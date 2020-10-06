@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="End" xml:space="preserve">
+    <value>00FE</value>
+  </data>
+  <data name="Exclamation" xml:space="preserve">
+    <value>004B</value>
+  </data>
+  <data name="JumpDown" xml:space="preserve">
+    <value>0031</value>
+  </data>
+  <data name="JumpDown1" xml:space="preserve">
+    <value>0035</value>
+  </data>
+  <data name="JumpDown2" xml:space="preserve">
+    <value>0039</value>
+  </data>
+  <data name="JumpDownSlow" xml:space="preserve">
+    <value>002D</value>
+  </data>
+  <data name="JumpLeft" xml:space="preserve">
+    <value>0032</value>
+  </data>
+  <data name="JumpLeft1" xml:space="preserve">
+    <value>0036</value>
+  </data>
+  <data name="JumpLeft2" xml:space="preserve">
+    <value>003A</value>
+  </data>
+  <data name="JumpLeftSlow" xml:space="preserve">
+    <value>002E</value>
+  </data>
+  <data name="JumpRight" xml:space="preserve">
+    <value>0033</value>
+  </data>
+  <data name="JumpRight1" xml:space="preserve">
+    <value>0037</value>
+  </data>
+  <data name="JumpRight2" xml:space="preserve">
+    <value>003B</value>
+  </data>
+  <data name="JumpRightSlow" xml:space="preserve">
+    <value>002F</value>
+  </data>
+  <data name="JumpUp" xml:space="preserve">
+    <value>0030</value>
+  </data>
+  <data name="JumpUp1" xml:space="preserve">
+    <value>0034</value>
+  </data>
+  <data name="JumpUp2" xml:space="preserve">
+    <value>0038</value>
+  </data>
+  <data name="JumpUpSlow" xml:space="preserve">
+    <value>002C</value>
+  </data>
+  <data name="RunDown" xml:space="preserve">
+    <value>0015</value>
+  </data>
+  <data name="RunDownSite" xml:space="preserve">
+    <value>0029</value>
+  </data>
+  <data name="RunLeft" xml:space="preserve">
+    <value>0016</value>
+  </data>
+  <data name="RunLeftSite" xml:space="preserve">
+    <value>002A</value>
+  </data>
+  <data name="RunRight" xml:space="preserve">
+    <value>0017</value>
+  </data>
+  <data name="RunRightSite" xml:space="preserve">
+    <value>002B</value>
+  </data>
+  <data name="RunUp" xml:space="preserve">
+    <value>0014</value>
+  </data>
+  <data name="RunUpSite" xml:space="preserve">
+    <value>0028</value>
+  </data>
+  <data name="SeeDown" xml:space="preserve">
+    <value>0001</value>
+  </data>
+  <data name="SeeLeft" xml:space="preserve">
+    <value>0002</value>
+  </data>
+  <data name="SeeRight" xml:space="preserve">
+    <value>0003</value>
+  </data>
+  <data name="SeeUp" xml:space="preserve">
+    <value>0000</value>
+  </data>
+  <data name="WaitDisappear" xml:space="preserve">
+    <value>0045</value>
+  </data>
+  <data name="WaitDoubleExclamation" xml:space="preserve">
+    <value>0067</value>
+  </data>
+  <data name="WaitJumpLeft1" xml:space="preserve">
+    <value>005C</value>
+  </data>
+  <data name="WaitJumpLeft2" xml:space="preserve">
+    <value>005E</value>
+  </data>
+  <data name="WaitJumpRight1" xml:space="preserve">
+    <value>005D</value>
+  </data>
+  <data name="WaitJumpRight2" xml:space="preserve">
+    <value>005F</value>
+  </data>
+  <data name="WaitJumpSite" xml:space="preserve">
+    <value>0065</value>
+  </data>
+  <data name="WaitMoveDown" xml:space="preserve">
+    <value>0055</value>
+  </data>
+  <data name="WaitMoveForever" xml:space="preserve">
+    <value>0068</value>
+  </data>
+  <data name="WaitMoveLeft" xml:space="preserve">
+    <value>0056</value>
+  </data>
+  <data name="WaitMoveRight" xml:space="preserve">
+    <value>0057</value>
+  </data>
+  <data name="WaitMoveSite" xml:space="preserve">
+    <value>0064</value>
+  </data>
+  <data name="WaitMoveUp" xml:space="preserve">
+    <value>0054</value>
+  </data>
+  <data name="WaitWalkBackDown" xml:space="preserve">
+    <value>0059</value>
+  </data>
+  <data name="WaitWalkBackLeft" xml:space="preserve">
+    <value>005A</value>
+  </data>
+  <data name="WaitWalkBackRight" xml:space="preserve">
+    <value>005B</value>
+  </data>
+  <data name="WaitWalkBackUp" xml:space="preserve">
+    <value>0058</value>
+  </data>
+  <data name="WaitWalkDown" xml:space="preserve">
+    <value>0051</value>
+  </data>
+  <data name="WaitWalkDownSlow" xml:space="preserve">
+    <value>004D</value>
+  </data>
+  <data name="WaitWalkLeft" xml:space="preserve">
+    <value>0052</value>
+  </data>
+  <data name="WaitWalkLeftSlow" xml:space="preserve">
+    <value>004E</value>
+  </data>
+  <data name="WaitWalkRight" xml:space="preserve">
+    <value>0053</value>
+  </data>
+  <data name="WaitWalkRightSlow" xml:space="preserve">
+    <value>004F</value>
+  </data>
+  <data name="WaitWalkUp" xml:space="preserve">
+    <value>0050</value>
+  </data>
+  <data name="WaitWalkUpSlow" xml:space="preserve">
+    <value>004C</value>
+  </data>
+  <data name="WalkDown" xml:space="preserve">
+    <value>0009</value>
+  </data>
+  <data name="WalkDownFast" xml:space="preserve">
+    <value>000D</value>
+  </data>
+  <data name="WalkDownFastSite" xml:space="preserve">
+    <value>0021</value>
+  </data>
+  <data name="WalkDownSite" xml:space="preserve">
+    <value>001D</value>
+  </data>
+  <data name="WalkDownSlow" xml:space="preserve">
+    <value>0005</value>
+  </data>
+  <data name="WalkDownSlowSite" xml:space="preserve">
+    <value>0019</value>
+  </data>
+  <data name="WalkDownVeryFast" xml:space="preserve">
+    <value>0011</value>
+  </data>
+  <data name="WalkDownVeryFastSite" xml:space="preserve">
+    <value>0025</value>
+  </data>
+  <data name="WalkLeft" xml:space="preserve">
+    <value>000A</value>
+  </data>
+  <data name="WalkLeftFast" xml:space="preserve">
+    <value>000E</value>
+  </data>
+  <data name="WalkLeftFastSite" xml:space="preserve">
+    <value>0022</value>
+  </data>
+  <data name="WalkLeftSite" xml:space="preserve">
+    <value>001E</value>
+  </data>
+  <data name="WalkLeftSlow" xml:space="preserve">
+    <value>0006</value>
+  </data>
+  <data name="WalkLeftSlowSite" xml:space="preserve">
+    <value>001A</value>
+  </data>
+  <data name="WalkLeftVeryFast" xml:space="preserve">
+    <value>0012</value>
+  </data>
+  <data name="WalkLeftVeryFastSite" xml:space="preserve">
+    <value>0026</value>
+  </data>
+  <data name="WalkRight" xml:space="preserve">
+    <value>000B</value>
+  </data>
+  <data name="WalkRightFast" xml:space="preserve">
+    <value>000F</value>
+  </data>
+  <data name="WalkRightFastSite" xml:space="preserve">
+    <value>0023</value>
+  </data>
+  <data name="WalkRightSite" xml:space="preserve">
+    <value>001F</value>
+  </data>
+  <data name="WalkRightSlow" xml:space="preserve">
+    <value>0007</value>
+  </data>
+  <data name="WalkRightSlowSite" xml:space="preserve">
+    <value>001B</value>
+  </data>
+  <data name="WalkRightVeryFast" xml:space="preserve">
+    <value>0013</value>
+  </data>
+  <data name="WalkRightVeryFastSite" xml:space="preserve">
+    <value>0027</value>
+  </data>
+  <data name="WalkUp" xml:space="preserve">
+    <value>0008</value>
+  </data>
+  <data name="WalkUpFast" xml:space="preserve">
+    <value>000C</value>
+  </data>
+  <data name="WalkUpFastSite" xml:space="preserve">
+    <value>0020</value>
+  </data>
+  <data name="WalkUpSite" xml:space="preserve">
+    <value>001C</value>
+  </data>
+  <data name="WalkUpSlow" xml:space="preserve">
+    <value>0004</value>
+  </data>
+  <data name="WalkUpSlowSite" xml:space="preserve">
+    <value>0018</value>
+  </data>
+  <data name="WalkUpVeryFast" xml:space="preserve">
+    <value>0010</value>
+  </data>
+  <data name="WalkUpVeryFastSite" xml:space="preserve">
+    <value>0024</value>
+  </data>
+</root>

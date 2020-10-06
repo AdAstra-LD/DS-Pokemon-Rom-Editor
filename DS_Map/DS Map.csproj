@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E3C66521-EE89-4406-92C4-FC1D40DC4200}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>DS_Map</RootNamespace>
+    <AssemblyName>DS Map</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HelixToolkit, Version=2011.10.1.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\HelixToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Desktop\sdsme\Map_Editor\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tao.OpenGl, Version=2.1.0.12, Culture=neutral, PublicKeyToken=1ca010269a4501ef, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Desktop\sdsme\Map_Editor\Tao.OpenGl.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.Platform.Windows, Version=1.0.0.5, Culture=neutral, PublicKeyToken=701104b2da67a104, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Desktop\sdsme\Map_Editor\Tao.Platform.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AB.cs" />
+    <Compile Include="AreaData.cs" />
+    <Compile Include="ASMHacksDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASMHacksDialog.Designer.cs">
+      <DependentUpon>ASMHacksDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BuildingEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BuildingEditor.Designer.cs">
+      <DependentUpon>BuildingEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RomInfo.cs" />
+    <Compile Include="WildEditorHGSS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WildEditorHGSS.Designer.cs">
+      <DependentUpon>WildEditorHGSS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WildEditorDPPt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WildEditorDPPt.Designer.cs">
+      <DependentUpon>WildEditorDPPt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GiveItemDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GiveItemDialog.Designer.cs">
+      <DependentUpon>GiveItemDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GivePokémonDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GivePokémonDialog.Designer.cs">
+      <DependentUpon>GivePokémonDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EncounterFile.cs" />
+    <Compile Include="InsertValueDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InsertValueDialog.Designer.cs">
+      <DependentUpon>InsertValueDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageFile.cs" />
+    <Compile Include="Header.cs" />
+    <Compile Include="RichTextBoxExt.cs" />
+    <Compile Include="Resources\MovementNames.Designer.cs" />
+    <Compile Include="Resources\ScriptNamesDP.Designer.cs" />
+    <Compile Include="Resources\ScriptNamesHGSS.Designer.cs" />
+    <Compile Include="Resources\ScriptParametersDP.Designer.cs" />
+    <Compile Include="Resources\ScriptParametersHGSS.Designer.cs" />
+    <Compile Include="ScriptFile.cs" />
+    <Compile Include="Matrix.cs" />
+    <Compile Include="EventFile.cs" />
+    <Compile Include="DataGridViewDoubleBuffered.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LibNDSFormats\bytearrayoutputstream.cs" />
+    <Compile Include="LibNDSFormats\convertir.cs" />
+    <Compile Include="LibNDSFormats\EndianBinaryReader.cs" />
+    <Compile Include="LibNDSFormats\Export3DTools\Face.cs" />
+    <Compile Include="LibNDSFormats\Export3DTools\Group.cs" />
+    <Compile Include="LibNDSFormats\Export3DTools\OBJWriter.cs" />
+    <Compile Include="LibNDSFormats\Export3DTools\Polygon.cs" />
+    <Compile Include="LibNDSFormats\Export3DTools\PolygonType.cs" />
+    <Compile Include="LibNDSFormats\Export3DTools\Quad.cs" />
+    <Compile Include="LibNDSFormats\Export3DTools\QuadStrip.cs" />
+    <Compile Include="LibNDSFormats\Export3DTools\Triangle.cs" />
+    <Compile Include="LibNDSFormats\Export3DTools\TriangleStrip.cs" />
+    <Compile Include="LibNDSFormats\Helper.cs" />
+    <Compile Include="LibNDSFormats\nclr_e.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LibNDSFormats\NSBCA.cs" />
+    <Compile Include="LibNDSFormats\NSBCA\NSBCALoader.cs" />
+    <Compile Include="LibNDSFormats\NSBMD\MTX44.cs" />
+    <Compile Include="LibNDSFormats\NSBMD\NSBMD.cs" />
+    <Compile Include="LibNDSFormats\NSBMD\NSBMDAnimation.cs" />
+    <Compile Include="LibNDSFormats\NSBMD\NSBMDGlRenderer.cs" />
+    <Compile Include="LibNDSFormats\NSBMD\NSBMDLoader.cs" />
+    <Compile Include="LibNDSFormats\NSBMD\NSBMDMaterial.cs" />
+    <Compile Include="LibNDSFormats\NSBMD\NSBMDModel.cs" />
+    <Compile Include="LibNDSFormats\NSBMD\NSBMDObject.cs" />
+    <Compile Include="LibNDSFormats\NSBMD\NSBMDPalette.cs" />
+    <Compile Include="LibNDSFormats\NSBMD\NSBMDPolygon.cs" />
+    <Compile Include="LibNDSFormats\NSBMD\NSBMDTexture.cs" />
+    <Compile Include="LibNDSFormats\NSBTA.cs" />
+    <Compile Include="LibNDSFormats\NSBTP.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\bytearrayinputstream.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\directory.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\externalfilesystemsource.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\File.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\Filepallete.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\filesystem2.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\filesystemsource.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\image3d.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\image3dformat5.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\imageindexer.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\imagetexeler.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\imagetiler.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\inlinefile.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\nsbmetileset.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\nsbtx.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\NSBTXLoader.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\palettedimage.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\pallete2.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\pixelpalletedimage.cs" />
+    <Compile Include="LibNDSFormats\NSBTX\Rom.cs" />
+    <Compile Include="LibNDSFormats\StreamExt.cs" />
+    <Compile Include="LibNDSFormats\Utils.cs" />
+    <Compile Include="Main Window.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main Window.Designer.cs">
+      <DependentUpon>Main Window.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Narc.cs" />
+    <Compile Include="MapFile.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ReadText.Designer.cs" />
+    <Compile Include="Resources\writeText.Designer.cs" />
+    <Compile Include="SPK.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SPK.Designer.cs">
+      <DependentUpon>SPK.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ASMHacksDialog.resx">
+      <DependentUpon>ASMHacksDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BuildingEditor.resx">
+      <DependentUpon>BuildingEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WildEditorHGSS.resx">
+      <DependentUpon>WildEditorHGSS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GiveItemDialog.resx">
+      <DependentUpon>GiveItemDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GivePokémonDialog.resx">
+      <DependentUpon>GivePokémonDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsertValueDialog.resx">
+      <DependentUpon>InsertValueDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main Window.resx">
+      <DependentUpon>Main Window.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MovementNames.resx" />
+    <EmbeddedResource Include="Resources\ReadText.resx" />
+    <EmbeddedResource Include="Resources\ScriptNamesDP.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ScriptNamesHGSS.resx" />
+    <EmbeddedResource Include="Resources\ScriptParametersDP.resx" />
+    <EmbeddedResource Include="Resources\ScriptParametersHGSS.resx" />
+    <EmbeddedResource Include="Resources\writeText.resx" />
+    <EmbeddedResource Include="SPK.resx">
+      <DependentUpon>SPK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WildEditorDPPt.resx">
+      <DependentUpon>WildEditorDPPt.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Graphics\Program Icons\open_file.png" />
+    <None Include="Graphics\Program Icons\save_rom.png" />
+    <None Include="Graphics\Program Icons\map_editor.png" />
+    <None Include="Graphics\Program Icons\arrow.png" />
+    <None Include="Graphics\Program Icons\arrowdown.png" />
+    <None Include="Graphics\Program Icons\arrowleft.png" />
+    <None Include="Graphics\Program Icons\arrowright.png" />
+    <None Include="Graphics\Program Icons\arrowup.png" />
+    <None Include="Graphics\Event Icons\overworld.png" />
+    <None Include="Graphics\Event Icons\sign.png" />
+    <None Include="Graphics\Event Icons\trigger.png" />
+    <None Include="Graphics\Event Icons\warp.png" />
+    <None Include="Graphics\Event Icons\brown_sign.png" />
+    <None Include="Graphics\Event Icons\gray_sign.png" />
+    <None Include="Graphics\Event Icons\red_sign.png" />
+    <None Include="Graphics\Event Icons\route_sign.png" />
+    <None Include="Graphics\Event Icons\dawn_platinum.png" />
+    <None Include="Graphics\Event Icons\dppt_suitcase.png" />
+    <None Include="Graphics\Event Icons\blue_sign.png" />
+    <None Include="Graphics\Area Icons\hgsscave.png" />
+    <None Include="Graphics\Area Icons\hgssfield.png" />
+    <None Include="Graphics\Area Icons\hgssforest.png" />
+    <None Include="Graphics\Area Icons\hgssgray.png" />
+    <None Include="Graphics\Area Icons\hgsstown.png" />
+    <None Include="Graphics\Area Icons\hgsswall.png" />
+    <None Include="Graphics\Area Icons\hgsswater.png" />
+    <None Include="Graphics\Area Icons\hgsswood.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera000.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera001.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera002.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera003.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera004.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera006.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera020.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera036.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera049.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera051.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera067.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera068.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera084.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera116.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera129.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera148.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera163.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera195.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera211.png" />
+    <None Include="Graphics\Camera Angles\HGSS\hgsscamera244.png" />
+    <None Include="Graphics\Weather\HGSS\hgssdark.png" />
+    <None Include="Graphics\Weather\HGSS\hgssfog.png" />
+    <None Include="Graphics\Weather\HGSS\hgsshail.gif" />
+    <None Include="Graphics\Weather\HGSS\hgssnormal.png" />
+    <None Include="Graphics\Weather\HGSS\hgssrain.gif" />
+    <None Include="Graphics\Weather\HGSS\hgsssnow.gif" />
+    <None Include="Graphics\Weather\DPPt\dpblizzard.gif" />
+    <None Include="Graphics\Weather\DPPt\dpcloudy.png" />
+    <None Include="Graphics\Weather\DPPt\dpdark.png" />
+    <None Include="Graphics\Weather\DPPt\dpdiamondsnow.gif" />
+    <None Include="Graphics\Weather\DPPt\dpfog.png" />
+    <None Include="Graphics\Weather\DPPt\dphail.gif" />
+    <None Include="Graphics\Weather\DPPt\dpheavyrain.gif" />
+    <None Include="Graphics\Weather\DPPt\dplightning.gif" />
+    <None Include="Graphics\Weather\DPPt\dplightsandstorm.gif" />
+    <None Include="Graphics\Weather\DPPt\dpnormal.png" />
+    <None Include="Graphics\Weather\DPPt\dprain.gif" />
+    <None Include="Graphics\Weather\DPPt\dprocksascending.gif" />
+    <None Include="Graphics\Weather\DPPt\dpsandfall.gif" />
+    <None Include="Graphics\Weather\DPPt\dpsandstorm.gif" />
+    <None Include="Graphics\Weather\DPPt\dpsnowslow.gif" />
+    <None Include="Graphics\Weather\DPPt\dpthunderstorm.gif" />
+    <None Include="Graphics\Weather\DPPt\ptblizzard.gif" />
+    <None Include="Graphics\Weather\DPPt\ptdark.png" />
+    <None Include="Graphics\Weather\DPPt\ptdiamondsnow.gif" />
+    <None Include="Graphics\Weather\DPPt\pthail.gif" />
+    <None Include="Graphics\Weather\DPPt\ptheavyrain.gif" />
+    <None Include="Graphics\Weather\DPPt\ptnormal.png" />
+    <None Include="Graphics\Weather\DPPt\ptrain.gif" />
+    <None Include="Graphics\Weather\DPPt\ptsandfall.gif" />
+    <None Include="Graphics\Weather\DPPt\ptsandstorm.gif" />
+    <None Include="Graphics\Weather\DPPt\ptsnowslow.gif" />
+    <None Include="Graphics\Weather\DPPt\ptthunderstorm.gif" />
+    <None Include="Graphics\Weather\DPPt\ptweather12.gif" />
+    <None Include="Graphics\Weather\DPPt\ptweather13.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather14.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather15.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather16.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather17.gif" />
+    <None Include="Graphics\Weather\DPPt\ptweather18.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather19.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather20.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather21.gif" />
+    <None Include="Graphics\Weather\DPPt\ptweather22.gif" />
+    <None Include="Graphics\Weather\DPPt\ptweather23.gif" />
+    <None Include="Graphics\Weather\DPPt\ptweather24.gif" />
+    <None Include="Graphics\Weather\DPPt\ptweather25.gif" />
+    <None Include="Graphics\Weather\DPPt\ptweather26.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather27.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather28.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather29.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather30.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather31.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather32.gif" />
+    <None Include="Graphics\Weather\DPPt\ptweather33.png" />
+    <None Include="Graphics\Weather\DPPt\ptweather34.gif" />
+    <None Include="Graphics\Weather\DPPt\ptweather35.gif" />
+    <None Include="Graphics\Weather\DPPt\ptweather36.gif" />
+    <None Include="Graphics\Weather\DPPt\ptcloudy.png" />
+    <None Include="Graphics\Weather\DPPt\ptfog.png" />
+    <None Include="Graphics\Weather\DPPt\ptforestweather.gif" />
+    <None Include="Graphics\Weather\DPPt\ptlightning.gif" />
+    <None Include="Graphics\Weather\DPPt\ptlightsandstorm.gif" />
+    <None Include="Graphics\Weather\DPPt\ptrocksascending.gif" />
+    <None Include="Graphics\Weather\DPPt\ptspotlight.gif" />
+    <None Include="Graphics\Weather\HGSS\hgssdark2.png" />
+    <Content Include="Tools\blz.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\ndstool.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HelixToolkit.dll" />
+    <Content Include="OpenTK.dll" />
+    <Content Include="Tao.OpenGl.dll" />
+    <Content Include="Tao.Platform.Windows.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 e x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

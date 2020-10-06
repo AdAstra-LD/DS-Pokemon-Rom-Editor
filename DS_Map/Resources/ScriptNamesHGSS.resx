@@ -1,0 +1,633 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="0000" xml:space="preserve">
+    <value>Nop</value>
+  </data>
+  <data name="0001" xml:space="preserve">
+    <value>Nop1</value>
+  </data>
+  <data name="0002" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="0003" xml:space="preserve">
+    <value>Return2</value>
+  </data>
+  <data name="0011" xml:space="preserve">
+    <value>If</value>
+  </data>
+  <data name="0012" xml:space="preserve">
+    <value>If2</value>
+  </data>
+  <data name="0014" xml:space="preserve">
+    <value>CallStandard</value>
+  </data>
+  <data name="0016" xml:space="preserve">
+    <value>Jump</value>
+  </data>
+  <data name="001A" xml:space="preserve">
+    <value>Call</value>
+  </data>
+  <data name="001B" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="001C" xml:space="preserve">
+    <value>CompareLastResultJump</value>
+  </data>
+  <data name="001D" xml:space="preserve">
+    <value>CompareLastResultCall</value>
+  </data>
+  <data name="001E" xml:space="preserve">
+    <value>SetFlag</value>
+  </data>
+  <data name="001F" xml:space="preserve">
+    <value>ClearFlag</value>
+  </data>
+  <data name="0020" xml:space="preserve">
+    <value>CheckFlag</value>
+  </data>
+  <data name="0027" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="0029" xml:space="preserve">
+    <value>SetVar</value>
+  </data>
+  <data name="002A" xml:space="preserve">
+    <value>CopyVar</value>
+  </data>
+  <data name="002D" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="002E" xml:space="preserve">
+    <value>Message2</value>
+  </data>
+  <data name="0032" xml:space="preserve">
+    <value>WaitButton</value>
+  </data>
+  <data name="0035" xml:space="preserve">
+    <value>CloseMessageOnKeyPress</value>
+  </data>
+  <data name="0036" xml:space="preserve">
+    <value>FreezeMessageBox</value>
+  </data>
+  <data name="0037" xml:space="preserve">
+    <value>CallMessageBox</value>
+  </data>
+  <data name="0038" xml:space="preserve">
+    <value>ColorMessageBox</value>
+  </data>
+  <data name="0039" xml:space="preserve">
+    <value>TypeMessageBox</value>
+  </data>
+  <data name="003A" xml:space="preserve">
+    <value>NoMapMessageBox</value>
+  </data>
+  <data name="0040" xml:space="preserve">
+    <value>Multi</value>
+  </data>
+  <data name="0041" xml:space="preserve">
+    <value>Multi2</value>
+  </data>
+  <data name="0042" xml:space="preserve">
+    <value>TextScriptMulti</value>
+  </data>
+  <data name="0043" xml:space="preserve">
+    <value>CloseMulti</value>
+  </data>
+  <data name="0044" xml:space="preserve">
+    <value>Multi3</value>
+  </data>
+  <data name="0048" xml:space="preserve">
+    <value>MultiRow</value>
+  </data>
+  <data name="0049" xml:space="preserve">
+    <value>PlayFanfare</value>
+  </data>
+  <data name="004A" xml:space="preserve">
+    <value>PlayFanfare2</value>
+  </data>
+  <data name="004B" xml:space="preserve">
+    <value>WaitFanfare</value>
+  </data>
+  <data name="004C" xml:space="preserve">
+    <value>PlayCry</value>
+  </data>
+  <data name="004D" xml:space="preserve">
+    <value>WaitCry</value>
+  </data>
+  <data name="004E" xml:space="preserve">
+    <value>PlaySound</value>
+  </data>
+  <data name="004F" xml:space="preserve">
+    <value>FadeDefaultMusic</value>
+  </data>
+  <data name="0050" xml:space="preserve">
+    <value>PlayMusic</value>
+  </data>
+  <data name="0051" xml:space="preserve">
+    <value>StopMusic</value>
+  </data>
+  <data name="0052" xml:space="preserve">
+    <value>RestartMusic</value>
+  </data>
+  <data name="0054" xml:space="preserve">
+    <value>SwitchMusic</value>
+  </data>
+  <data name="005A" xml:space="preserve">
+    <value>SwitchMusic2</value>
+  </data>
+  <data name="005E" xml:space="preserve">
+    <value>ApplyMovement</value>
+  </data>
+  <data name="005F" xml:space="preserve">
+    <value>WaitMovement</value>
+  </data>
+  <data name="0060" xml:space="preserve">
+    <value>LockAll</value>
+  </data>
+  <data name="0061" xml:space="preserve">
+    <value>ReleaseAll</value>
+  </data>
+  <data name="0062" xml:space="preserve">
+    <value>Lock</value>
+  </data>
+  <data name="0063" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="0064" xml:space="preserve">
+    <value>AddPeople</value>
+  </data>
+  <data name="0065" xml:space="preserve">
+    <value>RemovePeople</value>
+  </data>
+  <data name="0066" xml:space="preserve">
+    <value>LockCam</value>
+  </data>
+  <data name="0068" xml:space="preserve">
+    <value>FacePlayer</value>
+  </data>
+  <data name="0069" xml:space="preserve">
+    <value>CheckSpritePosition</value>
+  </data>
+  <data name="006B" xml:space="preserve">
+    <value>CheckPersonPosition</value>
+  </data>
+  <data name="006C" xml:space="preserve">
+    <value>ContinueFollow</value>
+  </data>
+  <data name="006D" xml:space="preserve">
+    <value>FollowHero</value>
+  </data>
+  <data name="006E" xml:space="preserve">
+    <value>GiveMoney</value>
+  </data>
+  <data name="006F" xml:space="preserve">
+    <value>TakeMoney</value>
+  </data>
+  <data name="0070" xml:space="preserve">
+    <value>CheckMoney</value>
+  </data>
+  <data name="0071" xml:space="preserve">
+    <value>ShowMoney</value>
+  </data>
+  <data name="0072" xml:space="preserve">
+    <value>HideMoney</value>
+  </data>
+  <data name="007E" xml:space="preserve">
+    <value>TakeItem</value>
+  </data>
+  <data name="007F" xml:space="preserve">
+    <value>GiveItem</value>
+  </data>
+  <data name="0080" xml:space="preserve">
+    <value>CheckItem</value>
+  </data>
+  <data name="0084" xml:space="preserve">
+    <value>DoubleMessage</value>
+  </data>
+  <data name="0089" xml:space="preserve">
+    <value>GiveStoredPokemon</value>
+  </data>
+  <data name="0092" xml:space="preserve">
+    <value>RecordPokegearNumber</value>
+  </data>
+  <data name="0096" xml:space="preserve">
+    <value>CallEnd</value>
+  </data>
+  <data name="0098" xml:space="preserve">
+    <value>Wifi</value>
+  </data>
+  <data name="009A" xml:space="preserve">
+    <value>OpenPokemonDress</value>
+  </data>
+  <data name="009D" xml:space="preserve">
+    <value>OpenPokegearMap</value>
+  </data>
+  <data name="00A1" xml:space="preserve">
+    <value>CallEnd2</value>
+  </data>
+  <data name="00A3" xml:space="preserve">
+    <value>EndGame</value>
+  </data>
+  <data name="00A6" xml:space="preserve">
+    <value>WFC</value>
+  </data>
+  <data name="00AD" xml:space="preserve">
+    <value>GivePokemonNickname</value>
+  </data>
+  <data name="00AE" xml:space="preserve">
+    <value>FadeScreen</value>
+  </data>
+  <data name="00AF" xml:space="preserve">
+    <value>ResetScreen</value>
+  </data>
+  <data name="00B0" xml:space="preserve">
+    <value>Warp</value>
+  </data>
+  <data name="00B1" xml:space="preserve">
+    <value>HallFameData</value>
+  </data>
+  <data name="00B3" xml:space="preserve">
+    <value>WFC1</value>
+  </data>
+  <data name="00BE" xml:space="preserve">
+    <value>SetVariableHero</value>
+  </data>
+  <data name="00BF" xml:space="preserve">
+    <value>SetVariableRival</value>
+  </data>
+  <data name="00C0" xml:space="preserve">
+    <value>SetVariableAlter</value>
+  </data>
+  <data name="00C1" xml:space="preserve">
+    <value>SetVariablePokemon</value>
+  </data>
+  <data name="00C2" xml:space="preserve">
+    <value>SetVariableItem</value>
+  </data>
+  <data name="00C4" xml:space="preserve">
+    <value>SetVariableAttackItem</value>
+  </data>
+  <data name="00C5" xml:space="preserve">
+    <value>SetVariableAttack</value>
+  </data>
+  <data name="00C6" xml:space="preserve">
+    <value>SetVariableNumber</value>
+  </data>
+  <data name="00C7" xml:space="preserve">
+    <value>SetVariablePokemonNickname</value>
+  </data>
+  <data name="00C8" xml:space="preserve">
+    <value>SetVariableObject</value>
+  </data>
+  <data name="00CA" xml:space="preserve">
+    <value>SetVariablePokemonStored</value>
+  </data>
+  <data name="00CD" xml:space="preserve">
+    <value>CheckStarter</value>
+  </data>
+  <data name="00D5" xml:space="preserve">
+    <value>TrainerBattle</value>
+  </data>
+  <data name="00DB" xml:space="preserve">
+    <value>LostGoPokecenter</value>
+  </data>
+  <data name="00DC" xml:space="preserve">
+    <value>CheckLost</value>
+  </data>
+  <data name="00DE" xml:space="preserve">
+    <value>StoreStarter</value>
+  </data>
+  <data name="00EF" xml:space="preserve">
+    <value>ChecPokemonGender</value>
+  </data>
+  <data name="00F0" xml:space="preserve">
+    <value>WarpLift</value>
+  </data>
+  <data name="00F1" xml:space="preserve">
+    <value>CheckFloor</value>
+  </data>
+  <data name="00F3" xml:space="preserve">
+    <value>WirelessBattleWait</value>
+  </data>
+  <data name="00F7" xml:space="preserve">
+    <value>PokemonContest</value>
+  </data>
+  <data name="0119" xml:space="preserve">
+    <value>CheckGender</value>
+  </data>
+  <data name="011A" xml:space="preserve">
+    <value>HealPokemon</value>
+  </data>
+  <data name="0123" xml:space="preserve">
+    <value>ActivatePokedex</value>
+  </data>
+  <data name="0125" xml:space="preserve">
+    <value>GiveRunningShoes</value>
+  </data>
+  <data name="0126" xml:space="preserve">
+    <value>CheckBadge</value>
+  </data>
+  <data name="0127" xml:space="preserve">
+    <value>EnableBadge</value>
+  </data>
+  <data name="0128" xml:space="preserve">
+    <value>DisableBadge</value>
+  </data>
+  <data name="0133" xml:space="preserve">
+    <value>PrepareDoorAnimation</value>
+  </data>
+  <data name="0134" xml:space="preserve">
+    <value>CloseDoor</value>
+  </data>
+  <data name="0135" xml:space="preserve">
+    <value>MoveDoor</value>
+  </data>
+  <data name="0136" xml:space="preserve">
+    <value>OpenDoor</value>
+  </data>
+  <data name="0137" xml:space="preserve">
+    <value>WaitDoor</value>
+  </data>
+  <data name="0141" xml:space="preserve">
+    <value>VermillionGymAnimation</value>
+  </data>
+  <data name="0142" xml:space="preserve">
+    <value>VermillionGymBin</value>
+  </data>
+  <data name="0147" xml:space="preserve">
+    <value>AzaleaGym</value>
+  </data>
+  <data name="0148" xml:space="preserve">
+    <value>AzaleaGym2</value>
+  </data>
+  <data name="014C" xml:space="preserve">
+    <value>CheckPartyNumber</value>
+  </data>
+  <data name="0153" xml:space="preserve">
+    <value>SetOverworldPosition</value>
+  </data>
+  <data name="015D" xml:space="preserve">
+    <value>ChoosePokemonMenu</value>
+  </data>
+  <data name="015E" xml:space="preserve">
+    <value>ChoosePokemonMenu2</value>
+  </data>
+  <data name="015F" xml:space="preserve">
+    <value>StorePokemonMenu</value>
+  </data>
+  <data name="0162" xml:space="preserve">
+    <value>StorePokemonNumber</value>
+  </data>
+  <data name="0163" xml:space="preserve">
+    <value>CheckIfPokemonTraded</value>
+  </data>
+  <data name="0170" xml:space="preserve">
+    <value>CheckHiroMoneyNumber</value>
+  </data>
+  <data name="0178" xml:space="preserve">
+    <value>OpenMail</value>
+  </data>
+  <data name="0179" xml:space="preserve">
+    <value>CheckMail</value>
+  </data>
+  <data name="0188" xml:space="preserve">
+    <value>ComparePokemonHeight</value>
+  </data>
+  <data name="0189" xml:space="preserve">
+    <value>CheckPokemonHeight</value>
+  </data>
+  <data name="018A" xml:space="preserve">
+    <value>ChoosePokemonDelete</value>
+  </data>
+  <data name="018B" xml:space="preserve">
+    <value>StoreMoveDelete</value>
+  </data>
+  <data name="018C" xml:space="preserve">
+    <value>CheckMoveNumber</value>
+  </data>
+  <data name="018D" xml:space="preserve">
+    <value>DeleteMove</value>
+  </data>
+  <data name="018F" xml:space="preserve">
+    <value>SetVariableMoveDelete</value>
+  </data>
+  <data name="0194" xml:space="preserve">
+    <value>GiveItemStored</value>
+  </data>
+  <data name="01D3" xml:space="preserve">
+    <value>ChoosePokemonRem</value>
+  </data>
+  <data name="01D5" xml:space="preserve">
+    <value>StoreMoveRem</value>
+  </data>
+  <data name="01D8" xml:space="preserve">
+    <value>CheckPokemonTrade</value>
+  </data>
+  <data name="01D9" xml:space="preserve">
+    <value>TradeChosenPokemon</value>
+  </data>
+  <data name="01DA" xml:space="preserve">
+    <value>StopTrade</value>
+  </data>
+  <data name="01E0" xml:space="preserve">
+    <value>CheckRibbon</value>
+  </data>
+  <data name="01E1" xml:space="preserve">
+    <value>GiveRibbon</value>
+  </data>
+  <data name="01E3" xml:space="preserve">
+    <value>CheckPokemonRibbon</value>
+  </data>
+  <data name="01E6" xml:space="preserve">
+    <value>RBattleRecorder</value>
+  </data>
+  <data name="01EF" xml:space="preserve">
+    <value>CheckVersion</value>
+  </data>
+  <data name="01FB" xml:space="preserve">
+    <value>CheckBoxesNumber</value>
+  </data>
+  <data name="01FF" xml:space="preserve">
+    <value>StoreFriendParkResult</value>
+  </data>
+  <data name="0236" xml:space="preserve">
+    <value>ChoosePokemonMenuTrade</value>
+  </data>
+  <data name="024D" xml:space="preserve">
+    <value>LegendaryBattle</value>
+  </data>
+  <data name="0258" xml:space="preserve">
+    <value>StartFriendPark</value>
+  </data>
+  <data name="025E" xml:space="preserve">
+    <value>EndFriendPark</value>
+  </data>
+  <data name="0261" xml:space="preserve">
+    <value>MecScript</value>
+  </data>
+  <data name="0267" xml:space="preserve">
+    <value>MakePhoto</value>
+  </data>
+  <data name="026A" xml:space="preserve">
+    <value>CheckAlbumPhoto</value>
+  </data>
+  <data name="02BC" xml:space="preserve">
+    <value>CheckWildBattle2</value>
+  </data>
+  <data name="02BD" xml:space="preserve">
+    <value>WildBattle2</value>
+  </data>
+  <data name="02EA" xml:space="preserve">
+    <value>OpenLowScreen</value>
+  </data>
+  <data name="02EB" xml:space="preserve">
+    <value>CloseLowScreen</value>
+  </data>
+  <data name="02EC" xml:space="preserve">
+    <value>OpenLowYesNoBox</value>
+  </data>
+  <data name="02ED" xml:space="preserve">
+    <value>Multi4</value>
+  </data>
+  <data name="02EE" xml:space="preserve">
+    <value>Multi5</value>
+  </data>
+  <data name="02EF" xml:space="preserve">
+    <value>TextScriptMulti4</value>
+  </data>
+  <data name="02F0" xml:space="preserve">
+    <value>CloseMulti4</value>
+  </data>
+  <data name="0319" xml:space="preserve">
+    <value>TakeMomMoney</value>
+  </data>
+  <data name="031A" xml:space="preserve">
+    <value>GiveMomMoney</value>
+  </data>
+  <data name="031B" xml:space="preserve">
+    <value>OpenMomMoneyBox</value>
+  </data>
+  <data name="031C" xml:space="preserve">
+    <value>CloseMomMoneyBox</value>
+  </data>
+  <data name="0346" xml:space="preserve">
+    <value>CheckMomMoneyNumber</value>
+  </data>
+</root>
