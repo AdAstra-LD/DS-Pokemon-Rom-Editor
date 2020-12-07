@@ -862,7 +862,7 @@ namespace DS_Map
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            string message = "DS Pokémon Rom Editor by Nømura" + Environment.NewLine + "Version 1.0.3" + Environment.NewLine
+            string message = "Mixone's branch of DS Pokémon Rom Editor by Nømura" + Environment.NewLine + "Version 1.0.1" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who owes credit for SDSME." + Environment.NewLine +
                 "Special thanks go to Trifindo, Mikelan98, BagBoy, JackHack96 and AdAstra, who provided tons of help, research and expertise in the field of NDS Rom Hacking that made the development of this tool possible.";
 
