@@ -100,6 +100,12 @@
     <Compile Include="BuildingEditor.Designer.cs">
       <DependentUpon>BuildingEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="CameraView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CameraView.Designer.cs">
+      <DependentUpon>CameraView.cs</DependentUpon>
+    </Compile>
     <Compile Include="RomInfo.cs" />
     <Compile Include="WildEditorHGSS.cs">
       <SubType>Form</SubType>
@@ -227,6 +233,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BuildingEditor.resx">
       <DependentUpon>BuildingEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CameraView.resx">
+      <DependentUpon>CameraView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WildEditorHGSS.resx">
       <DependentUpon>WildEditorHGSS.cs</DependentUpon>

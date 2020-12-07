@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.textureComboBox = new System.Windows.Forms.ComboBox();
             this.importButton = new System.Windows.Forms.Button();
             this.exportButton = new System.Windows.Forms.Button();
@@ -35,7 +36,9 @@
             this.interiorCheckBox = new System.Windows.Forms.CheckBox();
             this.buildingsListBox = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // textureComboBox
@@ -131,6 +134,7 @@
             this.Name = "BuildingEditor";
             this.Text = "Building Editor";
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -145,5 +149,6 @@
         private System.Windows.Forms.CheckBox interiorCheckBox;
         private System.Windows.Forms.ListBox buildingsListBox;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }

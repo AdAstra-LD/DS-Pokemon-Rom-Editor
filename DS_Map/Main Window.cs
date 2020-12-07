@@ -796,6 +796,48 @@ namespace DS_Map
                 Narc.Open(workingFolder + tuple.Item1).ExtractToFolder(tuple.Item2);
             }
         }
+        private void UnpackNARCsBlackWhite2()
+        {
+            narcList = new string[]
+            {
+               @"data\a\0\7\0",
+               @"data\a\0\4\3",
+               @"data\a\0\4\2",
+               @"data\a\0\4\4",
+               @"data\a\0\4\0",
+               @"data\a\0\3\2",
+               @"data\a\0\6\5",
+               @"data\a\0\4\1",
+               @"data\a\0\2\7",
+               @"data\a\0\1\2",
+               @"data\a\0\8\1",
+               @"data\a\0\5\5",
+               @"data\a\0\3\7",
+               @"data\a\1\4\8"
+            };
+            narcFolders = new string[]
+            {
+               romInfo.GetBuildingTexturesFolderPath(),
+               workingFolder + @"data\a\0\4\area_build",
+               romInfo.GetAreaDataFolderPath(),
+               romInfo.GetMapTexturesFolderPath(),
+               romInfo.GetBuildingModelsFolderPath(false),
+               romInfo.GetEventFolderPath(),
+               romInfo.GetMapFolderPath(),
+               romInfo.GetMatrixFolderPath(),
+               romInfo.GetMessageFolderPath(),
+               romInfo.GetScriptFolderPath(),
+               romInfo.GetOverworldFolderPath(),
+               romInfo.GetTrainerDataFolderPath(),
+               romInfo.GetEncounterFolderPath(),
+               romInfo.GetBuildingModelsFolderPath(true)
+            };
+
+            foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create))
+            {
+                Narc.Open(workingFolder + tuple.Item1).ExtractToFolder(tuple.Item2);
+            }
+        }
         private void WriteToArm9(int startOffset, byte[] bytesToWrite)
         {
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(workingFolder + @"arm9.bin")))
@@ -3936,6 +3978,240 @@ namespace DS_Map
         }
         #endregion
 
+        #region LineNumbers Scripts
+        public int getWidthScript()
+        {
+            int w = 25;
+            // get total lines of scriptTextBox    
+            int line = scriptTextBox.Lines.Length;
+
+            if (line <= 99)
+            {
+                w = 20 + (int)scriptTextBox.Font.Size;
+            }
+            else if (line <= 999)
+            {
+                w = 30 + (int)scriptTextBox.Font.Size;
+            }
+            else
+            {
+                w = 50 + (int)scriptTextBox.Font.Size;
+            }
+
+            return w;
+        }
+
+        public void AddLineNumbersScript()
+        {
+            // create & set Point pt to (0,0)    
+            Point pt = new Point(0, 0);
+            // get First Index & First Line from scriptTextBox    
+            int First_Index = scriptTextBox.GetCharIndexFromPosition(pt);
+            int First_Line = scriptTextBox.GetLineFromCharIndex(First_Index);
+            // set X & Y coordinates of Point pt to ClientRectangle Width & Height respectively    
+            pt.X = ClientRectangle.Width;
+            pt.Y = ClientRectangle.Height;
+            // get Last Index & Last Line from scriptTextBox    
+            int Last_Index = scriptTextBox.GetCharIndexFromPosition(pt);
+            int Last_Line = scriptTextBox.GetLineFromCharIndex(Last_Index);
+            // set Center alignment to LineNumberTextBox    
+            LineNumberTextBoxScript.SelectionAlignment = HorizontalAlignment.Center;
+            // set LineNumberTextBox text to null & width to getWidth() function value    
+            LineNumberTextBoxScript.Text = "";
+            LineNumberTextBoxScript.Width = getWidthScript();
+            // now add each line number to LineNumberTextBox upto last line    
+            for (int i = First_Line; i <= Last_Line + 2; i++)
+            {
+                LineNumberTextBoxScript.Text += i + 1 + "\n";
+            }
+        }
+
+        private void scriptTextBox_SelectionChanged(object sender, EventArgs e)
+        {
+            Point pt = scriptTextBox.GetPositionFromCharIndex(scriptTextBox.SelectionStart);
+            if (pt.X == 1)
+            {
+                AddLineNumbersScript();
+            }
+        }
+
+        private void scriptTextBox_VScroll(object sender, EventArgs e)
+        {
+            LineNumberTextBoxScript.Text = "";
+            AddLineNumbersScript();
+            LineNumberTextBoxScript.Invalidate();
+        }
+
+        private void scriptTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (scriptTextBox.Text == "")
+            {
+                AddLineNumbersScript();
+            }
+        }
+
+        private void LineNumberTextBoxScript_MouseDown(object sender, MouseEventArgs e)
+        {
+            scriptTextBox.Select();
+            LineNumberTextBoxScript.DeselectAll();
+        }
+        #endregion
+        #region LineNumbers Functions
+        public int getWidthFunc()
+        {
+            int w = 25;
+            // get total lines of functionTextBox    
+            int line = functionTextBox.Lines.Length;
+
+            if (line <= 99)
+            {
+                w = 20 + (int)functionTextBox.Font.Size;
+            }
+            else if (line <= 999)
+            {
+                w = 30 + (int)functionTextBox.Font.Size;
+            }
+            else
+            {
+                w = 50 + (int)functionTextBox.Font.Size;
+            }
+
+            return w;
+        }
+
+        public void AddLineNumbersFunc()
+        {
+            // create & set Point pt to (0,0)    
+            Point pt = new Point(0, 0);
+            // get First Index & First Line from functionTextBox    
+            int First_Index = functionTextBox.GetCharIndexFromPosition(pt);
+            int First_Line = functionTextBox.GetLineFromCharIndex(First_Index);
+            // set X & Y coordinates of Point pt to ClientRectangle Width & Height respectively    
+            pt.X = ClientRectangle.Width;
+            pt.Y = ClientRectangle.Height;
+            // get Last Index & Last Line from functionTextBox    
+            int Last_Index = functionTextBox.GetCharIndexFromPosition(pt);
+            int Last_Line = functionTextBox.GetLineFromCharIndex(Last_Index);
+            // set Center alignment to LineNumberTextBox    
+            LineNumberTextBoxFunc.SelectionAlignment = HorizontalAlignment.Center;
+            // set LineNumberTextBox text to null & width to getWidth() function value    
+            LineNumberTextBoxFunc.Text = "";
+            LineNumberTextBoxFunc.Width = getWidthFunc();
+            // now add each line number to LineNumberTextBox upto last line    
+            for (int i = First_Line; i <= Last_Line + 2; i++)
+            {
+                LineNumberTextBoxFunc.Text += i + 1 + "\n";
+            }
+        }
+
+        private void functionTextBox_SelectionChanged(object sender, EventArgs e)
+        {
+            Point pt = functionTextBox.GetPositionFromCharIndex(functionTextBox.SelectionStart);
+            if (pt.X == 1)
+            {
+                AddLineNumbersFunc();
+            }
+        }
+
+        private void functionTextBox_VScroll(object sender, EventArgs e)
+        {
+            LineNumberTextBoxFunc.Text = "";
+            AddLineNumbersFunc();
+            LineNumberTextBoxFunc.Invalidate();
+        }
+
+        private void functionTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (functionTextBox.Text == "")
+            {
+                AddLineNumbersFunc();
+            }
+        }
+
+        private void LineNumberTextBoxFunc_MouseDown(object sender, MouseEventArgs e)
+        {
+            functionTextBox.Select();
+            LineNumberTextBoxFunc.DeselectAll();
+        }
+        #endregion
+        #region LineNumbers Movements
+        public int getWidthMov()
+        {
+            int w = 25;
+            // get total lines of movementTextBox    
+            int line = movementTextBox.Lines.Length;
+
+            if (line <= 99)
+            {
+                w = 20 + (int)movementTextBox.Font.Size;
+            }
+            else if (line <= 999)
+            {
+                w = 30 + (int)movementTextBox.Font.Size;
+            }
+            else
+            {
+                w = 50 + (int)movementTextBox.Font.Size;
+            }
+
+            return w;
+        }
+
+        public void AddLineNumbersMov()
+        {
+            // create & set Point pt to (0,0)    
+            Point pt = new Point(0, 0);
+            // get First Index & First Line from movementTextBox    
+            int First_Index = movementTextBox.GetCharIndexFromPosition(pt);
+            int First_Line = movementTextBox.GetLineFromCharIndex(First_Index);
+            // set X & Y coordinates of Point pt to ClientRectangle Width & Height respectively    
+            pt.X = ClientRectangle.Width;
+            pt.Y = ClientRectangle.Height;
+            // get Last Index & Last Line from movementTextBox    
+            int Last_Index = movementTextBox.GetCharIndexFromPosition(pt);
+            int Last_Line = movementTextBox.GetLineFromCharIndex(Last_Index);
+            // set Center alignment to LineNumberTextBox    
+            LineNumberTextBoxMov.SelectionAlignment = HorizontalAlignment.Center;
+            // set LineNumberTextBox text to null & width to getWidth() function value    
+            LineNumberTextBoxMov.Text = "";
+            LineNumberTextBoxMov.Width = getWidthMov();
+            // now add each line number to LineNumberTextBox upto last line    
+            for (int i = First_Line; i <= Last_Line + 2; i++)
+            {
+                LineNumberTextBoxMov.Text += i + 1 + "\n";
+            }
+        }
+
+        private void movementTextBox_SelectionChanged(object sender, EventArgs e)
+        {
+            Point pt = movementTextBox.GetPositionFromCharIndex(movementTextBox.SelectionStart);
+            if (pt.X == 1)
+            {
+                AddLineNumbersMov();
+            }
+        }
+
+        private void movementTextBox_VScroll(object sender, EventArgs e)
+        {
+            LineNumberTextBoxMov.Text = "";
+            AddLineNumbersMov();
+            LineNumberTextBoxMov.Invalidate();
+        }
+
+        private void movementTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (movementTextBox.Text == "")
+            {
+                AddLineNumbersMov();
+            }
+        }
+
+        private void LineNumberTextBoxMov_MouseDown(object sender, MouseEventArgs e)
+        {
+            movementTextBox.Select();
+            LineNumberTextBoxMov.DeselectAll();
+        }
+        #endregion
         private void addScriptFileButton_Click(object sender, EventArgs e)
         {
             /* Add new event file to event folder */
@@ -4014,8 +4290,9 @@ namespace DS_Map
                         List<Command> commands = new List<Command>();
 
                         /* Read script commands */
-                        while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump F"))
+                        while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump F") && i < scriptTextBox.Lines.Length - 1)
                         {
+                            Console.WriteLine("Script line " + i.ToString());
                             commands.Add(new Command(scriptTextBox.Lines[i], romInfo.GetVersion(), false));
                             i++;
                         }
@@ -4157,6 +4434,9 @@ namespace DS_Map
                 functionTextBox.Text += "Level script files currently not supported";
                 movementTextBox.Text += "Level script files currently not supported";
             }
+            AddLineNumbersScript();
+            AddLineNumbersFunc();
+            AddLineNumbersMov();
         }
 
         #region Miscellaneous
@@ -4430,8 +4710,9 @@ namespace DS_Map
             searchMessageResultTextBox.Clear();
             string searchString = searchMessageTextBox.Text;
             textSearchProgressBar.Maximum = romInfo.GetMessageCount();
-
-            for (int i = 0; i < romInfo.GetMessageCount(); i++)
+            int msgCount = romInfo.GetMessageCount();
+            if (msgCount > 828) msgCount = 828;
+            for (int i = 0; i < msgCount; i++)
             {
                 MessageFile file = LoadMessageFile(i);
                 string result = "File" + " " + i + ", " + "n. ";
@@ -4442,6 +4723,80 @@ namespace DS_Map
                 textSearchProgressBar.Value = i;
             }
 
+            textSearchProgressBar.Value = 0;
+        }
+        private void replaceMessageButton_Click(object sender, EventArgs e)
+        {
+            // Usage: search box -> WORD_TO_REPLACE, NEW_WORD
+            searchMessageResultTextBox.Clear();
+            string searchString = searchMessageTextBox.Text;
+            string replaceString = replaceMessageTextBox.Text;
+            textSearchProgressBar.Maximum = romInfo.GetMessageCount();
+            int msgCount = romInfo.GetMessageCount();
+            if (msgCount > 828) msgCount = 828;
+            for (int k = 0; k < msgCount; k++)
+            {
+                MessageFile file = LoadMessageFile(k);
+                currentMessageFile = file;
+                bool found = false;
+
+                for (int j = 0; j < file.messages.Count; j++)
+                {
+                    if (file.messages[j].Contains(searchString))
+                    {
+                        file.messages[j] = file.messages[j].Replace(searchString, replaceString);
+                        found = true;
+                    }
+                    
+                }
+                textSearchProgressBar.Value = k;                
+                if (found)
+                {
+                    disableHandlers = true;
+                    textEditorDataGridView.Rows.Clear();
+                    searchMessageResultTextBox.AppendText(searchString + " found and replaced by " + replaceString + Environment.NewLine);
+                    for (int i = 0; i < currentMessageFile.messages.Count; i++)
+                    {
+                        textEditorDataGridView.Rows.Add(currentMessageFile.messages[i]);
+                        textEditorDataGridView.Rows[i].HeaderCell.Value = i.ToString();
+                    }
+                    disableHandlers = false;
+                    BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.GetMessageFolderPath() + "\\" + k.ToString("D4"), FileMode.Create));
+                    textWriter.Write((UInt16)currentMessageFile.messages.Count);
+                    textWriter.Write((UInt16)currentMessageFile.initialKey);
+                    int key = (currentMessageFile.initialKey * 0x2FD) & 0xFFFF;
+                    int key2 = 0;
+                    int realKey = 0;
+                    int offset = 0x4 + (currentMessageFile.messages.Count * 8);
+                    int[] stringSize = new int[currentMessageFile.messages.Count];
+
+                    for (int i = 0; i < currentMessageFile.messages.Count; i++) // Reads and stores string offsets and sizes
+                    {
+                        key2 = (key * (i + 1) & 0xFFFF);
+                        realKey = key2 | (key2 << 16);
+                        textWriter.Write(offset ^ realKey);
+                        int length = currentMessageFile.GetStringLength(textEditorDataGridView[0, i].Value.ToString());
+                        stringSize[i] = length;
+                        textWriter.Write(length ^ realKey);
+                        offset += length * 2;
+                    }
+                    for (int i = 0; i < currentMessageFile.messages.Count; i++) // Encodes strings and writes them to file
+                    {
+                        key = (0x91BD3 * (i + 1)) & 0xFFFF;
+                        int[] currentString = currentMessageFile.EncodeString(textEditorDataGridView[0, i].Value.ToString(), i, stringSize[i]);
+                        for (int j = 0; j < stringSize[i] - 1; j++)
+                        {
+                            textWriter.Write((UInt16)(currentString[j] ^ key));
+                            key += 0x493D;
+                            key &= 0xFFFF;
+                        }
+                        textWriter.Write((UInt16)(0xFFFF ^ key));
+                    }
+                    textWriter.Close();
+                }
+                //else searchMessageResultTextBox.AppendText(searchString + " not found in this file");
+                //this.saveMessageFileButton_Click(sender, e);
+            }
             textSearchProgressBar.Value = 0;
         }
         private void selectTextFileComboBox_SelectedIndexChanged(object sender, EventArgs e)

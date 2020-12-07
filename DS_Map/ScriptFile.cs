@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Resources;
 using System.IO;
 using System.Linq;
+using System.Collections;
 
 namespace DS_Map
 {
@@ -516,7 +517,15 @@ namespace DS_Map
             this.description = getCommandName.GetString(id.ToString("X4"));
             if (description == null) description = id.ToString("X4");
             this.isMovement = isMovement;
-
+            for (int i = 0; i < parameters.Count; i++)
+            {
+                if (parameters[i].Length < 4)
+                {
+                    byte[] temp = new byte[4];
+                    parameters[i].CopyTo(temp, 0);
+                    parameters[i] = temp;
+                }
+            }
             switch (id)
             {
                 case 0x16:      // Jump
@@ -547,8 +556,22 @@ namespace DS_Map
                     break;
             }           
         }
+
+        private Object GetResxNameByValue(string value, ResourceManager rm)
+        {
+            var entry =
+                rm.GetResourceSet(System.Threading.Thread.CurrentThread.CurrentCulture, true, true)
+                  .OfType<DictionaryEntry>()
+                  .FirstOrDefault(e => e.Value.ToString() == value);
+
+            var key = entry.Key;
+            return key;
+
+        }
+
         public Command(string description, string version, bool isMovement)
         {
+            Console.WriteLine(description);
             this.description = description;
             this.isMovement = isMovement;
             this.parameters = new List<byte[]>();
@@ -918,10 +941,24 @@ namespace DS_Map
                 ["WaitMoveForever"] = 0x0068,
                 ["End"] = 0x00FE
             };
-
+            ResourceManager getCommandName; // Load the resource file containing information on parameters for each command
+            switch (version)
+            {
+                case "Diamond":
+                case "Pearl":
+                    getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
+                    break;
+                case "HeartGold":
+                case "SoulSilver":
+                    getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
+                    break;
+                default: // Platinum
+                    getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
+                    break;
+            }
             if (!isMovement)
             {
-                if (commandsDictDPPt.ContainsKey(words[0])) this.id = commandsDictDPPt[words[0]];
+                if (getCommandName.GetString(words[0]) != null) this.id = (ushort)GetResxNameByValue(words[0], getCommandName);
                 else UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
             }
             else
@@ -933,7 +970,7 @@ namespace DS_Map
             /* Read parameters from remainder of the description */
             if (words.Length > 1 && this.id != 0)
             {
-                if(!isMovement)
+                if (!isMovement)
                 {
                     Dictionary<string, byte> operatorsDict = new Dictionary<string, byte>()
                     {
@@ -962,11 +999,13 @@ namespace DS_Map
                             getCommandParameters = new ResourceManager("DS_Map.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
                             break;
                     }
-
+                    Console.WriteLine("ID = " + id.ToString());
                     string[] indexes = getCommandParameters.GetString(id.ToString("X4")).Split(' ');
 
                     for (int i = 1; i < indexes.Length; i++)
                     {
+                        Console.WriteLine("Index : "+i.ToString());
+                        Console.WriteLine("Started word : "+words[i]);
                         if (operatorsDict.ContainsKey(words[i])) parameters.Add(new byte[] { operatorsDict[words[i]] });
                         else
                         {
@@ -976,19 +1015,37 @@ namespace DS_Map
                             NumberStyles style;
                             if (words[i][index - 1] == 'x') style = NumberStyles.HexNumber;
                             else style = NumberStyles.Integer;
-
                             /* Convert strings of parameters into the correct datatypes */
+                            Console.WriteLine("started params");
                             if (indexes[i] == "1") parameters.Add(new byte[] { Byte.Parse(words[i].Substring(index), style) });
                             if (indexes[i] == "2") parameters.Add(BitConverter.GetBytes(Int16.Parse(words[i].Substring(index), style)));
                             if (indexes[i] == "4") parameters.Add(BitConverter.GetBytes(Int32.Parse(words[i].Substring(index), style)));
+                            Console.WriteLine("finished params");
                         }
+                        Console.WriteLine("Finished word : "+words[i]);
                     }
 
                     /* Fix function and movement references which are +1 greater than array indexes */
+                    Console.WriteLine("before fix");                    
+                    Console.WriteLine("Param length = "+parameters.Count.ToString());
                     if (id == 0x16 || id == 0x1A) parameters[0] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[0], 0) - 1);
+                    Console.WriteLine("passed parameters 0");
                     if (id == 0x1C || id == 0x1D || id == 0x5E) parameters[1] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[1], 0) - 1);
+                    Console.WriteLine("passed parameters 1");
+                    Console.WriteLine("passed fix");
                 }
-                else parameters.Add(BitConverter.GetBytes(Int16.Parse(words[1].Substring(2), NumberStyles.HexNumber)));
+                else
+                {
+                    Console.WriteLine("in else");
+                    if (words[1].Length > 4) // Cases where movement is followed by an Overworld parameter
+                    {
+                        int index = 1 + words[1].IndexOf('#'); // FInd index of #
+                        parameters.Add(BitConverter.GetBytes(Int32.Parse(words[1].Substring(index), NumberStyles.Integer))); // Add Overworld_#
+                        parameters[0] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[0], 0) - 1); // Add Overworld number
+                    } // TODO: Check if other cases may apply to movement parameters
+                    else parameters.Add(BitConverter.GetBytes(Int16.Parse(words[1].Substring(2), NumberStyles.HexNumber)));
+                    Console.WriteLine("passed else");
+                }
             }
             
         }
