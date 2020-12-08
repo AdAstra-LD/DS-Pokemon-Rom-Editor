@@ -3143,12 +3143,14 @@ namespace DS_Map
                         else archiveID = -1; // If no match has been found, return -1, which loads bounding box
                         break;
                     default:
-                        idReader.BaseStream.Position = 0x21BA8;
+                        idReader.BaseStream.Position = 0x220B2;
                         try
                         {
                             while (match == false) // Search for the overworld id in the table
                             {
-                                if (idReader.ReadUInt16() == ID) match = true; // If the entry is a match, stop and go to reading part
+                                ushort overlayID = idReader.ReadUInt16();
+                                Console.WriteLine("Overlay header ID : "+overlayID.ToString("X4"));
+                                if ( overlayID == ID) match = true; // If the entry is a match, stop and go to reading part
                                 else idReader.BaseStream.Position += 0x4; // If the entry is not a match, move forward
                             }
                         }
@@ -3580,7 +3582,7 @@ namespace DS_Map
             owScriptNumericUpDown.Value = currentEventFile.overworlds[index].scriptNumber;
             
             /* Sprite index and image controls */
-            owSpriteComboBox.SelectedIndex = currentEventFile.overworlds[index].spriteID;
+            owSpriteComboBox.SelectedIndex = MatchOverworldIDToSpriteArchive(currentEventFile.overworlds[index].spriteID);
             owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[index].spriteID, currentEventFile.overworlds[index].orientation);
 
             /* Special settings controls */
@@ -4472,6 +4474,10 @@ namespace DS_Map
                 if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "SetVar 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
             }
         }
+        private void trainerBattleButton_Click(object sender, EventArgs e)
+        {
+
+        }
         #endregion
 
         #region Overworlds
@@ -4964,5 +4970,7 @@ namespace DS_Map
         }
 
         #endregion
+
+       
     }
 }

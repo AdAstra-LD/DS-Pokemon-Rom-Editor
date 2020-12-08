@@ -16,6 +16,7 @@ The current list of modified features is as follows:
 
 ### Almost finished
 1. Full repair of script editor saving for HGSS.
+2. Overworld sprite loading repair. Now that proper table format known should be relatively easy.
 
 ### Building blocks set
 1. Internal camera preview and edit

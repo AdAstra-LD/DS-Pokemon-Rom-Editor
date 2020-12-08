@@ -337,6 +337,7 @@ namespace DS_Map
                     }
                     break;
                 default:
+                    Console.WriteLine("Loaded command id : " + id.ToString("X4"));
                     string[] indexes = getCommandParameters.GetString(id.ToString("X4")).Split(' ');
                     for (int i = 1; i < indexes.Length; i++) 
                     {
