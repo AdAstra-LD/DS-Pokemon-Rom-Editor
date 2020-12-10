@@ -3120,8 +3120,9 @@ namespace DS_Map
         {
             int archiveID;
             bool match = new bool();
+            Console.WriteLine("Searching for ID : " + ID.ToString("X4"));
             using (BinaryReader idReader = new BinaryReader(new FileStream(workingFolder + overworldTablePath, FileMode.Open)))
-            {               
+            {                
                 switch (romInfo.GetVersion())
                 {
                     case "Diamond":
@@ -3133,23 +3134,43 @@ namespace DS_Map
                         {
                             while (match == false) // Search for the overworld id in the table
                             {
-                                if (idReader.ReadUInt32() == ID) match = true; // If the entry is a match, stop and go to reading part
-                                else idReader.BaseStream.Position += 0x4; // If the entry is not a match, move forward
+                                byte[] temp = idReader.ReadBytes(4);
+                                //Array.Reverse(temp);
+                                uint overlayID = BitConverter.ToUInt32(temp, 0);
+                                if (overlayID == 0xFFFF) break;
+                                else
+                                {
+                                    
+                                    Console.WriteLine("Matching against : " + overlayID.ToString("X4"));
+                                    if (overlayID == ID) match = true; // If the entry is a match, stop and go to reading part
+                                    else idReader.BaseStream.Position += 0x4; // If the entry is not a match, move forward
+                                }
                             }
                         }
                         catch { } // If there is no match, catch EOF exception and break loop
 
-                        if (match) archiveID = idReader.ReadInt32(); // Read ID from file if there was a match in previous section
-                        else archiveID = -1; // If no match has been found, return -1, which loads bounding box
+                        if (match)
+                        {
+                            byte[] temp = idReader.ReadBytes(4);
+                            //Array.Reverse(temp);
+                            archiveID = BitConverter.ToInt32(temp, 0); // Read ID from file if there was a match in previous section
+                        }
+                        else
+                        {
+                            Console.WriteLine("Could not find ID : " + ID.ToString("X4"));
+                            archiveID = -1; // If no match has been found, return -1, which loads bounding box
+                        }
                         break;
                     default:
-                        idReader.BaseStream.Position = 0x220B2;
+                        //if (ID >= 428) idReader.BaseStream.Position = 0x220B2;
+                        //else
+                        idReader.BaseStream.Position = 0x21BA8;
                         try
                         {
                             while (match == false) // Search for the overworld id in the table
                             {
                                 ushort overlayID = idReader.ReadUInt16();
-                                Console.WriteLine("Overlay header ID : "+overlayID.ToString("X4"));
+                                Console.WriteLine("Matching against : " + overlayID.ToString("X4"));
                                 if ( overlayID == ID) match = true; // If the entry is a match, stop and go to reading part
                                 else idReader.BaseStream.Position += 0x4; // If the entry is not a match, move forward
                             }
@@ -3157,7 +3178,11 @@ namespace DS_Map
                         catch { } // If there is no match, catch EOF exception and break loop
 
                         if (match) archiveID = idReader.ReadInt16(); // Read ID from file if there was a match in previous section
-                        else archiveID = -1; // If no match has been found, return -1, which loads bounding box
+                        else
+                        {
+                            Console.WriteLine("Could not find ID : " + ID.ToString("X4"));
+                            archiveID = -1; // If no match has been found, return -1, which loads bounding box
+                        }
                         break;
                 }
 
