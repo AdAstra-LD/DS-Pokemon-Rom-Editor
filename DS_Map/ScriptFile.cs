@@ -378,6 +378,7 @@ namespace DS_Map
                         {
                             /* Write command id */
                             ushort id = scripts[i].commands[j].id;
+                            Console.WriteLine("Command added: "+scripts[i].commands[j].id+" with params "+ String.Join(", ", scripts[i].commands[j].parameters));
                             writer.Write(id);
 
                             /* Write command parameters */
@@ -572,13 +573,13 @@ namespace DS_Map
 
         public Command(string description, string version, bool isMovement)
         {
-            Console.WriteLine(description);
             this.description = description;
             this.isMovement = isMovement;
             this.parameters = new List<byte[]>();
 
             string[] words = description.Split(' '); // Separate command code from parameters
-
+            Console.WriteLine(String.Join(",", words));
+            Console.WriteLine(version);
             /* Get command id, which is always first in the description */
             Dictionary<string, ushort> commandsDictDPPt = new Dictionary<string, ushort>()
             {
@@ -959,8 +960,14 @@ namespace DS_Map
             }
             if (!isMovement)
             {
-                if (getCommandName.GetString(words[0]) != null) this.id = (ushort)GetResxNameByValue(words[0], getCommandName);
+                Console.WriteLine("Command name : "+words[0]);
+                if (GetResxNameByValue(words[0], getCommandName) != null)
+                {
+                    Console.WriteLine(GetResxNameByValue(words[0], getCommandName));
+                    this.id = ushort.Parse(GetResxNameByValue(words[0], getCommandName).ToString(), System.Globalization.NumberStyles.AllowHexSpecifier);
+                }
                 else UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
+
             }
             else
             {
@@ -969,6 +976,7 @@ namespace DS_Map
             }
 
             /* Read parameters from remainder of the description */
+            Console.WriteLine("ID = " + id.ToString("X4"));
             if (words.Length > 1 && this.id != 0)
             {
                 if (!isMovement)
@@ -999,8 +1007,7 @@ namespace DS_Map
                         default: // Platinum
                             getCommandParameters = new ResourceManager("DS_Map.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
                             break;
-                    }
-                    Console.WriteLine("ID = " + id.ToString());
+                    }                    
                     string[] indexes = getCommandParameters.GetString(id.ToString("X4")).Split(' ');
 
                     for (int i = 1; i < indexes.Length; i++)
