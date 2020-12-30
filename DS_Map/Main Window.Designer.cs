@@ -6027,7 +6027,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "DS Pokémon Rom Editor 1.0.2 (Nømura, AdAstra, Mixone)";
+            this.Text = "DS Pokémon Rom Editor 1.0.3 (Nømura, AdAstra, Mixone)";
             this.Icon = Properties.Resources.appIcon;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.mainTabControl.ResumeLayout(false);
