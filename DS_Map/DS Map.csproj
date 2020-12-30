@@ -51,6 +51,9 @@
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="HelixToolkit, Version=2011.10.1.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -400,6 +403,8 @@
     <None Include="Graphics\Weather\DPPt\ptrocksascending.gif" />
     <None Include="Graphics\Weather\DPPt\ptspotlight.gif" />
     <None Include="Graphics\Weather\HGSS\hgssdark2.png" />
+    <Content Include="app.ico" />
+    <None Include="Resources\Main Icon.ico" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
