@@ -73,7 +73,7 @@ namespace DS_Map
     public abstract class Header
 	{
         #region Fields (10)
-        public byte areaData { get; set; }
+        public byte areaDataID { get; set; }
         public byte camera { get; set; }
         public ushort events { get; set; }
         public byte flags { get; set; }
@@ -108,7 +108,7 @@ namespace DS_Map
         {
             using (BinaryReader reader = new BinaryReader(data))
             {
-                areaData = reader.ReadByte();
+                areaDataID = reader.ReadByte();
                 unknown1 = reader.ReadByte();
                 matrix = reader.ReadUInt16();
                 script = reader.ReadUInt16();
@@ -133,7 +133,7 @@ namespace DS_Map
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData))
             {
-                writer.Write(areaData);
+                writer.Write(areaDataID);
                 writer.Write(unknown1);
                 writer.Write(matrix);
                 writer.Write(script);
@@ -200,7 +200,7 @@ namespace DS_Map
         {
             using (BinaryReader reader = new BinaryReader(data))
             {
-                areaData = reader.ReadByte();
+                areaDataID = reader.ReadByte();
                 unknown1 = reader.ReadByte();
                 matrix = reader.ReadUInt16();
                 script = reader.ReadUInt16();
@@ -226,7 +226,7 @@ namespace DS_Map
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData))
             {
-                writer.Write(areaData);
+                writer.Write(areaDataID);
                 writer.Write(unknown1);
                 writer.Write(matrix);
                 writer.Write(script);
@@ -302,7 +302,7 @@ namespace DS_Map
             using (BinaryReader reader = new BinaryReader(data))
             {
                 wildPokémon = reader.ReadByte();
-                areaData = reader.ReadByte();
+                areaDataID = reader.ReadByte();
                 unknown1 = reader.ReadByte();
                 unknown2 = reader.ReadByte();
                 matrix = reader.ReadUInt16();
@@ -329,7 +329,7 @@ namespace DS_Map
             using (BinaryWriter writer = new BinaryWriter(newData))
             {
                 writer.Write((byte)wildPokémon);
-                writer.Write(areaData);
+                writer.Write(areaDataID);
                 writer.Write(unknown1);
                 writer.Write(unknown2);
                 writer.Write(matrix);
