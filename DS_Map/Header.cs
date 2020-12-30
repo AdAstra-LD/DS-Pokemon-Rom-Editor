@@ -484,27 +484,27 @@ namespace DS_Map
         };
         public string[] HGSSCameraValues = new string[]
         {
-            "[000] Normal 3D",
-            "[001] Normal 3D",
-            "[002] Normal 3D",
-            "[003] Normal 3D",
-            "[004] Normal 3D",
-            "[006] Normal 3D",
-            "[020] Frontal 3D n.1",
-            "[036] Frontal 3D n.2",
-            "[049] Full Frontal 3D",
-            "[051] Full Frontal 3D",
-            "[067] Interior 2D View",
-            "[068] Interior 2D View",
-            "[084] Normal 3D",
-            "[116] Higher Normal 3D",
-            "[129] Top View n.1",
-            "[148] Top View n.2",
-            "[163] 3D Enlarged Buildings",
-            "[195] Normal 3D",
-            "[211] Full Frontal 3D",
-            "[244] Higher Interior 2D View"
-
+            "[000] C0: Normal 3D, Prop 0",
+            "[001] C0: Normal 3D, Prop 1",
+            "[002] C0: Normal 3D, Prop 2",
+            "[003] C0: Normal 3D, Caves",
+            "[004] C0: Normal 3D, Hide Name",
+            "[006] C0: Normal 3D, Prop 6",
+            "[020] C1: Frontal 3D #1, Hide Name",
+            "[036] C2: Frontal 3D #2, Hide Name",
+            "[049] C3: Full Frontal 3D, Prop 1",
+            "[051] C3: Full Frontal 3D, Prop 2",
+            "[067] C4: Ortho View, Caves",
+            "[068] C4: Ortho View, Hide Name",
+            "[084] C5: Normal 3D, Hide Name",            
+            "[116] C7: High 3D, Hide Name",
+            "[129] C8: Top View n.1, Prop 1",
+            "[148] C9: Top View n.2, Hide Name",
+            "[163] C10: 3D Wide FOV, Caves",
+            "[195] C12: Normal 3D, Caves",
+            "[211] C13: Full Frontal 3D, Caves",
+            "[228] C14: Fuchsia Gym Cam, Hide Name",
+            "[244] C15: High Ortho view, Hide Name"
         };
         public string[] DPMusicValues = new string[]
         {
@@ -743,7 +743,7 @@ namespace DS_Map
                         "[1078] Lighthouse",
                         "[1079] Team Rocket HQ",
                         "[1080] Ice Path",
-                        "[1081] Dragon's Den"
+                        "[1081] Dragon's Den",
                         "[1082] Diglett's Cave",
                         "[1083] Viridian Forest",
                         "[1084] Victory Road",

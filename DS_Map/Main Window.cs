@@ -868,9 +868,9 @@ namespace DS_Map
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            string message = "Mixone's branch of DS Pokémon Rom Editor by Nømura" + Environment.NewLine + "Version 1.0.1" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura (AdAstra's edit of Mixone's branch)" + Environment.NewLine + "Version 1.0.1" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who owes credit for SDSME." + Environment.NewLine +
-                "Special thanks go to Trifindo, Mikelan98, BagBoy, JackHack96 and AdAstra, who provided tons of help, research and expertise in the field of NDS Rom Hacking that made the development of this tool possible.";
+                "Special thanks go to Trifindo, Mikelan98, BagBoy, and JackHack96, who provided tons of help, research and expertise in the field of NDS Rom Hacking that made the development of this tool possible.";
 
             MessageBox.Show(message, "about", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -5002,8 +5002,32 @@ namespace DS_Map
             }
         }
 
+
         #endregion
 
-       
+        private void headerEditorTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nameGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void musicNightLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cameraLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }
