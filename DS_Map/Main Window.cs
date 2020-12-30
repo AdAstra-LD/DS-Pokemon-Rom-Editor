@@ -4670,7 +4670,7 @@ namespace DS_Map
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) writer.Write(currentEventFile.Save());
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) writer.Write(currentMessageFile.Save());
         }
         private void importTextFileButton_Click(object sender, EventArgs e)
         {
