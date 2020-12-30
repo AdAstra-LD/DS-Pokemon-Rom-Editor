@@ -410,6 +410,34 @@ namespace DS_Map
             eventMatrix = LoadMatrix(0);
             selectEventComboBox.SelectedIndex = 0;
         }
+        private void SetupFlagNames()
+        {
+            switch (romInfo.GetVersion())
+            {
+                case "Diamond":
+                case "Pearl":
+                case "Platinum":
+                    flag1CheckBox.Text = "Fly";
+                    flag2CheckBox.Text = "Escape Rope";
+                    flag3CheckBox.Text = "Run";
+                    flag4CheckBox.Text = "Bike";
+                    flag5CheckBox.Text = "Battle BG b4";
+                    flag6CheckBox.Text = "Battle BG b3";
+                    flag7CheckBox.Text = "Battle BG b2";
+                    flag8CheckBox.Text = "Battle BG b1";
+                    break;
+                default:
+                    flag1CheckBox.Text = "Flag 1";
+                    flag2CheckBox.Text = "Flag 2";
+                    flag3CheckBox.Text = "Flag 3";
+                    flag4CheckBox.Text = "Fly";
+                    flag5CheckBox.Text = "Escape Rope";
+                    flag6CheckBox.Text = "Flag 6";
+                    flag7CheckBox.Text = "Bicycle";
+                    flag8CheckBox.Text = "Flag 8";
+                    break;
+            }
+        }
         private void SetupHeaderEditor()
         {
             /* Read Header internal names */
@@ -652,7 +680,7 @@ namespace DS_Map
         }
         private void UnpackRom(string ndsFileName)
         {
-            if (Directory.Exists(workingFolder)) // Check if extracted data for the ROM exists, and ask user if he wants to load it.
+            if (Directory.Exists(workingFolder)) // Check if extracted data for the ROM exists, and ask user if they want to load it.
             {
                 DialogResult d;
                 d = MessageBox.Show("Extracted data has been found for this ROM. Do you want to load it instead?", "Data detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -895,6 +923,8 @@ namespace DS_Map
             languageLabel.Text = "Language: " + romInfo.GetLanguage();
             iconON = true; gameIcon.Refresh();  // Paint game icon
 
+
+
             /* Extract NARCs sub-archives*/
             switch (romInfo.GetVersion())
             {
@@ -913,6 +943,7 @@ namespace DS_Map
             }
 
             /* Setup editors */
+            SetupFlagNames();
             SetupHeaderEditor();
             SetupMatrixEditor();
             SetupMapEditor();
@@ -929,6 +960,7 @@ namespace DS_Map
             statusLabel.Text = "Ready";
 
         }
+
         private void saveRom_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveRom = new SaveFileDialog();
@@ -1122,10 +1154,10 @@ namespace DS_Map
 
             int n;
 
-            if (sender == bikeFlagCheckBox) n = 7;
+            if (sender == flag7CheckBox) n = 7;
             else if (sender == flag6CheckBox) n = 6;
-            else if (sender == escapeRopeFlagCheckBox) n = 5;
-            else if (sender == flyFlagCheckBox) n = 4;
+            else if (sender == flag5CheckBox) n = 5;
+            else if (sender == flag4CheckBox) n = 4;
             else if (sender == flag3CheckBox) n = 3;
             else if (sender == flag2CheckBox) n = 2;
             else if (sender == flag1CheckBox) n = 1;

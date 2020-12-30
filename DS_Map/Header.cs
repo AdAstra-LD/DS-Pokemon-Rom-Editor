@@ -56,13 +56,24 @@ namespace DS_Map
        0x16 //  byte:       Follow mode (for the Pokémon following hero)
        0x17 //  byte:       Bitwise permission flags:
 
+        DPPT
        -----------------    1: Allow Fly
+       -----------------    2: Allow Escape Rope
+       -----------------    3: Allow Running
+       -----------------    4: Allow Bike 
+       -----------------    5: Battle BG b4
+       -----------------    6: Battle BG b3
+       -----------------    7: Battle BG b2
+       -----------------    8: Battle BG b1
+
+        HGSS
+       -----------------    1: ?
        -----------------    2: ?
        -----------------    3: ?
-       -----------------    4: Allow Bike usage
-       -----------------    5: ?
+       -----------------    4: Allow Fly 
+       -----------------    5: Allow Escape rope
        -----------------    6: ?
-       -----------------    7: Escape Rope
+       -----------------    7: Allow Bicycle
        -----------------    8: ?
 
     ----------------------------------------------------------------------------------*/
