@@ -416,16 +416,22 @@ namespace DS_Map
             internalNames = new List<string>();
             using (BinaryReader reader = new BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin")))
             {
-                for (int i = 0; i < romInfo.GetHeaderCount() * 16; i += 0x10)
+                int internalNameLen = 0x10;
+                int headerCount = romInfo.GetHeaderCount();
+                for (int i = 0; i < headerCount; i ++)
                 {
-                    reader.BaseStream.Position = i;
-                    byte[] targetBytes = reader.ReadBytes(0x16);
-                    string internalName = Encoding.ASCII.GetString(targetBytes).TrimEnd();
+                    reader.BaseStream.Position = i*internalNameLen;
+                    byte[] targetBytes = reader.ReadBytes(internalNameLen+1);
+                    int bytesLen = targetBytes.Length;
+                    if (bytesLen <= internalNameLen)
+                        targetBytes[bytesLen-1] = 0x00; 
+                    else targetBytes[internalNameLen] = 0x00;
+
+                    string internalName = Encoding.ASCII.GetString(targetBytes);//.TrimEnd();
+                    headerListBox.Items.Add(i + ": " + internalName);
                     internalNames.Add(internalName);
                 }
             }
-
-            for (int i = 0; i < internalNames.Count; i++) headerListBox.Items.Add(i + ": " + internalNames[i]); // Fill ListBox
 
             /*Add list of options to each control */
             mapNameComboBox.Items.AddRange(LoadMessageFile(romInfo.GetMapNamesMessageNumber()).messages.ToArray());
@@ -1055,7 +1061,7 @@ namespace DS_Map
         private void areaDataUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentHeader.areaData = (byte)areaDataUpDown.Value;
+            currentHeader.areaDataID = (byte)areaDataUpDown.Value;
         }
         private void areaIconComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1139,7 +1145,7 @@ namespace DS_Map
             /* Setup controls for common fields across headers */
             internalNameBox.Text = internalNames[headerListBox.SelectedIndex];
             matrixUpDown.Value = currentHeader.matrix;
-            areaDataUpDown.Value = currentHeader.areaData;
+            areaDataUpDown.Value = currentHeader.areaDataID;
             scriptFileUpDown.Value = currentHeader.script;
             levelScriptUpDown.Value = currentHeader.levelScript;
             eventFileUpDown.Value = currentHeader.events;
@@ -1580,16 +1586,15 @@ namespace DS_Map
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 /* Determine area data */
-                uint areaDataID;
-                if (currentMatrix.hasHeadersSection)
-                {
-                    int header = currentMatrix.headers[e.RowIndex, e.ColumnIndex];
-                    areaDataID = LoadHeader(header).areaData;
+                int header;
+                if (currentMatrix.hasHeadersSection) {
+                    header = currentMatrix.headers[e.RowIndex, e.ColumnIndex];
+                } else {
+                    header = headerListBox.SelectedIndex;
                 }
-                else areaDataID = 0;
 
                 /* Get texture file numbers from area data */
-                AreaData areaData = LoadAreaData(areaDataID);
+                AreaData areaData = LoadAreaData(LoadHeader(header).areaDataID);
 
                 /* Load Map File and switch to Map Editor tab */
                 disableHandlers = true;
@@ -1598,6 +1603,9 @@ namespace DS_Map
                 mapTextureComboBox.SelectedIndex = areaData.mapTileset + 1;
                 buildTextureComboBox.SelectedIndex = areaData.buildingsTileset + 1;
                 mainTabControl.SelectedTab = mapEditorTabPage;
+                
+                if (areaData.areaType == 0)
+                    interiorRadioButton.Checked = true;
 
                 disableHandlers = false;
                 selectMapComboBox_SelectedIndexChanged(null, null);
@@ -2956,7 +2964,7 @@ namespace DS_Map
                 if (eventMatrix.hasHeadersSection)
                 {
                     int header = eventMatrix.headers[(int)(eventMatrixYUpDown.Value), (int)(eventMatrixXUpDown.Value)];
-                    areaDataID = LoadHeader(header).areaData;
+                    areaDataID = LoadHeader(header).areaDataID;
                 }
                 else areaDataID = (uint)eventAreaDataUpDown.Value;
 
