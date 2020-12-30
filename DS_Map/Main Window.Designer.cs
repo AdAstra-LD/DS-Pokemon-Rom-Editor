@@ -97,7 +97,7 @@
             this.flag2CheckBox = new System.Windows.Forms.CheckBox();
             this.flag3CheckBox = new System.Windows.Forms.CheckBox();
             this.bikeFlagCheckBox = new System.Windows.Forms.CheckBox();
-            this.flag5CheckBox = new System.Windows.Forms.CheckBox();
+            this.flag1CheckBox = new System.Windows.Forms.CheckBox();
             this.flag6CheckBox = new System.Windows.Forms.CheckBox();
             this.escapeRopeFlagCheckBox = new System.Windows.Forms.CheckBox();
             this.flag8CheckBox = new System.Windows.Forms.CheckBox();
@@ -1166,13 +1166,13 @@
             // 
             // flagsGroupBox
             // 
-            this.flagsGroupBox.Controls.Add(this.flyFlagCheckBox);
+            this.flagsGroupBox.Controls.Add(this.flag1CheckBox);
             this.flagsGroupBox.Controls.Add(this.flag2CheckBox);
             this.flagsGroupBox.Controls.Add(this.flag3CheckBox);
-            this.flagsGroupBox.Controls.Add(this.bikeFlagCheckBox);
-            this.flagsGroupBox.Controls.Add(this.flag5CheckBox);
-            this.flagsGroupBox.Controls.Add(this.flag6CheckBox);
+            this.flagsGroupBox.Controls.Add(this.flyFlagCheckBox);
             this.flagsGroupBox.Controls.Add(this.escapeRopeFlagCheckBox);
+            this.flagsGroupBox.Controls.Add(this.flag6CheckBox);
+            this.flagsGroupBox.Controls.Add(this.bikeFlagCheckBox);
             this.flagsGroupBox.Controls.Add(this.flag8CheckBox);
             this.flagsGroupBox.Location = new System.Drawing.Point(512, 455);
             this.flagsGroupBox.Name = "flagsGroupBox";
@@ -1181,16 +1181,16 @@
             this.flagsGroupBox.TabStop = false;
             this.flagsGroupBox.Text = "Flags";
             // 
-            // flyFlagCheckBox
+            // flag1CheckBox
             // 
-            this.flyFlagCheckBox.AutoSize = true;
-            this.flyFlagCheckBox.Location = new System.Drawing.Point(23, 33);
-            this.flyFlagCheckBox.Name = "flyFlagCheckBox";
-            this.flyFlagCheckBox.Size = new System.Drawing.Size(39, 17);
-            this.flyFlagCheckBox.TabIndex = 28;
-            this.flyFlagCheckBox.Text = "Fly";
-            this.flyFlagCheckBox.UseVisualStyleBackColor = true;
-            this.flyFlagCheckBox.CheckedChanged += new System.EventHandler(this.headerFlagsCheckBoxes_CheckedChanged);
+            this.flag1CheckBox.AutoSize = true;
+            this.flag1CheckBox.Location = new System.Drawing.Point(23, 33);
+            this.flag1CheckBox.Name = "flag1CheckBox";
+            this.flag1CheckBox.Size = new System.Drawing.Size(39, 17);
+            this.flag1CheckBox.TabIndex = 28;
+            this.flag1CheckBox.Text = "Flag 1";
+            this.flag1CheckBox.UseVisualStyleBackColor = true;
+            this.flag1CheckBox.CheckedChanged += new System.EventHandler(this.headerFlagsCheckBoxes_CheckedChanged);
             // 
             // flag2CheckBox
             // 
@@ -1214,27 +1214,27 @@
             this.flag3CheckBox.UseVisualStyleBackColor = true;
             this.flag3CheckBox.CheckedChanged += new System.EventHandler(this.headerFlagsCheckBoxes_CheckedChanged);
             // 
-            // bikeFlagCheckBox
+            // flyFlagCheckBox
             // 
-            this.bikeFlagCheckBox.AutoSize = true;
-            this.bikeFlagCheckBox.Location = new System.Drawing.Point(23, 103);
-            this.bikeFlagCheckBox.Name = "bikeFlagCheckBox";
-            this.bikeFlagCheckBox.Size = new System.Drawing.Size(60, 17);
-            this.bikeFlagCheckBox.TabIndex = 31;
-            this.bikeFlagCheckBox.Text = "Bicycle";
-            this.bikeFlagCheckBox.UseVisualStyleBackColor = true;
+            this.flyFlagCheckBox.AutoSize = true;
+            this.flyFlagCheckBox.Location = new System.Drawing.Point(23, 103);
+            this.flyFlagCheckBox.Name = "flyFlagCheckBox";
+            this.flyFlagCheckBox.Size = new System.Drawing.Size(60, 17);
+            this.flyFlagCheckBox.TabIndex = 31;
+            this.flyFlagCheckBox.Text = "Fly";
+            this.flyFlagCheckBox.UseVisualStyleBackColor = true;
             this.bikeFlagCheckBox.CheckedChanged += new System.EventHandler(this.headerFlagsCheckBoxes_CheckedChanged);
             // 
-            // flag5CheckBox
+            // escapeRopeFlagCheckBox
             // 
-            this.flag5CheckBox.AutoSize = true;
-            this.flag5CheckBox.Location = new System.Drawing.Point(120, 33);
-            this.flag5CheckBox.Name = "flag5CheckBox";
-            this.flag5CheckBox.Size = new System.Drawing.Size(55, 17);
-            this.flag5CheckBox.TabIndex = 35;
-            this.flag5CheckBox.Text = "Flag 5";
-            this.flag5CheckBox.UseVisualStyleBackColor = true;
-            this.flag5CheckBox.CheckedChanged += new System.EventHandler(this.headerFlagsCheckBoxes_CheckedChanged);
+            this.escapeRopeFlagCheckBox.AutoSize = true;
+            this.escapeRopeFlagCheckBox.Location = new System.Drawing.Point(120, 33);
+            this.escapeRopeFlagCheckBox.Name = "escapeRopeFlagCheckBox";
+            this.escapeRopeFlagCheckBox.Size = new System.Drawing.Size(55, 17);
+            this.escapeRopeFlagCheckBox.TabIndex = 35;
+            this.escapeRopeFlagCheckBox.Text = "Escape Rope";
+            this.escapeRopeFlagCheckBox.UseVisualStyleBackColor = true;
+            this.escapeRopeFlagCheckBox.CheckedChanged += new System.EventHandler(this.headerFlagsCheckBoxes_CheckedChanged);
             // 
             // flag6CheckBox
             // 
@@ -1247,16 +1247,16 @@
             this.flag6CheckBox.UseVisualStyleBackColor = true;
             this.flag6CheckBox.CheckedChanged += new System.EventHandler(this.headerFlagsCheckBoxes_CheckedChanged);
             // 
-            // escapeRopeFlagCheckBox
+            // bikeFlagCheckBox
             // 
-            this.escapeRopeFlagCheckBox.AutoSize = true;
-            this.escapeRopeFlagCheckBox.Location = new System.Drawing.Point(120, 79);
-            this.escapeRopeFlagCheckBox.Name = "escapeRopeFlagCheckBox";
-            this.escapeRopeFlagCheckBox.Size = new System.Drawing.Size(91, 17);
-            this.escapeRopeFlagCheckBox.TabIndex = 33;
-            this.escapeRopeFlagCheckBox.Text = "Escape Rope";
-            this.escapeRopeFlagCheckBox.UseVisualStyleBackColor = true;
-            this.escapeRopeFlagCheckBox.CheckedChanged += new System.EventHandler(this.headerFlagsCheckBoxes_CheckedChanged);
+            this.bikeFlagCheckBox.AutoSize = true;
+            this.bikeFlagCheckBox.Location = new System.Drawing.Point(120, 79);
+            this.bikeFlagCheckBox.Name = "bikeFlagCheckBox";
+            this.bikeFlagCheckBox.Size = new System.Drawing.Size(91, 17);
+            this.bikeFlagCheckBox.TabIndex = 33;
+            this.bikeFlagCheckBox.Text = "Bicycle";
+            this.bikeFlagCheckBox.UseVisualStyleBackColor = true;
+            this.bikeFlagCheckBox.CheckedChanged += new System.EventHandler(this.headerFlagsCheckBoxes_CheckedChanged);
             // 
             // flag8CheckBox
             // 
@@ -6208,7 +6208,7 @@
         private System.Windows.Forms.Label cameraPicLable;
         private System.Windows.Forms.Label weatherPicLabel;
         private System.Windows.Forms.GroupBox flagsGroupBox;
-        private System.Windows.Forms.CheckBox flag5CheckBox;
+        private System.Windows.Forms.CheckBox flag1CheckBox;
         private System.Windows.Forms.CheckBox flag6CheckBox;
         private System.Windows.Forms.CheckBox escapeRopeFlagCheckBox;
         private System.Windows.Forms.CheckBox flag8CheckBox;

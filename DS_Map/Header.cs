@@ -743,6 +743,7 @@ namespace DS_Map
                         "[1078] Lighthouse",
                         "[1079] Team Rocket HQ",
                         "[1080] Ice Path",
+                        "[1081] Dragon's Den"
                         "[1082] Diglett's Cave",
                         "[1083] Viridian Forest",
                         "[1084] Victory Road",

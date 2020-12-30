@@ -1122,13 +1122,13 @@ namespace DS_Map
 
             int n;
 
-            if (sender == flyFlagCheckBox) n = 7;
-            else if (sender == flag2CheckBox) n = 6;
-            else if (sender == flag3CheckBox) n = 5;
-            else if (sender == bikeFlagCheckBox) n = 4;
-            else if (sender == flag5CheckBox) n = 3;
-            else if (sender == flag6CheckBox) n = 2;
-            else if (sender == escapeRopeFlagCheckBox) n = 1;
+            if (sender == bikeFlagCheckBox) n = 7;
+            else if (sender == flag6CheckBox) n = 6;
+            else if (sender == escapeRopeFlagCheckBox) n = 5;
+            else if (sender == flyFlagCheckBox) n = 4;
+            else if (sender == flag3CheckBox) n = 3;
+            else if (sender == flag2CheckBox) n = 2;
+            else if (sender == flag1CheckBox) n = 1;
             else n = 0;
 
             /* Toggle flag-specific bit */
