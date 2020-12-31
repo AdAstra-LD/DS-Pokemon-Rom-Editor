@@ -32,6 +32,8 @@ namespace DS_Map
         public ushort[,] headers;
         public byte[,] altitudes;
         public ushort[,] maps;
+
+        public static ushort VOID = 65535;
         #endregion Fields
 
         #region Constructors(1)
@@ -74,10 +76,10 @@ namespace DS_Map
             if (hasHeadersSection) for (int i = 0; i < Math.Min(height, newHeight); i++) for (int j = 0; j < Math.Min(width, newWidth); j++) newHeaders[i, j] = headers[i, j];
             if (hasAltitudesSection) for (int i = 0; i < Math.Min(height, newHeight); i++) for (int j = 0; j < Math.Min(width, newWidth); j++) newAltitudes[i, j] = altitudes[i, j];
 
-            /* Copy existing map rows into new array, and fill eventual new ones with 65535 (FF FF) */
+            /* Copy existing map rows into new array, and fill eventual new ones with Matrix.VOID (FF FF) */
             for (int i = 0; i < Math.Min(height, newHeight); i++) for (int j = 0; j < Math.Min(width, newWidth); j++) newMaps[i, j] = maps[i, j];
-            if (newHeight > height) for (int i = height; i < newHeight; i++) for (int j = 0; j < newWidth; j++) newMaps[i, j] = 65535;
-            if (newWidth > width)   for (int j = width; j < newWidth; j++) for (int i = 0; i < newHeight; i++) newMaps[i, j] = 65535;
+            if (newHeight > height) for (int i = height; i < newHeight; i++) for (int j = 0; j < newWidth; j++) newMaps[i, j] = Matrix.VOID;
+            if (newWidth > width)   for (int j = width; j < newWidth; j++) for (int i = 0; i < newHeight; i++) newMaps[i, j] = Matrix.VOID;
 
             /* Substitute old arrays with new arrays */
             headers = newHeaders;

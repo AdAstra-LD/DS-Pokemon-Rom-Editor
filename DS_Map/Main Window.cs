@@ -146,8 +146,7 @@ namespace DS_Map
         {
             return new AreaData(new FileStream(romInfo.GetAreaDataFolderPath() + "//" + areaDataID.ToString("D4"), FileMode.Open), romInfo.GetVersion());
         }
-        private MapFile LoadMapFile(int mapNumber)
-        {
+        private MapFile LoadMapFile(int mapNumber) { 
             return new MapFile(new FileStream(romInfo.GetMapFolderPath() + "\\" + mapNumber.ToString("D4"), FileMode.Open), romInfo.GetVersion());
         }
         private Matrix LoadMatrix(int matrixNumber)
@@ -632,7 +631,7 @@ namespace DS_Map
                         [new List<uint> { 174 }] = Tuple.Create(Color.SteelBlue, Color.White),
                         [new List<uint> { 175 }] = Tuple.Create(Color.Sienna, Color.White),
                         [new List<uint> { 178 }] = Tuple.Create(Color.PowderBlue, Color.Black),
-                        [new List<uint> { 65535 }] = Tuple.Create(Color.Black, Color.White)
+                        [new List<uint> { Matrix.VOID }] = Tuple.Create(Color.Black, Color.White)
                     };
                     break;
                 default:
@@ -641,7 +640,7 @@ namespace DS_Map
                         [new List<uint> { 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
                         [new List<uint> { 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
                         [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
-                        [new List<uint> { 65535 }] = Tuple.Create(Color.Black, Color.White)
+                        [new List<uint> { Matrix.VOID }] = Tuple.Create(Color.Black, Color.White)
                     };
                     break;
             }
@@ -1505,7 +1504,7 @@ namespace DS_Map
 
             /* Format table cells corresponding to border maps or void */
             ushort colorValue;
-            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = 65535;
+            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = Matrix.VOID;
 
             Tuple<Color, Color> cellColors = Format_Map_Cell(colorValue);
             e.CellStyle.BackColor = cellColors.Item1;
@@ -1538,7 +1537,7 @@ namespace DS_Map
 
             /* Format table cells corresponding to border maps or void */
             ushort colorValue;
-            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = 65535;
+            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = Matrix.VOID;
 
             Tuple<Color, Color> cellColors = Format_Map_Cell(colorValue);
             e.CellStyle.BackColor = cellColors.Item1;
@@ -1604,7 +1603,7 @@ namespace DS_Map
                     {
                         headersGridView.Rows[currentMatrix.height + i].Cells[j].Value = 0;
                         heightsGridView.Rows[currentMatrix.height + i].Cells[j].Value = 0;
-                        mapFilesGridView.Rows[currentMatrix.height + i].Cells[j].Value = 65535;
+                        mapFilesGridView.Rows[currentMatrix.height + i].Cells[j].Value = Matrix.VOID;
                     }
                 }
             }
@@ -1651,7 +1650,7 @@ namespace DS_Map
             {
                 /* If input is junk, use VOID (FF FF) as placeholder value */
                 ushort cellValue;
-                if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) cellValue = 65535;
+                if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) cellValue = Matrix.VOID;
                 
                 /* Change value in matrix object */
                 currentMatrix.maps[e.RowIndex, e.ColumnIndex] = cellValue;                
@@ -1664,13 +1663,15 @@ namespace DS_Map
 
             /* Format table cells corresponding to border maps or void */
             ushort colorValue;
-            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = 65535;
+            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) 
+                colorValue = Matrix.VOID;
 
             Tuple<Color, Color> cellColors = Format_Map_Cell(colorValue);
             e.CellStyle.BackColor = cellColors.Item1;
             e.CellStyle.ForeColor = cellColors.Item2;
           
-            if (colorValue == 65535) e.Value = "VOID";
+            if (colorValue == Matrix.VOID) 
+                e.Value = "VOID";
 
             disableHandlers = false;
 
@@ -1757,7 +1758,7 @@ namespace DS_Map
                     {
                         headersGridView.Rows[j].Cells[currentMatrix.width + i].Value = 0;
                         heightsGridView.Rows[j].Cells[currentMatrix.width + i].Value = 0;
-                        mapFilesGridView.Rows[j].Cells[currentMatrix.width + i].Value = 65535;
+                        mapFilesGridView.Rows[j].Cells[currentMatrix.width + i].Value = Matrix.VOID;
                     }
                 }
             }
@@ -2984,9 +2985,18 @@ namespace DS_Map
         private void DisplayEventMap()
         {
             /* Determine map file to open and open it in BinaryReader, unless map is VOID */
-            uint mapIndex = (eventMatrix.maps[(int)(eventMatrixYUpDown.Value), (int)(eventMatrixXUpDown.Value)]);
-            if (mapIndex == 65535)
-            {
+            uint mapIndex = Matrix.VOID;
+            if (eventMatrixXUpDown.Value > eventMatrix.width || eventMatrixYUpDown.Value > eventMatrix.height) {
+                String errorMsg = "This event is located on an unreachable map that is beyond the current matrix.\n" +
+                    "It is strongly advised that you bring every Overworld, Spawnable, Warp and Trigger of this event to a map that belongs to the matrix's range.";
+                DialogResult d;
+                d = MessageBox.Show(errorMsg, "Can't load proper map", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else {
+                mapIndex = eventMatrix.maps[(int)(eventMatrixYUpDown.Value), (int)(eventMatrixXUpDown.Value)];
+            }
+            
+            if (mapIndex == Matrix.VOID) {
                 eventPictureBox.BackgroundImage = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
                 using (Graphics g = Graphics.FromImage(eventPictureBox.BackgroundImage)) g.Clear(Color.Black);
             }
@@ -3704,7 +3714,8 @@ namespace DS_Map
         private void owIDNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentEventFile.overworlds[overworldsListBox.SelectedIndex].owID = (ushort)owIDNumericUpDown.Value;
+            if (currentEventFile.overworlds.Any() && overworldsListBox.SelectedIndex > 0)
+                currentEventFile.overworlds[overworldsListBox.SelectedIndex].owID = (ushort)owIDNumericUpDown.Value;
         }
         private void owMovementComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {

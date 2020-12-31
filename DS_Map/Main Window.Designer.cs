@@ -2868,7 +2868,7 @@
             this.eventAreaDataUpDown.Enabled = false;
             this.eventAreaDataUpDown.Location = new System.Drawing.Point(307, 201);
             this.eventAreaDataUpDown.Maximum = new decimal(new int[] {
-            65535,
+            Matrix.VOID,
             0,
             0,
             0});
@@ -2889,7 +2889,7 @@
             // 
             this.eventMatrixUpDown.Location = new System.Drawing.Point(307, 174);
             this.eventMatrixUpDown.Maximum = new decimal(new int[] {
-            65535,
+            Matrix.VOID,
             0,
             0,
             0});
@@ -2971,7 +2971,7 @@
             // 
             this.signMatrixXUpDown.Location = new System.Drawing.Point(83, 132);
             this.signMatrixXUpDown.Maximum = new decimal(new int[] {
-            65535,
+            Matrix.VOID,
             0,
             0,
             0});
@@ -2993,7 +2993,7 @@
             // 
             this.signMatrixYUpDown.Location = new System.Drawing.Point(83, 162);
             this.signMatrixYUpDown.Maximum = new decimal(new int[] {
-            65535,
+            Matrix.VOID,
             0,
             0,
             0});
@@ -3060,7 +3060,7 @@
             // 
             this.signMapYUpDown.Location = new System.Drawing.Point(84, 54);
             this.signMapYUpDown.Maximum = new decimal(new int[] {
-            65535,
+            Matrix.VOID,
             0,
             0,
             0});
