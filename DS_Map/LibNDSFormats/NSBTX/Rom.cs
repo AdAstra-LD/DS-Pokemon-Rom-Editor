@@ -271,7 +271,7 @@ namespace NSMBe4
         //    SaveOverlay0();
         //}
 
-        public static byte[] DecompressOverlay(byte[] sourcedata)
+        public static byte[] decompressOverlay(byte[] sourcedata)
         {
             uint DataVar1, DataVar2;
             //uint last 8-5 bytes

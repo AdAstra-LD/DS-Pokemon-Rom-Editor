@@ -3197,6 +3197,7 @@
             this.owSpritePictureBox.Size = new System.Drawing.Size(66, 66);
             this.owSpritePictureBox.TabIndex = 20;
             this.owSpritePictureBox.TabStop = false;
+            this.owSpritePictureBox.Click += new System.EventHandler(this.owSpritePictureBox_Click);
             // 
             // owMovementGroupBox
             // 

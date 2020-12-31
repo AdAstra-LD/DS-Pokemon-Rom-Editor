@@ -79,14 +79,15 @@ namespace DS_Map
             decompress.Start();
             decompress.WaitForExit();
         }
-        private void DecompressOverlay(int overlayNumber)
+        private void decompressOverlay(int overlayNumber)
         {
             Process unpack = new Process();
             unpack.StartInfo.FileName = @"Tools\blz.exe";
-            unpack.StartInfo.Arguments = "-d " + workingFolder + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
+            String arguments = "-d " + '"' + workingFolder + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin" + '"';
+            unpack.StartInfo.Arguments = arguments;
             Application.DoEvents();
-            unpack.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            unpack.StartInfo.CreateNoWindow = true;
+            unpack.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+            unpack.StartInfo.CreateNoWindow = false;
             unpack.Start();
             unpack.WaitForExit();
         }
@@ -286,7 +287,7 @@ namespace DS_Map
                     break;
                 default:
                     overworldTablePath = "overlay" + "\\" + "overlay_0001.bin";
-                    DecompressOverlay(1); // HGSS Overlay 1 must be uncompressed to be able to read the overworld table
+                    decompressOverlay(1); // HGSS Overlay 1 must be uncompressed to be able to read the overworld table
                     break;
             }
 
@@ -343,43 +344,43 @@ namespace DS_Map
                     "[32]  L Run (Down, Right)",
                     "[33]  L Run (Right, Up)",
                     "[34]  Patrols Area, then stops",
-                    "[35] Patrols Area, then stops",
+                    "[35]  Patrols Area, then stops",
                     "[36]  L Run (Down, Left)",
-                    "[37] Running Up, Left, Down, Right",
-                    "[38] Running Down, Right, Up, Left",
-                    "[39] Running Left, Down, Right, Up",
-                    "[40] Running Right, Up, Left, Down",
-                    "[41] Running Up, Right, Down, Left",
-                    "[42] Running Down, Left, Up, Right",
-                    "[43] Running Left, Up, Right, Down",
-                    "[44] Running Right, Down, Left, Up",
-                    "[45] Looking Up, Down",
-                    "[46] Looking Right, Left",
-                    "[47] ?",
-                    "[48] Follow Hero",
-                    "[49] Semi-circle spin (Down, Right, Up)",
-                    "[50] ?",
-                    "[51] Hidden Under Snow",
-                    "[52] Hidden Under Snow",
-                    "[53] Hidden Underground",
-                    "[54] Hidden Under Grass",
-                    "[55] Mimicks Player (moves within range)",
-                    "[56] Mimicks Player (moves within range)",
-                    "[57] Mimicks Player (moves within range)",
-                    "[58] Mimicks Player (moves within range)",
-                    "[59] Mimick's Player facing direction",
-                    "[60] Mimick's Player facing direction",
-                    "[61] Mimick's Player facing direction",
-                    "[62] Mimick's Player facing direction",
-                    "[63] Jogging on the spot",
-                    "[64] Jogging on the spot",
-                    "[65] Jogging on the spot",
-                    "[66] Jogging on the spot",
-                    "[67] Walking Right, Left",
-                    "[68] Looking Right",
-                    "[69] ?",
-                    "[70] ?",
-                    "[71] Looking Left"
+                    "[37]  Running Up, Left, Down, Right",
+                    "[38]  Running Down, Right, Up, Left",
+                    "[39]  Running Left, Down, Right, Up",
+                    "[40]  Running Right, Up, Left, Down",
+                    "[41]  Running Up, Right, Down, Left",
+                    "[42]  Running Down, Left, Up, Right",
+                    "[43]  Running Left, Up, Right, Down",
+                    "[44]  Running Right, Down, Left, Up",
+                    "[45]  Looking Up, Down",
+                    "[46]  Looking Right, Left",
+                    "[47]  ?",
+                    "[48]  Follow Hero",
+                    "[49]  Semi-circle spin (Down, Right, Up)",
+                    "[50]  ?",
+                    "[51]  Hidden Under Snow",
+                    "[52]  Hidden Under Snow",
+                    "[53]  Hidden Underground",
+                    "[54]  Hidden Under Grass",
+                    "[55]  Mimicks Player (moves within range)",
+                    "[56]  Mimicks Player (moves within range)",
+                    "[57]  Mimicks Player (moves within range)",
+                    "[58]  Mimicks Player (moves within range)",
+                    "[59]  Mimick's Player facing direction",
+                    "[60]  Mimick's Player facing direction",
+                    "[61]  Mimick's Player facing direction",
+                    "[62]  Mimick's Player facing direction",
+                    "[63]  Jogging on the spot",
+                    "[64]  Jogging on the spot",
+                    "[65]  Jogging on the spot",
+                    "[66]  Jogging on the spot",
+                    "[67]  Walking Right, Left",
+                    "[68]  Looking Right",
+                    "[69]  ?",
+                    "[70]  ?",
+                    "[71]  Looking Left"
                 });
 
             /* Create dictionary for 3D overworlds */
@@ -982,7 +983,7 @@ namespace DS_Map
                 case "HeartGold":
                 case "SoulSilver":
                     UnpackNARCsHeartGoldSoulSilver();
-                    DecompressOverlay(1);
+                    decompressOverlay(1);
                     break;
                 default:
                     UnpackNARCsPlatinum();
@@ -3208,7 +3209,7 @@ namespace DS_Map
                         try
                         {
                             while (match == false) // Search for the overworld id in the table
-                            {
+                            { 
                                 ushort overlayID = idReader.ReadUInt16();
                                 Console.WriteLine("Matching against : " + overlayID.ToString("X4"));
                                 if ( overlayID == ID) match = true; // If the entry is a match, stop and go to reading part
@@ -5058,6 +5059,11 @@ namespace DS_Map
         }
 
         private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void owSpritePictureBox_Click(object sender, EventArgs e)
         {
 
         }
