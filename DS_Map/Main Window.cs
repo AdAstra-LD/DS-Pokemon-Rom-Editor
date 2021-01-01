@@ -14,17 +14,13 @@ using Tao.OpenGl;
 using LibNDSFormats.NSBMD;
 using LibNDSFormats.NSBTX;
 
-namespace DS_Map
-{
-    public partial class Form1 : Form
-    {
-        public Form1()
-        {
+namespace DS_Map {
+    public partial class Form1 : Form {
+        public Form1() {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
+        private void Form1_Load(object sender, EventArgs e) {
             
         }
 
@@ -51,8 +47,7 @@ namespace DS_Map
         #endregion
 
         #region Subroutines
-        private void CompressOverlay(int overlayNumber)
-        {
+        private void CompressOverlay(int overlayNumber) {
             Process unpack = new Process();
             unpack.StartInfo.FileName = @"Tools\blz.exe";
             unpack.StartInfo.Arguments = "-en " + workingFolder + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
@@ -62,8 +57,8 @@ namespace DS_Map
             unpack.Start();
             unpack.WaitForExit();
         }
-        private void DecompressArm9()
-        {
+		
+        private void DecompressArm9() {
             if (new FileInfo(workingFolder + @"arm9.bin").Length < 0xC0000)
             {
                 BinaryWriter arm9Truncate = new BinaryWriter(File.OpenWrite(workingFolder + @"arm9.bin"));
@@ -80,8 +75,8 @@ namespace DS_Map
             decompress.Start();
             decompress.WaitForExit();
         }
-        private void decompressOverlay(int overlayNumber)
-        {
+		
+        private void decompressOverlay(int overlayNumber) {
             Process unpack = new Process();
             unpack.StartInfo.FileName = @"Tools\blz.exe";
             String arguments = "-d " + '"' + workingFolder + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin" + '"';
@@ -92,8 +87,8 @@ namespace DS_Map
             unpack.Start();
             unpack.WaitForExit();
         }
-        private string[] GetBuildingsList(bool interior)
-        {
+		
+        private string[] GetBuildingsList(bool interior) {
             List<string> names = new List<string>();
             string path = romInfo.GetBuildingModelsFolderPath(interior);
             int buildModelsCount = Directory.GetFiles(path).Length;
@@ -109,8 +104,8 @@ namespace DS_Map
             }
             return names.ToArray();
         }
-        private string[] GetTrainerNames()
-        {
+		
+        private string[] GetTrainerNames() {
             List<string> trainerList = new List<string>();
 
             /* Store all trainer names and classes */
@@ -127,77 +122,90 @@ namespace DS_Map
             }
             return trainerList.ToArray();
         }
-        private string[] GetItemNames()
-        {
+		
+        private string[] GetItemNames() {
             return LoadMessageFile(romInfo.GetItemNamesMessageNumber()).messages.ToArray();
         }
-        private string[] GetItemNames(int startIndex, int count)
-        {
+		
+        private string[] GetItemNames(int startIndex, int count) {
             return LoadMessageFile(romInfo.GetItemNamesMessageNumber()).messages.GetRange(startIndex, count).ToArray();
         }
-        private string[] GetPokémonNames()
-        {
+        
+		private string[] GetPokémonNames() {
             return LoadMessageFile(romInfo.GetPokémonNamesMessageNumber()).messages.ToArray();
         }
-        private string[] GetAttackNames()
-        {
+        
+		private string[] GetAttackNames() {
             return LoadMessageFile(romInfo.GetAttackNamesMessageNumber()).messages.ToArray();
         }
-        private AreaData LoadAreaData(uint areaDataID)
-        {
+        
+		private AreaData LoadAreaData(uint areaDataID) {
             return new AreaData(new FileStream(romInfo.GetAreaDataFolderPath() + "//" + areaDataID.ToString("D4"), FileMode.Open), gameVersion);
         }
-        private MapFile LoadMapFile(int mapNumber) { 
+        
+		private MapFile LoadMapFile(int mapNumber) { 
             return new MapFile(new FileStream(romInfo.GetMapFolderPath() + "\\" + mapNumber.ToString("D4"), FileMode.Open), gameVersion);
         }
-        private Matrix LoadMatrix(int matrixNumber)
-        {
+        
+		private Matrix LoadMatrix(int matrixNumber) {
             return new Matrix(new FileStream(romInfo.GetMatrixFolderPath() + "\\" + matrixNumber.ToString("D4"), FileMode.Open));
         }
-        public MessageFile LoadMessageFile(int fileID)
-        {
+        
+		public MessageFile LoadMessageFile(int fileID) {
             return new MessageFile(new FileStream(romInfo.GetMessageFolderPath() + "\\" + fileID.ToString("D4"), FileMode.Open));
         }
-        private EventFile LoadEventFile(int fileID)
-        {
+        
+		private EventFile LoadEventFile(int fileID) {
             return new EventFile(new FileStream(romInfo.GetEventFolderPath() + "\\" + fileID.ToString("D4"), FileMode.Open));
         }
-        private void PaintGameIcon(object sender, PaintEventArgs e)
-        {
-            if (iconON == true)
-            {
+        
+		private void PaintGameIcon(object sender, PaintEventArgs e) {
+            if (iconON == true) {
                 BinaryReader readIcon = new BinaryReader(File.OpenRead(workingFolder + @"banner.bin"));
                 #region Read Icon Palette
                 readIcon.BaseStream.Position = 0x220;
-                byte firstByte;
-                byte secondByte;
-                int palR;
-                int palG;
-                int palB;
+                byte firstByte, secondByte;
+                int palR, palG, palB;
                 int palCounter = 0;
                 int[] paletteArray = new int[48];
-                for (int i = 0; i < 16; i++)
-                {
+                for (int i = 0; i < 16; i++) {
                     palR = 0;
                     palG = 0;
                     palB = 0;
                     secondByte = readIcon.ReadByte();
                     firstByte = readIcon.ReadByte();
-                    if ((firstByte & (1 << 6)) != 0) palB = palB | (1 << 4);
-                    if ((firstByte & (1 << 5)) != 0) palB = palB | (1 << 3);
-                    if ((firstByte & (1 << 4)) != 0) palB = palB | (1 << 2);
-                    if ((firstByte & (1 << 3)) != 0) palB = palB | (1 << 1);
-                    if ((firstByte & (1 << 2)) != 0) palB = palB | (1 << 0);
-                    if ((firstByte & (1 << 1)) != 0) palG = palG | (1 << 4);
-                    if ((firstByte & (1 << 0)) != 0) palG = palG | (1 << 3);
-                    if ((secondByte & (1 << 7)) != 0) palG = palG | (1 << 2);
-                    if ((secondByte & (1 << 6)) != 0) palG = palG | (1 << 1);
-                    if ((secondByte & (1 << 5)) != 0) palG = palG | (1 << 0);
-                    if ((secondByte & (1 << 4)) != 0) palR = palR | (1 << 4);
-                    if ((secondByte & (1 << 3)) != 0) palR = palR | (1 << 3);
-                    if ((secondByte & (1 << 2)) != 0) palR = palR | (1 << 2);
-                    if ((secondByte & (1 << 1)) != 0) palR = palR | (1 << 1);
-                    if ((secondByte & (1 << 0)) != 0) palR = palR | (1 << 0);
+					
+                    if ((firstByte & (1 << 6)) != 0) 
+						palB = palB | (1 << 4);
+                    if ((firstByte & (1 << 5)) != 0) 
+						palB = palB | (1 << 3);
+                    if ((firstByte & (1 << 4)) != 0) 
+						palB = palB | (1 << 2);
+                    if ((firstByte & (1 << 3)) != 0) 
+						palB = palB | (1 << 1);
+                    if ((firstByte & (1 << 2)) != 0) 
+						palB = palB | (1 << 0);
+                    if ((firstByte & (1 << 1)) != 0) 
+						palG = palG | (1 << 4);
+                    if ((firstByte & (1 << 0)) != 0) 
+						palG = palG | (1 << 3);
+                    if ((secondByte & (1 << 7)) != 0) 
+						palG = palG | (1 << 2);
+                    if ((secondByte & (1 << 6)) != 0) 
+						palG = palG | (1 << 1);
+                    if ((secondByte & (1 << 5)) != 0) 
+						palG = palG | (1 << 0);
+                    if ((secondByte & (1 << 4)) != 0) 
+						palR = palR | (1 << 4);
+                    if ((secondByte & (1 << 3)) != 0) 
+						palR = palR | (1 << 3);
+                    if ((secondByte & (1 << 2)) != 0) 
+						palR = palR | (1 << 2);
+                    if ((secondByte & (1 << 1)) != 0) 
+						palR = palR | (1 << 1);
+                    if ((secondByte & (1 << 0)) != 0) 
+						palR = palR | (1 << 0);
+						
                     paletteArray[palCounter] = palR * 8;
                     palCounter++;
                     paletteArray[palCounter] = palG * 8;
@@ -214,15 +222,12 @@ namespace DS_Map
                 int iconY = 0;
                 int xTile = 0;
                 int yTile = 0;
-                for (int o = 0; o < 4; o++)
-                {
-                    for (int a = 0; a < 4; a++)
-                    {
-                        for (int i = 0; i < 8; i++)
-                        {
+                for (int o = 0; o < 4; o++) {
+                    for (int a = 0; a < 4; a++) {
+                        for (int i = 0; i < 8; i++) {
                             iconX = xTile;
-                            for (int counter = 0; counter < 4; counter++)
-                            {
+							
+                            for (int counter = 0; counter < 4; counter++) {
                                 pixelByte = readIcon.ReadByte();
                                 pixelPalId = pixelByte & 0x0F;
                                 Brush icon = new SolidBrush(Color.FromArgb(255, paletteArray[pixelPalId * 3], paletteArray[pixelPalId * 3 + 1], paletteArray[pixelPalId * 3 + 2]));
@@ -246,40 +251,46 @@ namespace DS_Map
             }
             else return;
         }
-        private byte[] ReadFromArm9(int startOffset, int numberOfBytes)
-        {
+        private byte[] ReadFromArm9(int startOffset, int numberOfBytes) {
             BinaryReader readArm9 = new BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
             readArm9.BaseStream.Position = startOffset;
             byte[] targetBytes = readArm9.ReadBytes(numberOfBytes);
             readArm9.Dispose();
             return targetBytes;
         }
-        private void RepackNARCs()
-        {
+		
+        private void RepackNARCs() {
             foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create))
             {
                 Narc.FromFolder(tuple.Item2).Save(workingFolder + tuple.Item1); // Make new NARC from folder
                 Directory.Delete(tuple.Item2, true); // Delete folder
             }
         }
-        private void RepackRom(string ndsFileName)
-        {
+		
+        private void RepackRom(string ndsFileName) {
             Process repack = new Process();
             repack.StartInfo.FileName = @"Tools\ndstool.exe";
-            repack.StartInfo.Arguments = "-c " + '"' + ndsFileName + '"' + " -9 " + '"' + workingFolder + "arm9.bin" + '"' + " -7 " + '"' + workingFolder + "arm7.bin" + '"' + " -y9 " + '"' + workingFolder + "y9.bin" + '"' + " -y7 " + '"' + workingFolder + "y7.bin" + '"' + " -d " + '"' + workingFolder + "data" + '"' + " -y " + '"' + workingFolder + "overlay" + '"' + " -t " + '"' + workingFolder + "banner.bin" + '"' + " -h " + '"' + workingFolder + "header.bin" + '"';
+            repack.StartInfo.Arguments = "-c " + '"' + ndsFileName + '"' 
+				+ " -9 " + '"' + workingFolder + "arm9.bin" + '"' 
+				+ " -7 " + '"' + workingFolder + "arm7.bin" + '"'
+				+ " -y9 " + '"' + workingFolder + "y9.bin" + '"' 
+				+ " -y7 " + '"' + workingFolder + "y7.bin" + '"' 
+				+ " -d " + '"' + workingFolder + "data" + '"' 
+				+ " -y " + '"' + workingFolder + "overlay" + '"' 
+				+ " -t " + '"' + workingFolder + "banner.bin" + '"' 
+				+ " -h " + '"' + workingFolder + "header.bin" + '"';
+			
             Application.DoEvents();
             repack.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             repack.StartInfo.CreateNoWindow = true;
             repack.Start();
             repack.WaitForExit();
         }
-        private void SetupEventEditor()
-        {
+        private void SetupEventEditor() {
             disableHandlers = true;
             eventOpenGlControl.InitializeContexts();
 
-            switch (gameVersion)
-            {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
