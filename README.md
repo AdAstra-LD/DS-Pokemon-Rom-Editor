@@ -13,3 +13,9 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with some QOL adjustments.
 7. Fixed Exception upon loading Dragon's Den header (Music not found).
 8. Fixed other Exceptions, which now show user-friendly messages
 9. Correct list of HGSS cameras.
+10. Fixed save error when a "Call Function_#" was in the script.
+11. New palette match algorithm.
+12. Updated editors' initial configurations.
+13. Fixed some exceptions with more user-friendly messages.
+14. Fixed some script command and movement names.
+15. Enabled some of the quick script cmd buttons.
