@@ -1009,7 +1009,7 @@ namespace DS_Map {
                 br.BaseStream.Seek(0xC, SeekOrigin.Begin); // Get ROM ID
                 gameCode = Encoding.UTF8.GetString(br.ReadBytes(4));
             }
-            workingFolder = Path.GetDirectoryName(openRom.FileName) + "\\" + Path.GetFileNameWithoutExtension(openRom.FileName) + "_DSPRE" + "\\";
+            workingFolder = Path.GetDirectoryName(openRom.FileName) + "\\" + Path.GetFileNameWithoutExtension(openRom.FileName) + "_DSPRE_extracted" + "\\";
             
             bool processAborted = UnpackRom(openRom.FileName);
             if (processAborted)
