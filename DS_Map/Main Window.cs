@@ -3001,7 +3001,7 @@ namespace DS_Map {
         private void bdhcImportButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog it = new OpenFileDialog();
-            if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum")
+            if (gameVersion == "Diamond" || gameVersion == "Pearl")
                 it.Filter = "Terrain File (*.bdhc)|*.bdhc";
             else
                 it.Filter = "Terrain File (*.bdhc, *.bdhcam)|*.bdhc;*.bdhcam";

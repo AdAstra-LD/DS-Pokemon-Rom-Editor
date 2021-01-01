@@ -404,7 +404,6 @@
     <None Include="Graphics\Weather\DPPt\ptspotlight.gif" />
     <None Include="Graphics\Weather\HGSS\hgssdark2.png" />
     <Content Include="app.ico" />
-    <None Include="Resources\Main Icon.ico" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
