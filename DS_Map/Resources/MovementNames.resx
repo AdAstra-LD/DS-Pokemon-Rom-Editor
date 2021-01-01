@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="0000" xml:space="preserve">
-    <value>SeeUp</value>
+    <value>LookUp</value>
   </data>
   <data name="0001" xml:space="preserve">
-    <value>SeeDown</value>
+    <value>LookDown</value>
   </data>
   <data name="0002" xml:space="preserve">
-    <value>SeeLeft</value>
+    <value>LookLeft</value>
   </data>
   <data name="0003" xml:space="preserve">
-    <value>SeeRight</value>
+    <value>LookRight</value>
   </data>
   <data name="0004" xml:space="preserve">
     <value>WalkUpSlow</value>
