@@ -7,13 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Collections;
 
-namespace DS_Map
-{
+namespace DS_Map {
     /// <summary>
     /// Class to store script file data in Pokémon NDS games
     /// </summary>
-    public class ScriptFile
-	{
+    public class ScriptFile {
         #region Fields (3)
         public List<Script> scripts = new List<Script>();
         public List<Script> functions = new List<Script>();
@@ -22,46 +20,38 @@ namespace DS_Map
         #endregion
 
         #region Constructors (1)
-        public ScriptFile(Stream fs, string version)
-		{
+        public ScriptFile(Stream fs, string version) {
             List<uint> scriptOffsets = new List<uint>();
             List<uint> functionOffsets = new List<uint>();
             List<uint> movementOffsets = new List<uint>();
             ushort[] endCodes = new ushort[] { 0x2, 0x16, 0x1B };
 
-            using (BinaryReader scriptFileReader = new BinaryReader(fs))
-            {
+            using (BinaryReader scriptFileReader = new BinaryReader(fs)) {
                 /* Read script offsets from the header */
-                while (scriptFileReader.ReadUInt16() != 0xFD13)
-                {
+                while (scriptFileReader.ReadUInt16() != 0xFD13) {
                     scriptFileReader.BaseStream.Position -= 0x2;
                     uint value = scriptFileReader.ReadUInt32();
 
-                    if (value == 0)
-                    {
+                    if (value == 0) {
                         isLevelScript = true;
                         return;
-                    }
-                    else
-                    {
+                    } else {
                         uint offset = value + (uint)scriptFileReader.BaseStream.Position;
                         scriptOffsets.Add(offset); // Don't change order of addition
                     }
                 }
 
                 /* Read scripts */
-                for (int i = 0; i < scriptOffsets.Count; i++)
-                {
+                for (int i = 0; i < scriptOffsets.Count; i++) {
                     int duplicateIndex = scriptOffsets.FindIndex(offset => offset == scriptOffsets[i]); // Check for UseScript_#
-                    if (duplicateIndex != i) scripts.Add(new Script(duplicateIndex));
-                    else
-                    {
+                    if (duplicateIndex != i)
+                        scripts.Add(new Script(duplicateIndex));
+                    else {
                         scriptFileReader.BaseStream.Position = scriptOffsets[i];
 
                         List<Command> commandsList = new List<Command>();
                         bool endScript = new bool();
-                        while (!endScript)
-                        {
+                        while (!endScript) {
                             Command command = Read_Command(scriptFileReader, ref functionOffsets, ref movementOffsets, version);
                             commandsList.Add(command);
                             if (endCodes.Contains(command.id)) endScript = true;
@@ -71,14 +61,12 @@ namespace DS_Map
                 }
 
                 /* Read functions */
-                for (int i = 0; i < functionOffsets.Count; i++)
-                {
+                for (int i = 0; i < functionOffsets.Count; i++) {
                     scriptFileReader.BaseStream.Position = functionOffsets[i];
 
                     List<Command> commandsList = new List<Command>();
                     bool endFunction = new bool();
-                    while (!endFunction)
-                    {
+                    while (!endFunction) {
                         Command command = Read_Command(scriptFileReader, ref functionOffsets, ref movementOffsets, version);
                         commandsList.Add(command);
                         if (endCodes.Contains(command.id)) endFunction = true;
@@ -88,14 +76,12 @@ namespace DS_Map
                 }
 
                 /* Read movements */
-                for (int i = 0; i < movementOffsets.Count; i++)
-                {
+                for (int i = 0; i < movementOffsets.Count; i++) {
                     scriptFileReader.BaseStream.Position = movementOffsets[i];
 
                     List<Command> commandsList = new List<Command>();
                     bool endMovement = new bool();
-                    while (!endMovement)
-                    {
+                    while (!endMovement) {
                         ushort id = scriptFileReader.ReadUInt16();
                         List<byte[]> parameters = new List<byte[]>();
                         if (id != 0xFE) parameters.Add(scriptFileReader.ReadBytes(2));
@@ -112,21 +98,16 @@ namespace DS_Map
         #endregion
 
         #region Methods (1)
-        private Command Read_Command(BinaryReader dataReader, ref List<uint> functionOffsets, ref List<uint> movementOffsets, string gameVersion)
-        {
+        private Command Read_Command(BinaryReader dataReader, ref List<uint> functionOffsets, ref List<uint> movementOffsets, string gameVersion) {
             ResourceManager getCommandParameters;
-            switch (gameVersion)
-            {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
+                case "Platinum":
                     getCommandParameters = new ResourceManager("DS_Map.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
                     break;
-                case "HeartGold":
-                case "SoulSilver":
+                default:
                     getCommandParameters = new ResourceManager("DS_Map.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
-                    break;
-                default: // Platinum
-                    getCommandParameters = new ResourceManager("DS_Map.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
                     break;
             }
 
@@ -134,69 +115,62 @@ namespace DS_Map
             List<byte[]> parameters = new List<byte[]>();
 
             /* How to read parameters for different commands */
-            switch (id)
-            {
-                case 0x16: // Jump
-                case 0x1A: // Call
-                case 0x1C: // CompareLastResultJump
-                case 0x1D: // CompareLastResultCall
-                    {
-                        if (id == 0x1C || id == 0x1D)
-                        {
-                            byte opcode = dataReader.ReadByte();
-                            uint offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
-                            if (!functionOffsets.Contains(offset)) functionOffsets.Add(offset);
+            switch (id) {
+                case 0x16: //Jump
+                case 0x1A: //Call
+                    uint offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
+                    if (!functionOffsets.Contains(offset))
+                        functionOffsets.Add(offset);
 
-                            parameters.Add(new byte[] { opcode });
-                            parameters.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
-                        }
-                        else
-                        {
-                            uint offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
-                            if (!functionOffsets.Contains(offset)) functionOffsets.Add(offset);
+                    parameters.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
+                    break;
+                case 0x1C: //CompareLastResultJump
+                case 0x1D: //CompareLastResultCall
+                    byte opcode = dataReader.ReadByte();
+                    offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
+                    if (!functionOffsets.Contains(offset))
+                        functionOffsets.Add(offset);
 
-                            parameters.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
-                        }
-                    }
+                    parameters.Add(new byte[] { opcode });
+                    parameters.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
                     break;
                 case 0x5E: // ApplyMovement
                 case 0x2A1: // ApplyMovement2
                     {
                         ushort overworld = dataReader.ReadUInt16();
-                        uint offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
-                        if (!movementOffsets.Contains(offset)) movementOffsets.Add(offset);
+                        offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
+                        if (!movementOffsets.Contains(offset))
+                            movementOffsets.Add(offset);
 
                         parameters.Add(BitConverter.GetBytes(overworld));
                         parameters.Add(BitConverter.GetBytes(movementOffsets.IndexOf(offset)));
                     }
                     break;
-                case 0x190:
-                    {
-                        if (gameVersion != "HeartGold" && gameVersion != "SoulSilver") goto default;
-                        else
-                        {
+                case 0x190: {
+                        if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum")
+                            goto default;
+                        else {
                             byte parameter1 = dataReader.ReadByte();
                             parameters.Add(new byte[] { parameter1 });
-                            if (parameter1 == 0x2) parameters.Add(dataReader.ReadBytes(2));
+                            if (parameter1 == 0x2)
+                                parameters.Add(dataReader.ReadBytes(2));
                         }
                     }
                     break;
-                case 0x1CF:
-                    {
+                case 0x1CF: {
                         byte parameter1 = dataReader.ReadByte();
                         parameters.Add(new byte[] { parameter1 });
-                        if (parameter1 == 0x2) parameters.Add(dataReader.ReadBytes(2));
+                        if (parameter1 == 0x2)
+                            parameters.Add(dataReader.ReadBytes(2));
                     }
                     break;
-                case 0x1D1:
-                    {
-                        if (gameVersion != "HeartGold" && gameVersion != "SoulSilver") goto default;
-                        else
-                        {
+                case 0x1D1: {
+                        if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum")
+                            goto default;
+                        else {
                             short parameter1 = dataReader.ReadInt16();
                             parameters.Add(BitConverter.GetBytes(parameter1));
-                            switch (parameter1)
-                            {
+                            switch (parameter1) {
                                 case 0x0:
                                 case 0x1:
                                 case 0x2:
@@ -216,16 +190,14 @@ namespace DS_Map
                         }
                     }
                     break;
-                case 0x1E9:
-                    {
-                        if (gameVersion != "HeartGold" || gameVersion != "SoulSilver") goto default;
-                        else
-                        {
+                case 0x1E9: {
+                        if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum")
+                            goto default;
+                        else {
                             short parameter1 = dataReader.ReadInt16();
                             parameters.Add(BitConverter.GetBytes(parameter1));
 
-                            switch (parameter1)
-                            {
+                            switch (parameter1) {
                                 case 0x1:
                                 case 0x2:
                                 case 0x3:
@@ -243,28 +215,25 @@ namespace DS_Map
                         }
                     }
                     break;
-                case 0x21D:
-                    {
-                        if (gameVersion != "Platinum") goto default;
-                        else
-                        {
+                case 0x21D: {
+                        if (gameVersion == "Platinum") {
                             byte parameter1 = dataReader.ReadByte();
                             parameters.Add(new byte[] { parameter1 });
-                            if (parameter1 != 0x6)
-                            {
+
+                            if (parameter1 != 0x6) {
                                 parameters.Add(dataReader.ReadBytes(2));
-                                if (parameter1 != 0x5) parameters.Add(dataReader.ReadBytes(2));
+                                if (parameter1 != 0x5)
+                                    parameters.Add(dataReader.ReadBytes(2));
                             }
-                        }
+                        } else
+                            goto default;
                     }
                     break;
-                case 0x235:
-                    {
+                case 0x235: {
                         short parameter1 = dataReader.ReadInt16();
                         parameters.Add(BitConverter.GetBytes(parameter1));
 
-                        switch (parameter1)
-                        {
+                        switch (parameter1) {
                             case 0x1:
                             case 0x3:
                                 parameters.Add(dataReader.ReadBytes(2));
@@ -284,13 +253,11 @@ namespace DS_Map
                         }
                     }
                     break;
-                case 0x23E:
-                    {
+                case 0x23E: {
                         short parameter1 = dataReader.ReadInt16();
                         parameters.Add(BitConverter.GetBytes(parameter1));
 
-                        switch (parameter1)
-                        {
+                        switch (parameter1) {
                             case 0x1:
                             case 0x3:
                                 parameters.Add(dataReader.ReadBytes(2));
@@ -305,56 +272,51 @@ namespace DS_Map
                         }
                     }
                     break;
-                case 0x2C4:
-                    {
+                case 0x2C4: {
                         byte parameter1 = dataReader.ReadByte();
                         parameters.Add(new byte[] { parameter1 });
-                        if (parameter1 == 0 || parameter1 == 1) parameters.Add(dataReader.ReadBytes(2));
+                        if (parameter1 == 0 || parameter1 == 1)
+                            parameters.Add(dataReader.ReadBytes(2));
                     }
                     break;
-                case 0x2C5:
-                    {
-                        if (gameVersion != "Platinum") goto default;
-                        else
-                        {
+                case 0x2C5: {
+                        if (gameVersion == "Platinum") {
                             parameters.Add(dataReader.ReadBytes(2));
                             parameters.Add(dataReader.ReadBytes(2));
-                        }
+                        } else
+                            goto default;
                     }
                     break;
                 case 0x2C6:
                 case 0x2C9:
                 case 0x2CA:
                 case 0x2CD:
-                    if (gameVersion != "Platinum") goto default;
-                    break;
-                case 0x2CF:
-                    if (gameVersion != "Platinum") goto default;
+                    if (gameVersion == "Platinum")
+                        break;
                     else
-                    {
+                        goto default;
+                case 0x2CF:
+                    if (gameVersion == "Platinum") {
                         parameters.Add(dataReader.ReadBytes(2));
                         parameters.Add(dataReader.ReadBytes(2));
-                    }
+                    } else
+                        goto default;
                     break;
                 default:
                     Console.WriteLine("Loaded command id : " + id.ToString("X4"));
                     string[] indexes = getCommandParameters.GetString(id.ToString("X4")).Split(' ');
-                    for (int i = 1; i < indexes.Length; i++) 
-                    {
+                    for (int i = 1; i < indexes.Length; i++) {
                         int length = Convert.ToInt32(indexes[i]);
                         parameters.Add(dataReader.ReadBytes(length));
                     }
                     break;
-
             }
 
             return new Command(id, parameters, gameVersion, false);
         }
-        public byte[] Save()
-        {
+        public byte[] Save() {
             MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData))
-            {
+            using (BinaryWriter writer = new BinaryWriter(newData)) {
                 List<uint> scriptOffsets = new List<uint>();
                 List<uint> functionOffsets = new List<uint>();
                 List<uint> movementOffsets = new List<uint>();
@@ -367,33 +329,34 @@ namespace DS_Map
                 writer.Write((ushort)0xFD13); // End of header signal
 
                 /* Write scripts */
-                for (int i = 0; i < scripts.Count; i++)
-                {
-                    if (scripts[i].useScript != -1) scriptOffsets.Add(scriptOffsets[scripts[i].useScript]);  // If script is a UseScript, copy offset
-                    else
-                    {
+                for (int i = 0; i < scripts.Count; i++) {
+                    if (scripts[i].useScript != -1)
+                        scriptOffsets.Add(scriptOffsets[scripts[i].useScript]);  // If script is a UseScript, copy offset
+                    else {
                         scriptOffsets.Add((uint)writer.BaseStream.Position);
 
-                        for (int j = 0; j < scripts[i].commands.Count; j++)
-                        {
+                        for (int j = 0; j < scripts[i].commands.Count; j++) {
                             /* Write command id */
                             ushort id = scripts[i].commands[j].id;
-                            Console.WriteLine("Command added: "+scripts[i].commands[j].id+" with params "+ String.Join(", ", scripts[i].commands[j].parameters));
+                            Console.WriteLine("Command added: " + scripts[i].commands[j].id + " with params " + String.Join(", ", scripts[i].commands[j].parameters));
                             writer.Write(id);
 
                             /* Write command parameters */
                             List<byte[]> parameters = scripts[i].commands[j].parameters;
-                            for (int k = 0; k < parameters.Count; k++) writer.Write(parameters[k]);
+                            for (int k = 0; k < parameters.Count; k++)
+                                writer.Write(parameters[k]);
 
                             /* If command calls a function/movement, store reference position */
-                            if (referenceCodes.Contains(id))
-                            {
+                            if (referenceCodes.Contains(id)) {
                                 int index;
-                                if (id == 0x16 || id == 0x1A) index = 0; // Jump, Call
-                                else index = 1;
+                                if (id == 0x16 || id == 0x1A)
+                                    index = 0; // Jump, Call
+                                else
+                                    index = 1;
 
                                 int type = 0;
-                                if (id == 0x5E) type = 1; // ApplyMovement
+                                if (id == 0x5E)
+                                    type = 1; // ApplyMovement
                                 references.Add(new Tuple<int, int, int>((int)writer.BaseStream.Position - 4, BitConverter.ToInt32(parameters[index], 0), type));
                             }
                         }
@@ -401,12 +364,10 @@ namespace DS_Map
                 }
 
                 /* Write functions */
-                for (int i = 0; i < functions.Count; i++)
-                {
+                for (int i = 0; i < functions.Count; i++) {
                     functionOffsets.Add((uint)writer.BaseStream.Position);
 
-                    for (int j = 0; j < functions[i].commands.Count; j++)
-                    {
+                    for (int j = 0; j < functions[i].commands.Count; j++) {
                         /* Write command id */
                         ushort id = functions[i].commands[j].id;
                         writer.Write(id);
@@ -416,8 +377,7 @@ namespace DS_Map
                         for (int k = 0; k < parameters.Count; k++) writer.Write(parameters[k]);
 
                         /* If command calls a function/movement, store reference position */
-                        if (referenceCodes.Contains(id))
-                        {
+                        if (referenceCodes.Contains(id)) {
                             int index;
                             if (id == 0x16 || id == 0x1A) index = 0;
                             else index = 1;
@@ -430,12 +390,10 @@ namespace DS_Map
                 }
 
                 /* Write movements */
-                for (int i = 0; i < movements.Count; i++)
-                {
+                for (int i = 0; i < movements.Count; i++) {
                     movementOffsets.Add((uint)writer.BaseStream.Position);
 
-                    for (int j = 0; j < movements[i].commands.Count; j++)
-                    {
+                    for (int j = 0; j < movements[i].commands.Count; j++) {
                         /* Write movement command id */
                         ushort id = movements[i].commands[j].id;
                         writer.Write(id);
@@ -451,10 +409,9 @@ namespace DS_Map
                 for (int i = 0; i < scriptOffsets.Count; i++) writer.Write(scriptOffsets[i] - (uint)writer.BaseStream.Position - 0x4);
 
                 /* Fix references to functions and movements */
-                for (int i = 0; i < references.Count; i++)
-                {
+                for (int i = 0; i < references.Count; i++) {
                     writer.BaseStream.Position = references[i].Item1;
-                    
+
                     if (references[i].Item3 == 1) writer.Write((UInt32)(movementOffsets[references[i].Item2] - references[i].Item1 - 4));
                     else writer.Write((UInt32)(functionOffsets[references[i].Item2] - references[i].Item1 - 4));
                 }
@@ -464,26 +421,22 @@ namespace DS_Map
         }
         #endregion
     }
-    public class Script
-    {
+    public class Script {
         #region Fields (1)
         public List<Command> commands;
         public int useScript = -1;
         #endregion Fields
 
         #region Constructors (2)
-        public Script(List<Command> commandsList)
-        {
+        public Script(List<Command> commandsList) {
             commands = commandsList;
         }
-        public Script(int useScript)
-        {
+        public Script(int useScript) {
             this.useScript = useScript;
         }
         #endregion
     }
-    public class Command
-    {
+    public class Command {
         #region Fields (4)
         public ushort id;
         public List<byte[]> parameters;
@@ -492,10 +445,8 @@ namespace DS_Map
         #endregion
 
         #region Constructors (2)
-        public Command(ushort id, List<byte[]> parameters, string version, bool isMovement)
-        {
-            Dictionary<byte, string> operatorsDict = new Dictionary<byte, string>()
-            {
+        public Command(ushort id, List<byte[]> parameters, string version, bool isMovement) {
+            Dictionary<byte, string> operatorsDict = new Dictionary<byte, string>() {
                 [0x0] = "LOWER",
                 [0x1] = "EQUAL",
                 [0x2] = "LARGER",
@@ -507,29 +458,29 @@ namespace DS_Map
                 [0xFF] = "TRUEUP"
             };
             ResourceManager getCommandName;
-            if (!isMovement)
-            {
-                if (version == "Diamond" || version == "Pearl" || version == "Platinum") getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
-                else getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
+            if (!isMovement) {
+                if (version == "Diamond" || version == "Pearl" || version == "Platinum")
+                    getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
+                else
+                    getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
+            } else {
+                getCommandName = new ResourceManager("DS_Map.Resources.MovementNames", Assembly.GetExecutingAssembly());
             }
-            else getCommandName = new ResourceManager("DS_Map.Resources.MovementNames", Assembly.GetExecutingAssembly());
 
             this.id = id;
             this.parameters = parameters;
             this.description = getCommandName.GetString(id.ToString("X4"));
-            if (description == null) description = id.ToString("X4");
+            if (description == null)
+                description = id.ToString("X4");
             this.isMovement = isMovement;
-            for (int i = 0; i < parameters.Count; i++)
-            {
-                if (parameters[i].Length < 4)
-                {
+            for (int i = 0; i < parameters.Count; i++) {
+                if (parameters[i].Length < 4) {
                     byte[] temp = new byte[4];
                     parameters[i].CopyTo(temp, 0);
                     parameters[i] = temp;
                 }
             }
-            switch (id)
-            {
+            switch (id) {
                 case 0x16:      // Jump
                 case 0x1A:      // Call
                     this.description += " " + "Function_#" + (1 + BitConverter.ToInt32(parameters[0], 0)).ToString("D");
@@ -545,22 +496,20 @@ namespace DS_Map
                 case 0x62:      // Lock
                 case 0x63:      // Release
                 case 0x64:      // AddPeople
-                case 0x65:      // RemovePeople
+                case 0x65:      // RemoveOW
                     this.description += " " + "Overworld_#" + BitConverter.ToInt16(parameters[0], 0).ToString("D");
                     break;
                 default:
-                    for (int i = 0; i < parameters.Count; i++)
-                    {
+                    for (int i = 0; i < parameters.Count; i++) {
                         if (parameters[i].Length == 1) this.description += " " + "0x" + (parameters[i][0]).ToString("X1");
                         else if (parameters[i].Length == 2) this.description += " " + "0x" + (BitConverter.ToInt16(parameters[i], 0)).ToString("X1");
                         else if (parameters[i].Length == 4) this.description += " " + "0x" + (BitConverter.ToInt32(parameters[i], 0)).ToString("X1");
-                    }                    
+                    }
                     break;
-            }           
+            }
         }
 
-        private Object GetResxNameByValue(string value, ResourceManager rm)
-        {
+        private Object GetResxNameByValue(string value, ResourceManager rm) {
             var entry =
                 rm.GetResourceSet(System.Threading.Thread.CurrentThread.CurrentCulture, true, true)
                   .OfType<DictionaryEntry>()
@@ -571,8 +520,7 @@ namespace DS_Map
 
         }
 
-        public Command(string description, string version, bool isMovement)
-        {
+        public Command(string description, string version, bool isMovement) {
             this.description = description;
             this.isMovement = isMovement;
             this.parameters = new List<byte[]>();
@@ -581,22 +529,21 @@ namespace DS_Map
             Console.WriteLine(String.Join(",", words));
             Console.WriteLine(version);
             /* Get command id, which is always first in the description */
-            Dictionary<string, ushort> commandsDictDPPt = new Dictionary<string, ushort>()
-            {
+            Dictionary<string, ushort> commandsDictDPPt = new Dictionary<string, ushort>() {
                 ["Nop"] = 0x0000,
-                ["Nop1"] = 0x0001,
+                ["Dummy"] = 0x0001,
                 ["End"] = 0x0002,
-                ["Return2"] = 0x0003,
+                ["TimeWait"] = 0x0003,
                 ["If"] = 0x0011,
                 ["If2"] = 0x0012,
                 ["CallStandard"] = 0x0014,
-                ["Jump"] = 0x0016 ,
+                ["Jump"] = 0x0016,
                 ["Call"] = 0x001A,
                 ["Return"] = 0x001B,
                 ["CompareLastResultJump"] = 0x001C,
                 ["CompareLastResultCall"] = 0x001D,
-                ["ClearFlag"] = 0x001E,
-                ["SetFlag"] = 0x001F,
+                ["SetFlag"] = 0x001E,
+                ["ClearFlag"] = 0x001F,
                 ["CheckFlag"] = 0x0020,
                 ["SetValue"] = 0x0023,
                 ["CompareVarsToByte"] = 0x0026,
@@ -605,15 +552,15 @@ namespace DS_Map
                 ["Message"] = 0x002C,
                 ["Message2"] = 0x002D,
                 ["Message3"] = 0x002F,
-                ["WaitButton"] = 0x0031 ,
-                ["CloseMessageOnKeyPress"] = 0x0034,
+                ["WaitButton"] = 0x0031,
+                ["CloseMessage"] = 0x0034,
                 ["FreezeMessageBox"] = 0x0035,
                 ["CallMessageBox"] = 0x0036,
                 ["ColorMessageBox"] = 0x0037,
                 ["TypeMessageBox"] = 0x0038,
                 ["NoMapMessageBox"] = 0x0039,
                 ["CallMessageBoxText"] = 0x003A,
-                ["Menu"] = 0x003C ,
+                ["Menu"] = 0x003C,
                 ["YesNoBox"] = 0x003E,
                 ["WaitFor"] = 0x003F,
                 ["Multi"] = 0x0040,
@@ -641,8 +588,8 @@ namespace DS_Map
                 ["ReleaseAll"] = 0x0061,
                 ["Lock"] = 0x0062,
                 ["Release"] = 0x0063,
-                ["AddPeople"] = 0x0064,
-                ["RemovePeople"] = 0x0065,
+                ["AddOW"] = 0x0064,
+                ["RemoveOW"] = 0x0065,
                 ["LockCam"] = 0x0066,
                 ["FacePlayer"] = 0x0068,
                 ["CheckSpritePosition"] = 0x0069,
@@ -853,12 +800,11 @@ namespace DS_Map
                 ["PortalEffect"] = 0x0328,
                 ["DisplayFloor"] = 0x0347
             };
-            Dictionary<string, ushort> movementsDictDPPtHGSS = new Dictionary<string, ushort>()
-            {
-                ["SeeUp"] = 0x0000,
-                ["SeeDown"] = 0x0001,
-                ["SeeLeft"] = 0x0002,
-                ["SeeRight"] = 0x0003,
+            Dictionary<string, ushort> movementsDictDPPtHGSS = new Dictionary<string, ushort>() {
+                ["LookUp"] = 0x0000,
+                ["LookDown"] = 0x0001,
+                ["LookLeft"] = 0x0002,
+                ["LookRight"] = 0x0003,
                 ["WalkUpSlow"] = 0x0004,
                 ["WalkDownSlow"] = 0x0005,
                 ["WalkLeftSlow"] = 0x0006,
@@ -944,79 +890,61 @@ namespace DS_Map
                 ["End"] = 0x00FE
             };
             ResourceManager getCommandName; // Load the resource file containing information on parameters for each command
-            switch (version)
-            {
+            switch (version) {
                 case "Diamond":
                 case "Pearl":
+                case "Platinum":
                     getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
                     break;
-                case "HeartGold":
-                case "SoulSilver":
+                default:
                     getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
                     break;
-                default: // Platinum
-                    getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
-                    break;
             }
-            if (!isMovement)
-            {
-                Console.WriteLine("Command name : "+words[0]);
-                if (GetResxNameByValue(words[0], getCommandName) != null)
-                {
+            if (!isMovement) {
+                Console.WriteLine("Command name : " + words[0]);
+                if (GetResxNameByValue(words[0], getCommandName) != null) {
                     Console.WriteLine(GetResxNameByValue(words[0], getCommandName));
                     this.id = ushort.Parse(GetResxNameByValue(words[0], getCommandName).ToString(), System.Globalization.NumberStyles.AllowHexSpecifier);
-                }
-                else UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
+                } else UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
 
-            }
-            else
-            {
+            } else {
                 if (movementsDictDPPtHGSS.ContainsKey(words[0])) this.id = movementsDictDPPtHGSS[words[0]];
                 else UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
             }
 
             /* Read parameters from remainder of the description */
             Console.WriteLine("ID = " + id.ToString("X4"));
-            if (words.Length > 1 && this.id != 0)
-            {
-                if (!isMovement)
-                {
-                    Dictionary<string, byte> operatorsDict = new Dictionary<string, byte>()
-                    {
+            if (words.Length > 1 && this.id != 0) {
+                if (!isMovement) {
+                    Dictionary<string, byte> operatorsDict = new Dictionary<string, byte>() {
                         ["LOWER"] = 0x0,
                         ["EQUAL"] = 0x1,
-                        ["LARGER"] = 0x2,
+                        ["GREATER"] = 0x2,
                         ["LOWER/EQUAL"] = 0x3,
-                        ["LARGER/EQUAL"] = 0x4,
+                        ["GREATER/EQUAL"] = 0x4,
                         ["DIFFERENT"] = 0x5,
                         ["OR"] = 0x6,
                         ["AND"] = 0x7,
                         ["TRUEUP"] = 0xFF
                     };
                     ResourceManager getCommandParameters; // Load the resource file containing information on parameters for each command
-                    switch (version)
-                    {
+                    switch (version) {
                         case "Diamond":
                         case "Pearl":
+                        case "Platinum":
                             getCommandParameters = new ResourceManager("DS_Map.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
                             break;
-                        case "HeartGold":
-                        case "SoulSilver":
+                        default:
                             getCommandParameters = new ResourceManager("DS_Map.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
                             break;
-                        default: // Platinum
-                            getCommandParameters = new ResourceManager("DS_Map.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
-                            break;
-                    }                    
+                    }
                     string[] indexes = getCommandParameters.GetString(id.ToString("X4")).Split(' ');
 
-                    for (int i = 1; i < indexes.Length; i++)
-                    {
-                        Console.WriteLine("Index : "+i.ToString());
-                        Console.WriteLine("Started word : "+words[i]);
+                    for (int i = 1; i < indexes.Length; i++) {
+                        Console.WriteLine("Index : " + i.ToString());
+                        Console.WriteLine("Started word : " + words[i]);
                         if (operatorsDict.ContainsKey(words[i])) parameters.Add(new byte[] { operatorsDict[words[i]] });
-                        else
-                        {
+                        else {
                             int index = 1 + words[i].IndexOfAny(new char[] { 'x', '#' });
 
                             /* If number is preceded by 0x parse it as hex, otherwise as decimal */
@@ -1025,25 +953,28 @@ namespace DS_Map
                             else style = NumberStyles.Integer;
                             /* Convert strings of parameters into the correct datatypes */
                             Console.WriteLine("started params");
-                            if (indexes[i] == "1") parameters.Add(new byte[] { Byte.Parse(words[i].Substring(index), style) });
-                            if (indexes[i] == "2") parameters.Add(BitConverter.GetBytes(Int16.Parse(words[i].Substring(index), style)));
-                            if (indexes[i] == "4") parameters.Add(BitConverter.GetBytes(Int32.Parse(words[i].Substring(index), style)));
+                            if (indexes[i] == "1")
+                                parameters.Add(new byte[] { Byte.Parse(words[i].Substring(index), style) });
+                            if (indexes[i] == "2")
+                                parameters.Add(BitConverter.GetBytes(Int16.Parse(words[i].Substring(index), style)));
+                            if (indexes[i] == "4")
+                                parameters.Add(BitConverter.GetBytes(Int32.Parse(words[i].Substring(index), style)));
                             Console.WriteLine("finished params");
                         }
-                        Console.WriteLine("Finished word : "+words[i]);
+                        Console.WriteLine("Finished word : " + words[i]);
                     }
 
                     /* Fix function and movement references which are +1 greater than array indexes */
-                    Console.WriteLine("before fix");                    
-                    Console.WriteLine("Param length = "+parameters.Count.ToString());
-                    if (id == 0x16 || id == 0x1A) parameters[0] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[0], 0) - 1);
+                    Console.WriteLine("before fix");
+                    Console.WriteLine("Param length = " + parameters.Count.ToString());
+                    if (id == 0x16 || id == 0x1A)
+                        parameters[0] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[0], 0) - 1);
                     Console.WriteLine("passed parameters 0");
-                    if (id == 0x1C || id == 0x1D || id == 0x5E) parameters[1] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[1], 0) - 1);
+                    if (id == 0x1C || id == 0x1D || id == 0x5E)
+                        parameters[1] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[1], 0) - 1);
                     Console.WriteLine("passed parameters 1");
                     Console.WriteLine("passed fix");
-                }
-                else
-                {
+                } else {
                     Console.WriteLine("in else");
                     if (words[1].Length > 4) // Cases where movement is followed by an Overworld parameter
                     {
@@ -1055,7 +986,7 @@ namespace DS_Map
                     Console.WriteLine("passed else");
                 }
             }
-            
+
         }
         #endregion
     }

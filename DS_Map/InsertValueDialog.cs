@@ -18,8 +18,7 @@ namespace DS_Map
         {
             InitializeComponent();
             label1.Text = valueLabel;
-            if (format == "hex") numericUpDown1.Hexadecimal = true;
-            else numericUpDown1.Hexadecimal = false;
+            numericUpDown1.Hexadecimal = (format == "hex");
         }
 
         private void okButton_Click(object sender, EventArgs e)

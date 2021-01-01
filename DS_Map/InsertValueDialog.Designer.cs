@@ -73,7 +73,7 @@
             this.backButton.Name = "backButton";
             this.backButton.Size = new System.Drawing.Size(92, 23);
             this.backButton.TabIndex = 3;
-            this.backButton.Text = "Back";
+            this.backButton.Text = "Discard";
             this.backButton.UseVisualStyleBackColor = true;
             // 
             // InsertValueDialog

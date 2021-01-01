@@ -121,25 +121,76 @@
     <value>Nop</value>
   </data>
   <data name="0001" xml:space="preserve">
-    <value>Nop1</value>
+    <value>Dummy</value>
   </data>
   <data name="0002" xml:space="preserve">
     <value>End</value>
   </data>
   <data name="0003" xml:space="preserve">
-    <value>Return2</value>
+    <value>TimeWait</value>
+  </data>
+  <data name="0004" xml:space="preserve">
+    <value>RegValueSet</value>
+  </data>
+  <data name="0005" xml:space="preserve">
+    <value>RegDataSet</value>
+  </data>
+  <data name="0006" xml:space="preserve">
+    <value>RegAdrsSet</value>
+  </data>
+  <data name="0007" xml:space="preserve">
+    <value>AdrsValueSet</value>
+  </data>
+  <data name="0008" xml:space="preserve">
+    <value>AdrsRegSet</value>
+  </data>
+  <data name="0009" xml:space="preserve">
+    <value>RegRegSet</value>
+  </data>
+  <data name="000A" xml:space="preserve">
+    <value>AdrsAdrsSet</value>
+  </data>
+  <data name="000B" xml:space="preserve">
+    <value>IfRegReg</value>
+  </data>
+  <data name="000C" xml:space="preserve">
+    <value>IfRegValue</value>
+  </data>
+  <data name="000D" xml:space="preserve">
+    <value>IfRegAdrs</value>
+  </data>
+  <data name="000E" xml:space="preserve">
+    <value>IfAdrsReg</value>
+  </data>
+  <data name="000F" xml:space="preserve">
+    <value>IfAdrsValue</value>
+  </data>
+  <data name="0010" xml:space="preserve">
+    <value>IfAdrsAdrs</value>
   </data>
   <data name="0011" xml:space="preserve">
-    <value>If</value>
+    <value>CompareVarValue</value>
   </data>
   <data name="0012" xml:space="preserve">
-    <value>If2</value>
+    <value>CompareVars</value>
   </data>
   <data name="0014" xml:space="preserve">
-    <value>CallStandard</value>
+    <value>CommonScript</value>
+  </data>
+  <data name="0015" xml:space="preserve">
+    <value>LocalScript</value>
   </data>
   <data name="0016" xml:space="preserve">
     <value>Jump</value>
+  </data>
+  <data name="0017" xml:space="preserve">
+    <value>JumpIfObjID</value>
+  </data>
+  <data name="0018" xml:space="preserve">
+    <value>JumpIfBgID</value>
+  </data>
+  <data name="0019" xml:space="preserve">
+    <value>JumpIfPlayerDir</value>
   </data>
   <data name="001A" xml:space="preserve">
     <value>Call</value>
@@ -148,10 +199,10 @@
     <value>Return</value>
   </data>
   <data name="001C" xml:space="preserve">
-    <value>CompareLastResultJump</value>
+    <value>Jump-If</value>
   </data>
   <data name="001D" xml:space="preserve">
-    <value>CompareLastResultCall</value>
+    <value>Call-If</value>
   </data>
   <data name="001E" xml:space="preserve">
     <value>SetFlag</value>
@@ -163,40 +214,58 @@
     <value>CheckFlag</value>
   </data>
   <data name="0027" xml:space="preserve">
-    <value>Copy</value>
+    <value>IncrementVar</value>
+  </data>
+  <data name="0028" xml:space="preserve">
+    <value>DecrementVar</value>
   </data>
   <data name="0029" xml:space="preserve">
     <value>SetVar</value>
   </data>
   <data name="002A" xml:space="preserve">
-    <value>CopyVar</value>
+    <value>SetVarToVar</value>
+  </data>
+  <data name="002B" xml:space="preserve">
+    <value>SetVarToFlexible</value>
+  </data>
+  <data name="002C" xml:space="preserve">
+    <value>MessageAll</value>
   </data>
   <data name="002D" xml:space="preserve">
     <value>Message</value>
   </data>
   <data name="002E" xml:space="preserve">
-    <value>Message2</value>
+    <value>MessageSp</value>
+  </data>
+  <data name="002F" xml:space="preserve">
+    <value>MessageNoSkip</value>
+  </data>
+  <data name="0031" xml:space="preserve">
+    <value>WaitAB</value>
   </data>
   <data name="0032" xml:space="preserve">
     <value>WaitButton</value>
   </data>
+  <data name="0034" xml:space="preserve">
+    <value>OpenMessage</value>
+  </data>
   <data name="0035" xml:space="preserve">
-    <value>CloseMessageOnKeyPress</value>
+    <value>CloseMessage</value>
   </data>
   <data name="0036" xml:space="preserve">
     <value>FreezeMessageBox</value>
   </data>
   <data name="0037" xml:space="preserve">
-    <value>CallMessageBox</value>
+    <value>BoardMake</value>
   </data>
   <data name="0038" xml:space="preserve">
-    <value>ColorMessageBox</value>
+    <value>BoardInfo</value>
   </data>
   <data name="0039" xml:space="preserve">
-    <value>TypeMessageBox</value>
+    <value>BoardShow</value>
   </data>
   <data name="003A" xml:space="preserve">
-    <value>NoMapMessageBox</value>
+    <value>BoardWait</value>
   </data>
   <data name="0040" xml:space="preserve">
     <value>Multi</value>
@@ -220,7 +289,7 @@
     <value>PlayFanfare</value>
   </data>
   <data name="004A" xml:space="preserve">
-    <value>PlayFanfare2</value>
+    <value>StopFanfare</value>
   </data>
   <data name="004B" xml:space="preserve">
     <value>WaitFanfare</value>
@@ -235,7 +304,7 @@
     <value>PlaySound</value>
   </data>
   <data name="004F" xml:space="preserve">
-    <value>FadeDefaultMusic</value>
+    <value>WaitSound</value>
   </data>
   <data name="0050" xml:space="preserve">
     <value>PlayMusic</value>
@@ -244,7 +313,7 @@
     <value>StopMusic</value>
   </data>
   <data name="0052" xml:space="preserve">
-    <value>RestartMusic</value>
+    <value>RestartDefaultMusic</value>
   </data>
   <data name="0054" xml:space="preserve">
     <value>SwitchMusic</value>
@@ -271,28 +340,31 @@
     <value>Release</value>
   </data>
   <data name="0064" xml:space="preserve">
-    <value>AddPeople</value>
+    <value>AddOW</value>
   </data>
   <data name="0065" xml:space="preserve">
-    <value>RemovePeople</value>
+    <value>RemoveOW</value>
   </data>
   <data name="0066" xml:space="preserve">
     <value>LockCam</value>
+  </data>
+  <data name="0067" xml:space="preserve">
+    <value>ReleaseCamera</value>
   </data>
   <data name="0068" xml:space="preserve">
     <value>FacePlayer</value>
   </data>
   <data name="0069" xml:space="preserve">
-    <value>CheckSpritePosition</value>
+    <value>CheckPlayerPosition</value>
   </data>
-  <data name="006B" xml:space="preserve">
-    <value>CheckPersonPosition</value>
+  <data name="006A" xml:space="preserve">
+    <value>CheckOverworldPosition</value>
   </data>
   <data name="006C" xml:space="preserve">
-    <value>ContinueFollow</value>
+    <value>KeepOverworld</value>
   </data>
   <data name="006D" xml:space="preserve">
-    <value>FollowHero</value>
+    <value>OverworldDefaultMovement</value>
   </data>
   <data name="006E" xml:space="preserve">
     <value>GiveMoney</value>

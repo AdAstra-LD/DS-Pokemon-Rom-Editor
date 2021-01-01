@@ -42,7 +42,8 @@ namespace DS_Map
             buildingOpenGLControl.MouseWheel += new MouseEventHandler(buildingOpenGLControl_MouseWheel);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
 
-            if (romInfo.GetVersion() == "HeartGold" || romInfo.GetVersion() == "SoulSilver") interiorCheckBox.Enabled = true;
+            if (romInfo.getVersion() == "HeartGold" || romInfo.getVersion() == "SoulSilver") 
+                interiorCheckBox.Enabled = true;
 
             disableHandlers = true;
             FillListBox(false);

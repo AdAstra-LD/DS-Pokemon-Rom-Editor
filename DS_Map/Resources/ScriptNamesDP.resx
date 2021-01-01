@@ -121,22 +121,28 @@
     <value>Nop</value>
   </data>
   <data name="0001" xml:space="preserve">
-    <value>Nop1</value>
+    <value>Dummy</value>
   </data>
   <data name="0002" xml:space="preserve">
     <value>End</value>
   </data>
   <data name="0003" xml:space="preserve">
-    <value>Return2</value>
+    <value>TimeWait</value>
+  </data>
+  <data name="0004" xml:space="preserve">
+    <value>RegValueSet</value>
+  </data>
+  <data name="0005" xml:space="preserve">
+    <value>RegDataSet</value>
   </data>
   <data name="0011" xml:space="preserve">
-    <value>If</value>
+    <value>IfVarValue</value>
   </data>
   <data name="0012" xml:space="preserve">
     <value>If2</value>
   </data>
   <data name="0014" xml:space="preserve">
-    <value>CallStandard</value>
+    <value>CommonScript</value>
   </data>
   <data name="0016" xml:space="preserve">
     <value>Jump</value>
@@ -148,16 +154,16 @@
     <value>Return</value>
   </data>
   <data name="001C" xml:space="preserve">
-    <value>CompareLastResultJump</value>
+    <value>Jump-If</value>
   </data>
   <data name="001D" xml:space="preserve">
-    <value>CompareLastResultCall</value>
+    <value>Call-If</value>
   </data>
   <data name="001E" xml:space="preserve">
-    <value>ClearFlag</value>
+    <value>SetFlag</value>
   </data>
   <data name="001F" xml:space="preserve">
-    <value>SetFlag</value>
+    <value>ClearFlag</value>
   </data>
   <data name="0020" xml:space="preserve">
     <value>CheckFlag</value>
@@ -292,10 +298,10 @@
     <value>Release</value>
   </data>
   <data name="0064" xml:space="preserve">
-    <value>AddPeople</value>
+    <value>AddOW</value>
   </data>
   <data name="0065" xml:space="preserve">
-    <value>RemovePeople</value>
+    <value>RemoveOW</value>
   </data>
   <data name="0066" xml:space="preserve">
     <value>LockCam</value>

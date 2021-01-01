@@ -23,15 +23,12 @@ namespace DS_Map
                 buildingsTileset = reader.ReadUInt16();
                 mapTileset = reader.ReadUInt16();
 
-                if (version == "HeartGold" || version == "SoulSilver")
-                {
+                if (version == "Diamond" || version == "Pearl" || version == "Platinum") {
+                    unknown1 = reader.ReadUInt16();
+                    lightType = reader.ReadByte();
+                } else {
                     dynamicTextureType = reader.ReadUInt16();
                     areaType = reader.ReadByte();
-                    lightType = reader.ReadByte();
-                }
-                else
-                {
-                    unknown1 = reader.ReadUInt16();
                     lightType = reader.ReadByte();
                 }
             }
@@ -47,15 +44,12 @@ namespace DS_Map
                 writer.Write(buildingsTileset);
                 writer.Write(mapTileset);
 
-                if (version == "HeartGold" || version == "SoulSilver")
-                {
+                if (version == "Diamond" || version == "Pearl" || version == "Platinum") {
+                    writer.Write(unknown1);
+                    writer.Write(lightType);
+                } else {
                     writer.Write(dynamicTextureType);
                     writer.Write(areaType);
-                    writer.Write(lightType);
-                }
-                else
-                {
-                    writer.Write(unknown1);
                     writer.Write(lightType);
                 }
             }

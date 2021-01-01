@@ -18,7 +18,7 @@ namespace DS_Map
         public RomInfo(string id, string workingFolder)
         {
             romID = id;
-            version = GetVersion();
+            version = getVersion();
             this.workingFolder = workingFolder;
         }
         #endregion
@@ -426,13 +426,16 @@ namespace DS_Map
                 case "IPGE":
                     language = "USA";
                     break;
+
                 case "ADAS":
                 case "APAS":
                 case "CPUS":
                 case "IPKS":
                 case "IPGS":
+                case "LATA":
                     language = "ESP";
                     break;
+
                 case "ADAI":
                 case "APAI":
                 case "CPUI":
@@ -440,6 +443,7 @@ namespace DS_Map
                 case "IPGI":
                     language = "ITA";
                     break;
+
                 case "ADAF":
                 case "APAF":
                 case "CPUF":
@@ -447,6 +451,7 @@ namespace DS_Map
                 case "IPGF":
                     language = "FRA";
                     break;
+
                 case "ADAD":
                 case "APAD":
                 case "CPUD":
@@ -454,16 +459,16 @@ namespace DS_Map
                 case "IPGD":
                     language = "GER";
                     break;
+
                 default:
                     language = "JAP";
                     break;
             }           
             return language;
         }
-        public string GetVersion()
+        public string getVersion()
         {
-            Dictionary <string, string> versions = new Dictionary<string, string>()
-            {
+            Dictionary<string, string> versions = new Dictionary<string, string>() {
                 ["ADAE"] = "Diamond",
                 ["ADAS"] = "Diamond",
                 ["ADAI"] = "Diamond",
@@ -494,6 +499,7 @@ namespace DS_Map
                 ["IPGF"] = "SoulSilver",
                 ["IPGD"] = "SoulSilver",
                 ["IPGJ"] = "SoulSilver",
+                ["LATA"] = "LATA",
             };
             return versions[this.romID];
         }

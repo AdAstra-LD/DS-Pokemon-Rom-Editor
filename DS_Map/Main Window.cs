@@ -144,10 +144,10 @@ namespace DS_Map
         }
         private AreaData LoadAreaData(uint areaDataID)
         {
-            return new AreaData(new FileStream(romInfo.GetAreaDataFolderPath() + "//" + areaDataID.ToString("D4"), FileMode.Open), romInfo.GetVersion());
+            return new AreaData(new FileStream(romInfo.GetAreaDataFolderPath() + "//" + areaDataID.ToString("D4"), FileMode.Open), romInfo.getVersion());
         }
         private MapFile LoadMapFile(int mapNumber) { 
-            return new MapFile(new FileStream(romInfo.GetMapFolderPath() + "\\" + mapNumber.ToString("D4"), FileMode.Open), romInfo.GetVersion());
+            return new MapFile(new FileStream(romInfo.GetMapFolderPath() + "\\" + mapNumber.ToString("D4"), FileMode.Open), romInfo.getVersion());
         }
         private Matrix LoadMatrix(int matrixNumber)
         {
@@ -277,7 +277,7 @@ namespace DS_Map
             disableHandlers = true;
             eventOpenGlControl.InitializeContexts();
 
-            switch (romInfo.GetVersion())
+            switch (romInfo.getVersion())
             {
                 case "Diamond":
                 case "Pearl":
@@ -292,11 +292,13 @@ namespace DS_Map
 
             /* Add event file numbers to box */
             int eventCount = Directory.GetFiles(romInfo.GetEventFolderPath()).Length;
-            for (int i = 0; i < eventCount; i++) selectEventComboBox.Items.Add("Event File " + i);
+            for (int i = 0; i < eventCount; i++) 
+                selectEventComboBox.Items.Add("Event File " + i);
 
             /* Add sprite list to ow sprite box */
             int owSpriteCount = Directory.GetFiles(romInfo.GetOverworldFolderPath()).Length;
-            for (int i = 0; i < owSpriteCount; i++) owSpriteComboBox.Items.Add("Sprite " + i);
+            for (int i = 0; i < owSpriteCount; i++) 
+                owSpriteComboBox.Items.Add("Sprite " + i);
 
             /* Add trainer list to ow trainer box */
             owTrainerComboBox.Items.AddRange(GetTrainerNames());
@@ -383,7 +385,7 @@ namespace DS_Map
                 });
 
             /* Create dictionary for 3D overworlds */
-            switch (romInfo.GetVersion())
+            switch (romInfo.getVersion())
             {
                 case "Diamond":
                 case "Pearl":
@@ -412,7 +414,7 @@ namespace DS_Map
         }
         private void SetupFlagNames()
         {
-            switch (romInfo.GetVersion())
+            switch (romInfo.getVersion())
             {
                 case "Diamond":
                 case "Pearl":
@@ -464,7 +466,7 @@ namespace DS_Map
             /*Add list of options to each control */
             mapNameComboBox.Items.AddRange(LoadMessageFile(romInfo.GetMapNamesMessageNumber()).messages.ToArray());
             HeaderDatabase headerInfo = new HeaderDatabase();
-            switch (romInfo.GetVersion())
+            switch (romInfo.getVersion())
             {
                 case "Diamond":
                 case "Pearl":
@@ -476,16 +478,7 @@ namespace DS_Map
                     showNameComboBox.Items.AddRange(headerInfo.DPShowNameValues);
                     weatherComboBox.Items.AddRange(headerInfo.DPWeatherValues);
                     break;
-                case "HeartGold":
-                case "SoulSilver":
-                    showNameComboBox.Enabled = false;
-                    areaIconComboBox.Items.AddRange(headerInfo.HGSSAreaIconValues);
-                    cameraComboBox.Items.AddRange(headerInfo.HGSSCameraValues);
-                    musicDayComboBox.Items.AddRange(headerInfo.HGSSMusicValues);
-                    musicNightComboBox.Items.AddRange(headerInfo.HGSSMusicValues);
-                    weatherComboBox.Items.AddRange(headerInfo.HGSSWeatherValues);
-                    break;
-                default:
+                case "Platinum":
                     areaIconComboBox.Items.AddRange(headerInfo.PtAreaIconValues);
                     cameraComboBox.Items.AddRange(headerInfo.DPPtCameraValues);
                     musicDayComboBox.Items.AddRange(headerInfo.PtMusicValues);
@@ -493,6 +486,14 @@ namespace DS_Map
                     showNameComboBox.Items.AddRange(headerInfo.PtShowNameValues);
                     weatherComboBox.Items.AddRange(headerInfo.PtWeatherValues);
                     break;
+                default:
+                    showNameComboBox.Enabled = false;
+                    areaIconComboBox.Items.AddRange(headerInfo.HGSSAreaIconValues);
+                    cameraComboBox.Items.AddRange(headerInfo.HGSSCameraValues);
+                    musicDayComboBox.Items.AddRange(headerInfo.HGSSMusicValues);
+                    musicNightComboBox.Items.AddRange(headerInfo.HGSSMusicValues);
+                    weatherComboBox.Items.AddRange(headerInfo.HGSSWeatherValues);
+                    break;                    
             }
 
         }
@@ -505,28 +506,39 @@ namespace DS_Map
             mapOpenGlControl.MouseWheel += new MouseEventHandler(mapOpenGlControl_MouseWheel);
             collisionPainterPictureBox.Image = new Bitmap(100, 100);
             typePainterPictureBox.Image = new Bitmap(100, 100);
-            if (romInfo.GetVersion() == "HeartGold" || romInfo.GetVersion() == "SoulSilver")
-            {
-                interiorRadioButton.Enabled = true;
-                externalRadioButton.Enabled = true;
-            }
+            switch (romInfo.getVersion()) {
+                case "Diamond":
+                case "Pearl":
+                case "Platinum":
+                    break;
+                default:
+                    interiorRadioButton.Enabled = true;
+                    externalRadioButton.Enabled = true;
+                    break;
+            };
 
             /* Add map names to box */
             for (int i = 0; i < romInfo.GetMapCount(); i++)
             {
                 using (BinaryReader reader = new BinaryReader(File.OpenRead(romInfo.GetMapFolderPath() + "\\" + i.ToString("D4"))))
                 {
-                    if (romInfo.GetVersion() == "HeartGold" || romInfo.GetVersion() == "SoulSilver")
-                    {
-                        reader.BaseStream.Position = 0x12;
-                        short bgsSize = reader.ReadInt16();
-                        reader.BaseStream.Position = 0x0;
-                        reader.BaseStream.Position = 0x14 + bgsSize + reader.ReadUInt32() + reader.ReadUInt32() + 0x34;
-                    }
-                    else reader.BaseStream.Position = 0x10 + reader.ReadUInt32() + reader.ReadUInt32() + 0x34;
+                    switch (romInfo.getVersion()) {
+                        case "Diamond":
+                        case "Pearl":
+                        case "Platinum":
+                            reader.BaseStream.Position = 0x10 + reader.ReadUInt32() + reader.ReadUInt32() + 0x34;
+                            break;
+                        default:
+                            reader.BaseStream.Position = 0x12;
+                            short bgsSize = reader.ReadInt16();
+                            reader.BaseStream.Position = 0x0;
+                            reader.BaseStream.Position = 0x14 + bgsSize + reader.ReadUInt32() + reader.ReadUInt32() + 0x34;
+                            break;
+                    };
                     string nsbmdName = Encoding.UTF8.GetString(reader.ReadBytes(16));
                     selectMapComboBox.Items.Add(i + ": " + nsbmdName);
-                }               
+                }
+                
             }
 
             /* Fill building models list */
@@ -609,8 +621,8 @@ namespace DS_Map
             disableHandlers = false;
 
             selectMapComboBox.SelectedIndex = 0;
-            mapTextureComboBox.SelectedIndex = 7;
-            buildTextureComboBox.SelectedIndex = 1;
+            mapTextureComboBox.SelectedIndex = 0;
+            buildTextureComboBox.SelectedIndex = 0;
         }
         private void SetupMatrixEditor()
         {
@@ -620,8 +632,7 @@ namespace DS_Map
             for (int i = 0; i < romInfo.GetMatrixCount(); i++) selectMatrixComboBox.Items.Add("Matrix " + i);
             
             /* Initialize dictionary of colors corresponding to border maps in the matrix editor */
-            switch (romInfo.GetVersion())
-            {
+            switch (romInfo.getVersion()) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
@@ -634,11 +645,22 @@ namespace DS_Map
                         [new List<uint> { Matrix.VOID }] = Tuple.Create(Color.Black, Color.White)
                     };
                     break;
-                default:
+                case "HeartGold":
+                case "SoulSilver":
                     mapColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>>()
                     {
                         [new List<uint> { 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
                         [new List<uint> { 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
+                        [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
+                        [new List<uint> { Matrix.VOID }] = Tuple.Create(Color.Black, Color.White)
+                    };
+                    break;
+                default:
+                    mapColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>>() {
+                        [new List<uint> { 203 }] = Tuple.Create(Color.FromArgb(80, 200, 16), Color.White),
+                        [new List<uint> { 204, 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
+                        [new List<uint> { 205, 206 }] = Tuple.Create(Color.DarkGreen, Color.White),
+                        [new List<uint> { 207, 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
                         [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
                         [new List<uint> { Matrix.VOID }] = Tuple.Create(Color.Black, Color.White)
                     };
@@ -672,11 +694,17 @@ namespace DS_Map
             for (int i = 0; i < areaDataCount; i++) selectAreaDataComboBox.Items.Add("Area Data " + i);
 
             /* Enable version-specific controls */
-            if (romInfo.GetVersion() == "HeartGold" || romInfo.GetVersion() == "SoulSilver")
-            {
-                areaDataDynamicTexturesComboBox.Enabled = true;
-                areaDataAreaTypeComboBox.Enabled = true;
-            }
+
+            switch (romInfo.getVersion()) {
+                case "Diamond":
+                case "Pearl":
+                case "Platinum":
+                    break;
+                default:
+                    areaDataDynamicTexturesComboBox.Enabled = true;
+                    areaDataAreaTypeComboBox.Enabled = true;
+                    break;
+            };
         }
         private void UnpackRom(string ndsFileName)
         {
@@ -739,8 +767,11 @@ namespace DS_Map
                romInfo.GetTrainerDataFolderPath(),
             };
 
-            if (romInfo.GetVersion() == "Diamond") narcList[5] += "d_enc_data.narc";
-            else narcList[5] += "p_enc_data.narc";
+            if (romInfo.getVersion() == "Diamond") {
+                narcList[5] += "d_enc_data.narc";
+            } else {
+                narcList[5] += "p_enc_data.narc";
+            }
 
             foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create))
             {
@@ -919,26 +950,25 @@ namespace DS_Map
 
             /* Set ROM version and language */
             romInfo = new RomInfo(gameCode, workingFolder);
-            versionLabel.Text = "ROM: Pokémon " + romInfo.GetVersion();
+            versionLabel.Text = "ROM: Pokémon " + romInfo.getVersion();
             languageLabel.Text = "Language: " + romInfo.GetLanguage();
             iconON = true; gameIcon.Refresh();  // Paint game icon
 
 
 
             /* Extract NARCs sub-archives*/
-            switch (romInfo.GetVersion())
+            switch (romInfo.getVersion())
             {
                 case "Diamond":
                 case "Pearl":
                     UnpackNARCsDiamondPearl();
                     break;
-                case "HeartGold":
-                case "SoulSilver":
-                    UnpackNARCsHeartGoldSoulSilver();
-                    DecompressArm9();
+                case "Platinum":
+                    UnpackNARCsPlatinum();
                     break;
                 default:
-                    UnpackNARCsPlatinum();
+                    UnpackNARCsHeartGoldSoulSilver();
+                    DecompressArm9();
                     break;
             }
 
@@ -970,22 +1000,31 @@ namespace DS_Map
 
             statusLabel.Text = "Writing new ROM...";
 
-            if (romInfo.GetVersion() == "HeartGold" || romInfo.GetVersion() == "SoulSilver") CompressOverlay(1); // Must compress overlay 1 in HGSS, which contains overworld table
+
+            switch (romInfo.getVersion()) {
+                case "Diamond":
+                case "Pearl":
+                case "Platinum":
+                    break;
+                default:
+                    CompressOverlay(1); // Must compress overlay 1 in HGSS, which contains overworld table
+                    break;
+            }
+                
             RepackNARCs();
             RepackRom(saveRom.FileName);
-            switch (romInfo.GetVersion())
+            switch (romInfo.getVersion())
             {
                 case "Diamond":
                 case "Pearl":
                     UnpackNARCsDiamondPearl();
                     break;
-                case "HeartGold":
-                case "SoulSilver":
-                    UnpackNARCsHeartGoldSoulSilver();
-                    decompressOverlay(1);
+                case "Platinum":
+                    UnpackNARCsPlatinum();
                     break;
                 default:
-                    UnpackNARCsPlatinum();
+                    UnpackNARCsHeartGoldSoulSilver();
+                    decompressOverlay(1);
                     break;
             }
 
@@ -993,12 +1032,18 @@ namespace DS_Map
         }
         private void wildEditorButton_Click(object sender, EventArgs e)
         {
-            if (romInfo.GetVersion() == "HeartGold" || romInfo.GetVersion() == "SoulSilver")
-            {
-                using (WildEditorHGSS editor = new WildEditorHGSS(romInfo.GetEncounterFolderPath(), GetPokémonNames())) editor.ShowDialog();
+            switch (romInfo.getVersion()) {
+                case "Diamond":
+                case "Pearl":
+                case "Platinum":
+                    using (WildEditorDPPt editor = new WildEditorDPPt(romInfo.GetEncounterFolderPath(), GetPokémonNames())) 
+                        editor.ShowDialog();
+                    break;
+                default:
+                    using (WildEditorHGSS editor = new WildEditorHGSS(romInfo.GetEncounterFolderPath(), GetPokémonNames())) 
+                        editor.ShowDialog();
+                    break;
             }
-
-            else using (WildEditorDPPt editor = new WildEditorDPPt(romInfo.GetEncounterFolderPath(), GetPokémonNames())) editor.ShowDialog();
         }
         #endregion
 
@@ -1084,9 +1129,16 @@ namespace DS_Map
             byte[] headerData = ReadFromArm9(headerOffset, 24);
 
             /* Encapsulate header data into the class appropriate for the game version */
-            if (romInfo.GetVersion() == "Platinum") return new HeaderPt(new MemoryStream(headerData));
-            else if (romInfo.GetVersion() == "HeartGold" || romInfo.GetVersion() == "SoulSilver") return new HeaderHGSS(new MemoryStream(headerData));
-            else return new HeaderDP(new MemoryStream(headerData));
+
+            switch (romInfo.getVersion()) {
+                case "Diamond":
+                case "Pearl":
+                    return new HeaderDP(new MemoryStream(headerData));
+                case "Platinum":
+                    return new HeaderPt(new MemoryStream(headerData));
+                default:
+                    return new HeaderHGSS(new MemoryStream(headerData));
+            }                
         }
         #endregion
 
@@ -1100,22 +1152,21 @@ namespace DS_Map
             if (disableHandlers) return;
 
             string imageName;
-            switch(romInfo.GetVersion())
+            switch(romInfo.getVersion())
             {
+                case "Diamond":
+                case "Pearl":
+                    break;
                 case "Platinum":
                     ((HeaderPt)currentHeader).areaIcon = (byte)areaIconComboBox.SelectedIndex;
                     imageName = "areaicon0" + areaIconComboBox.SelectedIndex.ToString();
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
                     break;
-                case "HeartGold":
-                case "SoulSilver":
+                default:
                     ((HeaderHGSS)currentHeader).areaIcon = Byte.Parse(areaIconComboBox.SelectedItem.ToString().Substring(1, 3));
                     imageName = hgssAreaIconImageDict[areaIconComboBox.SelectedIndex];
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
                     break;
-                default:
-                    break;
-
             }            
         }
         private void cameraComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -1123,21 +1174,20 @@ namespace DS_Map
             if (disableHandlers) return;
            
             string imageName;
-            switch (romInfo.GetVersion())
+            switch (romInfo.getVersion())
             {
+                case "Diamond":
+                case "Pearl":
+                    currentHeader.camera = (byte)cameraComboBox.SelectedIndex;
+                    imageName = "dpcamera" + cameraComboBox.SelectedIndex.ToString();
+                    break;
                 case "Platinum":
                     currentHeader.camera = (byte)cameraComboBox.SelectedIndex;
                     imageName = "ptcamera" + cameraComboBox.SelectedIndex.ToString();
-
-                    break;
-                case "HeartGold":
-                case "SoulSilver":
-                    currentHeader.camera = Byte.Parse(cameraComboBox.SelectedItem.ToString().Substring(1, 3));
-                    imageName = "hgsscamera" + currentHeader.camera.ToString("D3");
                     break;
                 default:
-                    currentHeader.camera = (byte)cameraComboBox.SelectedIndex;
-                    imageName = "dpcamera" + cameraComboBox.SelectedIndex.ToString();
+                    currentHeader.camera = Byte.Parse(cameraComboBox.SelectedItem.ToString().Substring(1, 3));
+                    imageName = "hgsscamera" + currentHeader.camera.ToString("D3");
                     break;
             }
 
@@ -1170,7 +1220,8 @@ namespace DS_Map
         }
         private void headerListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             currentHeader = LoadHeader(headerListBox.SelectedIndex);
 
@@ -1192,13 +1243,14 @@ namespace DS_Map
             foreach (Control cBox in flagsGroupBox.Controls)
             {
                 ((CheckBox)cBox).Checked = false;
-                if ((currentHeader.flags & (1 << i)) != 0) ((CheckBox)cBox).Checked = true;
+                if ((currentHeader.flags & (1 << i)) != 0) 
+                    ((CheckBox)cBox).Checked = true;
                 i--;
             }
             disableHandlers = false;
 
             /* Setup controls for fields with version-specific differences */
-            switch (romInfo.GetVersion())
+            switch (romInfo.getVersion())
             {
                 case "Diamond":
                 case "Pearl":                   
@@ -1234,10 +1286,21 @@ namespace DS_Map
         }
         private void mapNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
-            if (romInfo.GetVersion() == "Platinum") ((HeaderPt)currentHeader).mapName = (byte)mapNameComboBox.SelectedIndex;
-            else if (romInfo.GetVersion() == "HeartGold" || romInfo.GetVersion() == "SoulSilver") ((HeaderHGSS)currentHeader).mapName = (byte)mapNameComboBox.SelectedIndex;
-            else ((HeaderDP)currentHeader).mapName = (ushort)mapNameComboBox.SelectedIndex;
+            if (disableHandlers) 
+                return;
+
+            switch (romInfo.getVersion()) {
+                case "Diamond":
+                case "Pearl":
+                    ((HeaderDP)currentHeader).mapName = (ushort)mapNameComboBox.SelectedIndex;
+                    break;
+                case "Platinum":
+                    ((HeaderPt)currentHeader).mapName = (byte)mapNameComboBox.SelectedIndex;
+                    break;
+                default:
+                    ((HeaderHGSS)currentHeader).mapName = (byte)mapNameComboBox.SelectedIndex;
+                    break;
+            }
         }
         private void matrixUpDown_ValueChanged(object sender, EventArgs e)
         {
@@ -1247,16 +1310,35 @@ namespace DS_Map
         private void musicDayComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            if (romInfo.GetVersion() == "Platinum") ((HeaderPt)currentHeader).musicDay = UInt16.Parse(musicDayComboBox.SelectedItem.ToString().Substring(1, 4));
-            else if (romInfo.GetVersion() == "HeartGold" || romInfo.GetVersion() == "SoulSilver") ((HeaderHGSS)currentHeader).musicDay = UInt16.Parse(musicDayComboBox.SelectedItem.ToString().Substring(1, 4));
-            else ((HeaderDP)currentHeader).musicDay = UInt16.Parse(musicDayComboBox.SelectedItem.ToString().Substring(1, 4));
+            switch (romInfo.getVersion()) {
+                case "Diamond":
+                case "Pearl":
+                    ((HeaderDP)currentHeader).musicDay = UInt16.Parse(musicDayComboBox.SelectedItem.ToString().Substring(1, 4));
+                    break;
+                case "Platinum":
+                    ((HeaderPt)currentHeader).musicDay = UInt16.Parse(musicDayComboBox.SelectedItem.ToString().Substring(1, 4));
+                    break;
+                default:
+                    ((HeaderHGSS)currentHeader).musicDay = UInt16.Parse(musicDayComboBox.SelectedItem.ToString().Substring(1, 4));
+                    break;
+            }
         }
         private void musicNightComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            if (romInfo.GetVersion() == "Platinum") ((HeaderPt)currentHeader).musicNight = UInt16.Parse(musicNightComboBox.SelectedItem.ToString().Substring(1, 4));
-            else if (romInfo.GetVersion() == "HeartGold" || romInfo.GetVersion() == "SoulSilver") ((HeaderHGSS)currentHeader).musicNight = UInt16.Parse(musicNightComboBox.SelectedItem.ToString().Substring(1, 4));
-            else ((HeaderDP)currentHeader).musicNight = UInt16.Parse(musicNightComboBox.SelectedItem.ToString().Substring(1, 4));
+
+            switch (romInfo.getVersion()) {
+                case "Diamond":
+                case "Pearl":
+                    ((HeaderDP)currentHeader).musicNight = UInt16.Parse(musicNightComboBox.SelectedItem.ToString().Substring(1, 4));
+                    break;
+                case "Platinum":
+                    ((HeaderPt)currentHeader).musicNight = UInt16.Parse(musicNightComboBox.SelectedItem.ToString().Substring(1, 4));
+                    break;
+                default:
+                    ((HeaderHGSS)currentHeader).musicNight = UInt16.Parse(musicNightComboBox.SelectedItem.ToString().Substring(1, 4));
+                    break;
+            }
         }
         private void openAreaDataButton_Click(object sender, EventArgs e)
         {
@@ -1338,17 +1420,17 @@ namespace DS_Map
             currentHeader.weather = Byte.Parse(weatherComboBox.SelectedItem.ToString().Substring(1, 2));
 
             string imageName;
-            switch (romInfo.GetVersion())
+            switch (romInfo.getVersion())
             {
+                case "Diamond":
+                case "Pearl":
+                    imageName = dpweatherImageDict[weatherComboBox.SelectedIndex];
+                    break;
                 case "Platinum":
                     imageName = ptweatherImageDict[weatherComboBox.SelectedIndex];
                     break;
-                case "HeartGold":
-                case "SoulSilver":
-                    imageName = hgssweatherImageDict[weatherComboBox.SelectedIndex];
-                    break;
                 default:
-                    imageName = dpweatherImageDict[weatherComboBox.SelectedIndex];
+                    imageName = hgssweatherImageDict[weatherComboBox.SelectedIndex];
                     break;
             }
 
@@ -2886,95 +2968,81 @@ namespace DS_Map
         #endregion
 
         #region Subroutines
-        private void DisplayActiveEvents()
-        {
+        private void DisplayActiveEvents() {
             eventPictureBox.Image = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
 
             /* Draw spawnables */
-            if (showSignsCheckBox.Checked) for (int i = 0; i < currentEventFile.spawnables.Count; i++)
-            {
-                Spawnable spawnable = currentEventFile.spawnables[i];
-                if (spawnable.xMatrixPosition == eventMatrixXUpDown.Value && spawnable.yMatrixPosition == eventMatrixYUpDown.Value)
-                {
-                    using (Graphics g = Graphics.FromImage(eventPictureBox.Image))
-                    {
-                        g.CompositingMode = CompositingMode.SourceOver;
-                        g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("sign"), (spawnable.xMapPosition) * 17, (spawnable.yMapPosition) * 17);
-                        if (selectedEvent == spawnable) // Draw selection rectangle if event is the selected one
-                        {
-                            eventPen = Pens.Red;
-                            g.DrawRectangle(eventPen, (spawnable.xMapPosition) * 17 - 1, (spawnable.yMapPosition) * 17 - 1, 18, 18);
-                            g.DrawRectangle(eventPen, (spawnable.xMapPosition) * 17 - 2, (spawnable.yMapPosition) * 17 - 2, 20, 20);
-                        }
-                    }
-                }
-            }
-
-            /* Draw warps */
-            if (showWarpsCheckBox.Checked) for (int i = 0; i < currentEventFile.warps.Count; i++)
-            {
-                Warp warp = currentEventFile.warps[i];
-                if (warp.xMatrixPosition == eventMatrixXUpDown.Value && warp.yMatrixPosition == eventMatrixYUpDown.Value)
-                {
-                    using (Graphics g = Graphics.FromImage(eventPictureBox.Image))
-                    {
-                        g.CompositingMode = CompositingMode.SourceOver;
-                        g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("warp"), (warp.xMapPosition) * 17, (warp.yMapPosition) * 17);
-                        if (selectedEvent == warp) // Draw selection rectangle if event is the selected one
-                        {
-                            eventPen = Pens.Red;
-                            g.DrawRectangle(eventPen, (warp.xMapPosition) * 17 - 1, (warp.yMapPosition) * 17 - 1, 18, 18);
-                            g.DrawRectangle(eventPen, (warp.xMapPosition) * 17 - 2, (warp.yMapPosition) * 17 - 2, 20, 20);
-                        }
-                    }
-
-                }
-            }
-
-            /* Draw triggers */
-            if (showTriggersCheckBox.Checked) for (int i = 0; i < currentEventFile.triggers.Count; i++)
-            {
-                Trigger trigger = currentEventFile.triggers[i];
-                if (trigger.xMatrixPosition == eventMatrixXUpDown.Value && trigger.yMatrixPosition == eventMatrixYUpDown.Value)
-                {
-                    using (Graphics g = Graphics.FromImage(eventPictureBox.Image))
-                    {
-                        g.CompositingMode = CompositingMode.SourceOver;
-                        for (int y = 0; y < currentEventFile.triggers[i].length; y++)
-                        {
-                            for (int x = 0; x < currentEventFile.triggers[i].width; x++)
+            if (showSignsCheckBox.Checked) for (int i = 0; i < currentEventFile.spawnables.Count; i++) {
+                    Spawnable spawnable = currentEventFile.spawnables[i];
+                    if (spawnable.xMatrixPosition == eventMatrixXUpDown.Value && spawnable.yMatrixPosition == eventMatrixYUpDown.Value) {
+                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
+                            g.CompositingMode = CompositingMode.SourceOver;
+                            g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("sign"), (spawnable.xMapPosition) * 17, (spawnable.yMapPosition) * 17);
+                            if (selectedEvent == spawnable) // Draw selection rectangle if event is the selected one
                             {
-                                g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("trigger"), (trigger.xMapPosition + x) * 17, (trigger.yMapPosition + y) * 17);
+                                eventPen = Pens.Red;
+                                g.DrawRectangle(eventPen, (spawnable.xMapPosition) * 17 - 1, (spawnable.yMapPosition) * 17 - 1, 18, 18);
+                                g.DrawRectangle(eventPen, (spawnable.xMapPosition) * 17 - 2, (spawnable.yMapPosition) * 17 - 2, 20, 20);
                             }
                         }
-                        if (selectedEvent == trigger) // Draw selection rectangle if event is the selected one
-                        {
-                            eventPen = Pens.Red;
-                            g.DrawRectangle(eventPen, (trigger.xMapPosition) * 17 - 1, (trigger.yMapPosition) * 17 - 1, 17 * trigger.width + 1, 17 * trigger.length + 1);
-                            g.DrawRectangle(eventPen, (trigger.xMapPosition) * 17 - 2, (trigger.yMapPosition) * 17 - 2, 17 * trigger.width + 3, 17 * trigger.length + 3);
+                    }
+                }
+
+            /* Draw warps */
+            if (showWarpsCheckBox.Checked) for (int i = 0; i < currentEventFile.warps.Count; i++) {
+                    Warp warp = currentEventFile.warps[i];
+                    if (warp.xMatrixPosition == eventMatrixXUpDown.Value && warp.yMatrixPosition == eventMatrixYUpDown.Value) {
+                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
+                            g.CompositingMode = CompositingMode.SourceOver;
+                            g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("warp"), (warp.xMapPosition) * 17, (warp.yMapPosition) * 17);
+                            if (selectedEvent == warp) // Draw selection rectangle if event is the selected one
+                            {
+                                eventPen = Pens.Red;
+                                g.DrawRectangle(eventPen, (warp.xMapPosition) * 17 - 1, (warp.yMapPosition) * 17 - 1, 18, 18);
+                                g.DrawRectangle(eventPen, (warp.xMapPosition) * 17 - 2, (warp.yMapPosition) * 17 - 2, 20, 20);
+                            }
+                        }
+
+                    }
+                }
+
+            /* Draw triggers */
+            if (showTriggersCheckBox.Checked) for (int i = 0; i < currentEventFile.triggers.Count; i++) {
+                    Trigger trigger = currentEventFile.triggers[i];
+                    if (trigger.xMatrixPosition == eventMatrixXUpDown.Value && trigger.yMatrixPosition == eventMatrixYUpDown.Value) {
+                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
+                            g.CompositingMode = CompositingMode.SourceOver;
+                            for (int y = 0; y < currentEventFile.triggers[i].length; y++) {
+                                for (int x = 0; x < currentEventFile.triggers[i].width; x++) {
+                                    g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("trigger"), (trigger.xMapPosition + x) * 17, (trigger.yMapPosition + y) * 17);
+                                }
+                            }
+                            if (selectedEvent == trigger) // Draw selection rectangle if event is the selected one
+                            {
+                                eventPen = Pens.Red;
+                                g.DrawRectangle(eventPen, (trigger.xMapPosition) * 17 - 1, (trigger.yMapPosition) * 17 - 1, 17 * trigger.width + 1, 17 * trigger.length + 1);
+                                g.DrawRectangle(eventPen, (trigger.xMapPosition) * 17 - 2, (trigger.yMapPosition) * 17 - 2, 17 * trigger.width + 3, 17 * trigger.length + 3);
+                            }
                         }
                     }
                 }
-            }
 
             /* Draw overworlds */
-            if (showOwsCheckBox.Checked) for (int i = 0; i < currentEventFile.overworlds.Count; i++)
-            {
-                Overworld overworld = currentEventFile.overworlds[i];
-                if (overworld.xMatrixPosition == eventMatrixXUpDown.Value && overworld.yMatrixPosition == eventMatrixYUpDown.Value) // Draw image only if event is in current map
-                {
-                    using (Graphics g = Graphics.FromImage(eventPictureBox.Image))
-                    {
-                        g.CompositingMode = CompositingMode.SourceOver;
-                        Bitmap sprite = GetOverworldImage(overworld.spriteID, overworld.orientation);
-                        sprite.MakeTransparent();
-                        g.DrawImage( sprite, (overworld.xMapPosition) * 17 - 7 + (32 - sprite.Width)/2, (overworld.yMapPosition - 1) * 17 + (32 - sprite.Height) );
+            if (showOwsCheckBox.Checked) {
+                for (int i = 0; i < currentEventFile.overworlds.Count; i++) {
+                    Overworld overworld = currentEventFile.overworlds[i];
+                    if (overworld.xMatrixPosition == eventMatrixXUpDown.Value && overworld.yMatrixPosition == eventMatrixYUpDown.Value) { // Draw image only if event is in current map
+                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
+                            g.CompositingMode = CompositingMode.SourceOver;
+                            Bitmap sprite = GetOverworldImage(overworld.spriteID, overworld.orientation);
+                            sprite.MakeTransparent();
+                            g.DrawImage(sprite, (overworld.xMapPosition) * 17 - 7 + (32 - sprite.Width) / 2, (overworld.yMapPosition - 1) * 17 + (32 - sprite.Height));
 
-                        if (selectedEvent == overworld)
-                        {
-                            eventPen = Pens.Red;
-                            g.DrawRectangle(eventPen, (overworld.xMapPosition) * 17 - 8, (overworld.yMapPosition - 1) * 17, 34, 34);
-                            g.DrawRectangle(eventPen, (overworld.xMapPosition) * 17 - 9, (overworld.yMapPosition - 1) * 17 - 1, 36, 36);
+                            if (selectedEvent == overworld) {
+                                eventPen = Pens.Red;
+                                g.DrawRectangle(eventPen, (overworld.xMapPosition) * 17 - 8, (overworld.yMapPosition - 1) * 17, 34, 34);
+                                g.DrawRectangle(eventPen, (overworld.xMapPosition) * 17 - 9, (overworld.yMapPosition - 1) * 17 - 1, 36, 36);
+                            }
                         }
                     }
                 }
@@ -2999,13 +3067,10 @@ namespace DS_Map
             if (mapIndex == Matrix.VOID) {
                 eventPictureBox.BackgroundImage = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
                 using (Graphics g = Graphics.FromImage(eventPictureBox.BackgroundImage)) g.Clear(Color.Black);
-            }
-            else
-            {
+            } else {
                 /* Determine area data */
                 uint areaDataID;
-                if (eventMatrix.hasHeadersSection)
-                {
+                if (eventMatrix.hasHeadersSection) {
                     int header = eventMatrix.headers[(int)(eventMatrixYUpDown.Value), (int)(eventMatrixXUpDown.Value)];
                     areaDataID = LoadHeader(header).areaDataID;
                 }
@@ -3019,7 +3084,9 @@ namespace DS_Map
                 eventMapFile.mapModel = LoadModelTextures(eventMapFile.mapModel, romInfo.GetMapTexturesFolderPath(), areaData.mapTileset);
 
                 bool isInteriorMap = new bool();
-                if ((romInfo.GetVersion() == "HeartGold" || romInfo.GetVersion() == "SoulSilver") && areaData.areaType == 0x0) isInteriorMap = true;
+                if ((romInfo.getVersion() == "HeartGold" || romInfo.getVersion() == "SoulSilver") 
+                && areaData.areaType == 0x0) 
+                    isInteriorMap = true;
 
                 for (int i = 0; i < eventMapFile.buildings.Count; i++)
                 {
@@ -3167,73 +3234,26 @@ namespace DS_Map
             eventMatrixXUpDown.Value = xPosition;
             eventMatrixYUpDown.Value = yPosition;
         }
-        private int MatchOverworldIDToSpriteArchive(uint ID)
-        {
-            int archiveID;
-            bool match = new bool();
+        private int MatchOverworldIDToSpriteArchive(uint ID) { 
+        
             Console.WriteLine("Searching for ID : " + ID.ToString("X4"));
             using (BinaryReader idReader = new BinaryReader(new FileStream(workingFolder + overworldTablePath, FileMode.Open)))
-            {                
-                switch (romInfo.GetVersion())
+            {        
+                int archiveID;
+                switch (romInfo.getVersion())
                 {
                     case "Diamond":
                     case "Pearl":
+                        idReader.BaseStream.Position = 0x22BCC;
+                        archiveID = matchOverworldInTableDPPt(idReader, ID);
+                        break;
                     case "Platinum":
-                        if (romInfo.GetVersion() == "Platinum") idReader.BaseStream.Position = 0x2BC34; // Go at the beginning of the overworlds table
-                        else idReader.BaseStream.Position = 0x22BCC;
-                        try
-                        {
-                            while (match == false) // Search for the overworld id in the table
-                            {
-                                byte[] temp = idReader.ReadBytes(4);
-                                //Array.Reverse(temp);
-                                uint overlayID = BitConverter.ToUInt32(temp, 0);
-                                if (overlayID == 0xFFFF) break;
-                                else
-                                {
-                                    
-                                    Console.WriteLine("Matching against : " + overlayID.ToString("X4"));
-                                    if (overlayID == ID) match = true; // If the entry is a match, stop and go to reading part
-                                    else idReader.BaseStream.Position += 0x4; // If the entry is not a match, move forward
-                                }
-                            }
-                        }
-                        catch { } // If there is no match, catch EOF exception and break loop
-
-                        if (match)
-                        {
-                            byte[] temp = idReader.ReadBytes(4);
-                            //Array.Reverse(temp);
-                            archiveID = BitConverter.ToInt32(temp, 0); // Read ID from file if there was a match in previous section
-                        }
-                        else
-                        {
-                            Console.WriteLine("Could not find ID : " + ID.ToString("X4"));
-                            archiveID = -1; // If no match has been found, return -1, which loads bounding box
-                        }
+                        idReader.BaseStream.Position = 0x2BC34; // Go to the beginning of the overworlds table
+                        archiveID = matchOverworldInTableDPPt(idReader, ID);
                         break;
                     default:
-                        //if (ID >= 428) idReader.BaseStream.Position = 0x220B2;
-                        //else
                         idReader.BaseStream.Position = 0x21BA8;
-                        try
-                        {
-                            while (match == false) // Search for the overworld id in the table
-                            { 
-                                ushort overlayID = idReader.ReadUInt16();
-                                Console.WriteLine("Matching against : " + overlayID.ToString("X4"));
-                                if ( overlayID == ID) match = true; // If the entry is a match, stop and go to reading part
-                                else idReader.BaseStream.Position += 0x4; // If the entry is not a match, move forward
-                            }
-                        }
-                        catch { } // If there is no match, catch EOF exception and break loop
-
-                        if (match) archiveID = idReader.ReadInt16(); // Read ID from file if there was a match in previous section
-                        else
-                        {
-                            Console.WriteLine("Could not find ID : " + ID.ToString("X4"));
-                            archiveID = -1; // If no match has been found, return -1, which loads bounding box
-                        }
+                        archiveID = matchOverworldInTableHGSS(idReader, ID);
                         break;
                 }
 
@@ -3241,6 +3261,60 @@ namespace DS_Map
                 return archiveID;
             }
         }
+
+        private int matchOverworldInTableHGSS(BinaryReader idReader, uint ID) {
+            int archiveID;
+            bool match = new bool();
+            try {
+                while (match == false) { // Search for the overworld id in the table  
+                    ushort overlayID = idReader.ReadUInt16();
+                    Console.WriteLine("Matching against : " + overlayID.ToString("X4"));
+                    if (overlayID == ID) 
+                        match = true; // If the entry is a match, stop and go to reading part
+                    else 
+                        idReader.BaseStream.Position += 0x4; // If the entry is not a match, move forward
+                }
+            } catch { } // If there is no match, catch EOF exception and break loop
+
+            if (match) {
+                archiveID = idReader.ReadInt16(); // Read ID from file if there was a match in previous section
+            } else {
+                Console.WriteLine("Could not find ID : " + ID.ToString("X4"));
+                archiveID = -1; // If no match has been found, return -1, which loads bounding box
+            }
+            return archiveID;
+        }
+
+        private int matchOverworldInTableDPPt(BinaryReader idReader, uint ID) {
+            int archiveID;
+            bool match = new bool();
+            try {
+                while (match == false) // Search for the overworld id in the table
+                {
+                    byte[] temp = idReader.ReadBytes(4);
+                    //Array.Reverse(temp);
+                    uint overlayID = BitConverter.ToUInt32(temp, 0);
+                    if (overlayID == 0xFFFF) break;
+                    else {
+
+                        Console.WriteLine("Matching against : " + overlayID.ToString("X4"));
+                        if (overlayID == ID) match = true; // If the entry is a match, stop and go to reading part
+                        else idReader.BaseStream.Position += 0x4; // If the entry is not a match, move forward
+                    }
+                }
+            } catch { } // If there is no match, catch EOF exception and break loop
+
+            if (match) {
+                byte[] temp = idReader.ReadBytes(4);
+                //Array.Reverse(temp);
+                archiveID = BitConverter.ToInt32(temp, 0); // Read ID from file if there was a match in previous section
+            } else {
+                Console.WriteLine("Could not find ID : " + ID.ToString("X4"));
+                archiveID = -1; // If no match has been found, return -1, which loads bounding box
+            }
+            return archiveID;
+        }
+
         private Bitmap LoadTextureFromNSBTX(NSMBe4.NSBMD.NSBTX_File nsbtx, int imageIndex, int palIndex)
         {
             Bitmap b_ = new Bitmap(nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].width, nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].height);
@@ -3343,7 +3417,8 @@ namespace DS_Map
         }
         private void eventMatrixUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             disableHandlers = true;
 
             eventMatrix = LoadMatrix((int)eventMatrixUpDown.Value);
@@ -3354,8 +3429,10 @@ namespace DS_Map
             DrawEventMatrix();
             MarkUsedCells();
 
-            if (eventMatrix.hasHeadersSection) eventAreaDataUpDown.Enabled = false;
-            else eventAreaDataUpDown.Enabled = true;
+            if (eventMatrix.hasHeadersSection) 
+                eventAreaDataUpDown.Enabled = false;
+            else 
+                eventAreaDataUpDown.Enabled = true;
 
             disableHandlers = false;
         }
@@ -4049,7 +4126,7 @@ namespace DS_Map
         #region Subroutines
         public ScriptFile LoadScriptFile(int fileID)
         {
-            return new ScriptFile((new FileStream(romInfo.GetScriptFolderPath() + "\\" + fileID.ToString("D4"), FileMode.Open)), romInfo.GetVersion());
+            return new ScriptFile((new FileStream(romInfo.GetScriptFolderPath() + "\\" + fileID.ToString("D4"), FileMode.Open)), romInfo.getVersion());
         }
         public void SaveScriptFile(int fileID)
         {
@@ -4372,10 +4449,10 @@ namespace DS_Map
                         while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump F") && i < scriptTextBox.Lines.Length - 1)
                         {
                             Console.WriteLine("Script line " + i.ToString());
-                            commands.Add(new Command(scriptTextBox.Lines[i], romInfo.GetVersion(), false));
+                            commands.Add(new Command(scriptTextBox.Lines[i], romInfo.getVersion(), false));
                             i++;
                         }
-                        commands.Add(new Command(scriptTextBox.Lines[i], romInfo.GetVersion(), false)); // Add end or jump/call command
+                        commands.Add(new Command(scriptTextBox.Lines[i], romInfo.getVersion(), false)); // Add end or jump/call command
                         currentScriptFile.scripts.Add(new Script(commands));
                     }
                 }
@@ -4391,10 +4468,10 @@ namespace DS_Map
                     /* Read function commands */
                     while (functionTextBox.Lines[i] != "End" && !functionTextBox.Lines[i].Contains("Return") && !functionTextBox.Lines[i].Contains("Jump F"))
                     {
-                        commands.Add(new Command(functionTextBox.Lines[i], romInfo.GetVersion(), false));
+                        commands.Add(new Command(functionTextBox.Lines[i], romInfo.getVersion(), false));
                         i++;
                     }
-                    commands.Add(new Command(functionTextBox.Lines[i], romInfo.GetVersion(), false)); // Add end command
+                    commands.Add(new Command(functionTextBox.Lines[i], romInfo.getVersion(), false)); // Add end command
                     currentScriptFile.functions.Add(new Script(commands));
                 }
             }
@@ -4409,10 +4486,10 @@ namespace DS_Map
                     /* Read script commands */
                     while (movementTextBox.Lines[i] != "End")
                     {
-                        commands.Add(new Command(movementTextBox.Lines[i], romInfo.GetVersion(), true));
+                        commands.Add(new Command(movementTextBox.Lines[i], romInfo.getVersion(), true));
                         i++;
                     }
-                    commands.Add(new Command(movementTextBox.Lines[i], romInfo.GetVersion(), true)); // Add end command
+                    commands.Add(new Command(movementTextBox.Lines[i], romInfo.getVersion(), true)); // Add end command
 
                     currentScriptFile.movements.Add(new Script(commands));
                 }
@@ -4529,10 +4606,15 @@ namespace DS_Map
         }
         private void messageButton_Click(object sender, EventArgs e)
         {
-            using (InsertValueDialog f = new InsertValueDialog("Insert message number:", "dec"))
-            {
+            using (InsertValueDialog f = new InsertValueDialog("Insert message number:", "dec")) {
                 f.ShowDialog();
-                if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "Message 0x" + ((int)f.numericUpDown1.Value).ToString("X"));
+                if (f.okSelected) {
+                    String msg = "\nSetVariableHero 0x0" +
+                        "\nPlayFanfare 0x5DC" + "\nLockAll" + "\nFacePlayer" +
+                        "\nMessage 0x" + ((int)f.numericUpDown1.Value).ToString("X") +
+                        "\nWaitButton" + "\nCloseMessage" + "\nReleaseAll";
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, msg);
+                }
             }
         }
         private void setflagButton_Click(object sender, EventArgs e)
@@ -4540,7 +4622,10 @@ namespace DS_Map
             using (InsertValueDialog f = new InsertValueDialog("Insert flag number (hex):", "hex"))
             {
                 f.ShowDialog();
-                if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "SetFlag 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
+                if (f.okSelected)
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nSetFlag 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
+                else
+                    f.Hide();
             }
         }
         private void setvarButton_Click(object sender, EventArgs e)
@@ -4548,7 +4633,10 @@ namespace DS_Map
             using (InsertValueDialog f = new InsertValueDialog("Insert variable number (hex):", "hex"))
             {
                 f.ShowDialog();
-                if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "SetVar 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
+                if (f.okSelected) 
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "SetVar 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
+                else
+                    f.Hide();
             }
         }
         private void trainerBattleButton_Click(object sender, EventArgs e)
@@ -4571,7 +4659,8 @@ namespace DS_Map
 
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, firstLine + "\r" + secondLine + "\r" + thirdLine);
 
-                }
+                } else
+                    f.Hide();
 
             }
         }
@@ -4585,18 +4674,24 @@ namespace DS_Map
         }
         private void lockButton_Click(object sender, EventArgs e)
         {
-            using (InsertValueDialog f = new InsertValueDialog("Insert overworld number:", "dec"))
+            using (InsertValueDialog f = new InsertValueDialog("ID of the overworld to lock:", "dec"))
             {
                 f.ShowDialog();
-                if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "Lock" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
+                if (f.okSelected) 
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "Lock" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
+                else
+                    f.Hide();
             }
         }
         private void releaseButton_Click(object sender, EventArgs e)
         {
-            using (InsertValueDialog f = new InsertValueDialog("Insert overworld number:", "dec"))
+            using (InsertValueDialog f = new InsertValueDialog("ID of the overworld to release:", "dec"))
             {
                 f.ShowDialog();
-                if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "Release" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
+                if (f.okSelected) 
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "Release" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
+                else
+                    f.Hide();
             }
         }
         private void waitmovementButton_Click(object sender, EventArgs e)
@@ -4605,18 +4700,24 @@ namespace DS_Map
         }
         private void addpeopleButton_Click(object sender, EventArgs e)
         {
-            using (InsertValueDialog f = new InsertValueDialog("Insert overworld number:", "dec"))
+            using (InsertValueDialog f = new InsertValueDialog("ID of the Overworld to add:", "dec"))
             {
                 f.ShowDialog();
-                if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "AddPeople" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
+                if (f.okSelected) 
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "AddOW" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
+                else
+                    f.Hide();
             }
         }
         private void removepeopleButton_Click(object sender, EventArgs e)
         {
-            using (InsertValueDialog f = new InsertValueDialog("Insert overworld number:", "dec"))
+            using (InsertValueDialog f = new InsertValueDialog("ID of the Overworld to remove:", "dec"))
             {
                 f.ShowDialog();
-                if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "RemovePeople" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
+                if (f.okSelected) 
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "RemoveOW" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
+                else
+                    f.Hide();
             }
         }
         #endregion
@@ -4627,7 +4728,10 @@ namespace DS_Map
             using (GivePokémonDialog f = new GivePokémonDialog(GetPokémonNames(), GetItemNames(), GetAttackNames()))
             {
                 f.ShowDialog();
-                if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, f.command);
+                if (f.okSelected) 
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, f.command);
+                else
+                    f.Hide();
             }
         }
         private void giveMoneyButton_Click(object sender, EventArgs e)
@@ -4635,7 +4739,10 @@ namespace DS_Map
             using (InsertValueDialog f = new InsertValueDialog("Insert money amount:", "dec"))
             {
                 f.ShowDialog();
-                if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "GiveMoney" + " " + "0x" + ((int)f.numericUpDown1.Value).ToString("X"));
+                if (f.okSelected) 
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "GiveMoney" + " " + "0x" + ((int)f.numericUpDown1.Value).ToString("X"));
+                else
+                    f.Hide();
             }
         }
         private void takeMoneyButton_Click(object sender, EventArgs e)
@@ -4643,7 +4750,10 @@ namespace DS_Map
             using (InsertValueDialog f = new InsertValueDialog("Insert money amount:", "dec"))
             {
                 f.ShowDialog();
-                if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "TakeMoney" + " " + "0x" + ((int)f.numericUpDown1.Value).ToString("X"));
+                if (f.okSelected) 
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "TakeMoney" + " " + "0x" + ((int)f.numericUpDown1.Value).ToString("X"));
+                else
+                    f.Hide();
             }
         }
         private void takeItemButton_Click(object sender, EventArgs e)
@@ -4658,7 +4768,8 @@ namespace DS_Map
 
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "TakeItem" + " " + "0x" + item + " " + "0x" + quantity + " " + "0x800C");
 
-                }
+                } else
+                    f.Hide();
 
             }
         }
@@ -4667,7 +4778,10 @@ namespace DS_Map
             using (InsertValueDialog f = new InsertValueDialog("Insert badge number:", "dec"))
             {
                 f.ShowDialog();
-                if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "EnableBadge 0x" + ((int)f.numericUpDown1.Value).ToString("X"));
+                if (f.okSelected) 
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "EnableBadge 0x" + ((int)f.numericUpDown1.Value).ToString("X"));
+                else
+                    f.Hide();
             }
         }
         private void takeBadgeButton_Click(object sender, EventArgs e)
@@ -4675,7 +4789,10 @@ namespace DS_Map
             using (InsertValueDialog f = new InsertValueDialog("Insert badge number:", "dec"))
             {
                 f.ShowDialog();
-                if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "DisableBadge 0x" + ((int)f.numericUpDown1.Value).ToString("X"));
+                if (f.okSelected) 
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "DisableBadge 0x" + ((int)f.numericUpDown1.Value).ToString("X"));
+                else
+                    f.Hide();
             }
         }
         #endregion
@@ -5029,7 +5146,7 @@ namespace DS_Map
         private void saveAreaDataButton_Click(object sender, EventArgs e)
         {
             string areaDataPath = romInfo.GetAreaDataFolderPath() + "\\" + selectAreaDataComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(areaDataPath, FileMode.Create))) writer.Write(currentAreaData.SaveAreaData(romInfo.GetVersion()));
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(areaDataPath, FileMode.Create))) writer.Write(currentAreaData.SaveAreaData(romInfo.getVersion()));
         }
         private void selectAreaDataComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -5038,11 +5155,19 @@ namespace DS_Map
             areaDataBuildingTilesetUpDown.Value = currentAreaData.buildingsTileset;
             areaDataMapTilesetUpDown.Value = currentAreaData.mapTileset;
             areaDataLightTypeComboBox.SelectedIndex = currentAreaData.lightType;
-            if (romInfo.GetVersion() == "HeartGold" || romInfo.GetVersion() == "SoulSilver")
-            {
-                if (currentAreaData.dynamicTextureType == 0xFFFF) areaDataDynamicTexturesComboBox.SelectedIndex = 0x2;
-                else areaDataDynamicTexturesComboBox.SelectedIndex = currentAreaData.dynamicTextureType;
-                areaDataAreaTypeComboBox.SelectedIndex = currentAreaData.areaType;
+            switch (romInfo.getVersion()) {
+                case "Diamond":
+                case "Pearl":
+                case "Platinum":
+                    break;
+                default:
+                    if (currentAreaData.dynamicTextureType == 0xFFFF) {
+                        areaDataDynamicTexturesComboBox.SelectedIndex = 0x2;
+                    } else {
+                        areaDataDynamicTexturesComboBox.SelectedIndex = currentAreaData.dynamicTextureType;
+                    }
+                    areaDataAreaTypeComboBox.SelectedIndex = currentAreaData.areaType;
+                    break;
             }
         }
 
