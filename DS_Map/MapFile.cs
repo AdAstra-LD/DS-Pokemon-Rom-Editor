@@ -68,7 +68,7 @@ namespace DS_Map
                 int bdhcSectionLength = reader.ReadInt32();
 
                 /* Read background sounds section */
-                if (this.gameVersion == "HeartGold" || this.gameVersion == "SoulSilver")
+                if (gameVersion == "HeartGold" || gameVersion == "SoulSilver")
                 {
                     reader.BaseStream.Position += 0x2;
                     int bgsSectionLength = (reader.ReadByte() + (reader.ReadByte() << 8));
@@ -222,7 +222,7 @@ namespace DS_Map
                 writer.Write(bdhc.Length);
 
                 /* Write soundplate section for HG/SS */
-                if (this.gameVersion == "HeartGold" || this.gameVersion == "SoulSilver")
+                if (gameVersion == "HeartGold" || gameVersion == "SoulSilver")
                 {
                     writer.BaseStream.Position += 0x2;
                     writer.Write((short)bgs.Length);
