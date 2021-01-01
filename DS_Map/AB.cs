@@ -47,9 +47,12 @@ namespace AB_API
                 else
                 {
                     BinaryWriter write = new BinaryWriter(File.Create(folderPath + "\\" + "header" + "\\" + i.ToString("D4")));
-                    if (count == 2) read.BaseStream.Position += 4;
-                    if (count == 3) read.BaseStream.Position += 8;
-                    if (count == 4) read.BaseStream.Position += 12;
+                    if (count == 2) 
+                        read.BaseStream.Position += 4;
+                    if (count == 3) 
+                        read.BaseStream.Position += 8;
+                    if (count == 4) 
+                        read.BaseStream.Position += 12;
                     int offset = read.ReadInt32();
                     read.BaseStream.Position = offsets[i] + 0x18 + offset;
                     int size = read.ReadInt32();
