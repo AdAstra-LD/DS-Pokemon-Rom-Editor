@@ -632,9 +632,25 @@ namespace DS_Map {
             
             disableHandlers = false;
 
+
             selectMapComboBox.SelectedIndex = 0;
-            mapTextureComboBox.SelectedIndex = 0;
-            buildTextureComboBox.SelectedIndex = 0;
+            switch (gameVersion) {
+                case "Diamond":
+                case "Pearl":
+                case "Platinum":
+                    mapTextureComboBox.SelectedIndex = 7;
+                    buildTextureComboBox.SelectedIndex = 1;
+                    break;
+                case "HeartGold":
+                case "SoulSilver":
+                    mapTextureComboBox.SelectedIndex = 3;
+                    buildTextureComboBox.SelectedIndex = 1;
+                    break;
+                default:
+                    mapTextureComboBox.SelectedIndex = 2;
+                    buildTextureComboBox.SelectedIndex = 1;
+                    break;
+            };
         }
         private void SetupMatrixEditor()
         {
@@ -680,30 +696,32 @@ namespace DS_Map {
             }
 
             disableHandlers = false;
-    }
+            selectMatrixComboBox.SelectedIndex = 0;
+        }
         private void SetupScriptEditor()
         {
             int scriptCount = Directory.GetFiles(romInfo.GetScriptFolderPath()).Length;
-            for (int i = 0; i < scriptCount; i++) selectScriptFileComboBox.Items.Add("Script File " + i);
+            for (int i = 0; i < scriptCount; i++) 
+                selectScriptFileComboBox.Items.Add("Script File " + i);
+
+            selectScriptFileComboBox.SelectedIndex = 0;
         }
         private void SetupTextEditor()
         {
-            for (int i = 0; i < romInfo.GetMessageCount(); i++) selectTextFileComboBox.Items.Add("Message File " + i);
+            for (int i = 0; i < romInfo.GetMessageCount(); i++) 
+                selectTextFileComboBox.Items.Add("Message File " + i);
+
+            selectTextFileComboBox.SelectedIndex = 0;
         }
         private void SetupTilesetEditor()
         {
             /* Fill Tileset ListBox */
             FillTilesetBox();
 
-            texturePacksListBox.SelectedIndex = 0;
-            disableHandlers = true;
-            texturesListBox.SelectedIndex = 0;
-            disableHandlers = false;
-            palettesListBox.SelectedIndex = 0;
-
             /* Fill AreaData ComboBox */
             int areaDataCount = Directory.GetFiles(romInfo.GetAreaDataFolderPath()).Length;
-            for (int i = 0; i < areaDataCount; i++) selectAreaDataComboBox.Items.Add("Area Data " + i);
+            for (int i = 0; i < areaDataCount; i++) 
+                selectAreaDataComboBox.Items.Add("Area Data " + i);
 
             /* Enable gameVersion-specific controls */
 
@@ -717,6 +735,15 @@ namespace DS_Map {
                     areaDataAreaTypeComboBox.Enabled = true;
                     break;
             };
+
+            if (selectAreaDataComboBox.Items.Count > 0)
+                selectAreaDataComboBox.SelectedIndex = 0;
+            if (texturePacksListBox.Items.Count > 0)
+                texturePacksListBox.SelectedIndex = 0;
+            if (texturesListBox.Items.Count > 0)
+                texturesListBox.SelectedIndex = 0;
+            if (palettesListBox.Items.Count > 0)
+                palettesListBox.SelectedIndex = 0;
         }
         private void UnpackRom(string ndsFileName)
         {
@@ -1358,7 +1385,13 @@ namespace DS_Map {
         private void openAreaDataButton_Click(object sender, EventArgs e)
         {
             selectAreaDataComboBox.SelectedIndex = (int)areaDataUpDown.Value;
+            texturePacksListBox.SelectedIndex = (mapTilesetRadioButton.Checked ? (int)areaDataMapTilesetUpDown.Value : (int)areaDataBuildingTilesetUpDown.Value);
             mainTabControl.SelectedTab = tilesetEditorTabPage;
+
+            if (texturesListBox.Items.Count > 0)
+                texturesListBox.SelectedIndex = 0;
+            if (palettesListBox.Items.Count > 0)
+                palettesListBox.SelectedIndex = 0;
         }
         private void openEventsButton_Click(object sender, EventArgs e)
         {
@@ -5010,16 +5043,24 @@ namespace DS_Map {
             texturePacksListBox.Items.Clear();
 
             int tilesetFileCount;
-            if (mapTilesetRadioButton.Checked) tilesetFileCount = Directory.GetFiles(romInfo.GetMapTexturesFolderPath()).Length;
-            else tilesetFileCount = Directory.GetFiles(romInfo.GetBuildingTexturesFolderPath()).Length;
+            if (mapTilesetRadioButton.Checked) 
+                tilesetFileCount = Directory.GetFiles(romInfo.GetMapTexturesFolderPath()).Length;
+            else 
+                tilesetFileCount = Directory.GetFiles(romInfo.GetBuildingTexturesFolderPath()).Length;
 
-            for (int i = 0; i < tilesetFileCount; i++) texturePacksListBox.Items.Add("Texture Pack " + i);
+            for (int i = 0; i < tilesetFileCount; i++) 
+                texturePacksListBox.Items.Add("Texture Pack " + i);
         }
         #endregion
 
         private void buildingsTilesetRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             FillTilesetBox();
+            texturePacksListBox.SelectedIndex = (int)areaDataBuildingTilesetUpDown.Value;
+            if (texturesListBox.Items.Count > 0)
+                texturesListBox.SelectedIndex = 0;
+            if (palettesListBox.Items.Count > 0)
+                palettesListBox.SelectedIndex = 0;
         }
         private void exportNSBTXButton_Click(object sender, EventArgs e)
         {
@@ -5053,12 +5094,17 @@ namespace DS_Map {
         private void mapTilesetRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             FillTilesetBox();
+            texturePacksListBox.SelectedIndex = (int)areaDataMapTilesetUpDown.Value;
+            if (texturesListBox.Items.Count > 0)
+                texturesListBox.SelectedIndex = 0;
+            if (palettesListBox.Items.Count > 0)
+                palettesListBox.SelectedIndex = 0;
         }
         private void palettesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
-            try
-            {
+            if (disableHandlers) 
+                return;
+            try {
                 texturePictureBox.Image = LoadTextureFromNSBTX(currentTileset, texturesListBox.SelectedIndex, palettesListBox.SelectedIndex);
             }
             catch { }
@@ -5071,17 +5117,30 @@ namespace DS_Map {
 
             /* Load tileset file */
             string tilesetPath;
-            if (mapTilesetRadioButton.Checked) tilesetPath = romInfo.GetMapTexturesFolderPath() + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-            else tilesetPath = romInfo.GetBuildingTexturesFolderPath() + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+            if (mapTilesetRadioButton.Checked) 
+                tilesetPath = romInfo.GetMapTexturesFolderPath() + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+            else 
+                tilesetPath = romInfo.GetBuildingTexturesFolderPath() + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             currentTileset = new NSMBe4.NSBMD.NSBTX_File(new FileStream(tilesetPath, FileMode.Open));
 
             /* Add textures and palette slot names to ListBoxes */
             texturesListBox.Items.AddRange(currentTileset.TexInfo.names.ToArray());
             palettesListBox.Items.AddRange(currentTileset.PalInfo.names.ToArray());
+
+            if (texturesListBox.Items.Count > 0)
+                texturesListBox.SelectedIndex = 0;
         }
-        private void texturesListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (disableHandlers) return;
+        private void texturesListBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (disableHandlers)
+                return;
+
+            String texSelected = texturesListBox.SelectedItem.ToString();
+            String result = findAndSelectMatchingPalette(texSelected);
+            if (result != null) {
+                palettesListBox.SelectedItem = result;
+                statusLabel.Text = "Ready";
+            }
+
             try
             {
                 texturePictureBox.Image = LoadTextureFromNSBTX(currentTileset, texturesListBox.SelectedIndex, palettesListBox.SelectedIndex);
@@ -5089,6 +5148,29 @@ namespace DS_Map {
             catch { }
         }
 
+        private String findAndSelectMatchingPalette(String findThis) {
+            statusLabel.Text = "Searching palette...";
+
+            String copy = findThis;
+            while (copy.Length > 0) {
+                if (palettesListBox.Items.Contains(copy + "_pl")) {
+                    return copy + "_pl";
+                }
+                if (palettesListBox.Items.Contains(copy)) {
+                    return copy;
+                }
+                copy = copy.Substring(0, copy.Length - 1);
+            }
+
+            foreach (String palette in palettesListBox.Items) {
+                if (palette.StartsWith(findThis)) {
+                    return palette;
+                }
+            }
+
+            statusLabel.Text = "Couldn't find a palette to match " + '"' + findThis + '"';
+            return null;
+        }
 
         private void areaDataBuildingTilesetUpDown_ValueChanged(object sender, EventArgs e)
         {
