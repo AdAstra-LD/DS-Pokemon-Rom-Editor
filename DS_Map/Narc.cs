@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Windows.Forms;
 
 namespace NarcAPI
 {
@@ -110,9 +108,13 @@ namespace NarcAPI
 
         public void ExtractToFolder(String folderPath)
         {
-            if (Directory.Exists(folderPath))
-            {
-                Directory.Delete(folderPath, true);
+            if (Directory.Exists(folderPath)) {
+                try {
+                    Directory.Delete(folderPath, true);
+                } catch (IOException) {
+                    MessageBox.Show("Can't access temp directory: \n" + folderPath +"\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             Directory.CreateDirectory(folderPath);
             FileStream file;

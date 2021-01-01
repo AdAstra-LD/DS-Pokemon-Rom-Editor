@@ -222,10 +222,9 @@ namespace DS_Map
                 writer.Write(bdhc.Length);
 
                 /* Write soundplate section for HG/SS */
-                if (gameVersion == "HeartGold" || gameVersion == "SoulSilver")
-                {
-                    writer.BaseStream.Position += 0x2;
-                    writer.Write((short)bgs.Length);
+                if (gameVersion == "HeartGold" || gameVersion == "SoulSilver") { 
+                    writer.Write((ushort)0x1234);
+                    writer.Write((ushort)bgs.Length);
                     writer.Write(bgs);
                 }
 

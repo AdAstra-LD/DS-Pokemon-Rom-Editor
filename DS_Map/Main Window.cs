@@ -161,7 +161,13 @@ namespace DS_Map {
         
 		private void PaintGameIcon(object sender, PaintEventArgs e) {
             if (iconON == true) {
-                BinaryReader readIcon = new BinaryReader(File.OpenRead(workingFolder + @"banner.bin"));
+                BinaryReader readIcon;
+                try {
+                    readIcon = new BinaryReader(File.OpenRead(workingFolder + @"banner.bin"));
+                } catch (FileNotFoundException) {
+                    MessageBox.Show("Couldn't load " + '"' + "banner.bin" + '"' + '.', "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 #region Read Icon Palette
                 readIcon.BaseStream.Position = 0x220;
                 byte firstByte, secondByte;
@@ -745,30 +751,50 @@ namespace DS_Map {
             if (palettesListBox.Items.Count > 0)
                 palettesListBox.SelectedIndex = 0;
         }
-        private void UnpackRom(string ndsFileName)
-        {
+        private bool UnpackRom(string ndsFileName) {
             if (Directory.Exists(workingFolder)) // Check if extracted data for the ROM exists, and ask user if they want to load it.
             {
                 DialogResult d;
-                d = MessageBox.Show("Extracted data has been found for this ROM. Do you want to load it instead?", "Data detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                d = MessageBox.Show("This ROM has already been opened before. Do you want to load the extracted data?", "Data detected", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
-                if (d == DialogResult.Yes) return;
-                else
-                {
-                    Application.DoEvents();
-                    Directory.Delete(workingFolder, true);
+                if (d == DialogResult.Yes) 
+                    return false;
+                else if (d == DialogResult.Cancel) {
+                    statusLabel.Text = "Load aborted";
+                    return true;
                 }
+                else if (d == DialogResult.No) {
+                    Application.DoEvents();
+                    try {
+                        statusLabel.Text = "Deleting old data...";
+                        Directory.Delete(workingFolder, true);
+                    } catch (IOException) {
+                        MessageBox.Show("Can't access temp directory: \n" + workingFolder + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return true;
+                    }
+                } 
             }
 
+            statusLabel.Text = "Unpacking ROM...";
             Directory.CreateDirectory(workingFolder);
             Process unpack = new Process();
             unpack.StartInfo.FileName = @"Tools\ndstool.exe";
-            unpack.StartInfo.Arguments = "-x " + '"' + ndsFileName + '"' + " -9 " + '"' + workingFolder + "arm9.bin" + '"' + " -7 " + '"' + workingFolder + "arm7.bin" + '"' + " -y9 " + '"' + workingFolder + "y9.bin" + '"' + " -y7 " + '"' + workingFolder + "y7.bin" + '"' + " -d " + '"' + workingFolder + "data" + '"' + " -y " + '"' + workingFolder + "overlay" + '"' + " -t " + '"' + workingFolder + "banner.bin" + '"' + " -h " + '"' + workingFolder + "header.bin" + '"';
+            unpack.StartInfo.Arguments = "-x " + '"' + ndsFileName + '"' 
+                + " -9 " + '"' + workingFolder + "arm9.bin" + '"' 
+                + " -7 " + '"' + workingFolder + "arm7.bin" + '"' 
+                + " -y9 " + '"' + workingFolder + "y9.bin" + '"' 
+                + " -y7 " + '"' + workingFolder + "y7.bin" + '"' 
+                + " -d " + '"' + workingFolder + "data" + '"' 
+                + " -y " + '"' + workingFolder + "overlay" + '"' 
+                + " -t " + '"' + workingFolder + "banner.bin" + '"' 
+                + " -h " + '"' + workingFolder + "header.bin" + '"';
             Application.DoEvents();
             unpack.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             unpack.StartInfo.CreateNoWindow = true;
             unpack.Start();
             unpack.WaitForExit();
+
+            return false;
         }
         private void UnpackNARCsDiamondPearl()
         {
@@ -979,14 +1005,15 @@ namespace DS_Map {
             if (openRom.ShowDialog(this) != DialogResult.OK) 
                 return;
 
-            statusLabel.Text = "Loading ROM... Please wait.";
-            using (BinaryReader br = new BinaryReader(File.OpenRead(openRom.FileName)))
-            {
+            using (BinaryReader br = new BinaryReader(File.OpenRead(openRom.FileName))) {
                 br.BaseStream.Seek(0xC, SeekOrigin.Begin); // Get ROM ID
                 gameCode = Encoding.UTF8.GetString(br.ReadBytes(4));
             }
             workingFolder = Path.GetDirectoryName(openRom.FileName) + "\\" + Path.GetFileNameWithoutExtension(openRom.FileName) + "_DSPRE" + "\\";
-            UnpackRom(openRom.FileName);
+            
+            bool processAborted = UnpackRom(openRom.FileName);
+            if (processAborted)
+                return;
 
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, workingFolder);
