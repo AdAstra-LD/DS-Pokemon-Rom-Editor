@@ -20,7 +20,7 @@ namespace DS_Map
         {
             string path = info.GetScriptFolderPath() + "\\" + info.GetItemScriptFileNumber().ToString("D4");
 
-            ScriptFile file = new ScriptFile(new FileStream(path, FileMode.Open), info.getVersion());
+            ScriptFile file = new ScriptFile(new FileStream(path, FileMode.Open), info.getGameVersion());
             for (int i = 0; i < file.scripts.Count - 1; i++)
             {
                 file.scripts[i].commands[0].parameters[1] = BitConverter.GetBytes((ushort)i); // Fix item index

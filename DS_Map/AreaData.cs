@@ -16,14 +16,14 @@ namespace DS_Map
         #endregion
 
         #region Constructors (1)
-        public AreaData(Stream data, string version)
+        public AreaData(Stream data, string gameVersion)
 		{
             using (BinaryReader reader = new BinaryReader(data))
             {
                 buildingsTileset = reader.ReadUInt16();
                 mapTileset = reader.ReadUInt16();
 
-                if (version == "Diamond" || version == "Pearl" || version == "Platinum") {
+                if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum") {
                     unknown1 = reader.ReadUInt16();
                     lightType = reader.ReadByte();
                 } else {
@@ -36,7 +36,7 @@ namespace DS_Map
         #endregion
 
         #region Methods (1)
-        public byte[] SaveAreaData(string version)
+        public byte[] SaveAreaData(string gameVersion)
         {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData))
@@ -44,7 +44,7 @@ namespace DS_Map
                 writer.Write(buildingsTileset);
                 writer.Write(mapTileset);
 
-                if (version == "Diamond" || version == "Pearl" || version == "Platinum") {
+                if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum") {
                     writer.Write(unknown1);
                     writer.Write(lightType);
                 } else {

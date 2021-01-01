@@ -45,7 +45,7 @@ namespace DS_Map
     public class MapFile
     {
         #region Fields
-        private string version;
+        private string gameVersion;
         public byte[,] collisions = new byte[32, 32];
         public byte[,] types = new byte[32, 32];
         public List<Building> buildings;
@@ -56,9 +56,9 @@ namespace DS_Map
         #endregion
 
         #region Constructors (1)
-        public MapFile(Stream data, string version)
+        public MapFile(Stream data, string gameVersion)
         {
-            this.version = version;
+            this.gameVersion = gameVersion;
             using (BinaryReader reader = new BinaryReader(data))
             {
                 /* Read sections lengths */
@@ -68,7 +68,7 @@ namespace DS_Map
                 int bdhcSectionLength = reader.ReadInt32();
 
                 /* Read background sounds section */
-                if (this.version == "HeartGold" || this.version == "SoulSilver")
+                if (this.gameVersion == "HeartGold" || this.gameVersion == "SoulSilver")
                 {
                     reader.BaseStream.Position += 0x2;
                     int bgsSectionLength = (reader.ReadByte() + (reader.ReadByte() << 8));
@@ -222,7 +222,7 @@ namespace DS_Map
                 writer.Write(bdhc.Length);
 
                 /* Write soundplate section for HG/SS */
-                if (this.version == "HeartGold" || this.version == "SoulSilver")
+                if (this.gameVersion == "HeartGold" || this.gameVersion == "SoulSilver")
                 {
                     writer.BaseStream.Position += 0x2;
                     writer.Write((short)bgs.Length);

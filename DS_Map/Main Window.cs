@@ -46,7 +46,8 @@ namespace DS_Map
         public static string[] narcList;
         public static string[] narcFolders;
         RomInfo romInfo;
-       
+        private String gameVersion;
+
         #endregion
 
         #region Subroutines
@@ -144,10 +145,10 @@ namespace DS_Map
         }
         private AreaData LoadAreaData(uint areaDataID)
         {
-            return new AreaData(new FileStream(romInfo.GetAreaDataFolderPath() + "//" + areaDataID.ToString("D4"), FileMode.Open), romInfo.getVersion());
+            return new AreaData(new FileStream(romInfo.GetAreaDataFolderPath() + "//" + areaDataID.ToString("D4"), FileMode.Open), gameVersion);
         }
         private MapFile LoadMapFile(int mapNumber) { 
-            return new MapFile(new FileStream(romInfo.GetMapFolderPath() + "\\" + mapNumber.ToString("D4"), FileMode.Open), romInfo.getVersion());
+            return new MapFile(new FileStream(romInfo.GetMapFolderPath() + "\\" + mapNumber.ToString("D4"), FileMode.Open), gameVersion);
         }
         private Matrix LoadMatrix(int matrixNumber)
         {
@@ -277,7 +278,7 @@ namespace DS_Map
             disableHandlers = true;
             eventOpenGlControl.InitializeContexts();
 
-            switch (romInfo.getVersion())
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -385,7 +386,7 @@ namespace DS_Map
                 });
 
             /* Create dictionary for 3D overworlds */
-            switch (romInfo.getVersion())
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -414,7 +415,7 @@ namespace DS_Map
         }
         private void SetupFlagNames()
         {
-            switch (romInfo.getVersion())
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -466,7 +467,7 @@ namespace DS_Map
             /*Add list of options to each control */
             mapNameComboBox.Items.AddRange(LoadMessageFile(romInfo.GetMapNamesMessageNumber()).messages.ToArray());
             HeaderDatabase headerInfo = new HeaderDatabase();
-            switch (romInfo.getVersion())
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -506,7 +507,7 @@ namespace DS_Map
             mapOpenGlControl.MouseWheel += new MouseEventHandler(mapOpenGlControl_MouseWheel);
             collisionPainterPictureBox.Image = new Bitmap(100, 100);
             typePainterPictureBox.Image = new Bitmap(100, 100);
-            switch (romInfo.getVersion()) {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
@@ -522,7 +523,7 @@ namespace DS_Map
             {
                 using (BinaryReader reader = new BinaryReader(File.OpenRead(romInfo.GetMapFolderPath() + "\\" + i.ToString("D4"))))
                 {
-                    switch (romInfo.getVersion()) {
+                    switch (gameVersion) {
                         case "Diamond":
                         case "Pearl":
                         case "Platinum":
@@ -632,7 +633,7 @@ namespace DS_Map
             for (int i = 0; i < romInfo.GetMatrixCount(); i++) selectMatrixComboBox.Items.Add("Matrix " + i);
             
             /* Initialize dictionary of colors corresponding to border maps in the matrix editor */
-            switch (romInfo.getVersion()) {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
@@ -693,9 +694,9 @@ namespace DS_Map
             int areaDataCount = Directory.GetFiles(romInfo.GetAreaDataFolderPath()).Length;
             for (int i = 0; i < areaDataCount; i++) selectAreaDataComboBox.Items.Add("Area Data " + i);
 
-            /* Enable version-specific controls */
+            /* Enable gameVersion-specific controls */
 
-            switch (romInfo.getVersion()) {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
@@ -767,7 +768,7 @@ namespace DS_Map
                romInfo.GetTrainerDataFolderPath(),
             };
 
-            if (romInfo.getVersion() == "Diamond") {
+            if (gameVersion == "Diamond") {
                 narcList[5] += "d_enc_data.narc";
             } else {
                 narcList[5] += "p_enc_data.narc";
@@ -927,7 +928,7 @@ namespace DS_Map
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            string message = "DS Pokémon Rom Editor by Nømura (AdAstra's edit of Mixone's branch)" + Environment.NewLine + "Version 1.0.3" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura (AdAstra's edit of Mixone's branch)" + Environment.NewLine + "gameVersion 1.0.3" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who owes credit for SDSME." + Environment.NewLine +
                 "Special thanks go to Trifindo, Mikelan98, BagBoy, and JackHack96, who provided tons of help, research and expertise in the field of NDS Rom Hacking that made the development of this tool possible.";
 
@@ -937,9 +938,10 @@ namespace DS_Map
         {
             OpenFileDialog openRom = new OpenFileDialog(); // Select ROM
             openRom.Filter = "NDS File (*.nds)|*.nds";
-            if (openRom.ShowDialog(this) != DialogResult.OK) return;
+            if (openRom.ShowDialog(this) != DialogResult.OK) 
+                return;
 
-            statusLabel.Text = "Loading ROM...";
+            statusLabel.Text = "Loading ROM... Please wait.";
             using (BinaryReader br = new BinaryReader(File.OpenRead(openRom.FileName)))
             {
                 br.BaseStream.Seek(0xC, SeekOrigin.Begin); // Get ROM ID
@@ -948,16 +950,18 @@ namespace DS_Map
             workingFolder = Path.GetDirectoryName(openRom.FileName) + "\\" + Path.GetFileNameWithoutExtension(openRom.FileName) + "_DSPRE" + "\\";
             UnpackRom(openRom.FileName);
 
-            /* Set ROM version and language */
+            /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, workingFolder);
-            versionLabel.Text = "ROM: Pokémon " + romInfo.getVersion();
+            gameVersion = romInfo.getGameVersion();
+            versionLabel.Text = "ROM: Pokémon " + gameVersion;
             languageLabel.Text = "Language: " + romInfo.GetLanguage();
-            iconON = true; gameIcon.Refresh();  // Paint game icon
+            iconON = true; 
+            gameIcon.Refresh();  // Paint game icon
 
 
-
+            statusLabel.Text = "Unpacking NARCs...";
             /* Extract NARCs sub-archives*/
-            switch (romInfo.getVersion())
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -1001,7 +1005,7 @@ namespace DS_Map
             statusLabel.Text = "Writing new ROM...";
 
 
-            switch (romInfo.getVersion()) {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
@@ -1013,7 +1017,7 @@ namespace DS_Map
                 
             RepackNARCs();
             RepackRom(saveRom.FileName);
-            switch (romInfo.getVersion())
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -1032,7 +1036,7 @@ namespace DS_Map
         }
         private void wildEditorButton_Click(object sender, EventArgs e)
         {
-            switch (romInfo.getVersion()) {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
@@ -1128,9 +1132,9 @@ namespace DS_Map
             int headerOffset = romInfo.GetHeaderTableOffset() + 0x18 * headerNumber;
             byte[] headerData = ReadFromArm9(headerOffset, 24);
 
-            /* Encapsulate header data into the class appropriate for the game version */
+            /* Encapsulate header data into the class appropriate for the game gameVersion */
 
-            switch (romInfo.getVersion()) {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     return new HeaderDP(new MemoryStream(headerData));
@@ -1152,7 +1156,7 @@ namespace DS_Map
             if (disableHandlers) return;
 
             string imageName;
-            switch(romInfo.getVersion())
+            switch(gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -1174,7 +1178,7 @@ namespace DS_Map
             if (disableHandlers) return;
            
             string imageName;
-            switch (romInfo.getVersion())
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -1249,8 +1253,8 @@ namespace DS_Map
             }
             disableHandlers = false;
 
-            /* Setup controls for fields with version-specific differences */
-            switch (romInfo.getVersion())
+            /* Setup controls for fields with gameVersion-specific differences */
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":                   
@@ -1289,7 +1293,7 @@ namespace DS_Map
             if (disableHandlers) 
                 return;
 
-            switch (romInfo.getVersion()) {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     ((HeaderDP)currentHeader).mapName = (ushort)mapNameComboBox.SelectedIndex;
@@ -1310,7 +1314,7 @@ namespace DS_Map
         private void musicDayComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            switch (romInfo.getVersion()) {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     ((HeaderDP)currentHeader).musicDay = UInt16.Parse(musicDayComboBox.SelectedItem.ToString().Substring(1, 4));
@@ -1327,7 +1331,7 @@ namespace DS_Map
         {
             if (disableHandlers) return;
 
-            switch (romInfo.getVersion()) {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     ((HeaderDP)currentHeader).musicNight = UInt16.Parse(musicNightComboBox.SelectedItem.ToString().Substring(1, 4));
@@ -1420,7 +1424,7 @@ namespace DS_Map
             currentHeader.weather = Byte.Parse(weatherComboBox.SelectedItem.ToString().Substring(1, 2));
 
             string imageName;
-            switch (romInfo.getVersion())
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -3055,7 +3059,7 @@ namespace DS_Map
             /* Determine map file to open and open it in BinaryReader, unless map is VOID */
             uint mapIndex = Matrix.VOID;
             if (eventMatrixXUpDown.Value > eventMatrix.width || eventMatrixYUpDown.Value > eventMatrix.height) {
-                String errorMsg = "This event is located on an unreachable map that is beyond the current matrix.\n" +
+                String errorMsg = "This event file contains elements located on an unreachable map, beyond the current matrix.\n" +
                     "It is strongly advised that you bring every Overworld, Spawnable, Warp and Trigger of this event to a map that belongs to the matrix's range.";
                 DialogResult d;
                 d = MessageBox.Show(errorMsg, "Can't load proper map", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -3084,7 +3088,7 @@ namespace DS_Map
                 eventMapFile.mapModel = LoadModelTextures(eventMapFile.mapModel, romInfo.GetMapTexturesFolderPath(), areaData.mapTileset);
 
                 bool isInteriorMap = new bool();
-                if ((romInfo.getVersion() == "HeartGold" || romInfo.getVersion() == "SoulSilver") 
+                if ((gameVersion == "HeartGold" || gameVersion == "SoulSilver") 
                 && areaData.areaType == 0x0) 
                     isInteriorMap = true;
 
@@ -3240,7 +3244,7 @@ namespace DS_Map
             using (BinaryReader idReader = new BinaryReader(new FileStream(workingFolder + overworldTablePath, FileMode.Open)))
             {        
                 int archiveID;
-                switch (romInfo.getVersion())
+                switch (gameVersion)
                 {
                     case "Diamond":
                     case "Pearl":
@@ -4126,7 +4130,7 @@ namespace DS_Map
         #region Subroutines
         public ScriptFile LoadScriptFile(int fileID)
         {
-            return new ScriptFile((new FileStream(romInfo.GetScriptFolderPath() + "\\" + fileID.ToString("D4"), FileMode.Open)), romInfo.getVersion());
+            return new ScriptFile((new FileStream(romInfo.GetScriptFolderPath() + "\\" + fileID.ToString("D4"), FileMode.Open)), gameVersion);
         }
         public void SaveScriptFile(int fileID)
         {
@@ -4157,28 +4161,28 @@ namespace DS_Map
             return w;
         }
 
-        public void AddLineNumbersScript()
+        public void AddLineNumbers(RichTextBox mainbox, RichTextBox linebox)
         {
             // create & set Point pt to (0,0)    
             Point pt = new Point(0, 0);
             // get First Index & First Line from scriptTextBox    
-            int First_Index = scriptTextBox.GetCharIndexFromPosition(pt);
-            int First_Line = scriptTextBox.GetLineFromCharIndex(First_Index);
+            int First_Index = mainbox.GetCharIndexFromPosition(pt);
+            int First_Line = mainbox.GetLineFromCharIndex(First_Index);
             // set X & Y coordinates of Point pt to ClientRectangle Width & Height respectively    
             pt.X = ClientRectangle.Width;
             pt.Y = ClientRectangle.Height;
             // get Last Index & Last Line from scriptTextBox    
-            int Last_Index = scriptTextBox.GetCharIndexFromPosition(pt);
-            int Last_Line = scriptTextBox.GetLineFromCharIndex(Last_Index);
+            int Last_Index = mainbox.GetCharIndexFromPosition(pt);
+            int Last_Line = mainbox.GetLineFromCharIndex(Last_Index);
             // set Center alignment to LineNumberTextBox    
-            LineNumberTextBoxScript.SelectionAlignment = HorizontalAlignment.Center;
+            linebox.SelectionAlignment = HorizontalAlignment.Center;
             // set LineNumberTextBox text to null & width to getWidth() function value    
-            LineNumberTextBoxScript.Text = "";
-            LineNumberTextBoxScript.Width = getWidthScript();
+            linebox.Text = "";
+            linebox.Width = getWidthScript();
             // now add each line number to LineNumberTextBox upto last line    
-            for (int i = First_Line; i <= Last_Line + 2; i++)
+            for (int i = First_Line+1; i <= Last_Line; i++)
             {
-                LineNumberTextBoxScript.Text += i + 1 + "\n";
+                linebox.Text += i + "\n";
             }
         }
 
@@ -4187,14 +4191,14 @@ namespace DS_Map
             Point pt = scriptTextBox.GetPositionFromCharIndex(scriptTextBox.SelectionStart);
             if (pt.X == 1)
             {
-                AddLineNumbersScript();
+                AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             }
         }
 
         private void scriptTextBox_VScroll(object sender, EventArgs e)
         {
             LineNumberTextBoxScript.Text = "";
-            AddLineNumbersScript();
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             LineNumberTextBoxScript.Invalidate();
         }
 
@@ -4202,7 +4206,7 @@ namespace DS_Map
         {
             if (scriptTextBox.Text == "")
             {
-                AddLineNumbersScript();
+                AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             }
         }
 
@@ -4235,44 +4239,19 @@ namespace DS_Map
             return w;
         }
 
-        public void AddLineNumbersFunc()
-        {
-            // create & set Point pt to (0,0)    
-            Point pt = new Point(0, 0);
-            // get First Index & First Line from functionTextBox    
-            int First_Index = functionTextBox.GetCharIndexFromPosition(pt);
-            int First_Line = functionTextBox.GetLineFromCharIndex(First_Index);
-            // set X & Y coordinates of Point pt to ClientRectangle Width & Height respectively    
-            pt.X = ClientRectangle.Width;
-            pt.Y = ClientRectangle.Height;
-            // get Last Index & Last Line from functionTextBox    
-            int Last_Index = functionTextBox.GetCharIndexFromPosition(pt);
-            int Last_Line = functionTextBox.GetLineFromCharIndex(Last_Index);
-            // set Center alignment to LineNumberTextBox    
-            LineNumberTextBoxFunc.SelectionAlignment = HorizontalAlignment.Center;
-            // set LineNumberTextBox text to null & width to getWidth() function value    
-            LineNumberTextBoxFunc.Text = "";
-            LineNumberTextBoxFunc.Width = getWidthFunc();
-            // now add each line number to LineNumberTextBox upto last line    
-            for (int i = First_Line; i <= Last_Line + 2; i++)
-            {
-                LineNumberTextBoxFunc.Text += i + 1 + "\n";
-            }
-        }
-
         private void functionTextBox_SelectionChanged(object sender, EventArgs e)
         {
             Point pt = functionTextBox.GetPositionFromCharIndex(functionTextBox.SelectionStart);
             if (pt.X == 1)
             {
-                AddLineNumbersFunc();
+                AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
             }
         }
 
         private void functionTextBox_VScroll(object sender, EventArgs e)
         {
             LineNumberTextBoxFunc.Text = "";
-            AddLineNumbersFunc();
+            AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
             LineNumberTextBoxFunc.Invalidate();
         }
 
@@ -4280,7 +4259,7 @@ namespace DS_Map
         {
             if (functionTextBox.Text == "")
             {
-                AddLineNumbersFunc();
+                AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
             }
         }
 
@@ -4313,44 +4292,19 @@ namespace DS_Map
             return w;
         }
 
-        public void AddLineNumbersMov()
-        {
-            // create & set Point pt to (0,0)    
-            Point pt = new Point(0, 0);
-            // get First Index & First Line from movementTextBox    
-            int First_Index = movementTextBox.GetCharIndexFromPosition(pt);
-            int First_Line = movementTextBox.GetLineFromCharIndex(First_Index);
-            // set X & Y coordinates of Point pt to ClientRectangle Width & Height respectively    
-            pt.X = ClientRectangle.Width;
-            pt.Y = ClientRectangle.Height;
-            // get Last Index & Last Line from movementTextBox    
-            int Last_Index = movementTextBox.GetCharIndexFromPosition(pt);
-            int Last_Line = movementTextBox.GetLineFromCharIndex(Last_Index);
-            // set Center alignment to LineNumberTextBox    
-            LineNumberTextBoxMov.SelectionAlignment = HorizontalAlignment.Center;
-            // set LineNumberTextBox text to null & width to getWidth() function value    
-            LineNumberTextBoxMov.Text = "";
-            LineNumberTextBoxMov.Width = getWidthMov();
-            // now add each line number to LineNumberTextBox upto last line    
-            for (int i = First_Line; i <= Last_Line + 2; i++)
-            {
-                LineNumberTextBoxMov.Text += i + 1 + "\n";
-            }
-        }
-
         private void movementTextBox_SelectionChanged(object sender, EventArgs e)
         {
             Point pt = movementTextBox.GetPositionFromCharIndex(movementTextBox.SelectionStart);
             if (pt.X == 1)
             {
-                AddLineNumbersMov();
+                AddLineNumbers(movementTextBox, LineNumberTextBoxMov);
             }
         }
 
         private void movementTextBox_VScroll(object sender, EventArgs e)
         {
             LineNumberTextBoxMov.Text = "";
-            AddLineNumbersMov();
+            AddLineNumbers(movementTextBox, LineNumberTextBoxMov);
             LineNumberTextBoxMov.Invalidate();
         }
 
@@ -4358,7 +4312,7 @@ namespace DS_Map
         {
             if (movementTextBox.Text == "")
             {
-                AddLineNumbersMov();
+                AddLineNumbers(movementTextBox, LineNumberTextBoxMov);
             }
         }
 
@@ -4409,6 +4363,14 @@ namespace DS_Map
             selectScriptFileComboBox.SelectedIndex = (int)scriptFileUpDown.Value;
             mainTabControl.SelectedTab = scriptEditorTabPage;
         }
+
+        private void openLevelScriptButton_Click(object sender, EventArgs e) {
+            String errorMsg = "Level scripts are currently not supported.\n" +
+                    "For that, you can use AdAstra's Level Script Editor.";
+            DialogResult d;
+            d = MessageBox.Show(errorMsg, "Unimplemented feature", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
         private void removeScriptFileButton_Click(object sender, EventArgs e)
         {
             /* Delete script file */
@@ -4416,62 +4378,57 @@ namespace DS_Map
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectScriptFileComboBox.Items.Count - 1;
-            if (selectScriptFileComboBox.SelectedIndex == lastIndex) selectScriptFileComboBox.SelectedIndex--;
+            if (selectScriptFileComboBox.SelectedIndex == lastIndex) 
+                selectScriptFileComboBox.SelectedIndex--;
 
             /* Remove item from ComboBox */
             selectScriptFileComboBox.Items.RemoveAt(lastIndex);
         }
-        private void saveScriptFileButton_Click(object sender, EventArgs e)
-        {
+        private void saveScriptFileButton_Click(object sender, EventArgs e) {
             currentScriptFile.scripts.Clear();
             currentScriptFile.functions.Clear();
             currentScriptFile.movements.Clear();
 
             /* Create new script objects */
-            for (int i = 0; i < scriptTextBox.Lines.Length; i++)
-            {
-                if (!scriptTextBox.Lines[i].Contains('@')) continue; // Move on until script header is found
-                else
-                {
-                    i += 0x2; // Skip blank line
+            List<Command> commands = new List<Command>();
+            for (int i = 0; i < scriptTextBox.Lines.Length; i++) {
+                if (!scriptTextBox.Lines[i].Contains('@')) 
+                    continue; // Move on until script header is found
+                else {
+                    i++; // Skip line
+                    while (scriptTextBox.Lines[i].Length == 0)
+                        i++; //Skip all empty lines 
 
-                    if (scriptTextBox.Lines[i].Contains("UseScript"))
-                    {
+                    if (scriptTextBox.Lines[i].Contains("UseScript")) {
                         int scriptNumber = Int16.Parse(scriptTextBox.Lines[i].Substring(1 + scriptTextBox.Lines[i].IndexOf('#')));
                         currentScriptFile.scripts.Add(new Script(scriptNumber));
-                    }
-
-                    else
-                    {
-                        List<Command> commands = new List<Command>();
-
+                    } else { 
                         /* Read script commands */
-                        while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump F") && i < scriptTextBox.Lines.Length - 1)
-                        {
+                        while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump Function") && i < scriptTextBox.Lines.Length - 1) {
                             Console.WriteLine("Script line " + i.ToString());
-                            commands.Add(new Command(scriptTextBox.Lines[i], romInfo.getVersion(), false));
+                            commands.Add(new Command(scriptTextBox.Lines[i], gameVersion, false));
                             i++;
                         }
-                        commands.Add(new Command(scriptTextBox.Lines[i], romInfo.getVersion(), false)); // Add end or jump/call command
+                        commands.Add(new Command(scriptTextBox.Lines[i], gameVersion, false)); // Add end or jump/call command
                         currentScriptFile.scripts.Add(new Script(commands));
                     }
                 }
             }
-            for (int i = 0; i < functionTextBox.Lines.Length; i++)
-            {
-                if (!functionTextBox.Lines[i].Contains('@')) continue; // Move on until function header is found
+            for (int i = 0; i < functionTextBox.Lines.Length; i++) {
+                if (!functionTextBox.Lines[i].Contains('@')) 
+                    continue; // Move on until function header is found
                 else
                 {
-                    List<Command> commands = new List<Command>();
+                    commands = new List<Command>();
                     i += 0x2; // Skip blank line
 
                     /* Read function commands */
                     while (functionTextBox.Lines[i] != "End" && !functionTextBox.Lines[i].Contains("Return") && !functionTextBox.Lines[i].Contains("Jump F"))
                     {
-                        commands.Add(new Command(functionTextBox.Lines[i], romInfo.getVersion(), false));
+                        commands.Add(new Command(functionTextBox.Lines[i], gameVersion, false));
                         i++;
                     }
-                    commands.Add(new Command(functionTextBox.Lines[i], romInfo.getVersion(), false)); // Add end command
+                    commands.Add(new Command(functionTextBox.Lines[i], gameVersion, false)); // Add end command
                     currentScriptFile.functions.Add(new Script(commands));
                 }
             }
@@ -4480,16 +4437,16 @@ namespace DS_Map
                 if (!movementTextBox.Lines[i].Contains('@')) continue; // Move on until script header is found
                 else
                 {
-                    List<Command> commands = new List<Command>();
+                    commands = new List<Command>();
                     i += 0x2; // Skip blank line
 
                     /* Read script commands */
                     while (movementTextBox.Lines[i] != "End")
                     {
-                        commands.Add(new Command(movementTextBox.Lines[i], romInfo.getVersion(), true));
+                        commands.Add(new Command(movementTextBox.Lines[i], gameVersion, true));
                         i++;
                     }
-                    commands.Add(new Command(movementTextBox.Lines[i], romInfo.getVersion(), true)); // Add end command
+                    commands.Add(new Command(movementTextBox.Lines[i], gameVersion, true)); // Add end command
 
                     currentScriptFile.movements.Add(new Script(commands));
                 }
@@ -4514,14 +4471,14 @@ namespace DS_Map
                     {
                         for (int k = 0; k < file.scripts[j].commands.Count; k++)
                         {
-                            if (file.scripts[j].commands[k].description.Contains(searchString)) searchFlagResultTextBox.AppendText("File " + i + " " + "Script " + j + Environment.NewLine);
+                            if (file.scripts[j].commands[k].cmdName.Contains(searchString)) searchFlagResultTextBox.AppendText("File " + i + " " + "Script " + j + Environment.NewLine);
                         }
                     }
                     for (int j = 0; j < file.functions.Count; j++)
                     {
                         for (int k = 0; k < file.functions[j].commands.Count; k++)
                         {
-                            if (file.functions[j].commands[k].description.Contains(searchString)) searchFlagResultTextBox.AppendText("File " + i + " " + "Function " + j + Environment.NewLine);
+                            if (file.functions[j].commands[k].cmdName.Contains(searchString)) searchFlagResultTextBox.AppendText("File " + i + " " + "Function " + j + Environment.NewLine);
                         }
                     }
                 }
@@ -4535,64 +4492,70 @@ namespace DS_Map
         }
         private void selectScriptFileComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            /* Clear controls */
+            /* clear controls */
             scriptTextBox.Clear();
             functionTextBox.Clear();
             movementTextBox.Clear();
 
             currentScriptFile = LoadScriptFile(selectScriptFileComboBox.SelectedIndex); // Load script file
 
-            if (!currentScriptFile.isLevelScript)
-            {
+            if (currentScriptFile.isLevelScript) {
+                scriptTextBox.Focus();
+                scriptTextBox.Text += "Level script files currently not supported";
+                functionTextBox.Enabled = false;
+                movementTextBox.Enabled = false;
+            } else {
+                functionTextBox.Enabled = true;
+                movementTextBox.Enabled = true;
                 /* Add scripts */
-                for (int i = 0; i < currentScriptFile.scripts.Count; i++)
-                {
+                statusLabel.Text = "Parsing Script commands...";
+                for (int i = 0; i < currentScriptFile.scripts.Count; i++) {
                     Script currentScript = currentScriptFile.scripts[i];
 
                     /* Write header */
-                    string header = "-------------------@Script_#" + (i + 1) + " -------------------" + Environment.NewLine;
+                    string header = "----- " + "@Script_#" + (i + 1) + " -----" + Environment.NewLine;
                     scriptTextBox.AppendText(header, Color.Green);
                     scriptTextBox.Text += Environment.NewLine;
 
                     /* If current script is identical to another, print UseScript instead of commands */
-                    if (currentScript.useScript != -1) scriptTextBox.Text += "UseScript_#" + currentScript.useScript;
-                    else for (int j = 0; j < currentScript.commands.Count; j++) scriptTextBox.AppendText(currentScript.commands[j].description + Environment.NewLine, Color.Black);
+                    if (currentScript.useScript != -1) 
+                        scriptTextBox.Text += "UseScript_#" + currentScript.useScript;
+                    else 
+                        for (int j = 0; j < currentScript.commands.Count; j++) 
+                            scriptTextBox.AppendText(currentScript.commands[j].cmdName + Environment.NewLine, Color.Black);
                     scriptTextBox.Text += Environment.NewLine; // Write blank line to separate next script
                 }
 
                 /* Add functions */
-                for (int i = 0; i < currentScriptFile.functions.Count; i++)
-                {
+                statusLabel.Text = "Parsing Functions...";
+                for (int i = 0; i < currentScriptFile.functions.Count; i++) {
                     Script currentFunction = currentScriptFile.functions[i];
 
-                    string header = "-------------------@Function_#" + (i + 1) + " -------------------" + Environment.NewLine;
+                    string header = "----- " + "@Function_#" + (i + 1) + " -----" + Environment.NewLine;
                     functionTextBox.AppendText(header, Color.Blue);
                     functionTextBox.Text += Environment.NewLine;
-                    for (int j = 0; j < currentFunction.commands.Count; j++) functionTextBox.Text += currentFunction.commands[j].description + Environment.NewLine;
+                    for (int j = 0; j < currentFunction.commands.Count; j++) 
+                        functionTextBox.Text += currentFunction.commands[j].cmdName + Environment.NewLine;
                     functionTextBox.Text += Environment.NewLine;
                 }
 
                 /* Add movements */
-                for (int i = 0; i < currentScriptFile.movements.Count; i++)
-                {
+                statusLabel.Text = "Parsing Movements...";
+                for (int i = 0; i < currentScriptFile.movements.Count; i++) {
                     Script currentMovement = currentScriptFile.movements[i];
 
-                    string header = "-------------------@Movement_#" + (i + 1) + " -------------------" + Environment.NewLine;
+                    string header = "----- " + "@Movement_#" + (i + 1) + " -----" + Environment.NewLine;
                     movementTextBox.AppendText(header, Color.Brown);
                     movementTextBox.Text += Environment.NewLine;
-                    for (int j = 0; j < currentMovement.commands.Count; j++) movementTextBox.Text += currentMovement.commands[j].description + Environment.NewLine;
+                    for (int j = 0; j < currentMovement.commands.Count; j++) 
+                        movementTextBox.Text += currentMovement.commands[j].cmdName + Environment.NewLine;
                     movementTextBox.Text += Environment.NewLine;
                 }
             }
-            else
-            {
-                scriptTextBox.Text += "Level script files currently not supported";
-                functionTextBox.Text += "Level script files currently not supported";
-                movementTextBox.Text += "Level script files currently not supported";
-            }
-            AddLineNumbersScript();
-            AddLineNumbersFunc();
-            AddLineNumbersMov();
+            statusLabel.Text = "Ready";
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
+            AddLineNumbers(movementTextBox, LineNumberTextBoxMov);
         }
 
         #region Miscellaneous
@@ -5146,7 +5109,7 @@ namespace DS_Map
         private void saveAreaDataButton_Click(object sender, EventArgs e)
         {
             string areaDataPath = romInfo.GetAreaDataFolderPath() + "\\" + selectAreaDataComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(areaDataPath, FileMode.Create))) writer.Write(currentAreaData.SaveAreaData(romInfo.getVersion()));
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(areaDataPath, FileMode.Create))) writer.Write(currentAreaData.SaveAreaData(gameVersion));
         }
         private void selectAreaDataComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -5155,7 +5118,7 @@ namespace DS_Map
             areaDataBuildingTilesetUpDown.Value = currentAreaData.buildingsTileset;
             areaDataMapTilesetUpDown.Value = currentAreaData.mapTileset;
             areaDataLightTypeComboBox.SelectedIndex = currentAreaData.lightType;
-            switch (romInfo.getVersion()) {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
@@ -5174,34 +5137,5 @@ namespace DS_Map
 
         #endregion
 
-        private void headerEditorTabPage_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void nameGroupBox_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void musicNightLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cameraLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void owSpritePictureBox_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

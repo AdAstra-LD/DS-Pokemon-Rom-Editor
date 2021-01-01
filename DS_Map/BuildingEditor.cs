@@ -19,7 +19,7 @@ namespace DS_Map
         #region Variables
         string folder;
         bool disableHandlers = new bool();
-        RomInfo info;
+        RomInfo rom;
         NSBMD currentNSBMD;
         NSBMDGlRenderer renderer = new NSBMDGlRenderer();
         
@@ -35,14 +35,14 @@ namespace DS_Map
         public BuildingEditor(RomInfo romInfo)
         {
             InitializeComponent();
-            info = romInfo;
+            rom = romInfo;
 
             buildingOpenGLControl.InitializeContexts();
             buildingOpenGLControl.MakeCurrent();
             buildingOpenGLControl.MouseWheel += new MouseEventHandler(buildingOpenGLControl_MouseWheel);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
 
-            if (romInfo.getVersion() == "HeartGold" || romInfo.getVersion() == "SoulSilver") 
+            if (rom.getGameVersion() == "HeartGold" || rom.getGameVersion() == "SoulSilver") 
                 interiorCheckBox.Enabled = true;
 
             disableHandlers = true;
@@ -56,7 +56,7 @@ namespace DS_Map
         #region Subroutines
         private void CreateEmbeddedTexturesFile(int modelID, bool interior)
         {
-            string readingPath = folder + info.GetBuildingModelsFolderPath(interior) + "\\" + modelID.ToString("D4");
+            string readingPath = folder + rom.GetBuildingModelsFolderPath(interior) + "\\" + modelID.ToString("D4");
             string writingPath = Path.GetTempPath() + "BLDtexture.nsbtx";
 
             using (BinaryReader reader = new BinaryReader(new FileStream(readingPath, FileMode.Open)))
@@ -84,10 +84,10 @@ namespace DS_Map
         }
         private void FillListBox(bool interior)
         {
-            int modelCount = Directory.GetFiles(folder + info.GetBuildingModelsFolderPath(interior)).Length;
+            int modelCount = Directory.GetFiles(folder + rom.GetBuildingModelsFolderPath(interior)).Length;
             for (int i = 0; i < modelCount; i++)
             {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(folder + info.GetBuildingModelsFolderPath(interior) + "\\" + i.ToString("D4"))))
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(folder + rom.GetBuildingModelsFolderPath(interior) + "\\" + i.ToString("D4"))))
                 {
                     reader.BaseStream.Position = 0x14;
                     if (reader.ReadUInt32() == 0x304C444D) reader.BaseStream.Position = 0x34;
@@ -99,19 +99,19 @@ namespace DS_Map
         }
         private void FillTexturesBox()
         {
-            int texturesCount = Directory.GetFiles(folder + info.GetBuildingTexturesFolderPath()).Length;
+            int texturesCount = Directory.GetFiles(folder + rom.GetBuildingTexturesFolderPath()).Length;
             textureComboBox.Items.Add("Embedded textures");
             for (int i = 0; i < texturesCount; i++) textureComboBox.Items.Add("Texture " + i);
         }
         private void LoadBuildingModel(int modelID, bool interior)
         {
-            string path = folder + info.GetBuildingModelsFolderPath(interior) + "\\" + modelID.ToString("D4");
+            string path = folder + rom.GetBuildingModelsFolderPath(interior) + "\\" + modelID.ToString("D4");
             using (Stream fs = new FileStream(path, FileMode.Open)) currentNSBMD = NSBMDLoader.LoadNSBMD(fs);
         }
         private void LoadModelTextures(int fileID)
         {
             string path;
-            if (fileID > -1) path = folder + info.GetBuildingTexturesFolderPath() + "\\" + fileID.ToString("D4");
+            if (fileID > -1) path = folder + rom.GetBuildingTexturesFolderPath() + "\\" + fileID.ToString("D4");
             else path = Path.GetTempPath() + "BLDtexture.nsbtx"; // Load Embedded textures if the argument passed to this function is -1
             try
             {
@@ -197,7 +197,7 @@ namespace DS_Map
             if (em.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            else File.Copy(folder + info.GetBuildingModelsFolderPath(interiorCheckBox.Checked) + "\\" + buildingsListBox.SelectedIndex.ToString("D4"), em.FileName, true);
+            else File.Copy(folder + rom.GetBuildingModelsFolderPath(interiorCheckBox.Checked) + "\\" + buildingsListBox.SelectedIndex.ToString("D4"), em.FileName, true);
         }
         private void importButton_Click(object sender, EventArgs e)
         {
@@ -215,7 +215,7 @@ namespace DS_Map
                 }
                 else
                 {
-                    File.Copy(im.FileName, folder + info.GetBuildingModelsFolderPath(interiorCheckBox.Checked) + "\\" + buildingsListBox.SelectedIndex.ToString("D4"), true);
+                    File.Copy(im.FileName, folder + rom.GetBuildingModelsFolderPath(interiorCheckBox.Checked) + "\\" + buildingsListBox.SelectedIndex.ToString("D4"), true);
                     buildingsListBox_SelectedIndexChanged(null, null);
                 }                
             }

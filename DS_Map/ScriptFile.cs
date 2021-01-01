@@ -20,7 +20,7 @@ namespace DS_Map {
         #endregion
 
         #region Constructors (1)
-        public ScriptFile(Stream fs, string version) {
+        public ScriptFile(Stream fs, string gameVersion) {
             List<uint> scriptOffsets = new List<uint>();
             List<uint> functionOffsets = new List<uint>();
             List<uint> movementOffsets = new List<uint>();
@@ -52,7 +52,7 @@ namespace DS_Map {
                         List<Command> commandsList = new List<Command>();
                         bool endScript = new bool();
                         while (!endScript) {
-                            Command command = Read_Command(scriptFileReader, ref functionOffsets, ref movementOffsets, version);
+                            Command command = Read_Command(scriptFileReader, ref functionOffsets, ref movementOffsets, gameVersion);
                             commandsList.Add(command);
                             if (endCodes.Contains(command.id)) endScript = true;
                         }
@@ -67,7 +67,7 @@ namespace DS_Map {
                     List<Command> commandsList = new List<Command>();
                     bool endFunction = new bool();
                     while (!endFunction) {
-                        Command command = Read_Command(scriptFileReader, ref functionOffsets, ref movementOffsets, version);
+                        Command command = Read_Command(scriptFileReader, ref functionOffsets, ref movementOffsets, gameVersion);
                         commandsList.Add(command);
                         if (endCodes.Contains(command.id)) endFunction = true;
                     }
@@ -85,7 +85,7 @@ namespace DS_Map {
                         ushort id = scriptFileReader.ReadUInt16();
                         List<byte[]> parameters = new List<byte[]>();
                         if (id != 0xFE) parameters.Add(scriptFileReader.ReadBytes(2));
-                        Command command = new Command(id, parameters, version, true);
+                        Command command = new Command(id, parameters, gameVersion, true);
 
                         commandsList.Add(command);
                         if (command.id == 0xFE) endMovement = true;
@@ -99,15 +99,15 @@ namespace DS_Map {
 
         #region Methods (1)
         private Command Read_Command(BinaryReader dataReader, ref List<uint> functionOffsets, ref List<uint> movementOffsets, string gameVersion) {
-            ResourceManager getCommandParameters;
+            ResourceManager paramDatabase;
             switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
-                    getCommandParameters = new ResourceManager("DS_Map.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
+                    paramDatabase = new ResourceManager("DS_Map.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
                     break;
                 default:
-                    getCommandParameters = new ResourceManager("DS_Map.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
+                    paramDatabase = new ResourceManager("DS_Map.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
                     break;
             }
 
@@ -304,7 +304,7 @@ namespace DS_Map {
                     break;
                 default:
                     Console.WriteLine("Loaded command id : " + id.ToString("X4"));
-                    string[] indexes = getCommandParameters.GetString(id.ToString("X4")).Split(' ');
+                    string[] indexes = paramDatabase.GetString(id.ToString("X4")).Split(' ');
                     for (int i = 1; i < indexes.Length; i++) {
                         int length = Convert.ToInt32(indexes[i]);
                         parameters.Add(dataReader.ReadBytes(length));
@@ -440,12 +440,12 @@ namespace DS_Map {
         #region Fields (4)
         public ushort id;
         public List<byte[]> parameters;
-        public string description;
+        public string cmdName;
         public bool isMovement;
         #endregion
 
         #region Constructors (2)
-        public Command(ushort id, List<byte[]> parameters, string version, bool isMovement) {
+        public Command(ushort id, List<byte[]> parameters, string gameVersion, bool isMovement) {
             Dictionary<byte, string> operatorsDict = new Dictionary<byte, string>() {
                 [0x0] = "LOWER",
                 [0x1] = "EQUAL",
@@ -457,22 +457,23 @@ namespace DS_Map {
                 [0x7] = "AND",
                 [0xFF] = "TRUEUP"
             };
-            ResourceManager getCommandName;
+            ResourceManager commandDatabase;
             if (!isMovement) {
-                if (version == "Diamond" || version == "Pearl" || version == "Platinum")
-                    getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
+                if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum")
+                    commandDatabase = new ResourceManager("DS_Map.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
                 else
-                    getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
+                    commandDatabase = new ResourceManager("DS_Map.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
             } else {
-                getCommandName = new ResourceManager("DS_Map.Resources.MovementNames", Assembly.GetExecutingAssembly());
+                commandDatabase = new ResourceManager("DS_Map.Resources.MovementNames", Assembly.GetExecutingAssembly());
             }
 
             this.id = id;
             this.parameters = parameters;
-            this.description = getCommandName.GetString(id.ToString("X4"));
-            if (description == null)
-                description = id.ToString("X4");
+            this.cmdName = commandDatabase.GetString(id.ToString("X4"));
+            if (cmdName == null)
+                cmdName = id.ToString("X4");
             this.isMovement = isMovement;
+
             for (int i = 0; i < parameters.Count; i++) {
                 if (parameters[i].Length < 4) {
                     byte[] temp = new byte[4];
@@ -480,30 +481,31 @@ namespace DS_Map {
                     parameters[i] = temp;
                 }
             }
+
             switch (id) {
                 case 0x16:      // Jump
                 case 0x1A:      // Call
-                    this.description += " " + "Function_#" + (1 + BitConverter.ToInt32(parameters[0], 0)).ToString("D");
+                    this.cmdName += " " + "Function_#" + (1 + BitConverter.ToInt32(parameters[0], 0)).ToString("D");
                     break;
                 case 0x1C:      // CompareLastResultJump
                 case 0x1D:      // CompareLastResultCall
                     byte opcode = parameters[0][0];
-                    this.description += " " + operatorsDict[opcode] + " " + "Function_#" + (1 + (BitConverter.ToInt32(parameters[1], 0))).ToString("D");
+                    this.cmdName += " " + operatorsDict[opcode] + " " + "Function_#" + (1 + (BitConverter.ToInt32(parameters[1], 0))).ToString("D");
                     break;
                 case 0x5E:      // ApplyMovement
-                    this.description += " " + "Overworld_#" + (BitConverter.ToInt16(parameters[0], 0)).ToString("D") + " " + "Movement_#" + (1 + (BitConverter.ToInt32(parameters[1], 0))).ToString("D");
+                    this.cmdName += " " + "Overworld_#" + (BitConverter.ToInt16(parameters[0], 0)).ToString("D") + " " + "Movement_#" + (1 + (BitConverter.ToInt32(parameters[1], 0))).ToString("D");
                     break;
                 case 0x62:      // Lock
                 case 0x63:      // Release
                 case 0x64:      // AddPeople
                 case 0x65:      // RemoveOW
-                    this.description += " " + "Overworld_#" + BitConverter.ToInt16(parameters[0], 0).ToString("D");
+                    this.cmdName += " " + "Overworld_#" + BitConverter.ToInt16(parameters[0], 0).ToString("D");
                     break;
                 default:
                     for (int i = 0; i < parameters.Count; i++) {
-                        if (parameters[i].Length == 1) this.description += " " + "0x" + (parameters[i][0]).ToString("X1");
-                        else if (parameters[i].Length == 2) this.description += " " + "0x" + (BitConverter.ToInt16(parameters[i], 0)).ToString("X1");
-                        else if (parameters[i].Length == 4) this.description += " " + "0x" + (BitConverter.ToInt32(parameters[i], 0)).ToString("X1");
+                        if (parameters[i].Length == 1) this.cmdName += " " + "0x" + (parameters[i][0]).ToString("X1");
+                        else if (parameters[i].Length == 2) this.cmdName += " " + "0x" + (BitConverter.ToInt16(parameters[i], 0)).ToString("X1");
+                        else if (parameters[i].Length == 4) this.cmdName += " " + "0x" + (BitConverter.ToInt32(parameters[i], 0)).ToString("X1");
                     }
                     break;
             }
@@ -517,31 +519,30 @@ namespace DS_Map {
 
             var key = entry.Key;
             return key;
-
         }
 
-        public Command(string description, string version, bool isMovement) {
-            this.description = description;
+        public Command(string description, string gameVersion, bool isMovement) {
+            this.cmdName = description;
             this.isMovement = isMovement;
             this.parameters = new List<byte[]>();
 
             string[] words = description.Split(' '); // Separate command code from parameters
             Console.WriteLine(String.Join(",", words));
-            Console.WriteLine(version);
+            Console.WriteLine(gameVersion);
             /* Get command id, which is always first in the description */
             Dictionary<string, ushort> commandsDictDPPt = new Dictionary<string, ushort>() {
                 ["Nop"] = 0x0000,
                 ["Dummy"] = 0x0001,
                 ["End"] = 0x0002,
                 ["TimeWait"] = 0x0003,
-                ["If"] = 0x0011,
-                ["If2"] = 0x0012,
-                ["CallStandard"] = 0x0014,
+                ["CompareVarValue"] = 0x0011,
+                ["CompareVars"] = 0x0012,
+                ["CommonScript"] = 0x0014,
                 ["Jump"] = 0x0016,
                 ["Call"] = 0x001A,
                 ["Return"] = 0x001B,
-                ["CompareLastResultJump"] = 0x001C,
-                ["CompareLastResultCall"] = 0x001D,
+                ["Jump-If"] = 0x001C,
+                ["Call-If"] = 0x001D,
                 ["SetFlag"] = 0x001E,
                 ["ClearFlag"] = 0x001F,
                 ["CheckFlag"] = 0x0020,
@@ -889,27 +890,33 @@ namespace DS_Map {
                 ["WaitMoveForever"] = 0x0068,
                 ["End"] = 0x00FE
             };
-            ResourceManager getCommandName; // Load the resource file containing information on parameters for each command
-            switch (version) {
+            ResourceManager commandDatabase; // Load the resource file containing information on parameters for each command
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
-                    getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
+                    commandDatabase = new ResourceManager("DS_Map.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
                     break;
                 default:
-                    getCommandName = new ResourceManager("DS_Map.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
+                    commandDatabase = new ResourceManager("DS_Map.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
                     break;
             }
             if (!isMovement) {
                 Console.WriteLine("Command name : " + words[0]);
-                if (GetResxNameByValue(words[0], getCommandName) != null) {
-                    Console.WriteLine(GetResxNameByValue(words[0], getCommandName));
-                    this.id = ushort.Parse(GetResxNameByValue(words[0], getCommandName).ToString(), System.Globalization.NumberStyles.AllowHexSpecifier);
-                } else UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
+                Object cmd = GetResxNameByValue(words[0], commandDatabase);
+
+                if (cmd != null) {
+                    Console.WriteLine(cmd);
+                    this.id = ushort.Parse(cmd.ToString(), System.Globalization.NumberStyles.AllowHexSpecifier);
+                } else {
+                    UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
+                }
 
             } else {
-                if (movementsDictDPPtHGSS.ContainsKey(words[0])) this.id = movementsDictDPPtHGSS[words[0]];
-                else UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
+                if (movementsDictDPPtHGSS.ContainsKey(words[0])) 
+                    this.id = movementsDictDPPtHGSS[words[0]];
+                else 
+                    UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
             }
 
             /* Read parameters from remainder of the description */
@@ -927,18 +934,18 @@ namespace DS_Map {
                         ["AND"] = 0x7,
                         ["TRUEUP"] = 0xFF
                     };
-                    ResourceManager getCommandParameters; // Load the resource file containing information on parameters for each command
-                    switch (version) {
+                    ResourceManager paramDatabase; // Load the resource file containing information on parameters for each command
+                    switch (gameVersion) {
                         case "Diamond":
                         case "Pearl":
                         case "Platinum":
-                            getCommandParameters = new ResourceManager("DS_Map.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
+                            paramDatabase = new ResourceManager("DS_Map.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
                             break;
                         default:
-                            getCommandParameters = new ResourceManager("DS_Map.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
+                            paramDatabase = new ResourceManager("DS_Map.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
                             break;
                     }
-                    string[] indexes = getCommandParameters.GetString(id.ToString("X4")).Split(' ');
+                    string[] indexes = paramDatabase.GetString(id.ToString("X4")).Split(' ');
 
                     for (int i = 1; i < indexes.Length; i++) {
                         Console.WriteLine("Index : " + i.ToString());

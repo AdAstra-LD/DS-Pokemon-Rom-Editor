@@ -12,13 +12,13 @@ namespace DS_Map
     {
         private string romID;
         private string workingFolder;
-        private string version;
+        private string gameVersion;
 
         #region Constructors (1)
         public RomInfo(string id, string workingFolder)
         {
             romID = id;
-            version = getVersion();
+            gameVersion = getGameVersion();
             this.workingFolder = workingFolder;
         }
         #endregion
@@ -27,7 +27,7 @@ namespace DS_Map
         public string GetAreaDataFolderPath()
         {
             string path;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -47,7 +47,7 @@ namespace DS_Map
         public string GetBuildingModelsFolderPath(bool interior)
         {
             string path;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -109,7 +109,7 @@ namespace DS_Map
         public int GetAttackNamesMessageNumber()
         {
             int fileNumber;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -128,7 +128,7 @@ namespace DS_Map
         public int GetItemNamesMessageNumber()
         {
             int fileNumber;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -147,7 +147,7 @@ namespace DS_Map
         public int GetMapNamesMessageNumber()
         {
             int fileNumber;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -166,7 +166,7 @@ namespace DS_Map
         public int GetItemScriptFileNumber()
         {
             int fileNumber;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -184,7 +184,7 @@ namespace DS_Map
         public int GetPokémonNamesMessageNumber()
         {
             int fileNumber;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -203,7 +203,7 @@ namespace DS_Map
         public int GetTrainerNamesMessageNumber()
         {
             int fileNumber;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -222,7 +222,7 @@ namespace DS_Map
         public int GetTrainerClassMessageNumber()
         {
             int fileNumber;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -241,7 +241,7 @@ namespace DS_Map
         public string GetMapTexturesFolderPath()
         {
             string path;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -261,7 +261,7 @@ namespace DS_Map
         public string GetBuildingTexturesFolderPath()
         {
             string path;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -281,7 +281,7 @@ namespace DS_Map
         public string GetMatrixFolderPath()
         {
             string path;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -301,7 +301,7 @@ namespace DS_Map
         public string GetMessageFolderPath()
         {
             string path;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -323,7 +323,7 @@ namespace DS_Map
         public string GetTrainerDataFolderPath()
         {
             string path;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -339,7 +339,7 @@ namespace DS_Map
         public string GetMapFolderPath()
         {
             string path;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -361,7 +361,7 @@ namespace DS_Map
         public string GetOverworldFolderPath()
         {
             string path;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -377,7 +377,7 @@ namespace DS_Map
         public string GetEncounterFolderPath()
         {
             string path;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -399,7 +399,7 @@ namespace DS_Map
         public string GetEventFolderPath()
         {
             string path;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
@@ -466,7 +466,7 @@ namespace DS_Map
             }           
             return language;
         }
-        public string getVersion()
+        public string getGameVersion()
         {
             Dictionary<string, string> versions = new Dictionary<string, string>() {
                 ["ADAE"] = "Diamond",
@@ -510,7 +510,7 @@ namespace DS_Map
         public string GetScriptFolderPath()
         {
             string path;
-            switch (version)
+            switch (gameVersion)
             {
                 case "Diamond":
                 case "Pearl":
