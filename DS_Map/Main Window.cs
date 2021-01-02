@@ -755,7 +755,7 @@ namespace DS_Map {
             if (Directory.Exists(workingFolder)) // Check if extracted data for the ROM exists, and ask user if they want to load it.
             {
                 DialogResult d;
-                d = MessageBox.Show("This ROM has already been opened before. Do you want to load the extracted data?", "Data detected", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                d = MessageBox.Show("Extracted data of this ROM has been found.\nDo you want to load it?", "Data detected", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
                 if (d == DialogResult.Yes) 
                     return false;
@@ -1793,6 +1793,9 @@ namespace DS_Map {
                 buildTextureComboBox.SelectedIndex = areaData.buildingsTileset + 1;
                 mainTabControl.SelectedTab = mapEditorTabPage;
                 
+                if (mapPartsTabControl.SelectedTab == permissionsTabPage)
+
+                
                 if (areaData.areaType == 0)
                     interiorRadioButton.Checked = true;
 
@@ -2160,67 +2163,97 @@ namespace DS_Map {
         }
         private void mapPartsTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (mapPartsTabControl.SelectedTab == permissionsTabPage)
+            if (mapPartsTabControl.SelectedTab == buildingsTabPage)
             {
+                radio2D.Checked = false;
+
+                hideBuildings = false;
+                radio3D.Enabled = true;
+                radio2D.Enabled = true;
+                wireframeCheckBox.Enabled = true;
+
+                mapOpenGlControl.BringToFront();
+
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
+                ang, dist, elev, perspective,
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            }
+            else if (mapPartsTabControl.SelectedTab == permissionsTabPage)
+            {
+                radio2D.Checked = true;
+
                 hideBuildings = false;
                 radio3D.Enabled = false;
                 radio2D.Enabled = false;
                 wireframeCheckBox.Enabled = false;
 
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, 0f, 115.0f, 90f, 4f, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
+                ang, dist, elev, perspective,
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
 
                 movPictureBox.BackgroundImage = GrabMapScreenshot(movPictureBox.Width, movPictureBox.Height);
                 movPictureBox.BringToFront();
             }
             else if (mapPartsTabControl.SelectedTab == modelTabPage)
             {
+                radio2D.Checked = false;
+
                 hideBuildings = true;
                 radio3D.Enabled = true;
                 radio2D.Enabled = true;
                 wireframeCheckBox.Enabled = true;
 
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
-                mapOpenGlControl.BringToFront();               
+                mapOpenGlControl.BringToFront();
+
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
+                ang, dist, elev, perspective,
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
             }
-            else if (mapPartsTabControl.SelectedTab == terrainTabPage)
+            else // Model tab
             {
+                radio2D.Checked = true;
+
                 hideBuildings = false;
                 radio3D.Enabled = false;
                 radio2D.Enabled = false;
                 wireframeCheckBox.Enabled = false;
 
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, 0f, 115.0f, 90f, 4f, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
                 mapOpenGlControl.BringToFront();
-            }
-            else // Buildings tab
-            {
-                hideBuildings = false;
-                radio3D.Enabled = true;
-                radio2D.Enabled = true;
-                wireframeCheckBox.Enabled = true;
 
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
-                mapOpenGlControl.BringToFront();
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
+                ang, dist, elev, perspective,
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+
             }
         }
         private void radio2D_CheckedChanged(object sender, EventArgs e)
         {
-            if (radio2D.Checked)
-            {
-                perspective = 4f;
-                ang = 0f;
-                dist = 115.0f;
-                elev = 90f;
+            if (radio2D.Checked) {
+                cam2Dmode();
+            } else {
+                cam3Dmode();
+                radio3D.Checked = true;
             }
-            else
-            {
-                perspective = 45f;
-                ang = 0f;
-                dist = 12.8f;
-                elev = 50.0f;
-            }
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
+                ang, dist, elev, perspective,
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
         }
+
+        private void cam2Dmode() {
+            perspective = 4f;
+            ang = 0f;
+            dist = 115.0f;
+            elev = 90f;
+        }
+
+        private void cam3Dmode() {
+            perspective = 45f;
+            ang = 0f;
+            dist = 12.8f;
+            elev = 50.0f;
+        }
+
         private void removeMapFileButton_Click(object sender, EventArgs e)
         {
             /* Delete last map file */
@@ -5260,6 +5293,5 @@ namespace DS_Map {
 
 
         #endregion
-
     }
 }
