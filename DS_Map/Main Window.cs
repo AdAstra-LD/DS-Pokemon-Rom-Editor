@@ -1243,24 +1243,27 @@ namespace DSPRE {
             if (disableHandlers) return;
            
             string imageName;
-            switch (gameVersion)
-            {
-                case "Diamond":
-                case "Pearl":
-                    currentHeader.camera = (byte)cameraComboBox.SelectedIndex;
-                    imageName = "dpcamera" + cameraComboBox.SelectedIndex.ToString();
-                    break;
-                case "Platinum":
-                    currentHeader.camera = (byte)cameraComboBox.SelectedIndex;
-                    imageName = "ptcamera" + cameraComboBox.SelectedIndex.ToString();
-                    break;
-                default:
-                    currentHeader.camera = Byte.Parse(cameraComboBox.SelectedItem.ToString().Substring(1, 3));
-                    imageName = "hgsscamera" + currentHeader.camera.ToString("D3");
-                    break;
+            try {
+                switch (gameVersion)
+                {
+                    case "Diamond":
+                    case "Pearl":
+                        currentHeader.camera = (byte)cameraComboBox.SelectedIndex;
+                        imageName = "dpcamera" + cameraComboBox.SelectedIndex.ToString();
+                        break;
+                    case "Platinum":
+                        currentHeader.camera = (byte)cameraComboBox.SelectedIndex;
+                        imageName = "ptcamera" + cameraComboBox.SelectedIndex.ToString();
+                        break;
+                    default:
+                        currentHeader.camera = Byte.Parse(cameraComboBox.SelectedItem.ToString().Substring(1, 3));
+                        imageName = "hgsscamera" + currentHeader.camera.ToString("D3");
+                        break;
+                }
+                cameraPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
+            } catch (NullReferenceException) {
+                MessageBox.Show("The current header uses an unrecognized camera.\nThis is not a problem. Settings will be saved normally.", "Unknown camera settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-            cameraPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
         }
         private void eventFileUpDown_ValueChanged(object sender, EventArgs e)
         {
@@ -1643,7 +1646,8 @@ namespace DSPRE {
         }
         private void headersGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             if (e.RowIndex > -1 && e.ColumnIndex > -1)
             {
                 /* If input is junk, use 0000 as placeholder value */
@@ -1689,7 +1693,8 @@ namespace DSPRE {
         }
         private void heightsGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.Value == null) return;
+            if (e.Value == null) 
+                return;
             disableHandlers = true;
 
             /* Format table cells corresponding to border maps or void */
@@ -3169,8 +3174,7 @@ namespace DSPRE {
             if (eventMatrixXUpDown.Value > eventMatrix.width || eventMatrixYUpDown.Value > eventMatrix.height) {
                 String errorMsg = "This event file contains elements located on an unreachable map, beyond the current matrix.\n" +
                     "It is strongly advised that you bring every Overworld, Spawnable, Warp and Trigger of this event to a map that belongs to the matrix's range.";
-                DialogResult d;
-                d = MessageBox.Show(errorMsg, "Can't load proper map", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(errorMsg, "Can't load proper map", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else {
                 mapIndex = eventMatrix.maps[(int)(eventMatrixYUpDown.Value), (int)(eventMatrixXUpDown.Value)];
@@ -4894,7 +4898,7 @@ namespace DSPRE {
         private void addStringButton_Click(object sender, EventArgs e)
         {
             currentMessageFile.messages.Add("");
-            textEditorDataGridView.Rows.Add("");
+            textEditorDataGridView.Rows.Add(textEditorDataGridView.RowCount+1);
         }
         private void exportTextFileButton_Click(object sender, EventArgs e)
         {
@@ -5089,8 +5093,10 @@ namespace DSPRE {
         }
         private void textEditorDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (disableHandlers) return;
-            if (e.RowIndex > -1) currentMessageFile.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            if (disableHandlers) 
+                return;
+            if (e.RowIndex > -1) 
+                currentMessageFile.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
         }
 
         #endregion

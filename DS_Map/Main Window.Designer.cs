@@ -2842,7 +2842,7 @@
             // 
             // saveEventsButton
             // 
-            this.saveEventsButton.Enabled = false;
+            this.saveEventsButton.Enabled = true;
             this.saveEventsButton.Location = new System.Drawing.Point(8, 31);
             this.saveEventsButton.Name = "saveEventsButton";
             this.saveEventsButton.Size = new System.Drawing.Size(117, 22);
