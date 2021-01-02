@@ -5396,7 +5396,7 @@
             this.messageColumn});
             this.textEditorDataGridView.Location = new System.Drawing.Point(12, 77);
             this.textEditorDataGridView.Name = "textEditorDataGridView";
-            this.textEditorDataGridView.RowHeadersWidth = 55;
+            this.textEditorDataGridView.RowHeadersWidth = 62;
             this.textEditorDataGridView.Size = new System.Drawing.Size(778, 501);
             this.textEditorDataGridView.TabIndex = 24;
             this.textEditorDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellValueChanged);

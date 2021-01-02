@@ -4898,7 +4898,14 @@ namespace DSPRE {
         private void addStringButton_Click(object sender, EventArgs e)
         {
             currentMessageFile.messages.Add("");
-            textEditorDataGridView.Rows.Add(textEditorDataGridView.RowCount+1);
+            textEditorDataGridView.Rows.Add("");
+
+            int rowInd = textEditorDataGridView.RowCount - 1;
+
+            disableHandlers = true;
+            textEditorDataGridView.Rows[rowInd].HeaderCell.Value = "0x" + rowInd.ToString("X");
+            disableHandlers = false;
+
         }
         private void exportTextFileButton_Click(object sender, EventArgs e)
         {
@@ -4987,14 +4994,18 @@ namespace DSPRE {
             string searchString = searchMessageTextBox.Text;
             textSearchProgressBar.Maximum = romInfo.GetMessageCount();
             int msgCount = romInfo.GetMessageCount();
-            if (msgCount > 828) msgCount = 828;
+            if (msgCount > 828) 
+                msgCount = 828;
             for (int i = 0; i < msgCount; i++)
             {
                 MessageFile file = LoadMessageFile(i);
                 string result = "File" + " " + i + ", " + "n. ";
 
-                for (int j = 0; j < file.messages.Count; j++) if (file.messages[j].Contains(searchString)) result += j.ToString("D") + ", ";
-                if (result != "File" + " " + i + ", " + "n. ") searchMessageResultTextBox.AppendText(result + Environment.NewLine);
+                for (int j = 0; j < file.messages.Count; j++) 
+                    if (file.messages[j].Contains(searchString)) 
+                        result += j.ToString("D") + ", ";
+                if (result != "File" + " " + i + ", " + "n. ") 
+                    searchMessageResultTextBox.AppendText(result + Environment.NewLine);
 
                 textSearchProgressBar.Value = i;
             }
@@ -5034,7 +5045,7 @@ namespace DSPRE {
                     for (int i = 0; i < currentMessageFile.messages.Count; i++)
                     {
                         textEditorDataGridView.Rows.Add(currentMessageFile.messages[i]);
-                        textEditorDataGridView.Rows[i].HeaderCell.Value = i.ToString();
+                        textEditorDataGridView.Rows[i].HeaderCell.Value = "0x" + i.ToString("X");
                     }
                     disableHandlers = false;
                     BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.GetMessageFolderPath() + "\\" + k.ToString("D4"), FileMode.Create));
@@ -5085,7 +5096,7 @@ namespace DSPRE {
             for (int i = 0; i < currentMessageFile.messages.Count; i++)
             {
                 textEditorDataGridView.Rows.Add(currentMessageFile.messages[i]);
-                textEditorDataGridView.Rows[i].HeaderCell.Value = i.ToString();
+                textEditorDataGridView.Rows[i].HeaderCell.Value = "0x" + i.ToString("X");
             }
 
             disableHandlers = false;
