@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace DS_Map
+namespace DSPRE
 {
     public partial class GivePokémonDialog : Form
     {

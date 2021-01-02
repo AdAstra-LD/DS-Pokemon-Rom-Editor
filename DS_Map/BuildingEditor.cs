@@ -6,7 +6,7 @@ using LibNDSFormats.NSBMD;
 using LibNDSFormats.NSBTX;
 using Tao.OpenGl;
 
-namespace DS_Map
+namespace DSPRE
 {
     public partial class BuildingEditor : Form
     {

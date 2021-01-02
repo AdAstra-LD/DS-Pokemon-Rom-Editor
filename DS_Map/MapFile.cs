@@ -2,7 +2,7 @@ using System.IO;
 using System.Collections.Generic;
 using LibNDSFormats.NSBMD;
 
-namespace DS_Map
+namespace DSPRE
 {
     /* ----------------------- MAP FILE DATA STRUCTURE (DPPtHGSS):--------------------------
 

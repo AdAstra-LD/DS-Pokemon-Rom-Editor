@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DS_Map.Resources {
+namespace DSPRE.Resources {
     using System;
     
     

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tao.OpenGl;
 
-namespace DS_Map
+namespace DSPRE
 {
     public partial class CameraView : Form
     {

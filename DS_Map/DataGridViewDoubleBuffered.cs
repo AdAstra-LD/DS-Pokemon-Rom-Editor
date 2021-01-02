@@ -2,7 +2,7 @@
 
 using System.Windows.Forms;
 
-namespace DS_Map
+namespace DSPRE
 {
     public class DataGridViewDoubleBuffered : DataGridView
     {

@@ -1,7 +1,7 @@
 using System.IO;
 using System.Collections.Generic;
 
-namespace DS_Map
+namespace DSPRE
 {
 
     /// <summary>

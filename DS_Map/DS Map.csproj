@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E3C66521-EE89-4406-92C4-FC1D40DC4200}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>DS_Map</RootNamespace>
-    <AssemblyName>DS Map</AssemblyName>
+    <RootNamespace>DSPRE</RootNamespace>
+    <AssemblyName>DSPRE</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

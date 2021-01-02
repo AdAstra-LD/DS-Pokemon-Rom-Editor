@@ -1,4 +1,4 @@
-﻿namespace DS_Map
+﻿namespace DSPRE
 {
     partial class CameraView
     {

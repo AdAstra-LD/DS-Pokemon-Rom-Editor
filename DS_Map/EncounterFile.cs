@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace DS_Map
+namespace DSPRE
 {
     /* ---------------------- WILD POKÈMON DATA STRUCTURE (DPPt):----------------------------
         

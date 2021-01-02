@@ -5,7 +5,7 @@ using System.Text;
 using System.Resources;
 using System.Reflection;
 
-namespace DS_Map
+namespace DSPRE
 {
 	/// <summary>
 	/// Class to store message data from DS Pokémon games
@@ -20,7 +20,7 @@ namespace DS_Map
         #region Constructors (1)
         public MessageFile(FileStream messageStream)
         {
-            ResourceManager getChar = new ResourceManager("DS_Map.Resources.ReadText", Assembly.GetExecutingAssembly());
+            ResourceManager getChar = new ResourceManager("DSPRE.Resources.ReadText", Assembly.GetExecutingAssembly());
             BinaryReader readText = new BinaryReader(messageStream);
             int stringCount = readText.ReadUInt16();
             initialKey = readText.ReadUInt16();
@@ -164,7 +164,7 @@ namespace DS_Map
         #region Methods (2)
         public int[] EncodeString(string currentMessage, int stringIndex, int stringSize) // Converts string to hex characters
         {
-            ResourceManager getByte = new ResourceManager("DS_Map.Resources.WriteText", Assembly.GetExecutingAssembly());
+            ResourceManager getByte = new ResourceManager("DSPRE.Resources.WriteText", Assembly.GetExecutingAssembly());
 
             int[] pokemonMessage = new int[stringSize - 1];
             var charArray = currentMessage.ToCharArray();

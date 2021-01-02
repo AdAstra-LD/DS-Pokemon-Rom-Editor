@@ -1,4 +1,4 @@
-﻿namespace DS_Map
+﻿namespace DSPRE
 {
     partial class Form1
     {
@@ -119,11 +119,11 @@
             this.matrixNameLabel = new System.Windows.Forms.Label();
             this.matrixTabControl = new System.Windows.Forms.TabControl();
             this.headersTabPage = new System.Windows.Forms.TabPage();
-            this.headersGridView = new DS_Map.DataGridViewDoubleBuffered();
+            this.headersGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.heightsTabPage = new System.Windows.Forms.TabPage();
-            this.heightsGridView = new DS_Map.DataGridViewDoubleBuffered();
+            this.heightsGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.mapFilesTabPage = new System.Windows.Forms.TabPage();
-            this.mapFilesGridView = new DS_Map.DataGridViewDoubleBuffered();
+            this.mapFilesGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.matrixNameTextBox = new System.Windows.Forms.TextBox();
             this.heightUpDown = new System.Windows.Forms.NumericUpDown();
             this.widthUpDown = new System.Windows.Forms.NumericUpDown();
@@ -2714,7 +2714,7 @@
             // 
             // eventShiftRightButton
             // 
-            this.eventShiftRightButton.BackgroundImage = global::DS_Map.Properties.Resources.arrowright;
+            this.eventShiftRightButton.BackgroundImage = global::DSPRE.Properties.Resources.arrowright;
             this.eventShiftRightButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.eventShiftRightButton.Location = new System.Drawing.Point(1022, 232);
             this.eventShiftRightButton.Name = "eventShiftRightButton";
@@ -2725,7 +2725,7 @@
             // 
             // eventShiftLeftButton
             // 
-            this.eventShiftLeftButton.BackgroundImage = global::DS_Map.Properties.Resources.arrowleft;
+            this.eventShiftLeftButton.BackgroundImage = global::DSPRE.Properties.Resources.arrowleft;
             this.eventShiftLeftButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.eventShiftLeftButton.Location = new System.Drawing.Point(436, 232);
             this.eventShiftLeftButton.Name = "eventShiftLeftButton";
@@ -2736,7 +2736,7 @@
             // 
             // eventShiftUpButton
             // 
-            this.eventShiftUpButton.BackgroundImage = global::DS_Map.Properties.Resources.arrowup;
+            this.eventShiftUpButton.BackgroundImage = global::DSPRE.Properties.Resources.arrowup;
             this.eventShiftUpButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.eventShiftUpButton.Location = new System.Drawing.Point(663, 7);
             this.eventShiftUpButton.Name = "eventShiftUpButton";
@@ -2748,7 +2748,7 @@
             // 
             // eventShiftDownButton
             // 
-            this.eventShiftDownButton.BackgroundImage = global::DS_Map.Properties.Resources.arrowdown;
+            this.eventShiftDownButton.BackgroundImage = global::DSPRE.Properties.Resources.arrowdown;
             this.eventShiftDownButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.eventShiftDownButton.Location = new System.Drawing.Point(663, 589);
             this.eventShiftDownButton.Name = "eventShiftDownButton";
@@ -4631,7 +4631,7 @@
             // 
             // routeSignButton
             // 
-            this.routeSignButton.Image = global::DS_Map.Properties.Resources.route_sign;
+            this.routeSignButton.Image = global::DSPRE.Properties.Resources.route_sign;
             this.routeSignButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.routeSignButton.Location = new System.Drawing.Point(108, 77);
             this.routeSignButton.Name = "routeSignButton";
@@ -4643,7 +4643,7 @@
             // 
             // townSignButton
             // 
-            this.townSignButton.Image = global::DS_Map.Properties.Resources.brown_sign;
+            this.townSignButton.Image = global::DSPRE.Properties.Resources.brown_sign;
             this.townSignButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.townSignButton.Location = new System.Drawing.Point(108, 42);
             this.townSignButton.Name = "townSignButton";
@@ -4655,7 +4655,7 @@
             // 
             // tipsSignButton
             // 
-            this.tipsSignButton.Image = global::DS_Map.Properties.Resources.blue_sign;
+            this.tipsSignButton.Image = global::DSPRE.Properties.Resources.blue_sign;
             this.tipsSignButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tipsSignButton.Location = new System.Drawing.Point(108, 147);
             this.tipsSignButton.Name = "tipsSignButton";
@@ -5917,7 +5917,7 @@
             // loadRomButton
             // 
             this.loadRomButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.loadRomButton.Image = global::DS_Map.Properties.Resources.open_file;
+            this.loadRomButton.Image = global::DSPRE.Properties.Resources.open_file;
             this.loadRomButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.loadRomButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.loadRomButton.Margin = new System.Windows.Forms.Padding(13, 6, 6, 2);
@@ -5930,7 +5930,7 @@
             // 
             this.saveRomButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.saveRomButton.Enabled = false;
-            this.saveRomButton.Image = global::DS_Map.Properties.Resources.save_rom;
+            this.saveRomButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveRomButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.saveRomButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveRomButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
@@ -6011,7 +6011,7 @@
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = global::DS_Map.Properties.Resources.appIcon;
+            this.Icon = global::DSPRE.Properties.Resources.appIcon;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -6254,9 +6254,9 @@
         private System.Windows.Forms.TabControl matrixTabControl;
         private System.Windows.Forms.TabPage headersTabPage;
         private System.Windows.Forms.TabPage heightsTabPage;
-        private DS_Map.DataGridViewDoubleBuffered heightsGridView;
+        private DSPRE.DataGridViewDoubleBuffered heightsGridView;
         private System.Windows.Forms.TabPage mapFilesTabPage;
-        private DS_Map.DataGridViewDoubleBuffered mapFilesGridView;
+        private DSPRE.DataGridViewDoubleBuffered mapFilesGridView;
         private System.Windows.Forms.TextBox matrixNameTextBox;
         private System.Windows.Forms.NumericUpDown heightUpDown;
         private System.Windows.Forms.NumericUpDown widthUpDown;
@@ -6264,7 +6264,7 @@
         private System.Windows.Forms.Label widthLabel;
         private System.Windows.Forms.ComboBox selectMatrixComboBox;
         private System.Windows.Forms.Button saveMatrixButton;
-        private DS_Map.DataGridViewDoubleBuffered headersGridView;
+        private DSPRE.DataGridViewDoubleBuffered headersGridView;
         private System.Windows.Forms.Button addHeadersButton;
         private System.Windows.Forms.Button addHeightsButton;
         private System.Windows.Forms.Button removeHeadersButton;

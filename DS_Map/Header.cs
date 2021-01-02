@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace DS_Map
+namespace DSPRE
 {
     /* ---------------------- HEADER DATA STRUCTURE (DPPt):----------------------------
         

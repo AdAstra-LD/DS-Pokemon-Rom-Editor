@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace DS_Map
+namespace DSPRE
 {
    /* ---------------------- MATRIX DATA STRUCTURE (DPPtHGSS):-----------------------------
 

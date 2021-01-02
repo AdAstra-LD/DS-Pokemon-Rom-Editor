@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Collections;
 
-namespace DS_Map {
+namespace DSPRE {
     /// <summary>
     /// Class to store script file data in Pokémon NDS games
     /// </summary>
@@ -104,10 +104,10 @@ namespace DS_Map {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
-                    paramDatabase = new ResourceManager("DS_Map.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
+                    paramDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
                     break;
                 default:
-                    paramDatabase = new ResourceManager("DS_Map.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
+                    paramDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
                     break;
             }
 
@@ -460,11 +460,11 @@ namespace DS_Map {
             ResourceManager commandDatabase;
             if (!isMovement) {
                 if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum")
-                    commandDatabase = new ResourceManager("DS_Map.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
+                    commandDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
                 else
-                    commandDatabase = new ResourceManager("DS_Map.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
+                    commandDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
             } else {
-                commandDatabase = new ResourceManager("DS_Map.Resources.MovementNames", Assembly.GetExecutingAssembly());
+                commandDatabase = new ResourceManager("DSPRE.Resources.MovementNames", Assembly.GetExecutingAssembly());
             }
 
             this.id = id;
@@ -895,10 +895,10 @@ namespace DS_Map {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
-                    commandDatabase = new ResourceManager("DS_Map.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
+                    commandDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
                     break;
                 default:
-                    commandDatabase = new ResourceManager("DS_Map.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
+                    commandDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
                     break;
             }
             if (!isMovement) {
@@ -939,10 +939,10 @@ namespace DS_Map {
                         case "Diamond":
                         case "Pearl":
                         case "Platinum":
-                            paramDatabase = new ResourceManager("DS_Map.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
+                            paramDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
                             break;
                         default:
-                            paramDatabase = new ResourceManager("DS_Map.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
+                            paramDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
                             break;
                     }
                     string[] indexes = paramDatabase.GetString(id.ToString("X4")).Split(' ');

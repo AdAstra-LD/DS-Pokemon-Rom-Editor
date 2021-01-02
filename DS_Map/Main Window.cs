@@ -14,7 +14,7 @@ using Tao.OpenGl;
 using LibNDSFormats.NSBMD;
 using LibNDSFormats.NSBTX;
 
-namespace DS_Map {
+namespace DSPRE {
     public partial class Form1 : Form {
         public Form1() {
             InitializeComponent();
@@ -25,7 +25,7 @@ namespace DS_Map {
         }
 
         #region RM
-        ResourceManager rm = new ResourceManager("DS_Map.WinFormStrings", Assembly.GetExecutingAssembly());
+        ResourceManager rm = new ResourceManager("DSPRE.WinFormStrings", Assembly.GetExecutingAssembly());
         #endregion
 
         #region Program Window
@@ -3264,7 +3264,8 @@ namespace DS_Map {
             else
             {
                 int archiveID = MatchOverworldIDToSpriteArchive(spriteID);
-                if (archiveID == -1) return (Bitmap)Properties.Resources.ResourceManager.GetObject("overworld"); // If id is -1, load bounding box
+                if (archiveID == -1) 
+                    return (Bitmap)Properties.Resources.ResourceManager.GetObject("overworld"); // If id is -1, load bounding box
                 else
                 {
                     try

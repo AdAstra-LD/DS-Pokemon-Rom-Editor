@@ -1,5 +1,5 @@
 using System.IO;
-namespace DS_Map
+namespace DSPRE
 {
 	/// <summary>
 	/// Class to store area data in Pokémon NDS games
