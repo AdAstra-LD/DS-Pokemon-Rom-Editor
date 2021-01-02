@@ -19,7 +19,6 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with some QOL adjustments.
 13. Fixed save error when a "Call Function_#" was in the script.
 14. New palette match algorithm.
 15. Updated editors' initial configurations.
-16. Fixed some exceptions with more user-friendly messages.
-17. Fixed some script command and movement names.
-18. Enabled some of the quick script cmd buttons.
-19. Fixed map screen going 3D with collision tab open
+16. Fixed some script command and movement names.
+17. Enabled some of the quick script cmd buttons.
+18. Fixed map screen going 3D with collision tab open
