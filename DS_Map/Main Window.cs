@@ -4581,13 +4581,13 @@ namespace DSPRE {
                     for (int j = 0; j < file.scripts.Count; j++) {
                         for (int k = 0; k < file.scripts[j].commands.Count; k++) {
                             if (file.scripts[j].commands[k].cmdName.Contains(searchString)) 
-                                searchInScriptsResultTextBox.AppendText(i + " - " + "Script " + j + ": " + file.scripts[j].commands[k].cmdName + Environment.NewLine);
+                                searchInScriptsResultTextBox.AppendText((i + 1) + " - " + "Script " + (j + 1) + ": " + file.scripts[j].commands[k].cmdName + Environment.NewLine);
                         }
                     }
                     for (int j = 0; j < file.functions.Count; j++) {
                         for (int k = 0; k < file.functions[j].commands.Count; k++) {
                             if (file.functions[j].commands[k].cmdName.Contains(searchString)) 
-                                searchInScriptsResultTextBox.AppendText(i + " - " + "Function " + j + ": " + file.functions[j].commands[k].cmdName + Environment.NewLine);
+                                searchInScriptsResultTextBox.AppendText((i + 1) + " - " + "Function " + (j+1) + ": " + file.functions[j].commands[k].cmdName + Environment.NewLine);
                         }
                     }
                 }
