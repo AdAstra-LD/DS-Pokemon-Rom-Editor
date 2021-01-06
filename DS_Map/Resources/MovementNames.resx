@@ -274,16 +274,16 @@
     <value>JumpRight</value>
   </data>
   <data name="0034" xml:space="preserve">
-    <value>JumpUp1</value>
+    <value>JumpUpRecoil</value>
   </data>
   <data name="0035" xml:space="preserve">
-    <value>JumpDown1</value>
+    <value>JumpDownRecoil</value>
   </data>
   <data name="0036" xml:space="preserve">
-    <value>JumpLeft1</value>
+    <value>JumpLeftRecoil</value>
   </data>
   <data name="0037" xml:space="preserve">
-    <value>JumpRight1</value>
+    <value>JumpRightRecoil</value>
   </data>
   <data name="0038" xml:space="preserve">
     <value>JumpUp2</value>

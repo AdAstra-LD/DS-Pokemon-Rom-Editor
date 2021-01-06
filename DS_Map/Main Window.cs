@@ -4568,40 +4568,33 @@ namespace DSPRE {
             /* Write new scripts to file */
             SaveScriptFile(selectScriptFileComboBox.SelectedIndex);
         }
-        private void searchFlagReferencesButton_Click(object sender, EventArgs e)
+        private void searchInScriptsButton_Click(object sender, EventArgs e)
         {
-            searchFlagResultTextBox.Clear();
-            string searchString = "Flag 0x" + ((int)searchFlagUpDown.Value).ToString("X");
-            flagSearchProgressBar.Maximum = selectScriptFileComboBox.Items.Count;
+            searchInScriptsResultTextBox.Clear();
+            string searchString = searchInScriptsUpDown.Text;
+            searchProgressBar.Maximum = selectScriptFileComboBox.Items.Count;
 
-            for (int i = 0; i < selectScriptFileComboBox.Items.Count; i++)
-            {
-                try
-                {
+            for (int i = 0; i < selectScriptFileComboBox.Items.Count; i++) {
+                try {
                     ScriptFile file = LoadScriptFile(i);
 
-                    for (int j = 0; j < file.scripts.Count; j++)
-                    {
-                        for (int k = 0; k < file.scripts[j].commands.Count; k++)
-                        {
-                            if (file.scripts[j].commands[k].cmdName.Contains(searchString)) searchFlagResultTextBox.AppendText("File " + i + " " + "Script " + j + Environment.NewLine);
+                    for (int j = 0; j < file.scripts.Count; j++) {
+                        for (int k = 0; k < file.scripts[j].commands.Count; k++) {
+                            if (file.scripts[j].commands[k].cmdName.Contains(searchString)) 
+                                searchInScriptsResultTextBox.AppendText(i + " - " + "Script " + j + ": " + file.scripts[j].commands[k].cmdName + Environment.NewLine);
                         }
                     }
-                    for (int j = 0; j < file.functions.Count; j++)
-                    {
-                        for (int k = 0; k < file.functions[j].commands.Count; k++)
-                        {
-                            if (file.functions[j].commands[k].cmdName.Contains(searchString)) searchFlagResultTextBox.AppendText("File " + i + " " + "Function " + j + Environment.NewLine);
+                    for (int j = 0; j < file.functions.Count; j++) {
+                        for (int k = 0; k < file.functions[j].commands.Count; k++) {
+                            if (file.functions[j].commands[k].cmdName.Contains(searchString)) 
+                                searchInScriptsResultTextBox.AppendText(i + " - " + "Function " + j + ": " + file.functions[j].commands[k].cmdName + Environment.NewLine);
                         }
                     }
                 }
-                catch
-                {
-
-                }
-                flagSearchProgressBar.Value = i;
+                catch { }
+                searchProgressBar.Value = i;
             }
-            flagSearchProgressBar.Value = 0;
+            searchProgressBar.Value = 0;
         }
         private void selectScriptFileComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {

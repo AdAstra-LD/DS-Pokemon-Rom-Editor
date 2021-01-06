@@ -345,12 +345,11 @@
             this.scriptEditorTabPage = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.label31 = new System.Windows.Forms.Label();
-            this.flagSearchProgressBar = new System.Windows.Forms.ProgressBar();
+            this.searchProgressBar = new System.Windows.Forms.ProgressBar();
             this.label30 = new System.Windows.Forms.Label();
-            this.searchFlagUpDown = new System.Windows.Forms.NumericUpDown();
             this.label29 = new System.Windows.Forms.Label();
-            this.searchFlagReferencesButton = new System.Windows.Forms.Button();
-            this.searchFlagResultTextBox = new System.Windows.Forms.TextBox();
+            this.searchInScriptsButton = new System.Windows.Forms.Button();
+            this.searchInScriptsResultTextBox = new System.Windows.Forms.TextBox();
             this.importScriptFileButton = new System.Windows.Forms.Button();
             this.exportScriptFileButton = new System.Windows.Forms.Button();
             this.saveScriptFileButton = new System.Windows.Forms.Button();
@@ -494,6 +493,7 @@
             this.wildEditorButton = new System.Windows.Forms.ToolStripButton();
             this.buildingEditorButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
+            this.searchInScriptsUpDown = new System.Windows.Forms.TextBox();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.areaIconPictureBox)).BeginInit();
@@ -604,7 +604,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.eventPictureBox)).BeginInit();
             this.scriptEditorTabPage.SuspendLayout();
             this.groupBox8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.searchFlagUpDown)).BeginInit();
             this.scriptEditorTabControl.SuspendLayout();
             this.scriptsTabPage.SuspendLayout();
             this.functionTabPage.SuspendLayout();
@@ -2842,7 +2841,6 @@
             // 
             // saveEventsButton
             // 
-            this.saveEventsButton.Enabled = true;
             this.saveEventsButton.Location = new System.Drawing.Point(8, 31);
             this.saveEventsButton.Name = "saveEventsButton";
             this.saveEventsButton.Size = new System.Drawing.Size(117, 22);
@@ -4281,19 +4279,19 @@
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.searchInScriptsUpDown);
             this.groupBox8.Controls.Add(this.label31);
-            this.groupBox8.Controls.Add(this.flagSearchProgressBar);
+            this.groupBox8.Controls.Add(this.searchProgressBar);
             this.groupBox8.Controls.Add(this.label30);
-            this.groupBox8.Controls.Add(this.searchFlagUpDown);
             this.groupBox8.Controls.Add(this.label29);
-            this.groupBox8.Controls.Add(this.searchFlagReferencesButton);
-            this.groupBox8.Controls.Add(this.searchFlagResultTextBox);
+            this.groupBox8.Controls.Add(this.searchInScriptsButton);
+            this.groupBox8.Controls.Add(this.searchInScriptsResultTextBox);
             this.groupBox8.Location = new System.Drawing.Point(8, 333);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(429, 276);
             this.groupBox8.TabIndex = 18;
             this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Search for flag references";
+            this.groupBox8.Text = "Search for commands:";
             // 
             // label31
             // 
@@ -4304,12 +4302,12 @@
             this.label31.TabIndex = 37;
             this.label31.Text = "Progress";
             // 
-            // flagSearchProgressBar
+            // searchProgressBar
             // 
-            this.flagSearchProgressBar.Location = new System.Drawing.Point(10, 241);
-            this.flagSearchProgressBar.Name = "flagSearchProgressBar";
-            this.flagSearchProgressBar.Size = new System.Drawing.Size(396, 23);
-            this.flagSearchProgressBar.TabIndex = 36;
+            this.searchProgressBar.Location = new System.Drawing.Point(10, 241);
+            this.searchProgressBar.Name = "searchProgressBar";
+            this.searchProgressBar.Size = new System.Drawing.Size(396, 23);
+            this.searchProgressBar.TabIndex = 36;
             // 
             // label30
             // 
@@ -4320,19 +4318,6 @@
             this.label30.TabIndex = 35;
             this.label30.Text = "Results";
             // 
-            // searchFlagUpDown
-            // 
-            this.searchFlagUpDown.Hexadecimal = true;
-            this.searchFlagUpDown.Location = new System.Drawing.Point(9, 36);
-            this.searchFlagUpDown.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.searchFlagUpDown.Name = "searchFlagUpDown";
-            this.searchFlagUpDown.Size = new System.Drawing.Size(91, 20);
-            this.searchFlagUpDown.TabIndex = 34;
-            // 
             // label29
             // 
             this.label29.AutoSize = true;
@@ -4342,23 +4327,23 @@
             this.label29.TabIndex = 33;
             this.label29.Text = "Flag Number (Hex)";
             // 
-            // searchFlagReferencesButton
+            // searchInScriptsButton
             // 
-            this.searchFlagReferencesButton.Location = new System.Drawing.Point(108, 36);
-            this.searchFlagReferencesButton.Name = "searchFlagReferencesButton";
-            this.searchFlagReferencesButton.Size = new System.Drawing.Size(91, 20);
-            this.searchFlagReferencesButton.TabIndex = 32;
-            this.searchFlagReferencesButton.Text = "Search";
-            this.searchFlagReferencesButton.UseVisualStyleBackColor = true;
-            this.searchFlagReferencesButton.Click += new System.EventHandler(this.searchFlagReferencesButton_Click);
+            this.searchInScriptsButton.Location = new System.Drawing.Point(315, 34);
+            this.searchInScriptsButton.Name = "searchInScriptsButton";
+            this.searchInScriptsButton.Size = new System.Drawing.Size(91, 20);
+            this.searchInScriptsButton.TabIndex = 32;
+            this.searchInScriptsButton.Text = "Search";
+            this.searchInScriptsButton.UseVisualStyleBackColor = true;
+            this.searchInScriptsButton.Click += new System.EventHandler(this.searchInScriptsButton_Click);
             // 
-            // searchFlagResultTextBox
+            // searchInScriptsResultTextBox
             // 
-            this.searchFlagResultTextBox.Location = new System.Drawing.Point(10, 79);
-            this.searchFlagResultTextBox.Multiline = true;
-            this.searchFlagResultTextBox.Name = "searchFlagResultTextBox";
-            this.searchFlagResultTextBox.Size = new System.Drawing.Size(396, 140);
-            this.searchFlagResultTextBox.TabIndex = 17;
+            this.searchInScriptsResultTextBox.Location = new System.Drawing.Point(10, 79);
+            this.searchInScriptsResultTextBox.Multiline = true;
+            this.searchInScriptsResultTextBox.Name = "searchInScriptsResultTextBox";
+            this.searchInScriptsResultTextBox.Size = new System.Drawing.Size(396, 140);
+            this.searchInScriptsResultTextBox.TabIndex = 17;
             // 
             // importScriptFileButton
             // 
@@ -5997,6 +5982,13 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             // 
+            // searchInScriptsUpDown
+            // 
+            this.searchInScriptsUpDown.Location = new System.Drawing.Point(10, 35);
+            this.searchInScriptsUpDown.Name = "searchInScriptsUpDown";
+            this.searchInScriptsUpDown.Size = new System.Drawing.Size(299, 20);
+            this.searchInScriptsUpDown.TabIndex = 38;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -6155,7 +6147,6 @@
             this.scriptEditorTabPage.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.searchFlagUpDown)).EndInit();
             this.scriptEditorTabControl.ResumeLayout(false);
             this.scriptsTabPage.ResumeLayout(false);
             this.functionTabPage.ResumeLayout(false);
@@ -6562,14 +6553,13 @@
         private System.Windows.Forms.Button lockButton;
         private System.Windows.Forms.Button releaseAllButton;
         private System.Windows.Forms.Button lockAllButton;
-        private System.Windows.Forms.TextBox searchFlagResultTextBox;
+        private System.Windows.Forms.TextBox searchInScriptsResultTextBox;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.NumericUpDown searchFlagUpDown;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Button searchFlagReferencesButton;
+        private System.Windows.Forms.Button searchInScriptsButton;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.ProgressBar flagSearchProgressBar;
+        private System.Windows.Forms.ProgressBar searchProgressBar;
         private System.Windows.Forms.Button giveShoesButton;
         private System.Windows.Forms.Button givePokédexButton;
         private System.Windows.Forms.Button giveBadgeButton;
@@ -6639,6 +6629,7 @@
         private System.Windows.Forms.RichTextBox LineNumberTextBoxFunc;
         private System.Windows.Forms.RichTextBox LineNumberTextBoxMov;
         private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.TextBox searchInScriptsUpDown;
     }
 }
 
