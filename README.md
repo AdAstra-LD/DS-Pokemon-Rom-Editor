@@ -22,3 +22,4 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with some QOL adjustments.
 16. Fixed some script command and movement names.
 17. Enabled some of the quick script cmd buttons.
 18. Fixed map screen going 3D with collision tab open
+19. Added New Movement names and changed some of the old ones
