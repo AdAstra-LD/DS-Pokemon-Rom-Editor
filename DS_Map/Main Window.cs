@@ -50,7 +50,7 @@ namespace DSPRE {
         private void CompressOverlay(int overlayNumber) {
             Process unpack = new Process();
             unpack.StartInfo.FileName = @"Tools\blz.exe";
-            unpack.StartInfo.Arguments = "-en " + workingFolder + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
+            unpack.StartInfo.Arguments = "-en " + '"' + workingFolder + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin" + '"';
             Application.DoEvents();
             unpack.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             unpack.StartInfo.CreateNoWindow = true;
