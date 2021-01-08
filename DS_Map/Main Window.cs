@@ -618,21 +618,39 @@ namespace DSPRE {
                 "[03] Very Tall Grass (Wild)",
                 "[06] Tree Headbutt (HGSS)",
                 "[08] Cave Floor",
+                "[0B] Old Château floor",
                 "[0C] Ground Mountain",
                 "[10] River Water (Wild)",
+                "[11] Whirlpool (HGSS)",
                 "[13] Waterfall",
                 "[15] Sea Water (Wild)",
                 "[16] Puddle",
+                "[17] Shallow Walkable water",
                 "[20] Ice",
                 "[21] Sand",
+                "[22] Cave Underwater",
+                "[24] Safari Zone Border",
+                "[2C] Magma",
+                "[2D] Reflection",
+                "[30] Block Right",
+                "[31] Block Left",
+                "[32] Block Up",
+                "[33] Block Down",
                 "[38] Jump Right",
                 "[39] Jump Left",
-                "[3A] Jump Up",
+                "[3A] Jump Up (Broken in HGSS)",
                 "[3B] Jump Down",
+                "[3C] Ladder front",
+                "[3D] Ladder back",
+                "[3E] Ladder down",
+                "[3F] Jump Corner DownLeft",
                 "[40] Slide Right",
                 "[41] Slide Left",
                 "[42] Slide Up",
                 "[43] Slide Down",
+                "[4B] Horiz Rock Climb",
+                "[4C] Vert Rock Climb",
+                "[4D] Stop Sliding",
                 "[5E] Stairs Warp (Right)",
                 "[5F] Stairs Warp (Left)",
                 "[62] Warp Entrance (Right)",
@@ -641,6 +659,8 @@ namespace DSPRE {
                 "[65] Warp Entrance (Down)",
                 "[67] Warp Panel",
                 "[69] Door",
+                "[6A] Automatic stairs Down right",
+                "[6B] Automatic stairs Up right",
                 "[6C] Warp Right",
                 "[6D] Warp Left",
                 "[6E] Warp Up",
@@ -650,7 +670,15 @@ namespace DSPRE {
                 "[72] Bridge Over Cave",
                 "[73] Bridge Over Water",
                 "[75] Bridge Over Snow",
+                "[76] Vertical bike bridge",
+                "[79] Vertical bike bridge over sand",
+                "[7A] Horizontal bike bridge",
+                "[7C] Horizontal bike bridge over water",
+                "[7D] Horizontal bike bridge over sand",
                 "[80] Table",
+                "[83] Storage PC",
+                "[85] Open TownMap",
+                "[86] TV",
                 "[A0] Farm Land",
                 "[A1] Deep Snow",
                 "[A2] Very Deep Snow",
@@ -658,8 +686,12 @@ namespace DSPRE {
                 "[A4] Mud",
                 "[A6] Mud Grass",
                 "[A8] Snow",
+                "[D8] Bike Jump Left",
                 "[D9] Bike Slope Top",
                 "[DA] Bike Slope Bottom",
+                "[DB] Bike parking",
+                "[E4] Trash Can",
+                "[E5] Shop items"
             };
             for (int i = 0; i < typePainters.Count; i++) 
                 typePainterComboBox.Items.Add(typePainters[i]);
@@ -1023,7 +1055,7 @@ namespace DSPRE {
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.4a" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.4c" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who owes credit for SDSME." + Environment.NewLine +
                 "Special thanks go to Trifindo, Mikelan98, BagBoy, and JackHack96, whose help, research and expertise in the field of NDS Rom Hacking made the development of this tool possible.";
 
