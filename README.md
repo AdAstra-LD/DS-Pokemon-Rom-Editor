@@ -27,3 +27,4 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with some QOL adjustments.
 21. Replaced flag search with "Search any command"
 22. Changed row numbers to hex in Text Editor
 23. Expanded collisions database
+24. Added new ALT key shortcuts
