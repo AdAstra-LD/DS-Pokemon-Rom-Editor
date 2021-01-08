@@ -374,7 +374,7 @@
             this.saveEventsButton.Name = "saveEventsButton";
             this.saveEventsButton.Size = new System.Drawing.Size(117, 34);
             this.saveEventsButton.TabIndex = 55;
-            this.saveEventsButton.Text = "Save Encounters";
+            this.saveEventsButton.Text = "&Save Encounters";
             this.saveEventsButton.UseVisualStyleBackColor = true;
             this.saveEventsButton.Click += new System.EventHandler(this.saveEventsButton_Click);
             // 
