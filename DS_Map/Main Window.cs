@@ -80,7 +80,9 @@ namespace DSPRE {
         private void decompressOverlay(int overlayNumber, bool makeBackup) {
             String overlayFilePath = workDir + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
 
-            if (makeBackup) { 
+            if (makeBackup) {
+                if (File.Exists(overlayFilePath + ".bak"))
+                    File.Delete(overlayFilePath + ".bak");
                 File.Copy(overlayFilePath, overlayFilePath + ".bak" );
             }
 
@@ -1120,7 +1122,6 @@ namespace DSPRE {
             wildEditorButton.Enabled = true;
             loadRomButton.Enabled = false;
             statusLabel.Text = "Ready";
-
         }
 
         private void saveRom_Click(object sender, EventArgs e)
