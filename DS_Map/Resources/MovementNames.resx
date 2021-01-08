@@ -262,28 +262,28 @@
     <value>JumpRightSlow</value>
   </data>
   <data name="0030" xml:space="preserve">
-    <value>JumpUp</value>
+    <value>JumpUpSite</value>
   </data>
   <data name="0031" xml:space="preserve">
-    <value>JumpDown</value>
+    <value>JumpDownSite</value>
   </data>
   <data name="0032" xml:space="preserve">
-    <value>JumpLeft</value>
+    <value>JumpLeftSite</value>
   </data>
   <data name="0033" xml:space="preserve">
-    <value>JumpRight</value>
+    <value>JumpRighSitet</value>
   </data>
   <data name="0034" xml:space="preserve">
-    <value>JumpUpRecoil</value>
+    <value>JumpUp</value>
   </data>
   <data name="0035" xml:space="preserve">
-    <value>JumpDownRecoil</value>
+    <value>JumpDown</value>
   </data>
   <data name="0036" xml:space="preserve">
-    <value>JumpLeftRecoil</value>
+    <value>JumpLeft</value>
   </data>
   <data name="0037" xml:space="preserve">
-    <value>JumpRightRecoil</value>
+    <value>JumpRight</value>
   </data>
   <data name="0038" xml:space="preserve">
     <value>JumpUp2</value>
