@@ -1081,7 +1081,7 @@
             this.saveHeaderButton.Name = "saveHeaderButton";
             this.saveHeaderButton.Size = new System.Drawing.Size(126, 30);
             this.saveHeaderButton.TabIndex = 33;
-            this.saveHeaderButton.Text = "Save Current Header";
+            this.saveHeaderButton.Text = "&Save Current Header";
             this.saveHeaderButton.UseVisualStyleBackColor = true;
             this.saveHeaderButton.Click += new System.EventHandler(this.saveHeaderButton_Click);
             // 
@@ -4371,7 +4371,7 @@
             this.saveScriptFileButton.Name = "saveScriptFileButton";
             this.saveScriptFileButton.Size = new System.Drawing.Size(193, 23);
             this.saveScriptFileButton.TabIndex = 14;
-            this.saveScriptFileButton.Text = "Save Current";
+            this.saveScriptFileButton.Text = "&Save Current";
             this.saveScriptFileButton.UseVisualStyleBackColor = true;
             this.saveScriptFileButton.Click += new System.EventHandler(this.saveScriptFileButton_Click);
             // 
@@ -5419,7 +5419,7 @@
             this.saveMessageFileButton.Name = "saveMessageFileButton";
             this.saveMessageFileButton.Size = new System.Drawing.Size(128, 23);
             this.saveMessageFileButton.TabIndex = 21;
-            this.saveMessageFileButton.Text = "Save Current";
+            this.saveMessageFileButton.Text = "&Save Current";
             this.saveMessageFileButton.UseVisualStyleBackColor = true;
             this.saveMessageFileButton.Click += new System.EventHandler(this.saveMessageFileButton_Click);
             // 
