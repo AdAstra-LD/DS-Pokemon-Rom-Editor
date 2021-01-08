@@ -33,7 +33,7 @@ namespace DSPRE {
         #region Variables
         public bool disableHandlers = false;
         public bool iconON = false;
-        public static string workingFolder;
+        public static string workDir;
         public bool expandedARM9;
         public bool standardizedItems;
 
@@ -48,9 +48,10 @@ namespace DSPRE {
 
         #region Subroutines
         private void CompressOverlay(int overlayNumber) {
+            String overlayFilePath = '"' + workDir + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin" + '"';
             Process unpack = new Process();
             unpack.StartInfo.FileName = @"Tools\blz.exe";
-            unpack.StartInfo.Arguments = "-en " + '"' + workingFolder + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin" + '"';
+            unpack.StartInfo.Arguments = "-en " + overlayFilePath;
             Application.DoEvents();
             unpack.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             unpack.StartInfo.CreateNoWindow = true;
@@ -59,33 +60,51 @@ namespace DSPRE {
         }
 		
         private void DecompressArm9() {
-            if (new FileInfo(workingFolder + @"arm9.bin").Length < 0xC0000)
+            if (new FileInfo(workDir + @"arm9.bin").Length < 0xC0000)
             {
-                BinaryWriter arm9Truncate = new BinaryWriter(File.OpenWrite(workingFolder + @"arm9.bin"));
-                long arm9Length = new FileInfo(workingFolder + @"arm9.bin").Length;
+                BinaryWriter arm9Truncate = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin"));
+                long arm9Length = new FileInfo(workDir + @"arm9.bin").Length;
                 arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
                 arm9Truncate.Close();
             }
 
             Process decompress = new Process();
             decompress.StartInfo.FileName = @"Tools\blz.exe";
-            decompress.StartInfo.Arguments = @" -d " + '"' + workingFolder + "arm9.bin" + '"';
+            decompress.StartInfo.Arguments = @" -d " + '"' + workDir + "arm9.bin" + '"';
             decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             decompress.StartInfo.CreateNoWindow = true;
             decompress.Start();
             decompress.WaitForExit();
         }
-		
-        private void decompressOverlay(int overlayNumber) {
+
+        private void decompressOverlay(int overlayNumber, bool makeBackup) {
+            String overlayFilePath = workDir + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
+
+            if (makeBackup) { 
+                File.Copy(overlayFilePath, overlayFilePath + ".bak" );
+            }
+
             Process unpack = new Process();
             unpack.StartInfo.FileName = @"Tools\blz.exe";
-            String arguments = "-d " + '"' + workingFolder + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin" + '"';
+            String arguments = "-d " + '"' + overlayFilePath + '"';
             unpack.StartInfo.Arguments = arguments;
             Application.DoEvents();
             unpack.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
             unpack.StartInfo.CreateNoWindow = false;
             unpack.Start();
             unpack.WaitForExit();
+        }
+
+        private void restoreOverlayFromBackup (int overlayNumber) {
+            String overlayFilePath = workDir + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
+
+            if (File.Exists(overlayFilePath + ".bak")) {
+                File.Delete(overlayFilePath);
+                File.Move(overlayFilePath + ".bak", overlayFilePath);
+            } else {
+                MessageBox.Show("File " + '"' + overlayFilePath + ".bak" + '"' + " couldn't be found and restored.",
+                    "Can't restore overlay from backup", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 		
         private string[] GetBuildingsList(bool interior) {
@@ -142,9 +161,15 @@ namespace DSPRE {
 		private AreaData LoadAreaData(uint areaDataID) {
             return new AreaData(new FileStream(romInfo.GetAreaDataFolderPath() + "//" + areaDataID.ToString("D4"), FileMode.Open), gameVersion);
         }
-        
-		private MapFile LoadMapFile(int mapNumber) { 
-            return new MapFile(new FileStream(romInfo.GetMapFolderPath() + "\\" + mapNumber.ToString("D4"), FileMode.Open), gameVersion);
+
+        private MapFile LoadMapFile(int mapNumber) {
+            try {
+                return new MapFile(new FileStream(romInfo.GetMapFolderPath() + "\\" + mapNumber.ToString("D4"), FileMode.Open), gameVersion);
+            } catch (FileNotFoundException) {
+                MessageBox.Show("File " + '"' + romInfo.GetMapFolderPath() + "\\" + mapNumber.ToString("D4") + '"' + " is missing.", "File not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            
         }
         
 		private Matrix LoadMatrix(int matrixNumber) {
@@ -163,7 +188,7 @@ namespace DSPRE {
             if (iconON == true) {
                 BinaryReader readIcon;
                 try {
-                    readIcon = new BinaryReader(File.OpenRead(workingFolder + @"banner.bin"));
+                    readIcon = new BinaryReader(File.OpenRead(workDir + @"banner.bin"));
                 } catch (FileNotFoundException) {
                     MessageBox.Show("Couldn't load " + '"' + "banner.bin" + '"' + '.', "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -258,7 +283,7 @@ namespace DSPRE {
             else return;
         }
         private byte[] ReadFromArm9(int startOffset, int numberOfBytes) {
-            BinaryReader readArm9 = new BinaryReader(File.OpenRead(workingFolder + @"arm9.bin"));
+            BinaryReader readArm9 = new BinaryReader(File.OpenRead(workDir + @"arm9.bin"));
             readArm9.BaseStream.Position = startOffset;
             byte[] targetBytes = readArm9.ReadBytes(numberOfBytes);
             readArm9.Dispose();
@@ -268,23 +293,29 @@ namespace DSPRE {
         private void RepackNARCs() {
             foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create))
             {
-                Narc.FromFolder(tuple.Item2).Save(workingFolder + tuple.Item1); // Make new NARC from folder
+                Narc.FromFolder(tuple.Item2).Save(workDir + tuple.Item1); // Make new NARC from folder
+                //Directory.Delete(tuple.Item2, true); // Delete folder
+            }
+        }
+
+        private void DeleteTempFolders() {
+            foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create)) { 
                 Directory.Delete(tuple.Item2, true); // Delete folder
             }
         }
-		
+
         private void RepackRom(string ndsFileName) {
             Process repack = new Process();
             repack.StartInfo.FileName = @"Tools\ndstool.exe";
             repack.StartInfo.Arguments = "-c " + '"' + ndsFileName + '"' 
-				+ " -9 " + '"' + workingFolder + "arm9.bin" + '"' 
-				+ " -7 " + '"' + workingFolder + "arm7.bin" + '"'
-				+ " -y9 " + '"' + workingFolder + "y9.bin" + '"' 
-				+ " -y7 " + '"' + workingFolder + "y7.bin" + '"' 
-				+ " -d " + '"' + workingFolder + "data" + '"' 
-				+ " -y " + '"' + workingFolder + "overlay" + '"' 
-				+ " -t " + '"' + workingFolder + "banner.bin" + '"' 
-				+ " -h " + '"' + workingFolder + "header.bin" + '"';
+				+ " -9 " + '"' + workDir + "arm9.bin" + '"' 
+				+ " -7 " + '"' + workDir + "arm7.bin" + '"'
+				+ " -y9 " + '"' + workDir + "y9.bin" + '"' 
+				+ " -y7 " + '"' + workDir + "y7.bin" + '"' 
+				+ " -d " + '"' + workDir + "data" + '"' 
+				+ " -y " + '"' + workDir + "overlay" + '"' 
+				+ " -t " + '"' + workDir + "banner.bin" + '"' 
+				+ " -h " + '"' + workDir + "header.bin" + '"';
 			
             Application.DoEvents();
             repack.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -304,7 +335,7 @@ namespace DSPRE {
                     break;
                 default:
                     overworldTablePath = "overlay" + "\\" + "overlay_0001.bin";
-                    decompressOverlay(1); // HGSS Overlay 1 must be uncompressed to be able to read the overworld table
+                    decompressOverlay(1, true); // HGSS Overlay 1 must be uncompressed to be able to read the overworld table
                     break;
             }
 
@@ -462,7 +493,7 @@ namespace DSPRE {
         {
             /* Read Header internal names */
             internalNames = new List<string>();
-            using (BinaryReader reader = new BinaryReader(File.OpenRead(workingFolder + @"data\fielddata\maptable\mapname.bin")))
+            using (BinaryReader reader = new BinaryReader(File.OpenRead(workDir + @"data\fielddata\maptable\mapname.bin")))
             {
                 int internalNameLen = 0x10;
                 int headerCount = romInfo.GetHeaderCount();
@@ -585,6 +616,7 @@ namespace DSPRE {
                 "[00] None",
                 "[02] Tall Grass (Wild)",
                 "[03] Very Tall Grass (Wild)",
+                "[06] Tree Headbutt (HGSS)",
                 "[08] Cave Floor",
                 "[0C] Ground Mountain",
                 "[10] River Water (Wild)",
@@ -629,7 +661,8 @@ namespace DSPRE {
                 "[D9] Bike Slope Top",
                 "[DA] Bike Slope Bottom",
             };
-            for (int i = 0; i < typePainters.Count; i++) typePainterComboBox.Items.Add(typePainters[i]);
+            for (int i = 0; i < typePainters.Count; i++) 
+                typePainterComboBox.Items.Add(typePainters[i]);
 
             /* Set controls' initial values */
             selectCollisionPanel.BackColor = Color.MidnightBlue;
@@ -752,7 +785,7 @@ namespace DSPRE {
                 palettesListBox.SelectedIndex = 0;
         }
         private bool UnpackRom(string ndsFileName) {
-            if (Directory.Exists(workingFolder)) // Check if extracted data for the ROM exists, and ask user if they want to load it.
+            if (Directory.Exists(workDir)) // Check if extracted data for the ROM exists, and ask user if they want to load it.
             {
                 DialogResult d;
                 d = MessageBox.Show("Extracted data of this ROM has been found.\nDo you want to load it?", "Data detected", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -767,27 +800,27 @@ namespace DSPRE {
                     Application.DoEvents();
                     try {
                         statusLabel.Text = "Deleting old data...";
-                        Directory.Delete(workingFolder, true);
+                        Directory.Delete(workDir, true);
                     } catch (IOException) {
-                        MessageBox.Show("Can't access temp directory: \n" + workingFolder + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can't access temp directory: \n" + workDir + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return true;
                     }
                 } 
             }
 
             statusLabel.Text = "Unpacking ROM...";
-            Directory.CreateDirectory(workingFolder);
+            Directory.CreateDirectory(workDir);
             Process unpack = new Process();
             unpack.StartInfo.FileName = @"Tools\ndstool.exe";
             unpack.StartInfo.Arguments = "-x " + '"' + ndsFileName + '"' 
-                + " -9 " + '"' + workingFolder + "arm9.bin" + '"' 
-                + " -7 " + '"' + workingFolder + "arm7.bin" + '"' 
-                + " -y9 " + '"' + workingFolder + "y9.bin" + '"' 
-                + " -y7 " + '"' + workingFolder + "y7.bin" + '"' 
-                + " -d " + '"' + workingFolder + "data" + '"' 
-                + " -y " + '"' + workingFolder + "overlay" + '"' 
-                + " -t " + '"' + workingFolder + "banner.bin" + '"' 
-                + " -h " + '"' + workingFolder + "header.bin" + '"';
+                + " -9 " + '"' + workDir + "arm9.bin" + '"' 
+                + " -7 " + '"' + workDir + "arm7.bin" + '"' 
+                + " -y9 " + '"' + workDir + "y9.bin" + '"' 
+                + " -y7 " + '"' + workDir + "y7.bin" + '"' 
+                + " -d " + '"' + workDir + "data" + '"' 
+                + " -y " + '"' + workDir + "overlay" + '"' 
+                + " -t " + '"' + workDir + "banner.bin" + '"' 
+                + " -h " + '"' + workDir + "header.bin" + '"';
             Application.DoEvents();
             unpack.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             unpack.StartInfo.CreateNoWindow = true;
@@ -815,10 +848,9 @@ namespace DSPRE {
                @"data\poketool\trainer\trdata.narc"
             };
 
-            narcFolders = new string[]
-            {
+            narcFolders = new string[] {
                romInfo.GetBuildingTexturesFolderPath(),
-               workingFolder + @"data\fielddata\areadata\area_build_model\area_build",
+               workDir + @"extracted\area_build",
                romInfo.GetAreaDataFolderPath(),
                romInfo.GetMapTexturesFolderPath(),
                romInfo.GetBuildingModelsFolderPath(false),
@@ -838,9 +870,8 @@ namespace DSPRE {
                 narcList[5] += "p_enc_data.narc";
             }
 
-            foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create))
-            {
-                Narc.Open(workingFolder + tuple.Item1).ExtractToFolder(tuple.Item2);
+            foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create)) {
+                Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
             }
         }
         private void UnpackNARCsPlatinum()
@@ -865,7 +896,7 @@ namespace DSPRE {
             narcFolders = new string[]
             {
                romInfo.GetBuildingTexturesFolderPath(),
-               workingFolder + @"data\fielddata\areadata\area_build_model\area_build",
+               workDir + @"extracted\area_build",
                romInfo.GetAreaDataFolderPath(),
                romInfo.GetMapTexturesFolderPath(),
                romInfo.GetBuildingModelsFolderPath(false),
@@ -881,7 +912,7 @@ namespace DSPRE {
 
             foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create))
             {
-                Narc.Open(workingFolder + tuple.Item1).ExtractToFolder(tuple.Item2);
+                Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
             }
         }
         private void UnpackNARCsHeartGoldSoulSilver()
@@ -906,7 +937,7 @@ namespace DSPRE {
             narcFolders = new string[]
             {
                romInfo.GetBuildingTexturesFolderPath(),
-               workingFolder + @"data\a\0\4\area_build",
+               workDir + @"extracted\area_build",
                romInfo.GetAreaDataFolderPath(),
                romInfo.GetMapTexturesFolderPath(),
                romInfo.GetBuildingModelsFolderPath(false),
@@ -923,7 +954,7 @@ namespace DSPRE {
 
             foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create))
             {
-                Narc.Open(workingFolder + tuple.Item1).ExtractToFolder(tuple.Item2);
+                Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
             }
         }
         private void UnpackNARCsBlackWhite2()
@@ -948,7 +979,7 @@ namespace DSPRE {
             narcFolders = new string[]
             {
                romInfo.GetBuildingTexturesFolderPath(),
-               workingFolder + @"data\a\0\4\area_build",
+               workDir + @"extracted\area_build",
                romInfo.GetAreaDataFolderPath(),
                romInfo.GetMapTexturesFolderPath(),
                romInfo.GetBuildingModelsFolderPath(false),
@@ -965,12 +996,12 @@ namespace DSPRE {
 
             foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create))
             {
-                Narc.Open(workingFolder + tuple.Item1).ExtractToFolder(tuple.Item2);
+                Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
             }
         }
         private void WriteToArm9(int startOffset, byte[] bytesToWrite)
         {
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(workingFolder + @"arm9.bin")))
+            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin")))
             {
                 writer.BaseStream.Position = startOffset;
                 writer.Write(bytesToWrite, 0, bytesToWrite.Length);
@@ -1009,14 +1040,14 @@ namespace DSPRE {
                 br.BaseStream.Seek(0xC, SeekOrigin.Begin); // Get ROM ID
                 gameCode = Encoding.UTF8.GetString(br.ReadBytes(4));
             }
-            workingFolder = Path.GetDirectoryName(openRom.FileName) + "\\" + Path.GetFileNameWithoutExtension(openRom.FileName) + "_DSPRE_extracted" + "\\";
+            workDir = Path.GetDirectoryName(openRom.FileName) + "\\" + Path.GetFileNameWithoutExtension(openRom.FileName) + "_DSPRE_extracted" + "\\";
             
             bool processAborted = UnpackRom(openRom.FileName);
             if (processAborted)
                 return;
 
             /* Set ROM gameVersion and language */
-            romInfo = new RomInfo(gameCode, workingFolder);
+            romInfo = new RomInfo(gameCode, workDir);
             gameVersion = romInfo.getGameVersion();
             versionLabel.Text = "ROM: Pokémon " + gameVersion;
             languageLabel.Text = "Language: " + romInfo.GetLanguage();
@@ -1076,26 +1107,15 @@ namespace DSPRE {
                 case "Platinum":
                     break;
                 default:
-                    CompressOverlay(1); // Must compress overlay 1 in HGSS, which contains overworld table
+                    restoreOverlayFromBackup(1); // Must restore compressed overlay 1 in HGSS, which contains overworld table
                     break;
             }
                 
             RepackNARCs();
+            //DeleteTempFolders();
             RepackRom(saveRom.FileName);
-            switch (gameVersion)
-            {
-                case "Diamond":
-                case "Pearl":
-                    UnpackNARCsDiamondPearl();
-                    break;
-                case "Platinum":
-                    UnpackNARCsPlatinum();
-                    break;
-                default:
-                    UnpackNARCsHeartGoldSoulSilver();
-                    decompressOverlay(1);
-                    break;
-            }
+            if (gameVersion != "Diamond" && gameVersion != "Pearl" && gameVersion != "Platinum")
+                decompressOverlay(1, true);
 
             statusLabel.Text = "Ready";
         }
@@ -1213,7 +1233,8 @@ namespace DSPRE {
 
         private void areaDataUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentHeader.areaDataID = (byte)areaDataUpDown.Value;
         }
         private void areaIconComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -3354,7 +3375,7 @@ namespace DSPRE {
         private int MatchOverworldIDToSpriteArchive(uint ID) { 
         
             Console.WriteLine("Searching for ID : " + ID.ToString("X4"));
-            using (BinaryReader idReader = new BinaryReader(new FileStream(workingFolder + overworldTablePath, FileMode.Open)))
+            using (BinaryReader idReader = new BinaryReader(new FileStream(workDir + overworldTablePath, FileMode.Open)))
             {        
                 int archiveID;
                 switch (gameVersion)
@@ -3837,64 +3858,61 @@ namespace DSPRE {
             #endregion
 
             int index = overworldsListBox.SelectedIndex;
-            selectedEvent = currentEventFile.overworlds[index];
+            try {
+                selectedEvent = currentEventFile.overworlds[index];
 
-            /* Set coordinates controls */
-            owXMapUpDown.Value = currentEventFile.overworlds[index].xMapPosition;
-            owYMapUpDown.Value = currentEventFile.overworlds[index].yMapPosition;
-            owXMatrixUpDown.Value = currentEventFile.overworlds[index].xMatrixPosition;
-            owYMatrixUpDown.Value = currentEventFile.overworlds[index].yMatrixPosition;
-            owZPositionUpDown.Value = currentEventFile.overworlds[index].zPosition;
+                /* Set coordinates controls */
+                owXMapUpDown.Value = currentEventFile.overworlds[index].xMapPosition;
+                owYMapUpDown.Value = currentEventFile.overworlds[index].yMapPosition;
+                owXMatrixUpDown.Value = currentEventFile.overworlds[index].xMatrixPosition;
+                owYMatrixUpDown.Value = currentEventFile.overworlds[index].yMatrixPosition;
+                owZPositionUpDown.Value = currentEventFile.overworlds[index].zPosition;
 
-            /*ID, Flag and Script number controls */
-            owIDNumericUpDown.Value = currentEventFile.overworlds[index].owID;
-            owFlagNumericUpDown.Value = currentEventFile.overworlds[index].flag;
-            owScriptNumericUpDown.Value = currentEventFile.overworlds[index].scriptNumber;
-            
-            /* Sprite index and image controls */
-            owSpriteComboBox.SelectedIndex = MatchOverworldIDToSpriteArchive(currentEventFile.overworlds[index].spriteID);
-            owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[index].spriteID, currentEventFile.overworlds[index].orientation);
+                /*ID, Flag and Script number controls */
+                owIDNumericUpDown.Value = currentEventFile.overworlds[index].owID;
+                owFlagNumericUpDown.Value = currentEventFile.overworlds[index].flag;
+                owScriptNumericUpDown.Value = currentEventFile.overworlds[index].scriptNumber;
 
-            /* Special settings controls */
-            if (currentEventFile.overworlds[index].type == 0x1)
-            {
-                disableHandlers = false;
-                isTrainerRadioButton.Checked = true;
-                disableHandlers = true;
-                if (currentEventFile.overworlds[index].scriptNumber >= 4999)
-                {
-                    owTrainerComboBox.SelectedIndex = Math.Max(currentEventFile.overworlds[index].scriptNumber - 4999, 0); // Partner of double battle trainer
-                    owPartnerTrainerCheckBox.Checked = true;
+                /* Sprite index and image controls */
+                owSpriteComboBox.SelectedIndex = MatchOverworldIDToSpriteArchive(currentEventFile.overworlds[index].spriteID);
+                owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[index].spriteID, currentEventFile.overworlds[index].orientation);
+
+                /* Special settings controls */
+                if (currentEventFile.overworlds[index].type == 0x1) {
+                    disableHandlers = false;
+                    isTrainerRadioButton.Checked = true;
+                    disableHandlers = true;
+                    if (currentEventFile.overworlds[index].scriptNumber >= 4999) {
+                        owTrainerComboBox.SelectedIndex = Math.Max(currentEventFile.overworlds[index].scriptNumber - 4999, 0); // Partner of double battle trainer
+                        owPartnerTrainerCheckBox.Checked = true;
+                    } else {
+                        owTrainerComboBox.SelectedIndex = Math.Max(currentEventFile.overworlds[index].scriptNumber - 2999, 0); // Normal trainer
+                        owPartnerTrainerCheckBox.Checked = false;
+                    }
+                } else if (currentEventFile.overworlds[index].type == 0x3 || currentEventFile.overworlds[index].scriptNumber >= 7000 && currentEventFile.overworlds[index].scriptNumber <= 8000) {
+                    disableHandlers = false;
+                    isItemRadioButton.Checked = true;
+                    owItemComboBox.SelectedIndex = Math.Max(currentEventFile.overworlds[index].scriptNumber - 7000, 0);
+                    disableHandlers = true;
+                } else {
+                    disableHandlers = false;
+                    normalRadioButton.Checked = true;
+                    disableHandlers = true;
                 }
-                else
-                {
-                    owTrainerComboBox.SelectedIndex = Math.Max(currentEventFile.overworlds[index].scriptNumber - 2999, 0); // Normal trainer
-                    owPartnerTrainerCheckBox.Checked = false;
-                }
-            }
-            else if (currentEventFile.overworlds[index].type == 0x3 || currentEventFile.overworlds[index].scriptNumber >= 7000 && currentEventFile.overworlds[index].scriptNumber <= 8000)
-            {
-                disableHandlers = false;
-                isItemRadioButton.Checked = true;
-                owItemComboBox.SelectedIndex = Math.Max(currentEventFile.overworlds[index].scriptNumber - 7000, 0);
-                disableHandlers = true;
-            }
-            else
-            {
-                disableHandlers = false;
-                normalRadioButton.Checked = true;
-                disableHandlers = true;
-            }
 
 
-            /* Movement settings */
-            owMovementComboBox.SelectedIndex = currentEventFile.overworlds[index].movement;
-            owOrientationComboBox.SelectedIndex = currentEventFile.overworlds[index].orientation;
-            owSightRangeUpDown.Value = currentEventFile.overworlds[index].sightRange;
-            owXRangeUpDown.Value = currentEventFile.overworlds[index].xRange;
-            owYRangeUpDown.Value = currentEventFile.overworlds[index].yRange;
+                /* Movement settings */
+                owMovementComboBox.SelectedIndex = currentEventFile.overworlds[index].movement;
+                owOrientationComboBox.SelectedIndex = currentEventFile.overworlds[index].orientation;
+                owSightRangeUpDown.Value = currentEventFile.overworlds[index].sightRange;
+                owXRangeUpDown.Value = currentEventFile.overworlds[index].xRange;
+                owYRangeUpDown.Value = currentEventFile.overworlds[index].yRange;
 
-            DisplayActiveEvents();
+                DisplayActiveEvents();
+            } catch (ArgumentOutOfRangeException) {
+                String errorMsg = "There was a problem loading the overworld events of this Event file.";
+                MessageBox.Show(errorMsg, "Something went wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             #region Re-enable events
             disableHandlers = false;
@@ -3902,7 +3920,8 @@ namespace DSPRE {
         }
         private void owFlagNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].flag = (ushort)owFlagNumericUpDown.Value;
         }
         private void owIDNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -4480,8 +4499,7 @@ namespace DSPRE {
         private void openLevelScriptButton_Click(object sender, EventArgs e) {
             String errorMsg = "Level scripts are currently not supported.\n" +
                     "For that, you can use AdAstra's Level Script Editor.";
-            DialogResult d;
-            d = MessageBox.Show(errorMsg, "Unimplemented feature", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show(errorMsg, "Unimplemented feature", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void removeScriptFileButton_Click(object sender, EventArgs e)
@@ -4670,7 +4688,8 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("Insert flag number (hex):", "hex"))
             {
                 f.ShowDialog();
-                if (f.okSelected) scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "ClearFlag 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
+                if (f.okSelected) 
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "ClearFlag 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
             }
         }
         private void messageButton_Click(object sender, EventArgs e)

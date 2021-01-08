@@ -26,19 +26,7 @@ namespace DSPRE
         #region Methods (22)
         public string GetAreaDataFolderPath()
         {
-            string path;
-            switch (gameVersion)
-            {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
-                    path = @"data\fielddata\areadata\area_data";
-                    break;
-                default:
-                    path = @"data\a\0\4\area_data";
-                    break;
-            }
-            return workingFolder + path;
+            return workingFolder + @"extracted\area_data";
         }
         public int GetAreaDataCount()
         {
@@ -52,11 +40,13 @@ namespace DSPRE
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
-                    path = @"data\fielddata\build_model\build_model";
+                    path = @"extracted\DPPtBuildings";
                     break;
                 default:
-                    if (interior) path = @"data\a\1\4\building";
-                    else path = @"data\a\0\4\building";
+                    if (interior) 
+                        path = @"extracted\HGSSBuildingsIN";
+                    else 
+                        path = @"extracted\HGSSBuildingsOUT";
                     break;
             }
             return workingFolder + path;
@@ -119,8 +109,10 @@ namespace DSPRE
                     fileNumber = 647;
                     break;
                 default:
-                    if (GetLanguage() == "JAP") fileNumber = 739;
-                    else fileNumber = 750;
+                    if (GetLanguage() == "JAP") 
+                        fileNumber = 739;
+                    else 
+                        fileNumber = 750;
                     break;
             }
             return fileNumber;
@@ -194,8 +186,10 @@ namespace DSPRE
                     fileNumber = 412;
                     break;
                 default:
-                    if (GetLanguage() == "JAP") fileNumber = 232;
-                    else fileNumber = 237;
+                    if (GetLanguage() == "JAP") 
+                        fileNumber = 232;
+                    else 
+                        fileNumber = 237;
                     break;
             }
             return fileNumber;
@@ -213,8 +207,10 @@ namespace DSPRE
                     fileNumber = 618;
                     break;
                 default:
-                    if (GetLanguage() == "JAP") fileNumber = 719;
-                    else fileNumber = 729;
+                    if (GetLanguage() == "JAP") 
+                        fileNumber = 719;
+                    else 
+                        fileNumber = 729;
                     break;
             }
             return fileNumber;
@@ -232,67 +228,32 @@ namespace DSPRE
                     fileNumber = 619;
                     break;
                 default:
-                    if (GetLanguage() == "JAP") fileNumber = 720;
-                    else fileNumber = 730;
+                    if (GetLanguage() == "JAP") 
+                        fileNumber = 720;
+                    else 
+                        fileNumber = 730;
                     break;
             }
             return fileNumber;
         }
         public string GetMapTexturesFolderPath()
         {
-            string path;
-            switch (gameVersion)
-            {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
-                    path = @"data\fielddata\areadata\area_map_tex\map_tex_set";
-                    break;
-                default:
-                    path = @"data\a\0\4\texture";
-                    break;
-            }
-            return workingFolder + path;
+            return workingFolder + @"extracted\maptex";
         }
         public int GetMapTexturesCount()
         {
             return Directory.GetFiles(GetMapTexturesFolderPath()).Length;
         }
-        public string GetBuildingTexturesFolderPath()
-        {
-            string path;
-            switch (gameVersion)
-            {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
-                    path = @"data\fielddata\areadata\area_build_model\areabm_texset";
-                    break;
-                default:
-                    path = @"data\a\0\7\textureBld";
-                    break;
-            }
-            return workingFolder + path;
+        public string GetBuildingTexturesFolderPath() { 
+            return workingFolder + @"extracted\TextureBLD";
         }
+
         public int GetBuildingTexturesCount()
         {
             return Directory.GetFiles(GetBuildingTexturesFolderPath()).Length;
         }
-        public string GetMatrixFolderPath()
-        {
-            string path;
-            switch (gameVersion)
-            {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
-                    path = @"data\fielddata\mapmatrix\map_matrix";
-                    break;
-                default:
-                    path = @"data\a\0\4\matrix";
-                    break;
-            }
-            return workingFolder + path;
+        public string GetMatrixFolderPath() {  
+            return workingFolder + @"extracted\matrix";
         }
         public int GetMatrixCount()
         {
@@ -300,21 +261,7 @@ namespace DSPRE
         }
         public string GetMessageFolderPath()
         {
-            string path;
-            switch (gameVersion)
-            {
-                case "Diamond":
-                case "Pearl":
-                    path = @"data\msgdata\msg";
-                    break;
-                case "Platinum":
-                    path = @"data\msgdata\pl_msg";
-                    break;
-                default:
-                    path = @"data\a\0\2\text";
-                    break;
-            }
-            return workingFolder + path;
+            return workingFolder + @"extracted\msg";
         }
         public int GetMessageCount()
         {
@@ -322,37 +269,11 @@ namespace DSPRE
         }
         public string GetTrainerDataFolderPath()
         {
-            string path;
-            switch (gameVersion)
-            {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
-                    path = @"data\poketool\trainer\trdata";
-                    break;
-                default:
-                    path = @"data\a\0\5\trdata";
-                    break;
-            }
-            return workingFolder + path;
+            return workingFolder + @"extracted\trainerdata";
         }
         public string GetMapFolderPath()
         {
-            string path;
-            switch (gameVersion)
-            {
-                case "Diamond":
-                case "Pearl":
-                    path = @"data\fielddata\land_data\land_data_release";
-                    break;
-                case "Platinum":
-                    path = @"data\fielddata\land_data\land_data";
-                    break;
-                default:
-                    path = @"data\a\0\6\map";
-                    break;
-            }
-            return workingFolder + path;
+            return workingFolder + @"extracted\maps";
         }
         public int GetMapCount()
         {
@@ -360,37 +281,11 @@ namespace DSPRE
         }
         public string GetOverworldFolderPath()
         {
-            string path;
-            switch (gameVersion)
-            {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
-                    path = @"data\data\mmodel\mmodel";
-                    break;
-                default:
-                    path = @"data\a\0\8\overworlds";
-                    break;
-            }
-            return workingFolder + path;
+            return workingFolder + @"extracted\overworlds";
         }
         public string GetEncounterFolderPath()
         {
-            string path;
-            switch (gameVersion)
-            {
-                case "Diamond":
-                case "Pearl":
-                    path = @"data\fielddata\encountdata\enc_data";
-                    break;
-                case "Platinum":
-                    path = @"data\fielddata\encountdata\pl_enc_data";
-                    break;
-                default:
-                    path = @"data\a\0\3\wild";
-                    break;
-            }
-            return workingFolder + path;
+            return workingFolder + @"extracted\wildPokeData";
         }
         public int GetEventCount()
         {
@@ -398,21 +293,7 @@ namespace DSPRE
         }
         public string GetEventFolderPath()
         {
-            string path;
-            switch (gameVersion)
-            {
-                case "Diamond":
-                case "Pearl":
-                    path = @"data\fielddata\eventdata\zone_event_release";
-                    break;
-                case "Platinum":
-                    path = @"data\fielddata\eventdata\zone_event";
-                    break;
-                default:
-                    path = @"data\a\0\3\event";
-                    break;
-            }
-            return workingFolder + path;
+            return workingFolder + @"extracted\events";
         }
         public string GetLanguage()
         {
@@ -509,21 +390,7 @@ namespace DSPRE
         }
         public string GetScriptFolderPath()
         {
-            string path;
-            switch (gameVersion)
-            {
-                case "Diamond":
-                case "Pearl":
-                    path = @"data\fielddata\script\scr_seq_release";
-                    break;
-                case "Platinum":
-                    path = @"data\fielddata\script\scr_seq";
-                    break;
-                default:
-                    path = @"data\a\0\1\script";
-                    break;
-            }
-            return workingFolder + path;
+            return workingFolder + @"extracted\scripts";
         }
 
 
