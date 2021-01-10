@@ -157,7 +157,7 @@ namespace DSPRE
             }
         }
 
-        private void applyPokemonNamesToNormalCase_Click(object sender, EventArgs e) {
+        private void applyPokemonNamesToSentenceCase_Click(object sender, EventArgs e) {
             String version = rom.getGameVersion();
             int[] fileArchives = null;
            
@@ -179,19 +179,19 @@ namespace DSPRE
             }
             DialogResult d;
             d = MessageBox.Show("Confirming this process will apply the following changes:\n\n" +
-                "- Every Pokémon name will be converted to Normal Case." + "\n\n" +
+                "- Every Pokémon name will be converted to Sentence Case." + "\n\n" +
                 "Do you wish to continue?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
-                namesToNormalCase(fileArchives);
-                MessageBox.Show("Operation successful.", "Pokémon names have been converted to Normal Case.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                namesToSentenceCase(fileArchives);
+                MessageBox.Show("Operation successful.", "Pokémon names have been converted to Sentence Case.", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private void namesToNormalCase(int[] fileArchives) {
+        private void namesToSentenceCase(int[] fileArchives) {
             //TODO implement this
         }
 
