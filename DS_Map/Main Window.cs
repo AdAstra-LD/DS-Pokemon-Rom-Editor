@@ -15,8 +15,8 @@ using LibNDSFormats.NSBMD;
 using LibNDSFormats.NSBTX;
 
 namespace DSPRE {
-    public partial class Form1 : Form {
-        public Form1() {
+    public partial class MainProgram : Form {
+        public MainProgram() {
             InitializeComponent();
         }
 
@@ -40,7 +40,7 @@ namespace DSPRE {
         /* ROM Information */
         public static string gameCode;
         public static string[] narcList;
-        public static string[] narcFolders;
+        public static string[] extractedNarcFolders;
         RomInfo romInfo;
         private String gameVersion;
 
@@ -179,7 +179,7 @@ namespace DSPRE {
         }
         
 		public MessageFile LoadMessageFile(int fileID) {
-            return new MessageFile(new FileStream(romInfo.GetMessageFolderPath() + "\\" + fileID.ToString("D4"), FileMode.Open));
+            return new MessageFile(new FileStream(romInfo.GetTextArchivesPath() + "\\" + fileID.ToString("D4"), FileMode.Open));
         }
         
 		private EventFile LoadEventFile(int fileID) {
@@ -284,16 +284,25 @@ namespace DSPRE {
             }
             else return;
         }
-        private byte[] ReadFromArm9(int startOffset, int numberOfBytes) {
+        public static byte[] ReadFromArm9(long startOffset, long numberOfBytes) {
             BinaryReader readArm9 = new BinaryReader(File.OpenRead(workDir + @"arm9.bin"));
             readArm9.BaseStream.Position = startOffset;
-            byte[] targetBytes = readArm9.ReadBytes(numberOfBytes);
+            byte[] targetBytes = null;
+
+            if (numberOfBytes < 0) {
+                numberOfBytes = 2097152; //ARM9 is definitely smaller than 2MB
+            }
+            try {
+                targetBytes = readArm9.ReadBytes((int)numberOfBytes);
+            } catch (EndOfStreamException) {
+                Console.WriteLine("ARM9 Stream ended");
+            }
             readArm9.Dispose();
             return targetBytes;
         }
 		
         private void RepackNARCs() {
-            foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create))
+            foreach (var tuple in narcList.Zip(extractedNarcFolders, Tuple.Create))
             {
                 Narc.FromFolder(tuple.Item2).Save(workDir + tuple.Item1); // Make new NARC from folder
                 //Directory.Delete(tuple.Item2, true); // Delete folder
@@ -301,7 +310,7 @@ namespace DSPRE {
         }
 
         private void DeleteTempFolders() {
-            foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create)) { 
+            foreach (var tuple in narcList.Zip(extractedNarcFolders, Tuple.Create)) { 
                 Directory.Delete(tuple.Item2, true); // Delete folder
             }
         }
@@ -546,7 +555,8 @@ namespace DSPRE {
                     weatherComboBox.Items.AddRange(headerInfo.HGSSWeatherValues);
                     break;                    
             }
-
+            if (headerListBox.Items.Count > 0)
+                headerListBox.SelectedIndex = 0;
         }
         private void SetupMapEditor()
         {
@@ -782,7 +792,7 @@ namespace DSPRE {
         private void SetupTextEditor()
         {
             for (int i = 0; i < romInfo.GetMessageCount(); i++) 
-                selectTextFileComboBox.Items.Add("Message File " + i);
+                selectTextFileComboBox.Items.Add("Text Archive " + i);
 
             selectTextFileComboBox.SelectedIndex = 0;
         }
@@ -879,12 +889,13 @@ namespace DSPRE {
                @"data\msgdata\msg.narc",
                @"data\fielddata\script\scr_seq_release.narc",
                @"data\data\mmodel\mmodel.narc",
-               @"data\poketool\trainer\trdata.narc"
+               @"data\poketool\trainer\trdata.narc",
+               @"data\data\weather_sys.narc"
             };
 
-            narcFolders = new string[] {
+            extractedNarcFolders = new string[] {
                romInfo.GetBuildingTexturesFolderPath(),
-               workDir + @"extracted\area_build",
+               workDir + @"unpacked\area_build",
                romInfo.GetAreaDataFolderPath(),
                romInfo.GetMapTexturesFolderPath(),
                romInfo.GetBuildingModelsFolderPath(false),
@@ -892,10 +903,11 @@ namespace DSPRE {
                romInfo.GetEventFolderPath(),
                romInfo.GetMapFolderPath(),
                romInfo.GetMatrixFolderPath(),
-               romInfo.GetMessageFolderPath(),
+               romInfo.GetTextArchivesPath(),
                romInfo.GetScriptFolderPath(),
                romInfo.GetOverworldFolderPath(),
                romInfo.GetTrainerDataFolderPath(),
+               romInfo.getSyntheticOverlayPath()
             };
 
             if (gameVersion == "Diamond") {
@@ -904,7 +916,7 @@ namespace DSPRE {
                 narcList[5] += "p_enc_data.narc";
             }
 
-            foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create)) {
+            foreach (var tuple in narcList.Zip(extractedNarcFolders, Tuple.Create)) {
                 Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
             }
         }
@@ -924,13 +936,14 @@ namespace DSPRE {
                @"data\msgdata\pl_msg.narc",
                @"data\fielddata\script\scr_seq.narc",
                @"data\data\mmodel\mmodel.narc",
-               @"data\poketool\trainer\trdata.narc"
+               @"data\poketool\trainer\trdata.narc",
+               @"data\data\weather_sys.narc"
             };
 
-            narcFolders = new string[]
+            extractedNarcFolders = new string[]
             {
                romInfo.GetBuildingTexturesFolderPath(),
-               workDir + @"extracted\area_build",
+               workDir + @"unpacked\area_build",
                romInfo.GetAreaDataFolderPath(),
                romInfo.GetMapTexturesFolderPath(),
                romInfo.GetBuildingModelsFolderPath(false),
@@ -938,13 +951,14 @@ namespace DSPRE {
                romInfo.GetEventFolderPath(),
                romInfo.GetMapFolderPath(),
                romInfo.GetMatrixFolderPath(),
-               romInfo.GetMessageFolderPath(),
+               romInfo.GetTextArchivesPath(),
                romInfo.GetScriptFolderPath(),
                romInfo.GetOverworldFolderPath(),
-               romInfo.GetTrainerDataFolderPath()
+               romInfo.GetTrainerDataFolderPath(),
+               romInfo.getSyntheticOverlayPath()
             };
 
-            foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create))
+            foreach (var tuple in narcList.Zip(extractedNarcFolders, Tuple.Create))
             {
                 Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
             }
@@ -966,27 +980,29 @@ namespace DSPRE {
                @"data\a\0\8\1",
                @"data\a\0\5\5",
                @"data\a\0\3\7",
-               @"data\a\1\4\8"
+               @"data\a\1\4\8",
+               @"data\a\0\2\8"
             };
-            narcFolders = new string[]
+            extractedNarcFolders = new string[]
             {
                romInfo.GetBuildingTexturesFolderPath(),
-               workDir + @"extracted\area_build",
+               workDir + @"unpacked\area_build",
                romInfo.GetAreaDataFolderPath(),
                romInfo.GetMapTexturesFolderPath(),
                romInfo.GetBuildingModelsFolderPath(false),
                romInfo.GetEventFolderPath(),
                romInfo.GetMapFolderPath(),
                romInfo.GetMatrixFolderPath(),
-               romInfo.GetMessageFolderPath(),
+               romInfo.GetTextArchivesPath(),
                romInfo.GetScriptFolderPath(),
                romInfo.GetOverworldFolderPath(),
                romInfo.GetTrainerDataFolderPath(),
                romInfo.GetEncounterFolderPath(),
-               romInfo.GetBuildingModelsFolderPath(true)
+               romInfo.GetBuildingModelsFolderPath(true),
+               romInfo.getSyntheticOverlayPath()
             };
 
-            foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create))
+            foreach (var tuple in narcList.Zip(extractedNarcFolders, Tuple.Create))
             {
                 Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
             }
@@ -1010,17 +1026,17 @@ namespace DSPRE {
                @"data\a\0\3\7",
                @"data\a\1\4\8"
             };
-            narcFolders = new string[]
+            extractedNarcFolders = new string[]
             {
                romInfo.GetBuildingTexturesFolderPath(),
-               workDir + @"extracted\area_build",
+               workDir + @"unpacked\area_build",
                romInfo.GetAreaDataFolderPath(),
                romInfo.GetMapTexturesFolderPath(),
                romInfo.GetBuildingModelsFolderPath(false),
                romInfo.GetEventFolderPath(),
                romInfo.GetMapFolderPath(),
                romInfo.GetMatrixFolderPath(),
-               romInfo.GetMessageFolderPath(),
+               romInfo.GetTextArchivesPath(),
                romInfo.GetScriptFolderPath(),
                romInfo.GetOverworldFolderPath(),
                romInfo.GetTrainerDataFolderPath(),
@@ -1028,12 +1044,12 @@ namespace DSPRE {
                romInfo.GetBuildingModelsFolderPath(true)
             };
 
-            foreach (var tuple in narcList.Zip(narcFolders, Tuple.Create))
+            foreach (var tuple in narcList.Zip(extractedNarcFolders, Tuple.Create))
             {
                 Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
             }
         }
-        private void WriteToArm9(int startOffset, byte[] bytesToWrite)
+        public static void WriteToArm9(long startOffset, byte[] bytesToWrite)
         {
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin")))
             {
@@ -1045,7 +1061,7 @@ namespace DSPRE {
 
         private void asmHacksToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (ASMHacksDialog window = new ASMHacksDialog(romInfo))
+            using (ROMToolboxDialog window = new ROMToolboxDialog(romInfo))
             {
                 window.ShowDialog();
                 if (window.standardizedItems) isItemRadioButton.Enabled = true;
@@ -1057,7 +1073,7 @@ namespace DSPRE {
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.4c" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.5" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who owes credit for SDSME." + Environment.NewLine +
                 "Special thanks go to Trifindo, Mikelan98, BagBoy, and JackHack96, whose help, research and expertise in the field of NDS Rom Hacking made the development of this tool possible.";
 
@@ -1118,9 +1134,11 @@ namespace DSPRE {
 
             mainTabControl.Show();
             saveRomButton.Enabled = true;
+            romToolboxButton.Enabled = true;
             buildingEditorButton.Enabled = true;
             wildEditorButton.Enabled = true;
             loadRomButton.Enabled = false;
+            openROMToolStripMenuItem.Enabled = false;
             statusLabel.Text = "Ready";
         }
 
@@ -1154,18 +1172,26 @@ namespace DSPRE {
         }
         private void wildEditorButton_Click(object sender, EventArgs e)
         {
+            openWildEditor();
+        }
+
+        private void openWildEditor() {
             switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
-                    using (WildEditorDPPt editor = new WildEditorDPPt(romInfo.GetEncounterFolderPath(), GetPokémonNames())) 
+                    using (WildEditorDPPt editor = new WildEditorDPPt(romInfo.GetEncounterFolderPath(), GetPokémonNames()))
                         editor.ShowDialog();
                     break;
                 default:
-                    using (WildEditorHGSS editor = new WildEditorHGSS(romInfo.GetEncounterFolderPath(), GetPokémonNames())) 
+                    using (WildEditorHGSS editor = new WildEditorHGSS(romInfo.GetEncounterFolderPath(), GetPokémonNames()))
                         editor.ShowDialog();
                     break;
             }
+        }
+
+        private void openWildEditorWithIdButtonClick(object sender, EventArgs e) {
+            openWildEditor();
         }
         #endregion
 
@@ -1349,10 +1375,13 @@ namespace DSPRE {
             if (disableHandlers) 
                 return;
 
-            currentHeader = LoadHeader(headerListBox.SelectedIndex);
+            String currentInternalName = headerListBox.SelectedItem.ToString();
+            const String separator = ": ";
+            int separatorLoc = currentInternalName.IndexOf(separator);
+            currentHeader = LoadHeader(    Int32.Parse(currentInternalName.Substring(0, separatorLoc ))  );
 
             /* Setup controls for common fields across headers */
-            internalNameBox.Text = internalNames[headerListBox.SelectedIndex];
+            internalNameBox.Text = currentInternalName.Substring(separatorLoc+separator.Length);
             matrixUpDown.Value = currentHeader.matrix;
             areaDataUpDown.Value = currentHeader.areaDataID;
             scriptFileUpDown.Value = currentHeader.script;
@@ -1530,6 +1559,78 @@ namespace DSPRE {
             int headerOffset = romInfo.GetHeaderTableOffset() + 0x18 * headerListBox.SelectedIndex;
             WriteToArm9(headerOffset, currentHeader.SaveHeader());        
         }
+        private void resetButton_Click(object sender, EventArgs e) {
+            if (headerListBox.Items.Count < internalNames.Count)
+                resetHeaderSearchResults();
+        }
+
+        private void resetHeaderSearchResults() {
+            headerListBox.Enabled = true;
+            searchLocationTextBox.Clear();
+            headerListBox.Items.Clear();
+            for (int i = 0; i < internalNames.Count; i++) {
+                String name = internalNames[i];
+                headerListBox.Items.Add(i + ": " + name);
+            }
+        }
+        private void searchHeaderTextBox_KeyPress(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                startSearchGameLocation();
+            }
+
+        }
+        private void searchHeaderButton_Click(object sender, EventArgs e) {
+            startSearchGameLocation();
+        }
+
+        private void startSearchGameLocation() { 
+            if (searchLocationTextBox.Text.Length != 0) {
+                headerListBox.Items.Clear();
+                bool notEmpty = false;
+
+
+                switch (gameVersion) {
+                    case "Diamond":
+                    case "Pearl":
+                        for (int i = 0; i < internalNames.Count; i++) {
+                            String locationName = mapNameComboBox.Items[((HeaderDP)LoadHeader(i)).mapName].ToString();
+                            if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
+                                headerListBox.Items.Add(i + ": " + internalNames[i]);
+                                notEmpty = true;
+                            }
+                        }
+                        break;
+                    case "Platinum":
+                        for (int i = 0; i < internalNames.Count; i++) {
+                            String locationName = mapNameComboBox.Items[((HeaderPt)LoadHeader(i)).mapName].ToString();
+                            if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
+                                headerListBox.Items.Add(i + ": " + internalNames[i]);
+                                notEmpty = true;
+                            }
+                        }
+                        break;
+                    case "HeartGold":
+                    case "SoulSilver":
+                        for (int i = 0; i < internalNames.Count; i++) {
+                            String locationName = mapNameComboBox.Items[((HeaderHGSS)LoadHeader(i)).mapName].ToString();
+                            if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
+                                headerListBox.Items.Add(i + ": " + internalNames[i]);
+                                notEmpty = true;
+                            }
+                        }
+                        break;
+                }
+                if (notEmpty)
+                    headerListBox.SelectedIndex = 0;
+                else {
+                    headerListBox.Items.Add("No Result for " + '"' + searchLocationTextBox.Text + '"');
+                    headerListBox.Enabled = false;
+                }
+            } else if (headerListBox.Items.Count < internalNames.Count) {
+                    resetHeaderSearchResults();
+            }
+        }
+
         private void scriptFileUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
@@ -1537,7 +1638,8 @@ namespace DSPRE {
         }
         private void showNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentHeader.showName = Byte.Parse(showNameComboBox.SelectedItem.ToString().Substring(1, 3));
         }
         private void textFileUpDown_ValueChanged(object sender, EventArgs e)
@@ -1691,6 +1793,8 @@ namespace DSPRE {
         }
         private void headersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            if (headerListBox.Items.Count < internalNames.Count)
+                resetHeaderSearchResults();
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 int headerNumber = Convert.ToInt32(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
@@ -3959,18 +4063,21 @@ namespace DSPRE {
         }
         private void owIDNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             if (currentEventFile.overworlds.Any() && overworldsListBox.SelectedIndex > 0)
                 currentEventFile.overworlds[overworldsListBox.SelectedIndex].owID = (ushort)owIDNumericUpDown.Value;
         }
         private void owMovementComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].movement = (ushort)owMovementComboBox.SelectedIndex;
         }
         private void owOrientationComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].orientation = (ushort)owOrientationComboBox.SelectedIndex;
             owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[overworldsListBox.SelectedIndex].spriteID, currentEventFile.overworlds[overworldsListBox.SelectedIndex].orientation);
             DisplayActiveEvents();
@@ -3978,21 +4085,26 @@ namespace DSPRE {
         }
         private void owScriptNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)owScriptNumericUpDown.Value;
         }
         private void owSightRangeUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].sightRange = (ushort)owSightRangeUpDown.Value;
         }
         private void owSpriteComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
-            currentEventFile.overworlds[overworldsListBox.SelectedIndex].spriteID = (ushort)owSpriteComboBox.SelectedIndex;
-            owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[overworldsListBox.SelectedIndex].spriteID, currentEventFile.overworlds[overworldsListBox.SelectedIndex].orientation);
-            DisplayActiveEvents();
-            owSpritePictureBox.Invalidate();
+            if (disableHandlers) 
+                return;
+            if (currentEventFile.overworlds.Count != 0) {
+                currentEventFile.overworlds[overworldsListBox.SelectedIndex].spriteID = (ushort)owSpriteComboBox.SelectedIndex;
+                owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[overworldsListBox.SelectedIndex].spriteID, currentEventFile.overworlds[overworldsListBox.SelectedIndex].orientation);
+                DisplayActiveEvents();
+                owSpritePictureBox.Invalidate();
+            }
         }
         private void owPartnerTrainerCheckBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -4632,13 +4744,13 @@ namespace DSPRE {
                     for (int j = 0; j < file.scripts.Count; j++) {
                         for (int k = 0; k < file.scripts[j].commands.Count; k++) {
                             if (file.scripts[j].commands[k].cmdName.Contains(searchString)) 
-                                searchInScriptsResultTextBox.AppendText((i + 1) + " - " + "Script " + (j + 1) + ": " + file.scripts[j].commands[k].cmdName + Environment.NewLine);
+                                searchInScriptsResultTextBox.AppendText(i + " - " + "Script " + (j + 1) + ": " + file.scripts[j].commands[k].cmdName + Environment.NewLine);
                         }
                     }
                     for (int j = 0; j < file.functions.Count; j++) {
                         for (int k = 0; k < file.functions[j].commands.Count; k++) {
                             if (file.functions[j].commands[k].cmdName.Contains(searchString)) 
-                                searchInScriptsResultTextBox.AppendText((i + 1) + " - " + "Function " + (j+1) + ": " + file.functions[j].commands[k].cmdName + Environment.NewLine);
+                                searchInScriptsResultTextBox.AppendText(i + " - " + "Function " + (j + 1) + ": " + file.functions[j].commands[k].cmdName + Environment.NewLine);
                         }
                     }
                 }
@@ -4933,11 +5045,11 @@ namespace DSPRE {
         private void addMessageFileButton_Click(object sender, EventArgs e)
         {
             /* Add new event file to event folder */
-            string messageFilePath = romInfo.GetMessageFolderPath() + "\\" + selectTextFileComboBox.Items.Count.ToString("D4");
+            string messageFilePath = romInfo.GetTextArchivesPath() + "\\" + selectTextFileComboBox.Items.Count.ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(messageFilePath, FileMode.Create))) writer.Write(LoadMessageFile(0).Save());
 
             /* Update ComboBox and select new file */
-            selectTextFileComboBox.Items.Add("Message File " + selectTextFileComboBox.Items.Count);
+            selectTextFileComboBox.Items.Add("Text Archive " + selectTextFileComboBox.Items.Count);
             selectTextFileComboBox.SelectedIndex = selectTextFileComboBox.Items.Count - 1;
         }
         private void addStringButton_Click(object sender, EventArgs e)
@@ -4955,7 +5067,7 @@ namespace DSPRE {
         private void exportTextFileButton_Click(object sender, EventArgs e)
         {
             SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "Message File (*.msg)|*.msg";
+            sf.Filter = "Text Archive (*.msg)|*.msg";
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -4965,23 +5077,23 @@ namespace DSPRE {
         {
             /* Prompt user to select .msg file */
             OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Message File (*.msg)|*.msg";
+            of.Filter = "Text Archive (*.msg)|*.msg";
             if (of.ShowDialog(this) != DialogResult.OK) return;
 
-            /* Update message file object in memory */
-            string path = romInfo.GetMessageFolderPath() + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4");
+            /* Update Text Archive object in memory */
+            string path = romInfo.GetTextArchivesPath() + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Display success message */
-            MessageBox.Show("Message file imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Text Archive imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             /* Refresh controls */
             selectTextFileComboBox_SelectedIndexChanged(null, null);
         }
         private void removeMessageFileButton_Click(object sender, EventArgs e)
         {
-            /* Delete message file */
-            File.Delete(romInfo.GetMessageFolderPath() + "\\" + (selectTextFileComboBox.Items.Count - 1).ToString("D4"));
+            /* Delete Text Archive */
+            File.Delete(romInfo.GetTextArchivesPath() + "\\" + (selectTextFileComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectTextFileComboBox.Items.Count - 1;
@@ -4998,9 +5110,12 @@ namespace DSPRE {
                 textEditorDataGridView.Rows.RemoveAt(textEditorDataGridView.Rows.Count - 1);
             }
         }
-        private void saveMessageFileButton_Click(object sender, EventArgs e)
-        {
-            BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.GetMessageFolderPath() + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4"), FileMode.Create));
+        private void saveTextArchiveButton_Click(object sender, EventArgs e) {
+            saveTextArchive();
+        }
+
+        private void saveTextArchive() {
+            BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.GetTextArchivesPath() + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4"), FileMode.Create));
             textWriter.Write((UInt16)currentMessageFile.messages.Count);
             textWriter.Write((UInt16)currentMessageFile.initialKey);
             int key = (currentMessageFile.initialKey * 0x2FD) & 0xFFFF;
@@ -5023,8 +5138,7 @@ namespace DSPRE {
             {
                 key = (0x91BD3 * (i + 1)) & 0xFFFF;
                 int[] currentString = currentMessageFile.EncodeString(textEditorDataGridView[0, i].Value.ToString(), i, stringSize[i]);
-                for (int j = 0; j < stringSize[i] - 1; j++)
-                {
+                for (int j = 0; j < stringSize[i] - 1; j++) {
                     textWriter.Write((UInt16)(currentString[j] ^ key));
                     key += 0x493D;
                     key &= 0xFFFF;
@@ -5041,21 +5155,33 @@ namespace DSPRE {
             int msgCount = romInfo.GetMessageCount();
             if (msgCount > 828) 
                 msgCount = 828;
-            for (int i = 0; i < msgCount; i++)
-            {
-                MessageFile file = LoadMessageFile(i);
-                string result = "File" + " " + i + ", " + "n. ";
 
-                for (int j = 0; j < file.messages.Count; j++) 
-                    if (file.messages[j].Contains(searchString)) 
-                        result += j.ToString("D") + ", ";
-                if (result != "File" + " " + i + ", " + "n. ") 
-                    searchMessageResultTextBox.AppendText(result + Environment.NewLine);
+            for (int i = 0; i < msgCount; i++) {
+                caseSensitiveCheckbox.Enabled = false;
+                MessageFile file = LoadMessageFile(i);
+                string result = '(' + i + ')' + " - Line #";
+
+                if (caseSensitiveCheckbox.Checked) {
+                    for (int j = 0; j < file.messages.Count; j++)
+                        if (file.messages[j].Contains(searchString))
+                            result += j.ToString("D") + ", ";
+
+                    if (result != ('(' + i + ')' + " - Line #"))
+                        searchMessageResultTextBox.AppendText(result + Environment.NewLine);
+                } else {
+                    for (int j = 0; j < file.messages.Count; j++)
+                        if (file.messages[j].IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) 
+                            result += j.ToString("D") + ", ";
+
+                    if (result != ('(' + i + ')' + " - Line #"))
+                        searchMessageResultTextBox.AppendText(result + Environment.NewLine);
+                }
 
                 textSearchProgressBar.Value = i;
             }
 
             textSearchProgressBar.Value = 0;
+            caseSensitiveCheckbox.Enabled = true;
         }
         private void replaceMessageButton_Click(object sender, EventArgs e)
         {
@@ -5093,7 +5219,7 @@ namespace DSPRE {
                         textEditorDataGridView.Rows[i].HeaderCell.Value = "0x" + i.ToString("X");
                     }
                     disableHandlers = false;
-                    BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.GetMessageFolderPath() + "\\" + k.ToString("D4"), FileMode.Create));
+                    BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.GetTextArchivesPath() + "\\" + k.ToString("D4"), FileMode.Create));
                     textWriter.Write((UInt16)currentMessageFile.messages.Count);
                     textWriter.Write((UInt16)currentMessageFile.initialKey);
                     int key = (currentMessageFile.initialKey * 0x2FD) & 0xFFFF;
@@ -5356,9 +5482,5 @@ namespace DSPRE {
 
 
         #endregion
-
-        private void button10_Click(object sender, EventArgs e) {
-
-        }
     }
 }

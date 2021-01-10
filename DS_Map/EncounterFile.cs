@@ -9,17 +9,17 @@ namespace DSPRE
        0x2  //  ushort:     Matrix number
        0x4  //  ushort:     Script file number
        0x6  //  ushort:     Level script file number
-       0x8  //  ushort:     Message file number
+       0x8  //  ushort:     Text Archive number
        0xA  //  ushort:     Day music track number
        0xC  //  ushort:     Night music track number
        0xE  //  ushort:     Wild Pokémon file number
        0x10 //  ushort:     Event file number
 
        * Diamond/Pearl:
-       0x12 //  ushort:     Index of map name in message file #382 (US version)   
+       0x12 //  ushort:     Index of map name in Text Archive #382 (US version)   
        
        * Platinum:
-       0x12 //  byte:       Index of map name in message file #382 (US version)
+       0x12 //  byte:       Index of map name in Text Archive #382 (US version)
        0x13 //  byte:       Map name textbox type value
 
        0x14 //  byte:       Weather value
@@ -45,11 +45,11 @@ namespace DSPRE
        0x4  //  ushort:     Matrix number
        0x6  //  ushort:     Script file number
        0x8  //  ushort:     Level script file
-       0xA  //  ushort:     Message file number
+       0xA  //  ushort:     Text Archive number
        0xC  //  ushort:     Day music track number
        0xE  //  ushort:     Night music track number
        0x10 //  ushort:     Event file number
-       0x12 //  byte:       Index of map name in message file #382 (US version)
+       0x12 //  byte:       Index of map name in Text Archive #382 (US version)
        0x13 //  byte:       Map name textbox type value
        0x14 //  byte:       Weather value
        0x15 //  byte:       Camera value

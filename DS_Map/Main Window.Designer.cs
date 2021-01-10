@@ -1,6 +1,6 @@
 ﻿namespace DSPRE
 {
-    partial class Form1
+    partial class MainProgram
     {
         /// <summary>
         /// Variabile di progettazione necessaria.
@@ -29,32 +29,46 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle76 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle77 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle78 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle79 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle80 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle81 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle82 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle83 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle84 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle85 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle86 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle87 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle88 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle89 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle90 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.headerListBox = new System.Windows.Forms.ListBox();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.openMessageFileButton = new System.Windows.Forms.Button();
+            this.textFileUpDown = new System.Windows.Forms.NumericUpDown();
+            this.textLabel = new System.Windows.Forms.Label();
+            this.openEventsButton = new System.Windows.Forms.Button();
+            this.eventLabel = new System.Windows.Forms.Label();
+            this.eventFileUpDown = new System.Windows.Forms.NumericUpDown();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.resetButton = new System.Windows.Forms.Button();
+            this.searchHeaderButton = new System.Windows.Forms.Button();
+            this.searchLocationTextBox = new System.Windows.Forms.TextBox();
             this.addHeaderButton = new System.Windows.Forms.Button();
             this.areaIconPictureBox = new System.Windows.Forms.PictureBox();
             this.areaImageLabel = new System.Windows.Forms.Label();
             this.nameGroupBox = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.button10 = new System.Windows.Forms.Button();
             this.internalNameBox = new System.Windows.Forms.TextBox();
+            this.wildPokeUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
+            this.wildPokeLabel = new System.Windows.Forms.Label();
             this.areaIconComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.showNameComboBox = new System.Windows.Forms.ComboBox();
@@ -62,9 +76,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.weatherComboBox = new System.Windows.Forms.ComboBox();
             this.musicNightComboBox = new System.Windows.Forms.ComboBox();
-            this.button10 = new System.Windows.Forms.Button();
-            this.wildPokeUpDown = new System.Windows.Forms.NumericUpDown();
-            this.wildPokeLabel = new System.Windows.Forms.Label();
             this.weatherLabel = new System.Windows.Forms.Label();
             this.cameraLabel = new System.Windows.Forms.Label();
             this.musicNightLabel = new System.Windows.Forms.Label();
@@ -72,18 +83,13 @@
             this.musicDayLabel = new System.Windows.Forms.Label();
             this.musicDayComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.openMessageFileButton = new System.Windows.Forms.Button();
             this.levelScriptUpDown = new System.Windows.Forms.NumericUpDown();
             this.openLevelScriptButton = new System.Windows.Forms.Button();
-            this.textFileUpDown = new System.Windows.Forms.NumericUpDown();
-            this.textLabel = new System.Windows.Forms.Label();
-            this.openEventsButton = new System.Windows.Forms.Button();
-            this.eventLabel = new System.Windows.Forms.Label();
-            this.eventFileUpDown = new System.Windows.Forms.NumericUpDown();
             this.levelScriptLabel = new System.Windows.Forms.Label();
             this.openScriptButton = new System.Windows.Forms.Button();
             this.scriptLabel = new System.Windows.Forms.Label();
             this.scriptFileUpDown = new System.Windows.Forms.NumericUpDown();
+            this.headerListBox = new System.Windows.Forms.ListBox();
             this.saveHeaderButton = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.openAreaDataButton = new System.Windows.Forms.Button();
@@ -429,7 +435,7 @@
             this.replaceMessageTextBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.textSearchProgressBar = new System.Windows.Forms.ProgressBar();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.caseSensitiveCheckbox = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.searchMessageResultTextBox = new System.Windows.Forms.TextBox();
             this.searchMessageTextBox = new System.Windows.Forms.TextBox();
@@ -441,9 +447,9 @@
             this.messageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.exportTextFileButton = new System.Windows.Forms.Button();
             this.importTextFileButton = new System.Windows.Forms.Button();
-            this.saveMessageFileButton = new System.Windows.Forms.Button();
+            this.saveTextArchiveButton = new System.Windows.Forms.Button();
             this.removeMessageFileButton = new System.Windows.Forms.Button();
-            this.addMessageFileButton = new System.Windows.Forms.Button();
+            this.addTextArchiveButton = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.selectTextFileComboBox = new System.Windows.Forms.ComboBox();
             this.tilesetEditorTabPage = new System.Windows.Forms.TabPage();
@@ -493,17 +499,20 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.wildEditorButton = new System.Windows.Forms.ToolStripButton();
             this.buildingEditorButton = new System.Windows.Forms.ToolStripButton();
+            this.romToolboxButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.areaIconPictureBox)).BeginInit();
-            this.nameGroupBox.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.wildPokeUpDown)).BeginInit();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.levelScriptUpDown)).BeginInit();
+            this.groupBox10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textFileUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventFileUpDown)).BeginInit();
+            this.groupBox9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.areaIconPictureBox)).BeginInit();
+            this.nameGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.wildPokeUpDown)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.levelScriptUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scriptFileUpDown)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.areaDataUpDown)).BeginInit();
@@ -627,16 +636,6 @@
             this.mainToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // headerListBox
-            // 
-            this.headerListBox.FormattingEnabled = true;
-            this.headerListBox.Location = new System.Drawing.Point(13, 15);
-            this.headerListBox.Name = "headerListBox";
-            this.headerListBox.Size = new System.Drawing.Size(221, 550);
-            this.headerListBox.TabIndex = 2;
-            this.headerListBox.SelectedValueChanged += new System.EventHandler(this.headerListBox_SelectedIndexChanged);
-            this.headerListBox.Leave += new System.EventHandler(this.headerListBox_Leave);
-            // 
             // mainTabControl
             // 
             this.mainTabControl.Controls.Add(this.headerEditorTabPage);
@@ -657,6 +656,8 @@
             // headerEditorTabPage
             // 
             this.headerEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
+            this.headerEditorTabPage.Controls.Add(this.groupBox10);
+            this.headerEditorTabPage.Controls.Add(this.groupBox9);
             this.headerEditorTabPage.Controls.Add(this.addHeaderButton);
             this.headerEditorTabPage.Controls.Add(this.areaIconPictureBox);
             this.headerEditorTabPage.Controls.Add(this.areaImageLabel);
@@ -679,12 +680,129 @@
             this.headerEditorTabPage.TabIndex = 0;
             this.headerEditorTabPage.Text = "Header Editor";
             // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.openMessageFileButton);
+            this.groupBox10.Controls.Add(this.textFileUpDown);
+            this.groupBox10.Controls.Add(this.textLabel);
+            this.groupBox10.Controls.Add(this.openEventsButton);
+            this.groupBox10.Controls.Add(this.eventLabel);
+            this.groupBox10.Controls.Add(this.eventFileUpDown);
+            this.groupBox10.Location = new System.Drawing.Point(264, 371);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(559, 77);
+            this.groupBox10.TabIndex = 31;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Events && Texts";
+            // 
+            // openMessageFileButton
+            // 
+            this.openMessageFileButton.Location = new System.Drawing.Point(419, 28);
+            this.openMessageFileButton.Name = "openMessageFileButton";
+            this.openMessageFileButton.Size = new System.Drawing.Size(117, 36);
+            this.openMessageFileButton.TabIndex = 46;
+            this.openMessageFileButton.Text = "Open &Text Archive";
+            this.openMessageFileButton.UseVisualStyleBackColor = true;
+            this.openMessageFileButton.Click += new System.EventHandler(this.openMessageFileButton_Click);
+            // 
+            // textFileUpDown
+            // 
+            this.textFileUpDown.Location = new System.Drawing.Point(315, 38);
+            this.textFileUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.textFileUpDown.Name = "textFileUpDown";
+            this.textFileUpDown.Size = new System.Drawing.Size(90, 20);
+            this.textFileUpDown.TabIndex = 47;
+            // 
+            // textLabel
+            // 
+            this.textLabel.AutoSize = true;
+            this.textLabel.Location = new System.Drawing.Point(312, 21);
+            this.textLabel.Name = "textLabel";
+            this.textLabel.Size = new System.Drawing.Size(77, 13);
+            this.textLabel.TabIndex = 45;
+            this.textLabel.Text = "Text Archive #";
+            // 
+            // openEventsButton
+            // 
+            this.openEventsButton.Location = new System.Drawing.Point(134, 28);
+            this.openEventsButton.Name = "openEventsButton";
+            this.openEventsButton.Size = new System.Drawing.Size(117, 37);
+            this.openEventsButton.TabIndex = 44;
+            this.openEventsButton.Text = "Open &Events";
+            this.openEventsButton.UseVisualStyleBackColor = true;
+            this.openEventsButton.Click += new System.EventHandler(this.openEventsButton_Click);
+            // 
+            // eventLabel
+            // 
+            this.eventLabel.AutoSize = true;
+            this.eventLabel.Location = new System.Drawing.Point(18, 21);
+            this.eventLabel.Name = "eventLabel";
+            this.eventLabel.Size = new System.Drawing.Size(64, 13);
+            this.eventLabel.TabIndex = 43;
+            this.eventLabel.Text = "Event File #";
+            // 
+            // eventFileUpDown
+            // 
+            this.eventFileUpDown.Location = new System.Drawing.Point(21, 38);
+            this.eventFileUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.eventFileUpDown.Name = "eventFileUpDown";
+            this.eventFileUpDown.Size = new System.Drawing.Size(89, 20);
+            this.eventFileUpDown.TabIndex = 42;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.resetButton);
+            this.groupBox9.Controls.Add(this.searchHeaderButton);
+            this.groupBox9.Controls.Add(this.searchLocationTextBox);
+            this.groupBox9.Location = new System.Drawing.Point(13, 12);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(238, 49);
+            this.groupBox9.TabIndex = 29;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Search Location Name:";
+            // 
+            // resetButton
+            // 
+            this.resetButton.Location = new System.Drawing.Point(185, 17);
+            this.resetButton.Name = "resetButton";
+            this.resetButton.Size = new System.Drawing.Size(47, 23);
+            this.resetButton.TabIndex = 2;
+            this.resetButton.Text = "Reset";
+            this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
+            // 
+            // searchHeaderButton
+            // 
+            this.searchHeaderButton.Location = new System.Drawing.Point(153, 17);
+            this.searchHeaderButton.Name = "searchHeaderButton";
+            this.searchHeaderButton.Size = new System.Drawing.Size(29, 23);
+            this.searchHeaderButton.TabIndex = 1;
+            this.searchHeaderButton.Text = "Go";
+            this.searchHeaderButton.UseVisualStyleBackColor = true;
+            this.searchHeaderButton.Click += new System.EventHandler(this.searchHeaderButton_Click);
+            // 
+            // searchLocationTextBox
+            // 
+            this.searchLocationTextBox.Location = new System.Drawing.Point(6, 19);
+            this.searchLocationTextBox.Name = "searchLocationTextBox";
+            this.searchLocationTextBox.Size = new System.Drawing.Size(141, 20);
+            this.searchLocationTextBox.TabIndex = 0;
+            this.searchLocationTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchHeaderTextBox_KeyPress);
+            // 
             // addHeaderButton
             // 
             this.addHeaderButton.Enabled = false;
             this.addHeaderButton.Location = new System.Drawing.Point(13, 573);
             this.addHeaderButton.Name = "addHeaderButton";
-            this.addHeaderButton.Size = new System.Drawing.Size(221, 29);
+            this.addHeaderButton.Size = new System.Drawing.Size(238, 29);
             this.addHeaderButton.TabIndex = 11;
             this.addHeaderButton.Text = "Add New Header";
             this.addHeaderButton.UseVisualStyleBackColor = true;
@@ -710,146 +828,64 @@
             // 
             // nameGroupBox
             // 
+            this.nameGroupBox.Controls.Add(this.label3);
             this.nameGroupBox.Controls.Add(this.label14);
+            this.nameGroupBox.Controls.Add(this.button10);
             this.nameGroupBox.Controls.Add(this.internalNameBox);
+            this.nameGroupBox.Controls.Add(this.wildPokeUpDown);
             this.nameGroupBox.Controls.Add(this.label2);
+            this.nameGroupBox.Controls.Add(this.wildPokeLabel);
             this.nameGroupBox.Controls.Add(this.areaIconComboBox);
             this.nameGroupBox.Controls.Add(this.label1);
             this.nameGroupBox.Controls.Add(this.showNameComboBox);
             this.nameGroupBox.Controls.Add(this.mapNameComboBox);
             this.nameGroupBox.Location = new System.Drawing.Point(264, 12);
             this.nameGroupBox.Name = "nameGroupBox";
-            this.nameGroupBox.Size = new System.Drawing.Size(541, 109);
+            this.nameGroupBox.Size = new System.Drawing.Size(559, 131);
             this.nameGroupBox.TabIndex = 28;
             this.nameGroupBox.TabStop = false;
-            this.nameGroupBox.Text = "Name:";
+            this.nameGroupBox.Text = "Location Info";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 24);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(79, 13);
+            this.label3.TabIndex = 28;
+            this.label3.Text = "Location Name";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(448, 22);
+            this.label14.Location = new System.Drawing.Point(245, 24);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(71, 13);
             this.label14.TabIndex = 27;
             this.label14.Text = "Internal name";
             // 
-            // internalNameBox
-            // 
-            this.internalNameBox.Location = new System.Drawing.Point(234, 19);
-            this.internalNameBox.MaxLength = 50;
-            this.internalNameBox.Name = "internalNameBox";
-            this.internalNameBox.ReadOnly = true;
-            this.internalNameBox.Size = new System.Drawing.Size(199, 20);
-            this.internalNameBox.TabIndex = 6;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(231, 59);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Area icon:";
-            // 
-            // areaIconComboBox
-            // 
-            this.areaIconComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.areaIconComboBox.FormattingEnabled = true;
-            this.areaIconComboBox.IntegralHeight = false;
-            this.areaIconComboBox.Location = new System.Drawing.Point(234, 75);
-            this.areaIconComboBox.Name = "areaIconComboBox";
-            this.areaIconComboBox.Size = new System.Drawing.Size(199, 21);
-            this.areaIconComboBox.TabIndex = 3;
-            this.areaIconComboBox.SelectedIndexChanged += new System.EventHandler(this.areaIconComboBox_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 58);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Show name on entering";
-            // 
-            // showNameComboBox
-            // 
-            this.showNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.showNameComboBox.FormattingEnabled = true;
-            this.showNameComboBox.IntegralHeight = false;
-            this.showNameComboBox.Location = new System.Drawing.Point(9, 75);
-            this.showNameComboBox.Name = "showNameComboBox";
-            this.showNameComboBox.Size = new System.Drawing.Size(203, 21);
-            this.showNameComboBox.TabIndex = 1;
-            this.showNameComboBox.SelectedIndexChanged += new System.EventHandler(this.showNameComboBox_SelectedIndexChanged);
-            // 
-            // mapNameComboBox
-            // 
-            this.mapNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.mapNameComboBox.FormattingEnabled = true;
-            this.mapNameComboBox.Location = new System.Drawing.Point(9, 19);
-            this.mapNameComboBox.Name = "mapNameComboBox";
-            this.mapNameComboBox.Size = new System.Drawing.Size(208, 21);
-            this.mapNameComboBox.TabIndex = 0;
-            this.mapNameComboBox.SelectedIndexChanged += new System.EventHandler(this.mapNameComboBox_SelectedIndexChanged);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.BackColor = System.Drawing.SystemColors.Window;
-            this.groupBox2.Controls.Add(this.weatherComboBox);
-            this.groupBox2.Controls.Add(this.musicNightComboBox);
-            this.groupBox2.Controls.Add(this.button10);
-            this.groupBox2.Controls.Add(this.wildPokeUpDown);
-            this.groupBox2.Controls.Add(this.wildPokeLabel);
-            this.groupBox2.Controls.Add(this.weatherLabel);
-            this.groupBox2.Controls.Add(this.cameraLabel);
-            this.groupBox2.Controls.Add(this.musicNightLabel);
-            this.groupBox2.Controls.Add(this.cameraComboBox);
-            this.groupBox2.Controls.Add(this.musicDayLabel);
-            this.groupBox2.Controls.Add(this.musicDayComboBox);
-            this.groupBox2.Location = new System.Drawing.Point(264, 142);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(541, 134);
-            this.groupBox2.TabIndex = 29;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Miscellaneous";
-            // 
-            // weatherComboBox
-            // 
-            this.weatherComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.weatherComboBox.FormattingEnabled = true;
-            this.weatherComboBox.IntegralHeight = false;
-            this.weatherComboBox.Location = new System.Drawing.Point(9, 95);
-            this.weatherComboBox.MaxDropDownItems = 20;
-            this.weatherComboBox.Name = "weatherComboBox";
-            this.weatherComboBox.Size = new System.Drawing.Size(208, 21);
-            this.weatherComboBox.TabIndex = 26;
-            this.weatherComboBox.SelectedIndexChanged += new System.EventHandler(this.weatherComboBox_SelectedIndexChanged);
-            // 
-            // musicNightComboBox
-            // 
-            this.musicNightComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.musicNightComboBox.FormattingEnabled = true;
-            this.musicNightComboBox.IntegralHeight = false;
-            this.musicNightComboBox.Location = new System.Drawing.Point(234, 36);
-            this.musicNightComboBox.MaxDropDownItems = 20;
-            this.musicNightComboBox.Name = "musicNightComboBox";
-            this.musicNightComboBox.Size = new System.Drawing.Size(199, 21);
-            this.musicNightComboBox.TabIndex = 25;
-            this.musicNightComboBox.SelectedIndexChanged += new System.EventHandler(this.musicNightComboBox_SelectedIndexChanged);
-            // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(451, 79);
+            this.button10.Location = new System.Drawing.Point(476, 76);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(73, 49);
+            this.button10.Size = new System.Drawing.Size(73, 38);
             this.button10.TabIndex = 24;
             this.button10.Text = "Open Wild Pokémon";
             this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            this.button10.Click += new System.EventHandler(this.openWildEditorWithIdButtonClick);
+            // 
+            // internalNameBox
+            // 
+            this.internalNameBox.Location = new System.Drawing.Point(248, 40);
+            this.internalNameBox.MaxLength = 50;
+            this.internalNameBox.Name = "internalNameBox";
+            this.internalNameBox.ReadOnly = true;
+            this.internalNameBox.Size = new System.Drawing.Size(207, 20);
+            this.internalNameBox.TabIndex = 6;
             // 
             // wildPokeUpDown
             // 
-            this.wildPokeUpDown.Location = new System.Drawing.Point(451, 36);
+            this.wildPokeUpDown.Location = new System.Drawing.Point(476, 41);
             this.wildPokeUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -860,19 +896,111 @@
             this.wildPokeUpDown.TabIndex = 24;
             this.wildPokeUpDown.ValueChanged += new System.EventHandler(this.wildPokeUpDown_ValueChanged);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(245, 73);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Area icon:";
+            // 
             // wildPokeLabel
             // 
             this.wildPokeLabel.AutoSize = true;
-            this.wildPokeLabel.Location = new System.Drawing.Point(448, 16);
+            this.wildPokeLabel.Location = new System.Drawing.Point(473, 21);
             this.wildPokeLabel.Name = "wildPokeLabel";
             this.wildPokeLabel.Size = new System.Drawing.Size(76, 13);
             this.wildPokeLabel.TabIndex = 14;
             this.wildPokeLabel.Text = "Wild Pokémon";
             // 
+            // areaIconComboBox
+            // 
+            this.areaIconComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.areaIconComboBox.FormattingEnabled = true;
+            this.areaIconComboBox.IntegralHeight = false;
+            this.areaIconComboBox.Location = new System.Drawing.Point(248, 89);
+            this.areaIconComboBox.Name = "areaIconComboBox";
+            this.areaIconComboBox.Size = new System.Drawing.Size(207, 21);
+            this.areaIconComboBox.TabIndex = 3;
+            this.areaIconComboBox.SelectedIndexChanged += new System.EventHandler(this.areaIconComboBox_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 72);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(119, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Show name on entering";
+            // 
+            // showNameComboBox
+            // 
+            this.showNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.showNameComboBox.FormattingEnabled = true;
+            this.showNameComboBox.IntegralHeight = false;
+            this.showNameComboBox.Location = new System.Drawing.Point(9, 89);
+            this.showNameComboBox.Name = "showNameComboBox";
+            this.showNameComboBox.Size = new System.Drawing.Size(216, 21);
+            this.showNameComboBox.TabIndex = 1;
+            this.showNameComboBox.SelectedIndexChanged += new System.EventHandler(this.showNameComboBox_SelectedIndexChanged);
+            // 
+            // mapNameComboBox
+            // 
+            this.mapNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mapNameComboBox.FormattingEnabled = true;
+            this.mapNameComboBox.Location = new System.Drawing.Point(8, 39);
+            this.mapNameComboBox.Name = "mapNameComboBox";
+            this.mapNameComboBox.Size = new System.Drawing.Size(216, 21);
+            this.mapNameComboBox.TabIndex = 0;
+            this.mapNameComboBox.SelectedIndexChanged += new System.EventHandler(this.mapNameComboBox_SelectedIndexChanged);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.BackColor = System.Drawing.SystemColors.Window;
+            this.groupBox2.Controls.Add(this.weatherComboBox);
+            this.groupBox2.Controls.Add(this.musicNightComboBox);
+            this.groupBox2.Controls.Add(this.weatherLabel);
+            this.groupBox2.Controls.Add(this.cameraLabel);
+            this.groupBox2.Controls.Add(this.musicNightLabel);
+            this.groupBox2.Controls.Add(this.cameraComboBox);
+            this.groupBox2.Controls.Add(this.musicDayLabel);
+            this.groupBox2.Controls.Add(this.musicDayComboBox);
+            this.groupBox2.Location = new System.Drawing.Point(264, 153);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(559, 127);
+            this.groupBox2.TabIndex = 29;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Appearance && Sound";
+            // 
+            // weatherComboBox
+            // 
+            this.weatherComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.weatherComboBox.FormattingEnabled = true;
+            this.weatherComboBox.IntegralHeight = false;
+            this.weatherComboBox.Location = new System.Drawing.Point(9, 95);
+            this.weatherComboBox.MaxDropDownItems = 20;
+            this.weatherComboBox.Name = "weatherComboBox";
+            this.weatherComboBox.Size = new System.Drawing.Size(253, 21);
+            this.weatherComboBox.TabIndex = 26;
+            this.weatherComboBox.SelectedIndexChanged += new System.EventHandler(this.weatherComboBox_SelectedIndexChanged);
+            // 
+            // musicNightComboBox
+            // 
+            this.musicNightComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.musicNightComboBox.FormattingEnabled = true;
+            this.musicNightComboBox.IntegralHeight = false;
+            this.musicNightComboBox.Location = new System.Drawing.Point(283, 36);
+            this.musicNightComboBox.MaxDropDownItems = 20;
+            this.musicNightComboBox.Name = "musicNightComboBox";
+            this.musicNightComboBox.Size = new System.Drawing.Size(253, 21);
+            this.musicNightComboBox.TabIndex = 25;
+            this.musicNightComboBox.SelectedIndexChanged += new System.EventHandler(this.musicNightComboBox_SelectedIndexChanged);
+            // 
             // weatherLabel
             // 
             this.weatherLabel.AutoSize = true;
-            this.weatherLabel.Location = new System.Drawing.Point(9, 79);
+            this.weatherLabel.Location = new System.Drawing.Point(6, 78);
             this.weatherLabel.Name = "weatherLabel";
             this.weatherLabel.Size = new System.Drawing.Size(51, 13);
             this.weatherLabel.TabIndex = 12;
@@ -881,7 +1009,7 @@
             // cameraLabel
             // 
             this.cameraLabel.AutoSize = true;
-            this.cameraLabel.Location = new System.Drawing.Point(231, 79);
+            this.cameraLabel.Location = new System.Drawing.Point(280, 79);
             this.cameraLabel.Name = "cameraLabel";
             this.cameraLabel.Size = new System.Drawing.Size(46, 13);
             this.cameraLabel.TabIndex = 10;
@@ -890,7 +1018,7 @@
             // musicNightLabel
             // 
             this.musicNightLabel.AutoSize = true;
-            this.musicNightLabel.Location = new System.Drawing.Point(231, 20);
+            this.musicNightLabel.Location = new System.Drawing.Point(280, 20);
             this.musicNightLabel.Name = "musicNightLabel";
             this.musicNightLabel.Size = new System.Drawing.Size(72, 13);
             this.musicNightLabel.TabIndex = 8;
@@ -900,16 +1028,16 @@
             // 
             this.cameraComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cameraComboBox.FormattingEnabled = true;
-            this.cameraComboBox.Location = new System.Drawing.Point(234, 95);
+            this.cameraComboBox.Location = new System.Drawing.Point(283, 95);
             this.cameraComboBox.Name = "cameraComboBox";
-            this.cameraComboBox.Size = new System.Drawing.Size(199, 21);
+            this.cameraComboBox.Size = new System.Drawing.Size(253, 21);
             this.cameraComboBox.TabIndex = 9;
             this.cameraComboBox.SelectedIndexChanged += new System.EventHandler(this.cameraComboBox_SelectedIndexChanged);
             // 
             // musicDayLabel
             // 
             this.musicDayLabel.AutoSize = true;
-            this.musicDayLabel.Location = new System.Drawing.Point(9, 20);
+            this.musicDayLabel.Location = new System.Drawing.Point(6, 20);
             this.musicDayLabel.Name = "musicDayLabel";
             this.musicDayLabel.Size = new System.Drawing.Size(66, 13);
             this.musicDayLabel.TabIndex = 6;
@@ -923,44 +1051,28 @@
             this.musicDayComboBox.Location = new System.Drawing.Point(9, 36);
             this.musicDayComboBox.MaxDropDownItems = 20;
             this.musicDayComboBox.Name = "musicDayComboBox";
-            this.musicDayComboBox.Size = new System.Drawing.Size(208, 21);
+            this.musicDayComboBox.Size = new System.Drawing.Size(253, 21);
             this.musicDayComboBox.TabIndex = 0;
             this.musicDayComboBox.SelectedIndexChanged += new System.EventHandler(this.musicDayComboBox_SelectedIndexChanged);
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.openMessageFileButton);
             this.groupBox3.Controls.Add(this.levelScriptUpDown);
             this.groupBox3.Controls.Add(this.openLevelScriptButton);
-            this.groupBox3.Controls.Add(this.textFileUpDown);
-            this.groupBox3.Controls.Add(this.textLabel);
-            this.groupBox3.Controls.Add(this.openEventsButton);
-            this.groupBox3.Controls.Add(this.eventLabel);
-            this.groupBox3.Controls.Add(this.eventFileUpDown);
             this.groupBox3.Controls.Add(this.levelScriptLabel);
             this.groupBox3.Controls.Add(this.openScriptButton);
             this.groupBox3.Controls.Add(this.scriptLabel);
             this.groupBox3.Controls.Add(this.scriptFileUpDown);
-            this.groupBox3.Location = new System.Drawing.Point(264, 294);
+            this.groupBox3.Location = new System.Drawing.Point(264, 288);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(541, 142);
+            this.groupBox3.Size = new System.Drawing.Size(559, 77);
             this.groupBox3.TabIndex = 30;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Scripts, Events && Texts";
-            // 
-            // openMessageFileButton
-            // 
-            this.openMessageFileButton.Location = new System.Drawing.Point(382, 89);
-            this.openMessageFileButton.Name = "openMessageFileButton";
-            this.openMessageFileButton.Size = new System.Drawing.Size(117, 36);
-            this.openMessageFileButton.TabIndex = 23;
-            this.openMessageFileButton.Text = "Open &Text File";
-            this.openMessageFileButton.UseVisualStyleBackColor = true;
-            this.openMessageFileButton.Click += new System.EventHandler(this.openMessageFileButton_Click);
+            this.groupBox3.Text = "Scripts";
             // 
             // levelScriptUpDown
             // 
-            this.levelScriptUpDown.Location = new System.Drawing.Point(278, 38);
+            this.levelScriptUpDown.Location = new System.Drawing.Point(315, 41);
             this.levelScriptUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -973,7 +1085,7 @@
             // 
             // openLevelScriptButton
             // 
-            this.openLevelScriptButton.Location = new System.Drawing.Point(382, 27);
+            this.openLevelScriptButton.Location = new System.Drawing.Point(419, 30);
             this.openLevelScriptButton.Name = "openLevelScriptButton";
             this.openLevelScriptButton.Size = new System.Drawing.Size(117, 38);
             this.openLevelScriptButton.TabIndex = 17;
@@ -981,74 +1093,20 @@
             this.openLevelScriptButton.UseVisualStyleBackColor = true;
             this.openLevelScriptButton.Click += new System.EventHandler(this.openLevelScriptButton_Click);
             // 
-            // textFileUpDown
-            // 
-            this.textFileUpDown.Location = new System.Drawing.Point(278, 98);
-            this.textFileUpDown.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.textFileUpDown.Name = "textFileUpDown";
-            this.textFileUpDown.Size = new System.Drawing.Size(90, 20);
-            this.textFileUpDown.TabIndex = 24;
-            this.textFileUpDown.ValueChanged += new System.EventHandler(this.textFileUpDown_ValueChanged);
-            // 
-            // textLabel
-            // 
-            this.textLabel.AutoSize = true;
-            this.textLabel.Location = new System.Drawing.Point(275, 82);
-            this.textLabel.Name = "textLabel";
-            this.textLabel.Size = new System.Drawing.Size(36, 13);
-            this.textLabel.TabIndex = 22;
-            this.textLabel.Text = "Texts:";
-            // 
-            // openEventsButton
-            // 
-            this.openEventsButton.Location = new System.Drawing.Point(127, 88);
-            this.openEventsButton.Name = "openEventsButton";
-            this.openEventsButton.Size = new System.Drawing.Size(88, 37);
-            this.openEventsButton.TabIndex = 20;
-            this.openEventsButton.Text = "Open &Events";
-            this.openEventsButton.UseVisualStyleBackColor = true;
-            this.openEventsButton.Click += new System.EventHandler(this.openEventsButton_Click);
-            // 
-            // eventLabel
-            // 
-            this.eventLabel.AutoSize = true;
-            this.eventLabel.Location = new System.Drawing.Point(18, 83);
-            this.eventLabel.Name = "eventLabel";
-            this.eventLabel.Size = new System.Drawing.Size(58, 13);
-            this.eventLabel.TabIndex = 19;
-            this.eventLabel.Text = "Events no.";
-            // 
-            // eventFileUpDown
-            // 
-            this.eventFileUpDown.Location = new System.Drawing.Point(21, 100);
-            this.eventFileUpDown.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.eventFileUpDown.Name = "eventFileUpDown";
-            this.eventFileUpDown.Size = new System.Drawing.Size(89, 20);
-            this.eventFileUpDown.TabIndex = 18;
-            this.eventFileUpDown.ValueChanged += new System.EventHandler(this.eventFileUpDown_ValueChanged);
-            // 
             // levelScriptLabel
             // 
             this.levelScriptLabel.AutoSize = true;
-            this.levelScriptLabel.Location = new System.Drawing.Point(275, 19);
+            this.levelScriptLabel.Location = new System.Drawing.Point(312, 22);
             this.levelScriptLabel.Name = "levelScriptLabel";
-            this.levelScriptLabel.Size = new System.Drawing.Size(64, 13);
+            this.levelScriptLabel.Size = new System.Drawing.Size(80, 13);
             this.levelScriptLabel.TabIndex = 16;
-            this.levelScriptLabel.Text = "Level script:";
+            this.levelScriptLabel.Text = "Level script file:";
             // 
             // openScriptButton
             // 
-            this.openScriptButton.Location = new System.Drawing.Point(127, 27);
+            this.openScriptButton.Location = new System.Drawing.Point(134, 31);
             this.openScriptButton.Name = "openScriptButton";
-            this.openScriptButton.Size = new System.Drawing.Size(88, 37);
+            this.openScriptButton.Size = new System.Drawing.Size(117, 37);
             this.openScriptButton.TabIndex = 14;
             this.openScriptButton.Text = "Open &Script";
             this.openScriptButton.UseVisualStyleBackColor = true;
@@ -1057,15 +1115,15 @@
             // scriptLabel
             // 
             this.scriptLabel.AutoSize = true;
-            this.scriptLabel.Location = new System.Drawing.Point(18, 20);
+            this.scriptLabel.Location = new System.Drawing.Point(18, 24);
             this.scriptLabel.Name = "scriptLabel";
-            this.scriptLabel.Size = new System.Drawing.Size(52, 13);
+            this.scriptLabel.Size = new System.Drawing.Size(86, 13);
             this.scriptLabel.TabIndex = 13;
-            this.scriptLabel.Text = "Script no.";
+            this.scriptLabel.Text = "Script Archive #:";
             // 
             // scriptFileUpDown
             // 
-            this.scriptFileUpDown.Location = new System.Drawing.Point(21, 37);
+            this.scriptFileUpDown.Location = new System.Drawing.Point(21, 41);
             this.scriptFileUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1075,6 +1133,16 @@
             this.scriptFileUpDown.Size = new System.Drawing.Size(89, 20);
             this.scriptFileUpDown.TabIndex = 0;
             this.scriptFileUpDown.ValueChanged += new System.EventHandler(this.scriptFileUpDown_ValueChanged);
+            // 
+            // headerListBox
+            // 
+            this.headerListBox.FormattingEnabled = true;
+            this.headerListBox.Location = new System.Drawing.Point(13, 67);
+            this.headerListBox.Name = "headerListBox";
+            this.headerListBox.Size = new System.Drawing.Size(238, 498);
+            this.headerListBox.TabIndex = 2;
+            this.headerListBox.SelectedValueChanged += new System.EventHandler(this.headerListBox_SelectedIndexChanged);
+            this.headerListBox.Leave += new System.EventHandler(this.headerListBox_Leave);
             // 
             // saveHeaderButton
             // 
@@ -1103,9 +1171,9 @@
             // 
             // openAreaDataButton
             // 
-            this.openAreaDataButton.Location = new System.Drawing.Point(163, 83);
+            this.openAreaDataButton.Location = new System.Drawing.Point(158, 90);
             this.openAreaDataButton.Name = "openAreaDataButton";
-            this.openAreaDataButton.Size = new System.Drawing.Size(88, 37);
+            this.openAreaDataButton.Size = new System.Drawing.Size(100, 37);
             this.openAreaDataButton.TabIndex = 28;
             this.openAreaDataButton.Text = "Open &Area Data";
             this.openAreaDataButton.UseVisualStyleBackColor = true;
@@ -1113,9 +1181,9 @@
             // 
             // openMatrixButton
             // 
-            this.openMatrixButton.Location = new System.Drawing.Point(163, 36);
+            this.openMatrixButton.Location = new System.Drawing.Point(158, 33);
             this.openMatrixButton.Name = "openMatrixButton";
-            this.openMatrixButton.Size = new System.Drawing.Size(88, 30);
+            this.openMatrixButton.Size = new System.Drawing.Size(100, 37);
             this.openMatrixButton.TabIndex = 27;
             this.openMatrixButton.Text = "Open &Matrix";
             this.openMatrixButton.UseVisualStyleBackColor = true;
@@ -1177,7 +1245,7 @@
             this.flagsGroupBox.Controls.Add(this.flag8CheckBox);
             this.flagsGroupBox.Location = new System.Drawing.Point(563, 455);
             this.flagsGroupBox.Name = "flagsGroupBox";
-            this.flagsGroupBox.Size = new System.Drawing.Size(242, 147);
+            this.flagsGroupBox.Size = new System.Drawing.Size(260, 147);
             this.flagsGroupBox.TabIndex = 32;
             this.flagsGroupBox.TabStop = false;
             this.flagsGroupBox.Text = "Flags";
@@ -1224,7 +1292,7 @@
             // flag5CheckBox
             // 
             this.flag5CheckBox.AutoSize = true;
-            this.flag5CheckBox.Location = new System.Drawing.Point(120, 33);
+            this.flag5CheckBox.Location = new System.Drawing.Point(131, 33);
             this.flag5CheckBox.Name = "flag5CheckBox";
             this.flag5CheckBox.Size = new System.Drawing.Size(15, 14);
             this.flag5CheckBox.TabIndex = 35;
@@ -1234,7 +1302,7 @@
             // flag6CheckBox
             // 
             this.flag6CheckBox.AutoSize = true;
-            this.flag6CheckBox.Location = new System.Drawing.Point(120, 56);
+            this.flag6CheckBox.Location = new System.Drawing.Point(131, 56);
             this.flag6CheckBox.Name = "flag6CheckBox";
             this.flag6CheckBox.Size = new System.Drawing.Size(15, 14);
             this.flag6CheckBox.TabIndex = 32;
@@ -1244,7 +1312,7 @@
             // flag7CheckBox
             // 
             this.flag7CheckBox.AutoSize = true;
-            this.flag7CheckBox.Location = new System.Drawing.Point(120, 79);
+            this.flag7CheckBox.Location = new System.Drawing.Point(131, 79);
             this.flag7CheckBox.Name = "flag7CheckBox";
             this.flag7CheckBox.Size = new System.Drawing.Size(15, 14);
             this.flag7CheckBox.TabIndex = 33;
@@ -1254,7 +1322,7 @@
             // flag8CheckBox
             // 
             this.flag8CheckBox.AutoSize = true;
-            this.flag8CheckBox.Location = new System.Drawing.Point(120, 103);
+            this.flag8CheckBox.Location = new System.Drawing.Point(131, 103);
             this.flag8CheckBox.Name = "flag8CheckBox";
             this.flag8CheckBox.Size = new System.Drawing.Size(15, 14);
             this.flag8CheckBox.TabIndex = 34;
@@ -1470,45 +1538,45 @@
             this.headersGridView.AllowUserToDeleteRows = false;
             this.headersGridView.AllowUserToResizeColumns = false;
             this.headersGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle76.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.headersGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle76;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.headersGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
             this.headersGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle77.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle77.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle77.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle77.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle77.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle77.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle77.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle77;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
             this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle78.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle78.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle78.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle78.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle78.Format = "D4";
-            dataGridViewCellStyle78.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle78.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle78.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle78;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle18.Format = "D4";
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle18;
             this.headersGridView.Location = new System.Drawing.Point(0, 0);
             this.headersGridView.Name = "headersGridView";
-            dataGridViewCellStyle79.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle79.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle79.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle79.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle79.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle79.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle79.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle79;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle19;
             this.headersGridView.RowHeadersWidth = 50;
             this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle80.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle80.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle80;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle20;
             this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.headersGridView.RowTemplate.Height = 18;
             this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -1536,45 +1604,45 @@
             this.heightsGridView.AllowUserToDeleteRows = false;
             this.heightsGridView.AllowUserToResizeColumns = false;
             this.heightsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle81.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle81;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
             this.heightsGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle82.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle82.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle82.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle82.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle82.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle82.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle82.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle82;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
             this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle83.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle83.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle83.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            dataGridViewCellStyle83.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle83.Format = "D2";
-            dataGridViewCellStyle83.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle83.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle83.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle83;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle23.Format = "D2";
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle23;
             this.heightsGridView.Location = new System.Drawing.Point(0, 0);
             this.heightsGridView.Name = "heightsGridView";
-            dataGridViewCellStyle84.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle84.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle84.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle84.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle84.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle84.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle84.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle84;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
             this.heightsGridView.RowHeadersWidth = 50;
             this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle85.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle85.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle85;
+            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle25.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle25;
             this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.heightsGridView.RowTemplate.Height = 18;
             this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -1600,45 +1668,45 @@
             this.mapFilesGridView.AllowUserToDeleteRows = false;
             this.mapFilesGridView.AllowUserToResizeColumns = false;
             this.mapFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle86.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle86;
+            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle26;
             this.mapFilesGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle87.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle87.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle87.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle87.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle87.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle87.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle87.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle87;
+            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle27;
             this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle88.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle88.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle88.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle88.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle88.Format = "D4";
-            dataGridViewCellStyle88.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle88.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle88.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle88;
+            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle28.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle28.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle28.Format = "D4";
+            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle28.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle28;
             this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
             this.mapFilesGridView.Name = "mapFilesGridView";
-            dataGridViewCellStyle89.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle89.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle89.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle89.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle89.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle89.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle89.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle89;
+            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle29.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle29;
             this.mapFilesGridView.RowHeadersWidth = 50;
             this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle90.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle90.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle90;
+            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle30.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle30;
             this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.mapFilesGridView.RowTemplate.Height = 18;
             this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -4296,7 +4364,7 @@
             // 
             // searchInScriptsUpDown
             // 
-            this.searchInScriptsUpDown.Location = new System.Drawing.Point(10, 35);
+            this.searchInScriptsUpDown.Location = new System.Drawing.Point(11, 35);
             this.searchInScriptsUpDown.Name = "searchInScriptsUpDown";
             this.searchInScriptsUpDown.Size = new System.Drawing.Size(299, 20);
             this.searchInScriptsUpDown.TabIndex = 38;
@@ -4329,15 +4397,15 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(5, 20);
+            this.label29.Location = new System.Drawing.Point(8, 19);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(95, 13);
+            this.label29.Size = new System.Drawing.Size(104, 13);
             this.label29.TabIndex = 33;
-            this.label29.Text = "Flag Number (Hex)";
+            this.label29.Text = "Command to search:";
             // 
             // searchInScriptsButton
             // 
-            this.searchInScriptsButton.Location = new System.Drawing.Point(315, 34);
+            this.searchInScriptsButton.Location = new System.Drawing.Point(315, 35);
             this.searchInScriptsButton.Name = "searchInScriptsButton";
             this.searchInScriptsButton.Size = new System.Drawing.Size(91, 20);
             this.searchInScriptsButton.TabIndex = 32;
@@ -5233,9 +5301,9 @@
             this.textEditorTabPage.Controls.Add(this.textEditorDataGridView);
             this.textEditorTabPage.Controls.Add(this.exportTextFileButton);
             this.textEditorTabPage.Controls.Add(this.importTextFileButton);
-            this.textEditorTabPage.Controls.Add(this.saveMessageFileButton);
+            this.textEditorTabPage.Controls.Add(this.saveTextArchiveButton);
             this.textEditorTabPage.Controls.Add(this.removeMessageFileButton);
-            this.textEditorTabPage.Controls.Add(this.addMessageFileButton);
+            this.textEditorTabPage.Controls.Add(this.addTextArchiveButton);
             this.textEditorTabPage.Controls.Add(this.label6);
             this.textEditorTabPage.Controls.Add(this.selectTextFileComboBox);
             this.textEditorTabPage.ImageIndex = 4;
@@ -5253,7 +5321,7 @@
             this.groupBox13.Controls.Add(this.replaceMessageTextBox);
             this.groupBox13.Controls.Add(this.label8);
             this.groupBox13.Controls.Add(this.textSearchProgressBar);
-            this.groupBox13.Controls.Add(this.checkBox1);
+            this.groupBox13.Controls.Add(this.caseSensitiveCheckbox);
             this.groupBox13.Controls.Add(this.label7);
             this.groupBox13.Controls.Add(this.searchMessageResultTextBox);
             this.groupBox13.Controls.Add(this.searchMessageTextBox);
@@ -5261,7 +5329,7 @@
             this.groupBox13.Controls.Add(this.replaceMessageButton);
             this.groupBox13.Location = new System.Drawing.Point(800, 71);
             this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(244, 411);
+            this.groupBox13.Size = new System.Drawing.Size(244, 507);
             this.groupBox13.TabIndex = 31;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Search for messages containing text";
@@ -5279,13 +5347,13 @@
             // 
             this.replaceMessageTextBox.Location = new System.Drawing.Point(8, 99);
             this.replaceMessageTextBox.Name = "replaceMessageTextBox";
-            this.replaceMessageTextBox.Size = new System.Drawing.Size(232, 20);
+            this.replaceMessageTextBox.Size = new System.Drawing.Size(230, 20);
             this.replaceMessageTextBox.TabIndex = 36;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(0, 362);
+            this.label8.Location = new System.Drawing.Point(6, 458);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(48, 13);
             this.label8.TabIndex = 35;
@@ -5293,21 +5361,21 @@
             // 
             // textSearchProgressBar
             // 
-            this.textSearchProgressBar.Location = new System.Drawing.Point(8, 378);
+            this.textSearchProgressBar.Location = new System.Drawing.Point(6, 474);
             this.textSearchProgressBar.Name = "textSearchProgressBar";
-            this.textSearchProgressBar.Size = new System.Drawing.Size(227, 27);
+            this.textSearchProgressBar.Size = new System.Drawing.Size(232, 27);
             this.textSearchProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.textSearchProgressBar.TabIndex = 34;
             // 
-            // checkBox1
+            // caseSensitiveCheckbox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(141, 46);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(96, 17);
-            this.checkBox1.TabIndex = 33;
-            this.checkBox1.Text = "Case Sensitive";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.caseSensitiveCheckbox.AutoSize = true;
+            this.caseSensitiveCheckbox.Location = new System.Drawing.Point(140, 49);
+            this.caseSensitiveCheckbox.Name = "caseSensitiveCheckbox";
+            this.caseSensitiveCheckbox.Size = new System.Drawing.Size(96, 17);
+            this.caseSensitiveCheckbox.TabIndex = 33;
+            this.caseSensitiveCheckbox.Text = "Case Sensitive";
+            this.caseSensitiveCheckbox.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -5320,23 +5388,23 @@
             // 
             // searchMessageResultTextBox
             // 
-            this.searchMessageResultTextBox.Location = new System.Drawing.Point(3, 190);
+            this.searchMessageResultTextBox.Location = new System.Drawing.Point(9, 190);
             this.searchMessageResultTextBox.Multiline = true;
             this.searchMessageResultTextBox.Name = "searchMessageResultTextBox";
             this.searchMessageResultTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.searchMessageResultTextBox.Size = new System.Drawing.Size(228, 127);
+            this.searchMessageResultTextBox.Size = new System.Drawing.Size(229, 254);
             this.searchMessageResultTextBox.TabIndex = 31;
             // 
             // searchMessageTextBox
             // 
             this.searchMessageTextBox.Location = new System.Drawing.Point(6, 20);
             this.searchMessageTextBox.Name = "searchMessageTextBox";
-            this.searchMessageTextBox.Size = new System.Drawing.Size(232, 20);
+            this.searchMessageTextBox.Size = new System.Drawing.Size(231, 20);
             this.searchMessageTextBox.TabIndex = 27;
             // 
             // searchMessageButton
             // 
-            this.searchMessageButton.Location = new System.Drawing.Point(6, 42);
+            this.searchMessageButton.Location = new System.Drawing.Point(6, 46);
             this.searchMessageButton.Name = "searchMessageButton";
             this.searchMessageButton.Size = new System.Drawing.Size(122, 22);
             this.searchMessageButton.TabIndex = 30;
@@ -5346,7 +5414,7 @@
             // 
             // replaceMessageButton
             // 
-            this.replaceMessageButton.Location = new System.Drawing.Point(8, 125);
+            this.replaceMessageButton.Location = new System.Drawing.Point(6, 125);
             this.replaceMessageButton.Name = "replaceMessageButton";
             this.replaceMessageButton.Size = new System.Drawing.Size(122, 22);
             this.replaceMessageButton.TabIndex = 30;
@@ -5356,11 +5424,11 @@
             // 
             // removeStringButton
             // 
-            this.removeStringButton.Location = new System.Drawing.Point(142, 584);
+            this.removeStringButton.Location = new System.Drawing.Point(194, 584);
             this.removeStringButton.Name = "removeStringButton";
-            this.removeStringButton.Size = new System.Drawing.Size(124, 28);
+            this.removeStringButton.Size = new System.Drawing.Size(136, 28);
             this.removeStringButton.TabIndex = 26;
-            this.removeStringButton.Text = "Remove String";
+            this.removeStringButton.Text = "Remove Selected Line";
             this.removeStringButton.UseVisualStyleBackColor = true;
             this.removeStringButton.Click += new System.EventHandler(this.removeStringButton_Click);
             // 
@@ -5368,9 +5436,9 @@
             // 
             this.addStringButton.Location = new System.Drawing.Point(12, 584);
             this.addStringButton.Name = "addStringButton";
-            this.addStringButton.Size = new System.Drawing.Size(124, 28);
+            this.addStringButton.Size = new System.Drawing.Size(176, 28);
             this.addStringButton.TabIndex = 25;
-            this.addStringButton.Text = "&Add String";
+            this.addStringButton.Text = "&Add New Line to this message";
             this.addStringButton.UseVisualStyleBackColor = true;
             this.addStringButton.Click += new System.EventHandler(this.addStringButton_Click);
             // 
@@ -5403,7 +5471,7 @@
             // 
             // exportTextFileButton
             // 
-            this.exportTextFileButton.Location = new System.Drawing.Point(144, 48);
+            this.exportTextFileButton.Location = new System.Drawing.Point(178, 47);
             this.exportTextFileButton.Name = "exportTextFileButton";
             this.exportTextFileButton.Size = new System.Drawing.Size(106, 23);
             this.exportTextFileButton.TabIndex = 23;
@@ -5413,7 +5481,7 @@
             // 
             // importTextFileButton
             // 
-            this.importTextFileButton.Location = new System.Drawing.Point(144, 21);
+            this.importTextFileButton.Location = new System.Drawing.Point(178, 20);
             this.importTextFileButton.Name = "importTextFileButton";
             this.importTextFileButton.Size = new System.Drawing.Size(106, 23);
             this.importTextFileButton.TabIndex = 22;
@@ -5423,42 +5491,42 @@
             // 
             // saveMessageFileButton
             // 
-            this.saveMessageFileButton.Location = new System.Drawing.Point(10, 48);
-            this.saveMessageFileButton.Name = "saveMessageFileButton";
-            this.saveMessageFileButton.Size = new System.Drawing.Size(128, 23);
-            this.saveMessageFileButton.TabIndex = 21;
-            this.saveMessageFileButton.Text = "&Save Current";
-            this.saveMessageFileButton.UseVisualStyleBackColor = true;
-            this.saveMessageFileButton.Click += new System.EventHandler(this.saveMessageFileButton_Click);
+            this.saveTextArchiveButton.Location = new System.Drawing.Point(10, 48);
+            this.saveTextArchiveButton.Name = "saveMessageFileButton";
+            this.saveTextArchiveButton.Size = new System.Drawing.Size(164, 23);
+            this.saveTextArchiveButton.TabIndex = 21;
+            this.saveTextArchiveButton.Text = "&Save Current";
+            this.saveTextArchiveButton.UseVisualStyleBackColor = true;
+            this.saveTextArchiveButton.Click += new System.EventHandler(this.saveTextArchiveButton_Click);
             // 
             // removeMessageFileButton
             // 
-            this.removeMessageFileButton.Location = new System.Drawing.Point(258, 48);
+            this.removeMessageFileButton.Location = new System.Drawing.Point(292, 47);
             this.removeMessageFileButton.Name = "removeMessageFileButton";
             this.removeMessageFileButton.Size = new System.Drawing.Size(106, 23);
             this.removeMessageFileButton.TabIndex = 20;
-            this.removeMessageFileButton.Text = "Remove Last";
+            this.removeMessageFileButton.Text = "Remove Last Archive";
             this.removeMessageFileButton.UseVisualStyleBackColor = true;
             this.removeMessageFileButton.Click += new System.EventHandler(this.removeMessageFileButton_Click);
             // 
-            // addMessageFileButton
+            // addTextArchiveButton
             // 
-            this.addMessageFileButton.Location = new System.Drawing.Point(258, 21);
-            this.addMessageFileButton.Name = "addMessageFileButton";
-            this.addMessageFileButton.Size = new System.Drawing.Size(106, 23);
-            this.addMessageFileButton.TabIndex = 19;
-            this.addMessageFileButton.Text = "Add File";
-            this.addMessageFileButton.UseVisualStyleBackColor = true;
-            this.addMessageFileButton.Click += new System.EventHandler(this.addMessageFileButton_Click);
+            this.addTextArchiveButton.Location = new System.Drawing.Point(292, 20);
+            this.addTextArchiveButton.Name = "addTextArchiveButton";
+            this.addTextArchiveButton.Size = new System.Drawing.Size(106, 23);
+            this.addTextArchiveButton.TabIndex = 19;
+            this.addTextArchiveButton.Text = "Add Text Archive";
+            this.addTextArchiveButton.UseVisualStyleBackColor = true;
+            this.addTextArchiveButton.Click += new System.EventHandler(this.addMessageFileButton_Click);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(9, 6);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(47, 13);
+            this.label6.Size = new System.Drawing.Size(67, 13);
             this.label6.TabIndex = 18;
-            this.label6.Text = "Text File";
+            this.label6.Text = "Text Archive";
             // 
             // selectTextFileComboBox
             // 
@@ -5466,7 +5534,7 @@
             this.selectTextFileComboBox.FormattingEnabled = true;
             this.selectTextFileComboBox.Location = new System.Drawing.Point(11, 22);
             this.selectTextFileComboBox.Name = "selectTextFileComboBox";
-            this.selectTextFileComboBox.Size = new System.Drawing.Size(125, 21);
+            this.selectTextFileComboBox.Size = new System.Drawing.Size(161, 21);
             this.selectTextFileComboBox.TabIndex = 17;
             this.selectTextFileComboBox.SelectedIndexChanged += new System.EventHandler(this.selectTextFileComboBox_SelectedIndexChanged);
             // 
@@ -5879,8 +5947,8 @@
             // asmHacksToolStripMenuItem
             // 
             this.asmHacksToolStripMenuItem.Name = "asmHacksToolStripMenuItem";
-            this.asmHacksToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-            this.asmHacksToolStripMenuItem.Text = "ASM Hacks";
+            this.asmHacksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.asmHacksToolStripMenuItem.Text = "ROM Toolbox";
             this.asmHacksToolStripMenuItem.Click += new System.EventHandler(this.asmHacksToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem1
@@ -5941,7 +6009,8 @@
             this.saveRomButton,
             this.toolStripSeparator1,
             this.wildEditorButton,
-            this.buildingEditorButton});
+            this.buildingEditorButton,
+            this.romToolboxButton});
             this.mainToolStrip.Location = new System.Drawing.Point(0, 24);
             this.mainToolStrip.Name = "mainToolStrip";
             this.mainToolStrip.Size = new System.Drawing.Size(1150, 44);
@@ -5977,9 +6046,23 @@
             this.buildingEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
             this.buildingEditorButton.Name = "buildingEditorButton";
             this.buildingEditorButton.Size = new System.Drawing.Size(36, 36);
-            this.buildingEditorButton.Text = "toolStripButton1";
+            this.buildingEditorButton.Text = "Buildings Editor";
             this.buildingEditorButton.ToolTipText = "Building Editor";
             this.buildingEditorButton.Click += new System.EventHandler(this.buildingEditorButton_Click);
+            // 
+            // romToolboxButton
+            // 
+            this.romToolboxButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.romToolboxButton.Enabled = false;
+            this.romToolboxButton.Image = ((System.Drawing.Image)(resources.GetObject("romToolboxButton.Image")));
+            this.romToolboxButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.romToolboxButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.romToolboxButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.romToolboxButton.Name = "romToolboxButton";
+            this.romToolboxButton.Size = new System.Drawing.Size(36, 36);
+            this.romToolboxButton.Text = "ROM Toolbox";
+            this.romToolboxButton.ToolTipText = "ROM Toolbox";
+            this.romToolboxButton.Click += new System.EventHandler(this.asmHacksToolStripMenuItem_Click);
             // 
             // versionLabel
             // 
@@ -5990,7 +6073,7 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             // 
-            // Form1
+            // MainProgram
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -6007,23 +6090,27 @@
             this.Icon = global::DSPRE.Properties.Resources.appIcon;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.Name = "Form1";
-            this.Text = "DS Pokémon Rom Editor 1.0.4c (Nømura, AdAstra, Mixone)";
+            this.Name = "MainProgram";
+            this.Text = "DS Pokémon Rom Editor 1.0.5 (Nømura, AdAstra, Mixone)";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);
             this.headerEditorTabPage.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.textFileUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eventFileUpDown)).EndInit();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.areaIconPictureBox)).EndInit();
             this.nameGroupBox.ResumeLayout(false);
             this.nameGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.wildPokeUpDown)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.wildPokeUpDown)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.levelScriptUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textFileUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eventFileUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scriptFileUpDown)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -6182,65 +6269,10 @@
         }
 
         #endregion
-        private System.Windows.Forms.ListBox headerListBox;
         private System.Windows.Forms.TabControl mainTabControl;
-        private System.Windows.Forms.TabPage headerEditorTabPage;
         private System.Windows.Forms.TabPage matrixEditorTabPage;
         private System.Windows.Forms.PictureBox gameIcon;
         private System.Windows.Forms.Label languageLabel;
-        private System.Windows.Forms.Button saveHeaderButton;
-        private System.Windows.Forms.Label cameraPicLabel;
-        private System.Windows.Forms.Label weatherPicLabel;
-        private System.Windows.Forms.GroupBox flagsGroupBox;
-        private System.Windows.Forms.CheckBox flag1CheckBox;
-        private System.Windows.Forms.CheckBox flag6CheckBox;
-        private System.Windows.Forms.CheckBox flag5CheckBox;
-        private System.Windows.Forms.CheckBox flag8CheckBox;
-        private System.Windows.Forms.CheckBox flag7CheckBox;
-        private System.Windows.Forms.CheckBox flag4CheckBox;
-        private System.Windows.Forms.CheckBox flag2CheckBox;
-        private System.Windows.Forms.CheckBox flag3CheckBox;
-        private System.Windows.Forms.PictureBox weatherPictureBox;
-        private System.Windows.Forms.PictureBox cameraPictureBox;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button openMatrixButton;
-        private System.Windows.Forms.Label areaDataLabel;
-        private System.Windows.Forms.NumericUpDown areaDataUpDown;
-        private System.Windows.Forms.Label matrixLabel;
-        private System.Windows.Forms.NumericUpDown matrixUpDown;
-        private System.Windows.Forms.GroupBox nameGroupBox;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox internalNameBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox areaIconComboBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox showNameComboBox;
-        private System.Windows.Forms.ComboBox mapNameComboBox;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox weatherComboBox;
-        private System.Windows.Forms.ComboBox musicNightComboBox;
-        private System.Windows.Forms.NumericUpDown wildPokeUpDown;
-        private System.Windows.Forms.Label wildPokeLabel;
-        private System.Windows.Forms.Label weatherLabel;
-        private System.Windows.Forms.Label cameraLabel;
-        private System.Windows.Forms.Label musicNightLabel;
-        private System.Windows.Forms.ComboBox cameraComboBox;
-        private System.Windows.Forms.Label musicDayLabel;
-        private System.Windows.Forms.ComboBox musicDayComboBox;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.NumericUpDown levelScriptUpDown;
-        private System.Windows.Forms.Button openLevelScriptButton;
-        private System.Windows.Forms.NumericUpDown textFileUpDown;
-        private System.Windows.Forms.Label textLabel;
-        private System.Windows.Forms.Button openEventsButton;
-        private System.Windows.Forms.Label eventLabel;
-        private System.Windows.Forms.NumericUpDown eventFileUpDown;
-        private System.Windows.Forms.Label levelScriptLabel;
-        private System.Windows.Forms.Button openScriptButton;
-        private System.Windows.Forms.Label scriptLabel;
-        private System.Windows.Forms.NumericUpDown scriptFileUpDown;
-        private System.Windows.Forms.PictureBox areaIconPictureBox;
-        private System.Windows.Forms.Label areaImageLabel;
         private System.Windows.Forms.Label labelMatrices;
         private System.Windows.Forms.Label matrixNameLabel;
         private System.Windows.Forms.TabControl matrixTabControl;
@@ -6262,7 +6294,6 @@
         private System.Windows.Forms.Button removeHeadersButton;
         private System.Windows.Forms.Button removeHeightsButton;
         private System.Windows.Forms.TabPage mapEditorTabPage;
-        private System.Windows.Forms.Button addHeaderButton;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openROMToolStripMenuItem;
@@ -6515,9 +6546,9 @@
         private System.Windows.Forms.Button wildBattleButton;
         private System.Windows.Forms.Button trainerBattleButton;
         private System.Windows.Forms.Button exportTextFileButton;
-        private System.Windows.Forms.Button saveMessageFileButton;
+        private System.Windows.Forms.Button saveTextArchiveButton;
         private System.Windows.Forms.Button removeMessageFileButton;
-        private System.Windows.Forms.Button addMessageFileButton;
+        private System.Windows.Forms.Button addTextArchiveButton;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox selectTextFileComboBox;
         private System.Windows.Forms.DataGridView textEditorDataGridView;
@@ -6530,7 +6561,7 @@
         private System.Windows.Forms.TextBox searchMessageResultTextBox;
         private System.Windows.Forms.Button searchMessageButton;
         private System.Windows.Forms.Button replaceMessageButton;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox caseSensitiveCheckbox;
         private System.Windows.Forms.ProgressBar textSearchProgressBar;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button restartMusicButton;
@@ -6585,7 +6616,6 @@
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.Button openMessageFileButton;
         private System.Windows.Forms.ToolStripButton wildEditorButton;
         private System.Windows.Forms.TabPage tilesetEditorTabPage;
         private System.Windows.Forms.GroupBox areaDataGroupBox;
@@ -6616,12 +6646,11 @@
         private System.Windows.Forms.Button saveAreaDataButton;
         private System.Windows.Forms.Button removeAreaDataButton;
         private System.Windows.Forms.Button addAreaDataButton;
-        private System.Windows.Forms.Button openAreaDataButton;
         private System.Windows.Forms.Button importTextFileButton;
         private System.Windows.Forms.NumericUpDown buildingHeightUpDown;
         private System.Windows.Forms.NumericUpDown buildingLengthUpDown;
         private System.Windows.Forms.NumericUpDown buildingWidthUpDown;
-        private System.Windows.Forms.ToolStripButton buildingEditorButton;
+        private System.Windows.Forms.ToolStripButton romToolboxButton;
         private System.Windows.Forms.Button removeMapFileButton;
         private System.Windows.Forms.Button addMapFileButton;
         private System.Windows.Forms.Label replaceTextLabel;
@@ -6629,8 +6658,73 @@
         private System.Windows.Forms.RichTextBox LineNumberTextBoxScript;
         private System.Windows.Forms.RichTextBox LineNumberTextBoxFunc;
         private System.Windows.Forms.RichTextBox LineNumberTextBoxMov;
-        private System.Windows.Forms.Button button10;
         private System.Windows.Forms.TextBox searchInScriptsUpDown;
+        private System.Windows.Forms.TabPage headerEditorTabPage;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.Button openMessageFileButton;
+        private System.Windows.Forms.NumericUpDown textFileUpDown;
+        private System.Windows.Forms.Label textLabel;
+        private System.Windows.Forms.Button openEventsButton;
+        private System.Windows.Forms.Label eventLabel;
+        private System.Windows.Forms.NumericUpDown eventFileUpDown;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.Button resetButton;
+        private System.Windows.Forms.Button searchHeaderButton;
+        private System.Windows.Forms.TextBox searchLocationTextBox;
+        private System.Windows.Forms.Button addHeaderButton;
+        private System.Windows.Forms.PictureBox areaIconPictureBox;
+        private System.Windows.Forms.Label areaImageLabel;
+        private System.Windows.Forms.GroupBox nameGroupBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.TextBox internalNameBox;
+        private System.Windows.Forms.NumericUpDown wildPokeUpDown;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label wildPokeLabel;
+        private System.Windows.Forms.ComboBox areaIconComboBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox showNameComboBox;
+        private System.Windows.Forms.ComboBox mapNameComboBox;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox weatherComboBox;
+        private System.Windows.Forms.ComboBox musicNightComboBox;
+        private System.Windows.Forms.Label weatherLabel;
+        private System.Windows.Forms.Label cameraLabel;
+        private System.Windows.Forms.Label musicNightLabel;
+        private System.Windows.Forms.ComboBox cameraComboBox;
+        private System.Windows.Forms.Label musicDayLabel;
+        private System.Windows.Forms.ComboBox musicDayComboBox;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.NumericUpDown levelScriptUpDown;
+        private System.Windows.Forms.Button openLevelScriptButton;
+        private System.Windows.Forms.Label levelScriptLabel;
+        private System.Windows.Forms.Button openScriptButton;
+        private System.Windows.Forms.Label scriptLabel;
+        private System.Windows.Forms.NumericUpDown scriptFileUpDown;
+        private System.Windows.Forms.ListBox headerListBox;
+        private System.Windows.Forms.Button saveHeaderButton;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button openAreaDataButton;
+        private System.Windows.Forms.Button openMatrixButton;
+        private System.Windows.Forms.Label areaDataLabel;
+        private System.Windows.Forms.NumericUpDown areaDataUpDown;
+        private System.Windows.Forms.Label matrixLabel;
+        private System.Windows.Forms.NumericUpDown matrixUpDown;
+        private System.Windows.Forms.GroupBox flagsGroupBox;
+        private System.Windows.Forms.CheckBox flag1CheckBox;
+        private System.Windows.Forms.CheckBox flag2CheckBox;
+        private System.Windows.Forms.CheckBox flag3CheckBox;
+        private System.Windows.Forms.CheckBox flag4CheckBox;
+        private System.Windows.Forms.CheckBox flag5CheckBox;
+        private System.Windows.Forms.CheckBox flag6CheckBox;
+        private System.Windows.Forms.CheckBox flag7CheckBox;
+        private System.Windows.Forms.CheckBox flag8CheckBox;
+        private System.Windows.Forms.Label cameraPicLabel;
+        private System.Windows.Forms.PictureBox cameraPictureBox;
+        private System.Windows.Forms.Label weatherPicLabel;
+        private System.Windows.Forms.PictureBox weatherPictureBox;
+        private System.Windows.Forms.ToolStripButton buildingEditorButton;
     }
 }
 

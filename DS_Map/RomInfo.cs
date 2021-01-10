@@ -1,5 +1,6 @@
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 namespace DSPRE
 {
@@ -11,22 +12,25 @@ namespace DSPRE
     public class RomInfo
     {
         private string romID;
-        private string workingFolder;
+        private string workDir;
         private string gameVersion;
 
         #region Constructors (1)
-        public RomInfo(string id, string workingFolder)
+        public RomInfo(string id, string workDir)
         {
             romID = id;
             gameVersion = getGameVersion();
-            this.workingFolder = workingFolder;
+            this.workDir = workDir;
         }
         #endregion
 
         #region Methods (22)
+        public string getWorkingFolder() {
+            return workDir;
+        }
         public string GetAreaDataFolderPath()
         {
-            return workingFolder + @"extracted\area_data";
+            return workDir + @"unpacked\area_data";
         }
         public int GetAreaDataCount()
         {
@@ -40,16 +44,16 @@ namespace DSPRE
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
-                    path = @"extracted\DPPtBuildings";
+                    path = @"unpacked\DPPtBuildings";
                     break;
                 default:
                     if (interior) 
-                        path = @"extracted\HGSSBuildingsIN";
+                        path = @"unpacked\HGSSBuildingsIN";
                     else 
-                        path = @"extracted\HGSSBuildingsOUT";
+                        path = @"unpacked\HGSSBuildingsOUT";
                     break;
             }
-            return workingFolder + path;
+            return workDir + path;
         }
         public int GetBuildingCount(bool interior)
         {
@@ -94,7 +98,7 @@ namespace DSPRE
         }
         public int GetHeaderCount()
         {
-            return (int)new FileInfo(workingFolder + @"data\fielddata\maptable\mapname.bin").Length / 0x10;
+            return (int)new FileInfo(workDir + @"data\fielddata\maptable\mapname.bin").Length / 0x10;
         }
         public int GetAttackNamesMessageNumber()
         {
@@ -238,14 +242,14 @@ namespace DSPRE
         }
         public string GetMapTexturesFolderPath()
         {
-            return workingFolder + @"extracted\maptex";
+            return workDir + @"unpacked\maptex";
         }
         public int GetMapTexturesCount()
         {
             return Directory.GetFiles(GetMapTexturesFolderPath()).Length;
         }
         public string GetBuildingTexturesFolderPath() { 
-            return workingFolder + @"extracted\TextureBLD";
+            return workDir + @"unpacked\TextureBLD";
         }
 
         public int GetBuildingTexturesCount()
@@ -253,27 +257,27 @@ namespace DSPRE
             return Directory.GetFiles(GetBuildingTexturesFolderPath()).Length;
         }
         public string GetMatrixFolderPath() {  
-            return workingFolder + @"extracted\matrix";
+            return workDir + @"unpacked\matrix";
         }
         public int GetMatrixCount()
         {
             return Directory.GetFiles(GetMatrixFolderPath()).Length;
         }
-        public string GetMessageFolderPath()
+        public string GetTextArchivesPath()
         {
-            return workingFolder + @"extracted\msg";
+            return workDir + @"unpacked\msg";
         }
         public int GetMessageCount()
         {
-            return Directory.GetFiles(GetMessageFolderPath()).Length;
+            return Directory.GetFiles(GetTextArchivesPath()).Length;
         }
         public string GetTrainerDataFolderPath()
         {
-            return workingFolder + @"extracted\trainerdata";
+            return workDir + @"unpacked\trainerdata";
         }
         public string GetMapFolderPath()
         {
-            return workingFolder + @"extracted\maps";
+            return workDir + @"unpacked\maps";
         }
         public int GetMapCount()
         {
@@ -281,11 +285,11 @@ namespace DSPRE
         }
         public string GetOverworldFolderPath()
         {
-            return workingFolder + @"extracted\overworlds";
+            return workDir + @"unpacked\overworlds";
         }
         public string GetEncounterFolderPath()
         {
-            return workingFolder + @"extracted\wildPokeData";
+            return workDir + @"unpacked\wildPokeData";
         }
         public int GetEventCount()
         {
@@ -293,7 +297,7 @@ namespace DSPRE
         }
         public string GetEventFolderPath()
         {
-            return workingFolder + @"extracted\events";
+            return workDir + @"unpacked\events";
         }
         public string GetLanguage()
         {
@@ -390,7 +394,11 @@ namespace DSPRE
         }
         public string GetScriptFolderPath()
         {
-            return workingFolder + @"extracted\scripts";
+            return workDir + @"unpacked\scripts";
+        }
+
+        internal string getSyntheticOverlayPath() {
+            return workDir + @"unpacked\syntheticOverlayNarc";
         }
 
 

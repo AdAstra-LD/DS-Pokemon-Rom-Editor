@@ -91,11 +91,11 @@
   <ItemGroup>
     <Compile Include="AB.cs" />
     <Compile Include="AreaData.cs" />
-    <Compile Include="ASMHacksDialog.cs">
+    <Compile Include="ROMToolboxDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ASMHacksDialog.Designer.cs">
-      <DependentUpon>ASMHacksDialog.cs</DependentUpon>
+    <Compile Include="ROMToolboxDialog.Designer.cs">
+      <DependentUpon>ROMToolboxDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="BuildingEditor.cs">
       <SubType>Form</SubType>
@@ -231,8 +231,8 @@
     <Compile Include="SPK.Designer.cs">
       <DependentUpon>SPK.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ASMHacksDialog.resx">
-      <DependentUpon>ASMHacksDialog.cs</DependentUpon>
+    <EmbeddedResource Include="ROMToolboxDialog.resx">
+      <DependentUpon>ROMToolboxDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BuildingEditor.resx">
       <DependentUpon>BuildingEditor.cs</DependentUpon>
@@ -404,6 +404,8 @@
     <None Include="Graphics\Weather\DPPt\ptspotlight.gif" />
     <None Include="Graphics\Weather\HGSS\hgssdark2.png" />
     <Content Include="app.ico" />
+    <None Include="Resources\exploreKit.Image.bmp" />
+    <None Include="Resources\exploreKit.Image.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
