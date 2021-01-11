@@ -73,13 +73,29 @@ namespace DSPRE
             ushort[,] newMaps = new ushort[newHeight, newWidth];
 
             /* Copy existing headers and altitudes rows into new arrays. If new matrix is larger in any dimension, new entries will be zero */
-            if (hasHeadersSection) for (int i = 0; i < Math.Min(height, newHeight); i++) for (int j = 0; j < Math.Min(width, newWidth); j++) newHeaders[i, j] = headers[i, j];
-            if (hasAltitudesSection) for (int i = 0; i < Math.Min(height, newHeight); i++) for (int j = 0; j < Math.Min(width, newWidth); j++) newAltitudes[i, j] = altitudes[i, j];
+            if (hasHeadersSection) 
+                for (int i = 0; i < Math.Min(height, newHeight); i++) 
+                    for (int j = 0; j < Math.Min(width, newWidth); j++) 
+                        newHeaders[i, j] = headers[i, j];
+            if (hasAltitudesSection) 
+                for (int i = 0; i < Math.Min(height, newHeight); i++) 
+                    for (int j = 0; j < Math.Min(width, newWidth); j++) 
+                        newAltitudes[i, j] = altitudes[i, j];
 
             /* Copy existing map rows into new array, and fill eventual new ones with Matrix.VOID (FF FF) */
-            for (int i = 0; i < Math.Min(height, newHeight); i++) for (int j = 0; j < Math.Min(width, newWidth); j++) newMaps[i, j] = maps[i, j];
-            if (newHeight > height) for (int i = height; i < newHeight; i++) for (int j = 0; j < newWidth; j++) newMaps[i, j] = Matrix.VOID;
-            if (newWidth > width)   for (int j = width; j < newWidth; j++) for (int i = 0; i < newHeight; i++) newMaps[i, j] = Matrix.VOID;
+            for (int i = 0; i < Math.Min(height, newHeight); i++) 
+                for (int j = 0; j < Math.Min(width, newWidth); j++) 
+                    newMaps[i, j] = maps[i, j];
+
+            if (newHeight > height) 
+                for (int i = height; i < newHeight; i++) 
+                    for (int j = 0; j < newWidth; j++) 
+                        newMaps[i, j] = Matrix.VOID;
+
+            if (newWidth > width)   
+                for (int j = width; j < newWidth; j++) 
+                    for (int i = 0; i < newHeight; i++) 
+                        newMaps[i, j] = Matrix.VOID;
 
             /* Substitute old arrays with new arrays */
             headers = newHeaders;
@@ -89,6 +105,8 @@ namespace DSPRE
             /* Set new width and height */
             height = (byte)newHeight;
             width = (byte)newWidth;
+
+
         }
         public void AddHeadersSection()
         {
@@ -117,9 +135,22 @@ namespace DSPRE
                 writer.Write(hasAltitudesSection);
                 writer.Write(name);
 
-                if (hasHeadersSection) for (int i = 0; i < height; i++) for (int j = 0; j < width; j++) writer.Write(headers[i, j]);
-                if (hasAltitudesSection) for (int i = 0; i < height; i++) for (int j = 0; j < width; j++) writer.Write(altitudes[i, j]);
-                for (int i = 0; i < height; i++) for (int j = 0; j < width; j++) writer.Write(maps[i, j]);
+                if (hasHeadersSection) {
+                    for (int i = 0; i < height; i++)
+                        for (int j = 0; j < width; j++)
+                            writer.Write(headers[i, j]);
+                }
+
+                if (hasAltitudesSection) {
+                    for (int i = 0; i < height; i++)
+                        for (int j = 0; j < width; j++)
+                            writer.Write(altitudes[i, j]);
+                }
+
+                for (int i = 0; i < height; i++) {
+                    for (int j = 0; j < width; j++)
+                        writer.Write(maps[i, j]);
+                }
 
             }
             return newData.ToArray();

@@ -1073,7 +1073,7 @@ namespace DSPRE {
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.5" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.5a" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who owes credit for SDSME." + Environment.NewLine +
                 "Special thanks go to Trifindo, Mikelan98, BagBoy, and JackHack96, whose help, research and expertise in the field of NDS Rom Hacking made the development of this tool possible.";
 
@@ -1873,9 +1873,19 @@ namespace DSPRE {
         private void importMatrixButton_Click(object sender, EventArgs e)
         {
             /* Prompt user to select .mtx file */
+            DialogResult d;
+            if (selectMatrixComboBox.SelectedIndex == 0) {
+                d = MessageBox.Show("Replacing a matrix - especially Matrix 0 - with a new file is risky.\nDo not do it unless you are absolutely sure.\nProceed?", "Risky operation",
+                   MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (d == DialogResult.No)
+                    return;
+            }
+
             OpenFileDialog importMatrix = new OpenFileDialog();
             importMatrix.Filter = "Matrix File (*.mtx)|*.mtx";
-            if (importMatrix.ShowDialog(this) != DialogResult.OK) return;
+            if (importMatrix.ShowDialog(this) != DialogResult.OK)
+                return;
 
             /* Update matrix object in memory */
             currentMatrix = new Matrix(new FileStream(importMatrix.FileName, FileMode.Open));
@@ -1890,6 +1900,7 @@ namespace DSPRE {
             widthUpDown.Value = currentMatrix.width;
             heightUpDown.Value = currentMatrix.height;
             disableHandlers = false;
+      
         }
         private void heightUpDown_ValueChanged(object sender, EventArgs e)
         {
@@ -1933,10 +1944,16 @@ namespace DSPRE {
 
             disableHandlers = false;
         }
-        private void mapFilesGridView_CellMouseDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-            {
+        private void mapFilesGridView_CellMouseDoubleClick(object sender, DataGridViewCellEventArgs e) {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0) {
+                if (currentMatrix.maps[e.RowIndex, e.ColumnIndex] == Matrix.VOID) {
+                    MessageBox.Show("You can't load a VOID map.\nSelect a valid map and try again.\n" +
+                        "If you only meant to change the value of this cell, wait some time between one mouse click and the other.\n" +
+                        "Alternatively, highlight the cell and press F2 on your keyboard.", 
+                        "User attempted to load VOID", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 /* Determine area data */
                 int header;
                 if (currentMatrix.hasHeadersSection) {
@@ -1945,9 +1962,15 @@ namespace DSPRE {
                     header = headerListBox.SelectedIndex;
                 }
 
-                /* Get texture file numbers from area data */
-                AreaData areaData = LoadAreaData(LoadHeader(header).areaDataID);
+                AreaData areaData;
+                if (header > internalNames.Count) {
+                    MessageBox.Show("This map is associated to a non-existent header.\nThis will lead to unpredictable behaviour and, possibily, problems, if you attempt to load it in game.",
+                        "Invalid header", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    header = 0;
+                } 
 
+                /* Get texture file numbers from area data */
+                areaData = LoadAreaData(LoadHeader(header).areaDataID);
                 /* Load Map File and switch to Map Editor tab */
                 disableHandlers = true;
 
@@ -1956,9 +1979,9 @@ namespace DSPRE {
                 buildTextureComboBox.SelectedIndex = areaData.buildingsTileset + 1;
                 mainTabControl.SelectedTab = mapEditorTabPage;
                 
-                if (mapPartsTabControl.SelectedTab == permissionsTabPage)
+                if (mapPartsTabControl.SelectedTab == permissionsTabPage) //what's this IF for??
 
-                
+
                 if (areaData.areaType == 0)
                     interiorRadioButton.Checked = true;
 
@@ -1968,12 +1991,14 @@ namespace DSPRE {
         }
         private void mapFilesGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (disableHandlers) return;
-            if (e.RowIndex > -1 && e.ColumnIndex > -1)
+            if (disableHandlers) 
+                return;
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 /* If input is junk, use VOID (FF FF) as placeholder value */
                 ushort cellValue;
-                if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) cellValue = Matrix.VOID;
+                if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) 
+                    cellValue = Matrix.VOID;
                 
                 /* Change value in matrix object */
                 currentMatrix.maps[e.RowIndex, e.ColumnIndex] = cellValue;                
@@ -2032,11 +2057,15 @@ namespace DSPRE {
         private void saveMatrixButton_Click(object sender, EventArgs e)
         {
             string matrixPath = romInfo.GetMatrixFolderPath() + "\\" + selectMatrixComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter matrixWriter = new BinaryWriter(new FileStream(matrixPath, FileMode.Create))) matrixWriter.Write(currentMatrix.Save());
+            using (BinaryWriter matrixWriter = new BinaryWriter(new FileStream(matrixPath, FileMode.Create))) 
+                matrixWriter.Write(currentMatrix.Save());
+
+            eventMatrix = LoadMatrix(selectMatrixComboBox.SelectedIndex);
         }
         private void selectMatrixComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             Clear_Matrix_Tables();
             currentMatrix = LoadMatrix(selectMatrixComboBox.SelectedIndex);
@@ -2051,25 +2080,22 @@ namespace DSPRE {
         }     
         private void widthUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             disableHandlers = true;
 
             /* Add or remove rows in DataGridView control */
             int delta = (int)widthUpDown.Value - currentMatrix.width;
-            for (int i = 0; i < Math.Abs(delta); i++)
-            {
-                if (delta < 0)
-                {
+            for (int i = 0; i < Math.Abs(delta); i++) {
+                if (delta < 0) {
                     headersGridView.Columns.RemoveAt(currentMatrix.width - 1 - i);
                     heightsGridView.Columns.RemoveAt(currentMatrix.width - 1 - i);
                     mapFilesGridView.Columns.RemoveAt(currentMatrix.width - 1 - i);
-                }
-                else
-                {
+                } else {
                     /* Add columns */
-                    headersGridView.Columns.Add(" ", (currentMatrix.width + i + 1).ToString());
-                    heightsGridView.Columns.Add(" ", (currentMatrix.width + i + 1).ToString());
-                    mapFilesGridView.Columns.Add(" ", (currentMatrix.width + i + 1).ToString());
+                    headersGridView.Columns.Add(" ", (currentMatrix.width + i).ToString());
+                    heightsGridView.Columns.Add(" ", (currentMatrix.width + i).ToString());
+                    mapFilesGridView.Columns.Add(" ", (currentMatrix.width + i).ToString());
 
                     /* Adjust column width */
                     headersGridView.Columns[currentMatrix.width + i].Width = 34;
@@ -2077,8 +2103,7 @@ namespace DSPRE {
                     mapFilesGridView.Columns[currentMatrix.width + i].Width = 34;
 
                     /* Fill new rows */
-                    for (int j = 0; j < currentMatrix.height; j++)
-                    {
+                    for (int j = 0; j < currentMatrix.height; j++) {
                         headersGridView.Rows[j].Cells[currentMatrix.width + i].Value = 0;
                         heightsGridView.Rows[j].Cells[currentMatrix.width + i].Value = 0;
                         mapFilesGridView.Rows[j].Cells[currentMatrix.width + i].Value = Matrix.VOID;
