@@ -60,20 +60,26 @@ namespace DSPRE {
         }
 		
         private bool DecompressArm9() {
-            if (new FileInfo(workDir + @"arm9.bin").Length < 0xBC000) {
-                BinaryWriter arm9Truncate = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin"));
-                long arm9Length = new FileInfo(workDir + @"arm9.bin").Length;
-                arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
-                arm9Truncate.Close();
-            }
+            int attempts = 0;
 
-            Process decompress = new Process();
-            decompress.StartInfo.FileName = @"Tools\blz.exe";
-            decompress.StartInfo.Arguments = @" -d " + '"' + workDir + "arm9.bin" + '"';
-            decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            decompress.StartInfo.CreateNoWindow = true;
-            decompress.Start();
-            decompress.WaitForExit();
+            do {
+                attempts++;
+                if (new FileInfo(workDir + @"arm9.bin").Length < 0xBC000) {
+                    BinaryWriter arm9Truncate = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin"));
+                    long arm9Length = new FileInfo(workDir + @"arm9.bin").Length;
+                    arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
+                    arm9Truncate.Close();
+
+                    Process decompress = new Process();
+                    decompress.StartInfo.FileName = @"Tools\blz.exe";
+                    decompress.StartInfo.Arguments = @" -d " + '"' + workDir + "arm9.bin" + '"';
+                    decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                    decompress.StartInfo.CreateNoWindow = true;
+                    decompress.Start();
+                    decompress.WaitForExit();
+                }
+            } while (new FileInfo(workDir + @"arm9.bin").Length < 1122000 && attempts < 2);
+
             return (new FileInfo(workDir + @"arm9.bin").Length > 1122000);
         }
 
