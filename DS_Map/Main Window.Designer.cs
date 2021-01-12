@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -44,7 +45,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
@@ -125,11 +125,8 @@
             this.matrixNameLabel = new System.Windows.Forms.Label();
             this.matrixTabControl = new System.Windows.Forms.TabControl();
             this.headersTabPage = new System.Windows.Forms.TabPage();
-            this.headersGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.heightsTabPage = new System.Windows.Forms.TabPage();
-            this.heightsGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.mapFilesTabPage = new System.Windows.Forms.TabPage();
-            this.mapFilesGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.matrixNameTextBox = new System.Windows.Forms.TextBox();
             this.heightUpDown = new System.Windows.Forms.NumericUpDown();
             this.widthUpDown = new System.Windows.Forms.NumericUpDown();
@@ -302,30 +299,42 @@
             this.addOverworldButton = new System.Windows.Forms.Button();
             this.overworldsListBox = new System.Windows.Forms.ListBox();
             this.warpsTabPage = new System.Windows.Forms.TabPage();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.destinationWarpGoToButton = new System.Windows.Forms.Button();
             this.warpAnchorUpDown = new System.Windows.Forms.NumericUpDown();
             this.warpHeaderUpDown = new System.Windows.Forms.NumericUpDown();
             this.warpAnchorLabel = new System.Windows.Forms.Label();
             this.warpHeaderLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.goToWarpButton = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.warpXMatrixUpDown = new System.Windows.Forms.NumericUpDown();
             this.label15 = new System.Windows.Forms.Label();
             this.warpYMatrixUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label16 = new System.Windows.Forms.Label();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.warpXMapUpDown = new System.Windows.Forms.NumericUpDown();
-            this.warpZUpDown = new System.Windows.Forms.NumericUpDown();
             this.label24 = new System.Windows.Forms.Label();
-            this.warpYMapUpDown = new System.Windows.Forms.NumericUpDown();
             this.label25 = new System.Windows.Forms.Label();
+            this.warpYMapUpDown = new System.Windows.Forms.NumericUpDown();
+            this.warpZUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
             this.removeWarpButton = new System.Windows.Forms.Button();
             this.addWarpButton = new System.Windows.Forms.Button();
             this.warpsListBox = new System.Windows.Forms.ListBox();
             this.triggersTabPage = new System.Windows.Forms.TabPage();
+            this.groupBox16 = new System.Windows.Forms.GroupBox();
             this.triggerLengthLabel = new System.Windows.Forms.Label();
             this.triggerLengthUpDown = new System.Windows.Forms.NumericUpDown();
             this.triggerWidthLabel = new System.Windows.Forms.Label();
             this.triggerWidthUpDown = new System.Windows.Forms.NumericUpDown();
+            this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.triggerZLabel = new System.Windows.Forms.Label();
+            this.triggerXMapUpDown = new System.Windows.Forms.NumericUpDown();
+            this.triggerZUpDown = new System.Windows.Forms.NumericUpDown();
+            this.triggerMapXLabel = new System.Windows.Forms.Label();
+            this.triggerYMapUpDown = new System.Windows.Forms.NumericUpDown();
+            this.triggerYMapLabel = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.triggerFlagUpDown = new System.Windows.Forms.NumericUpDown();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -334,12 +343,6 @@
             this.triggerXMatrixUpDown = new System.Windows.Forms.NumericUpDown();
             this.triggerXMatrixLabel = new System.Windows.Forms.Label();
             this.triggerYMatrixUpDown = new System.Windows.Forms.NumericUpDown();
-            this.triggerZLabel = new System.Windows.Forms.Label();
-            this.triggerXMapUpDown = new System.Windows.Forms.NumericUpDown();
-            this.triggerZUpDown = new System.Windows.Forms.NumericUpDown();
-            this.triggerMapXLabel = new System.Windows.Forms.Label();
-            this.triggerYMapUpDown = new System.Windows.Forms.NumericUpDown();
-            this.triggerYMapLabel = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.triggerScriptUpDown = new System.Windows.Forms.NumericUpDown();
             this.removeTriggerButton = new System.Windows.Forms.Button();
@@ -501,6 +504,9 @@
             this.buildingEditorButton = new System.Windows.Forms.ToolStripButton();
             this.romToolboxButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
+            this.headersGridView = new DSPRE.DataGridViewDoubleBuffered();
+            this.heightsGridView = new DSPRE.DataGridViewDoubleBuffered();
+            this.mapFilesGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.groupBox10.SuspendLayout();
@@ -523,11 +529,8 @@
             this.matrixEditorTabPage.SuspendLayout();
             this.matrixTabControl.SuspendLayout();
             this.headersTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).BeginInit();
             this.heightsTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).BeginInit();
             this.mapFilesTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthUpDown)).BeginInit();
             this.mapEditorTabPage.SuspendLayout();
@@ -590,24 +593,29 @@
             ((System.ComponentModel.ISupportInitialize)(this.owFlagNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.owIDNumericUpDown)).BeginInit();
             this.warpsTabPage.SuspendLayout();
+            this.groupBox11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.warpAnchorUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.warpHeaderUpDown)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox14.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.warpXMatrixUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.warpYMatrixUpDown)).BeginInit();
+            this.groupBox12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.warpXMapUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.warpZUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.warpYMapUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.warpZUpDown)).BeginInit();
             this.triggersTabPage.SuspendLayout();
+            this.groupBox16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.triggerLengthUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.triggerWidthUpDown)).BeginInit();
+            this.groupBox15.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.triggerXMapUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.triggerZUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.triggerYMapUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.triggerFlagUpDown)).BeginInit();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.triggerXMatrixUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.triggerYMatrixUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.triggerXMapUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.triggerZUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.triggerYMapUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.triggerScriptUpDown)).BeginInit();
             this.eventPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventPictureBox)).BeginInit();
@@ -634,6 +642,9 @@
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // mainTabControl
@@ -1532,62 +1543,6 @@
             this.headersTabPage.Text = "Map Headers";
             this.headersTabPage.UseVisualStyleBackColor = true;
             // 
-            // headersGridView
-            // 
-            this.headersGridView.AllowUserToAddRows = false;
-            this.headersGridView.AllowUserToDeleteRows = false;
-            this.headersGridView.AllowUserToResizeColumns = false;
-            this.headersGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.headersGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.headersGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.Format = "D4";
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle3;
-            this.headersGridView.Location = new System.Drawing.Point(0, 0);
-            this.headersGridView.Name = "headersGridView";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.headersGridView.RowHeadersWidth = 50;
-            this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.headersGridView.RowTemplate.Height = 18;
-            this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.headersGridView.ShowCellErrors = false;
-            this.headersGridView.Size = new System.Drawing.Size(878, 566);
-            this.headersGridView.TabIndex = 1;
-            this.headersGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.headersGridView_CellFormatting);
-            this.headersGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.headersGridView_CellMouseDoubleClick);
-            this.headersGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.headersGridView_CellValueChanged);
-            // 
             // heightsTabPage
             // 
             this.heightsTabPage.Controls.Add(this.heightsGridView);
@@ -1598,60 +1553,6 @@
             this.heightsTabPage.Text = "Map Heights";
             this.heightsTabPage.UseVisualStyleBackColor = true;
             // 
-            // heightsGridView
-            // 
-            this.heightsGridView.AllowUserToAddRows = false;
-            this.heightsGridView.AllowUserToDeleteRows = false;
-            this.heightsGridView.AllowUserToResizeColumns = false;
-            this.heightsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
-            this.heightsGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.Format = "D2";
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle8;
-            this.heightsGridView.Location = new System.Drawing.Point(0, 0);
-            this.heightsGridView.Name = "heightsGridView";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
-            this.heightsGridView.RowHeadersWidth = 50;
-            this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
-            this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.RowTemplate.Height = 18;
-            this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.heightsGridView.Size = new System.Drawing.Size(878, 566);
-            this.heightsGridView.TabIndex = 2;
-            this.heightsGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.heightsGridView_CellFormatting);
-            this.heightsGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.heightsGridView_CellValueChanged);
-            // 
             // mapFilesTabPage
             // 
             this.mapFilesTabPage.Controls.Add(this.mapFilesGridView);
@@ -1661,61 +1562,6 @@
             this.mapFilesTabPage.TabIndex = 3;
             this.mapFilesTabPage.Text = "Map Files";
             this.mapFilesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // mapFilesGridView
-            // 
-            this.mapFilesGridView.AllowUserToAddRows = false;
-            this.mapFilesGridView.AllowUserToDeleteRows = false;
-            this.mapFilesGridView.AllowUserToResizeColumns = false;
-            this.mapFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
-            this.mapFilesGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
-            this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle13.Format = "D4";
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle13;
-            this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
-            this.mapFilesGridView.Name = "mapFilesGridView";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
-            this.mapFilesGridView.RowHeadersWidth = 50;
-            this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
-            this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.RowTemplate.Height = 18;
-            this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.mapFilesGridView.Size = new System.Drawing.Size(878, 566);
-            this.mapFilesGridView.TabIndex = 2;
-            this.mapFilesGridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellMouseDoubleClick);
-            this.mapFilesGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.mapFilesGridView_CellFormatting);
-            this.mapFilesGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellValueChanged);
             // 
             // matrixNameTextBox
             // 
@@ -2539,9 +2385,7 @@
             this.unsupport3DText.ReadOnly = true;
             this.unsupport3DText.Size = new System.Drawing.Size(317, 77);
             this.unsupport3DText.TabIndex = 26;
-            this.unsupport3DText.Text = "Editing 3D models is not supported by this program.\r\nThey must be modeled in a 3D" +
-    " editor like Sketchup\r\nor Blender, or (recommended option) they can be created\r\nwith \'P" +
-    "okemon DS Map Studio\' by Trifindo.";
+            this.unsupport3DText.Text = resources.GetString("unsupport3DText.Text");
             // 
             // importMapButton
             // 
@@ -2720,7 +2564,7 @@
             // 
             this.eventMatrixYUpDown.Location = new System.Drawing.Point(307, 140);
             this.eventMatrixYUpDown.Name = "eventMatrixYUpDown";
-            this.eventMatrixYUpDown.Size = new System.Drawing.Size(70, 20);
+            this.eventMatrixYUpDown.Size = new System.Drawing.Size(47, 20);
             this.eventMatrixYUpDown.TabIndex = 52;
             this.eventMatrixYUpDown.ValueChanged += new System.EventHandler(this.eventMatrixYUpDown_ValueChanged);
             // 
@@ -2728,14 +2572,14 @@
             // 
             this.eventMatrixXUpDown.Location = new System.Drawing.Point(307, 113);
             this.eventMatrixXUpDown.Name = "eventMatrixXUpDown";
-            this.eventMatrixXUpDown.Size = new System.Drawing.Size(70, 20);
+            this.eventMatrixXUpDown.Size = new System.Drawing.Size(47, 20);
             this.eventMatrixXUpDown.TabIndex = 51;
             this.eventMatrixXUpDown.ValueChanged += new System.EventHandler(this.eventMatrixXUpDown_ValueChanged);
             // 
             // eventMatrixYLabel
             // 
             this.eventMatrixYLabel.AutoSize = true;
-            this.eventMatrixYLabel.Location = new System.Drawing.Point(382, 143);
+            this.eventMatrixYLabel.Location = new System.Drawing.Point(365, 141);
             this.eventMatrixYLabel.Name = "eventMatrixYLabel";
             this.eventMatrixYLabel.Size = new System.Drawing.Size(51, 13);
             this.eventMatrixYLabel.TabIndex = 50;
@@ -2744,7 +2588,7 @@
             // eventMatrixXLabel
             // 
             this.eventMatrixXLabel.AutoSize = true;
-            this.eventMatrixXLabel.Location = new System.Drawing.Point(382, 117);
+            this.eventMatrixXLabel.Location = new System.Drawing.Point(365, 115);
             this.eventMatrixXLabel.Name = "eventMatrixXLabel";
             this.eventMatrixXLabel.Size = new System.Drawing.Size(51, 13);
             this.eventMatrixXLabel.TabIndex = 49;
@@ -2921,7 +2765,7 @@
             // eventMapTextureLabel
             // 
             this.eventMapTextureLabel.AutoSize = true;
-            this.eventMapTextureLabel.Location = new System.Drawing.Point(383, 206);
+            this.eventMapTextureLabel.Location = new System.Drawing.Point(365, 203);
             this.eventMapTextureLabel.Name = "eventMapTextureLabel";
             this.eventMapTextureLabel.Size = new System.Drawing.Size(55, 13);
             this.eventMapTextureLabel.TabIndex = 31;
@@ -2937,13 +2781,13 @@
             0,
             0});
             this.eventAreaDataUpDown.Name = "eventAreaDataUpDown";
-            this.eventAreaDataUpDown.Size = new System.Drawing.Size(70, 20);
+            this.eventAreaDataUpDown.Size = new System.Drawing.Size(47, 20);
             this.eventAreaDataUpDown.TabIndex = 30;
             // 
             // backgroundMapLabel
             // 
             this.backgroundMapLabel.AutoSize = true;
-            this.backgroundMapLabel.Location = new System.Drawing.Point(382, 177);
+            this.backgroundMapLabel.Location = new System.Drawing.Point(365, 175);
             this.backgroundMapLabel.Name = "backgroundMapLabel";
             this.backgroundMapLabel.Size = new System.Drawing.Size(59, 13);
             this.backgroundMapLabel.TabIndex = 29;
@@ -2958,7 +2802,7 @@
             0,
             0});
             this.eventMatrixUpDown.Name = "eventMatrixUpDown";
-            this.eventMatrixUpDown.Size = new System.Drawing.Size(70, 20);
+            this.eventMatrixUpDown.Size = new System.Drawing.Size(47, 20);
             this.eventMatrixUpDown.TabIndex = 28;
             this.eventMatrixUpDown.ValueChanged += new System.EventHandler(this.eventMatrixUpDown_ValueChanged);
             // 
@@ -2971,7 +2815,7 @@
             this.eventsTabControl.Location = new System.Drawing.Point(7, 233);
             this.eventsTabControl.Name = "eventsTabControl";
             this.eventsTabControl.SelectedIndex = 0;
-            this.eventsTabControl.Size = new System.Drawing.Size(416, 378);
+            this.eventsTabControl.Size = new System.Drawing.Size(414, 378);
             this.eventsTabControl.TabIndex = 25;
             // 
             // signsTabPage
@@ -2987,7 +2831,7 @@
             this.signsTabPage.Location = new System.Drawing.Point(4, 22);
             this.signsTabPage.Name = "signsTabPage";
             this.signsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.signsTabPage.Size = new System.Drawing.Size(408, 352);
+            this.signsTabPage.Size = new System.Drawing.Size(406, 352);
             this.signsTabPage.TabIndex = 0;
             this.signsTabPage.Text = "Spawnables";
             this.signsTabPage.UseVisualStyleBackColor = true;
@@ -3235,7 +3079,7 @@
             this.overworldsTabPage.Location = new System.Drawing.Point(4, 22);
             this.overworldsTabPage.Name = "overworldsTabPage";
             this.overworldsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.overworldsTabPage.Size = new System.Drawing.Size(408, 352);
+            this.overworldsTabPage.Size = new System.Drawing.Size(406, 352);
             this.overworldsTabPage.TabIndex = 1;
             this.overworldsTabPage.Text = "Overworlds";
             this.overworldsTabPage.UseVisualStyleBackColor = true;
@@ -3383,7 +3227,7 @@
             this.positionGroupBox.Size = new System.Drawing.Size(133, 201);
             this.positionGroupBox.TabIndex = 19;
             this.positionGroupBox.TabStop = false;
-            this.positionGroupBox.Text = "Position";
+            this.positionGroupBox.Text = "Coordinates";
             // 
             // button14
             // 
@@ -3611,21 +3455,21 @@
             this.owSightRangeLabel.Enabled = false;
             this.owSightRangeLabel.Location = new System.Drawing.Point(6, 50);
             this.owSightRangeLabel.Name = "owSightRangeLabel";
-            this.owSightRangeLabel.Size = new System.Drawing.Size(61, 13);
+            this.owSightRangeLabel.Size = new System.Drawing.Size(96, 13);
             this.owSightRangeLabel.TabIndex = 3;
-            this.owSightRangeLabel.Text = "View (Tiles)";
+            this.owSightRangeLabel.Text = "View Range (Tiles)";
             // 
             // owSightRangeUpDown
             // 
             this.owSightRangeUpDown.Enabled = false;
-            this.owSightRangeUpDown.Location = new System.Drawing.Point(88, 46);
+            this.owSightRangeUpDown.Location = new System.Drawing.Point(108, 46);
             this.owSightRangeUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.owSightRangeUpDown.Name = "owSightRangeUpDown";
-            this.owSightRangeUpDown.Size = new System.Drawing.Size(81, 20);
+            this.owSightRangeUpDown.Size = new System.Drawing.Size(61, 20);
             this.owSightRangeUpDown.TabIndex = 2;
             this.owSightRangeUpDown.ValueChanged += new System.EventHandler(this.owSightRangeUpDown_ValueChanged);
             // 
@@ -3755,10 +3599,7 @@
             // 
             // warpsTabPage
             // 
-            this.warpsTabPage.Controls.Add(this.warpAnchorUpDown);
-            this.warpsTabPage.Controls.Add(this.warpHeaderUpDown);
-            this.warpsTabPage.Controls.Add(this.warpAnchorLabel);
-            this.warpsTabPage.Controls.Add(this.warpHeaderLabel);
+            this.warpsTabPage.Controls.Add(this.groupBox11);
             this.warpsTabPage.Controls.Add(this.groupBox1);
             this.warpsTabPage.Controls.Add(this.removeWarpButton);
             this.warpsTabPage.Controls.Add(this.addWarpButton);
@@ -3766,81 +3607,108 @@
             this.warpsTabPage.Location = new System.Drawing.Point(4, 22);
             this.warpsTabPage.Name = "warpsTabPage";
             this.warpsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.warpsTabPage.Size = new System.Drawing.Size(408, 352);
+            this.warpsTabPage.Size = new System.Drawing.Size(406, 352);
             this.warpsTabPage.TabIndex = 2;
             this.warpsTabPage.Text = "Warps";
             this.warpsTabPage.UseVisualStyleBackColor = true;
             // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.destinationWarpGoToButton);
+            this.groupBox11.Controls.Add(this.warpAnchorUpDown);
+            this.groupBox11.Controls.Add(this.warpHeaderUpDown);
+            this.groupBox11.Controls.Add(this.warpAnchorLabel);
+            this.groupBox11.Controls.Add(this.warpHeaderLabel);
+            this.groupBox11.Location = new System.Drawing.Point(179, 230);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(221, 116);
+            this.groupBox11.TabIndex = 22;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Destination";
+            // 
+            // destinationWarpGoToButton
+            // 
+            this.destinationWarpGoToButton.Location = new System.Drawing.Point(20, 87);
+            this.destinationWarpGoToButton.Name = "destinationWarpGoToButton";
+            this.destinationWarpGoToButton.Size = new System.Drawing.Size(184, 23);
+            this.destinationWarpGoToButton.TabIndex = 26;
+            this.destinationWarpGoToButton.Text = "Go to";
+            this.destinationWarpGoToButton.UseVisualStyleBackColor = true;
+            this.destinationWarpGoToButton.Click += new System.EventHandler(this.destinationWarpGoToButton_Click);
+            // 
             // warpAnchorUpDown
             // 
-            this.warpAnchorUpDown.Location = new System.Drawing.Point(306, 48);
+            this.warpAnchorUpDown.Location = new System.Drawing.Point(96, 55);
             this.warpAnchorUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.warpAnchorUpDown.Name = "warpAnchorUpDown";
-            this.warpAnchorUpDown.Size = new System.Drawing.Size(79, 20);
-            this.warpAnchorUpDown.TabIndex = 25;
-            this.warpAnchorUpDown.ValueChanged += new System.EventHandler(this.warpAnchorUpDown_ValueChanged);
+            this.warpAnchorUpDown.Size = new System.Drawing.Size(89, 20);
+            this.warpAnchorUpDown.TabIndex = 29;
             // 
             // warpHeaderUpDown
             // 
-            this.warpHeaderUpDown.Location = new System.Drawing.Point(306, 17);
+            this.warpHeaderUpDown.Location = new System.Drawing.Point(96, 24);
             this.warpHeaderUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.warpHeaderUpDown.Name = "warpHeaderUpDown";
-            this.warpHeaderUpDown.Size = new System.Drawing.Size(79, 20);
-            this.warpHeaderUpDown.TabIndex = 24;
-            this.warpHeaderUpDown.ValueChanged += new System.EventHandler(this.warpHeaderUpDown_ValueChanged);
+            this.warpHeaderUpDown.Size = new System.Drawing.Size(89, 20);
+            this.warpHeaderUpDown.TabIndex = 28;
             // 
             // warpAnchorLabel
             // 
             this.warpAnchorLabel.AutoSize = true;
-            this.warpAnchorLabel.Location = new System.Drawing.Point(190, 50);
+            this.warpAnchorLabel.Location = new System.Drawing.Point(30, 57);
             this.warpAnchorLabel.Name = "warpAnchorLabel";
-            this.warpAnchorLabel.Size = new System.Drawing.Size(97, 13);
-            this.warpAnchorLabel.TabIndex = 23;
-            this.warpAnchorLabel.Text = "Destination Anchor";
+            this.warpAnchorLabel.Size = new System.Drawing.Size(55, 13);
+            this.warpAnchorLabel.TabIndex = 27;
+            this.warpAnchorLabel.Text = "Anchor ID";
             // 
             // warpHeaderLabel
             // 
             this.warpHeaderLabel.AutoSize = true;
-            this.warpHeaderLabel.Location = new System.Drawing.Point(189, 19);
+            this.warpHeaderLabel.Location = new System.Drawing.Point(32, 26);
             this.warpHeaderLabel.Name = "warpHeaderLabel";
-            this.warpHeaderLabel.Size = new System.Drawing.Size(98, 13);
-            this.warpHeaderLabel.TabIndex = 22;
-            this.warpHeaderLabel.Text = "Destination Header";
+            this.warpHeaderLabel.Size = new System.Drawing.Size(42, 13);
+            this.warpHeaderLabel.TabIndex = 26;
+            this.warpHeaderLabel.Text = "Header";
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.goToWarpButton);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.warpXMatrixUpDown);
-            this.groupBox1.Controls.Add(this.label15);
-            this.groupBox1.Controls.Add(this.warpYMatrixUpDown);
-            this.groupBox1.Controls.Add(this.label16);
-            this.groupBox1.Controls.Add(this.warpXMapUpDown);
-            this.groupBox1.Controls.Add(this.warpZUpDown);
-            this.groupBox1.Controls.Add(this.label24);
-            this.groupBox1.Controls.Add(this.warpYMapUpDown);
-            this.groupBox1.Controls.Add(this.label25);
-            this.groupBox1.Location = new System.Drawing.Point(190, 104);
+            this.groupBox1.Controls.Add(this.groupBox14);
+            this.groupBox1.Controls.Add(this.groupBox12);
+            this.groupBox1.Location = new System.Drawing.Point(179, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(193, 218);
+            this.groupBox1.Size = new System.Drawing.Size(221, 218);
             this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Position";
+            this.groupBox1.Text = "Start coordinates";
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.goToWarpButton);
+            this.groupBox14.Controls.Add(this.label9);
+            this.groupBox14.Controls.Add(this.warpXMatrixUpDown);
+            this.groupBox14.Controls.Add(this.label15);
+            this.groupBox14.Controls.Add(this.warpYMatrixUpDown);
+            this.groupBox14.Location = new System.Drawing.Point(7, 82);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(208, 128);
+            this.groupBox14.TabIndex = 23;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = "Matrix coordinates";
             // 
             // goToWarpButton
             // 
-            this.goToWarpButton.Location = new System.Drawing.Point(7, 191);
+            this.goToWarpButton.Location = new System.Drawing.Point(13, 99);
             this.goToWarpButton.Name = "goToWarpButton";
-            this.goToWarpButton.Size = new System.Drawing.Size(181, 23);
-            this.goToWarpButton.TabIndex = 20;
+            this.goToWarpButton.Size = new System.Drawing.Size(184, 23);
+            this.goToWarpButton.TabIndex = 25;
             this.goToWarpButton.Text = "Go to";
             this.goToWarpButton.UseVisualStyleBackColor = true;
             this.goToWarpButton.Click += new System.EventHandler(this.goToEventButtons_Click);
@@ -3848,59 +3716,63 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(18, 160);
+            this.label9.Location = new System.Drawing.Point(10, 68);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(45, 13);
-            this.label9.TabIndex = 19;
+            this.label9.TabIndex = 24;
             this.label9.Text = "Matrix Y";
             // 
             // warpXMatrixUpDown
             // 
-            this.warpXMatrixUpDown.Location = new System.Drawing.Point(81, 127);
+            this.warpXMatrixUpDown.Location = new System.Drawing.Point(61, 35);
             this.warpXMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.warpXMatrixUpDown.Name = "warpXMatrixUpDown";
-            this.warpXMatrixUpDown.Size = new System.Drawing.Size(89, 20);
-            this.warpXMatrixUpDown.TabIndex = 16;
-            this.warpXMatrixUpDown.ValueChanged += new System.EventHandler(this.warpMatrixXUpDown_ValueChanged);
+            this.warpXMatrixUpDown.Size = new System.Drawing.Size(131, 20);
+            this.warpXMatrixUpDown.TabIndex = 21;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(18, 129);
+            this.label15.Location = new System.Drawing.Point(10, 37);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(45, 13);
-            this.label15.TabIndex = 17;
+            this.label15.TabIndex = 22;
             this.label15.Text = "Matrix X";
             // 
             // warpYMatrixUpDown
             // 
-            this.warpYMatrixUpDown.Location = new System.Drawing.Point(81, 157);
+            this.warpYMatrixUpDown.Location = new System.Drawing.Point(61, 66);
             this.warpYMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.warpYMatrixUpDown.Name = "warpYMatrixUpDown";
-            this.warpYMatrixUpDown.Size = new System.Drawing.Size(89, 20);
-            this.warpYMatrixUpDown.TabIndex = 18;
-            this.warpYMatrixUpDown.ValueChanged += new System.EventHandler(this.warpMatrixYUpDown_ValueChanged);
+            this.warpYMatrixUpDown.Size = new System.Drawing.Size(131, 20);
+            this.warpYMatrixUpDown.TabIndex = 23;
             // 
-            // label16
+            // groupBox12
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(18, 87);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(38, 13);
-            this.label16.TabIndex = 15;
-            this.label16.Text = "Map Z";
+            this.groupBox12.Controls.Add(this.warpXMapUpDown);
+            this.groupBox12.Controls.Add(this.label24);
+            this.groupBox12.Controls.Add(this.label25);
+            this.groupBox12.Controls.Add(this.warpYMapUpDown);
+            this.groupBox12.Controls.Add(this.warpZUpDown);
+            this.groupBox12.Controls.Add(this.label16);
+            this.groupBox12.Location = new System.Drawing.Point(7, 24);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(208, 49);
+            this.groupBox12.TabIndex = 22;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "Map coordinates";
             // 
             // warpXMapUpDown
             // 
-            this.warpXMapUpDown.Location = new System.Drawing.Point(82, 22);
+            this.warpXMapUpDown.Location = new System.Drawing.Point(29, 19);
             this.warpXMapUpDown.Maximum = new decimal(new int[] {
             32768,
             0,
@@ -3912,40 +3784,31 @@
             0,
             -2147483648});
             this.warpXMapUpDown.Name = "warpXMapUpDown";
-            this.warpXMapUpDown.Size = new System.Drawing.Size(89, 20);
+            this.warpXMapUpDown.Size = new System.Drawing.Size(34, 20);
             this.warpXMapUpDown.TabIndex = 10;
             this.warpXMapUpDown.ValueChanged += new System.EventHandler(this.warpXMapUpDown_ValueChanged);
-            // 
-            // warpZUpDown
-            // 
-            this.warpZUpDown.Location = new System.Drawing.Point(82, 85);
-            this.warpZUpDown.Maximum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            0});
-            this.warpZUpDown.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.warpZUpDown.Name = "warpZUpDown";
-            this.warpZUpDown.Size = new System.Drawing.Size(89, 20);
-            this.warpZUpDown.TabIndex = 14;
-            this.warpZUpDown.ValueChanged += new System.EventHandler(this.warpZUpDown_ValueChanged);
             // 
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(18, 25);
+            this.label24.Location = new System.Drawing.Point(78, 21);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(38, 13);
-            this.label24.TabIndex = 11;
-            this.label24.Text = "Map X";
+            this.label24.Size = new System.Drawing.Size(14, 13);
+            this.label24.TabIndex = 21;
+            this.label24.Text = "Y";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(13, 21);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(14, 13);
+            this.label25.TabIndex = 13;
+            this.label25.Text = "X";
             // 
             // warpYMapUpDown
             // 
-            this.warpYMapUpDown.Location = new System.Drawing.Point(82, 54);
+            this.warpYMapUpDown.Location = new System.Drawing.Point(92, 19);
             this.warpYMapUpDown.Maximum = new decimal(new int[] {
             32768,
             0,
@@ -3957,18 +3820,36 @@
             0,
             -2147483648});
             this.warpYMapUpDown.Name = "warpYMapUpDown";
-            this.warpYMapUpDown.Size = new System.Drawing.Size(89, 20);
+            this.warpYMapUpDown.Size = new System.Drawing.Size(34, 20);
             this.warpYMapUpDown.TabIndex = 12;
             this.warpYMapUpDown.ValueChanged += new System.EventHandler(this.warpYMapUpDown_ValueChanged);
             // 
-            // label25
+            // warpZUpDown
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(18, 57);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(38, 13);
-            this.label25.TabIndex = 13;
-            this.label25.Text = "Map Y";
+            this.warpZUpDown.Location = new System.Drawing.Point(158, 19);
+            this.warpZUpDown.Maximum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            0});
+            this.warpZUpDown.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.warpZUpDown.Name = "warpZUpDown";
+            this.warpZUpDown.Size = new System.Drawing.Size(34, 20);
+            this.warpZUpDown.TabIndex = 14;
+            this.warpZUpDown.ValueChanged += new System.EventHandler(this.warpZUpDown_ValueChanged);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(141, 21);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(14, 13);
+            this.label16.TabIndex = 15;
+            this.label16.Text = "Z";
             // 
             // removeWarpButton
             // 
@@ -4001,10 +3882,8 @@
             // 
             // triggersTabPage
             // 
-            this.triggersTabPage.Controls.Add(this.triggerLengthLabel);
-            this.triggersTabPage.Controls.Add(this.triggerLengthUpDown);
-            this.triggersTabPage.Controls.Add(this.triggerWidthLabel);
-            this.triggersTabPage.Controls.Add(this.triggerWidthUpDown);
+            this.triggersTabPage.Controls.Add(this.groupBox16);
+            this.triggersTabPage.Controls.Add(this.groupBox15);
             this.triggersTabPage.Controls.Add(this.label28);
             this.triggersTabPage.Controls.Add(this.triggerFlagUpDown);
             this.triggersTabPage.Controls.Add(this.groupBox6);
@@ -4016,67 +3895,166 @@
             this.triggersTabPage.Location = new System.Drawing.Point(4, 22);
             this.triggersTabPage.Name = "triggersTabPage";
             this.triggersTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.triggersTabPage.Size = new System.Drawing.Size(408, 352);
+            this.triggersTabPage.Size = new System.Drawing.Size(406, 352);
             this.triggersTabPage.TabIndex = 3;
             this.triggersTabPage.Text = "Triggers";
             this.triggersTabPage.UseVisualStyleBackColor = true;
             // 
+            // groupBox16
+            // 
+            this.groupBox16.Controls.Add(this.triggerLengthLabel);
+            this.groupBox16.Controls.Add(this.triggerLengthUpDown);
+            this.groupBox16.Controls.Add(this.triggerWidthLabel);
+            this.groupBox16.Controls.Add(this.triggerWidthUpDown);
+            this.groupBox16.Location = new System.Drawing.Point(190, 62);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(200, 71);
+            this.groupBox16.TabIndex = 33;
+            this.groupBox16.TabStop = false;
+            this.groupBox16.Text = "Trigger Size";
+            // 
             // triggerLengthLabel
             // 
             this.triggerLengthLabel.AutoSize = true;
-            this.triggerLengthLabel.Location = new System.Drawing.Point(291, 54);
+            this.triggerLengthLabel.Location = new System.Drawing.Point(114, 19);
             this.triggerLengthLabel.Name = "triggerLengthLabel";
-            this.triggerLengthLabel.Size = new System.Drawing.Size(40, 13);
-            this.triggerLengthLabel.TabIndex = 31;
-            this.triggerLengthLabel.Text = "Length";
+            this.triggerLengthLabel.Size = new System.Drawing.Size(56, 13);
+            this.triggerLengthLabel.TabIndex = 35;
+            this.triggerLengthLabel.Text = "Length [Y]";
             // 
             // triggerLengthUpDown
             // 
-            this.triggerLengthUpDown.Location = new System.Drawing.Point(294, 71);
+            this.triggerLengthUpDown.Location = new System.Drawing.Point(117, 36);
             this.triggerLengthUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.triggerLengthUpDown.Name = "triggerLengthUpDown";
-            this.triggerLengthUpDown.Size = new System.Drawing.Size(89, 20);
-            this.triggerLengthUpDown.TabIndex = 30;
-            this.triggerLengthUpDown.ValueChanged += new System.EventHandler(this.triggerLengthUpDown_ValueChanged);
+            this.triggerLengthUpDown.Size = new System.Drawing.Size(64, 20);
+            this.triggerLengthUpDown.TabIndex = 34;
             // 
             // triggerWidthLabel
             // 
             this.triggerWidthLabel.AutoSize = true;
-            this.triggerWidthLabel.Location = new System.Drawing.Point(187, 54);
+            this.triggerWidthLabel.Location = new System.Drawing.Point(13, 19);
             this.triggerWidthLabel.Name = "triggerWidthLabel";
-            this.triggerWidthLabel.Size = new System.Drawing.Size(35, 13);
-            this.triggerWidthLabel.TabIndex = 29;
-            this.triggerWidthLabel.Text = "Width";
+            this.triggerWidthLabel.Size = new System.Drawing.Size(51, 13);
+            this.triggerWidthLabel.TabIndex = 33;
+            this.triggerWidthLabel.Text = "Width [X]";
             // 
             // triggerWidthUpDown
             // 
-            this.triggerWidthUpDown.Location = new System.Drawing.Point(190, 71);
+            this.triggerWidthUpDown.Location = new System.Drawing.Point(16, 36);
             this.triggerWidthUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.triggerWidthUpDown.Name = "triggerWidthUpDown";
-            this.triggerWidthUpDown.Size = new System.Drawing.Size(87, 20);
-            this.triggerWidthUpDown.TabIndex = 28;
-            this.triggerWidthUpDown.ValueChanged += new System.EventHandler(this.triggerWidthUpDown_ValueChanged);
+            this.triggerWidthUpDown.Size = new System.Drawing.Size(62, 20);
+            this.triggerWidthUpDown.TabIndex = 32;
+            // 
+            // groupBox15
+            // 
+            this.groupBox15.Controls.Add(this.triggerZLabel);
+            this.groupBox15.Controls.Add(this.triggerXMapUpDown);
+            this.groupBox15.Controls.Add(this.triggerZUpDown);
+            this.groupBox15.Controls.Add(this.triggerMapXLabel);
+            this.groupBox15.Controls.Add(this.triggerYMapUpDown);
+            this.groupBox15.Controls.Add(this.triggerYMapLabel);
+            this.groupBox15.Location = new System.Drawing.Point(190, 157);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(200, 54);
+            this.groupBox15.TabIndex = 32;
+            this.groupBox15.TabStop = false;
+            this.groupBox15.Text = "Map Coordinates";
+            // 
+            // triggerZLabel
+            // 
+            this.triggerZLabel.AutoSize = true;
+            this.triggerZLabel.Location = new System.Drawing.Point(141, 22);
+            this.triggerZLabel.Name = "triggerZLabel";
+            this.triggerZLabel.Size = new System.Drawing.Size(14, 13);
+            this.triggerZLabel.TabIndex = 21;
+            this.triggerZLabel.Text = "Z";
+            // 
+            // triggerXMapUpDown
+            // 
+            this.triggerXMapUpDown.Location = new System.Drawing.Point(28, 20);
+            this.triggerXMapUpDown.Maximum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            0});
+            this.triggerXMapUpDown.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.triggerXMapUpDown.Name = "triggerXMapUpDown";
+            this.triggerXMapUpDown.Size = new System.Drawing.Size(34, 20);
+            this.triggerXMapUpDown.TabIndex = 16;
+            // 
+            // triggerZUpDown
+            // 
+            this.triggerZUpDown.Location = new System.Drawing.Point(156, 20);
+            this.triggerZUpDown.Maximum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            0});
+            this.triggerZUpDown.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
+            this.triggerZUpDown.Name = "triggerZUpDown";
+            this.triggerZUpDown.Size = new System.Drawing.Size(34, 20);
+            this.triggerZUpDown.TabIndex = 20;
+            // 
+            // triggerMapXLabel
+            // 
+            this.triggerMapXLabel.AutoSize = true;
+            this.triggerMapXLabel.Location = new System.Drawing.Point(8, 22);
+            this.triggerMapXLabel.Name = "triggerMapXLabel";
+            this.triggerMapXLabel.Size = new System.Drawing.Size(14, 13);
+            this.triggerMapXLabel.TabIndex = 17;
+            this.triggerMapXLabel.Text = "X";
+            // 
+            // triggerYMapUpDown
+            // 
+            this.triggerYMapUpDown.Location = new System.Drawing.Point(90, 20);
+            this.triggerYMapUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.triggerYMapUpDown.Name = "triggerYMapUpDown";
+            this.triggerYMapUpDown.Size = new System.Drawing.Size(34, 20);
+            this.triggerYMapUpDown.TabIndex = 18;
+            // 
+            // triggerYMapLabel
+            // 
+            this.triggerYMapLabel.AutoSize = true;
+            this.triggerYMapLabel.Location = new System.Drawing.Point(75, 22);
+            this.triggerYMapLabel.Name = "triggerYMapLabel";
+            this.triggerYMapLabel.Size = new System.Drawing.Size(14, 13);
+            this.triggerYMapLabel.TabIndex = 19;
+            this.triggerYMapLabel.Text = "Y";
             // 
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(291, 7);
+            this.label28.Location = new System.Drawing.Point(294, 13);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(45, 13);
+            this.label28.Size = new System.Drawing.Size(89, 13);
             this.label28.TabIndex = 27;
-            this.label28.Text = "Variable";
+            this.label28.Text = "Variable to watch";
             // 
             // triggerFlagUpDown
             // 
-            this.triggerFlagUpDown.Location = new System.Drawing.Point(294, 23);
+            this.triggerFlagUpDown.Location = new System.Drawing.Point(297, 29);
             this.triggerFlagUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4094,24 +4072,18 @@
             this.groupBox6.Controls.Add(this.triggerXMatrixUpDown);
             this.groupBox6.Controls.Add(this.triggerXMatrixLabel);
             this.groupBox6.Controls.Add(this.triggerYMatrixUpDown);
-            this.groupBox6.Controls.Add(this.triggerZLabel);
-            this.groupBox6.Controls.Add(this.triggerXMapUpDown);
-            this.groupBox6.Controls.Add(this.triggerZUpDown);
-            this.groupBox6.Controls.Add(this.triggerMapXLabel);
-            this.groupBox6.Controls.Add(this.triggerYMapUpDown);
-            this.groupBox6.Controls.Add(this.triggerYMapLabel);
-            this.groupBox6.Location = new System.Drawing.Point(190, 104);
+            this.groupBox6.Location = new System.Drawing.Point(190, 217);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(193, 218);
+            this.groupBox6.Size = new System.Drawing.Size(200, 121);
             this.groupBox6.TabIndex = 25;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Position";
+            this.groupBox6.Text = "Matrix Coordinates";
             // 
             // goToTriggerButton
             // 
-            this.goToTriggerButton.Location = new System.Drawing.Point(7, 187);
+            this.goToTriggerButton.Location = new System.Drawing.Point(9, 84);
             this.goToTriggerButton.Name = "goToTriggerButton";
-            this.goToTriggerButton.Size = new System.Drawing.Size(181, 23);
+            this.goToTriggerButton.Size = new System.Drawing.Size(179, 23);
             this.goToTriggerButton.TabIndex = 20;
             this.goToTriggerButton.Text = "Go to";
             this.goToTriggerButton.UseVisualStyleBackColor = true;
@@ -4120,7 +4092,7 @@
             // triggerYMatrixLabel
             // 
             this.triggerYMatrixLabel.AutoSize = true;
-            this.triggerYMatrixLabel.Location = new System.Drawing.Point(18, 157);
+            this.triggerYMatrixLabel.Location = new System.Drawing.Point(27, 56);
             this.triggerYMatrixLabel.Name = "triggerYMatrixLabel";
             this.triggerYMatrixLabel.Size = new System.Drawing.Size(45, 13);
             this.triggerYMatrixLabel.TabIndex = 19;
@@ -4128,21 +4100,21 @@
             // 
             // triggerXMatrixUpDown
             // 
-            this.triggerXMatrixUpDown.Location = new System.Drawing.Point(81, 124);
+            this.triggerXMatrixUpDown.Location = new System.Drawing.Point(90, 23);
             this.triggerXMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.triggerXMatrixUpDown.Name = "triggerXMatrixUpDown";
-            this.triggerXMatrixUpDown.Size = new System.Drawing.Size(89, 20);
+            this.triggerXMatrixUpDown.Size = new System.Drawing.Size(90, 20);
             this.triggerXMatrixUpDown.TabIndex = 16;
             this.triggerXMatrixUpDown.ValueChanged += new System.EventHandler(this.triggerXMatrixUpDown_ValueChanged);
             // 
             // triggerXMatrixLabel
             // 
             this.triggerXMatrixLabel.AutoSize = true;
-            this.triggerXMatrixLabel.Location = new System.Drawing.Point(18, 126);
+            this.triggerXMatrixLabel.Location = new System.Drawing.Point(27, 25);
             this.triggerXMatrixLabel.Name = "triggerXMatrixLabel";
             this.triggerXMatrixLabel.Size = new System.Drawing.Size(45, 13);
             this.triggerXMatrixLabel.TabIndex = 17;
@@ -4150,105 +4122,29 @@
             // 
             // triggerYMatrixUpDown
             // 
-            this.triggerYMatrixUpDown.Location = new System.Drawing.Point(81, 154);
+            this.triggerYMatrixUpDown.Location = new System.Drawing.Point(90, 53);
             this.triggerYMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.triggerYMatrixUpDown.Name = "triggerYMatrixUpDown";
-            this.triggerYMatrixUpDown.Size = new System.Drawing.Size(89, 20);
+            this.triggerYMatrixUpDown.Size = new System.Drawing.Size(90, 20);
             this.triggerYMatrixUpDown.TabIndex = 18;
             this.triggerYMatrixUpDown.ValueChanged += new System.EventHandler(this.triggerYMatrixUpDown_ValueChanged);
-            // 
-            // triggerZLabel
-            // 
-            this.triggerZLabel.AutoSize = true;
-            this.triggerZLabel.Location = new System.Drawing.Point(18, 84);
-            this.triggerZLabel.Name = "triggerZLabel";
-            this.triggerZLabel.Size = new System.Drawing.Size(38, 13);
-            this.triggerZLabel.TabIndex = 15;
-            this.triggerZLabel.Text = "Map Z";
-            // 
-            // triggerXMapUpDown
-            // 
-            this.triggerXMapUpDown.Location = new System.Drawing.Point(82, 19);
-            this.triggerXMapUpDown.Maximum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            0});
-            this.triggerXMapUpDown.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.triggerXMapUpDown.Name = "triggerXMapUpDown";
-            this.triggerXMapUpDown.Size = new System.Drawing.Size(89, 20);
-            this.triggerXMapUpDown.TabIndex = 10;
-            this.triggerXMapUpDown.ValueChanged += new System.EventHandler(this.triggerXMapUpDown_ValueChanged);
-            // 
-            // triggerZUpDown
-            // 
-            this.triggerZUpDown.Location = new System.Drawing.Point(82, 82);
-            this.triggerZUpDown.Maximum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            0});
-            this.triggerZUpDown.Minimum = new decimal(new int[] {
-            32768,
-            0,
-            0,
-            -2147483648});
-            this.triggerZUpDown.Name = "triggerZUpDown";
-            this.triggerZUpDown.Size = new System.Drawing.Size(89, 20);
-            this.triggerZUpDown.TabIndex = 14;
-            this.triggerZUpDown.ValueChanged += new System.EventHandler(this.triggerZUpDown_ValueChanged);
-            // 
-            // triggerMapXLabel
-            // 
-            this.triggerMapXLabel.AutoSize = true;
-            this.triggerMapXLabel.Location = new System.Drawing.Point(18, 22);
-            this.triggerMapXLabel.Name = "triggerMapXLabel";
-            this.triggerMapXLabel.Size = new System.Drawing.Size(38, 13);
-            this.triggerMapXLabel.TabIndex = 11;
-            this.triggerMapXLabel.Text = "Map X";
-            // 
-            // triggerYMapUpDown
-            // 
-            this.triggerYMapUpDown.Location = new System.Drawing.Point(82, 51);
-            this.triggerYMapUpDown.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.triggerYMapUpDown.Name = "triggerYMapUpDown";
-            this.triggerYMapUpDown.Size = new System.Drawing.Size(89, 20);
-            this.triggerYMapUpDown.TabIndex = 12;
-            this.triggerYMapUpDown.ValueChanged += new System.EventHandler(this.triggerYMapUpDown_ValueChanged);
-            // 
-            // triggerYMapLabel
-            // 
-            this.triggerYMapLabel.AutoSize = true;
-            this.triggerYMapLabel.Location = new System.Drawing.Point(18, 54);
-            this.triggerYMapLabel.Name = "triggerYMapLabel";
-            this.triggerYMapLabel.Size = new System.Drawing.Size(38, 13);
-            this.triggerYMapLabel.TabIndex = 13;
-            this.triggerYMapLabel.Text = "Map Y";
             // 
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(187, 6);
+            this.label27.Location = new System.Drawing.Point(190, 12);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(34, 13);
+            this.label27.Size = new System.Drawing.Size(82, 13);
             this.label27.TabIndex = 24;
-            this.label27.Text = "Script";
+            this.label27.Text = "Script Triggered";
             // 
             // triggerScriptUpDown
             // 
-            this.triggerScriptUpDown.Location = new System.Drawing.Point(190, 23);
+            this.triggerScriptUpDown.Location = new System.Drawing.Point(193, 29);
             this.triggerScriptUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -5327,7 +5223,7 @@
             this.groupBox13.Controls.Add(this.searchMessageTextBox);
             this.groupBox13.Controls.Add(this.searchMessageButton);
             this.groupBox13.Controls.Add(this.replaceMessageButton);
-            this.groupBox13.Location = new System.Drawing.Point(800, 71);
+            this.groupBox13.Location = new System.Drawing.Point(859, 71);
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.Size = new System.Drawing.Size(244, 507);
             this.groupBox13.TabIndex = 31;
@@ -5424,7 +5320,7 @@
             // 
             // removeStringButton
             // 
-            this.removeStringButton.Location = new System.Drawing.Point(194, 584);
+            this.removeStringButton.Location = new System.Drawing.Point(311, 584);
             this.removeStringButton.Name = "removeStringButton";
             this.removeStringButton.Size = new System.Drawing.Size(136, 28);
             this.removeStringButton.TabIndex = 26;
@@ -5434,11 +5330,11 @@
             // 
             // addStringButton
             // 
-            this.addStringButton.Location = new System.Drawing.Point(12, 584);
+            this.addStringButton.Location = new System.Drawing.Point(149, 584);
             this.addStringButton.Name = "addStringButton";
-            this.addStringButton.Size = new System.Drawing.Size(176, 28);
+            this.addStringButton.Size = new System.Drawing.Size(156, 28);
             this.addStringButton.TabIndex = 25;
-            this.addStringButton.Text = "&Add New Line to this message";
+            this.addStringButton.Text = "&Add New Line to message file";
             this.addStringButton.UseVisualStyleBackColor = true;
             this.addStringButton.Click += new System.EventHandler(this.addStringButton_Click);
             // 
@@ -5458,7 +5354,7 @@
             this.textEditorDataGridView.Location = new System.Drawing.Point(12, 77);
             this.textEditorDataGridView.Name = "textEditorDataGridView";
             this.textEditorDataGridView.RowHeadersWidth = 62;
-            this.textEditorDataGridView.Size = new System.Drawing.Size(778, 501);
+            this.textEditorDataGridView.Size = new System.Drawing.Size(841, 501);
             this.textEditorDataGridView.TabIndex = 24;
             this.textEditorDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellValueChanged);
             // 
@@ -5471,7 +5367,7 @@
             // 
             // exportTextFileButton
             // 
-            this.exportTextFileButton.Location = new System.Drawing.Point(178, 47);
+            this.exportTextFileButton.Location = new System.Drawing.Point(199, 48);
             this.exportTextFileButton.Name = "exportTextFileButton";
             this.exportTextFileButton.Size = new System.Drawing.Size(106, 23);
             this.exportTextFileButton.TabIndex = 23;
@@ -5481,7 +5377,7 @@
             // 
             // importTextFileButton
             // 
-            this.importTextFileButton.Location = new System.Drawing.Point(178, 20);
+            this.importTextFileButton.Location = new System.Drawing.Point(199, 21);
             this.importTextFileButton.Name = "importTextFileButton";
             this.importTextFileButton.Size = new System.Drawing.Size(106, 23);
             this.importTextFileButton.TabIndex = 22;
@@ -5493,7 +5389,7 @@
             // 
             this.saveTextArchiveButton.Location = new System.Drawing.Point(10, 48);
             this.saveTextArchiveButton.Name = "saveTextArchiveButton";
-            this.saveTextArchiveButton.Size = new System.Drawing.Size(164, 23);
+            this.saveTextArchiveButton.Size = new System.Drawing.Size(184, 23);
             this.saveTextArchiveButton.TabIndex = 21;
             this.saveTextArchiveButton.Text = "&Save Current";
             this.saveTextArchiveButton.UseVisualStyleBackColor = true;
@@ -5501,7 +5397,7 @@
             // 
             // removeMessageFileButton
             // 
-            this.removeMessageFileButton.Location = new System.Drawing.Point(292, 47);
+            this.removeMessageFileButton.Location = new System.Drawing.Point(313, 48);
             this.removeMessageFileButton.Name = "removeMessageFileButton";
             this.removeMessageFileButton.Size = new System.Drawing.Size(106, 23);
             this.removeMessageFileButton.TabIndex = 20;
@@ -5511,7 +5407,7 @@
             // 
             // addTextArchiveButton
             // 
-            this.addTextArchiveButton.Location = new System.Drawing.Point(292, 20);
+            this.addTextArchiveButton.Location = new System.Drawing.Point(313, 21);
             this.addTextArchiveButton.Name = "addTextArchiveButton";
             this.addTextArchiveButton.Size = new System.Drawing.Size(106, 23);
             this.addTextArchiveButton.TabIndex = 19;
@@ -5534,7 +5430,7 @@
             this.selectTextFileComboBox.FormattingEnabled = true;
             this.selectTextFileComboBox.Location = new System.Drawing.Point(11, 22);
             this.selectTextFileComboBox.Name = "selectTextFileComboBox";
-            this.selectTextFileComboBox.Size = new System.Drawing.Size(161, 21);
+            this.selectTextFileComboBox.Size = new System.Drawing.Size(181, 21);
             this.selectTextFileComboBox.TabIndex = 17;
             this.selectTextFileComboBox.SelectedIndexChanged += new System.EventHandler(this.selectTextFileComboBox_SelectedIndexChanged);
             // 
@@ -5567,34 +5463,34 @@
             this.groupBox7.Controls.Add(this.texturePacksListBox);
             this.groupBox7.Location = new System.Drawing.Point(6, 6);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(1042, 435);
+            this.groupBox7.Size = new System.Drawing.Size(1042, 458);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Texture Packs";
             // 
             // removeNSBTXButton
             // 
-            this.removeNSBTXButton.Location = new System.Drawing.Point(19, 400);
+            this.removeNSBTXButton.Location = new System.Drawing.Point(19, 424);
             this.removeNSBTXButton.Name = "removeNSBTXButton";
-            this.removeNSBTXButton.Size = new System.Drawing.Size(140, 23);
+            this.removeNSBTXButton.Size = new System.Drawing.Size(177, 23);
             this.removeNSBTXButton.TabIndex = 11;
             this.removeNSBTXButton.Text = "Remove Last";
             this.removeNSBTXButton.UseVisualStyleBackColor = true;
             // 
             // addNSBTXButton
             // 
-            this.addNSBTXButton.Location = new System.Drawing.Point(19, 377);
+            this.addNSBTXButton.Location = new System.Drawing.Point(19, 401);
             this.addNSBTXButton.Name = "addNSBTXButton";
-            this.addNSBTXButton.Size = new System.Drawing.Size(140, 23);
+            this.addNSBTXButton.Size = new System.Drawing.Size(177, 23);
             this.addNSBTXButton.TabIndex = 10;
             this.addNSBTXButton.Text = "Add NSBTX";
             this.addNSBTXButton.UseVisualStyleBackColor = true;
             // 
             // exportNSBTXButton
             // 
-            this.exportNSBTXButton.Location = new System.Drawing.Point(19, 354);
+            this.exportNSBTXButton.Location = new System.Drawing.Point(19, 378);
             this.exportNSBTXButton.Name = "exportNSBTXButton";
-            this.exportNSBTXButton.Size = new System.Drawing.Size(140, 23);
+            this.exportNSBTXButton.Size = new System.Drawing.Size(177, 23);
             this.exportNSBTXButton.TabIndex = 9;
             this.exportNSBTXButton.Text = "&Export NSBTX";
             this.exportNSBTXButton.UseVisualStyleBackColor = true;
@@ -5602,9 +5498,9 @@
             // 
             // importNSBTXButton
             // 
-            this.importNSBTXButton.Location = new System.Drawing.Point(19, 331);
+            this.importNSBTXButton.Location = new System.Drawing.Point(19, 355);
             this.importNSBTXButton.Name = "importNSBTXButton";
-            this.importNSBTXButton.Size = new System.Drawing.Size(140, 23);
+            this.importNSBTXButton.Size = new System.Drawing.Size(177, 23);
             this.importNSBTXButton.TabIndex = 8;
             this.importNSBTXButton.Text = "&Import NSBTX";
             this.importNSBTXButton.UseVisualStyleBackColor = true;
@@ -5625,7 +5521,7 @@
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(468, 33);
+            this.label38.Location = new System.Drawing.Point(485, 28);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(45, 13);
             this.label38.TabIndex = 6;
@@ -5634,7 +5530,7 @@
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(245, 33);
+            this.label37.Location = new System.Drawing.Point(244, 28);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(48, 13);
             this.label37.TabIndex = 5;
@@ -5643,25 +5539,25 @@
             // palettesListBox
             // 
             this.palettesListBox.FormattingEnabled = true;
-            this.palettesListBox.Location = new System.Drawing.Point(471, 53);
+            this.palettesListBox.Location = new System.Drawing.Point(488, 48);
             this.palettesListBox.Name = "palettesListBox";
-            this.palettesListBox.Size = new System.Drawing.Size(217, 368);
+            this.palettesListBox.Size = new System.Drawing.Size(217, 394);
             this.palettesListBox.TabIndex = 4;
             this.palettesListBox.SelectedIndexChanged += new System.EventHandler(this.palettesListBox_SelectedIndexChanged);
             // 
             // texturesListBox
             // 
             this.texturesListBox.FormattingEnabled = true;
-            this.texturesListBox.Location = new System.Drawing.Point(248, 53);
+            this.texturesListBox.Location = new System.Drawing.Point(247, 48);
             this.texturesListBox.Name = "texturesListBox";
-            this.texturesListBox.Size = new System.Drawing.Size(197, 368);
+            this.texturesListBox.Size = new System.Drawing.Size(197, 394);
             this.texturesListBox.TabIndex = 3;
             this.texturesListBox.SelectedIndexChanged += new System.EventHandler(this.texturesListBox_SelectedIndexChanged);
             // 
             // buildingsTilesetRadioButton
             // 
             this.buildingsTilesetRadioButton.AutoSize = true;
-            this.buildingsTilesetRadioButton.Location = new System.Drawing.Point(94, 26);
+            this.buildingsTilesetRadioButton.Location = new System.Drawing.Point(129, 25);
             this.buildingsTilesetRadioButton.Name = "buildingsTilesetRadioButton";
             this.buildingsTilesetRadioButton.Size = new System.Drawing.Size(67, 17);
             this.buildingsTilesetRadioButton.TabIndex = 2;
@@ -5687,7 +5583,7 @@
             this.texturePacksListBox.FormattingEnabled = true;
             this.texturePacksListBox.Location = new System.Drawing.Point(20, 48);
             this.texturePacksListBox.Name = "texturePacksListBox";
-            this.texturePacksListBox.Size = new System.Drawing.Size(139, 277);
+            this.texturePacksListBox.Size = new System.Drawing.Size(176, 303);
             this.texturePacksListBox.TabIndex = 0;
             this.texturePacksListBox.SelectedIndexChanged += new System.EventHandler(this.texturePacksListBox_SelectedIndexChanged);
             // 
@@ -5707,36 +5603,36 @@
             this.areaDataGroupBox.Controls.Add(this.label32);
             this.areaDataGroupBox.Controls.Add(this.areaDataBuildingTilesetUpDown);
             this.areaDataGroupBox.Controls.Add(this.selectAreaDataComboBox);
-            this.areaDataGroupBox.Location = new System.Drawing.Point(6, 444);
+            this.areaDataGroupBox.Location = new System.Drawing.Point(6, 470);
             this.areaDataGroupBox.Name = "areaDataGroupBox";
-            this.areaDataGroupBox.Size = new System.Drawing.Size(1042, 166);
+            this.areaDataGroupBox.Size = new System.Drawing.Size(1042, 140);
             this.areaDataGroupBox.TabIndex = 0;
             this.areaDataGroupBox.TabStop = false;
             this.areaDataGroupBox.Text = "Area Data";
             // 
             // removeAreaDataButton
             // 
-            this.removeAreaDataButton.Location = new System.Drawing.Point(283, 33);
+            this.removeAreaDataButton.Location = new System.Drawing.Point(19, 104);
             this.removeAreaDataButton.Name = "removeAreaDataButton";
-            this.removeAreaDataButton.Size = new System.Drawing.Size(95, 23);
+            this.removeAreaDataButton.Size = new System.Drawing.Size(82, 23);
             this.removeAreaDataButton.TabIndex = 14;
             this.removeAreaDataButton.Text = "Remove Last";
             this.removeAreaDataButton.UseVisualStyleBackColor = true;
             // 
             // addAreaDataButton
             // 
-            this.addAreaDataButton.Location = new System.Drawing.Point(182, 33);
+            this.addAreaDataButton.Location = new System.Drawing.Point(19, 75);
             this.addAreaDataButton.Name = "addAreaDataButton";
-            this.addAreaDataButton.Size = new System.Drawing.Size(95, 23);
+            this.addAreaDataButton.Size = new System.Drawing.Size(82, 23);
             this.addAreaDataButton.TabIndex = 13;
             this.addAreaDataButton.Text = "Add";
             this.addAreaDataButton.UseVisualStyleBackColor = true;
             // 
             // saveAreaDataButton
             // 
-            this.saveAreaDataButton.Location = new System.Drawing.Point(896, 137);
+            this.saveAreaDataButton.Location = new System.Drawing.Point(106, 75);
             this.saveAreaDataButton.Name = "saveAreaDataButton";
-            this.saveAreaDataButton.Size = new System.Drawing.Size(140, 23);
+            this.saveAreaDataButton.Size = new System.Drawing.Size(90, 52);
             this.saveAreaDataButton.TabIndex = 12;
             this.saveAreaDataButton.Text = "&Save";
             this.saveAreaDataButton.UseVisualStyleBackColor = true;
@@ -5745,7 +5641,7 @@
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(680, 95);
+            this.label36.Location = new System.Drawing.Point(403, 88);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(52, 13);
             this.label36.TabIndex = 10;
@@ -5759,7 +5655,7 @@
             this.areaDataAreaTypeComboBox.Items.AddRange(new object[] {
             "Indoor",
             "Outdoor"});
-            this.areaDataAreaTypeComboBox.Location = new System.Drawing.Point(683, 111);
+            this.areaDataAreaTypeComboBox.Location = new System.Drawing.Point(405, 104);
             this.areaDataAreaTypeComboBox.Name = "areaDataAreaTypeComboBox";
             this.areaDataAreaTypeComboBox.Size = new System.Drawing.Size(130, 21);
             this.areaDataAreaTypeComboBox.TabIndex = 9;
@@ -5768,7 +5664,7 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(513, 95);
+            this.label35.Location = new System.Drawing.Point(554, 88);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(88, 13);
             this.label35.TabIndex = 8;
@@ -5783,7 +5679,7 @@
             "Outdoors",
             "Other textures",
             "None"});
-            this.areaDataDynamicTexturesComboBox.Location = new System.Drawing.Point(516, 111);
+            this.areaDataDynamicTexturesComboBox.Location = new System.Drawing.Point(557, 104);
             this.areaDataDynamicTexturesComboBox.Name = "areaDataDynamicTexturesComboBox";
             this.areaDataDynamicTexturesComboBox.Size = new System.Drawing.Size(133, 21);
             this.areaDataDynamicTexturesComboBox.TabIndex = 7;
@@ -5792,7 +5688,7 @@
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(336, 94);
+            this.label34.Location = new System.Drawing.Point(245, 88);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(53, 13);
             this.label34.TabIndex = 6;
@@ -5806,7 +5702,7 @@
             "Model\'s light",
             "Day/Night Light",
             "Unknown Light"});
-            this.areaDataLightTypeComboBox.Location = new System.Drawing.Point(339, 110);
+            this.areaDataLightTypeComboBox.Location = new System.Drawing.Point(248, 104);
             this.areaDataLightTypeComboBox.Name = "areaDataLightTypeComboBox";
             this.areaDataLightTypeComboBox.Size = new System.Drawing.Size(132, 21);
             this.areaDataLightTypeComboBox.TabIndex = 5;
@@ -5815,7 +5711,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(180, 95);
+            this.label33.Location = new System.Drawing.Point(245, 28);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(62, 13);
             this.label33.TabIndex = 4;
@@ -5823,21 +5719,21 @@
             // 
             // areaDataMapTilesetUpDown
             // 
-            this.areaDataMapTilesetUpDown.Location = new System.Drawing.Point(182, 111);
+            this.areaDataMapTilesetUpDown.Location = new System.Drawing.Point(247, 44);
             this.areaDataMapTilesetUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.areaDataMapTilesetUpDown.Name = "areaDataMapTilesetUpDown";
-            this.areaDataMapTilesetUpDown.Size = new System.Drawing.Size(120, 20);
+            this.areaDataMapTilesetUpDown.Size = new System.Drawing.Size(133, 20);
             this.areaDataMapTilesetUpDown.TabIndex = 3;
             this.areaDataMapTilesetUpDown.ValueChanged += new System.EventHandler(this.areaDataMapTilesetUpDown_ValueChanged);
             // 
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(19, 95);
+            this.label32.Location = new System.Drawing.Point(403, 28);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(78, 13);
             this.label32.TabIndex = 2;
@@ -5845,14 +5741,14 @@
             // 
             // areaDataBuildingTilesetUpDown
             // 
-            this.areaDataBuildingTilesetUpDown.Location = new System.Drawing.Point(21, 111);
+            this.areaDataBuildingTilesetUpDown.Location = new System.Drawing.Point(405, 44);
             this.areaDataBuildingTilesetUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.areaDataBuildingTilesetUpDown.Name = "areaDataBuildingTilesetUpDown";
-            this.areaDataBuildingTilesetUpDown.Size = new System.Drawing.Size(120, 20);
+            this.areaDataBuildingTilesetUpDown.Size = new System.Drawing.Size(130, 20);
             this.areaDataBuildingTilesetUpDown.TabIndex = 1;
             this.areaDataBuildingTilesetUpDown.ValueChanged += new System.EventHandler(this.areaDataBuildingTilesetUpDown_ValueChanged);
             // 
@@ -5860,9 +5756,9 @@
             // 
             this.selectAreaDataComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.selectAreaDataComboBox.FormattingEnabled = true;
-            this.selectAreaDataComboBox.Location = new System.Drawing.Point(21, 34);
+            this.selectAreaDataComboBox.Location = new System.Drawing.Point(20, 35);
             this.selectAreaDataComboBox.Name = "selectAreaDataComboBox";
-            this.selectAreaDataComboBox.Size = new System.Drawing.Size(120, 21);
+            this.selectAreaDataComboBox.Size = new System.Drawing.Size(176, 21);
             this.selectAreaDataComboBox.TabIndex = 0;
             this.selectAreaDataComboBox.SelectedIndexChanged += new System.EventHandler(this.selectAreaDataComboBox_SelectedIndexChanged);
             // 
@@ -6073,6 +5969,171 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             // 
+            // headersGridView
+            // 
+            this.headersGridView.AllowUserToAddRows = false;
+            this.headersGridView.AllowUserToDeleteRows = false;
+            this.headersGridView.AllowUserToResizeColumns = false;
+            this.headersGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.headersGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.headersGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.Format = "D4";
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            this.headersGridView.Location = new System.Drawing.Point(0, 0);
+            this.headersGridView.Name = "headersGridView";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.headersGridView.RowHeadersWidth = 50;
+            this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.headersGridView.RowTemplate.Height = 18;
+            this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.headersGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.headersGridView.ShowCellErrors = false;
+            this.headersGridView.Size = new System.Drawing.Size(878, 566);
+            this.headersGridView.TabIndex = 1;
+            this.headersGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.headersGridView_CellFormatting);
+            this.headersGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.headersGridView_CellMouseDoubleClick);
+            this.headersGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.headersGridView_CellValueChanged);
+            // 
+            // heightsGridView
+            // 
+            this.heightsGridView.AllowUserToAddRows = false;
+            this.heightsGridView.AllowUserToDeleteRows = false;
+            this.heightsGridView.AllowUserToResizeColumns = false;
+            this.heightsGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            this.heightsGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.Format = "D2";
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle8;
+            this.heightsGridView.Location = new System.Drawing.Point(0, 0);
+            this.heightsGridView.Name = "heightsGridView";
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            this.heightsGridView.RowHeadersWidth = 50;
+            this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.heightsGridView.RowTemplate.Height = 18;
+            this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.heightsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.heightsGridView.Size = new System.Drawing.Size(878, 566);
+            this.heightsGridView.TabIndex = 2;
+            this.heightsGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.heightsGridView_CellFormatting);
+            this.heightsGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.heightsGridView_CellValueChanged);
+            // 
+            // mapFilesGridView
+            // 
+            this.mapFilesGridView.AllowUserToAddRows = false;
+            this.mapFilesGridView.AllowUserToDeleteRows = false;
+            this.mapFilesGridView.AllowUserToResizeColumns = false;
+            this.mapFilesGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
+            this.mapFilesGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle13.Format = "D4";
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle13;
+            this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
+            this.mapFilesGridView.Name = "mapFilesGridView";
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            this.mapFilesGridView.RowHeadersWidth = 50;
+            this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mapFilesGridView.RowTemplate.Height = 18;
+            this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.mapFilesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.mapFilesGridView.Size = new System.Drawing.Size(878, 566);
+            this.mapFilesGridView.TabIndex = 2;
+            this.mapFilesGridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellMouseDoubleClick);
+            this.mapFilesGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.mapFilesGridView_CellFormatting);
+            this.mapFilesGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellValueChanged);
+            // 
             // MainProgram
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -6124,11 +6185,8 @@
             this.matrixEditorTabPage.PerformLayout();
             this.matrixTabControl.ResumeLayout(false);
             this.headersTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).EndInit();
             this.heightsTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).EndInit();
             this.mapFilesTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthUpDown)).EndInit();
             this.mapEditorTabPage.ResumeLayout(false);
@@ -6206,28 +6264,36 @@
             ((System.ComponentModel.ISupportInitialize)(this.owFlagNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.owIDNumericUpDown)).EndInit();
             this.warpsTabPage.ResumeLayout(false);
-            this.warpsTabPage.PerformLayout();
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.warpAnchorUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.warpHeaderUpDown)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBox14.ResumeLayout(false);
+            this.groupBox14.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.warpXMatrixUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.warpYMatrixUpDown)).EndInit();
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox12.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.warpXMapUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.warpZUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.warpYMapUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.warpZUpDown)).EndInit();
             this.triggersTabPage.ResumeLayout(false);
             this.triggersTabPage.PerformLayout();
+            this.groupBox16.ResumeLayout(false);
+            this.groupBox16.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.triggerLengthUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.triggerWidthUpDown)).EndInit();
+            this.groupBox15.ResumeLayout(false);
+            this.groupBox15.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.triggerXMapUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.triggerZUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.triggerYMapUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.triggerFlagUpDown)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.triggerXMatrixUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.triggerYMatrixUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.triggerXMapUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.triggerZUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.triggerYMapUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.triggerScriptUpDown)).EndInit();
             this.eventPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.eventPictureBox)).EndInit();
@@ -6263,6 +6329,9 @@
             this.statusStrip1.PerformLayout();
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -6463,21 +6532,11 @@
         private System.Windows.Forms.Button removeWarpButton;
         private System.Windows.Forms.Button addWarpButton;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button goToWarpButton;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.NumericUpDown warpXMatrixUpDown;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.NumericUpDown warpYMatrixUpDown;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.NumericUpDown warpXMapUpDown;
         private System.Windows.Forms.NumericUpDown warpZUpDown;
-        private System.Windows.Forms.Label label24;
         private System.Windows.Forms.NumericUpDown warpYMapUpDown;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.NumericUpDown warpAnchorUpDown;
-        private System.Windows.Forms.NumericUpDown warpHeaderUpDown;
-        private System.Windows.Forms.Label warpAnchorLabel;
-        private System.Windows.Forms.Label warpHeaderLabel;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button goToSignButton;
         private System.Windows.Forms.Label signMatrixYLabel;
@@ -6492,26 +6551,10 @@
         private System.Windows.Forms.Label signMapYLabel;
         private System.Windows.Forms.Button removeTriggerButton;
         private System.Windows.Forms.Button addTriggerButton;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.Button goToTriggerButton;
-        private System.Windows.Forms.Label triggerYMatrixLabel;
-        private System.Windows.Forms.NumericUpDown triggerXMatrixUpDown;
-        private System.Windows.Forms.Label triggerXMatrixLabel;
-        private System.Windows.Forms.NumericUpDown triggerYMatrixUpDown;
-        private System.Windows.Forms.Label triggerZLabel;
-        private System.Windows.Forms.NumericUpDown triggerXMapUpDown;
-        private System.Windows.Forms.NumericUpDown triggerZUpDown;
-        private System.Windows.Forms.Label triggerMapXLabel;
-        private System.Windows.Forms.NumericUpDown triggerYMapUpDown;
-        private System.Windows.Forms.Label triggerYMapLabel;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.NumericUpDown triggerScriptUpDown;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.NumericUpDown triggerFlagUpDown;
-        private System.Windows.Forms.Label triggerWidthLabel;
-        private System.Windows.Forms.NumericUpDown triggerWidthUpDown;
-        private System.Windows.Forms.Label triggerLengthLabel;
-        private System.Windows.Forms.NumericUpDown triggerLengthUpDown;
         private System.Windows.Forms.ComboBox owOrientationComboBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox owPartnerTrainerCheckBox;
@@ -6725,6 +6768,38 @@
         private System.Windows.Forms.Label weatherPicLabel;
         private System.Windows.Forms.PictureBox weatherPictureBox;
         private System.Windows.Forms.ToolStripButton buildingEditorButton;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.Button destinationWarpGoToButton;
+        private System.Windows.Forms.NumericUpDown warpAnchorUpDown;
+        private System.Windows.Forms.NumericUpDown warpHeaderUpDown;
+        private System.Windows.Forms.Label warpAnchorLabel;
+        private System.Windows.Forms.Label warpHeaderLabel;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private System.Windows.Forms.Button goToWarpButton;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown warpXMatrixUpDown;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.NumericUpDown warpYMatrixUpDown;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.GroupBox groupBox15;
+        private System.Windows.Forms.Label triggerZLabel;
+        private System.Windows.Forms.NumericUpDown triggerXMapUpDown;
+        private System.Windows.Forms.NumericUpDown triggerZUpDown;
+        private System.Windows.Forms.Label triggerMapXLabel;
+        private System.Windows.Forms.NumericUpDown triggerYMapUpDown;
+        private System.Windows.Forms.Label triggerYMapLabel;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button goToTriggerButton;
+        private System.Windows.Forms.Label triggerYMatrixLabel;
+        private System.Windows.Forms.NumericUpDown triggerXMatrixUpDown;
+        private System.Windows.Forms.Label triggerXMatrixLabel;
+        private System.Windows.Forms.NumericUpDown triggerYMatrixUpDown;
+        private System.Windows.Forms.GroupBox groupBox16;
+        private System.Windows.Forms.Label triggerLengthLabel;
+        private System.Windows.Forms.NumericUpDown triggerLengthUpDown;
+        private System.Windows.Forms.Label triggerWidthLabel;
+        private System.Windows.Forms.NumericUpDown triggerWidthUpDown;
     }
 }
 

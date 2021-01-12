@@ -1,4 +1,5 @@
 using System.IO;
+using System.Windows.Forms;
 
 namespace DSPRE
 {
@@ -312,23 +313,27 @@ namespace DSPRE
         {
             using (BinaryReader reader = new BinaryReader(data))
             {
-                wildPokémon = reader.ReadByte();
-                areaDataID = reader.ReadByte();
-                unknown1 = reader.ReadByte();
-                unknown2 = reader.ReadByte();
-                matrix = reader.ReadUInt16();
-                script = reader.ReadUInt16();
-                levelScript = reader.ReadUInt16();
-                text = reader.ReadUInt16();
-                musicDay = reader.ReadUInt16();
-                musicNight = reader.ReadUInt16();
-                events = reader.ReadUInt16();
-                mapName = reader.ReadByte();
-                areaIcon = StandardizeAreaIcon(reader.ReadByte());
-                weather = StandardizeWeather(reader.ReadByte());
-                camera = reader.ReadByte();
-                followMode = reader.ReadByte();
-                flags = reader.ReadByte();
+                try {
+                    wildPokémon = reader.ReadByte();
+                    areaDataID = reader.ReadByte();
+                    unknown1 = reader.ReadByte();
+                    unknown2 = reader.ReadByte();
+                    matrix = reader.ReadUInt16();
+                    script = reader.ReadUInt16();
+                    levelScript = reader.ReadUInt16();
+                    text = reader.ReadUInt16();
+                    musicDay = reader.ReadUInt16();
+                    musicNight = reader.ReadUInt16();
+                    events = reader.ReadUInt16();
+                    mapName = reader.ReadByte();
+                    areaIcon = StandardizeAreaIcon(reader.ReadByte());
+                    weather = StandardizeWeather(reader.ReadByte());
+                    camera = reader.ReadByte();
+                    followMode = reader.ReadByte();
+                    flags = reader.ReadByte();
+                } catch (EndOfStreamException) {
+                    MessageBox.Show("Error loading headers.\n", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
         #endregion Constructors

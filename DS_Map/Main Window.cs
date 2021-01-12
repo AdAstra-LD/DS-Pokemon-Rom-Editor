@@ -59,9 +59,8 @@ namespace DSPRE {
             unpack.WaitForExit();
         }
 		
-        private void DecompressArm9() {
-            if (new FileInfo(workDir + @"arm9.bin").Length < 0xC0000)
-            {
+        private bool DecompressArm9() {
+            if (new FileInfo(workDir + @"arm9.bin").Length < 0xBC000) {
                 BinaryWriter arm9Truncate = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin"));
                 long arm9Length = new FileInfo(workDir + @"arm9.bin").Length;
                 arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
@@ -75,6 +74,7 @@ namespace DSPRE {
             decompress.StartInfo.CreateNoWindow = true;
             decompress.Start();
             decompress.WaitForExit();
+            return (new FileInfo(workDir + @"arm9.bin").Length > 1122000);
         }
 
         private void decompressOverlay(int overlayNumber, bool makeBackup) {
@@ -346,7 +346,7 @@ namespace DSPRE {
                     break;
                 default:
                     overworldTablePath = "overlay" + "\\" + "overlay_0001.bin";
-                    decompressOverlay(1, true); // HGSS Overlay 1 must be uncompressed to be able to read the overworld table
+                    decompressOverlay(1, true); // HGSS Overlay 1 must be uncompressed in order to read the overworld table
                     break;
             }
 
@@ -1064,12 +1064,14 @@ namespace DSPRE {
             using (ROMToolboxDialog window = new ROMToolboxDialog(romInfo))
             {
                 window.ShowDialog();
-                if (window.standardizedItems) isItemRadioButton.Enabled = true;
+                if (window.standardizedItems) 
+                    isItemRadioButton.Enabled = true;
             }
         }
         private void buildingEditorButton_Click(object sender, EventArgs e)
         {
-            using (BuildingEditor editor = new BuildingEditor(romInfo)) editor.ShowDialog();
+            using (BuildingEditor editor = new BuildingEditor(romInfo)) 
+                editor.ShowDialog();
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -1099,13 +1101,18 @@ namespace DSPRE {
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, workDir);
             gameVersion = romInfo.getGameVersion();
+            if (gameVersion == null) {
+                statusLabel.Text = "Ready";
+                return;
+            }
             versionLabel.Text = "ROM: Pokémon " + gameVersion;
-            languageLabel.Text = "Language: " + romInfo.GetLanguage();
-            iconON = true; 
+            languageLabel.Text = "Language: " + romInfo.getGameLanguage();
+            iconON = true;
             gameIcon.Refresh();  // Paint game icon
 
 
             statusLabel.Text = "Unpacking NARCs...";
+            Update();
             /* Extract NARCs sub-archives*/
             switch (gameVersion)
             {
@@ -1118,10 +1125,16 @@ namespace DSPRE {
                     break;
                 default:
                     UnpackNARCsHeartGoldSoulSilver();
-                    DecompressArm9();
+                    if (!DecompressArm9()) {
+                        MessageBox.Show("ARM9 decompression failed. The program can't proceed.\nAborting.",
+                                    "Errror with ARM9 decompression", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     break;
             }
 
+            statusLabel.Text = "Setting up editors...";
+            Update();
             /* Setup editors */
             SetupFlagNames();
             SetupHeaderEditor();
@@ -1139,6 +1152,7 @@ namespace DSPRE {
             wildEditorButton.Enabled = true;
             loadRomButton.Enabled = false;
             openROMToolStripMenuItem.Enabled = false;
+
             statusLabel.Text = "Ready";
         }
 
@@ -1508,41 +1522,38 @@ namespace DSPRE {
         }
         private void openEventsButton_Click(object sender, EventArgs e)
         {
-            if (matrixUpDown.Value != 0) eventAreaDataUpDown.Value = areaDataUpDown.Value; // Use Area Data for textures if matrix is not 0
-            eventMatrixUpDown.Value = matrixUpDown.Value; // Open the right matrix in event editor
-            selectEventComboBox.SelectedIndex = (int)eventFileUpDown.Value; // Select event file
-
-            disableHandlers = true;
-            if (currentEventFile.overworlds.Count > 0) 
-            {
-                eventMatrixXUpDown.Value = currentEventFile.overworlds[0].xMatrixPosition;
-                eventMatrixYUpDown.Value = currentEventFile.overworlds[0].yMatrixPosition;
-            }
-            else if (currentEventFile.warps.Count > 0)
-            {
-                eventMatrixXUpDown.Value = currentEventFile.warps[0].xMatrixPosition;
-                eventMatrixYUpDown.Value = currentEventFile.warps[0].yMatrixPosition;
-            }
-            else if (currentEventFile.spawnables.Count > 0)
-            {
-                eventMatrixXUpDown.Value = currentEventFile.spawnables[0].xMatrixPosition;
-                eventMatrixYUpDown.Value = currentEventFile.spawnables[0].yMatrixPosition;
-            }
-            else if (currentEventFile.triggers.Count > 0)
-            {
-                eventMatrixXUpDown.Value = currentEventFile.triggers[0].xMatrixPosition;
-                eventMatrixYUpDown.Value = currentEventFile.triggers[0].yMatrixPosition;
-            }
-            else
-            {
-                eventMatrixXUpDown.Value = 0;
-                eventMatrixYUpDown.Value = 0;
-            }
+            if (matrixUpDown.Value != 0)
+                eventAreaDataUpDown.Value = areaDataUpDown.Value; // Use Area Data for textures if matrix is not 0
+            openEvents();
             disableHandlers = false;
 
             eventMatrixXUpDown_ValueChanged(null, null);
             mainTabControl.SelectedTab = eventEditorTabPage;
         }
+
+        private void openEvents() {
+            eventMatrixUpDown.Value = matrixUpDown.Value; // Open the right matrix in event editor
+            selectEventComboBox.SelectedIndex = (int)eventFileUpDown.Value; // Select event file
+
+            disableHandlers = true;
+            if (currentEventFile.overworlds.Count > 0) {
+                eventMatrixXUpDown.Value = currentEventFile.overworlds[0].xMatrixPosition;
+                eventMatrixYUpDown.Value = currentEventFile.overworlds[0].yMatrixPosition;
+            } else if (currentEventFile.warps.Count > 0) {
+                eventMatrixXUpDown.Value = currentEventFile.warps[0].xMatrixPosition;
+                eventMatrixYUpDown.Value = currentEventFile.warps[0].yMatrixPosition;
+            } else if (currentEventFile.spawnables.Count > 0) {
+                eventMatrixXUpDown.Value = currentEventFile.spawnables[0].xMatrixPosition;
+                eventMatrixYUpDown.Value = currentEventFile.spawnables[0].yMatrixPosition;
+            } else if (currentEventFile.triggers.Count > 0) {
+                eventMatrixXUpDown.Value = currentEventFile.triggers[0].xMatrixPosition;
+                eventMatrixYUpDown.Value = currentEventFile.triggers[0].yMatrixPosition;
+            } else {
+                eventMatrixXUpDown.Value = 0;
+                eventMatrixYUpDown.Value = 0;
+            }
+        }
+
         private void openMatrixButton_Click(object sender, EventArgs e)
         {
             int matrixNumber = (int)matrixUpDown.Value;
@@ -3782,12 +3793,17 @@ namespace DSPRE {
             eventMatrixXUpDown.Value = selectedEvent.xMatrixPosition;
             eventMatrixYUpDown.Value = selectedEvent.yMatrixPosition;
         }
+        private void destinationWarpGoToButton_Click(object sender, EventArgs e) {
+            selectEventComboBox.SelectedIndex = LoadHeader((int)warpHeaderUpDown.Value).events;
+            openEvents();
+        }
         private void importEventFileButton_Click(object sender, EventArgs e)
         {
             /* Prompt user to select .evt file */
             OpenFileDialog of = new OpenFileDialog();
             of.Filter = "Event File (*.evt)|*.evt";
-            if (of.ShowDialog(this) != DialogResult.OK) return;
+            if (of.ShowDialog(this) != DialogResult.OK) 
+                return;
 
             /* Update matrix object in memory */
             string path = romInfo.GetEventFolderPath() + "\\" + selectEventComboBox.SelectedIndex.ToString("D4");
@@ -3893,40 +3909,46 @@ namespace DSPRE {
         }
         private void signMatrixXUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers || spawnablesListBox.SelectedIndex == null) 
+                return;
 
             currentEventFile.spawnables[spawnablesListBox.SelectedIndex].xMatrixPosition = (ushort)signMatrixXUpDown.Value;
             DisplayActiveEvents();
         }
         private void signMatrixYUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers || spawnablesListBox.SelectedIndex == null) 
+                return;
 
             currentEventFile.spawnables[spawnablesListBox.SelectedIndex].yMatrixPosition = (ushort)signMatrixYUpDown.Value;
             DisplayActiveEvents();
         }
         private void signScriptUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers || spawnablesListBox.SelectedIndex == null) 
+                return;
             currentEventFile.spawnables[spawnablesListBox.SelectedIndex].scriptNumber = (ushort)signScriptUpDown.Value;
         }
         private void signMapXUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers || spawnablesListBox.SelectedIndex == null) 
+                return;
 
             currentEventFile.spawnables[spawnablesListBox.SelectedIndex].xMapPosition = (short)signMapXUpDown.Value;
             DisplayActiveEvents();
         }
         private void signMapYUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             currentEventFile.spawnables[spawnablesListBox.SelectedIndex].yMapPosition = (short)signMapYUpDown.Value;
             DisplayActiveEvents();
         }
         private void signZUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             currentEventFile.spawnables[spawnablesListBox.SelectedIndex].zPosition = (short)signZUpDown.Value;
             DisplayActiveEvents();
@@ -3942,7 +3964,8 @@ namespace DSPRE {
         }
         private void isTrainerRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             /* Disable script number control */
             owScriptNumericUpDown.Enabled = false;
@@ -3964,11 +3987,13 @@ namespace DSPRE {
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].type = 0x1;
 
             /* Adjust script number */
-            if (owTrainerComboBox.SelectedIndex >= 0) owTrainerComboBox_SelectedIndexChanged(null, null);
+            if (owTrainerComboBox.SelectedIndex >= 0) 
+                owTrainerComboBox_SelectedIndexChanged(null, null);
         }
         private void isItemRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             /* Disable script number control */
             owScriptNumericUpDown.Enabled = false;
@@ -3996,7 +4021,8 @@ namespace DSPRE {
         }
         private void normalRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             /* Enable script number control buttons */
             owScriptNumericUpDown.Enabled = true;
@@ -4082,27 +4108,28 @@ namespace DSPRE {
         }
         private void owFlagNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) 
+            if (disableHandlers || overworldsListBox.SelectedIndex == null) 
                 return;
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].flag = (ushort)owFlagNumericUpDown.Value;
         }
         private void owIDNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) 
+            if (disableHandlers || overworldsListBox.SelectedIndex == null) 
                 return;
             if (currentEventFile.overworlds.Any() && overworldsListBox.SelectedIndex > 0)
                 currentEventFile.overworlds[overworldsListBox.SelectedIndex].owID = (ushort)owIDNumericUpDown.Value;
         }
         private void owMovementComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) 
+            if (disableHandlers || overworldsListBox.SelectedIndex == null) 
                 return;
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].movement = (ushort)owMovementComboBox.SelectedIndex;
         }
         private void owOrientationComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) 
+            if (disableHandlers || overworldsListBox.SelectedIndex == null) 
                 return;
+
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].orientation = (ushort)owOrientationComboBox.SelectedIndex;
             owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[overworldsListBox.SelectedIndex].spriteID, currentEventFile.overworlds[overworldsListBox.SelectedIndex].orientation);
             DisplayActiveEvents();
@@ -4110,13 +4137,13 @@ namespace DSPRE {
         }
         private void owScriptNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) 
+            if (disableHandlers || overworldsListBox.SelectedIndex == null) 
                 return;
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)owScriptNumericUpDown.Value;
         }
         private void owSightRangeUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) 
+            if (disableHandlers || overworldsListBox.SelectedIndex == null) 
                 return;
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].sightRange = (ushort)owSightRangeUpDown.Value;
         }
@@ -4124,7 +4151,7 @@ namespace DSPRE {
         {
             if (disableHandlers) 
                 return;
-            if (currentEventFile.overworlds.Count != 0) {
+            if (overworldsListBox.SelectedIndex != 0) {
                 currentEventFile.overworlds[overworldsListBox.SelectedIndex].spriteID = (ushort)owSpriteComboBox.SelectedIndex;
                 owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[overworldsListBox.SelectedIndex].spriteID, currentEventFile.overworlds[overworldsListBox.SelectedIndex].orientation);
                 DisplayActiveEvents();
@@ -4288,7 +4315,8 @@ namespace DSPRE {
         }
         private void warpXMapUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers || warpsListBox.SelectedIndex != null) 
+                return;
 
             currentEventFile.warps[warpsListBox.SelectedIndex].xMapPosition = (short)warpXMapUpDown.Value;
             DisplayActiveEvents();
@@ -5507,5 +5535,7 @@ namespace DSPRE {
 
 
         #endregion
+
+
     }
 }

@@ -91,6 +91,11 @@
   <ItemGroup>
     <Compile Include="AB.cs" />
     <Compile Include="AreaData.cs" />
+    <Compile Include="Resources\ROMToolboxDB\ARM9ExpansionDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ARM9ExpansionDB.resx</DependentUpon>
+    </Compile>
     <Compile Include="ROMToolboxDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -231,6 +236,10 @@
     <Compile Include="SPK.Designer.cs">
       <DependentUpon>SPK.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Resources\ROMToolboxDB\ARM9ExpansionDB.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ARM9ExpansionDB.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ROMToolboxDialog.resx">
       <DependentUpon>ROMToolboxDialog.cs</DependentUpon>
     </EmbeddedResource>

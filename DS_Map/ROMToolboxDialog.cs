@@ -1,6 +1,8 @@
 ﻿using NarcAPI;
 using System;
 using System.IO;
+using System.Reflection;
+using System.Resources;
 using System.Windows.Forms;
 
 namespace DSPRE
@@ -33,10 +35,10 @@ namespace DSPRE
         }
 
         private void applyARM9ExpansionButton_Click(object sender, EventArgs e) {
-            String version = rom.getGameVersion();
-            String lang = rom.GetLanguage();
-            String arm9path = rom.getWorkingFolder() + @"arm9.bin";
+            arm9Expansion(rom.getWorkingFolder() + @"arm9.bin", rom.getGameVersion(), rom.getGameLanguage());
+        }
 
+        private void arm9Expansion(string arm9path, string version, string lang) {
             long initOffset;
             String initString;
 
@@ -45,26 +47,21 @@ namespace DSPRE
 
             int fileID = -1;
 
+            ResourceManager arm9DB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.ARM9ExpansionDB", Assembly.GetExecutingAssembly());
+
+            fileID = Int16.Parse(arm9DB.GetString("fileID" + version));
             switch (version) {
                 case "Diamond":
                 case "Pearl":
-                    fileID = 9;
+                    initString = arm9DB.GetString("initString" + "Diamond");
+                    branchCodeString = arm9DB.GetString("branchCode" + "Diamond" + lang);
                     branchOffset = 0x02000C80;
-                    initString = "FC B5 05 48 " +
-                                "C0 46 41 21 " +
-                                "09 22 02 4D " +
-                                "A8 47 00 20 " +
-                                "03 21 FC BD " +
-                                "F1 64 00 02 " +
-                                "00 80 3C 02";
                     switch (lang) {
                         case "USA":
                             initOffset = 0x021064EC;
-                            branchCodeString = "05 F1 34 FC";
                             break;
                         case "ESP":
                             initOffset = 0x0210668C;
-                            branchCodeString = "05 F1 04 FD";
                             break;
                         default:
                             unsupportedROMLanguage();
@@ -72,32 +69,15 @@ namespace DSPRE
                     }
                     break;
                 case "Platinum":
-                    fileID = 9;
+                    initString = arm9DB.GetString("initString" + version + lang);
+                    branchCodeString = arm9DB.GetString("branchCode" + version + lang);
                     branchOffset = 0x02000CB4;
                     switch (lang) {
                         case "USA":
-                            initString = "FC B5 05 48 " +
-                                        "C0 46 41 21 " +
-                                        "09 22 02 4D " +
-                                        "A8 47 00 20 " +
-                                        "03 21 FC BD " +
-                                        "A5 6A 00 02 " +
-                                        "00 80 3C 02";
-
                             initOffset = 0x02100E20;
-                            branchCodeString = "00 F1 B4 F8";
                             break;
                         case "ESP":
-                            initString = "FC B5 05 48 " +
-                                        "C0 46 41 21 " +
-                                        "09 22 02 4D " +
-                                        "A8 47 00 20 " +
-                                        "03 21 FC BD " +
-                                        "B9 6A 00 02 " +
-                                        "00 80 3C 02";
-
                             initOffset = 0x0210101C;
-                            branchCodeString = "00 F1 B2 F9";
                             break;
                         default:
                             unsupportedROMLanguage();
@@ -106,23 +86,15 @@ namespace DSPRE
                     break;
                 case "HeartGold":
                 case "SoulSilver":
-                    fileID = 0;
+                    initString = arm9DB.GetString("initString" + "HeartGold");
+                    branchCodeString = arm9DB.GetString("branchCode" + "HeartGold" + lang);
                     branchOffset = 0x02000CD0;
-                    initString = "FC B5 05 48 " +
-                                "C0 46 1C 21 " +
-                                "00 22 02 4D " +
-                                "A8 47 00 20 " +
-                                "03 21 FC BD " +
-                                "09 75 00 02 " +
-                                "00 80 3C 02";
                     switch (lang) {
                         case "USA":
                             initOffset = 0x02110334;
-                            branchCodeString = "0F F1 30 FB";
                             break;
                         case "ESP":
                             initOffset = 0x02110354;
-                            branchCodeString = "0F F1 40 FB";
                             break;
                         default:
                             unsupportedROMLanguage();
@@ -139,15 +111,15 @@ namespace DSPRE
             DialogResult d;
             d = MessageBox.Show("Confirming this process will apply the following changes:\n\n" +
                 "- Backup ARM9 file (arm9.bin.bak will be created)." + "\n\n" +
-                "- Replace " + (branchCodeString.Length/3+1) + " bytes of data at arm9 offset 0x" + branchOffset.ToString("X") + " with " + '\n' + branchCodeString + "\n\n" +
-                "- Replace " + (initString.Length / 3+1) + " bytes of data at arm9 offset 0x" + initOffset.ToString("X") + " with " + '\n' + initString + "\n\n" +
-                "- Modify file #" + fileID + " inside " + '\n' + rom.getSyntheticOverlayPath() +  '\n' + " to accommodate for 88KB of data (no backup)." + "\n\n" +
+                "- Replace " + (branchCodeString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + branchOffset.ToString("X") + " with " + '\n' + branchCodeString + "\n\n" +
+                "- Replace " + (initString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + initOffset.ToString("X") + " with " + '\n' + initString + "\n\n" +
+                "- Modify file #" + fileID + " inside " + '\n' + rom.getSyntheticOverlayPath() + '\n' + " to accommodate for 88KB of data (no backup)." + "\n\n" +
                 "Do you wish to continue?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
                 if (arm9expand(arm9path, fileID, initOffset, initString, branchOffset, branchCodeString))
-                    MessageBox.Show("Operation successful.", "ARM9 usable memory has been expanded.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else {
                     MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 backup (arm9.bin.bak).", "Something went wrong",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -257,7 +229,7 @@ namespace DSPRE
         }
 
         private void unsupportedROMLanguage() {
-            MessageBox.Show("This operation is currently impossible to carry out on the " + rom.GetLanguage() +
+            MessageBox.Show("This operation is currently impossible to carry out on the " + rom.getGameLanguage() +
                 " version of this ROM.", "Unsupported language", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

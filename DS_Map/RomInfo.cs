@@ -1,25 +1,25 @@
 using System.IO;
 using System.Collections.Generic;
-using System;
+using System.Windows;
+using System.Windows.Forms;
 
-namespace DSPRE
-{
+namespace DSPRE {
 
     /// <summary>
     /// Class to store ROM data from GEN IV Pokémon games
     /// </summary>
 
-    public class RomInfo
-    {
+    public class RomInfo {
         private string romID;
         private string workDir;
         private string gameVersion;
+        private string language;
 
         #region Constructors (1)
-        public RomInfo(string id, string workDir)
-        {
+        public RomInfo(string id, string workDir) {
             romID = id;
-            gameVersion = getGameVersion();
+            gameVersion = loadGameVersion();
+            language = loadGameLanguage();
             this.workDir = workDir;
         }
         #endregion
@@ -28,41 +28,34 @@ namespace DSPRE
         public string getWorkingFolder() {
             return workDir;
         }
-        public string GetAreaDataFolderPath()
-        {
+        public string GetAreaDataFolderPath() {
             return workDir + @"unpacked\area_data";
         }
-        public int GetAreaDataCount()
-        {
+        public int GetAreaDataCount() {
             return Directory.GetFiles(GetAreaDataFolderPath()).Length; ;
         }
-        public string GetBuildingModelsFolderPath(bool interior)
-        {
+        public string GetBuildingModelsFolderPath(bool interior) {
             string path;
-            switch (gameVersion)
-            {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
                     path = @"unpacked\DPPtBuildings";
                     break;
                 default:
-                    if (interior) 
+                    if (interior)
                         path = @"unpacked\HGSSBuildingsIN";
-                    else 
+                    else
                         path = @"unpacked\HGSSBuildingsOUT";
                     break;
             }
             return workDir + path;
         }
-        public int GetBuildingCount(bool interior)
-        {
+        public int GetBuildingCount(bool interior) {
             return Directory.GetFiles(GetBuildingModelsFolderPath(interior)).Length;
         }
-        public int GetHeaderTableOffset()
-        {
-            Dictionary<string, int> offsets = new Dictionary<string, int>()
-            {
+        public int GetHeaderTableOffset() {
+            Dictionary<string, int> offsets = new Dictionary<string, int>() {
                 ["ADAE"] = 0xEEDBC,
                 ["ADAS"] = 0xEEE08,
                 ["ADAI"] = 0xEED70,
@@ -96,15 +89,12 @@ namespace DSPRE
             };
             return offsets[this.romID];
         }
-        public int GetHeaderCount()
-        {
+        public int GetHeaderCount() {
             return (int)new FileInfo(workDir + @"data\fielddata\maptable\mapname.bin").Length / 0x10;
         }
-        public int GetAttackNamesMessageNumber()
-        {
+        public int GetAttackNamesMessageNumber() {
             int fileNumber;
-            switch (gameVersion)
-            {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     fileNumber = 588;
@@ -113,19 +103,17 @@ namespace DSPRE
                     fileNumber = 647;
                     break;
                 default:
-                    if (GetLanguage() == "JAP") 
+                    if (getGameLanguage() == "JAP")
                         fileNumber = 739;
-                    else 
+                    else
                         fileNumber = 750;
                     break;
             }
             return fileNumber;
         }
-        public int GetItemNamesMessageNumber()
-        {
+        public int GetItemNamesMessageNumber() {
             int fileNumber;
-            switch (gameVersion)
-            {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     fileNumber = 344;
@@ -134,17 +122,15 @@ namespace DSPRE
                     fileNumber = 392;
                     break;
                 default:
-                    if (GetLanguage() == "JAP") fileNumber = 219;
+                    if (getGameLanguage() == "JAP") fileNumber = 219;
                     else fileNumber = 222;
                     break;
             }
             return fileNumber;
         }
-        public int GetMapNamesMessageNumber()
-        {
+        public int GetMapNamesMessageNumber() {
             int fileNumber;
-            switch (gameVersion)
-            {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     fileNumber = 382;
@@ -153,17 +139,15 @@ namespace DSPRE
                     fileNumber = 433;
                     break;
                 default:
-                    if (GetLanguage() == "JAP") fileNumber = 272;
+                    if (getGameLanguage() == "JAP") fileNumber = 272;
                     else fileNumber = 279;
                     break;
             }
             return fileNumber;
         }
-        public int GetItemScriptFileNumber()
-        {
+        public int GetItemScriptFileNumber() {
             int fileNumber;
-            switch (gameVersion)
-            {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     fileNumber = 370;
@@ -177,11 +161,9 @@ namespace DSPRE
             }
             return fileNumber;
         }
-        public int GetPokémonNamesMessageNumber()
-        {
+        public int GetPokémonNamesMessageNumber() {
             int fileNumber;
-            switch (gameVersion)
-            {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     fileNumber = 362;
@@ -190,19 +172,17 @@ namespace DSPRE
                     fileNumber = 412;
                     break;
                 default:
-                    if (GetLanguage() == "JAP") 
+                    if (getGameLanguage() == "JAP")
                         fileNumber = 232;
-                    else 
+                    else
                         fileNumber = 237;
                     break;
             }
             return fileNumber;
         }
-        public int GetTrainerNamesMessageNumber()
-        {
+        public int GetTrainerNamesMessageNumber() {
             int fileNumber;
-            switch (gameVersion)
-            {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     fileNumber = 559;
@@ -211,19 +191,17 @@ namespace DSPRE
                     fileNumber = 618;
                     break;
                 default:
-                    if (GetLanguage() == "JAP") 
+                    if (getGameLanguage() == "JAP")
                         fileNumber = 719;
-                    else 
+                    else
                         fileNumber = 729;
                     break;
             }
             return fileNumber;
         }
-        public int GetTrainerClassMessageNumber()
-        {
+        public int GetTrainerClassMessageNumber() {
             int fileNumber;
-            switch (gameVersion)
-            {
+            switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     fileNumber = 560;
@@ -232,78 +210,64 @@ namespace DSPRE
                     fileNumber = 619;
                     break;
                 default:
-                    if (GetLanguage() == "JAP") 
+                    if (getGameLanguage() == "JAP")
                         fileNumber = 720;
-                    else 
+                    else
                         fileNumber = 730;
                     break;
             }
             return fileNumber;
         }
-        public string GetMapTexturesFolderPath()
-        {
+        public string GetMapTexturesFolderPath() {
             return workDir + @"unpacked\maptex";
         }
-        public int GetMapTexturesCount()
-        {
+        public int GetMapTexturesCount() {
             return Directory.GetFiles(GetMapTexturesFolderPath()).Length;
         }
-        public string GetBuildingTexturesFolderPath() { 
+        public string GetBuildingTexturesFolderPath() {
             return workDir + @"unpacked\TextureBLD";
         }
 
-        public int GetBuildingTexturesCount()
-        {
+        public int GetBuildingTexturesCount() {
             return Directory.GetFiles(GetBuildingTexturesFolderPath()).Length;
         }
-        public string GetMatrixFolderPath() {  
+        public string GetMatrixFolderPath() {
             return workDir + @"unpacked\matrix";
         }
-        public int GetMatrixCount()
-        {
+        public int GetMatrixCount() {
             return Directory.GetFiles(GetMatrixFolderPath()).Length;
         }
-        public string GetTextArchivesPath()
-        {
+        public string GetTextArchivesPath() {
             return workDir + @"unpacked\msg";
         }
-        public int GetMessageCount()
-        {
+        public int GetMessageCount() {
             return Directory.GetFiles(GetTextArchivesPath()).Length;
         }
-        public string GetTrainerDataFolderPath()
-        {
+        public string GetTrainerDataFolderPath() {
             return workDir + @"unpacked\trainerdata";
         }
-        public string GetMapFolderPath()
-        {
+        public string GetMapFolderPath() {
             return workDir + @"unpacked\maps";
         }
-        public int GetMapCount()
-        {
+        public int GetMapCount() {
             return Directory.GetFiles(GetMapFolderPath()).Length;
         }
-        public string GetOverworldFolderPath()
-        {
+        public string GetOverworldFolderPath() {
             return workDir + @"unpacked\overworlds";
         }
-        public string GetEncounterFolderPath()
-        {
+        public string GetEncounterFolderPath() {
             return workDir + @"unpacked\wildPokeData";
         }
-        public int GetEventCount()
-        {
+        public int GetEventCount() {
             return Directory.GetFiles(GetEventFolderPath()).Length;
         }
-        public string GetEventFolderPath()
-        {
+        public string GetEventFolderPath() {
             return workDir + @"unpacked\events";
         }
-        public string GetLanguage()
-        {
+        public string loadGameLanguage() {
             string language;
-            switch (romID)
-            {
+
+            switch (romID) {
                 case "ADAE":
                 case "APAE":
                 case "CPUE":
@@ -348,11 +312,18 @@ namespace DSPRE
                 default:
                     language = "JAP";
                     break;
-            }           
+            }
             return language;
         }
-        public string getGameVersion()
-        {
+
+        public string getGameLanguage() {
+            return this.language;
+        }
+
+        public string getGameVersion() {
+            return gameVersion;
+        }
+        public string loadGameVersion() {
             Dictionary<string, string> versions = new Dictionary<string, string>() {
                 ["ADAE"] = "Diamond",
                 ["ADAS"] = "Diamond",
@@ -386,14 +357,18 @@ namespace DSPRE
                 ["IPGJ"] = "SoulSilver",
                 ["LATA"] = "LATA",
             };
-            return versions[this.romID];
+            try {
+                return versions[this.romID];
+            } catch (KeyNotFoundException) {
+                System.Windows.Forms.MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
         }
-        public int GetScriptCount()
-        {
+        public int GetScriptCount() {
             return Directory.GetFiles(GetScriptFolderPath()).Length;
         }
-        public string GetScriptFolderPath()
-        {
+        public string GetScriptFolderPath() {
             return workDir + @"unpacked\scripts";
         }
 
