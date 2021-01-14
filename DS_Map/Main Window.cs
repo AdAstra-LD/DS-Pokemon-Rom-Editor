@@ -3625,7 +3625,17 @@ namespace DSPRE {
                         archiveID = matchOverworldInTableDPPt(idReader, ID);
                         break;
                     case "Platinum":
-                        idReader.BaseStream.Position = 0x2BC34; // Go to the beginning of the overworld table
+                        switch (romInfo.GetGameLanguage()) { // Go to the beginning of the overworld table
+                            case "ITA":
+                                idReader.BaseStream.Position = 0x2BC44;
+                                break;
+                            case "GER":
+                                idReader.BaseStream.Position = 0x2BC50;
+                                break;
+                            default:
+                                idReader.BaseStream.Position = 0x2BC34; 
+                                break;
+                        }
                         archiveID = matchOverworldInTableDPPt(idReader, ID);
                         break;
                     default:
@@ -3647,7 +3657,7 @@ namespace DSPRE {
                     ushort idFound = idReader.ReadUInt16();
                     Console.WriteLine("Matching against : " + idFound.ToString("X4"));
                     if (idFound == ID)
-                        return idReader.ReadInt16(); // If the entry is a match, stop and go to reading part
+                        return (int)idReader.ReadUInt16(); // If the entry is a match, stop and go to reading part
                     else
                         idReader.BaseStream.Position += 0x4; // If the entry is not a match, move forward
                 }
@@ -3662,14 +3672,14 @@ namespace DSPRE {
             bool match = new bool();
             try {
                 while (!match) { // Search for the overworld id in the table
-                    uint idFound = BitConverter.ToUInt32(idReader.ReadBytes(4), 0);
+                    uint idFound = idReader.ReadUInt32();
                     //if (idFound == 0xFFFF) 
                     //    break;
                     //else {
                     
                         Console.WriteLine("Matching against : " + idFound.ToString("X4"));
                         if (idFound == ID)
-                            return BitConverter.ToInt32(idReader.ReadBytes(4), 0); // Read ID from file if there was a match
+                            return (int)idReader.ReadUInt32(); // Read ID from file if there was a match
                         else
                             idReader.BaseStream.Position += 0x4; // If the entry is not a match, move forward
                     //}
@@ -4106,6 +4116,15 @@ namespace DSPRE {
             try {
                 selectedEvent = currentEventFile.overworlds[index];
 
+                /* Sprite index and image controls */
+                owSpriteComboBox.SelectedIndex = MatchOverworldIDToSpriteArchive(currentEventFile.overworlds[index].spriteID, spritesTablePath);
+                owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[index].spriteID, currentEventFile.overworlds[index].orientation);
+            } catch (ArgumentOutOfRangeException) {
+                String errorMsg = "This Overworld's sprite ID couldn't be read correctly.";
+                MessageBox.Show(errorMsg, "Something went wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            try { 
                 /* Set coordinates controls */
                 owXMapUpDown.Value = currentEventFile.overworlds[index].xMapPosition;
                 owYMapUpDown.Value = currentEventFile.overworlds[index].yMapPosition;
@@ -4117,10 +4136,6 @@ namespace DSPRE {
                 owIDNumericUpDown.Value = currentEventFile.overworlds[index].owID;
                 owFlagNumericUpDown.Value = currentEventFile.overworlds[index].flag;
                 owScriptNumericUpDown.Value = currentEventFile.overworlds[index].scriptNumber;
-
-                /* Sprite index and image controls */
-                owSpriteComboBox.SelectedIndex = MatchOverworldIDToSpriteArchive(currentEventFile.overworlds[index].spriteID, spritesTablePath);
-                owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[index].spriteID, currentEventFile.overworlds[index].orientation);
 
                 /* Special settings controls */
                 if (currentEventFile.overworlds[index].type == 0x1) {
