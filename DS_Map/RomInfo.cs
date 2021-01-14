@@ -15,44 +15,73 @@ namespace DSPRE {
         private string gameVersion;
         private string language;
 
+        private string interiorBuildingsPath;
+        private string exteriorBuildingsPath;
+        private string areaDataFolderPath;
+        private string OWtablePath;
+
         #region Constructors (1)
         public RomInfo(string id, string workDir) {
             romID = id;
             gameVersion = loadGameVersion();
             language = loadGameLanguage();
             this.workDir = workDir;
+            SetBuildingModelsDirPath();
+            SetAreaDataDirPath();
+            SetOWtablePath();
         }
         #endregion
 
         #region Methods (22)
-        public string getWorkingFolder() {
+        public string GetWorkingFolder() {
             return workDir;
         }
-        public string GetAreaDataFolderPath() {
-            return workDir + @"unpacked\area_data";
+        public string GetAreaDataDirPath() {
+            return areaDataFolderPath;
+        }
+        public void SetAreaDataDirPath() {
+            areaDataFolderPath = workDir + @"unpacked\area_data";
         }
         public int GetAreaDataCount() {
-            return Directory.GetFiles(GetAreaDataFolderPath()).Length; ;
+            return Directory.GetFiles(GetAreaDataDirPath()).Length; ;
         }
-        public string GetBuildingModelsFolderPath(bool interior) {
-            string path;
+        public void SetBuildingModelsDirPath() {
             switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
-                    path = @"unpacked\DPPtBuildings";
+                    exteriorBuildingsPath = workDir + @"unpacked\DPPtBuildings";
                     break;
                 default:
-                    if (interior)
-                        path = @"unpacked\HGSSBuildingsIN";
-                    else
-                        path = @"unpacked\HGSSBuildingsOUT";
+                    interiorBuildingsPath = workDir + @"unpacked\HGSSBuildingsIN";
+                    exteriorBuildingsPath = workDir + @"unpacked\HGSSBuildingsOUT";
                     break;
             }
-            return workDir + path;
+        }
+        public string GetBuildingModelsDirPath(bool interior) {
+            if (interior)
+                return interiorBuildingsPath;
+            else
+                return exteriorBuildingsPath;
         }
         public int GetBuildingCount(bool interior) {
-            return Directory.GetFiles(GetBuildingModelsFolderPath(interior)).Length;
+            return Directory.GetFiles(GetBuildingModelsDirPath(interior)).Length;
+        }
+
+        public void SetOWtablePath () {
+            switch (gameVersion) {
+                case "Diamond":
+                case "Pearl":
+                case "Platinum":
+                    OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
+                    break;
+                default:
+                    OWtablePath = workDir + "overlay" + "\\" + "overlay_0001.bin";
+                    break;
+            }
+        }
+        public string GetOWtablePath () {
+            return OWtablePath;
         }
         public int GetHeaderTableOffset() {
             Dictionary<string, int> offsets = new Dictionary<string, int>() {
@@ -103,7 +132,7 @@ namespace DSPRE {
                     fileNumber = 647;
                     break;
                 default:
-                    if (getGameLanguage() == "JAP")
+                    if (GetGameLanguage() == "JAP")
                         fileNumber = 739;
                     else
                         fileNumber = 750;
@@ -122,7 +151,7 @@ namespace DSPRE {
                     fileNumber = 392;
                     break;
                 default:
-                    if (getGameLanguage() == "JAP") fileNumber = 219;
+                    if (GetGameLanguage() == "JAP") fileNumber = 219;
                     else fileNumber = 222;
                     break;
             }
@@ -139,7 +168,7 @@ namespace DSPRE {
                     fileNumber = 433;
                     break;
                 default:
-                    if (getGameLanguage() == "JAP") fileNumber = 272;
+                    if (GetGameLanguage() == "JAP") fileNumber = 272;
                     else fileNumber = 279;
                     break;
             }
@@ -172,7 +201,7 @@ namespace DSPRE {
                     fileNumber = 412;
                     break;
                 default:
-                    if (getGameLanguage() == "JAP")
+                    if (GetGameLanguage() == "JAP")
                         fileNumber = 232;
                     else
                         fileNumber = 237;
@@ -191,7 +220,7 @@ namespace DSPRE {
                     fileNumber = 618;
                     break;
                 default:
-                    if (getGameLanguage() == "JAP")
+                    if (GetGameLanguage() == "JAP")
                         fileNumber = 719;
                     else
                         fileNumber = 729;
@@ -210,7 +239,7 @@ namespace DSPRE {
                     fileNumber = 619;
                     break;
                 default:
-                    if (getGameLanguage() == "JAP")
+                    if (GetGameLanguage() == "JAP")
                         fileNumber = 720;
                     else
                         fileNumber = 730;
@@ -240,7 +269,7 @@ namespace DSPRE {
         public string GetTextArchivesPath() {
             return workDir + @"unpacked\msg";
         }
-        public int GetMessageCount() {
+        public int GetTextArchivesCount() {
             return Directory.GetFiles(GetTextArchivesPath()).Length;
         }
         public string GetTrainerDataFolderPath() {
@@ -252,7 +281,7 @@ namespace DSPRE {
         public int GetMapCount() {
             return Directory.GetFiles(GetMapFolderPath()).Length;
         }
-        public string GetOverworldFolderPath() {
+        public string GetOWSpriteDirPath() {
             return workDir + @"unpacked\overworlds";
         }
         public string GetEncounterFolderPath() {
@@ -316,11 +345,11 @@ namespace DSPRE {
             return language;
         }
 
-        public string getGameLanguage() {
+        public string GetGameLanguage() {
             return this.language;
         }
 
-        public string getGameVersion() {
+        public string GetGameVersion() {
             return gameVersion;
         }
         public string loadGameVersion() {
@@ -372,7 +401,7 @@ namespace DSPRE {
             return workDir + @"unpacked\scripts";
         }
 
-        internal string getSyntheticOverlayPath() {
+        internal string GetSyntheticOverlayPath() {
             return workDir + @"unpacked\syntheticOverlayNarc";
         }
 

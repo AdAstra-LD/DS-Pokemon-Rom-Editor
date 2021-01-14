@@ -10,7 +10,7 @@ namespace DSPRE
 	/// <summary>
 	/// Class to store message data from DS Pokémon games
 	/// </summary>
-	public class MessageFile
+	public class MessageArchive
 	{
         #region Fields (2)
         public List<string> messages = new List<string>();
@@ -18,9 +18,9 @@ namespace DSPRE
         #endregion Fields
 
         #region Constructors (1)
-        public MessageFile(FileStream messageStream)
+        public MessageArchive(FileStream messageStream)
         {
-            ResourceManager getChar = new ResourceManager("DSPRE.Resources.ReadText", Assembly.GetExecutingAssembly());
+            ResourceManager GetChar = new ResourceManager("DSPRE.Resources.ReadText", Assembly.GetExecutingAssembly());
             BinaryReader readText = new BinaryReader(messageStream);
             int stringCount = readText.ReadUInt16();
             initialKey = readText.ReadUInt16();
@@ -100,7 +100,7 @@ namespace DSPRE
                                             }
                                             if (tmp1 != 0x0 && tmp1 != 0x1)
                                             {
-                                                string character = getChar.GetString(tmp1.ToString("X4"));
+                                                string character = GetChar.GetString(tmp1.ToString("X4"));
                                                 pokemonText.Append(character);
                                                 if (character == null)
                                                 {
@@ -118,7 +118,7 @@ namespace DSPRE
                                         }
                                         if (tmp1 != 0x0 && tmp1 != 0x1)
                                         {
-                                            string character = getChar.GetString(tmp1.ToString("X4"));
+                                            string character = GetChar.GetString(tmp1.ToString("X4"));
                                             pokemonText.Append(character);
                                             if (character == null)
                                             {
@@ -142,7 +142,7 @@ namespace DSPRE
                             }
                             else
                             {
-                                string character = getChar.GetString(car.ToString("X4"));
+                                string character = GetChar.GetString(car.ToString("X4"));
                                 pokemonText.Append(character);
                                 if (character == null)
                                 {
@@ -164,7 +164,7 @@ namespace DSPRE
         #region Methods (2)
         public int[] EncodeString(string currentMessage, int stringIndex, int stringSize) // Converts string to hex characters
         {
-            ResourceManager getByte = new ResourceManager("DSPRE.Resources.WriteText", Assembly.GetExecutingAssembly());
+            ResourceManager GetByte = new ResourceManager("DSPRE.Resources.WriteText", Assembly.GetExecutingAssembly());
 
             int[] pokemonMessage = new int[stringSize - 1];
             var charArray = currentMessage.ToCharArray();
@@ -245,7 +245,7 @@ namespace DSPRE
                     }
                     else
                     {
-                        pokemonMessage[count] = (int)Convert.ToUInt32(getByte.GetString(((int)charArray[i]).ToString()), 16);
+                        pokemonMessage[count] = (int)Convert.ToUInt32(GetByte.GetString(((int)charArray[i]).ToString()), 16);
                     }
                 }
                 count++;

@@ -23,7 +23,7 @@ namespace DSPRE
         {
             string path = rom.GetScriptFolderPath() + "\\" + rom.GetItemScriptFileNumber().ToString("D4");
 
-            ScriptFile file = new ScriptFile(new FileStream(path, FileMode.Open), rom.getGameVersion());
+            ScriptFile file = new ScriptFile(new FileStream(path, FileMode.Open), rom.GetGameVersion());
             for (int i = 0; i < file.scripts.Count - 1; i++)
             {
                 file.scripts[i].commands[0].parameters[1] = BitConverter.GetBytes((ushort)i); // Fix item index
@@ -35,7 +35,7 @@ namespace DSPRE
         }
 
         private void applyARM9ExpansionButton_Click(object sender, EventArgs e) {
-            arm9Expansion(rom.getWorkingFolder() + @"arm9.bin", rom.getGameVersion(), rom.getGameLanguage());
+            arm9Expansion(rom.GetWorkingFolder() + @"arm9.bin", rom.GetGameVersion(), rom.GetGameLanguage());
         }
 
         private void arm9Expansion(string arm9path, string version, string lang) {
@@ -113,7 +113,7 @@ namespace DSPRE
                 "- Backup ARM9 file (arm9.bin.bak will be created)." + "\n\n" +
                 "- Replace " + (branchCodeString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + branchOffset.ToString("X") + " with " + '\n' + branchCodeString + "\n\n" +
                 "- Replace " + (initString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + initOffset.ToString("X") + " with " + '\n' + initString + "\n\n" +
-                "- Modify file #" + fileID + " inside " + '\n' + rom.getSyntheticOverlayPath() + '\n' + " to accommodate for 88KB of data (no backup)." + "\n\n" +
+                "- Modify file #" + fileID + " inside " + '\n' + rom.GetSyntheticOverlayPath() + '\n' + " to accommodate for 88KB of data (no backup)." + "\n\n" +
                 "Do you wish to continue?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -130,7 +130,7 @@ namespace DSPRE
         }
 
         private void applyPokemonNamesToSentenceCase_Click(object sender, EventArgs e) {
-            String version = rom.getGameVersion();
+            String version = rom.GetGameVersion();
             int[] fileArchives = null;
            
             switch (version) {
@@ -187,7 +187,7 @@ namespace DSPRE
                 return false;
             }
 
-            String fullFilePath = rom.getSyntheticOverlayPath() + '\\' + fileID.ToString().PadLeft(4, '0');
+            String fullFilePath = rom.GetSyntheticOverlayPath() + '\\' + fileID.ToString("D4");
             File.Delete(fullFilePath);
 
             BinaryWriter f = new BinaryWriter(File.Create(fullFilePath));
@@ -224,12 +224,12 @@ namespace DSPRE
         }
 
         private void unsupportedROM() {
-            MessageBox.Show("This operation is currently impossible to carry out on any Pokémon " + rom.getGameVersion() + "ROM.",
+            MessageBox.Show("This operation is currently impossible to carry out on any Pokémon " + rom.GetGameVersion() + "ROM.",
                 "Unsupported ROM", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void unsupportedROMLanguage() {
-            MessageBox.Show("This operation is currently impossible to carry out on the " + rom.getGameLanguage() +
+            MessageBox.Show("This operation is currently impossible to carry out on the " + rom.GetGameLanguage() +
                 " version of this ROM.", "Unsupported language", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

@@ -36,7 +36,7 @@ namespace DSPRE
             buildingOpenGLControl.MouseWheel += new MouseEventHandler(buildingOpenGLControl_MouseWheel);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
 
-            if (rom.getGameVersion() == "HeartGold" || rom.getGameVersion() == "SoulSilver") 
+            if (rom.GetGameVersion() == "HeartGold" || rom.GetGameVersion() == "SoulSilver") 
                 interiorCheckBox.Enabled = true;
 
             disableHandlers = true;
@@ -50,7 +50,7 @@ namespace DSPRE
         #region Subroutines
         private void CreateEmbeddedTexturesFile(int modelID, bool interior)
         {
-            string readingPath = folder + rom.GetBuildingModelsFolderPath(interior) + "\\" + modelID.ToString("D4");
+            string readingPath = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + modelID.ToString("D4");
             string writingPath = Path.GetTempPath() + "BLDtexture.nsbtx";
 
             using (BinaryReader reader = new BinaryReader(new FileStream(readingPath, FileMode.Open)))
@@ -78,10 +78,10 @@ namespace DSPRE
         }
         private void FillListBox(bool interior)
         {
-            int modelCount = Directory.GetFiles(folder + rom.GetBuildingModelsFolderPath(interior)).Length;
+            int modelCount = Directory.GetFiles(folder + rom.GetBuildingModelsDirPath(interior)).Length;
             for (int i = 0; i < modelCount; i++)
             {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(folder + rom.GetBuildingModelsFolderPath(interior) + "\\" + i.ToString("D4"))))
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(folder + rom.GetBuildingModelsDirPath(interior) + "\\" + i.ToString("D4"))))
                 {
                     reader.BaseStream.Position = 0x14;
                     if (reader.ReadUInt32() == 0x304C444D) reader.BaseStream.Position = 0x34;
@@ -95,20 +95,24 @@ namespace DSPRE
         {
             int texturesCount = Directory.GetFiles(folder + rom.GetBuildingTexturesFolderPath()).Length;
             textureComboBox.Items.Add("Embedded textures");
-            for (int i = 0; i < texturesCount; i++) textureComboBox.Items.Add("Texture " + i);
+
+            for (int i = 0; i < texturesCount; i++) 
+                textureComboBox.Items.Add("Texture " + i);
         }
         private void LoadBuildingModel(int modelID, bool interior)
         {
-            string path = folder + rom.GetBuildingModelsFolderPath(interior) + "\\" + modelID.ToString("D4");
-            using (Stream fs = new FileStream(path, FileMode.Open)) currentNSBMD = NSBMDLoader.LoadNSBMD(fs);
+            string path = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + modelID.ToString("D4");
+            using (Stream fs = new FileStream(path, FileMode.Open)) 
+                currentNSBMD = NSBMDLoader.LoadNSBMD(fs);
         }
         private void LoadModelTextures(int fileID)
         {
             string path;
-            if (fileID > -1) path = folder + rom.GetBuildingTexturesFolderPath() + "\\" + fileID.ToString("D4");
-            else path = Path.GetTempPath() + "BLDtexture.nsbtx"; // Load Embedded textures if the argument passed to this function is -1
-            try
-            {
+            if (fileID > -1) 
+                path = folder + rom.GetBuildingTexturesFolderPath() + "\\" + fileID.ToString("D4");
+            else 
+                path = Path.GetTempPath() + "BLDtexture.nsbtx"; // Load Embedded textures if the argument passed to this function is -1
+            try {
                 currentNSBMD.materials = NSBTXLoader.LoadNsbtx(new MemoryStream(File.ReadAllBytes(path)), out currentNSBMD.Textures, out currentNSBMD.Palettes);
                 currentNSBMD.MatchTextures();
             }
@@ -116,9 +120,9 @@ namespace DSPRE
         }
         private void RenderModel()
         {
-            MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File ani = new MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File();
-            MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File tp = new MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File();
-            MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File ca = new MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File();
+            MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File bta = new MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File();
+            MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File btp = new MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File();
+            MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File bca = new MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File();
             int[] aniframeS = new int[0];
 
             buildingOpenGLControl.Invalidate(); // Invalidate drawing surface
@@ -127,7 +131,7 @@ namespace DSPRE
             /* Render the building model */
             renderer.Model = currentNSBMD.models[0];
             Gl.glScalef(currentNSBMD.models[0].modelScale / 32, currentNSBMD.models[0].modelScale / 32, currentNSBMD.models[0].modelScale / 32);
-            renderer.RenderModel("", ani, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, ca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, tp, currentNSBMD);
+            renderer.RenderModel("", bta, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, bca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, btp, currentNSBMD);
         }
         private void SetupRenderer(float ang, float dist, float elev, float perspective)
         {
@@ -177,7 +181,8 @@ namespace DSPRE
         }
         private void buildingsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             LoadBuildingModel(buildingsListBox.SelectedIndex, interiorCheckBox.Checked);
             CreateEmbeddedTexturesFile(buildingsListBox.SelectedIndex, interiorCheckBox.Checked);
@@ -191,7 +196,7 @@ namespace DSPRE
             if (em.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            else File.Copy(folder + rom.GetBuildingModelsFolderPath(interiorCheckBox.Checked) + "\\" + buildingsListBox.SelectedIndex.ToString("D4"), em.FileName, true);
+            else File.Copy(folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingsListBox.SelectedIndex.ToString("D4"), em.FileName, true);
         }
         private void importButton_Click(object sender, EventArgs e)
         {
@@ -209,13 +214,12 @@ namespace DSPRE
                 }
                 else
                 {
-                    File.Copy(im.FileName, folder + rom.GetBuildingModelsFolderPath(interiorCheckBox.Checked) + "\\" + buildingsListBox.SelectedIndex.ToString("D4"), true);
+                    File.Copy(im.FileName, folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingsListBox.SelectedIndex.ToString("D4"), true);
                     buildingsListBox_SelectedIndexChanged(null, null);
                 }                
             }
         }
-        private void interiorCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
+        private void interiorCheckBox_CheckedChanged(object sender, EventArgs e) {
             disableHandlers = true;
 
             buildingsListBox.Items.Clear();
@@ -225,17 +229,16 @@ namespace DSPRE
 
             buildingsListBox.SelectedIndex = 0;
         }
-        private void textureComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (disableHandlers) return;
+        private void textureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (disableHandlers) 
+                return;
             LoadModelTextures(textureComboBox.SelectedIndex - 1);
             RenderModel();
         }
 
         private void buildingOpenGLControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            switch (e.KeyCode)
-            {
+            switch (e.KeyCode) {
                 case Keys.Right:
                     ang += 1;
                     break;
@@ -248,7 +251,7 @@ namespace DSPRE
                 case Keys.Up:
                     elev -= 1;
                     break;
-            }
+            } 
             RenderModel();
         }
     }

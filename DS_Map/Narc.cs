@@ -108,6 +108,7 @@ namespace NarcAPI
 
         public void ExtractToFolder(String folderPath)
         {
+            Console.WriteLine(folderPath);
             if (Directory.Exists(folderPath)) {
                 try {
                     Directory.Delete(folderPath, true);
@@ -116,7 +117,13 @@ namespace NarcAPI
                     return;
                 }
             }
-            Directory.CreateDirectory(folderPath);
+            try {
+                Directory.CreateDirectory(folderPath);
+            } catch (ArgumentNullException) {
+                MessageBox.Show("Dir path is null.", "Can't create directory", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             FileStream file;
             byte[] buffer;
             for (int i = 0; i < Elements.Length; i++)

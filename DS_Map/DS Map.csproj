@@ -146,7 +146,7 @@
     <Compile Include="InsertValueDialog.Designer.cs">
       <DependentUpon>InsertValueDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="MessageFile.cs" />
+    <Compile Include="MessageArchive.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="RichTextBoxExt.cs" />
     <Compile Include="Resources\MovementNames.Designer.cs" />
