@@ -87,7 +87,7 @@ namespace DSPRE
         #region Fields (10)
         public byte areaDataID { get; set; }
         public byte camera { get; set; }
-        public ushort events { get; set; }
+        public ushort eventID { get; set; }
         public byte flags { get; set; }
         public ushort levelScript { get; set; }
         public ushort matrix { get; set; }
@@ -129,7 +129,7 @@ namespace DSPRE
                 musicDay = reader.ReadUInt16();
                 musicNight = reader.ReadUInt16();
                 wildPokémon = reader.ReadUInt16();
-                events = reader.ReadUInt16();
+                eventID = reader.ReadUInt16();
                 mapName = reader.ReadUInt16();
                 weather = StandardizeWeather(reader.ReadByte());
                 camera = reader.ReadByte();
@@ -154,7 +154,7 @@ namespace DSPRE
                 writer.Write(musicDay);
                 writer.Write(musicNight);
                 writer.Write(wildPokémon);
-                writer.Write(events);
+                writer.Write(eventID);
                 writer.Write(mapName);
                 writer.Write(weather);
                 writer.Write(camera);
@@ -221,7 +221,7 @@ namespace DSPRE
                 musicDay = reader.ReadUInt16();
                 musicNight = reader.ReadUInt16();
                 wildPokémon = reader.ReadUInt16();
-                events = reader.ReadUInt16();
+                eventID = reader.ReadUInt16();
                 mapName = reader.ReadByte();
                 areaIcon = reader.ReadByte();
                 weather = StandardizeWeather(reader.ReadByte());
@@ -247,7 +247,7 @@ namespace DSPRE
                 writer.Write(musicDay);
                 writer.Write(musicNight);
                 writer.Write(wildPokémon);
-                writer.Write(events);
+                writer.Write(eventID);
                 writer.Write(mapName);
                 writer.Write(areaIcon);
                 writer.Write(weather);
@@ -324,7 +324,7 @@ namespace DSPRE
                     text = reader.ReadUInt16();
                     musicDay = reader.ReadUInt16();
                     musicNight = reader.ReadUInt16();
-                    events = reader.ReadUInt16();
+                    eventID = reader.ReadUInt16();
                     mapName = reader.ReadByte();
                     areaIcon = StandardizeAreaIcon(reader.ReadByte());
                     weather = StandardizeWeather(reader.ReadByte());
@@ -354,7 +354,7 @@ namespace DSPRE
                 writer.Write(text);
                 writer.Write(musicDay);
                 writer.Write(musicNight);
-                writer.Write(events);
+                writer.Write(eventID);
                 writer.Write(mapName);
                 writer.Write(areaIcon);
                 writer.Write(weather);
