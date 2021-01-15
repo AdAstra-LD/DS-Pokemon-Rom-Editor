@@ -5,7 +5,8 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with some QOL adjustments.
 ## Major Changes to Mixone's fork
 - Drastically sped up save time
 - New search location feature
-- Fixed HGSS Overworld sprites not appearing in the event editor [overlay1 decompression command problem].
+- Added mouse support and warps navigation feature to the Event Editor
+- Fixed OW search algorithm for most (if not all) supported ROMs
 - Added ARM9 memory expander to the new ROM Toolbox
 - New palette match algorithm.
 - Replaced flag search with "Search any command"
@@ -13,16 +14,17 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with some QOL adjustments.
 - Fixed "Open Matrix" not loading the correct textures and buildings, especially for interior maps.
 
 
-
 ## Minor Changes to Mixone's fork
 
 - New app Icon
 - Fixed app name
 - Added BDHCAM Support.
+- Fixed header flag names.
 - Corrected list of HGSS cameras.
+- Added new ALT key shortcuts (Hold alt to see which shortcuts are available)
+- Wild Poke editor now detects selected header
 - Fixed Text message search being case sensitive no matter what
 - Fixed BGS signature of maps being overwritten upon saving.
-- Fixed header flag names.
 - Fixed "Text Editor" export button.
 - Fixed a problem with Internal Names visualization (String termination problem for 16-byte long names).
 - Fixed Exception upon loading Dragon's Den header (Music not found).
@@ -34,7 +36,8 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with some QOL adjustments.
 - Added New Movement names and changed some of the old ones
 - Changed row numbers to hex in Text Editor
 - Expanded collisions database
-- Added new ALT key shortcuts (Hold alt to see which shortcuts are available)
 - Added placeholder BDHCAM button to toolbox
 - Added placeholder "Pokemon names case converter" button to toolbox
 - Fixed Encounters editor not opening
+- Fixed wrong numbers when resizing matrices
+- Added a warning when attempting to resize matrix 0
