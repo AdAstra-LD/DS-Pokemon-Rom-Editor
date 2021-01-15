@@ -33,7 +33,7 @@ namespace DSPRE
         public byte[,] altitudes;
         public ushort[,] maps;
 
-        public static ushort VOID = 65535;
+        public static ushort EMPTY = 65535;
         #endregion Fields
 
         #region Constructors(1)
@@ -82,7 +82,7 @@ namespace DSPRE
                     for (int j = 0; j < Math.Min(width, newWidth); j++) 
                         newAltitudes[i, j] = altitudes[i, j];
 
-            /* Copy existing map rows into new array, and fill eventual new ones with Matrix.VOID (FF FF) */
+            /* Copy existing map rows into new array, and fill eventual new ones with Matrix.EMPTY (FF FF) */
             for (int i = 0; i < Math.Min(height, newHeight); i++) 
                 for (int j = 0; j < Math.Min(width, newWidth); j++) 
                     newMaps[i, j] = maps[i, j];
@@ -90,12 +90,12 @@ namespace DSPRE
             if (newHeight > height) 
                 for (int i = height; i < newHeight; i++) 
                     for (int j = 0; j < newWidth; j++) 
-                        newMaps[i, j] = Matrix.VOID;
+                        newMaps[i, j] = Matrix.EMPTY;
 
             if (newWidth > width)   
                 for (int j = width; j < newWidth; j++) 
                     for (int i = 0; i < newHeight; i++) 
-                        newMaps[i, j] = Matrix.VOID;
+                        newMaps[i, j] = Matrix.EMPTY;
 
             /* Substitute old arrays with new arrays */
             headers = newHeaders;

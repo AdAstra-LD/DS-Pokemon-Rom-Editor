@@ -1470,6 +1470,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap unpackAllIcon {
+            get {
+                object obj = ResourceManager.GetObject("unpackAllIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap warp {
             get {
                 object obj = ResourceManager.GetObject("warp", resourceCulture);

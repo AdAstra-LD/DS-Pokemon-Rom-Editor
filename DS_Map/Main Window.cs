@@ -34,6 +34,7 @@ namespace DSPRE {
         public bool standardizedItems;
 
         /* Editors Setup */
+        private bool matrixEditorIsReady = false;
         private bool mapEditorIsReady = false;
         private bool eventEditorIsReady = false;
         private bool scriptEditorIsReady = false;
@@ -118,8 +119,13 @@ namespace DSPRE {
             return unpack.ExitCode;
         }
 
-        private void restoreOverlayFromBackup(int overlayNumber) {
+        private void restoreOverlayFromCompressedBackup(int overlayNumber) {
             String overlayFilePath = workDir + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
+
+            if (new FileInfo(overlayFilePath).Length <= new FileInfo(overlayFilePath + ".bak").Length) { //if overlay is bigger than its backup
+                Console.WriteLine("Overlay " + overlayNumber + " is already compressed.");
+                return;
+            }
 
             if (File.Exists(overlayFilePath + ".bak")) {
                 File.Delete(overlayFilePath);
@@ -329,14 +335,6 @@ namespace DSPRE {
             readArm9.Dispose();
             return tarGetBytes;
         }
-
-        private void RepackNARCs() {
-            foreach (var tuple in romInfo.GetNarcPaths().Zip(romInfo.GetExtractedNarcDirs(), Tuple.Create)) {
-                Narc.FromFolder(tuple.Item2).Save(workDir + tuple.Item1); // Make new NARC from folder
-                //Directory.Delete(tuple.Item2, true); // Delete folder
-            }
-        }
-
         private void DeleteTempFolders() {
             foreach (var tuple in romInfo.GetNarcPaths().Zip(romInfo.GetExtractedNarcDirs(), Tuple.Create)) {
                 Directory.Delete(tuple.Item2, true); // Delete folder
@@ -363,7 +361,33 @@ namespace DSPRE {
             repack.WaitForExit();
         }
         private void SetupEventEditor() {
-            statusLabel.Text = "Setting up Event Editor...";
+            /* Extract essential NARCs sub-archives*/
+            string[] narcPaths = romInfo.GetNarcPaths();
+            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+
+            statusLabel.Text = "Attempting to unpack Event Editor NARCs... Please wait. This might take a while";
+            toolStripProgressBar.Visible = true;
+            toolStripProgressBar.Maximum = 12;
+            toolStripProgressBar.Value = 0;
+            Update();
+
+            for (int i = 2; i < 13; i++) {
+                var tuple = Tuple.Create(narcPaths[i], extractedNarcDirs[i]);
+                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+                if (!di.Exists || di.GetFiles().Length == 0) {
+                    Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+                }
+                toolStripProgressBar.Value++;
+            }
+            if (romInfo.GetGameVersion() == "HeartGold" || romInfo.GetGameVersion() == "SoulSilver") {
+                var tuple = Tuple.Create(narcPaths[narcPaths.Length-1], extractedNarcDirs[extractedNarcDirs.Length-1]);
+                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+                if (!di.Exists || di.GetFiles().Length == 0) {
+                    Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+                }
+                toolStripProgressBar.Value++;
+            }
+            
 
             disableHandlers = true;
             if (File.Exists(romInfo.GetOWtablePath())) {
@@ -382,19 +406,30 @@ namespace DSPRE {
                 }
             }
 
-
             /* Add event file numbers to box */
             int eventCount = Directory.GetFiles(romInfo.GetEventsDirPath()).Length;
-            for (int i = 0; i < eventCount; i++)
+            int owSpriteCount = Directory.GetFiles(romInfo.GetOWSpriteDirPath()).Length;
+            string[] trainerNames = GetTrainerNames();
+
+            statusLabel.Text = "Loading Events... Please wait";
+            toolStripProgressBar.Maximum = eventCount+owSpriteCount+trainerNames.Length;
+            toolStripProgressBar.Value = 0;
+            Update();
+
+            /* Add event list to event combobox */
+            for (int i = 0; i < eventCount; i++) {
                 selectEventComboBox.Items.Add("Event File " + i);
+                toolStripProgressBar.Value++;
+            }
 
             /* Add sprite list to ow sprite box */
-            int owSpriteCount = Directory.GetFiles(romInfo.GetOWSpriteDirPath()).Length;
-            for (int i = 0; i < owSpriteCount; i++)
+            for (int i = 0; i < owSpriteCount; i++) {
                 owSpriteComboBox.Items.Add("Sprite " + i);
+                toolStripProgressBar.Value++;
+            }
 
             /* Add trainer list to ow trainer box */
-            owTrainerComboBox.Items.AddRange(GetTrainerNames());
+            owTrainerComboBox.Items.AddRange(trainerNames);
 
             /* Add item list to ow item box */
             int count = LoadScriptFile(romInfo.GetItemScriptFileNumber()).scripts.Count - 1;
@@ -502,6 +537,9 @@ namespace DSPRE {
             /* Draw matrix 0 in matrix navigator */
             eventMatrix = LoadMatrix(0);
             selectEventComboBox.SelectedIndex = 0;
+
+            toolStripProgressBar.Value = 0;
+            toolStripProgressBar.Visible = false;
         }
         private void SetupFlagNames() {
             switch (romInfo.GetGameVersion()) {
@@ -528,11 +566,23 @@ namespace DSPRE {
                     flag8CheckBox.Text = "Flag 8";
                     break;
             }
+            toolStripProgressBar.Visible = false;
         }
         private void SetupHeaderEditor() {
-            statusLabel.Text = "Setting up Header Editor...";
+            /* Extract essential NARCs sub-archives*/
+            string[] narcPaths = romInfo.GetNarcPaths();
+            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+
+            statusLabel.Text = "Attempting to unpack Header Editor NARCs... Please wait.";
             Update();
 
+            for (int i = 0; i < 2; i++) {
+                var tuple = Tuple.Create(narcPaths[i], extractedNarcDirs[i]);
+                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+                if (!di.Exists || di.GetFiles().Length == 0) {
+                    Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+                }
+            }
             /* Read Header internal names */
             internalNames = new List<string>();
             using (BinaryReader reader = new BinaryReader(File.OpenRead(workDir + @"data\fielddata\maptable\mapname.bin"))) {
@@ -589,8 +639,33 @@ namespace DSPRE {
             if (headerListBox.Items.Count > 0)
                 headerListBox.SelectedIndex = 0;
         }
-        private void SetupMapEditor() {
-            statusLabel.Text = "Setting up Map Editor...";
+        private void SetupMapEditor() { 
+            /* Extract essential NARCs sub-archives*/
+            string[] narcPaths = romInfo.GetNarcPaths();
+            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+
+            toolStripProgressBar.Visible = true;
+            toolStripProgressBar.Maximum = 15;
+            toolStripProgressBar.Value = 0;
+            statusLabel.Text = "Attempting to unpack Map Editor NARCs... Please wait.";
+            Update();
+
+            for (int i = 3; i < 9; i++) {
+                var tuple = Tuple.Create(narcPaths[i], extractedNarcDirs[i]);
+                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+                if (!di.Exists || di.GetFiles().Length == 0) {
+                    Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+                }
+                toolStripProgressBar.Value++;
+            }
+            if (romInfo.GetGameVersion() == "HeartGold" || romInfo.GetGameVersion() == "SoulSilver") {
+                var tuple = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 1]);
+                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+                if (!di.Exists || di.GetFiles().Length == 0) {
+                    Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+                }
+                toolStripProgressBar.Value++;
+            }
 
             disableHandlers = true;
 
@@ -630,19 +705,23 @@ namespace DSPRE {
                 }
 
             }
+            toolStripProgressBar.Value++;
 
             /* Fill building models list */
             buildIndexComboBox.Items.AddRange(GetBuildingsList(false));
+            toolStripProgressBar.Value++;
 
             /*  Fill map textures list */
             mapTextureComboBox.Items.Add("Untextured");
             for (int i = 0; i < romInfo.GetMapTexturesCount(); i++)
                 mapTextureComboBox.Items.Add("Texture " + i);
+            toolStripProgressBar.Value++;
 
             /*  Fill building textures list */
             buildTextureComboBox.Items.Add("Untextured");
             for (int i = 0; i < romInfo.GetBuildingTexturesCount(); i++)
                 buildTextureComboBox.Items.Add("Texture " + i);
+            toolStripProgressBar.Value++;
 
             /*  Fill collision painters list */
             List<string> collisionPainters = new List<string>()
@@ -736,14 +815,19 @@ namespace DSPRE {
                 "[E4] Trash Can",
                 "[E5] Shop items"
             };
+
             for (int i = 0; i < typePainters.Count; i++)
                 typePainterComboBox.Items.Add(typePainters[i]);
+            toolStripProgressBar.Value++;
 
             /* Set controls' initial values */
             selectCollisionPanel.BackColor = Color.MidnightBlue;
             typePainterComboBox.SelectedIndex = 0;
             collisionPainterComboBox.SelectedIndex = 1;
 
+
+            toolStripProgressBar.Value = 0;
+            toolStripProgressBar.Visible = false;
             disableHandlers = false;
 
 
@@ -768,8 +852,18 @@ namespace DSPRE {
             };
         }
         private void SetupMatrixEditor() {
+            string[] narcPaths = romInfo.GetNarcPaths();
+            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+
             statusLabel.Text = "Setting up Matrix Editor...";
             Update();
+
+            var tuple = Tuple.Create(narcPaths[2], extractedNarcDirs[2]); // 2 = matrixDir
+            DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+            if (!di.Exists || di.GetFiles().Length == 0) {
+                Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+            }
+
 
             disableHandlers = true;
 
@@ -788,7 +882,7 @@ namespace DSPRE {
                         [new List<uint> { 174 }] = Tuple.Create(Color.SteelBlue, Color.White),
                         [new List<uint> { 175 }] = Tuple.Create(Color.Sienna, Color.White),
                         [new List<uint> { 178 }] = Tuple.Create(Color.PowderBlue, Color.Black),
-                        [new List<uint> { Matrix.VOID }] = Tuple.Create(Color.Black, Color.White)
+                        [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
                     };
                     break;
                 case "HeartGold":
@@ -797,7 +891,7 @@ namespace DSPRE {
                         [new List<uint> { 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
                         [new List<uint> { 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
                         [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
-                        [new List<uint> { Matrix.VOID }] = Tuple.Create(Color.Black, Color.White)
+                        [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
                     };
                     break;
                 default:
@@ -807,7 +901,7 @@ namespace DSPRE {
                         [new List<uint> { 205, 206 }] = Tuple.Create(Color.DarkGreen, Color.White),
                         [new List<uint> { 207, 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
                         [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
-                        [new List<uint> { Matrix.VOID }] = Tuple.Create(Color.Black, Color.White)
+                        [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
                     };
                     break;
             }
@@ -816,8 +910,19 @@ namespace DSPRE {
             selectMatrixComboBox.SelectedIndex = 0;
         }
         private void SetupScriptEditor() {
+            /* Extract essential NARCs sub-archives*/
+            string[] narcPaths = romInfo.GetNarcPaths();
+            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+
             statusLabel.Text = "Setting up Script Editor...";
             Update();
+
+            var tuple = Tuple.Create(narcPaths[12], extractedNarcDirs[12]); //12 = scripts Narc Dir
+            DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+            if (!di.Exists || di.GetFiles().Length == 0) {
+                Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+            }
+
 
             int scriptCount = Directory.GetFiles(romInfo.GetScriptDirPath()).Length;
             for (int i = 0; i < scriptCount; i++)
@@ -830,6 +935,15 @@ namespace DSPRE {
             selectScriptFileComboBox.SelectedIndex = 0;
         }
         private void SetupTextEditor() {
+            string[] narcPaths = romInfo.GetNarcPaths();
+            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+
+            var tuple = Tuple.Create(narcPaths[2], extractedNarcDirs[2]);
+            DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+            if (!di.Exists || di.GetFiles().Length == 0) {
+                Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+            }
+
             statusLabel.Text = "Setting up Text Editor...";
             Update();
 
@@ -839,8 +953,19 @@ namespace DSPRE {
             selectTextFileComboBox.SelectedIndex = 0;
         }
         private void SetupTilesetEditor() {
-            statusLabel.Text = "Setting up Tileset Editor...";
+            string[] narcPaths = romInfo.GetNarcPaths();
+            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+
+            statusLabel.Text = "Attempting to unpack Tileset Editor NARCs... Please wait.";
             Update();
+
+            for (int i = 6; i < 9; i++) {
+                var tuple = Tuple.Create(narcPaths[i], extractedNarcDirs[i]);
+                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+                if (!di.Exists || di.GetFiles().Length == 0) {
+                    Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+                }
+            }
 
             /* Fill Tileset ListBox */
             FillTilesetBox();
@@ -898,8 +1023,9 @@ namespace DSPRE {
             }
         }
         private void UnpackRom(string ndsFileName) {
-            statusLabel.Text = "Unpacking full ROM...";
+            statusLabel.Text = "Unpacking ROM contents to " + workDir + " ...";
             Update();
+
             Directory.CreateDirectory(workDir);
             Process unpack = new Process();
             unpack.StartInfo.FileName = @"Tools\ndstool.exe";
@@ -917,10 +1043,6 @@ namespace DSPRE {
             unpack.StartInfo.CreateNoWindow = true;
             unpack.Start();
             unpack.WaitForExit();
-        }
-        private void UnpackNARCs() {
-            foreach (var tuple in romInfo.GetNarcPaths().Zip(romInfo.GetExtractedNarcDirs(), Tuple.Create))
-                Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
         }
         public static void WriteToArm9(long startOffset, byte[] bytesToWrite) {
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin"))) {
@@ -958,12 +1080,12 @@ namespace DSPRE {
                 br.BaseStream.Seek(0xC, SeekOrigin.Begin); // get ROM ID
                 gameCode = Encoding.UTF8.GetString(br.ReadBytes(4));
             }
-            workDir = Path.GetDirectoryName(openRom.FileName) + "\\" + Path.GetFileNameWithoutExtension(openRom.FileName) + "_DSPRE_extracted" + "\\";
+            workDir = Path.GetDirectoryName(openRom.FileName) + "\\" + Path.GetFileNameWithoutExtension(openRom.FileName) + "_DSPRE_contents" + "\\";
 
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, workDir);
             if (romInfo.GetGameVersion() == null) {
-                statusLabel.Text = "Ready";
+                statusLabel.Text = "Unsupported ROM";
                 Update();
                 return;
             }
@@ -1008,11 +1130,12 @@ namespace DSPRE {
 
             iconON = true;
             gameIcon.Refresh();  // Paint game icon
-            statusLabel.Text = "Unpacking NARCs from folder...";
+            statusLabel.Text = "Attempting to unpack NARCs from folder...";
             Update();
 
-            /* Extract NARCs sub-archives*/
-            UnpackNARCs();
+            /*foreach (Tuple<string, string> tuple in romInfo.GetNarcPaths().Zip(romInfo.GetExtractedNarcDirs(), Tuple.Create))
+                Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);*/
+
             switch (romInfo.GetGameVersion()) {
                 case "Diamond":
                 case "Pearl":
@@ -1027,17 +1150,15 @@ namespace DSPRE {
                     break;
             }
 
-            statusLabel.Text = "Setting up editors...";
-            Update();
             /* Setup essential editors */
             SetupFlagNames();
             SetupHeaderEditor();
-            SetupMatrixEditor();
             eventOpenGlControl.InitializeContexts();
             mapOpenGlControl.InitializeContexts();
 
             mainTabControl.Show();
             saveRomButton.Enabled = true;
+            unpackAllButton.Enabled = true;
             romToolboxButton.Enabled = true;
             buildingEditorButton.Enabled = true;
             wildEditorButton.Enabled = true;
@@ -1054,7 +1175,16 @@ namespace DSPRE {
             if (saveRom.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            statusLabel.Text = "Writing new ROM...";
+            statusLabel.Text = "Repacking NARCS...";
+            Update();
+
+            // Repack NARCs
+            foreach (var tuple in romInfo.GetNarcPaths().Zip(romInfo.GetExtractedNarcDirs(), Tuple.Create)) {
+                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+                if (di.Exists) {
+                    Narc.FromFolder(tuple.Item2).Save(workDir + tuple.Item1); // Make new NARC from folder
+                }
+            }
 
             if (eventEditorIsReady) {
                 switch (romInfo.GetGameVersion()) {
@@ -1063,12 +1193,13 @@ namespace DSPRE {
                     case "Platinum":
                         break;
                     default:
-                        restoreOverlayFromBackup(1); // Must restore compressed overlay 1 in HGSS, which contains overworld table
+                        restoreOverlayFromCompressedBackup(1); // Must restore compressed overlay 1 in HGSS, which contains overworld table
                         break;
                 }
             }
 
-            RepackNARCs();
+            statusLabel.Text = "Repacking ROM...";
+            Update();
             //DeleteTempFolders();
             RepackRom(saveRom.FileName);
 
@@ -1079,8 +1210,42 @@ namespace DSPRE {
             statusLabel.Text = "Ready";
         }
 
+        private void unpackAllButton_Click(object sender, EventArgs e) {
+            DialogResult d = MessageBox.Show("Do you wish to unpack all extracted NARCS?\n" +
+                "This operation might be long and can't be interrupted.\n" +
+                "Any unsaved changes made to the ROM in this session will be lost." +
+                "\nProceed?", "About to unpack all NARCS",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (d == DialogResult.Yes) {
+                toolStripProgressBar.Maximum = romInfo.GetNarcPaths().Length;
+                toolStripProgressBar.Visible = true;
+                toolStripProgressBar.Value = 0;
+                statusLabel.Text = "Attempting to unpack all NARCs... Be patient. This might take a while...";
+                Update();
+                foreach (var tuple in romInfo.GetNarcPaths().Zip(romInfo.GetExtractedNarcDirs(), Tuple.Create)) {
+                    Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+                    toolStripProgressBar.Value++;
+                }
+
+                MessageBox.Show("Operation completed.", "Success",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                statusLabel.Text = "Ready";
+                toolStripProgressBar.Value = 0;
+                toolStripProgressBar.Visible = false;
+                Update();
+            }
+        }
+
         private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) {
-            if (mainTabControl.SelectedTab == mapEditorTabPage) {
+            if (mainTabControl.SelectedTab == headerEditorTabPage) {
+                //
+            } else if (mainTabControl.SelectedTab == matrixEditorTabPage) {
+                if (!matrixEditorIsReady) {
+                    SetupMatrixEditor();
+                    matrixEditorIsReady = true;
+                }
+            } else if (mainTabControl.SelectedTab == mapEditorTabPage) {
                 if (!mapEditorIsReady) {
                     SetupMapEditor();
                     mapEditorIsReady = true;
@@ -1100,7 +1265,7 @@ namespace DSPRE {
                     SetupTextEditor();
                     textEditorIsReady = true;
                 }
-            } else {
+            } else if (mainTabControl.SelectedTab == tilesetEditorTabPage){
                 if (!tilesetEditorIsReady) {
                     SetupTilesetEditor();
                     tilesetEditorIsReady = true;
@@ -1208,7 +1373,7 @@ namespace DSPRE {
         #region Subroutines
         public Header LoadHeader(int headerNumber) {
             /* Calculate header offset and load data */
-            int headerOffset = romInfo.GetHeaderTableOffset() + 0x18 * headerNumber;
+            long headerOffset = romInfo.GetHeaderTableOffset() + 0x18 * headerNumber;
             byte[] headerData = ReadFromArm9(headerOffset, 24);
 
             /* Encapsulate header data into the class appropriate for the game gameVersion */
@@ -1529,6 +1694,10 @@ namespace DSPRE {
         }
 
         private void openMatrixButton_Click(object sender, EventArgs e) {
+            if (!matrixEditorIsReady) {
+                SetupMatrixEditor();
+                matrixEditorIsReady = true;
+            }
             mainTabControl.SelectedTab = matrixEditorTabPage;
             int matrixNumber = (int)matrixUpDown.Value;
             selectMatrixComboBox.SelectedIndex = matrixNumber;
@@ -1542,7 +1711,7 @@ namespace DSPRE {
             mainTabControl.SelectedTab = textEditorTabPage;
         }
         private void saveHeaderButton_Click(object sender, EventArgs e) {
-            int headerOffset = romInfo.GetHeaderTableOffset() + 0x18 * headerListBox.SelectedIndex;
+            long headerOffset = romInfo.GetHeaderTableOffset() + 0x18 * headerListBox.SelectedIndex;
             WriteToArm9(headerOffset, currentHeader.SaveHeader());
         }
         private void resetButton_Click(object sender, EventArgs e) {
@@ -1785,7 +1954,7 @@ namespace DSPRE {
 
             /* Format table cells corresponding to border maps or void */
             ushort colorValue;
-            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = Matrix.VOID;
+            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = Matrix.EMPTY;
 
             Tuple<Color, Color> cellColors = Format_Map_Cell(colorValue);
             e.CellStyle.BackColor = cellColors.Item1;
@@ -1816,7 +1985,7 @@ namespace DSPRE {
 
             /* Format table cells corresponding to border maps or void */
             ushort colorValue;
-            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = Matrix.VOID;
+            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = Matrix.EMPTY;
 
             Tuple<Color, Color> cellColors = Format_Map_Cell(colorValue);
             e.CellStyle.BackColor = cellColors.Item1;
@@ -1888,7 +2057,7 @@ namespace DSPRE {
                     for (int j = 0; j < currentMatrix.width; j++) {
                         headersGridView.Rows[currentMatrix.height + i].Cells[j].Value = 0;
                         heightsGridView.Rows[currentMatrix.height + i].Cells[j].Value = 0;
-                        mapFilesGridView.Rows[currentMatrix.height + i].Cells[j].Value = Matrix.VOID;
+                        mapFilesGridView.Rows[currentMatrix.height + i].Cells[j].Value = Matrix.EMPTY;
                     }
                 }
             }
@@ -1905,8 +2074,8 @@ namespace DSPRE {
             }
 
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0) {
-                if (currentMatrix.maps[e.RowIndex, e.ColumnIndex] == Matrix.VOID) {
-                    MessageBox.Show("You can't load a VOID map.\nSelect a valid map and try again.\n" +
+                if (currentMatrix.maps[e.RowIndex, e.ColumnIndex] == Matrix.EMPTY) {
+                    MessageBox.Show("You can't load an empty map.\nSelect a valid map and try again.\n" +
                         "If you only meant to change the value of this cell, wait some time between one mouse click and the other.\n" +
                         "Alternatively, highlight the cell and press F2 on your keyboard.",
                         "User attempted to load VOID", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1952,30 +2121,31 @@ namespace DSPRE {
             if (disableHandlers)
                 return;
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0) {
-                /* If input is junk, use VOID (FF FF) as placeholder value */
-                ushort cellValue;
-                if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue))
-                    cellValue = Matrix.VOID;
+                /* If input is junk, use '\' (FF FF) as placeholder value */
+                ushort cellValue = Matrix.EMPTY;
+                try {
+                    cellValue = UInt16.Parse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                } catch { }
 
                 /* Change value in matrix object */
                 currentMatrix.maps[e.RowIndex, e.ColumnIndex] = cellValue;
             }
         }
         private void mapFilesGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
-            if (e.Value == null) return;
             disableHandlers = true;
 
             /* Format table cells corresponding to border maps or void */
-            ushort colorValue;
-            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue))
-                colorValue = Matrix.VOID;
+            ushort colorValue = Matrix.EMPTY;
+            try {
+                colorValue = UInt16.Parse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+            } catch { }
 
             Tuple<Color, Color> cellColors = Format_Map_Cell(colorValue);
             e.CellStyle.BackColor = cellColors.Item1;
             e.CellStyle.ForeColor = cellColors.Item2;
 
-            if (colorValue == Matrix.VOID)
-                e.Value = "VOID";
+            if (colorValue == Matrix.EMPTY)
+                e.Value = '-';
 
             disableHandlers = false;
 
@@ -2054,7 +2224,7 @@ namespace DSPRE {
                     for (int j = 0; j < currentMatrix.height; j++) {
                         headersGridView.Rows[j].Cells[currentMatrix.width + i].Value = 0;
                         heightsGridView.Rows[j].Cells[currentMatrix.width + i].Value = 0;
-                        mapFilesGridView.Rows[j].Cells[currentMatrix.width + i].Value = Matrix.VOID;
+                        mapFilesGridView.Rows[j].Cells[currentMatrix.width + i].Value = Matrix.EMPTY;
                     }
                 }
             }
@@ -2374,7 +2544,8 @@ namespace DSPRE {
         }
         private void saveMapButton_Click(object sender, EventArgs e) {
             string mapIndex = selectMapComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.GetMapDirPath() + "\\" + mapIndex, FileMode.Create))) writer.Write(currentMapFile.Save());
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.GetMapDirPath() + "\\" + mapIndex, FileMode.Create))) 
+                writer.Write(currentMapFile.Save());
         }
         private void selectMapComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) return;
@@ -3205,7 +3376,7 @@ namespace DSPRE {
 
         private void DisplayEventMap() {
             /* Determine map file to open and open it in BinaryReader, unless map is VOID */
-            uint mapIndex = Matrix.VOID;
+            uint mapIndex = Matrix.EMPTY;
             if (eventMatrixXUpDown.Value > eventMatrix.width || eventMatrixYUpDown.Value > eventMatrix.height) {
                 String errorMsg = "This event file contains elements located on an unreachable map, beyond the current matrix.\n" +
                     "It is strongly advised that you bring every Overworld, Spawnable, Warp and Trigger of this event to a map that belongs to the matrix's range.";
@@ -3214,7 +3385,7 @@ namespace DSPRE {
                 mapIndex = eventMatrix.maps[(int)(eventMatrixYUpDown.Value), (int)(eventMatrixXUpDown.Value)];
             }
 
-            if (mapIndex == Matrix.VOID) {
+            if (mapIndex == Matrix.EMPTY) {
                 eventPictureBox.BackgroundImage = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
                 using (Graphics g = Graphics.FromImage(eventPictureBox.BackgroundImage)) g.Clear(Color.Black);
             } else {
@@ -4284,16 +4455,16 @@ namespace DSPRE {
 
         #region LineNumbers Scripts
         public int GetWidthScript() {
-            int w = 25;
+            int w = 29;
             // get total lines of scriptTextBox    
             int line = scriptTextBox.Lines.Length;
 
             if (line <= 99) {
-                w = 20 + (int)scriptTextBox.Font.Size;
+                w = 24 + (int)scriptTextBox.Font.Size;
             } else if (line <= 999) {
-                w = 30 + (int)scriptTextBox.Font.Size;
+                w = 34 + (int)scriptTextBox.Font.Size;
             } else {
-                w = 50 + (int)scriptTextBox.Font.Size;
+                w = 54 + (int)scriptTextBox.Font.Size;
             }
 
             return w;

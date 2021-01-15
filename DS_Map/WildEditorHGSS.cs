@@ -32,7 +32,7 @@ namespace DSPRE
                 }
             }
             if (encToOpen > selectEncounterComboBox.Items.Count) {
-                if (encToOpen != 65535) { 
+                if (encToOpen != 255) { 
                     MessageBox.Show("This encounter file doesn't exist.\n" +
                     "Enc #0 will be loaded, instead.", "WildPoké Data not found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
