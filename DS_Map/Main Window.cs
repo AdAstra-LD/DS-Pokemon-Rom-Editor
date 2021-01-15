@@ -64,26 +64,28 @@ namespace DSPRE {
 
         private bool DecompressArm9() {
             int attempts = 0;
+            long arm9Length = new FileInfo(workDir + @"arm9.bin").Length;
 
-            do {
+            while (attempts < 3 && arm9Length < 0xBC000) {
                 attempts++;
-                if (new FileInfo(workDir + @"arm9.bin").Length < 0xBC000) {
+                if (attempts > 1) {
                     BinaryWriter arm9Truncate = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin"));
-                    long arm9Length = new FileInfo(workDir + @"arm9.bin").Length;
+                    
                     arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
                     arm9Truncate.Close();
-
-                    Process decompress = new Process();
-                    decompress.StartInfo.FileName = @"Tools\blz.exe";
-                    decompress.StartInfo.Arguments = @" -d " + '"' + workDir + "arm9.bin" + '"';
-                    decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                    decompress.StartInfo.CreateNoWindow = true;
-                    decompress.Start();
-                    decompress.WaitForExit();
                 }
-            } while (new FileInfo(workDir + @"arm9.bin").Length < 1122000 && attempts < 2);
+                Process decompress = new Process();
+                decompress.StartInfo.FileName = @"Tools\blz.exe";
+                decompress.StartInfo.Arguments = @" -d " + '"' + workDir + "arm9.bin" + '"';
+                decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                decompress.StartInfo.CreateNoWindow = true;
+                decompress.Start();
+                decompress.WaitForExit();
 
-            return (new FileInfo(workDir + @"arm9.bin").Length > 1122000);
+                arm9Length = new FileInfo(workDir + @"arm9.bin").Length;
+            } 
+
+            return (arm9Length > 0xBC000);
         }
 
         private int decompressOverlay(int overlayNumber, bool makeBackup) {
@@ -96,7 +98,7 @@ namespace DSPRE {
             }
 
             if (makeBackup) {
-                if (File.Exists(overlayFilePath + ".bak")) { 
+                if (File.Exists(overlayFilePath + ".bak")) {
                     if (new FileInfo(overlayFilePath).Length > new FileInfo(overlayFilePath + ".bak").Length) { //if overlay is bigger than its backup
                         Console.WriteLine("Overlay " + overlayNumber + " is already uncompressed and its compressed backup exists.");
                         return 1;
@@ -534,7 +536,7 @@ namespace DSPRE {
 
                     if (bytesLen <= internalNameLen)
                         tarGetBytes[bytesLen - 1] = 0x00;
-                    else 
+                    else
                         tarGetBytes[internalNameLen] = 0x00;
 
                     string internalName = Encoding.ASCII.GetString(tarGetBytes);//.TrimEnd();
@@ -995,7 +997,7 @@ namespace DSPRE {
 
             versionLabel.Text = "ROM: Pokémon " + romInfo.GetGameVersion();
             languageLabel.Text = "Language: " + romInfo.GetGameLanguage();
-            
+
 
             int userchoice = UnpackRomCheckUserChoice();
             switch (userchoice) {
@@ -1513,8 +1515,18 @@ namespace DSPRE {
                 Update();
             }
         }
+        private bool isEventOnCurrentMatrix(Event ev) {
+            if (ev.xMatrixPosition == eventMatrixXUpDown.Value)
+                if (ev.yMatrixPosition == eventMatrixYUpDown.Value)
+                    return true;
+            return false;
+        }
 
         private void destinationWarpGoToButton_Click(object sender, EventArgs e) {
+            goToWarpDestination();
+        }
+
+        private void goToWarpDestination() {
             int destAnchor = (int)warpAnchorUpDown.Value;
             int destHeader = (int)warpHeaderUpDown.Value;
             ushort destEventID = LoadHeader(destHeader).eventID;
@@ -1584,7 +1596,7 @@ namespace DSPRE {
         private void startSearchGameLocation() {
             if (searchLocationTextBox.Text.Length != 0) {
                 headerListBox.Items.Clear();
-                bool notEmpty = false;
+                bool empty = true;
 
 
                 switch (romInfo.GetGameVersion()) {
@@ -1594,7 +1606,7 @@ namespace DSPRE {
                             String locationName = mapNameComboBox.Items[((HeaderDP)LoadHeader(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i + ": " + internalNames[i]);
-                                notEmpty = true;
+                                empty = false;
                             }
                         }
                         break;
@@ -1603,7 +1615,7 @@ namespace DSPRE {
                             String locationName = mapNameComboBox.Items[((HeaderPt)LoadHeader(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i + ": " + internalNames[i]);
-                                notEmpty = true;
+                                empty = false;
                             }
                         }
                         break;
@@ -1613,16 +1625,17 @@ namespace DSPRE {
                             String locationName = mapNameComboBox.Items[((HeaderHGSS)LoadHeader(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i + ": " + internalNames[i]);
-                                notEmpty = true;
+                                empty = false;
                             }
                         }
                         break;
                 }
-                if (notEmpty)
-                    headerListBox.SelectedIndex = 0;
-                else {
+                if (empty) {
                     headerListBox.Items.Add("No Result for " + '"' + searchLocationTextBox.Text + '"');
                     headerListBox.Enabled = false;
+                } else {
+                    headerListBox.SelectedIndex = 0;
+                    headerListBox.Enabled = true;
                 }
             } else if (headerListBox.Items.Count < internalNames.Count) {
                 resetHeaderSearchResults();
@@ -2426,9 +2439,9 @@ namespace DSPRE {
 
         }
         private void wireframeCheckBox_CheckedChanged(object sender, EventArgs e) {
-            if (wireframeCheckBox.Checked) 
+            if (wireframeCheckBox.Checked)
                 Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_LINE);
-            else 
+            else
                 Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_FILL);
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
@@ -2463,7 +2476,7 @@ namespace DSPRE {
         }
         private void buildingsListBox_SelectedIndexChanged(object sender, EventArgs e) {
             #region Temporarily disable events to allow for faster execution
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
             disableHandlers = true;
             #endregion
@@ -2566,42 +2579,42 @@ namespace DSPRE {
             }
         }
         private void xBuildUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xPosition = (short)xBuildUpDown.Value;
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
         }
         private void yBuildUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yPosition = (short)yBuildUpDown.Value;
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
         }
         private void zBuildUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zPosition = (short)zBuildUpDown.Value;
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
         }
         private void xFractionUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xFraction = (ushort)xFractionUpDown.Value;
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
         }
         private void yFractionUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yFraction = (ushort)yFractionUpDown.Value;
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
         }
         private void zFractionUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zFraction = (ushort)zFractionUpDown.Value;
@@ -2740,9 +2753,9 @@ namespace DSPRE {
             } catch { return; }
         }
         private void Restore_Painter() {
-            if (selectCollisionPanel.BackColor == Color.MidnightBlue) 
+            if (selectCollisionPanel.BackColor == Color.MidnightBlue)
                 collisionPainterComboBox_SelectedIndexChanged(null, null); // Restore painters to original state
-            else if (typePainterComboBox.Enabled) 
+            else if (typePainterComboBox.Enabled)
                 typePainterComboBox_SelectedIndexChanged(null, null); // Restore painters to original state
             else typePainterUpDown_ValueChanged(null, null);
         }
@@ -3125,56 +3138,15 @@ namespace DSPRE {
             eventPictureBox.Image = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
 
             /* Draw spawnables */
-            if (showSignsCheckBox.Checked) for (int i = 0; i < currentEventFile.spawnables.Count; i++) {
+            if (showSignsCheckBox.Checked) 
+                for (int i = 0; i < currentEventFile.spawnables.Count; i++) {
                     Spawnable spawnable = currentEventFile.spawnables[i];
                     if (spawnable.xMatrixPosition == eventMatrixXUpDown.Value && spawnable.yMatrixPosition == eventMatrixYUpDown.Value) {
                         using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
                             g.CompositingMode = CompositingMode.SourceOver;
                             g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("sign"), (spawnable.xMapPosition) * 17, (spawnable.yMapPosition) * 17);
-                            if (selectedEvent == spawnable) // Draw selection rectangle if event is the selected one
-                            {
-                                eventPen = Pens.Red;
-                                g.DrawRectangle(eventPen, (spawnable.xMapPosition) * 17 - 1, (spawnable.yMapPosition) * 17 - 1, 18, 18);
-                                g.DrawRectangle(eventPen, (spawnable.xMapPosition) * 17 - 2, (spawnable.yMapPosition) * 17 - 2, 20, 20);
-                            }
-                        }
-                    }
-                }
-
-            /* Draw warps */
-            if (showWarpsCheckBox.Checked) for (int i = 0; i < currentEventFile.warps.Count; i++) {
-                    Warp warp = currentEventFile.warps[i];
-                    if (warp.xMatrixPosition == eventMatrixXUpDown.Value && warp.yMatrixPosition == eventMatrixYUpDown.Value) {
-                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
-                            g.CompositingMode = CompositingMode.SourceOver;
-                            g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("warp"), (warp.xMapPosition) * 17, (warp.yMapPosition) * 17);
-                            if (selectedEvent == warp) // Draw selection rectangle if event is the selected one
-                            {
-                                eventPen = Pens.Red;
-                                g.DrawRectangle(eventPen, (warp.xMapPosition) * 17 - 1, (warp.yMapPosition) * 17 - 1, 18, 18);
-                                g.DrawRectangle(eventPen, (warp.xMapPosition) * 17 - 2, (warp.yMapPosition) * 17 - 2, 20, 20);
-                            }
-                        }
-
-                    }
-                }
-
-            /* Draw triggers */
-            if (showTriggersCheckBox.Checked) for (int i = 0; i < currentEventFile.triggers.Count; i++) {
-                    Trigger trigger = currentEventFile.triggers[i];
-                    if (trigger.xMatrixPosition == eventMatrixXUpDown.Value && trigger.yMatrixPosition == eventMatrixYUpDown.Value) {
-                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
-                            g.CompositingMode = CompositingMode.SourceOver;
-                            for (int y = 0; y < currentEventFile.triggers[i].length; y++) {
-                                for (int x = 0; x < currentEventFile.triggers[i].width; x++) {
-                                    g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("trigger"), (trigger.xMapPosition + x) * 17, (trigger.yMapPosition + y) * 17);
-                                }
-                            }
-                            if (selectedEvent == trigger) // Draw selection rectangle if event is the selected one
-                            {
-                                eventPen = Pens.Red;
-                                g.DrawRectangle(eventPen, (trigger.xMapPosition) * 17 - 1, (trigger.yMapPosition) * 17 - 1, 17 * trigger.width + 1, 17 * trigger.length + 1);
-                                g.DrawRectangle(eventPen, (trigger.xMapPosition) * 17 - 2, (trigger.yMapPosition) * 17 - 2, 17 * trigger.width + 3, 17 * trigger.length + 3);
+                            if (selectedEvent == spawnable) { // Draw selection rectangle if event is the selected one
+                                drawSelectionRectangle(g, spawnable);
                             }
                         }
                     }
@@ -3184,7 +3156,7 @@ namespace DSPRE {
             if (showOwsCheckBox.Checked) {
                 for (int i = 0; i < currentEventFile.overworlds.Count; i++) {
                     Overworld overworld = currentEventFile.overworlds[i];
-                    if (overworld.xMatrixPosition == eventMatrixXUpDown.Value && overworld.yMatrixPosition == eventMatrixYUpDown.Value) { // Draw image only if event is in current map
+                    if (isEventOnCurrentMatrix(overworld)) { // Draw image only if event is in current map
                         using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
                             g.CompositingMode = CompositingMode.SourceOver;
                             Bitmap sprite = GetOverworldImage(overworld.spriteID, overworld.orientation);
@@ -3192,17 +3164,69 @@ namespace DSPRE {
                             g.DrawImage(sprite, (overworld.xMapPosition) * 17 - 7 + (32 - sprite.Width) / 2, (overworld.yMapPosition - 1) * 17 + (32 - sprite.Height));
 
                             if (selectedEvent == overworld) {
-                                eventPen = Pens.Red;
-                                g.DrawRectangle(eventPen, (overworld.xMapPosition) * 17 - 8, (overworld.yMapPosition - 1) * 17, 34, 34);
-                                g.DrawRectangle(eventPen, (overworld.xMapPosition) * 17 - 9, (overworld.yMapPosition - 1) * 17 - 1, 36, 36);
+                                drawSelectionRectangleOverworld(g, overworld);
                             }
                         }
                     }
                 }
             }
 
+            /* Draw warps */
+            if (showWarpsCheckBox.Checked) for (int i = 0; i < currentEventFile.warps.Count; i++) {
+                    Warp warp = currentEventFile.warps[i];
+                    if (isEventOnCurrentMatrix(warp)) {
+                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
+                            g.CompositingMode = CompositingMode.SourceOver;
+                            g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("warp"), (warp.xMapPosition) * 17, (warp.yMapPosition) * 17);
+                            if (selectedEvent == warp) { // Draw selection rectangle if event is the selected one
+
+                                drawSelectionRectangle(g, warp);
+                            }
+                        }
+
+                    }
+                }
+
+            /* Draw triggers */
+            if (showTriggersCheckBox.Checked) for (int i = 0; i < currentEventFile.triggers.Count; i++) {
+                    Trigger trigger = currentEventFile.triggers[i];
+                    if (isEventOnCurrentMatrix(trigger)) {
+                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
+                            g.CompositingMode = CompositingMode.SourceOver;
+                            for (int y = 0; y < currentEventFile.triggers[i].length; y++) {
+                                for (int x = 0; x < currentEventFile.triggers[i].width; x++) {
+                                    g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("trigger"), (trigger.xMapPosition + x) * 17, (trigger.yMapPosition + y) * 17);
+                                }
+                            }
+                            if (selectedEvent == trigger) {// Draw selection rectangle if event is the selected one
+                                drawSelectionRectangleTrigger(g, trigger);
+                            }
+                        }
+                    }
+                }
+
             eventPictureBox.Invalidate();
         }
+
+        private void drawSelectionRectangle(Graphics g, Event ev) {
+            eventPen = Pens.Red;
+            g.DrawRectangle(eventPen, (ev.xMapPosition) * 17 - 1, (ev.yMapPosition) * 17 - 1, 18, 18);
+            g.DrawRectangle(eventPen, (ev.xMapPosition) * 17 - 2, (ev.yMapPosition) * 17 - 2, 20, 20);
+        }
+        private void drawSelectionRectangleTrigger(Graphics g, Trigger t) {
+            eventPen = Pens.Red;
+            g.DrawRectangle(eventPen, (t.xMapPosition) * 17 - 1, (t.yMapPosition) * 17 - 1, 17 * t.width + 1, 17 * t.length + 1);
+            g.DrawRectangle(eventPen, (t.xMapPosition) * 17 - 2, (t.yMapPosition) * 17 - 2, 17 * t.width + 3, 17 * t.length + 3);
+
+        }
+        private void drawSelectionRectangleOverworld(Graphics g, Overworld ow) {
+            eventPen = Pens.Red;
+            g.DrawRectangle(eventPen, (ow.xMapPosition) * 17 - 8, (ow.yMapPosition - 1) * 17, 34, 34);
+            g.DrawRectangle(eventPen, (ow.xMapPosition) * 17 - 9, (ow.yMapPosition - 1) * 17 - 1, 36, 36);
+        }
+
+
+
         private void DisplayEventMap() {
             /* Determine map file to open and open it in BinaryReader, unless map is VOID */
             uint mapIndex = Matrix.VOID;
@@ -3264,28 +3288,31 @@ namespace DSPRE {
                 }
             }
         }
-        private void FillOverworldsBox() {
-            overworldsListBox.Items.Clear();
-            for (int i = 0; i < currentEventFile.overworlds.Count; i++) overworldsListBox.Items.Add("Overworld " + i);
-        }
         private void FillSpawnablesBox() {
             spawnablesListBox.Items.Clear();
-            for (int i = 0; i < currentEventFile.spawnables.Count; i++) spawnablesListBox.Items.Add("Spawnable " + i);
+            for (int i = 0; i < currentEventFile.spawnables.Count; i++) 
+                spawnablesListBox.Items.Add("Spawnable " + i);
         }
-        private void FillTriggersBox() {
-            triggersListBox.Items.Clear();
-            for (int i = 0; i < currentEventFile.triggers.Count; i++) triggersListBox.Items.Add("Trigger " + i);
+        private void FillOverworldsBox() {
+            overworldsListBox.Items.Clear();
+            for (int i = 0; i < currentEventFile.overworlds.Count; i++)
+                overworldsListBox.Items.Add("Overworld " + i);
         }
         private void FillWarpsBox() {
             warpsListBox.Items.Clear();
-            for (int i = 0; i < currentEventFile.warps.Count; i++) warpsListBox.Items.Add("Warp " + i);
+            for (int i = 0; i < currentEventFile.warps.Count; i++) 
+                warpsListBox.Items.Add("Warp " + i);
+        }
+        private void FillTriggersBox() {
+            triggersListBox.Items.Clear();
+            for (int i = 0; i < currentEventFile.triggers.Count; i++)
+                triggersListBox.Items.Add("Trigger " + i);
         }
         private Bitmap GetOverworldImage(ushort spriteID, ushort orientation) {
             /* Find sprite corresponding to ID and load it*/
             string imageName;
 
-            if (ow3DSpriteDict.TryGetValue(spriteID, out imageName)) // If overworld is 3D, load image from dictionary
-            {
+            if (ow3DSpriteDict.TryGetValue(spriteID, out imageName)) { // If overworld is 3D, load image from dictionary
                 return (Bitmap)Properties.Resources.ResourceManager.GetObject(imageName);
             } else {
                 int archiveID = MatchOverworldIDToSpriteArchive(spriteID, spritesTablePath);
@@ -3297,8 +3324,8 @@ namespace DSPRE {
                         NSMBe4.NSBMD.NSBTX_File nsbtx = new NSMBe4.NSBMD.NSBTX_File(stream);
 
 
-                        if (nsbtx.TexInfo.num_objs > 2) // Read nsbtx slot corresponding to overworld's movement
-                        {
+                        if (nsbtx.TexInfo.num_objs > 2) { // Read nsbtx slot corresponding to overworld's movement
+
                             switch (orientation) {
                                 case 0:
                                     return LoadTextureFromNSBTX(nsbtx, 0, 0);
@@ -3310,8 +3337,8 @@ namespace DSPRE {
                                     return LoadTextureFromNSBTX(nsbtx, 4, 0);
                             }
                         } else return LoadTextureFromNSBTX(nsbtx, 0, 0); // Read nsbtx slot 0 if ow has only 2 frames
-                    } catch // Load bounding box if sprite cannot be found
-                      {
+                    } catch { // Load bounding box if sprite cannot be found
+
                         return (Bitmap)Properties.Resources.ResourceManager.GetObject("overworld");
                     }
                 }
@@ -3395,7 +3422,7 @@ namespace DSPRE {
             }
         }
 
-        private int matchOverworldInTableHGSS(BinaryReader idReader, uint ID) {  
+        private int matchOverworldInTableHGSS(BinaryReader idReader, uint ID) {
             bool match = new bool();
             try {
                 while (!match) { // Search for the overworld id in the table  
@@ -3412,7 +3439,7 @@ namespace DSPRE {
             return -1; // If no match has been found, return -1, which loads bounding box
         }
 
-        private int matchOverworldInTableDPPt(BinaryReader idReader, uint ID) { 
+        private int matchOverworldInTableDPPt(BinaryReader idReader, uint ID) {
             bool match = new bool();
             try {
                 while (!match) { // Search for the overworld id in the table
@@ -3626,6 +3653,88 @@ namespace DSPRE {
         }
         private void showEventsCheckBoxes_CheckedChanged(object sender, EventArgs e) {
             DisplayActiveEvents();
+        }
+
+        private void eventPictureBox_Click(object sender, EventArgs e) {
+            Point coordinates = eventPictureBox.PointToClient(Cursor.Position);
+            Point mouseTilePos = new Point(coordinates.X / 17, coordinates.Y / 17);
+            MouseEventArgs mea = (MouseEventArgs)e;
+
+            if (mea.Button == MouseButtons.Left) {
+                if (selectedEvent != null) {
+
+                    selectedEvent.xMapPosition = (short)mouseTilePos.X;
+                    selectedEvent.yMapPosition = (short)mouseTilePos.Y;
+                    selectedEvent.xMatrixPosition = (ushort)eventMatrixXUpDown.Value;
+                    selectedEvent.yMatrixPosition = (ushort)eventMatrixYUpDown.Value;
+
+                    DisplayActiveEvents();
+                }
+            } else if (mea.Button == MouseButtons.Right) {
+                for (int i = 0; i < currentEventFile.warps.Count; i++) {
+                    Warp ev = currentEventFile.warps[i];
+                    if (isEventUnderMouse(ev, mouseTilePos)) {
+                        if (ev == selectedEvent) {
+                            goToWarpDestination();
+                            return;
+                        }
+                        selectedEvent = ev;
+                        eventsTabControl.SelectedTab = warpsTabPage;
+                        warpsListBox.SelectedIndex = i;
+                        DisplayActiveEvents();
+                        return;
+                    }
+                }
+                for (int i = 0; i < currentEventFile.spawnables.Count; i++) {
+                    Spawnable ev = currentEventFile.spawnables[i];
+                    if (isEventUnderMouse(ev, mouseTilePos)) {
+                        selectedEvent = ev;
+                        eventsTabControl.SelectedTab = signsTabPage;
+                        spawnablesListBox.SelectedIndex = i;
+                        DisplayActiveEvents();
+                        return;
+                    }
+                }
+                for (int i = 0; i < currentEventFile.overworlds.Count; i++) {
+                    Overworld ev = currentEventFile.overworlds[i];
+                    if (isEventUnderMouse(ev, mouseTilePos)) {
+                        selectedEvent = ev;
+                        eventsTabControl.SelectedTab = overworldsTabPage;
+                        overworldsListBox.SelectedIndex = i;
+                        DisplayActiveEvents();
+                        return;
+                    }
+                }
+                for (int i = 0; i < currentEventFile.triggers.Count; i++) {
+                    Trigger ev = currentEventFile.triggers[i];
+                    if (isEventUnderMouse(ev, mouseTilePos)) {
+                        selectedEvent = ev;
+                        eventsTabControl.SelectedTab = triggersTabPage;
+                        triggersListBox.SelectedIndex = i;
+                        DisplayActiveEvents();
+                        return;
+                    }
+                }
+            } else if (mea.Button == MouseButtons.Middle) {
+                for (int i = 0; i < currentEventFile.warps.Count; i++) {
+                    Warp ev = currentEventFile.warps[i];
+                    if (isEventUnderMouse(ev, mouseTilePos)) {
+                        if (ev == selectedEvent) {
+                            goToWarpDestination();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool isEventUnderMouse(Event ev, Point mouseTilePos) {
+            if (isEventOnCurrentMatrix(ev)) {
+                Point evLocalCoords = new Point(ev.xMapPosition, ev.yMapPosition);
+                if (evLocalCoords.Equals(mouseTilePos))
+                    return true;
+            }
+            return false;
         }
 
         #region Spawnables Editor
@@ -5177,26 +5286,26 @@ namespace DSPRE {
             currentAreaData.buildingsTileset = (ushort)areaDataBuildingTilesetUpDown.Value;
         }
         private void areaDataDynamicTexturesComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
-            if (areaDataDynamicTexturesComboBox.SelectedIndex == 0x2) 
+            if (areaDataDynamicTexturesComboBox.SelectedIndex == 0x2)
                 currentAreaData.dynamicTextureType = 0xFFFF;
-            else 
+            else
                 currentAreaData.dynamicTextureType = (ushort)areaDataDynamicTexturesComboBox.SelectedIndex;
 
         }
         private void areaDataLightTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
             currentAreaData.lightType = (byte)areaDataLightTypeComboBox.SelectedIndex;
         }
         private void areaDataMapTilesetUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
             currentAreaData.mapTileset = (ushort)areaDataMapTilesetUpDown.Value;
         }
         private void areaDataAreaTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
             currentAreaData.areaType = (byte)areaDataAreaTypeComboBox.SelectedIndex;
         }
@@ -5239,14 +5348,5 @@ namespace DSPRE {
 
 
         #endregion
-
-        private void eventPictureBox_Click(object sender, EventArgs e) {
-            Point controlLoc = this.PointToScreen(eventPictureBox.Location);
-            Point relativeLoc = new Point(controlLoc.X - Location.X, controlLoc.Y - Location.Y);
-
-            Console.WriteLine("box's loc:" + relativeLoc);
-            Console.WriteLine(this.PointToClient(Cursor.Position));
-            Console.WriteLine("Frame start x:" + eventPictureBox.Location + "\n" + "Frame start y:" + eventPictureBox.Location.Y);
-        }
     }
 }

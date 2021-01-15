@@ -602,6 +602,26 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap goToOW {
+            get {
+                object obj = ResourceManager.GetObject("goToOW", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap goToSpawnable {
+            get {
+                object obj = ResourceManager.GetObject("goToSpawnable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap goToTrigger {
             get {
                 object obj = ResourceManager.GetObject("goToTrigger", resourceCulture);
@@ -975,6 +995,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap hgsswood {
             get {
                 object obj = ResourceManager.GetObject("hgsswood", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LeftClick {
+            get {
+                object obj = ResourceManager.GetObject("LeftClick", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1390,6 +1420,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap RightClick {
+            get {
+                object obj = ResourceManager.GetObject("RightClick", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap route_sign {
             get {
                 object obj = ResourceManager.GetObject("route_sign", resourceCulture);
@@ -1433,6 +1473,26 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap warp {
             get {
                 object obj = ResourceManager.GetObject("warp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap warpGo {
+            get {
+                object obj = ResourceManager.GetObject("warpGo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WheelClick {
+            get {
+                object obj = ResourceManager.GetObject("WheelClick", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
