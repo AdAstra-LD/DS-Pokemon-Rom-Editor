@@ -10,7 +10,7 @@ namespace DSPRE
 	/// <summary>
 	/// Class to store message data from DS Pokémon games
 	/// </summary>
-	public class MessageArchive
+	public class TextArchive
 	{
         #region Fields (2)
         public List<string> messages = new List<string>();
@@ -18,7 +18,7 @@ namespace DSPRE
         #endregion Fields
 
         #region Constructors (1)
-        public MessageArchive(FileStream messageStream)
+        public TextArchive(FileStream messageStream)
         {
             ResourceManager GetChar = new ResourceManager("DSPRE.Resources.ReadText", Assembly.GetExecutingAssembly());
             BinaryReader readText = new BinaryReader(messageStream);

@@ -151,8 +151,8 @@ namespace DSPRE {
             List<string> trainerList = new List<string>();
 
             /* Store all trainer names and classes */
-            MessageArchive trainerClasses = LoadMessageArchive(romInfo.GetTrainerClassMessageNumber());
-            MessageArchive trainerNames = LoadMessageArchive(romInfo.GetTrainerNamesMessageNumber());
+            TextArchive trainerClasses = LoadMessageArchive(romInfo.GetTrainerClassMessageNumber());
+            TextArchive trainerNames = LoadMessageArchive(romInfo.GetTrainerNamesMessageNumber());
             BinaryReader trainerReader;
             int trainerCount = Directory.GetFiles(romInfo.GetTrainerDataDirPath()).Length;
 
@@ -198,12 +198,24 @@ namespace DSPRE {
             return new Matrix(new FileStream(romInfo.GetMatrixDirPath() + "\\" + matrixNumber.ToString("D4"), FileMode.Open));
         }
 
-        public MessageArchive LoadMessageArchive(int fileID) {
-            return new MessageArchive(new FileStream(romInfo.GetTextArchivesPath() + "\\" + fileID.ToString("D4"), FileMode.Open));
+        public TextArchive LoadMessageArchive(int fileID) {
+            TextArchive ta = null;
+            try {
+                ta = new TextArchive(new FileStream(romInfo.GetTextArchivesPath() + "\\" + fileID.ToString("D4"), FileMode.Open));
+            } catch (FileNotFoundException) {
+                MessageBox.Show("Text archive not found.\n", "Can't load text", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return ta;
         }
 
         private EventFile LoadEventFile(int fileID) {
-            return new EventFile(new FileStream(romInfo.GetEventsDirPath() + "\\" + fileID.ToString("D4"), FileMode.Open));
+            EventFile ev = null;
+            try {
+                ev = new EventFile(new FileStream(romInfo.GetEventsDirPath() + "\\" + fileID.ToString("D4"), FileMode.Open));
+            } catch (FileNotFoundException) {
+                MessageBox.Show("Event file not found.\n", "Can't load event", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return ev;
         }
 
         private void PaintGameIcon(object sender, PaintEventArgs e) {
@@ -4899,7 +4911,7 @@ namespace DSPRE {
         #region Text Editor
 
         #region Variables
-        MessageArchive currentMessageFile;
+        TextArchive currentMessageFile;
         #endregion
 
         #region Subroutines
@@ -5016,7 +5028,7 @@ namespace DSPRE {
             if (caseSensitiveCheckbox.Checked) {
                 for (int i = 0; i < textArchivesCount; i++) {
 
-                    MessageArchive file = LoadMessageArchive(i);
+                    TextArchive file = LoadMessageArchive(i);
 
                     for (int j = 0; j < file.messages.Count; j++)
                         if (file.messages[j].IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) {
@@ -5027,7 +5039,7 @@ namespace DSPRE {
             } else {
                 for (int i = 0; i < textArchivesCount; i++) {
 
-                    MessageArchive file = LoadMessageArchive(i);
+                    TextArchive file = LoadMessageArchive(i);
 
                     for (int j = 0; j < file.messages.Count; j++)
                         if (file.messages[j].IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) {
@@ -5049,7 +5061,7 @@ namespace DSPRE {
             int msgCount = romInfo.GetTextArchivesCount();
             if (msgCount > 828) msgCount = 828;
             for (int k = 0; k < msgCount; k++) {
-                MessageArchive file = LoadMessageArchive(k);
+                TextArchive file = LoadMessageArchive(k);
                 currentMessageFile = file;
                 bool found = false;
 
