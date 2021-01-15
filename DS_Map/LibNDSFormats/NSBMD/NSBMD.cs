@@ -1254,16 +1254,12 @@ namespace LibNDSFormats.NSBMD
                 {
                     case 0:
                         return R;
-                        break;
                     case 1:
                         return G;
-                        break;
                     case 2:
                         return B;
-                        break;
                     case 3:
                         return A;
-                        break;
                     default:
                         throw new Exception();
                         break;

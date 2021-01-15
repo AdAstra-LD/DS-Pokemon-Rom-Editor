@@ -56,6 +56,7 @@
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(197, 20);
             this.numericUpDown1.TabIndex = 1;
+            this.numericUpDown1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericUpDown1_KeyDown);
             // 
             // okButton
             // 
@@ -75,6 +76,7 @@
             this.backButton.TabIndex = 3;
             this.backButton.Text = "Discard";
             this.backButton.UseVisualStyleBackColor = true;
+            this.backButton.Click += new System.EventHandler(this.backButton_Click);
             // 
             // InsertValueDialog
             // 

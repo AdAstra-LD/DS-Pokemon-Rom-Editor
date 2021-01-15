@@ -21,7 +21,7 @@ namespace DSPRE
 
         private void applyItemStandardizeButton_Click(object sender, EventArgs e)
         {
-            string path = rom.GetScriptFolderPath() + "\\" + rom.GetItemScriptFileNumber().ToString("D4");
+            string path = rom.GetScriptDirPath() + "\\" + rom.GetItemScriptFileNumber().ToString("D4");
 
             ScriptFile file = new ScriptFile(new FileStream(path, FileMode.Open), rom.GetGameVersion());
             for (int i = 0; i < file.scripts.Count - 1; i++)

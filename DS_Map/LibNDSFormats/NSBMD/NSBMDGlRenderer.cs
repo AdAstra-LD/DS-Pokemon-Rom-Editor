@@ -849,7 +849,7 @@ namespace LibNDSFormats.NSBMD
 							//r = multMatrix(r,  Model.Objects[i].rotate_mtx);
 						}
 					}
-					catch (Exception e) { }
+					catch { }
 
 					float transx = float.NaN;
 					float transy = float.NaN;
@@ -2557,7 +2557,6 @@ namespace LibNDSFormats.NSBMD
 									default:
 										//return ;// FALSE;
 										throw new Exception();
-										break;
 								}
 
 								Gl.glBegin(mode);

@@ -93,7 +93,7 @@ namespace DSPRE
         }
         private void FillTexturesBox()
         {
-            int texturesCount = Directory.GetFiles(folder + rom.GetBuildingTexturesFolderPath()).Length;
+            int texturesCount = Directory.GetFiles(folder + rom.GetBuildingTexturesDirPath()).Length;
             textureComboBox.Items.Add("Embedded textures");
 
             for (int i = 0; i < texturesCount; i++) 
@@ -109,7 +109,7 @@ namespace DSPRE
         {
             string path;
             if (fileID > -1) 
-                path = folder + rom.GetBuildingTexturesFolderPath() + "\\" + fileID.ToString("D4");
+                path = folder + rom.GetBuildingTexturesDirPath() + "\\" + fileID.ToString("D4");
             else 
                 path = Path.GetTempPath() + "BLDtexture.nsbtx"; // Load Embedded textures if the argument passed to this function is -1
             try {

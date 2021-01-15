@@ -413,8 +413,10 @@
     <None Include="Graphics\Weather\DPPt\ptspotlight.gif" />
     <None Include="Graphics\Weather\HGSS\hgssdark2.png" />
     <Content Include="app.ico" />
-    <None Include="Resources\exploreKit.Image.bmp" />
     <None Include="Resources\exploreKit.Image.png" />
+    <Content Include="goToWarp.png" />
+    <None Include="Graphics\Program Icons\goToWarp.png" />
+    <None Include="Graphics\Program Icons\goToTrigger.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

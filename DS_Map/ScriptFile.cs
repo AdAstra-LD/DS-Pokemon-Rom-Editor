@@ -6,6 +6,7 @@ using System.Resources;
 using System.IO;
 using System.Linq;
 using System.Collections;
+using System.Windows.Forms;
 
 namespace DSPRE {
     /// <summary>
@@ -28,17 +29,21 @@ namespace DSPRE {
 
             using (BinaryReader scriptFileReader = new BinaryReader(fs)) {
                 /* Read script offsets from the header */
-                while (scriptFileReader.ReadUInt16() != 0xFD13) {
-                    scriptFileReader.BaseStream.Position -= 0x2;
-                    uint value = scriptFileReader.ReadUInt32();
+                try {
+                    while (scriptFileReader.ReadUInt16() != 0xFD13) {
+                        scriptFileReader.BaseStream.Position -= 0x2;
+                        uint value = scriptFileReader.ReadUInt32();
 
-                    if (value == 0) {
-                        isLevelScript = true;
-                        return;
-                    } else {
-                        uint offset = value + (uint)scriptFileReader.BaseStream.Position;
-                        scriptOffsets.Add(offset); // Don't change order of addition
+                        if (value == 0) {
+                            isLevelScript = true;
+                            return;
+                        } else {
+                            uint offset = value + (uint)scriptFileReader.BaseStream.Position;
+                            scriptOffsets.Add(offset); // Don't change order of addition
+                        }
                     }
+                } catch (EndOfStreamException) {
+                    MessageBox.Show("Script File couldn't be read correctly.", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 /* Read scripts */
@@ -458,15 +463,14 @@ namespace DSPRE {
                 [0xFF] = "TRUEUP"
             };
             ResourceManager commandDatabase;
-            if (!isMovement) {
+            if (isMovement) {
+                commandDatabase = new ResourceManager("DSPRE.Resources.MovementNames", Assembly.GetExecutingAssembly());
+            } else {
                 if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum")
                     commandDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
                 else
                     commandDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
-            } else {
-                commandDatabase = new ResourceManager("DSPRE.Resources.MovementNames", Assembly.GetExecutingAssembly());
             }
-
             this.id = id;
             this.parameters = parameters;
             this.cmdName = commandDatabase.GetString(id.ToString("X4"));
@@ -503,9 +507,12 @@ namespace DSPRE {
                     break;
                 default:
                     for (int i = 0; i < parameters.Count; i++) {
-                        if (parameters[i].Length == 1) this.cmdName += " " + "0x" + (parameters[i][0]).ToString("X1");
-                        else if (parameters[i].Length == 2) this.cmdName += " " + "0x" + (BitConverter.ToInt16(parameters[i], 0)).ToString("X1");
-                        else if (parameters[i].Length == 4) this.cmdName += " " + "0x" + (BitConverter.ToInt32(parameters[i], 0)).ToString("X1");
+                        if (parameters[i].Length == 1) 
+                            this.cmdName += " " + "0x" + (parameters[i][0]).ToString("X1");
+                        else if (parameters[i].Length == 2) 
+                            this.cmdName += " " + "0x" + (BitConverter.ToInt16(parameters[i], 0)).ToString("X1");
+                        else if (parameters[i].Length == 4) 
+                            this.cmdName += " " + "0x" + (BitConverter.ToInt32(parameters[i], 0)).ToString("X1");
                     }
                     break;
             }
@@ -905,7 +912,13 @@ namespace DSPRE {
                     commandDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
                     break;
             }
-            if (!isMovement) {
+
+            if (isMovement) {
+                if (movementsDictDPPtHGSS.ContainsKey(words[0]))
+                    this.id = movementsDictDPPtHGSS[words[0]];
+                else
+                    UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
+            } else {
                 Console.WriteLine("Command name : " + words[0]);
                 Object cmd = GetResxNameByValue(words[0], commandDatabase);
 
@@ -916,17 +929,23 @@ namespace DSPRE {
                     UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
                 }
 
-            } else {
-                if (movementsDictDPPtHGSS.ContainsKey(words[0])) 
-                    this.id = movementsDictDPPtHGSS[words[0]];
-                else 
-                    UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
             }
 
             /* Read parameters from remainder of the description */
             Console.WriteLine("ID = " + id.ToString("X4"));
             if (words.Length > 1 && this.id != 0) {
-                if (!isMovement) {
+                if (isMovement) {
+                    if (words[1].Length > 4) { // Cases where movement is followed by an Overworld parameter
+
+                        int index = 1 + words[1].IndexOf('#'); // FInd index of #
+                        parameters.Add(BitConverter.GetBytes(Int32.Parse(words[1].Substring(index), NumberStyles.Integer))); // Add Overworld_#
+                        parameters[0] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[0], 0) - 1); // Add Overworld number
+
+                        // TODO: Check if other cases may apply to movement parameters
+                    } else {
+                        parameters.Add(BitConverter.GetBytes(Int16.Parse(words[1].Substring(2), NumberStyles.HexNumber)));
+                    }
+                } else {
                     Dictionary<string, byte> operatorsDict = new Dictionary<string, byte>() {
                         ["LOWER"] = 0x0,
                         ["EQUAL"] = 0x1,
@@ -949,26 +968,30 @@ namespace DSPRE {
                             paramDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
                             break;
                     }
-                    string[] indexes = paramDatabase.GetString(id.ToString("X4")).Split(' ');
+                    string[] indices = paramDatabase.GetString(id.ToString("X4")).Split(' ');
 
-                    for (int i = 1; i < indexes.Length; i++) {
+                    for (int i = 1; i < indices.Length; i++) {
                         Console.WriteLine("Index : " + i.ToString());
                         Console.WriteLine("Started word : " + words[i]);
-                        if (operatorsDict.ContainsKey(words[i])) parameters.Add(new byte[] { operatorsDict[words[i]] });
-                        else {
+                        if (operatorsDict.ContainsKey(words[i])) {
+                            parameters.Add(new byte[] { operatorsDict[words[i]] });
+                        } else {
                             int index = 1 + words[i].IndexOfAny(new char[] { 'x', '#' });
 
                             /* If number is preceded by 0x parse it as hex, otherwise as decimal */
                             NumberStyles style;
-                            if (words[i][index - 1] == 'x') style = NumberStyles.HexNumber;
-                            else style = NumberStyles.Integer;
+                            if (words[i][index - 1] == 'x')
+                                style = NumberStyles.HexNumber;
+                            else
+                                style = NumberStyles.Integer;
+
                             /* Convert strings of parameters into the correct datatypes */
                             Console.WriteLine("started params");
-                            if (indexes[i] == "1")
+                            if (indices[i] == "1")
                                 parameters.Add(new byte[] { Byte.Parse(words[i].Substring(index), style) });
-                            if (indexes[i] == "2")
+                            if (indices[i] == "2")
                                 parameters.Add(BitConverter.GetBytes(Int16.Parse(words[i].Substring(index), style)));
-                            if (indexes[i] == "4")
+                            if (indices[i] == "4")
                                 parameters.Add(BitConverter.GetBytes(Int32.Parse(words[i].Substring(index), style)));
                             Console.WriteLine("finished params");
                         }
@@ -980,21 +1003,8 @@ namespace DSPRE {
                     Console.WriteLine("Param length = " + parameters.Count.ToString());
                     if (id == 0x16 || id == 0x1A)
                         parameters[0] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[0], 0) - 1);
-                    Console.WriteLine("passed parameters 0");
                     if (id == 0x1C || id == 0x1D || id == 0x5E)
                         parameters[1] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[1], 0) - 1);
-                    Console.WriteLine("passed parameters 1");
-                    Console.WriteLine("passed fix");
-                } else {
-                    Console.WriteLine("in else");
-                    if (words[1].Length > 4) // Cases where movement is followed by an Overworld parameter
-                    {
-                        int index = 1 + words[1].IndexOf('#'); // FInd index of #
-                        parameters.Add(BitConverter.GetBytes(Int32.Parse(words[1].Substring(index), NumberStyles.Integer))); // Add Overworld_#
-                        parameters[0] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[0], 0) - 1); // Add Overworld number
-                    } // TODO: Check if other cases may apply to movement parameters
-                    else parameters.Add(BitConverter.GetBytes(Int16.Parse(words[1].Substring(2), NumberStyles.HexNumber)));
-                    Console.WriteLine("passed else");
                 }
             }
 

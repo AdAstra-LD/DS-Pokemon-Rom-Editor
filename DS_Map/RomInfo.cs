@@ -17,8 +17,20 @@ namespace DSPRE {
 
         private string interiorBuildingsPath;
         private string exteriorBuildingsPath;
-        private string areaDataFolderPath;
+        private string areaDataDirPath;
         private string OWtablePath;
+        private string mapTexturesDirPath;
+        private string buildingTexturesDirPath;
+        private string matrixDirPath;
+        private string mapDirPath;
+        private string eventsDirPath;
+        private string scriptDirPath;
+        private string textArchivesPath;
+        private string syntheticOverlayPath;
+
+        private string[] narcPaths;
+        private string[] extractedNarcDirs;
+
 
         #region Constructors (1)
         public RomInfo(string id, string workDir) {
@@ -26,9 +38,21 @@ namespace DSPRE {
             gameVersion = loadGameVersion();
             language = loadGameLanguage();
             this.workDir = workDir;
+
+            SetSyntheticOverlayPath();
+
             SetBuildingModelsDirPath();
             SetAreaDataDirPath();
             SetOWtablePath();
+            SetMapTexturesDirPath();
+            SetBuildingTexturesDirPath();
+            SetEventsDirPath();
+            SetMatrixDirPath();
+            SetTextArchivesPath();
+            SetMapDirPath();
+            SetScriptDirPath();
+
+            SetNarcDirs();
         }
         #endregion
 
@@ -36,14 +60,191 @@ namespace DSPRE {
         public string GetWorkingFolder() {
             return workDir;
         }
+        public string loadGameLanguage() {
+            string language;
+
+            switch (romID) {
+                case "ADAE":
+                case "APAE":
+                case "CPUE":
+                case "IPKE":
+                case "IPGE":
+                    language = "USA";
+                    break;
+
+                case "ADAS":
+                case "APAS":
+                case "CPUS":
+                case "IPKS":
+                case "IPGS":
+                case "LATA":
+                    language = "ESP";
+                    break;
+
+                case "ADAI":
+                case "APAI":
+                case "CPUI":
+                case "IPKI":
+                case "IPGI":
+                    language = "ITA";
+                    break;
+
+                case "ADAF":
+                case "APAF":
+                case "CPUF":
+                case "IPKF":
+                case "IPGF":
+                    language = "FRA";
+                    break;
+
+                case "ADAD":
+                case "APAD":
+                case "CPUD":
+                case "IPKD":
+                case "IPGD":
+                    language = "GER";
+                    break;
+
+                default:
+                    language = "JAP";
+                    break;
+            }
+            return language;
+        }
+
+        public string GetGameLanguage() {
+            return this.language;
+        }
+
+        public string GetGameVersion() {
+            return gameVersion;
+        }
+        public void SetNarcDirs () {
+            switch (gameVersion) {
+                case "Diamond":
+                case "Pearl":
+                    extractedNarcDirs = new string[] {
+                        syntheticOverlayPath,
+                        GetBuildingTexturesDirPath(),
+                        workDir + @"unpacked\area_build",
+                        areaDataDirPath,
+                        mapTexturesDirPath,
+                        exteriorBuildingsPath,
+                        GetEncounterDirPath(),
+                        eventsDirPath,
+                        mapDirPath,
+                        matrixDirPath,
+                        textArchivesPath,
+                        GetScriptDirPath(),
+                        GetOWSpriteDirPath(),
+                        GetTrainerDataDirPath(),
+                    };
+                    narcPaths = new string[] {
+                        @"data\data\weather_sys.narc",
+                        @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
+                        @"data\fielddata\areadata\area_build_model\area_build.narc",
+                        @"data\fielddata\areadata\area_data.narc",
+                        @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
+                        @"data\fielddata\build_model\build_model.narc",
+                        @"data\fielddata\encountdata\" + char.ToLower(gameVersion[0]) + "_enc_data.narc",
+                        @"data\fielddata\eventdata\zone_event_release.narc",
+                        @"data\fielddata\land_data\land_data_release.narc",
+                        @"data\fielddata\mapmatrix\map_matrix.narc",
+                        @"data\msgdata\msg.narc",
+                        @"data\fielddata\script\scr_seq_release.narc",
+                        @"data\data\mmodel\mmodel.narc",
+                        @"data\poketool\trainer\trdata.narc"
+                    };
+                    break;
+                case "Platinum":
+                    extractedNarcDirs = new string[] {
+                        syntheticOverlayPath,
+                        GetBuildingTexturesDirPath(),
+                        workDir + @"unpacked\area_build",
+                        areaDataDirPath,
+                        mapTexturesDirPath,
+                        exteriorBuildingsPath,
+                        GetEncounterDirPath(),
+                        eventsDirPath,
+                        mapDirPath,
+                        matrixDirPath,
+                        textArchivesPath,
+                        scriptDirPath,
+                        GetOWSpriteDirPath(),
+                        GetTrainerDataDirPath()
+                    };
+                    narcPaths = new string[] {
+                        @"data\data\weather_sys.narc",
+                        @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
+                        @"data\fielddata\areadata\area_build_model\area_build.narc",
+                        @"data\fielddata\areadata\area_data.narc",
+                        @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
+                        @"data\fielddata\build_model\build_model.narc",
+                        @"data\fielddata\encountdata\pl_enc_data.narc",
+                        @"data\fielddata\eventdata\zone_event.narc",
+                        @"data\fielddata\land_data\land_data.narc",
+                        @"data\fielddata\mapmatrix\map_matrix.narc",
+                        @"data\msgdata\pl_msg.narc",
+                        @"data\fielddata\script\scr_seq.narc",
+                        @"data\data\mmodel\mmodel.narc",
+                        @"data\poketool\trainer\trdata.narc"
+                    };
+                    break;
+                default:
+                    extractedNarcDirs = new string[] {
+                        syntheticOverlayPath,
+                        buildingTexturesDirPath,
+                        workDir + @"unpacked\area_build",
+                        areaDataDirPath,
+                        mapTexturesDirPath,
+                        exteriorBuildingsPath,
+                        eventsDirPath,
+                        mapDirPath,
+                        matrixDirPath,
+                        textArchivesPath,
+                        scriptDirPath,
+                        GetOWSpriteDirPath(),
+                        GetTrainerDataDirPath(),
+                        GetEncounterDirPath(),
+                        interiorBuildingsPath
+                    };
+                    narcPaths = new string[] {
+                        @"data\a\0\2\8",
+                        @"data\a\0\7\0",
+                        @"data\a\0\4\3",
+                        @"data\a\0\4\2",
+                        @"data\a\0\4\4",
+                        @"data\a\0\4\0",
+                        @"data\a\0\3\2",
+                        @"data\a\0\6\5",
+                        @"data\a\0\4\1",
+                        @"data\a\0\2\7",
+                        @"data\a\0\1\2",
+                        @"data\a\0\8\1",
+                        @"data\a\0\5\5",
+                        @"data\a\0\3\7",
+                        @"data\a\1\4\8"
+                    };
+                    break;
+            }
+        }
+
+        public string[] GetNarcPaths() {
+            return narcPaths;
+        }
+        public string[] GetExtractedNarcDirs() {
+            return extractedNarcDirs;
+        }
+
         public string GetAreaDataDirPath() {
-            return areaDataFolderPath;
+            return areaDataDirPath;
         }
         public void SetAreaDataDirPath() {
-            areaDataFolderPath = workDir + @"unpacked\area_data";
+            areaDataDirPath = workDir + @"unpacked\area_data";
         }
+
         public int GetAreaDataCount() {
-            return Directory.GetFiles(GetAreaDataDirPath()).Length; ;
+            return Directory.GetFiles(areaDataDirPath).Length; ;
         }
         public void SetBuildingModelsDirPath() {
             switch (gameVersion) {
@@ -65,7 +266,10 @@ namespace DSPRE {
                 return exteriorBuildingsPath;
         }
         public int GetBuildingCount(bool interior) {
-            return Directory.GetFiles(GetBuildingModelsDirPath(interior)).Length;
+            if (interior)
+                return Directory.GetFiles(interiorBuildingsPath).Length;
+            else
+                return Directory.GetFiles(exteriorBuildingsPath).Length;
         }
 
         public void SetOWtablePath () {
@@ -91,24 +295,28 @@ namespace DSPRE {
                 ["ADAF"] = 0xEEDFC,
                 ["ADAD"] = 0xEEDCC,
                 ["ADAJ"] = 0xF0C28,
+
                 ["APAE"] = 0xEEDBC,
                 ["APAS"] = 0xEEE08,
                 ["APAI"] = 0xEED70,
                 ["APAF"] = 0xEEDFC,
                 ["APAD"] = 0xEEDCC,
                 ["APAJ"] = 0xF0C28,
+
                 ["CPUE"] = 0xE601C,
                 ["CPUS"] = 0xE60B0,
                 ["CPUI"] = 0xE6038,
                 ["CPUF"] = 0xE60A4,
                 ["CPUD"] = 0xE6074,
                 ["CPUJ"] = 0xE56F0,
+
                 ["IPKE"] = 0xF6BE0,
                 ["IPKS"] = 0xF6BC8,
                 ["IPKI"] = 0xF6B58,
                 ["IPKF"] = 0xF6BC4,
                 ["IPKD"] = 0xF6B94,
                 ["IPKJ"] = 0xF6390,
+
                 ["IPGE"] = 0xF6BE0,
                 ["IPGS"] = 0xF6BD0,
                 ["IPGI"] = 0xF6B58,
@@ -168,8 +376,10 @@ namespace DSPRE {
                     fileNumber = 433;
                     break;
                 default:
-                    if (GetGameLanguage() == "JAP") fileNumber = 272;
-                    else fileNumber = 279;
+                    if (GetGameLanguage() == "JAP") 
+                        fileNumber = 272;
+                    else 
+                        fileNumber = 279;
                     break;
             }
             return fileNumber;
@@ -247,110 +457,69 @@ namespace DSPRE {
             }
             return fileNumber;
         }
-        public string GetMapTexturesFolderPath() {
-            return workDir + @"unpacked\maptex";
+        public void SetMapTexturesDirPath() {
+            mapTexturesDirPath = workDir + @"unpacked\maptex";
+        }
+        public string GetMapTexturesDirPath() {
+            return mapTexturesDirPath;
         }
         public int GetMapTexturesCount() {
-            return Directory.GetFiles(GetMapTexturesFolderPath()).Length;
+            return Directory.GetFiles(GetMapTexturesDirPath()).Length;
         }
-        public string GetBuildingTexturesFolderPath() {
-            return workDir + @"unpacked\TextureBLD";
+        public string GetBuildingTexturesDirPath() {
+            return buildingTexturesDirPath;
+        }
+        public void SetBuildingTexturesDirPath() {
+            buildingTexturesDirPath = workDir + @"unpacked\TextureBLD";
         }
 
         public int GetBuildingTexturesCount() {
-            return Directory.GetFiles(GetBuildingTexturesFolderPath()).Length;
+            return Directory.GetFiles(GetBuildingTexturesDirPath()).Length;
         }
-        public string GetMatrixFolderPath() {
-            return workDir + @"unpacked\matrix";
+        public string GetMatrixDirPath() {
+            return matrixDirPath;
+        }
+        public void SetMatrixDirPath() {
+            matrixDirPath = workDir + @"unpacked\matrix";
         }
         public int GetMatrixCount() {
-            return Directory.GetFiles(GetMatrixFolderPath()).Length;
+            return Directory.GetFiles(matrixDirPath).Length;
         }
         public string GetTextArchivesPath() {
-            return workDir + @"unpacked\msg";
+            return textArchivesPath;
+        }
+        public void SetTextArchivesPath() {
+            textArchivesPath = workDir + @"unpacked\msg";
         }
         public int GetTextArchivesCount() {
-            return Directory.GetFiles(GetTextArchivesPath()).Length;
+            return Directory.GetFiles(textArchivesPath).Length;
         }
-        public string GetTrainerDataFolderPath() {
+        public string GetTrainerDataDirPath() {
             return workDir + @"unpacked\trainerdata";
         }
-        public string GetMapFolderPath() {
-            return workDir + @"unpacked\maps";
+        public string GetMapDirPath() {
+            return mapDirPath;
+        }
+        public void SetMapDirPath () {
+            mapDirPath = workDir + @"unpacked\maps";
         }
         public int GetMapCount() {
-            return Directory.GetFiles(GetMapFolderPath()).Length;
+            return Directory.GetFiles(mapDirPath).Length;
         }
         public string GetOWSpriteDirPath() {
             return workDir + @"unpacked\overworlds";
         }
-        public string GetEncounterFolderPath() {
+        public string GetEncounterDirPath() {
             return workDir + @"unpacked\wildPokeData";
         }
         public int GetEventCount() {
-            return Directory.GetFiles(GetEventFolderPath()).Length;
+            return Directory.GetFiles(eventsDirPath).Length;
         }
-        public string GetEventFolderPath() {
-            return workDir + @"unpacked\events";
+        public string GetEventsDirPath() {
+            return eventsDirPath;
         }
-        public string loadGameLanguage() {
-            string language;
-
-            switch (romID) {
-                case "ADAE":
-                case "APAE":
-                case "CPUE":
-                case "IPKE":
-                case "IPGE":
-                    language = "USA";
-                    break;
-
-                case "ADAS":
-                case "APAS":
-                case "CPUS":
-                case "IPKS":
-                case "IPGS":
-                case "LATA":
-                    language = "ESP";
-                    break;
-
-                case "ADAI":
-                case "APAI":
-                case "CPUI":
-                case "IPKI":
-                case "IPGI":
-                    language = "ITA";
-                    break;
-
-                case "ADAF":
-                case "APAF":
-                case "CPUF":
-                case "IPKF":
-                case "IPGF":
-                    language = "FRA";
-                    break;
-
-                case "ADAD":
-                case "APAD":
-                case "CPUD":
-                case "IPKD":
-                case "IPGD":
-                    language = "GER";
-                    break;
-
-                default:
-                    language = "JAP";
-                    break;
-            }
-            return language;
-        }
-
-        public string GetGameLanguage() {
-            return this.language;
-        }
-
-        public string GetGameVersion() {
-            return gameVersion;
+        public void SetEventsDirPath() {
+            eventsDirPath = workDir + @"unpacked\events";
         }
         public string loadGameVersion() {
             Dictionary<string, string> versions = new Dictionary<string, string>() {
@@ -395,14 +564,21 @@ namespace DSPRE {
             }
         }
         public int GetScriptCount() {
-            return Directory.GetFiles(GetScriptFolderPath()).Length;
+            return Directory.GetFiles(GetScriptDirPath()).Length;
         }
-        public string GetScriptFolderPath() {
-            return workDir + @"unpacked\scripts";
+        public string GetScriptDirPath() {
+            return scriptDirPath;
+        }
+        public void SetScriptDirPath() {
+            scriptDirPath = workDir + @"unpacked\scripts";
         }
 
-        internal string GetSyntheticOverlayPath() {
-            return workDir + @"unpacked\syntheticOverlayNarc";
+        public string GetSyntheticOverlayPath() {
+            return syntheticOverlayPath;
+        }
+
+        public void SetSyntheticOverlayPath() {
+            syntheticOverlayPath = workDir + @"unpacked\syntheticOverlayNarc";
         }
 
 

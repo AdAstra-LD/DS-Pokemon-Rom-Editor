@@ -10,26 +10,35 @@ namespace DSPRE
         EncounterFileHGSS currentFile;
         bool disableHandlers = new bool();
 
-        public WildEditorHGSS(string folderPath, string[] names)
+        public WildEditorHGSS(string dirPath, string[] names, int encToOpen)
         {
             InitializeComponent();
 
-            encounterFileFolder = folderPath;
-            for (int i = 0; i < Directory.GetFiles(folderPath).Length; i++) selectEncounterComboBox.Items.Add("Encounters File " + i.ToString());
-            foreach (TabPage page in mainTabControl.TabPages)
-            {
-                foreach (Control g in page.Controls)
-                {
+            encounterFileFolder = dirPath;
+            for (int i = 0; i < Directory.GetFiles(dirPath).Length; i++) 
+                selectEncounterComboBox.Items.Add("Encounters File " + i.ToString());
+            foreach (TabPage page in mainTabControl.TabPages) {
+                foreach (Control g in page.Controls) {
                     GroupBox group = g as GroupBox;
-                    if (group != null)
-                    {
-                        foreach (Control c in group.Controls)
-                        {
+                    
+                    if (group != null) {
+                        foreach (Control c in group.Controls) {
                             ComboBox box = c as ComboBox;
-                            if (box != null) box.Items.AddRange(names);
+
+                            if (box != null) 
+                                box.Items.AddRange(names);
                         }
                     }
                 }
+            }
+            if (encToOpen > selectEncounterComboBox.Items.Count) {
+                if (encToOpen != 65535) { 
+                    MessageBox.Show("This encounter file doesn't exist.\n" +
+                    "Enc #0 will be loaded, instead.", "WildPoké Data not found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                selectEncounterComboBox.SelectedIndex = 0;
+            } else {
+                selectEncounterComboBox.SelectedIndex = encToOpen;
             }
         }
 

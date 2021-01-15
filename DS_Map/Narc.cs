@@ -32,10 +32,10 @@ namespace NarcAPI
             return narc;
         }
 
-        public static Narc FromFolder(String folderPath)
+        public static Narc FromFolder(String dirPath)
         {
-            Narc narc = new Narc(Path.GetDirectoryName(folderPath));
-            String[] fileNames = Directory.GetFiles(folderPath, "*.*", SearchOption.AllDirectories);
+            Narc narc = new Narc(Path.GetDirectoryName(dirPath));
+            String[] fileNames = Directory.GetFiles(dirPath, "*.*", SearchOption.AllDirectories);
             uint numberOfElements = (uint)fileNames.Length;
             narc.Elements = new MemoryStream[numberOfElements];
             for (int i = 0; i < numberOfElements; i++)
@@ -106,19 +106,19 @@ namespace NarcAPI
             bw.Close();
         }
 
-        public void ExtractToFolder(String folderPath)
+        public void ExtractToFolder(String dirPath)
         {
-            Console.WriteLine(folderPath);
-            if (Directory.Exists(folderPath)) {
+            Console.WriteLine(dirPath);
+            if (Directory.Exists(dirPath)) {
                 try {
-                    Directory.Delete(folderPath, true);
+                    Directory.Delete(dirPath, true);
                 } catch (IOException) {
-                    MessageBox.Show("Can't access temp directory: \n" + folderPath +"\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Can't access temp directory: \n" + dirPath +"\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
             try {
-                Directory.CreateDirectory(folderPath);
+                Directory.CreateDirectory(dirPath);
             } catch (ArgumentNullException) {
                 MessageBox.Show("Dir path is null.", "Can't create directory", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -128,7 +128,7 @@ namespace NarcAPI
             byte[] buffer;
             for (int i = 0; i < Elements.Length; i++)
             {
-                file = File.Create(Path.Combine(folderPath, i.ToString("D4")));
+                file = File.Create(Path.Combine(dirPath, i.ToString("D4")));
                 buffer = new byte[Elements[i].Length];
                 Elements[i].Seek(0, SeekOrigin.Begin);
                 Elements[i].Read(buffer, 0, (int)Elements[i].Length);
