@@ -190,7 +190,8 @@ namespace DSPRE {
                         @"data\poketool\trainer\trdata.narc"
                     };
                     break;
-                default:
+                case "HeartGold":
+                case "SoulSilver":
                     extractedNarcDirs = new string[] {
                         syntheticOverlayPath,
                         buildingTexturesDirPath,
@@ -224,6 +225,38 @@ namespace DSPRE {
                         @"data\a\0\5\5",
                         @"data\a\0\3\7",
                         @"data\a\1\4\8"
+                    };
+                    break;
+                default:
+                    narcPaths = new string[] {
+                           @"data\a\0\7\0",
+                           @"data\a\0\4\3",
+                           @"data\a\0\4\2",
+                           @"data\a\0\4\4",
+                           @"data\a\0\4\0",
+                           @"data\a\0\3\2",
+                           @"data\a\0\6\5",
+                           @"data\a\0\4\1",
+                           @"data\a\0\2\7",
+                           @"data\a\0\1\2",
+                           @"data\a\0\8\1",
+                           @"data\a\0\5\5",
+                           @"data\a\0\3\7",
+                           @"data\a\1\4\8"
+                        };
+                    extractedNarcDirs = new string[] {
+                       GetBuildingTexturesDirPath(),
+                       workDir + @"unpacked\area_build",
+                       areaDataDirPath,
+                       mapTexturesDirPath,
+                       eventsDirPath,
+                       mapDirPath,
+                       matrixDirPath,
+                       textArchivesPath,
+                       scriptDirPath,
+                       GetOWSpriteDirPath(),
+                       GetTrainerDataDirPath(),
+                       GetEncounterDirPath(),
                     };
                     break;
             }

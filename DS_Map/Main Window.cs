@@ -43,8 +43,6 @@ namespace DSPRE {
 
         /* ROM Information */
         public static string gameCode;
-        public static string[] narcList;
-        public static string[] extractedNarcFolders;
         RomInfo romInfo;
 
         #endregion
@@ -333,14 +331,14 @@ namespace DSPRE {
         }
 
         private void RepackNARCs() {
-            foreach (var tuple in narcList.Zip(extractedNarcFolders, Tuple.Create)) {
+            foreach (var tuple in romInfo.GetNarcPaths().Zip(romInfo.GetExtractedNarcDirs(), Tuple.Create)) {
                 Narc.FromFolder(tuple.Item2).Save(workDir + tuple.Item1); // Make new NARC from folder
                 //Directory.Delete(tuple.Item2, true); // Delete folder
             }
         }
 
         private void DeleteTempFolders() {
-            foreach (var tuple in narcList.Zip(extractedNarcFolders, Tuple.Create)) {
+            foreach (var tuple in romInfo.GetNarcPaths().Zip(romInfo.GetExtractedNarcDirs(), Tuple.Create)) {
                 Directory.Delete(tuple.Item2, true); // Delete folder
             }
         }
@@ -924,43 +922,6 @@ namespace DSPRE {
             foreach (var tuple in romInfo.GetNarcPaths().Zip(romInfo.GetExtractedNarcDirs(), Tuple.Create))
                 Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
         }
-        private void UnpackNARCsBlackWhite2() {
-            narcList = new string[]
-            {
-               @"data\a\0\7\0",
-               @"data\a\0\4\3",
-               @"data\a\0\4\2",
-               @"data\a\0\4\4",
-               @"data\a\0\4\0",
-               @"data\a\0\3\2",
-               @"data\a\0\6\5",
-               @"data\a\0\4\1",
-               @"data\a\0\2\7",
-               @"data\a\0\1\2",
-               @"data\a\0\8\1",
-               @"data\a\0\5\5",
-               @"data\a\0\3\7",
-               @"data\a\1\4\8"
-            };
-            extractedNarcFolders = new string[]
-            {
-               romInfo.GetBuildingTexturesDirPath(),
-               workDir + @"unpacked\area_build",
-               romInfo.GetAreaDataDirPath(),
-               romInfo.GetMapTexturesDirPath(),
-               romInfo.GetEventsDirPath(),
-               romInfo.GetMapDirPath(),
-               romInfo.GetMatrixDirPath(),
-               romInfo.GetTextArchivesPath(),
-               romInfo.GetScriptDirPath(),
-               romInfo.GetOWSpriteDirPath(),
-               romInfo.GetTrainerDataDirPath(),
-               romInfo.GetEncounterDirPath(),
-            };
-
-            foreach (var tuple in narcList.Zip(extractedNarcFolders, Tuple.Create))
-                Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-        }
         public static void WriteToArm9(long startOffset, byte[] bytesToWrite) {
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin"))) {
                 writer.BaseStream.Position = startOffset;
@@ -1095,22 +1056,25 @@ namespace DSPRE {
 
             statusLabel.Text = "Writing new ROM...";
 
-
-            switch (romInfo.GetGameVersion()) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
-                    break;
-                default:
-                    restoreOverlayFromBackup(1); // Must restore compressed overlay 1 in HGSS, which contains overworld table
-                    break;
+            if (eventEditorIsReady) {
+                switch (romInfo.GetGameVersion()) {
+                    case "Diamond":
+                    case "Pearl":
+                    case "Platinum":
+                        break;
+                    default:
+                        restoreOverlayFromBackup(1); // Must restore compressed overlay 1 in HGSS, which contains overworld table
+                        break;
+                }
             }
 
             RepackNARCs();
             //DeleteTempFolders();
             RepackRom(saveRom.FileName);
-            if (romInfo.GetGameVersion() != "Diamond" && romInfo.GetGameVersion() != "Pearl" && romInfo.GetGameVersion() != "Platinum")
-                decompressOverlay(1, true);
+
+            if (eventEditorIsReady)
+                if (romInfo.GetGameVersion() != "Diamond" && romInfo.GetGameVersion() != "Pearl" && romInfo.GetGameVersion() != "Platinum")
+                    decompressOverlay(1, true);
 
             statusLabel.Text = "Ready";
         }
