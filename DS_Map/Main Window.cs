@@ -1293,11 +1293,15 @@ namespace DSPRE {
                         editor.ShowDialog();
                     break;
             }
+            statusLabel.Text = "Ready";
         }
 
         private void openWildEditorWithIdButtonClick(object sender, EventArgs e) {
             string[] narcPaths = romInfo.GetNarcPaths();
             string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+
+            statusLabel.Text = "Attempting to extract Wild Encounters NARC...";
+            Update();
 
             Tuple<string, string> t;
             if (romInfo.GetGameVersion() == "HeartGold" || romInfo.GetGameVersion() == "SoulSilver") {
@@ -1310,6 +1314,8 @@ namespace DSPRE {
             if (!di.Exists || di.GetFiles().Length == 0) {
                 Narc.Open(workDir + t.Item1).ExtractToFolder(t.Item2);
             }
+            statusLabel.Text = "Passing control to Wild Pokémon Editor...";
+            Update();
             openWildEditor();
         }
         #endregion
