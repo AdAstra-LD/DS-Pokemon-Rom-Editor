@@ -239,6 +239,7 @@
             this.surfSixtyMinUpDown = new System.Windows.Forms.NumericUpDown();
             this.label66 = new System.Windows.Forms.Label();
             this.surfSixtyComboBox = new System.Windows.Forms.ComboBox();
+            this.surfPicture = new System.Windows.Forms.PictureBox();
             this.mainTabControl.SuspendLayout();
             this.grassGroundTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -318,6 +319,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMinUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMaxUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMinUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // removeEncounterFileButton
@@ -1431,6 +1433,7 @@
             // 
             // waterTabPage
             // 
+            this.waterTabPage.Controls.Add(this.surfPicture);
             this.waterTabPage.Controls.Add(this.pictureBox7);
             this.waterTabPage.Controls.Add(this.pictureBox6);
             this.waterTabPage.Controls.Add(this.pictureBox5);
@@ -1499,7 +1502,7 @@
             this.superRodGroupBox.Controls.Add(this.superRodSixtyMinUpDown);
             this.superRodGroupBox.Controls.Add(this.label74);
             this.superRodGroupBox.Controls.Add(this.superRodSixtyComboBox);
-            this.superRodGroupBox.Location = new System.Drawing.Point(367, 232);
+            this.superRodGroupBox.Location = new System.Drawing.Point(367, 234);
             this.superRodGroupBox.Name = "superRodGroupBox";
             this.superRodGroupBox.Size = new System.Drawing.Size(325, 220);
             this.superRodGroupBox.TabIndex = 44;
@@ -1753,7 +1756,7 @@
             this.goodRodGroupBox.Controls.Add(this.goodRodSixtyMinUpDown);
             this.goodRodGroupBox.Controls.Add(this.label58);
             this.goodRodGroupBox.Controls.Add(this.goodRodSixtyComboBox);
-            this.goodRodGroupBox.Location = new System.Drawing.Point(17, 232);
+            this.goodRodGroupBox.Location = new System.Drawing.Point(17, 234);
             this.goodRodGroupBox.Name = "goodRodGroupBox";
             this.goodRodGroupBox.Size = new System.Drawing.Size(325, 220);
             this.goodRodGroupBox.TabIndex = 43;
@@ -2007,7 +2010,7 @@
             this.oldRodGroupBox.Controls.Add(this.oldRodSixtyMinUpDown);
             this.oldRodGroupBox.Controls.Add(this.label50);
             this.oldRodGroupBox.Controls.Add(this.oldRodSixtyComboBox);
-            this.oldRodGroupBox.Location = new System.Drawing.Point(367, 4);
+            this.oldRodGroupBox.Location = new System.Drawing.Point(367, 6);
             this.oldRodGroupBox.Name = "oldRodGroupBox";
             this.oldRodGroupBox.Size = new System.Drawing.Size(325, 220);
             this.oldRodGroupBox.TabIndex = 42;
@@ -2261,7 +2264,7 @@
             this.surfGroupBox.Controls.Add(this.surfSixtyMinUpDown);
             this.surfGroupBox.Controls.Add(this.label66);
             this.surfGroupBox.Controls.Add(this.surfSixtyComboBox);
-            this.surfGroupBox.Location = new System.Drawing.Point(17, 4);
+            this.surfGroupBox.Location = new System.Drawing.Point(17, 6);
             this.surfGroupBox.Name = "surfGroupBox";
             this.surfGroupBox.Size = new System.Drawing.Size(325, 220);
             this.surfGroupBox.TabIndex = 4;
@@ -2489,6 +2492,16 @@
             this.surfSixtyComboBox.TabIndex = 3;
             this.surfSixtyComboBox.SelectedIndexChanged += new System.EventHandler(this.surfSixtyComboBox_SelectedIndexChanged);
             // 
+            // surfPicture
+            // 
+            this.surfPicture.Image = global::DSPRE.Properties.Resources.SurfIcon;
+            this.surfPicture.Location = new System.Drawing.Point(67, -3);
+            this.surfPicture.Name = "surfPicture";
+            this.surfPicture.Size = new System.Drawing.Size(42, 42);
+            this.surfPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.surfPicture.TabIndex = 200;
+            this.surfPicture.TabStop = false;
+            // 
             // WildEditorHGSS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2591,6 +2604,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMinUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMaxUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMinUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2808,5 +2822,6 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox surfPicture;
     }
 }

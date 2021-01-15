@@ -424,6 +424,7 @@
     <None Include="Graphics\Program Icons\WheelClick.png" />
     <None Include="Graphics\Program Icons\RightClick.png" />
     <None Include="Graphics\Program Icons\unpackAllIcon.png" />
+    <None Include="Graphics\Program Icons\SurfIcon.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

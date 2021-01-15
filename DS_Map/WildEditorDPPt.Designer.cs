@@ -235,6 +235,7 @@
             this.surfSixtyMinUpDown = new System.Windows.Forms.NumericUpDown();
             this.label66 = new System.Windows.Forms.Label();
             this.surfSixtyComboBox = new System.Windows.Forms.ComboBox();
+            this.surfPicture = new System.Windows.Forms.PictureBox();
             this.mainTabControl.SuspendLayout();
             this.grassGroundTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -309,6 +310,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMinUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMaxUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMinUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // encounterFileLabel
@@ -322,7 +324,7 @@
             // 
             // removeEventFileButton
             // 
-            this.removeEventFileButton.Location = new System.Drawing.Point(446, 12);
+            this.removeEventFileButton.Location = new System.Drawing.Point(463, 12);
             this.removeEventFileButton.Name = "removeEventFileButton";
             this.removeEventFileButton.Size = new System.Drawing.Size(80, 35);
             this.removeEventFileButton.TabIndex = 60;
@@ -331,7 +333,7 @@
             // 
             // addEventFileButton
             // 
-            this.addEventFileButton.Location = new System.Drawing.Point(360, 12);
+            this.addEventFileButton.Location = new System.Drawing.Point(377, 12);
             this.addEventFileButton.Name = "addEventFileButton";
             this.addEventFileButton.Size = new System.Drawing.Size(80, 35);
             this.addEventFileButton.TabIndex = 59;
@@ -344,13 +346,13 @@
             this.selectEncounterComboBox.FormattingEnabled = true;
             this.selectEncounterComboBox.Location = new System.Drawing.Point(14, 26);
             this.selectEncounterComboBox.Name = "selectEncounterComboBox";
-            this.selectEncounterComboBox.Size = new System.Drawing.Size(150, 21);
+            this.selectEncounterComboBox.Size = new System.Drawing.Size(175, 21);
             this.selectEncounterComboBox.TabIndex = 58;
             this.selectEncounterComboBox.SelectedIndexChanged += new System.EventHandler(this.selectEncounterComboBox_SelectedIndexChanged);
             // 
             // exportEncounterFileButton
             // 
-            this.exportEncounterFileButton.Location = new System.Drawing.Point(274, 12);
+            this.exportEncounterFileButton.Location = new System.Drawing.Point(291, 12);
             this.exportEncounterFileButton.Name = "exportEncounterFileButton";
             this.exportEncounterFileButton.Size = new System.Drawing.Size(80, 35);
             this.exportEncounterFileButton.TabIndex = 57;
@@ -360,7 +362,7 @@
             // 
             // importEncounterFileButton
             // 
-            this.importEncounterFileButton.Location = new System.Drawing.Point(188, 12);
+            this.importEncounterFileButton.Location = new System.Drawing.Point(205, 12);
             this.importEncounterFileButton.Name = "importEncounterFileButton";
             this.importEncounterFileButton.Size = new System.Drawing.Size(80, 36);
             this.importEncounterFileButton.TabIndex = 56;
@@ -385,7 +387,7 @@
             this.mainTabControl.Location = new System.Drawing.Point(15, 59);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(761, 585);
+            this.mainTabControl.Size = new System.Drawing.Size(761, 602);
             this.mainTabControl.TabIndex = 0;
             // 
             // grassGroundTabPage
@@ -402,7 +404,7 @@
             this.grassGroundTabPage.Location = new System.Drawing.Point(4, 22);
             this.grassGroundTabPage.Name = "grassGroundTabPage";
             this.grassGroundTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.grassGroundTabPage.Size = new System.Drawing.Size(753, 559);
+            this.grassGroundTabPage.Size = new System.Drawing.Size(753, 576);
             this.grassGroundTabPage.TabIndex = 0;
             this.grassGroundTabPage.Text = "Grass/Ground";
             this.grassGroundTabPage.UseVisualStyleBackColor = true;
@@ -410,7 +412,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(70, 292);
+            this.pictureBox3.Location = new System.Drawing.Point(70, 297);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(32, 30);
             this.pictureBox3.TabIndex = 194;
@@ -428,7 +430,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(82, 483);
+            this.pictureBox1.Location = new System.Drawing.Point(82, 488);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(25, 26);
             this.pictureBox1.TabIndex = 192;
@@ -444,7 +446,7 @@
             this.radarGroupBox.Controls.Add(this.radarSecondComboBox);
             this.radarGroupBox.Controls.Add(this.label34);
             this.radarGroupBox.Controls.Add(this.radarFirstComboBox);
-            this.radarGroupBox.Location = new System.Drawing.Point(15, 490);
+            this.radarGroupBox.Location = new System.Drawing.Point(15, 495);
             this.radarGroupBox.Name = "radarGroupBox";
             this.radarGroupBox.Size = new System.Drawing.Size(720, 63);
             this.radarGroupBox.TabIndex = 191;
@@ -550,7 +552,7 @@
             this.dualSlotGroupBox.Controls.Add(this.sapphireSecondComboBox);
             this.dualSlotGroupBox.Controls.Add(this.label28);
             this.dualSlotGroupBox.Controls.Add(this.label29);
-            this.dualSlotGroupBox.Location = new System.Drawing.Point(15, 302);
+            this.dualSlotGroupBox.Location = new System.Drawing.Point(15, 307);
             this.dualSlotGroupBox.Name = "dualSlotGroupBox";
             this.dualSlotGroupBox.Size = new System.Drawing.Size(721, 179);
             this.dualSlotGroupBox.TabIndex = 190;
@@ -1317,6 +1319,7 @@
             // 
             // waterTabPage
             // 
+            this.waterTabPage.Controls.Add(this.surfPicture);
             this.waterTabPage.Controls.Add(this.pictureBox7);
             this.waterTabPage.Controls.Add(this.pictureBox6);
             this.waterTabPage.Controls.Add(this.pictureBox5);
@@ -1327,7 +1330,7 @@
             this.waterTabPage.Location = new System.Drawing.Point(4, 22);
             this.waterTabPage.Name = "waterTabPage";
             this.waterTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.waterTabPage.Size = new System.Drawing.Size(753, 559);
+            this.waterTabPage.Size = new System.Drawing.Size(753, 576);
             this.waterTabPage.TabIndex = 1;
             this.waterTabPage.Text = "Water";
             this.waterTabPage.UseVisualStyleBackColor = true;
@@ -2375,11 +2378,21 @@
             this.surfSixtyComboBox.TabIndex = 3;
             this.surfSixtyComboBox.SelectedIndexChanged += new System.EventHandler(this.surfSixtyComboBox_SelectedIndexChanged);
             // 
+            // surfPicture
+            // 
+            this.surfPicture.Image = global::DSPRE.Properties.Resources.SurfIcon;
+            this.surfPicture.Location = new System.Drawing.Point(66, 4);
+            this.surfPicture.Name = "surfPicture";
+            this.surfPicture.Size = new System.Drawing.Size(42, 42);
+            this.surfPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.surfPicture.TabIndex = 198;
+            this.surfPicture.TabStop = false;
+            // 
             // WildEditorDPPt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(791, 656);
+            this.ClientSize = new System.Drawing.Size(791, 673);
             this.Controls.Add(this.mainTabControl);
             this.Controls.Add(this.removeEventFileButton);
             this.Controls.Add(this.addEventFileButton);
@@ -2474,6 +2487,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMinUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMaxUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMinUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2686,5 +2700,6 @@
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox surfPicture;
     }
 }

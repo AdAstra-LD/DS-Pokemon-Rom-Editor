@@ -1307,7 +1307,7 @@ namespace DSPRE {
             if (romInfo.GetGameVersion() == "HeartGold" || romInfo.GetGameVersion() == "SoulSilver") {
                 t = Tuple.Create(narcPaths[narcPaths.Length - 2], extractedNarcDirs[extractedNarcDirs.Length - 2]);
             } else {
-                t = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 1]);
+                t = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 2]);
             }
 
             DirectoryInfo di = new DirectoryInfo(t.Item2);
