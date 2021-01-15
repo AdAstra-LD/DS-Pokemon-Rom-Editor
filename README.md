@@ -3,7 +3,7 @@
 Nomura's C# and WinForm DS Pokemon ROM Editor forked with some QOL adjustments.
 
 ## Major Changes to Mixone's fork
-- Drastically sped up save time
+- Drastically sped up load and save time
 - New search location feature
 - Added mouse support and warps navigation feature to the Event Editor
 - Fixed OW search algorithm for most (if not all) supported ROMs
