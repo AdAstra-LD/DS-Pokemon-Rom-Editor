@@ -380,7 +380,7 @@ namespace DSPRE {
                 toolStripProgressBar.Value++;
             }
             if (romInfo.GetGameVersion() == "HeartGold" || romInfo.GetGameVersion() == "SoulSilver") {
-                var tuple = Tuple.Create(narcPaths[narcPaths.Length-1], extractedNarcDirs[extractedNarcDirs.Length-1]);
+                var tuple = Tuple.Create(narcPaths[narcPaths.Length-1], extractedNarcDirs[extractedNarcDirs.Length-1]); // Last = interior buildings dir
                 DirectoryInfo di = new DirectoryInfo(tuple.Item2);
                 if (!di.Exists || di.GetFiles().Length == 0) {
                     Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
@@ -1296,6 +1296,20 @@ namespace DSPRE {
         }
 
         private void openWildEditorWithIdButtonClick(object sender, EventArgs e) {
+            string[] narcPaths = romInfo.GetNarcPaths();
+            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+
+            Tuple<string, string> t;
+            if (romInfo.GetGameVersion() == "HeartGold" || romInfo.GetGameVersion() == "SoulSilver") {
+                t = Tuple.Create(narcPaths[narcPaths.Length - 2], extractedNarcDirs[extractedNarcDirs.Length - 2]);
+            } else {
+                t = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 1]);
+            }
+
+            DirectoryInfo di = new DirectoryInfo(t.Item2);
+            if (!di.Exists || di.GetFiles().Length == 0) {
+                Narc.Open(workDir + t.Item1).ExtractToFolder(t.Item2);
+            }
             openWildEditor();
         }
         #endregion
