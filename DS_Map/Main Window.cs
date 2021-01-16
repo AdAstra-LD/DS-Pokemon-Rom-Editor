@@ -3793,7 +3793,8 @@ namespace DSPRE {
         }
         private void saveEventsButton_Click(object sender, EventArgs e) {
             string eventFile = selectEventComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.GetEventsDirPath() + "\\" + eventFile, FileMode.Create))) writer.Write(currentEventFile.Save());
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.GetEventsDirPath() + "\\" + eventFile, FileMode.Create))) 
+                writer.Write(currentEventFile.Save());
         }
         private void selectEventComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers)
@@ -4229,7 +4230,8 @@ namespace DSPRE {
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].zPosition = (short)owZPositionUpDown.Value;
         }
         private void owXMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].xMatrixPosition = (ushort)owXMatrixUpDown.Value;
             eventMatrixPictureBox.Image = new Bitmap(eventMatrixPictureBox.Width, eventMatrixPictureBox.Height);
@@ -4239,7 +4241,8 @@ namespace DSPRE {
             DisplayActiveEvents();
         }
         private void owYMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].yMatrixPosition = (ushort)owYMatrixUpDown.Value;
             eventMatrixPictureBox.Image = new Bitmap(eventMatrixPictureBox.Width, eventMatrixPictureBox.Height);
@@ -4289,11 +4292,13 @@ namespace DSPRE {
             }
         }
         private void warpAnchorUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentEventFile.warps[warpsListBox.SelectedIndex].anchor = (ushort)warpAnchorUpDown.Value;
         }
         private void warpHeaderUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentEventFile.warps[warpsListBox.SelectedIndex].header = (ushort)warpHeaderUpDown.Value;
         }
         private void warpsListBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -4320,21 +4325,20 @@ namespace DSPRE {
             #endregion
         }
         private void warpMatrixXUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
-                return;
+            if (disableHandlers) return;
 
             currentEventFile.warps[warpsListBox.SelectedIndex].xMatrixPosition = (ushort)warpXMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpMatrixYUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers) 
                 return;
 
             currentEventFile.warps[warpsListBox.SelectedIndex].yMatrixPosition = (ushort)warpYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpXMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers) 
                 return;
 
             currentEventFile.warps[warpsListBox.SelectedIndex].xMapPosition = (short)warpXMapUpDown.Value;
@@ -4406,12 +4410,6 @@ namespace DSPRE {
             disableHandlers = false;
             #endregion
         }
-        private void triggerLengthUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
-
-            currentEventFile.triggers[triggersListBox.SelectedIndex].length = (ushort)triggerLengthUpDown.Value;
-            DisplayActiveEvents();
-        }
         private void triggerScriptUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) return;
             currentEventFile.triggers[triggersListBox.SelectedIndex].scriptNumber = (ushort)triggerScriptUpDown.Value;
@@ -4435,21 +4433,31 @@ namespace DSPRE {
             DisplayActiveEvents();
         }
         private void triggerXMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].xMatrixPosition = (ushort)triggerXMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerYMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].yMatrixPosition = (ushort)triggerYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerWidthUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].width = (ushort)triggerWidthUpDown.Value;
+            DisplayActiveEvents();
+        }
+        private void triggerLengthUpDown_ValueChanged(object sender, EventArgs e) {
+            if (disableHandlers) 
+                return;
+
+            currentEventFile.triggers[triggersListBox.SelectedIndex].length = (ushort)triggerLengthUpDown.Value;
             DisplayActiveEvents();
         }
         #endregion
