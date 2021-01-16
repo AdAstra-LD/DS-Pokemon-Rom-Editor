@@ -34,22 +34,18 @@ namespace DSPRE
             }
 
             if (encToOpen > selectEncounterComboBox.Items.Count) {
-                if (encToOpen != 65535) {
-                    MessageBox.Show("This encounter file doesn't exist.\n" +
-                    "Enc #0 will be loaded, instead.", "WildPoké Data not found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
+                MessageBox.Show("This encounter file doesn't exist.\n" +
+                "Enc #0 will be loaded, instead.", "WildPoké Data not found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 selectEncounterComboBox.SelectedIndex = 0;
             } else {
                 selectEncounterComboBox.SelectedIndex = encToOpen;
             }
         }
-        private void WildEditorDPPt_Load(object sender, EventArgs e)
-        {
+        private void WildEditorDPPt_Load(object sender, EventArgs e) {
             
         }
 
-        private void SetupControls()
-        {
+        private void SetupControls() {
             disableHandlers = true;
 
             /* Setup encounter rates controls */
@@ -227,7 +223,8 @@ namespace DSPRE
         private void saveEventsButton_Click(object sender, EventArgs e)
         {
             string filePath = encounterFileFolder + "\\" + selectEncounterComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(filePath, FileMode.Create))) writer.Write(currentFile.SaveEncounterFile());
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(filePath, FileMode.Create))) 
+                writer.Write(currentFile.SaveEncounterFile());
         }
 
         private void walkingTwentyFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -776,14 +773,51 @@ namespace DSPRE
         }
         private void goodRodRateUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentFile.goodRodRate = (byte)goodRodRateUpDown.Value;
         }
         private void superRodRateUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentFile.superRodRate = (byte)superRodRateUpDown.Value;
         }
 
+        private void addEncounterFileButton_Click(object sender, EventArgs e) {
+            /* Load new encounter, a copy of encounter 0 */
+            int encounterCount = selectEncounterComboBox.Items.Count;
+            EncounterFile newEncounter = new EncounterFileDPPt(new FileStream(encounterFileFolder + "\\" + 0.ToString("D4"), FileMode.Open));
+
+            /* Add new encounter file to encounter folder */
+            string encounterFilePath = encounterFileFolder + "\\" + encounterCount.ToString("D4");
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(encounterFilePath, FileMode.Create))) 
+                writer.Write(newEncounter.SaveEncounterFile());
+
+            /* Update ComboBox*/
+            selectEncounterComboBox.Items.Add("[New] Encounters File " + encounterCount.ToString());
+        }
+
+        private void removeLastEncounterFileButton_Click(object sender, EventArgs e) {
+            int encounterCount = selectEncounterComboBox.Items.Count;
+
+            if (encounterCount > 1) {
+                /* Delete encounter file file */
+                int encounterToDelete = encounterCount - 1;
+
+                string encounterFilePath = encounterFileFolder + "\\" + encounterToDelete.ToString("D4");
+                File.Delete(encounterFilePath);
+
+                /* Change selected index if the encounter file to be deleted is currently selected */
+                if (selectEncounterComboBox.SelectedIndex == encounterToDelete)
+                    selectEncounterComboBox.SelectedIndex--;
+
+                /* Remove entry from ComboBox, and decrease encounter file count */
+                selectEncounterComboBox.Items.RemoveAt(encounterToDelete);
+            } else {
+                MessageBox.Show("At least one encounter file must be kept.", "Can't delete encounter file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+        }
     }
 }

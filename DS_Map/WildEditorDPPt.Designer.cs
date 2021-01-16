@@ -132,6 +132,7 @@
             this.walkingRateUpDown = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
             this.waterTabPage = new System.Windows.Forms.TabPage();
+            this.surfPicture = new System.Windows.Forms.PictureBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -235,7 +236,6 @@
             this.surfSixtyMinUpDown = new System.Windows.Forms.NumericUpDown();
             this.label66 = new System.Windows.Forms.Label();
             this.surfSixtyComboBox = new System.Windows.Forms.ComboBox();
-            this.surfPicture = new System.Windows.Forms.PictureBox();
             this.mainTabControl.SuspendLayout();
             this.grassGroundTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -259,6 +259,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.walkingFiveFirstUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingRateUpDown)).BeginInit();
             this.waterTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.surfPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
@@ -310,7 +311,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMinUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMaxUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // encounterFileLabel
@@ -324,21 +324,23 @@
             // 
             // removeEventFileButton
             // 
-            this.removeEventFileButton.Location = new System.Drawing.Point(463, 12);
+            this.removeEventFileButton.Location = new System.Drawing.Point(510, 12);
             this.removeEventFileButton.Name = "removeEventFileButton";
             this.removeEventFileButton.Size = new System.Drawing.Size(80, 35);
             this.removeEventFileButton.TabIndex = 60;
             this.removeEventFileButton.Text = "Remove Last";
             this.removeEventFileButton.UseVisualStyleBackColor = true;
+            this.removeEventFileButton.Click += new System.EventHandler(this.removeLastEncounterFileButton_Click);
             // 
             // addEventFileButton
             // 
-            this.addEventFileButton.Location = new System.Drawing.Point(377, 12);
+            this.addEventFileButton.Location = new System.Drawing.Point(424, 12);
             this.addEventFileButton.Name = "addEventFileButton";
             this.addEventFileButton.Size = new System.Drawing.Size(80, 35);
             this.addEventFileButton.TabIndex = 59;
             this.addEventFileButton.Text = "Add File";
             this.addEventFileButton.UseVisualStyleBackColor = true;
+            this.addEventFileButton.Click += new System.EventHandler(this.addEncounterFileButton_Click);
             // 
             // selectEncounterComboBox
             // 
@@ -1334,6 +1336,16 @@
             this.waterTabPage.TabIndex = 1;
             this.waterTabPage.Text = "Water";
             this.waterTabPage.UseVisualStyleBackColor = true;
+            // 
+            // surfPicture
+            // 
+            this.surfPicture.Image = global::DSPRE.Properties.Resources.SurfIcon;
+            this.surfPicture.Location = new System.Drawing.Point(66, 4);
+            this.surfPicture.Name = "surfPicture";
+            this.surfPicture.Size = new System.Drawing.Size(42, 42);
+            this.surfPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.surfPicture.TabIndex = 198;
+            this.surfPicture.TabStop = false;
             // 
             // pictureBox7
             // 
@@ -2378,16 +2390,6 @@
             this.surfSixtyComboBox.TabIndex = 3;
             this.surfSixtyComboBox.SelectedIndexChanged += new System.EventHandler(this.surfSixtyComboBox_SelectedIndexChanged);
             // 
-            // surfPicture
-            // 
-            this.surfPicture.Image = global::DSPRE.Properties.Resources.SurfIcon;
-            this.surfPicture.Location = new System.Drawing.Point(66, 4);
-            this.surfPicture.Name = "surfPicture";
-            this.surfPicture.Size = new System.Drawing.Size(42, 42);
-            this.surfPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.surfPicture.TabIndex = 198;
-            this.surfPicture.TabStop = false;
-            // 
             // WildEditorDPPt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2432,6 +2434,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.walkingFiveFirstUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingRateUpDown)).EndInit();
             this.waterTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.surfPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
@@ -2487,7 +2490,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMinUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMaxUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

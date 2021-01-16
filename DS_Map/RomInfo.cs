@@ -2,6 +2,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
+using System;
 
 namespace DSPRE {
 
@@ -10,30 +11,34 @@ namespace DSPRE {
     /// </summary>
 
     public class RomInfo {
-        private string romID;
-        private string workDir;
-        private string gameVersion;
-        private string language;
-        private long headerTableOffset;
+        public string romID { get; private set; }
+        public string workDir { get; private set; }
+        public string gameVersion { get; private set; }
+        public string gameLanguage { get; private set; }
+        public long headerTableOffset { get; private set; }
 
-        private string syntheticOverlayPath;
+        public string syntheticOverlayPath { get; private set; }
         private string interiorBuildingsPath;
         private string exteriorBuildingModelsPath;
-        private string areaDataDirPath;
-        private string OWtablePath;
-        private string mapTexturesDirPath;
-        private string buildingTexturesDirPath;
-        private string buildingConfigFilesPath;
-        private string matrixDirPath;
-        private string mapDirPath;
-        private string eventsDirPath;
-        private string scriptDirPath;
-        private string textArchivesPath;
-        private string encounterDirPath;
-        private string trainerDataDirPath;
+        public string areaDataDirPath { get; private set; }
+        public string OWtablePath { get; private set; }
+        public string mapTexturesDirPath { get; private set; }
+        public string buildingTexturesDirPath { get; private set; }
+        public string buildingConfigFilesPath { get; private set; }
+        public string matrixDirPath { get; private set; }
+        public string mapDirPath { get; private set; }
+        public string eventsDirPath { get; private set; }
+        public string scriptDirPath { get; private set; }
+        public string textArchivesPath { get; private set; }
+        public string encounterDirPath { get; private set; }
+        public string trainerDataDirPath { get; private set; }
+        public string[] narcPaths { get; private set; }
+        public string[] extractedNarcDirs { get; private set; }
 
-        private string[] narcPaths;
-        private string[] extractedNarcDirs;
+        public int nullEncounterID { get; private set; }
+        public int attackNamesTextNumber { get; private set; }
+        public int pokémonNamesTextNumber { get; private set; }
+        public int itemNamesTextNumber { get; private set; }
 
 
         #region Constructors (1)
@@ -44,6 +49,7 @@ namespace DSPRE {
             if (gameVersion == null)
                 return;
 
+            SetNullEncounterID();
             LoadGameLanguage();
             LoadHeaderTableOffset();
             this.workDir = workDir;
@@ -65,7 +71,25 @@ namespace DSPRE {
             SetEncounterDirPath();
             SetTrainerDataDirPath();
 
+            SetAttackNamesTextNumber();
+            SetPokémonNamesTextNumber();
+            SetItemNamesTextNumber();
+
             SetNarcDirs();
+        }
+
+        private void SetNullEncounterID() {
+            switch (gameVersion) {
+                case "Diamond":
+                case "Pearl":
+                case "Platinum":
+                    nullEncounterID = 65535;
+                    break;
+                case "HeartGold":
+                case "SoulSilver":
+                    nullEncounterID = 255;
+                    break;
+            }
         }
         #endregion
 
@@ -80,7 +104,7 @@ namespace DSPRE {
                 case "CPUE":
                 case "IPKE":
                 case "IPGE":
-                    language = "USA";
+                    gameLanguage = "USA";
                     break;
 
                 case "ADAS":
@@ -89,7 +113,7 @@ namespace DSPRE {
                 case "IPKS":
                 case "IPGS":
                 case "LATA":
-                    language = "ESP";
+                    gameLanguage = "ESP";
                     break;
 
                 case "ADAI":
@@ -97,7 +121,7 @@ namespace DSPRE {
                 case "CPUI":
                 case "IPKI":
                 case "IPGI":
-                    language = "ITA";
+                    gameLanguage = "ITA";
                     break;
 
                 case "ADAF":
@@ -105,7 +129,7 @@ namespace DSPRE {
                 case "CPUF":
                 case "IPKF":
                 case "IPGF":
-                    language = "FRA";
+                    gameLanguage = "FRA";
                     break;
 
                 case "ADAD":
@@ -113,21 +137,13 @@ namespace DSPRE {
                 case "CPUD":
                 case "IPKD":
                 case "IPGD":
-                    language = "GER";
+                    gameLanguage = "GER";
                     break;
 
                 default:
-                    language = "JAP";
+                    gameLanguage = "JAP";
                     break;
             }
-        }
-
-        public string GetGameLanguage() {
-            return language;
-        }
-
-        public string GetGameVersion() {
-            return gameVersion;
         }
         public void SetNarcDirs () {
             extractedNarcDirs = new string[] {
@@ -136,11 +152,11 @@ namespace DSPRE {
 
                 matrixDirPath,
 
-                exteriorBuildingModelsPath,
                 mapDirPath,
+                exteriorBuildingModelsPath,
                 buildingConfigFilesPath,
-                mapTexturesDirPath,
                 buildingTexturesDirPath,
+                mapTexturesDirPath,
                 areaDataDirPath,
 
                 eventsDirPath,
@@ -162,11 +178,11 @@ namespace DSPRE {
 
                         @"data\fielddata\mapmatrix\map_matrix.narc",
 
-                        @"data\fielddata\build_model\build_model.narc",
                         @"data\fielddata\land_data\land_data_release.narc",
+                        @"data\fielddata\build_model\build_model.narc",
                         @"data\fielddata\areadata\area_build_model\area_build.narc",
-                        @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
                         @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
+                        @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
                         @"data\fielddata\areadata\area_data.narc",
 
                         @"data\fielddata\eventdata\zone_event_release.narc",
@@ -185,11 +201,11 @@ namespace DSPRE {
 
                         @"data\fielddata\mapmatrix\map_matrix.narc",
 
-                        @"data\fielddata\build_model\build_model.narc",
                         @"data\fielddata\land_data\land_data.narc",
+                        @"data\fielddata\build_model\build_model.narc",
                         @"data\fielddata\areadata\area_build_model\area_build.narc",
-                        @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
                         @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
+                        @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
                         @"data\fielddata\areadata\area_data.narc",
 
                         @"data\fielddata\eventdata\zone_event.narc",
@@ -208,11 +224,11 @@ namespace DSPRE {
 
                         @"data\a\0\4\1",
 
-                        @"data\a\0\4\0",
                         @"data\a\0\6\5",
+                        @"data\a\0\4\0",
                         @"data\a\0\4\3",
-                        @"data\a\0\4\4",
                         @"data\a\0\7\0",
+                        @"data\a\0\4\4",
                         @"data\a\0\4\2",
 
                         @"data\a\0\3\2",
@@ -264,30 +280,11 @@ namespace DSPRE {
         public void SetMapTexturesDirPath() {
             mapTexturesDirPath = workDir + @"unpacked\maptex";
         }
-        public string GetMapTexturesDirPath() {
-            return mapTexturesDirPath;
-        }
-        public string GetBuildingTexturesDirPath() {
-            return buildingTexturesDirPath;
-        }
         public void SetBuildingTexturesDirPath() {
             buildingTexturesDirPath = workDir + @"unpacked\TextureBLD";
         }
-        public string GetBuildingConfigFilesPath() {
-            return buildingConfigFilesPath;
-        }
         public void SetBuildinConfigFilesPath() {
             buildingConfigFilesPath = workDir + @"unpacked\area_build";
-        }
-        public string[] GetNarcPaths() {
-            return narcPaths;
-        }
-        public string[] GetExtractedNarcDirs() {
-            return extractedNarcDirs;
-        }
-
-        public string GetAreaDataDirPath() {
-            return areaDataDirPath;
         }
         public void SetAreaDataDirPath() {
             areaDataDirPath = workDir + @"unpacked\area_data";
@@ -334,12 +331,6 @@ namespace DSPRE {
                     break;
             }
         }
-        public string GetOWtablePath () {
-            return OWtablePath;
-        }
-        public long GetHeaderTableOffset() {
-            return headerTableOffset;
-        }
         public void LoadHeaderTableOffset() {
             Dictionary<string, int> offsets = new Dictionary<string, int>() {
                 ["ADAE"] = 0xEEDBC,
@@ -382,41 +373,39 @@ namespace DSPRE {
         public int GetHeaderCount() {
             return (int)new FileInfo(workDir + @"data\fielddata\maptable\mapname.bin").Length / 0x10;
         }
-        public int GetAttackNamesMessageNumber() {
-            int fileNumber;
+        public void SetAttackNamesTextNumber() {
             switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
-                    fileNumber = 588;
+                    attackNamesTextNumber = 588;
                     break;
                 case "Platinum":
-                    fileNumber = 647;
+                    attackNamesTextNumber = 647;
                     break;
                 default:
-                    if (GetGameLanguage() == "JAP")
-                        fileNumber = 739;
+                    if (gameLanguage == "JAP")
+                        attackNamesTextNumber = 739;
                     else
-                        fileNumber = 750;
+                        attackNamesTextNumber = 750;
                     break;
             }
-            return fileNumber;
         }
-        public int GetItemNamesMessageNumber() {
-            int fileNumber;
+        public void SetItemNamesTextNumber() {
             switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
-                    fileNumber = 344;
+                    itemNamesTextNumber = 344;
                     break;
                 case "Platinum":
-                    fileNumber = 392;
+                    itemNamesTextNumber = 392;
                     break;
                 default:
-                    if (GetGameLanguage() == "JAP") fileNumber = 219;
-                    else fileNumber = 222;
+                    if (gameLanguage == "JAP")
+                        itemNamesTextNumber = 219;
+                    else
+                        itemNamesTextNumber = 222;
                     break;
             }
-            return fileNumber;
         }
         public int GetMapNamesMessageNumber() {
             int fileNumber;
@@ -429,7 +418,7 @@ namespace DSPRE {
                     fileNumber = 433;
                     break;
                 default:
-                    if (GetGameLanguage() == "JAP") 
+                    if (gameLanguage == "JAP") 
                         fileNumber = 272;
                     else 
                         fileNumber = 279;
@@ -453,24 +442,22 @@ namespace DSPRE {
             }
             return fileNumber;
         }
-        public int GetPokémonNamesMessageNumber() {
-            int fileNumber;
+        public void SetPokémonNamesTextNumber() {
             switch (gameVersion) {
                 case "Diamond":
                 case "Pearl":
-                    fileNumber = 362;
+                    pokémonNamesTextNumber = 362;
                     break;
                 case "Platinum":
-                    fileNumber = 412;
+                    pokémonNamesTextNumber = 412;
                     break;
                 default:
-                    if (GetGameLanguage() == "JAP")
-                        fileNumber = 232;
+                    if (gameLanguage == "JAP")
+                        pokémonNamesTextNumber = 232;
                     else
-                        fileNumber = 237;
+                        pokémonNamesTextNumber = 237;
                     break;
             }
-            return fileNumber;
         }
         public int GetTrainerNamesMessageNumber() {
             int fileNumber;
@@ -483,7 +470,7 @@ namespace DSPRE {
                     fileNumber = 618;
                     break;
                 default:
-                    if (GetGameLanguage() == "JAP")
+                    if (gameLanguage == "JAP")
                         fileNumber = 719;
                     else
                         fileNumber = 729;
@@ -502,7 +489,7 @@ namespace DSPRE {
                     fileNumber = 619;
                     break;
                 default:
-                    if (GetGameLanguage() == "JAP")
+                    if (gameLanguage == "JAP")
                         fileNumber = 720;
                     else
                         fileNumber = 730;
@@ -514,10 +501,7 @@ namespace DSPRE {
             return Directory.GetFiles(mapTexturesDirPath).Length;
         }
         public int GetBuildingTexturesCount() {
-            return Directory.GetFiles(GetBuildingTexturesDirPath()).Length;
-        }
-        public string GetMatrixDirPath() {
-            return matrixDirPath;
+            return Directory.GetFiles(buildingTexturesDirPath).Length;
         }
         public void SetMatrixDirPath() {
             matrixDirPath = workDir + @"unpacked\matrix";
@@ -525,23 +509,14 @@ namespace DSPRE {
         public int GetMatrixCount() {
             return Directory.GetFiles(matrixDirPath).Length;
         }
-        public string GetTextArchivesPath() {
-            return textArchivesPath;
-        }
         public void SetTextArchivesPath() {
             textArchivesPath = workDir + @"unpacked\msg";
         }
         public int GetTextArchivesCount() {
             return Directory.GetFiles(textArchivesPath).Length;
         }
-        public string GetTrainerDataDirPath() {
-            return trainerDataDirPath;
-        }
         public void SetTrainerDataDirPath() {
             trainerDataDirPath = workDir + @"unpacked\trainerdata";
-        }
-        public string GetMapDirPath() {
-            return mapDirPath;
         }
         public void SetMapDirPath () {
             mapDirPath = workDir + @"unpacked\maps";
@@ -549,20 +524,14 @@ namespace DSPRE {
         public int GetMapCount() {
             return Directory.GetFiles(mapDirPath).Length;
         }
-        public string GetOWSpriteDirPath() {
-            return workDir + @"unpacked\overworlds";
-        }
-        public string GetEncounterDirPath() {
-            return encounterDirPath;
-        }
-        public void SetEncounterDirPath() {
-            encounterDirPath = workDir + @"unpacked\wildPokeData";
-        }
         public int GetEventCount() {
             return Directory.GetFiles(eventsDirPath).Length;
         }
-        public string GetEventsDirPath() {
-            return eventsDirPath;
+        public string GetOWSpriteDirPath() {
+            return workDir + @"unpacked\overworlds";
+        }
+        public void SetEncounterDirPath() {
+            encounterDirPath = workDir + @"unpacked\wildPokeData";
         }
         public void SetEventsDirPath() {
             eventsDirPath = workDir + @"unpacked\events";
@@ -609,25 +578,15 @@ namespace DSPRE {
             }
         }
         public int GetScriptCount() {
-            return Directory.GetFiles(GetScriptDirPath()).Length;
-        }
-        public string GetScriptDirPath() {
-            return scriptDirPath;
+            return Directory.GetFiles(scriptDirPath).Length;
         }
         public void SetScriptDirPath() {
             scriptDirPath = workDir + @"unpacked\scripts";
         }
 
-        public string GetSyntheticOverlayPath() {
-            return syntheticOverlayPath;
-        }
-
         public void SetSyntheticOverlayPath() {
             syntheticOverlayPath = workDir + @"unpacked\syntheticOverlayNarc";
         }
-
-
-
         #endregion
 
     }

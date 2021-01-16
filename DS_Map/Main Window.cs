@@ -158,10 +158,10 @@ namespace DSPRE {
             TextArchive trainerClasses = LoadMessageArchive(romInfo.GetTrainerClassMessageNumber());
             TextArchive trainerNames = LoadMessageArchive(romInfo.GetTrainerNamesMessageNumber());
             BinaryReader trainerReader;
-            int trainerCount = Directory.GetFiles(romInfo.GetTrainerDataDirPath()).Length;
+            int trainerCount = Directory.GetFiles(romInfo.trainerDataDirPath).Length;
 
             for (int i = 0; i < trainerCount; i++) {
-                trainerReader = new BinaryReader(new FileStream(romInfo.GetTrainerDataDirPath() + "\\" + i.ToString("D4"), FileMode.Open));
+                trainerReader = new BinaryReader(new FileStream(romInfo.trainerDataDirPath + "\\" + i.ToString("D4"), FileMode.Open));
                 trainerReader.BaseStream.Position += 0x1;
                 trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[trainerReader.ReadUInt16()] + " " + trainerNames.messages[i]);
             }
@@ -169,43 +169,60 @@ namespace DSPRE {
         }
 
         private string[] GetItemNames() {
-            return LoadMessageArchive(romInfo.GetItemNamesMessageNumber()).messages.ToArray();
+            return LoadMessageArchive(romInfo.itemNamesTextNumber).messages.ToArray();
         }
 
         private string[] GetItemNames(int startIndex, int count) {
-            return LoadMessageArchive(romInfo.GetItemNamesMessageNumber()).messages.GetRange(startIndex, count).ToArray();
+            return LoadMessageArchive(romInfo.itemNamesTextNumber).messages.GetRange(startIndex, count).ToArray();
         }
 
         private string[] GetPokémonNames() {
-            return LoadMessageArchive(romInfo.GetPokémonNamesMessageNumber()).messages.ToArray();
+            return LoadMessageArchive(romInfo.pokémonNamesTextNumber).messages.ToArray();
         }
 
         private string[] GetAttackNames() {
-            return LoadMessageArchive(romInfo.GetAttackNamesMessageNumber()).messages.ToArray();
+            return LoadMessageArchive(romInfo.attackNamesTextNumber).messages.ToArray();
         }
 
         private AreaData LoadAreaData(uint areaDataID) {
-            return new AreaData(new FileStream(romInfo.GetAreaDataDirPath() + "//" + areaDataID.ToString("D4"), FileMode.Open), romInfo.GetGameVersion());
+            return new AreaData(new FileStream(romInfo.areaDataDirPath + "//" + areaDataID.ToString("D4"), FileMode.Open), romInfo.gameVersion);
         }
 
         private MapFile LoadMapFile(int mapNumber) {
+            if (mapNumber < 0) {
+                MessageBox.Show("Negative map number received " + '(' + mapNumber + ')', "Received negative integer!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+
+            String mapFilePath = romInfo.mapDirPath + "\\" + mapNumber.ToString("D4");
             try {
-                return new MapFile(new FileStream(romInfo.GetMapDirPath() + "\\" + mapNumber.ToString("D4"), FileMode.Open), romInfo.GetGameVersion());
+                return new MapFile(new FileStream(mapFilePath, FileMode.Open), romInfo.gameVersion);
             } catch (FileNotFoundException) {
-                MessageBox.Show("File " + '"' + romInfo.GetMapDirPath() + "\\" + mapNumber.ToString("D4") + '"' + " is missing.", "File not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("File " + '"' + mapFilePath + " is missing.", "File not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
         }
 
         private Matrix LoadMatrix(int matrixNumber) {
-            return new Matrix(new FileStream(romInfo.GetMatrixDirPath() + "\\" + matrixNumber.ToString("D4"), FileMode.Open));
+            if (matrixNumber < 0) {
+                MessageBox.Show("Negative matrix number received " + '(' + matrixNumber + ')', "Received negative integer!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+
+            String matrixFilePath = romInfo.matrixDirPath + "\\" + matrixNumber.ToString("D4");
+            try {
+                return new Matrix(new FileStream(romInfo.matrixDirPath + "\\" + matrixNumber.ToString("D4"), FileMode.Open));
+            } catch (FileNotFoundException) {
+                MessageBox.Show("File " + '"' + matrixFilePath + " is missing.", "File not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
         }
 
         public TextArchive LoadMessageArchive(int fileID) {
             TextArchive ta = null;
             try {
-                ta = new TextArchive(new FileStream(romInfo.GetTextArchivesPath() + "\\" + fileID.ToString("D4"), FileMode.Open));
+                ta = new TextArchive(new FileStream(romInfo.textArchivesPath + "\\" + fileID.ToString("D4"), FileMode.Open));
             } catch (FileNotFoundException) {
                 MessageBox.Show("Text archive not found.\n", "Can't load text", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -215,7 +232,7 @@ namespace DSPRE {
         private EventFile LoadEventFile(int fileID) {
             EventFile ev = null;
             try {
-                ev = new EventFile(new FileStream(romInfo.GetEventsDirPath() + "\\" + fileID.ToString("D4"), FileMode.Open));
+                ev = new EventFile(new FileStream(romInfo.eventsDirPath + "\\" + fileID.ToString("D4"), FileMode.Open));
             } catch (FileNotFoundException) {
                 MessageBox.Show("Event file not found.\n", "Can't load event", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -336,7 +353,7 @@ namespace DSPRE {
             return tarGetBytes;
         }
         private void DeleteTempFolders() {
-            foreach (var tuple in romInfo.GetNarcPaths().Zip(romInfo.GetExtractedNarcDirs(), Tuple.Create)) {
+            foreach (var tuple in romInfo.narcPaths.Zip(romInfo.extractedNarcDirs, Tuple.Create)) {
                 Directory.Delete(tuple.Item2, true); // Delete folder
             }
         }
@@ -362,8 +379,8 @@ namespace DSPRE {
         }
         private void SetupEventEditor() {
             /* Extract essential NARCs sub-archives*/
-            string[] narcPaths = romInfo.GetNarcPaths();
-            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+            string[] narcPaths = romInfo.narcPaths;
+            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
 
             statusLabel.Text = "Attempting to unpack Event Editor NARCs... Please wait. This might take a while";
             toolStripProgressBar.Visible = true;
@@ -379,7 +396,7 @@ namespace DSPRE {
                 }
                 toolStripProgressBar.Value++;
             }
-            if (romInfo.GetGameVersion() == "HeartGold" || romInfo.GetGameVersion() == "SoulSilver") {
+            if (romInfo.gameVersion == "HeartGold" || romInfo.gameVersion == "SoulSilver") {
                 var tuple = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 1]); // Last = interior buildings dir
                 DirectoryInfo di = new DirectoryInfo(tuple.Item2);
                 if (!di.Exists || di.GetFiles().Length == 0) {
@@ -390,8 +407,8 @@ namespace DSPRE {
 
 
             disableHandlers = true;
-            if (File.Exists(romInfo.GetOWtablePath())) {
-                switch (romInfo.GetGameVersion()) {
+            if (File.Exists(romInfo.OWtablePath)) {
+                switch (romInfo.gameVersion) {
                     case "Diamond":
                     case "Pearl":
                     case "Platinum":
@@ -407,7 +424,7 @@ namespace DSPRE {
             }
 
             /* Add event file numbers to box */
-            int eventCount = Directory.GetFiles(romInfo.GetEventsDirPath()).Length;
+            int eventCount = Directory.GetFiles(romInfo.eventsDirPath).Length;
             int owSpriteCount = Directory.GetFiles(romInfo.GetOWSpriteDirPath()).Length;
             string[] trainerNames = GetTrainerNames();
 
@@ -513,7 +530,7 @@ namespace DSPRE {
                 });
 
             /* Create dictionary for 3D overworlds */
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     break;
@@ -542,7 +559,7 @@ namespace DSPRE {
             toolStripProgressBar.Visible = false;
         }
         private void SetupFlagNames() {
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
@@ -570,8 +587,8 @@ namespace DSPRE {
         }
         private void SetupHeaderEditor() {
             /* Extract essential NARCs sub-archives*/
-            string[] narcPaths = romInfo.GetNarcPaths();
-            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+            string[] narcPaths = romInfo.narcPaths;
+            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
 
             statusLabel.Text = "Attempting to unpack Header Editor NARCs... Please wait.";
             Update();
@@ -608,7 +625,7 @@ namespace DSPRE {
             /*Add list of options to each control */
             mapNameComboBox.Items.AddRange(LoadMessageArchive(romInfo.GetMapNamesMessageNumber()).messages.ToArray());
             HeaderDatabase headerInfo = new HeaderDatabase();
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     areaIconComboBox.Enabled = false;
@@ -641,8 +658,8 @@ namespace DSPRE {
         }
         private void SetupMapEditor() {
             /* Extract essential NARCs sub-archives*/
-            string[] narcPaths = romInfo.GetNarcPaths();
-            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+            string[] narcPaths = romInfo.narcPaths;
+            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
 
             toolStripProgressBar.Visible = true;
             toolStripProgressBar.Maximum = 15;
@@ -658,7 +675,7 @@ namespace DSPRE {
                 }
                 toolStripProgressBar.Value++;
             }
-            if (romInfo.GetGameVersion() == "HeartGold" || romInfo.GetGameVersion() == "SoulSilver") {
+            if (romInfo.gameVersion == "HeartGold" || romInfo.gameVersion == "SoulSilver") {
                 var tuple = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 1]);
                 DirectoryInfo di = new DirectoryInfo(tuple.Item2);
                 if (!di.Exists || di.GetFiles().Length == 0) {
@@ -673,7 +690,7 @@ namespace DSPRE {
             mapOpenGlControl.MouseWheel += new MouseEventHandler(mapOpenGlControl_MouseWheel);
             collisionPainterPictureBox.Image = new Bitmap(100, 100);
             typePainterPictureBox.Image = new Bitmap(100, 100);
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
@@ -686,8 +703,8 @@ namespace DSPRE {
 
             /* Add map names to box */
             for (int i = 0; i < romInfo.GetMapCount(); i++) {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(romInfo.GetMapDirPath() + "\\" + i.ToString("D4")))) {
-                    switch (romInfo.GetGameVersion()) {
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(romInfo.mapDirPath + "\\" + i.ToString("D4")))) {
+                    switch (romInfo.gameVersion) {
                         case "Diamond":
                         case "Pearl":
                         case "Platinum":
@@ -833,7 +850,7 @@ namespace DSPRE {
 
             //Default selections
             selectMapComboBox.SelectedIndex = 0;
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
@@ -852,8 +869,8 @@ namespace DSPRE {
             };
         }
         private void SetupMatrixEditor() {
-            string[] narcPaths = romInfo.GetNarcPaths();
-            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+            string[] narcPaths = romInfo.narcPaths;
+            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
 
             statusLabel.Text = "Setting up Matrix Editor...";
             Update();
@@ -873,7 +890,7 @@ namespace DSPRE {
                 selectMatrixComboBox.Items.Add("Matrix " + i);
 
             /* Initialize dictionary of colors corresponding to border maps in the matrix editor */
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
@@ -911,8 +928,8 @@ namespace DSPRE {
         }
         private void SetupScriptEditor() {
             /* Extract essential NARCs sub-archives*/
-            string[] narcPaths = romInfo.GetNarcPaths();
-            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+            string[] narcPaths = romInfo.narcPaths;
+            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
 
             statusLabel.Text = "Setting up Script Editor...";
             Update();
@@ -924,7 +941,7 @@ namespace DSPRE {
             }
 
 
-            int scriptCount = Directory.GetFiles(romInfo.GetScriptDirPath()).Length;
+            int scriptCount = Directory.GetFiles(romInfo.scriptDirPath).Length;
             for (int i = 0; i < scriptCount; i++)
                 selectScriptFileComboBox.Items.Add("Script File " + i);
 
@@ -935,8 +952,8 @@ namespace DSPRE {
             selectScriptFileComboBox.SelectedIndex = 0;
         }
         private void SetupTextEditor() {
-            string[] narcPaths = romInfo.GetNarcPaths();
-            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+            string[] narcPaths = romInfo.narcPaths;
+            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
 
             var tuple = Tuple.Create(narcPaths[2], extractedNarcDirs[2]);
             DirectoryInfo di = new DirectoryInfo(tuple.Item2);
@@ -953,8 +970,8 @@ namespace DSPRE {
             selectTextFileComboBox.SelectedIndex = 0;
         }
         private void SetupTilesetEditor() {
-            string[] narcPaths = romInfo.GetNarcPaths();
-            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+            string[] narcPaths = romInfo.narcPaths;
+            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
 
             statusLabel.Text = "Attempting to unpack Tileset Editor NARCs... Please wait.";
             Update();
@@ -977,7 +994,7 @@ namespace DSPRE {
 
             /* Enable gameVersion-specific controls */
 
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
@@ -1060,11 +1077,42 @@ namespace DSPRE {
             }
         }
         private void buildingEditorButton_Click(object sender, EventArgs e) {
+            string[] narcPaths = romInfo.narcPaths;
+            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
+
+            toolStripProgressBar.Visible = true;
+
+            statusLabel.Text = "Attempting to unpack Building Editor NARCs... Please wait. This might take a while";
+            toolStripProgressBar.Visible = true;
+            toolStripProgressBar.Maximum = 4;
+            toolStripProgressBar.Value = 0;
+            Update();
+
+            for (int i = 4; i < 7; i++) {
+                var tuple = Tuple.Create(narcPaths[i], extractedNarcDirs[i]);
+                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+                if (!di.Exists || di.GetFiles().Length == 0) {
+                    Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+                }
+                toolStripProgressBar.Value++;
+            }
+            if (romInfo.gameVersion == "HeartGold" || romInfo.gameVersion == "SoulSilver") {
+                var tuple = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 1]); // Last = interior buildings dir
+                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+                if (!di.Exists || di.GetFiles().Length == 0) {
+                    Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+                }
+                toolStripProgressBar.Value++;
+            }
+
+            toolStripProgressBar.Value = 0;
+            toolStripProgressBar.Visible = false;
+
             using (BuildingEditor editor = new BuildingEditor(romInfo))
                 editor.ShowDialog();
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.6b" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.6c" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who owes credit for SDSME." + Environment.NewLine +
                 "Special thanks go to Trifindo, Mikelan98, BagBoy, and JackHack96, whose help, research and expertise in the field of NDS Rom Hacking made the development of this tool possible.";
 
@@ -1084,14 +1132,14 @@ namespace DSPRE {
 
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, workDir);
-            if (romInfo.GetGameVersion() == null) {
+            if (romInfo.gameVersion == null) {
                 statusLabel.Text = "Unsupported ROM";
                 Update();
                 return;
             }
 
-            versionLabel.Text = "ROM: Pokémon " + romInfo.GetGameVersion();
-            languageLabel.Text = "Language: " + romInfo.GetGameLanguage();
+            versionLabel.Text = "ROM: Pokémon " + romInfo.gameVersion;
+            languageLabel.Text = "Language: " + romInfo.gameLanguage;
 
 
             int userchoice = UnpackRomCheckUserChoice();
@@ -1133,10 +1181,10 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack NARCs from folder...";
             Update();
 
-            /*foreach (Tuple<string, string> tuple in romInfo.GetNarcPaths().Zip(romInfo.GetExtractedNarcDirs(), Tuple.Create))
+            /*foreach (Tuple<string, string> tuple in romInfo.narcPaths.Zip(romInfo.extractedNarcDirs, Tuple.Create))
                 Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);*/
 
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":
@@ -1179,7 +1227,7 @@ namespace DSPRE {
             Update();
 
             // Repack NARCs
-            foreach (var tuple in romInfo.GetNarcPaths().Zip(romInfo.GetExtractedNarcDirs(), Tuple.Create)) {
+            foreach (var tuple in romInfo.narcPaths.Zip(romInfo.extractedNarcDirs, Tuple.Create)) {
                 DirectoryInfo di = new DirectoryInfo(tuple.Item2);
                 if (di.Exists) {
                     Narc.FromFolder(tuple.Item2).Save(workDir + tuple.Item1); // Make new NARC from folder
@@ -1187,7 +1235,7 @@ namespace DSPRE {
             }
 
             if (eventEditorIsReady) {
-                switch (romInfo.GetGameVersion()) {
+                switch (romInfo.gameVersion) {
                     case "Diamond":
                     case "Pearl":
                     case "Platinum":
@@ -1204,7 +1252,7 @@ namespace DSPRE {
             RepackRom(saveRom.FileName);
 
             if (eventEditorIsReady)
-                if (romInfo.GetGameVersion() != "Diamond" && romInfo.GetGameVersion() != "Pearl" && romInfo.GetGameVersion() != "Platinum")
+                if (romInfo.gameVersion != "Diamond" && romInfo.gameVersion != "Pearl" && romInfo.gameVersion != "Platinum")
                     decompressOverlay(1, true);
 
             statusLabel.Text = "Ready";
@@ -1218,12 +1266,12 @@ namespace DSPRE {
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (d == DialogResult.Yes) {
-                toolStripProgressBar.Maximum = romInfo.GetNarcPaths().Length;
+                toolStripProgressBar.Maximum = romInfo.narcPaths.Length;
                 toolStripProgressBar.Visible = true;
                 toolStripProgressBar.Value = 0;
                 statusLabel.Text = "Attempting to unpack all NARCs... Be patient. This might take a while...";
                 Update();
-                foreach (var tuple in romInfo.GetNarcPaths().Zip(romInfo.GetExtractedNarcDirs(), Tuple.Create)) {
+                foreach (var tuple in romInfo.narcPaths.Zip(romInfo.extractedNarcDirs, Tuple.Create)) {
                     Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
                     toolStripProgressBar.Value++;
                 }
@@ -1233,8 +1281,19 @@ namespace DSPRE {
                 statusLabel.Text = "Ready";
                 toolStripProgressBar.Value = 0;
                 toolStripProgressBar.Visible = false;
+
+                matrixEditorIsReady = false;
+                mapEditorIsReady = false;
+                eventEditorIsReady = false;
+                scriptEditorIsReady = false;
+                textEditorIsReady = false;
+                tilesetEditorIsReady = false;
+
                 Update();
             }
+
+            
+
         }
 
         private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1277,34 +1336,18 @@ namespace DSPRE {
 
 
         private void wildEditorButton_Click(object sender, EventArgs e) {
-            openWildEditor();
+            openWildEditor(false);
         }
 
-        private void openWildEditor() {
-            switch (romInfo.GetGameVersion()) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
-                    using (WildEditorDPPt editor = new WildEditorDPPt(romInfo.GetEncounterDirPath(), GetPokémonNames(), (int)wildPokeUpDown.Value))
-                        editor.ShowDialog();
-                    break;
-                default:
-                    using (WildEditorHGSS editor = new WildEditorHGSS(romInfo.GetEncounterDirPath(), GetPokémonNames(), (int)wildPokeUpDown.Value))
-                        editor.ShowDialog();
-                    break;
-            }
-            statusLabel.Text = "Ready";
-        }
-
-        private void openWildEditorWithIdButtonClick(object sender, EventArgs e) {
-            string[] narcPaths = romInfo.GetNarcPaths();
-            string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
+        private void openWildEditor(bool loadCurrent) {
+            string[] narcPaths = romInfo.narcPaths;
+            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
 
             statusLabel.Text = "Attempting to extract Wild Encounters NARC...";
             Update();
 
             Tuple<string, string> t;
-            if (romInfo.GetGameVersion() == "HeartGold" || romInfo.GetGameVersion() == "SoulSilver") {
+            if (romInfo.gameVersion == "HeartGold" || romInfo.gameVersion == "SoulSilver") {
                 t = Tuple.Create(narcPaths[narcPaths.Length - 2], extractedNarcDirs[extractedNarcDirs.Length - 2]);
             } else {
                 t = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 2]);
@@ -1316,7 +1359,29 @@ namespace DSPRE {
             }
             statusLabel.Text = "Passing control to Wild Pokémon Editor...";
             Update();
-            openWildEditor();
+
+            int encToOpen;
+            if (loadCurrent)
+                encToOpen = (int)wildPokeUpDown.Value;
+            else
+                encToOpen = 0;
+            switch (romInfo.gameVersion) {
+                case "Diamond":
+                case "Pearl":
+                case "Platinum":
+                    using (WildEditorDPPt editor = new WildEditorDPPt(romInfo.encounterDirPath, GetPokémonNames(), encToOpen))
+                        editor.ShowDialog();
+                    break;
+                default:
+                    using (WildEditorHGSS editor = new WildEditorHGSS(romInfo.encounterDirPath, GetPokémonNames(), encToOpen))
+                        editor.ShowDialog();
+                    break;
+            }
+            statusLabel.Text = "Ready";
+        }
+
+        private void openWildEditorWithIdButtonClick(object sender, EventArgs e) {
+            openWildEditor(true);
         }
         #endregion
 
@@ -1393,12 +1458,12 @@ namespace DSPRE {
         #region Subroutines
         public Header LoadHeader(int headerNumber) {
             /* Calculate header offset and load data */
-            long headerOffset = romInfo.GetHeaderTableOffset() + 0x18 * headerNumber;
+            long headerOffset = romInfo.headerTableOffset + 0x18 * headerNumber;
             byte[] headerData = ReadFromArm9(headerOffset, 24);
 
             /* Encapsulate header data into the class appropriate for the game gameVersion */
 
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     return new HeaderDP(new MemoryStream(headerData));
@@ -1419,7 +1484,7 @@ namespace DSPRE {
             if (disableHandlers) return;
 
             string imageName;
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     break;
@@ -1440,7 +1505,7 @@ namespace DSPRE {
 
             string imageName;
             try {
-                switch (romInfo.GetGameVersion()) {
+                switch (romInfo.gameVersion) {
                     case "Diamond":
                     case "Pearl":
                         currentHeader.camera = (byte)cameraComboBox.SelectedIndex;
@@ -1513,6 +1578,12 @@ namespace DSPRE {
             weatherComboBox.SelectedIndex = weatherComboBox.FindString("[" + currentHeader.weather.ToString("D2"));
             cameraComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.camera.ToString("D3"));
 
+
+            if (currentHeader.wildPokémon == romInfo.nullEncounterID)
+                openWildEditorWithIdButton.Enabled = false;
+            else 
+                openWildEditorWithIdButton.Enabled = true;
+
             /* Flags */
             int i = 7;
             disableHandlers = true;
@@ -1526,7 +1597,7 @@ namespace DSPRE {
             disableHandlers = false;
 
             /* Setup controls for fields with gameVersion-specific differences */
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     mapNameComboBox.SelectedIndex = ((HeaderDP)currentHeader).mapName;
@@ -1576,7 +1647,7 @@ namespace DSPRE {
             if (disableHandlers)
                 return;
 
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     ((HeaderDP)currentHeader).mapName = (ushort)mapNameComboBox.SelectedIndex;
@@ -1595,7 +1666,7 @@ namespace DSPRE {
         }
         private void musicDayComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) return;
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     ((HeaderDP)currentHeader).musicDay = UInt16.Parse(musicDayComboBox.SelectedItem.ToString().Substring(1, 4));
@@ -1611,7 +1682,7 @@ namespace DSPRE {
         private void musicNightComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) return;
 
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     ((HeaderDP)currentHeader).musicNight = UInt16.Parse(musicNightComboBox.SelectedItem.ToString().Substring(1, 4));
@@ -1746,7 +1817,7 @@ namespace DSPRE {
             mainTabControl.SelectedTab = textEditorTabPage;
         }
         private void saveHeaderButton_Click(object sender, EventArgs e) {
-            long headerOffset = romInfo.GetHeaderTableOffset() + 0x18 * headerListBox.SelectedIndex;
+            long headerOffset = romInfo.headerTableOffset + 0x18 * headerListBox.SelectedIndex;
             WriteToArm9(headerOffset, currentHeader.SaveHeader());
         }
         private void resetButton_Click(object sender, EventArgs e) {
@@ -1779,7 +1850,7 @@ namespace DSPRE {
                 bool empty = true;
 
 
-                switch (romInfo.GetGameVersion()) {
+                switch (romInfo.gameVersion) {
                     case "Diamond":
                     case "Pearl":
                         for (int i = 0; i < internalNames.Count; i++) {
@@ -1842,7 +1913,7 @@ namespace DSPRE {
             currentHeader.weather = Byte.Parse(weatherComboBox.SelectedItem.ToString().Substring(1, 2));
 
             string imageName;
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                     imageName = dpweatherImageDict[weatherComboBox.SelectedIndex];
@@ -1858,8 +1929,15 @@ namespace DSPRE {
             weatherPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
         }
         private void wildPokeUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
+
             currentHeader.wildPokémon = (ushort)wildPokeUpDown.Value;
+
+            if (currentHeader.wildPokémon == romInfo.nullEncounterID)
+                openWildEditorWithIdButton.Enabled = false;
+            else
+                openWildEditorWithIdButton.Enabled = true;
         }
         #endregion
 
@@ -1889,6 +1967,9 @@ namespace DSPRE {
         }
         private void Generate_Matrix_Tables() {
             /* Generate table columns */
+            if (currentMatrix == null)
+                return;
+
             for (int i = 0; i < currentMatrix.width; i++) {
                 headersGridView.Columns.Add("Column" + i, i.ToString("D"));
                 headersGridView.Columns[i].Width = 34; // Set column size
@@ -1949,11 +2030,11 @@ namespace DSPRE {
             Matrix newMatrix = LoadMatrix(0);
 
             /* Add new matrix file to matrix folder */
-            string matrixPath = romInfo.GetMatrixDirPath() + "\\" + romInfo.GetMatrixCount().ToString("D4");
+            string matrixPath = romInfo.matrixDirPath + "\\" + romInfo.GetMatrixCount().ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(matrixPath, FileMode.Create))) writer.Write(newMatrix.Save());
 
             /* Update ComboBox*/
-            selectMatrixComboBox.Items.Add("Matrix " + romInfo.GetMatrixCount());
+            selectMatrixComboBox.Items.Add("Matrix " + (romInfo.GetMatrixCount()-1).ToString());
         }
         private void exportMatrixButton_Click(object sender, EventArgs e) {
             SaveFileDialog sf = new SaveFileDialog();
@@ -2199,20 +2280,26 @@ namespace DSPRE {
             currentMatrix.RemoveHeightsSection();
         }
         private void removeMatrixButton_Click(object sender, EventArgs e) {
-            if (selectMatrixComboBox.Items.Count > 0) {
+            if (selectMatrixComboBox.Items.Count > 1) {
                 /* Delete matrix file */
-                string matrixPath = romInfo.GetMatrixDirPath() + "\\" + (romInfo.GetMatrixCount() - 1).ToString("D4");
+                int matrixToDelete = romInfo.GetMatrixCount() - 1;
+
+                string matrixPath = romInfo.matrixDirPath + "\\" + matrixToDelete.ToString("D4");
                 File.Delete(matrixPath);
 
                 /* Change selected index if the matrix to be deleted is currently selected */
-                if (selectMatrixComboBox.SelectedIndex == romInfo.GetMatrixCount() - 1) selectMatrixComboBox.SelectedIndex--;
+                if (selectMatrixComboBox.SelectedIndex == matrixToDelete) 
+                    selectMatrixComboBox.SelectedIndex--;
 
                 /* Remove entry from ComboBox, and decrease matrix count */
-                selectMatrixComboBox.Items.RemoveAt(romInfo.GetMatrixCount() - 1);
+                selectMatrixComboBox.Items.RemoveAt(matrixToDelete);
+            } else {
+                MessageBox.Show("At least one matrix must be kept.", "Can't delete matrix", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
         }
         private void saveMatrixButton_Click(object sender, EventArgs e) {
-            string matrixPath = romInfo.GetMatrixDirPath() + "\\" + selectMatrixComboBox.SelectedIndex.ToString("D4");
+            string matrixPath = romInfo.matrixDirPath + "\\" + selectMatrixComboBox.SelectedIndex.ToString("D4");
             using (BinaryWriter matrixWriter = new BinaryWriter(new FileStream(matrixPath, FileMode.Create)))
                 matrixWriter.Write(currentMatrix.Save());
 
@@ -2414,7 +2501,7 @@ namespace DSPRE {
 
         private void addMapFileButton_Click(object sender, EventArgs e) {
             /* Add new map file to map folder */
-            string mapFilePath = romInfo.GetMapDirPath() + "\\" + selectMapComboBox.Items.Count.ToString("D4");
+            string mapFilePath = romInfo.mapDirPath + "\\" + selectMapComboBox.Items.Count.ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(mapFilePath, FileMode.Create))) writer.Write(LoadMapFile(0).Save());
 
             /* Update ComboBox and select new file */
@@ -2430,7 +2517,7 @@ namespace DSPRE {
                 buildingTexturesOn = true;
 
                 foreach (Building building in currentMapFile.buildings) {
-                    string texturePath = romInfo.GetBuildingTexturesDirPath() + "\\" + (buildTextureComboBox.SelectedIndex - 1).ToString("D4");
+                    string texturePath = romInfo.buildingTexturesDirPath + "\\" + (buildTextureComboBox.SelectedIndex - 1).ToString("D4");
                     building.NSBMDFile.materials = NSBTXLoader.LoadNsbtx(new MemoryStream(File.ReadAllBytes(texturePath)), out building.NSBMDFile.Textures, out building.NSBMDFile.Palettes);
                     try {
                         building.NSBMDFile.MatchTextures();
@@ -2447,7 +2534,7 @@ namespace DSPRE {
             else {
                 mapTexturesOn = true;
 
-                string texturePath = romInfo.GetMapTexturesDirPath() + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4");
+                string texturePath = romInfo.mapTexturesDirPath + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4");
                 currentMapFile.mapModel.materials = NSBTXLoader.LoadNsbtx(new MemoryStream(File.ReadAllBytes(texturePath)), out currentMapFile.mapModel.Textures, out currentMapFile.mapModel.Palettes);
                 try {
                     currentMapFile.mapModel.MatchTextures();
@@ -2569,7 +2656,7 @@ namespace DSPRE {
 
         private void removeMapFileButton_Click(object sender, EventArgs e) {
             /* Delete last map file */
-            File.Delete(romInfo.GetMapDirPath() + "\\" + (selectMapComboBox.Items.Count - 1).ToString("D4"));
+            File.Delete(romInfo.mapDirPath + "\\" + (selectMapComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectMapComboBox.Items.Count - 1;
@@ -2580,7 +2667,7 @@ namespace DSPRE {
         }
         private void saveMapButton_Click(object sender, EventArgs e) {
             string mapIndex = selectMapComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.GetMapDirPath() + "\\" + mapIndex, FileMode.Create)))
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.mapDirPath + "\\" + mapIndex, FileMode.Create)))
                 writer.Write(currentMapFile.Save());
         }
         private void selectMapComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -2590,13 +2677,13 @@ namespace DSPRE {
             currentMapFile = LoadMapFile(selectMapComboBox.SelectedIndex);
 
             /* Load map textures for renderer */
-            if (mapTextureComboBox.SelectedIndex > 0) currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, romInfo.GetMapTexturesDirPath(), mapTextureComboBox.SelectedIndex - 1);
+            if (mapTextureComboBox.SelectedIndex > 0) currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, romInfo.mapTexturesDirPath, mapTextureComboBox.SelectedIndex - 1);
 
 
             /* Load buildings nsbmd and textures for renderer into MapFile's building objects */
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {
                 currentMapFile.buildings[i] = LoadBuildingModel(currentMapFile.buildings[i], interiorbldRadioButton.Checked); // Load building nsbmd
-                if (buildTextureComboBox.SelectedIndex > 0) currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, romInfo.GetBuildingTexturesDirPath(), buildTextureComboBox.SelectedIndex - 1); // Load building textures                
+                if (buildTextureComboBox.SelectedIndex > 0) currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
             }
 
             /* Render the map */
@@ -2637,7 +2724,7 @@ namespace DSPRE {
 
             /* Load new building's model and textures for the renderer */
             currentMapFile.buildings[currentMapFile.buildings.Count - 1] = LoadBuildingModel(currentMapFile.buildings[currentMapFile.buildings.Count - 1], interiorbldRadioButton.Checked);
-            currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile = LoadModelTextures(currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile, romInfo.GetBuildingTexturesDirPath(), buildTextureComboBox.SelectedIndex - 1);
+            currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile = LoadModelTextures(currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1);
 
             /* Add new entry to buildings ListBox */
             buildingsListBox.Items.Add("Building " + (buildingsListBox.Items.Count + 1));
@@ -2652,7 +2739,7 @@ namespace DSPRE {
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].modelID = (uint)buildIndexComboBox.SelectedIndex;
             currentMapFile.buildings[buildingsListBox.SelectedIndex] = LoadBuildingModel(currentMapFile.buildings[buildingsListBox.SelectedIndex], interiorbldRadioButton.Checked);
-            currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile = LoadModelTextures(currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile, romInfo.GetBuildingTexturesDirPath(), buildTextureComboBox.SelectedIndex - 1);
+            currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile = LoadModelTextures(currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1);
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
 
@@ -2717,7 +2804,7 @@ namespace DSPRE {
 
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {
                 currentMapFile.buildings[i] = LoadBuildingModel(currentMapFile.buildings[i], interiorbldRadioButton.Checked); // Load building nsbmd
-                currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, romInfo.GetBuildingTexturesDirPath(), buildTextureComboBox.SelectedIndex - 1); // Load building textures                
+                currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
             }
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
@@ -2736,7 +2823,7 @@ namespace DSPRE {
             /* Load buildings nsbmd and textures for renderer into MapFile's building objects */
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {
                 currentMapFile.buildings[i] = LoadBuildingModel(currentMapFile.buildings[i], interiorbldRadioButton.Checked); // Load building nsbmd
-                currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, romInfo.GetBuildingTexturesDirPath(), buildTextureComboBox.SelectedIndex - 1); // Load building textures                
+                currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
             }
 
             /* Render the map */
@@ -3250,7 +3337,7 @@ namespace DSPRE {
                 } else currentMapFile.ImportMapModel(modelReader.BaseStream);
             }
 
-            if (mapTextureComboBox.SelectedIndex > 0) currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, romInfo.GetMapTexturesDirPath(), mapTextureComboBox.SelectedIndex - 1);
+            if (mapTextureComboBox.SelectedIndex > 0) currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, romInfo.mapTexturesDirPath, mapTextureComboBox.SelectedIndex - 1);
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
 
             MessageBox.Show("Map model imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -3272,7 +3359,7 @@ namespace DSPRE {
         #region BDHC Editor
         private void bdhcImportButton_Click(object sender, EventArgs e) {
             OpenFileDialog it = new OpenFileDialog();
-            if (romInfo.GetGameVersion() == "Diamond" || romInfo.GetGameVersion() == "Pearl")
+            if (romInfo.gameVersion == "Diamond" || romInfo.gameVersion == "Pearl")
                 it.Filter = "Terrain File (*.bdhc)|*.bdhc";
             else
                 it.Filter = "Terrain File (*.bdhc, *.bdhcam)|*.bdhc;*.bdhcam";
@@ -3437,16 +3524,16 @@ namespace DSPRE {
 
                 /* Read map and building models, match them with textures and render them*/
                 eventMapFile = LoadMapFile((int)mapIndex);
-                eventMapFile.mapModel = LoadModelTextures(eventMapFile.mapModel, romInfo.GetMapTexturesDirPath(), areaData.mapTileset);
+                eventMapFile.mapModel = LoadModelTextures(eventMapFile.mapModel, romInfo.mapTexturesDirPath, areaData.mapTileset);
 
                 bool isInteriorMap = new bool();
-                if ((romInfo.GetGameVersion() == "HeartGold" || romInfo.GetGameVersion() == "SoulSilver")
+                if ((romInfo.gameVersion == "HeartGold" || romInfo.gameVersion == "SoulSilver")
                 && areaData.areaType == 0x0)
                     isInteriorMap = true;
 
                 for (int i = 0; i < eventMapFile.buildings.Count; i++) {
                     eventMapFile.buildings[i] = LoadBuildingModel(eventMapFile.buildings[i], isInteriorMap); // Load building nsbmd
-                    eventMapFile.buildings[i].NSBMDFile = LoadModelTextures(eventMapFile.buildings[i].NSBMDFile, romInfo.GetBuildingTexturesDirPath(), areaData.buildingsTileset); // Load building textures                
+                    eventMapFile.buildings[i].NSBMDFile = LoadModelTextures(eventMapFile.buildings[i].NSBMDFile, romInfo.buildingTexturesDirPath, areaData.buildingsTileset); // Load building textures                
                 }
 
                 RenderMap(ref eventMapRenderer, ref eventBuildingsRenderer, ref eventMapFile, 0f, 115.0f, 90f, 4f, eventOpenGlControl.Width, eventOpenGlControl.Height, true, true);
@@ -3572,16 +3659,16 @@ namespace DSPRE {
         private int MatchOverworldIDToSpriteArchive(uint ID, String overworldTablePath) {
 
             Console.WriteLine("Searching for ID : " + ID.ToString("X4"));
-            using (BinaryReader idReader = new BinaryReader(new FileStream(romInfo.GetOWtablePath(), FileMode.Open))) {
+            using (BinaryReader idReader = new BinaryReader(new FileStream(romInfo.OWtablePath, FileMode.Open))) {
                 int archiveID;
-                switch (romInfo.GetGameVersion()) {
+                switch (romInfo.gameVersion) {
                     case "Diamond":
                     case "Pearl":
                         idReader.BaseStream.Position = 0x22BCC;
                         archiveID = matchOverworldInTableDPPt(idReader, ID);
                         break;
                     case "Platinum":
-                        switch (romInfo.GetGameLanguage()) { // Go to the beginning of the overworld table
+                        switch (romInfo.gameLanguage) { // Go to the beginning of the overworld table
                             case "ITA":
                                 idReader.BaseStream.Position = 0x2BC44;
                                 break;
@@ -3715,7 +3802,7 @@ namespace DSPRE {
 
         private void addEventFileButton_Click(object sender, EventArgs e) {
             /* Add new event file to event folder */
-            string eventFilePath = romInfo.GetEventsDirPath() + "\\" + selectEventComboBox.Items.Count.ToString("D4");
+            string eventFilePath = romInfo.eventsDirPath + "\\" + selectEventComboBox.Items.Count.ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(eventFilePath, FileMode.Create))) writer.Write(LoadEventFile(0).Save());
 
             /* Update ComboBox and select new file */
@@ -3787,7 +3874,7 @@ namespace DSPRE {
                 return;
 
             /* Update matrix object in memory */
-            string path = romInfo.GetEventsDirPath() + "\\" + selectEventComboBox.SelectedIndex.ToString("D4");
+            string path = romInfo.eventsDirPath + "\\" + selectEventComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Display success message */
@@ -3798,7 +3885,7 @@ namespace DSPRE {
         }
         private void removeEventFileButton_Click(object sender, EventArgs e) {
             /* Delete event file */
-            File.Delete(romInfo.GetEventsDirPath() + "\\" + (selectEventComboBox.Items.Count - 1).ToString("D4"));
+            File.Delete(romInfo.eventsDirPath + "\\" + (selectEventComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectEventComboBox.Items.Count - 1;
@@ -3809,7 +3896,7 @@ namespace DSPRE {
         }
         private void saveEventsButton_Click(object sender, EventArgs e) {
             string eventFile = selectEventComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.GetEventsDirPath() + "\\" + eventFile, FileMode.Create)))
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.eventsDirPath + "\\" + eventFile, FileMode.Create)))
                 writer.Write(currentEventFile.Save());
         }
         private void selectEventComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -4488,11 +4575,11 @@ namespace DSPRE {
 
         #region Subroutines
         public ScriptFile LoadScriptFile(int fileID) {
-            return new ScriptFile((new FileStream(romInfo.GetScriptDirPath() +
-                "\\" + fileID.ToString("D4"), FileMode.Open)), romInfo.GetGameVersion());
+            return new ScriptFile((new FileStream(romInfo.scriptDirPath +
+                "\\" + fileID.ToString("D4"), FileMode.Open)), romInfo.gameVersion);
         }
         public void SaveScriptFile(int fileID) {
-            using (BinaryWriter writer = new BinaryWriter((new FileStream(romInfo.GetScriptDirPath() +
+            using (BinaryWriter writer = new BinaryWriter((new FileStream(romInfo.scriptDirPath +
                 "\\" + fileID.ToString("D4"), FileMode.Create)))) writer.Write(currentScriptFile.Save());
         }
         #endregion
@@ -4651,7 +4738,7 @@ namespace DSPRE {
         #endregion
         private void addScriptFileButton_Click(object sender, EventArgs e) {
             /* Add new event file to event folder */
-            string scriptFilePath = romInfo.GetScriptDirPath() + "\\" + selectScriptFileComboBox.Items.Count.ToString("D4");
+            string scriptFilePath = romInfo.scriptDirPath + "\\" + selectScriptFileComboBox.Items.Count.ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(scriptFilePath, FileMode.Create))) writer.Write(LoadScriptFile(0).Save());
 
             /* Update ComboBox and select new file */
@@ -4677,7 +4764,7 @@ namespace DSPRE {
             if (of.ShowDialog(this) != DialogResult.OK) return;
 
             /* Update scriptFile object in memory */
-            string path = romInfo.GetScriptDirPath() + "\\" + selectScriptFileComboBox.SelectedIndex.ToString("D4");
+            string path = romInfo.scriptDirPath + "\\" + selectScriptFileComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Display success message */
@@ -4704,7 +4791,7 @@ namespace DSPRE {
 
         private void removeScriptFileButton_Click(object sender, EventArgs e) {
             /* Delete script file */
-            File.Delete(romInfo.GetScriptDirPath() + "\\" + (selectScriptFileComboBox.Items.Count - 1).ToString("D4"));
+            File.Delete(romInfo.scriptDirPath + "\\" + (selectScriptFileComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectScriptFileComboBox.Items.Count - 1;
@@ -4749,10 +4836,10 @@ namespace DSPRE {
                         /* Read script commands */
                         while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump Function") && i < scriptTextBox.Lines.Length - 1) {
                             Console.WriteLine("Script line " + i.ToString());
-                            commands.Add(new Command(scriptTextBox.Lines[i], romInfo.GetGameVersion(), false));
+                            commands.Add(new Command(scriptTextBox.Lines[i], romInfo.gameVersion, false));
                             i++;
                         }
-                        commands.Add(new Command(scriptTextBox.Lines[i], romInfo.GetGameVersion(), false)); // Add end or jump/call command
+                        commands.Add(new Command(scriptTextBox.Lines[i], romInfo.gameVersion, false)); // Add end or jump/call command
                         currentScriptFile.scripts.Add(new Script(commands));
                     }
                 }
@@ -4768,10 +4855,10 @@ namespace DSPRE {
 
                     /* Read function commands */
                     while (functionTextBox.Lines[i] != "End" && !functionTextBox.Lines[i].Contains("Return") && !functionTextBox.Lines[i].Contains("Jump F")) {
-                        commands.Add(new Command(functionTextBox.Lines[i], romInfo.GetGameVersion(), false));
+                        commands.Add(new Command(functionTextBox.Lines[i], romInfo.gameVersion, false));
                         i++;
                     }
-                    commands.Add(new Command(functionTextBox.Lines[i], romInfo.GetGameVersion(), false)); // Add end command
+                    commands.Add(new Command(functionTextBox.Lines[i], romInfo.gameVersion, false)); // Add end command
                     currentScriptFile.functions.Add(new Script(commands));
                 }
             }
@@ -4787,10 +4874,10 @@ namespace DSPRE {
 
                     /* Read script commands */
                     while (movementTextBox.Lines[i] != "End") {
-                        commands.Add(new Command(movementTextBox.Lines[i], romInfo.GetGameVersion(), true));
+                        commands.Add(new Command(movementTextBox.Lines[i], romInfo.gameVersion, true));
                         i++;
                     }
-                    commands.Add(new Command(movementTextBox.Lines[i], romInfo.GetGameVersion(), true)); // Add end command
+                    commands.Add(new Command(movementTextBox.Lines[i], romInfo.gameVersion, true)); // Add end command
 
                     currentScriptFile.movements.Add(new Script(commands));
                 }
@@ -5099,7 +5186,7 @@ namespace DSPRE {
 
         private void addMessageFileButton_Click(object sender, EventArgs e) {
             /* Add new event file to event folder */
-            string messageFilePath = romInfo.GetTextArchivesPath() + "\\" + selectTextFileComboBox.Items.Count.ToString("D4");
+            string messageFilePath = romInfo.textArchivesPath + "\\" + selectTextFileComboBox.Items.Count.ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(messageFilePath, FileMode.Create))) writer.Write(LoadMessageArchive(0).Save());
 
             /* Update ComboBox and select new file */
@@ -5132,7 +5219,7 @@ namespace DSPRE {
             if (of.ShowDialog(this) != DialogResult.OK) return;
 
             /* Update Text Archive object in memory */
-            string path = romInfo.GetTextArchivesPath() + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4");
+            string path = romInfo.textArchivesPath + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Display success message */
@@ -5143,7 +5230,7 @@ namespace DSPRE {
         }
         private void removeMessageFileButton_Click(object sender, EventArgs e) {
             /* Delete Text Archive */
-            File.Delete(romInfo.GetTextArchivesPath() + "\\" + (selectTextFileComboBox.Items.Count - 1).ToString("D4"));
+            File.Delete(romInfo.textArchivesPath + "\\" + (selectTextFileComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectTextFileComboBox.Items.Count - 1;
@@ -5163,7 +5250,7 @@ namespace DSPRE {
         }
 
         private void saveTextArchive() {
-            BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.GetTextArchivesPath() + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4"), FileMode.Create));
+            BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.textArchivesPath + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4"), FileMode.Create));
             textWriter.Write((UInt16)currentMessageFile.messages.Count);
             textWriter.Write((UInt16)currentMessageFile.initialKey);
             int key = (currentMessageFile.initialKey * 0x2FD) & 0xFFFF;
@@ -5261,7 +5348,7 @@ namespace DSPRE {
                         textEditorDataGridView.Rows[i].HeaderCell.Value = "0x" + i.ToString("X");
                     }
                     disableHandlers = false;
-                    BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.GetTextArchivesPath() + "\\" + k.ToString("D4"), FileMode.Create));
+                    BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.textArchivesPath + "\\" + k.ToString("D4"), FileMode.Create));
                     textWriter.Write((UInt16)currentMessageFile.messages.Count);
                     textWriter.Write((UInt16)currentMessageFile.initialKey);
                     int key = (currentMessageFile.initialKey * 0x2FD) & 0xFFFF;
@@ -5377,8 +5464,8 @@ namespace DSPRE {
                 return;
 
             string tilesetPath;
-            if (mapTilesetRadioButton.Checked) tilesetPath = romInfo.GetMapTexturesDirPath() + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-            else tilesetPath = romInfo.GetBuildingTexturesDirPath() + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+            if (mapTilesetRadioButton.Checked) tilesetPath = romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+            else tilesetPath = romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             File.Copy(tilesetPath, sf.FileName);
         }
         private void importNSBTXButton_Click(object sender, EventArgs e) {
@@ -5389,8 +5476,8 @@ namespace DSPRE {
 
             /* Update nsbtx file */
             string tilesetPath;
-            if (mapTilesetRadioButton.Checked) tilesetPath = romInfo.GetMapTexturesDirPath() + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-            else tilesetPath = romInfo.GetBuildingTexturesDirPath() + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+            if (mapTilesetRadioButton.Checked) tilesetPath = romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+            else tilesetPath = romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, tilesetPath, true);
 
             /* Update nsbtx object in memory and controls */
@@ -5420,9 +5507,9 @@ namespace DSPRE {
             /* Load tileset file */
             string tilesetPath;
             if (mapTilesetRadioButton.Checked)
-                tilesetPath = romInfo.GetMapTexturesDirPath() + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+                tilesetPath = romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             else
-                tilesetPath = romInfo.GetBuildingTexturesDirPath() + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+                tilesetPath = romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             currentTileset = new NSMBe4.NSBMD.NSBTX_File(new FileStream(tilesetPath, FileMode.Open));
 
             /* Add textures and palette slot names to ListBoxes */
@@ -5501,9 +5588,9 @@ namespace DSPRE {
             currentAreaData.areaType = (byte)areaDataAreaTypeComboBox.SelectedIndex;
         }
         private void saveAreaDataButton_Click(object sender, EventArgs e) {
-            string areaDataPath = romInfo.GetAreaDataDirPath() + "\\" + selectAreaDataComboBox.SelectedIndex.ToString("D4");
+            string areaDataPath = romInfo.areaDataDirPath + "\\" + selectAreaDataComboBox.SelectedIndex.ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(areaDataPath, FileMode.Create)))
-                writer.Write(currentAreaData.SaveAreaData(romInfo.GetGameVersion()));
+                writer.Write(currentAreaData.SaveAreaData(romInfo.gameVersion));
         }
         private void selectAreaDataComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             currentAreaData = LoadAreaData((uint)selectAreaDataComboBox.SelectedIndex);
@@ -5511,7 +5598,7 @@ namespace DSPRE {
             areaDataBuildingTilesetUpDown.Value = currentAreaData.buildingsTileset;
             areaDataMapTilesetUpDown.Value = currentAreaData.mapTileset;
             areaDataLightTypeComboBox.SelectedIndex = currentAreaData.lightType;
-            switch (romInfo.GetGameVersion()) {
+            switch (romInfo.gameVersion) {
                 case "Diamond":
                 case "Pearl":
                 case "Platinum":

@@ -6,6 +6,7 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with some QOL adjustments.
 - Drastically sped up load and save time
 - New search location feature
 - Added mouse support and warps navigation feature to the Event Editor
+- Encounter editor now allows adding and removing encounter files
 - Fixed OW search algorithm for most (if not all) supported ROMs
 - Added ARM9 memory expander to the new ROM Toolbox
 - New palette match algorithm.
@@ -41,3 +42,5 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with some QOL adjustments.
 - Fixed Encounters editor not opening
 - Fixed wrong numbers when resizing matrices
 - Added a warning when attempting to resize matrix 0
+- Fixed Matrix editor "add" and "remove" buttons GUI numbering mismatch
+- the "Open Wild Pokémon" button in Header Editor is disabled when a NULL encounter file is detected
