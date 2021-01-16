@@ -69,7 +69,7 @@ namespace DSPRE {
                 attempts++;
                 if (attempts > 1) {
                     BinaryWriter arm9Truncate = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin"));
-                    
+
                     arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
                     arm9Truncate.Close();
                 }
@@ -82,7 +82,7 @@ namespace DSPRE {
                 decompress.WaitForExit();
 
                 arm9Length = new FileInfo(workDir + @"arm9.bin").Length;
-            } 
+            }
 
             return (arm9Length > 0xBC000);
         }
@@ -380,14 +380,14 @@ namespace DSPRE {
                 toolStripProgressBar.Value++;
             }
             if (romInfo.GetGameVersion() == "HeartGold" || romInfo.GetGameVersion() == "SoulSilver") {
-                var tuple = Tuple.Create(narcPaths[narcPaths.Length-1], extractedNarcDirs[extractedNarcDirs.Length-1]); // Last = interior buildings dir
+                var tuple = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 1]); // Last = interior buildings dir
                 DirectoryInfo di = new DirectoryInfo(tuple.Item2);
                 if (!di.Exists || di.GetFiles().Length == 0) {
                     Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
                 }
                 toolStripProgressBar.Value++;
             }
-            
+
 
             disableHandlers = true;
             if (File.Exists(romInfo.GetOWtablePath())) {
@@ -412,7 +412,7 @@ namespace DSPRE {
             string[] trainerNames = GetTrainerNames();
 
             statusLabel.Text = "Loading Events... Please wait";
-            toolStripProgressBar.Maximum = eventCount+owSpriteCount+trainerNames.Length;
+            toolStripProgressBar.Maximum = eventCount + owSpriteCount + trainerNames.Length;
             toolStripProgressBar.Value = 0;
             Update();
 
@@ -639,7 +639,7 @@ namespace DSPRE {
             if (headerListBox.Items.Count > 0)
                 headerListBox.SelectedIndex = 0;
         }
-        private void SetupMapEditor() { 
+        private void SetupMapEditor() {
             /* Extract essential NARCs sub-archives*/
             string[] narcPaths = romInfo.GetNarcPaths();
             string[] extractedNarcDirs = romInfo.GetExtractedNarcDirs();
@@ -1265,7 +1265,7 @@ namespace DSPRE {
                     SetupTextEditor();
                     textEditorIsReady = true;
                 }
-            } else if (mainTabControl.SelectedTab == tilesetEditorTabPage){
+            } else if (mainTabControl.SelectedTab == tilesetEditorTabPage) {
                 if (!tilesetEditorIsReady) {
                     SetupTilesetEditor();
                     tilesetEditorIsReady = true;
@@ -1549,6 +1549,21 @@ namespace DSPRE {
                     break;
             }
         }
+        private void eventsTabControl_SelectedIndexChanged(object sender, EventArgs e) {
+            if (eventsTabControl.SelectedTab == signsTabPage) {
+                if (spawnablesListBox.Items.Count > 0)
+                    spawnablesListBox.SelectedIndex = 0;
+            } else if (eventsTabControl.SelectedTab == overworldsTabPage) {
+                if (overworldsListBox.Items.Count > 0)
+                    overworldsListBox.SelectedIndex = 0;
+            } else if (eventsTabControl.SelectedTab == warpsTabPage) {
+                if (warpsListBox.Items.Count > 0)
+                    warpsListBox.SelectedIndex = 0;
+            } else if (eventsTabControl.SelectedTab == triggersTabPage) {
+                if (triggersListBox.Items.Count > 0)
+                    triggersListBox.SelectedIndex = 0;
+            }
+        }
         private void headerListBox_Leave(object sender, EventArgs e) {
             if (disableHandlers) return;
             headerListBox.Refresh();
@@ -1808,11 +1823,12 @@ namespace DSPRE {
         }
 
         private void scriptFileUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentHeader.script = (ushort)scriptFileUpDown.Value;
         }
         private void showNameComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || showNameComboBox.SelectedItem == null)
                 return;
             currentHeader.showName = Byte.Parse(showNameComboBox.SelectedItem.ToString().Substring(1, 3));
         }
@@ -2564,7 +2580,7 @@ namespace DSPRE {
         }
         private void saveMapButton_Click(object sender, EventArgs e) {
             string mapIndex = selectMapComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.GetMapDirPath() + "\\" + mapIndex, FileMode.Create))) 
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.GetMapDirPath() + "\\" + mapIndex, FileMode.Create)))
                 writer.Write(currentMapFile.Save());
         }
         private void selectMapComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -3305,7 +3321,7 @@ namespace DSPRE {
             eventPictureBox.Image = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
 
             /* Draw spawnables */
-            if (showSignsCheckBox.Checked) 
+            if (showSignsCheckBox.Checked)
                 for (int i = 0; i < currentEventFile.spawnables.Count; i++) {
                     Spawnable spawnable = currentEventFile.spawnables[i];
                     if (spawnable.xMatrixPosition == eventMatrixXUpDown.Value && spawnable.yMatrixPosition == eventMatrixYUpDown.Value) {
@@ -3457,7 +3473,7 @@ namespace DSPRE {
         }
         private void FillSpawnablesBox() {
             spawnablesListBox.Items.Clear();
-            for (int i = 0; i < currentEventFile.spawnables.Count; i++) 
+            for (int i = 0; i < currentEventFile.spawnables.Count; i++)
                 spawnablesListBox.Items.Add("Spawnable " + i);
         }
         private void FillOverworldsBox() {
@@ -3467,7 +3483,7 @@ namespace DSPRE {
         }
         private void FillWarpsBox() {
             warpsListBox.Items.Clear();
-            for (int i = 0; i < currentEventFile.warps.Count; i++) 
+            for (int i = 0; i < currentEventFile.warps.Count; i++)
                 warpsListBox.Items.Add("Warp " + i);
         }
         private void FillTriggersBox() {
@@ -3793,7 +3809,7 @@ namespace DSPRE {
         }
         private void saveEventsButton_Click(object sender, EventArgs e) {
             string eventFile = selectEventComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.GetEventsDirPath() + "\\" + eventFile, FileMode.Create))) 
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.GetEventsDirPath() + "\\" + eventFile, FileMode.Create)))
                 writer.Write(currentEventFile.Save());
         }
         private void selectEventComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -4230,7 +4246,7 @@ namespace DSPRE {
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].zPosition = (short)owZPositionUpDown.Value;
         }
         private void owXMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].xMatrixPosition = (ushort)owXMatrixUpDown.Value;
@@ -4241,7 +4257,7 @@ namespace DSPRE {
             DisplayActiveEvents();
         }
         private void owYMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].yMatrixPosition = (ushort)owYMatrixUpDown.Value;
@@ -4292,12 +4308,12 @@ namespace DSPRE {
             }
         }
         private void warpAnchorUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
             currentEventFile.warps[warpsListBox.SelectedIndex].anchor = (ushort)warpAnchorUpDown.Value;
         }
         private void warpHeaderUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
             currentEventFile.warps[warpsListBox.SelectedIndex].header = (ushort)warpHeaderUpDown.Value;
         }
@@ -4331,14 +4347,14 @@ namespace DSPRE {
             DisplayActiveEvents();
         }
         private void warpMatrixYUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentEventFile.warps[warpsListBox.SelectedIndex].yMatrixPosition = (ushort)warpYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpXMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentEventFile.warps[warpsListBox.SelectedIndex].xMapPosition = (short)warpXMapUpDown.Value;
@@ -4433,28 +4449,28 @@ namespace DSPRE {
             DisplayActiveEvents();
         }
         private void triggerXMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].xMatrixPosition = (ushort)triggerXMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerYMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].yMatrixPosition = (ushort)triggerYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerWidthUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].width = (ushort)triggerWidthUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerLengthUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].length = (ushort)triggerLengthUpDown.Value;
