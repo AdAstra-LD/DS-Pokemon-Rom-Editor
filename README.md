@@ -1,6 +1,6 @@
 # DS Pokemon Rom Editor
 
-Nomura's C# and WinForm DS Pokemon ROM Editor forked with some QOL adjustments.
+Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features and bugfixes.
 
 ## Major Changes to Mixone's fork
 - Significantly shorter load and save times.
