@@ -1,4 +1,5 @@
 using System.IO;
+using System.Windows.Forms;
 
 namespace DSPRE
 {
@@ -308,6 +309,8 @@ namespace DSPRE
         {
             using (BinaryReader reader = new BinaryReader(data))
             {
+                bool error = false;
+
                 /* Encounter rates */
                 walkingRate = reader.ReadByte();
                 surfRate = reader.ReadByte();
@@ -319,56 +322,57 @@ namespace DSPRE
                 reader.BaseStream.Position += 0x2;
 
                 /* Walking encounters levels */
-                for (int i = 0; i < 12; i++) walkingLevels[i] = reader.ReadByte();
+                for (int i = 0; i < 12; i++) 
+                    walkingLevels[i] = reader.ReadByte();
 
                 /* Morning walking encounters */
-                for (int i = 0; i < 12; i++) morningPokémon[i] = reader.ReadUInt16();
+                for (int i = 0; i < 12; i++) 
+                    morningPokémon[i] = reader.ReadUInt16();
 
                 /* Day walking encounters */
-                for (int i = 0; i < 12; i++) dayPokémon[i] = reader.ReadUInt16();
+                for (int i = 0; i < 12; i++) 
+                    dayPokémon[i] = reader.ReadUInt16();
 
                 /* Night walking encounters */
-                for (int i = 0; i < 12; i++) nightPokémon[i] = reader.ReadUInt16();
+                for (int i = 0; i < 12; i++) 
+                    nightPokémon[i] = reader.ReadUInt16();
 
                 /* PokéGear music encounters */
-                for (int i = 0; i < 2; i++) hoennMusicPokémon[i] = reader.ReadUInt16();
-                for (int i = 0; i < 2; i++) sinnohMusicPokémon[i] = reader.ReadUInt16();
+                for (int i = 0; i < 2; i++) 
+                    hoennMusicPokémon[i] = reader.ReadUInt16();
+                for (int i = 0; i < 2; i++) 
+                    sinnohMusicPokémon[i] = reader.ReadUInt16();
 
                 /* Surf encounters */
-                for (int i = 0; i < 5; i++)
-                {
+                for (int i = 0; i < 5; i++) {
                     surfMinLevels[i] = reader.ReadByte();
                     surfMaxLevels[i] = reader.ReadByte();
                     surfPokémon[i] = reader.ReadUInt16();
                 }
 
                 /* Rock Smash encounters */
-                for (int i = 0; i < 2; i++)
-                {
+                for (int i = 0; i < 2; i++) {
                     rockSmashMinLevels[i] = reader.ReadByte();
                     rockSmashMaxLevels[i] = reader.ReadByte();
                     rockSmashPokémon[i] = reader.ReadUInt16();
                 }
 
                 /* Old Rod encounters */
-                for (int i = 0; i < 5; i++)
-                {
+                for (int i = 0; i < 5; i++) {
                     oldRodMinLevels[i] = reader.ReadByte();
                     oldRodMaxLevels[i] = reader.ReadByte();
                     oldRodPokémon[i] = reader.ReadUInt16();
                 }
 
                 /* Good Rod encounters */
-                for (int i = 0; i < 5; i++)
-                {
+                for (int i = 0; i < 5; i++) {
                     goodRodMinLevels[i] = reader.ReadByte();
                     goodRodMaxLevels[i] = reader.ReadByte();
                     goodRodPokémon[i] = reader.ReadUInt16();
                 }
 
                 /* Super Rod encounters */
-                for (int i = 0; i < 5; i++)
-                {
+                for (int i = 0; i < 5; i++) {
                     superRodMinLevels[i] = reader.ReadByte();
                     superRodMaxLevels[i] = reader.ReadByte();
                     superRodPokémon[i] = reader.ReadUInt16();
@@ -376,7 +380,20 @@ namespace DSPRE
 
                 /* Swarm encounters */
                 swarmPokémon = new ushort[4];
-                for (int i = 0; i < 4; i++) swarmPokémon[i] = reader.ReadUInt16();
+                for (int i = 0; i < 4; i++) {
+                    try {
+                        swarmPokémon[i] = reader.ReadUInt16();
+                    } catch (EndOfStreamException) {
+                        error = true;
+                        swarmPokémon[i] = 0x00;
+                    } 
+                }
+
+                if (error) {
+                    MessageBox.Show("The Swarm Encounters section of this Encounters File" +
+                        "is partially corrupted.\n" + "Assuming a value of 0 to repair the " +
+                        "unreadable fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
         #endregion
