@@ -99,18 +99,20 @@ namespace DSPRE {
         public static byte[] ReadFromArm9(long startOffset, long numberOfBytes) {
             BinaryReader readArm9 = new BinaryReader(File.OpenRead(workDir + @"arm9.bin"));
             readArm9.BaseStream.Position = startOffset;
-            byte[] tarGetBytes = null;
+            byte[] buffer = null;
 
             if (numberOfBytes < 0) {
                 numberOfBytes = 2097152; //ARM9 is definitely smaller than 2MB
-            }
+            } 
+            
             try {
-                tarGetBytes = readArm9.ReadBytes((int)numberOfBytes);
+                buffer = readArm9.ReadBytes((int)numberOfBytes);
             } catch (EndOfStreamException) {
                 Console.WriteLine("ARM9 Stream ended");
             }
+
             readArm9.Dispose();
-            return tarGetBytes;
+            return buffer;
         }
         public static void WriteToArm9(long startOffset, byte[] bytesToWrite) {
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin"))) {

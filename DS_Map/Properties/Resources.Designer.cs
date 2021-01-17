@@ -652,9 +652,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera000 {
+        internal static System.Drawing.Bitmap hgsscamera00 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera000", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera00", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -662,9 +662,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera001 {
+        internal static System.Drawing.Bitmap hgsscamera01 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera001", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera01", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -672,9 +672,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera002 {
+        internal static System.Drawing.Bitmap hgsscamera02 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera002", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera02", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -682,9 +682,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera003 {
+        internal static System.Drawing.Bitmap hgsscamera03 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera003", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera03", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -692,9 +692,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera004 {
+        internal static System.Drawing.Bitmap hgsscamera04 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera004", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera04", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -702,9 +702,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera006 {
+        internal static System.Drawing.Bitmap hgsscamera05 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera006", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera05", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -712,9 +712,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera020 {
+        internal static System.Drawing.Bitmap hgsscamera06 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera020", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera06", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -722,9 +722,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera036 {
+        internal static System.Drawing.Bitmap hgsscamera07 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera036", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera07", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -732,9 +732,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera049 {
+        internal static System.Drawing.Bitmap hgsscamera08 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera049", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera08", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -742,9 +742,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera051 {
+        internal static System.Drawing.Bitmap hgsscamera09 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera051", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera09", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -752,9 +752,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera067 {
+        internal static System.Drawing.Bitmap hgsscamera10 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera067", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera10", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -762,9 +762,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera068 {
+        internal static System.Drawing.Bitmap hgsscamera11 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera068", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera11", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -772,9 +772,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera084 {
+        internal static System.Drawing.Bitmap hgsscamera12 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera084", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera12", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -782,9 +782,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera116 {
+        internal static System.Drawing.Bitmap hgsscamera13 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera116", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera13", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -792,9 +792,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera129 {
+        internal static System.Drawing.Bitmap hgsscamera14 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera129", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera14", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -802,49 +802,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera148 {
+        internal static System.Drawing.Bitmap hgsscamera15 {
             get {
-                object obj = ResourceManager.GetObject("hgsscamera148", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera163 {
-            get {
-                object obj = ResourceManager.GetObject("hgsscamera163", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera195 {
-            get {
-                object obj = ResourceManager.GetObject("hgsscamera195", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera211 {
-            get {
-                object obj = ResourceManager.GetObject("hgsscamera211", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap hgsscamera244 {
-            get {
-                object obj = ResourceManager.GetObject("hgsscamera244", resourceCulture);
+                object obj = ResourceManager.GetObject("hgsscamera15", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

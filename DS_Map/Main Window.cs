@@ -32,6 +32,8 @@ namespace DSPRE {
         public bool expandedARM9;
         public bool standardizedItems;
 
+        private const string headerNamesSeparator = " -   ";
+
         /* Editors Setup */
         private bool matrixEditorIsReady = false;
         private bool mapEditorIsReady = false;
@@ -480,7 +482,19 @@ namespace DSPRE {
                     flag8CheckBox.Text = "Flag 8";
                     break;
             }
-            toolStripProgressBar.Visible = false;
+        }
+        private void SetupCameraAndAreaProperties() {
+            switch (romInfo.gameVersion) {
+                case "D":
+                case "P":
+                case "Plat":
+                    areaSettingsComboBox.Visible = false;
+                    areaSettingsLabel.Visible = false;
+                    cameraComboBox.Width = cameraComboBox.Width*2 + 19;
+                    break;
+                default:
+                    break;
+            }
         }
         private void SetupHeaderEditor() {
             /* Extract essential NARCs sub-archives*/
@@ -497,26 +511,26 @@ namespace DSPRE {
                     Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
                 }
             }
+
+            statusLabel.Text = "Reading internal names... Please wait.";
+            Update();
             /* Read Header internal names */
             internalNames = new List<string>();
-            using (BinaryReader reader = new BinaryReader(File.OpenRead(romInfo.workDir + @"data\fielddata\maptable\mapname.bin"))) {
-                int internalNameLen = 0x10;
-                int headerCount = romInfo.GetHeaderCount();
+            try {
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(romInfo.internalNamesLocation))) {
+                    int headerCount = romInfo.GetHeaderCount();
 
-                for (int i = 0; i < headerCount; i++) {
-                    reader.BaseStream.Position = i * internalNameLen;
-                    byte[] tarGetBytes = reader.ReadBytes(internalNameLen + 1);
-                    int bytesLen = tarGetBytes.Length;
+                    for (int i = 0; i < headerCount; i++) {
+                        byte[] row = reader.ReadBytes(romInfo.internalNameLength);
 
-                    if (bytesLen <= internalNameLen)
-                        tarGetBytes[bytesLen - 1] = 0x00;
-                    else
-                        tarGetBytes[internalNameLen] = 0x00;
-
-                    string internalName = Encoding.ASCII.GetString(tarGetBytes);//.TrimEnd();
-                    headerListBox.Items.Add(i + ": " + internalName);
-                    internalNames.Add(internalName);
+                        string internalName = Encoding.ASCII.GetString(row);//.TrimEnd();
+                        headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalName);
+                        internalNames.Add(internalName);
+                    }
                 }
+            } catch (FileNotFoundException) {
+                MessageBox.Show(romInfo.internalNamesLocation + " doesn't exist.", "Couldn't read internal names", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             /*Add list of options to each control */
@@ -545,6 +559,7 @@ namespace DSPRE {
                     showNameComboBox.Enabled = false;
                     areaIconComboBox.Items.AddRange(headerInfo.HGSSAreaIconValues);
                     cameraComboBox.Items.AddRange(headerInfo.HGSSCameraValues);
+                    areaSettingsComboBox.Items.AddRange(headerInfo.HGSSAreaProperties);
                     musicDayComboBox.Items.AddRange(headerInfo.HGSSMusicValues);
                     musicNightComboBox.Items.AddRange(headerInfo.HGSSMusicValues);
                     weatherComboBox.Items.AddRange(headerInfo.HGSSWeatherValues);
@@ -1004,7 +1019,7 @@ namespace DSPRE {
                 editor.ShowDialog();
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.6c" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.6d" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who owes credit for SDSME." + Environment.NewLine +
                 "Special thanks go to Trifindo, Mikelan98, BagBoy, and JackHack96, whose help, research and expertise in the field of NDS Rom Hacking made the development of this tool possible.";
 
@@ -1094,6 +1109,7 @@ namespace DSPRE {
 
             /* Setup essential editors */
             SetupFlagNames();
+            SetupCameraAndAreaProperties();
             SetupHeaderEditor();
             eventOpenGlControl.InitializeContexts();
             mapOpenGlControl.InitializeContexts();
@@ -1411,13 +1427,23 @@ namespace DSPRE {
                         imageName = "ptcamera" + cameraComboBox.SelectedIndex.ToString();
                         break;
                     default:
-                        currentHeader.camera = Byte.Parse(cameraComboBox.SelectedItem.ToString().Substring(1, 3));
-                        imageName = "hgsscamera" + currentHeader.camera.ToString("D3");
+                        currentHeader.camera = Byte.Parse(cameraComboBox.SelectedItem.ToString().Substring(1, 2));
+                        imageName = "hgsscamera" + currentHeader.camera.ToString("D2");
                         break;
                 }
                 cameraPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
             } catch (NullReferenceException) {
-                MessageBox.Show("The current header uses an unrecognized camera.\nThis is not a problem. Settings will be saved normally.", "Unknown camera settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("The current header uses an unrecognized camera.\n", "Unknown camera settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void areaSettingsComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (disableHandlers) 
+                return;
+
+            try {
+                currentHeader.camera = Byte.Parse(areaSettingsComboBox.SelectedItem.ToString().Substring(1, 2));
+            } catch (NullReferenceException) {
+                MessageBox.Show("The current header uses unrecognized area settings.\n", "Unknown area settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         private void eventFileUpDown_ValueChanged(object sender, EventArgs e) {
@@ -1456,13 +1482,12 @@ namespace DSPRE {
             if (disableHandlers)
                 return;
 
-            String currentInternalName = headerListBox.SelectedItem.ToString();
-            const String separator = ": ";
-            int separatorPosition = currentInternalName.IndexOf(separator);
-            currentHeader = LoadHeader(Int32.Parse(currentInternalName.Substring(0, separatorPosition)));
+            String nameDisplayedInListBox = headerListBox.SelectedItem.ToString();
+            int separatorPosition = nameDisplayedInListBox.IndexOf(headerNamesSeparator);
+            currentHeader = LoadHeader(Int32.Parse(nameDisplayedInListBox.Substring(0, separatorPosition)));
 
             /* Setup controls for common fields across headers */
-            internalNameBox.Text = currentInternalName.Substring(separatorPosition + separator.Length);
+            internalNameBox.Text = nameDisplayedInListBox.Substring(separatorPosition + headerNamesSeparator.Length);
             matrixUpDown.Value = currentHeader.matrix;
             areaDataUpDown.Value = currentHeader.areaDataID;
             scriptFileUpDown.Value = currentHeader.script;
@@ -1471,7 +1496,10 @@ namespace DSPRE {
             textFileUpDown.Value = currentHeader.text;
             wildPokeUpDown.Value = currentHeader.wildPokémon;
             weatherComboBox.SelectedIndex = weatherComboBox.FindString("[" + currentHeader.weather.ToString("D2"));
-            cameraComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.camera.ToString("D3"));
+            cameraComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.camera.ToString("D2"));
+            
+            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS")
+                areaSettingsComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.areaSettings.ToString("D2"));
 
 
             if (currentHeader.wildPokémon == romInfo.nullEncounterID)
@@ -1531,11 +1559,13 @@ namespace DSPRE {
             }
         }
         private void headerListBox_Leave(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             headerListBox.Refresh();
         }
         private void levelScriptUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentHeader.levelScript = (ushort)levelScriptUpDown.Value;
         }
         private void mapNameComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1556,11 +1586,13 @@ namespace DSPRE {
             }
         }
         private void matrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentHeader.matrix = (ushort)matrixUpDown.Value;
         }
         private void musicDayComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             switch (romInfo.gameVersion) {
                 case "D":
                 case "P":
@@ -1575,7 +1607,8 @@ namespace DSPRE {
             }
         }
         private void musicNightComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             switch (romInfo.gameVersion) {
                 case "D":
@@ -1714,7 +1747,22 @@ namespace DSPRE {
         private void saveHeaderButton_Click(object sender, EventArgs e) {
             long headerOffset = romInfo.headerTableOffset + 0x18 * headerListBox.SelectedIndex;
             DSUtils.WriteToArm9(headerOffset, currentHeader.SaveHeader());
+
+            disableHandlers = true;
+            /* Update internal name */
+            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(romInfo.internalNamesLocation))) {
+                writer.BaseStream.Position = headerListBox.SelectedIndex * romInfo.internalNameLength;
+
+                writer.Write(  Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0'))  );
+                updateHeaderNameShown(headerListBox.SelectedIndex, internalNameBox.Text);
+            }
+            disableHandlers = false;
         }
+
+        private void updateHeaderNameShown(int selectedIndex, string text) {
+            headerListBox.Items[selectedIndex] = selectedIndex.ToString("D3") + headerNamesSeparator + text;
+        }
+
         private void resetButton_Click(object sender, EventArgs e) {
             if (headerListBox.Items.Count < internalNames.Count)
                 resetHeaderSearchResults();

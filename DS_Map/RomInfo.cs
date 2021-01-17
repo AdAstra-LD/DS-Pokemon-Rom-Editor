@@ -22,6 +22,7 @@ namespace DSPRE {
 
         private string interiorBuildingsPath;
         private string exteriorBuildingModelsPath;
+
         public string areaDataDirPath { get; private set; }
         public string OWtablePath { get; private set; }
         public string mapTexturesDirPath { get; private set; }
@@ -42,6 +43,9 @@ namespace DSPRE {
         public int pokémonNamesTextNumber { get; private set; }
         public int itemNamesTextNumber { get; private set; }
 
+        public readonly int internalNameLength = 16;
+        public string internalNamesLocation { get; private set; }
+
 
         #region Constructors (1)
         public RomInfo(string id, string workDir) {
@@ -55,6 +59,8 @@ namespace DSPRE {
             LoadGameName();
             LoadGameLanguage();
             LoadHeaderTableOffset();
+
+            internalNamesLocation = this.workDir + @"data\fielddata\maptable\mapname.bin";
 
             mapTexturesDirPath = this.workDir + @"unpacked\maptex";
             buildingTexturesDirPath = this.workDir + @"unpacked\TextureBLD";
@@ -425,7 +431,7 @@ namespace DSPRE {
             }
         }
         public int GetHeaderCount() {
-            return (int)new FileInfo(workDir + @"data\fielddata\maptable\mapname.bin").Length / 0x10;
+            return (int)new FileInfo(internalNamesLocation).Length / internalNameLength;
         }
         public void SetAttackNamesTextNumber() {
             switch (gameVersion) {
