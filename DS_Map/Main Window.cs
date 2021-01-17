@@ -1772,21 +1772,20 @@ namespace DSPRE {
             headerListBox.Enabled = true;
             searchLocationTextBox.Clear();
             headerListBox.Items.Clear();
+
             for (int i = 0; i < internalNames.Count; i++) {
                 String name = internalNames[i];
-                headerListBox.Items.Add(i + ": " + name);
+                headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + name);
             }
         }
         private void searchHeaderTextBox_KeyPress(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
                 startSearchGameLocation();
             }
-
         }
         private void searchHeaderButton_Click(object sender, EventArgs e) {
             startSearchGameLocation();
         }
-
         private void startSearchGameLocation() {
             if (searchLocationTextBox.Text.Length != 0) {
                 headerListBox.Items.Clear();
@@ -1799,7 +1798,7 @@ namespace DSPRE {
                         for (int i = 0; i < internalNames.Count; i++) {
                             String locationName = mapNameComboBox.Items[((HeaderDP)LoadHeader(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i + ": " + internalNames[i]);
+                                headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalNames[i]);
                                 empty = false;
                             }
                         }
@@ -1808,7 +1807,7 @@ namespace DSPRE {
                         for (int i = 0; i < internalNames.Count; i++) {
                             String locationName = mapNameComboBox.Items[((HeaderPt)LoadHeader(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i + ": " + internalNames[i]);
+                                headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalNames[i]);
                                 empty = false;
                             }
                         }
@@ -1818,14 +1817,14 @@ namespace DSPRE {
                         for (int i = 0; i < internalNames.Count; i++) {
                             String locationName = mapNameComboBox.Items[((HeaderHGSS)LoadHeader(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i + ": " + internalNames[i]);
+                                headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalNames[i]);
                                 empty = false;
                             }
                         }
                         break;
                 }
                 if (empty) {
-                    headerListBox.Items.Add("No Result for " + '"' + searchLocationTextBox.Text + '"');
+                    headerListBox.Items.Add("No result for " + '"' + searchLocationTextBox.Text + '"');
                     headerListBox.Enabled = false;
                 } else {
                     headerListBox.SelectedIndex = 0;

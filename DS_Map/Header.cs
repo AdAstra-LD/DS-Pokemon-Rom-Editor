@@ -490,22 +490,22 @@ namespace DSPRE
         };
         public string[] DPPtCameraValues = new string[]
         {
-            "[00] Normal 3D",
-            "[01] Normal 3D",
-            "[02] Normal 3D",
-            "[03] Normal 3D",
+            "[00] 3D Normal",
+            "[01] 3D Top View (Higher than [12])",
+            "[02] 3D Frontal Low (Wider than [15])",
+            "[03] 3D Frontal",
             "[04] 2D Ortho",
-            "[05] 3D Enlarged",
-            "[06] 3D Top View",
-            "[07] Normal 3D",
-            "[08] 3D Top View",
-            "[09] Frontal 3D",
-            "[10] Normal 3D",
+            "[05] 3D Normal - Wide FOV",
+            "[06] 3D Bird View",
+            "[07] 3D Normal",
+            "[08] 3D Bird View Far",
+            "[09] 3D Frontal - Wide FOV",
+            "[10] 3D Top View - Narrow",
             "[11] Normal 3D",
-            "[12] Normal 3D",
+            "[12] 3D Top View",
             "[13] Frontal 3D",
-            "[14] 3D Top View",
-            "[15] Normal 3D"
+            "[14] 3D Top View - Wide FOV",
+            "[15] 3D Frontal Low"
         };
         public string[] HGSSCameraValues = new string[] {
             "[00] 3D Top",
