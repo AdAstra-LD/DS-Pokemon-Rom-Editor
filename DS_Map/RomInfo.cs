@@ -80,28 +80,6 @@ namespace DSPRE {
 
             SetNarcDirs();
         }
-
-        private void LoadGameName() {
-            switch(gameVersion) {
-                case "D":
-                    gameName = "Diamond";
-                    break;
-                case "P":
-                    gameName = "Pearl";
-                    break;
-                case "Plat":
-                    gameName = "Platinum";
-                    break;
-                    break;
-                case "HG":
-                    gameName = "HeartGold";
-                    break;
-                case "SS":
-                    gameName = "SoulSilver";
-                    break;
-            }
-        }
-
         #endregion
 
         #region Methods (22)
@@ -115,54 +93,6 @@ namespace DSPRE {
                 case "HG":
                 case "SS":
                     nullEncounterID = 255;
-                    break;
-            }
-        }
-        public void LoadGameLanguage() {
-            switch (romID) {
-                case "ADAE":
-                case "APAE":
-                case "CPUE":
-                case "IPKE":
-                case "IPGE":
-                    gameLanguage = "ENG";
-                    break;
-
-                case "ADAS":
-                case "APAS":
-                case "CPUS":
-                case "IPKS":
-                case "IPGS":
-                case "LATA":
-                    gameLanguage = "ESP";
-                    break;
-
-                case "ADAI":
-                case "APAI":
-                case "CPUI":
-                case "IPKI":
-                case "IPGI":
-                    gameLanguage = "ITA";
-                    break;
-
-                case "ADAF":
-                case "APAF":
-                case "CPUF":
-                case "IPKF":
-                case "IPGF":
-                    gameLanguage = "FRA";
-                    break;
-
-                case "ADAD":
-                case "APAD":
-                case "CPUD":
-                case "IPKD":
-                case "IPGD":
-                    gameLanguage = "GER";
-                    break;
-
-                default:
-                    gameLanguage = "JAP";
                     break;
             }
         }
@@ -298,9 +228,6 @@ namespace DSPRE {
                     */
             }
         }
-        public int GetAreaDataCount() {
-            return Directory.GetFiles(areaDataDirPath).Length; ;
-        }
         public void SetBuildingModelsDirPath() {
             switch (gameVersion) {
                 case "D":
@@ -386,6 +313,117 @@ namespace DSPRE {
             };
             headerTableOffset = offsets[this.romID];
         }
+        public void LoadGameVersion() {
+            Dictionary<string, string> versions = new Dictionary<string, string>() {
+                ["ADAE"] = "D",
+                ["ADAS"] = "D",
+                ["ADAI"] = "D",
+                ["ADAF"] = "D",
+                ["ADAD"] = "D",
+                ["ADAJ"] = "D",
+
+                ["APAE"] = "P",
+                ["APAS"] = "P",
+                ["APAI"] = "P",
+                ["APAF"] = "P",
+                ["APAD"] = "P",
+                ["APAJ"] = "P",
+
+                ["CPUE"] = "Plat",
+                ["CPUS"] = "Plat",
+                ["CPUI"] = "Plat",
+                ["CPUF"] = "Plat",
+                ["CPUD"] = "Plat",
+                ["CPUJ"] = "Plat",
+
+                ["IPKE"] = "HG",
+                ["IPKS"] = "HG",
+                ["IPKI"] = "HG",
+                ["IPKF"] = "HG",
+                ["IPKD"] = "HG",
+                ["IPKJ"] = "HG",
+
+                ["IPGE"] = "SS",
+                ["IPGS"] = "SS",
+                ["IPGI"] = "SS",
+                ["IPGF"] = "SS",
+                ["IPGD"] = "SS",
+                ["IPGJ"] = "SS"
+            };
+            try {
+                gameVersion = versions[romID];
+            } catch (KeyNotFoundException) {
+                System.Windows.Forms.MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void LoadGameName() {
+            switch (gameVersion) {
+                case "D":
+                    gameName = "Diamond";
+                    break;
+                case "P":
+                    gameName = "Pearl";
+                    break;
+                case "Plat":
+                    gameName = "Platinum";
+                    break;
+                case "HG":
+                    gameName = "HeartGold";
+                    break;
+                case "SS":
+                    gameName = "SoulSilver";
+                    break;
+            }
+        }
+        public void LoadGameLanguage() {
+            switch (romID) {
+                case "ADAE":
+                case "APAE":
+                case "CPUE":
+                case "IPKE":
+                case "IPGE":
+                    gameLanguage = "ENG";
+                    break;
+
+                case "ADAS":
+                case "APAS":
+                case "CPUS":
+                case "IPKS":
+                case "IPGS":
+                case "LATA":
+                    gameLanguage = "ESP";
+                    break;
+
+                case "ADAI":
+                case "APAI":
+                case "CPUI":
+                case "IPKI":
+                case "IPGI":
+                    gameLanguage = "ITA";
+                    break;
+
+                case "ADAF":
+                case "APAF":
+                case "CPUF":
+                case "IPKF":
+                case "IPGF":
+                    gameLanguage = "FRA";
+                    break;
+
+                case "ADAD":
+                case "APAD":
+                case "CPUD":
+                case "IPKD":
+                case "IPGD":
+                    gameLanguage = "GER";
+                    break;
+
+                default:
+                    gameLanguage = "JAP";
+                    break;
+            }
+        }
         public int GetHeaderCount() {
             return (int)new FileInfo(workDir + @"data\fielddata\maptable\mapname.bin").Length / 0x10;
         }
@@ -423,7 +461,7 @@ namespace DSPRE {
                     break;
             }
         }
-        public int GetMapNamesMessageNumber() {
+        public int GetMapNamesTextNumber() {
             int fileNumber;
             switch (gameVersion) {
                 case "D":
@@ -513,6 +551,9 @@ namespace DSPRE {
             }
             return fileNumber;
         }
+        public int GetAreaDataCount() {
+            return Directory.GetFiles(areaDataDirPath).Length; ;
+        }
         public int GetMapTexturesCount() {
             return Directory.GetFiles(mapTexturesDirPath).Length;
         }
@@ -533,50 +574,6 @@ namespace DSPRE {
         }
         public int GetScriptCount() {
             return Directory.GetFiles(scriptDirPath).Length;
-        }
-        public void LoadGameVersion() {
-            Dictionary<string, string> versions = new Dictionary<string, string>() {
-                ["ADAE"] = "D",
-                ["ADAS"] = "D",
-                ["ADAI"] = "D",
-                ["ADAF"] = "D",
-                ["ADAD"] = "D",
-                ["ADAJ"] = "D",
-
-                ["APAE"] = "P",
-                ["APAS"] = "P",
-                ["APAI"] = "P",
-                ["APAF"] = "P",
-                ["APAD"] = "P",
-                ["APAJ"] = "P",
-
-                ["CPUE"] = "Plat",
-                ["CPUS"] = "Plat",
-                ["CPUI"] = "Plat",
-                ["CPUF"] = "Plat",
-                ["CPUD"] = "Plat",
-                ["CPUJ"] = "Plat",
-
-                ["IPKE"] = "HG",
-                ["IPKS"] = "HG",
-                ["IPKI"] = "HG",
-                ["IPKF"] = "HG",
-                ["IPKD"] = "HG",
-                ["IPKJ"] = "HG",
-
-                ["IPGE"] = "SS",
-                ["IPGS"] = "SS",
-                ["IPGI"] = "SS",
-                ["IPGF"] = "SS",
-                ["IPGD"] = "SS",
-                ["IPGJ"] = "SS"
-            };
-            try {
-                gameVersion = versions[romID];
-            } catch (KeyNotFoundException) {
-                System.Windows.Forms.MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
         #endregion
     }

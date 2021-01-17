@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="AB.cs" />
     <Compile Include="AreaData.cs" />
+    <Compile Include="DSUtils.cs" />
     <Compile Include="Resources\ROMToolboxDB\ARM9ExpansionDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
