@@ -68,7 +68,7 @@ namespace DSPRE
                 int bdhcSectionLength = reader.ReadInt32();
 
                 /* Read background sounds section */
-                if (gameVersion == "HeartGold" || gameVersion == "SoulSilver")
+                if (gameVersion == "HG" || gameVersion == "SS")
                 {
                     reader.BaseStream.Position += 0x2;
                     int bgsSectionLength = (reader.ReadByte() + (reader.ReadByte() << 8));
@@ -222,7 +222,7 @@ namespace DSPRE
                 writer.Write(bdhc.Length);
 
                 /* Write soundplate section for HG/SS */
-                if (gameVersion == "HeartGold" || gameVersion == "SoulSilver") { 
+                if (gameVersion == "HG" || gameVersion == "SS") { 
                     writer.Write((ushort)0x1234);
                     writer.Write((ushort)bgs.Length);
                     writer.Write(bgs);

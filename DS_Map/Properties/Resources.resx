@@ -497,7 +497,7 @@
     <value>..\Graphics\Camera Angles\HGSS\hgsscamera000.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Platinum" xml:space="preserve">
-    <value>pt</value>
+    <value>Plat</value>
   </data>
   <data name="warpGo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Program Icons\warpGo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -81,81 +81,81 @@ namespace DSPRE.Resources.ROMToolboxDB {
         /// <summary>
         ///   Cerca una stringa localizzata simile a 0F F1 40 FB.
         /// </summary>
-        internal static string branchCodeHeartGoldESP {
+        internal static string branchCodeHGESP {
             get {
-                return ResourceManager.GetString("branchCodeHeartGoldESP", resourceCulture);
+                return ResourceManager.GetString("branchCodeHGESP", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 0F F1 30 FB.
         /// </summary>
-        internal static string branchCodeHeartGoldUSA {
+        internal static string branchCodeHGUSA {
             get {
-                return ResourceManager.GetString("branchCodeHeartGoldUSA", resourceCulture);
+                return ResourceManager.GetString("branchCodeHGUSA", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 00 F1 B2 F9.
         /// </summary>
-        internal static string branchCodePlatinumESP {
+        internal static string branchCodePtESP {
             get {
-                return ResourceManager.GetString("branchCodePlatinumESP", resourceCulture);
+                return ResourceManager.GetString("branchCodePtESP", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 00 F1 B4 F8.
         /// </summary>
-        internal static string branchCodePlatinumUSA {
+        internal static string branchCodePtUSA {
             get {
-                return ResourceManager.GetString("branchCodePlatinumUSA", resourceCulture);
+                return ResourceManager.GetString("branchCodePtUSA", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 9.
         /// </summary>
-        internal static string fileIDDiamond {
+        internal static string fileIDD {
             get {
-                return ResourceManager.GetString("fileIDDiamond", resourceCulture);
+                return ResourceManager.GetString("fileIDD", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 0.
         /// </summary>
-        internal static string fileIDHeartGold {
+        internal static string fileIDHG {
             get {
-                return ResourceManager.GetString("fileIDHeartGold", resourceCulture);
+                return ResourceManager.GetString("fileIDHG", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 9.
         /// </summary>
-        internal static string fileIDPearl {
+        internal static string fileIDP {
             get {
-                return ResourceManager.GetString("fileIDPearl", resourceCulture);
+                return ResourceManager.GetString("fileIDP", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 9.
         /// </summary>
-        internal static string fileIDPlatinum {
+        internal static string fileIDPt {
             get {
-                return ResourceManager.GetString("fileIDPlatinum", resourceCulture);
+                return ResourceManager.GetString("fileIDPt", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 0.
         /// </summary>
-        internal static string fileIDSoulSilver {
+        internal static string fileIDSS {
             get {
-                return ResourceManager.GetString("fileIDSoulSilver", resourceCulture);
+                return ResourceManager.GetString("fileIDSS", resourceCulture);
             }
         }
         
@@ -171,27 +171,27 @@ namespace DSPRE.Resources.ROMToolboxDB {
         /// <summary>
         ///   Cerca una stringa localizzata simile a FC B5 05 48 C0 46 1C 21 00 22 02 4D A8 47 00 20 03 21 FC BD 09 75 00 02 00 80 3C 02.
         /// </summary>
-        internal static string initStringHeartGold {
+        internal static string initStringHG {
             get {
-                return ResourceManager.GetString("initStringHeartGold", resourceCulture);
+                return ResourceManager.GetString("initStringHG", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD B9 6A 00 02 00 80 3C 02.
         /// </summary>
-        internal static string initStringPlatinumESP {
+        internal static string initStringPtESP {
             get {
-                return ResourceManager.GetString("initStringPlatinumESP", resourceCulture);
+                return ResourceManager.GetString("initStringPtESP", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD A5 6A 00 02 00 80 3C 02.
         /// </summary>
-        internal static string initStringPlatinumUSA {
+        internal static string initStringPtUSA {
             get {
-                return ResourceManager.GetString("initStringPlatinumUSA", resourceCulture);
+                return ResourceManager.GetString("initStringPtUSA", resourceCulture);
             }
         }
     }

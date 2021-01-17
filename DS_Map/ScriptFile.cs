@@ -106,9 +106,9 @@ namespace DSPRE {
         private Command Read_Command(BinaryReader dataReader, ref List<uint> functionOffsets, ref List<uint> movementOffsets, string gameVersion) {
             ResourceManager paramDatabase;
             switch (gameVersion) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
+                case "D":
+                case "P":
+                case "Plat":
                     paramDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
                     break;
                 default:
@@ -152,7 +152,7 @@ namespace DSPRE {
                     }
                     break;
                 case 0x190: {
-                        if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum")
+                        if (gameVersion == "D" || gameVersion == "P" || gameVersion == "Plat")
                             goto default;
                         else {
                             byte parameter1 = dataReader.ReadByte();
@@ -170,7 +170,7 @@ namespace DSPRE {
                     }
                     break;
                 case 0x1D1: {
-                        if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum")
+                        if (gameVersion == "D" || gameVersion == "P" || gameVersion == "Plat")
                             goto default;
                         else {
                             short parameter1 = dataReader.ReadInt16();
@@ -196,7 +196,7 @@ namespace DSPRE {
                     }
                     break;
                 case 0x1E9: {
-                        if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum")
+                        if (gameVersion == "D" || gameVersion == "P" || gameVersion == "Plat")
                             goto default;
                         else {
                             short parameter1 = dataReader.ReadInt16();
@@ -221,7 +221,7 @@ namespace DSPRE {
                     }
                     break;
                 case 0x21D: {
-                        if (gameVersion == "Platinum") {
+                        if (gameVersion == "Plat") {
                             byte parameter1 = dataReader.ReadByte();
                             parameters.Add(new byte[] { parameter1 });
 
@@ -285,7 +285,7 @@ namespace DSPRE {
                     }
                     break;
                 case 0x2C5: {
-                        if (gameVersion == "Platinum") {
+                        if (gameVersion == "Plat") {
                             parameters.Add(dataReader.ReadBytes(2));
                             parameters.Add(dataReader.ReadBytes(2));
                         } else
@@ -296,12 +296,12 @@ namespace DSPRE {
                 case 0x2C9:
                 case 0x2CA:
                 case 0x2CD:
-                    if (gameVersion == "Platinum")
+                    if (gameVersion == "Plat")
                         break;
                     else
                         goto default;
                 case 0x2CF:
-                    if (gameVersion == "Platinum") {
+                    if (gameVersion == "Plat") {
                         parameters.Add(dataReader.ReadBytes(2));
                         parameters.Add(dataReader.ReadBytes(2));
                     } else
@@ -466,7 +466,7 @@ namespace DSPRE {
             if (isMovement) {
                 commandDatabase = new ResourceManager("DSPRE.Resources.MovementNames", Assembly.GetExecutingAssembly());
             } else {
-                if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum")
+                if (gameVersion == "D" || gameVersion == "P" || gameVersion == "Plat")
                     commandDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
                 else
                     commandDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
@@ -903,9 +903,9 @@ namespace DSPRE {
             };
             ResourceManager commandDatabase; // Load the resource file containing information on parameters for each command
             switch (gameVersion) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
+                case "D":
+                case "P":
+                case "Plat":
                     commandDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
                     break;
                 default:
@@ -959,9 +959,9 @@ namespace DSPRE {
                     };
                     ResourceManager paramDatabase; // Load the resource file containing information on parameters for each command
                     switch (gameVersion) {
-                        case "Diamond":
-                        case "Pearl":
-                        case "Platinum":
+                        case "D":
+                        case "P":
+                        case "Plat":
                             paramDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
                             break;
                         default:

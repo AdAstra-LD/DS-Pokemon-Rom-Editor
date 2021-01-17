@@ -14,10 +14,12 @@ namespace DSPRE {
         public string romID { get; private set; }
         public string workDir { get; private set; }
         public string gameVersion { get; private set; }
+        public string gameName { get; private set; }
         public string gameLanguage { get; private set; }
         public long headerTableOffset { get; private set; }
-
         public string syntheticOverlayPath { get; private set; }
+        public string OWSpriteDirPath { get; private set; }
+
         private string interiorBuildingsPath;
         private string exteriorBuildingModelsPath;
         public string areaDataDirPath { get; private set; }
@@ -44,32 +46,33 @@ namespace DSPRE {
         #region Constructors (1)
         public RomInfo(string id, string workDir) {
             romID = id;
-            LoadGameVersion();
+            this.workDir = workDir;
 
+            LoadGameVersion();
             if (gameVersion == null)
                 return;
 
-            SetNullEncounterID();
+            LoadGameName();
             LoadGameLanguage();
             LoadHeaderTableOffset();
-            this.workDir = workDir;
 
-            SetSyntheticOverlayPath();
+            mapTexturesDirPath = this.workDir + @"unpacked\maptex";
+            buildingTexturesDirPath = this.workDir + @"unpacked\TextureBLD";
+            buildingConfigFilesPath = this.workDir + @"unpacked\area_build";
+            areaDataDirPath = this.workDir + @"unpacked\area_data";
+            textArchivesPath = this.workDir + @"unpacked\msg";
+            matrixDirPath = this.workDir + @"unpacked\matrix";
+            trainerDataDirPath = this.workDir + @"unpacked\trainerdata";
+            mapDirPath = this.workDir + @"unpacked\maps";
+            encounterDirPath = this.workDir + @"unpacked\wildPokeData";
+            eventsDirPath = this.workDir + @"unpacked\events";
+            scriptDirPath = this.workDir + @"unpacked\scripts";
+            syntheticOverlayPath = this.workDir + @"unpacked\syntheticOverlayNarc";
+            OWSpriteDirPath = this.workDir + @"unpacked\overworlds";
 
+            SetNullEncounterID();           
             SetBuildingModelsDirPath();
-            SetAreaDataDirPath();
             SetOWtablePath();
-            SetMapTexturesDirPath();
-            SetBuildingTexturesDirPath();
-            SetBuildinConfigFilesPath();
-            SetBuildinConfigFilesPath();
-            SetEventsDirPath();
-            SetMatrixDirPath();
-            SetTextArchivesPath();
-            SetMapDirPath();
-            SetScriptDirPath();
-            SetEncounterDirPath();
-            SetTrainerDataDirPath();
 
             SetAttackNamesTextNumber();
             SetPokémonNamesTextNumber();
@@ -78,24 +81,42 @@ namespace DSPRE {
             SetNarcDirs();
         }
 
-        private void SetNullEncounterID() {
-            switch (gameVersion) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
-                    nullEncounterID = 65535;
+        private void LoadGameName() {
+            switch(gameVersion) {
+                case "D":
+                    gameName = "Diamond";
                     break;
-                case "HeartGold":
-                case "SoulSilver":
-                    nullEncounterID = 255;
+                case "P":
+                    gameName = "Pearl";
+                    break;
+                case "Plat":
+                    gameName = "Platinum";
+                    break;
+                    break;
+                case "HG":
+                    gameName = "HeartGold";
+                    break;
+                case "SS":
+                    gameName = "SoulSilver";
                     break;
             }
         }
+
         #endregion
 
         #region Methods (22)
-        public string GetWorkingFolder() {
-            return workDir;
+        private void SetNullEncounterID() {
+            switch (gameVersion) {
+                case "D":
+                case "P":
+                case "Plat":
+                    nullEncounterID = 65535;
+                    break;
+                case "HG":
+                case "SS":
+                    nullEncounterID = 255;
+                    break;
+            }
         }
         public void LoadGameLanguage() {
             switch (romID) {
@@ -104,7 +125,7 @@ namespace DSPRE {
                 case "CPUE":
                 case "IPKE":
                 case "IPGE":
-                    gameLanguage = "USA";
+                    gameLanguage = "ENG";
                     break;
 
                 case "ADAS":
@@ -161,7 +182,7 @@ namespace DSPRE {
 
                 eventsDirPath,
                 trainerDataDirPath,
-                GetOWSpriteDirPath(),
+                OWSpriteDirPath,
 
                 scriptDirPath,
                 encounterDirPath,
@@ -170,8 +191,8 @@ namespace DSPRE {
             };
             
             switch (gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     narcPaths = new string[] {
                         @"data\data\weather_sys.narc",
                         @"data\msgdata\msg.narc",
@@ -194,7 +215,7 @@ namespace DSPRE {
 
                     };
                     break;
-                case "Platinum":
+                case "Plat":
                     narcPaths = new string[] {
                         @"data\data\weather_sys.narc",
                         @"data\msgdata\" + gameVersion.Substring(0,2).ToLower() + '_' + "msg.narc",
@@ -216,8 +237,8 @@ namespace DSPRE {
                         @"data\fielddata\encountdata\" + gameVersion.Substring(0,2).ToLower() + '_' + "enc_data.narc"
                     };
                     break;
-                case "HeartGold":
-                case "SoulSilver":
+                case "HG":
+                case "SS":
                     narcPaths = new string[] {
                         @"data\a\0\2\8",
                         @"data\a\0\2\7",
@@ -277,27 +298,14 @@ namespace DSPRE {
                     */
             }
         }
-        public void SetMapTexturesDirPath() {
-            mapTexturesDirPath = workDir + @"unpacked\maptex";
-        }
-        public void SetBuildingTexturesDirPath() {
-            buildingTexturesDirPath = workDir + @"unpacked\TextureBLD";
-        }
-        public void SetBuildinConfigFilesPath() {
-            buildingConfigFilesPath = workDir + @"unpacked\area_build";
-        }
-        public void SetAreaDataDirPath() {
-            areaDataDirPath = workDir + @"unpacked\area_data";
-        }
-
         public int GetAreaDataCount() {
             return Directory.GetFiles(areaDataDirPath).Length; ;
         }
         public void SetBuildingModelsDirPath() {
             switch (gameVersion) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
+                case "D":
+                case "P":
+                case "Plat":
                     exteriorBuildingModelsPath = workDir + @"unpacked\DPPtBuildings";
                     break;
                 default:
@@ -321,9 +329,9 @@ namespace DSPRE {
 
         public void SetOWtablePath () {
             switch (gameVersion) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
+                case "D":
+                case "P":
+                case "Plat":
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
                     break;
                 default:
@@ -334,17 +342,21 @@ namespace DSPRE {
         public void LoadHeaderTableOffset() {
             Dictionary<string, int> offsets = new Dictionary<string, int>() {
                 ["ADAE"] = 0xEEDBC,
-                ["ADAS"] = 0xEEE08,
-                ["ADAI"] = 0xEED70,
-                ["ADAF"] = 0xEEDFC,
-                ["ADAD"] = 0xEEDCC,
-                ["ADAJ"] = 0xF0C28,
-
                 ["APAE"] = 0xEEDBC,
+
+                ["ADAS"] = 0xEEE08,
                 ["APAS"] = 0xEEE08,
+
+                ["ADAI"] = 0xEED70,
                 ["APAI"] = 0xEED70,
+
+                ["ADAF"] = 0xEEDFC,
                 ["APAF"] = 0xEEDFC,
+
+                ["ADAD"] = 0xEEDCC,
                 ["APAD"] = 0xEEDCC,
+
+                ["ADAJ"] = 0xF0C28,
                 ["APAJ"] = 0xF0C28,
 
                 ["CPUE"] = 0xE601C,
@@ -355,18 +367,22 @@ namespace DSPRE {
                 ["CPUJ"] = 0xE56F0,
 
                 ["IPKE"] = 0xF6BE0,
-                ["IPKS"] = 0xF6BC8,
-                ["IPKI"] = 0xF6B58,
-                ["IPKF"] = 0xF6BC4,
-                ["IPKD"] = 0xF6B94,
-                ["IPKJ"] = 0xF6390,
-
                 ["IPGE"] = 0xF6BE0,
+
+                ["IPKS"] = 0xF6BC8,
                 ["IPGS"] = 0xF6BD0,
+
+                ["IPKI"] = 0xF6B58,
                 ["IPGI"] = 0xF6B58,
+
+                ["IPKF"] = 0xF6BC4,
                 ["IPGF"] = 0xF6BC4,
+
+                ["IPKD"] = 0xF6B94,
                 ["IPGD"] = 0xF6B94,
-                ["IPGJ"] = 0xF6390,
+
+                ["IPKJ"] = 0xF6390,
+                ["IPGJ"] = 0xF6390
             };
             headerTableOffset = offsets[this.romID];
         }
@@ -375,11 +391,11 @@ namespace DSPRE {
         }
         public void SetAttackNamesTextNumber() {
             switch (gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     attackNamesTextNumber = 588;
                     break;
-                case "Platinum":
+                case "Plat":
                     attackNamesTextNumber = 647;
                     break;
                 default:
@@ -392,11 +408,11 @@ namespace DSPRE {
         }
         public void SetItemNamesTextNumber() {
             switch (gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     itemNamesTextNumber = 344;
                     break;
-                case "Platinum":
+                case "Plat":
                     itemNamesTextNumber = 392;
                     break;
                 default:
@@ -410,11 +426,11 @@ namespace DSPRE {
         public int GetMapNamesMessageNumber() {
             int fileNumber;
             switch (gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     fileNumber = 382;
                     break;
-                case "Platinum":
+                case "Plat":
                     fileNumber = 433;
                     break;
                 default:
@@ -429,11 +445,11 @@ namespace DSPRE {
         public int GetItemScriptFileNumber() {
             int fileNumber;
             switch (gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     fileNumber = 370;
                     break;
-                case "Platinum":
+                case "Plat":
                     fileNumber = 404;
                     break;
                 default:
@@ -444,11 +460,11 @@ namespace DSPRE {
         }
         public void SetPokémonNamesTextNumber() {
             switch (gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     pokémonNamesTextNumber = 362;
                     break;
-                case "Platinum":
+                case "Plat":
                     pokémonNamesTextNumber = 412;
                     break;
                 default:
@@ -462,11 +478,11 @@ namespace DSPRE {
         public int GetTrainerNamesMessageNumber() {
             int fileNumber;
             switch (gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     fileNumber = 559;
                     break;
-                case "Platinum":
+                case "Plat":
                     fileNumber = 618;
                     break;
                 default:
@@ -481,11 +497,11 @@ namespace DSPRE {
         public int GetTrainerClassMessageNumber() {
             int fileNumber;
             switch (gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     fileNumber = 560;
                     break;
-                case "Platinum":
+                case "Plat":
                     fileNumber = 619;
                     break;
                 default:
@@ -503,23 +519,11 @@ namespace DSPRE {
         public int GetBuildingTexturesCount() {
             return Directory.GetFiles(buildingTexturesDirPath).Length;
         }
-        public void SetMatrixDirPath() {
-            matrixDirPath = workDir + @"unpacked\matrix";
-        }
         public int GetMatrixCount() {
             return Directory.GetFiles(matrixDirPath).Length;
         }
-        public void SetTextArchivesPath() {
-            textArchivesPath = workDir + @"unpacked\msg";
-        }
         public int GetTextArchivesCount() {
             return Directory.GetFiles(textArchivesPath).Length;
-        }
-        public void SetTrainerDataDirPath() {
-            trainerDataDirPath = workDir + @"unpacked\trainerdata";
-        }
-        public void SetMapDirPath () {
-            mapDirPath = workDir + @"unpacked\maps";
         }
         public int GetMapCount() {
             return Directory.GetFiles(mapDirPath).Length;
@@ -527,48 +531,45 @@ namespace DSPRE {
         public int GetEventCount() {
             return Directory.GetFiles(eventsDirPath).Length;
         }
-        public string GetOWSpriteDirPath() {
-            return workDir + @"unpacked\overworlds";
-        }
-        public void SetEncounterDirPath() {
-            encounterDirPath = workDir + @"unpacked\wildPokeData";
-        }
-        public void SetEventsDirPath() {
-            eventsDirPath = workDir + @"unpacked\events";
+        public int GetScriptCount() {
+            return Directory.GetFiles(scriptDirPath).Length;
         }
         public void LoadGameVersion() {
             Dictionary<string, string> versions = new Dictionary<string, string>() {
-                ["ADAE"] = "Diamond",
-                ["ADAS"] = "Diamond",
-                ["ADAI"] = "Diamond",
-                ["ADAF"] = "Diamond",
-                ["ADAD"] = "Diamond",
-                ["ADAJ"] = "Diamond",
-                ["APAE"] = "Pearl",
-                ["APAS"] = "Pearl",
-                ["APAI"] = "Pearl",
-                ["APAF"] = "Pearl",
-                ["APAD"] = "Pearl",
-                ["APAJ"] = "Pearl",
-                ["CPUE"] = "Platinum",
-                ["CPUS"] = "Platinum",
-                ["CPUI"] = "Platinum",
-                ["CPUF"] = "Platinum",
-                ["CPUD"] = "Platinum",
-                ["CPUJ"] = "Platinum",
-                ["IPKE"] = "HeartGold",
-                ["IPKS"] = "HeartGold",
-                ["IPKI"] = "HeartGold",
-                ["IPKF"] = "HeartGold",
-                ["IPKD"] = "HeartGold",
-                ["IPKJ"] = "HeartGold",
-                ["IPGE"] = "SoulSilver",
-                ["IPGS"] = "SoulSilver",
-                ["IPGI"] = "SoulSilver",
-                ["IPGF"] = "SoulSilver",
-                ["IPGD"] = "SoulSilver",
-                ["IPGJ"] = "SoulSilver",
-                ["LATA"] = "LATA",
+                ["ADAE"] = "D",
+                ["ADAS"] = "D",
+                ["ADAI"] = "D",
+                ["ADAF"] = "D",
+                ["ADAD"] = "D",
+                ["ADAJ"] = "D",
+
+                ["APAE"] = "P",
+                ["APAS"] = "P",
+                ["APAI"] = "P",
+                ["APAF"] = "P",
+                ["APAD"] = "P",
+                ["APAJ"] = "P",
+
+                ["CPUE"] = "Plat",
+                ["CPUS"] = "Plat",
+                ["CPUI"] = "Plat",
+                ["CPUF"] = "Plat",
+                ["CPUD"] = "Plat",
+                ["CPUJ"] = "Plat",
+
+                ["IPKE"] = "HG",
+                ["IPKS"] = "HG",
+                ["IPKI"] = "HG",
+                ["IPKF"] = "HG",
+                ["IPKD"] = "HG",
+                ["IPKJ"] = "HG",
+
+                ["IPGE"] = "SS",
+                ["IPGS"] = "SS",
+                ["IPGI"] = "SS",
+                ["IPGF"] = "SS",
+                ["IPGD"] = "SS",
+                ["IPGJ"] = "SS"
             };
             try {
                 gameVersion = versions[romID];
@@ -577,17 +578,6 @@ namespace DSPRE {
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        public int GetScriptCount() {
-            return Directory.GetFiles(scriptDirPath).Length;
-        }
-        public void SetScriptDirPath() {
-            scriptDirPath = workDir + @"unpacked\scripts";
-        }
-
-        public void SetSyntheticOverlayPath() {
-            syntheticOverlayPath = workDir + @"unpacked\syntheticOverlayNarc";
-        }
         #endregion
-
     }
 }

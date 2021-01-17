@@ -16,10 +16,10 @@ namespace DSPRE
        0xE  //  ushort:     Wild Pokémon file number
        0x10 //  ushort:     Event file number
 
-       * Diamond/Pearl:
+       * D/P:
        0x12 //  ushort:     Index of map name in Text Archive #382 (US version)   
        
-       * Platinum:
+       * Plat:
        0x12 //  byte:       Index of map name in Text Archive #382 (US version)
        0x13 //  byte:       Map name textbox type value
 
@@ -104,7 +104,7 @@ namespace DSPRE
     }
 
     /// <summary>
-    /// Class to store map header data from Pokémon Diamond and Pearl
+    /// Class to store map header data from Pokémon D and P
     /// </summary>
     public class HeaderDP: Header
     {
@@ -182,7 +182,7 @@ namespace DSPRE
                 case 21:
                 case 26:
                 case 27:
-                    return 6; // Diamond snow
+                    return 6; // D snow
                 case 28:
                     return 5; // Snowfall
                 case 24:
@@ -195,7 +195,7 @@ namespace DSPRE
     }
     
     /// <summary>
-    /// Class to store map header data from Pokémon Platinum
+    /// Class to store map header data from Pokémon Plat
     /// </summary>
     public class HeaderPt : Header
     {
@@ -281,7 +281,7 @@ namespace DSPRE
                 case 21:
                 case 34:
                 case 35:
-                    return 6; // Diamond snow
+                    return 6; // D snow
                 case 36:
                     return 5; // Snowfall
                 case 32:
@@ -294,7 +294,7 @@ namespace DSPRE
     }
     
     /// <summary>
-    /// Class to store map header data from Pokémon HeartGold and SoulSilver
+    /// Class to store map header data from Pokémon HG and SS
     /// </summary>
     public class HeaderHGSS : Header
     {
@@ -810,7 +810,7 @@ namespace DSPRE
                     "[03] Heavy rain",
                     "[04] Thunderstorm",
                     "[05] Snowfall, slow",
-                    "[06] Diamond dust",
+                    "[06] D dust",
                     "[07] Blizzard",
                     "[09] Volcanic ash fall, slow",
                     "[10] Sand storm",
@@ -830,7 +830,7 @@ namespace DSPRE
                     "[03] Heavy rain",
                     "[04] Thunderstorm",
                     "[05] Snowfall, slow",
-                    "[06] Diamond dust",
+                    "[06] D dust",
                     "[07] Blizzard",
                     "[09] Volcanic ash fall, slow",
                     "[10] Sand storm",
@@ -849,7 +849,7 @@ namespace DSPRE
         {
                     "[00] Normal",
                     "[02] Heavy rain",
-                    "[10] Diamond snow",
+                    "[10] D snow",
                     "[16] Hail",
                     "[18] Fog",
                     "[22] Cave Dark",

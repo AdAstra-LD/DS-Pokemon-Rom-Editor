@@ -35,7 +35,7 @@ namespace DSPRE
         }
 
         private void applyARM9ExpansionButton_Click(object sender, EventArgs e) {
-            arm9Expansion(rom.GetWorkingFolder() + @"arm9.bin", rom.gameVersion, rom.gameLanguage);
+            arm9Expansion(rom.workDir + @"arm9.bin", rom.gameVersion, rom.gameLanguage);
         }
 
         private void arm9Expansion(string arm9path, string version, string lang) {
@@ -51,10 +51,10 @@ namespace DSPRE
 
             fileID = Int16.Parse(arm9DB.GetString("fileID" + version));
             switch (version) {
-                case "Diamond":
-                case "Pearl":
-                    initString = arm9DB.GetString("initString" + "Diamond");
-                    branchCodeString = arm9DB.GetString("branchCode" + "Diamond" + lang);
+                case "D":
+                case "P":
+                    initString = arm9DB.GetString("initString" + "D");
+                    branchCodeString = arm9DB.GetString("branchCode" + "D" + lang);
                     branchOffset = 0x02000C80;
                     switch (lang) {
                         case "USA":
@@ -68,7 +68,7 @@ namespace DSPRE
                             return;
                     }
                     break;
-                case "Platinum":
+                case "Plat":
                     initString = arm9DB.GetString("initString" + version + lang);
                     branchCodeString = arm9DB.GetString("branchCode" + version + lang);
                     branchOffset = 0x02000CB4;
@@ -84,10 +84,10 @@ namespace DSPRE
                             return;
                     }
                     break;
-                case "HeartGold":
-                case "SoulSilver":
-                    initString = arm9DB.GetString("initString" + "HeartGold");
-                    branchCodeString = arm9DB.GetString("branchCode" + "HeartGold" + lang);
+                case "HG":
+                case "SS":
+                    initString = arm9DB.GetString("initString" + "HG");
+                    branchCodeString = arm9DB.GetString("branchCode" + "HG" + lang);
                     branchOffset = 0x02000CD0;
                     switch (lang) {
                         case "USA":
@@ -134,15 +134,15 @@ namespace DSPRE
             int[] fileArchives = null;
            
             switch (version) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     fileArchives = new int[2] { 443, 444 };
                     break;
-                case "Platinum":
+                case "Plat":
                     fileArchives = new int[7] { 493, 494,  793, 794, 795, 796, 797};
                     break;
-                case "HeartGold":
-                case "SoulSilver":
+                case "HG":
+                case "SS":
                     fileArchives = new int[7] { 237, 238,  817, 818, 819, 820, 821};
                     break;
                 default:

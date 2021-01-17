@@ -1208,7 +1208,6 @@ namespace LibNDSFormats.NSBMD
                         break;
                     default:
                         throw new Exception("Unknown ID");
-                        break;
                 }
             }
 
@@ -1262,7 +1261,6 @@ namespace LibNDSFormats.NSBMD
                         return A;
                     default:
                         throw new Exception();
-                        break;
                 }
             }
             set
@@ -1283,7 +1281,6 @@ namespace LibNDSFormats.NSBMD
                         break;
                     default:
                         throw new Exception();
-                        break;
                 }
             }
         }

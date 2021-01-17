@@ -1059,7 +1059,7 @@ namespace DSPRE.Properties {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a pt.
+        ///   Cerca una stringa localizzata simile a Plat.
         /// </summary>
         internal static string Platinum {
             get {

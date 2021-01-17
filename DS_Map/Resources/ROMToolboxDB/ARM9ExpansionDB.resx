@@ -123,45 +123,45 @@
   <data name="branchCodeDiamondUSA" xml:space="preserve">
     <value>05 F1 34 FC</value>
   </data>
-  <data name="branchCodeHeartGoldESP" xml:space="preserve">
+  <data name="branchCodeHGESP" xml:space="preserve">
     <value>0F F1 40 FB</value>
   </data>
-  <data name="branchCodeHeartGoldUSA" xml:space="preserve">
+  <data name="branchCodeHGUSA" xml:space="preserve">
     <value>0F F1 30 FB</value>
   </data>
-  <data name="branchCodePlatinumESP" xml:space="preserve">
+  <data name="branchCodePtESP" xml:space="preserve">
     <value>00 F1 B2 F9</value>
   </data>
-  <data name="branchCodePlatinumUSA" xml:space="preserve">
+  <data name="branchCodePtUSA" xml:space="preserve">
     <value>00 F1 B4 F8</value>
   </data>
-  <data name="fileIDDiamond" xml:space="preserve">
+  <data name="fileIDD" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="fileIDHeartGold" xml:space="preserve">
+  <data name="fileIDHG" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="fileIDPearl" xml:space="preserve">
+  <data name="fileIDP" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="fileIDPlatinum" xml:space="preserve">
+  <data name="fileIDPt" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="fileIDSoulSilver" xml:space="preserve">
+  <data name="fileIDSS" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="initStringDiamond" xml:space="preserve">
     <value>FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD F1 64 00 02 00 80 3C 02</value>
-    <comment>Valid for USA and ESP, also for Pearl</comment>
+    <comment>Valid for USA and ESP, also for P</comment>
   </data>
-  <data name="initStringHeartGold" xml:space="preserve">
+  <data name="initStringHG" xml:space="preserve">
     <value>FC B5 05 48 C0 46 1C 21 00 22 02 4D A8 47 00 20 03 21 FC BD 09 75 00 02 00 80 3C 02</value>
-    <comment>Valid for USA and ESP, also for SoulSilver</comment>
+    <comment>Valid for USA and ESP, also for SS</comment>
   </data>
-  <data name="initStringPlatinumESP" xml:space="preserve">
+  <data name="initStringPtESP" xml:space="preserve">
     <value>FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD B9 6A 00 02 00 80 3C 02</value>
   </data>
-  <data name="initStringPlatinumUSA" xml:space="preserve">
+  <data name="initStringPtUSA" xml:space="preserve">
     <value>FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD A5 6A 00 02 00 80 3C 02</value>
   </data>
 </root>

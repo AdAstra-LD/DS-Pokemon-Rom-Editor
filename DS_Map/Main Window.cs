@@ -396,7 +396,7 @@ namespace DSPRE {
                 }
                 toolStripProgressBar.Value++;
             }
-            if (romInfo.gameVersion == "HeartGold" || romInfo.gameVersion == "SoulSilver") {
+            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
                 var tuple = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 1]); // Last = interior buildings dir
                 DirectoryInfo di = new DirectoryInfo(tuple.Item2);
                 if (!di.Exists || di.GetFiles().Length == 0) {
@@ -409,9 +409,9 @@ namespace DSPRE {
             disableHandlers = true;
             if (File.Exists(romInfo.OWtablePath)) {
                 switch (romInfo.gameVersion) {
-                    case "Diamond":
-                    case "Pearl":
-                    case "Platinum":
+                    case "D":
+                    case "P":
+                    case "Plat":
                         break;
                     default:
                         int ret = decompressOverlay(1, true); // HGSS Overlay 1 must be uncompressed in order to read the overworld table
@@ -425,7 +425,7 @@ namespace DSPRE {
 
             /* Add event file numbers to box */
             int eventCount = Directory.GetFiles(romInfo.eventsDirPath).Length;
-            int owSpriteCount = Directory.GetFiles(romInfo.GetOWSpriteDirPath()).Length;
+            int owSpriteCount = Directory.GetFiles(romInfo.OWSpriteDirPath).Length;
             string[] trainerNames = GetTrainerNames();
 
             statusLabel.Text = "Loading Events... Please wait";
@@ -531,10 +531,10 @@ namespace DSPRE {
 
             /* Create dictionary for 3D overworlds */
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     break;
-                case "Platinum":
+                case "Plat":
                     ow3DSpriteDict = new Dictionary<uint, string>() {
                         [91] = "brown_sign",
                         [92] = "red_sign",
@@ -560,9 +560,9 @@ namespace DSPRE {
         }
         private void SetupFlagNames() {
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
+                case "D":
+                case "P":
+                case "Plat":
                     flag1CheckBox.Text = "Fly";
                     flag2CheckBox.Text = "Escape Rope";
                     flag3CheckBox.Text = "Run";
@@ -626,8 +626,8 @@ namespace DSPRE {
             mapNameComboBox.Items.AddRange(LoadMessageArchive(romInfo.GetMapNamesMessageNumber()).messages.ToArray());
             HeaderDatabase headerInfo = new HeaderDatabase();
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     areaIconComboBox.Enabled = false;
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("dpareaicon");
                     cameraComboBox.Items.AddRange(headerInfo.DPPtCameraValues);
@@ -636,7 +636,7 @@ namespace DSPRE {
                     showNameComboBox.Items.AddRange(headerInfo.DPShowNameValues);
                     weatherComboBox.Items.AddRange(headerInfo.DPWeatherValues);
                     break;
-                case "Platinum":
+                case "Plat":
                     areaIconComboBox.Items.AddRange(headerInfo.PtAreaIconValues);
                     cameraComboBox.Items.AddRange(headerInfo.DPPtCameraValues);
                     musicDayComboBox.Items.AddRange(headerInfo.PtMusicValues);
@@ -675,7 +675,7 @@ namespace DSPRE {
                 }
                 toolStripProgressBar.Value++;
             }
-            if (romInfo.gameVersion == "HeartGold" || romInfo.gameVersion == "SoulSilver") {
+            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
                 var tuple = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 1]);
                 DirectoryInfo di = new DirectoryInfo(tuple.Item2);
                 if (!di.Exists || di.GetFiles().Length == 0) {
@@ -691,9 +691,9 @@ namespace DSPRE {
             collisionPainterPictureBox.Image = new Bitmap(100, 100);
             typePainterPictureBox.Image = new Bitmap(100, 100);
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
+                case "D":
+                case "P":
+                case "Plat":
                     break;
                 default:
                     interiorbldRadioButton.Enabled = true;
@@ -705,9 +705,9 @@ namespace DSPRE {
             for (int i = 0; i < romInfo.GetMapCount(); i++) {
                 using (BinaryReader reader = new BinaryReader(File.OpenRead(romInfo.mapDirPath + "\\" + i.ToString("D4")))) {
                     switch (romInfo.gameVersion) {
-                        case "Diamond":
-                        case "Pearl":
-                        case "Platinum":
+                        case "D":
+                        case "P":
+                        case "Plat":
                             reader.BaseStream.Position = 0x10 + reader.ReadUInt32() + reader.ReadUInt32() + 0x34;
                             break;
                         default:
@@ -851,14 +851,14 @@ namespace DSPRE {
             //Default selections
             selectMapComboBox.SelectedIndex = 0;
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
+                case "D":
+                case "P":
+                case "Plat":
                     mapTextureComboBox.SelectedIndex = 7;
                     buildTextureComboBox.SelectedIndex = 1;
                     break;
-                case "HeartGold":
-                case "SoulSilver":
+                case "HG":
+                case "SS":
                     mapTextureComboBox.SelectedIndex = 3;
                     buildTextureComboBox.SelectedIndex = 1;
                     break;
@@ -891,9 +891,9 @@ namespace DSPRE {
 
             /* Initialize dictionary of colors corresponding to border maps in the matrix editor */
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
+                case "D":
+                case "P":
+                case "Plat":
                     mapColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>>() {
                         [new List<uint> { 173, 176, 177, 179 }] = Tuple.Create(Color.ForestGreen, Color.White),
                         [new List<uint> { 174 }] = Tuple.Create(Color.SteelBlue, Color.White),
@@ -902,8 +902,8 @@ namespace DSPRE {
                         [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
                     };
                     break;
-                case "HeartGold":
-                case "SoulSilver":
+                case "HG":
+                case "SS":
                     mapColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>>() {
                         [new List<uint> { 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
                         [new List<uint> { 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
@@ -995,9 +995,9 @@ namespace DSPRE {
             /* Enable gameVersion-specific controls */
 
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
+                case "D":
+                case "P":
+                case "Plat":
                     break;
                 default:
                     areaDataDynamicTexturesComboBox.Enabled = true;
@@ -1096,7 +1096,7 @@ namespace DSPRE {
                 }
                 toolStripProgressBar.Value++;
             }
-            if (romInfo.gameVersion == "HeartGold" || romInfo.gameVersion == "SoulSilver") {
+            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
                 var tuple = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 1]); // Last = interior buildings dir
                 DirectoryInfo di = new DirectoryInfo(tuple.Item2);
                 if (!di.Exists || di.GetFiles().Length == 0) {
@@ -1138,7 +1138,7 @@ namespace DSPRE {
                 return;
             }
 
-            versionLabel.Text = "ROM: Pokémon " + romInfo.gameVersion;
+            versionLabel.Text = "Pokémon " + romInfo.gameName + " [" + romInfo.romID + "]";
             languageLabel.Text = "Language: " + romInfo.gameLanguage;
 
 
@@ -1185,9 +1185,9 @@ namespace DSPRE {
                 Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);*/
 
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
+                case "D":
+                case "P":
+                case "Plat":
                     break;
                 default:
                     if (!DecompressArm9()) {
@@ -1236,9 +1236,9 @@ namespace DSPRE {
 
             if (eventEditorIsReady) {
                 switch (romInfo.gameVersion) {
-                    case "Diamond":
-                    case "Pearl":
-                    case "Platinum":
+                    case "D":
+                    case "P":
+                    case "Plat":
                         break;
                     default:
                         restoreOverlayFromCompressedBackup(1); // Must restore compressed overlay 1 in HGSS, which contains overworld table
@@ -1252,7 +1252,7 @@ namespace DSPRE {
             RepackRom(saveRom.FileName);
 
             if (eventEditorIsReady)
-                if (romInfo.gameVersion != "Diamond" && romInfo.gameVersion != "Pearl" && romInfo.gameVersion != "Platinum")
+                if (romInfo.gameVersion != "D" && romInfo.gameVersion != "P" && romInfo.gameVersion != "Plat")
                     decompressOverlay(1, true);
 
             statusLabel.Text = "Ready";
@@ -1347,7 +1347,7 @@ namespace DSPRE {
             Update();
 
             Tuple<string, string> t;
-            if (romInfo.gameVersion == "HeartGold" || romInfo.gameVersion == "SoulSilver") {
+            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
                 t = Tuple.Create(narcPaths[narcPaths.Length - 2], extractedNarcDirs[extractedNarcDirs.Length - 2]);
             } else {
                 t = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 2]);
@@ -1366,9 +1366,9 @@ namespace DSPRE {
             else
                 encToOpen = 0;
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
+                case "D":
+                case "P":
+                case "Plat":
                     using (WildEditorDPPt editor = new WildEditorDPPt(romInfo.encounterDirPath, GetPokémonNames(), encToOpen))
                         editor.ShowDialog();
                     break;
@@ -1429,7 +1429,7 @@ namespace DSPRE {
             [3] = "ptheavyrain",
             [4] = "ptthunderstorm",
             [5] = "ptsnowslow",
-            [6] = "ptdiamondsnow",
+            [6] = "ptDsnow",
             [7] = "ptblizzard",
             [8] = "ptsandfall",
             [9] = "ptsandstorm",
@@ -1464,10 +1464,10 @@ namespace DSPRE {
             /* Encapsulate header data into the class appropriate for the game gameVersion */
 
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     return new HeaderDP(new MemoryStream(headerData));
-                case "Platinum":
+                case "Plat":
                     return new HeaderPt(new MemoryStream(headerData));
                 default:
                     return new HeaderHGSS(new MemoryStream(headerData));
@@ -1485,10 +1485,10 @@ namespace DSPRE {
 
             string imageName;
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     break;
-                case "Platinum":
+                case "Plat":
                     ((HeaderPt)currentHeader).areaIcon = (byte)areaIconComboBox.SelectedIndex;
                     imageName = "areaicon0" + areaIconComboBox.SelectedIndex.ToString();
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
@@ -1506,12 +1506,12 @@ namespace DSPRE {
             string imageName;
             try {
                 switch (romInfo.gameVersion) {
-                    case "Diamond":
-                    case "Pearl":
+                    case "D":
+                    case "P":
                         currentHeader.camera = (byte)cameraComboBox.SelectedIndex;
                         imageName = "dpcamera" + cameraComboBox.SelectedIndex.ToString();
                         break;
-                    case "Platinum":
+                    case "Plat":
                         currentHeader.camera = (byte)cameraComboBox.SelectedIndex;
                         imageName = "ptcamera" + cameraComboBox.SelectedIndex.ToString();
                         break;
@@ -1598,14 +1598,14 @@ namespace DSPRE {
 
             /* Setup controls for fields with gameVersion-specific differences */
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     mapNameComboBox.SelectedIndex = ((HeaderDP)currentHeader).mapName;
                     musicDayComboBox.SelectedIndex = musicDayComboBox.FindString("[" + ((HeaderDP)currentHeader).musicDay.ToString());
                     musicNightComboBox.SelectedIndex = musicNightComboBox.FindString("[" + ((HeaderDP)currentHeader).musicNight.ToString());
                     showNameComboBox.SelectedIndex = showNameComboBox.FindString("[" + $"{currentHeader.showName:D3}");
                     break;
-                case "Platinum":
+                case "Plat":
                     areaIconComboBox.SelectedIndex = ((HeaderPt)currentHeader).areaIcon;
                     mapNameComboBox.SelectedIndex = ((HeaderPt)currentHeader).mapName;
                     musicDayComboBox.SelectedIndex = musicDayComboBox.FindString("[" + ((HeaderPt)currentHeader).musicDay.ToString());
@@ -1648,11 +1648,11 @@ namespace DSPRE {
                 return;
 
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     ((HeaderDP)currentHeader).mapName = (ushort)mapNameComboBox.SelectedIndex;
                     break;
-                case "Platinum":
+                case "Plat":
                     ((HeaderPt)currentHeader).mapName = (byte)mapNameComboBox.SelectedIndex;
                     break;
                 default:
@@ -1667,11 +1667,11 @@ namespace DSPRE {
         private void musicDayComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) return;
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     ((HeaderDP)currentHeader).musicDay = UInt16.Parse(musicDayComboBox.SelectedItem.ToString().Substring(1, 4));
                     break;
-                case "Platinum":
+                case "Plat":
                     ((HeaderPt)currentHeader).musicDay = UInt16.Parse(musicDayComboBox.SelectedItem.ToString().Substring(1, 4));
                     break;
                 default:
@@ -1683,11 +1683,11 @@ namespace DSPRE {
             if (disableHandlers) return;
 
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     ((HeaderDP)currentHeader).musicNight = UInt16.Parse(musicNightComboBox.SelectedItem.ToString().Substring(1, 4));
                     break;
-                case "Platinum":
+                case "Plat":
                     ((HeaderPt)currentHeader).musicNight = UInt16.Parse(musicNightComboBox.SelectedItem.ToString().Substring(1, 4));
                     break;
                 default:
@@ -1851,8 +1851,8 @@ namespace DSPRE {
 
 
                 switch (romInfo.gameVersion) {
-                    case "Diamond":
-                    case "Pearl":
+                    case "D":
+                    case "P":
                         for (int i = 0; i < internalNames.Count; i++) {
                             String locationName = mapNameComboBox.Items[((HeaderDP)LoadHeader(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
@@ -1861,7 +1861,7 @@ namespace DSPRE {
                             }
                         }
                         break;
-                    case "Platinum":
+                    case "Plat":
                         for (int i = 0; i < internalNames.Count; i++) {
                             String locationName = mapNameComboBox.Items[((HeaderPt)LoadHeader(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
@@ -1870,8 +1870,8 @@ namespace DSPRE {
                             }
                         }
                         break;
-                    case "HeartGold":
-                    case "SoulSilver":
+                    case "HG":
+                    case "SS":
                         for (int i = 0; i < internalNames.Count; i++) {
                             String locationName = mapNameComboBox.Items[((HeaderHGSS)LoadHeader(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
@@ -1914,11 +1914,11 @@ namespace DSPRE {
 
             string imageName;
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
+                case "D":
+                case "P":
                     imageName = dpweatherImageDict[weatherComboBox.SelectedIndex];
                     break;
-                case "Platinum":
+                case "Plat":
                     imageName = ptweatherImageDict[weatherComboBox.SelectedIndex];
                     break;
                 default:
@@ -3359,7 +3359,7 @@ namespace DSPRE {
         #region BDHC Editor
         private void bdhcImportButton_Click(object sender, EventArgs e) {
             OpenFileDialog it = new OpenFileDialog();
-            if (romInfo.gameVersion == "Diamond" || romInfo.gameVersion == "Pearl")
+            if (romInfo.gameVersion == "D" || romInfo.gameVersion == "P")
                 it.Filter = "Terrain File (*.bdhc)|*.bdhc";
             else
                 it.Filter = "Terrain File (*.bdhc, *.bdhcam)|*.bdhc;*.bdhcam";
@@ -3527,7 +3527,7 @@ namespace DSPRE {
                 eventMapFile.mapModel = LoadModelTextures(eventMapFile.mapModel, romInfo.mapTexturesDirPath, areaData.mapTileset);
 
                 bool isInteriorMap = new bool();
-                if ((romInfo.gameVersion == "HeartGold" || romInfo.gameVersion == "SoulSilver")
+                if ((romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS")
                 && areaData.areaType == 0x0)
                     isInteriorMap = true;
 
@@ -3590,7 +3590,7 @@ namespace DSPRE {
                     return (Bitmap)Properties.Resources.ResourceManager.GetObject("overworld"); // If id is -1, load bounding box
                 else {
                     try {
-                        FileStream stream = new FileStream(romInfo.GetOWSpriteDirPath() + "\\" + archiveID.ToString("D4"), FileMode.Open);
+                        FileStream stream = new FileStream(romInfo.OWSpriteDirPath + "\\" + archiveID.ToString("D4"), FileMode.Open);
                         NSMBe4.NSBMD.NSBTX_File nsbtx = new NSMBe4.NSBMD.NSBTX_File(stream);
 
 
@@ -3662,12 +3662,12 @@ namespace DSPRE {
             using (BinaryReader idReader = new BinaryReader(new FileStream(romInfo.OWtablePath, FileMode.Open))) {
                 int archiveID;
                 switch (romInfo.gameVersion) {
-                    case "Diamond":
-                    case "Pearl":
+                    case "D":
+                    case "P":
                         idReader.BaseStream.Position = 0x22BCC;
                         archiveID = matchOverworldInTableDPPt(idReader, ID);
                         break;
-                    case "Platinum":
+                    case "Plat":
                         switch (romInfo.gameLanguage) { // Go to the beginning of the overworld table
                             case "ITA":
                                 idReader.BaseStream.Position = 0x2BC44;
@@ -4602,19 +4602,19 @@ namespace DSPRE {
         }
 
         public void AddLineNumbers(RichTextBox mainbox, RichTextBox linebox) {
-            // create & set Point pt to (0,0)    
-            Point pt = new Point(0, 0);
+            // create & set Point p to (0,0)    
+            Point p = new Point(0, 0);
 
             // get First Index & First Line from scriptTextBox    
-            int First_Index = mainbox.GetCharIndexFromPosition(pt);
+            int First_Index = mainbox.GetCharIndexFromPosition(p);
             int First_Line = mainbox.GetLineFromCharIndex(First_Index);
 
-            // set X & Y coordinates of Point pt to ClientRectangle Width & Height respectively    
-            pt.X = ClientRectangle.Width;
-            pt.Y = ClientRectangle.Height;
+            // set X & Y coordinates of Point p to ClientRectangle Width & Height respectively    
+            p.X = ClientRectangle.Width;
+            p.Y = ClientRectangle.Height;
 
             // get Last Index & Last Line from scriptTextBox    
-            int Last_Index = mainbox.GetCharIndexFromPosition(pt);
+            int Last_Index = mainbox.GetCharIndexFromPosition(p);
             int Last_Line = mainbox.GetLineFromCharIndex(Last_Index);
 
             // set Center alignment to LineNumberTextBox    
@@ -4631,8 +4631,8 @@ namespace DSPRE {
         }
 
         private void scriptTextBox_SelectionChanged(object sender, EventArgs e) {
-            Point pt = scriptTextBox.GetPositionFromCharIndex(scriptTextBox.SelectionStart);
-            if (pt.X == 1) {
+            Point p = scriptTextBox.GetPositionFromCharIndex(scriptTextBox.SelectionStart);
+            if (p.X == 1) {
                 AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             }
         }
@@ -4672,8 +4672,8 @@ namespace DSPRE {
         }
 
         private void functionTextBox_SelectionChanged(object sender, EventArgs e) {
-            Point pt = functionTextBox.GetPositionFromCharIndex(functionTextBox.SelectionStart);
-            if (pt.X == 1) {
+            Point p = functionTextBox.GetPositionFromCharIndex(functionTextBox.SelectionStart);
+            if (p.X == 1) {
                 AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
             }
         }
@@ -4713,8 +4713,8 @@ namespace DSPRE {
         }
 
         private void movementTextBox_SelectionChanged(object sender, EventArgs e) {
-            Point pt = movementTextBox.GetPositionFromCharIndex(movementTextBox.SelectionStart);
-            if (pt.X == 1) {
+            Point p = movementTextBox.GetPositionFromCharIndex(movementTextBox.SelectionStart);
+            if (p.X == 1) {
                 AddLineNumbers(movementTextBox, LineNumberTextBoxMov);
             }
         }
@@ -5599,9 +5599,9 @@ namespace DSPRE {
             areaDataMapTilesetUpDown.Value = currentAreaData.mapTileset;
             areaDataLightTypeComboBox.SelectedIndex = currentAreaData.lightType;
             switch (romInfo.gameVersion) {
-                case "Diamond":
-                case "Pearl":
-                case "Platinum":
+                case "D":
+                case "P":
+                case "Plat":
                     break;
                 default:
                     if (currentAreaData.dynamicTextureType == 0xFFFF) {

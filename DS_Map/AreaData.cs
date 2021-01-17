@@ -23,7 +23,7 @@ namespace DSPRE
                 buildingsTileset = reader.ReadUInt16();
                 mapTileset = reader.ReadUInt16();
 
-                if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum") {
+                if (gameVersion == "D" || gameVersion == "P" || gameVersion == "Plat") {
                     unknown1 = reader.ReadUInt16();
                     lightType = reader.ReadByte();
                 } else {
@@ -44,7 +44,7 @@ namespace DSPRE
                 writer.Write(buildingsTileset);
                 writer.Write(mapTileset);
 
-                if (gameVersion == "Diamond" || gameVersion == "Pearl" || gameVersion == "Platinum") {
+                if (gameVersion == "D" || gameVersion == "P" || gameVersion == "Plat") {
                     writer.Write(unknown1);
                     writer.Write(lightType);
                 } else {
