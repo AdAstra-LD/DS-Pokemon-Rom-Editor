@@ -445,5 +445,43 @@ namespace DSPRE {
                 "[71]  Looking Left"
             };
         }
+        public static class CameraAngles {
+            public static string[] DPPtCameraValues = new string[] {
+                "[00] 3D Normal",
+                "[01] 3D Top View (Higher than [12])",
+                "[02] 3D Frontal Low (Wider than [15])",
+                "[03] 3D Frontal",
+                "[04] 2D Ortho",
+                "[05] 3D Normal - Wide FOV",
+                "[06] 3D Bird View",
+                "[07] 3D Normal",
+                "[08] 3D Bird View Far",
+                "[09] 3D Frontal - Wide FOV",
+                "[10] 3D Top View - Narrow",
+                "[11] Normal 3D",
+                "[12] 3D Top View",
+                "[13] Frontal 3D",
+                "[14] 3D Top View - Wide FOV",
+                "[15] 3D Frontal Low"
+            };
+            public static string[] HGSSCameraValues = new string[] {
+                "[00] 3D Top",
+                "[01] 3D Front High",
+                "[02] 3D Lower",
+                "[03] 3D Frontal",
+                "[04] 2D Top View",
+                "[05] Normal 3D",
+                "[06] 3D Normal",
+                "[07] High 3D",
+                "[08] 3D Top View",
+                "[09] 3D Top View",
+                "[10] 3D High Wide",
+                "[11] 3D Frontal Wide",
+                "[12] 3D Lower Close",
+                "[13] 3D Full Frontal",
+                "[14] 3D Top View",
+                "[15] 2D Higher"
+            };
+        }
     }
 }

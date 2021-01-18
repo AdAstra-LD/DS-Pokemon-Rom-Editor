@@ -455,7 +455,7 @@ namespace DSPRE {
                     areaIconComboBox.Enabled = false;
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("dpareaicon");
                     areaSettingsLabel.Text = "Show nametag:";
-                    cameraComboBox.Items.AddRange(headerInfo.DPPtCameraValues);
+                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraValues);
                     musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicValues.Values.ToArray());
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicValues.Values.ToArray());
                     areaSettingsComboBox.Items.AddRange(headerInfo.DPShowNameValues);
@@ -464,7 +464,7 @@ namespace DSPRE {
                 case "Plat":
                     areaIconComboBox.Items.AddRange(headerInfo.PtAreaIconValues);
                     areaSettingsLabel.Text = "Show nametag:";
-                    cameraComboBox.Items.AddRange(headerInfo.DPPtCameraValues);
+                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraValues);
                     musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicValues.Values.ToArray());
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicValues.Values.ToArray());
                     areaSettingsComboBox.Items.AddRange(headerInfo.PtShowNameValues);
@@ -472,7 +472,7 @@ namespace DSPRE {
                     break;
                 default:
                     areaIconComboBox.Items.AddRange(headerInfo.HGSSAreaIconValues);
-                    cameraComboBox.Items.AddRange(headerInfo.HGSSCameraValues);
+                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.HGSSCameraValues);
                     areaSettingsComboBox.Items.AddRange(headerInfo.HGSSAreaProperties);
                     areaSettingsLabel.Text = "Area Settings:";
                     musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicValues.Values.ToArray());
