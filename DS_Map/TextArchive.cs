@@ -73,61 +73,46 @@ namespace DSPRE
                             pokemonText.Append("");
                             break;
                         default:
-                            if (specialCharON == true)
-                            {
+                            if (specialCharON) {
                                 pokemonText.Append(car.ToString("X4"));
                                 specialCharON = false;
-                            }
-                            else if (compressed)
-                            {
+                            } else if (compressed) {
                                 #region Compressed String
                                 int shift = 0;
                                 int trans = 0;
                                 string uncomp = "";
-                                while (true)
-                                {
+                                while (true) {
                                     int tmp = car >> shift;
                                     int tmp1 = tmp;
-                                    if (shift >= 0xF)
-                                    {
+                                    if (shift >= 0xF) {
                                         shift -= 0xF;
-                                        if (shift > 0)
-                                        {
+                                        if (shift > 0) {
                                             tmp1 = (trans | ((car << (9 - shift)) & 0x1FF));
-                                            if ((tmp1 & 0xFF) == 0xFF)
-                                            {
+                                            if ((tmp1 & 0xFF) == 0xFF) {
                                                 break;
                                             }
-                                            if (tmp1 != 0x0 && tmp1 != 0x1)
-                                            {
+                                            if (tmp1 != 0x0 && tmp1 != 0x1) {
                                                 string character = GetChar.GetString(tmp1.ToString("X4"));
                                                 pokemonText.Append(character);
-                                                if (character == null)
-                                                {
+                                                if (character == null) {
                                                     pokemonText.Append(@"\x" + tmp1.ToString("X4"));
                                                 }
                                             }
                                         }
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         tmp1 = ((car >> shift) & 0x1FF);
-                                        if ((tmp1 & 0xFF) == 0xFF)
-                                        {
+                                        if ((tmp1 & 0xFF) == 0xFF) {
                                             break;
                                         }
-                                        if (tmp1 != 0x0 && tmp1 != 0x1)
-                                        {
+                                        if (tmp1 != 0x0 && tmp1 != 0x1) {
                                             string character = GetChar.GetString(tmp1.ToString("X4"));
                                             pokemonText.Append(character);
-                                            if (character == null)
-                                            {
+                                            if (character == null) {
                                                 pokemonText.Append(@"\x" + tmp1.ToString("X4"));
                                             }
                                         }
                                         shift += 9;
-                                        if (shift < 0xF)
-                                        {
+                                        if (shift < 0xF) {
                                             trans = ((car >> shift) & 0x1FF);
                                             shift += 9;
                                         }
@@ -139,13 +124,10 @@ namespace DSPRE
                                 }
                                 #endregion
                                 pokemonText.Append(uncomp);
-                            }
-                            else
-                            {
+                            } else {
                                 string character = GetChar.GetString(car.ToString("X4"));
                                 pokemonText.Append(character);
-                                if (character == null)
-                                {
+                                if (character == null) {
                                     pokemonText.Append(@"\x" + car.ToString("X4"));
                                 }
                             }
@@ -162,62 +144,41 @@ namespace DSPRE
         #endregion
 
         #region Methods (2)
-        public int[] EncodeString(string currentMessage, int stringIndex, int stringSize) // Converts string to hex characters
-        {
+        public int[] EncodeString(string currentMessage, int stringIndex, int stringSize) { // Converts string to hex characters 
             ResourceManager GetByte = new ResourceManager("DSPRE.Resources.WriteText", Assembly.GetExecutingAssembly());
 
             int[] pokemonMessage = new int[stringSize - 1];
             var charArray = currentMessage.ToCharArray();
             int count = 0;
-            for (int i = 0; i < currentMessage.Length; i++)
-            {
-                if (charArray[i] == '\\')
-                {
-                    if (charArray[i + 1] == 'r')
-                    {
+            for (int i = 0; i < currentMessage.Length; i++) {
+                if (charArray[i] == '\\') {
+                    if (charArray[i + 1] == 'r') {
                         pokemonMessage[count] = 0x25BC;
                         i++;
-                    }
-                    else
-                    {
-                        if (charArray[i + 1] == 'n')
-                        {
+                    } else {
+                        if (charArray[i + 1] == 'n') {
                             pokemonMessage[count] = 0xE000;
                             i++;
-                        }
-                        else
-                        {
-                            if (charArray[i + 1] == 'f')
-                            {
+                        } else {
+                            if (charArray[i + 1] == 'f') {
                                 pokemonMessage[count] = 0x25BD;
                                 i++;
-                            }
-                            else
-                            {
-                                if (charArray[i + 1] == 'v')
-                                {
+                            } else {
+                                if (charArray[i + 1] == 'v') {
                                     pokemonMessage[count] = 0xFFFE;
                                     count++;
                                     string characterID = ((char)charArray[i + 2]).ToString() + ((char)charArray[i + 3]).ToString() + ((char)charArray[i + 4]).ToString() + ((char)charArray[i + 5]).ToString();
                                     pokemonMessage[count] = (int)Convert.ToUInt32(characterID, 16);
                                     i += 5;
-                                }
-                                else
-                                {
-                                    if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '0')
-                                    {
+                                } else {
+                                    if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '0') {
                                         pokemonMessage[count] = 0x0000;
                                         i += 5;
-                                    }
-                                    else
-                                    {
-                                        if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '1')
-                                        {
+                                    } else {
+                                        if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '1') {
                                             pokemonMessage[count] = 0x0001;
                                             i += 5;
-                                        }
-                                        else
-                                        {
+                                        } else {
                                             string characterID = ((char)charArray[i + 2]).ToString() + ((char)charArray[i + 3]).ToString() + ((char)charArray[i + 4]).ToString() + ((char)charArray[i + 5]).ToString();
                                             pokemonMessage[count] = (int)Convert.ToUInt32(characterID, 16);
                                             i += 5;
@@ -227,9 +188,7 @@ namespace DSPRE
                             }
                         }
                     }
-                }
-                else
-                {
+                } else {
                     if (charArray[i] == '[')
                     {
                         if (charArray[i + 1] == 'P')
@@ -242,9 +201,7 @@ namespace DSPRE
                             pokemonMessage[count] = 0x01E1;
                             i += 3;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         pokemonMessage[count] = (int)Convert.ToUInt32(GetByte.GetString(((int)charArray[i]).ToString()), 16);
                     }
                 }

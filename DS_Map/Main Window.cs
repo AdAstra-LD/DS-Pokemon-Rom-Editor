@@ -154,7 +154,7 @@ namespace DSPRE {
         }
 
         private void PaintGameIcon(object sender, PaintEventArgs e) {
-            if (iconON == true) {
+            if (iconON) {
                 BinaryReader readIcon;
                 try {
                     readIcon = new BinaryReader(File.OpenRead(romInfo.workDir + @"banner.bin"));
@@ -1425,16 +1425,6 @@ namespace DSPRE {
                 MessageBox.Show("The current header uses an unrecognized camera.\n", "Unknown camera settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void areaSettingsComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
-                return;
-
-            try {
-                currentHeader.camera = Byte.Parse(areaSettingsComboBox.SelectedItem.ToString().Substring(1, 2));
-            } catch (NullReferenceException) {
-                MessageBox.Show("The current header uses unrecognized area settings.\n", "Unknown area settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
         private void eventFileUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) 
                 return;
@@ -1448,7 +1438,7 @@ namespace DSPRE {
             byte flagVal = 0;
             foreach(Control c in flagsGroupBox.Controls) {
                 try {
-                    if (((CheckBox)c).Checked == true)
+                    if (((CheckBox)c).Checked)
                         flagVal += (byte)Math.Pow(2, i);
                     i--;
                 } catch (InvalidCastException) { }
