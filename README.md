@@ -2,15 +2,17 @@
 
 Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features and bugfixes.
 
-![Screenshot](aDSPRE_106d.png)
-![Screenshot](bDSPRE_106d.png)
+![Screenshot](aDSPRE_107.png)
+![Screenshot](bDSPRE_107.png)
 
 ## Major Changes to Mixone's fork
 - Significantly shorter load and save times.
 - Added mouse support and warps navigation feature to the Event Editor.
+- Added copy buttons to header editor.
 - Search location feature.
 - Editable Internal names.
 - Fixed Camera settings selector for HGSS roms.
+- Fixed Text Search and Replace.
 
 - Encounter Editor allows adding and removing encounter files.
 - Encounter Editor can now attempt to repair corrupted encounter files.
@@ -47,7 +49,6 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features a
 - Fixed wrong numbers when resizing matrices.
 - Added a warning when attempting to resize matrix 0.
 
-- Fixed Text search being case sensitive no matter what.
 - Fixed "Text Editor" export button.
 - Added option to show row numbers as hex in the Text Editor.
 
