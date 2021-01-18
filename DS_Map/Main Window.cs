@@ -139,6 +139,8 @@ namespace DSPRE {
                 ta = new TextArchive(new FileStream(romInfo.textArchivesPath + "\\" + fileID.ToString("D4"), FileMode.Open));
             } catch (FileNotFoundException) {
                 MessageBox.Show("Text archive not found.\n", "Can't load text", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } catch (IOException) {
+                MessageBox.Show("Couldn't access text archive.\n", "Can't load text", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return ta;
         }
@@ -5420,118 +5422,170 @@ namespace DSPRE {
             textWriter.Close();
         }
         private void searchMessageButton_Click(object sender, EventArgs e) {
-            searchMessageResultTextBox.Clear();
-            string searchString = searchMessageTextBox.Text;
-            textSearchProgressBar.Maximum = romInfo.GetTextArchivesCount();
-            int textArchivesCount = romInfo.GetTextArchivesCount();
-            if (textArchivesCount > 828)
-                textArchivesCount = 828;
+            int firstArchive;
+            int lastArchive;
 
-            caseSensitiveCheckbox.Enabled = false;
-            if (caseSensitiveCheckbox.Checked) {
-                for (int i = 0; i < textArchivesCount; i++) {
+            if (searchOnlyCurrentCheckBox.Checked) {
+                firstArchive = selectTextFileComboBox.SelectedIndex;
+                lastArchive = firstArchive + 1;
+            } else {
+                firstArchive = 0;
+                lastArchive = romInfo.GetTextArchivesCount();
+            }
+
+            string searchString = searchMessageTextBox.Text;
+            textSearchResultsListBox.Items.Clear();
+
+            if (lastArchive > 828)
+                lastArchive = 828;
+            textSearchProgressBar.Maximum = lastArchive;
+
+            if (caseSensitiveSearchCheckbox.Checked) {
+                caseSensitiveSearchCheckbox.Enabled = false;
+                for (int i = firstArchive; i < lastArchive; i++) {
 
                     TextArchive file = LoadMessageArchive(i);
 
-                    for (int j = 0; j < file.messages.Count; j++)
-                        if (file.messages[j].IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                            searchMessageResultTextBox.AppendText("(" + i + ")" + " - Line #" + j.ToString("D") + ", " + Environment.NewLine);
+                    for (int j = 0; j < file.messages.Count; j++) {
+                        if (file.messages[j].Contains(searchString)) {
+                            textSearchResultsListBox.Items.Add("(" + i + ")" + " - #" + j.ToString("D"));
                         }
+                    }
                     textSearchProgressBar.Value = i;
                 }
             } else {
-                for (int i = 0; i < textArchivesCount; i++) {
+                caseSensitiveSearchCheckbox.Enabled = false;
+                for (int i = firstArchive; i < lastArchive; i++) {
 
                     TextArchive file = LoadMessageArchive(i);
 
-                    for (int j = 0; j < file.messages.Count; j++)
+                    for (int j = 0; j < file.messages.Count; j++) {
                         if (file.messages[j].IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                            searchMessageResultTextBox.AppendText("(" + i + ")" + " - Line #" + j.ToString("D") + ", " + Environment.NewLine);
+                            textSearchResultsListBox.Items.Add("(" + i + ")" + " - #" + j.ToString("D"));
                         }
+                    }
                     textSearchProgressBar.Value = i;
                 }
             }
 
             textSearchProgressBar.Value = 0;
-            caseSensitiveCheckbox.Enabled = true;
+            caseSensitiveSearchCheckbox.Enabled = true;
         }
         private void replaceMessageButton_Click(object sender, EventArgs e) {
             // Usage: search box -> WORD_TO_REPLACE, NEW_WORD
-            searchMessageResultTextBox.Clear();
-            string searchString = searchMessageTextBox.Text;
-            string replaceString = replaceMessageTextBox.Text;
-            textSearchProgressBar.Maximum = romInfo.GetTextArchivesCount();
-            int msgCount = romInfo.GetTextArchivesCount();
-            if (msgCount > 828) msgCount = 828;
-            for (int k = 0; k < msgCount; k++) {
-                TextArchive file = LoadMessageArchive(k);
-                currentMessageFile = file;
-                bool found = false;
 
-                for (int j = 0; j < file.messages.Count; j++) {
-                    if (file.messages[j].Contains(searchString)) {
-                        file.messages[j] = file.messages[j].Replace(searchString, replaceString);
-                        found = true;
-                    }
+            int firstArchive;
+            int lastArchive;
 
-                }
-                textSearchProgressBar.Value = k;
-                if (found) {
-                    disableHandlers = true;
-                    textEditorDataGridView.Rows.Clear();
-                    searchMessageResultTextBox.AppendText(searchString + " found and replaced by " + replaceString + Environment.NewLine);
-                    for (int i = 0; i < currentMessageFile.messages.Count; i++) {
-                        textEditorDataGridView.Rows.Add(currentMessageFile.messages[i]);
-                        textEditorDataGridView.Rows[i].HeaderCell.Value = "0x" + i.ToString("X");
-                    }
-                    disableHandlers = false;
-                    BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.textArchivesPath + "\\" + k.ToString("D4"), FileMode.Create));
-                    textWriter.Write((UInt16)currentMessageFile.messages.Count);
-                    textWriter.Write((UInt16)currentMessageFile.initialKey);
-                    int key = (currentMessageFile.initialKey * 0x2FD) & 0xFFFF;
-                    int key2 = 0;
-                    int realKey = 0;
-                    int offset = 0x4 + (currentMessageFile.messages.Count * 8);
-                    int[] stringSize = new int[currentMessageFile.messages.Count];
-
-                    for (int i = 0; i < currentMessageFile.messages.Count; i++) // Reads and stores string offsets and sizes
-                    {
-                        key2 = (key * (i + 1) & 0xFFFF);
-                        realKey = key2 | (key2 << 16);
-                        textWriter.Write(offset ^ realKey);
-                        int length = currentMessageFile.GetStringLength(textEditorDataGridView[0, i].Value.ToString());
-                        stringSize[i] = length;
-                        textWriter.Write(length ^ realKey);
-                        offset += length * 2;
-                    }
-                    for (int i = 0; i < currentMessageFile.messages.Count; i++) // Encodes strings and writes them to file
-                    {
-                        key = (0x91BD3 * (i + 1)) & 0xFFFF;
-                        int[] currentString = currentMessageFile.EncodeString(textEditorDataGridView[0, i].Value.ToString(), i, stringSize[i]);
-                        for (int j = 0; j < stringSize[i] - 1; j++) {
-                            textWriter.Write((UInt16)(currentString[j] ^ key));
-                            key += 0x493D;
-                            key &= 0xFFFF;
-                        }
-                        textWriter.Write((UInt16)(0xFFFF ^ key));
-                    }
-                    textWriter.Close();
-                }
-                //else searchMessageResultTextBox.AppendText(searchString + " not found in this file");
-                //this.saveMessageFileButton_Click(sender, e);
+            string specify;
+            if (replaceOnlyCurrentCheckBox.Checked) {
+                specify = " in the current text bank only";
+                firstArchive = selectTextFileComboBox.SelectedIndex;
+                lastArchive = firstArchive + 1;
+            } else {
+                specify = " in every Text Bank of the game";
+                firstArchive = 0;
+                lastArchive = romInfo.GetTextArchivesCount();
             }
-            textSearchProgressBar.Value = 0;
+
+            string message = "You are about to replace every occurrence of " + '"' + searchMessageTextBox.Text + '"'
+                + " with " + '"' + replaceMessageTextBox.Text + '"' + specify +
+                ".\nThe operation can't be interrupted nor undone.\n\nProceed?";
+            DialogResult d = MessageBox.Show(message, "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (d == DialogResult.Yes) {
+
+                string searchString = searchMessageTextBox.Text;
+                string replaceString = replaceMessageTextBox.Text;
+                textSearchResultsListBox.Items.Clear();
+
+                if (lastArchive > 828)
+                    lastArchive = 828;
+                textSearchProgressBar.Maximum = lastArchive;
+
+                for (int k = firstArchive; k < lastArchive; k++) {
+                    TextArchive file = LoadMessageArchive(k);
+                    currentMessageFile = file;
+                    bool found = false;
+
+                    if (caseSensitiveReplaceCheckbox.Checked) {
+                        for (int j = 0; j < file.messages.Count; j++) {
+                            if (file.messages[j].Contains(searchString)) {
+                                file.messages[j] = file.messages[j].Replace(searchString, replaceString);
+                                found = true;
+                            }
+                        }
+                    } else {
+                        for (int j = 0; j < file.messages.Count; j++) {
+                            if (file.messages[j].IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) {
+                                file.messages[j] = file.messages[j].Replace(searchString, replaceString);
+                                found = true;
+                            }
+                        }
+                    }
+
+                    textSearchProgressBar.Value = k;
+                    if (found) {
+                        disableHandlers = true;
+
+                        textEditorDataGridView.Rows.Clear();
+                        textSearchResultsListBox.Items.Add("Text archive (" + k + ") - Succesfully edited");
+                        updateTextEditorFileView(false);
+
+                        disableHandlers = false;
+
+                        BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.textArchivesPath + "\\" + k.ToString("D4"), FileMode.Create));
+                        textWriter.Write((UInt16)currentMessageFile.messages.Count);
+                        textWriter.Write((UInt16)currentMessageFile.initialKey);
+                        int key = (currentMessageFile.initialKey * 0x2FD) & 0xFFFF;
+                        int key2 = 0;
+                        int realKey = 0;
+                        int offset = 0x4 + (currentMessageFile.messages.Count * 8);
+                        int[] stringSize = new int[currentMessageFile.messages.Count];
+
+                        for (int i = 0; i < currentMessageFile.messages.Count; i++) { // Reads and stores string offsets and sizes
+                            key2 = (key * (i + 1) & 0xFFFF);
+                            realKey = key2 | (key2 << 16);
+                            textWriter.Write(offset ^ realKey);
+                            int length = currentMessageFile.GetStringLength(textEditorDataGridView[0, i].Value.ToString());
+                            stringSize[i] = length;
+                            textWriter.Write(length ^ realKey);
+                            offset += length * 2;
+                        }
+                        for (int i = 0; i < currentMessageFile.messages.Count; i++) { // Encodes strings and writes them to file
+                            key = (0x91BD3 * (i + 1)) & 0xFFFF;
+                            int[] currentString = currentMessageFile.EncodeString(textEditorDataGridView[0, i].Value.ToString(), i, stringSize[i]);
+                            for (int j = 0; j < stringSize[i] - 1; j++) {
+                                textWriter.Write((UInt16)(currentString[j] ^ key));
+                                key += 0x493D;
+                                key &= 0xFFFF;
+                            }
+                            textWriter.Write((UInt16)(0xFFFF ^ key));
+                        }
+                        textWriter.Close();
+                    }
+                    //else searchMessageResultTextBox.AppendText(searchString + " not found in this file");
+                    //this.saveMessageFileButton_Click(sender, e);
+                }
+                updateTextEditorFileView(true);
+                textSearchProgressBar.Value = 0;
+            }
         }
         private void selectTextFileComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            updateTextEditorFileView(true);
+        }
+
+        private void updateTextEditorFileView(bool readAgain) {
             disableHandlers = true;
 
             textEditorDataGridView.Rows.Clear();
-            currentMessageFile = LoadMessageArchive(selectTextFileComboBox.SelectedIndex);
+            if (currentMessageFile == null || readAgain) { 
+                currentMessageFile = LoadMessageArchive(selectTextFileComboBox.SelectedIndex);
+            }
 
             for (int i = 0; i < currentMessageFile.messages.Count; i++) {
                 textEditorDataGridView.Rows.Add(currentMessageFile.messages[i]);
             }
-
 
             if (hexRadiobutton.Checked) {
                 printTextEditorLinesHex();
@@ -5540,8 +5594,8 @@ namespace DSPRE {
             }
 
             disableHandlers = false;
-
         }
+
         private void printTextEditorLinesHex() {
             disableHandlers = true;
             for (int i = 0; i < currentMessageFile.messages.Count; i++) {
@@ -5561,7 +5615,25 @@ namespace DSPRE {
             if (e.RowIndex > -1)
                 currentMessageFile.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
         }
+        private void textSearchResultsListBox_SelectedIndexChanged(object sender, EventArgs e) {
+            string resultRow = textSearchResultsListBox.Text;
+            resultRow = resultRow.Substring(1);
+            string[] parts = resultRow.Split(new string[] { ") - #"}, StringSplitOptions.RemoveEmptyEntries);
 
+            int msg;
+            int line;
+            if (Int32.TryParse((parts[0]), out msg)) {
+                if (Int32.TryParse((parts[1]), out line)) {
+                    selectTextFileComboBox.SelectedIndex = msg;
+                    textEditorDataGridView.ClearSelection();
+                    textEditorDataGridView.Rows[line].Selected = true;
+                    textEditorDataGridView.Rows[line].Cells[0].Selected = true;
+                    textEditorDataGridView.CurrentCell = textEditorDataGridView.Rows[line].Cells[0];
+
+                    return;
+                }
+            }
+        }
         #endregion
 
         #region Tileset Editor
@@ -5752,6 +5824,10 @@ namespace DSPRE {
         }
 
         private void hexRadiobutton_CheckedChanged(object sender, EventArgs e) {
+            updateTextEditorLineNumbers();
+        }
+
+        private void updateTextEditorLineNumbers() {
             disableHandlers = true;
             if (hexRadiobutton.Checked) {
                 printTextEditorLinesHex();
@@ -5763,6 +5839,5 @@ namespace DSPRE {
 
 
         #endregion
-
     }
 }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Resources;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace DSPRE
 {
@@ -22,7 +23,14 @@ namespace DSPRE
         {
             ResourceManager GetChar = new ResourceManager("DSPRE.Resources.ReadText", Assembly.GetExecutingAssembly());
             BinaryReader readText = new BinaryReader(messageStream);
-            int stringCount = readText.ReadUInt16();
+            int stringCount;
+            try {
+                stringCount = readText.ReadUInt16();
+            } catch (EndOfStreamException) {
+                MessageBox.Show("Error loading text file.\n", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                readText.Close();
+                return;
+            }
             initialKey = readText.ReadUInt16();
             int key1 = (initialKey * 0x2FD) & 0xFFFF;
             int key2 = 0;
