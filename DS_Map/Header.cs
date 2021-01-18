@@ -13,7 +13,7 @@ namespace DSPRE
        0x8  //  ushort:     Text Archive number
        0xA  //  ushort:     Day music track number
        0xC  //  ushort:     Night music track number
-       0xE  //  ushort:     Wild Pokémon file number
+       0xE  //  ushort:     Wild PokÃ©mon file number
        0x10 //  ushort:     Event file number
 
        * D/P:
@@ -39,7 +39,7 @@ namespace DSPRE
 
     /* ---------------------- HEADER DATA STRUCTURE (HGSS):----------------------------
         
-       0x0  //  byte:       Wild Pokémon file number
+       0x0  //  byte:       Wild PokÃ©mon file number
        0x1  //  byte:       Area data value
        0x2  //  byte:       ?
        0x3  //  byte:       ?
@@ -54,7 +54,7 @@ namespace DSPRE
        0x13 //  byte:       Map name textbox type value
        0x14 //  byte:       Weather value
        0x15 //  byte:       Camera value
-       0x16 //  byte:       Follow mode (for the Pokémon following hero)
+       0x16 //  byte:       Follow mode (for the PokÃ©mon following hero)
        0x17 //  byte:       Bitwise permission flags:
 
         DPPT
@@ -80,11 +80,11 @@ namespace DSPRE
     ----------------------------------------------------------------------------------*/
 
     /// <summary>
-    /// General class to store common map header data across all Gen IV Pokémon NDS games
+    /// General class to store common map header data across all Gen IV PokÃ©mon NDS games
     /// </summary>
     public abstract class Header
 	{
-        #region Fields (10)
+        #regionÂ FieldsÂ (10)
         public byte areaDataID { get; set; }
         public byte camera { get; set; }
         public byte areaSettings { get; set; }
@@ -96,8 +96,8 @@ namespace DSPRE
         public byte showName { get; set; }
         public ushort text { get; set; }
         public byte weather { get; set; }
-        public ushort wildPokémon { get; set; }
-        #endregion Fields
+        public ushort wildPokÃ©mon { get; set; }
+        #endregionÂ Fields
 
         #region Methods (1)
         public abstract byte[] SaveHeader();
@@ -105,18 +105,18 @@ namespace DSPRE
     }
 
     /// <summary>
-    /// Class to store map header data from Pokémon D and P
+    /// Class to store map header data from PokÃ©mon D and P
     /// </summary>
     public class HeaderDP: Header
     {
-        #region Fields (5)
+        #regionÂ FieldsÂ (5)
         public byte unknown1 { get; set; }
         public ushort musicDay { get; set; }
         public ushort musicNight { get; set; }
         public ushort mapName { get; set; }
-        #endregion Fields
+        #endregionÂ Fields
 
-        #region Constructors (1)
+        #regionÂ ConstructorsÂ (1)
         public HeaderDP(Stream data)
         {
             using (BinaryReader reader = new BinaryReader(data))
@@ -129,7 +129,7 @@ namespace DSPRE
                 text = reader.ReadUInt16();
                 musicDay = reader.ReadUInt16();
                 musicNight = reader.ReadUInt16();
-                wildPokémon = reader.ReadUInt16();
+                wildPokÃ©mon = reader.ReadUInt16();
                 eventID = reader.ReadUInt16();
                 mapName = reader.ReadUInt16();
                 weather = StandardizeWeather(reader.ReadByte());
@@ -138,7 +138,7 @@ namespace DSPRE
                 flags = reader.ReadByte();
             }
         }
-        #endregion Constructors
+        #endregionÂ Constructors
 
         #region Methods (1)
         public override byte[] SaveHeader()
@@ -154,7 +154,7 @@ namespace DSPRE
                 writer.Write(text);
                 writer.Write(musicDay);
                 writer.Write(musicNight);
-                writer.Write(wildPokémon);
+                writer.Write(wildPokÃ©mon);
                 writer.Write(eventID);
                 writer.Write(mapName);
                 writer.Write(weather);
@@ -196,19 +196,19 @@ namespace DSPRE
     }
     
     /// <summary>
-    /// Class to store map header data from Pokémon Plat
+    /// Class to store map header data from PokÃ©mon Plat
     /// </summary>
     public class HeaderPt : Header
     {
-        #region Fields (5)
+        #regionÂ FieldsÂ (5)
         public byte areaIcon { get; set; }
         public byte mapName { get; set; }
         public ushort musicDay { get; set; }
         public ushort musicNight { get; set; }
         public byte unknown1 { get; set; }
-        #endregion Fields
+        #endregionÂ Fields
 
-        #region Constructors (1)
+        #regionÂ ConstructorsÂ (1)
         public HeaderPt(Stream data)
         {
             using (BinaryReader reader = new BinaryReader(data))
@@ -222,7 +222,7 @@ namespace DSPRE
                     text = reader.ReadUInt16();
                     musicDay = reader.ReadUInt16();
                     musicNight = reader.ReadUInt16();
-                    wildPokémon = reader.ReadUInt16();
+                    wildPokÃ©mon = reader.ReadUInt16();
                     eventID = reader.ReadUInt16();
                     mapName = reader.ReadByte();
                     areaIcon = reader.ReadByte();
@@ -235,7 +235,7 @@ namespace DSPRE
                 }
             }
         }
-        #endregion Constructors
+        #endregionÂ Constructors
 
         #region Methods(1)
         public override byte[] SaveHeader()
@@ -251,7 +251,7 @@ namespace DSPRE
                 writer.Write(text);
                 writer.Write(musicDay);
                 writer.Write(musicNight);
-                writer.Write(wildPokémon);
+                writer.Write(wildPokÃ©mon);
                 writer.Write(eventID);
                 writer.Write(mapName);
                 writer.Write(areaIcon);
@@ -299,11 +299,11 @@ namespace DSPRE
     }
     
     /// <summary>
-    /// Class to store map header data from Pokémon HG and SS
+    /// Class to store map header data from PokÃ©mon HG and SS
     /// </summary>
     public class HeaderHGSS : Header
     {
-        #region Fields (7)
+        #regionÂ FieldsÂ (7)
         public byte areaIcon { get; set; }
         public byte followMode { get; set; }
         public byte mapName { get; set; }
@@ -313,13 +313,13 @@ namespace DSPRE
         public byte unknown2 { get; set; }
         #endregion
 
-        #region Constructors (1)
+        #regionÂ ConstructorsÂ (1)
         public HeaderHGSS(Stream data)
         {
             using (BinaryReader reader = new BinaryReader(data))
             {
                 try {
-                    wildPokémon = reader.ReadByte();
+                    wildPokÃ©mon = reader.ReadByte();
                     areaDataID = reader.ReadByte();
                     unknown1 = reader.ReadByte();
                     unknown2 = reader.ReadByte();
@@ -345,7 +345,7 @@ namespace DSPRE
                 }
             }
         }
-        #endregion Constructors
+        #endregionÂ Constructors
 
         #region Methods(1)
         public override byte[] SaveHeader()
@@ -353,7 +353,7 @@ namespace DSPRE
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData))
             {
-                writer.Write((byte)wildPokémon);
+                writer.Write((byte)wildPokÃ©mon);
                 writer.Write(areaDataID);
                 writer.Write(unknown1);
                 writer.Write(unknown2);
@@ -563,7 +563,7 @@ namespace DSPRE
             "[1016] Veilstone City (Day)",
             "[1017] Sunyshore City (Day)",
             "[1018] Snowpoint City (Day)",
-            "[1019] Pokémon League (Day)",
+            "[1019] PokÃ©mon League (Day)",
             "[1020] Fight Area (Day)",
             "[1021] Route 201 (Day)",
             "[1022] Route 203 (Day)",
@@ -587,7 +587,7 @@ namespace DSPRE
             "[1045] Veilstone City (Night)",
             "[1046] Sunyshore City (Night)",
             "[1047] Snowpoint City (Night)",
-            "[1048] Pokémon League (Night)",
+            "[1048] PokÃ©mon League (Night)",
             "[1049] Fight Area (Night)",
             "[1050] Route 201 (Night)",
             "[1051] Route 203 (Night)",
@@ -614,12 +614,12 @@ namespace DSPRE
             "[1075] Cave 2",
             "[1076] Elite 4 - Showdown",
             "[1077] Hall of Fame",
-            "[1085] Pokémon Center (Day)",
-            "[1086] Pokémon Center (Night)",
+            "[1085] PokÃ©mon Center (Day)",
+            "[1086] PokÃ©mon Center (Night)",
             "[1087] Gym theme",
             "[1088] Rowan's Lab",
             "[1089] Poffin House",
-            "[1090] Pokémon Mart",
+            "[1090] PokÃ©mon Mart",
             "[1091] Game Corner",
             "[1092] Battle Tower (inside)",
             "[1093] Jubilife TV",
@@ -646,7 +646,7 @@ namespace DSPRE
             "[1016] Veilstone City (Day)",
             "[1017] Sunyshore City (Day)",
             "[1018] Snowpoint City (Day)",
-            "[1019] Pokémon League (Day)",
+            "[1019] PokÃ©mon League (Day)",
             "[1020] Fight Area (Day)",
             "[1021] Route 201 (Day)",
             "[1022] Route 203 (Day)",
@@ -670,7 +670,7 @@ namespace DSPRE
             "[1045] Veilstone City (Night)",
             "[1046] Sunyshore City (Night)",
             "[1047] Snowpoint City (Night)",
-            "[1048] Pokémon League (Night)",
+            "[1048] PokÃ©mon League (Night)",
             "[1049] Fight Area (Night)",
             "[1050] Route 201 (Night)",
             "[1051] Route 203 (Night)",
@@ -697,12 +697,12 @@ namespace DSPRE
             "[1075] Cave 2",
             "[1076] Elite 4 - Showdown",
             "[1077] Hall of Fame",
-            "[1085] Pokémon Center (Day)",
-            "[1086] Pokémon Center (Night)",
+            "[1085] PokÃ©mon Center (Day)",
+            "[1086] PokÃ©mon Center (Night)",
             "[1087] Gym theme",
             "[1088] Rowan's Lab",
             "[1089] Poffin House",
-            "[1090] Pokémon Mart",
+            "[1090] PokÃ©mon Mart",
             "[1091] Game Corner",
             "[1092] Battle Tower (inside)",
             "[1093] Jubilife TV",
@@ -721,7 +721,7 @@ namespace DSPRE
         {
             "[1000] Mystery Zone",
             "[1001] Bell Tower",
-            "[1013] Bicycle ThemeÓ,
+            "[1013] Bicycle Theme",
             "[1018] New Bark Town",
             "[1019] Cherrygrove City",
             "[1020] Violet City",
@@ -765,12 +765,12 @@ namespace DSPRE
             "[1060] Route 12/13/14/15",
             "[1061] Route 24/25",
             "[1062] Route 26/27",
-            "[1063] Pokémon Center",
-            "[1064] Pokémon Mart",
+            "[1063] PokÃ©mon Center",
+            "[1064] PokÃ©mon Mart",
             "[1065] Gym Theme",
             "[1066] Prof. Elm Lab",
             "[1068] Kimono Girls Theater",
-            "[1069] Game CornerÓ,
+            "[1069] Game Corner",
             "[1070] Battle Park",
             "[1071] Battle Tower",
             "[1072] Sprout Tower",
@@ -787,29 +787,29 @@ namespace DSPRE
             "[1083] Viridian Forest",
             "[1084] Victory Road",
             "[1085] Indigo Plateau",
-            "[1092] Pokéathlon GameÓ,
+            "[1092] PokÃ©athlon Game",
             "[1096] S.S. Aqua",
             "[1097] Mt. Moon Plaza",
-            "[1099] Sleeping Radio MusicÓ,
-            "[1100] Pokemon March RadioÓ,
-            "[1101] Unown RadioÓ,
-            "[1102] Pokeflute RadioÓ,
-            "[1103] Prof. OakÕs Theme/RadioÓ,
-            "[1134] Pokéathlon Dome (Inside)",
-            "[1141] Pokéathlon Dome (Outside)",
+            "[1099] Sleeping Radio Music",
+            "[1100] Pokemon March Radio",
+            "[1101] Unown Radio",
+            "[1102] Pokeflute Radio",
+            "[1103] Prof. Oak's Theme",
+            "[1134] PokÃ©athlon Dome (Inside)",
+            "[1141] PokÃ©athlon Dome (Outside)",
             "[1143] Battle Factory",
             "[1144] Battle Hall",
             "[1145] Battle Arcade",
             "[1146] Battle Castle",
-            "[1151] Wifi PlazaÓ,
-            "[1153] Wifi Plaza ParadeÓ,
+            "[1151] Wifi Plaza",
+            "[1153] Wifi Plaza Parade",
             "[1154] GTS Terminal",
             "[1157] Route 47/48",
             "[1158] Safari Zone Gate",
             "[1159] Pal Park",
             "[1168] Sinjoh Ruins",
-            "[1169] Route 101 RadioÓ,
-            "[1170] Route 201 RadioÓ,
+            "[1169] Route 101 Radio",
+            "[1170] Route 201 Radio",
             "[1216] Route 17"
         };
         public string[] DPShowNameValues = new string[]
