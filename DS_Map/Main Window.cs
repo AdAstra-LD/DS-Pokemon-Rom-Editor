@@ -523,7 +523,7 @@ namespace DSPRE {
             }
 
             /*Add list of options to each control */
-            locationNameComboBox.Items.AddRange(LoadMessageArchive(romInfo.GetMapNamesTextNumber()).messages.ToArray());
+            locationNameComboBox.Items.AddRange(LoadMessageArchive(romInfo.GetLocationNamesTextNumber()).messages.ToArray());
             HeaderDatabase headerInfo = new HeaderDatabase();
             switch (romInfo.gameVersion) {
                 case "D":
@@ -1134,27 +1134,26 @@ namespace DSPRE {
                 }
             }
 
-            if (eventEditorIsReady) {
-                switch (romInfo.gameVersion) {
-                    case "D":
-                    case "P":
-                    case "Plat":
-                        break;
-                    default:
-                        // Must restore compressed overlay 1 in HGSS
-                        DSUtils.RestoreOverlayFromCompressedBackup(1); 
-                        break;
-                }
+
+            switch (romInfo.gameVersion) {
+                case "D":
+                case "P":
+                case "Plat":
+                    break;
+                default:
+                    // Must restore compressed overlay 1 in HGSS
+                    DSUtils.RestoreOverlayFromCompressedBackup(1); 
+                    break;
             }
+
 
             statusLabel.Text = "Repacking ROM...";
             Update();
             //DeleteTempFolders();
             RepackRom(saveRom.FileName);
 
-            if (eventEditorIsReady)
-                if (romInfo.gameVersion != "D" && romInfo.gameVersion != "P" && romInfo.gameVersion != "Plat")
-                    DSUtils.DecompressOverlay(1, true);
+            if (romInfo.gameVersion != "D" && romInfo.gameVersion != "P" && romInfo.gameVersion != "Plat")
+                DSUtils.DecompressOverlay(1, true);
 
             statusLabel.Text = "Ready";
         }
@@ -1225,7 +1224,7 @@ namespace DSPRE {
                     SetupTextEditor();
                     textEditorIsReady = true;
                 }
-            } else if (mainTabControl.SelectedTab == tilesetEditorTabPage) {
+            } else if (mainTabControl.SelectedTab == nsbtxEditorTabPage) {
                 if (!tilesetEditorIsReady) {
                     SetupTilesetEditor();
                     tilesetEditorIsReady = true;
@@ -1608,7 +1607,7 @@ namespace DSPRE {
 
             selectAreaDataComboBox.SelectedIndex = (int)areaDataUpDown.Value;
             texturePacksListBox.SelectedIndex = (mapTilesetRadioButton.Checked ? (int)areaDataMapTilesetUpDown.Value : (int)areaDataBuildingTilesetUpDown.Value);
-            mainTabControl.SelectedTab = tilesetEditorTabPage;
+            mainTabControl.SelectedTab = nsbtxEditorTabPage;
 
             if (texturesListBox.Items.Count > 0)
                 texturesListBox.SelectedIndex = 0;
@@ -1985,7 +1984,7 @@ namespace DSPRE {
         private void copyEventsButton_Click(object sender, EventArgs e) {
             eventsCopy = eventFileUpDown.Value;
             Clipboard.SetData(DataFormats.Text, eventsCopy);
-            copyEventsButton.Enabled = true;
+            pasteEventsButton.Enabled = true;
         }
 
         private void copyTextsButton_Click(object sender, EventArgs e) {
@@ -3530,7 +3529,6 @@ namespace DSPRE {
         public static MapFile eventMapFile;
         public NSMBe4.NSBMD.NSBTX_File overworldFrames;
         public Matrix eventMatrix;
-        public string spritesTablePath;
 
         public EventFile currentEventFile;
         public Event selectedEvent;
@@ -3545,7 +3543,6 @@ namespace DSPRE {
         #region Subroutines
         private void DisplayActiveEvents() {
             eventPictureBox.Image = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
-
             /* Draw spawnables */
             if (showSignsCheckBox.Checked)
                 for (int i = 0; i < currentEventFile.spawnables.Count; i++) {
@@ -3724,7 +3721,7 @@ namespace DSPRE {
             if (ow3DSpriteDict.TryGetValue(spriteID, out imageName)) { // If overworld is 3D, load image from dictionary
                 return (Bitmap)Properties.Resources.ResourceManager.GetObject(imageName);
             } else {
-                int archiveID = MatchOverworldIDToSpriteArchive(spriteID, spritesTablePath);
+                int archiveID = MatchOverworldIDToSpriteArchive(spriteID, romInfo.OWtablePath);
                 if (archiveID == -1)
                     return (Bitmap)Properties.Resources.ResourceManager.GetObject("overworld"); // If id is -1, load bounding box
                 else {
@@ -4313,70 +4310,73 @@ namespace DSPRE {
         }
         private void overworldsListBox_SelectedIndexChanged(object sender, EventArgs e) {
             #region Disable Events for fast execution
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             disableHandlers = true;
             #endregion
 
             int index = overworldsListBox.SelectedIndex;
-            try {
-                selectedEvent = currentEventFile.overworlds[index];
+            if (index > -1) {
+                try {
+                    selectedEvent = currentEventFile.overworlds[index];
 
-                /* Sprite index and image controls */
-                owSpriteComboBox.SelectedIndex = MatchOverworldIDToSpriteArchive(currentEventFile.overworlds[index].spriteID, spritesTablePath);
-                owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[index].spriteID, currentEventFile.overworlds[index].orientation);
-            } catch (ArgumentOutOfRangeException) {
-                String errorMsg = "This Overworld's sprite ID couldn't be read correctly.";
-                MessageBox.Show(errorMsg, "Something went wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            try {
-                /* Set coordinates controls */
-                owXMapUpDown.Value = currentEventFile.overworlds[index].xMapPosition;
-                owYMapUpDown.Value = currentEventFile.overworlds[index].yMapPosition;
-                owXMatrixUpDown.Value = currentEventFile.overworlds[index].xMatrixPosition;
-                owYMatrixUpDown.Value = currentEventFile.overworlds[index].yMatrixPosition;
-                owZPositionUpDown.Value = currentEventFile.overworlds[index].zPosition;
-
-                /*ID, Flag and Script number controls */
-                owIDNumericUpDown.Value = currentEventFile.overworlds[index].owID;
-                owFlagNumericUpDown.Value = currentEventFile.overworlds[index].flag;
-                owScriptNumericUpDown.Value = currentEventFile.overworlds[index].scriptNumber;
-
-                /* Special settings controls */
-                if (currentEventFile.overworlds[index].type == 0x1) {
-                    disableHandlers = false;
-                    isTrainerRadioButton.Checked = true;
-                    disableHandlers = true;
-                    if (currentEventFile.overworlds[index].scriptNumber >= 4999) {
-                        owTrainerComboBox.SelectedIndex = Math.Max(currentEventFile.overworlds[index].scriptNumber - 4999, 0); // Partner of double battle trainer
-                        owPartnerTrainerCheckBox.Checked = true;
-                    } else {
-                        owTrainerComboBox.SelectedIndex = Math.Max(currentEventFile.overworlds[index].scriptNumber - 2999, 0); // Normal trainer
-                        owPartnerTrainerCheckBox.Checked = false;
-                    }
-                } else if (currentEventFile.overworlds[index].type == 0x3 || currentEventFile.overworlds[index].scriptNumber >= 7000 && currentEventFile.overworlds[index].scriptNumber <= 8000) {
-                    disableHandlers = false;
-                    isItemRadioButton.Checked = true;
-                    owItemComboBox.SelectedIndex = Math.Max(currentEventFile.overworlds[index].scriptNumber - 7000, 0);
-                    disableHandlers = true;
-                } else {
-                    disableHandlers = false;
-                    normalRadioButton.Checked = true;
-                    disableHandlers = true;
+                    /* Sprite index and image controls */
+                    owSpriteComboBox.SelectedIndex = MatchOverworldIDToSpriteArchive(currentEventFile.overworlds[index].spriteID, romInfo.OWtablePath);
+                    owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[index].spriteID, currentEventFile.overworlds[index].orientation);
+                } catch (ArgumentOutOfRangeException) {
+                    String errorMsg = "This Overworld's sprite ID couldn't be read correctly.";
+                    MessageBox.Show(errorMsg, "Something went wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+                try {
+                    /* Set coordinates controls */
+                    owXMapUpDown.Value = currentEventFile.overworlds[index].xMapPosition;
+                    owYMapUpDown.Value = currentEventFile.overworlds[index].yMapPosition;
+                    owXMatrixUpDown.Value = currentEventFile.overworlds[index].xMatrixPosition;
+                    owYMatrixUpDown.Value = currentEventFile.overworlds[index].yMatrixPosition;
+                    owZPositionUpDown.Value = currentEventFile.overworlds[index].zPosition;
 
-                /* Movement settings */
-                owMovementComboBox.SelectedIndex = currentEventFile.overworlds[index].movement;
-                owOrientationComboBox.SelectedIndex = currentEventFile.overworlds[index].orientation;
-                owSightRangeUpDown.Value = currentEventFile.overworlds[index].sightRange;
-                owXRangeUpDown.Value = currentEventFile.overworlds[index].xRange;
-                owYRangeUpDown.Value = currentEventFile.overworlds[index].yRange;
+                    /*ID, Flag and Script number controls */
+                    owIDNumericUpDown.Value = currentEventFile.overworlds[index].owID;
+                    owFlagNumericUpDown.Value = currentEventFile.overworlds[index].flag;
+                    owScriptNumericUpDown.Value = currentEventFile.overworlds[index].scriptNumber;
 
-                DisplayActiveEvents();
-            } catch (ArgumentOutOfRangeException) {
-                String errorMsg = "There was a problem loading the overworld events of this Event file.";
-                MessageBox.Show(errorMsg, "Something went wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    /* Special settings controls */
+                    if (currentEventFile.overworlds[index].type == 0x1) {
+                        disableHandlers = false;
+                        isTrainerRadioButton.Checked = true;
+                        disableHandlers = true;
+                        if (currentEventFile.overworlds[index].scriptNumber >= 4999) {
+                            owTrainerComboBox.SelectedIndex = Math.Max(currentEventFile.overworlds[index].scriptNumber - 4999, 0); // Partner of double battle trainer
+                            owPartnerTrainerCheckBox.Checked = true;
+                        } else {
+                            owTrainerComboBox.SelectedIndex = Math.Max(currentEventFile.overworlds[index].scriptNumber - 2999, 0); // Normal trainer
+                            owPartnerTrainerCheckBox.Checked = false;
+                        }
+                    } else if (currentEventFile.overworlds[index].type == 0x3 || currentEventFile.overworlds[index].scriptNumber >= 7000 && currentEventFile.overworlds[index].scriptNumber <= 8000) {
+                        disableHandlers = false;
+                        isItemRadioButton.Checked = true;
+                        owItemComboBox.SelectedIndex = Math.Max(currentEventFile.overworlds[index].scriptNumber - 7000, 0);
+                        disableHandlers = true;
+                    } else {
+                        disableHandlers = false;
+                        normalRadioButton.Checked = true;
+                        disableHandlers = true;
+                    }
+
+
+                    /* Movement settings */
+                    owMovementComboBox.SelectedIndex = currentEventFile.overworlds[index].movement;
+                    owOrientationComboBox.SelectedIndex = currentEventFile.overworlds[index].orientation;
+                    owSightRangeUpDown.Value = currentEventFile.overworlds[index].sightRange;
+                    owXRangeUpDown.Value = currentEventFile.overworlds[index].xRange;
+                    owYRangeUpDown.Value = currentEventFile.overworlds[index].yRange;
+
+                    DisplayActiveEvents();
+                } catch (ArgumentOutOfRangeException) {
+                    String errorMsg = "There was a problem loading the overworld events of this Event file.";
+                    MessageBox.Show(errorMsg, "Something went wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
             #region Re-enable events
@@ -4397,6 +4397,7 @@ namespace DSPRE {
         private void owMovementComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || overworldsListBox.SelectedIndex < 0)
                 return;
+
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].movement = (ushort)owMovementComboBox.SelectedIndex;
         }
         private void owOrientationComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -4411,22 +4412,24 @@ namespace DSPRE {
         private void owScriptNumericUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || overworldsListBox.SelectedIndex < 0)
                 return;
+
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)owScriptNumericUpDown.Value;
         }
         private void owSightRangeUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || overworldsListBox.SelectedIndex < 0)
                 return;
+
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].sightRange = (ushort)owSightRangeUpDown.Value;
         }
         private void owSpriteComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) 
                 return;
-            if (overworldsListBox.SelectedIndex != 0) {
-                currentEventFile.overworlds[overworldsListBox.SelectedIndex].spriteID = (ushort)owSpriteComboBox.SelectedIndex;
-                owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[overworldsListBox.SelectedIndex].spriteID, currentEventFile.overworlds[overworldsListBox.SelectedIndex].orientation);
-                DisplayActiveEvents();
-                owSpritePictureBox.Invalidate();
-            }
+            
+            currentEventFile.overworlds[overworldsListBox.SelectedIndex].spriteID = (ushort)owSpriteComboBox.SelectedIndex;
+            owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEventFile.overworlds[overworldsListBox.SelectedIndex].spriteID, currentEventFile.overworlds[overworldsListBox.SelectedIndex].orientation);
+            DisplayActiveEvents();
+            owSpritePictureBox.Invalidate();
+            
         }
         private void owPartnerTrainerCheckBox_CheckedChanged(object sender, EventArgs e) {
             if (disableHandlers || overworldsListBox.SelectedIndex < 0)

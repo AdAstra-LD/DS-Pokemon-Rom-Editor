@@ -240,7 +240,7 @@
             this.radio3D = new System.Windows.Forms.RadioButton();
             this.radio2D = new System.Windows.Forms.RadioButton();
             this.wireframeCheckBox = new System.Windows.Forms.CheckBox();
-            this.tilesetEditorTabPage = new System.Windows.Forms.TabPage();
+            this.nsbtxEditorTabPage = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.removeNSBTXButton = new System.Windows.Forms.Button();
             this.addNSBTXButton = new System.Windows.Forms.Button();
@@ -609,7 +609,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.typePictureBox)).BeginInit();
             this.modelTabPage.SuspendLayout();
             this.terrainTabPage.SuspendLayout();
-            this.tilesetEditorTabPage.SuspendLayout();
+            this.nsbtxEditorTabPage.SuspendLayout();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).BeginInit();
             this.areaDataGroupBox.SuspendLayout();
@@ -703,7 +703,7 @@
             this.mainTabControl.Controls.Add(this.headerEditorTabPage);
             this.mainTabControl.Controls.Add(this.matrixEditorTabPage);
             this.mainTabControl.Controls.Add(this.mapEditorTabPage);
-            this.mainTabControl.Controls.Add(this.tilesetEditorTabPage);
+            this.mainTabControl.Controls.Add(this.nsbtxEditorTabPage);
             this.mainTabControl.Controls.Add(this.eventEditorTabPage);
             this.mainTabControl.Controls.Add(this.scriptEditorTabPage);
             this.mainTabControl.Controls.Add(this.textEditorTabPage);
@@ -3087,18 +3087,18 @@
             this.wireframeCheckBox.UseVisualStyleBackColor = true;
             this.wireframeCheckBox.CheckedChanged += new System.EventHandler(this.wireframeCheckBox_CheckedChanged);
             // 
-            // tilesetEditorTabPage
+            // nsbtxEditorTabPage
             // 
-            this.tilesetEditorTabPage.Controls.Add(this.groupBox7);
-            this.tilesetEditorTabPage.Controls.Add(this.areaDataGroupBox);
-            this.tilesetEditorTabPage.ImageIndex = 6;
-            this.tilesetEditorTabPage.Location = new System.Drawing.Point(4, 23);
-            this.tilesetEditorTabPage.Name = "tilesetEditorTabPage";
-            this.tilesetEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tilesetEditorTabPage.Size = new System.Drawing.Size(1118, 619);
-            this.tilesetEditorTabPage.TabIndex = 6;
-            this.tilesetEditorTabPage.Text = "Tileset Editor";
-            this.tilesetEditorTabPage.UseVisualStyleBackColor = true;
+            this.nsbtxEditorTabPage.Controls.Add(this.groupBox7);
+            this.nsbtxEditorTabPage.Controls.Add(this.areaDataGroupBox);
+            this.nsbtxEditorTabPage.ImageIndex = 6;
+            this.nsbtxEditorTabPage.Location = new System.Drawing.Point(4, 23);
+            this.nsbtxEditorTabPage.Name = "nsbtxEditorTabPage";
+            this.nsbtxEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.nsbtxEditorTabPage.Size = new System.Drawing.Size(1118, 619);
+            this.nsbtxEditorTabPage.TabIndex = 6;
+            this.nsbtxEditorTabPage.Text = "NSBTX Editor";
+            this.nsbtxEditorTabPage.UseVisualStyleBackColor = true;
             // 
             // groupBox7
             // 
@@ -3123,9 +3123,9 @@
             // 
             // removeNSBTXButton
             // 
-            this.removeNSBTXButton.Location = new System.Drawing.Point(19, 424);
+            this.removeNSBTXButton.Location = new System.Drawing.Point(107, 401);
             this.removeNSBTXButton.Name = "removeNSBTXButton";
-            this.removeNSBTXButton.Size = new System.Drawing.Size(177, 23);
+            this.removeNSBTXButton.Size = new System.Drawing.Size(90, 23);
             this.removeNSBTXButton.TabIndex = 11;
             this.removeNSBTXButton.Text = "Remove Last";
             this.removeNSBTXButton.UseVisualStyleBackColor = true;
@@ -3134,7 +3134,7 @@
             // 
             this.addNSBTXButton.Location = new System.Drawing.Point(19, 401);
             this.addNSBTXButton.Name = "addNSBTXButton";
-            this.addNSBTXButton.Size = new System.Drawing.Size(177, 23);
+            this.addNSBTXButton.Size = new System.Drawing.Size(86, 23);
             this.addNSBTXButton.TabIndex = 10;
             this.addNSBTXButton.Text = "Add NSBTX";
             this.addNSBTXButton.UseVisualStyleBackColor = true;
@@ -3210,11 +3210,11 @@
             // buildingsTilesetRadioButton
             // 
             this.buildingsTilesetRadioButton.AutoSize = true;
-            this.buildingsTilesetRadioButton.Location = new System.Drawing.Point(129, 25);
+            this.buildingsTilesetRadioButton.Location = new System.Drawing.Point(108, 25);
             this.buildingsTilesetRadioButton.Name = "buildingsTilesetRadioButton";
-            this.buildingsTilesetRadioButton.Size = new System.Drawing.Size(67, 17);
+            this.buildingsTilesetRadioButton.Size = new System.Drawing.Size(91, 17);
             this.buildingsTilesetRadioButton.TabIndex = 2;
-            this.buildingsTilesetRadioButton.Text = "Buildings";
+            this.buildingsTilesetRadioButton.Text = "Buildings BTX";
             this.buildingsTilesetRadioButton.UseVisualStyleBackColor = true;
             this.buildingsTilesetRadioButton.CheckedChanged += new System.EventHandler(this.buildingsTilesetRadioButton_CheckedChanged);
             // 
@@ -3224,10 +3224,10 @@
             this.mapTilesetRadioButton.Checked = true;
             this.mapTilesetRadioButton.Location = new System.Drawing.Point(20, 26);
             this.mapTilesetRadioButton.Name = "mapTilesetRadioButton";
-            this.mapTilesetRadioButton.Size = new System.Drawing.Size(51, 17);
+            this.mapTilesetRadioButton.Size = new System.Drawing.Size(75, 17);
             this.mapTilesetRadioButton.TabIndex = 1;
             this.mapTilesetRadioButton.TabStop = true;
-            this.mapTilesetRadioButton.Text = "Maps";
+            this.mapTilesetRadioButton.Text = "Maps BTX";
             this.mapTilesetRadioButton.UseVisualStyleBackColor = true;
             this.mapTilesetRadioButton.CheckedChanged += new System.EventHandler(this.mapTilesetRadioButton_CheckedChanged);
             // 
@@ -3319,9 +3319,9 @@
             this.label35.AutoSize = true;
             this.label35.Location = new System.Drawing.Point(554, 88);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(88, 13);
+            this.label35.Size = new System.Drawing.Size(133, 13);
             this.label35.TabIndex = 8;
-            this.label35.Text = "Dynamic textures";
+            this.label35.Text = "Dynamic textures [NSBTA]";
             // 
             // areaDataDynamicTexturesComboBox
             // 
@@ -3366,9 +3366,9 @@
             this.label33.AutoSize = true;
             this.label33.Location = new System.Drawing.Point(245, 28);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(62, 13);
+            this.label33.Size = new System.Drawing.Size(72, 13);
             this.label33.TabIndex = 4;
-            this.label33.Text = "Map Tileset";
+            this.label33.Text = "Map Textures";
             // 
             // areaDataMapTilesetUpDown
             // 
@@ -3388,9 +3388,9 @@
             this.label32.AutoSize = true;
             this.label32.Location = new System.Drawing.Point(403, 28);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(78, 13);
+            this.label32.Size = new System.Drawing.Size(88, 13);
             this.label32.TabIndex = 2;
-            this.label32.Text = "Building Tileset";
+            this.label32.Text = "Building Textures";
             // 
             // areaDataBuildingTilesetUpDown
             // 
@@ -6851,7 +6851,7 @@
             this.modelTabPage.PerformLayout();
             this.terrainTabPage.ResumeLayout(false);
             this.terrainTabPage.PerformLayout();
-            this.tilesetEditorTabPage.ResumeLayout(false);
+            this.nsbtxEditorTabPage.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).EndInit();
@@ -7246,7 +7246,7 @@
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.ToolStripButton wildEditorButton;
-        private System.Windows.Forms.TabPage tilesetEditorTabPage;
+        private System.Windows.Forms.TabPage nsbtxEditorTabPage;
         private System.Windows.Forms.GroupBox areaDataGroupBox;
         private System.Windows.Forms.ComboBox selectAreaDataComboBox;
         private System.Windows.Forms.Label label36;

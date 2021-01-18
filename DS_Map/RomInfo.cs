@@ -467,7 +467,7 @@ namespace DSPRE {
                     break;
             }
         }
-        public int GetMapNamesTextNumber() {
+        public int GetLocationNamesTextNumber() {
             int fileNumber;
             switch (gameVersion) {
                 case "D":
