@@ -243,6 +243,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap copyIcon {
+            get {
+                object obj = ResourceManager.GetObject("copyIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dawn_platinum {
             get {
                 object obj = ResourceManager.GetObject("dawn_platinum", resourceCulture);
@@ -1005,6 +1015,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap overworld {
             get {
                 object obj = ResourceManager.GetObject("overworld", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pasteIcon {
+            get {
+                object obj = ResourceManager.GetObject("pasteIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

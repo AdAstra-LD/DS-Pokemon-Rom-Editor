@@ -367,7 +367,7 @@ namespace DSPRE
                 writer.Write(mapName);
                 writer.Write(areaIcon);
                 writer.Write(weather);
-                writer.Write(camera*16 + areaSettings);
+                writer.Write((byte)(camera*16 + areaSettings));
                 writer.Write(followMode);
                 writer.Write(flags);
             }

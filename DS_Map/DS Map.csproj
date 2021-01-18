@@ -422,6 +422,8 @@
     <Content Include="Graphics\Camera Angles\HGSS\hgsscamera13.png" />
     <Content Include="Graphics\Camera Angles\HGSS\hgsscamera14.png" />
     <Content Include="Graphics\Camera Angles\HGSS\hgsscamera15.png" />
+    <None Include="Graphics\Program Icons\copyIcon.png" />
+    <None Include="Graphics\Program Icons\pasteIcon.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

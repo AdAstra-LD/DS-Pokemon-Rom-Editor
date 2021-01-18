@@ -462,37 +462,24 @@ namespace DSPRE {
                 case "D":
                 case "P":
                 case "Plat":
-                    flag1CheckBox.Text = "Fly";
-                    flag2CheckBox.Text = "Escape Rope";
-                    flag3CheckBox.Text = "Run";
+                    flag7CheckBox.Text = "Fly";
+                    flag6CheckBox.Text = "Escape Rope";
+                    flag5CheckBox.Text = "Run";
                     flag4CheckBox.Text = "Bike";
-                    flag5CheckBox.Text = "Battle BG b4";
-                    flag6CheckBox.Text = "Battle BG b3";
-                    flag7CheckBox.Text = "Battle BG b2";
-                    flag8CheckBox.Text = "Battle BG b1";
+                    flag3CheckBox.Text = "Battle BG b4";
+                    flag2CheckBox.Text = "Battle BG b3";
+                    flag1CheckBox.Text = "Battle BG b2";
+                    flag0CheckBox.Text = "Battle BG b1";
                     break;
                 default:
-                    flag1CheckBox.Text = "Flag 1";
-                    flag2CheckBox.Text = "Flag 2";
-                    flag3CheckBox.Text = "Flag 3";
-                    flag4CheckBox.Text = "Fly";
-                    flag5CheckBox.Text = "Escape Rope";
+                    flag7CheckBox.Text = "Flag 7";
                     flag6CheckBox.Text = "Flag 6";
-                    flag7CheckBox.Text = "Bicycle";
-                    flag8CheckBox.Text = "Flag 8";
-                    break;
-            }
-        }
-        private void SetupCameraAndAreaProperties() {
-            switch (romInfo.gameVersion) {
-                case "D":
-                case "P":
-                case "Plat":
-                    areaSettingsComboBox.Visible = false;
-                    areaSettingsLabel.Visible = false;
-                    cameraComboBox.Width = cameraComboBox.Width*2 + 19;
-                    break;
-                default:
+                    flag5CheckBox.Text = "Flag 5";
+                    flag4CheckBox.Text = "Fly";
+                    flag3CheckBox.Text = "Escape Rope";
+                    flag2CheckBox.Text = "Flag 2";
+                    flag1CheckBox.Text = "Bicycle";
+                    flag0CheckBox.Text = "Flag 0";
                     break;
             }
         }
@@ -534,32 +521,34 @@ namespace DSPRE {
             }
 
             /*Add list of options to each control */
-            mapNameComboBox.Items.AddRange(LoadMessageArchive(romInfo.GetMapNamesTextNumber()).messages.ToArray());
+            locationNameComboBox.Items.AddRange(LoadMessageArchive(romInfo.GetMapNamesTextNumber()).messages.ToArray());
             HeaderDatabase headerInfo = new HeaderDatabase();
             switch (romInfo.gameVersion) {
                 case "D":
                 case "P":
                     areaIconComboBox.Enabled = false;
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("dpareaicon");
+                    areaSettingsLabel.Text = "Show nametag:";
                     cameraComboBox.Items.AddRange(headerInfo.DPPtCameraValues);
                     musicDayComboBox.Items.AddRange(headerInfo.DPMusicValues);
                     musicNightComboBox.Items.AddRange(headerInfo.DPMusicValues);
-                    showNameComboBox.Items.AddRange(headerInfo.DPShowNameValues);
+                    areaSettingsComboBox.Items.AddRange(headerInfo.DPShowNameValues);
                     weatherComboBox.Items.AddRange(headerInfo.DPWeatherValues);
                     break;
                 case "Plat":
                     areaIconComboBox.Items.AddRange(headerInfo.PtAreaIconValues);
+                    areaSettingsLabel.Text = "Show nametag:";
                     cameraComboBox.Items.AddRange(headerInfo.DPPtCameraValues);
                     musicDayComboBox.Items.AddRange(headerInfo.PtMusicValues);
                     musicNightComboBox.Items.AddRange(headerInfo.PtMusicValues);
-                    showNameComboBox.Items.AddRange(headerInfo.PtShowNameValues);
+                    areaSettingsComboBox.Items.AddRange(headerInfo.PtShowNameValues);
                     weatherComboBox.Items.AddRange(headerInfo.PtWeatherValues);
                     break;
                 default:
-                    showNameComboBox.Enabled = false;
                     areaIconComboBox.Items.AddRange(headerInfo.HGSSAreaIconValues);
                     cameraComboBox.Items.AddRange(headerInfo.HGSSCameraValues);
                     areaSettingsComboBox.Items.AddRange(headerInfo.HGSSAreaProperties);
+                    areaSettingsLabel.Text = "Area Settings:";
                     musicDayComboBox.Items.AddRange(headerInfo.HGSSMusicValues);
                     musicNightComboBox.Items.AddRange(headerInfo.HGSSMusicValues);
                     weatherComboBox.Items.AddRange(headerInfo.HGSSWeatherValues);
@@ -1019,7 +1008,7 @@ namespace DSPRE {
                 editor.ShowDialog();
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.6d" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.7" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who owes credit for SDSME." + Environment.NewLine +
                 "Special thanks go to Trifindo, Mikelan98, BagBoy, and JackHack96, whose help, research and expertise in the field of NDS Rom Hacking made the development of this tool possible.";
 
@@ -1109,7 +1098,6 @@ namespace DSPRE {
 
             /* Setup essential editors */
             SetupFlagNames();
-            SetupCameraAndAreaProperties();
             SetupHeaderEditor();
             eventOpenGlControl.InitializeContexts();
             mapOpenGlControl.InitializeContexts();
@@ -1412,7 +1400,8 @@ namespace DSPRE {
             }
         }
         private void cameraComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             string imageName;
             try {
@@ -1447,36 +1436,25 @@ namespace DSPRE {
             }
         }
         private void eventFileUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentHeader.eventID = (ushort)eventFileUpDown.Value;
         }
         private void headerFlagsCheckBoxes_CheckedChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
 
-            int n;
+            int i = 7;
+            byte flagVal = 0;
+            foreach(Control c in flagsGroupBox.Controls) {
+                try {
+                    if (((CheckBox)c).Checked == true)
+                        flagVal += (byte)Math.Pow(2, i);
+                    i--;
+                } catch (InvalidCastException) { }
+            }
 
-            if (sender == flag7CheckBox)
-                n = 7;
-            else if (sender == flag6CheckBox)
-                n = 6;
-            else if (sender == flag5CheckBox)
-                n = 5;
-            else if (sender == flag4CheckBox)
-                n = 4;
-            else if (sender == flag3CheckBox)
-                n = 3;
-            else if (sender == flag2CheckBox)
-                n = 2;
-            else if (sender == flag1CheckBox)
-                n = 1;
-            else
-                n = 0;
-
-            /* Toggle flag-specific bit */
-            int flags = currentHeader.flags;
-            flags ^= 1 << n;
-            currentHeader.flags = (byte)flags;
+            currentHeader.flags = flagVal;
         }
         private void headerListBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers)
@@ -1508,41 +1486,48 @@ namespace DSPRE {
                 openWildEditorWithIdButton.Enabled = true;
 
             /* Flags */
-            int i = 7;
-            disableHandlers = true;
-            foreach (Control cBox in flagsGroupBox.Controls) {
-                ((CheckBox)cBox).Checked = false;
-
-                if ((currentHeader.flags & (1 << i)) != 0)
-                    ((CheckBox)cBox).Checked = true;
-                i--;
-            }
-            disableHandlers = false;
+            refreshFlags();
 
             /* Setup controls for fields with gameVersion-specific differences */
             switch (romInfo.gameVersion) {
                 case "D":
                 case "P":
-                    mapNameComboBox.SelectedIndex = ((HeaderDP)currentHeader).mapName;
+                    locationNameComboBox.SelectedIndex = ((HeaderDP)currentHeader).mapName;
                     musicDayComboBox.SelectedIndex = musicDayComboBox.FindString("[" + ((HeaderDP)currentHeader).musicDay.ToString());
                     musicNightComboBox.SelectedIndex = musicNightComboBox.FindString("[" + ((HeaderDP)currentHeader).musicNight.ToString());
-                    showNameComboBox.SelectedIndex = showNameComboBox.FindString("[" + $"{currentHeader.showName:D3}");
+                    areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.showName:D3}");
                     break;
                 case "Plat":
                     areaIconComboBox.SelectedIndex = ((HeaderPt)currentHeader).areaIcon;
-                    mapNameComboBox.SelectedIndex = ((HeaderPt)currentHeader).mapName;
+                    locationNameComboBox.SelectedIndex = ((HeaderPt)currentHeader).mapName;
                     musicDayComboBox.SelectedIndex = musicDayComboBox.FindString("[" + ((HeaderPt)currentHeader).musicDay.ToString());
                     musicNightComboBox.SelectedIndex = musicNightComboBox.FindString("[" + ((HeaderPt)currentHeader).musicNight.ToString());
-                    showNameComboBox.SelectedIndex = showNameComboBox.FindString("[" + $"{currentHeader.showName:D3}");
+                    areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.showName:D3}");
                     break;
                 default:
                     areaIconComboBox.SelectedIndex = areaIconComboBox.FindString("[" + $"{((HeaderHGSS)currentHeader).areaIcon:D3}");
-                    mapNameComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).mapName;
+                    locationNameComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).mapName;
                     musicDayComboBox.SelectedIndex = musicDayComboBox.FindString("[" + ((HeaderHGSS)currentHeader).musicDay.ToString());
                     musicNightComboBox.SelectedIndex = musicNightComboBox.FindString("[" + ((HeaderHGSS)currentHeader).musicNight.ToString());
                     break;
             }
         }
+
+        private void refreshFlags() {
+            int i = 7;
+            disableHandlers = true;
+            foreach (Control cBox in flagsGroupBox.Controls) {
+                try {
+                    if ((currentHeader.flags & (1 << i)) != 0)
+                        ((CheckBox)cBox).Checked = true;
+                    else
+                        ((CheckBox)cBox).Checked = false;
+                    i--;
+                } catch (InvalidCastException) { }
+            }
+            disableHandlers = false;
+        }
+
         private void eventsTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (eventsTabControl.SelectedTab == signsTabPage) {
                 if (spawnablesListBox.Items.Count > 0)
@@ -1575,13 +1560,13 @@ namespace DSPRE {
             switch (romInfo.gameVersion) {
                 case "D":
                 case "P":
-                    ((HeaderDP)currentHeader).mapName = (ushort)mapNameComboBox.SelectedIndex;
+                    ((HeaderDP)currentHeader).mapName = (ushort)locationNameComboBox.SelectedIndex;
                     break;
                 case "Plat":
-                    ((HeaderPt)currentHeader).mapName = (byte)mapNameComboBox.SelectedIndex;
+                    ((HeaderPt)currentHeader).mapName = (byte)locationNameComboBox.SelectedIndex;
                     break;
                 default:
-                    ((HeaderHGSS)currentHeader).mapName = (byte)mapNameComboBox.SelectedIndex;
+                    ((HeaderHGSS)currentHeader).mapName = (byte)locationNameComboBox.SelectedIndex;
                     break;
             }
         }
@@ -1756,11 +1741,13 @@ namespace DSPRE {
                 writer.Write(  Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0'))  );
                 updateHeaderNameShown(headerListBox.SelectedIndex, internalNameBox.Text);
             }
+
+            headerListBox.Focus();
             disableHandlers = false;
         }
 
-        private void updateHeaderNameShown(int selectedIndex, string text) {
-            headerListBox.Items[selectedIndex] = selectedIndex.ToString("D3") + headerNamesSeparator + text;
+        private void updateHeaderNameShown(int SelectedIndex, string text) {
+            headerListBox.Items[SelectedIndex] = SelectedIndex.ToString("D3") + headerNamesSeparator + text;
         }
 
         private void resetButton_Click(object sender, EventArgs e) {
@@ -1796,7 +1783,7 @@ namespace DSPRE {
                     case "D":
                     case "P":
                         for (int i = 0; i < internalNames.Count; i++) {
-                            String locationName = mapNameComboBox.Items[((HeaderDP)LoadHeader(i)).mapName].ToString();
+                            String locationName = locationNameComboBox.Items[((HeaderDP)LoadHeader(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalNames[i]);
                                 empty = false;
@@ -1805,7 +1792,7 @@ namespace DSPRE {
                         break;
                     case "Plat":
                         for (int i = 0; i < internalNames.Count; i++) {
-                            String locationName = mapNameComboBox.Items[((HeaderPt)LoadHeader(i)).mapName].ToString();
+                            String locationName = locationNameComboBox.Items[((HeaderPt)LoadHeader(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalNames[i]);
                                 empty = false;
@@ -1815,7 +1802,7 @@ namespace DSPRE {
                     case "HG":
                     case "SS":
                         for (int i = 0; i < internalNames.Count; i++) {
-                            String locationName = mapNameComboBox.Items[((HeaderHGSS)LoadHeader(i)).mapName].ToString();
+                            String locationName = locationNameComboBox.Items[((HeaderHGSS)LoadHeader(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalNames[i]);
                                 empty = false;
@@ -1840,17 +1827,37 @@ namespace DSPRE {
                 return;
             currentHeader.script = (ushort)scriptFileUpDown.Value;
         }
-        private void showNameComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || showNameComboBox.SelectedItem == null)
+        private void areaSettingsComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (disableHandlers || areaSettingsComboBox.SelectedItem == null)
                 return;
-            currentHeader.showName = Byte.Parse(showNameComboBox.SelectedItem.ToString().Substring(1, 3));
+
+            switch (romInfo.gameVersion) {
+                case "D":
+                case "P":
+                case "Plat":
+                    currentHeader.showName = Byte.Parse(areaSettingsComboBox.SelectedItem.ToString().Substring(1, 3));
+                    break;
+                case "HG":
+                case "SS":
+                    currentHeader.areaSettings = (byte)areaSettingsComboBox.SelectedIndex;
+                    if (currentHeader.areaSettings == 4) {
+                        areaIconComboBox.Enabled = false;
+                        areaIconPictureBox.Enabled = false;
+                    } else {
+                        areaIconComboBox.Enabled = true;
+                        areaIconPictureBox.Enabled = true;
+                    }
+                    break;
+            }
         }
         private void textFileUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentHeader.text = (ushort)textFileUpDown.Value;
         }
         private void weatherComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             currentHeader.weather = Byte.Parse(weatherComboBox.SelectedItem.ToString().Substring(1, 2));
 
@@ -1880,6 +1887,204 @@ namespace DSPRE {
                 openWildEditorWithIdButton.Enabled = false;
             else
                 openWildEditorWithIdButton.Enabled = true;
+        }
+
+
+        /*Copy Paste Functions*/
+        #region Variables
+        int locationNameCopy;
+        string internalNameCopy;
+        decimal encountersIDCopy;
+        int shownameCopy;
+        int areaIconCopy;
+
+        int musicdayCopy;
+        int musicnightCopy;
+        int weatherCopy;
+        int camAngleCopy;
+        int areaSettingsCopy;
+
+        decimal scriptsCopy;
+        decimal levelScriptsCopy;
+        decimal eventsCopy;
+        decimal textsCopy;
+
+        decimal matrixCopy;
+        decimal areadataCopy;
+
+        byte flagsCopy;
+
+        #endregion
+        private void copyHeaderButton_Click(object sender, EventArgs e) {
+            locationNameCopy = locationNameComboBox.SelectedIndex;
+            internalNameCopy = internalNameBox.Text;
+            encountersIDCopy = wildPokeUpDown.Value;
+            shownameCopy = areaSettingsComboBox.SelectedIndex;
+            areaIconCopy = areaIconComboBox.SelectedIndex;
+            areaSettingsCopy = areaSettingsComboBox.SelectedIndex;
+
+            musicdayCopy = musicDayComboBox.SelectedIndex;
+            musicnightCopy = musicNightComboBox.SelectedIndex;
+            weatherCopy = weatherComboBox.SelectedIndex;
+            camAngleCopy = cameraComboBox.SelectedIndex;
+
+            scriptsCopy = scriptFileUpDown.Value;
+            levelScriptsCopy = levelScriptUpDown.Value;
+            eventsCopy = eventFileUpDown.Value;
+            textsCopy = textFileUpDown.Value;
+
+            matrixCopy = matrixUpDown.Value;
+            areadataCopy = areaDataUpDown.Value;
+
+            /*Enable paste buttons*/
+            pasteHeaderButton.Enabled = true;
+
+            pasteScriptsButton.Enabled = true;
+            pasteLevelScriptsButton.Enabled = true;
+            pasteEventsButton.Enabled = true;
+            pasteTextsButton.Enabled = true;
+
+            pasteMatrixButton.Enabled = true;
+            pasteAreaDataButton.Enabled = true;
+        }
+        private void copyInternalNameButton_Click(object sender, EventArgs e) {
+            internalNameCopy = internalNameBox.Text;
+            Clipboard.SetData(DataFormats.Text, internalNameCopy);
+            pasteInternalNameButton.Enabled = true;
+        }
+        private void copyLocationNameButton_Click(object sender, EventArgs e) {
+            locationNameCopy = locationNameComboBox.SelectedIndex;
+            pasteLocationNameButton.Enabled = true;
+        }
+        private void copyAreaSettingsButton_Click(object sender, EventArgs e) { 
+            areaSettingsCopy = areaSettingsComboBox.SelectedIndex;
+            pasteAreaSettingsButton.Enabled = true;
+        }
+        private void copyAreaIconButton_Click(object sender, EventArgs e) {
+            areaIconCopy = areaIconComboBox.SelectedIndex;
+            pasteAreaIconButton.Enabled = true;
+        }
+        private void copyMusicDayButton_Click(object sender, EventArgs e) {
+            musicdayCopy = musicDayComboBox.SelectedIndex;
+            pasteMusicDayButton.Enabled = true;
+        }
+        private void copyWeatherButton_Click(object sender, EventArgs e) {
+            weatherCopy = weatherComboBox.SelectedIndex;
+            pasteWeatherButton.Enabled = true;
+        }
+        private void copyMusicNightButton_Click(object sender, EventArgs e) {
+            musicnightCopy = musicNightComboBox.SelectedIndex;
+            pasteMusicNightButton.Enabled = true;
+        }
+        private void copyCameraAngleButton_Click(object sender, EventArgs e) {
+            camAngleCopy = cameraComboBox.SelectedIndex;
+            pasteCameraAngleButton.Enabled = true;
+        }
+        private void copyScriptsButton_Click(object sender, EventArgs e) {
+            scriptsCopy = scriptFileUpDown.Value;
+            Clipboard.SetData(DataFormats.Text, scriptsCopy);
+            pasteScriptsButton.Enabled = true;
+        }
+        private void copyLevelScriptsButton_Click(object sender, EventArgs e) {
+            levelScriptsCopy = levelScriptUpDown.Value;
+            Clipboard.SetData(DataFormats.Text, levelScriptsCopy);
+            pasteLevelScriptsButton.Enabled = true;
+        }
+        private void copyEventsButton_Click(object sender, EventArgs e) {
+            eventsCopy = eventFileUpDown.Value;
+            Clipboard.SetData(DataFormats.Text, eventsCopy);
+            copyEventsButton.Enabled = true;
+        }
+
+        private void copyTextsButton_Click(object sender, EventArgs e) {
+            textsCopy = textFileUpDown.Value;
+            Clipboard.SetData(DataFormats.Text, textsCopy);
+            pasteTextsButton.Enabled = true;
+        }
+
+        private void copyMatrixButton_Click(object sender, EventArgs e) {
+            matrixCopy = matrixUpDown.Value;
+            Clipboard.SetData(DataFormats.Text, matrixCopy);
+            pasteMatrixButton.Enabled = true;
+        }
+
+        private void copyAreaDataButton_Click(object sender, EventArgs e) {
+            areadataCopy = areaDataUpDown.Value;
+            Clipboard.SetData(DataFormats.Text, areadataCopy);
+            pasteAreaDataButton.Enabled = true;
+        }
+        private void copyFlagsButton_Click(object sender, EventArgs e) {
+            flagsCopy = currentHeader.flags;
+            pasteFlagsButton.Enabled = true;
+        }
+
+        /* Paste Buttons */
+        private void pasteHeaderButton_Click(object sender, EventArgs e) {
+            locationNameComboBox.SelectedIndex = locationNameCopy;
+            internalNameBox.Text = internalNameCopy;
+            wildPokeUpDown.Value = encountersIDCopy;
+            areaSettingsComboBox.SelectedIndex = shownameCopy;
+            areaIconComboBox.SelectedIndex = areaIconCopy;
+
+            musicDayComboBox.SelectedIndex = musicdayCopy;
+            musicNightComboBox.SelectedIndex = musicnightCopy;
+            weatherComboBox.SelectedIndex = weatherCopy;
+            cameraComboBox.SelectedIndex = camAngleCopy;
+
+            scriptFileUpDown.Value = scriptsCopy;
+            levelScriptUpDown.Value = levelScriptsCopy;
+            eventFileUpDown.Value = eventsCopy;
+            textFileUpDown.Value = textsCopy;
+
+            matrixUpDown.Value = matrixCopy;
+            areaDataUpDown.Value = areadataCopy;
+        }
+        private void pasteInternalNameButton_Click(object sender, EventArgs e) {
+            internalNameBox.Text = internalNameCopy;
+        }
+        private void pasteLocationNameButton_Click(object sender, EventArgs e) {
+            locationNameComboBox.SelectedIndex = locationNameCopy;
+        }
+        private void pasteAreaSettingsButton_Click(object sender, EventArgs e) {
+            areaSettingsComboBox.SelectedIndex = shownameCopy;
+        }
+        private void pasteAreaIconButton_Click(object sender, EventArgs e) {
+            if (areaIconComboBox.Enabled)
+                areaIconComboBox.SelectedIndex = areaIconCopy;
+        }
+        private void pasteMusicDayButton_Click(object sender, EventArgs e) {
+            musicDayComboBox.SelectedIndex = musicdayCopy;
+        }
+        private void pasteScriptsButton_Click(object sender, EventArgs e) {
+            scriptFileUpDown.Value = scriptsCopy;
+        }
+        private void pasteLevelScriptsButton_Click(object sender, EventArgs e) {
+            levelScriptUpDown.Value = levelScriptsCopy;
+        }
+        private void pasteEventsButton_Click(object sender, EventArgs e) {
+            eventFileUpDown.Value = eventsCopy;
+        }
+        private void pasteTextsButton_Click(object sender, EventArgs e) {
+            textFileUpDown.Value = textsCopy;
+        }
+        private void pasteMatrixButton_Click(object sender, EventArgs e) {
+            matrixUpDown.Value = matrixCopy;
+        }
+        private void pasteAreaDataButton_Click(object sender, EventArgs e) {
+            areaDataUpDown.Value = areadataCopy;
+        }
+        private void pasteWeatherButton_Click(object sender, EventArgs e) {
+            weatherComboBox.SelectedIndex = weatherCopy;
+        }
+        private void pasteMusicNightButton_Click(object sender, EventArgs e) {
+            musicNightComboBox.SelectedIndex = musicnightCopy;
+        }
+        private void pasteCameraAngleButton_Click(object sender, EventArgs e) {
+            cameraComboBox.SelectedIndex = camAngleCopy;
+        }
+        private void pasteFlagsButton_Click(object sender, EventArgs e) {
+            currentHeader.flags = flagsCopy;
+            refreshFlags();
         }
         #endregion
 
@@ -5568,5 +5773,6 @@ namespace DSPRE {
 
 
         #endregion
+
     }
 }
