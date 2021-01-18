@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
 using System;
+using System.Drawing;
 
 namespace DSPRE {
 
@@ -45,6 +46,7 @@ namespace DSPRE {
 
         public readonly int internalNameLength = 16;
         public string internalNamesLocation { get; private set; }
+        public Dictionary<List<uint>, Tuple<Color, Color>> mapCellsColorDictionary { get; private set; }
 
 
         #region Constructors (1)
@@ -85,6 +87,9 @@ namespace DSPRE {
             SetItemNamesTextNumber();
 
             SetNarcDirs();
+
+            /* System */
+            SetMapCellsColorDictionary();
         }
         #endregion
 
@@ -580,6 +585,22 @@ namespace DSPRE {
         }
         public int GetScriptCount() {
             return Directory.GetFiles(scriptDirPath).Length;
+        }
+        #endregion
+
+        #region System Methods
+        private void SetMapCellsColorDictionary() {
+            switch (gameVersion) {
+                case "D":
+                case "P":
+                case "Plat":
+                    mapCellsColorDictionary = PokeDatabase.MatrixCellColors.mapColorsDPPt;
+                    break;
+                case "HG":
+                case "SS":
+                    mapCellsColorDictionary = PokeDatabase.MatrixCellColors.mapColorsHGSS;
+                    break;
+            }
         }
         #endregion
     }

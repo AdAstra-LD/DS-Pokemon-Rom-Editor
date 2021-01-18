@@ -134,25 +134,23 @@ namespace DSPRE {
         }
 
         public TextArchive LoadMessageArchive(int fileID) {
-            TextArchive ta = null;
             try {
-                ta = new TextArchive(new FileStream(romInfo.textArchivesPath + "\\" + fileID.ToString("D4"), FileMode.Open));
+                return new TextArchive(new FileStream(romInfo.textArchivesPath + "\\" + fileID.ToString("D4"), FileMode.Open));
             } catch (FileNotFoundException) {
                 MessageBox.Show("Text archive not found.\n", "Can't load text", MessageBoxButtons.OK, MessageBoxIcon.Error);
             } catch (IOException) {
                 MessageBox.Show("Couldn't access text archive.\n", "Can't load text", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return ta;
+            return null;
         }
 
-        private EventFile LoadEventFile(int fileID) {
-            EventFile ev = null;
+        private EventFile LoadEventFile(int fileID) { 
             try {
-                ev = new EventFile(new FileStream(romInfo.eventsDirPath + "\\" + fileID.ToString("D4"), FileMode.Open));
+                return new EventFile(new FileStream(romInfo.eventsDirPath + "\\" + fileID.ToString("D4"), FileMode.Open));
             } catch (FileNotFoundException) {
                 MessageBox.Show("Event file not found.\n", "Can't load event", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return ev;
+            return null;
         }
 
         private void PaintGameIcon(object sender, PaintEventArgs e) {
@@ -354,81 +352,7 @@ namespace DSPRE {
             owItemComboBox.Items.AddRange(GetItemNames(0, count));
 
             /* Add ow movement list to box */
-            owMovementComboBox.Items.AddRange(new string[]
-                {
-                    "[00]  None",
-                    "[01]  None",
-                    "[02]  Looking in all directions",
-                    "[03]  Walking around in all directions",
-                    "[04]  Walking Up, Down",
-                    "[05]  Walking Left, Right",
-                    "[06]  Looking Up, Left",
-                    "[07]  Looking Up, Right",
-                    "[08]  Looking Down, Left",
-                    "[09]  Looking Down, Right",
-                    "[10]  Looking Up, Down, Left",
-                    "[11]  Looking Up, Right, Down",
-                    "[12]  Looking Right, Left, Up",
-                    "[13]  Looking Right, Left, Down",
-                    "[14]  Facing Up",
-                    "[15]  Facing Down",
-                    "[16]  Facing Left",
-                    "[17]  Facing Right",
-                    "[18]  Counterclockwise spinning",
-                    "[19]  Clockwise spinning",
-                    "[20]  Running Up, Down",
-                    "[21]  L Run (Up, Right)",
-                    "[22]  Patrols Area, then stops",
-                    "[23]  Patrols Area, then stops",
-                    "[24]  L Run (Up, Right)",
-                    "[25]  Patrols Area, then stops",
-                    "[26]  Patrols Area, then stops",
-                    "[27]  Patrols Area, then stops",
-                    "[28]  L run (Right, Down)",
-                    "[29]  L run (Left, Up)",
-                    "[30]  Continuous patrolling",
-                    "[31]  Continuous patrolling",
-                    "[32]  L Run (Down, Right)",
-                    "[33]  L Run (Right, Up)",
-                    "[34]  Patrols Area, then stops",
-                    "[35]  Patrols Area, then stops",
-                    "[36]  L Run (Down, Left)",
-                    "[37]  Running Up, Left, Down, Right",
-                    "[38]  Running Down, Right, Up, Left",
-                    "[39]  Running Left, Down, Right, Up",
-                    "[40]  Running Right, Up, Left, Down",
-                    "[41]  Running Up, Right, Down, Left",
-                    "[42]  Running Down, Left, Up, Right",
-                    "[43]  Running Left, Up, Right, Down",
-                    "[44]  Running Right, Down, Left, Up",
-                    "[45]  Looking Up, Down",
-                    "[46]  Looking Right, Left",
-                    "[47]  ?",
-                    "[48]  Follow Hero",
-                    "[49]  Semi-circle spin (Down, Right, Up)",
-                    "[50]  ?",
-                    "[51]  Hidden Under Snow",
-                    "[52]  Hidden Under Snow",
-                    "[53]  Hidden Underground",
-                    "[54]  Hidden Under Grass",
-                    "[55]  Mimicks Player (moves within range)",
-                    "[56]  Mimicks Player (moves within range)",
-                    "[57]  Mimicks Player (moves within range)",
-                    "[58]  Mimicks Player (moves within range)",
-                    "[59]  Mimick's Player facing direction",
-                    "[60]  Mimick's Player facing direction",
-                    "[61]  Mimick's Player facing direction",
-                    "[62]  Mimick's Player facing direction",
-                    "[63]  Jogging on the spot",
-                    "[64]  Jogging on the spot",
-                    "[65]  Jogging on the spot",
-                    "[66]  Jogging on the spot",
-                    "[67]  Walking Right, Left",
-                    "[68]  Looking Right",
-                    "[69]  ?",
-                    "[70]  ?",
-                    "[71]  Looking Left"
-                });
+            owMovementComboBox.Items.AddRange(PokeDatabase.ScriptMovements.moveArray);
 
             /* Create dictionary for 3D overworlds */
             switch (romInfo.gameVersion) {
@@ -532,8 +456,8 @@ namespace DSPRE {
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("dpareaicon");
                     areaSettingsLabel.Text = "Show nametag:";
                     cameraComboBox.Items.AddRange(headerInfo.DPPtCameraValues);
-                    musicDayComboBox.Items.AddRange(headerInfo.DPMusicValues);
-                    musicNightComboBox.Items.AddRange(headerInfo.DPMusicValues);
+                    musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicValues.Values.ToArray());
+                    musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicValues.Values.ToArray());
                     areaSettingsComboBox.Items.AddRange(headerInfo.DPShowNameValues);
                     weatherComboBox.Items.AddRange(headerInfo.DPWeatherValues);
                     break;
@@ -541,8 +465,8 @@ namespace DSPRE {
                     areaIconComboBox.Items.AddRange(headerInfo.PtAreaIconValues);
                     areaSettingsLabel.Text = "Show nametag:";
                     cameraComboBox.Items.AddRange(headerInfo.DPPtCameraValues);
-                    musicDayComboBox.Items.AddRange(headerInfo.PtMusicValues);
-                    musicNightComboBox.Items.AddRange(headerInfo.PtMusicValues);
+                    musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicValues.Values.ToArray());
+                    musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicValues.Values.ToArray());
                     areaSettingsComboBox.Items.AddRange(headerInfo.PtShowNameValues);
                     weatherComboBox.Items.AddRange(headerInfo.PtWeatherValues);
                     break;
@@ -551,8 +475,8 @@ namespace DSPRE {
                     cameraComboBox.Items.AddRange(headerInfo.HGSSCameraValues);
                     areaSettingsComboBox.Items.AddRange(headerInfo.HGSSAreaProperties);
                     areaSettingsLabel.Text = "Area Settings:";
-                    musicDayComboBox.Items.AddRange(headerInfo.HGSSMusicValues);
-                    musicNightComboBox.Items.AddRange(headerInfo.HGSSMusicValues);
+                    musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicValues.Values.ToArray());
+                    musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicValues.Values.ToArray());
                     weatherComboBox.Items.AddRange(headerInfo.HGSSWeatherValues);
                     break;
             }
@@ -791,40 +715,6 @@ namespace DSPRE {
             selectMatrixComboBox.Items.Add("Matrix 0 - Main");
             for (int i = 1; i < romInfo.GetMatrixCount(); i++)
                 selectMatrixComboBox.Items.Add("Matrix " + i);
-
-            /* Initialize dictionary of colors corresponding to border maps in the matrix editor */
-            switch (romInfo.gameVersion) {
-                case "D":
-                case "P":
-                case "Plat":
-                    mapColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>>() {
-                        [new List<uint> { 173, 176, 177, 179 }] = Tuple.Create(Color.ForestGreen, Color.White),
-                        [new List<uint> { 174 }] = Tuple.Create(Color.SteelBlue, Color.White),
-                        [new List<uint> { 175 }] = Tuple.Create(Color.Sienna, Color.White),
-                        [new List<uint> { 178 }] = Tuple.Create(Color.PowderBlue, Color.Black),
-                        [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
-                    };
-                    break;
-                case "HG":
-                case "SS":
-                    mapColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>>() {
-                        [new List<uint> { 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
-                        [new List<uint> { 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
-                        [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
-                        [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
-                    };
-                    break;
-                default:
-                    mapColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>>() {
-                        [new List<uint> { 203 }] = Tuple.Create(Color.FromArgb(80, 200, 16), Color.White),
-                        [new List<uint> { 204, 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
-                        [new List<uint> { 205, 206 }] = Tuple.Create(Color.DarkGreen, Color.White),
-                        [new List<uint> { 207, 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
-                        [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
-                        [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
-                    };
-                    break;
-            }
 
             disableHandlers = false;
             selectMatrixComboBox.SelectedIndex = 0;
@@ -1303,56 +1193,6 @@ namespace DSPRE {
             [8] = "hgssforest",
             [9] = "hgsswater",
         };
-        public Dictionary<int, string> dpweatherImageDict = new Dictionary<int, string>() {
-            [0] = "dpnormal",
-            [1] = "dpcloudy",
-            [2] = "dprain",
-            [3] = "dpheavyrain",
-            [4] = "dpthunderstorm",
-            [5] = "dpsnowslow",
-            [6] = "dpdiamondsnow",
-            [7] = "dpblizzard",
-            [8] = "dpsandfall",
-            [9] = "dpsandstorm",
-            [10] = "dphail",
-            [11] = "dprocksascending",
-            [12] = "dpfog",
-            [13] = "dpfog",
-            [14] = "dpdark",
-            [15] = "dplightning",
-            [16] = "dplightsandstorm"
-        };
-        public Dictionary<int, string> ptweatherImageDict = new Dictionary<int, string>() {
-            [0] = "ptnormal",
-            [1] = "ptcloudy",
-            [2] = "ptrain",
-            [3] = "ptheavyrain",
-            [4] = "ptthunderstorm",
-            [5] = "ptsnowslow",
-            [6] = "ptDsnow",
-            [7] = "ptblizzard",
-            [8] = "ptsandfall",
-            [9] = "ptsandstorm",
-            [10] = "pthail",
-            [11] = "ptrocksascending",
-            [12] = "ptfog",
-            [13] = "ptfog",
-            [14] = "ptdark",
-            [15] = "ptlightning",
-            [16] = "ptlightsandstorm",
-            [17] = "ptforestweather",
-            [18] = "ptspotlight",
-            [19] = "ptspotlight"
-        };
-        public Dictionary<int, string> hgssweatherImageDict = new Dictionary<int, string>() {
-            [0] = "hgssnormal",
-            [1] = "hgssrain",
-            [2] = "hgsssnow",
-            [3] = "hgsshail",
-            [4] = "hgssfog",
-            [5] = "hgssdark",
-            [6] = "hgssdark2"
-        };
         #endregion
 
         #region Subroutines
@@ -1484,22 +1324,22 @@ namespace DSPRE {
                 case "D":
                 case "P":
                     locationNameComboBox.SelectedIndex = ((HeaderDP)currentHeader).mapName;
-                    musicDayComboBox.SelectedIndex = musicDayComboBox.FindString("[" + ((HeaderDP)currentHeader).musicDay.ToString());
-                    musicNightComboBox.SelectedIndex = musicNightComboBox.FindString("[" + ((HeaderDP)currentHeader).musicNight.ToString());
+                    musicDayUpDown.Value = ((HeaderDP)currentHeader).musicDay;
+                    musicNightUpDown.Value = ((HeaderDP)currentHeader).musicNight;
                     areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.showName:D3}");
                     break;
                 case "Plat":
                     areaIconComboBox.SelectedIndex = ((HeaderPt)currentHeader).areaIcon;
                     locationNameComboBox.SelectedIndex = ((HeaderPt)currentHeader).mapName;
-                    musicDayComboBox.SelectedIndex = musicDayComboBox.FindString("[" + ((HeaderPt)currentHeader).musicDay.ToString());
-                    musicNightComboBox.SelectedIndex = musicNightComboBox.FindString("[" + ((HeaderPt)currentHeader).musicNight.ToString());
+                    musicDayUpDown.Value = ((HeaderPt)currentHeader).musicDay;
+                    musicNightUpDown.Value = ((HeaderPt)currentHeader).musicNight; 
                     areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.showName:D3}");
                     break;
                 default:
                     areaIconComboBox.SelectedIndex = areaIconComboBox.FindString("[" + $"{((HeaderHGSS)currentHeader).areaIcon:D3}");
                     locationNameComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).mapName;
-                    musicDayComboBox.SelectedIndex = musicDayComboBox.FindString("[" + ((HeaderHGSS)currentHeader).musicDay.ToString());
-                    musicNightComboBox.SelectedIndex = musicNightComboBox.FindString("[" + ((HeaderHGSS)currentHeader).musicNight.ToString());
+                    musicDayUpDown.Value = ((HeaderHGSS)currentHeader).musicDay;
+                    musicNightUpDown.Value = ((HeaderHGSS)currentHeader).musicNight; 
                     break;
             }
         }
@@ -1572,13 +1412,13 @@ namespace DSPRE {
             switch (romInfo.gameVersion) {
                 case "D":
                 case "P":
-                    ((HeaderDP)currentHeader).musicDay = UInt16.Parse(musicDayComboBox.SelectedItem.ToString().Substring(1, 4));
+                    ((HeaderDP)currentHeader).musicDay = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.DPMusicValues.Keys.ElementAt(musicDayComboBox.SelectedIndex));
                     break;
                 case "Plat":
-                    ((HeaderPt)currentHeader).musicDay = UInt16.Parse(musicDayComboBox.SelectedItem.ToString().Substring(1, 4));
+                    ((HeaderPt)currentHeader).musicDay = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.PtMusicValues.Keys.ElementAt(musicDayComboBox.SelectedIndex));
                     break;
                 default:
-                    ((HeaderHGSS)currentHeader).musicDay = UInt16.Parse(musicDayComboBox.SelectedItem.ToString().Substring(1, 4));
+                    ((HeaderHGSS)currentHeader).musicDay = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.HGSSMusicValues.Keys.ElementAt(musicDayComboBox.SelectedIndex));
                     break;
             }
         }
@@ -1589,15 +1429,69 @@ namespace DSPRE {
             switch (romInfo.gameVersion) {
                 case "D":
                 case "P":
-                    ((HeaderDP)currentHeader).musicNight = UInt16.Parse(musicNightComboBox.SelectedItem.ToString().Substring(1, 4));
+                    ((HeaderDP)currentHeader).musicNight = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.DPMusicValues.Keys.ElementAt(musicNightComboBox.SelectedIndex));
                     break;
                 case "Plat":
-                    ((HeaderPt)currentHeader).musicNight = UInt16.Parse(musicNightComboBox.SelectedItem.ToString().Substring(1, 4));
+                    ((HeaderPt)currentHeader).musicNight = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.PtMusicValues.Keys.ElementAt(musicNightComboBox.SelectedIndex));
                     break;
                 default:
-                    ((HeaderHGSS)currentHeader).musicNight = UInt16.Parse(musicNightComboBox.SelectedItem.ToString().Substring(1, 4));
+                    ((HeaderHGSS)currentHeader).musicNight = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.HGSSMusicValues.Keys.ElementAt(musicNightComboBox.SelectedIndex));
                     break;
             }
+        }
+        private void musicDayUpDown_ValueChanged(object sender, EventArgs e) {
+            if (disableHandlers)
+                return;
+
+            disableHandlers = true;
+            try {
+                ushort updValue = (ushort)((NumericUpDown)sender).Value;
+                switch (romInfo.gameVersion) {
+                    case "D":
+                    case "P":
+                        ((HeaderDP)currentHeader).musicDay = updValue;
+                        musicDayComboBox.SelectedItem = PokeDatabase.MusicDB.DPMusicValues[updValue];
+                        break;
+                    case "Plat":
+                        ((HeaderPt)currentHeader).musicDay = updValue;
+                        musicDayComboBox.SelectedItem = PokeDatabase.MusicDB.PtMusicValues[updValue];
+                        break;
+                    default:
+                        ((HeaderHGSS)currentHeader).musicDay = (ushort) ((NumericUpDown)sender).Value;
+                        musicDayComboBox.SelectedItem = PokeDatabase.MusicDB.HGSSMusicValues[updValue];
+                        break;
+                }
+            } catch (KeyNotFoundException) {
+                musicDayComboBox.SelectedItem = null;
+            }
+            disableHandlers = false;
+        }
+        private void musicNightUpDown_ValueChanged(object sender, EventArgs e) {
+            if (disableHandlers)
+                return;
+
+            disableHandlers = true;
+            try {
+                ushort updValue = (ushort)((NumericUpDown)sender).Value;
+                switch (romInfo.gameVersion) {
+                    case "D":
+                    case "P":
+                        ((HeaderDP)currentHeader).musicNight = updValue;
+                        musicNightComboBox.SelectedItem = PokeDatabase.MusicDB.DPMusicValues[updValue];
+                        break;
+                    case "Plat":
+                        ((HeaderPt)currentHeader).musicNight = updValue;
+                        musicNightComboBox.SelectedItem = PokeDatabase.MusicDB.PtMusicValues[updValue];
+                        break;
+                    default:
+                        ((HeaderHGSS)currentHeader).musicNight = updValue;
+                        musicNightComboBox.SelectedItem = PokeDatabase.MusicDB.HGSSMusicValues[updValue];
+                        break;
+                }
+            } catch (KeyNotFoundException) {
+                musicNightComboBox.SelectedItem = null;
+            }
+            disableHandlers = false;
         }
         private void openAreaDataButton_Click(object sender, EventArgs e) {
             if (!tilesetEditorIsReady) {
@@ -1856,13 +1750,13 @@ namespace DSPRE {
             switch (romInfo.gameVersion) {
                 case "D":
                 case "P":
-                    imageName = dpweatherImageDict[weatherComboBox.SelectedIndex];
+                    imageName = PokeDatabase.WeatherPics.dpweatherImageDict[weatherComboBox.SelectedIndex];
                     break;
                 case "Plat":
-                    imageName = ptweatherImageDict[weatherComboBox.SelectedIndex];
+                    imageName = PokeDatabase.WeatherPics.ptweatherImageDict[weatherComboBox.SelectedIndex];
                     break;
                 default:
-                    imageName = hgssweatherImageDict[weatherComboBox.SelectedIndex];
+                    imageName = PokeDatabase.WeatherPics.hgssweatherImageDict[weatherComboBox.SelectedIndex];
                     break;
             }
 
@@ -2083,7 +1977,6 @@ namespace DSPRE {
 
         #region Variables
         Matrix currentMatrix;
-        public Dictionary<List<uint>, Tuple<Color, Color>> mapColorsDict;
         #endregion
 
         #region Subroutines
@@ -2098,8 +1991,9 @@ namespace DSPRE {
             matrixTabControl.TabPages.Remove(heightsTabPage);
         }
         private Tuple<Color, Color> Format_Map_Cell(uint cellValue) {
-            foreach (KeyValuePair<List<uint>, Tuple<Color, Color>> entry in mapColorsDict) {
-                if (entry.Key.Contains(cellValue)) return entry.Value;
+            foreach (KeyValuePair<List<uint>, Tuple<Color, Color>> entry in romInfo.mapCellsColorDictionary) {
+                if (entry.Key.Contains(cellValue)) 
+                    return entry.Value;
             }
             return Tuple.Create(Color.White, Color.Black);
         }
@@ -2150,7 +2044,8 @@ namespace DSPRE {
         #endregion
 
         private void addHeadersButton_Click(object sender, EventArgs e) {
-            if (currentMatrix.hasHeadersSection) return;
+            if (currentMatrix.hasHeadersSection) 
+                return;
             else {
                 currentMatrix.AddHeadersSection();
                 matrixTabControl.TabPages.Add(headersTabPage);
@@ -2180,7 +2075,8 @@ namespace DSPRE {
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) writer.Write(currentMatrix.Save());
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) 
+                writer.Write(currentMatrix.Save());
         }
         private void headersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
             if (headerListBox.Items.Count < internalNames.Count)
