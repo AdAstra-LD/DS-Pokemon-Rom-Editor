@@ -1291,12 +1291,11 @@ namespace DSPRE {
             if (disableHandlers)
                 return;
 
-            int headerNumber = GetHeaderNumberFromListBoxName();
-            currentHeader = LoadHeader(headerNumber);
-
-
             String nameDisplayedInListBox = headerListBox.SelectedItem.ToString();
             int separatorPosition = nameDisplayedInListBox.IndexOf(headerNamesSeparator);
+            int headerNumber = Int32.Parse(nameDisplayedInListBox.Substring(0, separatorPosition));
+            currentHeader = LoadHeader(headerNumber);
+
             /* Setup controls for common fields across headers */
             internalNameBox.Text = nameDisplayedInListBox.Substring(separatorPosition + headerNamesSeparator.Length);
             matrixUpDown.Value = currentHeader.matrix;
@@ -1311,7 +1310,6 @@ namespace DSPRE {
             
             if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS")
                 areaSettingsComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.areaSettings.ToString("D2"));
-
 
             if (currentHeader.wildPokémon == romInfo.nullEncounterID)
                 openWildEditorWithIdButton.Enabled = false;
@@ -1345,13 +1343,6 @@ namespace DSPRE {
                     break;
             }
         }
-
-        private int GetHeaderNumberFromListBoxName() {
-            String nameDisplayedInListBox = headerListBox.SelectedItem.ToString();
-            int separatorPosition = nameDisplayedInListBox.IndexOf(headerNamesSeparator);
-            return Int32.Parse(nameDisplayedInListBox.Substring(0, separatorPosition));
-        }
-
         private void refreshFlags() {
             int i = 7;
             disableHandlers = true;
