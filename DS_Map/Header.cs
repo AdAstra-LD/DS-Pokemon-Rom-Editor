@@ -119,7 +119,7 @@ namespace DSPRE
         public byte unknown1 { get; set; }
         public ushort musicDay { get; set; }
         public ushort musicNight { get; set; }
-        public ushort mapName { get; set; }
+        public ushort locationName { get; set; }
         #endregion Fields
 
         #region Constructors (1)
@@ -138,7 +138,7 @@ namespace DSPRE
                 musicNight = reader.ReadUInt16();
                 wildPokémon = reader.ReadUInt16();
                 eventID = reader.ReadUInt16();
-                mapName = reader.ReadUInt16();
+                locationName = reader.ReadUInt16();
                 weather = StandardizeWeather(reader.ReadByte());
                 camera = reader.ReadByte();
                 showName = reader.ReadByte();
@@ -163,7 +163,7 @@ namespace DSPRE
                 writer.Write(musicNight);
                 writer.Write(wildPokémon);
                 writer.Write(eventID);
-                writer.Write(mapName);
+                writer.Write(locationName);
                 writer.Write(weather);
                 writer.Write(camera);
                 writer.Write(showName);
@@ -467,137 +467,5 @@ namespace DSPRE
             }
         }
         #endregion
-    }
-
-    public class HeaderDatabase
-    {
-        public string[] PtAreaIconValues = new string[]
-        {
-            "[00] City",
-            "[01] City",
-            "[02] Town 1",
-            "[03] Town 2",
-            "[04] Cave",
-            "[05] Forest",
-            "[06] Water",
-            "[07] Field",
-            "[08] Island",
-            "[09] Wood"
-        };
-        public string[] HGSSAreaIconValues = new string[]
-        {
-            "[002] Wood",
-            "[009] Gray",
-            "[017] Wall",
-            "[048] Not displayed",
-            "[131] Town",
-            "[132] Cave",
-            "[135] Field",
-            "[152] Lake",
-            "[165] Forest",
-            "[166] Water"
-        };
-        public string[] HGSSAreaProperties = new string[] {
-            "[00] Unknown",
-            "[01] Unknown",
-            "[02] Unknown",
-            "[03] Cave Animation",
-            "[04] Hide Nametag",
-            "[05] Unknown",
-            "[06] Unknown",
-            "[07] Unknown",
-            "[08] Unknown",
-            "[09] Unknown",
-            "[10] Unknown",
-            "[11] Unknown",
-            "[12] Unknown",
-            "[13] Unknown",
-            "[14] Unknown",
-            "[15] Unknown",
-            "[16] Unknown",
-        };
-        public string[] DPShowNameValues = new string[]
-        {
-            "[000] Show",
-            "[001] Show",
-            "[002] Show",
-            "[003] Show",
-            "[004] Don't show"
-        };
-        public string[] PtShowNameValues = new string[]
-        {
-            "[000] Show",
-            "[001] Show",
-            "[002] Show",
-            "[003] Show",
-            "[004] Don't show",
-            "[128] Don't show",
-            "[129] Show",
-            "[130] Show",
-            "[131] Show",
-            "[132] Don't show",
-            "[134] Show"
-        };
-        public string[] DPWeatherValues = new string[]
-        {
-            "[00] Normal",
-            "[01] Normal, somewhat dark",
-            "[02] Rain",
-            "[03] Heavy rain",
-            "[04] Thunderstorm",
-            "[05] Snowfall, slow",
-            "[06] D dust",
-            "[07] Blizzard",
-            "[09] Volcanic ash fall, slow",
-            "[10] Sand storm",
-            "[11] Hail",
-            "[12] Rocks ascending (?)",
-            "[14] Fog",
-            "[15] Deep fog",
-            "[16] Dark, Flash usable",
-            "[17] Lightning, no rain",
-            "[22] Volcanic ash fall, steady",
-        };
-        public string[] PtWeatherValues = new string[]
-        {
-            "[00] Normal",
-            "[01] Normal, somewhat dark",
-            "[02] Rain",
-            "[03] Heavy rain",
-            "[04] Thunderstorm",
-            "[05] Snowfall, slow",
-            "[06] D dust",
-            "[07] Blizzard",
-            "[09] Volcanic ash fall, slow",
-            "[10] Sand storm",
-            "[11] Hail",
-            "[12] Rocks ascending (?)",
-            "[14] Fog",
-            "[15] Deep fog",
-            "[16] Dark, Flash usable",
-            "[17] Lightning, no rain",
-            "[22] Volcanic ash fall, steady",
-            "[23] Eterna forest weather",
-            "[24] Player in circle of light",
-            "[25] Player in a circle of light",
-        };
-        public string[] HGSSWeatherValues = new string[]
-        {
-            "[00] Normal",
-            "[02] Heavy rain",
-            "[10] D snow",
-            "[16] Hail",
-            "[18] Fog",
-            "[22] Cave Dark",
-            "[24] Cave Dark after flash",
-        };
-
-        #region Constructors (1)
-        public HeaderDatabase()
-        {
-           
-        }
-        #endregion
-
     }
 }

@@ -6,9 +6,180 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DSPRE {
-    public abstract class PokeDatabase {
+    public static class PokeDatabase {
+        public static class Area {
+            public static string[] PtAreaIconValues = new string[] {
+                "[00] City",
+                "[01] City",
+                "[02] Town 1",
+                "[03] Town 2",
+                "[04] Cave",
+                "[05] Forest",
+                "[06] Water",
+                "[07] Field",
+                "[08] Island",
+                "[09] Wood"
+            };
+            public static string[] HGSSAreaIconValues = new string[] {
+                "[002] Wood",
+                "[009] Gray",
+                "[017] Wall",
+                "[048] Not displayed",
+                "[131] Town",
+                "[132] Cave",
+                "[135] Field",
+                "[152] Lake",
+                "[165] Forest",
+                "[166] Water"
+            };
+            public static string[] HGSSAreaProperties = new string[] {
+                "[00] Unknown",
+                "[01] Unknown",
+                "[02] Unknown",
+                "[03] Cave Animation",
+                "[04] Hide Nametag",
+                "[05] Unknown",
+                "[06] Unknown",
+                "[07] Unknown",
+                "[08] Unknown",
+                "[09] Unknown",
+                "[10] Unknown",
+                "[11] Unknown",
+                "[12] Unknown",
+                "[13] Unknown",
+                "[14] Unknown",
+                "[15] Unknown",
+                "[16] Unknown",
+            };
+        }
+        public static class ShowName {
+            public static string[] DPShowNameValues = new string[] {
+                "[000] Show",
+                "[001] Show",
+                "[002] Show",
+                "[003] Show",
+                "[004] Don't show"
+            };
+            public static string[] PtShowNameValues = new string[] {
+                "[000] Show",
+                "[001] Show",
+                "[002] Show",
+                "[003] Show",
+                "[004] Don't show",
+                "[128] Don't show",
+                "[129] Show",
+                "[130] Show",
+                "[131] Show",
+                "[132] Don't show",
+                "[134] Show"
+            };
+        }
+        public static class Weather {
+            public static Dictionary<int, string> DPWeatherDict = new Dictionary<int, string> {
+                [00] = "Normal",
+                [01] = "Normal, somewhat dark",
+                [02] = "Rain",
+                [03] = "Heavy rain",
+                [04] = "Thunderstorm",
+                [05] = "Snowfall, slow",
+                [06] = "Diamond dust",
+                [07] = "Blizzard",
+                [09] = "Volcanic ash fall, slow",
+                [10] = "Sand storm",
+                [11] = "Hail",
+                [12] = "Rocks ascending (?)",
+                [14] = "Fog",
+                [15] = "Deep fog",
+                [16] = "Dark, Flash usable",
+                [17] = "Lightning, no rain",
+                [22] = "Volcanic ash fall, steady",
+            };
+            public static Dictionary<int, string> PtWeatherDict = new Dictionary<int, string> {
+                [00] = "Normal",
+                [01] = "Normal, somewhat dark",
+                [02] = "Rain",
+                [03] = "Heavy rain",
+                [04] = "Thunderstorm",
+                [05] = "Snowfall, slow",
+                [06] = "Diamond dust",
+                [07] = "Blizzard",
+                [09] = "Volcanic ash fall, slow",
+                [10] = "Sand storm",
+                [11] = "Hail",
+                [12] = "Rocks ascending (?)",
+                [14] = "Fog",
+                [15] = "Deep fog",
+                [16] = "Dark, Flash usable",
+                [17] = "Lightning, no rain",
+                [22] = "Volcanic ash fall, steady",
+                [23] = "Eterna forest weather",
+                [24] = "Player in circle of light",
+                [25] = "Player in a circle of light",
+            };
+            public static Dictionary<int, string> HGSSWeatherDict = new Dictionary<int, string> {
+                [00] = "Normal",
+                [02] = "Heavy rain",
+                [10] = "Diamond snow",
+                [16] = "Hail",
+                [18] = "Fog",
+                [22] = "Cave Dark",
+                [24] = "Cave Dark after flash"
+            };
+        }
+        public static class AreaPics {
+            public static Dictionary<int, string> hgssAreaPicDict = new Dictionary<int, string>() {
+                [0] = "hgsswood",
+                [1] = "hgssgray",
+                [2] = "hgsswall",
+                [3] = "empty",
+                [4] = "hgsstown",
+                [5] = "hgsscave",
+                [6] = "hgssfield",
+                [7] = "hgsslake",
+                [8] = "hgssforest",
+                [9] = "hgsswater",
+            };
+        }
+        public static class CameraAngles {
+            public static string[] DPPtCameraValues = new string[] {
+                "[00] 3D Normal",
+                "[01] 3D Top View (Higher than [12])",
+                "[02] 3D Frontal Low (Wider than [15])",
+                "[03] 3D Frontal",
+                "[04] 2D Ortho",
+                "[05] 3D Normal - Wide FOV",
+                "[06] 3D Bird View",
+                "[07] 3D Normal",
+                "[08] 3D Bird View Far",
+                "[09] 3D Frontal - Wide FOV",
+                "[10] 3D Top View - Narrow",
+                "[11] Normal 3D",
+                "[12] 3D Top View",
+                "[13] Frontal 3D",
+                "[14] 3D Top View - Wide FOV",
+                "[15] 3D Frontal Low"
+            };
+            public static string[] HGSSCameraValues = new string[] {
+                "[00] 3D Top",
+                "[01] 3D Front High",
+                "[02] 3D Lower",
+                "[03] 3D Frontal",
+                "[04] 2D Top View",
+                "[05] Normal 3D",
+                "[06] 3D Normal",
+                "[07] High 3D",
+                "[08] 3D Top View",
+                "[09] 3D Top View",
+                "[10] 3D High Wide",
+                "[11] 3D Frontal Wide",
+                "[12] 3D Lower Close",
+                "[13] 3D Full Frontal",
+                "[14] 3D Top View",
+                "[15] 2D Higher"
+            };
+        }
         public abstract class MusicDB {
-            public static Dictionary<ushort, string> DPMusicValues = new Dictionary<ushort, string>() {
+            public static Dictionary<ushort, string> DPMusicDict = new Dictionary<ushort, string>() {
                 [1000] = "Mystery Zone",
                 [1001] = "Silence",
                 [1002] = "Pal Park",
@@ -90,7 +261,7 @@ namespace DSPRE {
                 [1096] = "Hall of Origin",
                 [1097] = "GTS theme"
             };
-            public static Dictionary<ushort, string> PtMusicValues = new Dictionary<ushort, string>() {
+            public static Dictionary<ushort, string> PtMusicDict = new Dictionary<ushort, string>() {
                 [1000] = "Mystery Zone",
                 [1001] = "Silence",
                 [1002] = "Pal Park",
@@ -179,7 +350,7 @@ namespace DSPRE {
                 [1195] = "Battle Factory",
                 [1196] = "Global Terminal"
             };
-            public static Dictionary<ushort, string> HGSSMusicValues = new Dictionary<ushort, string>() {
+            public static Dictionary<ushort, string> HGSSMusicDict = new Dictionary<ushort, string>() {
                 [1000] = "Mystery Zone",
                 [1001] = "Silence [Outside]",
                 [1002] = "Silence [Dungeon]",
@@ -293,20 +464,20 @@ namespace DSPRE {
         }
         public static class MatrixCellColors{
             /* Initialize dictionary of colors corresponding to border maps in the matrix editor */
-            public static Dictionary<List<uint>, Tuple<Color, Color>> mapColorsDPPt = new Dictionary<List<uint>, Tuple<Color, Color>> {
+            public static Dictionary<List<uint>, Tuple<Color, Color>> DPPtmatrixColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>> {
                 [new List<uint> { 173, 176, 177, 179 }] = Tuple.Create(Color.ForestGreen, Color.White),
                 [new List<uint> { 174 }] = Tuple.Create(Color.SteelBlue, Color.White),
                 [new List<uint> { 175 }] = Tuple.Create(Color.Sienna, Color.White),
                 [new List<uint> { 178 }] = Tuple.Create(Color.PowderBlue, Color.Black),
                 [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
             };
-            public static Dictionary<List<uint>, Tuple<Color, Color>> mapColorsHGSS = new Dictionary<List<uint>, Tuple<Color, Color>> {
+            public static Dictionary<List<uint>, Tuple<Color, Color>> HGSSmatrixColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>> {
                 [new List<uint> { 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
                 [new List<uint> { 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
                 [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
                 [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
             };
-            public static Dictionary<List<uint>, Tuple<Color, Color>> mapColorsGeneric = new Dictionary<List<uint>, Tuple<Color, Color>> {
+            public static Dictionary<List<uint>, Tuple<Color, Color>> GenericMatrixColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>> {
                 [new List<uint> { 203 }] = Tuple.Create(Color.FromArgb(80, 200, 16), Color.White),
                 [new List<uint> { 204, 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
                 [new List<uint> { 205, 206 }] = Tuple.Create(Color.DarkGreen, Color.White),
@@ -315,7 +486,6 @@ namespace DSPRE {
                 [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
             };
         }
-
         public static class WeatherPics {
             public static Dictionary<int, string> dpweatherImageDict = new Dictionary<int, string>() {
                 [0] = "dpnormal",
@@ -368,7 +538,6 @@ namespace DSPRE {
                 [6] = "hgssdark2"
             };
         }
-
         public static class ScriptMovements {
             public static string[] moveArray = new string[] {
                 "[00]  None",
@@ -443,44 +612,6 @@ namespace DSPRE {
                 "[69]  ?",
                 "[70]  ?",
                 "[71]  Looking Left"
-            };
-        }
-        public static class CameraAngles {
-            public static string[] DPPtCameraValues = new string[] {
-                "[00] 3D Normal",
-                "[01] 3D Top View (Higher than [12])",
-                "[02] 3D Frontal Low (Wider than [15])",
-                "[03] 3D Frontal",
-                "[04] 2D Ortho",
-                "[05] 3D Normal - Wide FOV",
-                "[06] 3D Bird View",
-                "[07] 3D Normal",
-                "[08] 3D Bird View Far",
-                "[09] 3D Frontal - Wide FOV",
-                "[10] 3D Top View - Narrow",
-                "[11] Normal 3D",
-                "[12] 3D Top View",
-                "[13] Frontal 3D",
-                "[14] 3D Top View - Wide FOV",
-                "[15] 3D Frontal Low"
-            };
-            public static string[] HGSSCameraValues = new string[] {
-                "[00] 3D Top",
-                "[01] 3D Front High",
-                "[02] 3D Lower",
-                "[03] 3D Frontal",
-                "[04] 2D Top View",
-                "[05] Normal 3D",
-                "[06] 3D Normal",
-                "[07] High 3D",
-                "[08] 3D Top View",
-                "[09] 3D Top View",
-                "[10] 3D High Wide",
-                "[11] 3D Frontal Wide",
-                "[12] 3D Lower Close",
-                "[13] 3D Full Frontal",
-                "[14] 3D Top View",
-                "[15] 2D Higher"
             };
         }
     }

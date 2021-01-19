@@ -594,11 +594,11 @@ namespace DSPRE {
                 case "D":
                 case "P":
                 case "Plat":
-                    mapCellsColorDictionary = PokeDatabase.MatrixCellColors.mapColorsDPPt;
+                    mapCellsColorDictionary = PokeDatabase.MatrixCellColors.DPPtmatrixColorsDict;
                     break;
                 case "HG":
                 case "SS":
-                    mapCellsColorDictionary = PokeDatabase.MatrixCellColors.mapColorsHGSS;
+                    mapCellsColorDictionary = PokeDatabase.MatrixCellColors.HGSSmatrixColorsDict;
                     break;
             }
         }
