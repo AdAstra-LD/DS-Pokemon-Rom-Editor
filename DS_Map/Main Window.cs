@@ -459,6 +459,7 @@ namespace DSPRE {
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicDict.Values.ToArray());
                     areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.DPShowNameValues);
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.DPWeatherDict.Values.ToArray());
+                    wildPokeUpDown.Maximum = 65535;
                     break;
                 case "Plat":
                     areaIconComboBox.Items.AddRange(PokeDatabase.Area.PtAreaIconValues);
@@ -468,6 +469,7 @@ namespace DSPRE {
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicDict.Values.ToArray());
                     areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.PtShowNameValues);
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.PtWeatherDict.Values.ToArray());
+                    wildPokeUpDown.Maximum = 65535;
                     break;
                 default:
                     areaIconComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaIconValues);
@@ -477,6 +479,7 @@ namespace DSPRE {
                     musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicDict.Values.ToArray());
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicDict.Values.ToArray());
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.HGSSWeatherDict.Values.ToArray());
+                    wildPokeUpDown.Maximum = 255;
                     break;
             }
 
@@ -1834,10 +1837,10 @@ namespace DSPRE {
         private void copyHeaderButton_Click(object sender, EventArgs e) {
             locationNameCopy = locationNameComboBox.SelectedIndex;
             internalNameCopy = internalNameBox.Text;
-            encountersIDCopy = wildPokeUpDown.Value;
             shownameCopy = areaSettingsComboBox.SelectedIndex;
             areaIconCopy = areaIconComboBox.SelectedIndex;
             areaSettingsCopy = areaSettingsComboBox.SelectedIndex;
+            encountersIDCopy = wildPokeUpDown.Value;
 
             musicdayCopy = musicDayComboBox.SelectedIndex;
             musicnightCopy = musicNightComboBox.SelectedIndex;
@@ -1855,6 +1858,18 @@ namespace DSPRE {
             /*Enable paste buttons*/
             pasteHeaderButton.Enabled = true;
 
+
+            pasteLocationNameButton.Enabled = true;
+            pasteInternalNameButton.Enabled = true;
+            pasteAreaSettingsButton.Enabled = true;
+            pasteAreaIconButton.Enabled = true;
+            pasteWildEncountersButton.Enabled = true;
+
+            pasteMusicDayButton.Enabled = true;
+            pasteMusicNightButton.Enabled = true;
+            pasteWeatherButton.Enabled = true;
+            pasteCameraAngleButton.Enabled = true;
+
             pasteScriptsButton.Enabled = true;
             pasteLevelScriptsButton.Enabled = true;
             pasteEventsButton.Enabled = true;
@@ -1862,6 +1877,8 @@ namespace DSPRE {
 
             pasteMatrixButton.Enabled = true;
             pasteAreaDataButton.Enabled = true;
+
+            pasteFlagsButton.Enabled = true;
         }
         private void copyInternalNameButton_Click(object sender, EventArgs e) {
             internalNameCopy = internalNameBox.Text;
@@ -1879,6 +1896,11 @@ namespace DSPRE {
         private void copyAreaIconButton_Click(object sender, EventArgs e) {
             areaIconCopy = areaIconComboBox.SelectedIndex;
             pasteAreaIconButton.Enabled = true;
+        }
+        private void copyWildEncountersButton_Click(object sender, EventArgs e) {
+            encountersIDCopy = wildPokeUpDown.Value;
+            Clipboard.SetData(DataFormats.Text, encountersIDCopy);
+            pasteWildEncountersButton.Enabled = true;
         }
         private void copyMusicDayButton_Click(object sender, EventArgs e) {
             musicdayCopy = musicDayComboBox.SelectedIndex;
@@ -1967,6 +1989,9 @@ namespace DSPRE {
         private void pasteAreaIconButton_Click(object sender, EventArgs e) {
             if (areaIconComboBox.Enabled)
                 areaIconComboBox.SelectedIndex = areaIconCopy;
+        }
+        private void pasteWildEncountersButton_Click(object sender, EventArgs e) {
+            wildPokeUpDown.Value = encountersIDCopy;
         }
         private void pasteMusicDayButton_Click(object sender, EventArgs e) {
             musicDayComboBox.SelectedIndex = musicdayCopy;
@@ -5773,6 +5798,5 @@ namespace DSPRE {
             disableHandlers = false;
         }
         #endregion
-
     }
 }

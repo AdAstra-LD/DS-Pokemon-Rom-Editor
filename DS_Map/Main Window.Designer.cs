@@ -556,6 +556,8 @@
             this.buildingEditorButton = new System.Windows.Forms.ToolStripButton();
             this.romToolboxButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
+            this.pasteWildEncountersButton = new System.Windows.Forms.Button();
+            this.copyWildEncountersButton = new System.Windows.Forms.Button();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.groupBox10.SuspendLayout();
@@ -726,6 +728,8 @@
             // headerEditorTabPage
             // 
             this.headerEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
+            this.headerEditorTabPage.Controls.Add(this.pasteFlagsButton);
+            this.headerEditorTabPage.Controls.Add(this.copyFlagsButton);
             this.headerEditorTabPage.Controls.Add(this.pasteHeaderButton);
             this.headerEditorTabPage.Controls.Add(this.groupBox10);
             this.headerEditorTabPage.Controls.Add(this.groupBox9);
@@ -964,7 +968,9 @@
             // 
             // nameGroupBox
             // 
+            this.nameGroupBox.Controls.Add(this.pasteWildEncountersButton);
             this.nameGroupBox.Controls.Add(this.pasteLocationNameButton);
+            this.nameGroupBox.Controls.Add(this.copyWildEncountersButton);
             this.nameGroupBox.Controls.Add(this.copyLocationNameButton);
             this.nameGroupBox.Controls.Add(this.pasteInternalNameButton);
             this.nameGroupBox.Controls.Add(this.copyInternalNameButton);
@@ -1105,9 +1111,9 @@
             // 
             this.openWildEditorWithIdButton.Location = new System.Drawing.Point(498, 65);
             this.openWildEditorWithIdButton.Name = "openWildEditorWithIdButton";
-            this.openWildEditorWithIdButton.Size = new System.Drawing.Size(73, 38);
+            this.openWildEditorWithIdButton.Size = new System.Drawing.Size(73, 22);
             this.openWildEditorWithIdButton.TabIndex = 24;
-            this.openWildEditorWithIdButton.Text = "Open Encounters";
+            this.openWildEditorWithIdButton.Text = "Open Editor";
             this.openWildEditorWithIdButton.UseVisualStyleBackColor = true;
             this.openWildEditorWithIdButton.Click += new System.EventHandler(this.openWildEditorWithIdButtonClick);
             // 
@@ -1146,9 +1152,9 @@
             this.wildPokeLabel.AutoSize = true;
             this.wildPokeLabel.Location = new System.Drawing.Point(495, 19);
             this.wildPokeLabel.Name = "wildPokeLabel";
-            this.wildPokeLabel.Size = new System.Drawing.Size(76, 13);
+            this.wildPokeLabel.Size = new System.Drawing.Size(85, 13);
             this.wildPokeLabel.TabIndex = 14;
-            this.wildPokeLabel.Text = "Wild Pokémon";
+            this.wildPokeLabel.Text = "Wild Encounters";
             // 
             // areaIconComboBox
             // 
@@ -1691,8 +1697,6 @@
             // 
             // flagsGroupBox
             // 
-            this.flagsGroupBox.Controls.Add(this.pasteFlagsButton);
-            this.flagsGroupBox.Controls.Add(this.copyFlagsButton);
             this.flagsGroupBox.Controls.Add(this.flag7CheckBox);
             this.flagsGroupBox.Controls.Add(this.flag6CheckBox);
             this.flagsGroupBox.Controls.Add(this.flag5CheckBox);
@@ -1712,7 +1716,7 @@
             // 
             this.pasteFlagsButton.Enabled = false;
             this.pasteFlagsButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
-            this.pasteFlagsButton.Location = new System.Drawing.Point(241, 74);
+            this.pasteFlagsButton.Location = new System.Drawing.Point(784, 546);
             this.pasteFlagsButton.Name = "pasteFlagsButton";
             this.pasteFlagsButton.Size = new System.Drawing.Size(35, 37);
             this.pasteFlagsButton.TabIndex = 48;
@@ -1722,7 +1726,7 @@
             // copyFlagsButton
             // 
             this.copyFlagsButton.Image = global::DSPRE.Properties.Resources.copyIcon;
-            this.copyFlagsButton.Location = new System.Drawing.Point(241, 31);
+            this.copyFlagsButton.Location = new System.Drawing.Point(784, 503);
             this.copyFlagsButton.Name = "copyFlagsButton";
             this.copyFlagsButton.Size = new System.Drawing.Size(35, 37);
             this.copyFlagsButton.TabIndex = 48;
@@ -1771,7 +1775,7 @@
             // flag3CheckBox
             // 
             this.flag3CheckBox.AutoSize = true;
-            this.flag3CheckBox.Location = new System.Drawing.Point(142, 30);
+            this.flag3CheckBox.Location = new System.Drawing.Point(127, 30);
             this.flag3CheckBox.Name = "flag3CheckBox";
             this.flag3CheckBox.Size = new System.Drawing.Size(15, 14);
             this.flag3CheckBox.TabIndex = 35;
@@ -1781,7 +1785,7 @@
             // flag2CheckBox
             // 
             this.flag2CheckBox.AutoSize = true;
-            this.flag2CheckBox.Location = new System.Drawing.Point(142, 53);
+            this.flag2CheckBox.Location = new System.Drawing.Point(127, 53);
             this.flag2CheckBox.Name = "flag2CheckBox";
             this.flag2CheckBox.Size = new System.Drawing.Size(15, 14);
             this.flag2CheckBox.TabIndex = 32;
@@ -1791,7 +1795,7 @@
             // flag1CheckBox
             // 
             this.flag1CheckBox.AutoSize = true;
-            this.flag1CheckBox.Location = new System.Drawing.Point(142, 76);
+            this.flag1CheckBox.Location = new System.Drawing.Point(127, 76);
             this.flag1CheckBox.Name = "flag1CheckBox";
             this.flag1CheckBox.Size = new System.Drawing.Size(15, 14);
             this.flag1CheckBox.TabIndex = 33;
@@ -1801,7 +1805,7 @@
             // flag0CheckBox
             // 
             this.flag0CheckBox.AutoSize = true;
-            this.flag0CheckBox.Location = new System.Drawing.Point(142, 100);
+            this.flag0CheckBox.Location = new System.Drawing.Point(127, 100);
             this.flag0CheckBox.Name = "flag0CheckBox";
             this.flag0CheckBox.Size = new System.Drawing.Size(15, 14);
             this.flag0CheckBox.TabIndex = 34;
@@ -6808,6 +6812,27 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             // 
+            // pasteWildEncountersButton
+            // 
+            this.pasteWildEncountersButton.Enabled = false;
+            this.pasteWildEncountersButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteWildEncountersButton.Location = new System.Drawing.Point(535, 91);
+            this.pasteWildEncountersButton.Name = "pasteWildEncountersButton";
+            this.pasteWildEncountersButton.Size = new System.Drawing.Size(35, 37);
+            this.pasteWildEncountersButton.TabIndex = 42;
+            this.pasteWildEncountersButton.UseVisualStyleBackColor = true;
+            this.pasteWildEncountersButton.Click += new System.EventHandler(this.pasteWildEncountersButton_Click);
+            // 
+            // copyWildEncountersButton
+            // 
+            this.copyWildEncountersButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyWildEncountersButton.Location = new System.Drawing.Point(498, 91);
+            this.copyWildEncountersButton.Name = "copyWildEncountersButton";
+            this.copyWildEncountersButton.Size = new System.Drawing.Size(35, 37);
+            this.copyWildEncountersButton.TabIndex = 41;
+            this.copyWildEncountersButton.UseVisualStyleBackColor = true;
+            this.copyWildEncountersButton.Click += new System.EventHandler(this.copyWildEncountersButton_Click);
+            // 
             // MainProgram
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -7532,6 +7557,8 @@
         private System.Windows.Forms.NumericUpDown musicDayUpDown;
         private System.Windows.Forms.NumericUpDown musicNightUpDown;
         private System.Windows.Forms.NumericUpDown weatherUpDown;
+        private System.Windows.Forms.Button pasteWildEncountersButton;
+        private System.Windows.Forms.Button copyWildEncountersButton;
     }
 }
 
