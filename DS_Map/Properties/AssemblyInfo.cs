@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // Le informazioni generali relative a un assembly sono controllate dal seguente 
 // set di attributi. Modificare i valori di questi attributi per modificare le informazioni
 // associate a un assembly.
-[assembly: AssemblyTitle("DSPRE Reloaded 1.0.7")]
+[assembly: AssemblyTitle("DSPRE Reloaded 1.0.7a")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DSPRE Reloaded 1.0.7")]
+[assembly: AssemblyProduct("DSPRE Reloaded 1.0.7a")]
 [assembly: AssemblyCopyright("Copyright © 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Se il progetto viene esposto a COM, il GUID seguente verrà utilizzato come ID della libreria dei tipi
-[assembly: Guid("e3a63421-ef89-4cd6-9214-fcfd42da3279")]
+[assembly: Guid("e3a69431-ea89-4cb6-9214-fabd92da3279")]
 
 // Le informazioni sulla versione di un assembly sono costituite dai seguenti quattro valori:
 //

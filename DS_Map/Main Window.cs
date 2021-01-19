@@ -900,7 +900,7 @@ namespace DSPRE {
                 editor.ShowDialog();
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.7" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.7a" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who owes credit for SDSME." + Environment.NewLine +
                 "Special thanks go to Trifindo, Mikelan98, BagBoy, and JackHack96, whose help, research and expertise in the field of NDS Rom Hacking made the development of this tool possible.";
 
@@ -1206,11 +1206,11 @@ namespace DSPRE {
             switch (romInfo.gameVersion) {
                 case "D":
                 case "P":
-                    return new HeaderDP(new MemoryStream(headerData));
+                    return new HeaderDP(headerNumber, new MemoryStream(headerData));
                 case "Plat":
-                    return new HeaderPt(new MemoryStream(headerData));
+                    return new HeaderPt(headerNumber, new MemoryStream(headerData));
                 default:
-                    return new HeaderHGSS(new MemoryStream(headerData));
+                    return new HeaderHGSS(headerNumber, new MemoryStream(headerData));
             }
         }
         #endregion
@@ -1291,10 +1291,12 @@ namespace DSPRE {
             if (disableHandlers)
                 return;
 
+            int headerNumber = GetHeaderNumberFromListBoxName();
+            currentHeader = LoadHeader(headerNumber);
+
+
             String nameDisplayedInListBox = headerListBox.SelectedItem.ToString();
             int separatorPosition = nameDisplayedInListBox.IndexOf(headerNamesSeparator);
-            currentHeader = LoadHeader(Int32.Parse(nameDisplayedInListBox.Substring(0, separatorPosition)));
-
             /* Setup controls for common fields across headers */
             internalNameBox.Text = nameDisplayedInListBox.Substring(separatorPosition + headerNamesSeparator.Length);
             matrixUpDown.Value = currentHeader.matrix;
@@ -1342,6 +1344,12 @@ namespace DSPRE {
                     musicNightUpDown.Value = ((HeaderHGSS)currentHeader).musicNight; 
                     break;
             }
+        }
+
+        private int GetHeaderNumberFromListBoxName() {
+            String nameDisplayedInListBox = headerListBox.SelectedItem.ToString();
+            int separatorPosition = nameDisplayedInListBox.IndexOf(headerNamesSeparator);
+            return Int32.Parse(nameDisplayedInListBox.Substring(0, separatorPosition));
         }
 
         private void refreshFlags() {
@@ -1615,7 +1623,7 @@ namespace DSPRE {
             mainTabControl.SelectedTab = textEditorTabPage;
         }
         private void saveHeaderButton_Click(object sender, EventArgs e) {
-            long headerOffset = romInfo.headerTableOffset + 0x18 * headerListBox.SelectedIndex;
+            long headerOffset = romInfo.headerTableOffset + 0x18 * currentHeader.ID;
             DSUtils.WriteToArm9(headerOffset, currentHeader.SaveHeader());
 
             disableHandlers = true;
@@ -1624,15 +1632,15 @@ namespace DSPRE {
                 writer.BaseStream.Position = headerListBox.SelectedIndex * romInfo.internalNameLength;
 
                 writer.Write(  Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0'))  );
-                updateHeaderNameShown(headerListBox.SelectedIndex, internalNameBox.Text);
+                updateHeaderNameShown(headerListBox.SelectedIndex, currentHeader.ID, internalNameBox.Text);
             }
 
             headerListBox.Focus();
             disableHandlers = false;
         }
 
-        private void updateHeaderNameShown(int SelectedIndex, string text) {
-            headerListBox.Items[SelectedIndex] = SelectedIndex.ToString("D3") + headerNamesSeparator + text;
+        private void updateHeaderNameShown(int thisIndex, int headerNumber, string text) {
+            headerListBox.Items[thisIndex] = headerNumber.ToString("D3") + headerNamesSeparator + text;
         }
 
         private void resetButton_Click(object sender, EventArgs e) {
@@ -5735,8 +5743,6 @@ namespace DSPRE {
             }
             disableHandlers = false;
         }
-
-
         #endregion
     }
 }

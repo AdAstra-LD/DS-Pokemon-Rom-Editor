@@ -85,6 +85,11 @@ namespace DSPRE
     /// </summary>
     public abstract class Header
 	{
+        /*System*/
+        public int ID { get; set; }
+        /**/
+
+
         #region Fields (10)
         public byte areaDataID { get; set; }
         public byte camera { get; set; }
@@ -118,8 +123,9 @@ namespace DSPRE
         #endregion Fields
 
         #region Constructors (1)
-        public HeaderDP(Stream data)
+        public HeaderDP(int headerNumber, Stream data)
         {
+            this.ID = headerNumber;
             using (BinaryReader reader = new BinaryReader(data))
             {
                 areaDataID = reader.ReadByte();
@@ -210,8 +216,9 @@ namespace DSPRE
         #endregion Fields
 
         #region Constructors (1)
-        public HeaderPt(Stream data)
+        public HeaderPt(int headerNumber, Stream data)
         {
+            this.ID = headerNumber;
             using (BinaryReader reader = new BinaryReader(data))
             {
                 try {
@@ -315,8 +322,9 @@ namespace DSPRE
         #endregion
 
         #region Constructors (1)
-        public HeaderHGSS(Stream data)
+        public HeaderHGSS(int headerNumber, Stream data)
         {
+            this.ID = headerNumber;
             using (BinaryReader reader = new BinaryReader(data))
             {
                 try {
