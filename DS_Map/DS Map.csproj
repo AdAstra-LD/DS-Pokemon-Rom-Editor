@@ -425,6 +425,15 @@
     <Content Include="Graphics\Camera Angles\HGSS\hgsscamera15.png" />
     <None Include="Graphics\Program Icons\copyIcon.png" />
     <None Include="Graphics\Program Icons\pasteIcon.png" />
+    <None Include="Resources\animated.png" />
+    <None Include="Resources\hgssrain.gif" />
+    <None Include="Resources\hgssdiamond.gif" />
+    <None Include="Resources\hgsssnow.gif" />
+    <None Include="Resources\hgssArcade.gif" />
+    <None Include="Resources\hgssnormal.gif" />
+    <None Include="Resources\copyIcon.png" />
+    <None Include="Resources\pasteIcon.png" />
+    <None Include="Resources\hgssfog.gif" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

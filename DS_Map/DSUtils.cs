@@ -80,20 +80,24 @@ namespace DSPRE {
             return unpack.ExitCode;
         }
 
-        public static void RestoreOverlayFromCompressedBackup(int overlayNumber) {
+        public static void RestoreOverlayFromCompressedBackup(int overlayNumber, bool eventEditorIsReady) {
             String overlayFilePath = workDir + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
 
-            if (new FileInfo(overlayFilePath).Length <= new FileInfo(overlayFilePath + ".bak").Length) { //if overlay is bigger than its backup
-                Console.WriteLine("Overlay " + overlayNumber + " is already compressed.");
-                return;
-            }
-
             if (File.Exists(overlayFilePath + ".bak")) {
-                File.Delete(overlayFilePath);
-                File.Move(overlayFilePath + ".bak", overlayFilePath);
+                if (new FileInfo(overlayFilePath).Length <= new FileInfo(overlayFilePath + ".bak").Length) { //if overlay is bigger than its backup
+                    Console.WriteLine("Overlay " + overlayNumber + " is already compressed.");
+                    return;
+                } else {
+                    File.Delete(overlayFilePath);
+                    File.Move(overlayFilePath + ".bak", overlayFilePath);
+                }
             } else {
-                MessageBox.Show("File " + '"' + overlayFilePath + ".bak" + '"' + " couldn't be found and restored.",
-                    "Can't restore overlay from backup", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string msg = "Overlay File " + '"' + overlayFilePath + ".bak" + '"' + " couldn't be found and restored.";
+                Console.WriteLine(msg);
+
+                if (eventEditorIsReady)
+                    MessageBox.Show(msg, "Can't restore overlay from backup", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
             }
         }
         public static byte[] ReadFromArm9(long startOffset, long numberOfBytes) {

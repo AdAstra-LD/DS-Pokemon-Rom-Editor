@@ -37,7 +37,7 @@ namespace DSPRE {
                 "[01] Unknown",
                 "[02] Unknown",
                 "[03] Cave Animation",
-                "[04] Hide Nametag",
+                "[04] Hide Location Tag",
                 "[05] Unknown",
                 "[06] Unknown",
                 "[07] Unknown",
@@ -118,12 +118,37 @@ namespace DSPRE {
             };
             public static Dictionary<int, string> HGSSWeatherDict = new Dictionary<int, string> {
                 [00] = "Normal",
-                [02] = "Heavy rain",
-                [10] = "Diamond snow",
-                [16] = "Hail",
+                [01] = "Normal [1]",
+
+                [02] = "Rain",
+                [03] = "Rain [3]",
+                [04] = "Rain [4]",
+                [05] = "Rain [5]",
+                [06] = "Rain [6]",
+                [07] = "Rain [7]",
+                [08] = "Rain [8]",
+
+                [09] = "Snow [9]",
+                [10] = "Snow [10]",
+                [11] = "Snow [11]",
+                [12] = "Snow [12]",
+                [13] = "Snow [13]",
+                [14] = "Sandstorm (in battle only)",
+                [15] = "Snow [15]",
+
+                [16] = "Diamond Dust",
+                [17] = "Diamond Dust [17]",
+
                 [18] = "Fog",
-                [22] = "Cave Dark",
-                [24] = "Cave Dark after flash"
+                [19] = "Fog [19]",
+                [20] = "Fog [20]",
+                [21] = "Fog [21]",
+
+                [22] = "Darkness",
+                [23] = "Darkness [23]",
+                [24] = "Darkness after flash",
+                [25] = "Darkness after flash [25]",
+                [26] = "Low Light (Battle Arcade)"
             };
         }
         public static class AreaPics {
@@ -528,14 +553,16 @@ namespace DSPRE {
                 [18] = "ptspotlight",
                 [19] = "ptspotlight"
             };
-            public static Dictionary<int, string> hgssweatherImageDict = new Dictionary<int, string>() {
-                [0] = "hgssnormal",
-                [1] = "hgssrain",
-                [2] = "hgsssnow",
-                [3] = "hgsshail",
-                [4] = "hgssfog",
-                [5] = "hgssdark",
-                [6] = "hgssdark2"
+            public static Dictionary<List<int>, string> hgssweatherImageDict = new Dictionary<List<int>, string>() {
+                [new List<int> { 0, 1 }] = "hgssnormal",
+                [new List<int> { 2, 3, 4, 5, 6, 7, 8 }] = "hgssrain",
+                [new List<int> { 9, 10, 11, 12, 13,  15 }] = "hgsssnow",
+                [new List<int> { 14 }] = "hgssnormal", //sandstorm in battle only
+                [new List<int> { 16, 17 }] = "hgssdiamond",
+                [new List<int> { 18, 19, 20, 21}] = "hgssfog",
+                [new List<int> { 22, 23 }] = "hgssdark",
+                [new List<int> { 24, 25 }] = "hgssdark2",
+                [new List<int> { 26 }] = "hgssArcade"
             };
         }
         public static class ScriptMovements {

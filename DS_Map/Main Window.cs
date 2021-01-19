@@ -35,12 +35,12 @@ namespace DSPRE {
         private const string headerNamesSeparator = " -   ";
 
         /* Editors Setup */
-        private bool matrixEditorIsReady = false;
-        private bool mapEditorIsReady = false;
-        private bool eventEditorIsReady = false;
-        private bool scriptEditorIsReady = false;
-        private bool textEditorIsReady = false;
-        private bool tilesetEditorIsReady = false;
+        public bool matrixEditorIsReady { get; private set; } = false;
+        public bool mapEditorIsReady { get; private set; } = false;
+        public bool eventEditorIsReady { get; private set; } = false;
+        public bool scriptEditorIsReady { get; private set; } = false;
+        public bool textEditorIsReady { get; private set; } = false;
+        public bool tilesetEditorIsReady { get; private set; } = false;
 
 
         /* ROM Information */
@@ -1025,15 +1025,8 @@ namespace DSPRE {
             }
 
 
-            switch (romInfo.gameVersion) {
-                case "D":
-                case "P":
-                case "Plat":
-                    break;
-                default:
-                    // Must restore compressed overlay 1 in HGSS
-                    DSUtils.RestoreOverlayFromCompressedBackup(1); 
-                    break;
+            if (romInfo.gameVersion != "D" && romInfo.gameVersion != "P" && romInfo.gameVersion != "Plat") { 
+                DSUtils.RestoreOverlayFromCompressedBackup(1, eventEditorIsReady); 
             }
 
 
@@ -1042,8 +1035,10 @@ namespace DSPRE {
             //DeleteTempFolders();
             RepackRom(saveRom.FileName);
 
+
             if (romInfo.gameVersion != "D" && romInfo.gameVersion != "P" && romInfo.gameVersion != "Plat")
-                DSUtils.DecompressOverlay(1, true);
+                if (eventEditorIsReady)
+                    DSUtils.DecompressOverlay(1, true);
 
             statusLabel.Text = "Ready";
         }
@@ -1510,7 +1505,7 @@ namespace DSPRE {
 
             /* Update Weather Picture */
             try {
-                string imageName;
+                string imageName = null;
                 switch (romInfo.gameVersion) {
                     case "D":
                     case "P":
@@ -1520,12 +1515,21 @@ namespace DSPRE {
                         imageName = PokeDatabase.WeatherPics.ptweatherImageDict[weatherComboBox.SelectedIndex];
                         break;
                     default:
-                        imageName = PokeDatabase.WeatherPics.hgssweatherImageDict[weatherComboBox.SelectedIndex];
+                        foreach (KeyValuePair<List<int>, string> entry in PokeDatabase.WeatherPics.hgssweatherImageDict) {
+                            if (entry.Key.Contains(weatherComboBox.SelectedIndex)) {
+                                imageName = entry.Value;
+                                break;
+                            }
+                        }
+                        if (imageName == null)
+                            throw new KeyNotFoundException();
                         break;
                 }
 
-                weatherPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
-            } catch (KeyNotFoundException) { }
+                weatherPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName); 
+            } catch (KeyNotFoundException) {
+                weatherPictureBox.Image = null;
+            }
         }
 
         private void weatherComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1772,11 +1776,13 @@ namespace DSPRE {
                 case "SS":
                     currentHeader.areaSettings = (byte)areaSettingsComboBox.SelectedIndex;
                     if (currentHeader.areaSettings == 4) {
+                        areaImageLabel.Text = "[Location Tag hidden]";
                         areaIconComboBox.Enabled = false;
-                        areaIconPictureBox.Enabled = false;
+                        areaIconPictureBox.Visible = false;
                     } else {
+                        areaImageLabel.Text = "Area icon";
                         areaIconComboBox.Enabled = true;
-                        areaIconPictureBox.Enabled = true;
+                        areaIconPictureBox.Visible = true;
                     }
                     break;
             }
@@ -2015,7 +2021,7 @@ namespace DSPRE {
             matrixTabControl.TabPages.Remove(headersTabPage);
             matrixTabControl.TabPages.Remove(heightsTabPage);
         }
-        private Tuple<Color, Color> Format_Map_Cell(uint cellValue) {
+        private Tuple<Color, Color> FormatMapCell(uint cellValue) {
             foreach (KeyValuePair<List<uint>, Tuple<Color, Color>> entry in romInfo.mapCellsColorDictionary) {
                 if (entry.Key.Contains(cellValue)) 
                     return entry.Value;
@@ -2132,7 +2138,7 @@ namespace DSPRE {
             ushort colorValue;
             if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = Matrix.EMPTY;
 
-            Tuple<Color, Color> cellColors = Format_Map_Cell(colorValue);
+            Tuple<Color, Color> cellColors = FormatMapCell(colorValue);
             e.CellStyle.BackColor = cellColors.Item1;
             e.CellStyle.ForeColor = cellColors.Item2;
 
@@ -2163,7 +2169,7 @@ namespace DSPRE {
             ushort colorValue;
             if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = Matrix.EMPTY;
 
-            Tuple<Color, Color> cellColors = Format_Map_Cell(colorValue);
+            Tuple<Color, Color> cellColors = FormatMapCell(colorValue);
             e.CellStyle.BackColor = cellColors.Item1;
             e.CellStyle.ForeColor = cellColors.Item2;
 
@@ -2316,7 +2322,7 @@ namespace DSPRE {
                 colorValue = UInt16.Parse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
             } catch { }
 
-            Tuple<Color, Color> cellColors = Format_Map_Cell(colorValue);
+            Tuple<Color, Color> cellColors = FormatMapCell(colorValue);
             e.CellStyle.BackColor = cellColors.Item1;
             e.CellStyle.ForeColor = cellColors.Item2;
 
