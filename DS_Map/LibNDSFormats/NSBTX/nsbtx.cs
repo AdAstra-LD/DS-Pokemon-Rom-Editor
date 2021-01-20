@@ -244,8 +244,8 @@ namespace NSMBe4.NSBMD
     }
     public class NSBTX_File
     {
-        public byte[] Before;
-        public byte[] Beafter;
+        public byte[] before;
+        public byte[] after;
         public header Header;
         public struct header
         {
@@ -370,27 +370,23 @@ namespace NSMBe4.NSBMD
         public NSBTX_File(FileStream f)
         {
             EndianBinaryReader er = new EndianBinaryReader(f, Endianness.LittleEndian);
-            if (er.ReadString(Encoding.ASCII, 4) != "BTX0")
-            {
+            if (er.ReadString(Encoding.ASCII, 4) != "BTX0") {
                 MessageBox.Show("Error", null, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 er.Close();
                 return;
-            }
-            else
-            {
+            } else {
                 Header.ID = "BTX0";
                 Header.Magic = er.ReadBytes(4);
                 Header.file_size = er.ReadInt32();
                 Header.header_size = er.ReadInt16();
                 Header.nSection = er.ReadInt16();
                 Header.Section_Offset = new Int32[Header.nSection];
-                for (int i = 0; i < Header.nSection; i++)
-                {
+                for (int i = 0; i < Header.nSection; i++) {
                     Header.Section_Offset[i] = er.ReadInt32();
                 }
+                
                 TEX0.ID = er.ReadString(Encoding.ASCII, 4);
-                if (TEX0.ID != "TEX0")
-                {
+                if (TEX0.ID != "TEX0") {
                     MessageBox.Show("Error", "Error");
                     er.Close();
                     return;

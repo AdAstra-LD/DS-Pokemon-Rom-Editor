@@ -786,7 +786,7 @@ namespace DSPRE {
             /* Fill AreaData ComboBox */
             int areaDataCount = romInfo.GetAreaDataCount();
             for (int i = 0; i < areaDataCount; i++)
-                selectAreaDataComboBox.Items.Add("Area Data " + i);
+                selectAreaDataListBox.Items.Add("AreaData File " + i);
 
             /* Enable gameVersion-specific controls */
 
@@ -796,13 +796,13 @@ namespace DSPRE {
                 case "Plat":
                     break;
                 default:
-                    areaDataDynamicTexturesComboBox.Enabled = true;
-                    areaDataAreaTypeComboBox.Enabled = true;
+                    areaDataDynamicTexturesNumericUpDown.Enabled = true;
+                    areaTypeGroupbox.Enabled = true;
                     break;
             };
 
-            if (selectAreaDataComboBox.Items.Count > 0)
-                selectAreaDataComboBox.SelectedIndex = 0;
+            if (selectAreaDataListBox.Items.Count > 0)
+                selectAreaDataListBox.SelectedIndex = 0;
             if (texturePacksListBox.Items.Count > 0)
                 texturePacksListBox.SelectedIndex = 0;
             if (texturesListBox.Items.Count > 0)
@@ -1560,7 +1560,7 @@ namespace DSPRE {
                 tilesetEditorIsReady = true;
             }
 
-            selectAreaDataComboBox.SelectedIndex = (int)areaDataUpDown.Value;
+            selectAreaDataListBox.SelectedIndex = (int)areaDataUpDown.Value;
             texturePacksListBox.SelectedIndex = (mapTilesetRadioButton.Checked ? (int)areaDataMapTilesetUpDown.Value : (int)areaDataBuildingTilesetUpDown.Value);
             mainTabControl.SelectedTab = nsbtxEditorTabPage;
 
@@ -3954,7 +3954,8 @@ namespace DSPRE {
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) writer.Write(currentEventFile.Save());
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) 
+                writer.Write(currentEventFile.Save());
         }
         private void importEventFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .evt file */
@@ -3967,11 +3968,11 @@ namespace DSPRE {
             string path = romInfo.eventsDirPath + "\\" + selectEventComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
-            /* Display success message */
-            MessageBox.Show("Events imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             /* Refresh controls */
             selectEventComboBox_SelectedIndexChanged(null, null);
+
+            /* Display success message */
+            MessageBox.Show("Events imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void removeEventFileButton_Click(object sender, EventArgs e) {
             /* Delete event file */
@@ -4867,11 +4868,11 @@ namespace DSPRE {
             string path = romInfo.scriptDirPath + "\\" + selectScriptFileComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
-            /* Display success message */
-            MessageBox.Show("Scripts imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             /* Refresh controls */
             selectScriptFileComboBox_SelectedIndexChanged(null, null);
+
+            /* Display success message */
+            MessageBox.Show("Scripts imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void openScriptButton_Click(object sender, EventArgs e) {
             if (!scriptEditorIsReady) {
@@ -5322,11 +5323,11 @@ namespace DSPRE {
             string path = romInfo.textArchivesPath + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
-            /* Display success message */
-            MessageBox.Show("Text Archive imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             /* Refresh controls */
             selectTextFileComboBox_SelectedIndexChanged(null, null);
+
+            /* Display success message */
+            MessageBox.Show("Text Archive imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void removeMessageFileButton_Click(object sender, EventArgs e) {
             /* Delete Text Archive */
@@ -5595,6 +5596,19 @@ namespace DSPRE {
                 }
             }
         }
+        private void hexRadiobutton_CheckedChanged(object sender, EventArgs e) {
+            updateTextEditorLineNumbers();
+        }
+
+        private void updateTextEditorLineNumbers() {
+            disableHandlers = true;
+            if (hexRadiobutton.Checked) {
+                printTextEditorLinesHex();
+            } else {
+                printTextEditorLinesDecimal();
+            }
+            disableHandlers = false;
+        }
         #endregion
 
         #region Tileset Editor
@@ -5634,24 +5648,29 @@ namespace DSPRE {
                 return;
 
             string tilesetPath;
-            if (mapTilesetRadioButton.Checked) tilesetPath = romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-            else tilesetPath = romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+            if (mapTilesetRadioButton.Checked) 
+                tilesetPath = romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+            else 
+                tilesetPath = romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             File.Copy(tilesetPath, sf.FileName);
         }
         private void importNSBTXButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .nsbtx file */
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "NSBTX File (*.nsbtx)|*.nsbtx";
-            if (of.ShowDialog(this) != DialogResult.OK) return;
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "NSBTX File (*.nsbtx)|*.nsbtx";
+            if (ofd.ShowDialog(this) != DialogResult.OK) 
+                return;
 
             /* Update nsbtx file */
             string tilesetPath;
-            if (mapTilesetRadioButton.Checked) tilesetPath = romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-            else tilesetPath = romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-            File.Copy(of.FileName, tilesetPath, true);
+            if (mapTilesetRadioButton.Checked) 
+                tilesetPath = romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+            else 
+                tilesetPath = romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+            File.Copy(ofd.FileName, tilesetPath, true);
 
             /* Update nsbtx object in memory and controls */
-            currentTileset = new NSMBe4.NSBMD.NSBTX_File(new FileStream(of.FileName, FileMode.Open));
+            currentTileset = new NSMBe4.NSBMD.NSBTX_File(new FileStream(ofd.FileName, FileMode.Open));
 
         }
         private void mapTilesetRadioButton_CheckedChanged(object sender, EventArgs e) {
@@ -5733,14 +5752,11 @@ namespace DSPRE {
             if (disableHandlers) return;
             currentAreaData.buildingsTileset = (ushort)areaDataBuildingTilesetUpDown.Value;
         }
-        private void areaDataDynamicTexturesComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+        private void areaDataDynamicTexturesUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
-            if (areaDataDynamicTexturesComboBox.SelectedIndex == 0x2)
-                currentAreaData.dynamicTextureType = 0xFFFF;
-            else
-                currentAreaData.dynamicTextureType = (ushort)areaDataDynamicTexturesComboBox.SelectedIndex;
 
+            currentAreaData.dynamicTextureType = (ushort)areaDataDynamicTexturesNumericUpDown.Value;
         }
         private void areaDataLightTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers)
@@ -5752,51 +5768,136 @@ namespace DSPRE {
                 return;
             currentAreaData.mapTileset = (ushort)areaDataMapTilesetUpDown.Value;
         }
-        private void areaDataAreaTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers)
-                return;
-            currentAreaData.areaType = (byte)areaDataAreaTypeComboBox.SelectedIndex;
-        }
         private void saveAreaDataButton_Click(object sender, EventArgs e) {
-            string areaDataPath = romInfo.areaDataDirPath + "\\" + selectAreaDataComboBox.SelectedIndex.ToString("D4");
+            string areaDataPath = romInfo.areaDataDirPath + "\\" + selectAreaDataListBox.SelectedIndex.ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(areaDataPath, FileMode.Create)))
-                writer.Write(currentAreaData.SaveAreaData(romInfo.gameVersion));
+                writer.Write(currentAreaData.Save(romInfo.gameVersion));
         }
-        private void selectAreaDataComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            currentAreaData = LoadAreaData((uint)selectAreaDataComboBox.SelectedIndex);
+        private void selectAreaDataListBox_SelectedIndexChanged(object sender, EventArgs e) {
+            currentAreaData = LoadAreaData((uint)selectAreaDataListBox.SelectedIndex);
 
             areaDataBuildingTilesetUpDown.Value = currentAreaData.buildingsTileset;
             areaDataMapTilesetUpDown.Value = currentAreaData.mapTileset;
             areaDataLightTypeComboBox.SelectedIndex = currentAreaData.lightType;
+
+            disableHandlers = true;
             switch (romInfo.gameVersion) {
                 case "D":
                 case "P":
                 case "Plat":
                     break;
                 default:
-                    if (currentAreaData.dynamicTextureType == 0xFFFF) {
-                        areaDataDynamicTexturesComboBox.SelectedIndex = 0x2;
-                    } else {
-                        areaDataDynamicTexturesComboBox.SelectedIndex = currentAreaData.dynamicTextureType;
-                    }
-                    areaDataAreaTypeComboBox.SelectedIndex = currentAreaData.areaType;
+                    areaDataDynamicTexturesNumericUpDown.Value = currentAreaData.dynamicTextureType;
+                    if (currentAreaData.areaType == 0)
+                        indoorAreaRadioButton.Checked = true;
+                    else
+                        outdoorAreaRadioButton.Checked = true;
                     break;
-            }
-        }
-
-        private void hexRadiobutton_CheckedChanged(object sender, EventArgs e) {
-            updateTextEditorLineNumbers();
-        }
-
-        private void updateTextEditorLineNumbers() {
-            disableHandlers = true;
-            if (hexRadiobutton.Checked) {
-                printTextEditorLinesHex();
-            } else {
-                printTextEditorLinesDecimal();
             }
             disableHandlers = false;
         }
+        private void indoorAreaRadioButton_CheckedChanged(object sender, EventArgs e) {
+            if (indoorAreaRadioButton.Checked == true)
+                currentAreaData.areaType = 0;
+            else
+                currentAreaData.areaType = 1;
+        }
+        private void addNSBTXButton_Click(object sender, EventArgs e) {
+            /* Add new NSBTX file to the correct folder */
+            if (mapTilesetRadioButton.Checked) {
+                File.Copy(romInfo.mapTexturesDirPath + "\\" + 0.ToString("D4"), romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
+            } else {
+                File.Copy(romInfo.buildingTexturesDirPath + "\\" + 0.ToString("D4"), romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
+            }
+           
+            /* Update ComboBox and select new file */
+            texturePacksListBox.Items.Add("Texture Pack " + texturePacksListBox.Items.Count);
+            texturePacksListBox.SelectedIndex = texturePacksListBox.Items.Count - 1;
+        }
+
+        private void removeNSBTXButton_Click(object sender, EventArgs e) {
+            if (texturePacksListBox.Items.Count > 1) {
+                /* Delete NSBTX file */
+                if (mapTilesetRadioButton.Checked)
+                    File.Delete(romInfo.mapTexturesDirPath + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
+                else {
+                    File.Delete(romInfo.buildingTexturesDirPath + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
+                }
+
+                /* Check if currently selected file is the last one, and in that case select the one before it */
+                int lastIndex = texturePacksListBox.Items.Count - 1;
+                if (texturePacksListBox.SelectedIndex == lastIndex)
+                    texturePacksListBox.SelectedIndex--;
+
+                /* Remove item from ComboBox */
+                texturePacksListBox.Items.RemoveAt(lastIndex);
+            } else {
+                MessageBox.Show("At least one tileset must be kept.", "Can't delete tileset", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+        }
         #endregion
+
+        private void addAreaDataButton_Click(object sender, EventArgs e) {
+            /* Add new NSBTX file to the correct folder */
+            File.Copy(romInfo.areaDataDirPath + "\\" + 0.ToString("D4"), romInfo.areaDataDirPath + "\\" + selectAreaDataListBox.Items.Count.ToString("D4"));
+
+            /* Update ComboBox and select new file */
+            selectAreaDataListBox.Items.Add("AreaData File " + selectAreaDataListBox.Items.Count);
+            selectAreaDataListBox.SelectedIndex = selectAreaDataListBox.Items.Count - 1;
+        }
+
+        private void removeAreaDataButton_Click(object sender, EventArgs e) {
+            if (selectAreaDataListBox.Items.Count > 1) {
+                /* Delete AreaData file */
+                File.Delete(romInfo.areaDataDirPath + "\\" + (selectAreaDataListBox.Items.Count - 1).ToString("D4"));
+
+                /* Check if currently selected file is the last one, and in that case select the one before it */
+                int lastIndex = selectAreaDataListBox.Items.Count - 1;
+                if (selectAreaDataListBox.SelectedIndex == lastIndex)
+                    selectAreaDataListBox.SelectedIndex--;
+
+                /* Remove item from ComboBox */
+                selectAreaDataListBox.Items.RemoveAt(lastIndex);
+            } else {
+                MessageBox.Show("At least one AreaData file must be kept.", "Can't delete AreaData", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+        }
+
+        private void exportAreaDataButton_Click(object sender, EventArgs e) {
+            if (selectAreaDataListBox.SelectedIndex < 0)
+                return;
+
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Filter = "AreaData File (*.bin)|*.bin";
+            if (sf.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create)))
+                writer.Write(currentAreaData.Save(romInfo.gameVersion));
+
+        }
+
+        private void importAreaDataButton_Click(object sender, EventArgs e) {
+            if (selectAreaDataListBox.SelectedIndex < 0)
+                return;
+
+            /* Prompt user to select .evt file */
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "AreaData File (*.bin)|*.bin";
+            if (of.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            /* Update matrix object in memory */
+            string path = romInfo.areaDataDirPath + "\\" + selectAreaDataListBox.SelectedIndex.ToString("D4");
+            File.Copy(of.FileName, path, true);
+
+            /* Refresh controls */
+            selectAreaDataListBox_SelectedIndexChanged(sender, e);
+
+            /* Display success message */
+            MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

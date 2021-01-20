@@ -29,24 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
+            this.pasteFlagsButton = new System.Windows.Forms.Button();
+            this.copyFlagsButton = new System.Windows.Forms.Button();
             this.pasteHeaderButton = new System.Windows.Forms.Button();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.pasteTextsButton = new System.Windows.Forms.Button();
@@ -67,7 +54,9 @@
             this.areaIconPictureBox = new System.Windows.Forms.PictureBox();
             this.areaImageLabel = new System.Windows.Forms.Label();
             this.nameGroupBox = new System.Windows.Forms.GroupBox();
+            this.pasteWildEncountersButton = new System.Windows.Forms.Button();
             this.pasteLocationNameButton = new System.Windows.Forms.Button();
+            this.copyWildEncountersButton = new System.Windows.Forms.Button();
             this.copyLocationNameButton = new System.Windows.Forms.Button();
             this.pasteInternalNameButton = new System.Windows.Forms.Button();
             this.copyInternalNameButton = new System.Windows.Forms.Button();
@@ -131,8 +120,6 @@
             this.matrixLabel = new System.Windows.Forms.Label();
             this.matrixUpDown = new System.Windows.Forms.NumericUpDown();
             this.flagsGroupBox = new System.Windows.Forms.GroupBox();
-            this.pasteFlagsButton = new System.Windows.Forms.Button();
-            this.copyFlagsButton = new System.Windows.Forms.Button();
             this.flag7CheckBox = new System.Windows.Forms.CheckBox();
             this.flag6CheckBox = new System.Windows.Forms.CheckBox();
             this.flag5CheckBox = new System.Windows.Forms.CheckBox();
@@ -159,11 +146,8 @@
             this.matrixNameLabel = new System.Windows.Forms.Label();
             this.matrixTabControl = new System.Windows.Forms.TabControl();
             this.headersTabPage = new System.Windows.Forms.TabPage();
-            this.headersGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.heightsTabPage = new System.Windows.Forms.TabPage();
-            this.heightsGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.mapFilesTabPage = new System.Windows.Forms.TabPage();
-            this.mapFilesGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.matrixNameTextBox = new System.Windows.Forms.TextBox();
             this.heightUpDown = new System.Windows.Forms.NumericUpDown();
             this.widthUpDown = new System.Windows.Forms.NumericUpDown();
@@ -246,6 +230,22 @@
             this.nsbtxEditorTabPage = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.removeNSBTXButton = new System.Windows.Forms.Button();
+            this.areaDataGroupBox = new System.Windows.Forms.GroupBox();
+            this.areaTypeGroupbox = new System.Windows.Forms.GroupBox();
+            this.outdoorAreaRadioButton = new System.Windows.Forms.RadioButton();
+            this.indoorAreaRadioButton = new System.Windows.Forms.RadioButton();
+            this.removeAreaDataButton = new System.Windows.Forms.Button();
+            this.addAreaDataButton = new System.Windows.Forms.Button();
+            this.saveAreaDataButton = new System.Windows.Forms.Button();
+            this.label35 = new System.Windows.Forms.Label();
+            this.areaDataDynamicTexturesNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label34 = new System.Windows.Forms.Label();
+            this.areaDataLightTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.areaDataMapTilesetUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label32 = new System.Windows.Forms.Label();
+            this.areaDataBuildingTilesetUpDown = new System.Windows.Forms.NumericUpDown();
+            this.selectAreaDataListBox = new System.Windows.Forms.ListBox();
             this.addNSBTXButton = new System.Windows.Forms.Button();
             this.exportNSBTXButton = new System.Windows.Forms.Button();
             this.importNSBTXButton = new System.Windows.Forms.Button();
@@ -257,21 +257,6 @@
             this.buildingsTilesetRadioButton = new System.Windows.Forms.RadioButton();
             this.mapTilesetRadioButton = new System.Windows.Forms.RadioButton();
             this.texturePacksListBox = new System.Windows.Forms.ListBox();
-            this.areaDataGroupBox = new System.Windows.Forms.GroupBox();
-            this.removeAreaDataButton = new System.Windows.Forms.Button();
-            this.addAreaDataButton = new System.Windows.Forms.Button();
-            this.saveAreaDataButton = new System.Windows.Forms.Button();
-            this.label36 = new System.Windows.Forms.Label();
-            this.areaDataAreaTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.areaDataDynamicTexturesComboBox = new System.Windows.Forms.ComboBox();
-            this.label34 = new System.Windows.Forms.Label();
-            this.areaDataLightTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.label33 = new System.Windows.Forms.Label();
-            this.areaDataMapTilesetUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label32 = new System.Windows.Forms.Label();
-            this.areaDataBuildingTilesetUpDown = new System.Windows.Forms.NumericUpDown();
-            this.selectAreaDataComboBox = new System.Windows.Forms.ComboBox();
             this.eventEditorTabPage = new System.Windows.Forms.TabPage();
             this.RightClickLabel = new System.Windows.Forms.Label();
             this.rightClickPicture = new System.Windows.Forms.PictureBox();
@@ -556,8 +541,8 @@
             this.buildingEditorButton = new System.Windows.Forms.ToolStripButton();
             this.romToolboxButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
-            this.pasteWildEncountersButton = new System.Windows.Forms.Button();
-            this.copyWildEncountersButton = new System.Windows.Forms.Button();
+            this.exportAreaDataButton = new System.Windows.Forms.Button();
+            this.importAreaDataButton = new System.Windows.Forms.Button();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.groupBox10.SuspendLayout();
@@ -582,12 +567,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.weatherPictureBox)).BeginInit();
             this.matrixEditorTabPage.SuspendLayout();
             this.matrixTabControl.SuspendLayout();
-            this.headersTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).BeginInit();
-            this.heightsTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).BeginInit();
-            this.mapFilesTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthUpDown)).BeginInit();
             this.mapEditorTabPage.SuspendLayout();
@@ -619,10 +598,12 @@
             this.terrainTabPage.SuspendLayout();
             this.nsbtxEditorTabPage.SuspendLayout();
             this.groupBox7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).BeginInit();
             this.areaDataGroupBox.SuspendLayout();
+            this.areaTypeGroupbox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.areaDataDynamicTexturesNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.areaDataMapTilesetUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.areaDataBuildingTilesetUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).BeginInit();
             this.eventEditorTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rightClickPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wheelClickPicture)).BeginInit();
@@ -755,10 +736,31 @@
             this.headerEditorTabPage.TabIndex = 0;
             this.headerEditorTabPage.Text = "Header Editor";
             // 
+            // pasteFlagsButton
+            // 
+            this.pasteFlagsButton.Enabled = false;
+            this.pasteFlagsButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteFlagsButton.Image")));
+            this.pasteFlagsButton.Location = new System.Drawing.Point(784, 546);
+            this.pasteFlagsButton.Name = "pasteFlagsButton";
+            this.pasteFlagsButton.Size = new System.Drawing.Size(35, 37);
+            this.pasteFlagsButton.TabIndex = 48;
+            this.pasteFlagsButton.UseVisualStyleBackColor = true;
+            this.pasteFlagsButton.Click += new System.EventHandler(this.pasteFlagsButton_Click);
+            // 
+            // copyFlagsButton
+            // 
+            this.copyFlagsButton.Image = ((System.Drawing.Image)(resources.GetObject("copyFlagsButton.Image")));
+            this.copyFlagsButton.Location = new System.Drawing.Point(784, 503);
+            this.copyFlagsButton.Name = "copyFlagsButton";
+            this.copyFlagsButton.Size = new System.Drawing.Size(35, 37);
+            this.copyFlagsButton.TabIndex = 48;
+            this.copyFlagsButton.UseVisualStyleBackColor = true;
+            this.copyFlagsButton.Click += new System.EventHandler(this.copyFlagsButton_Click);
+            // 
             // pasteHeaderButton
             // 
             this.pasteHeaderButton.Enabled = false;
-            this.pasteHeaderButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteHeaderButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteHeaderButton.Image")));
             this.pasteHeaderButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.pasteHeaderButton.Location = new System.Drawing.Point(925, 564);
             this.pasteHeaderButton.Name = "pasteHeaderButton";
@@ -791,7 +793,7 @@
             // pasteTextsButton
             // 
             this.pasteTextsButton.Enabled = false;
-            this.pasteTextsButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteTextsButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteTextsButton.Image")));
             this.pasteTextsButton.Location = new System.Drawing.Point(540, 29);
             this.pasteTextsButton.Name = "pasteTextsButton";
             this.pasteTextsButton.Size = new System.Drawing.Size(35, 37);
@@ -811,7 +813,7 @@
             // 
             // copyTextsButton
             // 
-            this.copyTextsButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyTextsButton.Image = ((System.Drawing.Image)(resources.GetObject("copyTextsButton.Image")));
             this.copyTextsButton.Location = new System.Drawing.Point(503, 29);
             this.copyTextsButton.Name = "copyTextsButton";
             this.copyTextsButton.Size = new System.Drawing.Size(35, 37);
@@ -822,7 +824,7 @@
             // pasteEventsButton
             // 
             this.pasteEventsButton.Enabled = false;
-            this.pasteEventsButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteEventsButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteEventsButton.Image")));
             this.pasteEventsButton.Location = new System.Drawing.Point(238, 29);
             this.pasteEventsButton.Name = "pasteEventsButton";
             this.pasteEventsButton.Size = new System.Drawing.Size(35, 37);
@@ -845,7 +847,7 @@
             // 
             // copyEventsButton
             // 
-            this.copyEventsButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyEventsButton.Image = ((System.Drawing.Image)(resources.GetObject("copyEventsButton.Image")));
             this.copyEventsButton.Location = new System.Drawing.Point(201, 29);
             this.copyEventsButton.Name = "copyEventsButton";
             this.copyEventsButton.Size = new System.Drawing.Size(35, 37);
@@ -936,7 +938,7 @@
             // 
             // copyHeaderButton
             // 
-            this.copyHeaderButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyHeaderButton.Image = ((System.Drawing.Image)(resources.GetObject("copyHeaderButton.Image")));
             this.copyHeaderButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.copyHeaderButton.Location = new System.Drawing.Point(845, 564);
             this.copyHeaderButton.Name = "copyHeaderButton";
@@ -996,10 +998,21 @@
             this.nameGroupBox.TabStop = false;
             this.nameGroupBox.Text = "Location Info";
             // 
+            // pasteWildEncountersButton
+            // 
+            this.pasteWildEncountersButton.Enabled = false;
+            this.pasteWildEncountersButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteWildEncountersButton.Image")));
+            this.pasteWildEncountersButton.Location = new System.Drawing.Point(535, 91);
+            this.pasteWildEncountersButton.Name = "pasteWildEncountersButton";
+            this.pasteWildEncountersButton.Size = new System.Drawing.Size(35, 37);
+            this.pasteWildEncountersButton.TabIndex = 42;
+            this.pasteWildEncountersButton.UseVisualStyleBackColor = true;
+            this.pasteWildEncountersButton.Click += new System.EventHandler(this.pasteWildEncountersButton_Click);
+            // 
             // pasteLocationNameButton
             // 
             this.pasteLocationNameButton.Enabled = false;
-            this.pasteLocationNameButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteLocationNameButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteLocationNameButton.Image")));
             this.pasteLocationNameButton.Location = new System.Drawing.Point(197, 32);
             this.pasteLocationNameButton.Name = "pasteLocationNameButton";
             this.pasteLocationNameButton.Size = new System.Drawing.Size(35, 37);
@@ -1007,9 +1020,19 @@
             this.pasteLocationNameButton.UseVisualStyleBackColor = true;
             this.pasteLocationNameButton.Click += new System.EventHandler(this.pasteLocationNameButton_Click);
             // 
+            // copyWildEncountersButton
+            // 
+            this.copyWildEncountersButton.Image = ((System.Drawing.Image)(resources.GetObject("copyWildEncountersButton.Image")));
+            this.copyWildEncountersButton.Location = new System.Drawing.Point(498, 91);
+            this.copyWildEncountersButton.Name = "copyWildEncountersButton";
+            this.copyWildEncountersButton.Size = new System.Drawing.Size(35, 37);
+            this.copyWildEncountersButton.TabIndex = 41;
+            this.copyWildEncountersButton.UseVisualStyleBackColor = true;
+            this.copyWildEncountersButton.Click += new System.EventHandler(this.copyWildEncountersButton_Click);
+            // 
             // copyLocationNameButton
             // 
-            this.copyLocationNameButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyLocationNameButton.Image = ((System.Drawing.Image)(resources.GetObject("copyLocationNameButton.Image")));
             this.copyLocationNameButton.Location = new System.Drawing.Point(160, 32);
             this.copyLocationNameButton.Name = "copyLocationNameButton";
             this.copyLocationNameButton.Size = new System.Drawing.Size(35, 37);
@@ -1020,7 +1043,7 @@
             // pasteInternalNameButton
             // 
             this.pasteInternalNameButton.Enabled = false;
-            this.pasteInternalNameButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteInternalNameButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteInternalNameButton.Image")));
             this.pasteInternalNameButton.Location = new System.Drawing.Point(440, 31);
             this.pasteInternalNameButton.Name = "pasteInternalNameButton";
             this.pasteInternalNameButton.Size = new System.Drawing.Size(35, 37);
@@ -1030,7 +1053,7 @@
             // 
             // copyInternalNameButton
             // 
-            this.copyInternalNameButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyInternalNameButton.Image = ((System.Drawing.Image)(resources.GetObject("copyInternalNameButton.Image")));
             this.copyInternalNameButton.Location = new System.Drawing.Point(403, 31);
             this.copyInternalNameButton.Name = "copyInternalNameButton";
             this.copyInternalNameButton.Size = new System.Drawing.Size(35, 37);
@@ -1041,7 +1064,7 @@
             // pasteAreaIconButton
             // 
             this.pasteAreaIconButton.Enabled = false;
-            this.pasteAreaIconButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteAreaIconButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteAreaIconButton.Image")));
             this.pasteAreaIconButton.Location = new System.Drawing.Point(440, 91);
             this.pasteAreaIconButton.Name = "pasteAreaIconButton";
             this.pasteAreaIconButton.Size = new System.Drawing.Size(35, 37);
@@ -1051,7 +1074,7 @@
             // 
             // copyAreaIconButton
             // 
-            this.copyAreaIconButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyAreaIconButton.Image = ((System.Drawing.Image)(resources.GetObject("copyAreaIconButton.Image")));
             this.copyAreaIconButton.Location = new System.Drawing.Point(403, 91);
             this.copyAreaIconButton.Name = "copyAreaIconButton";
             this.copyAreaIconButton.Size = new System.Drawing.Size(35, 37);
@@ -1062,7 +1085,7 @@
             // pasteAreaSettingsButton
             // 
             this.pasteAreaSettingsButton.Enabled = false;
-            this.pasteAreaSettingsButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteAreaSettingsButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteAreaSettingsButton.Image")));
             this.pasteAreaSettingsButton.Location = new System.Drawing.Point(197, 91);
             this.pasteAreaSettingsButton.Name = "pasteAreaSettingsButton";
             this.pasteAreaSettingsButton.Size = new System.Drawing.Size(35, 37);
@@ -1081,7 +1104,7 @@
             // 
             // copyAreaSettingsButton
             // 
-            this.copyAreaSettingsButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyAreaSettingsButton.Image = ((System.Drawing.Image)(resources.GetObject("copyAreaSettingsButton.Image")));
             this.copyAreaSettingsButton.Location = new System.Drawing.Point(160, 91);
             this.copyAreaSettingsButton.Name = "copyAreaSettingsButton";
             this.copyAreaSettingsButton.Size = new System.Drawing.Size(35, 37);
@@ -1259,7 +1282,7 @@
             // pasteCameraAngleButton
             // 
             this.pasteCameraAngleButton.Enabled = false;
-            this.pasteCameraAngleButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteCameraAngleButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteCameraAngleButton.Image")));
             this.pasteCameraAngleButton.Location = new System.Drawing.Point(540, 98);
             this.pasteCameraAngleButton.Name = "pasteCameraAngleButton";
             this.pasteCameraAngleButton.Size = new System.Drawing.Size(35, 37);
@@ -1269,7 +1292,7 @@
             // 
             // copyCameraAngleButton
             // 
-            this.copyCameraAngleButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyCameraAngleButton.Image = ((System.Drawing.Image)(resources.GetObject("copyCameraAngleButton.Image")));
             this.copyCameraAngleButton.Location = new System.Drawing.Point(503, 98);
             this.copyCameraAngleButton.Name = "copyCameraAngleButton";
             this.copyCameraAngleButton.Size = new System.Drawing.Size(35, 37);
@@ -1280,7 +1303,7 @@
             // pasteWeatherButton
             // 
             this.pasteWeatherButton.Enabled = false;
-            this.pasteWeatherButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteWeatherButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteWeatherButton.Image")));
             this.pasteWeatherButton.Location = new System.Drawing.Point(254, 99);
             this.pasteWeatherButton.Name = "pasteWeatherButton";
             this.pasteWeatherButton.Size = new System.Drawing.Size(35, 37);
@@ -1290,7 +1313,7 @@
             // 
             // copyWeatherButton
             // 
-            this.copyWeatherButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyWeatherButton.Image = ((System.Drawing.Image)(resources.GetObject("copyWeatherButton.Image")));
             this.copyWeatherButton.Location = new System.Drawing.Point(217, 99);
             this.copyWeatherButton.Name = "copyWeatherButton";
             this.copyWeatherButton.Size = new System.Drawing.Size(35, 37);
@@ -1301,7 +1324,7 @@
             // pasteMusicNightButton
             // 
             this.pasteMusicNightButton.Enabled = false;
-            this.pasteMusicNightButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteMusicNightButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteMusicNightButton.Image")));
             this.pasteMusicNightButton.Location = new System.Drawing.Point(540, 32);
             this.pasteMusicNightButton.Name = "pasteMusicNightButton";
             this.pasteMusicNightButton.Size = new System.Drawing.Size(35, 37);
@@ -1311,7 +1334,7 @@
             // 
             // copyMusicNightButton
             // 
-            this.copyMusicNightButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyMusicNightButton.Image = ((System.Drawing.Image)(resources.GetObject("copyMusicNightButton.Image")));
             this.copyMusicNightButton.Location = new System.Drawing.Point(503, 32);
             this.copyMusicNightButton.Name = "copyMusicNightButton";
             this.copyMusicNightButton.Size = new System.Drawing.Size(35, 37);
@@ -1322,7 +1345,7 @@
             // pasteMusicDayButton
             // 
             this.pasteMusicDayButton.Enabled = false;
-            this.pasteMusicDayButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteMusicDayButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteMusicDayButton.Image")));
             this.pasteMusicDayButton.Location = new System.Drawing.Point(254, 32);
             this.pasteMusicDayButton.Name = "pasteMusicDayButton";
             this.pasteMusicDayButton.Size = new System.Drawing.Size(35, 37);
@@ -1332,7 +1355,7 @@
             // 
             // copyMusicDayButton
             // 
-            this.copyMusicDayButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyMusicDayButton.Image = ((System.Drawing.Image)(resources.GetObject("copyMusicDayButton.Image")));
             this.copyMusicDayButton.Location = new System.Drawing.Point(217, 32);
             this.copyMusicDayButton.Name = "copyMusicDayButton";
             this.copyMusicDayButton.Size = new System.Drawing.Size(35, 37);
@@ -1444,7 +1467,7 @@
             // pasteLevelScriptsButton
             // 
             this.pasteLevelScriptsButton.Enabled = false;
-            this.pasteLevelScriptsButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteLevelScriptsButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteLevelScriptsButton.Image")));
             this.pasteLevelScriptsButton.Location = new System.Drawing.Point(540, 30);
             this.pasteLevelScriptsButton.Name = "pasteLevelScriptsButton";
             this.pasteLevelScriptsButton.Size = new System.Drawing.Size(35, 37);
@@ -1454,7 +1477,7 @@
             // 
             // copyLevelScriptsButton
             // 
-            this.copyLevelScriptsButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyLevelScriptsButton.Image = ((System.Drawing.Image)(resources.GetObject("copyLevelScriptsButton.Image")));
             this.copyLevelScriptsButton.Location = new System.Drawing.Point(503, 30);
             this.copyLevelScriptsButton.Name = "copyLevelScriptsButton";
             this.copyLevelScriptsButton.Size = new System.Drawing.Size(35, 37);
@@ -1465,7 +1488,7 @@
             // pasteScriptsButton
             // 
             this.pasteScriptsButton.Enabled = false;
-            this.pasteScriptsButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteScriptsButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteScriptsButton.Image")));
             this.pasteScriptsButton.Location = new System.Drawing.Point(238, 30);
             this.pasteScriptsButton.Name = "pasteScriptsButton";
             this.pasteScriptsButton.Size = new System.Drawing.Size(35, 37);
@@ -1475,7 +1498,7 @@
             // 
             // copyScriptsButton
             // 
-            this.copyScriptsButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyScriptsButton.Image = ((System.Drawing.Image)(resources.GetObject("copyScriptsButton.Image")));
             this.copyScriptsButton.Location = new System.Drawing.Point(201, 30);
             this.copyScriptsButton.Name = "copyScriptsButton";
             this.copyScriptsButton.Size = new System.Drawing.Size(35, 37);
@@ -1559,7 +1582,7 @@
             // 
             // saveHeaderButton
             // 
-            this.saveHeaderButton.Image = global::DSPRE.Properties.Resources.save_rom;
+            this.saveHeaderButton.Image = ((System.Drawing.Image)(resources.GetObject("saveHeaderButton.Image")));
             this.saveHeaderButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveHeaderButton.Location = new System.Drawing.Point(1006, 564);
             this.saveHeaderButton.Name = "saveHeaderButton";
@@ -1592,7 +1615,7 @@
             // pasteAreaDataButton
             // 
             this.pasteAreaDataButton.Enabled = false;
-            this.pasteAreaDataButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteAreaDataButton.Image")));
             this.pasteAreaDataButton.Location = new System.Drawing.Point(238, 87);
             this.pasteAreaDataButton.Name = "pasteAreaDataButton";
             this.pasteAreaDataButton.Size = new System.Drawing.Size(35, 37);
@@ -1602,7 +1625,7 @@
             // 
             // copyAreaDataButton
             // 
-            this.copyAreaDataButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("copyAreaDataButton.Image")));
             this.copyAreaDataButton.Location = new System.Drawing.Point(201, 87);
             this.copyAreaDataButton.Name = "copyAreaDataButton";
             this.copyAreaDataButton.Size = new System.Drawing.Size(35, 37);
@@ -1613,7 +1636,7 @@
             // pasteMatrixButton
             // 
             this.pasteMatrixButton.Enabled = false;
-            this.pasteMatrixButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteMatrixButton.Image")));
             this.pasteMatrixButton.Location = new System.Drawing.Point(238, 30);
             this.pasteMatrixButton.Name = "pasteMatrixButton";
             this.pasteMatrixButton.Size = new System.Drawing.Size(35, 37);
@@ -1633,7 +1656,7 @@
             // 
             // copyMatrixButton
             // 
-            this.copyMatrixButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.copyMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("copyMatrixButton.Image")));
             this.copyMatrixButton.Location = new System.Drawing.Point(201, 30);
             this.copyMatrixButton.Name = "copyMatrixButton";
             this.copyMatrixButton.Size = new System.Drawing.Size(35, 37);
@@ -1711,27 +1734,6 @@
             this.flagsGroupBox.TabIndex = 32;
             this.flagsGroupBox.TabStop = false;
             this.flagsGroupBox.Text = "Flags";
-            // 
-            // pasteFlagsButton
-            // 
-            this.pasteFlagsButton.Enabled = false;
-            this.pasteFlagsButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
-            this.pasteFlagsButton.Location = new System.Drawing.Point(784, 546);
-            this.pasteFlagsButton.Name = "pasteFlagsButton";
-            this.pasteFlagsButton.Size = new System.Drawing.Size(35, 37);
-            this.pasteFlagsButton.TabIndex = 48;
-            this.pasteFlagsButton.UseVisualStyleBackColor = true;
-            this.pasteFlagsButton.Click += new System.EventHandler(this.pasteFlagsButton_Click);
-            // 
-            // copyFlagsButton
-            // 
-            this.copyFlagsButton.Image = global::DSPRE.Properties.Resources.copyIcon;
-            this.copyFlagsButton.Location = new System.Drawing.Point(784, 503);
-            this.copyFlagsButton.Name = "copyFlagsButton";
-            this.copyFlagsButton.Size = new System.Drawing.Size(35, 37);
-            this.copyFlagsButton.TabIndex = 48;
-            this.copyFlagsButton.UseVisualStyleBackColor = true;
-            this.copyFlagsButton.Click += new System.EventHandler(this.copyFlagsButton_Click);
             // 
             // flag7CheckBox
             // 
@@ -2006,7 +2008,6 @@
             // 
             // headersTabPage
             // 
-            this.headersTabPage.Controls.Add(this.headersGridView);
             this.headersTabPage.Location = new System.Drawing.Point(4, 22);
             this.headersTabPage.Name = "headersTabPage";
             this.headersTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -2015,65 +2016,8 @@
             this.headersTabPage.Text = "Map Headers";
             this.headersTabPage.UseVisualStyleBackColor = true;
             // 
-            // headersGridView
-            // 
-            this.headersGridView.AllowUserToAddRows = false;
-            this.headersGridView.AllowUserToDeleteRows = false;
-            this.headersGridView.AllowUserToResizeColumns = false;
-            this.headersGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.headersGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
-            this.headersGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
-            this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle18.Format = "D4";
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle18;
-            this.headersGridView.Location = new System.Drawing.Point(0, 0);
-            this.headersGridView.Name = "headersGridView";
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle19;
-            this.headersGridView.RowHeadersWidth = 50;
-            this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle20;
-            this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.headersGridView.RowTemplate.Height = 18;
-            this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.headersGridView.ShowCellErrors = false;
-            this.headersGridView.Size = new System.Drawing.Size(965, 566);
-            this.headersGridView.TabIndex = 1;
-            this.headersGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.headersGridView_CellFormatting);
-            this.headersGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.headersGridView_CellMouseDoubleClick);
-            this.headersGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.headersGridView_CellValueChanged);
-            // 
             // heightsTabPage
             // 
-            this.heightsTabPage.Controls.Add(this.heightsGridView);
             this.heightsTabPage.Location = new System.Drawing.Point(4, 22);
             this.heightsTabPage.Name = "heightsTabPage";
             this.heightsTabPage.Size = new System.Drawing.Size(965, 566);
@@ -2081,124 +2025,14 @@
             this.heightsTabPage.Text = "Map Heights";
             this.heightsTabPage.UseVisualStyleBackColor = true;
             // 
-            // heightsGridView
-            // 
-            this.heightsGridView.AllowUserToAddRows = false;
-            this.heightsGridView.AllowUserToDeleteRows = false;
-            this.heightsGridView.AllowUserToResizeColumns = false;
-            this.heightsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
-            this.heightsGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
-            this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle23.Format = "D2";
-            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle23;
-            this.heightsGridView.Location = new System.Drawing.Point(0, 0);
-            this.heightsGridView.Name = "heightsGridView";
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
-            this.heightsGridView.RowHeadersWidth = 50;
-            this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle25.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle25;
-            this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.RowTemplate.Height = 18;
-            this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.heightsGridView.Size = new System.Drawing.Size(965, 566);
-            this.heightsGridView.TabIndex = 2;
-            this.heightsGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.heightsGridView_CellFormatting);
-            this.heightsGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.heightsGridView_CellValueChanged);
-            // 
             // mapFilesTabPage
             // 
-            this.mapFilesTabPage.Controls.Add(this.mapFilesGridView);
             this.mapFilesTabPage.Location = new System.Drawing.Point(4, 22);
             this.mapFilesTabPage.Name = "mapFilesTabPage";
             this.mapFilesTabPage.Size = new System.Drawing.Size(965, 566);
             this.mapFilesTabPage.TabIndex = 3;
             this.mapFilesTabPage.Text = "Map Files";
             this.mapFilesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // mapFilesGridView
-            // 
-            this.mapFilesGridView.AllowUserToAddRows = false;
-            this.mapFilesGridView.AllowUserToDeleteRows = false;
-            this.mapFilesGridView.AllowUserToResizeColumns = false;
-            this.mapFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle26;
-            this.mapFilesGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle27;
-            this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle28.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle28.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle28.Format = "D4";
-            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle28.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle28;
-            this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
-            this.mapFilesGridView.Name = "mapFilesGridView";
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle29.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle29;
-            this.mapFilesGridView.RowHeadersWidth = 50;
-            this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle30.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle30;
-            this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.RowTemplate.Height = 18;
-            this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.mapFilesGridView.Size = new System.Drawing.Size(965, 566);
-            this.mapFilesGridView.TabIndex = 2;
-            this.mapFilesGridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellMouseDoubleClick);
-            this.mapFilesGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.mapFilesGridView_CellFormatting);
-            this.mapFilesGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellValueChanged);
             // 
             // matrixNameTextBox
             // 
@@ -3142,7 +2976,6 @@
             // nsbtxEditorTabPage
             // 
             this.nsbtxEditorTabPage.Controls.Add(this.groupBox7);
-            this.nsbtxEditorTabPage.Controls.Add(this.areaDataGroupBox);
             this.nsbtxEditorTabPage.ImageIndex = 6;
             this.nsbtxEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.nsbtxEditorTabPage.Name = "nsbtxEditorTabPage";
@@ -3155,6 +2988,7 @@
             // groupBox7
             // 
             this.groupBox7.Controls.Add(this.removeNSBTXButton);
+            this.groupBox7.Controls.Add(this.areaDataGroupBox);
             this.groupBox7.Controls.Add(this.addNSBTXButton);
             this.groupBox7.Controls.Add(this.exportNSBTXButton);
             this.groupBox7.Controls.Add(this.importNSBTXButton);
@@ -3166,234 +3000,139 @@
             this.groupBox7.Controls.Add(this.buildingsTilesetRadioButton);
             this.groupBox7.Controls.Add(this.mapTilesetRadioButton);
             this.groupBox7.Controls.Add(this.texturePacksListBox);
-            this.groupBox7.Location = new System.Drawing.Point(39, 6);
+            this.groupBox7.Location = new System.Drawing.Point(6, 6);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(1042, 458);
+            this.groupBox7.Size = new System.Drawing.Size(1106, 599);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Texture Packs";
             // 
             // removeNSBTXButton
             // 
-            this.removeNSBTXButton.Location = new System.Drawing.Point(107, 419);
+            this.removeNSBTXButton.Location = new System.Drawing.Point(303, 18);
             this.removeNSBTXButton.Name = "removeNSBTXButton";
-            this.removeNSBTXButton.Size = new System.Drawing.Size(90, 23);
+            this.removeNSBTXButton.Size = new System.Drawing.Size(83, 23);
             this.removeNSBTXButton.TabIndex = 11;
             this.removeNSBTXButton.Text = "Remove Last";
             this.removeNSBTXButton.UseVisualStyleBackColor = true;
-            // 
-            // addNSBTXButton
-            // 
-            this.addNSBTXButton.Location = new System.Drawing.Point(20, 419);
-            this.addNSBTXButton.Name = "addNSBTXButton";
-            this.addNSBTXButton.Size = new System.Drawing.Size(86, 23);
-            this.addNSBTXButton.TabIndex = 10;
-            this.addNSBTXButton.Text = "Add NSBTX";
-            this.addNSBTXButton.UseVisualStyleBackColor = true;
-            // 
-            // exportNSBTXButton
-            // 
-            this.exportNSBTXButton.Location = new System.Drawing.Point(20, 396);
-            this.exportNSBTXButton.Name = "exportNSBTXButton";
-            this.exportNSBTXButton.Size = new System.Drawing.Size(177, 23);
-            this.exportNSBTXButton.TabIndex = 9;
-            this.exportNSBTXButton.Text = "&Export NSBTX";
-            this.exportNSBTXButton.UseVisualStyleBackColor = true;
-            this.exportNSBTXButton.Click += new System.EventHandler(this.exportNSBTXButton_Click);
-            // 
-            // importNSBTXButton
-            // 
-            this.importNSBTXButton.Location = new System.Drawing.Point(20, 373);
-            this.importNSBTXButton.Name = "importNSBTXButton";
-            this.importNSBTXButton.Size = new System.Drawing.Size(177, 23);
-            this.importNSBTXButton.TabIndex = 8;
-            this.importNSBTXButton.Text = "&Import NSBTX";
-            this.importNSBTXButton.UseVisualStyleBackColor = true;
-            this.importNSBTXButton.Click += new System.EventHandler(this.importNSBTXButton_Click);
-            // 
-            // texturePictureBox
-            // 
-            this.texturePictureBox.BackColor = System.Drawing.Color.White;
-            this.texturePictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("texturePictureBox.BackgroundImage")));
-            this.texturePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.texturePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.texturePictureBox.Location = new System.Drawing.Point(745, 98);
-            this.texturePictureBox.Name = "texturePictureBox";
-            this.texturePictureBox.Size = new System.Drawing.Size(256, 256);
-            this.texturePictureBox.TabIndex = 7;
-            this.texturePictureBox.TabStop = false;
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(485, 28);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(45, 13);
-            this.label38.TabIndex = 6;
-            this.label38.Text = "Palettes";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(244, 28);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(48, 13);
-            this.label37.TabIndex = 5;
-            this.label37.Text = "Textures";
-            // 
-            // palettesListBox
-            // 
-            this.palettesListBox.FormattingEnabled = true;
-            this.palettesListBox.Location = new System.Drawing.Point(488, 48);
-            this.palettesListBox.Name = "palettesListBox";
-            this.palettesListBox.Size = new System.Drawing.Size(217, 394);
-            this.palettesListBox.TabIndex = 4;
-            this.palettesListBox.SelectedIndexChanged += new System.EventHandler(this.palettesListBox_SelectedIndexChanged);
-            // 
-            // texturesListBox
-            // 
-            this.texturesListBox.FormattingEnabled = true;
-            this.texturesListBox.Location = new System.Drawing.Point(247, 48);
-            this.texturesListBox.Name = "texturesListBox";
-            this.texturesListBox.Size = new System.Drawing.Size(197, 394);
-            this.texturesListBox.TabIndex = 3;
-            this.texturesListBox.SelectedIndexChanged += new System.EventHandler(this.texturesListBox_SelectedIndexChanged);
-            // 
-            // buildingsTilesetRadioButton
-            // 
-            this.buildingsTilesetRadioButton.AutoSize = true;
-            this.buildingsTilesetRadioButton.Location = new System.Drawing.Point(108, 25);
-            this.buildingsTilesetRadioButton.Name = "buildingsTilesetRadioButton";
-            this.buildingsTilesetRadioButton.Size = new System.Drawing.Size(91, 17);
-            this.buildingsTilesetRadioButton.TabIndex = 2;
-            this.buildingsTilesetRadioButton.Text = "Buildings BTX";
-            this.buildingsTilesetRadioButton.UseVisualStyleBackColor = true;
-            this.buildingsTilesetRadioButton.CheckedChanged += new System.EventHandler(this.buildingsTilesetRadioButton_CheckedChanged);
-            // 
-            // mapTilesetRadioButton
-            // 
-            this.mapTilesetRadioButton.AutoSize = true;
-            this.mapTilesetRadioButton.Checked = true;
-            this.mapTilesetRadioButton.Location = new System.Drawing.Point(20, 26);
-            this.mapTilesetRadioButton.Name = "mapTilesetRadioButton";
-            this.mapTilesetRadioButton.Size = new System.Drawing.Size(75, 17);
-            this.mapTilesetRadioButton.TabIndex = 1;
-            this.mapTilesetRadioButton.TabStop = true;
-            this.mapTilesetRadioButton.Text = "Maps BTX";
-            this.mapTilesetRadioButton.UseVisualStyleBackColor = true;
-            this.mapTilesetRadioButton.CheckedChanged += new System.EventHandler(this.mapTilesetRadioButton_CheckedChanged);
-            // 
-            // texturePacksListBox
-            // 
-            this.texturePacksListBox.FormattingEnabled = true;
-            this.texturePacksListBox.Location = new System.Drawing.Point(21, 50);
-            this.texturePacksListBox.Name = "texturePacksListBox";
-            this.texturePacksListBox.Size = new System.Drawing.Size(176, 316);
-            this.texturePacksListBox.TabIndex = 0;
-            this.texturePacksListBox.SelectedIndexChanged += new System.EventHandler(this.texturePacksListBox_SelectedIndexChanged);
+            this.removeNSBTXButton.Click += new System.EventHandler(this.removeNSBTXButton_Click);
             // 
             // areaDataGroupBox
             // 
+            this.areaDataGroupBox.Controls.Add(this.exportAreaDataButton);
+            this.areaDataGroupBox.Controls.Add(this.areaTypeGroupbox);
+            this.areaDataGroupBox.Controls.Add(this.importAreaDataButton);
             this.areaDataGroupBox.Controls.Add(this.removeAreaDataButton);
             this.areaDataGroupBox.Controls.Add(this.addAreaDataButton);
             this.areaDataGroupBox.Controls.Add(this.saveAreaDataButton);
-            this.areaDataGroupBox.Controls.Add(this.label36);
-            this.areaDataGroupBox.Controls.Add(this.areaDataAreaTypeComboBox);
             this.areaDataGroupBox.Controls.Add(this.label35);
-            this.areaDataGroupBox.Controls.Add(this.areaDataDynamicTexturesComboBox);
+            this.areaDataGroupBox.Controls.Add(this.areaDataDynamicTexturesNumericUpDown);
             this.areaDataGroupBox.Controls.Add(this.label34);
             this.areaDataGroupBox.Controls.Add(this.areaDataLightTypeComboBox);
             this.areaDataGroupBox.Controls.Add(this.label33);
             this.areaDataGroupBox.Controls.Add(this.areaDataMapTilesetUpDown);
             this.areaDataGroupBox.Controls.Add(this.label32);
             this.areaDataGroupBox.Controls.Add(this.areaDataBuildingTilesetUpDown);
-            this.areaDataGroupBox.Controls.Add(this.selectAreaDataComboBox);
-            this.areaDataGroupBox.Location = new System.Drawing.Point(39, 470);
+            this.areaDataGroupBox.Controls.Add(this.selectAreaDataListBox);
+            this.areaDataGroupBox.Location = new System.Drawing.Point(599, 333);
             this.areaDataGroupBox.Name = "areaDataGroupBox";
-            this.areaDataGroupBox.Size = new System.Drawing.Size(1042, 140);
+            this.areaDataGroupBox.Size = new System.Drawing.Size(497, 249);
             this.areaDataGroupBox.TabIndex = 0;
             this.areaDataGroupBox.TabStop = false;
             this.areaDataGroupBox.Text = "Area Data";
             // 
+            // areaTypeGroupbox
+            // 
+            this.areaTypeGroupbox.Controls.Add(this.outdoorAreaRadioButton);
+            this.areaTypeGroupbox.Controls.Add(this.indoorAreaRadioButton);
+            this.areaTypeGroupbox.Enabled = false;
+            this.areaTypeGroupbox.Location = new System.Drawing.Point(180, 194);
+            this.areaTypeGroupbox.Name = "areaTypeGroupbox";
+            this.areaTypeGroupbox.Size = new System.Drawing.Size(154, 42);
+            this.areaTypeGroupbox.TabIndex = 15;
+            this.areaTypeGroupbox.TabStop = false;
+            this.areaTypeGroupbox.Text = "Area Type";
+            // 
+            // outdoorAreaRadioButton
+            // 
+            this.outdoorAreaRadioButton.AutoSize = true;
+            this.outdoorAreaRadioButton.Checked = true;
+            this.outdoorAreaRadioButton.Location = new System.Drawing.Point(82, 19);
+            this.outdoorAreaRadioButton.Name = "outdoorAreaRadioButton";
+            this.outdoorAreaRadioButton.Size = new System.Drawing.Size(63, 17);
+            this.outdoorAreaRadioButton.TabIndex = 1;
+            this.outdoorAreaRadioButton.TabStop = true;
+            this.outdoorAreaRadioButton.Text = "Outdoor";
+            this.outdoorAreaRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // indoorAreaRadioButton
+            // 
+            this.indoorAreaRadioButton.AutoSize = true;
+            this.indoorAreaRadioButton.Location = new System.Drawing.Point(13, 19);
+            this.indoorAreaRadioButton.Name = "indoorAreaRadioButton";
+            this.indoorAreaRadioButton.Size = new System.Drawing.Size(55, 17);
+            this.indoorAreaRadioButton.TabIndex = 0;
+            this.indoorAreaRadioButton.Text = "Indoor";
+            this.indoorAreaRadioButton.UseVisualStyleBackColor = true;
+            this.indoorAreaRadioButton.CheckedChanged += new System.EventHandler(this.indoorAreaRadioButton_CheckedChanged);
+            // 
             // removeAreaDataButton
             // 
-            this.removeAreaDataButton.Location = new System.Drawing.Point(19, 104);
+            this.removeAreaDataButton.Location = new System.Drawing.Point(391, 23);
             this.removeAreaDataButton.Name = "removeAreaDataButton";
-            this.removeAreaDataButton.Size = new System.Drawing.Size(82, 23);
+            this.removeAreaDataButton.Size = new System.Drawing.Size(101, 25);
             this.removeAreaDataButton.TabIndex = 14;
             this.removeAreaDataButton.Text = "Remove Last";
             this.removeAreaDataButton.UseVisualStyleBackColor = true;
+            this.removeAreaDataButton.Click += new System.EventHandler(this.removeAreaDataButton_Click);
             // 
             // addAreaDataButton
             // 
-            this.addAreaDataButton.Location = new System.Drawing.Point(19, 75);
+            this.addAreaDataButton.Location = new System.Drawing.Point(286, 23);
             this.addAreaDataButton.Name = "addAreaDataButton";
-            this.addAreaDataButton.Size = new System.Drawing.Size(82, 23);
+            this.addAreaDataButton.Size = new System.Drawing.Size(99, 25);
             this.addAreaDataButton.TabIndex = 13;
             this.addAreaDataButton.Text = "Add";
             this.addAreaDataButton.UseVisualStyleBackColor = true;
+            this.addAreaDataButton.Click += new System.EventHandler(this.addAreaDataButton_Click);
             // 
             // saveAreaDataButton
             // 
-            this.saveAreaDataButton.Location = new System.Drawing.Point(106, 75);
+            this.saveAreaDataButton.Location = new System.Drawing.Point(173, 23);
             this.saveAreaDataButton.Name = "saveAreaDataButton";
-            this.saveAreaDataButton.Size = new System.Drawing.Size(90, 52);
+            this.saveAreaDataButton.Size = new System.Drawing.Size(107, 25);
             this.saveAreaDataButton.TabIndex = 12;
             this.saveAreaDataButton.Text = "&Save";
             this.saveAreaDataButton.UseVisualStyleBackColor = true;
             this.saveAreaDataButton.Click += new System.EventHandler(this.saveAreaDataButton_Click);
             // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(403, 88);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(52, 13);
-            this.label36.TabIndex = 10;
-            this.label36.Text = "Area type";
-            // 
-            // areaDataAreaTypeComboBox
-            // 
-            this.areaDataAreaTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.areaDataAreaTypeComboBox.Enabled = false;
-            this.areaDataAreaTypeComboBox.FormattingEnabled = true;
-            this.areaDataAreaTypeComboBox.Items.AddRange(new object[] {
-            "Indoor",
-            "Outdoor"});
-            this.areaDataAreaTypeComboBox.Location = new System.Drawing.Point(405, 104);
-            this.areaDataAreaTypeComboBox.Name = "areaDataAreaTypeComboBox";
-            this.areaDataAreaTypeComboBox.Size = new System.Drawing.Size(130, 21);
-            this.areaDataAreaTypeComboBox.TabIndex = 9;
-            this.areaDataAreaTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.areaDataAreaTypeComboBox_SelectedIndexChanged);
-            // 
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(554, 88);
+            this.label35.Location = new System.Drawing.Point(391, 141);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(133, 13);
+            this.label35.Size = new System.Drawing.Size(76, 13);
             this.label35.TabIndex = 8;
-            this.label35.Text = "Dynamic textures [NSBTA]";
+            this.label35.Text = "Global NSBTA";
             // 
-            // areaDataDynamicTexturesComboBox
+            // areaDataDynamicTexturesNumericUpDown
             // 
-            this.areaDataDynamicTexturesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.areaDataDynamicTexturesComboBox.Enabled = false;
-            this.areaDataDynamicTexturesComboBox.FormattingEnabled = true;
-            this.areaDataDynamicTexturesComboBox.Items.AddRange(new object[] {
-            "Outdoors",
-            "Other textures",
-            "None"});
-            this.areaDataDynamicTexturesComboBox.Location = new System.Drawing.Point(557, 104);
-            this.areaDataDynamicTexturesComboBox.Name = "areaDataDynamicTexturesComboBox";
-            this.areaDataDynamicTexturesComboBox.Size = new System.Drawing.Size(133, 21);
-            this.areaDataDynamicTexturesComboBox.TabIndex = 7;
-            this.areaDataDynamicTexturesComboBox.SelectedIndexChanged += new System.EventHandler(this.areaDataDynamicTexturesComboBox_SelectedIndexChanged);
+            this.areaDataDynamicTexturesNumericUpDown.Enabled = false;
+            this.areaDataDynamicTexturesNumericUpDown.Location = new System.Drawing.Point(394, 157);
+            this.areaDataDynamicTexturesNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.areaDataDynamicTexturesNumericUpDown.Name = "areaDataDynamicTexturesNumericUpDown";
+            this.areaDataDynamicTexturesNumericUpDown.Size = new System.Drawing.Size(82, 20);
+            this.areaDataDynamicTexturesNumericUpDown.TabIndex = 7;
+            this.areaDataDynamicTexturesNumericUpDown.ValueChanged += new System.EventHandler(this.areaDataDynamicTexturesUpDown_ValueChanged);
             // 
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(245, 88);
+            this.label34.Location = new System.Drawing.Point(349, 195);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(53, 13);
             this.label34.TabIndex = 6;
@@ -3407,16 +3146,16 @@
             "Model\'s light",
             "Day/Night Light",
             "Unknown Light"});
-            this.areaDataLightTypeComboBox.Location = new System.Drawing.Point(248, 104);
+            this.areaDataLightTypeComboBox.Location = new System.Drawing.Point(349, 213);
             this.areaDataLightTypeComboBox.Name = "areaDataLightTypeComboBox";
-            this.areaDataLightTypeComboBox.Size = new System.Drawing.Size(132, 21);
+            this.areaDataLightTypeComboBox.Size = new System.Drawing.Size(137, 21);
             this.areaDataLightTypeComboBox.TabIndex = 5;
             this.areaDataLightTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.areaDataLightTypeComboBox_SelectedIndexChanged);
             // 
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(245, 28);
+            this.label33.Location = new System.Drawing.Point(181, 140);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(72, 13);
             this.label33.TabIndex = 4;
@@ -3424,21 +3163,21 @@
             // 
             // areaDataMapTilesetUpDown
             // 
-            this.areaDataMapTilesetUpDown.Location = new System.Drawing.Point(247, 44);
+            this.areaDataMapTilesetUpDown.Location = new System.Drawing.Point(185, 156);
             this.areaDataMapTilesetUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.areaDataMapTilesetUpDown.Name = "areaDataMapTilesetUpDown";
-            this.areaDataMapTilesetUpDown.Size = new System.Drawing.Size(133, 20);
+            this.areaDataMapTilesetUpDown.Size = new System.Drawing.Size(82, 20);
             this.areaDataMapTilesetUpDown.TabIndex = 3;
             this.areaDataMapTilesetUpDown.ValueChanged += new System.EventHandler(this.areaDataMapTilesetUpDown_ValueChanged);
             // 
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(403, 28);
+            this.label32.Location = new System.Drawing.Point(287, 141);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(88, 13);
             this.label32.TabIndex = 2;
@@ -3446,26 +3185,136 @@
             // 
             // areaDataBuildingTilesetUpDown
             // 
-            this.areaDataBuildingTilesetUpDown.Location = new System.Drawing.Point(405, 44);
+            this.areaDataBuildingTilesetUpDown.Location = new System.Drawing.Point(290, 157);
             this.areaDataBuildingTilesetUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.areaDataBuildingTilesetUpDown.Name = "areaDataBuildingTilesetUpDown";
-            this.areaDataBuildingTilesetUpDown.Size = new System.Drawing.Size(130, 20);
+            this.areaDataBuildingTilesetUpDown.Size = new System.Drawing.Size(82, 20);
             this.areaDataBuildingTilesetUpDown.TabIndex = 1;
             this.areaDataBuildingTilesetUpDown.ValueChanged += new System.EventHandler(this.areaDataBuildingTilesetUpDown_ValueChanged);
             // 
-            // selectAreaDataComboBox
+            // selectAreaDataListBox
             // 
-            this.selectAreaDataComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.selectAreaDataComboBox.FormattingEnabled = true;
-            this.selectAreaDataComboBox.Location = new System.Drawing.Point(20, 35);
-            this.selectAreaDataComboBox.Name = "selectAreaDataComboBox";
-            this.selectAreaDataComboBox.Size = new System.Drawing.Size(176, 21);
-            this.selectAreaDataComboBox.TabIndex = 0;
-            this.selectAreaDataComboBox.SelectedIndexChanged += new System.EventHandler(this.selectAreaDataComboBox_SelectedIndexChanged);
+            this.selectAreaDataListBox.FormattingEnabled = true;
+            this.selectAreaDataListBox.Location = new System.Drawing.Point(9, 24);
+            this.selectAreaDataListBox.Name = "selectAreaDataListBox";
+            this.selectAreaDataListBox.Size = new System.Drawing.Size(156, 212);
+            this.selectAreaDataListBox.TabIndex = 0;
+            this.selectAreaDataListBox.SelectedIndexChanged += new System.EventHandler(this.selectAreaDataListBox_SelectedIndexChanged);
+            // 
+            // addNSBTXButton
+            // 
+            this.addNSBTXButton.Location = new System.Drawing.Point(217, 18);
+            this.addNSBTXButton.Name = "addNSBTXButton";
+            this.addNSBTXButton.Size = new System.Drawing.Size(83, 23);
+            this.addNSBTXButton.TabIndex = 10;
+            this.addNSBTXButton.Text = "Add NSBTX";
+            this.addNSBTXButton.UseVisualStyleBackColor = true;
+            this.addNSBTXButton.Click += new System.EventHandler(this.addNSBTXButton_Click);
+            // 
+            // exportNSBTXButton
+            // 
+            this.exportNSBTXButton.Location = new System.Drawing.Point(107, 18);
+            this.exportNSBTXButton.Name = "exportNSBTXButton";
+            this.exportNSBTXButton.Size = new System.Drawing.Size(91, 23);
+            this.exportNSBTXButton.TabIndex = 9;
+            this.exportNSBTXButton.Text = "&Export selected";
+            this.exportNSBTXButton.UseVisualStyleBackColor = true;
+            this.exportNSBTXButton.Click += new System.EventHandler(this.exportNSBTXButton_Click);
+            // 
+            // importNSBTXButton
+            // 
+            this.importNSBTXButton.Location = new System.Drawing.Point(20, 18);
+            this.importNSBTXButton.Name = "importNSBTXButton";
+            this.importNSBTXButton.Size = new System.Drawing.Size(84, 23);
+            this.importNSBTXButton.TabIndex = 8;
+            this.importNSBTXButton.Text = "&Replace...";
+            this.importNSBTXButton.UseVisualStyleBackColor = true;
+            this.importNSBTXButton.Click += new System.EventHandler(this.importNSBTXButton_Click);
+            // 
+            // texturePictureBox
+            // 
+            this.texturePictureBox.BackColor = System.Drawing.Color.White;
+            this.texturePictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("texturePictureBox.BackgroundImage")));
+            this.texturePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.texturePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.texturePictureBox.Location = new System.Drawing.Point(717, 71);
+            this.texturePictureBox.Name = "texturePictureBox";
+            this.texturePictureBox.Size = new System.Drawing.Size(256, 256);
+            this.texturePictureBox.TabIndex = 7;
+            this.texturePictureBox.TabStop = false;
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(412, 55);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(45, 13);
+            this.label38.TabIndex = 6;
+            this.label38.Text = "Palettes";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(226, 55);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(48, 13);
+            this.label37.TabIndex = 5;
+            this.label37.Text = "Textures";
+            // 
+            // palettesListBox
+            // 
+            this.palettesListBox.FormattingEnabled = true;
+            this.palettesListBox.Location = new System.Drawing.Point(415, 71);
+            this.palettesListBox.Name = "palettesListBox";
+            this.palettesListBox.Size = new System.Drawing.Size(176, 511);
+            this.palettesListBox.TabIndex = 4;
+            this.palettesListBox.SelectedIndexChanged += new System.EventHandler(this.palettesListBox_SelectedIndexChanged);
+            // 
+            // texturesListBox
+            // 
+            this.texturesListBox.FormattingEnabled = true;
+            this.texturesListBox.Location = new System.Drawing.Point(229, 71);
+            this.texturesListBox.Name = "texturesListBox";
+            this.texturesListBox.Size = new System.Drawing.Size(176, 511);
+            this.texturesListBox.TabIndex = 3;
+            this.texturesListBox.SelectedIndexChanged += new System.EventHandler(this.texturesListBox_SelectedIndexChanged);
+            // 
+            // buildingsTilesetRadioButton
+            // 
+            this.buildingsTilesetRadioButton.AutoSize = true;
+            this.buildingsTilesetRadioButton.Location = new System.Drawing.Point(115, 51);
+            this.buildingsTilesetRadioButton.Name = "buildingsTilesetRadioButton";
+            this.buildingsTilesetRadioButton.Size = new System.Drawing.Size(106, 17);
+            this.buildingsTilesetRadioButton.TabIndex = 2;
+            this.buildingsTilesetRadioButton.Text = "Buildings NSBTX";
+            this.buildingsTilesetRadioButton.UseVisualStyleBackColor = true;
+            this.buildingsTilesetRadioButton.CheckedChanged += new System.EventHandler(this.buildingsTilesetRadioButton_CheckedChanged);
+            // 
+            // mapTilesetRadioButton
+            // 
+            this.mapTilesetRadioButton.AutoSize = true;
+            this.mapTilesetRadioButton.Checked = true;
+            this.mapTilesetRadioButton.Location = new System.Drawing.Point(21, 51);
+            this.mapTilesetRadioButton.Name = "mapTilesetRadioButton";
+            this.mapTilesetRadioButton.Size = new System.Drawing.Size(90, 17);
+            this.mapTilesetRadioButton.TabIndex = 1;
+            this.mapTilesetRadioButton.TabStop = true;
+            this.mapTilesetRadioButton.Text = "Maps NSBTX";
+            this.mapTilesetRadioButton.UseVisualStyleBackColor = true;
+            this.mapTilesetRadioButton.CheckedChanged += new System.EventHandler(this.mapTilesetRadioButton_CheckedChanged);
+            // 
+            // texturePacksListBox
+            // 
+            this.texturePacksListBox.FormattingEnabled = true;
+            this.texturePacksListBox.Location = new System.Drawing.Point(21, 71);
+            this.texturePacksListBox.Name = "texturePacksListBox";
+            this.texturePacksListBox.Size = new System.Drawing.Size(196, 511);
+            this.texturePacksListBox.TabIndex = 0;
+            this.texturePacksListBox.SelectedIndexChanged += new System.EventHandler(this.texturePacksListBox_SelectedIndexChanged);
             // 
             // eventEditorTabPage
             // 
@@ -3524,7 +3373,7 @@
             // 
             this.rightClickPicture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rightClickPicture.Image = global::DSPRE.Properties.Resources.RightClick;
+            this.rightClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("rightClickPicture.Image")));
             this.rightClickPicture.ImageLocation = "";
             this.rightClickPicture.Location = new System.Drawing.Point(441, 49);
             this.rightClickPicture.Name = "rightClickPicture";
@@ -3555,7 +3404,7 @@
             // 
             this.wheelClickPicture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.wheelClickPicture.Image = global::DSPRE.Properties.Resources.WheelClick;
+            this.wheelClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("wheelClickPicture.Image")));
             this.wheelClickPicture.ImageLocation = "";
             this.wheelClickPicture.Location = new System.Drawing.Point(441, 93);
             this.wheelClickPicture.Name = "wheelClickPicture";
@@ -3568,7 +3417,7 @@
             // 
             this.LeftClickPicture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.LeftClickPicture.Image = global::DSPRE.Properties.Resources.LeftClick;
+            this.LeftClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("LeftClickPicture.Image")));
             this.LeftClickPicture.ImageLocation = "";
             this.LeftClickPicture.Location = new System.Drawing.Point(441, 5);
             this.LeftClickPicture.Name = "LeftClickPicture";
@@ -3663,7 +3512,7 @@
             // 
             // eventShiftRightButton
             // 
-            this.eventShiftRightButton.BackgroundImage = global::DSPRE.Properties.Resources.arrowright;
+            this.eventShiftRightButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftRightButton.BackgroundImage")));
             this.eventShiftRightButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.eventShiftRightButton.Location = new System.Drawing.Point(1074, 233);
             this.eventShiftRightButton.Name = "eventShiftRightButton";
@@ -3674,7 +3523,7 @@
             // 
             // eventShiftLeftButton
             // 
-            this.eventShiftLeftButton.BackgroundImage = global::DSPRE.Properties.Resources.arrowleft;
+            this.eventShiftLeftButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftLeftButton.BackgroundImage")));
             this.eventShiftLeftButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.eventShiftLeftButton.Location = new System.Drawing.Point(488, 233);
             this.eventShiftLeftButton.Name = "eventShiftLeftButton";
@@ -3685,7 +3534,7 @@
             // 
             // eventShiftUpButton
             // 
-            this.eventShiftUpButton.BackgroundImage = global::DSPRE.Properties.Resources.arrowup;
+            this.eventShiftUpButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftUpButton.BackgroundImage")));
             this.eventShiftUpButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.eventShiftUpButton.Location = new System.Drawing.Point(715, 7);
             this.eventShiftUpButton.Name = "eventShiftUpButton";
@@ -3697,7 +3546,7 @@
             // 
             // eventShiftDownButton
             // 
-            this.eventShiftDownButton.BackgroundImage = global::DSPRE.Properties.Resources.arrowdown;
+            this.eventShiftDownButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftDownButton.BackgroundImage")));
             this.eventShiftDownButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.eventShiftDownButton.Location = new System.Drawing.Point(715, 590);
             this.eventShiftDownButton.Name = "eventShiftDownButton";
@@ -3895,7 +3744,7 @@
             // 
             // goToSignButton
             // 
-            this.goToSignButton.Image = global::DSPRE.Properties.Resources.goToSpawnable;
+            this.goToSignButton.Image = ((System.Drawing.Image)(resources.GetObject("goToSignButton.Image")));
             this.goToSignButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.goToSignButton.Location = new System.Drawing.Point(43, 196);
             this.goToSignButton.Name = "goToSignButton";
@@ -4141,7 +3990,7 @@
             // 
             // button14
             // 
-            this.button14.Image = global::DSPRE.Properties.Resources.goToOW;
+            this.button14.Image = ((System.Drawing.Image)(resources.GetObject("button14.Image")));
             this.button14.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button14.Location = new System.Drawing.Point(15, 48);
             this.button14.Name = "button14";
@@ -4681,7 +4530,7 @@
             // 
             // destinationWarpGoToButton
             // 
-            this.destinationWarpGoToButton.Image = global::DSPRE.Properties.Resources.warpGo;
+            this.destinationWarpGoToButton.Image = ((System.Drawing.Image)(resources.GetObject("destinationWarpGoToButton.Image")));
             this.destinationWarpGoToButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.destinationWarpGoToButton.Location = new System.Drawing.Point(54, 77);
             this.destinationWarpGoToButton.Name = "destinationWarpGoToButton";
@@ -4763,7 +4612,7 @@
             // 
             // goToWarpButton
             // 
-            this.goToWarpButton.Image = global::DSPRE.Properties.Resources.goToWarp;
+            this.goToWarpButton.Image = ((System.Drawing.Image)(resources.GetObject("goToWarpButton.Image")));
             this.goToWarpButton.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.goToWarpButton.Location = new System.Drawing.Point(29, 83);
             this.goToWarpButton.Name = "goToWarpButton";
@@ -5149,7 +4998,7 @@
             // 
             // goToTriggerButton
             // 
-            this.goToTriggerButton.Image = global::DSPRE.Properties.Resources.goToTrigger;
+            this.goToTriggerButton.Image = ((System.Drawing.Image)(resources.GetObject("goToTriggerButton.Image")));
             this.goToTriggerButton.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.goToTriggerButton.Location = new System.Drawing.Point(41, 84);
             this.goToTriggerButton.Name = "goToTriggerButton";
@@ -5662,7 +5511,7 @@
             // routeSignButton
             // 
             this.routeSignButton.Enabled = false;
-            this.routeSignButton.Image = global::DSPRE.Properties.Resources.route_sign;
+            this.routeSignButton.Image = ((System.Drawing.Image)(resources.GetObject("routeSignButton.Image")));
             this.routeSignButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.routeSignButton.Location = new System.Drawing.Point(108, 77);
             this.routeSignButton.Name = "routeSignButton";
@@ -5676,7 +5525,7 @@
             // townSignButton
             // 
             this.townSignButton.Enabled = false;
-            this.townSignButton.Image = global::DSPRE.Properties.Resources.brown_sign;
+            this.townSignButton.Image = ((System.Drawing.Image)(resources.GetObject("townSignButton.Image")));
             this.townSignButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.townSignButton.Location = new System.Drawing.Point(108, 42);
             this.townSignButton.Name = "townSignButton";
@@ -5688,7 +5537,7 @@
             // 
             // tipsSignButton
             // 
-            this.tipsSignButton.Image = global::DSPRE.Properties.Resources.blue_sign;
+            this.tipsSignButton.Image = ((System.Drawing.Image)(resources.GetObject("tipsSignButton.Image")));
             this.tipsSignButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tipsSignButton.Location = new System.Drawing.Point(108, 147);
             this.tipsSignButton.Name = "tipsSignButton";
@@ -6703,7 +6552,7 @@
             // loadRomButton
             // 
             this.loadRomButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.loadRomButton.Image = global::DSPRE.Properties.Resources.open_file;
+            this.loadRomButton.Image = ((System.Drawing.Image)(resources.GetObject("loadRomButton.Image")));
             this.loadRomButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.loadRomButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.loadRomButton.Margin = new System.Windows.Forms.Padding(13, 6, 0, 2);
@@ -6716,7 +6565,7 @@
             // 
             this.saveRomButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.saveRomButton.Enabled = false;
-            this.saveRomButton.Image = global::DSPRE.Properties.Resources.save_rom;
+            this.saveRomButton.Image = ((System.Drawing.Image)(resources.GetObject("saveRomButton.Image")));
             this.saveRomButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.saveRomButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveRomButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
@@ -6747,7 +6596,7 @@
             // 
             this.unpackAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.unpackAllButton.Enabled = false;
-            this.unpackAllButton.Image = global::DSPRE.Properties.Resources.unpackAllIcon;
+            this.unpackAllButton.Image = ((System.Drawing.Image)(resources.GetObject("unpackAllButton.Image")));
             this.unpackAllButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.unpackAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.unpackAllButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
@@ -6812,26 +6661,25 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             // 
-            // pasteWildEncountersButton
+            // exportAreaDataButton
             // 
-            this.pasteWildEncountersButton.Enabled = false;
-            this.pasteWildEncountersButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
-            this.pasteWildEncountersButton.Location = new System.Drawing.Point(535, 91);
-            this.pasteWildEncountersButton.Name = "pasteWildEncountersButton";
-            this.pasteWildEncountersButton.Size = new System.Drawing.Size(35, 37);
-            this.pasteWildEncountersButton.TabIndex = 42;
-            this.pasteWildEncountersButton.UseVisualStyleBackColor = true;
-            this.pasteWildEncountersButton.Click += new System.EventHandler(this.pasteWildEncountersButton_Click);
+            this.exportAreaDataButton.Location = new System.Drawing.Point(173, 54);
+            this.exportAreaDataButton.Name = "exportAreaDataButton";
+            this.exportAreaDataButton.Size = new System.Drawing.Size(107, 23);
+            this.exportAreaDataButton.TabIndex = 13;
+            this.exportAreaDataButton.Text = "Export selected";
+            this.exportAreaDataButton.UseVisualStyleBackColor = true;
+            this.exportAreaDataButton.Click += new System.EventHandler(this.exportAreaDataButton_Click);
             // 
-            // copyWildEncountersButton
+            // importAreaDataButton
             // 
-            this.copyWildEncountersButton.Image = global::DSPRE.Properties.Resources.copyIcon;
-            this.copyWildEncountersButton.Location = new System.Drawing.Point(498, 91);
-            this.copyWildEncountersButton.Name = "copyWildEncountersButton";
-            this.copyWildEncountersButton.Size = new System.Drawing.Size(35, 37);
-            this.copyWildEncountersButton.TabIndex = 41;
-            this.copyWildEncountersButton.UseVisualStyleBackColor = true;
-            this.copyWildEncountersButton.Click += new System.EventHandler(this.copyWildEncountersButton_Click);
+            this.importAreaDataButton.Location = new System.Drawing.Point(286, 54);
+            this.importAreaDataButton.Name = "importAreaDataButton";
+            this.importAreaDataButton.Size = new System.Drawing.Size(99, 23);
+            this.importAreaDataButton.TabIndex = 12;
+            this.importAreaDataButton.Text = "Replace with...";
+            this.importAreaDataButton.UseVisualStyleBackColor = true;
+            this.importAreaDataButton.Click += new System.EventHandler(this.importAreaDataButton_Click);
             // 
             // MainProgram
             // 
@@ -6847,7 +6695,7 @@
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = global::DSPRE.Properties.Resources.appIcon;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
@@ -6885,12 +6733,6 @@
             this.matrixEditorTabPage.ResumeLayout(false);
             this.matrixEditorTabPage.PerformLayout();
             this.matrixTabControl.ResumeLayout(false);
-            this.headersTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).EndInit();
-            this.heightsTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).EndInit();
-            this.mapFilesTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthUpDown)).EndInit();
             this.mapEditorTabPage.ResumeLayout(false);
@@ -6930,11 +6772,14 @@
             this.nsbtxEditorTabPage.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).EndInit();
             this.areaDataGroupBox.ResumeLayout(false);
             this.areaDataGroupBox.PerformLayout();
+            this.areaTypeGroupbox.ResumeLayout(false);
+            this.areaTypeGroupbox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.areaDataDynamicTexturesNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.areaDataMapTilesetUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.areaDataBuildingTilesetUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).EndInit();
             this.eventEditorTabPage.ResumeLayout(false);
             this.eventEditorTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rightClickPicture)).EndInit();
@@ -7324,11 +7169,9 @@
         private System.Windows.Forms.ToolStripButton wildEditorButton;
         private System.Windows.Forms.TabPage nsbtxEditorTabPage;
         private System.Windows.Forms.GroupBox areaDataGroupBox;
-        private System.Windows.Forms.ComboBox selectAreaDataComboBox;
-        private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.ComboBox areaDataAreaTypeComboBox;
+        private System.Windows.Forms.ListBox selectAreaDataListBox;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.ComboBox areaDataDynamicTexturesComboBox;
+        private System.Windows.Forms.NumericUpDown areaDataDynamicTexturesNumericUpDown;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.ComboBox areaDataLightTypeComboBox;
         private System.Windows.Forms.Label label33;
@@ -7559,6 +7402,11 @@
         private System.Windows.Forms.NumericUpDown weatherUpDown;
         private System.Windows.Forms.Button pasteWildEncountersButton;
         private System.Windows.Forms.Button copyWildEncountersButton;
+        private System.Windows.Forms.GroupBox areaTypeGroupbox;
+        private System.Windows.Forms.RadioButton outdoorAreaRadioButton;
+        private System.Windows.Forms.RadioButton indoorAreaRadioButton;
+        private System.Windows.Forms.Button exportAreaDataButton;
+        private System.Windows.Forms.Button importAreaDataButton;
     }
 }
 

@@ -36,7 +36,7 @@ namespace DSPRE
         #endregion
 
         #region Methods (1)
-        public byte[] SaveAreaData(string gameVersion)
+        public byte[] Save(string gameVersion)
         {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData))
