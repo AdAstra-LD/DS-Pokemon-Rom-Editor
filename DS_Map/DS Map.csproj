@@ -304,7 +304,6 @@
     <None Include="Graphics\Program Icons\open_file.png" />
     <None Include="Graphics\Program Icons\save_rom.png" />
     <None Include="Graphics\Program Icons\map_editor.png" />
-    <None Include="Graphics\Program Icons\arrow.png" />
     <None Include="Graphics\Program Icons\arrowdown.png" />
     <None Include="Graphics\Program Icons\arrowleft.png" />
     <None Include="Graphics\Program Icons\arrowright.png" />
@@ -396,7 +395,6 @@
     <None Include="Graphics\Weather\HGSS\hgssdark2.png" />
     <Content Include="app.ico" />
     <None Include="Resources\exploreKit.Image.png" />
-    <Content Include="goToWarp.png" />
     <None Include="Graphics\Program Icons\goToWarp.png" />
     <None Include="Graphics\Program Icons\goToTrigger.png" />
     <None Include="Graphics\Program Icons\warpGo.png" />
@@ -425,7 +423,6 @@
     <Content Include="Graphics\Camera Angles\HGSS\hgsscamera15.png" />
     <None Include="Graphics\Program Icons\copyIcon.png" />
     <None Include="Graphics\Program Icons\pasteIcon.png" />
-    <None Include="Resources\animated.png" />
     <None Include="Resources\hgssrain.gif" />
     <None Include="Resources\hgssdiamond.gif" />
     <None Include="Resources\hgsssnow.gif" />
@@ -436,6 +433,7 @@
     <None Include="Resources\hgssfog.gif" />
     <None Include="Resources\exportArrow.png" />
     <None Include="Resources\importArrow.png" />
+    <None Include="Graphics\Program Icons\unpackBuildingNarcsIcon.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

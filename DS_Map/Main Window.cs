@@ -32,7 +32,7 @@ namespace DSPRE {
         public bool expandedARM9;
         public bool standardizedItems;
 
-        private const string headerNamesSeparator = " -   ";
+        private const string nameSeparator = " -   ";
 
         /* Editors Setup */
         public bool matrixEditorIsReady { get; private set; } = false;
@@ -60,7 +60,7 @@ namespace DSPRE {
                 using (BinaryReader reader = new BinaryReader(File.OpenRead(path + "\\" + i.ToString("D4")))) {
                     reader.BaseStream.Position = 0x38;
                     string nsbmdName = Encoding.UTF8.GetString(reader.ReadBytes(16)).TrimEnd();
-                    names.Add(i + ": " + nsbmdName);
+                    names.Add(nsbmdName);
                 }
             }
             return names.ToArray();
@@ -279,8 +279,6 @@ namespace DSPRE {
         }
         private void SetupEventEditor() {
             /* Extract essential NARCs sub-archives*/
-            string[] narcPaths = romInfo.narcPaths;
-            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
 
             statusLabel.Text = "Attempting to unpack Event Editor NARCs... Please wait. This might take a while";
             toolStripProgressBar.Visible = true;
@@ -288,21 +286,9 @@ namespace DSPRE {
             toolStripProgressBar.Value = 0;
             Update();
 
-            for (int i = 2; i < 13; i++) {
-                var tuple = Tuple.Create(narcPaths[i], extractedNarcDirs[i]);
-                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
-                if (!di.Exists || di.GetFiles().Length == 0) {
-                    Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-                }
-                toolStripProgressBar.Value++;
-            }
+            UnpackNarcs(new List<int> { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 });
             if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
-                var tuple = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 1]); // Last = interior buildings dir
-                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
-                if (!di.Exists || di.GetFiles().Length == 0) {
-                    Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-                }
-                toolStripProgressBar.Value++;
+                UnpackNarcs(new List<int> { romInfo.narcPaths.Length - 1 });
             }
 
 
@@ -412,19 +398,11 @@ namespace DSPRE {
         }
         private void SetupHeaderEditor() {
             /* Extract essential NARCs sub-archives*/
-            string[] narcPaths = romInfo.narcPaths;
-            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
 
             statusLabel.Text = "Attempting to unpack Header Editor NARCs... Please wait.";
             Update();
 
-            for (int i = 0; i < 2; i++) {
-                var tuple = Tuple.Create(narcPaths[i], extractedNarcDirs[i]);
-                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
-                if (!di.Exists || di.GetFiles().Length == 0) {
-                    Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-                }
-            }
+            UnpackNarcs(new List<int> { 0, 1 });
 
             statusLabel.Text = "Reading internal names... Please wait.";
             Update();
@@ -439,7 +417,7 @@ namespace DSPRE {
                         byte[] row = reader.ReadBytes(romInfo.internalNameLength);
 
                         string internalName = Encoding.ASCII.GetString(row);//.TrimEnd();
-                        headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalName);
+                        headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalName);
                         internalNames.Add(internalName);
                     }
                 }
@@ -490,30 +468,15 @@ namespace DSPRE {
         }
         private void SetupMapEditor() {
             /* Extract essential NARCs sub-archives*/
-            string[] narcPaths = romInfo.narcPaths;
-            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
-
             toolStripProgressBar.Visible = true;
             toolStripProgressBar.Maximum = 15;
             toolStripProgressBar.Value = 0;
             statusLabel.Text = "Attempting to unpack Map Editor NARCs... Please wait.";
             Update();
 
-            for (int i = 3; i < 9; i++) {
-                var tuple = Tuple.Create(narcPaths[i], extractedNarcDirs[i]);
-                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
-                if (!di.Exists || di.GetFiles().Length == 0) {
-                    Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-                }
-                toolStripProgressBar.Value++;
-            }
+            UnpackNarcs(new List<int> { 3, 4, 5, 6, 7, 8 });
             if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
-                var tuple = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 1]);
-                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
-                if (!di.Exists || di.GetFiles().Length == 0) {
-                    Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-                }
-                toolStripProgressBar.Value++;
+                UnpackNarcs(new List<int> { romInfo.narcPaths.Length - 1 });
             }
 
             disableHandlers = true;
@@ -550,15 +513,14 @@ namespace DSPRE {
                             break;
                     };
                     string nsbmdName = Encoding.UTF8.GetString(reader.ReadBytes(16));
-                    selectMapComboBox.Items.Add(i + ": " + nsbmdName);
+                    selectMapComboBox.Items.Add(i.ToString("D3") + nameSeparator + nsbmdName);
                 }
 
             }
             toolStripProgressBar.Value++;
 
             /* Fill building models list */
-            buildIndexComboBox.Items.AddRange(GetBuildingsList(false));
-            toolStripProgressBar.Value++;
+            updateBuildingListComboBox(false);
 
             /*  Fill map textures list */
             mapTextureComboBox.Items.Add("Untextured");
@@ -700,19 +662,20 @@ namespace DSPRE {
                     break;
             };
         }
-        private void SetupMatrixEditor() {
-            string[] narcPaths = romInfo.narcPaths;
-            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
 
+        private void updateBuildingListComboBox(bool interior) {
+            string[] bldList = GetBuildingsList(interior);
+            for (int i = 0; i < bldList.Length; i++) {
+                buildIndexComboBox.Items.Add("[" + i + "] " + bldList[i]);
+            }
+            toolStripProgressBar.Value++;
+        }
+
+        private void SetupMatrixEditor() {
             statusLabel.Text = "Setting up Matrix Editor...";
             Update();
 
-            var tuple = Tuple.Create(narcPaths[2], extractedNarcDirs[2]); // 2 = matrixDir
-            DirectoryInfo di = new DirectoryInfo(tuple.Item2);
-            if (!di.Exists || di.GetFiles().Length == 0) {
-                Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-            }
-
+            UnpackNarcs(new List<int> { 2 }); // 2 = matrixDir
 
             disableHandlers = true;
 
@@ -726,18 +689,10 @@ namespace DSPRE {
         }
         private void SetupScriptEditor() {
             /* Extract essential NARCs sub-archives*/
-            string[] narcPaths = romInfo.narcPaths;
-            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
-
             statusLabel.Text = "Setting up Script Editor...";
             Update();
 
-            var tuple = Tuple.Create(narcPaths[12], extractedNarcDirs[12]); //12 = scripts Narc Dir
-            DirectoryInfo di = new DirectoryInfo(tuple.Item2);
-            if (!di.Exists || di.GetFiles().Length == 0) {
-                Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-            }
-
+            UnpackNarcs(new List<int> { 12 }); //12 = scripts Narc Dir
 
             int scriptCount = Directory.GetFiles(romInfo.scriptDirPath).Length;
             for (int i = 0; i < scriptCount; i++)
@@ -753,11 +708,7 @@ namespace DSPRE {
             string[] narcPaths = romInfo.narcPaths;
             string[] extractedNarcDirs = romInfo.extractedNarcDirs;
 
-            var tuple = Tuple.Create(narcPaths[2], extractedNarcDirs[2]);
-            DirectoryInfo di = new DirectoryInfo(tuple.Item2);
-            if (!di.Exists || di.GetFiles().Length == 0) {
-                Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-            }
+            UnpackNarcs(new List<int> { 1 });
 
             statusLabel.Text = "Setting up Text Editor...";
             Update();
@@ -768,19 +719,10 @@ namespace DSPRE {
             selectTextFileComboBox.SelectedIndex = 0;
         }
         private void SetupTilesetEditor() {
-            string[] narcPaths = romInfo.narcPaths;
-            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
-
             statusLabel.Text = "Attempting to unpack Tileset Editor NARCs... Please wait.";
             Update();
 
-            for (int i = 6; i < 9; i++) {
-                var tuple = Tuple.Create(narcPaths[i], extractedNarcDirs[i]);
-                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
-                if (!di.Exists || di.GetFiles().Length == 0) {
-                    Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-                }
-            }
+            UnpackNarcs(new List<int> { 6, 7, 8 });
 
             /* Fill Tileset ListBox */
             FillTilesetBox();
@@ -870,9 +812,13 @@ namespace DSPRE {
             }
         }
         private void buildingEditorButton_Click(object sender, EventArgs e) {
-            string[] narcPaths = romInfo.narcPaths;
-            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
+            unpackBuildingEditorNARCs();
 
+            using (BuildingEditor editor = new BuildingEditor(romInfo))
+                editor.ShowDialog();
+        }
+
+        private void unpackBuildingEditorNARCs() {
             toolStripProgressBar.Visible = true;
 
             statusLabel.Text = "Attempting to unpack Building Editor NARCs... Please wait. This might take a while";
@@ -881,35 +827,63 @@ namespace DSPRE {
             toolStripProgressBar.Value = 0;
             Update();
 
-            for (int i = 4; i < 7; i++) {
-                var tuple = Tuple.Create(narcPaths[i], extractedNarcDirs[i]);
-                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
-                if (!di.Exists || di.GetFiles().Length == 0) {
-                    Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-                }
-                toolStripProgressBar.Value++;
-            }
-            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
-                var tuple = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 1]); // Last = interior buildings dir
-                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
-                if (!di.Exists || di.GetFiles().Length == 0) {
-                    Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-                }
-                toolStripProgressBar.Value++;
-            }
+            UnpackNarcs(new List<int> { 4, 5, 6 });
+            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS")
+                UnpackNarcs(new List<int> { romInfo.narcPaths.Length - 1 });// Last = interior buildings dir
 
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
-
-            using (BuildingEditor editor = new BuildingEditor(romInfo))
-                editor.ShowDialog();
         }
-        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.7a" + Environment.NewLine
-                + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who owes credit for SDSME." + Environment.NewLine +
-                "Special thanks go to Trifindo, Mikelan98, BagBoy, and JackHack96, whose help, research and expertise in the field of NDS Rom Hacking made the development of this tool possible.";
 
-            MessageBox.Show(message, "about", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private void UnpackNarcs(List<int> IDs) {
+            string[] narcPaths = romInfo.narcPaths;
+            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
+
+            foreach (int id in IDs) {
+                var tuple = Tuple.Create(narcPaths[id], extractedNarcDirs[id]);
+                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+                if (!di.Exists || di.GetFiles().Length == 0) {
+                    Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+                }
+                toolStripProgressBar.Value++;
+            }
+        }
+
+        private void ForceUnpackBuildingEditorNARCs() {
+            toolStripProgressBar.Visible = true;
+
+            statusLabel.Text = "Attempting to unpack Building Editor NARCs... Please wait. This might take a while";
+            toolStripProgressBar.Visible = true;
+            toolStripProgressBar.Maximum = 4;
+            toolStripProgressBar.Value = 0;
+            Update();
+
+            forceUnpackNarcs(new List<int> { 4, 5, 6 });
+            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS")
+                forceUnpackNarcs(new List<int> { romInfo.narcPaths.Length - 1 });// Last = interior buildings dir
+
+            toolStripProgressBar.Value = 0;
+            toolStripProgressBar.Visible = false;
+        }
+
+        private void forceUnpackNarcs(List<int> IDs) {
+            string[] narcPaths = romInfo.narcPaths;
+            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
+
+            foreach (int id in IDs) {
+                var tuple = Tuple.Create(narcPaths[id], extractedNarcDirs[id]);
+                Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+                toolStripProgressBar.Value++;
+            }
+            
+        }
+
+        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e) {
+            string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.7b" + Environment.NewLine
+                + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
+                + Environment.NewLine + "Special thanks go to Trifindo, Mikelan98, BagBoy, and JackHack96, whose help, research and expertise in the field of NDS Rom Hacking made the development of this tool possible.";
+
+            MessageBox.Show(message, "About...", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void loadRom_Click(object sender, EventArgs e) {
             OpenFileDialog openRom = new OpenFileDialog(); // Select ROM
@@ -1009,6 +983,7 @@ namespace DSPRE {
             mainTabControl.Show();
             saveRomButton.Enabled = true;
             unpackAllButton.Enabled = true;
+            updateMapNarcsButton.Enabled = true;
             romToolboxButton.Enabled = true;
             buildingEditorButton.Enabled = true;
             wildEditorButton.Enabled = true;
@@ -1090,6 +1065,23 @@ namespace DSPRE {
             }
         }
 
+        private void updateMapNarcsButton_Click(object sender, EventArgs e) {
+            DialogResult d = MessageBox.Show("Do you wish to unpack all buildings-related NARCS?\n" +
+               "This operation might be long and can't be interrupted.\n" +
+               "Any unsaved changes made to buildings and textures in this session will be lost." +
+               "\nProceed?", "About to unpack all NARCS",
+               MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (d == DialogResult.Yes) {
+                ForceUnpackBuildingEditorNARCs();
+
+                MessageBox.Show("Operation completed.", "Success",
+                   MessageBoxButtons.OK, MessageBoxIcon.Information);
+                statusLabel.Text = "Ready";
+                Update();
+            }
+        }
+
         private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (mainTabControl.SelectedTab == headerEditorTabPage) {
                 //
@@ -1132,13 +1124,13 @@ namespace DSPRE {
         }
 
         private void openWildEditor(bool loadCurrent) {
-            string[] narcPaths = romInfo.narcPaths;
-            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
-
             statusLabel.Text = "Attempting to extract Wild Encounters NARC...";
             Update();
 
+            string[] narcPaths = romInfo.narcPaths;
+            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
             Tuple<string, string> t;
+
             if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
                 t = Tuple.Create(narcPaths[narcPaths.Length - 2], extractedNarcDirs[extractedNarcDirs.Length - 2]);
             } else {
@@ -1706,7 +1698,7 @@ namespace DSPRE {
         private void updateHeaderNameShown(int thisIndex, int headerNumber, string text) {
             disableHandlers = true;
 
-            headerListBox.Items[thisIndex] = headerNumber.ToString("D3") + headerNamesSeparator + text;
+            headerListBox.Items[thisIndex] = headerNumber.ToString("D3") + nameSeparator + text;
 
             disableHandlers = false;
         }
@@ -1723,7 +1715,7 @@ namespace DSPRE {
 
             for (int i = 0; i < internalNames.Count; i++) {
                 String name = internalNames[i];
-                headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + name);
+                headerListBox.Items.Add(i.ToString("D3") + nameSeparator + name);
             }
         }
         private void searchHeaderTextBox_KeyPress(object sender, KeyEventArgs e) {
@@ -1746,7 +1738,7 @@ namespace DSPRE {
                         for (int i = 0; i < internalNames.Count; i++) {
                             String locationName = locationNameComboBox.Items[((HeaderDP)LoadHeaderFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalNames[i]);
+                                headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
                                 empty = false;
                             }
                         }
@@ -1755,7 +1747,7 @@ namespace DSPRE {
                         for (int i = 0; i < internalNames.Count; i++) {
                             String locationName = locationNameComboBox.Items[((HeaderPt)LoadHeaderFromARM9(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalNames[i]);
+                                headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
                                 empty = false;
                             }
                         }
@@ -1765,7 +1757,7 @@ namespace DSPRE {
                         for (int i = 0; i < internalNames.Count; i++) {
                             String locationName = locationNameComboBox.Items[((HeaderHGSS)LoadHeaderFromARM9(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalNames[i]);
+                                headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
                                 empty = false;
                             }
                         }
@@ -2509,7 +2501,11 @@ namespace DSPRE {
         #region Subroutines
         private void FillBuildingsBox() {
             buildingsListBox.Items.Clear();
-            for (int i = 0; i < currentMapFile.buildings.Count; i++) buildingsListBox.Items.Add("Building " + (i + 1).ToString()); // Add entry into buildings ListBox
+
+            string[] bldList = GetBuildingsList(interiorbldRadioButton.Checked);
+            for (int i = 0; i < currentMapFile.buildings.Count; i++)
+                // Add entry into buildings ListBox
+                buildingsListBox.Items.Add((i+1).ToString("D2") + nameSeparator + buildIndexComboBox.Items[(int)currentMapFile.buildings[i].modelID]);
         }
         private Building LoadBuildingModel(Building building, bool interior) {
             string modelPath = romInfo.GetBuildingModelsDirPath(interior) + "\\" + building.modelID.ToString("D4");
@@ -2621,7 +2617,7 @@ namespace DSPRE {
             using (BinaryWriter writer = new BinaryWriter(new FileStream(mapFilePath, FileMode.Create))) writer.Write(LoadMapFile(0).Save());
 
             /* Update ComboBox and select new file */
-            selectMapComboBox.Items.Add(selectMapComboBox.Items.Count + ": " + "newmap");
+            selectMapComboBox.Items.Add(selectMapComboBox.Items.Count.ToString("D3") + nameSeparator + "newmap");
             selectMapComboBox.SelectedIndex = selectMapComboBox.Items.Count - 1;
         }
         private void buildTextureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -2787,7 +2783,8 @@ namespace DSPRE {
                 writer.Write(currentMapFile.Save());
         }
         private void selectMapComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
             /* Load map data into MapFile class instance */
             currentMapFile = LoadMapFile(selectMapComboBox.SelectedIndex);
@@ -2821,9 +2818,6 @@ namespace DSPRE {
             if (buildingsListBox.Items.Count > 0) buildingsListBox.SelectedIndex = 0;
 
         }
-        private void textureComboBoxes_SelectedIndexChanged(object sender, EventArgs e) {
-
-        }
         private void wireframeCheckBox_CheckedChanged(object sender, EventArgs e) {
             if (wireframeCheckBox.Checked)
                 Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_LINE);
@@ -2843,7 +2837,8 @@ namespace DSPRE {
             currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile = LoadModelTextures(currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1);
 
             /* Add new entry to buildings ListBox */
-            buildingsListBox.Items.Add("Building " + (buildingsListBox.Items.Count + 1));
+            buildingsListBox.Items.Add((buildingsListBox.Items.Count + 1).ToString("D2") + nameSeparator +
+                buildIndexComboBox.Items[(int)currentMapFile.buildings[currentMapFile.buildings.Count-1].modelID]);
             buildingsListBox.SelectedIndex = buildingsListBox.Items.Count - 1;
 
             /* Redraw scene with new building */
@@ -2851,7 +2846,12 @@ namespace DSPRE {
 
         }
         private void buildIndexComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers || buildingsListBox.SelectedIndex < 0) 
+                return;
+
+            disableHandlers = true;
+            buildingsListBox.Items[buildingsListBox.SelectedIndex] = (buildingsListBox.SelectedIndex + 1).ToString("D2") + nameSeparator + buildIndexComboBox.SelectedItem;
+            disableHandlers = false;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].modelID = (uint)buildIndexComboBox.SelectedIndex;
             currentMapFile.buildings[buildingsListBox.SelectedIndex] = LoadBuildingModel(currentMapFile.buildings[buildingsListBox.SelectedIndex], interiorbldRadioButton.Checked);
@@ -2932,10 +2932,27 @@ namespace DSPRE {
         private void interiorRadioButton_CheckedChanged(object sender, EventArgs e) {
             disableHandlers = true;
             int index = buildIndexComboBox.SelectedIndex;
-
             buildIndexComboBox.Items.Clear();
-            buildIndexComboBox.Items.AddRange(GetBuildingsList(interiorbldRadioButton.Checked));
-            buildIndexComboBox.SelectedIndex = index;
+
+            /* Fill building models list */
+            updateBuildingListComboBox(interiorbldRadioButton.Checked);
+            FillBuildingsBox();
+
+            try {
+                buildIndexComboBox.SelectedIndex = index;
+            } catch (ArgumentOutOfRangeException) {
+                string bldType;
+                if (interiorbldRadioButton.Checked)
+                    bldType = "interior";
+                else
+                    bldType = "exterior";
+
+                MessageBox.Show("Couldn't find " + bldType + " building #" + index + '.' +
+                    "\nBuilding 0 will be loaded in its place.", "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                buildIndexComboBox.SelectedIndex = 0;
+                currentMapFile.buildings[buildIndexComboBox.SelectedIndex].modelID = 0;
+            }
 
             /* Load buildings nsbmd and textures for renderer into MapFile's building objects */
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {

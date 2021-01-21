@@ -44,7 +44,7 @@ namespace DSPRE
             FillTexturesBox();
             textureComboBox.SelectedIndex = 0;
             disableHandlers = false;
-            buildingsListBox.SelectedIndex = 0;            
+            buildingEditorBldListBox.SelectedIndex = 0;            
         }
 
         #region Subroutines
@@ -76,18 +76,19 @@ namespace DSPRE
 
 
         }
-        private void FillListBox(bool interior)
-        {
+        private void FillListBox(bool interior) {
             int modelCount = Directory.GetFiles(folder + rom.GetBuildingModelsDirPath(interior)).Length;
-            for (int i = 0; i < modelCount; i++)
-            {
+            for (int i = 0; i < modelCount; i++) {
                 using (BinaryReader reader = new BinaryReader(File.OpenRead(folder + rom.GetBuildingModelsDirPath(interior) + "\\" + i.ToString("D4"))))
                 {
                     reader.BaseStream.Position = 0x14;
-                    if (reader.ReadUInt32() == 0x304C444D) reader.BaseStream.Position = 0x34;
-                    else reader.BaseStream.Position = 0x38;
+                    if (reader.ReadUInt32() == 0x304C444D) 
+                        reader.BaseStream.Position = 0x34;
+                    else 
+                        reader.BaseStream.Position = 0x38;
+                    
                     string nsbmdName = Encoding.UTF8.GetString(reader.ReadBytes(16));
-                    buildingsListBox.Items.Add(i + ": " + nsbmdName);
+                    buildingEditorBldListBox.Items.Add("[" + (i+1).ToString("D2") + "] " + nsbmdName);
                 }
             }
         }
@@ -186,8 +187,8 @@ namespace DSPRE
             if (disableHandlers) 
                 return;
 
-            LoadBuildingModel(buildingsListBox.SelectedIndex, interiorCheckBox.Checked);
-            CreateEmbeddedTexturesFile(buildingsListBox.SelectedIndex, interiorCheckBox.Checked);
+            LoadBuildingModel(buildingEditorBldListBox.SelectedIndex, interiorCheckBox.Checked);
+            CreateEmbeddedTexturesFile(buildingEditorBldListBox.SelectedIndex, interiorCheckBox.Checked);
             LoadModelTextures(textureComboBox.SelectedIndex - 1);
             RenderModel();
         }
@@ -195,11 +196,11 @@ namespace DSPRE
         {
             SaveFileDialog em = new SaveFileDialog();
             em.Filter = "NSBMD model (*.nsbmd)|*.nsbmd";
-            em.FileName = buildingsListBox.SelectedItem.ToString();
+            em.FileName = buildingEditorBldListBox.SelectedItem.ToString();
             if (em.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            else File.Copy(folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingsListBox.SelectedIndex.ToString("D4"), em.FileName, true);
+            else File.Copy(folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingEditorBldListBox.SelectedIndex.ToString("D4"), em.FileName, true);
         }
         private void importButton_Click(object sender, EventArgs e)
         {
@@ -217,7 +218,7 @@ namespace DSPRE
                 }
                 else
                 {
-                    File.Copy(im.FileName, folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingsListBox.SelectedIndex.ToString("D4"), true);
+                    File.Copy(im.FileName, folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingEditorBldListBox.SelectedIndex.ToString("D4"), true);
                     buildingsListBox_SelectedIndexChanged(null, null);
                 }                
             }
@@ -225,12 +226,12 @@ namespace DSPRE
         private void interiorCheckBox_CheckedChanged(object sender, EventArgs e) {
             disableHandlers = true;
 
-            buildingsListBox.Items.Clear();
+            buildingEditorBldListBox.Items.Clear();
             FillListBox(interiorCheckBox.Checked);
 
             disableHandlers = false;
 
-            buildingsListBox.SelectedIndex = 0;
+            buildingEditorBldListBox.SelectedIndex = 0;
         }
         private void textureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) 

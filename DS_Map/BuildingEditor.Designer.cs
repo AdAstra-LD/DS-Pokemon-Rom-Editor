@@ -34,7 +34,7 @@
             this.exportButton = new System.Windows.Forms.Button();
             this.buildingOpenGLControl = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.interiorCheckBox = new System.Windows.Forms.CheckBox();
-            this.buildingsListBox = new System.Windows.Forms.ListBox();
+            this.buildingEditorBldListBox = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.panel1.SuspendLayout();
@@ -103,14 +103,14 @@
             this.interiorCheckBox.UseVisualStyleBackColor = true;
             this.interiorCheckBox.CheckedChanged += new System.EventHandler(this.interiorCheckBox_CheckedChanged);
             // 
-            // buildingsListBox
+            // buildingEditorBldListBox
             // 
-            this.buildingsListBox.FormattingEnabled = true;
-            this.buildingsListBox.Location = new System.Drawing.Point(12, 12);
-            this.buildingsListBox.Name = "buildingsListBox";
-            this.buildingsListBox.Size = new System.Drawing.Size(248, 446);
-            this.buildingsListBox.TabIndex = 19;
-            this.buildingsListBox.SelectedIndexChanged += new System.EventHandler(this.buildingsListBox_SelectedIndexChanged);
+            this.buildingEditorBldListBox.FormattingEnabled = true;
+            this.buildingEditorBldListBox.Location = new System.Drawing.Point(12, 12);
+            this.buildingEditorBldListBox.Name = "buildingEditorBldListBox";
+            this.buildingEditorBldListBox.Size = new System.Drawing.Size(248, 446);
+            this.buildingEditorBldListBox.TabIndex = 19;
+            this.buildingEditorBldListBox.SelectedIndexChanged += new System.EventHandler(this.buildingsListBox_SelectedIndexChanged);
             // 
             // panel1
             // 
@@ -130,7 +130,7 @@
             this.Controls.Add(this.importButton);
             this.Controls.Add(this.exportButton);
             this.Controls.Add(this.interiorCheckBox);
-            this.Controls.Add(this.buildingsListBox);
+            this.Controls.Add(this.buildingEditorBldListBox);
             this.Name = "BuildingEditor";
             this.Text = "Building Editor";
             this.panel1.ResumeLayout(false);
@@ -147,7 +147,7 @@
         private System.Windows.Forms.Button exportButton;
         private Tao.Platform.Windows.SimpleOpenGlControl buildingOpenGLControl;
         private System.Windows.Forms.CheckBox interiorCheckBox;
-        private System.Windows.Forms.ListBox buildingsListBox;
+        private System.Windows.Forms.ListBox buildingEditorBldListBox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.BindingSource bindingSource1;
     }
