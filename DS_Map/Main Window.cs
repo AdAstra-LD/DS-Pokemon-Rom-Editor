@@ -938,10 +938,11 @@ namespace DSPRE {
             versionLabel.Text = "Pokémon " + romInfo.gameName + " [" + romInfo.romID + "]";
             languageLabel.Text = "Language: " + romInfo.gameLanguage;
 
-            if (romInfo.gameLanguage == "ENG" && europeByte == 0x0A)
-                languageLabel.Text += " [Europe]";
-            else
-                languageLabel.Text += " [America]";
+            if (romInfo.gameLanguage == "ENG")
+                if (europeByte == 0x0A)
+                    languageLabel.Text += " [Europe]";
+                else
+                    languageLabel.Text += " [America]";
 
             int userchoice = UnpackRomCheckUserChoice();
             switch (userchoice) {
