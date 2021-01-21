@@ -45,6 +45,7 @@ namespace DSPRE {
 
         /* ROM Information */
         public static string gameCode;
+        public static byte europeByte;
         RomInfo romInfo;
 
         #endregion
@@ -917,8 +918,10 @@ namespace DSPRE {
                 return;
 
             using (BinaryReader br = new BinaryReader(File.OpenRead(openRom.FileName))) {
-                br.BaseStream.Seek(0xC, SeekOrigin.Begin); // get ROM ID
+                br.BaseStream.Position = 0xC; // get ROM ID
                 gameCode = Encoding.UTF8.GetString(br.ReadBytes(4));
+                br.BaseStream.Position = 0x1E;
+                europeByte = br.ReadByte();
             }
             string workDir = Path.GetDirectoryName(openRom.FileName) + "\\" + Path.GetFileNameWithoutExtension(openRom.FileName) + "_DSPRE_contents" + "\\";
 
@@ -935,6 +938,10 @@ namespace DSPRE {
             versionLabel.Text = "Pokémon " + romInfo.gameName + " [" + romInfo.romID + "]";
             languageLabel.Text = "Language: " + romInfo.gameLanguage;
 
+            if (romInfo.gameLanguage == "ENG" && europeByte == 0x0A)
+                languageLabel.Text += " [Europe]";
+            else
+                languageLabel.Text += " [America]";
 
             int userchoice = UnpackRomCheckUserChoice();
             switch (userchoice) {

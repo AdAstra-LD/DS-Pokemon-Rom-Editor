@@ -615,6 +615,7 @@ namespace DSPRE {
                 ["CPUF"] = "Plat",
                 ["CPUD"] = "Plat",
                 ["CPUJ"] = "Plat",
+                ["CPUP"] = "Plat",
 
                 ["IPKE"] = "HG",
                 ["IPKS"] = "HG",
