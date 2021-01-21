@@ -3980,7 +3980,7 @@ namespace DSPRE {
         private void exportEventFileButton_Click(object sender, EventArgs e) {
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "Event File (*.evt)|*.evt";
-            sf.FileName = "Event " + selectEventComboBox.SelectedIndex;
+            sf.FileName = "Event File " + selectEventComboBox.SelectedIndex;
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -5907,7 +5907,7 @@ namespace DSPRE {
 
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "AreaData File (*.bin)|*.bin";
-            sf.FileName = "AreaData " + selectAreaDataListBox.SelectedItem.ToString();
+            sf.FileName = "AreaData File " + selectAreaDataListBox.SelectedIndex;
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
