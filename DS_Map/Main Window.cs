@@ -427,6 +427,7 @@ namespace DSPRE {
 
             statusLabel.Text = "Reading internal names... Please wait.";
             Update();
+
             /* Read Header internal names */
             internalNames = new List<string>();
             try {
@@ -1176,12 +1177,13 @@ namespace DSPRE {
         #endregion
 
         #region Subroutines
-        public Header LoadHeader(int headerNumber) {
+        public Header BuildHeaderFromFile(string filename, int headerNumber, long offsetInFile) {
             /* Calculate header offset and load data */
-            long headerOffset = romInfo.headerTableOffset + 0x18 * headerNumber;
-            byte[] headerData = DSUtils.ReadFromArm9(headerOffset, 24);
+            byte[] headerData = DSUtils.ReadFromFile(filename, offsetInFile, Header.length);
 
             /* Encapsulate header data into the class appropriate for the game gameVersion */
+            if (headerData.Length < Header.length)
+                return null;
 
             switch (romInfo.gameVersion) {
                 case "D":
@@ -1192,6 +1194,10 @@ namespace DSPRE {
                 default:
                     return new HeaderHGSS(headerNumber, new MemoryStream(headerData));
             }
+        }
+        public Header LoadHeaderFromARM9(int headerNumber) {
+            long headerOffset = PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * headerNumber;
+            return BuildHeaderFromFile(romInfo.workDir + "arm9.bin", headerNumber, headerOffset);
         }
         #endregion
 
@@ -1215,7 +1221,7 @@ namespace DSPRE {
                     break;
                 default:
                     ((HeaderHGSS)currentHeader).areaIcon = Byte.Parse(areaIconComboBox.SelectedItem.ToString().Substring(1, 3));
-                    imageName = PokeDatabase.AreaPics.hgssAreaPicDict[areaIconComboBox.SelectedIndex];
+                    imageName = PokeDatabase.System.AreaPics.hgssAreaPicDict[areaIconComboBox.SelectedIndex];
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
                     break;
             }
@@ -1273,13 +1279,14 @@ namespace DSPRE {
                 return;
 
             /* Obtain current header ID from listbox*/
-            String nameDisplayedInListBox = headerListBox.SelectedItem.ToString();
-            int separatorPosition = nameDisplayedInListBox.IndexOf(headerNamesSeparator);
-            int headerNumber = Int32.Parse(nameDisplayedInListBox.Substring(0, separatorPosition));
-            currentHeader = LoadHeader(headerNumber);
+            int headerNumber = Int32.Parse(headerListBox.SelectedItem.ToString().Substring(0, internalNames.Count.ToString().Length));
+            currentHeader = LoadHeaderFromARM9(headerNumber);
+            refreshHeaderEditorFields();
+        }
 
+        private void refreshHeaderEditorFields() {
             /* Setup controls for common fields across headers */
-            internalNameBox.Text = nameDisplayedInListBox.Substring(separatorPosition + headerNamesSeparator.Length);
+            internalNameBox.Text = internalNames[currentHeader.ID];
             matrixUpDown.Value = currentHeader.matrix;
             areaDataUpDown.Value = currentHeader.areaDataID;
             scriptFileUpDown.Value = currentHeader.script;
@@ -1288,20 +1295,16 @@ namespace DSPRE {
             textFileUpDown.Value = currentHeader.text;
             wildPokeUpDown.Value = currentHeader.wildPokémon;
             weatherUpDown.Value = currentHeader.weather;
-            updateWeatherPicAndComboBox();
 
             cameraComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.camera.ToString("D2"));
-            
+
             if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS")
                 areaSettingsComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.areaSettings.ToString("D2"));
 
             if (currentHeader.wildPokémon == romInfo.nullEncounterID)
                 openWildEditorWithIdButton.Enabled = false;
-            else 
+            else
                 openWildEditorWithIdButton.Enabled = true;
-
-            /* Flags */
-            refreshFlags();
 
             /* Setup controls for fields with version-specific differences */
             switch (romInfo.gameVersion) {
@@ -1316,17 +1319,20 @@ namespace DSPRE {
                     areaIconComboBox.SelectedIndex = ((HeaderPt)currentHeader).areaIcon;
                     locationNameComboBox.SelectedIndex = ((HeaderPt)currentHeader).mapName;
                     musicDayUpDown.Value = ((HeaderPt)currentHeader).musicDay;
-                    musicNightUpDown.Value = ((HeaderPt)currentHeader).musicNight; 
+                    musicNightUpDown.Value = ((HeaderPt)currentHeader).musicNight;
                     areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.showName:D3}");
                     break;
                 default:
                     areaIconComboBox.SelectedIndex = areaIconComboBox.FindString("[" + $"{((HeaderHGSS)currentHeader).areaIcon:D3}");
                     locationNameComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).mapName;
                     musicDayUpDown.Value = ((HeaderHGSS)currentHeader).musicDay;
-                    musicNightUpDown.Value = ((HeaderHGSS)currentHeader).musicNight; 
+                    musicNightUpDown.Value = ((HeaderHGSS)currentHeader).musicNight;
                     break;
             }
+            updateWeatherPicAndComboBox();
+            refreshFlags();
         }
+
         private void refreshFlags() {
             int i = 7;
             disableHandlers = true;
@@ -1512,13 +1518,13 @@ namespace DSPRE {
                 switch (romInfo.gameVersion) {
                     case "D":
                     case "P":
-                        imageName = PokeDatabase.WeatherPics.dpweatherImageDict[weatherComboBox.SelectedIndex];
+                        imageName = PokeDatabase.System.WeatherPics.dpWeatherImageDict[weatherComboBox.SelectedIndex];
                         break;
                     case "Plat":
-                        imageName = PokeDatabase.WeatherPics.ptweatherImageDict[weatherComboBox.SelectedIndex];
+                        imageName = PokeDatabase.System.WeatherPics.ptWeatherImageDict[weatherComboBox.SelectedIndex];
                         break;
                     default:
-                        foreach (KeyValuePair<List<int>, string> entry in PokeDatabase.WeatherPics.hgssweatherImageDict) {
+                        foreach (KeyValuePair<List<int>, string> entry in PokeDatabase.System.WeatherPics.hgssweatherImageDict) {
                             if (entry.Key.Contains(weatherComboBox.SelectedIndex)) {
                                 imageName = entry.Value;
                                 break;
@@ -1627,7 +1633,7 @@ namespace DSPRE {
         private void goToWarpDestination_Click(object sender, EventArgs e) {
             int destAnchor = (int)warpAnchorUpDown.Value;
             int destHeader = (int)warpHeaderUpDown.Value;
-            ushort destEventID = LoadHeader(destHeader).eventID;
+            ushort destEventID = LoadHeaderFromARM9(destHeader).eventID;
             EventFile destEvent = LoadEventFile(destEventID);
 
             if (destEvent.warps.Count < destAnchor + 1) {
@@ -1636,15 +1642,15 @@ namespace DSPRE {
                 if (d == DialogResult.No)
                     return;
                 else {
-                    eventMatrixUpDown.Value = LoadHeader((int)warpHeaderUpDown.Value).matrix;
-                    eventAreaDataUpDown.Value = LoadHeader((int)warpHeaderUpDown.Value).areaDataID;
+                    eventMatrixUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).matrix;
+                    eventAreaDataUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).areaDataID;
                     selectEventComboBox.SelectedIndex = destEventID;
                     centerEventviewOnEntities();
                     return;
                 }
             }
-            eventMatrixUpDown.Value = LoadHeader((int)warpHeaderUpDown.Value).matrix;
-            eventAreaDataUpDown.Value = LoadHeader((int)warpHeaderUpDown.Value).areaDataID;
+            eventMatrixUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).matrix;
+            eventAreaDataUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).areaDataID;
             selectEventComboBox.SelectedIndex = destEventID;
             warpsListBox.SelectedIndex = destAnchor;
             centerEventViewOnSelectedEvent_Click(sender, e);
@@ -1668,24 +1674,33 @@ namespace DSPRE {
             mainTabControl.SelectedTab = textEditorTabPage;
         }
         private void saveHeaderButton_Click(object sender, EventArgs e) {
-            long headerOffset = romInfo.headerTableOffset + 0x18 * currentHeader.ID;
-            DSUtils.WriteToArm9(headerOffset, currentHeader.SaveHeader());
+            long headerOffset = PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * currentHeader.ID;
+            DSUtils.WriteToArm9(headerOffset, currentHeader.toByteArray());
 
             disableHandlers = true;
-            /* Update internal name */
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(romInfo.internalNamesLocation))) {
-                writer.BaseStream.Position = headerListBox.SelectedIndex * romInfo.internalNameLength;
 
-                writer.Write(  Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0'))  );
-                updateHeaderNameShown(headerListBox.SelectedIndex, currentHeader.ID, internalNameBox.Text);
-            }
-
+            updateCurrentInternalName();
+            updateHeaderNameShown(headerListBox.SelectedIndex, currentHeader.ID, internalNames[currentHeader.ID]);
             headerListBox.Focus();
             disableHandlers = false;
         }
 
+        private void updateCurrentInternalName() {
+            /* Update internal name according to internalNameBox text*/
+            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(romInfo.internalNamesLocation))) {
+                writer.BaseStream.Position = currentHeader.ID * romInfo.internalNameLength;
+
+                writer.Write(Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0')));
+                internalNames[currentHeader.ID] = internalNameBox.Text;
+            }
+        }
+
         private void updateHeaderNameShown(int thisIndex, int headerNumber, string text) {
+            disableHandlers = true;
+
             headerListBox.Items[thisIndex] = headerNumber.ToString("D3") + headerNamesSeparator + text;
+
+            disableHandlers = false;
         }
 
         private void resetButton_Click(object sender, EventArgs e) {
@@ -1721,7 +1736,7 @@ namespace DSPRE {
                     case "D":
                     case "P":
                         for (int i = 0; i < internalNames.Count; i++) {
-                            String locationName = locationNameComboBox.Items[((HeaderDP)LoadHeader(i)).locationName].ToString();
+                            String locationName = locationNameComboBox.Items[((HeaderDP)LoadHeaderFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalNames[i]);
                                 empty = false;
@@ -1730,7 +1745,7 @@ namespace DSPRE {
                         break;
                     case "Plat":
                         for (int i = 0; i < internalNames.Count; i++) {
-                            String locationName = locationNameComboBox.Items[((HeaderPt)LoadHeader(i)).mapName].ToString();
+                            String locationName = locationNameComboBox.Items[((HeaderPt)LoadHeaderFromARM9(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalNames[i]);
                                 empty = false;
@@ -1740,7 +1755,7 @@ namespace DSPRE {
                     case "HG":
                     case "SS":
                         for (int i = 0; i < internalNames.Count; i++) {
-                            String locationName = locationNameComboBox.Items[((HeaderHGSS)LoadHeader(i)).mapName].ToString();
+                            String locationName = locationNameComboBox.Items[((HeaderHGSS)LoadHeaderFromARM9(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + headerNamesSeparator + internalNames[i]);
                                 empty = false;
@@ -1879,6 +1894,8 @@ namespace DSPRE {
             pasteAreaDataButton.Enabled = true;
 
             pasteFlagsButton.Enabled = true;
+
+            headerListBox.Focus();
         }
         private void copyInternalNameButton_Click(object sender, EventArgs e) {
             internalNameCopy = internalNameBox.Text;
@@ -2128,6 +2145,7 @@ namespace DSPRE {
         private void exportMatrixButton_Click(object sender, EventArgs e) {
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "Matrix File (*.mtx)|*.mtx";
+            sf.FileName = "Matrix " + selectMatrixComboBox.SelectedIndex;
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -2305,7 +2323,7 @@ namespace DSPRE {
                 }
 
                 /* get texture file numbers from area data */
-                areaData = LoadAreaData(LoadHeader(header).areaDataID);
+                areaData = LoadAreaData(LoadHeaderFromARM9(header).areaDataID);
                 /* Load Map File and switch to Map Editor tab */
                 disableHandlers = true;
 
@@ -2873,6 +2891,7 @@ namespace DSPRE {
         private void exportBuildingsButton_Click(object sender, EventArgs e) {
             SaveFileDialog eb = new SaveFileDialog();
             eb.Filter = "Buildings File (*.bld)|*.bld";
+            eb.FileName = selectMapComboBox.SelectedItem.ToString();
             if (eb.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -3325,6 +3344,7 @@ namespace DSPRE {
         private void exportMovButton_Click(object sender, EventArgs e) {
             SaveFileDialog em = new SaveFileDialog();
             em.Filter = "Permissions File (*.per)|*.per";
+            em.FileName = selectMapComboBox.SelectedItem.ToString();
             if (em.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -3435,6 +3455,7 @@ namespace DSPRE {
         private void exportMapButton_Click(object sender, EventArgs e) {
             SaveFileDialog em = new SaveFileDialog();
             em.Filter = "NSBMD model (*.nsbmd)|*.nsbmd";
+            em.FileName = selectMapComboBox.SelectedItem.ToString();
             if (em.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -3463,6 +3484,7 @@ namespace DSPRE {
         private void bdhcExportButton_Click(object sender, EventArgs e) {
             SaveFileDialog eb = new SaveFileDialog();
             eb.Filter = "Terrain File (*.bdhc)|*.bdhc";
+            eb.FileName = selectMapComboBox.SelectedItem.ToString();
             if (eb.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -3604,7 +3626,7 @@ namespace DSPRE {
                 uint areaDataID;
                 if (eventMatrix.hasHeadersSection) {
                     int header = eventMatrix.headers[(int)(eventMatrixYUpDown.Value), (int)(eventMatrixXUpDown.Value)];
-                    areaDataID = LoadHeader(header).areaDataID;
+                    areaDataID = LoadHeaderFromARM9(header).areaDataID;
                 } else areaDataID = (uint)eventAreaDataUpDown.Value;
 
                 /* get texture file numbers from area data */
@@ -3951,6 +3973,7 @@ namespace DSPRE {
         private void exportEventFileButton_Click(object sender, EventArgs e) {
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "Event File (*.evt)|*.evt";
+            sf.FileName = "Event " + selectEventComboBox.SelectedIndex;
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -4852,17 +4875,23 @@ namespace DSPRE {
         private void exportScriptFile() {
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "Script File (*.scr)|*.scr";
+            sf.FileName = "Script " + selectEventComboBox.SelectedIndex;
+            if (currentScriptFile.isLevelScript)
+                sf.FileName += " (LS)";
+
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) writer.Write(currentScriptFile.Save());
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) 
+                writer.Write(currentScriptFile.Save());
         }
 
         private void importScriptFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .scr file */
             OpenFileDialog of = new OpenFileDialog();
             of.Filter = "Script File (*.scr)|*.scr";
-            if (of.ShowDialog(this) != DialogResult.OK) return;
+            if (of.ShowDialog(this) != DialogResult.OK) 
+                return;
 
             /* Update scriptFile object in memory */
             string path = romInfo.scriptDirPath + "\\" + selectScriptFileComboBox.SelectedIndex.ToString("D4");
@@ -5871,6 +5900,7 @@ namespace DSPRE {
 
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "AreaData File (*.bin)|*.bin";
+            sf.FileName = "AreaData " + selectAreaDataListBox.SelectedItem.ToString();
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -5889,7 +5919,7 @@ namespace DSPRE {
             if (of.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            /* Update matrix object in memory */
+            /* Update areadata object in memory */
             string path = romInfo.areaDataDirPath + "\\" + selectAreaDataListBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
@@ -5898,6 +5928,57 @@ namespace DSPRE {
 
             /* Display success message */
             MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void importHeaderFromFileButton_Click(object sender, EventArgs e) {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Header File (*.dsh; *.bin)|*.dsh;*.bin";
+            if (of.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            Header h = null;
+            try {
+                if (new FileInfo(of.FileName).Length > 48)
+                    throw new FileFormatException();
+                
+                h = BuildHeaderFromFile(of.FileName, currentHeader.ID, 0);
+                if (h.ID == -1) 
+                    throw new FileFormatException();
+                
+            } catch (FileFormatException) {
+                MessageBox.Show("The file you tried to import is either malformed or not a Header file.\nNo changes have been made.",
+                        "Import Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            currentHeader = h;
+            long headerOffset = PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * currentHeader.ID;
+            DSUtils.WriteToArm9(headerOffset, currentHeader.toByteArray());
+            try {
+                using (BinaryReader reader = new BinaryReader(new FileStream(of.FileName, FileMode.Open))) {
+                    reader.BaseStream.Position = Header.length + 8;
+                    internalNameBox.Text = Encoding.UTF8.GetString(reader.ReadBytes(romInfo.internalNameLength));
+                    updateCurrentInternalName();
+                }
+                updateHeaderNameShown(headerListBox.SelectedIndex, currentHeader.ID, internalNames[currentHeader.ID]);
+            } catch (EndOfStreamException) { }
+
+            refreshHeaderEditorFields();
+        }
+
+        private void exportHeaderToFileButton_Click(object sender, EventArgs e) {
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Filter = "DSPRE Header File (*.dsh)|*.dsh";
+            sf.FileName = "Header " + currentHeader.ID + " - " + internalNames[currentHeader.ID] + " (" + locationNameComboBox.SelectedItem.ToString() + ")";
+            if (sf.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) {
+                writer.Write(currentHeader.toByteArray()); //Write full header
+                writer.Write((byte)0x00); //Padding
+                writer.Write(Encoding.UTF8.GetBytes("INTNAME")); //Signature
+                writer.Write(Encoding.UTF8.GetBytes(internalNames[currentHeader.ID])); //Save Internal name
+            }
         }
     }
 }

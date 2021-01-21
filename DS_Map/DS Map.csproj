@@ -434,6 +434,8 @@
     <None Include="Resources\copyIcon.png" />
     <None Include="Resources\pasteIcon.png" />
     <None Include="Resources\hgssfog.gif" />
+    <None Include="Resources\exportArrow.png" />
+    <None Include="Resources\importArrow.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

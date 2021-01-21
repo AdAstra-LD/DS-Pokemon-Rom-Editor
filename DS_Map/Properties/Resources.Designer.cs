@@ -612,6 +612,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap exportArrow {
+            get {
+                object obj = ResourceManager.GetObject("exportArrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap goToOW {
             get {
                 object obj = ResourceManager.GetObject("goToOW", resourceCulture);
@@ -975,6 +985,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap hgsswood {
             get {
                 object obj = ResourceManager.GetObject("hgsswood", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap importArrow {
+            get {
+                object obj = ResourceManager.GetObject("importArrow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

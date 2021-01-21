@@ -151,20 +151,6 @@ namespace DSPRE {
                 [26] = "Low Light (Battle Arcade)"
             };
         }
-        public static class AreaPics {
-            public static Dictionary<int, string> hgssAreaPicDict = new Dictionary<int, string>() {
-                [0] = "hgsswood",
-                [1] = "hgssgray",
-                [2] = "hgsswall",
-                [3] = "empty",
-                [4] = "hgsstown",
-                [5] = "hgsscave",
-                [6] = "hgssfield",
-                [7] = "hgsslake",
-                [8] = "hgssforest",
-                [9] = "hgsswater",
-            };
-        }
         public static class CameraAngles {
             public static string[] DPPtCameraValues = new string[] {
                 "[00] 3D Normal",
@@ -487,84 +473,6 @@ namespace DSPRE {
                 [1216] = "Route 17"
             };
         }
-        public static class MatrixCellColors{
-            /* Initialize dictionary of colors corresponding to border maps in the matrix editor */
-            public static Dictionary<List<uint>, Tuple<Color, Color>> DPPtmatrixColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>> {
-                [new List<uint> { 173, 176, 177, 179 }] = Tuple.Create(Color.ForestGreen, Color.White),
-                [new List<uint> { 174 }] = Tuple.Create(Color.SteelBlue, Color.White),
-                [new List<uint> { 175 }] = Tuple.Create(Color.Sienna, Color.White),
-                [new List<uint> { 178 }] = Tuple.Create(Color.PowderBlue, Color.Black),
-                [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
-            };
-            public static Dictionary<List<uint>, Tuple<Color, Color>> HGSSmatrixColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>> {
-                [new List<uint> { 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
-                [new List<uint> { 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
-                [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
-                [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
-            };
-            public static Dictionary<List<uint>, Tuple<Color, Color>> GenericMatrixColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>> {
-                [new List<uint> { 203 }] = Tuple.Create(Color.FromArgb(80, 200, 16), Color.White),
-                [new List<uint> { 204, 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
-                [new List<uint> { 205, 206 }] = Tuple.Create(Color.DarkGreen, Color.White),
-                [new List<uint> { 207, 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
-                [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
-                [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
-            };
-        }
-        public static class WeatherPics {
-            public static Dictionary<int, string> dpweatherImageDict = new Dictionary<int, string>() {
-                [0] = "dpnormal",
-                [1] = "dpcloudy",
-                [2] = "dprain",
-                [3] = "dpheavyrain",
-                [4] = "dpthunderstorm",
-                [5] = "dpsnowslow",
-                [6] = "dpdiamondsnow",
-                [7] = "dpblizzard",
-                [8] = "dpsandfall",
-                [9] = "dpsandstorm",
-                [10] = "dphail",
-                [11] = "dprocksascending",
-                [12] = "dpfog",
-                [13] = "dpfog",
-                [14] = "dpdark",
-                [15] = "dplightning",
-                [16] = "dplightsandstorm"
-            };
-            public static Dictionary<int, string> ptweatherImageDict = new Dictionary<int, string>() {
-                [0] = "ptnormal",
-                [1] = "ptcloudy",
-                [2] = "ptrain",
-                [3] = "ptheavyrain",
-                [4] = "ptthunderstorm",
-                [5] = "ptsnowslow",
-                [6] = "ptDsnow",
-                [7] = "ptblizzard",
-                [8] = "ptsandfall",
-                [9] = "ptsandstorm",
-                [10] = "pthail",
-                [11] = "ptrocksascending",
-                [12] = "ptfog",
-                [13] = "ptfog",
-                [14] = "ptdark",
-                [15] = "ptlightning",
-                [16] = "ptlightsandstorm",
-                [17] = "ptforestweather",
-                [18] = "ptspotlight",
-                [19] = "ptspotlight"
-            };
-            public static Dictionary<List<int>, string> hgssweatherImageDict = new Dictionary<List<int>, string>() {
-                [new List<int> { 0, 1 }] = "hgssnormal",
-                [new List<int> { 2, 3, 4, 5, 6, 7, 8 }] = "hgssrain",
-                [new List<int> { 9, 10, 11, 12, 13,  15 }] = "hgsssnow",
-                [new List<int> { 14 }] = "hgssnormal", //sandstorm in battle only
-                [new List<int> { 16, 17 }] = "hgssdiamond",
-                [new List<int> { 18, 19, 20, 21}] = "hgssfog",
-                [new List<int> { 22, 23 }] = "hgssdark",
-                [new List<int> { 24, 25 }] = "hgssdark2",
-                [new List<int> { 26 }] = "hgssArcade"
-            };
-        }
         public static class ScriptMovements {
             public static string[] moveArray = new string[] {
                 "[00]  None",
@@ -640,6 +548,181 @@ namespace DSPRE {
                 "[70]  ?",
                 "[71]  Looking Left"
             };
+        }
+        public static class System {
+            public static Dictionary<string, int> headerOffsetsDict = new Dictionary<string, int>() {
+                ["ADAE"] = 0xEEDBC,
+                ["APAE"] = 0xEEDBC,
+
+                ["ADAS"] = 0xEEE08,
+                ["APAS"] = 0xEEE08,
+
+                ["ADAI"] = 0xEED70,
+                ["APAI"] = 0xEED70,
+
+                ["ADAF"] = 0xEEDFC,
+                ["APAF"] = 0xEEDFC,
+
+                ["ADAD"] = 0xEEDCC,
+                ["APAD"] = 0xEEDCC,
+
+                ["ADAJ"] = 0xF0C28,
+                ["APAJ"] = 0xF0C28,
+
+                ["CPUE"] = 0xE601C,
+                ["CPUS"] = 0xE60B0,
+                ["CPUI"] = 0xE6038,
+                ["CPUF"] = 0xE60A4,
+                ["CPUD"] = 0xE6074,
+                ["CPUJ"] = 0xE56F0,
+
+                ["IPKE"] = 0xF6BE0,
+                ["IPGE"] = 0xF6BE0,
+
+                ["IPKS"] = 0xF6BC8,
+                ["IPGS"] = 0xF6BD0,
+
+                ["IPKI"] = 0xF6B58,
+                ["IPGI"] = 0xF6B58,
+
+                ["IPKF"] = 0xF6BC4,
+                ["IPGF"] = 0xF6BC4,
+
+                ["IPKD"] = 0xF6B94,
+                ["IPGD"] = 0xF6B94,
+
+                ["IPKJ"] = 0xF6390,
+                ["IPGJ"] = 0xF6390
+            };
+            public static Dictionary<string, string> versionsDict = new Dictionary<string, string>() {
+                ["ADAE"] = "D",
+                ["ADAS"] = "D",
+                ["ADAI"] = "D",
+                ["ADAF"] = "D",
+                ["ADAD"] = "D",
+                ["ADAJ"] = "D",
+
+                ["APAE"] = "P",
+                ["APAS"] = "P",
+                ["APAI"] = "P",
+                ["APAF"] = "P",
+                ["APAD"] = "P",
+                ["APAJ"] = "P",
+
+                ["CPUE"] = "Plat",
+                ["CPUS"] = "Plat",
+                ["CPUI"] = "Plat",
+                ["CPUF"] = "Plat",
+                ["CPUD"] = "Plat",
+                ["CPUJ"] = "Plat",
+
+                ["IPKE"] = "HG",
+                ["IPKS"] = "HG",
+                ["IPKI"] = "HG",
+                ["IPKF"] = "HG",
+                ["IPKD"] = "HG",
+                ["IPKJ"] = "HG",
+
+                ["IPGE"] = "SS",
+                ["IPGS"] = "SS",
+                ["IPGI"] = "SS",
+                ["IPGF"] = "SS",
+                ["IPGD"] = "SS",
+                ["IPGJ"] = "SS"
+            };
+
+            public static class MatrixCellColors {
+                /* Initialize dictionary of colors corresponding to border maps in the matrix editor */
+                public static Dictionary<List<uint>, Tuple<Color, Color>> DPPtmatrixColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>> {
+                    [new List<uint> { 173, 176, 177, 179 }] = Tuple.Create(Color.ForestGreen, Color.White),
+                    [new List<uint> { 174 }] = Tuple.Create(Color.SteelBlue, Color.White),
+                    [new List<uint> { 175 }] = Tuple.Create(Color.Sienna, Color.White),
+                    [new List<uint> { 178 }] = Tuple.Create(Color.PowderBlue, Color.Black),
+                    [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
+                };
+                public static Dictionary<List<uint>, Tuple<Color, Color>> HGSSmatrixColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>> {
+                    [new List<uint> { 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
+                    [new List<uint> { 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
+                    [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
+                    [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
+                };
+                public static Dictionary<List<uint>, Tuple<Color, Color>> GenericMatrixColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>> {
+                    [new List<uint> { 203 }] = Tuple.Create(Color.FromArgb(80, 200, 16), Color.White),
+                    [new List<uint> { 204, 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
+                    [new List<uint> { 205, 206 }] = Tuple.Create(Color.DarkGreen, Color.White),
+                    [new List<uint> { 207, 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
+                    [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
+                    [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
+                };
+            }
+            public static class AreaPics {
+                public static Dictionary<int, string> hgssAreaPicDict = new Dictionary<int, string>() {
+                    [0] = "hgsswood",
+                    [1] = "hgssgray",
+                    [2] = "hgsswall",
+                    [3] = "empty",
+                    [4] = "hgsstown",
+                    [5] = "hgsscave",
+                    [6] = "hgssfield",
+                    [7] = "hgsslake",
+                    [8] = "hgssforest",
+                    [9] = "hgsswater",
+                };
+            }
+            public static class WeatherPics {
+                public static Dictionary<int, string> dpWeatherImageDict = new Dictionary<int, string>() {
+                    [0] = "dpnormal",
+                    [1] = "dpcloudy",
+                    [2] = "dprain",
+                    [3] = "dpheavyrain",
+                    [4] = "dpthunderstorm",
+                    [5] = "dpsnowslow",
+                    [6] = "dpdiamondsnow",
+                    [7] = "dpblizzard",
+                    [8] = "dpsandfall",
+                    [9] = "dpsandstorm",
+                    [10] = "dphail",
+                    [11] = "dprocksascending",
+                    [12] = "dpfog",
+                    [13] = "dpfog",
+                    [14] = "dpdark",
+                    [15] = "dplightning",
+                    [16] = "dplightsandstorm"
+                };
+                public static Dictionary<int, string> ptWeatherImageDict = new Dictionary<int, string>() {
+                    [0] = "ptnormal",
+                    [1] = "ptcloudy",
+                    [2] = "ptrain",
+                    [3] = "ptheavyrain",
+                    [4] = "ptthunderstorm",
+                    [5] = "ptsnowslow",
+                    [6] = "ptDsnow",
+                    [7] = "ptblizzard",
+                    [8] = "ptsandfall",
+                    [9] = "ptsandstorm",
+                    [10] = "pthail",
+                    [11] = "ptrocksascending",
+                    [12] = "ptfog",
+                    [13] = "ptfog",
+                    [14] = "ptdark",
+                    [15] = "ptlightning",
+                    [16] = "ptlightsandstorm",
+                    [17] = "ptforestweather",
+                    [18] = "ptspotlight",
+                    [19] = "ptspotlight"
+                };
+                public static Dictionary<List<int>, string> hgssweatherImageDict = new Dictionary<List<int>, string>() {
+                    [new List<int> { 0, 1 }] = "hgssnormal",
+                    [new List<int> { 2, 3, 4, 5, 6, 7, 8 }] = "hgssrain",
+                    [new List<int> { 9, 10, 11, 12, 13, 15 }] = "hgsssnow",
+                    [new List<int> { 14 }] = "hgssnormal", //sandstorm in battle only
+                    [new List<int> { 16, 17 }] = "hgssdiamond",
+                    [new List<int> { 18, 19, 20, 21 }] = "hgssfog",
+                    [new List<int> { 22, 23 }] = "hgssdark",
+                    [new List<int> { 24, 25 }] = "hgssdark2",
+                    [new List<int> { 26 }] = "hgssArcade"
+                };
+            }
         }
     }
 }

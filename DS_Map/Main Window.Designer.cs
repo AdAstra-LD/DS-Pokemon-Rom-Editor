@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
+            this.importHeaderFromFileButton = new System.Windows.Forms.Button();
+            this.exportHeaderToFileButton = new System.Windows.Forms.Button();
             this.pasteFlagsButton = new System.Windows.Forms.Button();
             this.copyFlagsButton = new System.Windows.Forms.Button();
             this.pasteHeaderButton = new System.Windows.Forms.Button();
@@ -71,7 +73,6 @@
             this.internalNameBox = new System.Windows.Forms.TextBox();
             this.wildPokeUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.wildPokeLabel = new System.Windows.Forms.Label();
             this.areaIconComboBox = new System.Windows.Forms.ComboBox();
             this.areaSettingsComboBox = new System.Windows.Forms.ComboBox();
             this.locationNameComboBox = new System.Windows.Forms.ComboBox();
@@ -231,9 +232,11 @@
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.removeNSBTXButton = new System.Windows.Forms.Button();
             this.areaDataGroupBox = new System.Windows.Forms.GroupBox();
+            this.exportAreaDataButton = new System.Windows.Forms.Button();
             this.areaTypeGroupbox = new System.Windows.Forms.GroupBox();
             this.outdoorAreaRadioButton = new System.Windows.Forms.RadioButton();
             this.indoorAreaRadioButton = new System.Windows.Forms.RadioButton();
+            this.importAreaDataButton = new System.Windows.Forms.Button();
             this.removeAreaDataButton = new System.Windows.Forms.Button();
             this.addAreaDataButton = new System.Windows.Forms.Button();
             this.saveAreaDataButton = new System.Windows.Forms.Button();
@@ -541,8 +544,8 @@
             this.buildingEditorButton = new System.Windows.Forms.ToolStripButton();
             this.romToolboxButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
-            this.exportAreaDataButton = new System.Windows.Forms.Button();
-            this.importAreaDataButton = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.groupBox18 = new System.Windows.Forms.GroupBox();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.groupBox10.SuspendLayout();
@@ -685,6 +688,7 @@
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainToolStrip.SuspendLayout();
+            this.groupBox18.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainTabControl
@@ -709,6 +713,9 @@
             // headerEditorTabPage
             // 
             this.headerEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
+            this.headerEditorTabPage.Controls.Add(this.groupBox18);
+            this.headerEditorTabPage.Controls.Add(this.importHeaderFromFileButton);
+            this.headerEditorTabPage.Controls.Add(this.exportHeaderToFileButton);
             this.headerEditorTabPage.Controls.Add(this.pasteFlagsButton);
             this.headerEditorTabPage.Controls.Add(this.copyFlagsButton);
             this.headerEditorTabPage.Controls.Add(this.pasteHeaderButton);
@@ -735,6 +742,34 @@
             this.headerEditorTabPage.Size = new System.Drawing.Size(1118, 619);
             this.headerEditorTabPage.TabIndex = 0;
             this.headerEditorTabPage.Text = "Header Editor";
+            // 
+            // importHeaderFromFileButton
+            // 
+            this.importHeaderFromFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importHeaderFromFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.importHeaderFromFileButton.Location = new System.Drawing.Point(845, 518);
+            this.importHeaderFromFileButton.Name = "importHeaderFromFileButton";
+            this.importHeaderFromFileButton.Size = new System.Drawing.Size(74, 40);
+            this.importHeaderFromFileButton.TabIndex = 50;
+            this.importHeaderFromFileButton.Text = "Import";
+            this.importHeaderFromFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.importHeaderFromFileButton, "Import header from file, replacing the current header");
+            this.importHeaderFromFileButton.UseVisualStyleBackColor = true;
+            this.importHeaderFromFileButton.Click += new System.EventHandler(this.importHeaderFromFileButton_Click);
+            // 
+            // exportHeaderToFileButton
+            // 
+            this.exportHeaderToFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportHeaderToFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.exportHeaderToFileButton.Location = new System.Drawing.Point(925, 518);
+            this.exportHeaderToFileButton.Name = "exportHeaderToFileButton";
+            this.exportHeaderToFileButton.Size = new System.Drawing.Size(74, 40);
+            this.exportHeaderToFileButton.TabIndex = 49;
+            this.exportHeaderToFileButton.Text = "Export";
+            this.exportHeaderToFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.exportHeaderToFileButton, "Export current header to file");
+            this.exportHeaderToFileButton.UseVisualStyleBackColor = true;
+            this.exportHeaderToFileButton.Click += new System.EventHandler(this.exportHeaderToFileButton_Click);
             // 
             // pasteFlagsButton
             // 
@@ -768,6 +803,7 @@
             this.pasteHeaderButton.TabIndex = 37;
             this.pasteHeaderButton.Text = "Paste";
             this.pasteHeaderButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.pasteHeaderButton, "Replace current header with the copied one");
             this.pasteHeaderButton.UseVisualStyleBackColor = true;
             this.pasteHeaderButton.Click += new System.EventHandler(this.pasteHeaderButton_Click);
             // 
@@ -946,13 +982,14 @@
             this.copyHeaderButton.TabIndex = 36;
             this.copyHeaderButton.Text = "Copy";
             this.copyHeaderButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.copyHeaderButton, "Copy entire header");
             this.copyHeaderButton.UseVisualStyleBackColor = true;
             this.copyHeaderButton.Click += new System.EventHandler(this.copyHeaderButton_Click);
             // 
             // areaIconPictureBox
             // 
             this.areaIconPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.areaIconPictureBox.Location = new System.Drawing.Point(845, 34);
+            this.areaIconPictureBox.Location = new System.Drawing.Point(845, 29);
             this.areaIconPictureBox.Name = "areaIconPictureBox";
             this.areaIconPictureBox.Size = new System.Drawing.Size(256, 55);
             this.areaIconPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -962,7 +999,7 @@
             // areaImageLabel
             // 
             this.areaImageLabel.AutoSize = true;
-            this.areaImageLabel.Location = new System.Drawing.Point(842, 18);
+            this.areaImageLabel.Location = new System.Drawing.Point(842, 13);
             this.areaImageLabel.Name = "areaImageLabel";
             this.areaImageLabel.Size = new System.Drawing.Size(52, 13);
             this.areaImageLabel.TabIndex = 34;
@@ -970,9 +1007,7 @@
             // 
             // nameGroupBox
             // 
-            this.nameGroupBox.Controls.Add(this.pasteWildEncountersButton);
             this.nameGroupBox.Controls.Add(this.pasteLocationNameButton);
-            this.nameGroupBox.Controls.Add(this.copyWildEncountersButton);
             this.nameGroupBox.Controls.Add(this.copyLocationNameButton);
             this.nameGroupBox.Controls.Add(this.pasteInternalNameButton);
             this.nameGroupBox.Controls.Add(this.copyInternalNameButton);
@@ -983,17 +1018,14 @@
             this.nameGroupBox.Controls.Add(this.copyAreaSettingsButton);
             this.nameGroupBox.Controls.Add(this.label3);
             this.nameGroupBox.Controls.Add(this.label14);
-            this.nameGroupBox.Controls.Add(this.openWildEditorWithIdButton);
             this.nameGroupBox.Controls.Add(this.internalNameBox);
-            this.nameGroupBox.Controls.Add(this.wildPokeUpDown);
             this.nameGroupBox.Controls.Add(this.label2);
-            this.nameGroupBox.Controls.Add(this.wildPokeLabel);
             this.nameGroupBox.Controls.Add(this.areaIconComboBox);
             this.nameGroupBox.Controls.Add(this.areaSettingsComboBox);
             this.nameGroupBox.Controls.Add(this.locationNameComboBox);
             this.nameGroupBox.Location = new System.Drawing.Point(244, 12);
             this.nameGroupBox.Name = "nameGroupBox";
-            this.nameGroupBox.Size = new System.Drawing.Size(589, 140);
+            this.nameGroupBox.Size = new System.Drawing.Size(482, 140);
             this.nameGroupBox.TabIndex = 28;
             this.nameGroupBox.TabStop = false;
             this.nameGroupBox.Text = "Location Info";
@@ -1002,7 +1034,7 @@
             // 
             this.pasteWildEncountersButton.Enabled = false;
             this.pasteWildEncountersButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteWildEncountersButton.Image")));
-            this.pasteWildEncountersButton.Location = new System.Drawing.Point(535, 91);
+            this.pasteWildEncountersButton.Location = new System.Drawing.Point(51, 91);
             this.pasteWildEncountersButton.Name = "pasteWildEncountersButton";
             this.pasteWildEncountersButton.Size = new System.Drawing.Size(35, 37);
             this.pasteWildEncountersButton.TabIndex = 42;
@@ -1023,7 +1055,7 @@
             // copyWildEncountersButton
             // 
             this.copyWildEncountersButton.Image = ((System.Drawing.Image)(resources.GetObject("copyWildEncountersButton.Image")));
-            this.copyWildEncountersButton.Location = new System.Drawing.Point(498, 91);
+            this.copyWildEncountersButton.Location = new System.Drawing.Point(13, 91);
             this.copyWildEncountersButton.Name = "copyWildEncountersButton";
             this.copyWildEncountersButton.Size = new System.Drawing.Size(35, 37);
             this.copyWildEncountersButton.TabIndex = 41;
@@ -1132,9 +1164,9 @@
             // 
             // openWildEditorWithIdButton
             // 
-            this.openWildEditorWithIdButton.Location = new System.Drawing.Point(498, 65);
+            this.openWildEditorWithIdButton.Location = new System.Drawing.Point(13, 46);
             this.openWildEditorWithIdButton.Name = "openWildEditorWithIdButton";
-            this.openWildEditorWithIdButton.Size = new System.Drawing.Size(73, 22);
+            this.openWildEditorWithIdButton.Size = new System.Drawing.Size(73, 41);
             this.openWildEditorWithIdButton.TabIndex = 24;
             this.openWildEditorWithIdButton.Text = "Open Editor";
             this.openWildEditorWithIdButton.UseVisualStyleBackColor = true;
@@ -1150,7 +1182,7 @@
             // 
             // wildPokeUpDown
             // 
-            this.wildPokeUpDown.Location = new System.Drawing.Point(498, 39);
+            this.wildPokeUpDown.Location = new System.Drawing.Point(13, 20);
             this.wildPokeUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1169,15 +1201,6 @@
             this.label2.Size = new System.Drawing.Size(55, 13);
             this.label2.TabIndex = 4;
             this.label2.Text = "Area icon:";
-            // 
-            // wildPokeLabel
-            // 
-            this.wildPokeLabel.AutoSize = true;
-            this.wildPokeLabel.Location = new System.Drawing.Point(495, 19);
-            this.wildPokeLabel.Name = "wildPokeLabel";
-            this.wildPokeLabel.Size = new System.Drawing.Size(85, 13);
-            this.wildPokeLabel.TabIndex = 14;
-            this.wildPokeLabel.Text = "Wild Encounters";
             // 
             // areaIconComboBox
             // 
@@ -1584,9 +1607,9 @@
             // 
             this.saveHeaderButton.Image = ((System.Drawing.Image)(resources.GetObject("saveHeaderButton.Image")));
             this.saveHeaderButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveHeaderButton.Location = new System.Drawing.Point(1006, 564);
+            this.saveHeaderButton.Location = new System.Drawing.Point(1005, 518);
             this.saveHeaderButton.Name = "saveHeaderButton";
-            this.saveHeaderButton.Size = new System.Drawing.Size(95, 40);
+            this.saveHeaderButton.Size = new System.Drawing.Size(96, 86);
             this.saveHeaderButton.TabIndex = 33;
             this.saveHeaderButton.Text = "Save &This Header";
             this.saveHeaderButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1607,7 +1630,7 @@
             this.groupBox4.Controls.Add(this.matrixUpDown);
             this.groupBox4.Location = new System.Drawing.Point(244, 470);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(293, 132);
+            this.groupBox4.Size = new System.Drawing.Size(293, 136);
             this.groupBox4.TabIndex = 31;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Map matrix && Tileset";
@@ -1730,7 +1753,7 @@
             this.flagsGroupBox.Controls.Add(this.flag0CheckBox);
             this.flagsGroupBox.Location = new System.Drawing.Point(543, 470);
             this.flagsGroupBox.Name = "flagsGroupBox";
-            this.flagsGroupBox.Size = new System.Drawing.Size(290, 132);
+            this.flagsGroupBox.Size = new System.Drawing.Size(290, 136);
             this.flagsGroupBox.TabIndex = 32;
             this.flagsGroupBox.TabStop = false;
             this.flagsGroupBox.Text = "Flags";
@@ -1817,7 +1840,7 @@
             // cameraPicLabel
             // 
             this.cameraPicLabel.AutoSize = true;
-            this.cameraPicLabel.Location = new System.Drawing.Point(842, 343);
+            this.cameraPicLabel.Location = new System.Drawing.Point(842, 304);
             this.cameraPicLabel.Name = "cameraPicLabel";
             this.cameraPicLabel.Size = new System.Drawing.Size(72, 13);
             this.cameraPicLabel.TabIndex = 3;
@@ -1826,7 +1849,7 @@
             // cameraPictureBox
             // 
             this.cameraPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.cameraPictureBox.Location = new System.Drawing.Point(845, 359);
+            this.cameraPictureBox.Location = new System.Drawing.Point(845, 320);
             this.cameraPictureBox.Name = "cameraPictureBox";
             this.cameraPictureBox.Size = new System.Drawing.Size(256, 192);
             this.cameraPictureBox.TabIndex = 2;
@@ -1835,7 +1858,7 @@
             // weatherPicLabel
             // 
             this.weatherPicLabel.AutoSize = true;
-            this.weatherPicLabel.Location = new System.Drawing.Point(842, 112);
+            this.weatherPicLabel.Location = new System.Drawing.Point(842, 91);
             this.weatherPicLabel.Name = "weatherPicLabel";
             this.weatherPicLabel.Size = new System.Drawing.Size(48, 13);
             this.weatherPicLabel.TabIndex = 1;
@@ -1844,7 +1867,7 @@
             // weatherPictureBox
             // 
             this.weatherPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.weatherPictureBox.Location = new System.Drawing.Point(845, 128);
+            this.weatherPictureBox.Location = new System.Drawing.Point(845, 107);
             this.weatherPictureBox.Name = "weatherPictureBox";
             this.weatherPictureBox.Size = new System.Drawing.Size(256, 192);
             this.weatherPictureBox.TabIndex = 0;
@@ -3041,6 +3064,16 @@
             this.areaDataGroupBox.TabStop = false;
             this.areaDataGroupBox.Text = "Area Data";
             // 
+            // exportAreaDataButton
+            // 
+            this.exportAreaDataButton.Location = new System.Drawing.Point(173, 54);
+            this.exportAreaDataButton.Name = "exportAreaDataButton";
+            this.exportAreaDataButton.Size = new System.Drawing.Size(107, 23);
+            this.exportAreaDataButton.TabIndex = 13;
+            this.exportAreaDataButton.Text = "Export selected";
+            this.exportAreaDataButton.UseVisualStyleBackColor = true;
+            this.exportAreaDataButton.Click += new System.EventHandler(this.exportAreaDataButton_Click);
+            // 
             // areaTypeGroupbox
             // 
             this.areaTypeGroupbox.Controls.Add(this.outdoorAreaRadioButton);
@@ -3075,6 +3108,16 @@
             this.indoorAreaRadioButton.Text = "Indoor";
             this.indoorAreaRadioButton.UseVisualStyleBackColor = true;
             this.indoorAreaRadioButton.CheckedChanged += new System.EventHandler(this.indoorAreaRadioButton_CheckedChanged);
+            // 
+            // importAreaDataButton
+            // 
+            this.importAreaDataButton.Location = new System.Drawing.Point(286, 54);
+            this.importAreaDataButton.Name = "importAreaDataButton";
+            this.importAreaDataButton.Size = new System.Drawing.Size(99, 23);
+            this.importAreaDataButton.TabIndex = 12;
+            this.importAreaDataButton.Text = "Replace with...";
+            this.importAreaDataButton.UseVisualStyleBackColor = true;
+            this.importAreaDataButton.Click += new System.EventHandler(this.importAreaDataButton_Click);
             // 
             // removeAreaDataButton
             // 
@@ -6661,25 +6704,18 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             // 
-            // exportAreaDataButton
+            // groupBox18
             // 
-            this.exportAreaDataButton.Location = new System.Drawing.Point(173, 54);
-            this.exportAreaDataButton.Name = "exportAreaDataButton";
-            this.exportAreaDataButton.Size = new System.Drawing.Size(107, 23);
-            this.exportAreaDataButton.TabIndex = 13;
-            this.exportAreaDataButton.Text = "Export selected";
-            this.exportAreaDataButton.UseVisualStyleBackColor = true;
-            this.exportAreaDataButton.Click += new System.EventHandler(this.exportAreaDataButton_Click);
-            // 
-            // importAreaDataButton
-            // 
-            this.importAreaDataButton.Location = new System.Drawing.Point(286, 54);
-            this.importAreaDataButton.Name = "importAreaDataButton";
-            this.importAreaDataButton.Size = new System.Drawing.Size(99, 23);
-            this.importAreaDataButton.TabIndex = 12;
-            this.importAreaDataButton.Text = "Replace with...";
-            this.importAreaDataButton.UseVisualStyleBackColor = true;
-            this.importAreaDataButton.Click += new System.EventHandler(this.importAreaDataButton_Click);
+            this.groupBox18.Controls.Add(this.openWildEditorWithIdButton);
+            this.groupBox18.Controls.Add(this.pasteWildEncountersButton);
+            this.groupBox18.Controls.Add(this.wildPokeUpDown);
+            this.groupBox18.Controls.Add(this.copyWildEncountersButton);
+            this.groupBox18.Location = new System.Drawing.Point(732, 12);
+            this.groupBox18.Name = "groupBox18";
+            this.groupBox18.Size = new System.Drawing.Size(101, 140);
+            this.groupBox18.TabIndex = 51;
+            this.groupBox18.TabStop = false;
+            this.groupBox18.Text = "Wild Encounters";
             // 
             // MainProgram
             // 
@@ -6885,6 +6921,7 @@
             this.statusStrip1.PerformLayout();
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();
+            this.groupBox18.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -7228,7 +7265,6 @@
         private System.Windows.Forms.TextBox internalNameBox;
         private System.Windows.Forms.NumericUpDown wildPokeUpDown;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label wildPokeLabel;
         private System.Windows.Forms.ComboBox areaIconComboBox;
         private System.Windows.Forms.Label areaSettingsLabel;
         private System.Windows.Forms.ComboBox areaSettingsComboBox;
@@ -7407,6 +7443,10 @@
         private System.Windows.Forms.RadioButton indoorAreaRadioButton;
         private System.Windows.Forms.Button exportAreaDataButton;
         private System.Windows.Forms.Button importAreaDataButton;
+        private System.Windows.Forms.Button importHeaderFromFileButton;
+        private System.Windows.Forms.Button exportHeaderToFileButton;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.GroupBox groupBox18;
     }
 }
 

@@ -87,6 +87,7 @@ namespace DSPRE
 	{
         /*System*/
         public int ID { get; set; }
+        public static readonly int length = 24;
         /**/
 
 
@@ -106,7 +107,7 @@ namespace DSPRE
         #endregion Fields
 
         #region Methods (1)
-        public abstract byte[] SaveHeader();
+        public abstract byte[] toByteArray();
         #endregion
     }
 
@@ -148,7 +149,7 @@ namespace DSPRE
         #endregion Constructors
 
         #region Methods (1)
-        public override byte[] SaveHeader()
+        public override byte[] toByteArray()
         {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData))
@@ -239,14 +240,14 @@ namespace DSPRE
                     showName = reader.ReadByte();
                     flags = reader.ReadByte();
                 } catch (EndOfStreamException) {
-                    MessageBox.Show("Error loading headers.\n", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error loading header " + ID + '.', "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
         #endregion Constructors
 
         #region Methods(1)
-        public override byte[] SaveHeader()
+        public override byte[] toByteArray()
         {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData))
@@ -350,14 +351,15 @@ namespace DSPRE
                     followMode = reader.ReadByte();
                     flags = reader.ReadByte();
                 } catch (EndOfStreamException) {
-                    MessageBox.Show("Error loading headers.\n", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error loading header " + ID + '.', "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    ID = -1;
                 }
             }
         }
         #endregion Constructors
 
         #region Methods(1)
-        public override byte[] SaveHeader()
+        public override byte[] toByteArray()
         {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData))

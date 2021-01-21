@@ -44,7 +44,7 @@ namespace DSPRE {
         public int pokémonNamesTextNumber { get; private set; }
         public int itemNamesTextNumber { get; private set; }
 
-        public readonly int internalNameLength = 16;
+        public readonly byte internalNameLength = 16;
         public string internalNamesLocation { get; private set; }
         public Dictionary<List<uint>, Tuple<Color, Color>> mapCellsColorDictionary { get; private set; }
 
@@ -60,7 +60,6 @@ namespace DSPRE {
 
             LoadGameName();
             LoadGameLanguage();
-            LoadHeaderTableOffset();
 
             internalNamesLocation = this.workDir + @"data\fielddata\maptable\mapname.bin";
 
@@ -277,92 +276,9 @@ namespace DSPRE {
                     break;
             }
         }
-        public void LoadHeaderTableOffset() {
-            Dictionary<string, int> offsets = new Dictionary<string, int>() {
-                ["ADAE"] = 0xEEDBC,
-                ["APAE"] = 0xEEDBC,
-
-                ["ADAS"] = 0xEEE08,
-                ["APAS"] = 0xEEE08,
-
-                ["ADAI"] = 0xEED70,
-                ["APAI"] = 0xEED70,
-
-                ["ADAF"] = 0xEEDFC,
-                ["APAF"] = 0xEEDFC,
-
-                ["ADAD"] = 0xEEDCC,
-                ["APAD"] = 0xEEDCC,
-
-                ["ADAJ"] = 0xF0C28,
-                ["APAJ"] = 0xF0C28,
-
-                ["CPUE"] = 0xE601C,
-                ["CPUS"] = 0xE60B0,
-                ["CPUI"] = 0xE6038,
-                ["CPUF"] = 0xE60A4,
-                ["CPUD"] = 0xE6074,
-                ["CPUJ"] = 0xE56F0,
-
-                ["IPKE"] = 0xF6BE0,
-                ["IPGE"] = 0xF6BE0,
-
-                ["IPKS"] = 0xF6BC8,
-                ["IPGS"] = 0xF6BD0,
-
-                ["IPKI"] = 0xF6B58,
-                ["IPGI"] = 0xF6B58,
-
-                ["IPKF"] = 0xF6BC4,
-                ["IPGF"] = 0xF6BC4,
-
-                ["IPKD"] = 0xF6B94,
-                ["IPGD"] = 0xF6B94,
-
-                ["IPKJ"] = 0xF6390,
-                ["IPGJ"] = 0xF6390
-            };
-            headerTableOffset = offsets[this.romID];
-        }
         public void LoadGameVersion() {
-            Dictionary<string, string> versions = new Dictionary<string, string>() {
-                ["ADAE"] = "D",
-                ["ADAS"] = "D",
-                ["ADAI"] = "D",
-                ["ADAF"] = "D",
-                ["ADAD"] = "D",
-                ["ADAJ"] = "D",
-
-                ["APAE"] = "P",
-                ["APAS"] = "P",
-                ["APAI"] = "P",
-                ["APAF"] = "P",
-                ["APAD"] = "P",
-                ["APAJ"] = "P",
-
-                ["CPUE"] = "Plat",
-                ["CPUS"] = "Plat",
-                ["CPUI"] = "Plat",
-                ["CPUF"] = "Plat",
-                ["CPUD"] = "Plat",
-                ["CPUJ"] = "Plat",
-
-                ["IPKE"] = "HG",
-                ["IPKS"] = "HG",
-                ["IPKI"] = "HG",
-                ["IPKF"] = "HG",
-                ["IPKD"] = "HG",
-                ["IPKJ"] = "HG",
-
-                ["IPGE"] = "SS",
-                ["IPGS"] = "SS",
-                ["IPGI"] = "SS",
-                ["IPGF"] = "SS",
-                ["IPGD"] = "SS",
-                ["IPGJ"] = "SS"
-            };
             try {
-                gameVersion = versions[romID];
+                gameVersion = PokeDatabase.System.versionsDict[romID];
             } catch (KeyNotFoundException) {
                 System.Windows.Forms.MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -594,11 +510,11 @@ namespace DSPRE {
                 case "D":
                 case "P":
                 case "Plat":
-                    mapCellsColorDictionary = PokeDatabase.MatrixCellColors.DPPtmatrixColorsDict;
+                    mapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.DPPtmatrixColorsDict;
                     break;
                 case "HG":
                 case "SS":
-                    mapCellsColorDictionary = PokeDatabase.MatrixCellColors.HGSSmatrixColorsDict;
+                    mapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.HGSSmatrixColorsDict;
                     break;
             }
         }

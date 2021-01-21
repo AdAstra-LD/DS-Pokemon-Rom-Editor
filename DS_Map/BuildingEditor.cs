@@ -175,8 +175,10 @@ namespace DSPRE
 
         private void buildingOpenGLControl_MouseWheel(object sender, MouseEventArgs e) // Zoom In/Out
         {
-            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift) dist += (float)e.Delta / 200;
-            else dist -= (float)e.Delta / 200;
+            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift) 
+                dist += (float)e.Delta / 200;
+            else 
+                dist -= (float)e.Delta / 200;
             RenderModel();
         }
         private void buildingsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -193,6 +195,7 @@ namespace DSPRE
         {
             SaveFileDialog em = new SaveFileDialog();
             em.Filter = "NSBMD model (*.nsbmd)|*.nsbmd";
+            em.FileName = buildingsListBox.SelectedItem.ToString();
             if (em.ShowDialog(this) != DialogResult.OK)
                 return;
 
