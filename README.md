@@ -8,14 +8,20 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features a
 ## Major Changes to Mixone's fork
 - Significantly shorter load and save times.
 - Added mouse support and warps navigation feature to the Event Editor.
-- Added copy buttons to header editor.
+- Added copy and paste buttons to header editor.
+- Added import and export buttons to header editor.
 - Search location feature.
 - Editable Internal names.
 - Fixed Camera settings selector for HGSS roms.
 - Fixed Text Search and Replace.
 
+- Added more HGSS weather effects, redone weather preview pics
+
 - Encounter Editor allows adding and removing encounter files.
 - Encounter Editor can now attempt to repair corrupted encounter files.
+
+- Redesigned NSBTX Editor
+- Added NSBTX editor button functions
 
 - Fixed "Open Matrix" not loading the correct textures and buildings, especially for interior maps.
 - Fixed map screen randomly becoming 3D, even with the collision tab open.
