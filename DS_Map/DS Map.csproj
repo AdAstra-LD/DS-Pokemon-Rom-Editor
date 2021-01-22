@@ -93,6 +93,11 @@
     <Compile Include="AreaData.cs" />
     <Compile Include="DSUtils.cs" />
     <Compile Include="PokeDatabase.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ROMToolboxDB\ARM9ExpansionDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -225,11 +230,6 @@
     <Compile Include="MapFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Resources\ReadText.Designer.cs" />
     <Compile Include="Resources\writeText.Designer.cs" />
     <Compile Include="SPK.cs">
@@ -330,9 +330,6 @@
     <None Include="Graphics\Weather\HGSS\hgssdark.png" />
     <None Include="Graphics\Weather\HGSS\hgssfog.png" />
     <None Include="Graphics\Weather\HGSS\hgsshail.gif" />
-    <None Include="Graphics\Weather\HGSS\hgssnormal.png" />
-    <None Include="Graphics\Weather\HGSS\hgssrain.gif" />
-    <None Include="Graphics\Weather\HGSS\hgsssnow.gif" />
     <None Include="Graphics\Weather\DPPt\dpblizzard.gif" />
     <None Include="Graphics\Weather\DPPt\dpcloudy.png" />
     <None Include="Graphics\Weather\DPPt\dpdark.png" />
@@ -394,7 +391,7 @@
     <None Include="Graphics\Weather\DPPt\ptspotlight.gif" />
     <None Include="Graphics\Weather\HGSS\hgssdark2.png" />
     <Content Include="app.ico" />
-    <None Include="Resources\exploreKit.Image.png" />
+    <None Include="Graphics\Program Icons\exploreKit.Image.png" />
     <None Include="Graphics\Program Icons\goToWarp.png" />
     <None Include="Graphics\Program Icons\goToTrigger.png" />
     <None Include="Graphics\Program Icons\warpGo.png" />
@@ -421,19 +418,21 @@
     <Content Include="Graphics\Camera Angles\HGSS\hgsscamera13.png" />
     <Content Include="Graphics\Camera Angles\HGSS\hgsscamera14.png" />
     <Content Include="Graphics\Camera Angles\HGSS\hgsscamera15.png" />
+    <None Include="Graphics\Weather\HGSS\hgssrain.gif" />
+    <None Include="Graphics\Weather\HGSS\hgssdiamond.gif" />
+    <None Include="Graphics\Weather\HGSS\hgsssnow.gif" />
+    <None Include="Graphics\Weather\HGSS\hgssArcade.gif" />
+    <None Include="Graphics\Weather\HGSS\hgssnormal.gif" />
     <None Include="Graphics\Program Icons\copyIcon.png" />
     <None Include="Graphics\Program Icons\pasteIcon.png" />
-    <None Include="Resources\hgssrain.gif" />
-    <None Include="Resources\hgssdiamond.gif" />
-    <None Include="Resources\hgsssnow.gif" />
-    <None Include="Resources\hgssArcade.gif" />
-    <None Include="Resources\hgssnormal.gif" />
-    <None Include="Resources\copyIcon.png" />
-    <None Include="Resources\pasteIcon.png" />
-    <None Include="Resources\hgssfog.gif" />
-    <None Include="Resources\exportArrow.png" />
-    <None Include="Resources\importArrow.png" />
+    <None Include="Graphics\Weather\HGSS\hgssfog.gif" />
+    <None Include="Graphics\Program Icons\exportArrow.png" />
+    <None Include="Graphics\Program Icons\importArrow.png" />
     <None Include="Graphics\Program Icons\unpackBuildingNarcsIcon.png" />
+    <None Include="Graphics\Program Icons\deleteIcon.png" />
+    <Content Include="Graphics\Program Icons\addIcon.png" />
+    <Content Include="Graphics\Program Icons\loadColorTable.png" />
+    <Content Include="Graphics\Program Icons\resetColorTable.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

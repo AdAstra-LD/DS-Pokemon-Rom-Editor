@@ -2077,15 +2077,15 @@ namespace DSPRE {
 
             for (int i = 0; i < currentMatrix.width; i++) {
                 headersGridView.Columns.Add("Column" + i, i.ToString("D"));
-                headersGridView.Columns[i].Width = 34; // Set column size
+                headersGridView.Columns[i].Width = 32; // Set column size
                 headersGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
 
                 heightsGridView.Columns.Add("Column" + i, i.ToString("D"));
-                heightsGridView.Columns[i].Width = 22; // Set column size
+                heightsGridView.Columns[i].Width = 21; // Set column size
                 heightsGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
 
                 mapFilesGridView.Columns.Add("Column" + i, i.ToString("D"));
-                mapFilesGridView.Columns[i].Width = 34; // Set column size
+                mapFilesGridView.Columns[i].Width = 32; // Set column size
                 mapFilesGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
 
             }
@@ -2111,8 +2111,10 @@ namespace DSPRE {
                 }
             }
 
-            if (currentMatrix.hasHeadersSection) matrixTabControl.TabPages.Add(headersTabPage);
-            if (currentMatrix.hasAltitudesSection) matrixTabControl.TabPages.Add(heightsTabPage);
+            if (currentMatrix.hasHeadersSection) 
+                matrixTabControl.TabPages.Add(headersTabPage);
+            if (currentMatrix.hasAltitudesSection) 
+                matrixTabControl.TabPages.Add(heightsTabPage);
         }
         #endregion
 
@@ -2167,14 +2169,16 @@ namespace DSPRE {
             if (e.RowIndex > -1 && e.ColumnIndex > -1) {
                 /* If input is junk, use 0000 as placeholder value */
                 ushort cellValue;
-                if (!UInt16.TryParse(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) cellValue = 0;
+                if (!UInt16.TryParse(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) 
+                    cellValue = 0;
 
                 /* Change value in matrix object */
                 currentMatrix.headers[e.RowIndex, e.ColumnIndex] = cellValue;
             }
         }
         private void headersGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
-            if (e.Value == null) return;
+            if (e.Value == null) 
+                return;
             disableHandlers = true;
 
             /* Format table cells corresponding to border maps or void */
@@ -2197,7 +2201,8 @@ namespace DSPRE {
             if (e.RowIndex > -1 && e.ColumnIndex > -1) {
                 /* If input is junk, use 00 as placeholder value */
                 byte cellValue;
-                if (!Byte.TryParse(heightsGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) cellValue = 0;
+                if (!Byte.TryParse(heightsGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) 
+                    cellValue = 0;
 
                 /* Change value in matrix object */
                 currentMatrix.altitudes[e.RowIndex, e.ColumnIndex] = cellValue;
@@ -2210,7 +2215,8 @@ namespace DSPRE {
 
             /* Format table cells corresponding to border maps or void */
             ushort colorValue;
-            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = Matrix.EMPTY;
+            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) 
+                colorValue = Matrix.EMPTY;
 
             Tuple<Color, Color> cellColors = FormatMapCell(colorValue);
             e.CellStyle.BackColor = cellColors.Item1;
@@ -2218,7 +2224,8 @@ namespace DSPRE {
 
             /* If invalid input is entered, show 00 */
             byte cellValue;
-            if (!Byte.TryParse(heightsGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) e.Value = 0;
+            if (!Byte.TryParse(heightsGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) 
+                e.Value = 0;
 
             disableHandlers = false;
 
@@ -6004,6 +6011,102 @@ namespace DSPRE {
                 writer.Write(Encoding.UTF8.GetBytes("INTNAME")); //Signature
                 writer.Write(Encoding.UTF8.GetBytes(internalNames[currentHeader.ID])); //Save Internal name
             }
+        }
+
+        private void importColorTableButton_Click(object sender, EventArgs e) {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "DSPRE Color Table File (*.ctb)|*.ctb";
+            if (of.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            string[] fileTableContent = File.ReadAllLines(of.FileName);
+
+
+            string mapKeyword = "Maplist";
+            string colorKeyword = "Color";
+            string textColorKeyword = "TextColor";
+            string separator = "-";
+            Dictionary<List<uint>, Tuple<Color, Color>> colorsDict = new Dictionary<List<uint>, Tuple<Color, Color>>();
+            List<int> linesWithErrors = new List<int>();
+
+            for (int i = 0; i < fileTableContent.Length; i++) {
+                try {
+                    // MapList
+                    int j = 0;
+
+                    string[] lineParts = fileTableContent[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (!lineParts[j].Equals(mapKeyword)) {
+                        throw new FormatException();
+                    }
+                    j++;
+
+                    //204 209
+                    List<uint> mapList = new List<uint>();
+                    while (!lineParts[j].Equals("-")) {
+                        mapList.Add(UInt32.Parse(lineParts[j]));
+                        j++;
+                    }
+
+                    // -
+                    if (!lineParts[j].Equals(separator)) {
+                        throw new FormatException();
+                    }
+                    j++;
+
+                    //Color
+                    if (!lineParts[j].Equals(colorKeyword)) {
+                        throw new FormatException();
+                    }
+                    j++;
+
+                    //70 130 180
+                    int r = Int32.Parse(lineParts[j++]);
+                    int g = Int32.Parse(lineParts[j++]);
+                    int b = Int32.Parse(lineParts[j++]);
+
+                    // -
+                    if (!lineParts[j].Equals(separator)) {
+                        throw new FormatException();
+                    }
+                    j++;
+
+                    //Color
+                    if (!lineParts[j].Equals(textColorKeyword)) {
+                        throw new FormatException();
+                    }
+                    j++;
+
+                    Color foreground = Color.FromName(lineParts[j]);
+                    colorsDict.Add(mapList, Tuple.Create(Color.FromArgb(r, g, b), foreground));
+                } catch {
+                    linesWithErrors.Add(i+1);
+                    continue;
+                }
+            }
+            colorsDict.Add(new List<uint> { Matrix.EMPTY }, Tuple.Create(Color.Black, Color.White));
+
+            string invalidLines = "";
+            MessageBoxIcon iconType = MessageBoxIcon.Information;
+            if (linesWithErrors.Count > 0) {
+                invalidLines = "\nHowever, the following lines couldn't be parsed correctly:\n";
+                invalidLines += linesWithErrors[0];
+
+                for (int i = 1; i < linesWithErrors.Count; i++)
+                    invalidLines += (", " + linesWithErrors[i]);
+
+                invalidLines += ".";
+                iconType = MessageBoxIcon.Warning;
+            }
+            romInfo.SetMapCellsColorDictionary(colorsDict);
+            ClearMatrixTables();
+            GenerateMatrixTables();
+            MessageBox.Show("Color file has been read." + invalidLines, "Operation completed", MessageBoxButtons.OK, iconType);
+        }
+
+        private void resetColorTableButton_Click(object sender, EventArgs e) {
+            romInfo.LoadMapCellsColorDictionary();
+            ClearMatrixTables();
+            GenerateMatrixTables();
         }
     }
 }

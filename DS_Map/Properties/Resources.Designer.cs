@@ -61,6 +61,16 @@ namespace DSPRE.Properties {
         }
         
         /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap addIcon {
+            get {
+                object obj = ResourceManager.GetObject("addIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
         /// </summary>
         internal static System.Drawing.Icon appIcon {
@@ -256,6 +266,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap dawn_platinum {
             get {
                 object obj = ResourceManager.GetObject("dawn_platinum", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap deleteIcon {
+            get {
+                object obj = ResourceManager.GetObject("deleteIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -942,6 +962,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap hgssrain1 {
+            get {
+                object obj = ResourceManager.GetObject("hgssrain1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap hgsssnow {
             get {
                 object obj = ResourceManager.GetObject("hgsssnow", resourceCulture);
@@ -1005,6 +1035,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap LeftClick {
             get {
                 object obj = ResourceManager.GetObject("LeftClick", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap loadColorTable {
+            get {
+                object obj = ResourceManager.GetObject("loadColorTable", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1423,6 +1463,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap red_sign {
             get {
                 object obj = ResourceManager.GetObject("red_sign", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap resetColorTable {
+            get {
+                object obj = ResourceManager.GetObject("resetColorTable", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

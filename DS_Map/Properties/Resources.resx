@@ -127,6 +127,9 @@
   <data name="ptrain" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Weather\DPPt\ptrain.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="dpcamera4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\Camera Angles\DPPt\dpcamera4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="hgsscamera10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\graphics\camera angles\hgss\hgsscamera10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -135,9 +138,6 @@
   </data>
   <data name="dpcamera6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Camera Angles\DPPt\dpcamera6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="hgsscamera12" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\graphics\camera angles\hgss\hgsscamera12.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="hgsscamera08" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\graphics\camera angles\hgss\hgsscamera08.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -331,9 +331,6 @@
   <data name="route_sign" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Event Icons\route_sign.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="gray_sign" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Graphics\Event Icons\gray_sign.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="dpcamera8" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Camera Angles\DPPt\dpcamera8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -376,6 +373,9 @@
   <data name="dprain" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Weather\DPPt\dprain.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="hgsscamera03" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\camera angles\hgss\hgsscamera03.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ptlightning" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Weather\DPPt\ptlightning.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -409,9 +409,6 @@
   <data name="arrowright" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Program Icons\arrowright.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="dpcamera4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Graphics\Camera Angles\DPPt\dpcamera4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="overworld" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Event Icons\overworld.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -433,14 +430,17 @@
   <data name="dpthunderstorm" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Weather\DPPt\dpthunderstorm.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="hgsscamera03" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\graphics\camera angles\hgss\hgsscamera03.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="gray_sign" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\Event Icons\gray_sign.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="dpareaicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Area Icons\dp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="dpdiamondsnow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Weather\DPPt\dpdiamondsnow.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hgsscamera12" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\camera angles\hgss\hgsscamera12.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ptheavyrain" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Weather\DPPt\ptheavyrain.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -493,6 +493,9 @@
   <data name="hgsscamera09" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\graphics\camera angles\hgss\hgsscamera09.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="unpackBuildingNarcsIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\Program Icons\unpackBuildingNarcsIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ptcamera5" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Camera Angles\DPPt\ptcamera5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -529,37 +532,49 @@
   <data name="WheelClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Graphics\Program Icons\WheelClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="hgssArcade" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\hgssArcade.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="hgssdiamond" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\hgssdiamond.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="hgssfog" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\hgssfog.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="hgssnormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\hgssnormal.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="hgssrain" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\hgssrain.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="hgsssnow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\hgsssnow.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pasteIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pasteIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="deleteIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\Program Icons\deleteIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="copyIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\copyIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\graphics\program icons\copyicon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="exportArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\exportArrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\graphics\program icons\exportarrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hgssArcade" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\weather\hgss\hgssarcade.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hgssdiamond" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\weather\hgss\hgssdiamond.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hgssfog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\weather\hgss\hgssfog.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hgssnormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\weather\hgss\hgssnormal.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hgssrain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\weather\hgss\hgssrain.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hgssrain1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\weather\hgss\hgssrain.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hgsssnow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\weather\hgss\hgsssnow.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="importArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\importArrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\graphics\program icons\importarrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="unpackBuildingNarcsIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Graphics\Program Icons\unpackBuildingNarcsIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pasteIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\program icons\pasteicon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="addIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Graphics\Program Icons\addIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="loadColorTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\program icons\loadcolortable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="resetColorTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\program icons\resetcolortable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

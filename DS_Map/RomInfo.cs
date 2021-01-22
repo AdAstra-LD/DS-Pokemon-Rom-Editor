@@ -88,7 +88,7 @@ namespace DSPRE {
             SetNarcDirs();
 
             /* System */
-            SetMapCellsColorDictionary();
+            LoadMapCellsColorDictionary();
         }
         #endregion
 
@@ -505,7 +505,7 @@ namespace DSPRE {
         #endregion
 
         #region System Methods
-        private void SetMapCellsColorDictionary() {
+        public void LoadMapCellsColorDictionary() {
             switch (gameVersion) {
                 case "D":
                 case "P":
@@ -517,6 +517,9 @@ namespace DSPRE {
                     mapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.HGSSmatrixColorsDict;
                     break;
             }
+        }
+        public void SetMapCellsColorDictionary(Dictionary<List<uint>, Tuple<Color, Color>> dict) {
+            mapCellsColorDictionary = dict;
         }
         #endregion
     }
