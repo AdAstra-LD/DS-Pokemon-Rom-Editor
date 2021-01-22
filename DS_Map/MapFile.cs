@@ -91,9 +91,14 @@ namespace DSPRE
         #endregion
 
         #region Methods (2)
-        public void AddBuilding()
-        {
-            buildings.Add(new Building());
+        /* Creates new standard building object, adds it to the current map and returns it*/
+        public Building AddNewBuilding() {
+            Building b = new Building();
+            buildings.Add(b);
+            return b;
+        }
+        public void AddBuilding(Building b) {
+            buildings.Add(b);
         }
         public byte[] ExportBuildings()
         {
@@ -294,8 +299,19 @@ namespace DSPRE
            height = 16;
            length = 16;
         }
+        
+        public Building(Building toCopy) {
+            modelID = toCopy.modelID;
+            xFraction = toCopy.xFraction;
+            xPosition = toCopy.xPosition;
+            zFraction = toCopy.zFraction;
+            zPosition = (short)(toCopy.zPosition + 1);
+            yFraction = toCopy.yFraction;
+            yPosition = toCopy.yPosition;
+            width = toCopy.width;
+            height = toCopy.height;
+            length = toCopy.length;
+        }
         #endregion Constructors
-
-
     }
 }

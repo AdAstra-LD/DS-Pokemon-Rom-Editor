@@ -845,7 +845,10 @@ namespace DSPRE {
                 if (!di.Exists || di.GetFiles().Length == 0) {
                     Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
                 }
-                toolStripProgressBar.Value++;
+
+                try {
+                    toolStripProgressBar.Value++;
+                } catch (ArgumentOutOfRangeException) { }
             }
         }
 
@@ -1592,70 +1595,6 @@ namespace DSPRE {
             eventMatrixXUpDown_ValueChanged(null, null);
         }
 
-        private void centerEventviewOnEntities() {
-            disableHandlers = true;
-            if (currentEventFile.overworlds.Count > 0) {
-                eventMatrixXUpDown.Value = currentEventFile.overworlds[0].xMatrixPosition;
-                eventMatrixYUpDown.Value = currentEventFile.overworlds[0].yMatrixPosition;
-            } else if (currentEventFile.warps.Count > 0) {
-                eventMatrixXUpDown.Value = currentEventFile.warps[0].xMatrixPosition;
-                eventMatrixYUpDown.Value = currentEventFile.warps[0].yMatrixPosition;
-            } else if (currentEventFile.spawnables.Count > 0) {
-                eventMatrixXUpDown.Value = currentEventFile.spawnables[0].xMatrixPosition;
-                eventMatrixYUpDown.Value = currentEventFile.spawnables[0].yMatrixPosition;
-            } else if (currentEventFile.triggers.Count > 0) {
-                eventMatrixXUpDown.Value = currentEventFile.triggers[0].xMatrixPosition;
-                eventMatrixYUpDown.Value = currentEventFile.triggers[0].yMatrixPosition;
-            } else {
-                eventMatrixXUpDown.Value = 0;
-                eventMatrixYUpDown.Value = 0;
-            }
-            disableHandlers = false;
-        }
-
-        private void centerEventViewOnSelectedEvent_Click(object sender, EventArgs e) {
-            if (selectedEvent == null) {
-                MessageBox.Show("You haven't selected any event.", "Nothing to do here",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            } else {
-                eventMatrixXUpDown.Value = selectedEvent.xMatrixPosition;
-                eventMatrixYUpDown.Value = selectedEvent.yMatrixPosition;
-                Update();
-            }
-        }
-        private bool isEventOnCurrentMatrix(Event ev) {
-            if (ev.xMatrixPosition == eventMatrixXUpDown.Value)
-                if (ev.yMatrixPosition == eventMatrixYUpDown.Value)
-                    return true;
-            return false;
-        }
-
-        private void goToWarpDestination_Click(object sender, EventArgs e) {
-            int destAnchor = (int)warpAnchorUpDown.Value;
-            int destHeader = (int)warpHeaderUpDown.Value;
-            ushort destEventID = LoadHeaderFromARM9(destHeader).eventID;
-            EventFile destEvent = LoadEventFile(destEventID);
-
-            if (destEvent.warps.Count < destAnchor + 1) {
-                DialogResult d = MessageBox.Show("The selected warp's destination anchor doesn't exist.\n" +
-                    "Do you want to open the destination map anyway?", "Warp is not connected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (d == DialogResult.No)
-                    return;
-                else {
-                    eventMatrixUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).matrix;
-                    eventAreaDataUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).areaDataID;
-                    selectEventComboBox.SelectedIndex = destEventID;
-                    centerEventviewOnEntities();
-                    return;
-                }
-            }
-            eventMatrixUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).matrix;
-            eventAreaDataUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).areaDataID;
-            selectEventComboBox.SelectedIndex = destEventID;
-            warpsListBox.SelectedIndex = destAnchor;
-            centerEventViewOnSelectedEvent_Click(sender, e);
-        }
-
         private void openMatrixButton_Click(object sender, EventArgs e) {
             if (!matrixEditorIsReady) {
                 SetupMatrixEditor();
@@ -1823,6 +1762,56 @@ namespace DSPRE {
                 openWildEditorWithIdButton.Enabled = true;
         }
 
+        private void importHeaderFromFileButton_Click(object sender, EventArgs e) {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Header File (*.dsh; *.bin)|*.dsh;*.bin";
+            if (of.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            Header h = null;
+            try {
+                if (new FileInfo(of.FileName).Length > 48)
+                    throw new FileFormatException();
+
+                h = BuildHeaderFromFile(of.FileName, currentHeader.ID, 0);
+                if (h.ID == -1)
+                    throw new FileFormatException();
+
+            } catch (FileFormatException) {
+                MessageBox.Show("The file you tried to import is either malformed or not a Header file.\nNo changes have been made.",
+                        "Import Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            currentHeader = h;
+            long headerOffset = PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * currentHeader.ID;
+            DSUtils.WriteToArm9(headerOffset, currentHeader.toByteArray());
+            try {
+                using (BinaryReader reader = new BinaryReader(new FileStream(of.FileName, FileMode.Open))) {
+                    reader.BaseStream.Position = Header.length + 8;
+                    internalNameBox.Text = Encoding.UTF8.GetString(reader.ReadBytes(romInfo.internalNameLength));
+                    updateCurrentInternalName();
+                }
+                updateHeaderNameShown(headerListBox.SelectedIndex, currentHeader.ID, internalNames[currentHeader.ID]);
+            } catch (EndOfStreamException) { }
+
+            refreshHeaderEditorFields();
+        }
+
+        private void exportHeaderToFileButton_Click(object sender, EventArgs e) {
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Filter = "DSPRE Header File (*.dsh)|*.dsh";
+            sf.FileName = "Header " + currentHeader.ID + " - " + internalNames[currentHeader.ID] + " (" + locationNameComboBox.SelectedItem.ToString() + ")";
+            if (sf.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) {
+                writer.Write(currentHeader.toByteArray()); //Write full header
+                writer.Write((byte)0x00); //Padding
+                writer.Write(Encoding.UTF8.GetBytes("INTNAME")); //Signature
+                writer.Write(Encoding.UTF8.GetBytes(internalNames[currentHeader.ID])); //Save Internal name
+            }
+        }
 
         /*Copy Paste Functions*/
         #region Variables
@@ -2472,6 +2461,125 @@ namespace DSPRE {
 
             disableHandlers = false;
         }
+
+        private void importColorTableButton_Click(object sender, EventArgs e) {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "DSPRE Color Table File (*.ctb)|*.ctb";
+            if (of.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            string[] fileTableContent = File.ReadAllLines(of.FileName);
+
+
+            string mapKeyword = "[Maplist]";
+            string colorKeyword = "[Color]";
+            string textColorKeyword = "[TextColor]";
+            string dashSeparator = "-";
+
+            string problematicSegment = "incomplete line";
+            Dictionary<List<uint>, Tuple<Color, Color>> colorsDict = new Dictionary<List<uint>, Tuple<Color, Color>>();
+            List<string> linesWithErrors = new List<string>();
+
+            for (int i = 0; i < fileTableContent.Length; i++)   {
+                if (fileTableContent[i].Length > 0) {
+                    string[] lineParts = fileTableContent[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    try {
+                        // MapList
+                        int j = 0;
+                        if (!lineParts[j].Equals(mapKeyword)) {
+                            problematicSegment = nameof(mapKeyword);
+                            throw new FormatException();
+                        }
+                        j++;
+
+                        //204 to 209
+                        List<uint> mapList = new List<uint>();
+                        while (!lineParts[j].Equals("-")) {
+
+                            if (lineParts[j].Equals("and")) {
+                                j++;
+                            }
+                            uint firstValue = uint.Parse(lineParts[j++]);
+                            mapList.Add(firstValue);
+
+                            if (lineParts[j].Equals("to")) {
+                                j++;
+                                uint finalValue = uint.Parse(lineParts[j++]);
+                                //Add all numbers ranging from maplist[0] to finalValue
+                                if (firstValue > finalValue)
+                                    Swap(ref firstValue, ref finalValue);
+
+                                for (uint k = firstValue + 1; k <= finalValue; k++) {
+                                    mapList.Add(k);
+                                }
+                            }
+                        }
+
+                        // -
+                        if (!lineParts[j].Equals(dashSeparator)) {
+                            problematicSegment = nameof(dashSeparator);
+                            throw new FormatException();
+                        }
+                        j++;
+
+                        //Color
+                        if (!lineParts[j].Equals(colorKeyword)) {
+                            problematicSegment = nameof(colorKeyword);
+                            throw new FormatException();
+                        }
+                        j++;
+
+                        int r = Int32.Parse(lineParts[j++]);
+                        int g = Int32.Parse(lineParts[j++]);
+                        int b = Int32.Parse(lineParts[j++]);
+
+                        if (!lineParts[j].Equals(dashSeparator)) {
+                            problematicSegment = nameof(dashSeparator);
+                            throw new FormatException();
+                        }
+                        j++;
+
+                        if (!lineParts[j].Equals(textColorKeyword)) {
+                            problematicSegment = nameof(textColorKeyword);
+                            throw new FormatException();
+                        }
+                        j++;
+
+                        colorsDict.Add(   mapList, Tuple.Create( Color.FromArgb(r, g, b), Color.FromName(lineParts[j++]) )    );
+                    } catch {
+                        linesWithErrors.Add(i + 1 + " (err. " + problematicSegment + ")\n");
+                        continue;
+                    }
+                }
+            }
+            colorsDict.Add(new List<uint> { Matrix.EMPTY }, Tuple.Create(Color.Black, Color.White));
+
+            string errorMsg = "";
+            MessageBoxIcon iconType = MessageBoxIcon.Information;
+            if (linesWithErrors.Count > 0) {
+                errorMsg = "\nHowever, the following lines couldn't be parsed correctly:\n";
+
+                foreach(string s in linesWithErrors)
+                    errorMsg += "- Line " + s;
+
+                iconType = MessageBoxIcon.Warning;
+            }
+            romInfo.SetMapCellsColorDictionary(colorsDict);
+            ClearMatrixTables();
+            GenerateMatrixTables();
+            MessageBox.Show("Color file has been read." + errorMsg, "Operation completed", MessageBoxButtons.OK, iconType);
+        }
+
+        public void Swap(ref uint a, ref uint b) {
+            uint temp = a;
+            a = b;
+            b = temp;
+        }
+        private void resetColorTableButton_Click(object sender, EventArgs e) {
+            romInfo.LoadMapCellsColorDictionary();
+            ClearMatrixTables();
+            GenerateMatrixTables();
+        }
         #endregion
 
         #region Map Editor
@@ -2836,22 +2944,28 @@ namespace DSPRE {
 
         #region Building Editor
         private void addBuildingButton_Click(object sender, EventArgs e) {
-            /* Add new building object to MapFile */
-            currentMapFile.AddBuilding();
+            addBuildingToMap(new Building());
+        }
+        private void duplicateBuildingButton_Click(object sender, EventArgs e) {
+            addBuildingToMap(new Building(currentMapFile.buildings[buildingsListBox.SelectedIndex]));
+        }
+
+        private void addBuildingToMap(Building b) {
+            currentMapFile.AddBuilding(b);
 
             /* Load new building's model and textures for the renderer */
-            currentMapFile.buildings[currentMapFile.buildings.Count - 1] = LoadBuildingModel(currentMapFile.buildings[currentMapFile.buildings.Count - 1], interiorbldRadioButton.Checked);
-            currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile = LoadModelTextures(currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1);
+            currentMapFile.buildings[currentMapFile.buildings.Count - 1] = LoadBuildingModel(b, interiorbldRadioButton.Checked);
+            currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile = LoadModelTextures(b.NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1);
 
             /* Add new entry to buildings ListBox */
             buildingsListBox.Items.Add((buildingsListBox.Items.Count + 1).ToString("D2") + nameSeparator +
-                buildIndexComboBox.Items[(int)currentMapFile.buildings[currentMapFile.buildings.Count-1].modelID]);
+                buildIndexComboBox.Items[(int)b.modelID]);
             buildingsListBox.SelectedIndex = buildingsListBox.Items.Count - 1;
 
             /* Redraw scene with new building */
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
-
         }
+
         private void buildIndexComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || buildingsListBox.SelectedIndex < 0) 
                 return;
@@ -3547,6 +3661,69 @@ namespace DSPRE {
         #endregion
 
         #region Subroutines
+        private void centerEventviewOnEntities() {
+            disableHandlers = true;
+            if (currentEventFile.overworlds.Count > 0) {
+                eventMatrixXUpDown.Value = currentEventFile.overworlds[0].xMatrixPosition;
+                eventMatrixYUpDown.Value = currentEventFile.overworlds[0].yMatrixPosition;
+            } else if (currentEventFile.warps.Count > 0) {
+                eventMatrixXUpDown.Value = currentEventFile.warps[0].xMatrixPosition;
+                eventMatrixYUpDown.Value = currentEventFile.warps[0].yMatrixPosition;
+            } else if (currentEventFile.spawnables.Count > 0) {
+                eventMatrixXUpDown.Value = currentEventFile.spawnables[0].xMatrixPosition;
+                eventMatrixYUpDown.Value = currentEventFile.spawnables[0].yMatrixPosition;
+            } else if (currentEventFile.triggers.Count > 0) {
+                eventMatrixXUpDown.Value = currentEventFile.triggers[0].xMatrixPosition;
+                eventMatrixYUpDown.Value = currentEventFile.triggers[0].yMatrixPosition;
+            } else {
+                eventMatrixXUpDown.Value = 0;
+                eventMatrixYUpDown.Value = 0;
+            }
+            disableHandlers = false;
+        }
+
+        private void centerEventViewOnSelectedEvent_Click(object sender, EventArgs e) {
+            if (selectedEvent == null) {
+                MessageBox.Show("You haven't selected any event.", "Nothing to do here",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            } else {
+                eventMatrixXUpDown.Value = selectedEvent.xMatrixPosition;
+                eventMatrixYUpDown.Value = selectedEvent.yMatrixPosition;
+                Update();
+            }
+        }
+        private bool isEventOnCurrentMatrix(Event ev) {
+            if (ev.xMatrixPosition == eventMatrixXUpDown.Value)
+                if (ev.yMatrixPosition == eventMatrixYUpDown.Value)
+                    return true;
+            return false;
+        }
+
+        private void goToWarpDestination_Click(object sender, EventArgs e) {
+            int destAnchor = (int)warpAnchorUpDown.Value;
+            int destHeader = (int)warpHeaderUpDown.Value;
+            ushort destEventID = LoadHeaderFromARM9(destHeader).eventID;
+            EventFile destEvent = LoadEventFile(destEventID);
+
+            if (destEvent.warps.Count < destAnchor + 1) {
+                DialogResult d = MessageBox.Show("The selected warp's destination anchor doesn't exist.\n" +
+                    "Do you want to open the destination map anyway?", "Warp is not connected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (d == DialogResult.No)
+                    return;
+                else {
+                    eventMatrixUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).matrix;
+                    eventAreaDataUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).areaDataID;
+                    selectEventComboBox.SelectedIndex = destEventID;
+                    centerEventviewOnEntities();
+                    return;
+                }
+            }
+            eventMatrixUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).matrix;
+            eventAreaDataUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).areaDataID;
+            selectEventComboBox.SelectedIndex = destEventID;
+            warpsListBox.SelectedIndex = destAnchor;
+            centerEventViewOnSelectedEvent_Click(sender, e);
+        }
         private void DisplayActiveEvents() {
             eventPictureBox.Image = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
             /* Draw spawnables */
@@ -5897,8 +6074,6 @@ namespace DSPRE {
                 return;
             }
         }
-        #endregion
-
         private void addAreaDataButton_Click(object sender, EventArgs e) {
             /* Add new NSBTX file to the correct folder */
             File.Copy(romInfo.areaDataDirPath + "\\" + 0.ToString("D4"), romInfo.areaDataDirPath + "\\" + selectAreaDataListBox.Items.Count.ToString("D4"));
@@ -5961,152 +6136,6 @@ namespace DSPRE {
             /* Display success message */
             MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
-        private void importHeaderFromFileButton_Click(object sender, EventArgs e) {
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Header File (*.dsh; *.bin)|*.dsh;*.bin";
-            if (of.ShowDialog(this) != DialogResult.OK)
-                return;
-
-            Header h = null;
-            try {
-                if (new FileInfo(of.FileName).Length > 48)
-                    throw new FileFormatException();
-                
-                h = BuildHeaderFromFile(of.FileName, currentHeader.ID, 0);
-                if (h.ID == -1) 
-                    throw new FileFormatException();
-                
-            } catch (FileFormatException) {
-                MessageBox.Show("The file you tried to import is either malformed or not a Header file.\nNo changes have been made.",
-                        "Import Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            currentHeader = h;
-            long headerOffset = PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * currentHeader.ID;
-            DSUtils.WriteToArm9(headerOffset, currentHeader.toByteArray());
-            try {
-                using (BinaryReader reader = new BinaryReader(new FileStream(of.FileName, FileMode.Open))) {
-                    reader.BaseStream.Position = Header.length + 8;
-                    internalNameBox.Text = Encoding.UTF8.GetString(reader.ReadBytes(romInfo.internalNameLength));
-                    updateCurrentInternalName();
-                }
-                updateHeaderNameShown(headerListBox.SelectedIndex, currentHeader.ID, internalNames[currentHeader.ID]);
-            } catch (EndOfStreamException) { }
-
-            refreshHeaderEditorFields();
-        }
-
-        private void exportHeaderToFileButton_Click(object sender, EventArgs e) {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "DSPRE Header File (*.dsh)|*.dsh";
-            sf.FileName = "Header " + currentHeader.ID + " - " + internalNames[currentHeader.ID] + " (" + locationNameComboBox.SelectedItem.ToString() + ")";
-            if (sf.ShowDialog(this) != DialogResult.OK)
-                return;
-
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) {
-                writer.Write(currentHeader.toByteArray()); //Write full header
-                writer.Write((byte)0x00); //Padding
-                writer.Write(Encoding.UTF8.GetBytes("INTNAME")); //Signature
-                writer.Write(Encoding.UTF8.GetBytes(internalNames[currentHeader.ID])); //Save Internal name
-            }
-        }
-
-        private void importColorTableButton_Click(object sender, EventArgs e) {
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "DSPRE Color Table File (*.ctb)|*.ctb";
-            if (of.ShowDialog(this) != DialogResult.OK)
-                return;
-
-            string[] fileTableContent = File.ReadAllLines(of.FileName);
-
-
-            string mapKeyword = "Maplist";
-            string colorKeyword = "Color";
-            string textColorKeyword = "TextColor";
-            string separator = "-";
-            Dictionary<List<uint>, Tuple<Color, Color>> colorsDict = new Dictionary<List<uint>, Tuple<Color, Color>>();
-            List<int> linesWithErrors = new List<int>();
-
-            for (int i = 0; i < fileTableContent.Length; i++) {
-                try {
-                    // MapList
-                    int j = 0;
-
-                    string[] lineParts = fileTableContent[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (!lineParts[j].Equals(mapKeyword)) {
-                        throw new FormatException();
-                    }
-                    j++;
-
-                    //204 209
-                    List<uint> mapList = new List<uint>();
-                    while (!lineParts[j].Equals("-")) {
-                        mapList.Add(UInt32.Parse(lineParts[j]));
-                        j++;
-                    }
-
-                    // -
-                    if (!lineParts[j].Equals(separator)) {
-                        throw new FormatException();
-                    }
-                    j++;
-
-                    //Color
-                    if (!lineParts[j].Equals(colorKeyword)) {
-                        throw new FormatException();
-                    }
-                    j++;
-
-                    //70 130 180
-                    int r = Int32.Parse(lineParts[j++]);
-                    int g = Int32.Parse(lineParts[j++]);
-                    int b = Int32.Parse(lineParts[j++]);
-
-                    // -
-                    if (!lineParts[j].Equals(separator)) {
-                        throw new FormatException();
-                    }
-                    j++;
-
-                    //Color
-                    if (!lineParts[j].Equals(textColorKeyword)) {
-                        throw new FormatException();
-                    }
-                    j++;
-
-                    Color foreground = Color.FromName(lineParts[j]);
-                    colorsDict.Add(mapList, Tuple.Create(Color.FromArgb(r, g, b), foreground));
-                } catch {
-                    linesWithErrors.Add(i+1);
-                    continue;
-                }
-            }
-            colorsDict.Add(new List<uint> { Matrix.EMPTY }, Tuple.Create(Color.Black, Color.White));
-
-            string invalidLines = "";
-            MessageBoxIcon iconType = MessageBoxIcon.Information;
-            if (linesWithErrors.Count > 0) {
-                invalidLines = "\nHowever, the following lines couldn't be parsed correctly:\n";
-                invalidLines += linesWithErrors[0];
-
-                for (int i = 1; i < linesWithErrors.Count; i++)
-                    invalidLines += (", " + linesWithErrors[i]);
-
-                invalidLines += ".";
-                iconType = MessageBoxIcon.Warning;
-            }
-            romInfo.SetMapCellsColorDictionary(colorsDict);
-            ClearMatrixTables();
-            GenerateMatrixTables();
-            MessageBox.Show("Color file has been read." + invalidLines, "Operation completed", MessageBoxButtons.OK, iconType);
-        }
-
-        private void resetColorTableButton_Click(object sender, EventArgs e) {
-            romInfo.LoadMapCellsColorDictionary();
-            ClearMatrixTables();
-            GenerateMatrixTables();
-        }
+        #endregion
     }
 }

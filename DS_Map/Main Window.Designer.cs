@@ -567,6 +567,7 @@
             this.romToolboxButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.duplicateBuildingButton = new System.Windows.Forms.Button();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.groupBox18.SuspendLayout();
@@ -2558,6 +2559,7 @@
             // 
             // buildingsTabPage
             // 
+            this.buildingsTabPage.Controls.Add(this.duplicateBuildingButton);
             this.buildingsTabPage.Controls.Add(this.buildingHeightUpDown);
             this.buildingsTabPage.Controls.Add(this.buildingLengthUpDown);
             this.buildingsTabPage.Controls.Add(this.buildingWidthUpDown);
@@ -2655,9 +2657,9 @@
             // 
             // removeBuildingButton
             // 
-            this.removeBuildingButton.Location = new System.Drawing.Point(100, 302);
+            this.removeBuildingButton.Location = new System.Drawing.Point(126, 302);
             this.removeBuildingButton.Name = "removeBuildingButton";
-            this.removeBuildingButton.Size = new System.Drawing.Size(82, 23);
+            this.removeBuildingButton.Size = new System.Drawing.Size(56, 23);
             this.removeBuildingButton.TabIndex = 13;
             this.removeBuildingButton.Text = "Remove";
             this.removeBuildingButton.UseVisualStyleBackColor = true;
@@ -2667,7 +2669,7 @@
             // 
             this.addBuildingButton.Location = new System.Drawing.Point(14, 302);
             this.addBuildingButton.Name = "addBuildingButton";
-            this.addBuildingButton.Size = new System.Drawing.Size(80, 23);
+            this.addBuildingButton.Size = new System.Drawing.Size(42, 23);
             this.addBuildingButton.TabIndex = 12;
             this.addBuildingButton.Text = "Add";
             this.addBuildingButton.UseVisualStyleBackColor = true;
@@ -6969,6 +6971,16 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             // 
+            // duplicateBuildingButton
+            // 
+            this.duplicateBuildingButton.Location = new System.Drawing.Point(59, 302);
+            this.duplicateBuildingButton.Name = "duplicateBuildingButton";
+            this.duplicateBuildingButton.Size = new System.Drawing.Size(63, 23);
+            this.duplicateBuildingButton.TabIndex = 25;
+            this.duplicateBuildingButton.Text = "Duplicate";
+            this.duplicateBuildingButton.UseVisualStyleBackColor = true;
+            this.duplicateBuildingButton.Click += new System.EventHandler(this.duplicateBuildingButton_Click);
+            // 
             // MainProgram
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -7708,6 +7720,7 @@
         private System.Windows.Forms.ToolStripButton updateMapNarcsButton;
         private System.Windows.Forms.Button importColorTableButton;
         private System.Windows.Forms.Button resetColorTableButton;
+        private System.Windows.Forms.Button duplicateBuildingButton;
     }
 }
 
