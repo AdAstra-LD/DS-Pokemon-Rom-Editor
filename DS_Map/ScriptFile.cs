@@ -545,8 +545,8 @@ namespace DSPRE {
             /* Get command id, which is always first in the description */
 
             if (isMovement) {
-                if (PokeDatabase.System.Scripts.movementsDictDPPtHGSS.ContainsKey(words[0]))
-                    this.id = PokeDatabase.System.Scripts.movementsDictDPPtHGSS[words[0]];
+                if (PokeDatabase.System.movementsDictDPPtHGSS.ContainsKey(words[0]))
+                    this.id = PokeDatabase.System.movementsDictDPPtHGSS[words[0]];
                 else
                     UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
             } else {

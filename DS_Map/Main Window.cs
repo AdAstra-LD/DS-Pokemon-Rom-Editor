@@ -5310,11 +5310,10 @@ namespace DSPRE {
             }
         }
         private void messageButton_Click(object sender, EventArgs e) {
-            using (InsertValueDialog f = new InsertValueDialog("Insert message number:", "dec")) {
+            using (InsertValueDialog f = new InsertValueDialog("Insert message number (decimal):", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected) {
-                    String msg = "\nSetVariableHero 0x0" +
-                        "\nPlayFanfare 0x5DC" + "\nLockAll" + "\nFacePlayer" +
+                    String msg = "\nPlayFanfare 0x5DC" + "\nLockAll" + "\nFacePlayer" +
                         "\nMessage 0x" + ((int)f.numericUpDown1.Value).ToString("X") +
                         "\nWaitButton" + "\nCloseMessage" + "\nReleaseAll";
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, msg);

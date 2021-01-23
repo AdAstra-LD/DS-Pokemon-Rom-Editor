@@ -193,7 +193,7 @@
     <value>WaitButton</value>
   </data>
   <data name="0034" xml:space="preserve">
-    <value>CloseMessageOnKeyPress</value>
+    <value>CloseMessage</value>
   </data>
   <data name="0035" xml:space="preserve">
     <value>FreezeMessageBox</value>
