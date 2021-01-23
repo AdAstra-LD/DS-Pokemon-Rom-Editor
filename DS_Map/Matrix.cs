@@ -72,7 +72,7 @@ namespace DSPRE
             byte[,] newAltitudes = new byte[newHeight, newWidth];
             ushort[,] newMaps = new ushort[newHeight, newWidth];
 
-            /* Copy existing headers and altitudes rows into new arrays. If new matrix is larger in any dimension, new entries will be zero */
+            /* Copy existing headers and altitudes rows into new arrays. If new matrix is greater in any dimension, new entries will be zero */
             if (hasHeadersSection) 
                 for (int i = 0; i < Math.Min(height, newHeight); i++) 
                     for (int j = 0; j < Math.Min(width, newWidth); j++) 

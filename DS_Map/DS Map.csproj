@@ -103,6 +103,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ARM9ExpansionDB.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\ScriptComparisonOperators.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScriptComparisonOperators.resx</DependentUpon>
+    </Compile>
     <Compile Include="ROMToolboxDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -241,6 +246,10 @@
     <EmbeddedResource Include="Resources\ROMToolboxDB\ARM9ExpansionDB.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ARM9ExpansionDB.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ScriptComparisonOperators.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ScriptComparisonOperators.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ROMToolboxDialog.resx">
       <DependentUpon>ROMToolboxDialog.cs</DependentUpon>

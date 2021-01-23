@@ -551,28 +551,7 @@ namespace DSPRE {
         }
         public static class System {
             public static class Scripts {
-                public static Dictionary<byte, string> byteToComparisonOperatorDict = new Dictionary<byte, string>() {
-                    [0x0] = "LOWER",
-                    [0x1] = "EQUAL",
-                    [0x2] = "LARGER",
-                    [0x3] = "LOWER/EQUAL",
-                    [0x4] = "LARGER/EQUAL",
-                    [0x5] = "DIFFERENT",
-                    [0x6] = "OR",
-                    [0x7] = "AND",
-                    [0xFF] = "TRUEUP"
-                };
-                public static Dictionary<string, byte> stringToComparisonOperatorDict = new Dictionary<string, byte>() {
-                    ["LOWER"] = 0x0,
-                    ["EQUAL"] = 0x1,
-                    ["LARGER"] = 0x2,
-                    ["LOWER/EQUAL"] = 0x3,
-                    ["LARGER/EQUAL"] = 0x4,
-                    ["DIFFERENT"] = 0x5,
-                    ["OR"] = 0x6,
-                    ["AND"] = 0x7,
-                    ["TRUEUP"] = 0xFF
-                };
+                /*
                 public static Dictionary<string, ushort> commandsDictDPPt = new Dictionary<string, ushort>() {
                     ["Nop"] = 0x0000,
                     ["Dummy"] = 0x0001,
@@ -844,6 +823,7 @@ namespace DSPRE {
                     ["PortalEffect"] = 0x0328,
                     ["DisplayFloor"] = 0x0347
                 };
+                */
                 public static Dictionary<string, ushort> movementsDictDPPtHGSS = new Dictionary<string, ushort>() {
                     ["LookUp"] = 0x0000,
                     ["LookDown"] = 0x0001,

@@ -4889,9 +4889,10 @@ namespace DSPRE {
             return new ScriptFile((new FileStream(romInfo.scriptDirPath +
                 "\\" + fileID.ToString("D4"), FileMode.Open)), romInfo.gameVersion);
         }
-        public void SaveScriptFile(int fileID) {
+        public void SaveScriptFile(int fileID, ScriptFile toSave) {
             using (BinaryWriter writer = new BinaryWriter((new FileStream(romInfo.scriptDirPath +
-                "\\" + fileID.ToString("D4"), FileMode.Create)))) writer.Write(currentScriptFile.Save());
+                "\\" + fileID.ToString("D4"), FileMode.Create)))) 
+                writer.Write(toSave.Save());
         }
         #endregion
 
@@ -4955,6 +4956,9 @@ namespace DSPRE {
         }
 
         private void scriptTextBox_TextChanged(object sender, EventArgs e) {
+            if (disableHandlers)
+                return;
+
             if (scriptTextBox.Text == "") {
                 AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             }
@@ -5062,7 +5066,7 @@ namespace DSPRE {
         private void exportScriptFile() {
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "Script File (*.scr)|*.scr";
-            sf.FileName = "Script " + selectEventComboBox.SelectedIndex;
+            sf.FileName = "Script " + selectScriptFileComboBox.SelectedIndex;
             if (currentScriptFile.isLevelScript)
                 sf.FileName += " (LS)";
 
@@ -5120,83 +5124,79 @@ namespace DSPRE {
         }
         private void saveScriptFileButton_Click(object sender, EventArgs e) {
             /* Create new script objects */
-            List<Command> scriptCommands = new List<Command>();
-            populateScriptCommands(scriptCommands);
-
-            List<Command> functionCommands = new List<Command>();
-            populateFunctionCommands(scriptCommands);
-
-            List<Command> movementCommands = new List<Command>();
-            populateMovementCommands(movementCommands);
-
             currentScriptFile.scripts.Clear();
             currentScriptFile.functions.Clear();
             currentScriptFile.movements.Clear();
 
+            populateScriptCommands(currentScriptFile);
+            populateFunctionCommands(currentScriptFile);
+            populateMovementCommands(currentScriptFile);
+
             /* Write new scripts to file */
-            SaveScriptFile(selectScriptFileComboBox.SelectedIndex);
+            SaveScriptFile(selectScriptFileComboBox.SelectedIndex, currentScriptFile);
         }
 
-        private void populateScriptCommands(List<Command> commands) {
+        private void populateScriptCommands(ScriptFile scrFile) {
             for (int i = 0; i < scriptTextBox.Lines.Length; i++) {
-                if (!scriptTextBox.Lines[i].Contains('@'))
-                    continue; // Move on until script header is found
-                else {
+                if (scriptTextBox.Lines[i].Contains('@')) { // Move on until script header is found
                     i++; // Skip line
                     while (scriptTextBox.Lines[i].Length == 0)
                         i++; //Skip all empty lines 
 
                     if (scriptTextBox.Lines[i].Contains("UseScript")) {
                         int scriptNumber = Int16.Parse(scriptTextBox.Lines[i].Substring(1 + scriptTextBox.Lines[i].IndexOf('#')));
-                        currentScriptFile.scripts.Add(new Script(scriptNumber));
+                        scrFile.scripts.Add(new Script(scriptNumber));
                     } else {
                         /* Read script commands */
+
+                        List<Command> commandList = new List<Command>();
                         while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump Function") && i < scriptTextBox.Lines.Length - 1) {
-                            Console.WriteLine("Script line " + i.ToString());
-                            commands.Add(new Command(scriptTextBox.Lines[i], romInfo.gameVersion, false));
+                            Console.WriteLine("Script line " + i + 1.ToString());
+                            Command cmd = new Command(scriptTextBox.Lines[i], romInfo.gameVersion, false);
+                            Console.WriteLine("----" + cmd + "----");
+                            commandList.Add(cmd);
                             i++;
                         }
-                        commands.Add(new Command(scriptTextBox.Lines[i], romInfo.gameVersion, false)); // Add end or jump/call command
-                        currentScriptFile.scripts.Add(new Script(commands));
+                        commandList.Add(new Command(scriptTextBox.Lines[i], romInfo.gameVersion, false)); // Add end or jump/call command
+                        scrFile.scripts.Add(new Script(commandList));
                     }
                 }
             }
         }
 
-        private void populateFunctionCommands(List<Command> commands) {
+        private void populateFunctionCommands(ScriptFile scrFile) {
             for (int i = 0; i < functionTextBox.Lines.Length; i++) {
-                if (!functionTextBox.Lines[i].Contains('@'))
-                    continue; // Move on until function header is found
-                else {
+                if (functionTextBox.Lines[i].Contains('@')) { // Move on until function header is found
                     i += 0x2; // Skip blank line
 
                     /* Read function commands */
+                    List<Command> commandList = new List<Command>();
+
                     while (functionTextBox.Lines[i] != "End" && !functionTextBox.Lines[i].Contains("Return") && !functionTextBox.Lines[i].Contains("Jump F")) {
-                        commands.Add(new Command(functionTextBox.Lines[i], romInfo.gameVersion, false));
+                        commandList.Add(new Command(functionTextBox.Lines[i], romInfo.gameVersion, false));
                         i++;
                     }
-                    commands.Add(new Command(functionTextBox.Lines[i], romInfo.gameVersion, false)); // Add end command
-                    currentScriptFile.functions.Add(new Script(commands));
-                }
+                    commandList.Add(new Command(functionTextBox.Lines[i], romInfo.gameVersion, false)); // Add end command
+                    scrFile.functions.Add(new Script(commandList));
+                } 
             }
         }
 
 
-        private void populateMovementCommands(List<Command> commands) {
+        private void populateMovementCommands(ScriptFile scrFile) {
             for (int i = 0; i < movementTextBox.Lines.Length; i++) {
-                if (!movementTextBox.Lines[i].Contains('@'))
-                    continue; // Move on until script header is found
-                else {
+                if (movementTextBox.Lines[i].Contains('@')) {  // Move on until script header is found
                     i += 0x2; // Skip blank line
 
+                    List<Command> commandList = new List<Command>();
                     /* Read script commands */
                     while (movementTextBox.Lines[i] != "End") {
-                        commands.Add(new Command(movementTextBox.Lines[i], romInfo.gameVersion, true));
+                        commandList.Add(new Command(movementTextBox.Lines[i], romInfo.gameVersion, true));
                         i++;
                     }
-                    commands.Add(new Command(movementTextBox.Lines[i], romInfo.gameVersion, true)); // Add end command
+                    commandList.Add(new Command(movementTextBox.Lines[i], romInfo.gameVersion, true)); // Add end command
 
-                    currentScriptFile.movements.Add(new Script(commands));
+                    scrFile.movements.Add(new Script(commandList));
                 }
             }
         }
@@ -5230,11 +5230,11 @@ namespace DSPRE {
         }
         private void selectScriptFileComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             /* clear controls */
+            currentScriptFile = LoadScriptFile(selectScriptFileComboBox.SelectedIndex); // Load script file
+            
             scriptTextBox.Clear();
             functionTextBox.Clear();
             movementTextBox.Clear();
-
-            currentScriptFile = LoadScriptFile(selectScriptFileComboBox.SelectedIndex); // Load script file
 
             if (currentScriptFile.isLevelScript) {
                 scriptTextBox.Focus();
@@ -5246,6 +5246,7 @@ namespace DSPRE {
                 movementTextBox.Enabled = true;
 
                 /* Add scripts */
+                disableHandlers = true;
                 statusLabel.Text = "Parsing Script commands...";
                 for (int i = 0; i < currentScriptFile.scripts.Count; i++) {
                     Script currentScript = currentScriptFile.scripts[i];
@@ -5294,6 +5295,7 @@ namespace DSPRE {
                 }
             }
             statusLabel.Text = "Ready";
+            disableHandlers = false;
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
             AddLineNumbers(movementTextBox, LineNumberTextBoxMov);

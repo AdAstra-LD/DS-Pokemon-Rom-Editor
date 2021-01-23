@@ -31,7 +31,7 @@ namespace DSPRE
 
                 bool errorFlag = false;
                 for (int i = 0; i < itemScript.scripts.Count - 1; i++) {
-                    if (itemScript.scripts[i].commands[0].parameters[1] != BitConverter.GetBytes((ushort)i) || itemScript.scripts[i].commands[1].parameters[1] != BitConverter.GetBytes((ushort)1)) {
+                    if (itemScript.scripts[i].commands[0].parameterList[1] != BitConverter.GetBytes((ushort)i) || itemScript.scripts[i].commands[1].parameterList[1] != BitConverter.GetBytes((ushort)1)) {
                         errorFlag = true;
                         break;
                     }
@@ -39,8 +39,8 @@ namespace DSPRE
 
                 if (errorFlag) {
                     for (int i = 0; i < itemScript.scripts.Count - 1; i++) {
-                        itemScript.scripts[i].commands[0].parameters[1] = BitConverter.GetBytes((ushort)i); // Fix item index
-                        itemScript.scripts[i].commands[1].parameters[1] = BitConverter.GetBytes((ushort)1); // Fix item quantity
+                        itemScript.scripts[i].commands[0].parameterList[1] = BitConverter.GetBytes((ushort)i); // Fix item index
+                        itemScript.scripts[i].commands[1].parameterList[1] = BitConverter.GetBytes((ushort)1); // Fix item quantity
                     }
                     using (BinaryWriter writer = new BinaryWriter(new FileStream(itemScriptPath, FileMode.Create)))
                         writer.Write(itemScript.Save());

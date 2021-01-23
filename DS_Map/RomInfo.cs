@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Forms;
 using System;
 using System.Drawing;
+using System.Resources;
+using System.Reflection;
 
 namespace DSPRE {
 
@@ -17,6 +19,7 @@ namespace DSPRE {
         public string gameVersion { get; private set; }
         public string gameName { get; private set; }
         public string gameLanguage { get; private set; }
+
         public long headerTableOffset { get; private set; }
         public string syntheticOverlayPath { get; private set; }
         public string OWSpriteDirPath { get; private set; }
@@ -44,10 +47,13 @@ namespace DSPRE {
         public int pokémonNamesTextNumber { get; private set; }
         public int itemNamesTextNumber { get; private set; }
 
+
         public readonly byte internalNameLength = 16;
         public string internalNamesLocation { get; private set; }
         public Dictionary<List<uint>, Tuple<Color, Color>> mapCellsColorDictionary { get; private set; }
-
+        public static ResourceManager scriptCommandNamesDatabase { get; private set; }
+        public static ResourceManager scriptParametersDatabase { get; private set; }
+        public static ResourceManager scriptComparisonOperators { get; private set; }
 
         #region Constructors (1)
         public RomInfo(string id, string workDir) {
@@ -60,6 +66,7 @@ namespace DSPRE {
 
             LoadGameName();
             LoadGameLanguage();
+            SetScriptDatabases();
 
             internalNamesLocation = this.workDir + @"data\fielddata\maptable\mapname.bin";
 
@@ -273,6 +280,22 @@ namespace DSPRE {
                     break;
                 default:
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0001.bin";
+                    break;
+            }
+        }
+
+        public void SetScriptDatabases() {
+            scriptComparisonOperators = new ResourceManager("DSPRE.Resources.ScriptComparisonOperators", Assembly.GetExecutingAssembly());
+            switch (gameVersion) {
+                case "D":
+                case "P":
+                case "Plat":
+                    scriptCommandNamesDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
+                    scriptParametersDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
+                    break;
+                default:
+                    scriptCommandNamesDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
+                    scriptParametersDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
                     break;
             }
         }

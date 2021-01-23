@@ -49,22 +49,24 @@ namespace DSPRE {
                 /* Read scripts */
                 for (int i = 0; i < scriptOffsets.Count; i++) {
                     int duplicateIndex = scriptOffsets.FindIndex(offset => offset == scriptOffsets[i]); // Check for UseScript_#
-                    if (duplicateIndex != i)
-                        scripts.Add(new Script(duplicateIndex));
-                    else {
+                    if (duplicateIndex == i) {
                         scrReader.BaseStream.Position = scriptOffsets[i];
 
                         List<Command> commandsList = new List<Command>();
                         bool endScript = new bool();
                         while (!endScript) {
                             Command command = Read_Command(scrReader, ref functionOffsets, ref movementOffsets, gameVersion);
-                            commandsList.Add(command);
+                            if (command == null) {
+                                return;
+                            } else {
+                                commandsList.Add(command);
 
-                            if (endCodes.Contains(command.id)) 
-                                endScript = true;
+                                if (endCodes.Contains(command.id))
+                                    endScript = true;
+                            }
                         }
                         this.scripts.Add(new Script(commandsList));
-                    }
+                    } else scripts.Add(new Script(duplicateIndex));
                 }
 
                 /* Read functions */
@@ -105,22 +107,16 @@ namespace DSPRE {
                 }
             }
         }
+        public ScriptFile(List<Script> scripts, List<Script> functions, List<Script> movements) {
+            this.scripts = scripts;
+            this.functions = functions;
+            this.movements = movements;
+            isLevelScript = false;
+        }
         #endregion
 
         #region Methods (1)
         private Command Read_Command(BinaryReader dataReader, ref List<uint> functionOffsets, ref List<uint> movementOffsets, string gameVersion) {
-            ResourceManager paramDatabase;
-            switch (gameVersion) {
-                case "D":
-                case "P":
-                case "Plat":
-                    paramDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
-                    break;
-                default:
-                    paramDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
-                    break;
-            }
-
             ushort id = dataReader.ReadUInt16();
             List<byte[]> parameters = new List<byte[]>();
 
@@ -315,7 +311,7 @@ namespace DSPRE {
                 default:
                     Console.WriteLine("Loaded command id: " + id.ToString("X4"));
                     try {
-                        string[] databaseResult = paramDatabase.GetString(id.ToString("X4")).Split(' ');
+                        string[] databaseResult = RomInfo.scriptParametersDatabase.GetString(id.ToString("X4")).Split(' ');
                         int numberOfParameters = Int32.Parse(databaseResult[0]);
 
                         for (int i = 1; i <= numberOfParameters; i++) {
@@ -352,16 +348,18 @@ namespace DSPRE {
                     else {
                         scriptOffsets.Add((uint)writer.BaseStream.Position);
 
-                        for (int j = 0; j < scripts[i].commands.Count; j++) {
-                            /* Write command id */
+                        for (int j = 0; j < scripts[i].commands.Count; j++) { 
+                            /* Get command id */
                             ushort id = scripts[i].commands[j].id;
-                            Console.WriteLine("Command added: " + scripts[i].commands[j].id + " with params " + String.Join(", ", scripts[i].commands[j].parameters));
+                            /* Write ID and Parameters*/
                             writer.Write(id);
 
-                            /* Write command parameters */
-                            List<byte[]> parameters = scripts[i].commands[j].parameters;
-                            for (int k = 0; k < parameters.Count; k++)
-                                writer.Write(parameters[k]);
+                            /* Get command parameters */
+                            List<byte[]> parameterList = scripts[i].commands[j].parameterList;
+                            for (int k = 0; k < parameterList.Count; k++)
+                                writer.Write(parameterList[k]);
+
+                            Console.Write("\nCommand added: " + scripts[i].commands[j]);
 
                             /* If command calls a function/movement, store reference position */
                             if (referenceCodes.Contains(id)) {
@@ -374,7 +372,7 @@ namespace DSPRE {
                                 int type = 0;
                                 if (id == 0x5E)
                                     type = 1; // ApplyMovement
-                                references.Add(new Tuple<int, int, int>((int)writer.BaseStream.Position - 4, BitConverter.ToInt32(parameters[index], 0), type));
+                                references.Add(new Tuple<int, int, int>((int)writer.BaseStream.Position - 4, BitConverter.ToInt32(parameterList[index], 0), type));
                             }
                         }
                     }
@@ -390,8 +388,8 @@ namespace DSPRE {
                         writer.Write(id);
 
                         /* Write command parameters */
-                        List<byte[]> parameters = functions[i].commands[j].parameters;
-                        for (int k = 0; k < parameters.Count; k++) writer.Write(parameters[k]);
+                        List<byte[]> parameterList = functions[i].commands[j].parameterList;
+                        for (int k = 0; k < parameterList.Count; k++) writer.Write(parameterList[k]);
 
                         /* If command calls a function/movement, store reference position */
                         if (referenceCodes.Contains(id)) {
@@ -400,8 +398,9 @@ namespace DSPRE {
                             else index = 1;
 
                             int type = 0;
-                            if (id == 0x5E) type = 1;
-                            references.Add(new Tuple<int, int, int>((int)writer.BaseStream.Position - 4, BitConverter.ToInt32(parameters[index], 0), type));
+                            if (id == 0x5E) 
+                                type = 1;
+                            references.Add(new Tuple<int, int, int>((int)writer.BaseStream.Position - 4, BitConverter.ToInt32(parameterList[index], 0), type));
                         }
                     }
                 }
@@ -416,21 +415,25 @@ namespace DSPRE {
                         writer.Write(id);
 
                         /* Write movement command parameters */
-                        List<byte[]> parameters = movements[i].commands[j].parameters;
-                        for (int k = 0; k < parameters.Count; k++) writer.Write(parameters[k]);
+                        List<byte[]> parameterLists = movements[i].commands[j].parameterList;
+                        for (int k = 0; k < parameterLists.Count; k++) 
+                            writer.Write(parameterLists[k]);
                     }
                 }
 
                 /* Write script offsets to header */
                 writer.BaseStream.Position = 0x0;
-                for (int i = 0; i < scriptOffsets.Count; i++) writer.Write(scriptOffsets[i] - (uint)writer.BaseStream.Position - 0x4);
+                for (int i = 0; i < scriptOffsets.Count; i++) 
+                    writer.Write(scriptOffsets[i] - (uint)writer.BaseStream.Position - 0x4);
 
                 /* Fix references to functions and movements */
                 for (int i = 0; i < references.Count; i++) {
                     writer.BaseStream.Position = references[i].Item1;
 
-                    if (references[i].Item3 == 1) writer.Write((UInt32)(movementOffsets[references[i].Item2] - references[i].Item1 - 4));
-                    else writer.Write((UInt32)(functionOffsets[references[i].Item2] - references[i].Item1 - 4));
+                    if (references[i].Item3 == 1) 
+                        writer.Write((UInt32)(movementOffsets[references[i].Item2] - references[i].Item1 - 4));
+                    else 
+                        writer.Write((UInt32)(functionOffsets[references[i].Item2] - references[i].Item1 - 4));
                 }
             }
 
@@ -456,30 +459,27 @@ namespace DSPRE {
     public class Command {
         #region Fields (4)
         public ushort id;
-        public List<byte[]> parameters;
+        public List<byte[]> parameterList;
         public string cmdName;
         public bool isMovement;
         #endregion
 
         #region Constructors (2)
         public Command(ushort id, List<byte[]> parameters, string gameVersion, bool isMovement) {
-            ResourceManager commandNamesDatabase;
-            if (isMovement) {
-                commandNamesDatabase = new ResourceManager("DSPRE.Resources.MovementNames", Assembly.GetExecutingAssembly());
-            } else {
-                if (gameVersion == "D" || gameVersion == "P" || gameVersion == "Plat")
-                    commandNamesDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
-                else
-                    commandNamesDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
-            }
-
             this.id = id;
             this.isMovement = isMovement;
-            this.parameters = parameters;
+            this.parameterList = parameters;
+
+            ResourceManager commandNamesDatabase = RomInfo.scriptCommandNamesDatabase;
+            if (isMovement) {
+                commandNamesDatabase = new ResourceManager("DSPRE.Resources.MovementNames", Assembly.GetExecutingAssembly());
+            }
+
             this.cmdName = commandNamesDatabase.GetString(id.ToString("X4"));
             if (cmdName == null)
                 cmdName = id.ToString("X4");
 
+            /*
             for (int i = 0; i < parameters.Count; i++) {
                 if (parameters[i].Length < 4) {
                     byte[] temp = new byte[4];
@@ -487,6 +487,7 @@ namespace DSPRE {
                     parameters[i] = temp;
                 }
             }
+            */
 
             switch (id) {
                 case 0x16:      // Jump
@@ -496,10 +497,25 @@ namespace DSPRE {
                 case 0x1C:      // CompareLastResultJump
                 case 0x1D:      // CompareLastResultCall
                     byte opcode = parameters[0][0];
-                    this.cmdName += " " + PokeDatabase.System.Scripts.byteToComparisonOperatorDict[opcode] + " " + "Function_#" + (1 + (BitConverter.ToInt32(parameters[1], 0))).ToString("D");
+                    this.cmdName += " " + RomInfo.scriptComparisonOperators.GetString(opcode.ToString("X")) + " " + "Function_#" + (1 + (BitConverter.ToInt32(parameters[1], 0))).ToString("D");
                     break;
                 case 0x5E:      // ApplyMovement
-                    this.cmdName += " " + "Overworld_#" + (BitConverter.ToInt16(parameters[0], 0)).ToString("D") + " " + "Movement_#" + (1 + (BitConverter.ToInt32(parameters[1], 0))).ToString("D");
+                    string owToMove = BitConverter.ToUInt16(parameters[0], 0).ToString("D");
+                    switch (owToMove) {
+                        case "255":
+                            owToMove = "Player";
+                            break;
+                        case "253":
+                            owToMove = "Following";
+                            break;
+                        case "241":
+                            owToMove = "Cam";
+                            break;
+                        default:
+                            owToMove = "Overworld_#" + owToMove;
+                            break;
+                    }
+                    this.cmdName += " " + owToMove + " " + "Movement_#" + (1 + (BitConverter.ToInt32(parameters[1], 0))).ToString("D");
                     break;
                 case 0x62:      // Lock
                 case 0x63:      // Release
@@ -519,38 +535,14 @@ namespace DSPRE {
                     break;
             }
         }
-
-        private Object GetResxNameByValue(string value, ResourceManager rm) {
-            var entry =
-                rm.GetResourceSet(System.Threading.Thread.CurrentThread.CurrentCulture, true, true)
-                  .OfType<DictionaryEntry>()
-                  .FirstOrDefault(e => e.Value.ToString() == value);
-
-            var key = entry.Key;
-            return key;
-        }
-
         public Command(string description, string gameVersion, bool isMovement) {
             this.cmdName = description;
             this.isMovement = isMovement;
-            this.parameters = new List<byte[]>();
+            this.parameterList = new List<byte[]>();
 
             string[] words = description.Split(' '); // Separate command code from parameters
-            Console.WriteLine(String.Join(",", words));
-            Console.WriteLine(gameVersion);
+            Console.WriteLine(gameVersion + " - - - " + String.Join(" ", words));
             /* Get command id, which is always first in the description */
-            
-            ResourceManager commandDatabase; // Load the resource file containing information on parameters for each command
-            switch (gameVersion) {
-                case "D":
-                case "P":
-                case "Plat":
-                    commandDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
-                    break;
-                default:
-                    commandDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
-                    break;
-            }
 
             if (isMovement) {
                 if (PokeDatabase.System.Scripts.movementsDictDPPtHGSS.ContainsKey(words[0]))
@@ -559,10 +551,9 @@ namespace DSPRE {
                     UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
             } else {
                 Console.WriteLine("Command name: " + words[0]);
-                Object cmd = GetResxNameByValue(words[0], commandDatabase);
+                Object cmd = GetResxNameByValue(words[0], RomInfo.scriptCommandNamesDatabase);
 
                 if (cmd != null) {
-                    Console.WriteLine(cmd);
                     this.id = ushort.Parse(cmd.ToString(), System.Globalization.NumberStyles.AllowHexSpecifier);
                 } else {
                     UInt16.TryParse(words[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out this.id);
@@ -572,70 +563,89 @@ namespace DSPRE {
 
             /* Read parameters from remainder of the description */
             Console.WriteLine("ID = " + id.ToString("X4"));
-            if (words.Length > 1 && this.id != 0) {
+            if (words.Length > 1 && this.id > 0) {
                 if (isMovement) {
                     if (words[1].Length > 4) { // Cases where movement is followed by an Overworld parameter
 
-                        int index = 1 + words[1].IndexOf('#'); // FInd index of #
-                        parameters.Add(BitConverter.GetBytes(Int32.Parse(words[1].Substring(index), NumberStyles.Integer))); // Add Overworld_#
-                        parameters[0] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[0], 0) - 1); // Add Overworld number
+                        int positionOfOverworldID = 1 + words[1].IndexOf('#'); // Find position of #
+                        parameterList.Add(BitConverter.GetBytes(Int32.Parse(words[1].Substring(positionOfOverworldID), NumberStyles.Integer))); // Add Overworld_#
+                        parameterList[0] = BitConverter.GetBytes(BitConverter.ToInt32(parameterList[0], 0) - 1); // Add Overworld number
 
                         // TODO: Check if other cases may apply to movement parameters
                     } else {
-                        parameters.Add(BitConverter.GetBytes(Int16.Parse(words[1].Substring(2), NumberStyles.HexNumber)));
+                        parameterList.Add(BitConverter.GetBytes(Int16.Parse(words[1].Substring(2), NumberStyles.HexNumber)));
                     }
-                } else {
-                    ResourceManager paramDatabase; // Load the resource file containing information on parameters for each command
-                    switch (gameVersion) {
-                        case "D":
-                        case "P":
-                        case "Plat":
-                            paramDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
-                            break;
-                        default:
-                            paramDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
-                            break;
-                    }
-                    string[] indices = paramDatabase.GetString(id.ToString("X4")).Split(' ');
+                } else {                    
+                    string[] databaseResult = RomInfo.scriptParametersDatabase.GetString(id.ToString("X4")).Split(' ');
+                    for (int i = 1; i < databaseResult.Length; i++) {
+                        Console.WriteLine("Parameter #" + i.ToString() + ": " + words[i]);
 
-                    for (int i = 1; i < indices.Length; i++) {
-                        Console.WriteLine("Index : " + i.ToString());
-                        Console.WriteLine("Started word : " + words[i]);
-                        if (PokeDatabase.System.Scripts.stringToComparisonOperatorDict.ContainsKey(words[i])) {
-                            parameters.Add(new byte[] { PokeDatabase.System.Scripts.stringToComparisonOperatorDict[words[i]] });
+                        string comparisonOperator = (string)GetResxNameByValue(words[i], RomInfo.scriptComparisonOperators);
+                        if (comparisonOperator != null) { //TO FIX! This check should only be made if CMD ID actually accepts a comparison operator
+                            parameterList.Add(new byte[] { byte.Parse(comparisonOperator) });
                         } else {
-                            int index = 1 + words[i].IndexOfAny(new char[] { 'x', '#' });
+                            int indexOfSpecialCharacter = 1 + words[i].IndexOfAny(new char[] { 'x', '#' });
 
                             /* If number is preceded by 0x parse it as hex, otherwise as decimal */
                             NumberStyles style;
-                            if (words[i][index - 1] == 'x')
+                            if (words[i].Contains("0x"))
                                 style = NumberStyles.HexNumber;
                             else
                                 style = NumberStyles.Integer;
 
                             /* Convert strings of parameters into the correct datatypes */
-                            Console.WriteLine("started params");
-                            if (indices[i] == "1")
-                                parameters.Add(new byte[] { Byte.Parse(words[i].Substring(index), style) });
-                            if (indices[i] == "2")
-                                parameters.Add(BitConverter.GetBytes(Int16.Parse(words[i].Substring(index), style)));
-                            if (indices[i] == "4")
-                                parameters.Add(BitConverter.GetBytes(Int32.Parse(words[i].Substring(index), style)));
-                            Console.WriteLine("finished params");
+                            switch (databaseResult[i]) {
+                                case "1":
+                                    parameterList.Add(new byte[] { Byte.Parse(words[i].Substring(indexOfSpecialCharacter), style) });
+                                    break;
+                                case "2":
+                                    switch (words[i]) {
+                                        case "Player":
+                                            parameterList.Add(BitConverter.GetBytes((ushort)255));
+                                            break;
+                                        case "Following":
+                                            parameterList.Add(BitConverter.GetBytes((ushort)253));
+                                            break;
+                                        case "Cam":
+                                            parameterList.Add(BitConverter.GetBytes((ushort)241));
+                                            break;
+                                        default:
+                                            parameterList.Add(BitConverter.GetBytes(Int16.Parse(words[i].Substring(indexOfSpecialCharacter), style)));
+                                            break;
+                                    }
+                                    break;
+                                case "4":
+                                    parameterList.Add(BitConverter.GetBytes(Int32.Parse(words[i].Substring(indexOfSpecialCharacter), style)));
+                                    break;
+                            }     
                         }
                         Console.WriteLine("Finished word : " + words[i]);
                     }
 
                     /* Fix function and movement references which are +1 greater than array indexes */
-                    Console.WriteLine("before fix");
-                    Console.WriteLine("Param length = " + parameters.Count.ToString());
+                    Console.WriteLine("before fix Param length = " + parameterList.Count.ToString());
                     if (id == 0x16 || id == 0x1A)
-                        parameters[0] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[0], 0) - 1);
+                        parameterList[0] = BitConverter.GetBytes(BitConverter.ToInt32(parameterList[0], 0) - 1);
                     if (id == 0x1C || id == 0x1D || id == 0x5E)
-                        parameters[1] = BitConverter.GetBytes(BitConverter.ToInt32(parameters[1], 0) - 1);
+                        parameterList[1] = BitConverter.GetBytes(BitConverter.ToInt32(parameterList[1], 0) - 1);
                 }
             }
+        }
+        #endregion
 
+        #region Utilities
+
+        public override string ToString() {
+            return cmdName + " (" + id.ToString("X") + ")";
+        }
+        private Object GetResxNameByValue(string value, ResourceManager rm) {
+            var entry =
+                rm.GetResourceSet(System.Threading.Thread.CurrentThread.CurrentCulture, true, true)
+                  .OfType<DictionaryEntry>()
+                  .FirstOrDefault(e => e.Value.ToString() == value);
+
+            var key = entry.Key;
+            return key;
         }
         #endregion
     }
