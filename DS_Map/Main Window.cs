@@ -345,7 +345,7 @@ namespace DSPRE {
             }
 
             /* Add ow movement list to box */
-            owMovementComboBox.Items.AddRange(PokeDatabase.ScriptMovements.moveArray);
+            owMovementComboBox.Items.AddRange(PokeDatabase.EventEditorMovements.moveArray);
 
             /* Create dictionary for 3D overworlds */
             switch (romInfo.gameVersion) {

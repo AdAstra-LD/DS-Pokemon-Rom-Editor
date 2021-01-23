@@ -473,7 +473,7 @@ namespace DSPRE {
                 [1216] = "Route 17"
             };
         }
-        public static class ScriptMovements {
+        public static class EventEditorMovements {
             public static string[] moveArray = new string[] {
                 "[00]  None",
                 "[01]  None",
