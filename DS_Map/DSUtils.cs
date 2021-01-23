@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NarcAPI;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -126,6 +128,55 @@ namespace DSPRE {
                 writer.BaseStream.Position = startOffset;
                 writer.Write(bytesToWrite, 0, bytesToWrite.Length);
             }
+        }
+
+        public static void UnpackNarcs(List<int> IDs, int progress) {
+            string[] narcPaths = RomInfo.narcPaths;
+            string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
+
+            foreach (int id in IDs) {
+                var tuple = Tuple.Create(narcPaths[id], extractedNarcDirs[id]);
+                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+                if (!di.Exists || di.GetFiles().Length == 0) {
+                    NarcAPI.Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+                }
+
+                if (progress != null)
+                    try {
+                        progress++;
+                    } catch (ArgumentOutOfRangeException) { }
+            }
+        }
+        public static void ForceUnpackNarcs(List<int> IDs, int progress) {
+            string[] narcPaths = RomInfo.narcPaths;
+            string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
+
+            foreach (int id in IDs) {
+                var tuple = Tuple.Create(narcPaths[id], extractedNarcDirs[id]);
+                Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+
+                if (progress != null)
+                    try {
+                        progress++;
+                    } catch (ArgumentOutOfRangeException) { }
+            }
+        }
+        public static void UnpackNarc(int id) {
+            string[] narcPaths = RomInfo.narcPaths;
+            string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
+            
+            var tuple = Tuple.Create(narcPaths[id], extractedNarcDirs[id]);
+            DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+            if (!di.Exists || di.GetFiles().Length == 0) {
+                NarcAPI.Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
+            }
+        }
+        public static void ForceUnpackNarc(int id) {
+            string[] narcPaths = RomInfo.narcPaths;
+            string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
+
+            var tuple = Tuple.Create(narcPaths[id], extractedNarcDirs[id]);
+            Narc.Open(workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
         }
     }
 }

@@ -36,8 +36,8 @@ namespace DSPRE {
         public string textArchivesPath { get; private set; }
         public string encounterDirPath { get; private set; }
         public string trainerDataDirPath { get; private set; }
-        public string[] narcPaths { get; private set; }
-        public string[] extractedNarcDirs { get; private set; }
+        public static string[] narcPaths { get; private set; }
+        public static string[] extractedNarcDirs { get; private set; }
 
         public int nullEncounterID { get; private set; }
         public int attackNamesTextNumber { get; private set; }

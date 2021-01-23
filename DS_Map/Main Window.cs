@@ -42,7 +42,6 @@ namespace DSPRE {
         public bool textEditorIsReady { get; private set; } = false;
         public bool tilesetEditorIsReady { get; private set; } = false;
 
-
         /* ROM Information */
         public static string gameCode;
         public static byte europeByte;
@@ -253,7 +252,7 @@ namespace DSPRE {
         }
         
         private void DeleteTempFolders() {
-            foreach (var tuple in romInfo.narcPaths.Zip(romInfo.extractedNarcDirs, Tuple.Create)) {
+            foreach (var tuple in RomInfo.narcPaths.Zip(RomInfo.extractedNarcDirs, Tuple.Create)) {
                 Directory.Delete(tuple.Item2, true); // Delete folder
             }
         }
@@ -286,9 +285,9 @@ namespace DSPRE {
             toolStripProgressBar.Value = 0;
             Update();
 
-            UnpackNarcs(new List<int> { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 });
+            DSUtils.UnpackNarcs(new List<int> { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }, toolStripProgressBar.Value);
             if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
-                UnpackNarcs(new List<int> { romInfo.narcPaths.Length - 1 });
+                DSUtils.UnpackNarc(RomInfo.narcPaths.Length - 1);
             }
 
 
@@ -335,8 +334,15 @@ namespace DSPRE {
             owTrainerComboBox.Items.AddRange(trainerNames);
 
             /* Add item list to ow item box */
-            int count = LoadScriptFile(romInfo.GetItemScriptFileNumber()).scripts.Count - 1;
-            owItemComboBox.Items.AddRange(GetItemNames(0, count));
+            int itemScriptId = romInfo.GetItemScriptFileNumber();
+            try {
+                int count = LoadScriptFile(itemScriptId).scripts.Count - 1;
+                owItemComboBox.Items.AddRange(GetItemNames(0, count));
+            } catch {
+                MessageBox.Show("There was a problem reading Script File #" + itemScriptId + ".\n" +
+                    "It is strongly adviced that you restore this file from a clean backup.", "Item script couldn't be loaded",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             /* Add ow movement list to box */
             owMovementComboBox.Items.AddRange(PokeDatabase.ScriptMovements.moveArray);
@@ -402,7 +408,7 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack Header Editor NARCs... Please wait.";
             Update();
 
-            UnpackNarcs(new List<int> { 0, 1 });
+            DSUtils.UnpackNarcs(new List<int> { 0, 1 }, toolStripProgressBar.Value);
 
             statusLabel.Text = "Reading internal names... Please wait.";
             Update();
@@ -469,14 +475,14 @@ namespace DSPRE {
         private void SetupMapEditor() {
             /* Extract essential NARCs sub-archives*/
             toolStripProgressBar.Visible = true;
-            toolStripProgressBar.Maximum = 15;
+            toolStripProgressBar.Maximum = 14;
             toolStripProgressBar.Value = 0;
             statusLabel.Text = "Attempting to unpack Map Editor NARCs... Please wait.";
             Update();
 
-            UnpackNarcs(new List<int> { 3, 4, 5, 6, 7, 8 });
+            DSUtils.UnpackNarcs(new List<int> { 3, 4, 5, 6, 7, 8 }, toolStripProgressBar.Value);
             if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
-                UnpackNarcs(new List<int> { romInfo.narcPaths.Length - 1 });
+                DSUtils.UnpackNarc(RomInfo.narcPaths.Length - 1 );
             }
 
             disableHandlers = true;
@@ -675,7 +681,7 @@ namespace DSPRE {
             statusLabel.Text = "Setting up Matrix Editor...";
             Update();
 
-            UnpackNarcs(new List<int> { 2 }); // 2 = matrixDir
+            DSUtils.UnpackNarc( 2 ); // 2 = matrixDir
 
             disableHandlers = true;
 
@@ -687,12 +693,12 @@ namespace DSPRE {
             disableHandlers = false;
             selectMatrixComboBox.SelectedIndex = 0;
         }
-        private void SetupScriptEditor() {
+        public void SetupScriptEditor() {
             /* Extract essential NARCs sub-archives*/
             statusLabel.Text = "Setting up Script Editor...";
             Update();
 
-            UnpackNarcs(new List<int> { 12 }); //12 = scripts Narc Dir
+            DSUtils.UnpackNarc(12); //12 = scripts Narc Dir
 
             int scriptCount = Directory.GetFiles(romInfo.scriptDirPath).Length;
             for (int i = 0; i < scriptCount; i++)
@@ -705,10 +711,10 @@ namespace DSPRE {
             selectScriptFileComboBox.SelectedIndex = 0;
         }
         private void SetupTextEditor() {
-            string[] narcPaths = romInfo.narcPaths;
-            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
+            string[] narcPaths = RomInfo.narcPaths;
+            string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
 
-            UnpackNarcs(new List<int> { 1 });
+            DSUtils.UnpackNarc( 1 );
 
             statusLabel.Text = "Setting up Text Editor...";
             Update();
@@ -722,7 +728,7 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack Tileset Editor NARCs... Please wait.";
             Update();
 
-            UnpackNarcs(new List<int> { 6, 7, 8 });
+            DSUtils.UnpackNarcs(new List<int> { 6, 7, 8 }, toolStripProgressBar.Value);
 
             /* Fill Tileset ListBox */
             FillTilesetBox();
@@ -827,29 +833,12 @@ namespace DSPRE {
             toolStripProgressBar.Value = 0;
             Update();
 
-            UnpackNarcs(new List<int> { 4, 5, 6 });
+            DSUtils.UnpackNarcs(new List<int> { 4, 5, 6 }, toolStripProgressBar.Value);
             if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS")
-                UnpackNarcs(new List<int> { romInfo.narcPaths.Length - 1 });// Last = interior buildings dir
+                DSUtils.UnpackNarc(RomInfo.narcPaths.Length - 1 );// Last = interior buildings dir
 
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
-        }
-
-        private void UnpackNarcs(List<int> IDs) {
-            string[] narcPaths = romInfo.narcPaths;
-            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
-
-            foreach (int id in IDs) {
-                var tuple = Tuple.Create(narcPaths[id], extractedNarcDirs[id]);
-                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
-                if (!di.Exists || di.GetFiles().Length == 0) {
-                    Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-                }
-
-                try {
-                    toolStripProgressBar.Value++;
-                } catch (ArgumentOutOfRangeException) { }
-            }
         }
 
         private void ForceUnpackBuildingEditorNARCs() {
@@ -861,25 +850,15 @@ namespace DSPRE {
             toolStripProgressBar.Value = 0;
             Update();
 
-            forceUnpackNarcs(new List<int> { 4, 5, 6 });
+            DSUtils.ForceUnpackNarcs(new List<int> { 4, 5, 6 }, toolStripProgressBar.Value);
             if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS")
-                forceUnpackNarcs(new List<int> { romInfo.narcPaths.Length - 1 });// Last = interior buildings dir
+                DSUtils.ForceUnpackNarcs(new List<int> { RomInfo.narcPaths.Length - 1 }, toolStripProgressBar.Value);// Last = interior buildings dir
 
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
         }
 
-        private void forceUnpackNarcs(List<int> IDs) {
-            string[] narcPaths = romInfo.narcPaths;
-            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
-
-            foreach (int id in IDs) {
-                var tuple = Tuple.Create(narcPaths[id], extractedNarcDirs[id]);
-                Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-                toolStripProgressBar.Value++;
-            }
-            
-        }
+        
 
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e) {
             string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.7b" + Environment.NewLine
@@ -960,7 +939,7 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack NARCs from folder...";
             Update();
 
-            /*foreach (Tuple<string, string> tuple in romInfo.narcPaths.Zip(romInfo.extractedNarcDirs, Tuple.Create))
+            /*foreach (Tuple<string, string> tuple in RomInfo.narcPaths.Zip(RomInfo.extractedNarcDirs, Tuple.Create))
                 Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);*/
 
             switch (romInfo.gameVersion) {
@@ -1007,7 +986,7 @@ namespace DSPRE {
             Update();
 
             // Repack NARCs
-            foreach (var tuple in romInfo.narcPaths.Zip(romInfo.extractedNarcDirs, Tuple.Create)) {
+            foreach (var tuple in RomInfo.narcPaths.Zip(RomInfo.extractedNarcDirs, Tuple.Create)) {
                 DirectoryInfo di = new DirectoryInfo(tuple.Item2);
                 if (di.Exists) {
                     Narc.FromFolder(tuple.Item2).Save(romInfo.workDir + tuple.Item1); // Make new NARC from folder
@@ -1041,12 +1020,12 @@ namespace DSPRE {
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (d == DialogResult.Yes) {
-                toolStripProgressBar.Maximum = romInfo.narcPaths.Length;
+                toolStripProgressBar.Maximum = RomInfo.narcPaths.Length;
                 toolStripProgressBar.Visible = true;
                 toolStripProgressBar.Value = 0;
                 statusLabel.Text = "Attempting to unpack all NARCs... Be patient. This might take a while...";
                 Update();
-                foreach (var tuple in romInfo.narcPaths.Zip(romInfo.extractedNarcDirs, Tuple.Create)) {
+                foreach (var tuple in RomInfo.narcPaths.Zip(RomInfo.extractedNarcDirs, Tuple.Create)) {
                     Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
                     toolStripProgressBar.Value++;
                 }
@@ -1130,8 +1109,8 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to extract Wild Encounters NARC...";
             Update();
 
-            string[] narcPaths = romInfo.narcPaths;
-            string[] extractedNarcDirs = romInfo.extractedNarcDirs;
+            string[] narcPaths = RomInfo.narcPaths;
+            string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
             Tuple<string, string> t;
 
             if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
@@ -2469,7 +2448,6 @@ namespace DSPRE {
                 return;
 
             string[] fileTableContent = File.ReadAllLines(of.FileName);
-
 
             string mapKeyword = "[Maplist]";
             string colorKeyword = "[Color]";
@@ -5141,10 +5119,6 @@ namespace DSPRE {
             selectScriptFileComboBox.Items.RemoveAt(lastIndex);
         }
         private void saveScriptFileButton_Click(object sender, EventArgs e) {
-            currentScriptFile.scripts.Clear();
-            currentScriptFile.functions.Clear();
-            currentScriptFile.movements.Clear();
-
             /* Create new script objects */
             List<Command> scriptCommands = new List<Command>();
             populateScriptCommands(scriptCommands);
@@ -5154,6 +5128,10 @@ namespace DSPRE {
 
             List<Command> movementCommands = new List<Command>();
             populateMovementCommands(movementCommands);
+
+            currentScriptFile.scripts.Clear();
+            currentScriptFile.functions.Clear();
+            currentScriptFile.movements.Clear();
 
             /* Write new scripts to file */
             SaveScriptFile(selectScriptFileComboBox.SelectedIndex);

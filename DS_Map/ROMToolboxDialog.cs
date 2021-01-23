@@ -1,5 +1,6 @@
 ﻿using NarcAPI;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Resources;
@@ -19,19 +20,40 @@ namespace DSPRE
             this.romInfo = romInfo;
         }
 
-        private void applyItemStandardizeButton_Click(object sender, EventArgs e)
-        {
-            string path = romInfo.scriptDirPath + "\\" + romInfo.GetItemScriptFileNumber().ToString("D4");
+        private void applyItemStandardizeButton_Click(object sender, EventArgs e) {
+            try {
+                if (standardizedItems == true) {
+                    throw new ApplicationException();
+                }
+                DSUtils.UnpackNarc(12);
+                string itemScriptPath = romInfo.scriptDirPath + "\\" + romInfo.GetItemScriptFileNumber().ToString("D4");
+                ScriptFile itemScript = new ScriptFile(new FileStream(itemScriptPath, FileMode.Open), romInfo.gameVersion);
 
-            ScriptFile file = new ScriptFile(new FileStream(path, FileMode.Open), romInfo.gameVersion);
-            for (int i = 0; i < file.scripts.Count - 1; i++)
-            {
-                file.scripts[i].commands[0].parameters[1] = BitConverter.GetBytes((ushort)i); // Fix item index
-                file.scripts[i].commands[1].parameters[1] = BitConverter.GetBytes((ushort)1); // Fix item quantity
+                bool errorFlag = false;
+                for (int i = 0; i < itemScript.scripts.Count - 1; i++) {
+                    if (itemScript.scripts[i].commands[0].parameters[1] != BitConverter.GetBytes((ushort)i) || itemScript.scripts[i].commands[1].parameters[1] != BitConverter.GetBytes((ushort)1)) {
+                        errorFlag = true;
+                        break;
+                    }
+                }
+
+                if (errorFlag) {
+                    for (int i = 0; i < itemScript.scripts.Count - 1; i++) {
+                        itemScript.scripts[i].commands[0].parameters[1] = BitConverter.GetBytes((ushort)i); // Fix item index
+                        itemScript.scripts[i].commands[1].parameters[1] = BitConverter.GetBytes((ushort)1); // Fix item quantity
+                    }
+                    using (BinaryWriter writer = new BinaryWriter(new FileStream(itemScriptPath, FileMode.Create)))
+                        writer.Write(itemScript.Save());
+
+                    MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } else {
+                    standardizedItems = true;
+                    throw new ApplicationException();
+                }
+            } catch (ApplicationException) {
+                MessageBox.Show("This patch has already been applied.", "Can't reapply patch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create))) writer.Write(file.Save());
-
-            standardizedItems = true;
         }
 
         private void applyARM9ExpansionButton_Click(object sender, EventArgs e) {
@@ -57,7 +79,7 @@ namespace DSPRE
                     branchCodeString = arm9DB.GetString("branchCode" + "D" + lang);
                     branchOffset = 0x02000C80;
                     switch (lang) {
-                        case "USA":
+                        case "ENG":
                             initOffset = 0x021064EC;
                             break;
                         case "ESP":
@@ -73,7 +95,7 @@ namespace DSPRE
                     branchCodeString = arm9DB.GetString("branchCode" + version + lang);
                     branchOffset = 0x02000CB4;
                     switch (lang) {
-                        case "USA":
+                        case "ENG":
                             initOffset = 0x02100E20;
                             break;
                         case "ESP":
@@ -90,7 +112,7 @@ namespace DSPRE
                     branchCodeString = arm9DB.GetString("branchCode" + "HG" + lang);
                     branchOffset = 0x02000CD0;
                     switch (lang) {
-                        case "USA":
+                        case "ENG":
                             initOffset = 0x02110334;
                             break;
                         case "ESP":
@@ -193,9 +215,8 @@ namespace DSPRE
             BinaryWriter f = new BinaryWriter(File.Create(fullFilePath));
             for (int i = 0; i < 0x16000; i++) 
                 f.Write((byte)0x00);
-            f.Close();
-            
 
+            f.Close();
             return true;
         }
 
@@ -224,13 +245,13 @@ namespace DSPRE
         }
 
         private void unsupportedROM() {
-            MessageBox.Show("This operation is currently impossible to carry out on any Pokémon " + romInfo.gameVersion + "romInfo.",
+            MessageBox.Show("This operation is currently impossible to carry out on any Pokémon " + romInfo.gameVersion + "rom.",
                 "Unsupported ROM", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void unsupportedROMLanguage() {
             MessageBox.Show("This operation is currently impossible to carry out on the " + romInfo.gameLanguage +
-                " version of this romInfo.", "Unsupported language", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                " version of this rom.", "Unsupported language", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
