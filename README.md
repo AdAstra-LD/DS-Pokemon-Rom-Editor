@@ -7,6 +7,8 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features a
 
 ## Major Changes to Mixone's fork
 - Significantly shorter load and save times.
+- Fixed script editor (mostly).
+- Support for custom color tables (matrix editor).
 - Added mouse support and warps navigation feature to the Event Editor.
 - Added copy and paste buttons to header editor.
 - Added import and export buttons to header editor.
