@@ -897,7 +897,7 @@ with 'Pokemon DS Map Studio' by Trifindo.</value>
         FI8mFI8ldx/JDrZXxapFRgAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="button11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="checkPokemonButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wgAADsIBFShKgAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC41ZYUyZQAAAKpJREFUOE+tjbsN
@@ -906,7 +906,7 @@ with 'Pokemon DS Map Studio' by Trifindo.</value>
         /sAZb2R423IoICwCFkkoAK0kwpaBEwD+GhXbMnCDhYW9IgnD68jwA8jcngdwBY1hAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="button9.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="checkBadgeButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wgAADsIBFShKgAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC41ZYUyZQAAAeVJREFUOE+Nk+tq
@@ -921,7 +921,7 @@ with 'Pokemon DS Map Studio' by Trifindo.</value>
         pVC4AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="button7.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="checkItemButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wwAADsMBx2+oZAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC41ZYUyZQAAATBJREFUSEu1kyGS
@@ -933,7 +933,7 @@ with 'Pokemon DS Map Studio' by Trifindo.</value>
         WfIAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="button5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="checkMoneyButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAu
         IwAALiMBeKU/dgAAAAd0SU1FB+IGFwUNFpJng1gAAADESURBVDhP1ZLBDQIxDATTHRJtINEGH/qBbvjQ
@@ -1089,7 +1089,7 @@ with 'Pokemon DS Map Studio' by Trifindo.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACA
-        DwAAAk1TRnQBSQFMAgEBBwEAAWwBBwFsAQcBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        DwAAAk1TRnQBSQFMAgEBBwEAAbQBBwG0AQcBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -1228,20 +1228,20 @@ with 'Pokemon DS Map Studio' by Trifindo.</value>
   <data name="unpackAllButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAL1SURBVFhH7ZfNbxJBGIf5ixqj9/Zi9KBnD9VELCVNe2ji
-        qYWgG6DWg8aqMbTUgzFaexFIqf0IVKgePCikVKgfTRPDAimNpjVag6Uw67zDvu3uMsxSbE2a+CZPYNnZ
-        +T377u4AluNeHerr0Zf8fKA94XcSdRNLoVRqby2WTNhVKYRdZXXzcKo4cz2WHHcSOeRUgITfgRLwCgLA
-        SwjHMWxcwF6FQS1XMmSvaidEskEHhuqwtbfVjQVAfmNWGqRjzOtbytcPZ8ibCMmGHIz8tGsvHD8DOd4x
-        AIhAl1iQsdYC17a1bTYDJL887t2lh4IAOcixQCLQvX95NmM3OniDeEBQOuKpZiYl8nVxeK8D1dSoUox6
-        Ce1AuVmZRLBJCZgwGbRX088ksrHgVRCjALIecZONiOcXPDG8+QBdOJZRAibIv+jbeT+hDzYTQIpRD5Hf
-        ShVjR7jhWCBRa7ObtZkXjJgJaClGPCT3xPlbGA61L1C7zrxg5CAC60zAQQUEawPvEhRm+nbSf3EJCrNS
-        3U3JlWjmJjR2pEjZenNHqRiCC/Nukp12/RCtJzoJUbgR6EomKlXwifhOBbRnnA0M0jMWL2SITqKlhehR
-        z+7qlETkd/d3mw1FMkEHf0WEpZh3QCPysWEiC5ZfHXTc0lSP+CmAKqXGFEC0rgOl5TGlEL9JPvivsMl5
-        Yxh039rTfgXGqRHiKi376eQqVIQ3KYTDfhTgStDtlbHaPkSNEJdOAKEim69v6cIBrQDAJFiwVReMqBHi
-        0gWbYBQwQ40QFy+oEf8FdAL0hvs03qW0ne5k77XBiBohLl5QI1BgbsSmnDzTyciMWhnnL1xSTp2lMv9C
-        IHy7S1mhodCBE7QDEHxv4GJdJ9QI89paGinJC0OEF6pFK4AdYI+gITjuO2e+AvKqnPFfzUa8DUVQYP6u
-        jXVAG/pqyEo+P7wMP1wPp3Jxf7WRgJa4x0rkid6j+8v286NvGy+PVmCx1Ta3WuXcXD98G64+6N5RPzqO
-        ZbH8AddPYUhveDFCAAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALuSURBVFhH7ZfPbxJBFMf5ixqj9zYxRi+ePbTEYvFiDySe
+        Wgg6sUYvGkuNoeDPQzXxIJCC0KZqa4Q0kR6EhGqpRAKUpI2mNVqDUNhx3rCv3V2GWYqtSRO/ySew7Nv5
+        fvfNzgCWo64+9fXwVXwx0hv3uBT1EEUZ9eZbiyUTdtfLYXdNPTwYrUevzicmXEox5KJA3OPEEPAKAYA3
+        YI41vC5gbUBR10qErA3tgEgh6ERTHfbenpZaAMJvxMgoqzHXt5TXAXcoGggphJyctYh71xw/g3CiawAI
+        Al3iRkblAle2tW02A0Lmn9h22KUQQNnPtUA8MLA3PZvzN/pERSLAKDk31lh6TJSvb2/udqCRmqT5MFFY
+        B2qdhokHOwwBAyaC1kbyEVE2Xl+niDEA8mWa1c2N/YIVIxoP0JmjjCFggLWXw9X3D/XGZgEQ6Eg2SerG
+        jgjNURCi2eZrvM0iY8QsgJY860ppyvVbag7aC9CcZ5Exsp8AMC2lKScLINkbRFNQjg5Xk38xBeUwaXko
+        hSE6eQiNHVlnbC3eoXWDcS7EVkPE/UO2n+hCyMyNQFcyr0gdV8R3FkB7x4XAKLtj+UaG6EJ0txEN7qSf
+        EyW/dHenU1MkE3SKd0TYikUXtONzlChFyfarg9UtTp+XrwJQJeWjgGxfByppH83FiPLRf4EPLqrhsHO5
+        pw4KdaqFXJW0nw2uwoKIBgVzOI8BhCHY8bKveQ5RLeTSBUBYkM13t3TmgDYAwENwY5vOGFEt5NIZm2AM
+        YIZqIZfIqB3/A+gCsAdu5f4Q7TnVz99rjRHVQi6RUTswwMy4nR4/3c/JTNo4Z89Z6YkzLMy/CBC+PUSX
+        mSl04BjrABhPjAy0dEK1MNfWh/FKNkIUkakWbQDsAF+CBuMF70nzHVCkWsZ/eYV9l4vMAQww67HzDmhN
+        Z4lNyT4YhB+uB6PVBX+jXQAtMWZcfHbp8P6y/fzk3cbp0Qbous3dqlaaccC34eq9i1X1o6Moi+UPmzda
+        81svBvAAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="wildEditorButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

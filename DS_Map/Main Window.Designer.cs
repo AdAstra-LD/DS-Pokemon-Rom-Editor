@@ -165,11 +165,8 @@
             this.matrixNameLabel = new System.Windows.Forms.Label();
             this.matrixTabControl = new System.Windows.Forms.TabControl();
             this.headersTabPage = new System.Windows.Forms.TabPage();
-            this.headersGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.heightsTabPage = new System.Windows.Forms.TabPage();
-            this.heightsGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.mapFilesTabPage = new System.Windows.Forms.TabPage();
-            this.mapFilesGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.matrixNameTextBox = new System.Windows.Forms.TextBox();
             this.heightUpDown = new System.Windows.Forms.NumericUpDown();
             this.widthUpDown = new System.Windows.Forms.NumericUpDown();
@@ -191,6 +188,7 @@
             this.selectMapComboBox = new System.Windows.Forms.ComboBox();
             this.mapPartsTabControl = new System.Windows.Forms.TabControl();
             this.buildingsTabPage = new System.Windows.Forms.TabPage();
+            this.duplicateBuildingButton = new System.Windows.Forms.Button();
             this.buildingHeightUpDown = new System.Windows.Forms.NumericUpDown();
             this.buildingLengthUpDown = new System.Windows.Forms.NumericUpDown();
             this.buildingWidthUpDown = new System.Windows.Forms.NumericUpDown();
@@ -480,10 +478,10 @@
             this.wildBattleButton = new System.Windows.Forms.Button();
             this.legendaryBattleButton = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.checkPokemonButton = new System.Windows.Forms.Button();
+            this.checkBadgeButton = new System.Windows.Forms.Button();
+            this.checkItemButton = new System.Windows.Forms.Button();
+            this.checkMoneyButton = new System.Windows.Forms.Button();
             this.givePokégearButton = new System.Windows.Forms.Button();
             this.takePokémonButton = new System.Windows.Forms.Button();
             this.takeBadgeButton = new System.Windows.Forms.Button();
@@ -497,9 +495,9 @@
             this.giveItemButton = new System.Windows.Forms.Button();
             this.givePokémonButton = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
+            this.MoveCameraButton = new System.Windows.Forms.Button();
+            this.LockCameraButton = new System.Windows.Forms.Button();
+            this.followHeroButton = new System.Windows.Forms.Button();
             this.warpButton = new System.Windows.Forms.Button();
             this.resetScreenButton = new System.Windows.Forms.Button();
             this.fadeScreenButton = new System.Windows.Forms.Button();
@@ -567,7 +565,9 @@
             this.romToolboxButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.duplicateBuildingButton = new System.Windows.Forms.Button();
+            this.headersGridView = new DSPRE.DataGridViewDoubleBuffered();
+            this.heightsGridView = new DSPRE.DataGridViewDoubleBuffered();
+            this.mapFilesGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.groupBox18.SuspendLayout();
@@ -594,11 +594,8 @@
             this.matrixEditorTabPage.SuspendLayout();
             this.matrixTabControl.SuspendLayout();
             this.headersTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).BeginInit();
             this.heightsTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).BeginInit();
             this.mapFilesTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthUpDown)).BeginInit();
             this.mapEditorTabPage.SuspendLayout();
@@ -717,6 +714,9 @@
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // mainTabControl
@@ -2124,62 +2124,6 @@
             this.headersTabPage.Text = "Map Headers";
             this.headersTabPage.UseVisualStyleBackColor = true;
             // 
-            // headersGridView
-            // 
-            this.headersGridView.AllowUserToAddRows = false;
-            this.headersGridView.AllowUserToDeleteRows = false;
-            this.headersGridView.AllowUserToResizeColumns = false;
-            this.headersGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.headersGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.headersGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.Format = "D4";
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle3;
-            this.headersGridView.Location = new System.Drawing.Point(0, 0);
-            this.headersGridView.Name = "headersGridView";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.headersGridView.RowHeadersWidth = 50;
-            this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.headersGridView.RowTemplate.Height = 18;
-            this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.headersGridView.ShowCellErrors = false;
-            this.headersGridView.Size = new System.Drawing.Size(965, 566);
-            this.headersGridView.TabIndex = 1;
-            this.headersGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.headersGridView_CellFormatting);
-            this.headersGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.headersGridView_CellMouseDoubleClick);
-            this.headersGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.headersGridView_CellValueChanged);
-            // 
             // heightsTabPage
             // 
             this.heightsTabPage.Controls.Add(this.heightsGridView);
@@ -2190,60 +2134,6 @@
             this.heightsTabPage.Text = "Map Heights";
             this.heightsTabPage.UseVisualStyleBackColor = true;
             // 
-            // heightsGridView
-            // 
-            this.heightsGridView.AllowUserToAddRows = false;
-            this.heightsGridView.AllowUserToDeleteRows = false;
-            this.heightsGridView.AllowUserToResizeColumns = false;
-            this.heightsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
-            this.heightsGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.Format = "D2";
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle8;
-            this.heightsGridView.Location = new System.Drawing.Point(0, 0);
-            this.heightsGridView.Name = "heightsGridView";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
-            this.heightsGridView.RowHeadersWidth = 50;
-            this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
-            this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.RowTemplate.Height = 18;
-            this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.heightsGridView.Size = new System.Drawing.Size(965, 566);
-            this.heightsGridView.TabIndex = 2;
-            this.heightsGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.heightsGridView_CellFormatting);
-            this.heightsGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.heightsGridView_CellValueChanged);
-            // 
             // mapFilesTabPage
             // 
             this.mapFilesTabPage.Controls.Add(this.mapFilesGridView);
@@ -2253,61 +2143,6 @@
             this.mapFilesTabPage.TabIndex = 3;
             this.mapFilesTabPage.Text = "Map Files";
             this.mapFilesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // mapFilesGridView
-            // 
-            this.mapFilesGridView.AllowUserToAddRows = false;
-            this.mapFilesGridView.AllowUserToDeleteRows = false;
-            this.mapFilesGridView.AllowUserToResizeColumns = false;
-            this.mapFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
-            this.mapFilesGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
-            this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle13.Format = "D4";
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle13;
-            this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
-            this.mapFilesGridView.Name = "mapFilesGridView";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
-            this.mapFilesGridView.RowHeadersWidth = 50;
-            this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
-            this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.RowTemplate.Height = 18;
-            this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.mapFilesGridView.Size = new System.Drawing.Size(965, 566);
-            this.mapFilesGridView.TabIndex = 2;
-            this.mapFilesGridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellMouseDoubleClick);
-            this.mapFilesGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.mapFilesGridView_CellFormatting);
-            this.mapFilesGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellValueChanged);
             // 
             // matrixNameTextBox
             // 
@@ -2583,6 +2418,16 @@
             this.buildingsTabPage.TabIndex = 0;
             this.buildingsTabPage.Text = "Buildings";
             this.buildingsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // duplicateBuildingButton
+            // 
+            this.duplicateBuildingButton.Location = new System.Drawing.Point(59, 302);
+            this.duplicateBuildingButton.Name = "duplicateBuildingButton";
+            this.duplicateBuildingButton.Size = new System.Drawing.Size(63, 23);
+            this.duplicateBuildingButton.TabIndex = 25;
+            this.duplicateBuildingButton.Text = "Duplicate";
+            this.duplicateBuildingButton.UseVisualStyleBackColor = true;
+            this.duplicateBuildingButton.Click += new System.EventHandler(this.duplicateBuildingButton_Click);
             // 
             // buildingHeightUpDown
             // 
@@ -5632,6 +5477,7 @@
             this.LineNumberTextBoxScript.Font = new System.Drawing.Font("Bahnschrift Light", 9.75F);
             this.LineNumberTextBoxScript.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.LineNumberTextBoxScript.Location = new System.Drawing.Point(3, 3);
+            this.LineNumberTextBoxScript.MaxLength = 65535;
             this.LineNumberTextBoxScript.Name = "LineNumberTextBoxScript";
             this.LineNumberTextBoxScript.ReadOnly = true;
             this.LineNumberTextBoxScript.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
@@ -5779,6 +5625,7 @@
             this.closeMessageButton.Text = "Close Message";
             this.closeMessageButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.closeMessageButton.UseVisualStyleBackColor = true;
+            this.closeMessageButton.Click += new System.EventHandler(this.closeMessageButton_Click);
             // 
             // waitKeyPressButton
             // 
@@ -5790,6 +5637,7 @@
             this.waitKeyPressButton.Text = "Wait Key Press";
             this.waitKeyPressButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.waitKeyPressButton.UseVisualStyleBackColor = true;
+            this.waitKeyPressButton.Click += new System.EventHandler(this.waitKeyPressButton_Click);
             // 
             // messageButton
             // 
@@ -5830,11 +5678,12 @@
             this.townSignButton.Text = "Town Sign";
             this.townSignButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.townSignButton.UseVisualStyleBackColor = true;
+            this.townSignButton.Click += new System.EventHandler(this.townSignButton_Click);
             // 
             // tipsSignButton
             // 
+            this.tipsSignButton.Enabled = false;
             this.tipsSignButton.Image = ((System.Drawing.Image)(resources.GetObject("tipsSignButton.Image")));
-            this.tipsSignButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tipsSignButton.Location = new System.Drawing.Point(108, 147);
             this.tipsSignButton.Name = "tipsSignButton";
             this.tipsSignButton.Size = new System.Drawing.Size(100, 33);
@@ -5842,9 +5691,11 @@
             this.tipsSignButton.Text = "Tips Sign";
             this.tipsSignButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.tipsSignButton.UseVisualStyleBackColor = true;
+            this.tipsSignButton.Click += new System.EventHandler(this.tipsSignButton_Click);
             // 
             // greySignButton
             // 
+            this.greySignButton.Enabled = false;
             this.greySignButton.Image = ((System.Drawing.Image)(resources.GetObject("greySignButton.Image")));
             this.greySignButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.greySignButton.Location = new System.Drawing.Point(108, 112);
@@ -5854,6 +5705,7 @@
             this.greySignButton.Text = "Grey Sign";
             this.greySignButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.greySignButton.UseVisualStyleBackColor = true;
+            this.greySignButton.Click += new System.EventHandler(this.greySignButton_Click);
             // 
             // setflagButton
             // 
@@ -5870,6 +5722,7 @@
             // 
             // restartMusicButton
             // 
+            this.restartMusicButton.Enabled = false;
             this.restartMusicButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.restartMusicButton.Location = new System.Drawing.Point(211, 147);
             this.restartMusicButton.Name = "restartMusicButton";
@@ -5878,6 +5731,7 @@
             this.restartMusicButton.Text = "Restart Music";
             this.restartMusicButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.restartMusicButton.UseVisualStyleBackColor = true;
+            this.restartMusicButton.Click += new System.EventHandler(this.restartMusicButton_Click);
             // 
             // clearflagButton
             // 
@@ -5902,9 +5756,11 @@
             this.playSoundButton.Text = "Play Sound";
             this.playSoundButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.playSoundButton.UseVisualStyleBackColor = true;
+            this.playSoundButton.Click += new System.EventHandler(this.playSoundButton_Click);
             // 
             // setVarButton
             // 
+            this.setVarButton.Enabled = false;
             this.setVarButton.Location = new System.Drawing.Point(5, 147);
             this.setVarButton.Name = "setVarButton";
             this.setVarButton.Size = new System.Drawing.Size(100, 33);
@@ -5923,9 +5779,11 @@
             this.callFunctionButton.Text = "Call Function";
             this.callFunctionButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.callFunctionButton.UseVisualStyleBackColor = true;
+            this.callFunctionButton.Click += new System.EventHandler(this.callFunctionButton_Click);
             // 
             // switchMusicButton
             // 
+            this.switchMusicButton.Enabled = false;
             this.switchMusicButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.switchMusicButton.Location = new System.Drawing.Point(211, 112);
             this.switchMusicButton.Name = "switchMusicButton";
@@ -5934,6 +5792,7 @@
             this.switchMusicButton.Text = "Switch Music";
             this.switchMusicButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.switchMusicButton.UseVisualStyleBackColor = true;
+            this.switchMusicButton.Click += new System.EventHandler(this.switchMusicButton_Click);
             // 
             // jumpToFuncButton
             // 
@@ -5982,6 +5841,7 @@
             this.waitSoundButton.Text = "Wait for Sound";
             this.waitSoundButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.waitSoundButton.UseVisualStyleBackColor = true;
+            this.waitSoundButton.Click += new System.EventHandler(this.waitSoundButton_Click);
             // 
             // wildBattleButton
             // 
@@ -5994,6 +5854,7 @@
             this.wildBattleButton.Text = " Wild Battle";
             this.wildBattleButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.wildBattleButton.UseVisualStyleBackColor = true;
+            this.wildBattleButton.Click += new System.EventHandler(this.wildBattleButton_Click);
             // 
             // legendaryBattleButton
             // 
@@ -6007,13 +5868,14 @@
             this.legendaryBattleButton.Text = "Leg. Battle";
             this.legendaryBattleButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.legendaryBattleButton.UseVisualStyleBackColor = true;
+            this.legendaryBattleButton.Click += new System.EventHandler(this.legendaryBattleButton_Click);
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.button11);
-            this.tabPage1.Controls.Add(this.button9);
-            this.tabPage1.Controls.Add(this.button7);
-            this.tabPage1.Controls.Add(this.button5);
+            this.tabPage1.Controls.Add(this.checkPokemonButton);
+            this.tabPage1.Controls.Add(this.checkBadgeButton);
+            this.tabPage1.Controls.Add(this.checkItemButton);
+            this.tabPage1.Controls.Add(this.checkMoneyButton);
             this.tabPage1.Controls.Add(this.givePokégearButton);
             this.tabPage1.Controls.Add(this.takePokémonButton);
             this.tabPage1.Controls.Add(this.takeBadgeButton);
@@ -6034,55 +5896,64 @@
             this.tabPage1.Text = "Give/Take";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // button11
+            // checkPokemonButton
             // 
-            this.button11.Image = ((System.Drawing.Image)(resources.GetObject("button11.Image")));
-            this.button11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button11.Location = new System.Drawing.Point(314, 147);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(99, 33);
-            this.button11.TabIndex = 40;
-            this.button11.Text = " Check PKMN";
-            this.button11.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button11.UseVisualStyleBackColor = true;
+            this.checkPokemonButton.Enabled = false;
+            this.checkPokemonButton.Image = ((System.Drawing.Image)(resources.GetObject("checkPokemonButton.Image")));
+            this.checkPokemonButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkPokemonButton.Location = new System.Drawing.Point(314, 147);
+            this.checkPokemonButton.Name = "checkPokemonButton";
+            this.checkPokemonButton.Size = new System.Drawing.Size(99, 33);
+            this.checkPokemonButton.TabIndex = 40;
+            this.checkPokemonButton.Text = " Check PKMN";
+            this.checkPokemonButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.checkPokemonButton.UseVisualStyleBackColor = true;
+            this.checkPokemonButton.Click += new System.EventHandler(this.checkPokemonButton_Click);
             // 
-            // button9
+            // checkBadgeButton
             // 
-            this.button9.Image = ((System.Drawing.Image)(resources.GetObject("button9.Image")));
-            this.button9.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button9.Location = new System.Drawing.Point(211, 147);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(100, 33);
-            this.button9.TabIndex = 39;
-            this.button9.Text = "Check Badge";
-            this.button9.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button9.UseVisualStyleBackColor = true;
+            this.checkBadgeButton.Enabled = false;
+            this.checkBadgeButton.Image = ((System.Drawing.Image)(resources.GetObject("checkBadgeButton.Image")));
+            this.checkBadgeButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBadgeButton.Location = new System.Drawing.Point(211, 147);
+            this.checkBadgeButton.Name = "checkBadgeButton";
+            this.checkBadgeButton.Size = new System.Drawing.Size(100, 33);
+            this.checkBadgeButton.TabIndex = 39;
+            this.checkBadgeButton.Text = "Check Badge";
+            this.checkBadgeButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.checkBadgeButton.UseVisualStyleBackColor = true;
+            this.checkBadgeButton.Click += new System.EventHandler(this.checkBadgeButton_Click);
             // 
-            // button7
+            // checkItemButton
             // 
-            this.button7.Image = ((System.Drawing.Image)(resources.GetObject("button7.Image")));
-            this.button7.Location = new System.Drawing.Point(5, 147);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(100, 33);
-            this.button7.TabIndex = 38;
-            this.button7.Text = "Check Item";
-            this.button7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button7.UseVisualStyleBackColor = true;
+            this.checkItemButton.Enabled = false;
+            this.checkItemButton.Image = ((System.Drawing.Image)(resources.GetObject("checkItemButton.Image")));
+            this.checkItemButton.Location = new System.Drawing.Point(5, 147);
+            this.checkItemButton.Name = "checkItemButton";
+            this.checkItemButton.Size = new System.Drawing.Size(100, 33);
+            this.checkItemButton.TabIndex = 38;
+            this.checkItemButton.Text = "Check Item";
+            this.checkItemButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.checkItemButton.UseVisualStyleBackColor = true;
+            this.checkItemButton.Click += new System.EventHandler(this.checkItemButton_Click);
             // 
-            // button5
+            // checkMoneyButton
             // 
-            this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
-            this.button5.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button5.Location = new System.Drawing.Point(108, 147);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(100, 33);
-            this.button5.TabIndex = 37;
-            this.button5.Text = "Check Money";
-            this.button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button5.UseVisualStyleBackColor = true;
+            this.checkMoneyButton.Enabled = false;
+            this.checkMoneyButton.Image = ((System.Drawing.Image)(resources.GetObject("checkMoneyButton.Image")));
+            this.checkMoneyButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkMoneyButton.Location = new System.Drawing.Point(108, 147);
+            this.checkMoneyButton.Name = "checkMoneyButton";
+            this.checkMoneyButton.Size = new System.Drawing.Size(100, 33);
+            this.checkMoneyButton.TabIndex = 37;
+            this.checkMoneyButton.Text = "Check Money";
+            this.checkMoneyButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.checkMoneyButton.UseVisualStyleBackColor = true;
+            this.checkMoneyButton.Click += new System.EventHandler(this.checkMoneyButton_Click);
             // 
             // givePokégearButton
             // 
+            this.givePokégearButton.Enabled = false;
             this.givePokégearButton.Image = ((System.Drawing.Image)(resources.GetObject("givePokégearButton.Image")));
             this.givePokégearButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.givePokégearButton.Location = new System.Drawing.Point(211, 112);
@@ -6092,9 +5963,11 @@
             this.givePokégearButton.Text = " Give PokéGear";
             this.givePokégearButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.givePokégearButton.UseVisualStyleBackColor = true;
+            this.givePokégearButton.Click += new System.EventHandler(this.givePokégearButton_Click);
             // 
             // takePokémonButton
             // 
+            this.takePokémonButton.Enabled = false;
             this.takePokémonButton.Image = ((System.Drawing.Image)(resources.GetObject("takePokémonButton.Image")));
             this.takePokémonButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.takePokémonButton.Location = new System.Drawing.Point(108, 7);
@@ -6104,6 +5977,7 @@
             this.takePokémonButton.Text = " Take PKMN";
             this.takePokémonButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.takePokémonButton.UseVisualStyleBackColor = true;
+            this.takePokémonButton.Click += new System.EventHandler(this.takePokémonButton_Click);
             // 
             // takeBadgeButton
             // 
@@ -6120,6 +5994,7 @@
             // 
             // giveNationalDexButton
             // 
+            this.giveNationalDexButton.Enabled = false;
             this.giveNationalDexButton.Image = ((System.Drawing.Image)(resources.GetObject("giveNationalDexButton.Image")));
             this.giveNationalDexButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.giveNationalDexButton.Location = new System.Drawing.Point(211, 42);
@@ -6129,9 +6004,11 @@
             this.giveNationalDexButton.Text = " Give National Pokédex";
             this.giveNationalDexButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.giveNationalDexButton.UseVisualStyleBackColor = true;
+            this.giveNationalDexButton.Click += new System.EventHandler(this.giveNationalDexButton_Click);
             // 
             // giveShoesButton
             // 
+            this.giveShoesButton.Enabled = false;
             this.giveShoesButton.Image = ((System.Drawing.Image)(resources.GetObject("giveShoesButton.Image")));
             this.giveShoesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.giveShoesButton.Location = new System.Drawing.Point(211, 77);
@@ -6141,9 +6018,11 @@
             this.giveShoesButton.Text = " Give Running Shoes";
             this.giveShoesButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.giveShoesButton.UseVisualStyleBackColor = true;
+            this.giveShoesButton.Click += new System.EventHandler(this.giveShoesButton_Click);
             // 
             // givePokédexButton
             // 
+            this.givePokédexButton.Enabled = false;
             this.givePokédexButton.Image = ((System.Drawing.Image)(resources.GetObject("givePokédexButton.Image")));
             this.givePokédexButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.givePokédexButton.Location = new System.Drawing.Point(211, 7);
@@ -6153,6 +6032,7 @@
             this.givePokédexButton.Text = "Give Pokédex";
             this.givePokédexButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.givePokédexButton.UseVisualStyleBackColor = true;
+            this.givePokédexButton.Click += new System.EventHandler(this.givePokédexButton_Click);
             // 
             // giveBadgeButton
             // 
@@ -6232,9 +6112,9 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.button15);
-            this.tabPage3.Controls.Add(this.button13);
-            this.tabPage3.Controls.Add(this.button12);
+            this.tabPage3.Controls.Add(this.MoveCameraButton);
+            this.tabPage3.Controls.Add(this.LockCameraButton);
+            this.tabPage3.Controls.Add(this.followHeroButton);
             this.tabPage3.Controls.Add(this.warpButton);
             this.tabPage3.Controls.Add(this.resetScreenButton);
             this.tabPage3.Controls.Add(this.fadeScreenButton);
@@ -6255,72 +6135,84 @@
             this.tabPage3.Text = "Overworld";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // button15
+            // MoveCameraButton
             // 
-            this.button15.Location = new System.Drawing.Point(109, 147);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(100, 33);
-            this.button15.TabIndex = 23;
-            this.button15.Text = "Move Camera";
-            this.button15.UseVisualStyleBackColor = true;
+            this.MoveCameraButton.Location = new System.Drawing.Point(108, 147);
+            this.MoveCameraButton.Name = "MoveCameraButton";
+            this.MoveCameraButton.Size = new System.Drawing.Size(100, 33);
+            this.MoveCameraButton.TabIndex = 23;
+            this.MoveCameraButton.Text = "Move Camera";
+            this.MoveCameraButton.UseVisualStyleBackColor = true;
+            this.MoveCameraButton.Click += new System.EventHandler(this.MoveCameraButton_Click);
             // 
-            // button13
+            // LockCameraButton
             // 
-            this.button13.Location = new System.Drawing.Point(5, 147);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(100, 33);
-            this.button13.TabIndex = 22;
-            this.button13.Text = "Freeze Camera";
-            this.button13.UseVisualStyleBackColor = true;
+            this.LockCameraButton.Location = new System.Drawing.Point(5, 147);
+            this.LockCameraButton.Name = "LockCameraButton";
+            this.LockCameraButton.Size = new System.Drawing.Size(100, 33);
+            this.LockCameraButton.TabIndex = 22;
+            this.LockCameraButton.Text = "Lock Camera";
+            this.LockCameraButton.UseVisualStyleBackColor = true;
+            this.LockCameraButton.Click += new System.EventHandler(this.LockCameraButton_Click);
             // 
-            // button12
+            // followHeroButton
             // 
-            this.button12.Location = new System.Drawing.Point(213, 147);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(100, 33);
-            this.button12.TabIndex = 21;
-            this.button12.Text = "Follow Hero";
-            this.button12.UseVisualStyleBackColor = true;
+            this.followHeroButton.Enabled = false;
+            this.followHeroButton.Location = new System.Drawing.Point(211, 147);
+            this.followHeroButton.Name = "followHeroButton";
+            this.followHeroButton.Size = new System.Drawing.Size(100, 33);
+            this.followHeroButton.TabIndex = 21;
+            this.followHeroButton.Text = "Follow Hero";
+            this.followHeroButton.UseVisualStyleBackColor = true;
+            this.followHeroButton.Click += new System.EventHandler(this.followHeroButton_Click);
             // 
             // warpButton
             // 
-            this.warpButton.Location = new System.Drawing.Point(213, 112);
+            this.warpButton.Enabled = false;
+            this.warpButton.Location = new System.Drawing.Point(211, 112);
             this.warpButton.Name = "warpButton";
             this.warpButton.Size = new System.Drawing.Size(100, 33);
             this.warpButton.TabIndex = 20;
             this.warpButton.Text = "Warp to Map";
             this.warpButton.UseVisualStyleBackColor = true;
+            this.warpButton.Click += new System.EventHandler(this.warpButton_Click);
             // 
             // resetScreenButton
             // 
-            this.resetScreenButton.Location = new System.Drawing.Point(109, 112);
+            this.resetScreenButton.Enabled = false;
+            this.resetScreenButton.Location = new System.Drawing.Point(108, 112);
             this.resetScreenButton.Name = "resetScreenButton";
             this.resetScreenButton.Size = new System.Drawing.Size(100, 33);
             this.resetScreenButton.TabIndex = 19;
             this.resetScreenButton.Text = "Reset Screen";
             this.resetScreenButton.UseVisualStyleBackColor = true;
+            this.resetScreenButton.Click += new System.EventHandler(this.resetScreenButton_Click);
             // 
             // fadeScreenButton
             // 
-            this.fadeScreenButton.Location = new System.Drawing.Point(109, 77);
+            this.fadeScreenButton.Enabled = false;
+            this.fadeScreenButton.Location = new System.Drawing.Point(108, 77);
             this.fadeScreenButton.Name = "fadeScreenButton";
             this.fadeScreenButton.Size = new System.Drawing.Size(100, 33);
             this.fadeScreenButton.TabIndex = 18;
             this.fadeScreenButton.Text = "Fade Screen";
             this.fadeScreenButton.UseVisualStyleBackColor = true;
+            this.fadeScreenButton.Click += new System.EventHandler(this.fadeScreenButton_Click);
             // 
             // setOwPositionButton
             // 
-            this.setOwPositionButton.Location = new System.Drawing.Point(213, 77);
+            this.setOwPositionButton.Enabled = false;
+            this.setOwPositionButton.Location = new System.Drawing.Point(211, 77);
             this.setOwPositionButton.Name = "setOwPositionButton";
             this.setOwPositionButton.Size = new System.Drawing.Size(100, 33);
             this.setOwPositionButton.TabIndex = 17;
             this.setOwPositionButton.Text = "Change Position";
             this.setOwPositionButton.UseVisualStyleBackColor = true;
+            this.setOwPositionButton.Click += new System.EventHandler(this.setOwPositionButton_Click);
             // 
             // removePeopleButton
             // 
-            this.removePeopleButton.Location = new System.Drawing.Point(109, 42);
+            this.removePeopleButton.Location = new System.Drawing.Point(108, 42);
             this.removePeopleButton.Name = "removePeopleButton";
             this.removePeopleButton.Size = new System.Drawing.Size(100, 33);
             this.removePeopleButton.TabIndex = 16;
@@ -6340,7 +6232,7 @@
             // 
             // addPeopleButton
             // 
-            this.addPeopleButton.Location = new System.Drawing.Point(109, 7);
+            this.addPeopleButton.Location = new System.Drawing.Point(108, 7);
             this.addPeopleButton.Name = "addPeopleButton";
             this.addPeopleButton.Size = new System.Drawing.Size(100, 33);
             this.addPeopleButton.TabIndex = 15;
@@ -6360,7 +6252,7 @@
             // 
             // waitMovementButton
             // 
-            this.waitMovementButton.Location = new System.Drawing.Point(213, 42);
+            this.waitMovementButton.Location = new System.Drawing.Point(211, 42);
             this.waitMovementButton.Name = "waitMovementButton";
             this.waitMovementButton.Size = new System.Drawing.Size(100, 33);
             this.waitMovementButton.TabIndex = 14;
@@ -6380,12 +6272,14 @@
             // 
             // applyMovementButton
             // 
-            this.applyMovementButton.Location = new System.Drawing.Point(213, 7);
+            this.applyMovementButton.Enabled = false;
+            this.applyMovementButton.Location = new System.Drawing.Point(211, 7);
             this.applyMovementButton.Name = "applyMovementButton";
             this.applyMovementButton.Size = new System.Drawing.Size(100, 33);
             this.applyMovementButton.TabIndex = 13;
             this.applyMovementButton.Text = "Ow. Movement";
             this.applyMovementButton.UseVisualStyleBackColor = true;
+            this.applyMovementButton.Click += new System.EventHandler(this.applyMovementButton_Click);
             // 
             // releaseButton
             // 
@@ -6395,6 +6289,7 @@
             this.releaseButton.TabIndex = 12;
             this.releaseButton.Text = "Release Ow.";
             this.releaseButton.UseVisualStyleBackColor = true;
+            this.releaseButton.Click += new System.EventHandler(this.releaseButton_Click);
             // 
             // label5
             // 
@@ -6971,15 +6866,170 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             // 
-            // duplicateBuildingButton
+            // headersGridView
             // 
-            this.duplicateBuildingButton.Location = new System.Drawing.Point(59, 302);
-            this.duplicateBuildingButton.Name = "duplicateBuildingButton";
-            this.duplicateBuildingButton.Size = new System.Drawing.Size(63, 23);
-            this.duplicateBuildingButton.TabIndex = 25;
-            this.duplicateBuildingButton.Text = "Duplicate";
-            this.duplicateBuildingButton.UseVisualStyleBackColor = true;
-            this.duplicateBuildingButton.Click += new System.EventHandler(this.duplicateBuildingButton_Click);
+            this.headersGridView.AllowUserToAddRows = false;
+            this.headersGridView.AllowUserToDeleteRows = false;
+            this.headersGridView.AllowUserToResizeColumns = false;
+            this.headersGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.headersGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.headersGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.Format = "D4";
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            this.headersGridView.Location = new System.Drawing.Point(0, 0);
+            this.headersGridView.Name = "headersGridView";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.headersGridView.RowHeadersWidth = 50;
+            this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.headersGridView.RowTemplate.Height = 18;
+            this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.headersGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.headersGridView.ShowCellErrors = false;
+            this.headersGridView.Size = new System.Drawing.Size(965, 566);
+            this.headersGridView.TabIndex = 1;
+            this.headersGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.headersGridView_CellFormatting);
+            this.headersGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.headersGridView_CellMouseDoubleClick);
+            this.headersGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.headersGridView_CellValueChanged);
+            // 
+            // heightsGridView
+            // 
+            this.heightsGridView.AllowUserToAddRows = false;
+            this.heightsGridView.AllowUserToDeleteRows = false;
+            this.heightsGridView.AllowUserToResizeColumns = false;
+            this.heightsGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            this.heightsGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.Format = "D2";
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle8;
+            this.heightsGridView.Location = new System.Drawing.Point(0, 0);
+            this.heightsGridView.Name = "heightsGridView";
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            this.heightsGridView.RowHeadersWidth = 50;
+            this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.heightsGridView.RowTemplate.Height = 18;
+            this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.heightsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.heightsGridView.Size = new System.Drawing.Size(965, 566);
+            this.heightsGridView.TabIndex = 2;
+            this.heightsGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.heightsGridView_CellFormatting);
+            this.heightsGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.heightsGridView_CellValueChanged);
+            // 
+            // mapFilesGridView
+            // 
+            this.mapFilesGridView.AllowUserToAddRows = false;
+            this.mapFilesGridView.AllowUserToDeleteRows = false;
+            this.mapFilesGridView.AllowUserToResizeColumns = false;
+            this.mapFilesGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
+            this.mapFilesGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle13.Format = "D4";
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle13;
+            this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
+            this.mapFilesGridView.Name = "mapFilesGridView";
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            this.mapFilesGridView.RowHeadersWidth = 50;
+            this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mapFilesGridView.RowTemplate.Height = 18;
+            this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.mapFilesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.mapFilesGridView.Size = new System.Drawing.Size(965, 566);
+            this.mapFilesGridView.TabIndex = 2;
+            this.mapFilesGridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellMouseDoubleClick);
+            this.mapFilesGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.mapFilesGridView_CellFormatting);
+            this.mapFilesGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellValueChanged);
             // 
             // MainProgram
             // 
@@ -7035,11 +7085,8 @@
             this.matrixEditorTabPage.PerformLayout();
             this.matrixTabControl.ResumeLayout(false);
             this.headersTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).EndInit();
             this.heightsTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).EndInit();
             this.mapFilesTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthUpDown)).EndInit();
             this.mapEditorTabPage.ResumeLayout(false);
@@ -7192,6 +7239,9 @@
             this.statusStrip1.PerformLayout();
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -7466,13 +7516,13 @@
         private System.Windows.Forms.Button greySignButton;
         private System.Windows.Forms.Button closeMessageButton;
         private System.Windows.Forms.Button waitKeyPressButton;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button15;
-        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Button checkBadgeButton;
+        private System.Windows.Forms.Button checkItemButton;
+        private System.Windows.Forms.Button checkMoneyButton;
+        private System.Windows.Forms.Button checkPokemonButton;
+        private System.Windows.Forms.Button followHeroButton;
+        private System.Windows.Forms.Button MoveCameraButton;
+        private System.Windows.Forms.Button LockCameraButton;
         private System.Windows.Forms.ToolStripButton wildEditorButton;
         private System.Windows.Forms.TabPage nsbtxEditorTabPage;
         private System.Windows.Forms.GroupBox areaDataGroupBox;

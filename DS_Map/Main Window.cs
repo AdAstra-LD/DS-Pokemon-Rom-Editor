@@ -2351,7 +2351,8 @@ namespace DSPRE {
 
         }
         private void matrixNameTextBox_TextChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentMatrix.name = matrixNameTextBox.Text;
         }
         private void removeHeadersButton_Click(object sender, EventArgs e) {
@@ -4640,7 +4641,7 @@ namespace DSPRE {
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].zPosition = (short)owZPositionUpDown.Value;
         }
         private void owXMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
                 return;
 
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].xMatrixPosition = (ushort)owXMatrixUpDown.Value;
@@ -4651,7 +4652,7 @@ namespace DSPRE {
             DisplayActiveEvents();
         }
         private void owYMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
                 return;
 
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].yMatrixPosition = (ushort)owYMatrixUpDown.Value;
@@ -4671,10 +4672,10 @@ namespace DSPRE {
                 overworldsListBox.Items.RemoveAt(owNumber);
 
                 FillOverworldsBox(); // Update ListBox
-
                 disableHandlers = false;
 
-                if (owNumber > 0) overworldsListBox.SelectedIndex = owNumber - 1;
+                if (owNumber > 0) 
+                    overworldsListBox.SelectedIndex = owNumber - 1;
             }
         }
         #endregion
@@ -4702,21 +4703,19 @@ namespace DSPRE {
             }
         }
         private void warpAnchorUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0)
                 return;
             currentEventFile.warps[warpsListBox.SelectedIndex].anchor = (ushort)warpAnchorUpDown.Value;
         }
         private void warpHeaderUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0)
                 return;
             currentEventFile.warps[warpsListBox.SelectedIndex].header = (ushort)warpHeaderUpDown.Value;
         }
         private void warpsListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            #region Disable events for fast execution
             if (disableHandlers || warpsListBox.SelectedIndex < 0)
                 return;
             disableHandlers = true;
-            #endregion
 
             selectedEvent = currentEventFile.warps[warpsListBox.SelectedIndex];
 
@@ -4735,34 +4734,36 @@ namespace DSPRE {
             #endregion
         }
         private void warpMatrixXUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) 
+                return;
 
             currentEventFile.warps[warpsListBox.SelectedIndex].xMatrixPosition = (ushort)warpXMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpMatrixYUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0)
                 return;
 
             currentEventFile.warps[warpsListBox.SelectedIndex].yMatrixPosition = (ushort)warpYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpXMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0)
                 return;
 
             currentEventFile.warps[warpsListBox.SelectedIndex].xMapPosition = (short)warpXMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpYMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0)
                 return;
 
             currentEventFile.warps[warpsListBox.SelectedIndex].yMapPosition = (short)warpYMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpZUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) 
+                return;
 
             currentEventFile.warps[warpsListBox.SelectedIndex].zPosition = (short)warpZUpDown.Value;
             DisplayActiveEvents();
@@ -4792,14 +4793,14 @@ namespace DSPRE {
             }
         }
         private void triggerFlagUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers || triggersListBox.SelectedIndex < 0) 
+                return;
             currentEventFile.triggers[triggersListBox.SelectedIndex].flag = (ushort)triggerFlagUpDown.Value;
         }
         private void triggersListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            #region Disable events for fast execution
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             disableHandlers = true;
-            #endregion
 
             selectedEvent = currentEventFile.triggers[triggersListBox.SelectedIndex];
 
@@ -4821,54 +4822,54 @@ namespace DSPRE {
             #endregion
         }
         private void triggerScriptUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers || triggersListBox.SelectedIndex < 0) 
                 return;
             currentEventFile.triggers[triggersListBox.SelectedIndex].scriptNumber = (ushort)triggerScriptUpDown.Value;
         }
         private void triggerXMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers || triggersListBox.SelectedIndex < 0) 
                 return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].xMapPosition = (short)triggerXMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerYMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers || triggersListBox.SelectedIndex < 0) 
                 return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].yMapPosition = (short)triggerYMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerZUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers || triggersListBox.SelectedIndex < 0) 
                 return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].zPosition = (short)triggerZUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerXMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || triggersListBox.SelectedIndex < 0)
                 return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].xMatrixPosition = (ushort)triggerXMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerYMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || triggersListBox.SelectedIndex < 0)
                 return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].yMatrixPosition = (ushort)triggerYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerWidthUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || triggersListBox.SelectedIndex < 0)
                 return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].width = (ushort)triggerWidthUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerLengthUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || triggersListBox.SelectedIndex < 0)
                 return;
 
             currentEventFile.triggers[triggersListBox.SelectedIndex].length = (ushort)triggerLengthUpDown.Value;
@@ -4940,6 +4941,7 @@ namespace DSPRE {
             for (int i = First_Line + 1; i <= Last_Line; i++) {
                 linebox.Text += i + "\n";
             }
+            linebox.Invalidate();
         }
 
         private void scriptTextBox_SelectionChanged(object sender, EventArgs e) {
@@ -4952,7 +4954,6 @@ namespace DSPRE {
         private void scriptTextBox_VScroll(object sender, EventArgs e) {
             LineNumberTextBoxScript.Text = "";
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            LineNumberTextBoxScript.Invalidate();
         }
 
         private void scriptTextBox_TextChanged(object sender, EventArgs e) {
@@ -4962,6 +4963,14 @@ namespace DSPRE {
             if (scriptTextBox.Text == "") {
                 AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             }
+        }
+
+        private void scriptTextBoxTextScroll(RichTextBox txtb) {
+            // set the current caret position to the end
+            txtb.SelectionStart = txtb.Text.Length;
+            txtb.SelectionLength = 0;
+            // scroll automatically
+            txtb.ScrollToCaret();
         }
 
         private void LineNumberTextBoxScript_MouseDown(object sender, MouseEventArgs e) {
@@ -5301,13 +5310,53 @@ namespace DSPRE {
             AddLineNumbers(movementTextBox, LineNumberTextBoxMov);
         }
 
-        #region Miscellaneous
+        #region Script Macros
+        private void setflagButton_Click(object sender, EventArgs e) {
+            using (InsertValueDialog f = new InsertValueDialog("Insert flag number (hex):", "hex")) {
+                f.ShowDialog();
+                if (f.okSelected)
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nSetFlag 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
+            }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
         private void clearflagButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Insert flag number (hex):", "hex")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "ClearFlag 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nClearFlag 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
             }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void callFunctionButton_Click(object sender, EventArgs e) {
+            using (InsertValueDialog f = new InsertValueDialog("Number of Function to call (decimal):", "Decimal")) {
+                f.ShowDialog();
+                if (f.okSelected)
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nCall Function_#" + ((int)f.numericUpDown1.Value).ToString());
+            }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+        private void jumpToFuncButton_Click(object sender, EventArgs e) {
+            using (InsertValueDialog f = new InsertValueDialog("Number of Function to jump to (decimal):", "Decimal")) {
+                f.ShowDialog();
+                if (f.okSelected)
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nJump Function_#" + ((int)f.numericUpDown1.Value).ToString());
+            }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+        private void setvarButton_Click(object sender, EventArgs e) {
+            //TODO - ASK FOR VAR VALUE
+            using (InsertValueDialog f = new InsertValueDialog("Insert variable number (hex):", "hex")) {
+                f.ShowDialog();
+                if (f.okSelected)
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nSetVar 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
+            }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void messageButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Insert message number (decimal):", "dec")) {
@@ -5319,49 +5368,178 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, msg);
                 }
             }
-        }
-        private void setflagButton_Click(object sender, EventArgs e) {
-            using (InsertValueDialog f = new InsertValueDialog("Insert flag number (hex):", "hex")) {
-                f.ShowDialog();
-                if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nSetFlag 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
-                else
-                    f.Hide();
-            }
-        }
-        private void setvarButton_Click(object sender, EventArgs e) {
-            using (InsertValueDialog f = new InsertValueDialog("Insert variable number (hex):", "hex")) {
-                f.ShowDialog();
-                if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "SetVar 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
-                else
-                    f.Hide();
-            }
-        }
-        private void jumpToFuncButton_Click(object sender, EventArgs e) {
-            using (InsertValueDialog f = new InsertValueDialog("Function number to jump to:", "Decimal")) {
-                f.ShowDialog();
-                if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "Jump Function_#" + ((int)f.numericUpDown1.Value).ToString());
-                else
-                    f.Hide();
-            }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
 
         private void playCryButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Insert cry number (hex):", "hex")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "PlayCry 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
-                else
-                    f.Hide();
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nPlayCry 0x" + ((int)f.numericUpDown1.Value).ToString("X4") + " 0x1");
             }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void routeSignButton_Click(object sender, EventArgs e) {
-
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+        private void townSignButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+        private void greySignButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+        private void tipsSignButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void trainerBattleButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
 
+        private void playSoundButton_Click(object sender, EventArgs e) {
+            using (InsertValueDialog f = new InsertValueDialog("Insert sound ID (hex):", "hex")) {
+                f.ShowDialog();
+                if (f.okSelected)
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nPlaySound 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
+            }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void waitSoundButton_Click(object sender, EventArgs e) {
+            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nWaitSound");
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void switchMusicButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void restartMusicButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void waitKeyPressButton_Click(object sender, EventArgs e) {
+            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nWaitButton");
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void closeMessageButton_Click(object sender, EventArgs e) {
+            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nCloseMessage");
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void wildBattleButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void legendaryBattleButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void checkItemButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void takePokémonButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void checkMoneyButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void givePokédexButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void giveNationalDexButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void giveShoesButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void givePokégearButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void checkBadgeButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void checkPokemonButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void LockCameraButton_Click(object sender, EventArgs e) {
+            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nCheckPlayerPosition 0x8004 0x8005\n" +
+                "LockCam 0x8004 0x8005\n");
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void MoveCameraButton_Click(object sender, EventArgs e) {
+            using (InsertValueDialog f = new InsertValueDialog("Insert movement ID to apply (decimal):", "dec")) {
+                f.ShowDialog();
+                if (f.okSelected)
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nApplyMovement Cam Movement_#\n" + f.numericUpDown1.Value);
+            }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void resetScreenButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void fadeScreenButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void applyMovementButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void setOwPositionButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void warpButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
+        }
+
+        private void followHeroButton_Click(object sender, EventArgs e) {
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         #endregion
 
@@ -5376,55 +5554,61 @@ namespace DSPRE {
 
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, firstLine + "\r" + secondLine + "\r" + thirdLine);
 
-                } else
-                    f.Hide();
-
+                }
             }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void lockallButton_Click(object sender, EventArgs e) {
-            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "LockAll");
+            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nLockAll");
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void releaseallButton_Click(object sender, EventArgs e) {
-            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "ReleaseAll");
+            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nReleaseAll");
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void lockButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("ID of the overworld to lock:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "Lock" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
-                else
-                    f.Hide();
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nLock" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
             }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void releaseButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("ID of the overworld to release:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "Release" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
-                else
-                    f.Hide();
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nRelease" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
             }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void waitmovementButton_Click(object sender, EventArgs e) {
             scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "WaitMovement");
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void addpeopleButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("ID of the Overworld to add:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "AddOW" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
-                else
-                    f.Hide();
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nAddOW" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
             }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void removepeopleButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("ID of the Overworld to remove:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "RemoveOW" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
-                else
-                    f.Hide();
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nRemoveOW" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
             }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         #endregion
 
@@ -5434,27 +5618,27 @@ namespace DSPRE {
                 f.ShowDialog();
                 if (f.okSelected)
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, f.command);
-                else
-                    f.Hide();
             }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void giveMoneyButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Insert money amount:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "GiveMoney" + " " + "0x" + ((int)f.numericUpDown1.Value).ToString("X"));
-                else
-                    f.Hide();
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nGiveMoney" + " " + "0x" + ((int)f.numericUpDown1.Value).ToString("X"));
             }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void takeMoneyButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Insert money amount:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "TakeMoney" + " " + "0x" + ((int)f.numericUpDown1.Value).ToString("X"));
-                else
-                    f.Hide();
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nTakeMoney" + " " + "0x" + ((int)f.numericUpDown1.Value).ToString("X"));
             }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void takeItemButton_Click(object sender, EventArgs e) {
             using (GiveItemDialog f = new GiveItemDialog(GetItemNames())) {
@@ -5463,30 +5647,29 @@ namespace DSPRE {
                     string item = f.itemComboBox.SelectedIndex.ToString("X");
                     string quantity = ((int)f.quantityNumericUpDown.Value).ToString("X");
 
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "TakeItem" + " " + "0x" + item + " " + "0x" + quantity + " " + "0x800C");
-
-                } else
-                    f.Hide();
-
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nTakeItem" + " " + "0x" + item + " " + "0x" + quantity + " " + "0x800C");
+                }
+                AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+                scriptTextBoxTextScroll(scriptTextBox);
             }
         }
         private void giveBadgeButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Insert badge number:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "EnableBadge 0x" + ((int)f.numericUpDown1.Value).ToString("X"));
-                else
-                    f.Hide();
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nEnableBadge 0x" + ((int)f.numericUpDown1.Value).ToString("X"));
             }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         private void takeBadgeButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Insert badge number:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "DisableBadge 0x" + ((int)f.numericUpDown1.Value).ToString("X"));
-                else
-                    f.Hide();
+                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nDisableBadge 0x" + ((int)f.numericUpDown1.Value).ToString("X"));
             }
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+            scriptTextBoxTextScroll(scriptTextBox);
         }
         #endregion
 
