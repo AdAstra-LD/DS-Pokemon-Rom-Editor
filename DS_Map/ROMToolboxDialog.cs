@@ -92,7 +92,7 @@ namespace DSPRE
                     }
                     break;
                 case "Plat":
-                    initString = arm9DB.GetString("initString" + "_" + version + lang);
+                    initString = arm9DB.GetString("initString" + "_" + version + "_" + lang);
                     branchCodeString = arm9DB.GetString("branchCode" + "_" + version + "_" + lang);
                     branchOffset = 0x02000CB4;
                     switch (lang) {
