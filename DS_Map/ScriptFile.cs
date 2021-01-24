@@ -563,7 +563,7 @@ namespace DSPRE {
 
             /* Read parameters from remainder of the description */
             Console.WriteLine("ID = " + id.ToString("X4"));
-            if (words.Length > 1 && this.id > 0) {
+            if (words.Length > 1 && this.id > -1) {
                 if (isMovement) {
                     if (words[1].Length > 4) { // Cases where movement is followed by an Overworld parameter
 

@@ -704,8 +704,8 @@ namespace DSPRE {
             for (int i = 0; i < scriptCount; i++)
                 selectScriptFileComboBox.Items.Add("Script File " + i);
 
-            String exclMSG = "Currently, the script editor is VERY unreliable.\n" +
-                "Remember to use it carefully.\n";
+            String exclMSG = "The script editor has been recently \"fixed\".\n" +
+                "Always keep an eye out for unexpected behavior.\n";
             MessageBox.Show(exclMSG, "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
             selectScriptFileComboBox.SelectedIndex = 0;
