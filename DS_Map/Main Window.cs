@@ -1051,10 +1051,10 @@ namespace DSPRE {
         }
 
         private void updateMapNarcsButton_Click(object sender, EventArgs e) {
-            DialogResult d = MessageBox.Show("Do you wish to unpack all buildings-related NARCS?\n" +
+            DialogResult d = MessageBox.Show("Do you wish to unpack all NARC files necessary for the Building Editor ?\n" +
                "This operation might be long and can't be interrupted.\n" +
-               "Any unsaved changes made to buildings and textures in this session will be lost." +
-               "\nProceed?", "About to unpack all NARCS",
+               "Any unsaved changes made to building models and textures in this session will be lost." +
+               "\nProceed?", "About to unpack Building NARCs",
                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (d == DialogResult.Yes) {
@@ -4475,7 +4475,7 @@ namespace DSPRE {
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)owScriptNumericUpDown.Value;
         }
         private void owItemComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(7000 + owItemComboBox.SelectedIndex);
+            owScriptNumericUpDown.Value = currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(7000 + owItemComboBox.SelectedIndex);
         }
         private void overworldsListBox_SelectedIndexChanged(object sender, EventArgs e) {
             #region Disable Events for fast execution

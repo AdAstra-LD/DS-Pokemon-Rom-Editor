@@ -6807,7 +6807,7 @@
             this.updateMapNarcsButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
             this.updateMapNarcsButton.Name = "updateMapNarcsButton";
             this.updateMapNarcsButton.Size = new System.Drawing.Size(36, 36);
-            this.updateMapNarcsButton.Text = "Update Map Narcs";
+            this.updateMapNarcsButton.Text = "Unpack Building NARCs";
             this.updateMapNarcsButton.Click += new System.EventHandler(this.updateMapNarcsButton_Click);
             // 
             // toolStripSeparator1
