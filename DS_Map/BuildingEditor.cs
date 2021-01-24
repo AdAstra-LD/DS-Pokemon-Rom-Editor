@@ -36,7 +36,7 @@ namespace DSPRE
             buildingOpenGLControl.MouseWheel += new MouseEventHandler(buildingOpenGLControl_MouseWheel);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
 
-            if (rom.gameVersion == "HG" || rom.gameVersion == "SS") 
+            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") 
                 interiorCheckBox.Enabled = true;
 
             disableHandlers = true;
@@ -200,7 +200,8 @@ namespace DSPRE
             if (em.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            else File.Copy(folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingEditorBldListBox.SelectedIndex.ToString("D4"), em.FileName, true);
+            else 
+                File.Copy(folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingEditorBldListBox.SelectedIndex.ToString("D4"), em.FileName, true);
         }
         private void importButton_Click(object sender, EventArgs e)
         {

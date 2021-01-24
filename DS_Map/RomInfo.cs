@@ -16,7 +16,7 @@ namespace DSPRE {
     public class RomInfo {
         public string romID { get; private set; }
         public string workDir { get; private set; }
-        public string gameVersion { get; private set; }
+        public static string gameVersion { get; private set; }
         public string gameName { get; private set; }
         public string gameLanguage { get; private set; }
 
@@ -35,7 +35,7 @@ namespace DSPRE {
         public string matrixDirPath { get; private set; }
         public string mapDirPath { get; private set; }
         public string eventsDirPath { get; private set; }
-        public string scriptDirPath { get; private set; }
+        public static string scriptDirPath { get; private set; }
         public string textArchivesPath { get; private set; }
         public string encounterDirPath { get; private set; }
         public string trainerDataDirPath { get; private set; }
@@ -46,6 +46,7 @@ namespace DSPRE {
         public int attackNamesTextNumber { get; private set; }
         public int pokémonNamesTextNumber { get; private set; }
         public int itemNamesTextNumber { get; private set; }
+        public static int itemScriptFileNumber { get; internal set; }
 
 
         public readonly byte internalNameLength = 16;
@@ -91,6 +92,7 @@ namespace DSPRE {
             SetAttackNamesTextNumber();
             SetPokémonNamesTextNumber();
             SetItemNamesTextNumber();
+            SetItemScriptFileNumber();
 
             SetNarcDirs();
 
@@ -100,6 +102,20 @@ namespace DSPRE {
         #endregion
 
         #region Methods (22)
+        private void SetItemScriptFileNumber() {
+            switch (gameVersion) {
+                case "D":
+                case "P":
+                    itemScriptFileNumber = 370;
+                    break;
+                case "Plat":
+                    itemScriptFileNumber = 404;
+                    break;
+                default:
+                    itemScriptFileNumber = 141;
+                    break;
+            }
+        }
         private void SetNullEncounterID() {
             switch (gameVersion) {
                 case "D":
@@ -426,22 +442,6 @@ namespace DSPRE {
                         fileNumber = 272;
                     else 
                         fileNumber = 279;
-                    break;
-            }
-            return fileNumber;
-        }
-        public int GetItemScriptFileNumber() {
-            int fileNumber;
-            switch (gameVersion) {
-                case "D":
-                case "P":
-                    fileNumber = 370;
-                    break;
-                case "Plat":
-                    fileNumber = 404;
-                    break;
-                default:
-                    fileNumber = 141;
                     break;
             }
             return fileNumber;

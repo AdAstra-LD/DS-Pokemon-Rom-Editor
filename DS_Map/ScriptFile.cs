@@ -78,7 +78,7 @@ namespace DSPRE {
                     while (!endFunction) {
                         Command command = Read_Command(scrReader, ref functionOffsets, ref movementOffsets, gameVersion);
                         commandsList.Add(command);
-                        if (endCodes.Contains(command.id)) 
+                        if (endCodes.Contains(command.id))
                             endFunction = true;
                     }
 
@@ -94,18 +94,21 @@ namespace DSPRE {
                     while (!endMovement) {
                         ushort id = scrReader.ReadUInt16();
                         List<byte[]> parameters = new List<byte[]>();
-                        if (id != 0xFE) 
+                        if (id != 0xFE)
                             parameters.Add(scrReader.ReadBytes(2));
                         Command command = new Command(id, parameters, gameVersion, true);
 
                         commandsList.Add(command);
-                        if (command.id == 0xFE) 
+                        if (command.id == 0xFE)
                             endMovement = true;
 
                     }
                     this.movements.Add(new Script(commandsList));
                 }
             }
+        }
+        public ScriptFile(int fileID) : this((new FileStream(RomInfo.scriptDirPath +
+        "\\" + fileID.ToString("D4"), FileMode.Open)), RomInfo.gameVersion) {
         }
         public ScriptFile(List<Script> scripts, List<Script> functions, List<Script> movements) {
             this.scripts = scripts;
@@ -439,6 +442,12 @@ namespace DSPRE {
 
             return newData.ToArray();
         }
+
+        public void SaveToFile(int fileID) {
+            using (BinaryWriter writer = new BinaryWriter((new FileStream(RomInfo.scriptDirPath +
+                "\\" + fileID.ToString("D4"), FileMode.Create))))
+                writer.Write(this.Save());
+        }
         #endregion
     }
     public class Script {
@@ -563,7 +572,7 @@ namespace DSPRE {
 
             /* Read parameters from remainder of the description */
             Console.WriteLine("ID = " + id.ToString("X4"));
-            if (words.Length > 1 && this.id > -1) {
+            if (words.Length > 1) {
                 if (isMovement) {
                     if (words[1].Length > 4) { // Cases where movement is followed by an Overworld parameter
 

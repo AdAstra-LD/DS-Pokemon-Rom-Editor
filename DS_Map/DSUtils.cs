@@ -102,35 +102,37 @@ namespace DSPRE {
                 
             }
         }
-        public static byte[] ReadFromArm9(long startOffset, long numberOfBytes) {
+        public static byte[] ReadFromArm9(int startOffset, long numberOfBytes) {
             return ReadFromFile(workDir + "arm9.bin", startOffset, numberOfBytes);
         }
         public static byte[] ReadFromFile(string path, long startOffset, long numberOfBytes) {
-            BinaryReader reader = new BinaryReader(File.OpenRead(path));
+            FileStream f = File.OpenRead(path);
+            BinaryReader reader = new BinaryReader(f);
             reader.BaseStream.Position = startOffset;
             byte[] buffer = null;
 
-            if (numberOfBytes < 0) {
-                buffer = File.ReadAllBytes(path); 
-            } else {
-                try {
+            try {
+                if (numberOfBytes < 0) {
+                    buffer = reader.ReadBytes((int)(f.Length - reader.BaseStream.Position));
+                } else {
                     buffer = reader.ReadBytes((int)numberOfBytes);
-                } catch (EndOfStreamException) {
-                    Console.WriteLine("Stream ended");
-                } finally {
-                    reader.Dispose();
                 }
+            } catch (EndOfStreamException) {
+                Console.WriteLine("Stream ended");
+            } finally {
+                reader.Dispose();
             }
+
             return buffer;
         }
-        public static void WriteToArm9(long startOffset, byte[] bytesToWrite) {
+        public static void WriteToArm9(int startOffset, byte[] bytesToWrite) {
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin"))) {
                 writer.BaseStream.Position = startOffset;
                 writer.Write(bytesToWrite, 0, bytesToWrite.Length);
             }
         }
 
-        public static void UnpackNarcs(List<int> IDs, int progress) {
+        public static void UnpackNarcs(List<int> IDs, ToolStripProgressBar progress) {
             string[] narcPaths = RomInfo.narcPaths;
             string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
 
@@ -143,11 +145,11 @@ namespace DSPRE {
 
                 if (progress != null)
                     try {
-                        progress++;
+                        progress.Value++;
                     } catch (ArgumentOutOfRangeException) { }
             }
         }
-        public static void ForceUnpackNarcs(List<int> IDs, int progress) {
+        public static void ForceUnpackNarcs(List<int> IDs, ToolStripProgressBar progress) {
             string[] narcPaths = RomInfo.narcPaths;
             string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
 
@@ -157,7 +159,7 @@ namespace DSPRE {
 
                 if (progress != null)
                     try {
-                        progress++;
+                        progress.Value++;
                     } catch (ArgumentOutOfRangeException) { }
             }
         }

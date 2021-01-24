@@ -99,7 +99,7 @@ namespace DSPRE {
         }
 
         private AreaData LoadAreaData(uint areaDataID) {
-            return new AreaData(new FileStream(romInfo.areaDataDirPath + "//" + areaDataID.ToString("D4"), FileMode.Open), romInfo.gameVersion);
+            return new AreaData(new FileStream(romInfo.areaDataDirPath + "//" + areaDataID.ToString("D4"), FileMode.Open), RomInfo.gameVersion);
         }
 
         private MapFile LoadMapFile(int mapNumber) {
@@ -110,7 +110,7 @@ namespace DSPRE {
 
             String mapFilePath = romInfo.mapDirPath + "\\" + mapNumber.ToString("D4");
             try {
-                return new MapFile(new FileStream(mapFilePath, FileMode.Open), romInfo.gameVersion);
+                return new MapFile(new FileStream(mapFilePath, FileMode.Open), RomInfo.gameVersion);
             } catch (FileNotFoundException) {
                 MessageBox.Show("File " + '"' + mapFilePath + " is missing.", "File not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
@@ -285,15 +285,15 @@ namespace DSPRE {
             toolStripProgressBar.Value = 0;
             Update();
 
-            DSUtils.UnpackNarcs(new List<int> { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }, toolStripProgressBar.Value);
-            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
+            DSUtils.UnpackNarcs(new List<int> { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }, toolStripProgressBar);
+            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
                 DSUtils.UnpackNarc(RomInfo.narcPaths.Length - 1);
             }
 
 
             disableHandlers = true;
             if (File.Exists(romInfo.OWtablePath)) {
-                switch (romInfo.gameVersion) {
+                switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
                     case "Plat":
@@ -334,9 +334,9 @@ namespace DSPRE {
             owTrainerComboBox.Items.AddRange(trainerNames);
 
             /* Add item list to ow item box */
-            int itemScriptId = romInfo.GetItemScriptFileNumber();
+            int itemScriptId = RomInfo.itemScriptFileNumber;
             try {
-                int count = LoadScriptFile(itemScriptId).scripts.Count - 1;
+                int count = new ScriptFile(itemScriptId).scripts.Count - 1;
                 owItemComboBox.Items.AddRange(GetItemNames(0, count));
             } catch {
                 MessageBox.Show("There was a problem reading Script File #" + itemScriptId + ".\n" +
@@ -348,7 +348,7 @@ namespace DSPRE {
             owMovementComboBox.Items.AddRange(PokeDatabase.EventEditorMovements.moveArray);
 
             /* Create dictionary for 3D overworlds */
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                     break;
@@ -367,6 +367,9 @@ namespace DSPRE {
                     break;
             }
 
+            if (ROMToolboxDialog.ItemNumbersAreStandard())
+                isItemRadioButton.Enabled = true;
+
             disableHandlers = false;
 
             /* Draw matrix 0 in matrix navigator */
@@ -377,7 +380,7 @@ namespace DSPRE {
             toolStripProgressBar.Visible = false;
         }
         private void SetupFlagNames() {
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                 case "Plat":
@@ -408,7 +411,7 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack Header Editor NARCs... Please wait.";
             Update();
 
-            DSUtils.UnpackNarcs(new List<int> { 0, 1 }, toolStripProgressBar.Value);
+            DSUtils.UnpackNarcs(new List<int> { 0, 1 }, toolStripProgressBar);
 
             statusLabel.Text = "Reading internal names... Please wait.";
             Update();
@@ -434,7 +437,7 @@ namespace DSPRE {
 
             /*Add list of options to each control */
             locationNameComboBox.Items.AddRange(LoadMessageArchive(romInfo.GetLocationNamesTextNumber()).messages.ToArray());
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                     areaIconComboBox.Enabled = false;
@@ -480,8 +483,8 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack Map Editor NARCs... Please wait.";
             Update();
 
-            DSUtils.UnpackNarcs(new List<int> { 3, 4, 5, 6, 7, 8 }, toolStripProgressBar.Value);
-            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
+            DSUtils.UnpackNarcs(new List<int> { 3, 4, 5, 6, 7, 8 }, toolStripProgressBar);
+            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
                 DSUtils.UnpackNarc(RomInfo.narcPaths.Length - 1 );
             }
 
@@ -491,7 +494,7 @@ namespace DSPRE {
             mapOpenGlControl.MouseWheel += new MouseEventHandler(mapOpenGlControl_MouseWheel);
             collisionPainterPictureBox.Image = new Bitmap(100, 100);
             typePainterPictureBox.Image = new Bitmap(100, 100);
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                 case "Plat":
@@ -505,7 +508,7 @@ namespace DSPRE {
             /* Add map names to box */
             for (int i = 0; i < romInfo.GetMapCount(); i++) {
                 using (BinaryReader reader = new BinaryReader(File.OpenRead(romInfo.mapDirPath + "\\" + i.ToString("D4")))) {
-                    switch (romInfo.gameVersion) {
+                    switch (RomInfo.gameVersion) {
                         case "D":
                         case "P":
                         case "Plat":
@@ -650,7 +653,7 @@ namespace DSPRE {
 
             //Default selections
             selectMapComboBox.SelectedIndex = 0;
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                 case "Plat":
@@ -700,7 +703,7 @@ namespace DSPRE {
 
             DSUtils.UnpackNarc(12); //12 = scripts Narc Dir
 
-            int scriptCount = Directory.GetFiles(romInfo.scriptDirPath).Length;
+            int scriptCount = Directory.GetFiles(RomInfo.scriptDirPath).Length;
             for (int i = 0; i < scriptCount; i++)
                 selectScriptFileComboBox.Items.Add("Script File " + i);
 
@@ -728,7 +731,7 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack Tileset Editor NARCs... Please wait.";
             Update();
 
-            DSUtils.UnpackNarcs(new List<int> { 6, 7, 8 }, toolStripProgressBar.Value);
+            DSUtils.UnpackNarcs(new List<int> { 6, 7, 8 }, toolStripProgressBar);
 
             /* Fill Tileset ListBox */
             FillTilesetBox();
@@ -740,7 +743,7 @@ namespace DSPRE {
 
             /* Enable gameVersion-specific controls */
 
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                 case "Plat":
@@ -813,7 +816,7 @@ namespace DSPRE {
         private void asmHacksToolStripMenuItem_Click(object sender, EventArgs e) {
             using (ROMToolboxDialog window = new ROMToolboxDialog(romInfo)) {
                 window.ShowDialog();
-                if (window.standardizedItems)
+                if (ROMToolboxDialog.standardizedItems)
                     isItemRadioButton.Enabled = true;
             }
         }
@@ -833,8 +836,8 @@ namespace DSPRE {
             toolStripProgressBar.Value = 0;
             Update();
 
-            DSUtils.UnpackNarcs(new List<int> { 4, 5, 6 }, toolStripProgressBar.Value);
-            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS")
+            DSUtils.UnpackNarcs(new List<int> { 4, 5, 6 }, toolStripProgressBar);
+            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
                 DSUtils.UnpackNarc(RomInfo.narcPaths.Length - 1 );// Last = interior buildings dir
 
             toolStripProgressBar.Value = 0;
@@ -850,9 +853,9 @@ namespace DSPRE {
             toolStripProgressBar.Value = 0;
             Update();
 
-            DSUtils.ForceUnpackNarcs(new List<int> { 4, 5, 6 }, toolStripProgressBar.Value);
-            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS")
-                DSUtils.ForceUnpackNarcs(new List<int> { RomInfo.narcPaths.Length - 1 }, toolStripProgressBar.Value);// Last = interior buildings dir
+            DSUtils.ForceUnpackNarcs(new List<int> { 4, 5, 6 }, toolStripProgressBar);
+            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
+                DSUtils.ForceUnpackNarcs(new List<int> { RomInfo.narcPaths.Length - 1 }, toolStripProgressBar);// Last = interior buildings dir
 
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
@@ -885,7 +888,7 @@ namespace DSPRE {
             romInfo = new RomInfo(gameCode, workDir);
             DSUtils.SetWorkDir(workDir);
 
-            if (romInfo.gameVersion == null) {
+            if (RomInfo.gameVersion == null) {
                 statusLabel.Text = "Unsupported ROM";
                 Update();
                 return;
@@ -942,7 +945,7 @@ namespace DSPRE {
             /*foreach (Tuple<string, string> tuple in RomInfo.narcPaths.Zip(RomInfo.extractedNarcDirs, Tuple.Create))
                 Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);*/
 
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                 case "Plat":
@@ -994,7 +997,7 @@ namespace DSPRE {
             }
 
 
-            if (romInfo.gameVersion != "D" && romInfo.gameVersion != "P" && romInfo.gameVersion != "Plat") { 
+            if (RomInfo.gameVersion != "D" && RomInfo.gameVersion != "P" && RomInfo.gameVersion != "Plat") { 
                 DSUtils.RestoreOverlayFromCompressedBackup(1, eventEditorIsReady); 
             }
 
@@ -1005,7 +1008,7 @@ namespace DSPRE {
             RepackRom(saveRom.FileName);
 
 
-            if (romInfo.gameVersion != "D" && romInfo.gameVersion != "P" && romInfo.gameVersion != "Plat")
+            if (RomInfo.gameVersion != "D" && RomInfo.gameVersion != "P" && RomInfo.gameVersion != "Plat")
                 if (eventEditorIsReady)
                     DSUtils.DecompressOverlay(1, true);
 
@@ -1113,7 +1116,7 @@ namespace DSPRE {
             string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
             Tuple<string, string> t;
 
-            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS") {
+            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
                 t = Tuple.Create(narcPaths[narcPaths.Length - 2], extractedNarcDirs[extractedNarcDirs.Length - 2]);
             } else {
                 t = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 2]);
@@ -1131,7 +1134,7 @@ namespace DSPRE {
                 encToOpen = (int)wildPokeUpDown.Value;
             else
                 encToOpen = 0;
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                 case "Plat":
@@ -1167,7 +1170,7 @@ namespace DSPRE {
             if (headerData.Length < Header.length)
                 return null;
 
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                     return new HeaderDP(headerNumber, new MemoryStream(headerData));
@@ -1192,7 +1195,7 @@ namespace DSPRE {
             if (disableHandlers) return;
 
             string imageName;
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                     break;
@@ -1214,7 +1217,7 @@ namespace DSPRE {
 
             string imageName;
             try {
-                switch (romInfo.gameVersion) {
+                switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
                         currentHeader.camera = (byte)cameraComboBox.SelectedIndex;
@@ -1280,7 +1283,7 @@ namespace DSPRE {
 
             cameraComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.camera.ToString("D2"));
 
-            if (romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS")
+            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
                 areaSettingsComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.areaSettings.ToString("D2"));
 
             if (currentHeader.wildPokémon == romInfo.nullEncounterID)
@@ -1289,7 +1292,7 @@ namespace DSPRE {
                 openWildEditorWithIdButton.Enabled = true;
 
             /* Setup controls for fields with version-specific differences */
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                     locationNameComboBox.SelectedIndex = ((HeaderDP)currentHeader).locationName;
@@ -1359,7 +1362,7 @@ namespace DSPRE {
             if (disableHandlers)
                 return;
 
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                     ((HeaderDP)currentHeader).locationName = (ushort)locationNameComboBox.SelectedIndex;
@@ -1380,7 +1383,7 @@ namespace DSPRE {
         private void musicDayComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) 
                 return;
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                     ((HeaderDP)currentHeader).musicDay = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
@@ -1397,7 +1400,7 @@ namespace DSPRE {
             if (disableHandlers) 
                 return;
 
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                     ((HeaderDP)currentHeader).musicNight = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
@@ -1417,7 +1420,7 @@ namespace DSPRE {
             disableHandlers = true;
             try {
                 ushort updValue = (ushort)((NumericUpDown)sender).Value;
-                switch (romInfo.gameVersion) {
+                switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
                         ((HeaderDP)currentHeader).musicDay = updValue;
@@ -1444,7 +1447,7 @@ namespace DSPRE {
             disableHandlers = true;
             try {
                 ushort updValue = (ushort)((NumericUpDown)sender).Value;
-                switch (romInfo.gameVersion) {
+                switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
                         ((HeaderDP)currentHeader).musicNight = updValue;
@@ -1477,7 +1480,7 @@ namespace DSPRE {
             /* Update Weather Combobox*/
             disableHandlers = true;
             try {
-                switch (romInfo.gameVersion) {
+                switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
                         weatherComboBox.SelectedItem = PokeDatabase.Weather.DPWeatherDict[currentHeader.weather];
@@ -1497,7 +1500,7 @@ namespace DSPRE {
             /* Update Weather Picture */
             try {
                 string imageName = null;
-                switch (romInfo.gameVersion) {
+                switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
                         imageName = PokeDatabase.System.WeatherPics.dpWeatherImageDict[weatherComboBox.SelectedIndex];
@@ -1527,7 +1530,7 @@ namespace DSPRE {
             if (disableHandlers || weatherComboBox.SelectedIndex < 0)
                 return;
 
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                     weatherUpDown.Value = PokeDatabase.Weather.DPWeatherDict.Keys.ElementAt(weatherComboBox.SelectedIndex);
@@ -1592,7 +1595,7 @@ namespace DSPRE {
             mainTabControl.SelectedTab = textEditorTabPage;
         }
         private void saveHeaderButton_Click(object sender, EventArgs e) {
-            long headerOffset = PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * currentHeader.ID;
+            int headerOffset = PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * currentHeader.ID;
             DSUtils.WriteToArm9(headerOffset, currentHeader.toByteArray());
 
             disableHandlers = true;
@@ -1650,7 +1653,7 @@ namespace DSPRE {
                 bool empty = true;
 
 
-                switch (romInfo.gameVersion) {
+                switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
                         for (int i = 0; i < internalNames.Count; i++) {
@@ -1702,7 +1705,7 @@ namespace DSPRE {
             if (disableHandlers || areaSettingsComboBox.SelectedItem == null)
                 return;
 
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                 case "Plat":
@@ -1763,7 +1766,7 @@ namespace DSPRE {
             }
 
             currentHeader = h;
-            long headerOffset = PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * currentHeader.ID;
+            int headerOffset = PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * currentHeader.ID;
             DSUtils.WriteToArm9(headerOffset, currentHeader.toByteArray());
             try {
                 using (BinaryReader reader = new BinaryReader(new FileStream(of.FileName, FileMode.Open))) {
@@ -3595,7 +3598,7 @@ namespace DSPRE {
         #region BDHC Editor
         private void bdhcImportButton_Click(object sender, EventArgs e) {
             OpenFileDialog it = new OpenFileDialog();
-            if (romInfo.gameVersion == "D" || romInfo.gameVersion == "P")
+            if (RomInfo.gameVersion == "D" || RomInfo.gameVersion == "P")
                 it.Filter = "Terrain File (*.bdhc)|*.bdhc";
             else
                 it.Filter = "Terrain File (*.bdhc, *.bdhcam)|*.bdhc;*.bdhcam";
@@ -3825,7 +3828,7 @@ namespace DSPRE {
                 eventMapFile.mapModel = LoadModelTextures(eventMapFile.mapModel, romInfo.mapTexturesDirPath, areaData.mapTileset);
 
                 bool isInteriorMap = new bool();
-                if ((romInfo.gameVersion == "HG" || romInfo.gameVersion == "SS")
+                if ((RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
                 && areaData.areaType == 0x0)
                     isInteriorMap = true;
 
@@ -3959,7 +3962,7 @@ namespace DSPRE {
             Console.WriteLine("Searching for ID : " + ID.ToString("X4"));
             using (BinaryReader idReader = new BinaryReader(new FileStream(romInfo.OWtablePath, FileMode.Open))) {
                 int archiveID;
-                switch (romInfo.gameVersion) {
+                switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
                         idReader.BaseStream.Position = 0x22BCC;
@@ -4885,18 +4888,6 @@ namespace DSPRE {
         public ScriptFile currentScriptFile;
         #endregion
 
-        #region Subroutines
-        public ScriptFile LoadScriptFile(int fileID) {
-            return new ScriptFile((new FileStream(romInfo.scriptDirPath +
-                "\\" + fileID.ToString("D4"), FileMode.Open)), romInfo.gameVersion);
-        }
-        public void SaveScriptFile(int fileID, ScriptFile toSave) {
-            using (BinaryWriter writer = new BinaryWriter((new FileStream(romInfo.scriptDirPath +
-                "\\" + fileID.ToString("D4"), FileMode.Create)))) 
-                writer.Write(toSave.Save());
-        }
-        #endregion
-
         #region LineNumbers Scripts
         public int GetWidthScript() {
             int w = 29;
@@ -5062,8 +5053,9 @@ namespace DSPRE {
         #endregion
         private void addScriptFileButton_Click(object sender, EventArgs e) {
             /* Add new event file to event folder */
-            string scriptFilePath = romInfo.scriptDirPath + "\\" + selectScriptFileComboBox.Items.Count.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(scriptFilePath, FileMode.Create))) writer.Write(LoadScriptFile(0).Save());
+            string scriptFilePath = RomInfo.scriptDirPath + "\\" + selectScriptFileComboBox.Items.Count.ToString("D4");
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(scriptFilePath, FileMode.Create))) 
+                writer.Write(new ScriptFile(0).Save());
 
             /* Update ComboBox and select new file */
             selectScriptFileComboBox.Items.Add("Script File " + selectScriptFileComboBox.Items.Count);
@@ -5094,7 +5086,7 @@ namespace DSPRE {
                 return;
 
             /* Update scriptFile object in memory */
-            string path = romInfo.scriptDirPath + "\\" + selectScriptFileComboBox.SelectedIndex.ToString("D4");
+            string path = RomInfo.scriptDirPath + "\\" + selectScriptFileComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Refresh controls */
@@ -5121,7 +5113,7 @@ namespace DSPRE {
 
         private void removeScriptFileButton_Click(object sender, EventArgs e) {
             /* Delete script file */
-            File.Delete(romInfo.scriptDirPath + "\\" + (selectScriptFileComboBox.Items.Count - 1).ToString("D4"));
+            File.Delete(RomInfo.scriptDirPath + "\\" + (selectScriptFileComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectScriptFileComboBox.Items.Count - 1;
@@ -5142,9 +5134,8 @@ namespace DSPRE {
             populateMovementCommands(currentScriptFile);
 
             /* Write new scripts to file */
-            SaveScriptFile(selectScriptFileComboBox.SelectedIndex, currentScriptFile);
+            currentScriptFile.SaveToFile(selectScriptFileComboBox.SelectedIndex);
         }
-
         private void populateScriptCommands(ScriptFile scrFile) {
             for (int i = 0; i < scriptTextBox.Lines.Length; i++) {
                 if (scriptTextBox.Lines[i].Contains('@')) { // Move on until script header is found
@@ -5161,18 +5152,17 @@ namespace DSPRE {
                         List<Command> commandList = new List<Command>();
                         while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump Function") && i < scriptTextBox.Lines.Length - 1) {
                             Console.WriteLine("Script line " + i + 1.ToString());
-                            Command cmd = new Command(scriptTextBox.Lines[i], romInfo.gameVersion, false);
+                            Command cmd = new Command(scriptTextBox.Lines[i], RomInfo.gameVersion, false);
                             Console.WriteLine("----" + cmd + "----");
                             commandList.Add(cmd);
                             i++;
                         }
-                        commandList.Add(new Command(scriptTextBox.Lines[i], romInfo.gameVersion, false)); // Add end or jump/call command
+                        commandList.Add(new Command(scriptTextBox.Lines[i], RomInfo.gameVersion, false)); // Add end or jump/call command
                         scrFile.scripts.Add(new Script(commandList));
                     }
                 }
             }
         }
-
         private void populateFunctionCommands(ScriptFile scrFile) {
             for (int i = 0; i < functionTextBox.Lines.Length; i++) {
                 if (functionTextBox.Lines[i].Contains('@')) { // Move on until function header is found
@@ -5182,16 +5172,14 @@ namespace DSPRE {
                     List<Command> commandList = new List<Command>();
 
                     while (functionTextBox.Lines[i] != "End" && !functionTextBox.Lines[i].Contains("Return") && !functionTextBox.Lines[i].Contains("Jump F")) {
-                        commandList.Add(new Command(functionTextBox.Lines[i], romInfo.gameVersion, false));
+                        commandList.Add(new Command(functionTextBox.Lines[i], RomInfo.gameVersion, false));
                         i++;
                     }
-                    commandList.Add(new Command(functionTextBox.Lines[i], romInfo.gameVersion, false)); // Add end command
+                    commandList.Add(new Command(functionTextBox.Lines[i], RomInfo.gameVersion, false)); // Add end command
                     scrFile.functions.Add(new Script(commandList));
                 } 
             }
         }
-
-
         private void populateMovementCommands(ScriptFile scrFile) {
             for (int i = 0; i < movementTextBox.Lines.Length; i++) {
                 if (movementTextBox.Lines[i].Contains('@')) {  // Move on until script header is found
@@ -5200,17 +5188,15 @@ namespace DSPRE {
                     List<Command> commandList = new List<Command>();
                     /* Read script commands */
                     while (movementTextBox.Lines[i] != "End") {
-                        commandList.Add(new Command(movementTextBox.Lines[i], romInfo.gameVersion, true));
+                        commandList.Add(new Command(movementTextBox.Lines[i], RomInfo.gameVersion, true));
                         i++;
                     }
-                    commandList.Add(new Command(movementTextBox.Lines[i], romInfo.gameVersion, true)); // Add end command
+                    commandList.Add(new Command(movementTextBox.Lines[i], RomInfo.gameVersion, true)); // Add end command
 
                     scrFile.movements.Add(new Script(commandList));
                 }
             }
         }
-
-
         private void searchInScriptsButton_Click(object sender, EventArgs e) {
             searchInScriptsResultTextBox.Clear();
             string searchString = searchInScriptsUpDown.Text;
@@ -5218,7 +5204,8 @@ namespace DSPRE {
 
             for (int i = 0; i < selectScriptFileComboBox.Items.Count; i++) {
                 try {
-                    ScriptFile file = LoadScriptFile(i);
+                    Console.WriteLine("Attempting to load script " + i);
+                    ScriptFile file = new ScriptFile(i);
 
                     for (int j = 0; j < file.scripts.Count; j++) {
                         for (int k = 0; k < file.scripts[j].commands.Count; k++) {
@@ -5239,7 +5226,7 @@ namespace DSPRE {
         }
         private void selectScriptFileComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             /* clear controls */
-            currentScriptFile = LoadScriptFile(selectScriptFileComboBox.SelectedIndex); // Load script file
+            currentScriptFile = new ScriptFile(selectScriptFileComboBox.SelectedIndex); // Load script file
             
             scriptTextBox.Clear();
             functionTextBox.Clear();
@@ -6171,7 +6158,7 @@ namespace DSPRE {
         private void saveAreaDataButton_Click(object sender, EventArgs e) {
             string areaDataPath = romInfo.areaDataDirPath + "\\" + selectAreaDataListBox.SelectedIndex.ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(areaDataPath, FileMode.Create)))
-                writer.Write(currentAreaData.Save(romInfo.gameVersion));
+                writer.Write(currentAreaData.Save(RomInfo.gameVersion));
         }
         private void selectAreaDataListBox_SelectedIndexChanged(object sender, EventArgs e) {
             currentAreaData = LoadAreaData((uint)selectAreaDataListBox.SelectedIndex);
@@ -6181,7 +6168,7 @@ namespace DSPRE {
             areaDataLightTypeComboBox.SelectedIndex = currentAreaData.lightType;
 
             disableHandlers = true;
-            switch (romInfo.gameVersion) {
+            switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                 case "Plat":
@@ -6274,7 +6261,7 @@ namespace DSPRE {
                 return;
 
             using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create)))
-                writer.Write(currentAreaData.Save(romInfo.gameVersion));
+                writer.Write(currentAreaData.Save(RomInfo.gameVersion));
 
         }
 

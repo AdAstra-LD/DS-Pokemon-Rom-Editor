@@ -12,7 +12,7 @@ namespace DSPRE
     {
         RomInfo romInfo;
 
-        public bool standardizedItems = new bool();
+        public static bool standardizedItems = new bool();
 
         public ROMToolboxDialog(RomInfo romInfo)
         {
@@ -21,62 +21,63 @@ namespace DSPRE
         }
 
         private void applyItemStandardizeButton_Click(object sender, EventArgs e) {
-            try {
-                if (standardizedItems == true) {
-                    throw new ApplicationException();
-                }
-                DSUtils.UnpackNarc(12);
-                string itemScriptPath = romInfo.scriptDirPath + "\\" + romInfo.GetItemScriptFileNumber().ToString("D4");
-                ScriptFile itemScript = new ScriptFile(new FileStream(itemScriptPath, FileMode.Open), romInfo.gameVersion);
+            if (standardizedItems == true) {
+                alreadyApplied();
+                return;
+            }
+            DSUtils.UnpackNarc(12);
 
-                bool errorFlag = false;
+            if (!ItemNumbersAreStandard()) {
+                ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
                 for (int i = 0; i < itemScript.scripts.Count - 1; i++) {
-                    if (itemScript.scripts[i].commands[0].parameterList[1] != BitConverter.GetBytes((ushort)i) || itemScript.scripts[i].commands[1].parameterList[1] != BitConverter.GetBytes((ushort)1)) {
-                        errorFlag = true;
-                        break;
-                    }
+                    itemScript.scripts[i].commands[0].parameterList[1] = BitConverter.GetBytes((ushort)i); // Fix item index
+                    itemScript.scripts[i].commands[1].parameterList[1] = BitConverter.GetBytes((ushort)1); // Fix item quantity
                 }
-
-                if (errorFlag) {
-                    for (int i = 0; i < itemScript.scripts.Count - 1; i++) {
-                        itemScript.scripts[i].commands[0].parameterList[1] = BitConverter.GetBytes((ushort)i); // Fix item index
-                        itemScript.scripts[i].commands[1].parameterList[1] = BitConverter.GetBytes((ushort)1); // Fix item quantity
-                    }
-                    using (BinaryWriter writer = new BinaryWriter(new FileStream(itemScriptPath, FileMode.Create)))
-                        writer.Write(itemScript.Save());
-
-                    MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                } else {
-                    standardizedItems = true;
-                    throw new ApplicationException();
-                }
-            } catch (ApplicationException) {
-                MessageBox.Show("This patch has already been applied.", "Can't reapply patch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                itemScript.SaveToFile(RomInfo.itemScriptFileNumber);
+                MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                standardizedItems = true;
+            } else {
+                standardizedItems = true;
+                alreadyApplied();
                 return;
             }
         }
+        private void alreadyApplied () {
+            MessageBox.Show("This patch has already been applied.", "Can't reapply patch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        public static bool ItemNumbersAreStandard() {
+            ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
+
+            for (ushort i = 0; i < itemScript.scripts.Count - 1; i++) {
+                if (BitConverter.ToUInt16(itemScript.scripts[i].commands[0].parameterList[1], 0) != i || BitConverter.ToUInt16(itemScript.scripts[i].commands[1].parameterList[1], 0) != 1) {
+                    return false;
+                }
+            }
+            standardizedItems = true;
+            return true;
+        }
 
         private void applyARM9ExpansionButton_Click(object sender, EventArgs e) {
-            arm9Expansion(romInfo.workDir + @"arm9.bin", romInfo.gameVersion, romInfo.gameLanguage);
+            arm9Expansion(romInfo.workDir + @"arm9.bin", RomInfo.gameVersion, romInfo.gameLanguage);
         }
 
         private void arm9Expansion(string arm9path, string version, string lang) {
-            long initOffset;
+            int initOffset;
             String initString;
 
-            long branchOffset;
+            int branchOffset;
             String branchCodeString;
 
             int fileID = -1;
 
             ResourceManager arm9DB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.ARM9ExpansionDB", Assembly.GetExecutingAssembly());
 
-            fileID = Int16.Parse(arm9DB.GetString("fileID" + version));
+            fileID = Int16.Parse(arm9DB.GetString("fileID" + "_" + version));
             switch (version) {
                 case "D":
                 case "P":
-                    initString = arm9DB.GetString("initString" + "D");
-                    branchCodeString = arm9DB.GetString("branchCode" + "D" + lang);
+                    initString = arm9DB.GetString("initString" + "_" + "D");
+                    branchCodeString = arm9DB.GetString("branchCode" + "_" + "D" + "_" + lang);
                     branchOffset = 0x02000C80;
                     switch (lang) {
                         case "ENG":
@@ -91,8 +92,8 @@ namespace DSPRE
                     }
                     break;
                 case "Plat":
-                    initString = arm9DB.GetString("initString" + version + lang);
-                    branchCodeString = arm9DB.GetString("branchCode" + version + lang);
+                    initString = arm9DB.GetString("initString" + "_" + version + lang);
+                    branchCodeString = arm9DB.GetString("branchCode" + "_" + version + "_" + lang);
                     branchOffset = 0x02000CB4;
                     switch (lang) {
                         case "ENG":
@@ -108,8 +109,8 @@ namespace DSPRE
                     break;
                 case "HG":
                 case "SS":
-                    initString = arm9DB.GetString("initString" + "HG");
-                    branchCodeString = arm9DB.GetString("branchCode" + "HG" + lang);
+                    initString = arm9DB.GetString("initString" + "_" + "HG");
+                    branchCodeString = arm9DB.GetString("branchCode" + "_" + "HG" + "_" + lang);
                     branchOffset = 0x02000CD0;
                     switch (lang) {
                         case "ENG":
@@ -152,7 +153,7 @@ namespace DSPRE
         }
 
         private void applyPokemonNamesToSentenceCase_Click(object sender, EventArgs e) {
-            String version = romInfo.gameVersion;
+            String version = RomInfo.gameVersion;
             int[] fileArchives = null;
            
             switch (version) {
@@ -189,13 +190,13 @@ namespace DSPRE
             //TODO implement this
         }
 
-        private bool arm9expand(String arm9path, int fileID, long initOffset, string initString, long branchOffset, string branchString) {
+        private bool arm9expand(String arm9path, int fileID, int initOffset, string initString, int branchOffset, string branchString) {
             if (File.Exists(arm9path + ".bak"))
                 File.Delete(arm9path + ".bak");
             File.Copy(arm9path, arm9path + ".bak");
 
             try {
-                long current = 0;
+                int current = 0;
                 DSUtils.WriteToArm9(current, DSUtils.ReadFromArm9(current, branchOffset - current)); //Copy all until branchOffset
                 DSUtils.WriteToArm9(branchOffset, hexStringtoByteArray(branchString, branchString.Length)); //Write new branchOffset
                 current = branchOffset + branchString.Length;
@@ -245,7 +246,7 @@ namespace DSPRE
         }
 
         private void unsupportedROM() {
-            MessageBox.Show("This operation is currently impossible to carry out on any Pokémon " + romInfo.gameVersion + "rom.",
+            MessageBox.Show("This operation is currently impossible to carry out on any Pokémon " + RomInfo.gameVersion + "rom.",
                 "Unsupported ROM", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

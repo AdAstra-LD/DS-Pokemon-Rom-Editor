@@ -117,51 +117,51 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="branchCodeDiamondESP" xml:space="preserve">
-    <value>05 F1 04 FD</value>
-  </data>
-  <data name="branchCodeDiamondUSA" xml:space="preserve">
+  <data name="branchCode_D_ENG" xml:space="preserve">
     <value>05 F1 34 FC</value>
   </data>
-  <data name="branchCodeHGESP" xml:space="preserve">
-    <value>0F F1 40 FB</value>
+  <data name="branchCode_D_ESP" xml:space="preserve">
+    <value>05 F1 04 FD</value>
   </data>
-  <data name="branchCodeHGUSA" xml:space="preserve">
+  <data name="branchCode_HG_ENG" xml:space="preserve">
     <value>0F F1 30 FB</value>
   </data>
-  <data name="branchCodePtESP" xml:space="preserve">
-    <value>00 F1 B2 F9</value>
+  <data name="branchCode_HG_ESP" xml:space="preserve">
+    <value>0F F1 40 FB</value>
   </data>
-  <data name="branchCodePtUSA" xml:space="preserve">
+  <data name="branchCode_Plat_ENG" xml:space="preserve">
     <value>00 F1 B4 F8</value>
   </data>
-  <data name="fileIDD" xml:space="preserve">
+  <data name="branchCode_Plat_ESP" xml:space="preserve">
+    <value>00 F1 B2 F9</value>
+  </data>
+  <data name="fileID_D" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="fileIDHG" xml:space="preserve">
+  <data name="fileID_HG" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="fileIDP" xml:space="preserve">
+  <data name="fileID_P" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="fileIDPt" xml:space="preserve">
+  <data name="fileID_Plat" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="fileIDSS" xml:space="preserve">
+  <data name="fileID_SS" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="initStringDiamond" xml:space="preserve">
+  <data name="initString_D" xml:space="preserve">
     <value>FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD F1 64 00 02 00 80 3C 02</value>
-    <comment>Valid for USA and ESP, also for P</comment>
+    <comment>Valid for ENG and ESP, also for P</comment>
   </data>
-  <data name="initStringHG" xml:space="preserve">
+  <data name="initString_HG" xml:space="preserve">
     <value>FC B5 05 48 C0 46 1C 21 00 22 02 4D A8 47 00 20 03 21 FC BD 09 75 00 02 00 80 3C 02</value>
-    <comment>Valid for USA and ESP, also for SS</comment>
+    <comment>Valid for ENG and ESP, also for SS</comment>
   </data>
-  <data name="initStringPtESP" xml:space="preserve">
-    <value>FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD B9 6A 00 02 00 80 3C 02</value>
-  </data>
-  <data name="initStringPtUSA" xml:space="preserve">
+  <data name="initString_Plat_ENG" xml:space="preserve">
     <value>FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD A5 6A 00 02 00 80 3C 02</value>
+  </data>
+  <data name="initString_Plat_ESP" xml:space="preserve">
+    <value>FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD B9 6A 00 02 00 80 3C 02</value>
   </data>
 </root>
