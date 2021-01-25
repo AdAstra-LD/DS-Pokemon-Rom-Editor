@@ -86,8 +86,8 @@ namespace DSPRE
     public abstract class Header
 	{
         /*System*/
-        public int ID { get; set; }
-        public static readonly int length = 24;
+        public short ID { get; set; }
+        public static readonly byte length = 24;
         /**/
 
 
@@ -124,7 +124,7 @@ namespace DSPRE
         #endregion Fields
 
         #region Constructors (1)
-        public HeaderDP(int headerNumber, Stream data)
+        public HeaderDP(short headerNumber, Stream data)
         {
             this.ID = headerNumber;
             using (BinaryReader reader = new BinaryReader(data))
@@ -217,7 +217,7 @@ namespace DSPRE
         #endregion Fields
 
         #region Constructors (1)
-        public HeaderPt(int headerNumber, Stream data)
+        public HeaderPt(short headerNumber, Stream data)
         {
             this.ID = headerNumber;
             using (BinaryReader reader = new BinaryReader(data))
@@ -323,7 +323,7 @@ namespace DSPRE
         #endregion
 
         #region Constructors (1)
-        public HeaderHGSS(int headerNumber, Stream data)
+        public HeaderHGSS(short headerNumber, Stream data)
         {
             this.ID = headerNumber;
             using (BinaryReader reader = new BinaryReader(data))

@@ -643,7 +643,7 @@ namespace DSPRE {
                 ["WaitMoveForever"] = 0x0068,
                 ["End"] = 0x00FE
             };
-            public static Dictionary<string, int> headerOffsetsDict = new Dictionary<string, int>() {
+            public static Dictionary<string, uint> headerOffsetsDict = new Dictionary<string, uint>() {
                 ["ADAE"] = 0xEEDBC,
                 ["APAE"] = 0xEEDBC,
 

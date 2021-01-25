@@ -117,36 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="branchCode_D_ENG" xml:space="preserve">
-    <value>05 F1 34 FC</value>
-  </data>
-  <data name="branchCode_D_ESP" xml:space="preserve">
-    <value>05 F1 04 FD</value>
-  </data>
-  <data name="branchCode_HG_ENG" xml:space="preserve">
-    <value>0F F1 30 FB</value>
-  </data>
-  <data name="branchCode_HG_ESP" xml:space="preserve">
-    <value>0F F1 40 FB</value>
+  <data name="branchCode_HG" xml:space="preserve">
+    <value>B6 F3 2E FA</value>
+    <comment>Also valid for SS, both ESP and ENG</comment>
   </data>
   <data name="branchCode_Plat_ENG" xml:space="preserve">
-    <value>00 F1 B4 F8</value>
+    <value>B9 F3 E2 F8</value>
   </data>
   <data name="branchCode_Plat_ESP" xml:space="preserve">
-    <value>00 F1 B2 F9</value>
+    <value>B9 F3 AA F8</value>
   </data>
-  <data name="initString_D" xml:space="preserve">
-    <value>FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD F1 64 00 02 00 80 3C 02</value>
-    <comment>Valid for ENG and ESP, also for P</comment>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="cpue_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>cpue_cam.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="initString_HG" xml:space="preserve">
-    <value>FC B5 05 48 C0 46 1C 21 00 22 02 4D A8 47 00 20 03 21 FC BD 09 75 00 02 00 80 3C 02</value>
-    <comment>Valid for ENG and ESP, also for SS</comment>
+  <data name="cpus_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>cpus_cam.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="initString_Plat_ENG" xml:space="preserve">
-    <value>FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD A5 6A 00 02 00 80 3C 02</value>
+  <data name="ipge_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>ipge_cam.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="initString_Plat_ESP" xml:space="preserve">
-    <value>FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD B9 6A 00 02 00 80 3C 02</value>
+  <data name="ipgs_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>ipgs_cam.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ipke_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>ipke_cam.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ipks_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>ipks_cam.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="overlayCode1" xml:space="preserve">
+    <value>00 4B 18 47 41 9C 3D 02</value>
+  </data>
+  <data name="overlayCode2" xml:space="preserve">
+    <value>00 4B 18 47 01 9C 3D 02</value>
+  </data>
+  <data name="subroutineOffset" xml:space="preserve">
+    <value>71088</value>
+    <comment>0x000115B0</comment>
   </data>
 </root>

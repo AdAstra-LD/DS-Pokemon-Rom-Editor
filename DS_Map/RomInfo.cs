@@ -16,9 +16,11 @@ namespace DSPRE {
     public class RomInfo {
         public string romID { get; private set; }
         public string workDir { get; private set; }
+        public static string arm9Path { get; private set; }
+        public static string overlayTablePath { get; private set; }
         public static string gameVersion { get; private set; }
+        public static string gameLanguage { get; private set; }
         public string gameName { get; private set; }
-        public string gameLanguage { get; private set; }
 
         public long headerTableOffset { get; private set; }
         public string syntheticOverlayPath { get; private set; }
@@ -60,17 +62,17 @@ namespace DSPRE {
         public RomInfo(string id, string workDir) {
             romID = id;
             this.workDir = workDir;
-
             LoadGameVersion();
             if (gameVersion == null)
                 return;
 
             LoadGameName();
             LoadGameLanguage();
-            SetScriptDatabases();
+
+            arm9Path = workDir + @"arm9.bin";
+            overlayTablePath = workDir + @"y9.bin";
 
             internalNamesLocation = this.workDir + @"data\fielddata\maptable\mapname.bin";
-
             mapTexturesDirPath = this.workDir + @"unpacked\maptex";
             buildingTexturesDirPath = this.workDir + @"unpacked\TextureBLD";
             buildingConfigFilesPath = this.workDir + @"unpacked\area_build";
@@ -94,10 +96,11 @@ namespace DSPRE {
             SetItemNamesTextNumber();
             SetItemScriptFileNumber();
 
-            SetNarcDirs();
-
             /* System */
+            SetNarcDirs();
             LoadMapCellsColorDictionary();
+            SetScriptDatabases();
+            /* * * * */
         }
         #endregion
 

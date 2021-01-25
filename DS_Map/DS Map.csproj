@@ -103,6 +103,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ARM9ExpansionDB.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\ROMToolboxDB\BDHCAMPatchDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BDHCAMPatchDB.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ROMToolboxDB\SyntheticOverlayFileNumber.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SyntheticOverlayFileNumber.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ScriptComparisonOperators.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -247,6 +257,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ARM9ExpansionDB.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ROMToolboxDB\BDHCAMPatchDB.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BDHCAMPatchDB.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ROMToolboxDB\SyntheticOverlayFileNumber.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SyntheticOverlayFileNumber.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ScriptComparisonOperators.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ScriptComparisonOperators.Designer.cs</LastGenOutput>
@@ -305,6 +324,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\ROMToolboxDB\cpue_cam.bin" />
+    <None Include="Resources\ROMToolboxDB\cpus_cam.bin" />
+    <None Include="Resources\ROMToolboxDB\ipge_cam.bin" />
+    <None Include="Resources\ROMToolboxDB\ipgs_cam.bin" />
+    <None Include="Resources\ROMToolboxDB\ipke_cam.bin" />
+    <None Include="Resources\ROMToolboxDB\ipks_cam.bin" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

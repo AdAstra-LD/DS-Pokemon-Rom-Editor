@@ -25,29 +25,34 @@ namespace DSPRE {
         }
 
         public static bool DecompressArm9() {
-            int attempts = 0;
-            long arm9Length = new FileInfo(workDir + @"arm9.bin").Length;
+            Process decompress = new Process();
+            decompress.StartInfo.FileName = @"Tools\blz.exe";
+            decompress.StartInfo.Arguments = @" -d " + '"' + RomInfo.arm9Path + '"';
+            decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            decompress.StartInfo.CreateNoWindow = true;
+            decompress.Start();
+            decompress.WaitForExit();
 
-            while (attempts < 3 && arm9Length < 0xBC000) {
-                attempts++;
-                if (attempts > 1) {
-                    BinaryWriter arm9Truncate = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin"));
+            return new FileInfo(RomInfo.arm9Path).Length> 0xBC000;
+        }
 
-                    arm9Truncate.BaseStream.SetLength(arm9Length - 0xc);
-                    arm9Truncate.Close();
-                }
-                Process decompress = new Process();
-                decompress.StartInfo.FileName = @"Tools\blz.exe";
-                decompress.StartInfo.Arguments = @" -d " + '"' + workDir + "arm9.bin" + '"';
-                decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                decompress.StartInfo.CreateNoWindow = true;
-                decompress.Start();
-                decompress.WaitForExit();
+        public static void editARM9size (int increment) {
+            FileStream arm = File.OpenWrite(RomInfo.arm9Path);
+            BinaryWriter arm9Truncate = new BinaryWriter(arm);
+            arm9Truncate.BaseStream.SetLength(arm.Length + increment);
+            arm9Truncate.Close();
+        }
 
-                arm9Length = new FileInfo(workDir + @"arm9.bin").Length;
-            }
+        public static bool CompressArm9() {
+            Process compress = new Process();
+            compress.StartInfo.FileName = @"Tools\blz.exe";
+            compress.StartInfo.Arguments = @" -en9 " + '"' + RomInfo.arm9Path + '"';
+            compress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            compress.StartInfo.CreateNoWindow = true;
+            compress.Start();
+            compress.WaitForExit();
 
-            return (arm9Length > 0xBC000);
+            return new FileInfo(RomInfo.arm9Path).Length <= 0xBC000;
         }
 
         public static int DecompressOverlay(int overlayNumber, bool makeBackup) {
@@ -60,14 +65,14 @@ namespace DSPRE {
             }
 
             if (makeBackup) {
-                if (File.Exists(overlayFilePath + ".bak")) {
-                    if (new FileInfo(overlayFilePath).Length > new FileInfo(overlayFilePath + ".bak").Length) { //if overlay is bigger than its backup
+                if (File.Exists(overlayFilePath + ".backup")) {
+                    if (new FileInfo(overlayFilePath).Length > new FileInfo(overlayFilePath + ".backup").Length) { //if overlay is bigger than its backup
                         Console.WriteLine("Overlay " + overlayNumber + " is already uncompressed and its compressed backup exists.");
                         return 1;
                     }
-                    File.Delete(overlayFilePath + ".bak");
+                    File.Delete(overlayFilePath + ".backup");
                 }
-                File.Copy(overlayFilePath, overlayFilePath + ".bak");
+                File.Copy(overlayFilePath, overlayFilePath + ".backup");
             }
 
             Process unpack = new Process();
@@ -85,16 +90,16 @@ namespace DSPRE {
         public static void RestoreOverlayFromCompressedBackup(int overlayNumber, bool eventEditorIsReady) {
             String overlayFilePath = workDir + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
 
-            if (File.Exists(overlayFilePath + ".bak")) {
-                if (new FileInfo(overlayFilePath).Length <= new FileInfo(overlayFilePath + ".bak").Length) { //if overlay is bigger than its backup
+            if (File.Exists(overlayFilePath + ".backup")) {
+                if (new FileInfo(overlayFilePath).Length <= new FileInfo(overlayFilePath + ".backup").Length) { //if overlay is bigger than its backup
                     Console.WriteLine("Overlay " + overlayNumber + " is already compressed.");
                     return;
                 } else {
                     File.Delete(overlayFilePath);
-                    File.Move(overlayFilePath + ".bak", overlayFilePath);
+                    File.Move(overlayFilePath + ".backup", overlayFilePath);
                 }
             } else {
-                string msg = "Overlay File " + '"' + overlayFilePath + ".bak" + '"' + " couldn't be found and restored.";
+                string msg = "Overlay File " + '"' + overlayFilePath + ".backup" + '"' + " couldn't be found and restored.";
                 Console.WriteLine(msg);
 
                 if (eventEditorIsReady)
@@ -102,11 +107,24 @@ namespace DSPRE {
                 
             }
         }
-        public static byte[] ReadFromArm9(int startOffset, long numberOfBytes) {
-            return ReadFromFile(workDir + "arm9.bin", startOffset, numberOfBytes);
+        public static bool CheckTableOverlayMustBeCompressed(int ovNumber) {
+            bool result;
+            BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath));
+            f.BaseStream.Position = ovNumber * 32 + 31; //overlayNumber * size of entry + offset
+            if (f.ReadByte() % 2 == 0)  //even
+                result = false; 
+            else {
+                result = true; //odd
+            }
+            f.Close();
+
+            return result;
         }
-        public static byte[] ReadFromFile(string path, long startOffset, long numberOfBytes) {
-            FileStream f = File.OpenRead(path);
+        public static byte[] ReadFromArm9(uint startOffset, long numberOfBytes) {
+            return ReadFromFile(RomInfo.arm9Path, startOffset, numberOfBytes);
+        }
+        public static byte[] ReadFromFile(string filepath, long startOffset, long numberOfBytes) {
+            FileStream f = File.OpenRead(filepath);
             BinaryReader reader = new BinaryReader(f);
             reader.BaseStream.Position = startOffset;
             byte[] buffer = null;
@@ -125,8 +143,11 @@ namespace DSPRE {
 
             return buffer;
         }
-        public static void WriteToArm9(int startOffset, byte[] bytesToWrite) {
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(workDir + @"arm9.bin"))) {
+        public static void WriteToArm9(uint startOffset, byte[] bytesToWrite) {
+            WriteToFile(RomInfo.arm9Path, startOffset, bytesToWrite);
+        }
+        public static void WriteToFile(string filepath, uint startOffset, byte[] bytesToWrite) {
+            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(filepath))) {
                 writer.BaseStream.Position = startOffset;
                 writer.Write(bytesToWrite, 0, bytesToWrite.Length);
             }

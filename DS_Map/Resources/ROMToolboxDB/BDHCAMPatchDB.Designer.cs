@@ -22,14 +22,14 @@ namespace DSPRE.Resources.ROMToolboxDB {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ARM9ExpansionDB {
+    internal class BDHCAMPatchDB {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ARM9ExpansionDB() {
+        internal BDHCAMPatchDB() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DSPRE.Resources.ROMToolboxDB {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DSPRE.Resources.ROMToolboxDB.ARM9ExpansionDB", typeof(ARM9ExpansionDB).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DSPRE.Resources.ROMToolboxDB.BDHCAMPatchDB", typeof(BDHCAMPatchDB).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,43 +61,16 @@ namespace DSPRE.Resources.ROMToolboxDB {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a 05 F1 34 FC.
+        ///   Cerca una stringa localizzata simile a B6 F3 2E FA.
         /// </summary>
-        internal static string branchCode_D_ENG {
+        internal static string branchCode_HG {
             get {
-                return ResourceManager.GetString("branchCode_D_ENG", resourceCulture);
+                return ResourceManager.GetString("branchCode_HG", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a 05 F1 04 FD.
-        /// </summary>
-        internal static string branchCode_D_ESP {
-            get {
-                return ResourceManager.GetString("branchCode_D_ESP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a 0F F1 30 FB.
-        /// </summary>
-        internal static string branchCode_HG_ENG {
-            get {
-                return ResourceManager.GetString("branchCode_HG_ENG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a 0F F1 40 FB.
-        /// </summary>
-        internal static string branchCode_HG_ESP {
-            get {
-                return ResourceManager.GetString("branchCode_HG_ESP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a 00 F1 B4 F8.
+        ///   Cerca una stringa localizzata simile a B9 F3 E2 F8.
         /// </summary>
         internal static string branchCode_Plat_ENG {
             get {
@@ -106,7 +79,7 @@ namespace DSPRE.Resources.ROMToolboxDB {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a 00 F1 B2 F9.
+        ///   Cerca una stringa localizzata simile a B9 F3 AA F8.
         /// </summary>
         internal static string branchCode_Plat_ESP {
             get {
@@ -115,38 +88,89 @@ namespace DSPRE.Resources.ROMToolboxDB {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD F1 64 00 02 00 80 3C 02.
+        ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
-        internal static string initString_D {
+        internal static byte[] cpue_cam {
             get {
-                return ResourceManager.GetString("initString_D", resourceCulture);
+                object obj = ResourceManager.GetObject("cpue_cam", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a FC B5 05 48 C0 46 1C 21 00 22 02 4D A8 47 00 20 03 21 FC BD 09 75 00 02 00 80 3C 02.
+        ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
-        internal static string initString_HG {
+        internal static byte[] cpus_cam {
             get {
-                return ResourceManager.GetString("initString_HG", resourceCulture);
+                object obj = ResourceManager.GetObject("cpus_cam", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD A5 6A 00 02 00 80 3C 02.
+        ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
-        internal static string initString_Plat_ENG {
+        internal static byte[] ipge_cam {
             get {
-                return ResourceManager.GetString("initString_Plat_ENG", resourceCulture);
+                object obj = ResourceManager.GetObject("ipge_cam", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD B9 6A 00 02 00 80 3C 02.
+        ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
-        internal static string initString_Plat_ESP {
+        internal static byte[] ipgs_cam {
             get {
-                return ResourceManager.GetString("initString_Plat_ESP", resourceCulture);
+                object obj = ResourceManager.GetObject("ipgs_cam", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Byte[].
+        /// </summary>
+        internal static byte[] ipke_cam {
+            get {
+                object obj = ResourceManager.GetObject("ipke_cam", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Byte[].
+        /// </summary>
+        internal static byte[] ipks_cam {
+            get {
+                object obj = ResourceManager.GetObject("ipks_cam", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a 00 4B 18 47 41 9C 3D 02.
+        /// </summary>
+        internal static string overlayCode1 {
+            get {
+                return ResourceManager.GetString("overlayCode1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a 00 4B 18 47 01 9C 3D 02.
+        /// </summary>
+        internal static string overlayCode2 {
+            get {
+                return ResourceManager.GetString("overlayCode2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a 71088.
+        /// </summary>
+        internal static string subroutineOffset {
+            get {
+                return ResourceManager.GetString("subroutineOffset", resourceCulture);
             }
         }
     }

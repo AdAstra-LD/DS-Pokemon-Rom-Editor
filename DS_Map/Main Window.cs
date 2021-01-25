@@ -30,7 +30,6 @@ namespace DSPRE {
         public bool disableHandlers = false;
         public bool iconON = false;
         public bool expandedARM9;
-        public bool standardizedItems;
 
         private const string nameSeparator = " -   ";
 
@@ -261,7 +260,7 @@ namespace DSPRE {
             Process repack = new Process();
             repack.StartInfo.FileName = @"Tools\ndstool.exe";
             repack.StartInfo.Arguments = "-c " + '"' + ndsFileName + '"'
-                + " -9 " + '"' + romInfo.workDir + "arm9.bin" + '"'
+                + " -9 " + '"' + RomInfo.arm9Path + '"'
                 + " -7 " + '"' + romInfo.workDir + "arm7.bin" + '"'
                 + " -y9 " + '"' + romInfo.workDir + "y9.bin" + '"'
                 + " -y7 " + '"' + romInfo.workDir + "y7.bin" + '"'
@@ -796,7 +795,7 @@ namespace DSPRE {
             Process unpack = new Process();
             unpack.StartInfo.FileName = @"Tools\ndstool.exe";
             unpack.StartInfo.Arguments = "-x " + '"' + ndsFileName + '"'
-                + " -9 " + '"' + romInfo.workDir + "arm9.bin" + '"'
+                + " -9 " + '"' + RomInfo.arm9Path + '"'
                 + " -7 " + '"' + romInfo.workDir + "arm7.bin" + '"'
                 + " -y9 " + '"' + romInfo.workDir + "y9.bin" + '"'
                 + " -y7 " + '"' + romInfo.workDir + "y7.bin" + '"'
@@ -842,6 +841,8 @@ namespace DSPRE {
 
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
+            statusLabel.Text = "Ready";
+            Update();
         }
 
         private void ForceUnpackBuildingEditorNARCs() {
@@ -859,6 +860,8 @@ namespace DSPRE {
 
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
+            statusLabel.Text = "Ready";
+            Update();
         }
 
         
@@ -895,9 +898,9 @@ namespace DSPRE {
             }
 
             versionLabel.Text = "Pokémon " + romInfo.gameName + " [" + romInfo.romID + "]";
-            languageLabel.Text = "Language: " + romInfo.gameLanguage;
+            languageLabel.Text = "Language: " + RomInfo.gameLanguage;
 
-            if (romInfo.gameLanguage == "ENG")
+            if (RomInfo.gameLanguage == "ENG")
                 if (europeByte == 0x0A)
                     languageLabel.Text += " [Europe]";
                 else
@@ -918,16 +921,17 @@ namespace DSPRE {
                         statusLabel.Text = "Deleting old data...";
                         try {
                             Directory.Delete(romInfo.workDir, true);
-                        } catch (DirectoryNotFoundException) {
+                        } catch (IOException) {
                             MessageBox.Show("Concurrent access detected: \n" + romInfo.workDir +
-                                "\nIn this case, it's not a problem.\nHowever, always make sure no other process is " +
-                                "using the same ROM folder while DSPRE is running.", "Folder has already been deleted", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                "\nMake sure no other process is using the extracted ROM folder while DSPRE is running.", "Concurrent Access", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
                         }
                         Update();
                     }
 
                     try {
                         UnpackRom(openRom.FileName);
+                        DSUtils.editARM9size(-12);
                     } catch (IOException) {
                         MessageBox.Show("Can't access temp directory: \n" + romInfo.workDir + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         statusLabel.Text = "Error: concurrent access to " + romInfo.workDir;
@@ -996,11 +1000,15 @@ namespace DSPRE {
                 }
             }
 
-
-            if (RomInfo.gameVersion != "D" && RomInfo.gameVersion != "P" && RomInfo.gameVersion != "Plat") { 
-                DSUtils.RestoreOverlayFromCompressedBackup(1, eventEditorIsReady); 
+            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
+                if (DSUtils.CheckTableOverlayMustBeCompressed(1)) {
+                    if (ROMToolboxDialog.overlayMustBeRestoredFromBackup) {
+                        DSUtils.RestoreOverlayFromCompressedBackup(1, eventEditorIsReady);
+                    } else {
+                        DSUtils.CompressOverlay(1);
+                    }
+                }
             }
-
 
             statusLabel.Text = "Repacking ROM...";
             Update();
@@ -1162,7 +1170,7 @@ namespace DSPRE {
         #endregion
 
         #region Subroutines
-        public Header BuildHeaderFromFile(string filename, int headerNumber, long offsetInFile) {
+        public Header BuildHeaderFromFile(string filename, short headerNumber, long offsetInFile) {
             /* Calculate header offset and load data */
             byte[] headerData = DSUtils.ReadFromFile(filename, offsetInFile, Header.length);
 
@@ -1180,9 +1188,9 @@ namespace DSPRE {
                     return new HeaderHGSS(headerNumber, new MemoryStream(headerData));
             }
         }
-        public Header LoadHeaderFromARM9(int headerNumber) {
+        public Header LoadHeaderFromARM9(short headerNumber) {
             long headerOffset = PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * headerNumber;
-            return BuildHeaderFromFile(romInfo.workDir + "arm9.bin", headerNumber, headerOffset);
+            return BuildHeaderFromFile(RomInfo.arm9Path, headerNumber, headerOffset);
         }
         #endregion
 
@@ -1264,7 +1272,7 @@ namespace DSPRE {
                 return;
 
             /* Obtain current header ID from listbox*/
-            int headerNumber = Int32.Parse(headerListBox.SelectedItem.ToString().Substring(0, internalNames.Count.ToString().Length));
+            short headerNumber = Int16.Parse(headerListBox.SelectedItem.ToString().Substring(0, internalNames.Count.ToString().Length));
             currentHeader = LoadHeaderFromARM9(headerNumber);
             refreshHeaderEditorFields();
         }
@@ -1595,7 +1603,7 @@ namespace DSPRE {
             mainTabControl.SelectedTab = textEditorTabPage;
         }
         private void saveHeaderButton_Click(object sender, EventArgs e) {
-            int headerOffset = PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * currentHeader.ID;
+            uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * currentHeader.ID);
             DSUtils.WriteToArm9(headerOffset, currentHeader.toByteArray());
 
             disableHandlers = true;
@@ -1656,7 +1664,7 @@ namespace DSPRE {
                 switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
-                        for (int i = 0; i < internalNames.Count; i++) {
+                        for (short i = 0; i < internalNames.Count; i++) {
                             String locationName = locationNameComboBox.Items[((HeaderDP)LoadHeaderFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
@@ -1665,7 +1673,7 @@ namespace DSPRE {
                         }
                         break;
                     case "Plat":
-                        for (int i = 0; i < internalNames.Count; i++) {
+                        for (short i = 0; i < internalNames.Count; i++) {
                             String locationName = locationNameComboBox.Items[((HeaderPt)LoadHeaderFromARM9(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
@@ -1675,7 +1683,7 @@ namespace DSPRE {
                         break;
                     case "HG":
                     case "SS":
-                        for (int i = 0; i < internalNames.Count; i++) {
+                        for (short i = 0; i < internalNames.Count; i++) {
                             String locationName = locationNameComboBox.Items[((HeaderHGSS)LoadHeaderFromARM9(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
@@ -1766,7 +1774,7 @@ namespace DSPRE {
             }
 
             currentHeader = h;
-            int headerOffset = PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * currentHeader.ID;
+            uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[romInfo.romID] + Header.length * currentHeader.ID);
             DSUtils.WriteToArm9(headerOffset, currentHeader.toByteArray());
             try {
                 using (BinaryReader reader = new BinaryReader(new FileStream(of.FileName, FileMode.Open))) {
@@ -2286,11 +2294,11 @@ namespace DSPRE {
                 }
 
                 /* Determine area data */
-                int header;
+                short header;
                 if (currentMatrix.hasHeadersSection) {
-                    header = currentMatrix.headers[e.RowIndex, e.ColumnIndex];
+                    header = (short)currentMatrix.headers[e.RowIndex, e.ColumnIndex];
                 } else {
-                    header = headerListBox.SelectedIndex;
+                    header = (short)headerListBox.SelectedIndex;
                 }
 
                 AreaData areaData;
@@ -3683,7 +3691,7 @@ namespace DSPRE {
 
         private void goToWarpDestination_Click(object sender, EventArgs e) {
             int destAnchor = (int)warpAnchorUpDown.Value;
-            int destHeader = (int)warpHeaderUpDown.Value;
+            short destHeader = (short)warpHeaderUpDown.Value;
             ushort destEventID = LoadHeaderFromARM9(destHeader).eventID;
             EventFile destEvent = LoadEventFile(destEventID);
 
@@ -3693,15 +3701,15 @@ namespace DSPRE {
                 if (d == DialogResult.No)
                     return;
                 else {
-                    eventMatrixUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).matrix;
-                    eventAreaDataUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).areaDataID;
+                    eventMatrixUpDown.Value = LoadHeaderFromARM9((short)warpHeaderUpDown.Value).matrix;
+                    eventAreaDataUpDown.Value = LoadHeaderFromARM9((short)warpHeaderUpDown.Value).areaDataID;
                     selectEventComboBox.SelectedIndex = destEventID;
                     centerEventviewOnEntities();
                     return;
                 }
             }
-            eventMatrixUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).matrix;
-            eventAreaDataUpDown.Value = LoadHeaderFromARM9((int)warpHeaderUpDown.Value).areaDataID;
+            eventMatrixUpDown.Value = LoadHeaderFromARM9((short)warpHeaderUpDown.Value).matrix;
+            eventAreaDataUpDown.Value = LoadHeaderFromARM9((short)warpHeaderUpDown.Value).areaDataID;
             selectEventComboBox.SelectedIndex = destEventID;
             warpsListBox.SelectedIndex = destAnchor;
             centerEventViewOnSelectedEvent_Click(sender, e);
@@ -3816,7 +3824,7 @@ namespace DSPRE {
                 /* Determine area data */
                 uint areaDataID;
                 if (eventMatrix.hasHeadersSection) {
-                    int header = eventMatrix.headers[(int)(eventMatrixYUpDown.Value), (int)(eventMatrixXUpDown.Value)];
+                    short header = (short)eventMatrix.headers[(short)eventMatrixYUpDown.Value, (short)eventMatrixXUpDown.Value];
                     areaDataID = LoadHeaderFromARM9(header).areaDataID;
                 } else areaDataID = (uint)eventAreaDataUpDown.Value;
 
@@ -3969,7 +3977,7 @@ namespace DSPRE {
                         archiveID = matchOverworldInTableDPPt(idReader, ID);
                         break;
                     case "Plat":
-                        switch (romInfo.gameLanguage) { // Go to the beginning of the overworld table
+                        switch (RomInfo.gameLanguage) { // Go to the beginning of the overworld table
                             case "ITA":
                                 idReader.BaseStream.Position = 0x2BC44;
                                 break;
@@ -5468,6 +5476,7 @@ namespace DSPRE {
         }
 
         private void givePokégearButton_Click(object sender, EventArgs e) {
+
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBoxTextScroll(scriptTextBox);
         }

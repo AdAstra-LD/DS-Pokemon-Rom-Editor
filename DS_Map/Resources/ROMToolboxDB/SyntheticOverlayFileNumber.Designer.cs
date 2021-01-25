@@ -22,14 +22,14 @@ namespace DSPRE.Resources.ROMToolboxDB {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ARM9ExpansionDB {
+    internal class SyntheticOverlayFileNumber {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ARM9ExpansionDB() {
+        internal SyntheticOverlayFileNumber() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DSPRE.Resources.ROMToolboxDB {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DSPRE.Resources.ROMToolboxDB.ARM9ExpansionDB", typeof(ARM9ExpansionDB).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DSPRE.Resources.ROMToolboxDB.SyntheticOverlayFileNumber", typeof(SyntheticOverlayFileNumber).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,92 +61,47 @@ namespace DSPRE.Resources.ROMToolboxDB {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a 05 F1 34 FC.
+        ///   Cerca una stringa localizzata simile a 9.
         /// </summary>
-        internal static string branchCode_D_ENG {
+        internal static string fileID_D {
             get {
-                return ResourceManager.GetString("branchCode_D_ENG", resourceCulture);
+                return ResourceManager.GetString("fileID_D", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a 05 F1 04 FD.
+        ///   Cerca una stringa localizzata simile a 0.
         /// </summary>
-        internal static string branchCode_D_ESP {
+        internal static string fileID_HG {
             get {
-                return ResourceManager.GetString("branchCode_D_ESP", resourceCulture);
+                return ResourceManager.GetString("fileID_HG", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a 0F F1 30 FB.
+        ///   Cerca una stringa localizzata simile a 9.
         /// </summary>
-        internal static string branchCode_HG_ENG {
+        internal static string fileID_P {
             get {
-                return ResourceManager.GetString("branchCode_HG_ENG", resourceCulture);
+                return ResourceManager.GetString("fileID_P", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a 0F F1 40 FB.
+        ///   Cerca una stringa localizzata simile a 9.
         /// </summary>
-        internal static string branchCode_HG_ESP {
+        internal static string fileID_Plat {
             get {
-                return ResourceManager.GetString("branchCode_HG_ESP", resourceCulture);
+                return ResourceManager.GetString("fileID_Plat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a 00 F1 B4 F8.
+        ///   Cerca una stringa localizzata simile a 0.
         /// </summary>
-        internal static string branchCode_Plat_ENG {
+        internal static string fileID_SS {
             get {
-                return ResourceManager.GetString("branchCode_Plat_ENG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a 00 F1 B2 F9.
-        /// </summary>
-        internal static string branchCode_Plat_ESP {
-            get {
-                return ResourceManager.GetString("branchCode_Plat_ESP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD F1 64 00 02 00 80 3C 02.
-        /// </summary>
-        internal static string initString_D {
-            get {
-                return ResourceManager.GetString("initString_D", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a FC B5 05 48 C0 46 1C 21 00 22 02 4D A8 47 00 20 03 21 FC BD 09 75 00 02 00 80 3C 02.
-        /// </summary>
-        internal static string initString_HG {
-            get {
-                return ResourceManager.GetString("initString_HG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD A5 6A 00 02 00 80 3C 02.
-        /// </summary>
-        internal static string initString_Plat_ENG {
-            get {
-                return ResourceManager.GetString("initString_Plat_ENG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD B9 6A 00 02 00 80 3C 02.
-        /// </summary>
-        internal static string initString_Plat_ESP {
-            get {
-                return ResourceManager.GetString("initString_Plat_ESP", resourceCulture);
+                return ResourceManager.GetString("fileID_SS", resourceCulture);
             }
         }
     }
