@@ -374,6 +374,8 @@ namespace DSPRE {
             /* Draw matrix 0 in matrix navigator */
             eventMatrix = LoadMatrix(0);
             selectEventComboBox.SelectedIndex = 0;
+            owItemComboBox.SelectedIndex = 0;
+            owTrainerComboBox.SelectedIndex = 0;
 
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
@@ -4398,7 +4400,7 @@ namespace DSPRE {
 
         #region Overworlds Editor
         private void addOverworldButton_Click(object sender, EventArgs e) {
-            currentEventFile.overworlds.Add(new Overworld(currentEventFile.overworlds.Count + 1, (int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
+            currentEventFile.overworlds.Add(new Overworld(currentEventFile.overworlds.Count, (int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
             overworldsListBox.Items.Add("Overworld " + (currentEventFile.overworlds.Count - 1).ToString());
             overworldsListBox.SelectedIndex = currentEventFile.overworlds.Count - 1;
         }
@@ -4457,9 +4459,12 @@ namespace DSPRE {
             owPartnerTrainerCheckBox.Enabled = false;
 
             if (isItemRadioButton.Enabled) {
-                owItemComboBox.Enabled = true;
-                owItemComboBox.SelectedIndex = Math.Max(0, currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber - 7000);
-                owItemLabel.Enabled = true;
+                if (isItemRadioButton.Checked) {
+                    owItemComboBox.Enabled = true;
+                    owItemLabel.Enabled = true;
+
+                    currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(owScriptNumericUpDown.Value = 7000 + owItemComboBox.SelectedIndex);
+                }
             }
 
             /* Set overworld type to item */
@@ -4476,11 +4481,18 @@ namespace DSPRE {
             /* Set special settings controls */
             owSpecialGroupBox.Enabled = false;
 
+            if (normalRadioButton.Checked) {
+                owScriptNumericUpDown.Value = 0;
+            }
+
             /* Set trainer flag to false and correct script number */
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].type = 0x0;
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)owScriptNumericUpDown.Value;
         }
         private void owItemComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+                return;
+
             owScriptNumericUpDown.Value = currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(7000 + owItemComboBox.SelectedIndex);
         }
         private void overworldsListBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -4619,8 +4631,10 @@ namespace DSPRE {
             if (disableHandlers || overworldsListBox.SelectedIndex < 0)
                 return;
 
-            if (owPartnerTrainerCheckBox.Checked) currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(4999 + owTrainerComboBox.SelectedIndex);
-            else currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(2999 + owTrainerComboBox.SelectedIndex);
+            if (owPartnerTrainerCheckBox.Checked) 
+                owScriptNumericUpDown.Value = currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(4999 + owTrainerComboBox.SelectedIndex);
+            else
+                owScriptNumericUpDown.Value = currentEventFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(2999 + owTrainerComboBox.SelectedIndex);
         }
         private void owXMapUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || overworldsListBox.SelectedIndex < 0)
