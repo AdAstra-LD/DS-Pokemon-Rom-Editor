@@ -120,6 +120,16 @@ namespace DSPRE {
 
             return result;
         }
+        public static void SetOverlayCompressionInTable(int ovNumber, byte compressStatus) {
+            if (compressStatus < 0 || compressStatus > 3) {
+                Console.WriteLine("Compression status " + compressStatus + " is invalid. No operation performed.");
+                return;
+            }
+            BinaryWriter f = new BinaryWriter(File.OpenWrite(RomInfo.overlayTablePath));
+            f.BaseStream.Position = ovNumber * 32 + 31; //overlayNumber * size of entry + offset
+            f.Write(compressStatus);
+            f.Close();
+        }
         public static byte[] ReadFromArm9(uint startOffset, long numberOfBytes) {
             return ReadFromFile(RomInfo.arm9Path, startOffset, numberOfBytes);
         }

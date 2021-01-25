@@ -117,14 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="branchCode_HG" xml:space="preserve">
+  <data name="branchString_HG" xml:space="preserve">
     <value>B6 F3 2E FA</value>
     <comment>Also valid for SS, both ESP and ENG</comment>
   </data>
-  <data name="branchCode_Plat_ENG" xml:space="preserve">
+  <data name="branchString_Plat_ENG" xml:space="preserve">
     <value>B9 F3 E2 F8</value>
   </data>
-  <data name="branchCode_Plat_ESP" xml:space="preserve">
+  <data name="branchString_Plat_ESP" xml:space="preserve">
     <value>B9 F3 AA F8</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -146,10 +146,10 @@
   <data name="ipks_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ipks_cam.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="overlayCode1" xml:space="preserve">
+  <data name="overlayString1" xml:space="preserve">
     <value>00 4B 18 47 41 9C 3D 02</value>
   </data>
-  <data name="overlayCode2" xml:space="preserve">
+  <data name="overlayString2" xml:space="preserve">
     <value>00 4B 18 47 01 9C 3D 02</value>
   </data>
   <data name="subroutineOffset" xml:space="preserve">

@@ -31,8 +31,8 @@
             this.applyItemStandardizeButton = new System.Windows.Forms.Button();
             this.StandardizePatchLBL = new System.Windows.Forms.Label();
             this.StandardizePatchTextLBL = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.arm9expansionTextLBL = new System.Windows.Forms.Label();
+            this.arm9expansionLBL = new System.Windows.Forms.Label();
             this.applyARM9ExpansionButton = new System.Windows.Forms.Button();
             this.BDHCAMpatchTextLBL = new System.Windows.Forms.Label();
             this.BDHCAMpatchLBL = new System.Windows.Forms.Label();
@@ -43,6 +43,7 @@
             this.overlay1uncompressedLBL = new System.Windows.Forms.Label();
             this.overlay1patchtextLBL = new System.Windows.Forms.Label();
             this.overlay1uncomprButton = new System.Windows.Forms.Button();
+            this.bdhcamARM9LBL = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // applyItemStandardizeButton
@@ -75,24 +76,24 @@
             this.StandardizePatchTextLBL.Text = "Makes it so that PokéBall item scripts follow the order of items\r\nas indexed in t" +
     "he ROM. Needed for \'Item\' option in Event Editor\r\n";
             // 
-            // label3
+            // arm9expansionTextLBL
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 32);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(298, 52);
-            this.label3.TabIndex = 5;
-            this.label3.Text = resources.GetString("label3.Text");
+            this.arm9expansionTextLBL.AutoSize = true;
+            this.arm9expansionTextLBL.Location = new System.Drawing.Point(15, 32);
+            this.arm9expansionTextLBL.Name = "arm9expansionTextLBL";
+            this.arm9expansionTextLBL.Size = new System.Drawing.Size(298, 52);
+            this.arm9expansionTextLBL.TabIndex = 5;
+            this.arm9expansionTextLBL.Text = resources.GetString("arm9expansionTextLBL.Text");
             // 
-            // label4
+            // arm9expansionLBL
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(15, 17);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(103, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "ARM9 Expansion";
+            this.arm9expansionLBL.AutoSize = true;
+            this.arm9expansionLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.arm9expansionLBL.Location = new System.Drawing.Point(15, 17);
+            this.arm9expansionLBL.Name = "arm9expansionLBL";
+            this.arm9expansionLBL.Size = new System.Drawing.Size(103, 13);
+            this.arm9expansionLBL.TabIndex = 4;
+            this.arm9expansionLBL.Text = "ARM9 Expansion";
             // 
             // applyARM9ExpansionButton
             // 
@@ -107,27 +108,30 @@
             // BDHCAMpatchTextLBL
             // 
             this.BDHCAMpatchTextLBL.AutoSize = true;
-            this.BDHCAMpatchTextLBL.Location = new System.Drawing.Point(14, 173);
+            this.BDHCAMpatchTextLBL.Enabled = false;
+            this.BDHCAMpatchTextLBL.Location = new System.Drawing.Point(14, 170);
             this.BDHCAMpatchTextLBL.Name = "BDHCAMpatchTextLBL";
-            this.BDHCAMpatchTextLBL.Size = new System.Drawing.Size(314, 52);
+            this.BDHCAMpatchTextLBL.Size = new System.Drawing.Size(231, 65);
             this.BDHCAMpatchTextLBL.TabIndex = 8;
-            this.BDHCAMpatchTextLBL.Text = "Adds Dynamic BDHC Cameras to current ROM.\r\nWith this patch, you can make the game" +
-    " camera move\r\nbased on the player\'s position.\r\nYou will need Trifindo\'s PDSMS, i" +
-    "n order to make BDHCAM Files.\r\n";
+            this.BDHCAMpatchTextLBL.Text = "Adds Dynamic BDHC Cameras to current ROM.\r\nWith this patch, you have more control" +
+    " over \r\nthe game camera\'s rotation and position.\r\nYou will need Trifindo\'s PDSMS" +
+    "\r\nin order to make BDHCAM Files.\r\n";
             // 
             // BDHCAMpatchLBL
             // 
             this.BDHCAMpatchLBL.AutoSize = true;
+            this.BDHCAMpatchLBL.Enabled = false;
             this.BDHCAMpatchLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BDHCAMpatchLBL.Location = new System.Drawing.Point(14, 158);
+            this.BDHCAMpatchLBL.Location = new System.Drawing.Point(14, 155);
             this.BDHCAMpatchLBL.Name = "BDHCAMpatchLBL";
-            this.BDHCAMpatchLBL.Size = new System.Drawing.Size(269, 13);
+            this.BDHCAMpatchLBL.Size = new System.Drawing.Size(107, 13);
             this.BDHCAMpatchLBL.TabIndex = 7;
-            this.BDHCAMpatchLBL.Text = "Dynamic Cameras (Requires ARM9 Expansion)";
+            this.BDHCAMpatchLBL.Text = "Dynamic Cameras";
             // 
             // BDHCAMpatchButton
             // 
-            this.BDHCAMpatchButton.Location = new System.Drawing.Point(330, 173);
+            this.BDHCAMpatchButton.Enabled = false;
+            this.BDHCAMpatchButton.Location = new System.Drawing.Point(330, 183);
             this.BDHCAMpatchButton.Name = "BDHCAMpatchButton";
             this.BDHCAMpatchButton.Size = new System.Drawing.Size(100, 31);
             this.BDHCAMpatchButton.TabIndex = 6;
@@ -196,12 +200,23 @@
             this.overlay1uncomprButton.UseVisualStyleBackColor = true;
             this.overlay1uncomprButton.Click += new System.EventHandler(this.overlay1uncomprButton_Click);
             // 
+            // bdhcamARM9LBL
+            // 
+            this.bdhcamARM9LBL.AutoSize = true;
+            this.bdhcamARM9LBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bdhcamARM9LBL.Location = new System.Drawing.Point(117, 155);
+            this.bdhcamARM9LBL.Name = "bdhcamARM9LBL";
+            this.bdhcamARM9LBL.Size = new System.Drawing.Size(165, 13);
+            this.bdhcamARM9LBL.TabIndex = 15;
+            this.bdhcamARM9LBL.Text = "(Requires ARM9 Expansion)";
+            // 
             // ROMToolboxDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(442, 378);
+            this.Controls.Add(this.bdhcamARM9LBL);
             this.Controls.Add(this.overlay1uncomprButton);
             this.Controls.Add(this.overlay1patchtextLBL);
             this.Controls.Add(this.overlay1uncompressedLBL);
@@ -211,8 +226,8 @@
             this.Controls.Add(this.BDHCAMpatchTextLBL);
             this.Controls.Add(this.BDHCAMpatchLBL);
             this.Controls.Add(this.BDHCAMpatchButton);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.arm9expansionTextLBL);
+            this.Controls.Add(this.arm9expansionLBL);
             this.Controls.Add(this.applyARM9ExpansionButton);
             this.Controls.Add(this.StandardizePatchTextLBL);
             this.Controls.Add(this.StandardizePatchLBL);
@@ -231,8 +246,8 @@
         private System.Windows.Forms.Button applyItemStandardizeButton;
         private System.Windows.Forms.Label StandardizePatchLBL;
         private System.Windows.Forms.Label StandardizePatchTextLBL;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label arm9expansionTextLBL;
+        private System.Windows.Forms.Label arm9expansionLBL;
         private System.Windows.Forms.Button applyARM9ExpansionButton;
         private System.Windows.Forms.Label BDHCAMpatchTextLBL;
         private System.Windows.Forms.Label BDHCAMpatchLBL;
@@ -243,5 +258,6 @@
         private System.Windows.Forms.Label overlay1uncompressedLBL;
         private System.Windows.Forms.Label overlay1patchtextLBL;
         private System.Windows.Forms.Button overlay1uncomprButton;
+        private System.Windows.Forms.Label bdhcamARM9LBL;
     }
 }

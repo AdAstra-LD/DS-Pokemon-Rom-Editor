@@ -63,27 +63,27 @@ namespace DSPRE.Resources.ROMToolboxDB {
         /// <summary>
         ///   Cerca una stringa localizzata simile a B6 F3 2E FA.
         /// </summary>
-        internal static string branchCode_HG {
+        internal static string branchString_HG {
             get {
-                return ResourceManager.GetString("branchCode_HG", resourceCulture);
+                return ResourceManager.GetString("branchString_HG", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a B9 F3 E2 F8.
         /// </summary>
-        internal static string branchCode_Plat_ENG {
+        internal static string branchString_Plat_ENG {
             get {
-                return ResourceManager.GetString("branchCode_Plat_ENG", resourceCulture);
+                return ResourceManager.GetString("branchString_Plat_ENG", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a B9 F3 AA F8.
         /// </summary>
-        internal static string branchCode_Plat_ESP {
+        internal static string branchString_Plat_ESP {
             get {
-                return ResourceManager.GetString("branchCode_Plat_ESP", resourceCulture);
+                return ResourceManager.GetString("branchString_Plat_ESP", resourceCulture);
             }
         }
         
@@ -150,18 +150,18 @@ namespace DSPRE.Resources.ROMToolboxDB {
         /// <summary>
         ///   Cerca una stringa localizzata simile a 00 4B 18 47 41 9C 3D 02.
         /// </summary>
-        internal static string overlayCode1 {
+        internal static string overlayString1 {
             get {
-                return ResourceManager.GetString("overlayCode1", resourceCulture);
+                return ResourceManager.GetString("overlayString1", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 00 4B 18 47 01 9C 3D 02.
         /// </summary>
-        internal static string overlayCode2 {
+        internal static string overlayString2 {
             get {
-                return ResourceManager.GetString("overlayCode2", resourceCulture);
+                return ResourceManager.GetString("overlayString2", resourceCulture);
             }
         }
         

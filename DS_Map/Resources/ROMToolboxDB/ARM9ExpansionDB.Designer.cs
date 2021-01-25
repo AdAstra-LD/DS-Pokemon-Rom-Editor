@@ -63,54 +63,54 @@ namespace DSPRE.Resources.ROMToolboxDB {
         /// <summary>
         ///   Cerca una stringa localizzata simile a 05 F1 34 FC.
         /// </summary>
-        internal static string branchCode_D_ENG {
+        internal static string branchString_D_ENG {
             get {
-                return ResourceManager.GetString("branchCode_D_ENG", resourceCulture);
+                return ResourceManager.GetString("branchString_D_ENG", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 05 F1 04 FD.
         /// </summary>
-        internal static string branchCode_D_ESP {
+        internal static string branchString_D_ESP {
             get {
-                return ResourceManager.GetString("branchCode_D_ESP", resourceCulture);
+                return ResourceManager.GetString("branchString_D_ESP", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 0F F1 30 FB.
         /// </summary>
-        internal static string branchCode_HG_ENG {
+        internal static string branchString_HG_ENG {
             get {
-                return ResourceManager.GetString("branchCode_HG_ENG", resourceCulture);
+                return ResourceManager.GetString("branchString_HG_ENG", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 0F F1 40 FB.
         /// </summary>
-        internal static string branchCode_HG_ESP {
+        internal static string branchString_HG_ESP {
             get {
-                return ResourceManager.GetString("branchCode_HG_ESP", resourceCulture);
+                return ResourceManager.GetString("branchString_HG_ESP", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 00 F1 B4 F8.
         /// </summary>
-        internal static string branchCode_Plat_ENG {
+        internal static string branchString_Plat_ENG {
             get {
-                return ResourceManager.GetString("branchCode_Plat_ENG", resourceCulture);
+                return ResourceManager.GetString("branchString_Plat_ENG", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Cerca una stringa localizzata simile a 00 F1 B2 F9.
         /// </summary>
-        internal static string branchCode_Plat_ESP {
+        internal static string branchString_Plat_ESP {
             get {
-                return ResourceManager.GetString("branchCode_Plat_ESP", resourceCulture);
+                return ResourceManager.GetString("branchString_Plat_ESP", resourceCulture);
             }
         }
         

@@ -366,7 +366,7 @@ namespace DSPRE {
                     break;
             }
 
-            if (ROMToolboxDialog.ItemNumbersAreStandard())
+            if (CheckStandardizedItemNumbers())
                 isItemRadioButton.Enabled = true;
 
             disableHandlers = false;
@@ -825,7 +825,6 @@ namespace DSPRE {
             using (BuildingEditor editor = new BuildingEditor(romInfo))
                 editor.ShowDialog();
         }
-
         private void unpackBuildingEditorNARCs() {
             toolStripProgressBar.Visible = true;
 
@@ -844,7 +843,6 @@ namespace DSPRE {
             statusLabel.Text = "Ready";
             Update();
         }
-
         private void ForceUnpackBuildingEditorNARCs() {
             toolStripProgressBar.Visible = true;
 
@@ -863,9 +861,6 @@ namespace DSPRE {
             statusLabel.Text = "Ready";
             Update();
         }
-
-        
-
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e) {
             string message = "DS Pokémon Rom Editor by Nømura (Unofficial Branch)" + Environment.NewLine + "version 1.0.8" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
@@ -982,7 +977,6 @@ namespace DSPRE {
 
             statusLabel.Text = "Ready";
         }
-
         private void saveRom_Click(object sender, EventArgs e) {
             SaveFileDialog saveRom = new SaveFileDialog();
             saveRom.Filter = "NDS File (*.nds)|*.nds";
@@ -1022,7 +1016,6 @@ namespace DSPRE {
 
             statusLabel.Text = "Ready";
         }
-
         private void unpackAllButton_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("Do you wish to unpack all extracted NARCS?\n" +
                 "This operation might be long and can't be interrupted.\n" +
@@ -1057,7 +1050,6 @@ namespace DSPRE {
                 Update();
             }
         }
-
         private void updateMapNarcsButton_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("Do you wish to unpack all NARC files necessary for the Building Editor ?\n" +
                "This operation might be long and can't be interrupted.\n" +
@@ -1074,7 +1066,6 @@ namespace DSPRE {
                 Update();
             }
         }
-
         private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (mainTabControl.SelectedTab == headerEditorTabPage) {
                 //
@@ -1111,11 +1102,9 @@ namespace DSPRE {
             }
             statusLabel.Text = "Ready";
         }
-
         private void wildEditorButton_Click(object sender, EventArgs e) {
             openWildEditor(false);
         }
-
         private void openWildEditor(bool loadCurrent) {
             statusLabel.Text = "Attempting to extract Wild Encounters NARC...";
             Update();
@@ -1156,7 +1145,6 @@ namespace DSPRE {
             }
             statusLabel.Text = "Ready";
         }
-
         private void openWildEditorWithIdButtonClick(object sender, EventArgs e) {
             openWildEditor(true);
         }
@@ -4440,6 +4428,16 @@ namespace DSPRE {
             /* Adjust script number */
             if (owTrainerComboBox.SelectedIndex >= 0)
                 owTrainerComboBox_SelectedIndexChanged(null, null);
+        }
+        public static bool CheckStandardizedItemNumbers() {
+            ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
+
+            for (ushort i = 0; i < itemScript.scripts.Count - 1; i++) {
+                if (BitConverter.ToUInt16(itemScript.scripts[i].commands[0].parameterList[1], 0) != i || BitConverter.ToUInt16(itemScript.scripts[i].commands[1].parameterList[1], 0) != 1) {
+                    return false;
+                }
+            }
+            return true;
         }
         private void isItemRadioButton_CheckedChanged(object sender, EventArgs e) {
             if (disableHandlers)

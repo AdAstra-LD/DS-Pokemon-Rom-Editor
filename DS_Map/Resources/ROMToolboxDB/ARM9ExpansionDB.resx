@@ -117,22 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="branchCode_D_ENG" xml:space="preserve">
+  <data name="branchString_D_ENG" xml:space="preserve">
     <value>05 F1 34 FC</value>
   </data>
-  <data name="branchCode_D_ESP" xml:space="preserve">
+  <data name="branchString_D_ESP" xml:space="preserve">
     <value>05 F1 04 FD</value>
   </data>
-  <data name="branchCode_HG_ENG" xml:space="preserve">
+  <data name="branchString_HG_ENG" xml:space="preserve">
     <value>0F F1 30 FB</value>
   </data>
-  <data name="branchCode_HG_ESP" xml:space="preserve">
+  <data name="branchString_HG_ESP" xml:space="preserve">
     <value>0F F1 40 FB</value>
   </data>
-  <data name="branchCode_Plat_ENG" xml:space="preserve">
+  <data name="branchString_Plat_ENG" xml:space="preserve">
     <value>00 F1 B4 F8</value>
   </data>
-  <data name="branchCode_Plat_ESP" xml:space="preserve">
+  <data name="branchString_Plat_ESP" xml:space="preserve">
     <value>00 F1 B2 F9</value>
   </data>
   <data name="initString_D" xml:space="preserve">
