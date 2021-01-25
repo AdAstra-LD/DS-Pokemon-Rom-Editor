@@ -7049,7 +7049,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
-            this.Text = "DS Pokémon Rom Editor 1.0.7b (Nømura, AdAstra, Mixone)";
+            this.Text = "DS Pokémon Rom Editor 1.0.8 (Nømura, AdAstra, Mixone)";
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);
             this.headerEditorTabPage.PerformLayout();
