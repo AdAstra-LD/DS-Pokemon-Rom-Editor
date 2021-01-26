@@ -2568,7 +2568,7 @@ namespace DSPRE {
         /*  Camera settings */
         public bool hideBuildings = new bool();
         public bool mapTexturesOn = true;
-        public bool buildingTexturesOn = true;
+        public bool showBuildingTextures = true;
         public static float ang = 0.0f;
         public static float dist = 12.8f;
         public static float elev = 50.0f;
@@ -2716,22 +2716,35 @@ namespace DSPRE {
             selectMapComboBox.SelectedIndex = selectMapComboBox.Items.Count - 1;
         }
         private void buildTextureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
 
-            if (buildTextureComboBox.SelectedIndex == 0)
-                buildingTexturesOn = false;
-            else {
-                buildingTexturesOn = true;
+            string texturePath = romInfo.buildingTexturesDirPath + "\\" + (buildTextureComboBox.SelectedIndex - 1).ToString("D4");
+            byte[] textureFile = File.ReadAllBytes(texturePath);
 
-                foreach (Building building in currentMapFile.buildings) {
-                    string texturePath = romInfo.buildingTexturesDirPath + "\\" + (buildTextureComboBox.SelectedIndex - 1).ToString("D4");
-                    building.NSBMDFile.materials = NSBTXLoader.LoadNsbtx(new MemoryStream(File.ReadAllBytes(texturePath)), out building.NSBMDFile.Textures, out building.NSBMDFile.Palettes);
-                    try {
-                        building.NSBMDFile.MatchTextures();
-                    } catch { }
+            if (textureFile.Length > 4) {
+                if (buildTextureComboBox.SelectedIndex == 0)
+                    showBuildingTextures = false;
+                else {
+                    showBuildingTextures = true;
+
+                    Stream str = new MemoryStream(textureFile);
+                    foreach (Building building in currentMapFile.buildings) {
+                        str.Position = 0;
+                        building.NSBMDFile.materials = NSBTXLoader.LoadNsbtx(str, out building.NSBMDFile.Textures, out building.NSBMDFile.Palettes);
+                        try {
+                            building.NSBMDFile.MatchTextures();
+                        } catch { }
+                    }
                 }
+            } else {
+                disableHandlers = true;
+                buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = "Texture file too small (" + (buildTextureComboBox.SelectedIndex-1) + ")";
+                disableHandlers = false;
+                showBuildingTextures = false;
+
             }
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void mapTextureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) return;
@@ -2747,17 +2760,17 @@ namespace DSPRE {
                     currentMapFile.mapModel.MatchTextures();
                 } catch { }
             }
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void mapEditorTabPage_Enter(object sender, EventArgs e) {
             mapOpenGlControl.MakeCurrent();
-            if (selectMapComboBox.SelectedIndex > -1) RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            if (selectMapComboBox.SelectedIndex > -1) RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void mapOpenGlControl_MouseWheel(object sender, MouseEventArgs e) // Zoom In/Out
         {
             if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift) dist += (float)e.Delta / 200;
             else dist -= (float)e.Delta / 200;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void mapOpenGlControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
             switch (e.KeyCode) {
@@ -2775,7 +2788,7 @@ namespace DSPRE {
                     break;
             }
             mapOpenGlControl.Invalidate();
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void mapPartsTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (mapPartsTabControl.SelectedTab == buildingsTabPage) {
@@ -2790,7 +2803,7 @@ namespace DSPRE {
 
                 RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
-                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
             } else if (mapPartsTabControl.SelectedTab == permissionsTabPage) {
                 radio2D.Checked = true;
 
@@ -2801,7 +2814,7 @@ namespace DSPRE {
 
                 RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
-                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
                 movPictureBox.BackgroundImage = GrabMapScreenshot(movPictureBox.Width, movPictureBox.Height);
                 movPictureBox.BringToFront();
@@ -2817,7 +2830,7 @@ namespace DSPRE {
 
                 RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
-                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
             } else { // Model tab 
                 radio2D.Checked = true;
 
@@ -2830,7 +2843,7 @@ namespace DSPRE {
 
                 RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
-                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
             }
         }
@@ -2844,7 +2857,7 @@ namespace DSPRE {
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
-                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
 
         private void cam2Dmode() {
@@ -2895,7 +2908,7 @@ namespace DSPRE {
             }
 
             /* Render the map */
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
             /* Draw permissions in the small selection boxes */
             Draw_Small_Collision();
@@ -2919,7 +2932,7 @@ namespace DSPRE {
             else
                 Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_FILL);
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
 
         #region Building Editor
@@ -2943,7 +2956,7 @@ namespace DSPRE {
             buildingsListBox.SelectedIndex = buildingsListBox.Items.Count - 1;
 
             /* Redraw scene with new building */
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
 
         private void buildIndexComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -2958,7 +2971,7 @@ namespace DSPRE {
             currentMapFile.buildings[buildingsListBox.SelectedIndex] = LoadBuildingModel(currentMapFile.buildings[buildingsListBox.SelectedIndex], interiorbldRadioButton.Checked);
             currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile = LoadModelTextures(currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1);
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
         }
         private void buildingsListBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -2987,15 +3000,15 @@ namespace DSPRE {
         }
         private void buildingHeightUpDown_ValueChanged(object sender, EventArgs e) {
             currentMapFile.buildings[buildingsListBox.SelectedIndex].height = (uint)buildingHeightUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void buildingLengthUpDown_ValueChanged(object sender, EventArgs e) {
             currentMapFile.buildings[buildingsListBox.SelectedIndex].length = (uint)buildingLengthUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void buildingWidthUpDown_ValueChanged(object sender, EventArgs e) {
             currentMapFile.buildings[buildingsListBox.SelectedIndex].width = (uint)buildingWidthUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void exportBuildingsButton_Click(object sender, EventArgs e) {
             SaveFileDialog eb = new SaveFileDialog();
@@ -3025,7 +3038,7 @@ namespace DSPRE {
                 currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
             }
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
             MessageBox.Show("Buildings imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -3062,7 +3075,7 @@ namespace DSPRE {
             }
 
             /* Render the map */
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
             disableHandlers = false;
         }
@@ -3076,7 +3089,7 @@ namespace DSPRE {
                 buildingsListBox.Items.RemoveAt(buildingNumber);
 
                 FillBuildingsBox(); // Update ListBox
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
                 disableHandlers = false;
 
@@ -3088,42 +3101,42 @@ namespace DSPRE {
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xPosition = (short)xBuildUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void yBuildUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yPosition = (short)yBuildUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void zBuildUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zPosition = (short)zBuildUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void xFractionUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xFraction = (ushort)xFractionUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void yFractionUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yFraction = (ushort)yFractionUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void zFractionUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zFraction = (ushort)zFractionUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         #endregion
 
@@ -3574,7 +3587,7 @@ namespace DSPRE {
             }
 
             if (mapTextureComboBox.SelectedIndex > 0) currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, romInfo.mapTexturesDirPath, mapTextureComboBox.SelectedIndex - 1);
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, buildingTexturesOn);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
             MessageBox.Show("Map model imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

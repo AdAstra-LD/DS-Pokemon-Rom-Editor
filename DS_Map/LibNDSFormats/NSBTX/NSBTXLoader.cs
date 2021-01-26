@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using LibNDSFormats.NSBMD;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace LibNDSFormats.NSBTX
 {
@@ -14,6 +15,7 @@ namespace LibNDSFormats.NSBTX
     /// </summary>
     public static class NSBTXLoader
     {
+        public static object MessageBoxIcons { get; private set; }
         #region Methods (2)
 
         // Public Methods (2) 
@@ -31,7 +33,7 @@ namespace LibNDSFormats.NSBTX
             var reader = new BinaryReader(stream);
             int id = reader.ReadInt32();
             if (id != NSBMD.NSBMD.NDS_TYPE_BTX0)
-                throw new Exception();
+                Console.WriteLine("The header of this texture file is null!!!");
             int i = reader.ReadInt32();
             if (i == NSBMD.NSBMD.NDS_TYPE_MAGIC1)
             {
