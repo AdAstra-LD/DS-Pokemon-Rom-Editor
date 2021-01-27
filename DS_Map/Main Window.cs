@@ -544,106 +544,19 @@ namespace DSPRE {
                 buildTextureComboBox.Items.Add("Texture " + i);
             toolStripProgressBar.Value++;
 
-            /*  Fill collision painters list */
-            List<string> collisionPainters = new List<string>()
-            {
-                "Walkable",
-                "Blocked",
-                "Grass Sound",
-            };
-            for (int i = 0; i < 3; i++) collisionPainterComboBox.Items.Add(collisionPainters[i]);
+            foreach (string s in PokeDatabase.System.MapCollisionPainters) {
+                collisionPainterComboBox.Items.Add(s);
+            }
 
-            /*  Fill type painters list */
-            List<string> typePainters = new List<string>()
-            {
-                "[00] None",
-                "[02] Tall Grass (Wild)",
-                "[03] Very Tall Grass (Wild)",
-                "[06] Tree Headbutt (HGSS)",
-                "[08] Cave Floor",
-                "[0B] Old Château floor",
-                "[0C] Ground Mountain",
-                "[10] River Water (Wild)",
-                "[11] Whirlpool (HGSS)",
-                "[13] Waterfall",
-                "[15] Sea Water (Wild)",
-                "[16] Puddle",
-                "[17] Shallow Walkable water",
-                "[20] Ice",
-                "[21] Sand",
-                "[22] Cave Underwater",
-                "[24] Safari Zone Border",
-                "[2C] Magma",
-                "[2D] Reflection",
-                "[30] Block Right",
-                "[31] Block Left",
-                "[32] Block Up",
-                "[33] Block Down",
-                "[38] Jump Right",
-                "[39] Jump Left",
-                "[3A] Jump Up (Broken in HGSS)",
-                "[3B] Jump Down",
-                "[3C] Ladder front",
-                "[3D] Ladder back",
-                "[3E] Ladder down",
-                "[3F] Jump Corner DownLeft",
-                "[40] Slide Right",
-                "[41] Slide Left",
-                "[42] Slide Up",
-                "[43] Slide Down",
-                "[4B] Horiz Rock Climb",
-                "[4C] Vert Rock Climb",
-                "[4D] Stop Sliding",
-                "[5E] Stairs Warp (Right)",
-                "[5F] Stairs Warp (Left)",
-                "[62] Warp Entrance (Right)",
-                "[63] Warp Entrance (Left)",
-                "[64] Warp Entrance (Up)",
-                "[65] Warp Entrance (Down)",
-                "[67] Warp Panel",
-                "[69] Door",
-                "[6A] Automatic stairs Down right",
-                "[6B] Automatic stairs Up right",
-                "[6C] Warp Right",
-                "[6D] Warp Left",
-                "[6E] Warp Up",
-                "[6F] Warp Down",
-                "[70] Bridge Start",
-                "[71] Bridge Middle",
-                "[72] Bridge Over Cave",
-                "[73] Bridge Over Water",
-                "[75] Bridge Over Snow",
-                "[76] Vertical bike bridge",
-                "[79] Vertical bike bridge over sand",
-                "[7A] Horizontal bike bridge",
-                "[7C] Horizontal bike bridge over water",
-                "[7D] Horizontal bike bridge over sand",
-                "[80] Table",
-                "[83] Storage PC",
-                "[85] Open TownMap",
-                "[86] TV",
-                "[A0] Farm Land",
-                "[A1] Deep Snow",
-                "[A2] Very Deep Snow",
-                "[A3] Ultra Deep Snow",
-                "[A4] Mud",
-                "[A6] Mud Grass",
-                "[A8] Snow",
-                "[D8] Bike Jump Left",
-                "[D9] Bike Slope Top",
-                "[DA] Bike Slope Bottom",
-                "[DB] Bike parking",
-                "[E4] Trash Can",
-                "[E5] Shop items"
-            };
-
-            for (int i = 0; i < typePainters.Count; i++)
-                typePainterComboBox.Items.Add(typePainters[i]);
+            foreach(string s in PokeDatabase.System.MapCollisionTypePainters) {
+                collisionTypePainterComboBox.Items.Add(s);
+            }
+            
             toolStripProgressBar.Value++;
 
             /* Set controls' initial values */
             selectCollisionPanel.BackColor = Color.MidnightBlue;
-            typePainterComboBox.SelectedIndex = 0;
+            collisionTypePainterComboBox.SelectedIndex = 0;
             collisionPainterComboBox.SelectedIndex = 1;
 
 
@@ -654,6 +567,7 @@ namespace DSPRE {
 
             //Default selections
             selectMapComboBox.SelectedIndex = 0;
+            exteriorbldRadioButton.Checked = true;
             switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
@@ -2308,11 +2222,13 @@ namespace DSPRE {
                 buildTextureComboBox.SelectedIndex = areaData.buildingsTileset + 1;
                 mainTabControl.SelectedTab = mapEditorTabPage;
 
-                if (mapPartsTabControl.SelectedTab == permissionsTabPage) //what's this IF for??
+                //what's this IF for??
+                //if (mapPartsTabControl.SelectedTab == permissionsTabPage) 
 
-
-                    if (areaData.areaType == 0)
-                        interiorbldRadioButton.Checked = true;
+                if (areaData.areaType == AreaData.TYPE_INDOOR)
+                    interiorbldRadioButton.Checked = true;
+                else 
+                    exteriorbldRadioButton.Checked = true;
 
                 disableHandlers = false;
                 selectMapComboBox_SelectedIndexChanged(null, null);
@@ -2455,16 +2371,16 @@ namespace DSPRE {
             string colorKeyword = "[Color]";
             string textColorKeyword = "[TextColor]";
             string dashSeparator = "-";
-
             string problematicSegment = "incomplete line";
+             
             Dictionary<List<uint>, Tuple<Color, Color>> colorsDict = new Dictionary<List<uint>, Tuple<Color, Color>>();
             List<string> linesWithErrors = new List<string>();
 
             for (int i = 0; i < fileTableContent.Length; i++)   {
                 if (fileTableContent[i].Length > 0) {
                     string[] lineParts = fileTableContent[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
                     try {
-                        // MapList
                         int j = 0;
                         if (!lineParts[j].Equals(mapKeyword)) {
                             problematicSegment = nameof(mapKeyword);
@@ -2472,9 +2388,8 @@ namespace DSPRE {
                         }
                         j++;
 
-                        //204 to 209
                         List<uint> mapList = new List<uint>();
-                        while (!lineParts[j].Equals("-")) {
+                        while (!lineParts[j].Equals(dashSeparator)) {
 
                             if (lineParts[j].Equals("and")) {
                                 j++;
@@ -2495,14 +2410,12 @@ namespace DSPRE {
                             }
                         }
 
-                        // -
                         if (!lineParts[j].Equals(dashSeparator)) {
                             problematicSegment = nameof(dashSeparator);
                             throw new FormatException();
                         }
                         j++;
 
-                        //Color
                         if (!lineParts[j].Equals(colorKeyword)) {
                             problematicSegment = nameof(colorKeyword);
                             throw new FormatException();
@@ -2715,17 +2628,35 @@ namespace DSPRE {
             selectMapComboBox.Items.Add(selectMapComboBox.Items.Count.ToString("D3") + nameSeparator + "newmap");
             selectMapComboBox.SelectedIndex = selectMapComboBox.Items.Count - 1;
         }
-        private void buildTextureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+        private void replaceMapBinButton_Click(object sender, EventArgs e) {
+            /* Prompt user to select .evt file */
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Map BIN File (*.bin)|*.bin";
+            if (of.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            string texturePath = romInfo.buildingTexturesDirPath + "\\" + (buildTextureComboBox.SelectedIndex - 1).ToString("D4");
-            byte[] textureFile = File.ReadAllBytes(texturePath);
+            /* Update map object in memory */
+            string path = romInfo.mapDirPath + "\\" + selectMapComboBox.SelectedIndex.ToString("D4");
+            File.Copy(of.FileName, path, true);
 
-            if (textureFile.Length > 4) {
-                if (buildTextureComboBox.SelectedIndex == 0)
-                    showBuildingTextures = false;
-                else {
+            /* Refresh controls */
+            selectMapComboBox_SelectedIndexChanged(null, null);
+
+            /* Display success message */
+            MessageBox.Show("Map BIN imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+        private void buildTextureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (disableHandlers || buildTextureComboBox.SelectedIndex < 0) 
+                return;
+
+            if (buildTextureComboBox.SelectedIndex == 0)
+                showBuildingTextures = false;
+            else {
+                string texturePath = romInfo.buildingTexturesDirPath + "\\" + (buildTextureComboBox.SelectedIndex - 1).ToString("D4");
+                byte[] textureFile = File.ReadAllBytes(texturePath);
+
+                if (textureFile.Length > 4) { 
                     showBuildingTextures = true;
 
                     Stream str = new MemoryStream(textureFile);
@@ -2736,14 +2667,14 @@ namespace DSPRE {
                             building.NSBMDFile.MatchTextures();
                         } catch { }
                     }
+                } else {
+                    disableHandlers = true;
+                    buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = "Texture file too small (" + (buildTextureComboBox.SelectedIndex - 1) + ")";
+                    disableHandlers = false;
+                    showBuildingTextures = false;
                 }
-            } else {
-                disableHandlers = true;
-                buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = "Texture file too small (" + (buildTextureComboBox.SelectedIndex-1) + ")";
-                disableHandlers = false;
-                showBuildingTextures = false;
-
             }
+            
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void mapTextureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -2764,12 +2695,15 @@ namespace DSPRE {
         }
         private void mapEditorTabPage_Enter(object sender, EventArgs e) {
             mapOpenGlControl.MakeCurrent();
-            if (selectMapComboBox.SelectedIndex > -1) RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            if (selectMapComboBox.SelectedIndex > -1) 
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void mapOpenGlControl_MouseWheel(object sender, MouseEventArgs e) // Zoom In/Out
         {
-            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift) dist += (float)e.Delta / 200;
-            else dist -= (float)e.Delta / 200;
+            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift) 
+                dist += (float)e.Delta / 200;
+            else 
+                dist -= (float)e.Delta / 200;
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void mapOpenGlControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
@@ -2940,7 +2874,8 @@ namespace DSPRE {
             addBuildingToMap(new Building());
         }
         private void duplicateBuildingButton_Click(object sender, EventArgs e) {
-            addBuildingToMap(new Building(currentMapFile.buildings[buildingsListBox.SelectedIndex]));
+            if (buildingsListBox.SelectedIndex > -1)
+                addBuildingToMap(new Building(currentMapFile.buildings[buildingsListBox.SelectedIndex]));
         }
 
         private void addBuildingToMap(Building b) {
@@ -2999,16 +2934,22 @@ namespace DSPRE {
             #endregion
         }
         private void buildingHeightUpDown_ValueChanged(object sender, EventArgs e) {
-            currentMapFile.buildings[buildingsListBox.SelectedIndex].height = (uint)buildingHeightUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            if (buildingsListBox.SelectedIndex > -1) {
+                currentMapFile.buildings[buildingsListBox.SelectedIndex].height = (uint)buildingHeightUpDown.Value;
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            }
         }
         private void buildingLengthUpDown_ValueChanged(object sender, EventArgs e) {
-            currentMapFile.buildings[buildingsListBox.SelectedIndex].length = (uint)buildingLengthUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            if (buildingsListBox.SelectedIndex > -1) {
+                currentMapFile.buildings[buildingsListBox.SelectedIndex].length = (uint)buildingLengthUpDown.Value;
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            }
         }
         private void buildingWidthUpDown_ValueChanged(object sender, EventArgs e) {
-            currentMapFile.buildings[buildingsListBox.SelectedIndex].width = (uint)buildingWidthUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            if (buildingsListBox.SelectedIndex > -1) {
+                currentMapFile.buildings[buildingsListBox.SelectedIndex].width = (uint)buildingWidthUpDown.Value;
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            }
         }
         private void exportBuildingsButton_Click(object sender, EventArgs e) {
             SaveFileDialog eb = new SaveFileDialog();
@@ -3080,59 +3021,65 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void removeBuildingButton_Click(object sender, EventArgs e) {
-            if (buildingsListBox.Items.Count > 0) {
+            int toRemoveListBoxID = buildingsListBox.SelectedIndex;
+            if (toRemoveListBoxID > -1) {
                 disableHandlers = true;
 
                 /* Remove building object from list and the corresponding entry in the ListBox */
-                int buildingNumber = buildingsListBox.SelectedIndex;
-                currentMapFile.buildings.RemoveAt(buildingNumber);
-                buildingsListBox.Items.RemoveAt(buildingNumber);
+                
+                currentMapFile.buildings.RemoveAt(toRemoveListBoxID);
+                buildingsListBox.Items.RemoveAt(toRemoveListBoxID);
 
                 FillBuildingsBox(); // Update ListBox
                 RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
                 disableHandlers = false;
 
-                if (buildingNumber > 0) buildingsListBox.SelectedIndex = buildingNumber - 1;
+                if (buildingsListBox.Items.Count > 0) {
+                    if (toRemoveListBoxID > 0)
+                        buildingsListBox.SelectedIndex = toRemoveListBoxID - 1;
+                    else
+                        buildingsListBox.SelectedIndex = 0;
+                }
             }
         }
         private void xBuildUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || buildingsListBox.SelectedIndex < 0)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xPosition = (short)xBuildUpDown.Value;
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void yBuildUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || buildingsListBox.SelectedIndex < 0)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yPosition = (short)yBuildUpDown.Value;
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void zBuildUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || buildingsListBox.SelectedIndex < 0)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zPosition = (short)zBuildUpDown.Value;
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void xFractionUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || buildingsListBox.SelectedIndex < 0)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xFraction = (ushort)xFractionUpDown.Value;
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void yFractionUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || buildingsListBox.SelectedIndex < 0)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yFraction = (ushort)yFractionUpDown.Value;
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void zFractionUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || buildingsListBox.SelectedIndex < 0)
                 return;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zFraction = (ushort)zFractionUpDown.Value;
@@ -3273,7 +3220,7 @@ namespace DSPRE {
         private void Restore_Painter() {
             if (selectCollisionPanel.BackColor == Color.MidnightBlue)
                 collisionPainterComboBox_SelectedIndexChanged(null, null); // Restore painters to original state
-            else if (typePainterComboBox.Enabled)
+            else if (collisionTypePainterComboBox.Enabled)
                 typePainterComboBox_SelectedIndexChanged(null, null); // Restore painters to original state
             else typePainterUpDown_ValueChanged(null, null);
         }
@@ -3515,7 +3462,7 @@ namespace DSPRE {
             }
         }
         private void typePainterComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            string selectedType = typePainterComboBox.SelectedItem.ToString();
+            string selectedType = collisionTypePainterComboBox.SelectedItem.ToString();
             int typeValue = Convert.ToInt32(selectedType.Substring(1, 2), 16);
 
             Set_Type_Painter(typeValue);
@@ -3558,13 +3505,13 @@ namespace DSPRE {
         private void typesRadioButton_CheckedChanged(object sender, EventArgs e) {
             if (knownTypesRadioButton.Checked) {
                 typePainterUpDown.Enabled = false;
-                typePainterComboBox.Enabled = true;
+                collisionTypePainterComboBox.Enabled = true;
                 typePainterComboBox_SelectedIndexChanged(null, null);
             }
         }
         private void valueTypeRadioButton_CheckedChanged(object sender, EventArgs e) {
             if (valueTypeRadioButton.Checked) {
-                typePainterComboBox.Enabled = false;
+                collisionTypePainterComboBox.Enabled = false;
                 typePainterUpDown.Enabled = true;
                 typePainterUpDown_ValueChanged(null, null);
             }
@@ -5020,6 +4967,9 @@ namespace DSPRE {
         }
 
         private void functionTextBox_SelectionChanged(object sender, EventArgs e) {
+            if (disableHandlers)
+                return;
+
             Point p = functionTextBox.GetPositionFromCharIndex(functionTextBox.SelectionStart);
             if (p.X == 1) {
                 AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
@@ -5267,7 +5217,7 @@ namespace DSPRE {
 
             if (currentScriptFile.isLevelScript) {
                 scriptTextBox.Focus();
-                scriptTextBox.Text += "Level script files currently not supported";
+                scriptTextBox.Text += "Level script files are currently not supported.\nYou can use AdAstra's Level Scripts Editor.";
                 functionTextBox.Enabled = false;
                 movementTextBox.Enabled = false;
             } else {
@@ -6065,6 +6015,7 @@ namespace DSPRE {
         private void exportNSBTXButton_Click(object sender, EventArgs e) {
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "NSBTX File (*.nsbtx)|*.nsbtx";
+            sf.FileName = "Texture Pack " + texturesListBox.SelectedIndex;
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -6120,6 +6071,7 @@ namespace DSPRE {
                 tilesetPath = romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             else
                 tilesetPath = romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+
             currentTileset = new NSMBe4.NSBMD.NSBTX_File(new FileStream(tilesetPath, FileMode.Open));
 
             /* Add textures and palette slot names to ListBoxes */
@@ -6219,9 +6171,9 @@ namespace DSPRE {
         }
         private void indoorAreaRadioButton_CheckedChanged(object sender, EventArgs e) {
             if (indoorAreaRadioButton.Checked == true)
-                currentAreaData.areaType = 0;
+                currentAreaData.areaType = AreaData.TYPE_INDOOR; //0
             else
-                currentAreaData.areaType = 1;
+                currentAreaData.areaType = AreaData.TYPE_OUTDOOR; //1
         }
         private void addNSBTXButton_Click(object sender, EventArgs e) {
             /* Add new NSBTX file to the correct folder */

@@ -6,12 +6,15 @@ namespace DSPRE
 	/// </summary>
 	public class AreaData
 	{
+        internal static readonly byte TYPE_INDOOR = 0;
+        internal static readonly byte TYPE_OUTDOOR = 1;
+
         #region Fields (2)
         public ushort buildingsTileset;
         public ushort mapTileset;
         public ushort dynamicTextureType;
         public ushort unknown1;
-        public byte areaType;
+        public byte areaType = TYPE_OUTDOOR;
         public byte lightType;
         #endregion
 
