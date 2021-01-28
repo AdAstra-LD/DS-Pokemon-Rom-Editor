@@ -6327,5 +6327,9 @@ namespace DSPRE {
             MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
+
+        private void headerSearchToolStripButton_Click(object sender, EventArgs e) {
+
+        }
     }
 }

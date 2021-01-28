@@ -467,6 +467,7 @@
     <Content Include="Graphics\Program Icons\addIcon.png" />
     <Content Include="Graphics\Program Icons\loadColorTable.png" />
     <Content Include="Graphics\Program Icons\resetColorTable.png" />
+    <None Include="Graphics\Program Icons\wideLensImage.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
