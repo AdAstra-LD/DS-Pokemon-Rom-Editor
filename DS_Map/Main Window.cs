@@ -1097,7 +1097,6 @@ namespace DSPRE {
             return BuildHeaderFromFile(RomInfo.arm9Path, headerNumber, headerOffset);
         }
         #endregion
-
         private void areaDataUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
@@ -1728,6 +1727,8 @@ namespace DSPRE {
 
         decimal matrixCopy;
         decimal areadataCopy;
+        decimal worldmapXCoordCopy;
+        decimal worldmapYCoordCopy;
 
         byte flagsCopy;
 
@@ -1752,6 +1753,8 @@ namespace DSPRE {
 
             matrixCopy = matrixUpDown.Value;
             areadataCopy = areaDataUpDown.Value;
+            worldmapXCoordCopy = worldmapXCoordUpDown.Value;
+            worldmapYCoordCopy = worldmapYCoordUpDown.Value;
 
             /*Enable paste buttons*/
             pasteHeaderButton.Enabled = true;
@@ -1775,6 +1778,8 @@ namespace DSPRE {
 
             pasteMatrixButton.Enabled = true;
             pasteAreaDataButton.Enabled = true;
+
+            worldmapCoordsCopyButton.Enabled = true;
 
             pasteFlagsButton.Enabled = true;
 
@@ -1833,23 +1838,26 @@ namespace DSPRE {
             Clipboard.SetData(DataFormats.Text, eventsCopy);
             pasteEventsButton.Enabled = true;
         }
-
         private void copyTextsButton_Click(object sender, EventArgs e) {
             textsCopy = textFileUpDown.Value;
             Clipboard.SetData(DataFormats.Text, textsCopy);
             pasteTextsButton.Enabled = true;
         }
-
         private void copyMatrixButton_Click(object sender, EventArgs e) {
             matrixCopy = matrixUpDown.Value;
             Clipboard.SetData(DataFormats.Text, matrixCopy);
             pasteMatrixButton.Enabled = true;
         }
-
         private void copyAreaDataButton_Click(object sender, EventArgs e) {
             areadataCopy = areaDataUpDown.Value;
             Clipboard.SetData(DataFormats.Text, areadataCopy);
             pasteAreaDataButton.Enabled = true;
+        }
+
+        private void worldmapCoordsCopyButton_Click(object sender, EventArgs e) {
+            worldmapXCoordCopy = worldmapXCoordUpDown.Value;
+            worldmapYCoordCopy = worldmapYCoordUpDown.Value;
+            worldmapCoordsPasteButton.Enabled = true;
         }
         private void copyFlagsButton_Click(object sender, EventArgs e) {
             flagsCopy = currentHeader.flags;
@@ -1922,6 +1930,10 @@ namespace DSPRE {
         }
         private void pasteCameraAngleButton_Click(object sender, EventArgs e) {
             cameraComboBox.SelectedIndex = camAngleCopy;
+        }
+        private void worldmapCoordsPasteButton_Click(object sender, EventArgs e) {
+            worldmapXCoordUpDown.Value = worldmapXCoordCopy;
+            worldmapYCoordUpDown.Value = worldmapYCoordCopy;
         }
         private void pasteFlagsButton_Click(object sender, EventArgs e) {
             currentHeader.flags = flagsCopy;

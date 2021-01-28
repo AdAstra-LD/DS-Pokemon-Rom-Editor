@@ -235,7 +235,7 @@ namespace DSPRE
                     eventID = reader.ReadUInt16();
                     mapName = reader.ReadByte();
                     areaIcon = reader.ReadByte();
-                    weather = StandardizeWeather(reader.ReadByte());
+                    weather = reader.ReadByte();
                     camera = reader.ReadByte();
                     showName = reader.ReadByte();
                     flags = reader.ReadByte();
@@ -270,39 +270,6 @@ namespace DSPRE
                 writer.Write(flags);
             }
             return newData.ToArray();
-        }
-        public byte StandardizeWeather(byte weather)
-        {
-            /* This function was written to avoid having to account 
-            for duplicate weather values , since  many share the same 
-            weather conditions */
-
-            switch (weather)
-            {
-                case 8:
-                case 13:
-                case 18:
-                case 19:
-                case 20:
-                case 26:
-                case 27:
-                case 28:
-                case 29:
-                case 30:
-                case 31:
-                case 33:
-                    return 0; // Normal weather
-                case 21:
-                case 34:
-                case 35:
-                    return 6; // D snow
-                case 36:
-                    return 5; // Snowfall
-                case 32:
-                    return 2; // Rain
-                default:
-                    return weather;
-            }
         }
         #endregion
     }
@@ -342,7 +309,7 @@ namespace DSPRE
                     eventID = reader.ReadUInt16();
                     mapName = reader.ReadByte();
                     areaIcon = StandardizeAreaIcon(reader.ReadByte());
-                    weather = StandardizeWeather(reader.ReadByte());
+                    weather = reader.ReadByte();
                     
                     byte cameraAndArea = reader.ReadByte();
                     camera = (byte)(cameraAndArea / 16);
@@ -386,6 +353,12 @@ namespace DSPRE
         }
         public byte StandardizeAreaIcon(byte areaIcon)
         {
+            //TO DO: improve this
+            //The AreaIcon byte is probably split into bits by the game engine,
+            //each with a specific purpose...
+            //there is a very interesting pattern here
+
+
             /* This function was written to avoid having to account 
             for duplicate values of the map name textbox types, since 
             many share the same textbox image */
@@ -447,25 +420,6 @@ namespace DSPRE
                     return 165;
                 default:
                     return areaIcon;
-            }
-        }
-        public byte StandardizeWeather(byte weather)
-        {
-            /* This function was written to avoid having to account 
-            for duplicate weather values , since  many share the same 
-            weather conditions */
-
-            switch (weather)
-            {
-                case 0:
-                case 1:
-                case 26:
-                    return 0;
-                case 22:
-                case 23:
-                    return 22;
-                default:
-                    return weather; // No name displayed
             }
         }
         #endregion
