@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
@@ -35,7 +36,7 @@ namespace DSPRE
        -----------------    4: Allow Bike usage
        -----------------    5: ?
        -----------------    6: ?
-       -----------------    7: Escape Rope
+       -----------------    7: Esc. Rope
        -----------------    8: ?
 
     /* ---------------------- HEADER DATA STRUCTURE (HGSS):----------------------------
@@ -60,7 +61,7 @@ namespace DSPRE
 
         DPPT
        -----------------    1: Allow Fly
-       -----------------    2: Allow Escape Rope
+       -----------------    2: Allow Esc. Rope
        -----------------    3: Allow Running
        -----------------    4: Allow Bike 
        -----------------    5: Battle BG b4
@@ -73,7 +74,7 @@ namespace DSPRE
        -----------------    2: ?
        -----------------    3: ?
        -----------------    4: Allow Fly 
-       -----------------    5: Allow Escape rope
+       -----------------    5: Allow Esc. Rope
        -----------------    6: ?
        -----------------    7: Allow Bicycle
        -----------------    8: ?
@@ -94,7 +95,6 @@ namespace DSPRE
         #region Fields (10)
         public byte areaDataID { get; set; }
         public byte camera { get; set; }
-        public byte areaSettings { get; set; }
         public ushort eventID { get; set; }
         public byte flags { get; set; }
         public ushort levelScript { get; set; }
@@ -127,8 +127,7 @@ namespace DSPRE
         public HeaderDP(short headerNumber, Stream data)
         {
             this.ID = headerNumber;
-            using (BinaryReader reader = new BinaryReader(data))
-            {
+            using (BinaryReader reader = new BinaryReader(data)) {
                 areaDataID = reader.ReadByte();
                 unknown1 = reader.ReadByte();
                 matrix = reader.ReadUInt16();
@@ -285,8 +284,10 @@ namespace DSPRE
         public byte mapName { get; set; }
         public ushort musicDay { get; set; }
         public ushort musicNight { get; set; }
-        public byte unknown1 { get; set; }
-        public byte unknown2 { get; set; }
+        public byte areaSettings { get; set; } // 4 bits only [4 bits for the camera as well]
+        public byte unknown0 { get; set; } //4 bits only
+        public byte worldmapX { get; set; } //6 bits only
+        public byte worldmapY { get; set; } //6 bits only
         #endregion
 
         #region Constructors (1)
@@ -298,8 +299,12 @@ namespace DSPRE
                 try {
                     wildPokémon = reader.ReadByte();
                     areaDataID = reader.ReadByte();
-                    unknown1 = reader.ReadByte();
-                    unknown2 = reader.ReadByte();
+                    
+                    ushort coords = reader.ReadUInt16();
+                    unknown0 = (byte)(coords & 0b_1111); //get 4 bits
+                    worldmapX = (byte)((coords >> 4) & 0b_1111_11); //get 6 bits after the first 4
+                    worldmapY = (byte)((coords >> 10) & 0b_1111_11); //get 6 bits after the first 10
+
                     matrix = reader.ReadUInt16();
                     script = reader.ReadUInt16();
                     levelScript = reader.ReadUInt16();
@@ -312,8 +317,9 @@ namespace DSPRE
                     weather = reader.ReadByte();
                     
                     byte cameraAndArea = reader.ReadByte();
-                    camera = (byte)(cameraAndArea / 16);
-                    areaSettings = (byte)(cameraAndArea % 16);
+                    areaSettings = (byte)(cameraAndArea & 0b_1111); //get 4 bits 
+                    camera = (byte)(cameraAndArea >> 4 & 0b_1111); //get 4 bits after the first 4
+                    
 
                     followMode = reader.ReadByte();
                     flags = reader.ReadByte();
@@ -333,8 +339,7 @@ namespace DSPRE
             {
                 writer.Write((byte)wildPokémon);
                 writer.Write(areaDataID);
-                writer.Write(unknown1);
-                writer.Write(unknown2);
+                writer.Write((ushort) (worldmapY & 0b_1111_1111) << 10  +  (worldmapX & 0b_1111_1111) << 4  +  (unknown0 & 0b_1111));
                 writer.Write(matrix);
                 writer.Write(script);
                 writer.Write(levelScript);
@@ -345,7 +350,7 @@ namespace DSPRE
                 writer.Write(mapName);
                 writer.Write(areaIcon);
                 writer.Write(weather);
-                writer.Write((byte)(camera*16 + areaSettings));
+                writer.Write((byte)((camera & 0b_1111) << 4 + (areaSettings & 0b_1111)));
                 writer.Write(followMode);
                 writer.Write(flags);
             }

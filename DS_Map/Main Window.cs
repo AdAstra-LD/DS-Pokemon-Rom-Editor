@@ -151,7 +151,6 @@ namespace DSPRE {
             }
             return null;
         }
-
         private void PaintGameIcon(object sender, PaintEventArgs e) {
             if (iconON) {
                 BinaryReader readIcon;
@@ -249,13 +248,11 @@ namespace DSPRE {
                 readIcon.Close();
             } else return;
         }
-        
         private void DeleteTempFolders() {
             foreach (var tuple in RomInfo.narcPaths.Zip(RomInfo.extractedNarcDirs, Tuple.Create)) {
                 Directory.Delete(tuple.Item2, true); // Delete folder
             }
         }
-
         private void RepackRom(string ndsFileName) {
             Process repack = new Process();
             repack.StartInfo.FileName = @"Tools\ndstool.exe";
@@ -380,32 +377,6 @@ namespace DSPRE {
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
         }
-        private void SetupFlagNames() {
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
-                case "Plat":
-                    flag7CheckBox.Text = "Fly";
-                    flag6CheckBox.Text = "Escape Rope";
-                    flag5CheckBox.Text = "Run";
-                    flag4CheckBox.Text = "Bike";
-                    flag3CheckBox.Text = "Battle BG b4";
-                    flag2CheckBox.Text = "Battle BG b3";
-                    flag1CheckBox.Text = "Battle BG b2";
-                    flag0CheckBox.Text = "Battle BG b1";
-                    break;
-                default:
-                    flag7CheckBox.Text = "Flag 7";
-                    flag6CheckBox.Text = "Flag 6";
-                    flag5CheckBox.Text = "Flag 5";
-                    flag4CheckBox.Text = "Fly";
-                    flag3CheckBox.Text = "Escape Rope";
-                    flag2CheckBox.Text = "Flag 2";
-                    flag1CheckBox.Text = "Bicycle";
-                    flag0CheckBox.Text = "Flag 0";
-                    break;
-            }
-        }
         private void SetupHeaderEditor() {
             /* Extract essential NARCs sub-archives*/
 
@@ -450,6 +421,15 @@ namespace DSPRE {
                     areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.DPShowNameValues);
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.DPWeatherDict.Values.ToArray());
                     wildPokeUpDown.Maximum = 65535;
+
+                    flag7CheckBox.Text = "Fly";
+                    flag6CheckBox.Text = "Esc. Rope";
+                    flag5CheckBox.Text = "Run";
+                    flag4CheckBox.Text = "Bike";
+                    flag3CheckBox.Text = "Battle BG b4";
+                    flag2CheckBox.Text = "Battle BG b3";
+                    flag1CheckBox.Text = "Battle BG b2";
+                    flag0CheckBox.Text = "Battle BG b1";
                     break;
                 case "Plat":
                     areaIconComboBox.Items.AddRange(PokeDatabase.Area.PtAreaIconValues);
@@ -460,8 +440,19 @@ namespace DSPRE {
                     areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.PtShowNameValues);
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.PtWeatherDict.Values.ToArray());
                     wildPokeUpDown.Maximum = 65535;
+
+                    flag7CheckBox.Text = "Fly";
+                    flag6CheckBox.Text = "Esc. Rope";
+                    flag5CheckBox.Text = "Run";
+                    flag4CheckBox.Text = "Bike";
+                    flag3CheckBox.Text = "Battle BG b4";
+                    flag2CheckBox.Text = "Battle BG b3";
+                    flag1CheckBox.Text = "Battle BG b2";
+                    flag0CheckBox.Text = "Battle BG b1";
                     break;
                 default:
+                    worldmapCoordsGroupBox.Enabled = true;
+
                     areaIconComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaIconValues);
                     cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.HGSSCameraValues);
                     areaSettingsComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaProperties);
@@ -470,9 +461,17 @@ namespace DSPRE {
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicDict.Values.ToArray());
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.HGSSWeatherDict.Values.ToArray());
                     wildPokeUpDown.Maximum = 255;
+
+                    flag7CheckBox.Text = "Flag 7";
+                    flag6CheckBox.Text = "Flag 6";
+                    flag5CheckBox.Text = "Flag 5";
+                    flag4CheckBox.Text = "Fly";
+                    flag3CheckBox.Text = "Esc. Rope";
+                    flag2CheckBox.Text = "Flag 2";
+                    flag1CheckBox.Text = "Bicycle";
+                    flag0CheckBox.Text = "Flag 0";
                     break;
             }
-
             if (headerListBox.Items.Count > 0)
                 headerListBox.SelectedIndex = 0;
         }
@@ -875,7 +874,6 @@ namespace DSPRE {
             }
 
             /* Setup essential editors */
-            SetupFlagNames();
             SetupHeaderEditor();
             eventOpenGlControl.InitializeContexts();
             mapOpenGlControl.InitializeContexts();
@@ -1195,7 +1193,7 @@ namespace DSPRE {
             cameraComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.camera.ToString("D2"));
 
             if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
-                areaSettingsComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.areaSettings.ToString("D2"));
+                areaSettingsComboBox.SelectedIndex = cameraComboBox.FindString("[" + ((HeaderHGSS)currentHeader).areaSettings.ToString("D2"));
 
             if (currentHeader.wildPokémon == romInfo.nullEncounterID)
                 openWildEditorWithIdButton.Enabled = false;
@@ -1223,6 +1221,8 @@ namespace DSPRE {
                     locationNameComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).mapName;
                     musicDayUpDown.Value = ((HeaderHGSS)currentHeader).musicDay;
                     musicNightUpDown.Value = ((HeaderHGSS)currentHeader).musicNight;
+                    worldmapXCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapX;
+                    worldmapYCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapY;
                     break;
             }
             updateWeatherPicAndComboBox();
@@ -1383,7 +1383,12 @@ namespace DSPRE {
             currentHeader.weather = (byte)weatherUpDown.Value;
             updateWeatherPicAndComboBox();
         }
-
+        private void worldmapXCoordUpDown_ValueChanged(object sender, EventArgs e) {
+            ((HeaderHGSS)currentHeader).worldmapX = (byte)worldmapXCoordUpDown.Value;
+        }
+        private void worldmapYCoordUpDown_ValueChanged(object sender, EventArgs e) {
+            ((HeaderHGSS)currentHeader).worldmapY = (byte)worldmapYCoordUpDown.Value;
+        }
         private void updateWeatherPicAndComboBox() {
             if (disableHandlers)
                 return;
@@ -1624,8 +1629,10 @@ namespace DSPRE {
                     break;
                 case "HG":
                 case "SS":
-                    currentHeader.areaSettings = (byte)areaSettingsComboBox.SelectedIndex;
-                    if (currentHeader.areaSettings == 4) {
+                    HeaderHGSS ch = ((HeaderHGSS)currentHeader);
+
+                    ch.areaSettings = (byte)areaSettingsComboBox.SelectedIndex;
+                    if (ch.areaSettings == 4) {
                         areaImageLabel.Text = "[Location Tag hidden]";
                         areaIconComboBox.Enabled = false;
                         areaIconPictureBox.Visible = false;
