@@ -96,13 +96,14 @@ namespace DSPRE
         public byte areaDataID { get; set; }
         public byte camera { get; set; }
         public ushort eventID { get; set; }
-        public byte flags { get; set; }
         public ushort levelScript { get; set; }
         public ushort matrix { get; set; }
         public ushort script { get; set; }
         public byte showName { get; set; }
+        public byte battleBackground { get; set; }
         public ushort text { get; set; }
         public byte weather { get; set; }
+        public byte flags { get; set; }
         public ushort wildPokémon { get; set; }
         #endregion Fields
 
@@ -142,7 +143,10 @@ namespace DSPRE
                 weather = StandardizeWeather(reader.ReadByte());
                 camera = reader.ReadByte();
                 showName = reader.ReadByte();
-                flags = reader.ReadByte();
+
+                byte mapSettings = reader.ReadByte();
+                battleBackground = (byte)(mapSettings & 0b_1111);
+                flags = (byte)(mapSettings >> 4 & 0b_1111);
             }
         }
         #endregion Constructors
@@ -167,7 +171,9 @@ namespace DSPRE
                 writer.Write(weather);
                 writer.Write(camera);
                 writer.Write(showName);
-                writer.Write(flags);
+                
+                byte mapSettings = (byte) ((battleBackground & 0b_1111) + ((flags & 0b_1111) << 4));
+                writer.Write(mapSettings);
             }
             return newData.ToArray();
         }
@@ -233,11 +239,15 @@ namespace DSPRE
                     wildPokémon = reader.ReadUInt16();
                     eventID = reader.ReadUInt16();
                     mapName = reader.ReadByte();
-                    areaIcon = reader.ReadByte();
+                    areaIcon = reader.ReadByte(); 
                     weather = reader.ReadByte();
                     camera = reader.ReadByte();
-                    showName = reader.ReadByte();
-                    flags = reader.ReadByte();
+
+                    ushort mapSettings = reader.ReadUInt16();
+                    showName = (byte)(mapSettings & 0b_1111_111);
+                    battleBackground = (byte)(mapSettings >> 7 & 0b_1111_1);
+                    flags = (byte)(mapSettings >> 12 & 0b_1111);
+
                 } catch (EndOfStreamException) {
                     MessageBox.Show("Error loading header " + ID + '.', "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -265,8 +275,9 @@ namespace DSPRE
                 writer.Write(areaIcon);
                 writer.Write(weather);
                 writer.Write(camera);
-                writer.Write(showName);
-                writer.Write(flags);
+
+                ushort mapSettings = (ushort)((showName & 0b_1111_111) + ((battleBackground & 0b_1111_1) << 7) + ((flags & 0b_1111) << 12));
+                writer.Write(mapSettings);
             }
             return newData.ToArray();
         }
@@ -339,7 +350,10 @@ namespace DSPRE
             {
                 writer.Write((byte)wildPokémon);
                 writer.Write(areaDataID);
-                writer.Write((ushort) (worldmapY & 0b_1111_1111) << 10  +  (worldmapX & 0b_1111_1111) << 4  +  (unknown0 & 0b_1111));
+
+                ushort worldMapCoordinates = (ushort) ( (unknown0 & 0b_1111) + ((worldmapX & 0b_1111_1111) << 4) + ((worldmapY & 0b_1111_1111) << 10) );
+                writer.Write(worldMapCoordinates);
+
                 writer.Write(matrix);
                 writer.Write(script);
                 writer.Write(levelScript);
@@ -350,7 +364,10 @@ namespace DSPRE
                 writer.Write(mapName);
                 writer.Write(areaIcon);
                 writer.Write(weather);
-                writer.Write((byte)((camera & 0b_1111) << 4 + (areaSettings & 0b_1111)));
+
+                byte cameraAndArea = (byte)  ((areaSettings & 0b_1111) + ((camera & 0b_1111) << 4));
+                writer.Write(cameraAndArea);
+
                 writer.Write(followMode);
                 writer.Write(flags);
             }

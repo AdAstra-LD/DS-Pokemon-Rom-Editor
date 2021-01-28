@@ -13,6 +13,7 @@ using NarcAPI;
 using Tao.OpenGl;
 using LibNDSFormats.NSBMD;
 using LibNDSFormats.NSBTX;
+using System.Collections;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -421,15 +422,6 @@ namespace DSPRE {
                     areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.DPShowNameValues);
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.DPWeatherDict.Values.ToArray());
                     wildPokeUpDown.Maximum = 65535;
-
-                    flag7CheckBox.Text = "Fly";
-                    flag6CheckBox.Text = "Esc. Rope";
-                    flag5CheckBox.Text = "Run";
-                    flag4CheckBox.Text = "Bike";
-                    flag3CheckBox.Text = "Battle BG b4";
-                    flag2CheckBox.Text = "Battle BG b3";
-                    flag1CheckBox.Text = "Battle BG b2";
-                    flag0CheckBox.Text = "Battle BG b1";
                     break;
                 case "Plat":
                     areaIconComboBox.Items.AddRange(PokeDatabase.Area.PtAreaIconValues);
@@ -440,19 +432,8 @@ namespace DSPRE {
                     areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.PtShowNameValues);
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.PtWeatherDict.Values.ToArray());
                     wildPokeUpDown.Maximum = 65535;
-
-                    flag7CheckBox.Text = "Fly";
-                    flag6CheckBox.Text = "Esc. Rope";
-                    flag5CheckBox.Text = "Run";
-                    flag4CheckBox.Text = "Bike";
-                    flag3CheckBox.Text = "Battle BG b4";
-                    flag2CheckBox.Text = "Battle BG b3";
-                    flag1CheckBox.Text = "Battle BG b2";
-                    flag0CheckBox.Text = "Battle BG b1";
                     break;
                 default:
-                    worldmapCoordsGroupBox.Enabled = true;
-
                     areaIconComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaIconValues);
                     cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.HGSSCameraValues);
                     areaSettingsComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaProperties);
@@ -462,18 +443,30 @@ namespace DSPRE {
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.HGSSWeatherDict.Values.ToArray());
                     wildPokeUpDown.Maximum = 255;
 
+                    flag7CheckBox.Visible = true;
+                    flag6CheckBox.Visible = true;
+                    flag5CheckBox.Visible = true;
+                    flag4CheckBox.Visible = true;
                     flag7CheckBox.Text = "Flag 7";
                     flag6CheckBox.Text = "Flag 6";
                     flag5CheckBox.Text = "Flag 5";
                     flag4CheckBox.Text = "Fly";
+
                     flag3CheckBox.Text = "Esc. Rope";
                     flag2CheckBox.Text = "Flag 2";
                     flag1CheckBox.Text = "Bicycle";
                     flag0CheckBox.Text = "Flag 0";
+
+                    worldmapCoordsGroupBox.Enabled = true;
+                    battleBackgroundUpDown.Visible = false;
+                    battleBackgroundLabel.Visible = false;
                     break;
             }
             if (headerListBox.Items.Count > 0)
                 headerListBox.SelectedIndex = 0;
+        }
+        private void battleBackgroundUpDown_ValueChanged(object sender, EventArgs e) {
+            currentHeader.battleBackground = (byte)battleBackgroundUpDown.Value;
         }
         private void SetupMapEditor() {
             /* Extract essential NARCs sub-archives*/
@@ -1155,17 +1148,32 @@ namespace DSPRE {
             if (disableHandlers)
                 return;
 
-            /* Convert flags to byte*/
-            int i = 7;
             byte flagVal = 0;
-            foreach(Control c in flagsGroupBox.Controls) {
-                try {
-                    if (((CheckBox)c).Checked)
-                        flagVal += (byte)Math.Pow(2, i);
-                    i--;
-                } catch (InvalidCastException) { }
-            }
+            if (flag0CheckBox.Checked)
+                flagVal += (byte)Math.Pow(2, 0);
 
+            if (flag1CheckBox.Checked)
+                flagVal += (byte)Math.Pow(2, 1);
+
+            if (flag2CheckBox.Checked)
+                flagVal += (byte)Math.Pow(2, 2);
+
+            if (flag3CheckBox.Checked)
+                flagVal += (byte)Math.Pow(2, 3);
+
+            switch (RomInfo.gameVersion) {
+                case "HG":
+                case "SS":
+                    if (flag4CheckBox.Checked)
+                        flagVal += (byte)Math.Pow(2, 4);
+                    if (flag5CheckBox.Checked)
+                        flagVal += (byte)Math.Pow(2, 5);
+                    if (flag6CheckBox.Checked)
+                        flagVal += (byte)Math.Pow(2, 6);
+                    if (flag7CheckBox.Checked)
+                        flagVal += (byte)Math.Pow(2, 7);
+                    break;
+            }
             currentHeader.flags = flagVal;
         }
         private void headerListBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1208,6 +1216,7 @@ namespace DSPRE {
                     musicDayUpDown.Value = ((HeaderDP)currentHeader).musicDay;
                     musicNightUpDown.Value = ((HeaderDP)currentHeader).musicNight;
                     areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.showName:D3}");
+                    battleBackgroundUpDown.Value = currentHeader.battleBackground;
                     break;
                 case "Plat":
                     areaIconComboBox.SelectedIndex = ((HeaderPt)currentHeader).areaIcon;
@@ -1215,6 +1224,7 @@ namespace DSPRE {
                     musicDayUpDown.Value = ((HeaderPt)currentHeader).musicDay;
                     musicNightUpDown.Value = ((HeaderPt)currentHeader).musicNight;
                     areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.showName:D3}");
+                    battleBackgroundUpDown.Value = currentHeader.battleBackground;
                     break;
                 default:
                     areaIconComboBox.SelectedIndex = areaIconComboBox.FindString("[" + $"{((HeaderHGSS)currentHeader).areaIcon:D3}");
@@ -1225,23 +1235,23 @@ namespace DSPRE {
                     worldmapYCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapY;
                     break;
             }
-            updateWeatherPicAndComboBox();
             refreshFlags();
+            updateWeatherPicAndComboBox();
         }
-
         private void refreshFlags() {
-            int i = 7;
-            disableHandlers = true;
-            foreach (Control cBox in flagsGroupBox.Controls) {
-                try {
-                    if ((currentHeader.flags & (1 << i)) != 0)
-                        ((CheckBox)cBox).Checked = true;
-                    else
-                        ((CheckBox)cBox).Checked = false;
-                    i--;
-                } catch (InvalidCastException) { }
+            BitArray ba = new BitArray(new byte[] { currentHeader.flags });
+
+            flag0CheckBox.Checked = ba[0];
+            flag1CheckBox.Checked = ba[1];
+            flag2CheckBox.Checked = ba[2];
+            flag3CheckBox.Checked = ba[3];
+
+            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
+                flag4CheckBox.Checked = ba[4];
+                flag5CheckBox.Checked = ba[5];
+                flag6CheckBox.Checked = ba[6];
+                flag7CheckBox.Checked = ba[7];
             }
-            disableHandlers = false;
         }
 
         private void eventsTabControl_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1566,7 +1576,7 @@ namespace DSPRE {
         private void startSearchGameLocation() {
             if (searchLocationTextBox.Text.Length != 0) {
                 headerListBox.Items.Clear();
-                bool empty = true;
+                bool noResult = true;
 
 
                 switch (RomInfo.gameVersion) {
@@ -1576,7 +1586,7 @@ namespace DSPRE {
                             String locationName = locationNameComboBox.Items[((HeaderDP)LoadHeaderFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
-                                empty = false;
+                                noResult = false;
                             }
                         }
                         break;
@@ -1585,7 +1595,7 @@ namespace DSPRE {
                             String locationName = locationNameComboBox.Items[((HeaderPt)LoadHeaderFromARM9(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
-                                empty = false;
+                                noResult = false;
                             }
                         }
                         break;
@@ -1595,12 +1605,12 @@ namespace DSPRE {
                             String locationName = locationNameComboBox.Items[((HeaderHGSS)LoadHeaderFromARM9(i)).mapName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
-                                empty = false;
+                                noResult = false;
                             }
                         }
                         break;
                 }
-                if (empty) {
+                if (noResult) {
                     headerListBox.Items.Add("No result for " + '"' + searchLocationTextBox.Text + '"');
                     headerListBox.Enabled = false;
                 } else {
@@ -1611,7 +1621,6 @@ namespace DSPRE {
                 resetHeaderSearchResults();
             }
         }
-
         private void scriptFileUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) 
                 return;
@@ -5200,31 +5209,50 @@ namespace DSPRE {
             }
         }
         private void searchInScriptsButton_Click(object sender, EventArgs e) {
-            searchInScriptsResultTextBox.Clear();
+            searchInScriptsResultListBox.Items.Clear();
             string searchString = searchInScriptsUpDown.Text;
             searchProgressBar.Maximum = selectScriptFileComboBox.Items.Count;
 
+            string resultsBuffer = "";
+            List<string> results = new List<string>();
             for (int i = 0; i < selectScriptFileComboBox.Items.Count; i++) {
                 try {
                     Console.WriteLine("Attempting to load script " + i);
                     ScriptFile file = new ScriptFile(i);
 
-                    for (int j = 0; j < file.scripts.Count; j++) {
-                        for (int k = 0; k < file.scripts[j].commands.Count; k++) {
-                            if (file.scripts[j].commands[k].cmdName.Contains(searchString))
-                                searchInScriptsResultTextBox.AppendText(i + " - " + "Script " + (j + 1) + ": " + file.scripts[j].commands[k].cmdName + Environment.NewLine);
+                    //Case Sensitive search
+                    if (caseSensitiveSearchCheckbox.Checked) {
+                        for (int j = 0; j < file.scripts.Count; j++) {
+                            foreach (Command cur in file.scripts[j].commands) {
+                                if (cur.cmdName.Contains(searchString))
+                                    results.Add("File " + i + " - " + "Script " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
+                            }
                         }
-                    }
-                    for (int j = 0; j < file.functions.Count; j++) {
-                        for (int k = 0; k < file.functions[j].commands.Count; k++) {
-                            if (file.functions[j].commands[k].cmdName.Contains(searchString))
-                                searchInScriptsResultTextBox.AppendText(i + " - " + "Function " + (j + 1) + ": " + file.functions[j].commands[k].cmdName + Environment.NewLine);
+                        for (int j = 0; j < file.functions.Count; j++) {
+                            foreach (Command cur in file.functions[j].commands) {
+                                if (cur.cmdName.Contains(searchString))
+                                    results.Add("File " + i + " - " + "Function " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
+                            }
+                        }
+                    } else { //Case Insensitive search
+                        for (int j = 0; j < file.scripts.Count; j++) {
+                            foreach (Command cur in file.scripts[j].commands) { 
+                                if (cur.cmdName.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0)
+                                    results.Add("File " + i + " - " + "Script " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
+                            }
+                        }
+                        for (int j = 0; j < file.functions.Count; j++) {
+                            foreach (Command cur in file.functions[j].commands) {
+                                if (cur.cmdName.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0)
+                                    results.Add("File " + i + " - " + "Function " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
+                            }
                         }
                     }
                 } catch { }
                 searchProgressBar.Value = i;
             }
             searchProgressBar.Value = 0;
+            searchInScriptsResultListBox.Items.AddRange(results.ToArray());
         }
         private void selectScriptFileComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             /* clear controls */
@@ -5802,6 +5830,7 @@ namespace DSPRE {
                 lastArchive = 828;
             textSearchProgressBar.Maximum = lastArchive;
 
+            List<string> results = new List<string>();
             if (caseSensitiveSearchCheckbox.Checked) {
                 caseSensitiveSearchCheckbox.Enabled = false;
                 for (int i = firstArchive; i < lastArchive; i++) {
@@ -5810,7 +5839,7 @@ namespace DSPRE {
 
                     for (int j = 0; j < file.messages.Count; j++) {
                         if (file.messages[j].Contains(searchString)) {
-                            textSearchResultsListBox.Items.Add("(" + i + ")" + " - #" + j.ToString("D"));
+                            results.Add("(" + i + ")" + " - #" + j.ToString("D"));
                         }
                     }
                     textSearchProgressBar.Value = i;
@@ -5823,19 +5852,18 @@ namespace DSPRE {
 
                     for (int j = 0; j < file.messages.Count; j++) {
                         if (file.messages[j].IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                            textSearchResultsListBox.Items.Add("(" + i + ")" + " - #" + j.ToString("D"));
+                            results.Add("(" + i + ")" + " - #" + j.ToString("D"));
                         }
                     }
                     textSearchProgressBar.Value = i;
                 }
             }
 
+            textSearchResultsListBox.Items.AddRange(results.ToArray());
             textSearchProgressBar.Value = 0;
             caseSensitiveSearchCheckbox.Enabled = true;
         }
         private void replaceMessageButton_Click(object sender, EventArgs e) {
-            // Usage: search box -> WORD_TO_REPLACE, NEW_WORD
-
             int firstArchive;
             int lastArchive;
 
@@ -5977,7 +6005,7 @@ namespace DSPRE {
             if (e.RowIndex > -1)
                 currentMessageFile.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
         }
-        private void textSearchResultsListBox_SelectedIndexChanged(object sender, EventArgs e) {
+        private void textSearchResultsListBox_SelectedIndexChanged(object sender, MouseEventArgs e) {
             string resultRow = textSearchResultsListBox.Text;
             resultRow = resultRow.Substring(1);
             string[] parts = resultRow.Split(new string[] { ") - #"}, StringSplitOptions.RemoveEmptyEntries);
@@ -6264,7 +6292,6 @@ namespace DSPRE {
                 return;
             }
         }
-
         private void exportAreaDataButton_Click(object sender, EventArgs e) {
             if (selectAreaDataListBox.SelectedIndex < 0)
                 return;
@@ -6279,7 +6306,6 @@ namespace DSPRE {
                 writer.Write(currentAreaData.Save(RomInfo.gameVersion));
 
         }
-
         private void importAreaDataButton_Click(object sender, EventArgs e) {
             if (selectAreaDataListBox.SelectedIndex < 0)
                 return;
