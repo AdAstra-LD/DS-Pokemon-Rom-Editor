@@ -2629,7 +2629,7 @@ namespace DSPRE {
             selectMapComboBox.SelectedIndex = selectMapComboBox.Items.Count - 1;
         }
         private void replaceMapBinButton_Click(object sender, EventArgs e) {
-            /* Prompt user to select .evt file */
+            /* Prompt user to select .bin file */
             OpenFileDialog of = new OpenFileDialog();
             of.Filter = "Map BIN File (*.bin)|*.bin";
             if (of.ShowDialog(this) != DialogResult.OK)
@@ -5227,23 +5227,27 @@ namespace DSPRE {
                 /* Add scripts */
                 disableHandlers = true;
                 statusLabel.Text = "Parsing Script commands...";
+
+                string buffer = "";
                 for (int i = 0; i < currentScriptFile.scripts.Count; i++) {
                     Script currentScript = currentScriptFile.scripts[i];
 
                     /* Write header */
                     string scrHeader = "----- " + "@Script_#" + (i + 1) + " -----" + Environment.NewLine;
-                    scriptTextBox.AppendText(scrHeader, Color.Green);
-                    scriptTextBox.Text += Environment.NewLine;
+                    buffer += scrHeader;
+                    buffer += Environment.NewLine;
 
                     /* If current script is identical to another, print UseScript instead of commands */
                     if (currentScript.useScript != -1)
-                        scriptTextBox.Text += "UseScript_#" + currentScript.useScript;
+                        buffer += ("UseScript_#" + currentScript.useScript);
                     else {
                         for (int j = 0; j < currentScript.commands.Count; j++)
-                            scriptTextBox.AppendText(currentScript.commands[j].cmdName + Environment.NewLine, Color.Black);
+                            buffer += currentScript.commands[j].cmdName + Environment.NewLine;
                     }
-                    scriptTextBox.Text += Environment.NewLine; // Write blank line to separate next script
+                    buffer += Environment.NewLine; // Write blank line to separate next script
                 }
+                scriptTextBox.AppendText(buffer, Color.Green);
+                buffer = "";
 
                 /* Add functions */
                 statusLabel.Text = "Parsing Functions...";
@@ -5251,13 +5255,15 @@ namespace DSPRE {
                     Script currentFunction = currentScriptFile.functions[i];
 
                     string funcHeader = "----- " + "@Function_#" + (i + 1) + " -----" + Environment.NewLine;
-                    functionTextBox.AppendText(funcHeader, Color.Blue);
-                    functionTextBox.Text += Environment.NewLine;
+                    buffer += funcHeader;
+                    buffer += Environment.NewLine;
                     for (int j = 0; j < currentFunction.commands.Count; j++)
-                        functionTextBox.Text += currentFunction.commands[j].cmdName + Environment.NewLine;
+                        buffer += currentFunction.commands[j].cmdName + Environment.NewLine;
 
-                    functionTextBox.Text += Environment.NewLine;
+                    buffer += Environment.NewLine;
                 }
+                functionTextBox.AppendText(buffer, Color.Blue);
+                buffer = "";
 
                 /* Add movements */
                 statusLabel.Text = "Parsing Movements...";
@@ -5265,14 +5271,18 @@ namespace DSPRE {
                     Script currentMovement = currentScriptFile.movements[i];
 
                     string movHeader = "----- " + "@Movement_#" + (i + 1) + " -----" + Environment.NewLine;
-                    movementTextBox.AppendText(movHeader, Color.Brown);
-                    movementTextBox.Text += Environment.NewLine;
+                    buffer += movHeader;
+                    buffer += Environment.NewLine;
                     for (int j = 0; j < currentMovement.commands.Count; j++)
-                        movementTextBox.Text += currentMovement.commands[j].cmdName + Environment.NewLine;
+                        buffer += currentMovement.commands[j].cmdName + Environment.NewLine;
 
-                    movementTextBox.Text += Environment.NewLine;
+                    buffer += Environment.NewLine;
                 }
+                movementTextBox.AppendText(buffer, Color.Brown);
+                buffer = "";
             }
+            
+
             statusLabel.Text = "Ready";
             disableHandlers = false;
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);

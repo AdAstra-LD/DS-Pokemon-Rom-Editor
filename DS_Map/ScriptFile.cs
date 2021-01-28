@@ -66,7 +66,8 @@ namespace DSPRE {
                             }
                         }
                         this.scripts.Add(new Script(commandsList));
-                    } else scripts.Add(new Script(duplicateIndex));
+                    } else 
+                        scripts.Add(new Script(duplicateIndex));
                 }
 
                 /* Read functions */
@@ -281,14 +282,16 @@ namespace DSPRE {
                         }
                     }
                     break;
-                case 0x2C4: {
+                case 0x2C4: 
+                    {
                         byte parameter1 = dataReader.ReadByte();
                         parameters.Add(new byte[] { parameter1 });
                         if (parameter1 == 0 || parameter1 == 1)
                             parameters.Add(dataReader.ReadBytes(2));
                     }
                     break;
-                case 0x2C5: {
+                case 0x2C5: 
+                    {
                         if (gameVersion == "Plat") {
                             parameters.Add(dataReader.ReadBytes(2));
                             parameters.Add(dataReader.ReadBytes(2));
@@ -342,7 +345,7 @@ namespace DSPRE {
 
                 /* Allocate enough space for script pointers, which we do not know yet */
                 writer.BaseStream.Position += scripts.Count * 0x4;
-                writer.Write((ushort)0xFD13); // End of header signal
+                writer.Write((ushort)0xFD13); // Signal the end of header section
 
                 /* Write scripts */
                 for (int i = 0; i < scripts.Count; i++) {
@@ -392,13 +395,16 @@ namespace DSPRE {
 
                         /* Write command parameters */
                         List<byte[]> parameterList = functions[i].commands[j].parameterList;
-                        for (int k = 0; k < parameterList.Count; k++) writer.Write(parameterList[k]);
+                        for (int k = 0; k < parameterList.Count; k++) 
+                            writer.Write(parameterList[k]);
 
                         /* If command calls a function/movement, store reference position */
                         if (referenceCodes.Contains(id)) {
                             int index;
-                            if (id == 0x16 || id == 0x1A) index = 0;
-                            else index = 1;
+                            if (id == 0x16 || id == 0x1A) 
+                                index = 0;
+                            else 
+                                index = 1;
 
                             int type = 0;
                             if (id == 0x5E) 
@@ -406,6 +412,12 @@ namespace DSPRE {
                             references.Add(new Tuple<int, int, int>((int)writer.BaseStream.Position - 4, BitConverter.ToInt32(parameterList[index], 0), type));
                         }
                     }
+                }
+
+
+                // Movements must be halfword-aligned
+                if (writer.BaseStream.Position % 2 == 1) { //Check if the writer's head is on an odd byte
+                    writer.Write((byte)0); //Add padding
                 }
 
                 /* Write movements */
@@ -474,17 +486,17 @@ namespace DSPRE {
         #endregion
 
         #region Constructors (2)
-        public Command(ushort id, List<byte[]> parameters, string gameVersion, bool isMovement) {
+        public Command(ushort id, List<byte[]> parameterList, string gameVersion, bool isMovement) {
             this.id = id;
             this.isMovement = isMovement;
-            this.parameterList = parameters;
+            this.parameterList = parameterList;
 
             ResourceManager commandNamesDatabase = RomInfo.scriptCommandNamesDatabase;
             if (isMovement) {
                 commandNamesDatabase = new ResourceManager("DSPRE.Resources.MovementNames", Assembly.GetExecutingAssembly());
             }
 
-            this.cmdName = commandNamesDatabase.GetString(id.ToString("X4"));
+            cmdName = commandNamesDatabase.GetString(id.ToString("X4"));
             if (cmdName == null)
                 cmdName = id.ToString("X4");
 
@@ -497,51 +509,61 @@ namespace DSPRE {
                 }
             }
             */
-
-            switch (id) {
-                case 0x16:      // Jump
-                case 0x1A:      // Call
-                    this.cmdName += " " + "Function_#" + (1 + BitConverter.ToInt32(parameters[0], 0)).ToString("D");
-                    break;
-                case 0x1C:      // CompareLastResultJump
-                case 0x1D:      // CompareLastResultCall
-                    byte opcode = parameters[0][0];
-                    this.cmdName += " " + RomInfo.scriptComparisonOperators.GetString(opcode.ToString("X")) + " " + "Function_#" + (1 + (BitConverter.ToInt32(parameters[1], 0))).ToString("D");
-                    break;
-                case 0x5E:      // ApplyMovement
-                    string owToMove = BitConverter.ToUInt16(parameters[0], 0).ToString("D");
-                    switch (owToMove) {
-                        case "255":
-                            owToMove = "Player";
-                            break;
-                        case "253":
-                            owToMove = "Following";
-                            break;
-                        case "241":
-                            owToMove = "Cam";
-                            break;
-                        default:
-                            owToMove = "Overworld_#" + owToMove;
-                            break;
-                    }
-                    this.cmdName += " " + owToMove + " " + "Movement_#" + (1 + (BitConverter.ToInt32(parameters[1], 0))).ToString("D");
-                    break;
-                case 0x62:      // Lock
-                case 0x63:      // Release
-                case 0x64:      // AddPeople
-                case 0x65:      // RemoveOW
-                    this.cmdName += " " + "Overworld_#" + BitConverter.ToInt16(parameters[0], 0).ToString("D");
-                    break;
-                default:
-                    for (int i = 0; i < parameters.Count; i++) {
-                        if (parameters[i].Length == 1) 
-                            this.cmdName += " " + "0x" + (parameters[i][0]).ToString("X1");
-                        else if (parameters[i].Length == 2) 
-                            this.cmdName += " " + "0x" + (BitConverter.ToInt16(parameters[i], 0)).ToString("X1");
-                        else if (parameters[i].Length == 4) 
-                            this.cmdName += " " + "0x" + (BitConverter.ToInt32(parameters[i], 0)).ToString("X1");
-                    }
-                    break;
+            if (!isMovement) { 
+                switch (id) {
+                    case 0x16:      // Jump
+                    case 0x1A:      // Call
+                        this.cmdName += " " + "Function_#" + (1 + BitConverter.ToInt32(parameterList[0], 0)).ToString("D");
+                        break;
+                    case 0x1C:      // CompareLastResultJump
+                    case 0x1D:      // CompareLastResultCall
+                        byte opcode = parameterList[0][0];
+                        this.cmdName += " " + RomInfo.scriptComparisonOperators.GetString(opcode.ToString("X")) + " " + "Function_#" + (1 + (BitConverter.ToInt32(parameterList[1], 0))).ToString("D");
+                        break;
+                    case 0x5E:      // ApplyMovement
+                        string owToMove = BitConverter.ToUInt16(parameterList[0], 0).ToString("D");
+                        switch (owToMove) {
+                            case "255":
+                                owToMove = "Player";
+                                break;
+                            case "253":
+                                owToMove = "Following";
+                                break;
+                            case "241":
+                                owToMove = "Cam";
+                                break;
+                            default:
+                                owToMove = "Overworld_#" + owToMove;
+                                break;
+                        }
+                        this.cmdName += " " + owToMove + " " + "Movement_#" + (1 + (BitConverter.ToInt32(parameterList[1], 0))).ToString("D");
+                        break;
+                    case 0x62:      // Lock
+                    case 0x63:      // Release
+                    case 0x64:      // AddPeople
+                    case 0x65:      // RemoveOW
+                        this.cmdName += " " + "Overworld_#" + BitConverter.ToInt16(parameterList[0], 0).ToString("D");
+                        break;
+                    default:
+                        for (int i = 0; i < parameterList.Count; i++) {
+                            if (parameterList[i].Length == 1)
+                                this.cmdName += " " + "0x" + (parameterList[i][0]).ToString("X1");
+                            else if (parameterList[i].Length == 2)
+                                this.cmdName += " " + "0x" + (BitConverter.ToInt16(parameterList[i], 0)).ToString("X1");
+                            else if (parameterList[i].Length == 4)
+                                this.cmdName += " " + "0x" + (BitConverter.ToInt32(parameterList[i], 0)).ToString("X1");
+                        }
+                        break;
+                }
+            } else {
+                for (int i = 0; i < parameterList.Count; i++) {
+                    if (parameterList[i].Length == 1)
+                        this.cmdName += " " + "0x" + (parameterList[i][0]).ToString("X1");
+                    else if (parameterList[i].Length == 2)
+                        this.cmdName += " " + "0x" + (BitConverter.ToInt16(parameterList[i], 0)).ToString("X1");
+                    else if (parameterList[i].Length == 4)
+                        this.cmdName += " " + "0x" + (BitConverter.ToInt32(parameterList[i], 0)).ToString("X1");
+                }
             }
         }
         public Command(string description, string gameVersion, bool isMovement) {
