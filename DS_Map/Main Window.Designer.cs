@@ -584,6 +584,8 @@
             this.headerSearchToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -3955,7 +3957,7 @@
             // 
             this.eventMatrixPictureBox.Location = new System.Drawing.Point(0, 0);
             this.eventMatrixPictureBox.Name = "eventMatrixPictureBox";
-            this.eventMatrixPictureBox.Size = new System.Drawing.Size(280, 150);
+            this.eventMatrixPictureBox.Size = new System.Drawing.Size(300, 150);
             this.eventMatrixPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.eventMatrixPictureBox.TabIndex = 46;
             this.eventMatrixPictureBox.TabStop = false;
@@ -4157,6 +4159,7 @@
             // 
             // signsTabPage
             // 
+            this.signsTabPage.Controls.Add(this.button5);
             this.signsTabPage.Controls.Add(this.groupBox5);
             this.signsTabPage.Controls.Add(this.removeSpawnableButton);
             this.signsTabPage.Controls.Add(this.addSpawnableButton);
@@ -4186,9 +4189,9 @@
             this.groupBox5.Controls.Add(this.signMapXLabel);
             this.groupBox5.Controls.Add(this.signMapYUpDown);
             this.groupBox5.Controls.Add(this.signMapYLabel);
-            this.groupBox5.Location = new System.Drawing.Point(200, 80);
+            this.groupBox5.Location = new System.Drawing.Point(228, 85);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(226, 248);
+            this.groupBox5.Size = new System.Drawing.Size(196, 248);
             this.groupBox5.TabIndex = 22;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Position";
@@ -4197,7 +4200,7 @@
             // 
             this.goToSignButton.Image = ((System.Drawing.Image)(resources.GetObject("goToSignButton.Image")));
             this.goToSignButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.goToSignButton.Location = new System.Drawing.Point(43, 196);
+            this.goToSignButton.Location = new System.Drawing.Point(26, 197);
             this.goToSignButton.Name = "goToSignButton";
             this.goToSignButton.Size = new System.Drawing.Size(141, 39);
             this.goToSignButton.TabIndex = 20;
@@ -4209,7 +4212,7 @@
             // signMatrixYLabel
             // 
             this.signMatrixYLabel.AutoSize = true;
-            this.signMatrixYLabel.Location = new System.Drawing.Point(30, 165);
+            this.signMatrixYLabel.Location = new System.Drawing.Point(13, 165);
             this.signMatrixYLabel.Name = "signMatrixYLabel";
             this.signMatrixYLabel.Size = new System.Drawing.Size(45, 13);
             this.signMatrixYLabel.TabIndex = 19;
@@ -4217,7 +4220,7 @@
             // 
             // signMatrixXUpDown
             // 
-            this.signMatrixXUpDown.Location = new System.Drawing.Point(93, 132);
+            this.signMatrixXUpDown.Location = new System.Drawing.Point(76, 132);
             this.signMatrixXUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4231,7 +4234,7 @@
             // signMatrixXLabel
             // 
             this.signMatrixXLabel.AutoSize = true;
-            this.signMatrixXLabel.Location = new System.Drawing.Point(30, 134);
+            this.signMatrixXLabel.Location = new System.Drawing.Point(13, 134);
             this.signMatrixXLabel.Name = "signMatrixXLabel";
             this.signMatrixXLabel.Size = new System.Drawing.Size(45, 13);
             this.signMatrixXLabel.TabIndex = 17;
@@ -4239,7 +4242,7 @@
             // 
             // signMatrixYUpDown
             // 
-            this.signMatrixYUpDown.Location = new System.Drawing.Point(93, 162);
+            this.signMatrixYUpDown.Location = new System.Drawing.Point(76, 162);
             this.signMatrixYUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4253,7 +4256,7 @@
             // signZLabel
             // 
             this.signZLabel.AutoSize = true;
-            this.signZLabel.Location = new System.Drawing.Point(30, 87);
+            this.signZLabel.Location = new System.Drawing.Point(13, 87);
             this.signZLabel.Name = "signZLabel";
             this.signZLabel.Size = new System.Drawing.Size(38, 13);
             this.signZLabel.TabIndex = 15;
@@ -4261,7 +4264,7 @@
             // 
             // signMapXUpDown
             // 
-            this.signMapXUpDown.Location = new System.Drawing.Point(94, 22);
+            this.signMapXUpDown.Location = new System.Drawing.Point(77, 22);
             this.signMapXUpDown.Maximum = new decimal(new int[] {
             32768,
             0,
@@ -4279,7 +4282,7 @@
             // 
             // signZUpDown
             // 
-            this.signZUpDown.Location = new System.Drawing.Point(94, 85);
+            this.signZUpDown.Location = new System.Drawing.Point(77, 85);
             this.signZUpDown.Maximum = new decimal(new int[] {
             32768,
             0,
@@ -4298,7 +4301,7 @@
             // signMapXLabel
             // 
             this.signMapXLabel.AutoSize = true;
-            this.signMapXLabel.Location = new System.Drawing.Point(30, 25);
+            this.signMapXLabel.Location = new System.Drawing.Point(13, 25);
             this.signMapXLabel.Name = "signMapXLabel";
             this.signMapXLabel.Size = new System.Drawing.Size(38, 13);
             this.signMapXLabel.TabIndex = 11;
@@ -4306,7 +4309,7 @@
             // 
             // signMapYUpDown
             // 
-            this.signMapYUpDown.Location = new System.Drawing.Point(94, 54);
+            this.signMapYUpDown.Location = new System.Drawing.Point(77, 54);
             this.signMapYUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4320,7 +4323,7 @@
             // signMapYLabel
             // 
             this.signMapYLabel.AutoSize = true;
-            this.signMapYLabel.Location = new System.Drawing.Point(30, 57);
+            this.signMapYLabel.Location = new System.Drawing.Point(13, 57);
             this.signMapYLabel.Name = "signMapYLabel";
             this.signMapYLabel.Size = new System.Drawing.Size(38, 13);
             this.signMapYLabel.TabIndex = 13;
@@ -4328,21 +4331,25 @@
             // 
             // removeSpawnableButton
             // 
-            this.removeSpawnableButton.Location = new System.Drawing.Point(99, 322);
+            this.removeSpawnableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.removeSpawnableButton.Location = new System.Drawing.Point(67, 321);
             this.removeSpawnableButton.Name = "removeSpawnableButton";
-            this.removeSpawnableButton.Size = new System.Drawing.Size(82, 23);
+            this.removeSpawnableButton.Size = new System.Drawing.Size(63, 24);
             this.removeSpawnableButton.TabIndex = 8;
-            this.removeSpawnableButton.Text = "Remove";
+            this.removeSpawnableButton.Text = "Delete";
+            this.removeSpawnableButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.removeSpawnableButton.UseVisualStyleBackColor = true;
             this.removeSpawnableButton.Click += new System.EventHandler(this.removeSpawnableButton_Click);
             // 
             // addSpawnableButton
             // 
-            this.addSpawnableButton.Location = new System.Drawing.Point(15, 322);
+            this.addSpawnableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.addSpawnableButton.Location = new System.Drawing.Point(16, 321);
             this.addSpawnableButton.Name = "addSpawnableButton";
-            this.addSpawnableButton.Size = new System.Drawing.Size(78, 23);
+            this.addSpawnableButton.Size = new System.Drawing.Size(50, 24);
             this.addSpawnableButton.TabIndex = 7;
             this.addSpawnableButton.Text = "Add";
+            this.addSpawnableButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addSpawnableButton.UseVisualStyleBackColor = true;
             this.addSpawnableButton.Click += new System.EventHandler(this.addSpawnableButton_Click);
             // 
@@ -4350,7 +4357,7 @@
             // 
             this.orientationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.orientationComboBox.FormattingEnabled = true;
-            this.orientationComboBox.Location = new System.Drawing.Point(292, 48);
+            this.orientationComboBox.Location = new System.Drawing.Point(303, 48);
             this.orientationComboBox.Name = "orientationComboBox";
             this.orientationComboBox.Size = new System.Drawing.Size(121, 21);
             this.orientationComboBox.TabIndex = 6;
@@ -4358,7 +4365,7 @@
             // signOrientationLabel
             // 
             this.signOrientationLabel.AutoSize = true;
-            this.signOrientationLabel.Location = new System.Drawing.Point(213, 52);
+            this.signOrientationLabel.Location = new System.Drawing.Point(225, 51);
             this.signOrientationLabel.Name = "signOrientationLabel";
             this.signOrientationLabel.Size = new System.Drawing.Size(58, 13);
             this.signOrientationLabel.TabIndex = 5;
@@ -4367,7 +4374,7 @@
             // signScriptNumberLabel
             // 
             this.signScriptNumberLabel.AutoSize = true;
-            this.signScriptNumberLabel.Location = new System.Drawing.Point(210, 14);
+            this.signScriptNumberLabel.Location = new System.Drawing.Point(223, 14);
             this.signScriptNumberLabel.Name = "signScriptNumberLabel";
             this.signScriptNumberLabel.Size = new System.Drawing.Size(74, 13);
             this.signScriptNumberLabel.TabIndex = 4;
@@ -4375,7 +4382,7 @@
             // 
             // signScriptUpDown
             // 
-            this.signScriptUpDown.Location = new System.Drawing.Point(293, 12);
+            this.signScriptUpDown.Location = new System.Drawing.Point(304, 12);
             this.signScriptUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4389,14 +4396,15 @@
             // spawnablesListBox
             // 
             this.spawnablesListBox.FormattingEnabled = true;
-            this.spawnablesListBox.Location = new System.Drawing.Point(15, 13);
+            this.spawnablesListBox.Location = new System.Drawing.Point(17, 13);
             this.spawnablesListBox.Name = "spawnablesListBox";
-            this.spawnablesListBox.Size = new System.Drawing.Size(166, 303);
+            this.spawnablesListBox.Size = new System.Drawing.Size(193, 303);
             this.spawnablesListBox.TabIndex = 0;
             this.spawnablesListBox.SelectedIndexChanged += new System.EventHandler(this.spawnablesListBox_SelectedIndexChanged);
             // 
             // overworldsTabPage
             // 
+            this.overworldsTabPage.Controls.Add(this.button6);
             this.overworldsTabPage.Controls.Add(this.groupBox17);
             this.overworldsTabPage.Controls.Add(this.isItemRadioButton);
             this.overworldsTabPage.Controls.Add(this.owSpritePictureBox);
@@ -4432,9 +4440,9 @@
             this.groupBox17.Controls.Add(this.label12);
             this.groupBox17.Controls.Add(this.owXMatrixUpDown);
             this.groupBox17.Controls.Add(this.label11);
-            this.groupBox17.Location = new System.Drawing.Point(12, 251);
+            this.groupBox17.Location = new System.Drawing.Point(12, 252);
             this.groupBox17.Name = "groupBox17";
-            this.groupBox17.Size = new System.Drawing.Size(168, 95);
+            this.groupBox17.Size = new System.Drawing.Size(179, 94);
             this.groupBox17.TabIndex = 20;
             this.groupBox17.TabStop = false;
             this.groupBox17.Text = "Global Coordinates [Matrix]";
@@ -4443,9 +4451,9 @@
             // 
             this.button14.Image = ((System.Drawing.Image)(resources.GetObject("button14.Image")));
             this.button14.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button14.Location = new System.Drawing.Point(15, 48);
+            this.button14.Location = new System.Drawing.Point(20, 46);
             this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(138, 40);
+            this.button14.Size = new System.Drawing.Size(140, 39);
             this.button14.TabIndex = 5;
             this.button14.Text = "Find this Overworld";
             this.button14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4454,7 +4462,7 @@
             // 
             // owYMatrixUpDown
             // 
-            this.owYMatrixUpDown.Location = new System.Drawing.Point(107, 20);
+            this.owYMatrixUpDown.Location = new System.Drawing.Point(115, 23);
             this.owYMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4468,7 +4476,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(17, 23);
+            this.label12.Location = new System.Drawing.Point(17, 26);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(14, 13);
             this.label12.TabIndex = 5;
@@ -4476,7 +4484,7 @@
             // 
             // owXMatrixUpDown
             // 
-            this.owXMatrixUpDown.Location = new System.Drawing.Point(34, 20);
+            this.owXMatrixUpDown.Location = new System.Drawing.Point(34, 23);
             this.owXMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4490,7 +4498,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(91, 22);
+            this.label11.Location = new System.Drawing.Point(99, 25);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(14, 13);
             this.label11.TabIndex = 7;
@@ -4500,7 +4508,7 @@
             // 
             this.isItemRadioButton.AutoSize = true;
             this.isItemRadioButton.Enabled = false;
-            this.isItemRadioButton.Location = new System.Drawing.Point(311, 118);
+            this.isItemRadioButton.Location = new System.Drawing.Point(322, 122);
             this.isItemRadioButton.Name = "isItemRadioButton";
             this.isItemRadioButton.Size = new System.Drawing.Size(45, 17);
             this.isItemRadioButton.TabIndex = 21;
@@ -4512,7 +4520,7 @@
             // 
             this.owSpritePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.owSpritePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.owSpritePictureBox.Location = new System.Drawing.Point(366, 64);
+            this.owSpritePictureBox.Location = new System.Drawing.Point(366, 52);
             this.owSpritePictureBox.Name = "owSpritePictureBox";
             this.owSpritePictureBox.Size = new System.Drawing.Size(66, 66);
             this.owSpritePictureBox.TabIndex = 20;
@@ -4527,9 +4535,9 @@
             this.owMovementGroupBox.Controls.Add(this.owYRangeUpDown);
             this.owMovementGroupBox.Controls.Add(this.owXRangeUpDown);
             this.owMovementGroupBox.Controls.Add(this.owMovementComboBox);
-            this.owMovementGroupBox.Location = new System.Drawing.Point(186, 251);
+            this.owMovementGroupBox.Location = new System.Drawing.Point(201, 251);
             this.owMovementGroupBox.Name = "owMovementGroupBox";
-            this.owMovementGroupBox.Size = new System.Drawing.Size(247, 95);
+            this.owMovementGroupBox.Size = new System.Drawing.Size(232, 95);
             this.owMovementGroupBox.TabIndex = 18;
             this.owMovementGroupBox.TabStop = false;
             this.owMovementGroupBox.Text = "Movement";
@@ -4537,7 +4545,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 45);
+            this.label4.Location = new System.Drawing.Point(8, 47);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(95, 13);
             this.label4.TabIndex = 6;
@@ -4552,16 +4560,16 @@
             "Down",
             "Left",
             "Right"});
-            this.owOrientationComboBox.Location = new System.Drawing.Point(11, 64);
+            this.owOrientationComboBox.Location = new System.Drawing.Point(15, 64);
             this.owOrientationComboBox.Name = "owOrientationComboBox";
-            this.owOrientationComboBox.Size = new System.Drawing.Size(104, 21);
+            this.owOrientationComboBox.Size = new System.Drawing.Size(82, 21);
             this.owOrientationComboBox.TabIndex = 5;
             this.owOrientationComboBox.SelectedIndexChanged += new System.EventHandler(this.owOrientationComboBox_SelectedIndexChanged);
             // 
             // yMovRangeLabel
             // 
             this.yMovRangeLabel.AutoSize = true;
-            this.yMovRangeLabel.Location = new System.Drawing.Point(128, 69);
+            this.yMovRangeLabel.Location = new System.Drawing.Point(110, 70);
             this.yMovRangeLabel.Name = "yMovRangeLabel";
             this.yMovRangeLabel.Size = new System.Drawing.Size(55, 13);
             this.yMovRangeLabel.TabIndex = 4;
@@ -4570,7 +4578,7 @@
             // xMovRangeLabel
             // 
             this.xMovRangeLabel.AutoSize = true;
-            this.xMovRangeLabel.Location = new System.Drawing.Point(128, 45);
+            this.xMovRangeLabel.Location = new System.Drawing.Point(110, 46);
             this.xMovRangeLabel.Name = "xMovRangeLabel";
             this.xMovRangeLabel.Size = new System.Drawing.Size(55, 13);
             this.xMovRangeLabel.TabIndex = 3;
@@ -4578,7 +4586,7 @@
             // 
             // owYRangeUpDown
             // 
-            this.owYRangeUpDown.Location = new System.Drawing.Point(185, 67);
+            this.owYRangeUpDown.Location = new System.Drawing.Point(167, 68);
             this.owYRangeUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4591,7 +4599,7 @@
             // 
             // owXRangeUpDown
             // 
-            this.owXRangeUpDown.Location = new System.Drawing.Point(185, 42);
+            this.owXRangeUpDown.Location = new System.Drawing.Point(167, 43);
             this.owXRangeUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4606,16 +4614,16 @@
             // 
             this.owMovementComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.owMovementComboBox.FormattingEnabled = true;
-            this.owMovementComboBox.Location = new System.Drawing.Point(11, 16);
+            this.owMovementComboBox.Location = new System.Drawing.Point(15, 16);
             this.owMovementComboBox.Name = "owMovementComboBox";
-            this.owMovementComboBox.Size = new System.Drawing.Size(226, 21);
+            this.owMovementComboBox.Size = new System.Drawing.Size(203, 21);
             this.owMovementComboBox.TabIndex = 0;
             this.owMovementComboBox.SelectedIndexChanged += new System.EventHandler(this.owMovementComboBox_SelectedIndexChanged);
             // 
             // isTrainerLabel
             // 
             this.isTrainerLabel.AutoSize = true;
-            this.isTrainerLabel.Location = new System.Drawing.Point(187, 97);
+            this.isTrainerLabel.Location = new System.Drawing.Point(198, 106);
             this.isTrainerLabel.Name = "isTrainerLabel";
             this.isTrainerLabel.Size = new System.Drawing.Size(82, 13);
             this.isTrainerLabel.TabIndex = 17;
@@ -4629,9 +4637,9 @@
             this.positionGroupBox.Controls.Add(this.owXPositionLabel);
             this.positionGroupBox.Controls.Add(this.owYMapUpDown);
             this.positionGroupBox.Controls.Add(this.label10);
-            this.positionGroupBox.Location = new System.Drawing.Point(11, 188);
+            this.positionGroupBox.Location = new System.Drawing.Point(11, 192);
             this.positionGroupBox.Name = "positionGroupBox";
-            this.positionGroupBox.Size = new System.Drawing.Size(168, 57);
+            this.positionGroupBox.Size = new System.Drawing.Size(180, 57);
             this.positionGroupBox.TabIndex = 19;
             this.positionGroupBox.TabStop = false;
             this.positionGroupBox.Text = "Local Coordinates [Map]";
@@ -4639,7 +4647,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(115, 27);
+            this.label13.Location = new System.Drawing.Point(122, 27);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(14, 13);
             this.label13.TabIndex = 9;
@@ -4665,7 +4673,7 @@
             // 
             // owZPositionUpDown
             // 
-            this.owZPositionUpDown.Location = new System.Drawing.Point(129, 24);
+            this.owZPositionUpDown.Location = new System.Drawing.Point(136, 24);
             this.owZPositionUpDown.Maximum = new decimal(new int[] {
             32768,
             0,
@@ -4692,7 +4700,7 @@
             // 
             // owYMapUpDown
             // 
-            this.owYMapUpDown.Location = new System.Drawing.Point(73, 24);
+            this.owYMapUpDown.Location = new System.Drawing.Point(77, 24);
             this.owYMapUpDown.Maximum = new decimal(new int[] {
             32768,
             0,
@@ -4711,7 +4719,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(59, 27);
+            this.label10.Location = new System.Drawing.Point(63, 27);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(14, 13);
             this.label10.TabIndex = 3;
@@ -4720,7 +4728,7 @@
             // isTrainerRadioButton
             // 
             this.isTrainerRadioButton.AutoSize = true;
-            this.isTrainerRadioButton.Location = new System.Drawing.Point(250, 118);
+            this.isTrainerRadioButton.Location = new System.Drawing.Point(261, 122);
             this.isTrainerRadioButton.Name = "isTrainerRadioButton";
             this.isTrainerRadioButton.Size = new System.Drawing.Size(58, 17);
             this.isTrainerRadioButton.TabIndex = 16;
@@ -4733,7 +4741,7 @@
             this.normalRadioButton.AutoSize = true;
             this.normalRadioButton.Checked = true;
             this.normalRadioButton.Cursor = System.Windows.Forms.Cursors.Default;
-            this.normalRadioButton.Location = new System.Drawing.Point(190, 118);
+            this.normalRadioButton.Location = new System.Drawing.Point(201, 122);
             this.normalRadioButton.Name = "normalRadioButton";
             this.normalRadioButton.Size = new System.Drawing.Size(58, 17);
             this.normalRadioButton.TabIndex = 15;
@@ -4752,9 +4760,9 @@
             this.owSpecialGroupBox.Controls.Add(this.owSightRangeUpDown);
             this.owSpecialGroupBox.Controls.Add(this.owTrainerLabel);
             this.owSpecialGroupBox.Enabled = false;
-            this.owSpecialGroupBox.Location = new System.Drawing.Point(186, 145);
+            this.owSpecialGroupBox.Location = new System.Drawing.Point(201, 145);
             this.owSpecialGroupBox.Name = "owSpecialGroupBox";
-            this.owSpecialGroupBox.Size = new System.Drawing.Size(247, 102);
+            this.owSpecialGroupBox.Size = new System.Drawing.Size(232, 102);
             this.owSpecialGroupBox.TabIndex = 14;
             this.owSpecialGroupBox.TabStop = false;
             this.owSpecialGroupBox.Text = "Special Settings";
@@ -4762,7 +4770,7 @@
             // owPartnerTrainerCheckBox
             // 
             this.owPartnerTrainerCheckBox.AutoSize = true;
-            this.owPartnerTrainerCheckBox.Location = new System.Drawing.Point(180, 49);
+            this.owPartnerTrainerCheckBox.Location = new System.Drawing.Point(168, 49);
             this.owPartnerTrainerCheckBox.Name = "owPartnerTrainerCheckBox";
             this.owPartnerTrainerCheckBox.Size = new System.Drawing.Size(60, 17);
             this.owPartnerTrainerCheckBox.TabIndex = 7;
@@ -4775,9 +4783,9 @@
             this.owItemComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.owItemComboBox.Enabled = false;
             this.owItemComboBox.FormattingEnabled = true;
-            this.owItemComboBox.Location = new System.Drawing.Point(53, 73);
+            this.owItemComboBox.Location = new System.Drawing.Point(57, 73);
             this.owItemComboBox.Name = "owItemComboBox";
-            this.owItemComboBox.Size = new System.Drawing.Size(186, 21);
+            this.owItemComboBox.Size = new System.Drawing.Size(161, 21);
             this.owItemComboBox.TabIndex = 6;
             this.owItemComboBox.SelectedIndexChanged += new System.EventHandler(this.owItemComboBox_SelectedIndexChanged);
             // 
@@ -4796,9 +4804,9 @@
             this.owTrainerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.owTrainerComboBox.Enabled = false;
             this.owTrainerComboBox.FormattingEnabled = true;
-            this.owTrainerComboBox.Location = new System.Drawing.Point(53, 19);
+            this.owTrainerComboBox.Location = new System.Drawing.Point(57, 19);
             this.owTrainerComboBox.Name = "owTrainerComboBox";
-            this.owTrainerComboBox.Size = new System.Drawing.Size(185, 21);
+            this.owTrainerComboBox.Size = new System.Drawing.Size(161, 21);
             this.owTrainerComboBox.TabIndex = 4;
             this.owTrainerComboBox.SelectedIndexChanged += new System.EventHandler(this.owTrainerComboBox_SelectedIndexChanged);
             // 
@@ -4808,9 +4816,9 @@
             this.owSightRangeLabel.Enabled = false;
             this.owSightRangeLabel.Location = new System.Drawing.Point(6, 50);
             this.owSightRangeLabel.Name = "owSightRangeLabel";
-            this.owSightRangeLabel.Size = new System.Drawing.Size(96, 13);
+            this.owSightRangeLabel.Size = new System.Drawing.Size(97, 13);
             this.owSightRangeLabel.TabIndex = 3;
-            this.owSightRangeLabel.Text = "View Range (Tiles)";
+            this.owSightRangeLabel.Text = "Sight Range (Tiles)";
             // 
             // owSightRangeUpDown
             // 
@@ -4822,7 +4830,7 @@
             0,
             0});
             this.owSightRangeUpDown.Name = "owSightRangeUpDown";
-            this.owSightRangeUpDown.Size = new System.Drawing.Size(61, 20);
+            this.owSightRangeUpDown.Size = new System.Drawing.Size(48, 20);
             this.owSightRangeUpDown.TabIndex = 2;
             this.owSightRangeUpDown.ValueChanged += new System.EventHandler(this.owSightRangeUpDown_ValueChanged);
             // 
@@ -4854,14 +4862,14 @@
             0,
             0});
             this.owScriptNumericUpDown.Name = "owScriptNumericUpDown";
-            this.owScriptNumericUpDown.Size = new System.Drawing.Size(64, 20);
+            this.owScriptNumericUpDown.Size = new System.Drawing.Size(54, 20);
             this.owScriptNumericUpDown.TabIndex = 12;
             this.owScriptNumericUpDown.ValueChanged += new System.EventHandler(this.owScriptNumericUpDown_ValueChanged);
             // 
             // owFlagLabel
             // 
             this.owFlagLabel.AutoSize = true;
-            this.owFlagLabel.Location = new System.Drawing.Point(275, 6);
+            this.owFlagLabel.Location = new System.Drawing.Point(283, 6);
             this.owFlagLabel.Name = "owFlagLabel";
             this.owFlagLabel.Size = new System.Drawing.Size(27, 13);
             this.owFlagLabel.TabIndex = 11;
@@ -4869,21 +4877,21 @@
             // 
             // owFlagNumericUpDown
             // 
-            this.owFlagNumericUpDown.Location = new System.Drawing.Point(278, 22);
+            this.owFlagNumericUpDown.Location = new System.Drawing.Point(286, 22);
             this.owFlagNumericUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.owFlagNumericUpDown.Name = "owFlagNumericUpDown";
-            this.owFlagNumericUpDown.Size = new System.Drawing.Size(70, 20);
+            this.owFlagNumericUpDown.Size = new System.Drawing.Size(60, 20);
             this.owFlagNumericUpDown.TabIndex = 10;
             this.owFlagNumericUpDown.ValueChanged += new System.EventHandler(this.owFlagNumericUpDown_ValueChanged);
             // 
             // owSpriteLabel
             // 
             this.owSpriteLabel.AutoSize = true;
-            this.owSpriteLabel.Location = new System.Drawing.Point(185, 49);
+            this.owSpriteLabel.Location = new System.Drawing.Point(197, 57);
             this.owSpriteLabel.Name = "owSpriteLabel";
             this.owSpriteLabel.Size = new System.Drawing.Size(34, 13);
             this.owSpriteLabel.TabIndex = 9;
@@ -4893,16 +4901,16 @@
             // 
             this.owSpriteComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.owSpriteComboBox.FormattingEnabled = true;
-            this.owSpriteComboBox.Location = new System.Drawing.Point(188, 65);
+            this.owSpriteComboBox.Location = new System.Drawing.Point(201, 73);
             this.owSpriteComboBox.Name = "owSpriteComboBox";
-            this.owSpriteComboBox.Size = new System.Drawing.Size(168, 21);
+            this.owSpriteComboBox.Size = new System.Drawing.Size(155, 21);
             this.owSpriteComboBox.TabIndex = 8;
             this.owSpriteComboBox.SelectedIndexChanged += new System.EventHandler(this.owSpriteComboBox_SelectedIndexChanged);
             // 
             // owIDLabel
             // 
             this.owIDLabel.AutoSize = true;
-            this.owIDLabel.Location = new System.Drawing.Point(185, 6);
+            this.owIDLabel.Location = new System.Drawing.Point(198, 6);
             this.owIDLabel.Name = "owIDLabel";
             this.owIDLabel.Size = new System.Drawing.Size(58, 13);
             this.owIDLabel.TabIndex = 7;
@@ -4910,34 +4918,38 @@
             // 
             // owIDNumericUpDown
             // 
-            this.owIDNumericUpDown.Location = new System.Drawing.Point(188, 22);
+            this.owIDNumericUpDown.Location = new System.Drawing.Point(201, 22);
             this.owIDNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.owIDNumericUpDown.Name = "owIDNumericUpDown";
-            this.owIDNumericUpDown.Size = new System.Drawing.Size(73, 20);
+            this.owIDNumericUpDown.Size = new System.Drawing.Size(63, 20);
             this.owIDNumericUpDown.TabIndex = 6;
             this.owIDNumericUpDown.ValueChanged += new System.EventHandler(this.owIDNumericUpDown_ValueChanged);
             // 
             // removeOverworldButton
             // 
-            this.removeOverworldButton.Location = new System.Drawing.Point(99, 157);
+            this.removeOverworldButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.removeOverworldButton.Location = new System.Drawing.Point(59, 157);
             this.removeOverworldButton.Name = "removeOverworldButton";
-            this.removeOverworldButton.Size = new System.Drawing.Size(64, 23);
+            this.removeOverworldButton.Size = new System.Drawing.Size(62, 27);
             this.removeOverworldButton.TabIndex = 5;
-            this.removeOverworldButton.Text = "Remove";
+            this.removeOverworldButton.Text = "Delete";
+            this.removeOverworldButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.removeOverworldButton.UseVisualStyleBackColor = true;
             this.removeOverworldButton.Click += new System.EventHandler(this.removeOverworldButton_Click);
             // 
             // addOverworldButton
             // 
-            this.addOverworldButton.Location = new System.Drawing.Point(29, 157);
+            this.addOverworldButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.addOverworldButton.Location = new System.Drawing.Point(11, 157);
             this.addOverworldButton.Name = "addOverworldButton";
-            this.addOverworldButton.Size = new System.Drawing.Size(64, 23);
+            this.addOverworldButton.Size = new System.Drawing.Size(48, 27);
             this.addOverworldButton.TabIndex = 4;
             this.addOverworldButton.Text = "Add";
+            this.addOverworldButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addOverworldButton.UseVisualStyleBackColor = true;
             this.addOverworldButton.Click += new System.EventHandler(this.addOverworldButton_Click);
             // 
@@ -4946,7 +4958,7 @@
             this.overworldsListBox.FormattingEnabled = true;
             this.overworldsListBox.Location = new System.Drawing.Point(11, 6);
             this.overworldsListBox.Name = "overworldsListBox";
-            this.overworldsListBox.Size = new System.Drawing.Size(168, 147);
+            this.overworldsListBox.Size = new System.Drawing.Size(180, 147);
             this.overworldsListBox.TabIndex = 3;
             this.overworldsListBox.SelectedIndexChanged += new System.EventHandler(this.overworldsListBox_SelectedIndexChanged);
             // 
@@ -7241,6 +7253,28 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             // 
+            // button5
+            // 
+            this.button5.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button5.Location = new System.Drawing.Point(131, 321);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(79, 24);
+            this.button5.TabIndex = 23;
+            this.button5.Text = "Duplicate";
+            this.button5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button6.Location = new System.Drawing.Point(121, 156);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(70, 28);
+            this.button6.TabIndex = 26;
+            this.button6.Text = "Duplicate";
+            this.button6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button6.UseVisualStyleBackColor = true;
+            // 
             // MainProgram
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -8002,6 +8036,8 @@
         private System.Windows.Forms.ToolStripButton headerSearchToolStripButton;
         private System.Windows.Forms.Label battleBackgroundLabel;
         private System.Windows.Forms.NumericUpDown battleBackgroundUpDown;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
     }
 }
 

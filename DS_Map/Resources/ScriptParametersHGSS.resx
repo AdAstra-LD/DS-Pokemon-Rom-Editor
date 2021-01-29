@@ -130,43 +130,43 @@
     <value>2 2 2</value>
   </data>
   <data name="0004" xml:space="preserve">
-    <value>0</value>
+    <value>2 1 1</value>
   </data>
   <data name="0005" xml:space="preserve">
-    <value>0</value>
+    <value>2 1 4</value>
   </data>
   <data name="0006" xml:space="preserve">
-    <value>0</value>
+    <value>2 1 4</value>
   </data>
   <data name="0007" xml:space="preserve">
-    <value>0</value>
+    <value>2 4 1</value>
   </data>
   <data name="0008" xml:space="preserve">
-    <value>0</value>
+    <value>2 4 1</value>
   </data>
   <data name="0009" xml:space="preserve">
-    <value>0</value>
+    <value>2 1 1</value>
   </data>
   <data name="000A" xml:space="preserve">
-    <value>1 2</value>
+    <value>2 4 4</value>
   </data>
   <data name="000B" xml:space="preserve">
-    <value>0</value>
+    <value>2 1 1</value>
   </data>
   <data name="000C" xml:space="preserve">
-    <value>0</value>
+    <value>2 1 1</value>
   </data>
   <data name="000D" xml:space="preserve">
-    <value>0</value>
+    <value>2 1 4</value>
   </data>
   <data name="000E" xml:space="preserve">
-    <value>0</value>
+    <value>2 4 1</value>
   </data>
   <data name="000F" xml:space="preserve">
-    <value>0</value>
+    <value>2 4 1</value>
   </data>
   <data name="0010" xml:space="preserve">
-    <value>0</value>
+    <value>2 4 4</value>
   </data>
   <data name="0011" xml:space="preserve">
     <value>2 2 2</value>
@@ -175,10 +175,10 @@
     <value>2 2 2</value>
   </data>
   <data name="0013" xml:space="preserve">
-    <value>0</value>
+    <value>1 2</value>
   </data>
   <data name="0014" xml:space="preserve">
-    <value>2 1 1</value>
+    <value>1 2</value>
   </data>
   <data name="0015" xml:space="preserve">
     <value>0</value>
@@ -187,13 +187,13 @@
     <value>1 4</value>
   </data>
   <data name="0017" xml:space="preserve">
-    <value>0</value>
+    <value>2 1 4</value>
   </data>
   <data name="0018" xml:space="preserve">
-    <value>1 2</value>
+    <value>2 1 4</value>
   </data>
   <data name="0019" xml:space="preserve">
-    <value>2 2 2</value>
+    <value>2 1 4</value>
   </data>
   <data name="001A" xml:space="preserve">
     <value>1 4</value>
@@ -283,10 +283,10 @@
     <value>0</value>
   </data>
   <data name="0037" xml:space="preserve">
-    <value>3 2 2 2</value>
+    <value>4 1 1 2 2</value>
   </data>
   <data name="0038" xml:space="preserve">
-    <value>2 2 1</value>
+    <value>2 1 2</value>
   </data>
   <data name="0039" xml:space="preserve">
     <value>1 1</value>
@@ -304,7 +304,7 @@
     <value>0</value>
   </data>
   <data name="003E" xml:space="preserve">
-    <value>0</value>
+    <value>6 1 1 1 1 1 1</value>
   </data>
   <data name="003F" xml:space="preserve">
     <value>1 2</value>
@@ -325,10 +325,10 @@
     <value>5 1 1 1 1 2</value>
   </data>
   <data name="0045" xml:space="preserve">
-    <value>3 2 2 2</value>
+    <value>5 1 1 1 1 2</value>
   </data>
   <data name="0046" xml:space="preserve">
-    <value>0</value>
+    <value>3 2 2 2</value>
   </data>
   <data name="0047" xml:space="preserve">
     <value>0</value>
@@ -376,13 +376,13 @@
     <value>1 2</value>
   </data>
   <data name="0056" xml:space="preserve">
-    <value>0</value>
+    <value>2 1 1</value>
   </data>
   <data name="0057" xml:space="preserve">
     <value>1 2</value>
   </data>
   <data name="0058" xml:space="preserve">
-    <value>4 1 1 1 1</value>
+    <value>1 1</value>
   </data>
   <data name="0059" xml:space="preserve">
     <value>1 2</value>
@@ -391,7 +391,7 @@
     <value>1 2</value>
   </data>
   <data name="005B" xml:space="preserve">
-    <value>3 2 2 2</value>
+    <value>0</value>
   </data>
   <data name="005C" xml:space="preserve">
     <value>0</value>
@@ -448,13 +448,13 @@
     <value>2 2 2</value>
   </data>
   <data name="006E" xml:space="preserve">
-    <value>2 2 2</value>
+    <value>1 4</value>
   </data>
   <data name="006F" xml:space="preserve">
-    <value>2 2 2</value>
+    <value>1 4</value>
   </data>
   <data name="0070" xml:space="preserve">
-    <value>3 2 2 2</value>
+    <value>2 2 4</value>
   </data>
   <data name="0071" xml:space="preserve">
     <value>2 2 2</value>
@@ -727,10 +727,10 @@
     <value>4 1 2 2 1</value>
   </data>
   <data name="00CB" xml:space="preserve">
-    <value>1 2</value>
+    <value>1 1</value>
   </data>
   <data name="00CC" xml:space="preserve">
-    <value>0</value>
+    <value>1 1</value>
   </data>
   <data name="00CD" xml:space="preserve">
     <value>1 1</value>
@@ -844,7 +844,7 @@
     <value>1 2</value>
   </data>
   <data name="00F2" xml:space="preserve">
-    <value>0</value>
+    <value>4 1 1 2 2</value>
   </data>
   <data name="00F3" xml:space="preserve">
     <value>1 2</value>
@@ -865,10 +865,10 @@
     <value>1 2</value>
   </data>
   <data name="00F9" xml:space="preserve">
-    <value>1 2</value>
+    <value>2 2 2</value>
   </data>
   <data name="00FA" xml:space="preserve">
-    <value>0</value>
+    <value>2 2 2</value>
   </data>
   <data name="00FB" xml:space="preserve">
     <value>0</value>
@@ -943,13 +943,13 @@
     <value>2 2 2</value>
   </data>
   <data name="0113" xml:space="preserve">
-    <value>2 2 2</value>
+    <value>1 2</value>
   </data>
   <data name="0114" xml:space="preserve">
-    <value>2 2 2</value>
+    <value>1 2</value>
   </data>
   <data name="0115" xml:space="preserve">
-    <value>2 2 2</value>
+    <value>1 2</value>
   </data>
   <data name="0116" xml:space="preserve">
     <value>4 2 2 2 2</value>
@@ -1687,10 +1687,10 @@
     <value>1 2</value>
   </data>
   <data name="020B" xml:space="preserve">
-    <value>1 2</value>
+    <value>5 2 2 2 2 2</value>
   </data>
   <data name="020C" xml:space="preserve">
-    <value>0</value>
+    <value>5 2 2 2 2 2</value>
   </data>
   <data name="020D" xml:space="preserve">
     <value>2 1 2</value>
@@ -1699,7 +1699,7 @@
     <value>0</value>
   </data>
   <data name="020F" xml:space="preserve">
-    <value>0</value>
+    <value>1 2</value>
   </data>
   <data name="0210" xml:space="preserve">
     <value>1 2</value>
@@ -1813,7 +1813,7 @@
     <value>1 2</value>
   </data>
   <data name="0235" xml:space="preserve">
-    <value>1</value>
+    <value>1 2</value>
   </data>
   <data name="0236" xml:space="preserve">
     <value>0</value>
@@ -1879,13 +1879,13 @@
     <value>1 2</value>
   </data>
   <data name="024B" xml:space="preserve">
-    <value>1 2</value>
+    <value>0</value>
   </data>
   <data name="024C" xml:space="preserve">
     <value>1 2</value>
   </data>
   <data name="024D" xml:space="preserve">
-    <value>3 2 1 2</value>
+    <value>3 2 2 1</value>
   </data>
   <data name="024E" xml:space="preserve">
     <value>1 2</value>
@@ -2242,7 +2242,7 @@
     <value>2 2 2</value>
   </data>
   <data name="02C4" xml:space="preserve">
-    <value>0</value>
+    <value>1 2</value>
   </data>
   <data name="02C5" xml:space="preserve">
     <value>0</value>
@@ -2284,7 +2284,7 @@
     <value>1 2</value>
   </data>
   <data name="02D2" xml:space="preserve">
-    <value>3 2 2 2</value>
+    <value>5 1 1 2 2 2</value>
   </data>
   <data name="02D3" xml:space="preserve">
     <value>3 2 2 2</value>
@@ -2452,7 +2452,7 @@
     <value>2 2 2</value>
   </data>
   <data name="030A" xml:space="preserve">
-    <value>1 2</value>
+    <value>0</value>
   </data>
   <data name="030B" xml:space="preserve">
     <value>2 2 2</value>
@@ -2464,7 +2464,7 @@
     <value>1 2</value>
   </data>
   <data name="030E" xml:space="preserve">
-    <value>1 2</value>
+    <value>0</value>
   </data>
   <data name="030F" xml:space="preserve">
     <value>1 1</value>
@@ -2675,14 +2675,5 @@
   </data>
   <data name="0354" xml:space="preserve">
     <value>2 1 1</value>
-  </data>
-  <data name="0355" xml:space="preserve">
-    <value>2 1 2</value>
-  </data>
-  <data name="0356" xml:space="preserve">
-    <value>1 1</value>
-  </data>
-  <data name="0357" xml:space="preserve">
-    <value>1 2</value>
   </data>
 </root>

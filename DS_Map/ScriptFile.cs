@@ -124,213 +124,276 @@ namespace DSPRE {
             ushort id = dataReader.ReadUInt16();
             List<byte[]> parameters = new List<byte[]>();
 
-            /* How to read parameters for different commands */
-            switch (id) {
-                case 0x16: //Jump
-                case 0x1A: //Call
-                    uint offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
-                    if (!functionOffsets.Contains(offset))
-                        functionOffsets.Add(offset);
+            /* How to read parameters for different commands for DPPt*/
+            switch (gameVersion) {
+                case "D":
+                case "P":
+                case "Plat":
+                    switch (id) {
+                        case 0x16: //Jump
+                        case 0x1A: //Call
+                            uint offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
+                            if (!functionOffsets.Contains(offset))
+                                functionOffsets.Add(offset);
 
-                    parameters.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
-                    break;
-                case 0x1C: //CompareLastResultJump
-                case 0x1D: //CompareLastResultCall
-                    byte opcode = dataReader.ReadByte();
-                    offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
-                    if (!functionOffsets.Contains(offset))
-                        functionOffsets.Add(offset);
+                            parameters.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
+                            break;
+                        case 0x1C: //CompareLastResultJump
+                        case 0x1D: //CompareLastResultCall
+                            byte opcode = dataReader.ReadByte();
+                            offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
+                            if (!functionOffsets.Contains(offset))
+                                functionOffsets.Add(offset);
 
-                    parameters.Add(new byte[] { opcode });
-                    parameters.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
-                    break;
-                case 0x5E: // ApplyMovement
-                case 0x2A1: // ApplyMovement2
-                    {
-                        ushort overworld = dataReader.ReadUInt16();
-                        offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
-                        if (!movementOffsets.Contains(offset))
-                            movementOffsets.Add(offset);
+                            parameters.Add(new byte[] { opcode });
+                            parameters.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
+                            break;
+                        case 0x5E: // ApplyMovement
+                        case 0x2A1: // ApplyMovement2
+                            {
+                                ushort overworld = dataReader.ReadUInt16();
+                                offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
+                                if (!movementOffsets.Contains(offset))
+                                    movementOffsets.Add(offset);
 
-                        parameters.Add(BitConverter.GetBytes(overworld));
-                        parameters.Add(BitConverter.GetBytes(movementOffsets.IndexOf(offset)));
-                    }
-                    break;
-                case 0x190: {
-                        if (gameVersion == "D" || gameVersion == "P" || gameVersion == "Plat")
-                            goto default;
-                        else {
-                            byte parameter1 = dataReader.ReadByte();
-                            parameters.Add(new byte[] { parameter1 });
-                            if (parameter1 == 0x2)
-                                parameters.Add(dataReader.ReadBytes(2));
-                        }
-                    }
-                    break;
-                case 0x1CF: {
-                        byte parameter1 = dataReader.ReadByte();
-                        parameters.Add(new byte[] { parameter1 });
-                        if (parameter1 == 0x2)
-                            parameters.Add(dataReader.ReadBytes(2));
-                    }
-                    break;
-                case 0x1D1: {
-                        if (gameVersion == "D" || gameVersion == "P" || gameVersion == "Plat")
-                            goto default;
-                        else {
-                            short parameter1 = dataReader.ReadInt16();
-                            parameters.Add(BitConverter.GetBytes(parameter1));
-                            switch (parameter1) {
-                                case 0x0:
-                                case 0x1:
-                                case 0x2:
-                                case 0x3:
-                                    parameters.Add(dataReader.ReadBytes(2));
-                                    parameters.Add(dataReader.ReadBytes(2));
-                                    break;
-                                case 0x4:
-                                case 0x5:
-                                case 0x6:
-                                case 0x7:
-                                    parameters.Add(dataReader.ReadBytes(2));
-                                    break;
-                                default:
-                                    break;
+                                parameters.Add(BitConverter.GetBytes(overworld));
+                                parameters.Add(BitConverter.GetBytes(movementOffsets.IndexOf(offset)));
                             }
-                        }
-                    }
-                    break;
-                case 0x1E9: {
-                        if (gameVersion == "D" || gameVersion == "P" || gameVersion == "Plat")
-                            goto default;
-                        else {
-                            short parameter1 = dataReader.ReadInt16();
-                            parameters.Add(BitConverter.GetBytes(parameter1));
-
-                            switch (parameter1) {
-                                case 0x1:
-                                case 0x2:
-                                case 0x3:
-                                case 0x7:
-                                    parameters.Add(dataReader.ReadBytes(2));
-                                    break;
-                                case 0x5:
-                                case 0x6:
-                                    parameters.Add(dataReader.ReadBytes(2));
-                                    parameters.Add(dataReader.ReadBytes(2));
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-                    break;
-                case 0x21D: {
-                        if (gameVersion == "Plat") {
-                            byte parameter1 = dataReader.ReadByte();
-                            parameters.Add(new byte[] { parameter1 });
-
-                            if (parameter1 != 0x6) {
-                                parameters.Add(dataReader.ReadBytes(2));
-                                if (parameter1 != 0x5)
+                            break;
+                        case 0x1CF: 
+                            {
+                                byte parameter1 = dataReader.ReadByte();
+                                parameters.Add(new byte[] { parameter1 });
+                                if (parameter1 == 0x2)
                                     parameters.Add(dataReader.ReadBytes(2));
                             }
-                        } else
-                            goto default;
-                    }
-                    break;
-                case 0x235: {
-                        short parameter1 = dataReader.ReadInt16();
-                        parameters.Add(BitConverter.GetBytes(parameter1));
+                            break;
+                        case 0x21D: 
+                            {
+                                if (gameVersion == "Plat") {
+                                    byte parameter1 = dataReader.ReadByte();
+                                    parameters.Add(new byte[] { parameter1 });
 
-                        switch (parameter1) {
-                            case 0x1:
-                            case 0x3:
-                                parameters.Add(dataReader.ReadBytes(2));
-                                parameters.Add(dataReader.ReadBytes(2));
-                                parameters.Add(dataReader.ReadBytes(2));
-                                break;
-                            case 0x4:
-                                parameters.Add(dataReader.ReadBytes(2));
-                                parameters.Add(dataReader.ReadBytes(2));
-                                break;
-                            case 0x0:
-                            case 0x6:
-                                parameters.Add(dataReader.ReadBytes(2));
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    break;
-                case 0x23E: {
-                        short parameter1 = dataReader.ReadInt16();
-                        parameters.Add(BitConverter.GetBytes(parameter1));
+                                    if (parameter1 != 0x6) {
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        if (parameter1 != 0x5)
+                                            parameters.Add(dataReader.ReadBytes(2));
+                                    }
+                                } else {
+                                    goto default;
+                                }
+                            }
+                            break;
+                        case 0x235: 
+                            {
+                                short parameter1 = dataReader.ReadInt16();
+                                parameters.Add(BitConverter.GetBytes(parameter1));
 
-                        switch (parameter1) {
-                            case 0x1:
-                            case 0x3:
-                                parameters.Add(dataReader.ReadBytes(2));
-                                break;
-                            case 0x5:
-                            case 0x6:
-                                parameters.Add(dataReader.ReadBytes(2));
-                                parameters.Add(dataReader.ReadBytes(2));
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    break;
-                case 0x2C4: 
-                    {
-                        byte parameter1 = dataReader.ReadByte();
-                        parameters.Add(new byte[] { parameter1 });
-                        if (parameter1 == 0 || parameter1 == 1)
-                            parameters.Add(dataReader.ReadBytes(2));
-                    }
-                    break;
-                case 0x2C5: 
-                    {
-                        if (gameVersion == "Plat") {
-                            parameters.Add(dataReader.ReadBytes(2));
-                            parameters.Add(dataReader.ReadBytes(2));
-                        } else
-                            goto default;
-                    }
-                    break;
-                case 0x2C6:
-                case 0x2C9:
-                case 0x2CA:
-                case 0x2CD:
-                    if (gameVersion == "Plat")
-                        break;
-                    else
-                        goto default;
-                case 0x2CF:
-                    if (gameVersion == "Plat") {
-                        parameters.Add(dataReader.ReadBytes(2));
-                        parameters.Add(dataReader.ReadBytes(2));
-                    } else
-                        goto default;
-                    break;
-                default:
-                    Console.WriteLine("Loaded command id: " + id.ToString("X4"));
-                    try {
-                        string[] databaseResult = RomInfo.scriptParametersDatabase.GetString(id.ToString("X4")).Split(' ');
-                        int numberOfParameters = Int32.Parse(databaseResult[0]);
+                                switch (parameter1) {
+                                    case 0x1:
+                                    case 0x3:
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        break;
+                                    case 0x4:
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        break;
+                                    case 0x0:
+                                    case 0x6:
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        case 0x23E: 
+                            {
+                                short parameter1 = dataReader.ReadInt16();
+                                parameters.Add(BitConverter.GetBytes(parameter1));
 
-                        for (int i = 1; i <= numberOfParameters; i++) {
-                            int parameterSize = Int32.Parse(databaseResult[i]);
-                            parameters.Add(dataReader.ReadBytes(parameterSize));
-                        }
-                        break;
-                    } catch (NullReferenceException) {
-                        MessageBox.Show("Unrecognized script command " + id, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return null;
+                                switch (parameter1) {
+                                    case 0x1:
+                                    case 0x3:
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        break;
+                                    case 0x5:
+                                    case 0x6:
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        case 0x2C4: 
+                            {
+                                byte parameter1 = dataReader.ReadByte();
+                                parameters.Add(new byte[] { parameter1 });
+                                if (parameter1 == 0 || parameter1 == 1)
+                                    parameters.Add(dataReader.ReadBytes(2));
+                            }
+                            break;
+                        case 0x2C5: {
+                                if (gameVersion == "Plat") {
+                                    parameters.Add(dataReader.ReadBytes(2));
+                                    parameters.Add(dataReader.ReadBytes(2));
+                                } else {
+                                    goto default;
+                                }
+                            }
+                            break;
+                        case 0x2C6:
+                        case 0x2C9:
+                        case 0x2CA:
+                        case 0x2CD:
+                            if (gameVersion == "Plat")
+                                break;
+                            else
+                                goto default;
+                        case 0x2CF:
+                            if (gameVersion == "Plat") {
+                                parameters.Add(dataReader.ReadBytes(2));
+                                parameters.Add(dataReader.ReadBytes(2));
+                            } else {
+                                goto default;
+                            }
+                            break;
+                        default:
+                            Console.WriteLine("Loaded command id: " + id.ToString("X4"));
+                            try {
+                                string[] databaseResult = RomInfo.scriptParametersDatabase.GetString(id.ToString("X4")).Split(' ');
+                                int numberOfParameters = Int32.Parse(databaseResult[0]);
+
+                                for (int i = 1; i <= numberOfParameters; i++) {
+                                    int parameterSize = Int32.Parse(databaseResult[i]);
+                                    parameters.Add(dataReader.ReadBytes(parameterSize));
+                                }
+                                break;
+                            } catch (NullReferenceException) {
+                                MessageBox.Show("Unrecognized script command " + id, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return null;
+                            }
                     }
+                    break;
+                case "HG":
+                case "SS":
+                    switch (id) {
+                        case 0x16: //Jump
+                        case 0x1A: //Call
+                            uint offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
+                            if (!functionOffsets.Contains(offset))
+                                functionOffsets.Add(offset);
+
+                            parameters.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
+                            break;
+                        case 0x1C: //CompareLastResultJump
+                        case 0x1D: //CompareLastResultCall
+                            byte opcode = dataReader.ReadByte();
+                            offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
+                            if (!functionOffsets.Contains(offset))
+                                functionOffsets.Add(offset);
+
+                            parameters.Add(new byte[] { opcode });
+                            parameters.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
+                            break;
+                        case 0x5E: // ApplyMovement
+                            {
+                                ushort overworld = dataReader.ReadUInt16();
+                                offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
+                                if (!movementOffsets.Contains(offset))
+                                    movementOffsets.Add(offset);
+
+                                parameters.Add(BitConverter.GetBytes(overworld));
+                                parameters.Add(BitConverter.GetBytes(movementOffsets.IndexOf(offset)));
+                            }
+                            break;
+                        case 0x190:
+                        case 0x191:
+                        case 0x192: 
+                            {
+
+                                byte parameter1 = dataReader.ReadByte();
+                                parameters.Add(new byte[] { parameter1 });
+                                if (parameter1 == 0x2)
+                                    parameters.Add(dataReader.ReadBytes(2));
+
+                            }
+                            break;
+                        case 0x1D1: // Number of parameters differ depending on the first parameter value
+                            {
+                                short parameter1 = dataReader.ReadInt16();
+                                parameters.Add(BitConverter.GetBytes(parameter1));
+                                switch (parameter1) {
+                                    case 0x0:
+                                    case 0x1:
+                                    case 0x2:
+                                    case 0x3:
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        break;
+                                    case 0x4:
+                                    case 0x5:
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        break;
+                                    case 0x6:
+                                        break;
+                                    case 0x7:
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        case 0x1E9: // Number of parameters differ depending on the first parameter value
+                            {
+                                short parameter1 = dataReader.ReadInt16();
+                                parameters.Add(BitConverter.GetBytes(parameter1));
+                                switch (parameter1) {
+                                    case 0x0:
+                                        break;
+                                    case 0x1:
+                                    case 0x2:
+                                    case 0x3:
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        break;
+                                    case 0x4:
+                                        break;
+                                    case 0x5:
+                                    case 0x6:
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        parameters.Add(dataReader.ReadBytes(2));
+                                        break;
+                                    case 0x7:
+                                    case 0x8:
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        default:
+                            Console.WriteLine("Loaded command id: " + id.ToString("X4"));
+                            try {
+                                string[] databaseResult = RomInfo.scriptParametersDatabase.GetString(id.ToString("X4")).Split(' ');
+                                int numberOfParameters = Int32.Parse(databaseResult[0]);
+
+                                for (int i = 1; i <= numberOfParameters; i++) {
+                                    int parameterSize = Int32.Parse(databaseResult[i]);
+                                    parameters.Add(dataReader.ReadBytes(parameterSize));
+                                }
+                                break;
+                            } catch (NullReferenceException) {
+                                MessageBox.Show("Unrecognized script command " + id, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return null;
+                            }
+                    }
+                    break;
             }
-
             return new Command(id, parameters, gameVersion, false);
         }
         public byte[] Save() {

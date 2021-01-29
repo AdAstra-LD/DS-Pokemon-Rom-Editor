@@ -6126,13 +6126,13 @@ namespace DSPRE {
 
             /* Load tileset file */
             string tilesetPath;
-            if (mapTilesetRadioButton.Checked)
+            if (mapTilesetRadioButton.Checked) {
                 tilesetPath = romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-            else
+            } else {
                 tilesetPath = romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+            }
 
             currentTileset = new NSMBe4.NSBMD.NSBTX_File(new FileStream(tilesetPath, FileMode.Open));
-
             string currentItemName = texturePacksListBox.Items[texturePacksListBox.SelectedIndex].ToString();
 
             if (currentTileset.TexInfo.names == null || currentTileset.PalInfo.names == null) {
@@ -6154,8 +6154,8 @@ namespace DSPRE {
             if (disableHandlers)
                 return;
 
-            String texSelected = texturesListBox.SelectedItem.ToString();
-            String result = findAndSelectMatchingPalette(texSelected);
+            string texSelected = texturesListBox.SelectedItem.ToString();
+            string result = findAndSelectMatchingPalette(texSelected);
             if (result != null) {
                 palettesListBox.SelectedItem = result;
                 statusLabel.Text = "Ready";
@@ -6166,10 +6166,10 @@ namespace DSPRE {
             } catch { }
         }
 
-        private String findAndSelectMatchingPalette(String findThis) {
+        private string findAndSelectMatchingPalette(string findThis) {
             statusLabel.Text = "Searching palette...";
 
-            String copy = findThis;
+            string copy = findThis;
             while (copy.Length > 0) {
                 if (palettesListBox.Items.Contains(copy + "_pl")) {
                     return copy + "_pl";
@@ -6180,7 +6180,7 @@ namespace DSPRE {
                 copy = copy.Substring(0, copy.Length - 1);
             }
 
-            foreach (String palette in palettesListBox.Items) {
+            foreach (string palette in palettesListBox.Items) {
                 if (palette.StartsWith(findThis)) {
                     return palette;
                 }
@@ -6191,7 +6191,8 @@ namespace DSPRE {
         }
 
         private void areaDataBuildingTilesetUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
             currentAreaData.buildingsTileset = (ushort)areaDataBuildingTilesetUpDown.Value;
         }
         private void areaDataDynamicTexturesUpDown_ValueChanged(object sender, EventArgs e) {
@@ -6316,7 +6317,6 @@ namespace DSPRE {
 
             using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create)))
                 writer.Write(currentAreaData.Save(RomInfo.gameVersion));
-
         }
         private void importAreaDataButton_Click(object sender, EventArgs e) {
             if (selectAreaDataListBox.SelectedIndex < 0)
