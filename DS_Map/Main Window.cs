@@ -527,13 +527,13 @@ namespace DSPRE {
             /*  Fill map textures list */
             mapTextureComboBox.Items.Add("Untextured");
             for (int i = 0; i < romInfo.GetMapTexturesCount(); i++)
-                mapTextureComboBox.Items.Add("Texture " + i);
+                mapTextureComboBox.Items.Add("Map Texture Pack [" + i.ToString("D2") + "]");
             toolStripProgressBar.Value++;
 
             /*  Fill building textures list */
             buildTextureComboBox.Items.Add("Untextured");
             for (int i = 0; i < romInfo.GetBuildingTexturesCount(); i++)
-                buildTextureComboBox.Items.Add("Texture " + i);
+                buildTextureComboBox.Items.Add("Building Texture Pack [" + i.ToString("D2") + "]");
             toolStripProgressBar.Value++;
 
             foreach (string s in PokeDatabase.System.MapCollisionPainters) {
@@ -551,11 +551,9 @@ namespace DSPRE {
             collisionTypePainterComboBox.SelectedIndex = 0;
             collisionPainterComboBox.SelectedIndex = 1;
 
-
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
             disableHandlers = false;
-
 
             //Default selections
             selectMapComboBox.SelectedIndex = 0;
@@ -578,7 +576,6 @@ namespace DSPRE {
                     break;
             };
         }
-
         private void updateBuildingListComboBox(bool interior) {
             string[] bldList = GetBuildingsList(interior);
             for (int i = 0; i < bldList.Length; i++) {
@@ -586,7 +583,6 @@ namespace DSPRE {
             }
             toolStripProgressBar.Value++;
         }
-
         private void SetupMatrixEditor() {
             statusLabel.Text = "Setting up Matrix Editor...";
             Update();
@@ -717,9 +713,7 @@ namespace DSPRE {
             unpack.Start();
             unpack.WaitForExit();
         }
-        
         #endregion
-
         private void asmHacksToolStripMenuItem_Click(object sender, EventArgs e) {
             using (ROMToolboxDialog window = new ROMToolboxDialog(romInfo)) {
                 window.ShowDialog();
@@ -2685,23 +2679,26 @@ namespace DSPRE {
                 string texturePath = romInfo.buildingTexturesDirPath + "\\" + (buildTextureComboBox.SelectedIndex - 1).ToString("D4");
                 byte[] textureFile = File.ReadAllBytes(texturePath);
 
-                if (textureFile.Length > 4) { 
-                    showBuildingTextures = true;
+                Stream str = new MemoryStream(textureFile);
+                foreach (Building building in currentMapFile.buildings) {
+                    str.Position = 0;
+                    building.NSBMDFile.materials = NSBTXLoader.LoadNsbtx(str, out building.NSBMDFile.Textures, out building.NSBMDFile.Palettes);
 
-                    Stream str = new MemoryStream(textureFile);
-                    foreach (Building building in currentMapFile.buildings) {
-                        str.Position = 0;
-                        building.NSBMDFile.materials = NSBTXLoader.LoadNsbtx(str, out building.NSBMDFile.Textures, out building.NSBMDFile.Palettes);
-                        try {
-                            building.NSBMDFile.MatchTextures();
-                        } catch { }
+                    try {
+                        building.NSBMDFile.MatchTextures();
+                        showBuildingTextures = true;
+                    } catch {
+                        if (!buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex].ToString().StartsWith("Error!")) {
+                            disableHandlers = true;
+                            buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex].ToString().Insert(0, "Error! - ");
+                            disableHandlers = false;
+                        }
+                        showBuildingTextures = false;
                     }
-                } else {
-                    disableHandlers = true;
-                    buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = "Texture file too small (" + (buildTextureComboBox.SelectedIndex - 1) + ")";
-                    disableHandlers = false;
-                    showBuildingTextures = false;
                 }
+                //buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = "Error - Building Texture Pack too small [" + (buildTextureComboBox.SelectedIndex - 1).ToString("D2") + "]";
+
+
             }
             
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
@@ -6119,6 +6116,10 @@ namespace DSPRE {
             } catch { }
         }
         private void texturePacksListBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (disableHandlers)
+                return;
+            disableHandlers = true;
+
             /* Clear ListBoxes */
             texturesListBox.Items.Clear();
             palettesListBox.Items.Clear();
@@ -6132,9 +6133,19 @@ namespace DSPRE {
 
             currentTileset = new NSMBe4.NSBMD.NSBTX_File(new FileStream(tilesetPath, FileMode.Open));
 
+            string currentItemName = texturePacksListBox.Items[texturePacksListBox.SelectedIndex].ToString();
+
+            if (currentTileset.TexInfo.names == null || currentTileset.PalInfo.names == null) {
+                if (!currentItemName.StartsWith("Error!"))
+                    texturePacksListBox.Items[texturePacksListBox.SelectedIndex] = "Error! - " + currentItemName;
+                disableHandlers = false;
+                return;
+            }
             /* Add textures and palette slot names to ListBoxes */
             texturesListBox.Items.AddRange(currentTileset.TexInfo.names.ToArray());
             palettesListBox.Items.AddRange(currentTileset.PalInfo.names.ToArray());
+
+            disableHandlers = false;
 
             if (texturesListBox.Items.Count > 0)
                 texturesListBox.SelectedIndex = 0;

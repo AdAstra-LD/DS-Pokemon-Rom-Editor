@@ -179,8 +179,7 @@ namespace NSMBe4.NSBMD
 
             Array.Sort(palettes);
 
-            for (int i = 0; i < palettes.Length; i++)
-            {
+            for (int i = 0; i < palettes.Length; i++) {
                 palettes[i].name = str.ReadString(16);
                 if (i != palettes.Length - 1)
                     palettes[i].size = palettes[i + 1].offs - palettes[i].offs;
@@ -188,26 +187,20 @@ namespace NSMBe4.NSBMD
             }
             palettes[palettes.Length - 1].size = blockStart + palDataOffset + palDataSize - palettes[palettes.Length - 1].offs;
 
-            for (int i = 0; i < palettes.Length; i++)
-            {
-                if (hasFormat5)
-                {
+            for (int i = 0; i < palettes.Length; i++) {
+                if (hasFormat5) {
                     FilePalette pa = new FilePalette(new InlineFile(f, palettes[i].offs, palettes[i].size, palettes[i].name, null, LZd ? InlineFile.CompressionType.LZWithHeaderComp : InlineFile.CompressionType.NoComp));
                     pal.Add((NSMBe4.Palette)pa);
                     //mgr.m.addPalette(pa);
-                }
-                else
-                {
+                } else {
                     int extrapalcount = (palettes[i].size) / 512;
-                    for (int j = 0; j < extrapalcount; j++)
-                    {
+                    for (int j = 0; j < extrapalcount; j++) {
                         FilePalette pa = new FilePalette(new InlineFile(f, palettes[i].offs + j * 512, 512, palettes[i].name + ":" + j, null, LZd ? InlineFile.CompressionType.LZWithHeaderComp : InlineFile.CompressionType.NoComp));
                         pal.Add((NSMBe4.Palette)pa);
                         //mgr.m.addPalette(pa);
                     }
                     int lastsize = palettes[i].size % 512;
-                    if (lastsize != 0)
-                    {
+                    if (lastsize != 0) {
                         FilePalette pa = new FilePalette(new InlineFile(f, palettes[i].offs + extrapalcount * 512, lastsize, palettes[i].name + ":" + extrapalcount, null, LZd ? InlineFile.CompressionType.LZWithHeaderComp : InlineFile.CompressionType.NoComp));
                         pal.Add((NSMBe4.Palette)pa);
                         //mgr.m.addPalette(pa);
@@ -220,24 +213,20 @@ namespace NSMBe4.NSBMD
             //            new ImagePreviewer(textures[0].render(palettes[0])).Show();
         }
 
-        public void close()
-        {
+        public void close() {
             f.endEdit(this);
         }
 
-        public byte[] save()
-        {
+        public byte[] save() {
             f.replace(str.getData(), this);
             return str.getData();
         }
 
-        public class PaletteDef : IComparable<PaletteDef>
-        {
+        public class PaletteDef : IComparable<PaletteDef> {
             public int offs, size;
             public string name;
 
-            public int CompareTo(PaletteDef b)
-            {
+            public int CompareTo(PaletteDef b) {
                 return offs.CompareTo(b.offs);
             }
         }
@@ -247,8 +236,7 @@ namespace NSMBe4.NSBMD
         public byte[] before;
         public byte[] after;
         public header Header;
-        public struct header
-        {
+        public struct header {
             public string ID;
             public byte[] Magic;
             public Int32 file_size;
@@ -257,8 +245,7 @@ namespace NSMBe4.NSBMD
             public Int32[] Section_Offset;
         }
         public tex0 TEX0;
-        public struct tex0
-        {
+        public struct tex0 {
             public string ID;
             public Int32 Section_size;
             public Int32 Padding1;
@@ -296,15 +283,13 @@ namespace NSMBe4.NSBMD
                 public List<short> unknown1;
                 public List<short> unknown2;
             }
-            public struct Info
-            {
+            public struct Info {
                 public short header_size;
                 public short data_size;
 
                 public texInfo[] TexInfo;
 
-                public struct texInfo
-                {
+                public struct texInfo {
                     public Int32 Texture_Offset; //shift << 3, relative to start of Texture Data
                     public Int16 Parameters;
                     public byte Width;
@@ -331,8 +316,7 @@ namespace NSMBe4.NSBMD
             }
         }
         public palInfo PalInfo;
-        public struct palInfo
-        {
+        public struct palInfo {
             public byte dummy;
             public byte num_objs;
             public short section_size;
@@ -340,8 +324,7 @@ namespace NSMBe4.NSBMD
             public Info infoBlock;
             public List<string> names;
 
-            public struct UnknownBlock
-            {
+            public struct UnknownBlock {
                 public short header_size;
                 public short section_size;
                 public int constant; // 0x017F
@@ -349,8 +332,7 @@ namespace NSMBe4.NSBMD
                 public List<short> unknown1;
                 public List<short> unknown2;
             }
-            public struct Info
-            {
+            public struct Info {
                 public short header_size;
                 public short data_size;
 
@@ -367,11 +349,15 @@ namespace NSMBe4.NSBMD
 
         int[] bpp = { 0, 8, 2, 4, 8, 2, 8, 16 };
 
-        public NSBTX_File(FileStream f)
-        {
+        public NSBTX_File(FileStream f) {
             EndianBinaryReader er = new EndianBinaryReader(f, Endianness.LittleEndian);
+            if (f.Length <= 4) {
+                MessageBox.Show("Error: Texture file is too small.", null, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                er.Close();
+                return;
+            }
             if (er.ReadString(Encoding.ASCII, 4) != "BTX0") {
-                MessageBox.Show("Error", null, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("Error: BTX header is wrong.", null, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 er.Close();
                 return;
             } else {

@@ -32,20 +32,22 @@ namespace LibNDSFormats.NSBTX
             var materials = new List<NSBMDMaterial>();
             var reader = new BinaryReader(stream);
             int id = reader.ReadInt32();
-            if (id != NSBMD.NSBMD.NDS_TYPE_BTX0)
+            if (id != NSBMD.NSBMD.NDS_TYPE_BTX0) {
                 Console.WriteLine("The header of this texture file is null!!!");
+                return null;
+            }
+
             int i = reader.ReadInt32();
-            if (i == NSBMD.NSBMD.NDS_TYPE_MAGIC1)
-            {
+            if (i == NSBMD.NSBMD.NDS_TYPE_MAGIC1) {
                 i = reader.ReadInt32();
-                if (i == stream.Length)
-                {
+
+                if (i == stream.Length) {
                     int numblock = reader.ReadInt32();
                     numblock >>= 16;
                     int r = reader.ReadInt32();
                     id = reader.ReadInt32();
-                    if (numblock == 1 && r == 0x14)
-                    {
+
+                    if (numblock == 1 && r == 0x14) {
                         int texnum;
                         int palnum;
                         materials.AddRange(ReadTex0(stream, 0x14, out texnum, out palnum, out texs, out pals));

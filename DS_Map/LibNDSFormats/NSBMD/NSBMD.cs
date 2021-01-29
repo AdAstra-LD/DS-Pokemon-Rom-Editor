@@ -51,8 +51,7 @@ namespace LibNDSFormats.NSBMD
         /// </summary>
         public void MatchTextures()
         {
-            for (var i = 0; i < models.Length; i++)
-            {
+            for (var i = 0; i < models.Length; i++) {
                 //models[i].Materials.Clear();
                 //models[i].Materials.AddRange(materials);
                 /*int t7 = 0;
@@ -88,17 +87,17 @@ namespace LibNDSFormats.NSBMD
                     }
                 }*/
                 int t7 = 0;
-                for (var j = 0; j < models[i].Polygons.Count - 1; j++)
-                {
-                    for (int k = 0; k < models[i].Textures.Count; k++)
-                    {
-                        if (models[i].Textures[k].texmatid.Contains((uint)models[i].Polygons[j].MatId))
-                        {
+                for (var j = 0; j < models[i].Polygons.Count - 1; j++) {
+                    for (int k = 0; k < models[i].Textures.Count; k++) {
+                        if (models[i].Textures[k].texmatid.Contains((uint)models[i].Polygons[j].MatId)) {
                             int texid = k;
-                            for (int l = 0; l < Textures.Count; l++)
-                            {
-                                if (Textures[l].texname == models[i].Textures[k].texname) { texid = l; break; }
+                            for (int l = 0; l < Textures.Count; l++) {
+                                if (Textures[l].texname == models[i].Textures[k].texname) { 
+                                    texid = l; 
+                                    break; 
+                                }
                             }
+
                             models[i].Materials[models[i].Polygons[j].MatId].spdata = Textures[texid].spdata; //RITORNA QUI
                             models[i].Materials[models[i].Polygons[j].MatId].texdata = Textures[texid].texdata;
                             models[i].Materials[models[i].Polygons[j].MatId].texname = Textures[texid].texname;
@@ -111,16 +110,15 @@ namespace LibNDSFormats.NSBMD
                             break;
                         }
                     }
-                    if (models[i].Materials[models[i].Polygons[j].MatId].format != 7)
-                    {
-                        for (int k = 0; k < models[i].Palettes.Count; k++)
-                        {
-                            if (models[i].Palettes[k].palmatid.Contains((uint)models[i].Polygons[j].MatId))
-                            {
+                    if (models[i].Materials[models[i].Polygons[j].MatId].format != 7) {
+                        for (int k = 0; k < models[i].Palettes.Count; k++) {
+                            if (models[i].Palettes[k].palmatid.Contains((uint)models[i].Polygons[j].MatId)) {
                                 int palid = k;
-                                for (int l = 0; l < Palettes.Count; l++)
-                                {
-                                    if (Palettes[l].palname == models[i].Palettes[k].palname) { palid = l; break; }
+                                for (int l = 0; l < Palettes.Count; l++) {
+                                    if (Palettes[l].palname == models[i].Palettes[k].palname) { 
+                                        palid = l; 
+                                        break; 
+                                    }
                                 }
                                 models[i].Materials[models[i].Polygons[j].MatId].paldata = Palettes[palid].paldata;
                                 models[i].Materials[models[i].Polygons[j].MatId].palname = Palettes[palid].palname;
