@@ -396,11 +396,11 @@ namespace DSPRE {
                     int headerCount = romInfo.GetHeaderCount();
 
                     for (int i = 0; i < headerCount; i++) {
-                        byte[] row = reader.ReadBytes(romInfo.internalNameLength);
+                        byte[] row = reader.ReadBytes(RomInfo.internalNameLength);
 
                         string internalName = Encoding.ASCII.GetString(row);//.TrimEnd();
                         headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalName);
-                        internalNames.Add(internalName);
+                        internalNames.Add(internalName.TrimEnd('\0'));
                     }
                 }
             } catch (FileNotFoundException) {
@@ -1530,7 +1530,7 @@ namespace DSPRE {
         private void updateCurrentInternalName() {
             /* Update internal name according to internalNameBox text*/
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(romInfo.internalNamesLocation))) {
-                writer.BaseStream.Position = currentHeader.ID * romInfo.internalNameLength;
+                writer.BaseStream.Position = currentHeader.ID * RomInfo.internalNameLength;
 
                 writer.Write(Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0')));
                 internalNames[currentHeader.ID] = internalNameBox.Text;
@@ -1659,6 +1659,11 @@ namespace DSPRE {
                 return;
 
             currentHeader.wildPokémon = (ushort)wildPokeUpDown.Value;
+            if (wildPokeUpDown.Value == romInfo.nullEncounterID) {
+                wildPokeUpDown.ForeColor = Color.Red;
+            } else {
+                wildPokeUpDown.ForeColor = Color.Black;
+            }
 
             if (currentHeader.wildPokémon == romInfo.nullEncounterID)
                 openWildEditorWithIdButton.Enabled = false;
@@ -1693,7 +1698,7 @@ namespace DSPRE {
             try {
                 using (BinaryReader reader = new BinaryReader(new FileStream(of.FileName, FileMode.Open))) {
                     reader.BaseStream.Position = Header.length + 8;
-                    internalNameBox.Text = Encoding.UTF8.GetString(reader.ReadBytes(romInfo.internalNameLength));
+                    internalNameBox.Text = Encoding.UTF8.GetString(reader.ReadBytes(RomInfo.internalNameLength));
                     updateCurrentInternalName();
                 }
                 updateHeaderNameShown(headerListBox.SelectedIndex, currentHeader.ID, internalNames[currentHeader.ID]);
@@ -2945,12 +2950,10 @@ namespace DSPRE {
             int buildingNumber = buildingsListBox.SelectedIndex;
 
             buildIndexComboBox.SelectedIndex = (int)currentMapFile.buildings[buildingNumber].modelID;
-            xFractionUpDown.Value = currentMapFile.buildings[buildingNumber].xFraction;
-            xBuildUpDown.Value = currentMapFile.buildings[buildingNumber].xPosition;
-            zFractionUpDown.Value = currentMapFile.buildings[buildingNumber].zFraction;
-            zBuildUpDown.Value = currentMapFile.buildings[buildingNumber].zPosition;
-            yFractionUpDown.Value = currentMapFile.buildings[buildingNumber].yFraction;
-            yBuildUpDown.Value = currentMapFile.buildings[buildingNumber].yPosition;
+            xBuildUpDown.Value = currentMapFile.buildings[buildingNumber].xPosition + currentMapFile.buildings[buildingNumber].xFraction/65535;
+            zBuildUpDown.Value = currentMapFile.buildings[buildingNumber].zPosition + currentMapFile.buildings[buildingNumber].yFraction/65535;
+            yBuildUpDown.Value = currentMapFile.buildings[buildingNumber].yPosition + currentMapFile.buildings[buildingNumber].zFraction/65535;
+
             buildingWidthUpDown.Value = currentMapFile.buildings[buildingNumber].width;
             buildingHeightUpDown.Value = currentMapFile.buildings[buildingNumber].height;
             buildingLengthUpDown.Value = currentMapFile.buildings[buildingNumber].length;
@@ -3073,42 +3076,42 @@ namespace DSPRE {
             if (disableHandlers || buildingsListBox.SelectedIndex < 0)
                 return;
 
-            currentMapFile.buildings[buildingsListBox.SelectedIndex].xPosition = (short)xBuildUpDown.Value;
+            var wholePart = Math.Truncate(xBuildUpDown.Value);
+            var decPart = xBuildUpDown.Value - wholePart;
+
+            if (decPart < 0)
+                decPart += 1;
+
+            currentMapFile.buildings[buildingsListBox.SelectedIndex].xPosition = (short)wholePart;
+            currentMapFile.buildings[buildingsListBox.SelectedIndex].xFraction = (ushort)(decPart*65535);
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void yBuildUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || buildingsListBox.SelectedIndex < 0)
                 return;
 
-            currentMapFile.buildings[buildingsListBox.SelectedIndex].yPosition = (short)yBuildUpDown.Value;
+            var wholePart = Math.Truncate(yBuildUpDown.Value);
+            var decPart = yBuildUpDown.Value - wholePart;
+
+            if (decPart < 0)
+                decPart += 1;
+
+            currentMapFile.buildings[buildingsListBox.SelectedIndex].yPosition = (short)wholePart;
+            currentMapFile.buildings[buildingsListBox.SelectedIndex].yFraction = (ushort)(decPart * 65535);
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void zBuildUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || buildingsListBox.SelectedIndex < 0)
                 return;
 
-            currentMapFile.buildings[buildingsListBox.SelectedIndex].zPosition = (short)zBuildUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
-        }
-        private void xFractionUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || buildingsListBox.SelectedIndex < 0)
-                return;
+            var wholePart = Math.Truncate(zBuildUpDown.Value);
+            var decPart = zBuildUpDown.Value - wholePart;
 
-            currentMapFile.buildings[buildingsListBox.SelectedIndex].xFraction = (ushort)xFractionUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
-        }
-        private void yFractionUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || buildingsListBox.SelectedIndex < 0)
-                return;
+            if (decPart < 0)
+                decPart += 1;
 
-            currentMapFile.buildings[buildingsListBox.SelectedIndex].yFraction = (ushort)yFractionUpDown.Value;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
-        }
-        private void zFractionUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || buildingsListBox.SelectedIndex < 0)
-                return;
-
-            currentMapFile.buildings[buildingsListBox.SelectedIndex].zFraction = (ushort)zFractionUpDown.Value;
+            currentMapFile.buildings[buildingsListBox.SelectedIndex].zPosition = (short)wholePart;
+            currentMapFile.buildings[buildingsListBox.SelectedIndex].zFraction = (ushort)(decPart*65535);
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         #endregion
@@ -4965,14 +4968,6 @@ namespace DSPRE {
             }
         }
 
-        private void scriptTextBoxTextScroll(RichTextBox txtb) {
-            // set the current caret position to the end
-            txtb.SelectionStart = txtb.Text.Length;
-            txtb.SelectionLength = 0;
-            // scroll automatically
-            txtb.ScrollToCaret();
-        }
-
         private void LineNumberTextBoxScript_MouseDown(object sender, MouseEventArgs e) {
             scriptTextBox.Select();
             LineNumberTextBoxScript.DeselectAll();
@@ -5286,15 +5281,14 @@ namespace DSPRE {
                     buffer += Environment.NewLine;
 
                     /* If current script is identical to another, print UseScript instead of commands */
-                    if (currentScript.useScript != -1)
+                    if (currentScript.useScript != -1) {
                         buffer += ("UseScript_#" + currentScript.useScript);
-                    else {
+                    } else {
                         for (int j = 0; j < currentScript.commands.Count; j++)
                             buffer += currentScript.commands[j].cmdName + Environment.NewLine;
                     }
-                    buffer += Environment.NewLine; // Write blank line to separate next script
                 }
-                scriptTextBox.AppendText(buffer, Color.Green);
+                scriptTextBox.AppendText(buffer + Environment.NewLine, Color.FromArgb(0,140,0));
                 buffer = "";
 
                 /* Add functions */
@@ -5307,10 +5301,8 @@ namespace DSPRE {
                     buffer += Environment.NewLine;
                     for (int j = 0; j < currentFunction.commands.Count; j++)
                         buffer += currentFunction.commands[j].cmdName + Environment.NewLine;
-
-                    buffer += Environment.NewLine;
                 }
-                functionTextBox.AppendText(buffer, Color.Blue);
+                functionTextBox.AppendText(buffer + Environment.NewLine, Color.Blue);
                 buffer = "";
 
                 /* Add movements */
@@ -5323,10 +5315,8 @@ namespace DSPRE {
                     buffer += Environment.NewLine;
                     for (int j = 0; j < currentMovement.commands.Count; j++)
                         buffer += currentMovement.commands[j].cmdName + Environment.NewLine;
-
-                    buffer += Environment.NewLine;
                 }
-                movementTextBox.AppendText(buffer, Color.Brown);
+                movementTextBox.AppendText(buffer + Environment.NewLine, Color.FromArgb(192, 40, 40));
                 buffer = "";
             }
             
@@ -5346,7 +5336,7 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nSetFlag 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void clearflagButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Insert flag number (hex):", "hex")) {
@@ -5355,9 +5345,8 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nClearFlag 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void callFunctionButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Number of Function to call (decimal):", "Decimal")) {
                 f.ShowDialog();
@@ -5365,7 +5354,7 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nCall Function_#" + ((int)f.numericUpDown1.Value).ToString());
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void jumpToFuncButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Number of Function to jump to (decimal):", "Decimal")) {
@@ -5374,7 +5363,7 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nJump Function_#" + ((int)f.numericUpDown1.Value).ToString());
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void setvarButton_Click(object sender, EventArgs e) {
             //TODO - ASK FOR VAR VALUE
@@ -5384,7 +5373,7 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nSetVar 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void messageButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Insert message number (decimal):", "dec")) {
@@ -5397,7 +5386,7 @@ namespace DSPRE {
                 }
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
 
         private void playCryButton_Click(object sender, EventArgs e) {
@@ -5407,27 +5396,27 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nPlayCry 0x" + ((int)f.numericUpDown1.Value).ToString("X4") + " 0x1");
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void routeSignButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void townSignButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void greySignButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void tipsSignButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void trainerBattleButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
 
         private void playSoundButton_Click(object sender, EventArgs e) {
@@ -5437,100 +5426,81 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nPlaySound 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void waitSoundButton_Click(object sender, EventArgs e) {
             scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nWaitSound");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void switchMusicButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void restartMusicButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void waitKeyPressButton_Click(object sender, EventArgs e) {
             scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nWaitButton");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void closeMessageButton_Click(object sender, EventArgs e) {
             scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nCloseMessage");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void wildBattleButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void legendaryBattleButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void checkItemButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void takePokémonButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void checkMoneyButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void givePokédexButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void giveNationalDexButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void giveShoesButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void givePokégearButton_Click(object sender, EventArgs e) {
-
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void checkBadgeButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void checkPokemonButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void LockCameraButton_Click(object sender, EventArgs e) {
             scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nCheckPlayerPosition 0x8004 0x8005\n" +
                 "LockCam 0x8004 0x8005\n");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void MoveCameraButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Insert movement ID to apply (decimal):", "dec")) {
                 f.ShowDialog();
@@ -5538,37 +5508,31 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nApplyMovement Cam Movement_#\n" + f.numericUpDown1.Value);
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void resetScreenButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void fadeScreenButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void applyMovementButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void setOwPositionButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void warpButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
-
         private void followHeroButton_Click(object sender, EventArgs e) {
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         #endregion
 
@@ -5586,17 +5550,17 @@ namespace DSPRE {
                 }
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void lockallButton_Click(object sender, EventArgs e) {
             scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nLockAll");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void releaseallButton_Click(object sender, EventArgs e) {
             scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nReleaseAll");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void lockButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("ID of the overworld to lock:", "dec")) {
@@ -5605,7 +5569,7 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nLock" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void releaseButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("ID of the overworld to release:", "dec")) {
@@ -5614,12 +5578,12 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nRelease" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void waitmovementButton_Click(object sender, EventArgs e) {
             scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "WaitMovement");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void addpeopleButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("ID of the Overworld to add:", "dec")) {
@@ -5628,7 +5592,7 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nAddOW" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void removepeopleButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("ID of the Overworld to remove:", "dec")) {
@@ -5637,7 +5601,7 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nRemoveOW" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         #endregion
 
@@ -5649,7 +5613,7 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, f.command);
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void giveMoneyButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Insert money amount:", "dec")) {
@@ -5658,7 +5622,7 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nGiveMoney" + " " + "0x" + ((int)f.numericUpDown1.Value).ToString("X"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void takeMoneyButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Insert money amount:", "dec")) {
@@ -5667,7 +5631,7 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nTakeMoney" + " " + "0x" + ((int)f.numericUpDown1.Value).ToString("X"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void takeItemButton_Click(object sender, EventArgs e) {
             using (GiveItemDialog f = new GiveItemDialog(GetItemNames())) {
@@ -5679,7 +5643,7 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nTakeItem" + " " + "0x" + item + " " + "0x" + quantity + " " + "0x800C");
                 }
                 AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-                scriptTextBoxTextScroll(scriptTextBox);
+                scriptTextBox.ScrollToCaret();
             }
         }
         private void giveBadgeButton_Click(object sender, EventArgs e) {
@@ -5689,7 +5653,7 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nEnableBadge 0x" + ((int)f.numericUpDown1.Value).ToString("X"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         private void takeBadgeButton_Click(object sender, EventArgs e) {
             using (InsertValueDialog f = new InsertValueDialog("Insert badge number:", "dec")) {
@@ -5698,7 +5662,7 @@ namespace DSPRE {
                     scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nDisableBadge 0x" + ((int)f.numericUpDown1.Value).ToString("X"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            scriptTextBoxTextScroll(scriptTextBox);
+            scriptTextBox.ScrollToCaret();
         }
         #endregion
 
@@ -6199,9 +6163,14 @@ namespace DSPRE {
             currentAreaData.buildingsTileset = (ushort)areaDataBuildingTilesetUpDown.Value;
         }
         private void areaDataDynamicTexturesUpDown_ValueChanged(object sender, EventArgs e) {
+            if (areaDataDynamicTexturesNumericUpDown.Value == areaDataDynamicTexturesNumericUpDown.Maximum) {
+                areaDataDynamicTexturesNumericUpDown.ForeColor = Color.Red;
+            } else {
+                areaDataDynamicTexturesNumericUpDown.ForeColor = Color.Black;
+            }
+
             if (disableHandlers)
                 return;
-
             currentAreaData.dynamicTextureType = (ushort)areaDataDynamicTexturesNumericUpDown.Value;
         }
         private void areaDataLightTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -6345,6 +6314,18 @@ namespace DSPRE {
 
         private void headerSearchToolStripButton_Click(object sender, EventArgs e) {
 
+        }
+
+        private void internalNameBox_TextChanged(object sender, EventArgs e) {
+            if (internalNameBox.Text.Length > 13) {
+                internalNameLenLabel.ForeColor = Color.FromArgb(255, 0, 0);
+            } else if (internalNameBox.Text.Length > 7) {
+                internalNameLenLabel.ForeColor = Color.FromArgb(190, 190, 0);
+            } else {
+                internalNameLenLabel.ForeColor = Color.FromArgb(0, 180, 0);
+            }
+
+            internalNameLenLabel.Text = "[ " + (internalNameBox.Text.Length) + " ]";
         }
     }
 }

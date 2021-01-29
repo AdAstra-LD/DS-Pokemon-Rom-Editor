@@ -51,7 +51,7 @@ namespace DSPRE {
         public static int itemScriptFileNumber { get; internal set; }
 
 
-        public readonly byte internalNameLength = 16;
+        public static readonly byte internalNameLength = 16;
         public string internalNamesLocation { get; private set; }
         public Dictionary<List<uint>, Tuple<Color, Color>> mapCellsColorDictionary { get; private set; }
         public static ResourceManager scriptCommandNamesDatabase { get; private set; }
