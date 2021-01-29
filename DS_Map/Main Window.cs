@@ -4672,20 +4672,23 @@ namespace DSPRE {
             DisplayActiveEvents();
         }
         private void removeOverworldButton_Click(object sender, EventArgs e) {
-            if (overworldsListBox.Items.Count > 0) {
-                disableHandlers = true;
-
-                /* Remove overworld object from list and the corresponding entry in the ListBox */
-                int owNumber = overworldsListBox.SelectedIndex;
-                currentEventFile.overworlds.RemoveAt(owNumber);
-                overworldsListBox.Items.RemoveAt(owNumber);
-
-                FillOverworldsBox(); // Update ListBox
-                disableHandlers = false;
-
-                if (owNumber > 0) 
-                    overworldsListBox.SelectedIndex = owNumber - 1;
+            if (overworldsListBox.SelectedIndex < 0) {
+                return;
             }
+
+            disableHandlers = true;
+
+            /* Remove overworld object from list and the corresponding entry in the ListBox */
+            int owNumber = overworldsListBox.SelectedIndex;
+            currentEventFile.overworlds.RemoveAt(owNumber);
+            overworldsListBox.Items.RemoveAt(owNumber);
+
+            FillOverworldsBox(); // Update ListBox
+            disableHandlers = false;
+
+            if (owNumber > 0) 
+                overworldsListBox.SelectedIndex = owNumber - 1;
+            
         }
         #endregion
 
