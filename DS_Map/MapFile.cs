@@ -1,6 +1,8 @@
 using System.IO;
 using System.Collections.Generic;
 using LibNDSFormats.NSBMD;
+using System;
+using System.Windows.Forms;
 
 namespace DSPRE
 {
@@ -50,14 +52,13 @@ namespace DSPRE
         public byte[,] types = new byte[32, 32];
         public List<Building> buildings;
         public NSBMD mapModel;
-        public byte[] mapModelBytes;
+        public byte[] mapModelData;
         public byte[] bdhc;
         public byte[] bgs;
         #endregion
 
         #region Constructors (1)
-        public MapFile(Stream data, string gameVersion)
-        {
+        public MapFile(Stream data, string gameVersion) {
             this.gameVersion = gameVersion;
             using (BinaryReader reader = new BinaryReader(data))
             {
@@ -67,14 +68,21 @@ namespace DSPRE
                 int nsbmdSectionLength = reader.ReadInt32();
                 int bdhcSectionLength = reader.ReadInt32();
 
+
                 /* Read background sounds section */
-                if (gameVersion == "HG" || gameVersion == "SS")
-                {
-                    reader.BaseStream.Position += 0x2;
-                    int bgsSectionLength = (reader.ReadByte() + (reader.ReadByte() << 8));
-                    bgs = reader.ReadBytes(bgsSectionLength);
+                if (gameVersion == "HG" || gameVersion == "SS") {
+                    ushort signature = reader.ReadUInt16();
+                    if (signature != 0x1234) {
+                        MessageBox.Show("There was a problem reading the BackGround Sound data from this map file.",
+                            "BGS Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    ushort bgsSectionLength = reader.ReadUInt16();
+
+                    reader.BaseStream.Position -= 4;
+                    ImportSoundPlates(new MemoryStream(reader.ReadBytes(bgsSectionLength + 4)));
                 }
-                               
+
                 /* Read permission data */
                 ImportPermissions(new MemoryStream(reader.ReadBytes(permissionsSectionLength)));
 
@@ -100,13 +108,10 @@ namespace DSPRE
         public void AddBuilding(Building b) {
             buildings.Add(b);
         }
-        public byte[] ExportBuildings()
-        {
+        public byte[] ExportBuildings() {
             MemoryStream newData = new MemoryStream(0x30 * buildings.Count);
-            using (BinaryWriter writer = new BinaryWriter(newData))
-            {
-                for (int i = 0; i < buildings.Count; i++)
-                {
+            using (BinaryWriter writer = new BinaryWriter(newData)) {
+                for (int i = 0; i < buildings.Count; i++) {
                     writer.Write(buildings[i].modelID);
                     writer.Write(buildings[i].xFraction);
                     writer.Write(buildings[i].xPosition);
@@ -126,19 +131,14 @@ namespace DSPRE
             }
             return newData.ToArray();
         }
-        public byte[] ExportMapModel()
-        {
-            return mapModelBytes;
+        public byte[] ExportMapModel() {
+            return mapModelData;
         }
-        public byte[] ExportPermissions()
-        {
+        public byte[] ExportPermissions() {
             MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData))
-            {
-                for (int i = 0; i < 32; i++)
-                {
-                    for (int j = 0; j < 32; j++)
-                    {
+            using (BinaryWriter writer = new BinaryWriter(newData)) {
+                for (int i = 0; i < 32; i++) {
+                    for (int j = 0; j < 32; j++) {
                         writer.Write(types[i, j]);
                         writer.Write(collisions[i, j]);
                     }
@@ -146,30 +146,25 @@ namespace DSPRE
             }
             return newData.ToArray();
         }       
-        public byte[] ExportTerrain()
-        {
+        public byte[] GetTerrain() {
             return bdhc;
         }
-        public void ImportBuildings(Stream newData)
-        {
+        public byte[] GetSoundPlates() {
+            return bgs;
+        }
+        public void ImportBuildings(Stream newData) {
             buildings = new List<Building>();
-            using (BinaryReader reader = new BinaryReader(newData))
-            {
-                for (int i = 0; i < newData.Length / 0x30; i++)
-                {
+            using (BinaryReader reader = new BinaryReader(newData)) {
+                for (int i = 0; i < newData.Length / 0x30; i++) {
                     buildings.Add(new Building(new MemoryStream(reader.ReadBytes(0x30))));
                 }
             }
         }
-        public void ImportMapModel(Stream newData)
-        {
-            using (BinaryReader reader = new BinaryReader(newData))
-            {
+        public void ImportMapModel(Stream newData) {
+            using (BinaryReader reader = new BinaryReader(newData)) {
                 reader.BaseStream.Position = 0xE;
-                if (reader.ReadInt16() > 1) // If there is more than one file, it means there are embedded textures we must remove
-                {
-                    using (BinaryWriter writer = new BinaryWriter(new MemoryStream()))
-                    {
+                if (reader.ReadInt16() > 1) {// If there is more than one file, it means there are embedded textures we must remove
+                    using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
                         reader.BaseStream.Position = 0x1C;
                         uint mdl0Size = reader.ReadUInt32(); // Read mdl0 file size
 
@@ -182,48 +177,43 @@ namespace DSPRE
                         reader.BaseStream.Position = 0x18;
                         writer.Write(reader.ReadBytes((int)mdl0Size)); // Writes MDL0;
 
-                        mapModelBytes = ((MemoryStream)writer.BaseStream).ToArray();
+                        mapModelData = ((MemoryStream)writer.BaseStream).ToArray();
                     }
-                }
-                else
-                {
+                } else {
                     reader.BaseStream.Position = 0x0;
-                    mapModelBytes = reader.ReadBytes((int)newData.Length);
+                    mapModelData = reader.ReadBytes((int)newData.Length);
                 }
 
-                mapModel = NSBMDLoader.LoadNSBMD(new MemoryStream(mapModelBytes));
+                mapModel = NSBMDLoader.LoadNSBMD(new MemoryStream(mapModelData));
             }
         }
-        public void ImportPermissions(Stream newData)
-        {
-            using (BinaryReader reader = new BinaryReader(newData))
-            {
-                for (int i = 0; i < 32; i++)
-                {
-                    for (int j = 0; j < 32; j++)
-                    {
+        public void ImportPermissions(Stream newData) {
+            using (BinaryReader reader = new BinaryReader(newData)) {
+                for (int i = 0; i < 32; i++) {
+                    for (int j = 0; j < 32; j++) {
                         types[i, j] = reader.ReadByte(); // Read permission type (e.g. surfing water, grass, sand etc.)
                         collisions[i, j] = reader.ReadByte(); // Read walkability (00 for walkable and 80 for blocked)                        
                     }
                 }
             }
         }
-        public void ImportTerrain(Stream newData)
-        {
-            using (BinaryReader reader = new BinaryReader(newData))
-            {
+        public void ImportSoundPlates(Stream newData) {
+            using (BinaryReader reader = new BinaryReader(newData)) {
+                bgs = reader.ReadBytes((int)newData.Length);
+            }
+        }
+        public void ImportTerrain(Stream newData) {
+            using (BinaryReader reader = new BinaryReader(newData)) {
                 bdhc = reader.ReadBytes((int)newData.Length);
             }
         }
-        public byte[] Save()
-        {
+        public byte[] Save() {
             MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData))
-            {
+            using (BinaryWriter writer = new BinaryWriter(newData)) {
                 /* Write section lengths */
                 writer.Write(0x800);
                 writer.Write(buildings.Count * 0x30);
-                writer.Write(mapModelBytes.Length);
+                writer.Write(mapModelData.Length);
                 writer.Write(bdhc.Length);
 
                 /* Write soundplate section for HG/SS */
@@ -237,7 +227,7 @@ namespace DSPRE
                 writer.Write(ExportPermissions());
                 writer.Write(ExportBuildings());
                 writer.Write(ExportMapModel());
-                writer.Write(ExportTerrain());
+                writer.Write(GetTerrain());
             }
             return newData.ToArray();
         }

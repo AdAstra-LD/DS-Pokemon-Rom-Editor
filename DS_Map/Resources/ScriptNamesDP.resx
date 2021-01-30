@@ -136,13 +136,16 @@
     <value>RegDataSet</value>
   </data>
   <data name="0011" xml:space="preserve">
-    <value>IfVarValue</value>
+    <value>CompareVarValue</value>
   </data>
   <data name="0012" xml:space="preserve">
-    <value>If2</value>
+    <value>CompareVars</value>
   </data>
   <data name="0014" xml:space="preserve">
     <value>CommonScript</value>
+  </data>
+  <data name="0015" xml:space="preserve">
+    <value>LocalScript</value>
   </data>
   <data name="0016" xml:space="preserve">
     <value>Jump</value>

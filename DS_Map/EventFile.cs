@@ -48,19 +48,19 @@ namespace LibNDSFormats.NSBMD
             {
                 /* Write spawnables */
                 writer.Write((uint)spawnables.Count);
-                for (int i = 0; i < spawnables.Count; i++) writer.Write(spawnables[i].Save());
+                for (int i = 0; i < spawnables.Count; i++) writer.Write(spawnables[i].ToByteArray());
 
                 /* Write overworlds */
                 writer.Write((uint)overworlds.Count);
-                for (int i = 0; i < overworlds.Count; i++) writer.Write(overworlds[i].Save());
+                for (int i = 0; i < overworlds.Count; i++) writer.Write(overworlds[i].ToByteArray());
 
                 /* Write warps */
                 writer.Write((uint)warps.Count);
-                for (int i = 0; i < warps.Count; i++) writer.Write(warps[i].Save());
+                for (int i = 0; i < warps.Count; i++) writer.Write(warps[i].ToByteArray());
 
                 /* Write triggers */
                 writer.Write((uint)triggers.Count);
-                for (int i = 0; i < triggers.Count; i++) writer.Write(triggers[i].Save());
+                for (int i = 0; i < triggers.Count; i++) writer.Write(triggers[i].ToByteArray());
             }
             return newData.ToArray();
         }
@@ -79,7 +79,7 @@ namespace LibNDSFormats.NSBMD
         #endregion
 
         #region Methods (1)
-        public abstract byte[] Save();
+        public abstract byte[] ToByteArray();
         #endregion
     }
 
@@ -96,10 +96,8 @@ namespace LibNDSFormats.NSBMD
         #endregion
 
         #region Constructors (2)
-        public Spawnable(Stream data)
-        {
-            using (BinaryReader reader = new BinaryReader(data))
-            {
+        public Spawnable(Stream data) {
+            using (BinaryReader reader = new BinaryReader(data)) {
                 scriptNumber = reader.ReadUInt16();
                 unknown1 = reader.ReadUInt16();
                 
@@ -122,8 +120,7 @@ namespace LibNDSFormats.NSBMD
                 unknown5 = reader.ReadUInt16();
             }
         }
-        public Spawnable(int xMatrixPosition, int yMatrixPosition)
-        {
+        public Spawnable(int xMatrixPosition, int yMatrixPosition) {
             scriptNumber = 0;
             unknown1 = 0;
             unknown2 = 0;
@@ -138,13 +135,26 @@ namespace LibNDSFormats.NSBMD
             this.xMatrixPosition = (ushort)xMatrixPosition;
             this.yMatrixPosition = (ushort)yMatrixPosition;
         }
+        public Spawnable(Spawnable toCopy) {
+            scriptNumber = toCopy.scriptNumber;
+            unknown1 = toCopy.unknown1;
+            unknown2 = toCopy.unknown2;
+            unknown3 = toCopy.unknown3;
+            unknown4 = toCopy.unknown4;
+            unknown5 = toCopy.unknown5;
+            orientation = toCopy.orientation;
+
+            xMapPosition = toCopy.xMapPosition;
+            yMapPosition = toCopy.yMapPosition;
+            zPosition = toCopy.zPosition;
+            this.xMatrixPosition = toCopy.xMatrixPosition;
+            this.yMatrixPosition = toCopy.yMatrixPosition;
+        }
         #endregion
 
         #region Methods (1)
-        public override byte[] Save()
-        {
-            using (BinaryWriter writer = new BinaryWriter(new MemoryStream()))
-            {
+        public override byte[] ToByteArray() {
+            using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
                 writer.Write(scriptNumber);
                 writer.Write(unknown1);
                 short xCoordinate = (short)(xMapPosition + 32 * xMatrixPosition);
@@ -184,10 +194,8 @@ namespace LibNDSFormats.NSBMD
         #endregion
 
         #region Constructors (2)
-        public Overworld(Stream data)
-        {
-            using (BinaryReader reader = new BinaryReader(data))
-            {
+        public Overworld(Stream data) {
+            using (BinaryReader reader = new BinaryReader(data)) {
                 owID = reader.ReadUInt16();
                 spriteID = reader.ReadUInt16();
                 movement = reader.ReadUInt16();
@@ -213,8 +221,7 @@ namespace LibNDSFormats.NSBMD
                 unknown3 = reader.ReadUInt16();
             }
         }
-        public Overworld(int owID, int xMatrixPosition, int yMatrixPosition)
-        {
+        public Overworld(int owID, int xMatrixPosition, int yMatrixPosition) {
             this.owID = (ushort)owID;
             spriteID = 1;
             movement = 0;
@@ -235,10 +242,31 @@ namespace LibNDSFormats.NSBMD
             this.xMatrixPosition = (ushort)xMatrixPosition;
             this.yMatrixPosition = (ushort)yMatrixPosition;
         }
+        public Overworld(Overworld toCopy) {
+            this.owID = toCopy.owID;
+            spriteID = toCopy.spriteID;
+            movement = toCopy.movement;
+            type = toCopy.type;
+            flag = toCopy.flag;
+            scriptNumber = toCopy.scriptNumber;
+            orientation = toCopy.orientation;
+            sightRange = toCopy.sightRange;
+            unknown1 = toCopy.unknown1;
+            unknown2 = toCopy.unknown2;
+            xRange = toCopy.xRange;
+            yRange = toCopy.yRange;
+            unknown3 = toCopy.unknown3;
+
+            xMapPosition = toCopy.xMapPosition;
+            yMapPosition = toCopy.yMapPosition;
+            zPosition = toCopy.zPosition;
+            this.xMatrixPosition = toCopy.xMatrixPosition;
+            this.yMatrixPosition = toCopy.yMatrixPosition;
+        }
         #endregion
 
         #region Methods (1)
-        public override byte[] Save()
+        public override byte[] ToByteArray()
         {
             using (BinaryWriter writer = new BinaryWriter(new MemoryStream()))
             {
@@ -296,8 +324,7 @@ namespace LibNDSFormats.NSBMD
                 unknown2 = reader.ReadUInt16();
             }
         }
-        public Warp(int xMatrixPosition, int yMatrixPosition)
-        {
+        public Warp(int xMatrixPosition, int yMatrixPosition) {
             header = 0;
             anchor = 0;
 
@@ -306,13 +333,20 @@ namespace LibNDSFormats.NSBMD
             this.xMatrixPosition = (ushort)xMatrixPosition;
             this.yMatrixPosition = (ushort)yMatrixPosition;
         }
+        public Warp(Warp toCopy) {
+            header = toCopy.header;
+            anchor = toCopy.anchor;
+
+            xMapPosition = toCopy.xMapPosition;
+            yMapPosition = toCopy.yMapPosition;
+            this.xMatrixPosition = toCopy.xMatrixPosition;
+            this.yMatrixPosition = toCopy.yMatrixPosition;
+        }
         #endregion
 
         #region Methods (1)
-        public override byte[] Save()
-        {
-            using (BinaryWriter writer = new BinaryWriter(new MemoryStream()))
-            {
+        public override byte[] ToByteArray() {
+            using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
                 ushort xCoordinate = (ushort)(xMapPosition + 32 * xMatrixPosition);
                 writer.Write(xCoordinate);
                 ushort yCoordinate = (ushort)(yMapPosition + 32 * yMatrixPosition);
@@ -341,10 +375,8 @@ namespace LibNDSFormats.NSBMD
         #endregion Fields
 
         #region Constructors (2)
-        public Trigger(Stream data)
-        {
-            using (BinaryReader reader = new BinaryReader(data))
-            {
+        public Trigger(Stream data) {
+            using (BinaryReader reader = new BinaryReader(data)) {
                 scriptNumber = reader.ReadUInt16();
 
                 /* Decompose x-y coordinates in matrix and map positions */
@@ -362,8 +394,7 @@ namespace LibNDSFormats.NSBMD
                 flag = reader.ReadUInt16();
             }        
         }
-        public Trigger(int xMatrixPosition, int yMatrixPosition)
-        {
+        public Trigger(int xMatrixPosition, int yMatrixPosition) {
             scriptNumber = 0;
             flag = 0;
             width = 1;
@@ -374,10 +405,21 @@ namespace LibNDSFormats.NSBMD
             this.xMatrixPosition = (ushort)xMatrixPosition;
             this.yMatrixPosition = (ushort)yMatrixPosition;
         }
+        public Trigger(Trigger toCopy) {
+            scriptNumber = toCopy.scriptNumber;
+            flag = toCopy.flag;
+            width = toCopy.width;
+            length = toCopy.length;
+
+            xMapPosition = toCopy.xMapPosition;
+            yMapPosition = toCopy.xMapPosition;
+            this.xMatrixPosition = toCopy.xMatrixPosition;
+            this.yMatrixPosition = toCopy.yMatrixPosition;
+        }
         #endregion
 
         #region Methods (1)
-        public override byte[] Save()
+        public override byte[] ToByteArray()
         {
             using (BinaryWriter writer = new BinaryWriter(new MemoryStream()))
             {

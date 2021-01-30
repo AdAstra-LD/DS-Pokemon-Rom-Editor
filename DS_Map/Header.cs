@@ -84,8 +84,7 @@ namespace DSPRE
     /// <summary>
     /// General class to store common map header data across all Gen IV Pokémon NDS games
     /// </summary>
-    public abstract class Header
-	{
+    public abstract class Header {
         /*System*/
         public short ID { get; set; }
         public static readonly byte length = 24;
@@ -109,6 +108,28 @@ namespace DSPRE
 
         #region Methods (1)
         public abstract byte[] toByteArray();
+        public static Header BuildFromFile(string filename, short headerNumber, long offsetInFile) {
+            /* Calculate header offset and load data */
+            byte[] headerData = DSUtils.ReadFromFile(filename, offsetInFile, Header.length);
+
+            /* Encapsulate header data into the class appropriate for the gameVersion */
+            if (headerData.Length < Header.length)
+                return null;
+
+            switch (RomInfo.gameVersion) {
+                case "D":
+                case "P":
+                    return new HeaderDP(headerNumber, new MemoryStream(headerData));
+                case "Plat":
+                    return new HeaderPt(headerNumber, new MemoryStream(headerData));
+                default:
+                    return new HeaderHGSS(headerNumber, new MemoryStream(headerData));
+            }
+        }
+        public static Header LoadFromARM9(short headerNumber) {
+            long headerOffset = PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + Header.length * headerNumber;
+            return BuildFromFile(RomInfo.arm9Path, headerNumber, headerOffset);
+        }
         #endregion
     }
 

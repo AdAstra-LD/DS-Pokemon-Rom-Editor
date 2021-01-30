@@ -465,6 +465,7 @@
     <None Include="Graphics\Program Icons\unpackBuildingNarcsIcon.png" />
     <None Include="Graphics\Program Icons\deleteIcon.png" />
     <Content Include="Graphics\Program Icons\addIcon.png" />
+    <None Include="Graphics\Program Icons\copyIcon_small.png" />
     <Content Include="Graphics\Program Icons\loadColorTable.png" />
     <Content Include="Graphics\Program Icons\resetColorTable.png" />
     <None Include="Graphics\Program Icons\wideLensImage.png" />

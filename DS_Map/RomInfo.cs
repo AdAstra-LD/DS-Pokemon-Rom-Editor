@@ -14,7 +14,7 @@ namespace DSPRE {
     /// </summary>
 
     public class RomInfo {
-        public string romID { get; private set; }
+        public static string romID { get; private set; }
         public string workDir { get; private set; }
         public static string arm9Path { get; private set; }
         public static string overlayTablePath { get; private set; }

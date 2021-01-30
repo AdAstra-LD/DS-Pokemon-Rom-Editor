@@ -263,6 +263,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap copyIcon_small {
+            get {
+                object obj = ResourceManager.GetObject("copyIcon_small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dawn_platinum {
             get {
                 object obj = ResourceManager.GetObject("dawn_platinum", resourceCulture);

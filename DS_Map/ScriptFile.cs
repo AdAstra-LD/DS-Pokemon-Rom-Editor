@@ -97,12 +97,12 @@ namespace DSPRE {
                         List<byte[]> parameters = new List<byte[]>();
                         if (id != 0xFE)
                             parameters.Add(scrReader.ReadBytes(2));
-                        Command command = new Command(id, parameters, gameVersion, true);
 
+                        Command command = new Command(id, parameters, gameVersion, true);
                         commandsList.Add(command);
+
                         if (command.id == 0xFE)
                             endMovement = true;
-
                     }
                     this.movements.Add(new Script(commandsList));
                 }
@@ -412,12 +412,12 @@ namespace DSPRE {
 
                 /* Write scripts */
                 for (int i = 0; i < scripts.Count; i++) {
-                    if (scripts[i].useScript != -1)
-                        scriptOffsets.Add(scriptOffsets[scripts[i].useScript]);  // If script is a UseScript, copy offset
-                    else {
+                    if (scripts[i].useScript != -1) {
+                        scriptOffsets.Add(scriptOffsets[scripts[i].useScript]);  // If script has UseScript, copy offset
+                    } else {
                         scriptOffsets.Add((uint)writer.BaseStream.Position);
 
-                        for (int j = 0; j < scripts[i].commands.Count; j++) { 
+                        for (int j = 0; j < scripts[i].commands.Count; j++) {
                             /* Get command id */
                             ushort id = scripts[i].commands[j].id;
                             /* Write ID and Parameters*/

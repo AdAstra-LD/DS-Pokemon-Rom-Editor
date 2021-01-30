@@ -389,7 +389,7 @@ namespace DSPRE {
             string overlayString1 = bdhcamDB.GetString(nameof(overlayString1));
             string overlayString2 = bdhcamDB.GetString(nameof(overlayString2));
 
-            byte[] subroutine = (byte[])new ResourceManager("DSPRE.Resources.ROMToolboxDB.BDHCAMPatchDB", Assembly.GetExecutingAssembly()).GetObject(romInfo.romID.ToLower() + "_cam");
+            byte[] subroutine = (byte[])new ResourceManager("DSPRE.Resources.ROMToolboxDB.BDHCAMPatchDB", Assembly.GetExecutingAssembly()).GetObject(RomInfo.romID.ToLower() + "_cam");
 
             
             if (showOverlay1patchrequest) {

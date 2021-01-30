@@ -30,21 +30,21 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle76 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle77 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle78 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle79 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle80 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle81 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle82 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle83 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle84 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle85 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle86 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle87 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle88 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle89 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle90 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
             this.worldmapCoordsGroupBox = new System.Windows.Forms.GroupBox();
@@ -92,6 +92,7 @@
             this.areaIconPictureBox = new System.Windows.Forms.PictureBox();
             this.areaImageLabel = new System.Windows.Forms.Label();
             this.nameGroupBox = new System.Windows.Forms.GroupBox();
+            this.internalNameLenLabel = new System.Windows.Forms.Label();
             this.pasteLocationNameButton = new System.Windows.Forms.Button();
             this.copyLocationNameButton = new System.Windows.Forms.Button();
             this.pasteInternalNameButton = new System.Windows.Forms.Button();
@@ -174,8 +175,11 @@
             this.matrixNameLabel = new System.Windows.Forms.Label();
             this.matrixTabControl = new System.Windows.Forms.TabControl();
             this.headersTabPage = new System.Windows.Forms.TabPage();
+            this.headersGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.heightsTabPage = new System.Windows.Forms.TabPage();
+            this.heightsGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.mapFilesTabPage = new System.Windows.Forms.TabPage();
+            this.mapFilesGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.matrixNameTextBox = new System.Windows.Forms.TextBox();
             this.heightUpDown = new System.Windows.Forms.NumericUpDown();
             this.widthUpDown = new System.Windows.Forms.NumericUpDown();
@@ -198,10 +202,18 @@
             this.selectMapComboBox = new System.Windows.Forms.ComboBox();
             this.mapPartsTabControl = new System.Windows.Forms.TabControl();
             this.buildingsTabPage = new System.Windows.Forms.TabPage();
-            this.duplicateBuildingButton = new System.Windows.Forms.Button();
+            this.groupBox20 = new System.Windows.Forms.GroupBox();
+            this.interiorbldRadioButton = new System.Windows.Forms.RadioButton();
+            this.exteriorbldRadioButton = new System.Windows.Forms.RadioButton();
+            this.buildIndexComboBox = new System.Windows.Forms.ComboBox();
+            this.groupBox19 = new System.Windows.Forms.GroupBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
             this.buildingHeightUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label23 = new System.Windows.Forms.Label();
             this.buildingLengthUpDown = new System.Windows.Forms.NumericUpDown();
             this.buildingWidthUpDown = new System.Windows.Forms.NumericUpDown();
+            this.duplicateBuildingButton = new System.Windows.Forms.Button();
             this.importBuildingsButton = new System.Windows.Forms.Button();
             this.exportBuildingsButton = new System.Windows.Forms.Button();
             this.removeBuildingButton = new System.Windows.Forms.Button();
@@ -213,9 +225,6 @@
             this.zBuildUpDown = new System.Windows.Forms.NumericUpDown();
             this.yBuildUpDown = new System.Windows.Forms.NumericUpDown();
             this.xBuildUpDown = new System.Windows.Forms.NumericUpDown();
-            this.exteriorbldRadioButton = new System.Windows.Forms.RadioButton();
-            this.interiorbldRadioButton = new System.Windows.Forms.RadioButton();
-            this.buildIndexComboBox = new System.Windows.Forms.ComboBox();
             this.buildingsListBox = new System.Windows.Forms.ListBox();
             this.permissionsTabPage = new System.Windows.Forms.TabPage();
             this.clearCurrentButton = new System.Windows.Forms.Button();
@@ -237,13 +246,23 @@
             this.selectTypePanel = new System.Windows.Forms.Panel();
             this.typePictureBox = new System.Windows.Forms.PictureBox();
             this.modelTabPage = new System.Windows.Forms.TabPage();
+            this.ModelSizeTXT = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.unsupport3DText = new System.Windows.Forms.TextBox();
             this.importMapButton = new System.Windows.Forms.Button();
             this.exportMapButton = new System.Windows.Forms.Button();
             this.terrainTabPage = new System.Windows.Forms.TabPage();
+            this.TerrainSizeTXT = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.bdhcImportButton = new System.Windows.Forms.Button();
             this.bdhcExportButton = new System.Windows.Forms.Button();
+            this.bgsTabPage = new System.Windows.Forms.TabPage();
+            this.BGSSizeTXT = new System.Windows.Forms.TextBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.soundPlatesImportButton = new System.Windows.Forms.Button();
+            this.soundPlatesExportButton = new System.Windows.Forms.Button();
             this.radio3D = new System.Windows.Forms.RadioButton();
             this.radio2D = new System.Windows.Forms.RadioButton();
             this.wireframeCheckBox = new System.Windows.Forms.CheckBox();
@@ -280,6 +299,13 @@
             this.mapTilesetRadioButton = new System.Windows.Forms.RadioButton();
             this.texturePacksListBox = new System.Windows.Forms.ListBox();
             this.eventEditorTabPage = new System.Windows.Forms.TabPage();
+            this.groupBox21 = new System.Windows.Forms.GroupBox();
+            this.showTriggersCheckBox = new System.Windows.Forms.CheckBox();
+            this.showWarpsCheckBox = new System.Windows.Forms.CheckBox();
+            this.showOwsCheckBox = new System.Windows.Forms.CheckBox();
+            this.showSignsCheckBox = new System.Windows.Forms.CheckBox();
+            this.eventAreaDataUpDown = new System.Windows.Forms.NumericUpDown();
+            this.eventMapTextureLabel = new System.Windows.Forms.Label();
             this.RightClickLabel = new System.Windows.Forms.Label();
             this.rightClickPicture = new System.Windows.Forms.PictureBox();
             this.WheelClickLabel = new System.Windows.Forms.Label();
@@ -300,20 +326,14 @@
             this.eventShiftUpButton = new System.Windows.Forms.Button();
             this.eventShiftDownButton = new System.Windows.Forms.Button();
             this.selectEventComboBox = new System.Windows.Forms.ComboBox();
-            this.showTriggersCheckBox = new System.Windows.Forms.CheckBox();
-            this.showWarpsCheckBox = new System.Windows.Forms.CheckBox();
-            this.showOwsCheckBox = new System.Windows.Forms.CheckBox();
-            this.showSignsCheckBox = new System.Windows.Forms.CheckBox();
             this.exportEventFileButton = new System.Windows.Forms.Button();
             this.importEventFileButton = new System.Windows.Forms.Button();
             this.saveEventsButton = new System.Windows.Forms.Button();
-            this.eventMapTextureLabel = new System.Windows.Forms.Label();
-            this.eventAreaDataUpDown = new System.Windows.Forms.NumericUpDown();
             this.backgroundMapLabel = new System.Windows.Forms.Label();
             this.eventMatrixUpDown = new System.Windows.Forms.NumericUpDown();
             this.eventsTabControl = new System.Windows.Forms.TabControl();
             this.signsTabPage = new System.Windows.Forms.TabPage();
-            this.button5 = new System.Windows.Forms.Button();
+            this.duplicateSpawnableButton = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.goToSignButton = new System.Windows.Forms.Button();
             this.signMatrixYLabel = new System.Windows.Forms.Label();
@@ -334,7 +354,7 @@
             this.signScriptUpDown = new System.Windows.Forms.NumericUpDown();
             this.spawnablesListBox = new System.Windows.Forms.ListBox();
             this.overworldsTabPage = new System.Windows.Forms.TabPage();
-            this.button6 = new System.Windows.Forms.Button();
+            this.duplicateOverworldsButton = new System.Windows.Forms.Button();
             this.groupBox17 = new System.Windows.Forms.GroupBox();
             this.button14 = new System.Windows.Forms.Button();
             this.owYMatrixUpDown = new System.Windows.Forms.NumericUpDown();
@@ -381,6 +401,7 @@
             this.addOverworldButton = new System.Windows.Forms.Button();
             this.overworldsListBox = new System.Windows.Forms.ListBox();
             this.warpsTabPage = new System.Windows.Forms.TabPage();
+            this.duplicateWarpsButton = new System.Windows.Forms.Button();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.destinationWarpGoToButton = new System.Windows.Forms.Button();
             this.warpAnchorUpDown = new System.Windows.Forms.NumericUpDown();
@@ -405,6 +426,7 @@
             this.addWarpButton = new System.Windows.Forms.Button();
             this.warpsListBox = new System.Windows.Forms.ListBox();
             this.triggersTabPage = new System.Windows.Forms.TabPage();
+            this.duplicateTriggersButton = new System.Windows.Forms.Button();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
             this.triggerLengthLabel = new System.Windows.Forms.Label();
             this.triggerLengthUpDown = new System.Windows.Forms.NumericUpDown();
@@ -540,6 +562,7 @@
             this.removeStringButton = new System.Windows.Forms.Button();
             this.addStringButton = new System.Windows.Forms.Button();
             this.textEditorDataGridView = new System.Windows.Forms.DataGridView();
+            this.messageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.exportTextFileButton = new System.Windows.Forms.Button();
             this.importTextFileButton = new System.Windows.Forms.Button();
             this.saveTextArchiveButton = new System.Windows.Forms.Button();
@@ -572,16 +595,6 @@
             this.headerSearchToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.internalNameLenLabel = new System.Windows.Forms.Label();
-            this.messageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.headersGridView = new DSPRE.DataGridViewDoubleBuffered();
-            this.heightsGridView = new DSPRE.DataGridViewDoubleBuffered();
-            this.mapFilesGridView = new DSPRE.DataGridViewDoubleBuffered();
-            this.groupBox19 = new System.Windows.Forms.GroupBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.groupBox20 = new System.Windows.Forms.GroupBox();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -612,8 +625,11 @@
             this.matrixEditorTabPage.SuspendLayout();
             this.matrixTabControl.SuspendLayout();
             this.headersTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).BeginInit();
             this.heightsTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).BeginInit();
             this.mapFilesTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthUpDown)).BeginInit();
             this.mapEditorTabPage.SuspendLayout();
@@ -621,6 +637,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.movPictureBox)).BeginInit();
             this.mapPartsTabControl.SuspendLayout();
             this.buildingsTabPage.SuspendLayout();
+            this.groupBox20.SuspendLayout();
+            this.groupBox19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.buildingHeightUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buildingLengthUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buildingWidthUpDown)).BeginInit();
@@ -640,6 +658,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.typePictureBox)).BeginInit();
             this.modelTabPage.SuspendLayout();
             this.terrainTabPage.SuspendLayout();
+            this.bgsTabPage.SuspendLayout();
             this.nsbtxEditorTabPage.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.areaDataGroupBox.SuspendLayout();
@@ -649,6 +668,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.areaDataBuildingTilesetUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).BeginInit();
             this.eventEditorTabPage.SuspendLayout();
+            this.groupBox21.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eventAreaDataUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightClickPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wheelClickPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LeftClickPicture)).BeginInit();
@@ -656,7 +677,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.eventMatrixXUpDown)).BeginInit();
             this.eventMatrixPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventMatrixPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eventAreaDataUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventMatrixUpDown)).BeginInit();
             this.eventsTabControl.SuspendLayout();
             this.signsTabPage.SuspendLayout();
@@ -729,11 +749,6 @@
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainToolStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).BeginInit();
-            this.groupBox19.SuspendLayout();
-            this.groupBox20.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainTabControl
@@ -1316,6 +1331,15 @@
             this.nameGroupBox.TabIndex = 28;
             this.nameGroupBox.TabStop = false;
             this.nameGroupBox.Text = "Location Info";
+            // 
+            // internalNameLenLabel
+            // 
+            this.internalNameLenLabel.ForeColor = System.Drawing.Color.Green;
+            this.internalNameLenLabel.Location = new System.Drawing.Point(434, 41);
+            this.internalNameLenLabel.Name = "internalNameLenLabel";
+            this.internalNameLenLabel.Size = new System.Drawing.Size(32, 16);
+            this.internalNameLenLabel.TabIndex = 44;
+            this.internalNameLenLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // pasteLocationNameButton
             // 
@@ -2257,6 +2281,62 @@
             this.headersTabPage.Text = "Map Headers";
             this.headersTabPage.UseVisualStyleBackColor = true;
             // 
+            // headersGridView
+            // 
+            this.headersGridView.AllowUserToAddRows = false;
+            this.headersGridView.AllowUserToDeleteRows = false;
+            this.headersGridView.AllowUserToResizeColumns = false;
+            this.headersGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.headersGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.headersGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.Format = "D4";
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            this.headersGridView.Location = new System.Drawing.Point(0, 0);
+            this.headersGridView.Name = "headersGridView";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.headersGridView.RowHeadersWidth = 50;
+            this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.headersGridView.RowTemplate.Height = 18;
+            this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.headersGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.headersGridView.ShowCellErrors = false;
+            this.headersGridView.Size = new System.Drawing.Size(1032, 566);
+            this.headersGridView.TabIndex = 1;
+            this.headersGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.headersGridView_CellFormatting);
+            this.headersGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.headersGridView_CellMouseDoubleClick);
+            this.headersGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.headersGridView_CellValueChanged);
+            // 
             // heightsTabPage
             // 
             this.heightsTabPage.Controls.Add(this.heightsGridView);
@@ -2267,6 +2347,60 @@
             this.heightsTabPage.Text = "Map Heights";
             this.heightsTabPage.UseVisualStyleBackColor = true;
             // 
+            // heightsGridView
+            // 
+            this.heightsGridView.AllowUserToAddRows = false;
+            this.heightsGridView.AllowUserToDeleteRows = false;
+            this.heightsGridView.AllowUserToResizeColumns = false;
+            this.heightsGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            this.heightsGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.Format = "D2";
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle8;
+            this.heightsGridView.Location = new System.Drawing.Point(0, 0);
+            this.heightsGridView.Name = "heightsGridView";
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            this.heightsGridView.RowHeadersWidth = 50;
+            this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.heightsGridView.RowTemplate.Height = 18;
+            this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.heightsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.heightsGridView.Size = new System.Drawing.Size(1032, 566);
+            this.heightsGridView.TabIndex = 2;
+            this.heightsGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.heightsGridView_CellFormatting);
+            this.heightsGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.heightsGridView_CellValueChanged);
+            // 
             // mapFilesTabPage
             // 
             this.mapFilesTabPage.Controls.Add(this.mapFilesGridView);
@@ -2276,6 +2410,61 @@
             this.mapFilesTabPage.TabIndex = 3;
             this.mapFilesTabPage.Text = "Map Files";
             this.mapFilesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // mapFilesGridView
+            // 
+            this.mapFilesGridView.AllowUserToAddRows = false;
+            this.mapFilesGridView.AllowUserToDeleteRows = false;
+            this.mapFilesGridView.AllowUserToResizeColumns = false;
+            this.mapFilesGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
+            this.mapFilesGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle13.Format = "D4";
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle13;
+            this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
+            this.mapFilesGridView.Name = "mapFilesGridView";
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            this.mapFilesGridView.RowHeadersWidth = 50;
+            this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mapFilesGridView.RowTemplate.Height = 18;
+            this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.mapFilesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.mapFilesGridView.Size = new System.Drawing.Size(1032, 566);
+            this.mapFilesGridView.TabIndex = 2;
+            this.mapFilesGridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellMouseDoubleClick);
+            this.mapFilesGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.mapFilesGridView_CellFormatting);
+            this.mapFilesGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellValueChanged);
             // 
             // matrixNameTextBox
             // 
@@ -2541,6 +2730,7 @@
             this.mapPartsTabControl.Controls.Add(this.permissionsTabPage);
             this.mapPartsTabControl.Controls.Add(this.modelTabPage);
             this.mapPartsTabControl.Controls.Add(this.terrainTabPage);
+            this.mapPartsTabControl.Controls.Add(this.bgsTabPage);
             this.mapPartsTabControl.Location = new System.Drawing.Point(15, 6);
             this.mapPartsTabControl.Name = "mapPartsTabControl";
             this.mapPartsTabControl.SelectedIndex = 0;
@@ -2567,15 +2757,89 @@
             this.buildingsTabPage.Text = "Buildings";
             this.buildingsTabPage.UseVisualStyleBackColor = true;
             // 
-            // duplicateBuildingButton
+            // groupBox20
             // 
-            this.duplicateBuildingButton.Location = new System.Drawing.Point(255, 397);
-            this.duplicateBuildingButton.Name = "duplicateBuildingButton";
-            this.duplicateBuildingButton.Size = new System.Drawing.Size(79, 32);
-            this.duplicateBuildingButton.TabIndex = 25;
-            this.duplicateBuildingButton.Text = "Duplicate";
-            this.duplicateBuildingButton.UseVisualStyleBackColor = true;
-            this.duplicateBuildingButton.Click += new System.EventHandler(this.duplicateBuildingButton_Click);
+            this.groupBox20.Controls.Add(this.interiorbldRadioButton);
+            this.groupBox20.Controls.Add(this.exteriorbldRadioButton);
+            this.groupBox20.Controls.Add(this.buildIndexComboBox);
+            this.groupBox20.Location = new System.Drawing.Point(194, 105);
+            this.groupBox20.Name = "groupBox20";
+            this.groupBox20.Size = new System.Drawing.Size(208, 71);
+            this.groupBox20.TabIndex = 26;
+            this.groupBox20.TabStop = false;
+            this.groupBox20.Text = "Building Selector";
+            // 
+            // interiorbldRadioButton
+            // 
+            this.interiorbldRadioButton.AutoSize = true;
+            this.interiorbldRadioButton.Enabled = false;
+            this.interiorbldRadioButton.Location = new System.Drawing.Point(11, 19);
+            this.interiorbldRadioButton.Name = "interiorbldRadioButton";
+            this.interiorbldRadioButton.Size = new System.Drawing.Size(76, 17);
+            this.interiorbldRadioButton.TabIndex = 3;
+            this.interiorbldRadioButton.Text = "Interior List";
+            this.interiorbldRadioButton.UseVisualStyleBackColor = true;
+            this.interiorbldRadioButton.CheckedChanged += new System.EventHandler(this.interiorRadioButton_CheckedChanged);
+            // 
+            // exteriorbldRadioButton
+            // 
+            this.exteriorbldRadioButton.AutoSize = true;
+            this.exteriorbldRadioButton.Checked = true;
+            this.exteriorbldRadioButton.Enabled = false;
+            this.exteriorbldRadioButton.Location = new System.Drawing.Point(97, 19);
+            this.exteriorbldRadioButton.Name = "exteriorbldRadioButton";
+            this.exteriorbldRadioButton.Size = new System.Drawing.Size(79, 17);
+            this.exteriorbldRadioButton.TabIndex = 4;
+            this.exteriorbldRadioButton.TabStop = true;
+            this.exteriorbldRadioButton.Text = "Exterior List";
+            this.exteriorbldRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // buildIndexComboBox
+            // 
+            this.buildIndexComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.buildIndexComboBox.FormattingEnabled = true;
+            this.buildIndexComboBox.Location = new System.Drawing.Point(11, 42);
+            this.buildIndexComboBox.Name = "buildIndexComboBox";
+            this.buildIndexComboBox.Size = new System.Drawing.Size(187, 21);
+            this.buildIndexComboBox.TabIndex = 1;
+            this.buildIndexComboBox.SelectedIndexChanged += new System.EventHandler(this.buildIndexComboBox_SelectedIndexChanged);
+            // 
+            // groupBox19
+            // 
+            this.groupBox19.Controls.Add(this.label21);
+            this.groupBox19.Controls.Add(this.label22);
+            this.groupBox19.Controls.Add(this.buildingHeightUpDown);
+            this.groupBox19.Controls.Add(this.label23);
+            this.groupBox19.Controls.Add(this.buildingLengthUpDown);
+            this.groupBox19.Controls.Add(this.buildingWidthUpDown);
+            this.groupBox19.Location = new System.Drawing.Point(301, 206);
+            this.groupBox19.Name = "groupBox19";
+            this.groupBox19.Size = new System.Drawing.Size(101, 123);
+            this.groupBox19.TabIndex = 12;
+            this.groupBox19.TabStop = false;
+            this.groupBox19.Text = "Size";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.label21.Location = new System.Drawing.Point(6, 94);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(15, 15);
+            this.label21.TabIndex = 10;
+            this.label21.Text = "Z";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.ForeColor = System.Drawing.Color.Blue;
+            this.label22.Location = new System.Drawing.Point(6, 56);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(15, 15);
+            this.label22.TabIndex = 9;
+            this.label22.Text = "Y";
             // 
             // buildingHeightUpDown
             // 
@@ -2584,6 +2848,17 @@
             this.buildingHeightUpDown.Size = new System.Drawing.Size(69, 20);
             this.buildingHeightUpDown.TabIndex = 24;
             this.buildingHeightUpDown.ValueChanged += new System.EventHandler(this.buildingHeightUpDown_ValueChanged);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.ForeColor = System.Drawing.Color.Red;
+            this.label23.Location = new System.Drawing.Point(6, 22);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(16, 15);
+            this.label23.TabIndex = 8;
+            this.label23.Text = "X";
             // 
             // buildingLengthUpDown
             // 
@@ -2601,11 +2876,24 @@
             this.buildingWidthUpDown.TabIndex = 22;
             this.buildingWidthUpDown.ValueChanged += new System.EventHandler(this.buildingWidthUpDown_ValueChanged);
             // 
+            // duplicateBuildingButton
+            // 
+            this.duplicateBuildingButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
+            this.duplicateBuildingButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.duplicateBuildingButton.Location = new System.Drawing.Point(251, 397);
+            this.duplicateBuildingButton.Name = "duplicateBuildingButton";
+            this.duplicateBuildingButton.Size = new System.Drawing.Size(80, 32);
+            this.duplicateBuildingButton.TabIndex = 25;
+            this.duplicateBuildingButton.Text = "Duplicate";
+            this.duplicateBuildingButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.duplicateBuildingButton.UseVisualStyleBackColor = true;
+            this.duplicateBuildingButton.Click += new System.EventHandler(this.duplicateBuildingButton_Click);
+            // 
             // importBuildingsButton
             // 
             this.importBuildingsButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importBuildingsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importBuildingsButton.Location = new System.Drawing.Point(302, 13);
+            this.importBuildingsButton.Location = new System.Drawing.Point(300, 13);
             this.importBuildingsButton.Name = "importBuildingsButton";
             this.importBuildingsButton.Size = new System.Drawing.Size(102, 40);
             this.importBuildingsButton.TabIndex = 21;
@@ -2629,21 +2917,27 @@
             // 
             // removeBuildingButton
             // 
-            this.removeBuildingButton.Location = new System.Drawing.Point(334, 397);
+            this.removeBuildingButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeBuildingButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.removeBuildingButton.Location = new System.Drawing.Point(332, 397);
             this.removeBuildingButton.Name = "removeBuildingButton";
             this.removeBuildingButton.Size = new System.Drawing.Size(70, 32);
             this.removeBuildingButton.TabIndex = 13;
             this.removeBuildingButton.Text = "Remove";
+            this.removeBuildingButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.removeBuildingButton.UseVisualStyleBackColor = true;
             this.removeBuildingButton.Click += new System.EventHandler(this.removeBuildingButton_Click);
             // 
             // addBuildingButton
             // 
+            this.addBuildingButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addBuildingButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addBuildingButton.Location = new System.Drawing.Point(194, 397);
             this.addBuildingButton.Name = "addBuildingButton";
-            this.addBuildingButton.Size = new System.Drawing.Size(61, 32);
+            this.addBuildingButton.Size = new System.Drawing.Size(56, 32);
             this.addBuildingButton.TabIndex = 12;
             this.addBuildingButton.Text = "Add";
+            this.addBuildingButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addBuildingButton.UseVisualStyleBackColor = true;
             this.addBuildingButton.Click += new System.EventHandler(this.addBuildingButton_Click);
             // 
@@ -2655,7 +2949,7 @@
             this.buildPositionGroupBox.Controls.Add(this.zBuildUpDown);
             this.buildPositionGroupBox.Controls.Add(this.yBuildUpDown);
             this.buildPositionGroupBox.Controls.Add(this.xBuildUpDown);
-            this.buildPositionGroupBox.Location = new System.Drawing.Point(194, 188);
+            this.buildPositionGroupBox.Location = new System.Drawing.Point(194, 206);
             this.buildPositionGroupBox.Name = "buildPositionGroupBox";
             this.buildPositionGroupBox.Size = new System.Drawing.Size(101, 123);
             this.buildPositionGroupBox.TabIndex = 11;
@@ -2752,41 +3046,6 @@
             this.xBuildUpDown.TabIndex = 5;
             this.xBuildUpDown.ValueChanged += new System.EventHandler(this.xBuildUpDown_ValueChanged);
             // 
-            // exteriorbldRadioButton
-            // 
-            this.exteriorbldRadioButton.AutoSize = true;
-            this.exteriorbldRadioButton.Checked = true;
-            this.exteriorbldRadioButton.Enabled = false;
-            this.exteriorbldRadioButton.Location = new System.Drawing.Point(97, 19);
-            this.exteriorbldRadioButton.Name = "exteriorbldRadioButton";
-            this.exteriorbldRadioButton.Size = new System.Drawing.Size(79, 17);
-            this.exteriorbldRadioButton.TabIndex = 4;
-            this.exteriorbldRadioButton.TabStop = true;
-            this.exteriorbldRadioButton.Text = "Exterior List";
-            this.exteriorbldRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // interiorbldRadioButton
-            // 
-            this.interiorbldRadioButton.AutoSize = true;
-            this.interiorbldRadioButton.Enabled = false;
-            this.interiorbldRadioButton.Location = new System.Drawing.Point(11, 19);
-            this.interiorbldRadioButton.Name = "interiorbldRadioButton";
-            this.interiorbldRadioButton.Size = new System.Drawing.Size(76, 17);
-            this.interiorbldRadioButton.TabIndex = 3;
-            this.interiorbldRadioButton.Text = "Interior List";
-            this.interiorbldRadioButton.UseVisualStyleBackColor = true;
-            this.interiorbldRadioButton.CheckedChanged += new System.EventHandler(this.interiorRadioButton_CheckedChanged);
-            // 
-            // buildIndexComboBox
-            // 
-            this.buildIndexComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.buildIndexComboBox.FormattingEnabled = true;
-            this.buildIndexComboBox.Location = new System.Drawing.Point(11, 42);
-            this.buildIndexComboBox.Name = "buildIndexComboBox";
-            this.buildIndexComboBox.Size = new System.Drawing.Size(187, 21);
-            this.buildIndexComboBox.TabIndex = 1;
-            this.buildIndexComboBox.SelectedIndexChanged += new System.EventHandler(this.buildIndexComboBox_SelectedIndexChanged);
-            // 
             // buildingsListBox
             // 
             this.buildingsListBox.FormattingEnabled = true;
@@ -2812,12 +3071,12 @@
             this.permissionsTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.permissionsTabPage.Size = new System.Drawing.Size(416, 445);
             this.permissionsTabPage.TabIndex = 1;
-            this.permissionsTabPage.Text = "Permissions";
+            this.permissionsTabPage.Text = "Move Permissions";
             this.permissionsTabPage.UseVisualStyleBackColor = true;
             // 
             // clearCurrentButton
             // 
-            this.clearCurrentButton.Location = new System.Drawing.Point(12, 134);
+            this.clearCurrentButton.Location = new System.Drawing.Point(11, 134);
             this.clearCurrentButton.Name = "clearCurrentButton";
             this.clearCurrentButton.Size = new System.Drawing.Size(212, 23);
             this.clearCurrentButton.TabIndex = 32;
@@ -2853,9 +3112,9 @@
             this.typeGroupBox.Controls.Add(this.collisionTypePainterComboBox);
             this.typeGroupBox.Controls.Add(this.typePainterPictureBox);
             this.typeGroupBox.Enabled = false;
-            this.typeGroupBox.Location = new System.Drawing.Point(13, 301);
+            this.typeGroupBox.Location = new System.Drawing.Point(12, 301);
             this.typeGroupBox.Name = "typeGroupBox";
-            this.typeGroupBox.Size = new System.Drawing.Size(382, 134);
+            this.typeGroupBox.Size = new System.Drawing.Size(391, 134);
             this.typeGroupBox.TabIndex = 25;
             this.typeGroupBox.TabStop = false;
             this.typeGroupBox.Text = "Type Painter";
@@ -2902,7 +3161,7 @@
             this.collisionTypePainterComboBox.Location = new System.Drawing.Point(135, 44);
             this.collisionTypePainterComboBox.MaxDropDownItems = 10;
             this.collisionTypePainterComboBox.Name = "collisionTypePainterComboBox";
-            this.collisionTypePainterComboBox.Size = new System.Drawing.Size(227, 21);
+            this.collisionTypePainterComboBox.Size = new System.Drawing.Size(233, 21);
             this.collisionTypePainterComboBox.TabIndex = 2;
             this.collisionTypePainterComboBox.SelectedIndexChanged += new System.EventHandler(this.typePainterComboBox_SelectedIndexChanged);
             // 
@@ -2910,7 +3169,7 @@
             // 
             this.typePainterPictureBox.BackColor = System.Drawing.Color.White;
             this.typePainterPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.typePainterPictureBox.Location = new System.Drawing.Point(13, 31);
+            this.typePainterPictureBox.Location = new System.Drawing.Point(18, 31);
             this.typePainterPictureBox.Name = "typePainterPictureBox";
             this.typePainterPictureBox.Size = new System.Drawing.Size(80, 80);
             this.typePainterPictureBox.TabIndex = 1;
@@ -2920,9 +3179,9 @@
             // 
             this.collisionGroupBox.Controls.Add(this.collisionPainterComboBox);
             this.collisionGroupBox.Controls.Add(this.collisionPainterPictureBox);
-            this.collisionGroupBox.Location = new System.Drawing.Point(13, 167);
+            this.collisionGroupBox.Location = new System.Drawing.Point(12, 167);
             this.collisionGroupBox.Name = "collisionGroupBox";
-            this.collisionGroupBox.Size = new System.Drawing.Size(382, 118);
+            this.collisionGroupBox.Size = new System.Drawing.Size(391, 118);
             this.collisionGroupBox.TabIndex = 24;
             this.collisionGroupBox.TabStop = false;
             this.collisionGroupBox.Text = "Collision Painter";
@@ -2933,7 +3192,7 @@
             this.collisionPainterComboBox.FormattingEnabled = true;
             this.collisionPainterComboBox.Location = new System.Drawing.Point(134, 50);
             this.collisionPainterComboBox.Name = "collisionPainterComboBox";
-            this.collisionPainterComboBox.Size = new System.Drawing.Size(228, 21);
+            this.collisionPainterComboBox.Size = new System.Drawing.Size(234, 21);
             this.collisionPainterComboBox.TabIndex = 1;
             this.collisionPainterComboBox.SelectedIndexChanged += new System.EventHandler(this.collisionPainterComboBox_SelectedIndexChanged);
             // 
@@ -2941,7 +3200,7 @@
             // 
             this.collisionPainterPictureBox.BackColor = System.Drawing.Color.White;
             this.collisionPainterPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.collisionPainterPictureBox.Location = new System.Drawing.Point(13, 23);
+            this.collisionPainterPictureBox.Location = new System.Drawing.Point(18, 23);
             this.collisionPainterPictureBox.Name = "collisionPainterPictureBox";
             this.collisionPainterPictureBox.Size = new System.Drawing.Size(80, 80);
             this.collisionPainterPictureBox.TabIndex = 0;
@@ -2949,21 +3208,27 @@
             // 
             // ImportMovButton
             // 
-            this.ImportMovButton.Location = new System.Drawing.Point(263, 36);
+            this.ImportMovButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.ImportMovButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ImportMovButton.Location = new System.Drawing.Point(250, 36);
             this.ImportMovButton.Name = "ImportMovButton";
-            this.ImportMovButton.Size = new System.Drawing.Size(112, 38);
+            this.ImportMovButton.Size = new System.Drawing.Size(138, 38);
             this.ImportMovButton.TabIndex = 23;
             this.ImportMovButton.Text = "Import Permissions";
+            this.ImportMovButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ImportMovButton.UseVisualStyleBackColor = true;
             this.ImportMovButton.Click += new System.EventHandler(this.importMovButton_Click);
             // 
             // exportMovButton
             // 
-            this.exportMovButton.Location = new System.Drawing.Point(263, 80);
+            this.exportMovButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportMovButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.exportMovButton.Location = new System.Drawing.Point(250, 80);
             this.exportMovButton.Name = "exportMovButton";
-            this.exportMovButton.Size = new System.Drawing.Size(112, 38);
+            this.exportMovButton.Size = new System.Drawing.Size(138, 38);
             this.exportMovButton.TabIndex = 22;
             this.exportMovButton.Text = "Export Permissions";
+            this.exportMovButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.exportMovButton.UseVisualStyleBackColor = true;
             this.exportMovButton.Click += new System.EventHandler(this.exportMovButton_Click);
             // 
@@ -3007,6 +3272,8 @@
             // 
             // modelTabPage
             // 
+            this.modelTabPage.Controls.Add(this.ModelSizeTXT);
+            this.modelTabPage.Controls.Add(this.textBox3);
             this.modelTabPage.Controls.Add(this.unsupport3DText);
             this.modelTabPage.Controls.Add(this.importMapButton);
             this.modelTabPage.Controls.Add(this.exportMapButton);
@@ -3018,6 +3285,38 @@
             this.modelTabPage.Text = "3D Model";
             this.modelTabPage.UseVisualStyleBackColor = true;
             // 
+            // ModelSizeTXT
+            // 
+            this.ModelSizeTXT.BackColor = System.Drawing.SystemColors.Window;
+            this.ModelSizeTXT.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ModelSizeTXT.Cursor = System.Windows.Forms.Cursors.Default;
+            this.ModelSizeTXT.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ModelSizeTXT.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.ModelSizeTXT.Location = new System.Drawing.Point(104, 9);
+            this.ModelSizeTXT.MaxLength = 1000;
+            this.ModelSizeTXT.Multiline = true;
+            this.ModelSizeTXT.Name = "ModelSizeTXT";
+            this.ModelSizeTXT.ReadOnly = true;
+            this.ModelSizeTXT.Size = new System.Drawing.Size(117, 22);
+            this.ModelSizeTXT.TabIndex = 28;
+            this.ModelSizeTXT.Text = "ModelSizeTXT";
+            // 
+            // textBox3
+            // 
+            this.textBox3.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox3.Cursor = System.Windows.Forms.Cursors.Default;
+            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox3.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.textBox3.Location = new System.Drawing.Point(6, 9);
+            this.textBox3.MaxLength = 1000;
+            this.textBox3.Multiline = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(92, 22);
+            this.textBox3.TabIndex = 27;
+            this.textBox3.Text = "3D Model Size: ";
+            // 
             // unsupport3DText
             // 
             this.unsupport3DText.BackColor = System.Drawing.SystemColors.Window;
@@ -3025,47 +3324,89 @@
             this.unsupport3DText.Cursor = System.Windows.Forms.Cursors.Default;
             this.unsupport3DText.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.unsupport3DText.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.unsupport3DText.Location = new System.Drawing.Point(30, 231);
+            this.unsupport3DText.Location = new System.Drawing.Point(49, 236);
             this.unsupport3DText.MaxLength = 1000;
             this.unsupport3DText.Multiline = true;
             this.unsupport3DText.Name = "unsupport3DText";
             this.unsupport3DText.ReadOnly = true;
             this.unsupport3DText.Size = new System.Drawing.Size(348, 77);
             this.unsupport3DText.TabIndex = 26;
-            this.unsupport3DText.Text = resources.GetString("unsupport3DText.Text");
+            this.unsupport3DText.Text = "Editing 3D models is not supported by this program.\r\nThey must be modeled in a 3D" +
+    " editor like Sketchup\r\nor Blender, or (recommended option) they can be \r\ncreated" +
+    " with Trifindo\'s Pokemon DS Map Studio.";
             // 
             // importMapButton
             // 
-            this.importMapButton.Location = new System.Drawing.Point(295, 9);
+            this.importMapButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.importMapButton.Location = new System.Drawing.Point(277, 9);
             this.importMapButton.Name = "importMapButton";
-            this.importMapButton.Size = new System.Drawing.Size(112, 38);
+            this.importMapButton.Size = new System.Drawing.Size(120, 38);
             this.importMapButton.TabIndex = 25;
             this.importMapButton.Text = "Import 3D Map";
+            this.importMapButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.importMapButton.UseVisualStyleBackColor = true;
             this.importMapButton.Click += new System.EventHandler(this.importMapButton_Click);
             // 
             // exportMapButton
             // 
-            this.exportMapButton.Location = new System.Drawing.Point(295, 59);
+            this.exportMapButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.exportMapButton.Location = new System.Drawing.Point(277, 54);
             this.exportMapButton.Name = "exportMapButton";
-            this.exportMapButton.Size = new System.Drawing.Size(112, 38);
+            this.exportMapButton.Size = new System.Drawing.Size(120, 38);
             this.exportMapButton.TabIndex = 24;
             this.exportMapButton.Text = "Export 3D Map";
+            this.exportMapButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.exportMapButton.UseVisualStyleBackColor = true;
             this.exportMapButton.Click += new System.EventHandler(this.exportMapButton_Click);
             // 
             // terrainTabPage
             // 
+            this.terrainTabPage.Controls.Add(this.TerrainSizeTXT);
+            this.terrainTabPage.Controls.Add(this.textBox5);
             this.terrainTabPage.Controls.Add(this.textBox1);
             this.terrainTabPage.Controls.Add(this.bdhcImportButton);
             this.terrainTabPage.Controls.Add(this.bdhcExportButton);
             this.terrainTabPage.Location = new System.Drawing.Point(4, 22);
             this.terrainTabPage.Name = "terrainTabPage";
             this.terrainTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.terrainTabPage.Size = new System.Drawing.Size(416, 460);
+            this.terrainTabPage.Size = new System.Drawing.Size(416, 445);
             this.terrainTabPage.TabIndex = 3;
-            this.terrainTabPage.Text = "Terrain";
+            this.terrainTabPage.Text = "Terrain Data";
             this.terrainTabPage.UseVisualStyleBackColor = true;
+            // 
+            // TerrainSizeTXT
+            // 
+            this.TerrainSizeTXT.BackColor = System.Drawing.SystemColors.Window;
+            this.TerrainSizeTXT.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TerrainSizeTXT.Cursor = System.Windows.Forms.Cursors.Default;
+            this.TerrainSizeTXT.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TerrainSizeTXT.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.TerrainSizeTXT.Location = new System.Drawing.Point(124, 9);
+            this.TerrainSizeTXT.MaxLength = 1000;
+            this.TerrainSizeTXT.Multiline = true;
+            this.TerrainSizeTXT.Name = "TerrainSizeTXT";
+            this.TerrainSizeTXT.ReadOnly = true;
+            this.TerrainSizeTXT.Size = new System.Drawing.Size(117, 22);
+            this.TerrainSizeTXT.TabIndex = 30;
+            this.TerrainSizeTXT.Text = "TerrainSizeTXT";
+            // 
+            // textBox5
+            // 
+            this.textBox5.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox5.Cursor = System.Windows.Forms.Cursors.Default;
+            this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox5.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.textBox5.Location = new System.Drawing.Point(6, 9);
+            this.textBox5.MaxLength = 1000;
+            this.textBox5.Multiline = true;
+            this.textBox5.Name = "textBox5";
+            this.textBox5.ReadOnly = true;
+            this.textBox5.Size = new System.Drawing.Size(112, 22);
+            this.textBox5.TabIndex = 29;
+            this.textBox5.Text = "Terrain Data Size: ";
             // 
             // textBox1
             // 
@@ -3074,35 +3415,130 @@
             this.textBox1.Cursor = System.Windows.Forms.Cursors.Default;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.textBox1.Location = new System.Drawing.Point(94, 223);
+            this.textBox1.Location = new System.Drawing.Point(77, 245);
             this.textBox1.MaxLength = 1000;
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(238, 58);
+            this.textBox1.Size = new System.Drawing.Size(265, 58);
             this.textBox1.TabIndex = 28;
-            this.textBox1.Text = "Editing BDHC files is not supported by\r\nthis program. They can be created with \r\n" +
-    "\'Pokemon DS Map Studio\' by Trifindo.";
+            this.textBox1.Text = "Editing BDHC files is not supported by\r\nDSPRE. They can be created and modified \r" +
+    "\nwith Trifindo\'s Pokemon DS Map Studio.";
             // 
             // bdhcImportButton
             // 
-            this.bdhcImportButton.Location = new System.Drawing.Point(295, 9);
+            this.bdhcImportButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.bdhcImportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bdhcImportButton.Location = new System.Drawing.Point(277, 9);
             this.bdhcImportButton.Name = "bdhcImportButton";
-            this.bdhcImportButton.Size = new System.Drawing.Size(112, 38);
+            this.bdhcImportButton.Size = new System.Drawing.Size(120, 38);
             this.bdhcImportButton.TabIndex = 27;
             this.bdhcImportButton.Text = "Import BDHC";
+            this.bdhcImportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bdhcImportButton.UseVisualStyleBackColor = true;
             this.bdhcImportButton.Click += new System.EventHandler(this.bdhcImportButton_Click);
             // 
             // bdhcExportButton
             // 
-            this.bdhcExportButton.Location = new System.Drawing.Point(295, 59);
+            this.bdhcExportButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.bdhcExportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bdhcExportButton.Location = new System.Drawing.Point(277, 54);
             this.bdhcExportButton.Name = "bdhcExportButton";
-            this.bdhcExportButton.Size = new System.Drawing.Size(112, 38);
+            this.bdhcExportButton.Size = new System.Drawing.Size(120, 38);
             this.bdhcExportButton.TabIndex = 26;
             this.bdhcExportButton.Text = "Export BDHC";
+            this.bdhcExportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bdhcExportButton.UseVisualStyleBackColor = true;
             this.bdhcExportButton.Click += new System.EventHandler(this.bdhcExportButton_Click);
+            // 
+            // bgsTabPage
+            // 
+            this.bgsTabPage.Controls.Add(this.BGSSizeTXT);
+            this.bgsTabPage.Controls.Add(this.textBox7);
+            this.bgsTabPage.Controls.Add(this.textBox2);
+            this.bgsTabPage.Controls.Add(this.soundPlatesImportButton);
+            this.bgsTabPage.Controls.Add(this.soundPlatesExportButton);
+            this.bgsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.bgsTabPage.Name = "bgsTabPage";
+            this.bgsTabPage.Size = new System.Drawing.Size(416, 445);
+            this.bgsTabPage.TabIndex = 4;
+            this.bgsTabPage.Text = "Sound Plates";
+            this.bgsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // BGSSizeTXT
+            // 
+            this.BGSSizeTXT.BackColor = System.Drawing.SystemColors.Window;
+            this.BGSSizeTXT.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.BGSSizeTXT.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BGSSizeTXT.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BGSSizeTXT.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.BGSSizeTXT.Location = new System.Drawing.Point(73, 9);
+            this.BGSSizeTXT.MaxLength = 1000;
+            this.BGSSizeTXT.Multiline = true;
+            this.BGSSizeTXT.Name = "BGSSizeTXT";
+            this.BGSSizeTXT.ReadOnly = true;
+            this.BGSSizeTXT.Size = new System.Drawing.Size(117, 22);
+            this.BGSSizeTXT.TabIndex = 33;
+            this.BGSSizeTXT.Text = "BGSSizeTXT";
+            // 
+            // textBox7
+            // 
+            this.textBox7.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox7.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox7.Cursor = System.Windows.Forms.Cursors.Default;
+            this.textBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox7.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.textBox7.Location = new System.Drawing.Point(7, 9);
+            this.textBox7.MaxLength = 1000;
+            this.textBox7.Multiline = true;
+            this.textBox7.Name = "textBox7";
+            this.textBox7.ReadOnly = true;
+            this.textBox7.Size = new System.Drawing.Size(78, 22);
+            this.textBox7.TabIndex = 32;
+            this.textBox7.Text = "BGS Size: ";
+            // 
+            // textBox2
+            // 
+            this.textBox2.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.textBox2.Location = new System.Drawing.Point(86, 246);
+            this.textBox2.MaxLength = 1000;
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(238, 83);
+            this.textBox2.TabIndex = 31;
+            this.textBox2.Text = "Editing BackGround Sound files \r\nis not supported by DSPRE. \r\nThey can be created" +
+    " and modified with\r\nTrifindo\'s Pokemon DS Map Studio.";
+            // 
+            // soundPlatesImportButton
+            // 
+            this.soundPlatesImportButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.soundPlatesImportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.soundPlatesImportButton.Location = new System.Drawing.Point(277, 9);
+            this.soundPlatesImportButton.Name = "soundPlatesImportButton";
+            this.soundPlatesImportButton.Size = new System.Drawing.Size(120, 38);
+            this.soundPlatesImportButton.TabIndex = 30;
+            this.soundPlatesImportButton.Text = "Import BGS";
+            this.soundPlatesImportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.soundPlatesImportButton.UseVisualStyleBackColor = true;
+            this.soundPlatesImportButton.Click += new System.EventHandler(this.soundPlatesImportButton_Click);
+            // 
+            // soundPlatesExportButton
+            // 
+            this.soundPlatesExportButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.soundPlatesExportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.soundPlatesExportButton.Location = new System.Drawing.Point(277, 54);
+            this.soundPlatesExportButton.Name = "soundPlatesExportButton";
+            this.soundPlatesExportButton.Size = new System.Drawing.Size(120, 38);
+            this.soundPlatesExportButton.TabIndex = 29;
+            this.soundPlatesExportButton.Text = "Export BGS";
+            this.soundPlatesExportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.soundPlatesExportButton.UseVisualStyleBackColor = true;
+            this.soundPlatesExportButton.Click += new System.EventHandler(this.soundPlatesExportButton_Click);
             // 
             // radio3D
             // 
@@ -3515,6 +3951,7 @@
             // eventEditorTabPage
             // 
             this.eventEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
+            this.eventEditorTabPage.Controls.Add(this.groupBox21);
             this.eventEditorTabPage.Controls.Add(this.RightClickLabel);
             this.eventEditorTabPage.Controls.Add(this.rightClickPicture);
             this.eventEditorTabPage.Controls.Add(this.WheelClickLabel);
@@ -3534,15 +3971,9 @@
             this.eventEditorTabPage.Controls.Add(this.eventShiftUpButton);
             this.eventEditorTabPage.Controls.Add(this.eventShiftDownButton);
             this.eventEditorTabPage.Controls.Add(this.selectEventComboBox);
-            this.eventEditorTabPage.Controls.Add(this.showTriggersCheckBox);
-            this.eventEditorTabPage.Controls.Add(this.showWarpsCheckBox);
-            this.eventEditorTabPage.Controls.Add(this.showOwsCheckBox);
-            this.eventEditorTabPage.Controls.Add(this.showSignsCheckBox);
             this.eventEditorTabPage.Controls.Add(this.exportEventFileButton);
             this.eventEditorTabPage.Controls.Add(this.importEventFileButton);
             this.eventEditorTabPage.Controls.Add(this.saveEventsButton);
-            this.eventEditorTabPage.Controls.Add(this.eventMapTextureLabel);
-            this.eventEditorTabPage.Controls.Add(this.eventAreaDataUpDown);
             this.eventEditorTabPage.Controls.Add(this.backgroundMapLabel);
             this.eventEditorTabPage.Controls.Add(this.eventMatrixUpDown);
             this.eventEditorTabPage.Controls.Add(this.eventsTabControl);
@@ -3556,10 +3987,98 @@
             this.eventEditorTabPage.Text = "Event Editor";
             this.eventEditorTabPage.Enter += new System.EventHandler(this.eventEditorTabPage_Enter);
             // 
+            // groupBox21
+            // 
+            this.groupBox21.Controls.Add(this.showTriggersCheckBox);
+            this.groupBox21.Controls.Add(this.showWarpsCheckBox);
+            this.groupBox21.Controls.Add(this.showOwsCheckBox);
+            this.groupBox21.Controls.Add(this.showSignsCheckBox);
+            this.groupBox21.Controls.Add(this.eventAreaDataUpDown);
+            this.groupBox21.Controls.Add(this.eventMapTextureLabel);
+            this.groupBox21.Location = new System.Drawing.Point(469, 474);
+            this.groupBox21.Name = "groupBox21";
+            this.groupBox21.Size = new System.Drawing.Size(122, 135);
+            this.groupBox21.TabIndex = 61;
+            this.groupBox21.TabStop = false;
+            this.groupBox21.Text = "Renderer Settings";
+            // 
+            // showTriggersCheckBox
+            // 
+            this.showTriggersCheckBox.AutoSize = true;
+            this.showTriggersCheckBox.Checked = true;
+            this.showTriggersCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showTriggersCheckBox.Location = new System.Drawing.Point(9, 86);
+            this.showTriggersCheckBox.Name = "showTriggersCheckBox";
+            this.showTriggersCheckBox.Size = new System.Drawing.Size(94, 17);
+            this.showTriggersCheckBox.TabIndex = 44;
+            this.showTriggersCheckBox.Text = "Show Triggers";
+            this.showTriggersCheckBox.UseVisualStyleBackColor = true;
+            this.showTriggersCheckBox.CheckedChanged += new System.EventHandler(this.showEventsCheckBoxes_CheckedChanged);
+            // 
+            // showWarpsCheckBox
+            // 
+            this.showWarpsCheckBox.AutoSize = true;
+            this.showWarpsCheckBox.Checked = true;
+            this.showWarpsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showWarpsCheckBox.Location = new System.Drawing.Point(9, 42);
+            this.showWarpsCheckBox.Name = "showWarpsCheckBox";
+            this.showWarpsCheckBox.Size = new System.Drawing.Size(87, 17);
+            this.showWarpsCheckBox.TabIndex = 43;
+            this.showWarpsCheckBox.Text = "Show Warps";
+            this.showWarpsCheckBox.UseVisualStyleBackColor = true;
+            this.showWarpsCheckBox.CheckedChanged += new System.EventHandler(this.showEventsCheckBoxes_CheckedChanged);
+            // 
+            // showOwsCheckBox
+            // 
+            this.showOwsCheckBox.AutoSize = true;
+            this.showOwsCheckBox.Checked = true;
+            this.showOwsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showOwsCheckBox.Location = new System.Drawing.Point(9, 64);
+            this.showOwsCheckBox.Name = "showOwsCheckBox";
+            this.showOwsCheckBox.Size = new System.Drawing.Size(109, 17);
+            this.showOwsCheckBox.TabIndex = 42;
+            this.showOwsCheckBox.Text = "Show Overworlds";
+            this.showOwsCheckBox.UseVisualStyleBackColor = true;
+            this.showOwsCheckBox.CheckedChanged += new System.EventHandler(this.showEventsCheckBoxes_CheckedChanged);
+            // 
+            // showSignsCheckBox
+            // 
+            this.showSignsCheckBox.AutoSize = true;
+            this.showSignsCheckBox.Checked = true;
+            this.showSignsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showSignsCheckBox.Location = new System.Drawing.Point(9, 20);
+            this.showSignsCheckBox.Name = "showSignsCheckBox";
+            this.showSignsCheckBox.Size = new System.Drawing.Size(82, 17);
+            this.showSignsCheckBox.TabIndex = 41;
+            this.showSignsCheckBox.Text = "Show Signs";
+            this.showSignsCheckBox.UseVisualStyleBackColor = true;
+            this.showSignsCheckBox.CheckedChanged += new System.EventHandler(this.showEventsCheckBoxes_CheckedChanged);
+            // 
+            // eventAreaDataUpDown
+            // 
+            this.eventAreaDataUpDown.Location = new System.Drawing.Point(9, 108);
+            this.eventAreaDataUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.eventAreaDataUpDown.Name = "eventAreaDataUpDown";
+            this.eventAreaDataUpDown.Size = new System.Drawing.Size(40, 20);
+            this.eventAreaDataUpDown.TabIndex = 30;
+            // 
+            // eventMapTextureLabel
+            // 
+            this.eventMapTextureLabel.AutoSize = true;
+            this.eventMapTextureLabel.Location = new System.Drawing.Point(55, 112);
+            this.eventMapTextureLabel.Name = "eventMapTextureLabel";
+            this.eventMapTextureLabel.Size = new System.Drawing.Size(55, 13);
+            this.eventMapTextureLabel.TabIndex = 31;
+            this.eventMapTextureLabel.Text = "Area Data";
+            // 
             // RightClickLabel
             // 
             this.RightClickLabel.AutoSize = true;
-            this.RightClickLabel.Location = new System.Drawing.Point(503, 61);
+            this.RightClickLabel.Location = new System.Drawing.Point(469, 455);
             this.RightClickLabel.Name = "RightClickLabel";
             this.RightClickLabel.Size = new System.Drawing.Size(37, 13);
             this.RightClickLabel.TabIndex = 60;
@@ -3571,7 +4090,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rightClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("rightClickPicture.Image")));
             this.rightClickPicture.ImageLocation = "";
-            this.rightClickPicture.Location = new System.Drawing.Point(468, 49);
+            this.rightClickPicture.Location = new System.Drawing.Point(468, 417);
             this.rightClickPicture.Name = "rightClickPicture";
             this.rightClickPicture.Size = new System.Drawing.Size(38, 38);
             this.rightClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -3581,7 +4100,7 @@
             // WheelClickLabel
             // 
             this.WheelClickLabel.AutoSize = true;
-            this.WheelClickLabel.Location = new System.Drawing.Point(503, 105);
+            this.WheelClickLabel.Location = new System.Drawing.Point(555, 455);
             this.WheelClickLabel.Name = "WheelClickLabel";
             this.WheelClickLabel.Size = new System.Drawing.Size(33, 13);
             this.WheelClickLabel.TabIndex = 58;
@@ -3590,11 +4109,11 @@
             // LeftClickLabel
             // 
             this.LeftClickLabel.AutoSize = true;
-            this.LeftClickLabel.Location = new System.Drawing.Point(503, 17);
+            this.LeftClickLabel.Location = new System.Drawing.Point(513, 455);
             this.LeftClickLabel.Name = "LeftClickLabel";
-            this.LeftClickLabel.Size = new System.Drawing.Size(79, 13);
+            this.LeftClickLabel.Size = new System.Drawing.Size(34, 13);
             this.LeftClickLabel.TabIndex = 57;
-            this.LeftClickLabel.Text = "Move Selected";
+            this.LeftClickLabel.Text = "Move";
             // 
             // wheelClickPicture
             // 
@@ -3602,7 +4121,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.wheelClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("wheelClickPicture.Image")));
             this.wheelClickPicture.ImageLocation = "";
-            this.wheelClickPicture.Location = new System.Drawing.Point(468, 93);
+            this.wheelClickPicture.Location = new System.Drawing.Point(552, 417);
             this.wheelClickPicture.Name = "wheelClickPicture";
             this.wheelClickPicture.Size = new System.Drawing.Size(38, 38);
             this.wheelClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -3615,7 +4134,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LeftClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("LeftClickPicture.Image")));
             this.LeftClickPicture.ImageLocation = "";
-            this.LeftClickPicture.Location = new System.Drawing.Point(468, 5);
+            this.LeftClickPicture.Location = new System.Drawing.Point(510, 417);
             this.LeftClickPicture.Name = "LeftClickPicture";
             this.LeftClickPicture.Size = new System.Drawing.Size(38, 38);
             this.LeftClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -3624,7 +4143,7 @@
             // 
             // removeEventFileButton
             // 
-            this.removeEventFileButton.Location = new System.Drawing.Point(256, 31);
+            this.removeEventFileButton.Location = new System.Drawing.Point(379, 31);
             this.removeEventFileButton.Name = "removeEventFileButton";
             this.removeEventFileButton.Size = new System.Drawing.Size(80, 22);
             this.removeEventFileButton.TabIndex = 54;
@@ -3634,9 +4153,9 @@
             // 
             // addEventFileButton
             // 
-            this.addEventFileButton.Location = new System.Drawing.Point(256, 6);
+            this.addEventFileButton.Location = new System.Drawing.Point(379, 6);
             this.addEventFileButton.Name = "addEventFileButton";
-            this.addEventFileButton.Size = new System.Drawing.Size(80, 23);
+            this.addEventFileButton.Size = new System.Drawing.Size(80, 22);
             this.addEventFileButton.TabIndex = 53;
             this.addEventFileButton.Text = "Add";
             this.addEventFileButton.UseVisualStyleBackColor = true;
@@ -3644,7 +4163,7 @@
             // 
             // eventMatrixYUpDown
             // 
-            this.eventMatrixYUpDown.Location = new System.Drawing.Point(350, 145);
+            this.eventMatrixYUpDown.Location = new System.Drawing.Point(466, 173);
             this.eventMatrixYUpDown.Name = "eventMatrixYUpDown";
             this.eventMatrixYUpDown.Size = new System.Drawing.Size(40, 20);
             this.eventMatrixYUpDown.TabIndex = 52;
@@ -3652,7 +4171,7 @@
             // 
             // eventMatrixXUpDown
             // 
-            this.eventMatrixXUpDown.Location = new System.Drawing.Point(350, 120);
+            this.eventMatrixXUpDown.Location = new System.Drawing.Point(466, 147);
             this.eventMatrixXUpDown.Name = "eventMatrixXUpDown";
             this.eventMatrixXUpDown.Size = new System.Drawing.Size(40, 20);
             this.eventMatrixXUpDown.TabIndex = 51;
@@ -3661,25 +4180,29 @@
             // eventMatrixYLabel
             // 
             this.eventMatrixYLabel.AutoSize = true;
-            this.eventMatrixYLabel.Location = new System.Drawing.Point(396, 146);
+            this.eventMatrixYLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.eventMatrixYLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.eventMatrixYLabel.Location = new System.Drawing.Point(512, 174);
             this.eventMatrixYLabel.Name = "eventMatrixYLabel";
-            this.eventMatrixYLabel.Size = new System.Drawing.Size(51, 13);
+            this.eventMatrixYLabel.Size = new System.Drawing.Size(60, 13);
             this.eventMatrixYLabel.TabIndex = 50;
             this.eventMatrixYLabel.Text = "Current Y";
             // 
             // eventMatrixXLabel
             // 
             this.eventMatrixXLabel.AutoSize = true;
-            this.eventMatrixXLabel.Location = new System.Drawing.Point(396, 122);
+            this.eventMatrixXLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.eventMatrixXLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.eventMatrixXLabel.Location = new System.Drawing.Point(512, 149);
             this.eventMatrixXLabel.Name = "eventMatrixXLabel";
-            this.eventMatrixXLabel.Size = new System.Drawing.Size(51, 13);
+            this.eventMatrixXLabel.Size = new System.Drawing.Size(60, 13);
             this.eventMatrixXLabel.TabIndex = 49;
             this.eventMatrixXLabel.Text = "Current X";
             // 
             // matrixNavigatorLabel
             // 
             this.matrixNavigatorLabel.AutoSize = true;
-            this.matrixNavigatorLabel.Location = new System.Drawing.Point(8, 63);
+            this.matrixNavigatorLabel.Location = new System.Drawing.Point(8, 60);
             this.matrixNavigatorLabel.Name = "matrixNavigatorLabel";
             this.matrixNavigatorLabel.Size = new System.Drawing.Size(84, 13);
             this.matrixNavigatorLabel.TabIndex = 48;
@@ -3691,16 +4214,16 @@
             this.eventMatrixPanel.BackColor = System.Drawing.SystemColors.Menu;
             this.eventMatrixPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.eventMatrixPanel.Controls.Add(this.eventMatrixPictureBox);
-            this.eventMatrixPanel.Location = new System.Drawing.Point(9, 79);
+            this.eventMatrixPanel.Location = new System.Drawing.Point(9, 75);
             this.eventMatrixPanel.Name = "eventMatrixPanel";
-            this.eventMatrixPanel.Size = new System.Drawing.Size(327, 145);
+            this.eventMatrixPanel.Size = new System.Drawing.Size(448, 149);
             this.eventMatrixPanel.TabIndex = 47;
             // 
             // eventMatrixPictureBox
             // 
-            this.eventMatrixPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.eventMatrixPictureBox.Location = new System.Drawing.Point(0, -1);
             this.eventMatrixPictureBox.Name = "eventMatrixPictureBox";
-            this.eventMatrixPictureBox.Size = new System.Drawing.Size(300, 150);
+            this.eventMatrixPictureBox.Size = new System.Drawing.Size(440, 150);
             this.eventMatrixPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.eventMatrixPictureBox.TabIndex = 46;
             this.eventMatrixPictureBox.TabStop = false;
@@ -3710,7 +4233,7 @@
             // 
             this.eventShiftRightButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftRightButton.BackgroundImage")));
             this.eventShiftRightButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.eventShiftRightButton.Location = new System.Drawing.Point(1111, 233);
+            this.eventShiftRightButton.Location = new System.Drawing.Point(1152, 233);
             this.eventShiftRightButton.Name = "eventShiftRightButton";
             this.eventShiftRightButton.Size = new System.Drawing.Size(25, 156);
             this.eventShiftRightButton.TabIndex = 45;
@@ -3721,7 +4244,7 @@
             // 
             this.eventShiftLeftButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftLeftButton.BackgroundImage")));
             this.eventShiftLeftButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.eventShiftLeftButton.Location = new System.Drawing.Point(525, 233);
+            this.eventShiftLeftButton.Location = new System.Drawing.Point(570, 233);
             this.eventShiftLeftButton.Name = "eventShiftLeftButton";
             this.eventShiftLeftButton.Size = new System.Drawing.Size(25, 156);
             this.eventShiftLeftButton.TabIndex = 44;
@@ -3732,7 +4255,7 @@
             // 
             this.eventShiftUpButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftUpButton.BackgroundImage")));
             this.eventShiftUpButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.eventShiftUpButton.Location = new System.Drawing.Point(752, 7);
+            this.eventShiftUpButton.Location = new System.Drawing.Point(795, 8);
             this.eventShiftUpButton.Name = "eventShiftUpButton";
             this.eventShiftUpButton.Size = new System.Drawing.Size(156, 25);
             this.eventShiftUpButton.TabIndex = 43;
@@ -3744,7 +4267,7 @@
             // 
             this.eventShiftDownButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftDownButton.BackgroundImage")));
             this.eventShiftDownButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.eventShiftDownButton.Location = new System.Drawing.Point(752, 590);
+            this.eventShiftDownButton.Location = new System.Drawing.Point(795, 589);
             this.eventShiftDownButton.Name = "eventShiftDownButton";
             this.eventShiftDownButton.Size = new System.Drawing.Size(156, 25);
             this.eventShiftDownButton.TabIndex = 42;
@@ -3756,119 +4279,52 @@
             // 
             this.selectEventComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.selectEventComboBox.FormattingEnabled = true;
-            this.selectEventComboBox.Location = new System.Drawing.Point(8, 7);
+            this.selectEventComboBox.Location = new System.Drawing.Point(10, 7);
             this.selectEventComboBox.Name = "selectEventComboBox";
-            this.selectEventComboBox.Size = new System.Drawing.Size(160, 21);
+            this.selectEventComboBox.Size = new System.Drawing.Size(193, 21);
             this.selectEventComboBox.TabIndex = 41;
             this.selectEventComboBox.SelectedIndexChanged += new System.EventHandler(this.selectEventComboBox_SelectedIndexChanged);
             // 
-            // showTriggersCheckBox
-            // 
-            this.showTriggersCheckBox.AutoSize = true;
-            this.showTriggersCheckBox.Checked = true;
-            this.showTriggersCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showTriggersCheckBox.Location = new System.Drawing.Point(350, 84);
-            this.showTriggersCheckBox.Name = "showTriggersCheckBox";
-            this.showTriggersCheckBox.Size = new System.Drawing.Size(94, 17);
-            this.showTriggersCheckBox.TabIndex = 40;
-            this.showTriggersCheckBox.Text = "Show Triggers";
-            this.showTriggersCheckBox.UseVisualStyleBackColor = true;
-            this.showTriggersCheckBox.CheckedChanged += new System.EventHandler(this.showEventsCheckBoxes_CheckedChanged);
-            // 
-            // showWarpsCheckBox
-            // 
-            this.showWarpsCheckBox.AutoSize = true;
-            this.showWarpsCheckBox.Checked = true;
-            this.showWarpsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showWarpsCheckBox.Location = new System.Drawing.Point(350, 36);
-            this.showWarpsCheckBox.Name = "showWarpsCheckBox";
-            this.showWarpsCheckBox.Size = new System.Drawing.Size(87, 17);
-            this.showWarpsCheckBox.TabIndex = 39;
-            this.showWarpsCheckBox.Text = "Show Warps";
-            this.showWarpsCheckBox.UseVisualStyleBackColor = true;
-            this.showWarpsCheckBox.CheckedChanged += new System.EventHandler(this.showEventsCheckBoxes_CheckedChanged);
-            // 
-            // showOwsCheckBox
-            // 
-            this.showOwsCheckBox.AutoSize = true;
-            this.showOwsCheckBox.Checked = true;
-            this.showOwsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showOwsCheckBox.Location = new System.Drawing.Point(350, 60);
-            this.showOwsCheckBox.Name = "showOwsCheckBox";
-            this.showOwsCheckBox.Size = new System.Drawing.Size(109, 17);
-            this.showOwsCheckBox.TabIndex = 38;
-            this.showOwsCheckBox.Text = "Show Overworlds";
-            this.showOwsCheckBox.UseVisualStyleBackColor = true;
-            this.showOwsCheckBox.CheckedChanged += new System.EventHandler(this.showEventsCheckBoxes_CheckedChanged);
-            // 
-            // showSignsCheckBox
-            // 
-            this.showSignsCheckBox.AutoSize = true;
-            this.showSignsCheckBox.Checked = true;
-            this.showSignsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showSignsCheckBox.Location = new System.Drawing.Point(350, 12);
-            this.showSignsCheckBox.Name = "showSignsCheckBox";
-            this.showSignsCheckBox.Size = new System.Drawing.Size(82, 17);
-            this.showSignsCheckBox.TabIndex = 37;
-            this.showSignsCheckBox.Text = "Show Signs";
-            this.showSignsCheckBox.UseVisualStyleBackColor = true;
-            this.showSignsCheckBox.CheckedChanged += new System.EventHandler(this.showEventsCheckBoxes_CheckedChanged);
-            // 
             // exportEventFileButton
             // 
-            this.exportEventFileButton.Location = new System.Drawing.Point(174, 31);
+            this.exportEventFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.exportEventFileButton.Location = new System.Drawing.Point(294, 6);
             this.exportEventFileButton.Name = "exportEventFileButton";
-            this.exportEventFileButton.Size = new System.Drawing.Size(80, 22);
+            this.exportEventFileButton.Size = new System.Drawing.Size(82, 47);
             this.exportEventFileButton.TabIndex = 36;
             this.exportEventFileButton.Text = "Export";
+            this.exportEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.exportEventFileButton.UseVisualStyleBackColor = true;
             this.exportEventFileButton.Click += new System.EventHandler(this.exportEventFileButton_Click);
             // 
             // importEventFileButton
             // 
-            this.importEventFileButton.Location = new System.Drawing.Point(174, 6);
+            this.importEventFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.importEventFileButton.Location = new System.Drawing.Point(209, 6);
             this.importEventFileButton.Name = "importEventFileButton";
-            this.importEventFileButton.Size = new System.Drawing.Size(80, 23);
+            this.importEventFileButton.Size = new System.Drawing.Size(82, 47);
             this.importEventFileButton.TabIndex = 35;
-            this.importEventFileButton.Text = "Import";
+            this.importEventFileButton.Text = "Replace\r\nCurrent";
+            this.importEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.importEventFileButton.UseVisualStyleBackColor = true;
             this.importEventFileButton.Click += new System.EventHandler(this.importEventFileButton_Click);
             // 
             // saveEventsButton
             // 
-            this.saveEventsButton.Location = new System.Drawing.Point(7, 31);
+            this.saveEventsButton.Location = new System.Drawing.Point(9, 31);
             this.saveEventsButton.Name = "saveEventsButton";
-            this.saveEventsButton.Size = new System.Drawing.Size(161, 22);
+            this.saveEventsButton.Size = new System.Drawing.Size(195, 22);
             this.saveEventsButton.TabIndex = 34;
             this.saveEventsButton.Text = "Save Events";
             this.saveEventsButton.UseVisualStyleBackColor = true;
             this.saveEventsButton.Click += new System.EventHandler(this.saveEventsButton_Click);
             // 
-            // eventMapTextureLabel
-            // 
-            this.eventMapTextureLabel.AutoSize = true;
-            this.eventMapTextureLabel.Location = new System.Drawing.Point(396, 206);
-            this.eventMapTextureLabel.Name = "eventMapTextureLabel";
-            this.eventMapTextureLabel.Size = new System.Drawing.Size(55, 13);
-            this.eventMapTextureLabel.TabIndex = 31;
-            this.eventMapTextureLabel.Text = "Area Data";
-            // 
-            // eventAreaDataUpDown
-            // 
-            this.eventAreaDataUpDown.Location = new System.Drawing.Point(350, 204);
-            this.eventAreaDataUpDown.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.eventAreaDataUpDown.Name = "eventAreaDataUpDown";
-            this.eventAreaDataUpDown.Size = new System.Drawing.Size(40, 20);
-            this.eventAreaDataUpDown.TabIndex = 30;
-            // 
             // backgroundMapLabel
             // 
             this.backgroundMapLabel.AutoSize = true;
-            this.backgroundMapLabel.Location = new System.Drawing.Point(396, 180);
+            this.backgroundMapLabel.Location = new System.Drawing.Point(512, 97);
             this.backgroundMapLabel.Name = "backgroundMapLabel";
             this.backgroundMapLabel.Size = new System.Drawing.Size(59, 13);
             this.backgroundMapLabel.TabIndex = 29;
@@ -3876,7 +4332,7 @@
             // 
             // eventMatrixUpDown
             // 
-            this.eventMatrixUpDown.Location = new System.Drawing.Point(350, 179);
+            this.eventMatrixUpDown.Location = new System.Drawing.Point(466, 93);
             this.eventMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -3902,7 +4358,7 @@
             // 
             // signsTabPage
             // 
-            this.signsTabPage.Controls.Add(this.button5);
+            this.signsTabPage.Controls.Add(this.duplicateSpawnableButton);
             this.signsTabPage.Controls.Add(this.groupBox5);
             this.signsTabPage.Controls.Add(this.removeSpawnableButton);
             this.signsTabPage.Controls.Add(this.addSpawnableButton);
@@ -3919,16 +4375,18 @@
             this.signsTabPage.Text = "Spawnables";
             this.signsTabPage.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // duplicateSpawnableButton
             // 
-            this.button5.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button5.Location = new System.Drawing.Point(131, 321);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(79, 24);
-            this.button5.TabIndex = 23;
-            this.button5.Text = "Duplicate";
-            this.button5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button5.UseVisualStyleBackColor = true;
+            this.duplicateSpawnableButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
+            this.duplicateSpawnableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.duplicateSpawnableButton.Location = new System.Drawing.Point(131, 308);
+            this.duplicateSpawnableButton.Name = "duplicateSpawnableButton";
+            this.duplicateSpawnableButton.Size = new System.Drawing.Size(79, 32);
+            this.duplicateSpawnableButton.TabIndex = 23;
+            this.duplicateSpawnableButton.Text = "Duplicate";
+            this.duplicateSpawnableButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.duplicateSpawnableButton.UseVisualStyleBackColor = true;
+            this.duplicateSpawnableButton.Click += new System.EventHandler(this.duplicateSpawnableButton_Click);
             // 
             // groupBox5
             // 
@@ -3943,7 +4401,7 @@
             this.groupBox5.Controls.Add(this.signMapXLabel);
             this.groupBox5.Controls.Add(this.signMapYUpDown);
             this.groupBox5.Controls.Add(this.signMapYLabel);
-            this.groupBox5.Location = new System.Drawing.Point(228, 85);
+            this.groupBox5.Location = new System.Drawing.Point(228, 88);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(196, 248);
             this.groupBox5.TabIndex = 22;
@@ -3983,7 +4441,7 @@
             this.signMatrixXUpDown.Name = "signMatrixXUpDown";
             this.signMatrixXUpDown.Size = new System.Drawing.Size(101, 20);
             this.signMatrixXUpDown.TabIndex = 16;
-            this.signMatrixXUpDown.ValueChanged += new System.EventHandler(this.signMatrixXUpDown_ValueChanged);
+            this.signMatrixXUpDown.ValueChanged += new System.EventHandler(this.spawnableMatrixXUpDown_ValueChanged);
             // 
             // signMatrixXLabel
             // 
@@ -4005,7 +4463,7 @@
             this.signMatrixYUpDown.Name = "signMatrixYUpDown";
             this.signMatrixYUpDown.Size = new System.Drawing.Size(101, 20);
             this.signMatrixYUpDown.TabIndex = 18;
-            this.signMatrixYUpDown.ValueChanged += new System.EventHandler(this.signMatrixYUpDown_ValueChanged);
+            this.signMatrixYUpDown.ValueChanged += new System.EventHandler(this.spawnableMatrixYUpDown_ValueChanged);
             // 
             // signZLabel
             // 
@@ -4085,10 +4543,11 @@
             // 
             // removeSpawnableButton
             // 
+            this.removeSpawnableButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeSpawnableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeSpawnableButton.Location = new System.Drawing.Point(67, 321);
+            this.removeSpawnableButton.Location = new System.Drawing.Point(67, 308);
             this.removeSpawnableButton.Name = "removeSpawnableButton";
-            this.removeSpawnableButton.Size = new System.Drawing.Size(63, 24);
+            this.removeSpawnableButton.Size = new System.Drawing.Size(63, 32);
             this.removeSpawnableButton.TabIndex = 8;
             this.removeSpawnableButton.Text = "Delete";
             this.removeSpawnableButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4097,10 +4556,11 @@
             // 
             // addSpawnableButton
             // 
+            this.addSpawnableButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addSpawnableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addSpawnableButton.Location = new System.Drawing.Point(16, 321);
+            this.addSpawnableButton.Location = new System.Drawing.Point(16, 308);
             this.addSpawnableButton.Name = "addSpawnableButton";
-            this.addSpawnableButton.Size = new System.Drawing.Size(50, 24);
+            this.addSpawnableButton.Size = new System.Drawing.Size(50, 32);
             this.addSpawnableButton.TabIndex = 7;
             this.addSpawnableButton.Text = "Add";
             this.addSpawnableButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4145,20 +4605,20 @@
             this.signScriptUpDown.Name = "signScriptUpDown";
             this.signScriptUpDown.Size = new System.Drawing.Size(120, 20);
             this.signScriptUpDown.TabIndex = 3;
-            this.signScriptUpDown.ValueChanged += new System.EventHandler(this.signScriptUpDown_ValueChanged);
+            this.signScriptUpDown.ValueChanged += new System.EventHandler(this.spawnableScriptUpDown_ValueChanged);
             // 
             // spawnablesListBox
             // 
             this.spawnablesListBox.FormattingEnabled = true;
             this.spawnablesListBox.Location = new System.Drawing.Point(17, 13);
             this.spawnablesListBox.Name = "spawnablesListBox";
-            this.spawnablesListBox.Size = new System.Drawing.Size(193, 303);
+            this.spawnablesListBox.Size = new System.Drawing.Size(193, 290);
             this.spawnablesListBox.TabIndex = 0;
             this.spawnablesListBox.SelectedIndexChanged += new System.EventHandler(this.spawnablesListBox_SelectedIndexChanged);
             // 
             // overworldsTabPage
             // 
-            this.overworldsTabPage.Controls.Add(this.button6);
+            this.overworldsTabPage.Controls.Add(this.duplicateOverworldsButton);
             this.overworldsTabPage.Controls.Add(this.groupBox17);
             this.overworldsTabPage.Controls.Add(this.isItemRadioButton);
             this.overworldsTabPage.Controls.Add(this.owSpritePictureBox);
@@ -4187,16 +4647,18 @@
             this.overworldsTabPage.Text = "Overworlds";
             this.overworldsTabPage.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // duplicateOverworldsButton
             // 
-            this.button6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button6.Location = new System.Drawing.Point(121, 156);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(70, 28);
-            this.button6.TabIndex = 26;
-            this.button6.Text = "Duplicate";
-            this.button6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button6.UseVisualStyleBackColor = true;
+            this.duplicateOverworldsButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
+            this.duplicateOverworldsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.duplicateOverworldsButton.Location = new System.Drawing.Point(119, 155);
+            this.duplicateOverworldsButton.Name = "duplicateOverworldsButton";
+            this.duplicateOverworldsButton.Size = new System.Drawing.Size(72, 31);
+            this.duplicateOverworldsButton.TabIndex = 26;
+            this.duplicateOverworldsButton.Text = "Duplicate";
+            this.duplicateOverworldsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.duplicateOverworldsButton.UseVisualStyleBackColor = true;
+            this.duplicateOverworldsButton.Click += new System.EventHandler(this.duplicateOverworldsButton_Click);
             // 
             // groupBox17
             // 
@@ -4216,7 +4678,7 @@
             // 
             this.button14.Image = ((System.Drawing.Image)(resources.GetObject("button14.Image")));
             this.button14.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button14.Location = new System.Drawing.Point(20, 46);
+            this.button14.Location = new System.Drawing.Point(20, 47);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(140, 39);
             this.button14.TabIndex = 5;
@@ -4227,7 +4689,7 @@
             // 
             // owYMatrixUpDown
             // 
-            this.owYMatrixUpDown.Location = new System.Drawing.Point(115, 23);
+            this.owYMatrixUpDown.Location = new System.Drawing.Point(117, 22);
             this.owYMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4241,7 +4703,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(17, 26);
+            this.label12.Location = new System.Drawing.Point(19, 25);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(14, 13);
             this.label12.TabIndex = 5;
@@ -4249,7 +4711,7 @@
             // 
             // owXMatrixUpDown
             // 
-            this.owXMatrixUpDown.Location = new System.Drawing.Point(34, 23);
+            this.owXMatrixUpDown.Location = new System.Drawing.Point(36, 22);
             this.owXMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4263,7 +4725,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(99, 25);
+            this.label11.Location = new System.Drawing.Point(99, 24);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(14, 13);
             this.label11.TabIndex = 7;
@@ -4696,10 +5158,11 @@
             // 
             // removeOverworldButton
             // 
+            this.removeOverworldButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeOverworldButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeOverworldButton.Location = new System.Drawing.Point(59, 157);
+            this.removeOverworldButton.Location = new System.Drawing.Point(59, 155);
             this.removeOverworldButton.Name = "removeOverworldButton";
-            this.removeOverworldButton.Size = new System.Drawing.Size(62, 27);
+            this.removeOverworldButton.Size = new System.Drawing.Size(60, 31);
             this.removeOverworldButton.TabIndex = 5;
             this.removeOverworldButton.Text = "Delete";
             this.removeOverworldButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4708,10 +5171,11 @@
             // 
             // addOverworldButton
             // 
+            this.addOverworldButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addOverworldButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addOverworldButton.Location = new System.Drawing.Point(11, 157);
+            this.addOverworldButton.Location = new System.Drawing.Point(11, 155);
             this.addOverworldButton.Name = "addOverworldButton";
-            this.addOverworldButton.Size = new System.Drawing.Size(48, 27);
+            this.addOverworldButton.Size = new System.Drawing.Size(48, 31);
             this.addOverworldButton.TabIndex = 4;
             this.addOverworldButton.Text = "Add";
             this.addOverworldButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4729,6 +5193,7 @@
             // 
             // warpsTabPage
             // 
+            this.warpsTabPage.Controls.Add(this.duplicateWarpsButton);
             this.warpsTabPage.Controls.Add(this.groupBox11);
             this.warpsTabPage.Controls.Add(this.groupBox1);
             this.warpsTabPage.Controls.Add(this.removeWarpButton);
@@ -4742,6 +5207,19 @@
             this.warpsTabPage.Text = "Warps";
             this.warpsTabPage.UseVisualStyleBackColor = true;
             // 
+            // duplicateWarpsButton
+            // 
+            this.duplicateWarpsButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
+            this.duplicateWarpsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.duplicateWarpsButton.Location = new System.Drawing.Point(130, 308);
+            this.duplicateWarpsButton.Name = "duplicateWarpsButton";
+            this.duplicateWarpsButton.Size = new System.Drawing.Size(74, 32);
+            this.duplicateWarpsButton.TabIndex = 23;
+            this.duplicateWarpsButton.Text = "Duplicate";
+            this.duplicateWarpsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.duplicateWarpsButton.UseVisualStyleBackColor = true;
+            this.duplicateWarpsButton.Click += new System.EventHandler(this.duplicateWarpsButton_Click);
+            // 
             // groupBox11
             // 
             this.groupBox11.Controls.Add(this.destinationWarpGoToButton);
@@ -4749,9 +5227,9 @@
             this.groupBox11.Controls.Add(this.warpHeaderUpDown);
             this.groupBox11.Controls.Add(this.warpAnchorLabel);
             this.groupBox11.Controls.Add(this.warpHeaderLabel);
-            this.groupBox11.Location = new System.Drawing.Point(205, 219);
+            this.groupBox11.Location = new System.Drawing.Point(218, 219);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(221, 124);
+            this.groupBox11.Size = new System.Drawing.Size(211, 124);
             this.groupBox11.TabIndex = 22;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Destination";
@@ -4760,18 +5238,18 @@
             // 
             this.destinationWarpGoToButton.Image = ((System.Drawing.Image)(resources.GetObject("destinationWarpGoToButton.Image")));
             this.destinationWarpGoToButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.destinationWarpGoToButton.Location = new System.Drawing.Point(54, 77);
+            this.destinationWarpGoToButton.Location = new System.Drawing.Point(57, 77);
             this.destinationWarpGoToButton.Name = "destinationWarpGoToButton";
-            this.destinationWarpGoToButton.Size = new System.Drawing.Size(115, 41);
+            this.destinationWarpGoToButton.Size = new System.Drawing.Size(102, 41);
             this.destinationWarpGoToButton.TabIndex = 26;
-            this.destinationWarpGoToButton.Text = "Test this Warp";
+            this.destinationWarpGoToButton.Text = "Test this \r\nWarp";
             this.destinationWarpGoToButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.destinationWarpGoToButton.UseVisualStyleBackColor = true;
             this.destinationWarpGoToButton.Click += new System.EventHandler(this.goToWarpDestination_Click);
             // 
             // warpAnchorUpDown
             // 
-            this.warpAnchorUpDown.Location = new System.Drawing.Point(96, 51);
+            this.warpAnchorUpDown.Location = new System.Drawing.Point(91, 51);
             this.warpAnchorUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4784,7 +5262,7 @@
             // 
             // warpHeaderUpDown
             // 
-            this.warpHeaderUpDown.Location = new System.Drawing.Point(96, 20);
+            this.warpHeaderUpDown.Location = new System.Drawing.Point(91, 20);
             this.warpHeaderUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4798,7 +5276,7 @@
             // warpAnchorLabel
             // 
             this.warpAnchorLabel.AutoSize = true;
-            this.warpAnchorLabel.Location = new System.Drawing.Point(30, 53);
+            this.warpAnchorLabel.Location = new System.Drawing.Point(25, 53);
             this.warpAnchorLabel.Name = "warpAnchorLabel";
             this.warpAnchorLabel.Size = new System.Drawing.Size(55, 13);
             this.warpAnchorLabel.TabIndex = 27;
@@ -4807,7 +5285,7 @@
             // warpHeaderLabel
             // 
             this.warpHeaderLabel.AutoSize = true;
-            this.warpHeaderLabel.Location = new System.Drawing.Point(32, 22);
+            this.warpHeaderLabel.Location = new System.Drawing.Point(27, 22);
             this.warpHeaderLabel.Name = "warpHeaderLabel";
             this.warpHeaderLabel.Size = new System.Drawing.Size(42, 13);
             this.warpHeaderLabel.TabIndex = 26;
@@ -4817,9 +5295,9 @@
             // 
             this.groupBox1.Controls.Add(this.groupBox14);
             this.groupBox1.Controls.Add(this.groupBox12);
-            this.groupBox1.Location = new System.Drawing.Point(205, 6);
+            this.groupBox1.Location = new System.Drawing.Point(216, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(221, 209);
+            this.groupBox1.Size = new System.Drawing.Size(213, 209);
             this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Start coordinates";
@@ -4831,9 +5309,9 @@
             this.groupBox14.Controls.Add(this.warpXMatrixUpDown);
             this.groupBox14.Controls.Add(this.label15);
             this.groupBox14.Controls.Add(this.warpYMatrixUpDown);
-            this.groupBox14.Location = new System.Drawing.Point(7, 74);
+            this.groupBox14.Location = new System.Drawing.Point(6, 74);
             this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Size = new System.Drawing.Size(208, 128);
+            this.groupBox14.Size = new System.Drawing.Size(200, 128);
             this.groupBox14.TabIndex = 23;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Matrix coordinates";
@@ -4842,11 +5320,11 @@
             // 
             this.goToWarpButton.Image = ((System.Drawing.Image)(resources.GetObject("goToWarpButton.Image")));
             this.goToWarpButton.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.goToWarpButton.Location = new System.Drawing.Point(29, 83);
+            this.goToWarpButton.Location = new System.Drawing.Point(53, 80);
             this.goToWarpButton.Name = "goToWarpButton";
-            this.goToWarpButton.Size = new System.Drawing.Size(154, 39);
+            this.goToWarpButton.Size = new System.Drawing.Size(102, 39);
             this.goToWarpButton.TabIndex = 25;
-            this.goToWarpButton.Text = "Go to start coordinates";
+            this.goToWarpButton.Text = "Go to start \r\ncoordinates";
             this.goToWarpButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.goToWarpButton.UseVisualStyleBackColor = true;
             this.goToWarpButton.Click += new System.EventHandler(this.centerEventViewOnSelectedEvent_Click);
@@ -4854,7 +5332,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(10, 59);
+            this.label9.Location = new System.Drawing.Point(8, 56);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(45, 13);
             this.label9.TabIndex = 24;
@@ -4862,7 +5340,7 @@
             // 
             // warpXMatrixUpDown
             // 
-            this.warpXMatrixUpDown.Location = new System.Drawing.Point(61, 26);
+            this.warpXMatrixUpDown.Location = new System.Drawing.Point(59, 23);
             this.warpXMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4876,7 +5354,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(10, 28);
+            this.label15.Location = new System.Drawing.Point(8, 25);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(45, 13);
             this.label15.TabIndex = 22;
@@ -4884,7 +5362,7 @@
             // 
             // warpYMatrixUpDown
             // 
-            this.warpYMatrixUpDown.Location = new System.Drawing.Point(61, 57);
+            this.warpYMatrixUpDown.Location = new System.Drawing.Point(59, 54);
             this.warpYMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4903,9 +5381,9 @@
             this.groupBox12.Controls.Add(this.warpYMapUpDown);
             this.groupBox12.Controls.Add(this.warpZUpDown);
             this.groupBox12.Controls.Add(this.label16);
-            this.groupBox12.Location = new System.Drawing.Point(7, 19);
+            this.groupBox12.Location = new System.Drawing.Point(6, 19);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(208, 49);
+            this.groupBox12.Size = new System.Drawing.Size(200, 49);
             this.groupBox12.TabIndex = 22;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Map coordinates";
@@ -4993,35 +5471,42 @@
             // 
             // removeWarpButton
             // 
-            this.removeWarpButton.Location = new System.Drawing.Point(101, 319);
+            this.removeWarpButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeWarpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.removeWarpButton.Location = new System.Drawing.Point(66, 308);
             this.removeWarpButton.Name = "removeWarpButton";
-            this.removeWarpButton.Size = new System.Drawing.Size(82, 23);
+            this.removeWarpButton.Size = new System.Drawing.Size(63, 32);
             this.removeWarpButton.TabIndex = 10;
-            this.removeWarpButton.Text = "Remove";
+            this.removeWarpButton.Text = "Delete";
+            this.removeWarpButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.removeWarpButton.UseVisualStyleBackColor = true;
             this.removeWarpButton.Click += new System.EventHandler(this.removeWarpButton_Click);
             // 
             // addWarpButton
             // 
-            this.addWarpButton.Location = new System.Drawing.Point(17, 319);
+            this.addWarpButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addWarpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.addWarpButton.Location = new System.Drawing.Point(14, 308);
             this.addWarpButton.Name = "addWarpButton";
-            this.addWarpButton.Size = new System.Drawing.Size(78, 23);
+            this.addWarpButton.Size = new System.Drawing.Size(51, 32);
             this.addWarpButton.TabIndex = 9;
             this.addWarpButton.Text = "Add";
+            this.addWarpButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addWarpButton.UseVisualStyleBackColor = true;
             this.addWarpButton.Click += new System.EventHandler(this.addWarpButton_Click);
             // 
             // warpsListBox
             // 
             this.warpsListBox.FormattingEnabled = true;
-            this.warpsListBox.Location = new System.Drawing.Point(17, 11);
+            this.warpsListBox.Location = new System.Drawing.Point(14, 12);
             this.warpsListBox.Name = "warpsListBox";
-            this.warpsListBox.Size = new System.Drawing.Size(166, 303);
+            this.warpsListBox.Size = new System.Drawing.Size(190, 290);
             this.warpsListBox.TabIndex = 4;
             this.warpsListBox.SelectedIndexChanged += new System.EventHandler(this.warpsListBox_SelectedIndexChanged);
             // 
             // triggersTabPage
             // 
+            this.triggersTabPage.Controls.Add(this.duplicateTriggersButton);
             this.triggersTabPage.Controls.Add(this.groupBox16);
             this.triggersTabPage.Controls.Add(this.groupBox15);
             this.triggersTabPage.Controls.Add(this.label28);
@@ -5040,13 +5525,26 @@
             this.triggersTabPage.Text = "Triggers";
             this.triggersTabPage.UseVisualStyleBackColor = true;
             // 
+            // duplicateTriggersButton
+            // 
+            this.duplicateTriggersButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
+            this.duplicateTriggersButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.duplicateTriggersButton.Location = new System.Drawing.Point(131, 309);
+            this.duplicateTriggersButton.Name = "duplicateTriggersButton";
+            this.duplicateTriggersButton.Size = new System.Drawing.Size(74, 32);
+            this.duplicateTriggersButton.TabIndex = 36;
+            this.duplicateTriggersButton.Text = "Duplicate";
+            this.duplicateTriggersButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.duplicateTriggersButton.UseVisualStyleBackColor = true;
+            this.duplicateTriggersButton.Click += new System.EventHandler(this.duplicateTriggersButton_Click);
+            // 
             // groupBox16
             // 
             this.groupBox16.Controls.Add(this.triggerLengthLabel);
             this.groupBox16.Controls.Add(this.triggerLengthUpDown);
             this.groupBox16.Controls.Add(this.triggerWidthLabel);
             this.groupBox16.Controls.Add(this.triggerWidthUpDown);
-            this.groupBox16.Location = new System.Drawing.Point(204, 62);
+            this.groupBox16.Location = new System.Drawing.Point(225, 62);
             this.groupBox16.Name = "groupBox16";
             this.groupBox16.Size = new System.Drawing.Size(200, 71);
             this.groupBox16.TabIndex = 33;
@@ -5105,7 +5603,7 @@
             this.groupBox15.Controls.Add(this.triggerMapXLabel);
             this.groupBox15.Controls.Add(this.triggerYMapUpDown);
             this.groupBox15.Controls.Add(this.triggerYMapLabel);
-            this.groupBox15.Location = new System.Drawing.Point(204, 153);
+            this.groupBox15.Location = new System.Drawing.Point(225, 153);
             this.groupBox15.Name = "groupBox15";
             this.groupBox15.Size = new System.Drawing.Size(200, 54);
             this.groupBox15.TabIndex = 32;
@@ -5191,7 +5689,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(308, 13);
+            this.label28.Location = new System.Drawing.Point(329, 13);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(89, 13);
             this.label28.TabIndex = 27;
@@ -5199,7 +5697,7 @@
             // 
             // triggerFlagUpDown
             // 
-            this.triggerFlagUpDown.Location = new System.Drawing.Point(311, 29);
+            this.triggerFlagUpDown.Location = new System.Drawing.Point(332, 29);
             this.triggerFlagUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -5217,7 +5715,7 @@
             this.groupBox6.Controls.Add(this.triggerXMatrixUpDown);
             this.groupBox6.Controls.Add(this.triggerXMatrixLabel);
             this.groupBox6.Controls.Add(this.triggerYMatrixUpDown);
-            this.groupBox6.Location = new System.Drawing.Point(204, 213);
+            this.groupBox6.Location = new System.Drawing.Point(225, 213);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(200, 129);
             this.groupBox6.TabIndex = 25;
@@ -5228,7 +5726,7 @@
             // 
             this.goToTriggerButton.Image = ((System.Drawing.Image)(resources.GetObject("goToTriggerButton.Image")));
             this.goToTriggerButton.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.goToTriggerButton.Location = new System.Drawing.Point(41, 84);
+            this.goToTriggerButton.Location = new System.Drawing.Point(42, 84);
             this.goToTriggerButton.Name = "goToTriggerButton";
             this.goToTriggerButton.Size = new System.Drawing.Size(120, 39);
             this.goToTriggerButton.TabIndex = 20;
@@ -5284,7 +5782,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(204, 12);
+            this.label27.Location = new System.Drawing.Point(225, 12);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(82, 13);
             this.label27.TabIndex = 24;
@@ -5292,7 +5790,7 @@
             // 
             // triggerScriptUpDown
             // 
-            this.triggerScriptUpDown.Location = new System.Drawing.Point(207, 29);
+            this.triggerScriptUpDown.Location = new System.Drawing.Point(228, 29);
             this.triggerScriptUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -5305,30 +5803,36 @@
             // 
             // removeTriggerButton
             // 
-            this.removeTriggerButton.Location = new System.Drawing.Point(100, 321);
+            this.removeTriggerButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeTriggerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.removeTriggerButton.Location = new System.Drawing.Point(68, 309);
             this.removeTriggerButton.Name = "removeTriggerButton";
-            this.removeTriggerButton.Size = new System.Drawing.Size(82, 23);
+            this.removeTriggerButton.Size = new System.Drawing.Size(62, 32);
             this.removeTriggerButton.TabIndex = 10;
-            this.removeTriggerButton.Text = "Remove";
+            this.removeTriggerButton.Text = "Delete";
+            this.removeTriggerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.removeTriggerButton.UseVisualStyleBackColor = true;
             this.removeTriggerButton.Click += new System.EventHandler(this.removeTriggerButton_Click);
             // 
             // addTriggerButton
             // 
-            this.addTriggerButton.Location = new System.Drawing.Point(15, 321);
+            this.addTriggerButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addTriggerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.addTriggerButton.Location = new System.Drawing.Point(16, 309);
             this.addTriggerButton.Name = "addTriggerButton";
-            this.addTriggerButton.Size = new System.Drawing.Size(78, 23);
+            this.addTriggerButton.Size = new System.Drawing.Size(51, 32);
             this.addTriggerButton.TabIndex = 9;
             this.addTriggerButton.Text = "Add";
+            this.addTriggerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addTriggerButton.UseVisualStyleBackColor = true;
             this.addTriggerButton.Click += new System.EventHandler(this.addTriggerButton_Click);
             // 
             // triggersListBox
             // 
             this.triggersListBox.FormattingEnabled = true;
-            this.triggersListBox.Location = new System.Drawing.Point(16, 15);
+            this.triggersListBox.Location = new System.Drawing.Point(16, 13);
             this.triggersListBox.Name = "triggersListBox";
-            this.triggersListBox.Size = new System.Drawing.Size(166, 303);
+            this.triggersListBox.Size = new System.Drawing.Size(189, 290);
             this.triggersListBox.TabIndex = 4;
             this.triggersListBox.SelectedIndexChanged += new System.EventHandler(this.triggersListBox_SelectedIndexChanged);
             // 
@@ -5337,7 +5841,7 @@
             this.eventPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.eventPanel.Controls.Add(this.eventPictureBox);
             this.eventPanel.Controls.Add(this.eventOpenGlControl);
-            this.eventPanel.Location = new System.Drawing.Point(558, 39);
+            this.eventPanel.Location = new System.Drawing.Point(601, 39);
             this.eventPanel.Name = "eventPanel";
             this.eventPanel.Size = new System.Drawing.Size(546, 546);
             this.eventPanel.TabIndex = 24;
@@ -6686,6 +7190,14 @@
             this.textEditorDataGridView.TabIndex = 24;
             this.textEditorDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellValueChanged);
             // 
+            // messageColumn
+            // 
+            this.messageColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.messageColumn.HeaderText = "Message";
+            this.messageColumn.Name = "messageColumn";
+            this.messageColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.messageColumn.Width = 56;
+            // 
             // exportTextFileButton
             // 
             this.exportTextFileButton.Location = new System.Drawing.Point(311, 22);
@@ -7012,248 +7524,6 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             // 
-            // internalNameLenLabel
-            // 
-            this.internalNameLenLabel.ForeColor = System.Drawing.Color.Green;
-            this.internalNameLenLabel.Location = new System.Drawing.Point(434, 41);
-            this.internalNameLenLabel.Name = "internalNameLenLabel";
-            this.internalNameLenLabel.Size = new System.Drawing.Size(32, 16);
-            this.internalNameLenLabel.TabIndex = 44;
-            this.internalNameLenLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // messageColumn
-            // 
-            this.messageColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.messageColumn.HeaderText = "Message";
-            this.messageColumn.Name = "messageColumn";
-            this.messageColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.messageColumn.Width = 56;
-            // 
-            // headersGridView
-            // 
-            this.headersGridView.AllowUserToAddRows = false;
-            this.headersGridView.AllowUserToDeleteRows = false;
-            this.headersGridView.AllowUserToResizeColumns = false;
-            this.headersGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle76.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.headersGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle76;
-            this.headersGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle77.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle77.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle77.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle77.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle77.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle77.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle77.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle77;
-            this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle78.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle78.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle78.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle78.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle78.Format = "D4";
-            dataGridViewCellStyle78.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle78.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle78.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle78;
-            this.headersGridView.Location = new System.Drawing.Point(0, 0);
-            this.headersGridView.Name = "headersGridView";
-            dataGridViewCellStyle79.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle79.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle79.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle79.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle79.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle79.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle79.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle79;
-            this.headersGridView.RowHeadersWidth = 50;
-            this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle80.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle80.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle80;
-            this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.headersGridView.RowTemplate.Height = 18;
-            this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.headersGridView.ShowCellErrors = false;
-            this.headersGridView.Size = new System.Drawing.Size(1032, 566);
-            this.headersGridView.TabIndex = 1;
-            this.headersGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.headersGridView_CellFormatting);
-            this.headersGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.headersGridView_CellMouseDoubleClick);
-            this.headersGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.headersGridView_CellValueChanged);
-            // 
-            // heightsGridView
-            // 
-            this.heightsGridView.AllowUserToAddRows = false;
-            this.heightsGridView.AllowUserToDeleteRows = false;
-            this.heightsGridView.AllowUserToResizeColumns = false;
-            this.heightsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle81.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle81;
-            this.heightsGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle82.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle82.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle82.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle82.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle82.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle82.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle82.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle82;
-            this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle83.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle83.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle83.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            dataGridViewCellStyle83.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle83.Format = "D2";
-            dataGridViewCellStyle83.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle83.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle83.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle83;
-            this.heightsGridView.Location = new System.Drawing.Point(0, 0);
-            this.heightsGridView.Name = "heightsGridView";
-            dataGridViewCellStyle84.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle84.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle84.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle84.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle84.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle84.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle84.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle84;
-            this.heightsGridView.RowHeadersWidth = 50;
-            this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle85.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle85.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle85;
-            this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.RowTemplate.Height = 18;
-            this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.heightsGridView.Size = new System.Drawing.Size(1032, 566);
-            this.heightsGridView.TabIndex = 2;
-            this.heightsGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.heightsGridView_CellFormatting);
-            this.heightsGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.heightsGridView_CellValueChanged);
-            // 
-            // mapFilesGridView
-            // 
-            this.mapFilesGridView.AllowUserToAddRows = false;
-            this.mapFilesGridView.AllowUserToDeleteRows = false;
-            this.mapFilesGridView.AllowUserToResizeColumns = false;
-            this.mapFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle86.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle86;
-            this.mapFilesGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle87.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle87.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle87.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle87.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle87.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle87.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle87.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle87;
-            this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle88.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle88.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle88.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle88.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle88.Format = "D4";
-            dataGridViewCellStyle88.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle88.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle88.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle88;
-            this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
-            this.mapFilesGridView.Name = "mapFilesGridView";
-            dataGridViewCellStyle89.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle89.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle89.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle89.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle89.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle89.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle89.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle89;
-            this.mapFilesGridView.RowHeadersWidth = 50;
-            this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle90.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle90.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle90;
-            this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.RowTemplate.Height = 18;
-            this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.mapFilesGridView.Size = new System.Drawing.Size(1032, 566);
-            this.mapFilesGridView.TabIndex = 2;
-            this.mapFilesGridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellMouseDoubleClick);
-            this.mapFilesGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.mapFilesGridView_CellFormatting);
-            this.mapFilesGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellValueChanged);
-            // 
-            // groupBox19
-            // 
-            this.groupBox19.Controls.Add(this.label21);
-            this.groupBox19.Controls.Add(this.label22);
-            this.groupBox19.Controls.Add(this.buildingHeightUpDown);
-            this.groupBox19.Controls.Add(this.label23);
-            this.groupBox19.Controls.Add(this.buildingLengthUpDown);
-            this.groupBox19.Controls.Add(this.buildingWidthUpDown);
-            this.groupBox19.Location = new System.Drawing.Point(301, 188);
-            this.groupBox19.Name = "groupBox19";
-            this.groupBox19.Size = new System.Drawing.Size(101, 123);
-            this.groupBox19.TabIndex = 12;
-            this.groupBox19.TabStop = false;
-            this.groupBox19.Text = "Size";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.label21.Location = new System.Drawing.Point(6, 94);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(15, 15);
-            this.label21.TabIndex = 10;
-            this.label21.Text = "Z";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.ForeColor = System.Drawing.Color.Blue;
-            this.label22.Location = new System.Drawing.Point(6, 56);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(15, 15);
-            this.label22.TabIndex = 9;
-            this.label22.Text = "Y";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.ForeColor = System.Drawing.Color.Red;
-            this.label23.Location = new System.Drawing.Point(6, 22);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(16, 15);
-            this.label23.TabIndex = 8;
-            this.label23.Text = "X";
-            // 
-            // groupBox20
-            // 
-            this.groupBox20.Controls.Add(this.interiorbldRadioButton);
-            this.groupBox20.Controls.Add(this.exteriorbldRadioButton);
-            this.groupBox20.Controls.Add(this.buildIndexComboBox);
-            this.groupBox20.Location = new System.Drawing.Point(194, 87);
-            this.groupBox20.Name = "groupBox20";
-            this.groupBox20.Size = new System.Drawing.Size(208, 71);
-            this.groupBox20.TabIndex = 26;
-            this.groupBox20.TabStop = false;
-            this.groupBox20.Text = "Building Selector";
-            // 
             // MainProgram
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -7313,8 +7583,11 @@
             this.matrixEditorTabPage.PerformLayout();
             this.matrixTabControl.ResumeLayout(false);
             this.headersTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).EndInit();
             this.heightsTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).EndInit();
             this.mapFilesTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthUpDown)).EndInit();
             this.mapEditorTabPage.ResumeLayout(false);
@@ -7323,6 +7596,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.movPictureBox)).EndInit();
             this.mapPartsTabControl.ResumeLayout(false);
             this.buildingsTabPage.ResumeLayout(false);
+            this.groupBox20.ResumeLayout(false);
+            this.groupBox20.PerformLayout();
+            this.groupBox19.ResumeLayout(false);
+            this.groupBox19.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.buildingHeightUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.buildingLengthUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.buildingWidthUpDown)).EndInit();
@@ -7347,6 +7624,8 @@
             this.modelTabPage.PerformLayout();
             this.terrainTabPage.ResumeLayout(false);
             this.terrainTabPage.PerformLayout();
+            this.bgsTabPage.ResumeLayout(false);
+            this.bgsTabPage.PerformLayout();
             this.nsbtxEditorTabPage.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
@@ -7360,6 +7639,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).EndInit();
             this.eventEditorTabPage.ResumeLayout(false);
             this.eventEditorTabPage.PerformLayout();
+            this.groupBox21.ResumeLayout(false);
+            this.groupBox21.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.eventAreaDataUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightClickPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.wheelClickPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LeftClickPicture)).EndInit();
@@ -7368,7 +7650,6 @@
             this.eventMatrixPanel.ResumeLayout(false);
             this.eventMatrixPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventMatrixPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.eventAreaDataUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventMatrixUpDown)).EndInit();
             this.eventsTabControl.ResumeLayout(false);
             this.signsTabPage.ResumeLayout(false);
@@ -7463,13 +7744,6 @@
             this.statusStrip1.PerformLayout();
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).EndInit();
-            this.groupBox19.ResumeLayout(false);
-            this.groupBox19.PerformLayout();
-            this.groupBox20.ResumeLayout(false);
-            this.groupBox20.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -7588,10 +7862,6 @@
         private System.Windows.Forms.Button saveEventsButton;
         private System.Windows.Forms.Button exportEventFileButton;
         private System.Windows.Forms.Button importEventFileButton;
-        private System.Windows.Forms.CheckBox showTriggersCheckBox;
-        private System.Windows.Forms.CheckBox showWarpsCheckBox;
-        private System.Windows.Forms.CheckBox showOwsCheckBox;
-        private System.Windows.Forms.CheckBox showSignsCheckBox;
         private System.Windows.Forms.ListBox spawnablesListBox;
         private System.Windows.Forms.ComboBox selectEventComboBox;
         private System.Windows.Forms.Label signScriptNumberLabel;
@@ -8004,8 +8274,8 @@
         private System.Windows.Forms.ToolStripButton headerSearchToolStripButton;
         private System.Windows.Forms.Label battleBackgroundLabel;
         private System.Windows.Forms.NumericUpDown battleBackgroundUpDown;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button duplicateSpawnableButton;
+        private System.Windows.Forms.Button duplicateOverworldsButton;
         private System.Windows.Forms.Label internalNameLenLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn messageColumn;
         private System.Windows.Forms.GroupBox groupBox19;
@@ -8013,6 +8283,23 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.GroupBox groupBox20;
+        private System.Windows.Forms.TabPage bgsTabPage;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button soundPlatesImportButton;
+        private System.Windows.Forms.Button soundPlatesExportButton;
+        private System.Windows.Forms.TextBox ModelSizeTXT;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox TerrainSizeTXT;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox BGSSizeTXT;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.GroupBox groupBox21;
+        private System.Windows.Forms.CheckBox showTriggersCheckBox;
+        private System.Windows.Forms.CheckBox showWarpsCheckBox;
+        private System.Windows.Forms.CheckBox showOwsCheckBox;
+        private System.Windows.Forms.CheckBox showSignsCheckBox;
+        private System.Windows.Forms.Button duplicateWarpsButton;
+        private System.Windows.Forms.Button duplicateTriggersButton;
     }
 }
 
