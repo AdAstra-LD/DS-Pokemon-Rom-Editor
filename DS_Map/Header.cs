@@ -88,22 +88,23 @@ namespace DSPRE
         /*System*/
         public short ID { get; set; }
         public static readonly byte length = 24;
+        public static readonly string nameSeparator = " -   ";
         /**/
 
 
         #region Fields (10)
         public byte areaDataID { get; set; }
-        public byte camera { get; set; }
-        public ushort eventID { get; set; }
-        public ushort levelScript { get; set; }
-        public ushort matrix { get; set; }
-        public ushort script { get; set; }
-        public ushort musicDay { get; set; }
-        public ushort musicNight { get; set; }
+        public byte cameraAngleID { get; set; }
+        public ushort eventFileID { get; set; }
+        public ushort levelScriptID { get; set; }
+        public ushort matrixID { get; set; }
+        public ushort scriptFileID { get; set; }
+        public ushort musicDayID { get; set; }
+        public ushort musicNightID { get; set; }
         public byte showName { get; set; }
         public byte battleBackground { get; set; }
-        public ushort text { get; set; }
-        public byte weather { get; set; }
+        public ushort textArchiveID { get; set; }
+        public byte weatherID { get; set; }
         public byte flags { get; set; }
         public ushort wildPokémon { get; set; }
         #endregion Fields
@@ -152,17 +153,17 @@ namespace DSPRE
             using (BinaryReader reader = new BinaryReader(data)) {
                 areaDataID = reader.ReadByte();
                 unknown1 = reader.ReadByte();
-                matrix = reader.ReadUInt16();
-                script = reader.ReadUInt16();
-                levelScript = reader.ReadUInt16();
-                text = reader.ReadUInt16();
-                musicDay = reader.ReadUInt16();
-                musicNight = reader.ReadUInt16();
+                matrixID = reader.ReadUInt16();
+                scriptFileID = reader.ReadUInt16();
+                levelScriptID = reader.ReadUInt16();
+                textArchiveID = reader.ReadUInt16();
+                musicDayID = reader.ReadUInt16();
+                musicNightID = reader.ReadUInt16();
                 wildPokémon = reader.ReadUInt16();
-                eventID = reader.ReadUInt16();
+                eventFileID = reader.ReadUInt16();
                 locationName = reader.ReadUInt16();
-                weather = StandardizeWeather(reader.ReadByte());
-                camera = reader.ReadByte();
+                weatherID = StandardizeWeather(reader.ReadByte());
+                cameraAngleID = reader.ReadByte();
                 showName = reader.ReadByte();
 
                 byte mapSettings = reader.ReadByte();
@@ -180,17 +181,17 @@ namespace DSPRE
             {
                 writer.Write(areaDataID);
                 writer.Write(unknown1);
-                writer.Write(matrix);
-                writer.Write(script);
-                writer.Write(levelScript);
-                writer.Write(text);
-                writer.Write(musicDay);
-                writer.Write(musicNight);
+                writer.Write(matrixID);
+                writer.Write(scriptFileID);
+                writer.Write(levelScriptID);
+                writer.Write(textArchiveID);
+                writer.Write(musicDayID);
+                writer.Write(musicNightID);
                 writer.Write(wildPokémon);
-                writer.Write(eventID);
+                writer.Write(eventFileID);
                 writer.Write(locationName);
-                writer.Write(weather);
-                writer.Write(camera);
+                writer.Write(weatherID);
+                writer.Write(cameraAngleID);
                 writer.Write(showName);
                 
                 byte mapSettings = (byte) ((battleBackground & 0b_1111) + ((flags & 0b_1111) << 4));
@@ -249,18 +250,18 @@ namespace DSPRE
                 try {
                     areaDataID = reader.ReadByte();
                     unknown1 = reader.ReadByte();
-                    matrix = reader.ReadUInt16();
-                    script = reader.ReadUInt16();
-                    levelScript = reader.ReadUInt16();
-                    text = reader.ReadUInt16();
-                    musicDay = reader.ReadUInt16();
-                    musicNight = reader.ReadUInt16();
+                    matrixID = reader.ReadUInt16();
+                    scriptFileID = reader.ReadUInt16();
+                    levelScriptID = reader.ReadUInt16();
+                    textArchiveID = reader.ReadUInt16();
+                    musicDayID = reader.ReadUInt16();
+                    musicNightID = reader.ReadUInt16();
                     wildPokémon = reader.ReadUInt16();
-                    eventID = reader.ReadUInt16();
+                    eventFileID = reader.ReadUInt16();
                     locationName = reader.ReadByte();
                     areaIcon = reader.ReadByte(); 
-                    weather = reader.ReadByte();
-                    camera = reader.ReadByte();
+                    weatherID = reader.ReadByte();
+                    cameraAngleID = reader.ReadByte();
 
                     ushort mapSettings = reader.ReadUInt16();
                     showName = (byte)(mapSettings & 0b_1111_111);
@@ -282,18 +283,18 @@ namespace DSPRE
             {
                 writer.Write(areaDataID);
                 writer.Write(unknown1);
-                writer.Write(matrix);
-                writer.Write(script);
-                writer.Write(levelScript);
-                writer.Write(text);
-                writer.Write(musicDay);
-                writer.Write(musicNight);
+                writer.Write(matrixID);
+                writer.Write(scriptFileID);
+                writer.Write(levelScriptID);
+                writer.Write(textArchiveID);
+                writer.Write(musicDayID);
+                writer.Write(musicNightID);
                 writer.Write(wildPokémon);
-                writer.Write(eventID);
+                writer.Write(eventFileID);
                 writer.Write(locationName);
                 writer.Write(areaIcon);
-                writer.Write(weather);
-                writer.Write(camera);
+                writer.Write(weatherID);
+                writer.Write(cameraAngleID);
 
                 ushort mapSettings = (ushort)((showName & 0b_1111_111) + ((battleBackground & 0b_1111_1) << 7) + ((flags & 0b_1111) << 12));
                 writer.Write(mapSettings);
@@ -333,20 +334,20 @@ namespace DSPRE
                     worldmapX = (byte)((coords >> 4) & 0b_1111_11); //get 6 bits after the first 4
                     worldmapY = (byte)((coords >> 10) & 0b_1111_11); //get 6 bits after the first 10
 
-                    matrix = reader.ReadUInt16();
-                    script = reader.ReadUInt16();
-                    levelScript = reader.ReadUInt16();
-                    text = reader.ReadUInt16();
-                    musicDay = reader.ReadUInt16();
-                    musicNight = reader.ReadUInt16();
-                    eventID = reader.ReadUInt16();
+                    matrixID = reader.ReadUInt16();
+                    scriptFileID = reader.ReadUInt16();
+                    levelScriptID = reader.ReadUInt16();
+                    textArchiveID = reader.ReadUInt16();
+                    musicDayID = reader.ReadUInt16();
+                    musicNightID = reader.ReadUInt16();
+                    eventFileID = reader.ReadUInt16();
                     locationName = reader.ReadByte();
                     areaIcon = StandardizeAreaIcon(reader.ReadByte());
-                    weather = reader.ReadByte();
+                    weatherID = reader.ReadByte();
                     
                     byte cameraAndArea = reader.ReadByte();
                     areaSettings = (byte)(cameraAndArea & 0b_1111); //get 4 bits 
-                    camera = (byte)(cameraAndArea >> 4 & 0b_1111); //get 4 bits after the first 4
+                    cameraAngleID = (byte)(cameraAndArea >> 4 & 0b_1111); //get 4 bits after the first 4
                     
 
                     followMode = reader.ReadByte();
@@ -371,18 +372,18 @@ namespace DSPRE
                 ushort worldMapCoordinates = (ushort) ( (unknown0 & 0b_1111) + ((worldmapX & 0b_1111_1111) << 4) + ((worldmapY & 0b_1111_1111) << 10) );
                 writer.Write(worldMapCoordinates);
 
-                writer.Write(matrix);
-                writer.Write(script);
-                writer.Write(levelScript);
-                writer.Write(text);
-                writer.Write(musicDay);
-                writer.Write(musicNight);
-                writer.Write(eventID);
+                writer.Write(matrixID);
+                writer.Write(scriptFileID);
+                writer.Write(levelScriptID);
+                writer.Write(textArchiveID);
+                writer.Write(musicDayID);
+                writer.Write(musicNightID);
+                writer.Write(eventFileID);
                 writer.Write(locationName);
                 writer.Write(areaIcon);
-                writer.Write(weather);
+                writer.Write(weatherID);
 
-                byte cameraAndArea = (byte)  ((areaSettings & 0b_1111) + ((camera & 0b_1111) << 4));
+                byte cameraAndArea = (byte)  ((areaSettings & 0b_1111) + ((cameraAngleID & 0b_1111) << 4));
                 writer.Write(cameraAndArea);
 
                 writer.Write(followMode);

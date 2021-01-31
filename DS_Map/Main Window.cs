@@ -30,9 +30,6 @@ namespace DSPRE {
         #region Variables
         public bool disableHandlers = false;
         public bool iconON = false;
-        public bool expandedARM9;
-
-        private const string nameSeparator = " -   ";
 
         /* Editors Setup */
         public bool matrixEditorIsReady { get; private set; } = false;
@@ -399,7 +396,7 @@ namespace DSPRE {
                         byte[] row = reader.ReadBytes(RomInfo.internalNameLength);
 
                         string internalName = Encoding.ASCII.GetString(row);//.TrimEnd();
-                        headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalName);
+                        headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + internalName);
                         internalNames.Add(internalName.TrimEnd('\0'));
                     }
                 }
@@ -516,7 +513,7 @@ namespace DSPRE {
                             break;
                     };
                     string nsbmdName = Encoding.UTF8.GetString(reader.ReadBytes(16));
-                    selectMapComboBox.Items.Add(i.ToString("D3") + nameSeparator + nsbmdName);
+                    selectMapComboBox.Items.Add(i.ToString("D3") + Header.nameSeparator + nsbmdName);
                 }
 
             }
@@ -1105,16 +1102,16 @@ namespace DSPRE {
                 switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
-                        currentHeader.camera = (byte)cameraComboBox.SelectedIndex;
+                        currentHeader.cameraAngleID = (byte)cameraComboBox.SelectedIndex;
                         imageName = "dpcamera" + cameraComboBox.SelectedIndex.ToString();
                         break;
                     case "Plat":
-                        currentHeader.camera = (byte)cameraComboBox.SelectedIndex;
+                        currentHeader.cameraAngleID = (byte)cameraComboBox.SelectedIndex;
                         imageName = "ptcamera" + cameraComboBox.SelectedIndex.ToString();
                         break;
                     default:
-                        currentHeader.camera = Byte.Parse(cameraComboBox.SelectedItem.ToString().Substring(1, 2));
-                        imageName = "hgsscamera" + currentHeader.camera.ToString("D2");
+                        currentHeader.cameraAngleID = Byte.Parse(cameraComboBox.SelectedItem.ToString().Substring(1, 2));
+                        imageName = "hgsscamera" + currentHeader.cameraAngleID.ToString("D2");
                         break;
                 }
                 cameraPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
@@ -1125,7 +1122,7 @@ namespace DSPRE {
         private void eventFileUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) 
                 return;
-            currentHeader.eventID = (ushort)eventFileUpDown.Value;
+            currentHeader.eventFileID = (ushort)eventFileUpDown.Value;
         }
         private void headerFlagsCheckBoxes_CheckedChanged(object sender, EventArgs e) {
             if (disableHandlers)
@@ -1172,16 +1169,16 @@ namespace DSPRE {
         private void refreshHeaderEditorFields() {
             /* Setup controls for common fields across headers */
             internalNameBox.Text = internalNames[currentHeader.ID];
-            matrixUpDown.Value = currentHeader.matrix;
+            matrixUpDown.Value = currentHeader.matrixID;
             areaDataUpDown.Value = currentHeader.areaDataID;
-            scriptFileUpDown.Value = currentHeader.script;
-            levelScriptUpDown.Value = currentHeader.levelScript;
-            eventFileUpDown.Value = currentHeader.eventID;
-            textFileUpDown.Value = currentHeader.text;
+            scriptFileUpDown.Value = currentHeader.scriptFileID;
+            levelScriptUpDown.Value = currentHeader.levelScriptID;
+            eventFileUpDown.Value = currentHeader.eventFileID;
+            textFileUpDown.Value = currentHeader.textArchiveID;
             wildPokeUpDown.Value = currentHeader.wildPokémon;
-            weatherUpDown.Value = currentHeader.weather;
+            weatherUpDown.Value = currentHeader.weatherID;
 
-            cameraComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.camera.ToString("D2"));
+            cameraComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.cameraAngleID.ToString("D2"));
 
             if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
                 areaSettingsComboBox.SelectedIndex = cameraComboBox.FindString("[" + ((HeaderHGSS)currentHeader).areaSettings.ToString("D2"));
@@ -1196,24 +1193,24 @@ namespace DSPRE {
                 case "D":
                 case "P":
                     locationNameComboBox.SelectedIndex = ((HeaderDP)currentHeader).locationName;
-                    musicDayUpDown.Value = ((HeaderDP)currentHeader).musicDay;
-                    musicNightUpDown.Value = ((HeaderDP)currentHeader).musicNight;
+                    musicDayUpDown.Value = ((HeaderDP)currentHeader).musicDayID;
+                    musicNightUpDown.Value = ((HeaderDP)currentHeader).musicNightID;
                     areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.showName:D3}");
                     battleBackgroundUpDown.Value = currentHeader.battleBackground;
                     break;
                 case "Plat":
                     areaIconComboBox.SelectedIndex = ((HeaderPt)currentHeader).areaIcon;
                     locationNameComboBox.SelectedIndex = ((HeaderPt)currentHeader).locationName;
-                    musicDayUpDown.Value = ((HeaderPt)currentHeader).musicDay;
-                    musicNightUpDown.Value = ((HeaderPt)currentHeader).musicNight;
+                    musicDayUpDown.Value = ((HeaderPt)currentHeader).musicDayID;
+                    musicNightUpDown.Value = ((HeaderPt)currentHeader).musicNightID;
                     areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.showName:D3}");
                     battleBackgroundUpDown.Value = currentHeader.battleBackground;
                     break;
                 default:
                     areaIconComboBox.SelectedIndex = areaIconComboBox.FindString("[" + $"{((HeaderHGSS)currentHeader).areaIcon:D3}");
                     locationNameComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).locationName;
-                    musicDayUpDown.Value = ((HeaderHGSS)currentHeader).musicDay;
-                    musicNightUpDown.Value = ((HeaderHGSS)currentHeader).musicNight;
+                    musicDayUpDown.Value = ((HeaderHGSS)currentHeader).musicDayID;
+                    musicNightUpDown.Value = ((HeaderHGSS)currentHeader).musicNightID;
                     worldmapXCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapX;
                     worldmapYCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapY;
                     break;
@@ -1260,7 +1257,7 @@ namespace DSPRE {
         private void levelScriptUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) 
                 return;
-            currentHeader.levelScript = (ushort)levelScriptUpDown.Value;
+            currentHeader.levelScriptID = (ushort)levelScriptUpDown.Value;
         }
         private void mapNameComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers)
@@ -1282,7 +1279,7 @@ namespace DSPRE {
         private void matrixUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) 
                 return;
-            currentHeader.matrix = (ushort)matrixUpDown.Value;
+            currentHeader.matrixID = (ushort)matrixUpDown.Value;
         }
         private void musicDayComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) 
@@ -1290,13 +1287,13 @@ namespace DSPRE {
             switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
-                    currentHeader.musicDay = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
+                    currentHeader.musicDayID = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
                     break;
                 case "Plat":
-                    currentHeader.musicDay = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.PtMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
+                    currentHeader.musicDayID = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.PtMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
                     break;
                 default:
-                    currentHeader.musicDay = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.HGSSMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
+                    currentHeader.musicDayID = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.HGSSMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
                     break;
             }
         }
@@ -1307,13 +1304,13 @@ namespace DSPRE {
             switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
-                    currentHeader.musicNight= (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
+                    currentHeader.musicNightID= (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
                     break;
                 case "Plat":
-                    currentHeader.musicNight = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.PtMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
+                    currentHeader.musicNightID = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.PtMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
                     break;
                 default:
-                    currentHeader.musicNight = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.HGSSMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
+                    currentHeader.musicNightID = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.HGSSMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
                     break;
             }
         }
@@ -1324,7 +1321,7 @@ namespace DSPRE {
             disableHandlers = true;
             try {
                 ushort updValue = (ushort)((NumericUpDown)sender).Value;
-                currentHeader.musicDay = updValue;
+                currentHeader.musicDayID = updValue;
                 switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
@@ -1349,7 +1346,7 @@ namespace DSPRE {
             disableHandlers = true;
             try {
                 ushort updValue = (ushort)((NumericUpDown)sender).Value;
-                currentHeader.musicNight = updValue;
+                currentHeader.musicNightID = updValue;
                 switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
@@ -1369,7 +1366,7 @@ namespace DSPRE {
         }
 
         private void weatherUpDown_ValueChanged(object sender, EventArgs e) {
-            currentHeader.weather = (byte)weatherUpDown.Value;
+            currentHeader.weatherID = (byte)weatherUpDown.Value;
             updateWeatherPicAndComboBox();
         }
         private void worldmapXCoordUpDown_ValueChanged(object sender, EventArgs e) {
@@ -1388,13 +1385,13 @@ namespace DSPRE {
                 switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
-                        weatherComboBox.SelectedItem = PokeDatabase.Weather.DPWeatherDict[currentHeader.weather];
+                        weatherComboBox.SelectedItem = PokeDatabase.Weather.DPWeatherDict[currentHeader.weatherID];
                         break;
                     case "Plat":
-                        weatherComboBox.SelectedItem = PokeDatabase.Weather.PtWeatherDict[currentHeader.weather];
+                        weatherComboBox.SelectedItem = PokeDatabase.Weather.PtWeatherDict[currentHeader.weatherID];
                         break;
                     default:
-                        weatherComboBox.SelectedItem = PokeDatabase.Weather.HGSSWeatherDict[currentHeader.weather];
+                        weatherComboBox.SelectedItem = PokeDatabase.Weather.HGSSWeatherDict[currentHeader.weatherID];
                         break;
                 }
             } catch (KeyNotFoundException) {
@@ -1447,7 +1444,7 @@ namespace DSPRE {
                     weatherUpDown.Value = PokeDatabase.Weather.HGSSWeatherDict.Keys.ElementAt(weatherComboBox.SelectedIndex);
                     break;
             }
-            currentHeader.weather = (byte)weatherUpDown.Value;
+            currentHeader.weatherID = (byte)weatherUpDown.Value;
             
         }
         private void openAreaDataButton_Click(object sender, EventArgs e) {
@@ -1524,7 +1521,7 @@ namespace DSPRE {
         private void updateHeaderNameShown(int thisIndex, int headerNumber, string text) {
             disableHandlers = true;
 
-            headerListBox.Items[thisIndex] = headerNumber.ToString("D3") + nameSeparator + text;
+            headerListBox.Items[thisIndex] = headerNumber.ToString("D3") + Header.nameSeparator + text;
 
             disableHandlers = false;
         }
@@ -1541,7 +1538,7 @@ namespace DSPRE {
 
             for (int i = 0; i < internalNames.Count; i++) {
                 String name = internalNames[i];
-                headerListBox.Items.Add(i.ToString("D3") + nameSeparator + name);
+                headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + name);
             }
         }
         private void searchHeaderTextBox_KeyPress(object sender, KeyEventArgs e) {
@@ -1557,14 +1554,13 @@ namespace DSPRE {
                 headerListBox.Items.Clear();
                 bool noResult = true;
 
-
                 switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
                         for (short i = 0; i < internalNames.Count; i++) {
                             String locationName = locationNameComboBox.Items[((HeaderDP)Header.LoadFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
+                                headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + internalNames[i]);
                                 noResult = false;
                             }
                         }
@@ -1573,7 +1569,7 @@ namespace DSPRE {
                         for (short i = 0; i < internalNames.Count; i++) {
                             String locationName = locationNameComboBox.Items[((HeaderPt)Header.LoadFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
+                                headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + internalNames[i]);
                                 noResult = false;
                             }
                         }
@@ -1583,7 +1579,7 @@ namespace DSPRE {
                         for (short i = 0; i < internalNames.Count; i++) {
                             String locationName = locationNameComboBox.Items[((HeaderHGSS)Header.LoadFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
+                                headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + internalNames[i]);
                                 noResult = false;
                             }
                         }
@@ -1603,7 +1599,7 @@ namespace DSPRE {
         private void scriptFileUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) 
                 return;
-            currentHeader.script = (ushort)scriptFileUpDown.Value;
+            currentHeader.scriptFileID = (ushort)scriptFileUpDown.Value;
         }
         private void areaSettingsComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || areaSettingsComboBox.SelectedItem == null)
@@ -1635,7 +1631,7 @@ namespace DSPRE {
         private void textFileUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) 
                 return;
-            currentHeader.text = (ushort)textFileUpDown.Value;
+            currentHeader.textArchiveID = (ushort)textFileUpDown.Value;
         }
         
         private void wildPokeUpDown_ValueChanged(object sender, EventArgs e) {
@@ -2525,7 +2521,7 @@ namespace DSPRE {
             string[] bldList = GetBuildingsList(interiorbldRadioButton.Checked);
             for (int i = 0; i < currentMapFile.buildings.Count; i++)
                 // Add entry into buildings ListBox
-                buildingsListBox.Items.Add((i+1).ToString("D2") + nameSeparator + buildIndexComboBox.Items[(int)currentMapFile.buildings[i].modelID]);
+                buildingsListBox.Items.Add((i+1).ToString("D2") + Header.nameSeparator + buildIndexComboBox.Items[(int)currentMapFile.buildings[i].modelID]);
         }
         private Building LoadBuildingModel(Building building, bool interior) {
             string modelPath = romInfo.GetBuildingModelsDirPath(interior) + "\\" + building.modelID.ToString("D4");
@@ -2637,7 +2633,7 @@ namespace DSPRE {
             using (BinaryWriter writer = new BinaryWriter(new FileStream(mapFilePath, FileMode.Create))) writer.Write(LoadMapFile(0).Save());
 
             /* Update ComboBox and select new file */
-            selectMapComboBox.Items.Add(selectMapComboBox.Items.Count.ToString("D3") + nameSeparator + "newmap");
+            selectMapComboBox.Items.Add(selectMapComboBox.Items.Count.ToString("D3") + Header.nameSeparator + "newmap");
             selectMapComboBox.SelectedIndex = selectMapComboBox.Items.Count - 1;
         }
         private void replaceMapBinButton_Click(object sender, EventArgs e) {
@@ -2911,7 +2907,7 @@ namespace DSPRE {
             currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile = LoadModelTextures(b.NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1);
 
             /* Add new entry to buildings ListBox */
-            buildingsListBox.Items.Add((buildingsListBox.Items.Count + 1).ToString("D2") + nameSeparator +
+            buildingsListBox.Items.Add((buildingsListBox.Items.Count + 1).ToString("D2") + Header.nameSeparator +
                 buildIndexComboBox.Items[(int)b.modelID]);
             buildingsListBox.SelectedIndex = buildingsListBox.Items.Count - 1;
 
@@ -2924,7 +2920,7 @@ namespace DSPRE {
                 return;
 
             disableHandlers = true;
-            buildingsListBox.Items[buildingsListBox.SelectedIndex] = (buildingsListBox.SelectedIndex + 1).ToString("D2") + nameSeparator + buildIndexComboBox.SelectedItem;
+            buildingsListBox.Items[buildingsListBox.SelectedIndex] = (buildingsListBox.SelectedIndex + 1).ToString("D2") + Header.nameSeparator + buildIndexComboBox.SelectedItem;
             disableHandlers = false;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].modelID = (uint)buildIndexComboBox.SelectedIndex;
@@ -3693,7 +3689,7 @@ namespace DSPRE {
         private void goToWarpDestination_Click(object sender, EventArgs e) {
             int destAnchor = (int)warpAnchorUpDown.Value;
             short destHeader = (short)warpHeaderUpDown.Value;
-            ushort destEventID = Header.LoadFromARM9(destHeader).eventID;
+            ushort destEventID = Header.LoadFromARM9(destHeader).eventFileID;
             EventFile destEvent = LoadEventFile(destEventID);
 
             if (destEvent.warps.Count < destAnchor + 1) {
@@ -3702,14 +3698,14 @@ namespace DSPRE {
                 if (d == DialogResult.No)
                     return;
                 else {
-                    eventMatrixUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).matrix;
+                    eventMatrixUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).matrixID;
                     eventAreaDataUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).areaDataID;
                     selectEventComboBox.SelectedIndex = destEventID;
                     centerEventviewOnEntities();
                     return;
                 }
             }
-            eventMatrixUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).matrix;
+            eventMatrixUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).matrixID;
             eventAreaDataUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).areaDataID;
             selectEventComboBox.SelectedIndex = destEventID;
             warpsListBox.SelectedIndex = destAnchor;
@@ -6423,7 +6419,7 @@ namespace DSPRE {
         #endregion
 
         private void headerSearchToolStripButton_Click(object sender, EventArgs e) {
-            HeaderSearch h = new HeaderSearch(ref internalNames);
+            HeaderSearch h = new HeaderSearch(ref internalNames, headerListBox);
             h.Show();
         }
     }
