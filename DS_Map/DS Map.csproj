@@ -92,7 +92,6 @@
     <Compile Include="AB.cs" />
     <Compile Include="AreaData.cs" />
     <Compile Include="DSUtils.cs" />
-    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="PokeDatabase.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -180,6 +179,9 @@
     <Compile Include="ScriptFile.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="EventFile.cs" />
+    <Compile Include="DataGridViewDoubleBuffered.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="LibNDSFormats\bytearrayoutputstream.cs" />
     <Compile Include="LibNDSFormats\convertir.cs" />
     <Compile Include="LibNDSFormats\EndianBinaryReader.cs" />

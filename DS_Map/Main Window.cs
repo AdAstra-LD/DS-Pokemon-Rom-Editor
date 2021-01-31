@@ -2340,7 +2340,7 @@ namespace DSPRE {
             if (disableHandlers)
                 return;
             disableHandlers = true;
-            
+
             /* Add or remove rows in DataGridView control */
             int delta = (int)widthUpDown.Value - currentMatrix.width;
             for (int i = 0; i < Math.Abs(delta); i++) {
