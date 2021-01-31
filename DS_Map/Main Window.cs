@@ -5424,7 +5424,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("Insert flag number (hex):", "hex")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nSetFlag 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nSetFlag 0x" + ((int)f.inputValUpDown.Value).ToString("X4"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();
@@ -5433,7 +5433,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("Insert flag number (hex):", "hex")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nClearFlag 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nClearFlag 0x" + ((int)f.inputValUpDown.Value).ToString("X4"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();
@@ -5442,7 +5442,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("Number of Function to call (decimal):", "Decimal")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nCall Function_#" + ((int)f.numericUpDown1.Value).ToString());
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nCall Function_#" + ((int)f.inputValUpDown.Value).ToString());
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();
@@ -5451,7 +5451,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("Number of Function to jump to (decimal):", "Decimal")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nJump Function_#" + ((int)f.numericUpDown1.Value).ToString());
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nJump Function_#" + ((int)f.inputValUpDown.Value).ToString());
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();
@@ -5461,17 +5461,20 @@ namespace DSPRE {
             string cmd = "";
             using (InsertValueDialog f = new InsertValueDialog("Insert variable number (hex):", "hex")) {
                 f.ShowDialog();
-                if (f.okSelected) {
-                    cmd = "\nSetVar 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
-
-                    f.ShowDialog();
-                    if (f.okSelected)
-                        cmd = "\nSetVar 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
-
-                    scriptTextBox.Text.Insert(cmd);
-                    AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-                    scriptTextBox.ScrollToCaret();
+                if (!f.okSelected) {
+                    return;
                 }
+                cmd += "\nSetVar 0x" + ((int)f.inputValUpDown.Value).ToString("X4");
+
+                f.ShowDialog();
+                if (!f.okSelected) {
+                    return;
+                }
+                cmd += "\nSetVar 0x" + ((int)f.inputValUpDown.Value).ToString("X4");
+
+                scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, cmd);
+                AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+                scriptTextBox.ScrollToCaret();
             }
         }
         private void messageButton_Click(object sender, EventArgs e) {
@@ -5479,7 +5482,7 @@ namespace DSPRE {
                 f.ShowDialog();
                 if (f.okSelected) {
                     String cmd = "\nPlayFanfare 0x5DC" + "\nLockAll" + "\nFacePlayer" +
-                        "\nMessage 0x" + ((int)f.numericUpDown1.Value).ToString("X") +
+                        "\nMessage 0x" + ((int)f.inputValUpDown.Value).ToString("X") +
                         "\nWaitButton" + "\nCloseMessage" + "\nReleaseAll";
                     scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, cmd);
 
@@ -5493,7 +5496,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("Insert cry number (hex):", "hex")) {
                 f.ShowDialog();
                 if (f.okSelected) {
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nPlayCry 0x" + ((int)f.numericUpDown1.Value).ToString("X4") + " 0x1");
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nPlayCry 0x" + ((int)f.inputValUpDown.Value).ToString("X4") + " 0x1");
                     
                     AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
                     scriptTextBox.ScrollToCaret();
@@ -5525,13 +5528,13 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("Insert sound ID (hex):", "hex")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nPlaySound 0x" + ((int)f.numericUpDown1.Value).ToString("X4"));
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nPlaySound 0x" + ((int)f.inputValUpDown.Value).ToString("X4"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();
         }
         private void waitSoundButton_Click(object sender, EventArgs e) {
-            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nWaitSound");
+            scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nWaitSound");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();
         }
@@ -5544,12 +5547,12 @@ namespace DSPRE {
             scriptTextBox.ScrollToCaret();
         }
         private void waitKeyPressButton_Click(object sender, EventArgs e) {
-            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nWaitButton");
+            scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nWaitButton");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();
         }
         private void closeMessageButton_Click(object sender, EventArgs e) {
-            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nCloseMessage");
+            scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nCloseMessage");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();
         }
@@ -5598,7 +5601,7 @@ namespace DSPRE {
             scriptTextBox.ScrollToCaret();
         }
         private void LockCameraButton_Click(object sender, EventArgs e) {
-            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nCheckPlayerPosition 0x8004 0x8005\n" +
+            scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nCheckPlayerPosition 0x8004 0x8005\n" +
                 "LockCam 0x8004 0x8005\n");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();
@@ -5607,7 +5610,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("Insert movement ID to apply (decimal):", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected) {
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nApplyMovement Cam Movement_#\n" + f.numericUpDown1.Value);
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nApplyMovement Cam Movement_#\n" + f.inputValUpDown.Value);
                     AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
                     scriptTextBox.ScrollToCaret();
                 }
@@ -5648,19 +5651,19 @@ namespace DSPRE {
                     string secondLine = "SetVar 0x8005 0x" + ((int)f.quantityNumericUpDown.Value).ToString("X");
                     string thirdLine = "CallStandard 0xFC 0x7";
 
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, firstLine + "\r" + secondLine + "\r" + thirdLine);
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, firstLine + "\r" + secondLine + "\r" + thirdLine);
                     AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
                     scriptTextBox.ScrollToCaret();
                 }
             }
         }
         private void lockallButton_Click(object sender, EventArgs e) {
-            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nLockAll");
+            scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nLockAll");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();
         }
         private void releaseallButton_Click(object sender, EventArgs e) {
-            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nReleaseAll");
+            scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nReleaseAll");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();
         }
@@ -5668,7 +5671,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("ID of the overworld to lock:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected) {
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nLock" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nLock" + " " + "Overworld_#" + ((int)f.inputValUpDown.Value).ToString("D"));
                     AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
                     scriptTextBox.ScrollToCaret();
                 }
@@ -5678,14 +5681,14 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("ID of the overworld to release:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected) {
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nRelease" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nRelease" + " " + "Overworld_#" + ((int)f.inputValUpDown.Value).ToString("D"));
                     AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
                     scriptTextBox.ScrollToCaret();
                 }
             }
         }
         private void waitmovementButton_Click(object sender, EventArgs e) {
-            scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "WaitMovement");
+            scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "WaitMovement");
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();
         }
@@ -5693,7 +5696,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("ID of the Overworld to add:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected) {
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nAddOW" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nAddOW" + " " + "Overworld_#" + ((int)f.inputValUpDown.Value).ToString("D"));
                     AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
                     scriptTextBox.ScrollToCaret();
                 }
@@ -5703,7 +5706,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("ID of the Overworld to remove:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected) {
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nRemoveOW" + " " + "Overworld_#" + ((int)f.numericUpDown1.Value).ToString("D"));
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nRemoveOW" + " " + "Overworld_#" + ((int)f.inputValUpDown.Value).ToString("D"));
                     AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
                     scriptTextBox.ScrollToCaret();
                 }
@@ -5716,7 +5719,7 @@ namespace DSPRE {
             using (GivePokémonDialog f = new GivePokémonDialog(GetPokémonNames(), GetItemNames(), GetAttackNames())) {
                 f.ShowDialog();
                 if (f.okSelected) {
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, f.command);
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, f.command);
                     AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
                     scriptTextBox.ScrollToCaret();
                 }
@@ -5726,7 +5729,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("Insert money amount:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected) {
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nGiveMoney" + " " + "0x" + ((int)f.numericUpDown1.Value).ToString("X"));
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nGiveMoney" + " " + "0x" + ((int)f.inputValUpDown.Value).ToString("X"));
                     AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
                     scriptTextBox.ScrollToCaret();
                 }
@@ -5736,7 +5739,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("Insert money amount:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected) {
-                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nTakeMoney" + " " + "0x" + ((int)f.numericUpDown1.Value).ToString("X"));
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nTakeMoney" + " " + "0x" + ((int)f.inputValUpDown.Value).ToString("X"));
                     AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
                     scriptTextBox.ScrollToCaret();
                 }
@@ -5760,7 +5763,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("Insert badge number:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nEnableBadge 0x" + ((int)f.numericUpDown1.Value).ToString("X"));
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nEnableBadge 0x" + ((int)f.inputValUpDown.Value).ToString("X"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();
@@ -5769,7 +5772,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("Insert badge number:", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected)
-                    scriptTextBox.Text = scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nDisableBadge 0x" + ((int)f.numericUpDown1.Value).ToString("X"));
+                    scriptTextBox.Text.Insert(scriptTextBox.SelectionStart, "\nDisableBadge 0x" + ((int)f.inputValUpDown.Value).ToString("X"));
             }
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             scriptTextBox.ScrollToCaret();

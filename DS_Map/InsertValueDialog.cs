@@ -9,9 +9,9 @@ namespace DSPRE
 
         public InsertValueDialog(string valueLabel, string format) {
             InitializeComponent();
-            numericUpDown1.Focus();
+            inputValUpDown.Focus();
             label1.Text = valueLabel;
-            numericUpDown1.Hexadecimal = (format == "hex");
+            inputValUpDown.Hexadecimal = (format == "hex");
         }
 
         private void okButton_Click(object sender, EventArgs e) {

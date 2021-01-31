@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.inputValUpDown = new System.Windows.Forms.NumericUpDown();
             this.okButton = new System.Windows.Forms.Button();
             this.backButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputValUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -46,17 +46,17 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Hexadecimal = true;
-            this.numericUpDown1.Location = new System.Drawing.Point(22, 31);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.inputValUpDown.Hexadecimal = true;
+            this.inputValUpDown.Location = new System.Drawing.Point(22, 31);
+            this.inputValUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(197, 20);
-            this.numericUpDown1.TabIndex = 1;
-            this.numericUpDown1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericUpDown1_KeyDown);
+            this.inputValUpDown.Name = "numericUpDown1";
+            this.inputValUpDown.Size = new System.Drawing.Size(197, 20);
+            this.inputValUpDown.TabIndex = 1;
+            this.inputValUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericUpDown1_KeyDown);
             // 
             // okButton
             // 
@@ -85,11 +85,11 @@
             this.ClientSize = new System.Drawing.Size(243, 90);
             this.Controls.Add(this.backButton);
             this.Controls.Add(this.okButton);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.inputValUpDown);
             this.Controls.Add(this.label1);
             this.Name = "InsertValueDialog";
             this.Text = "Insert Value";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputValUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -98,7 +98,7 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.NumericUpDown numericUpDown1;
+        public System.Windows.Forms.NumericUpDown inputValUpDown;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button backButton;
     }

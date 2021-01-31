@@ -4,10 +4,8 @@ using System.Windows.Forms;
 
 namespace DSPRE
 {
-    public class DataGridViewDoubleBuffered : DataGridView
-    {
-        public DataGridViewDoubleBuffered()
-        {
+    public class DataGridViewDoubleBuffered : DataGridView {
+        public DataGridViewDoubleBuffered() {
             DoubleBuffered = true;
         }
     }
