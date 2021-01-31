@@ -118,6 +118,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ScriptComparisonOperators.resx</DependentUpon>
     </Compile>
+    <Compile Include="HeaderSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HeaderSearch.Designer.cs">
+      <DependentUpon>HeaderSearch.cs</DependentUpon>
+    </Compile>
     <Compile Include="ROMToolboxDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -253,6 +259,9 @@
     <Compile Include="SPK.Designer.cs">
       <DependentUpon>SPK.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="HeaderSearch.resx">
+      <DependentUpon>HeaderSearch.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ROMToolboxDB\ARM9ExpansionDB.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ARM9ExpansionDB.Designer.cs</LastGenOutput>

@@ -98,6 +98,8 @@ namespace DSPRE
         public ushort levelScript { get; set; }
         public ushort matrix { get; set; }
         public ushort script { get; set; }
+        public ushort musicDay { get; set; }
+        public ushort musicNight { get; set; }
         public byte showName { get; set; }
         public byte battleBackground { get; set; }
         public ushort text { get; set; }
@@ -140,8 +142,6 @@ namespace DSPRE
     {
         #region Fields (5)
         public byte unknown1 { get; set; }
-        public ushort musicDay { get; set; }
-        public ushort musicNight { get; set; }
         public ushort locationName { get; set; }
         #endregion Fields
 
@@ -236,9 +236,7 @@ namespace DSPRE
     {
         #region Fields (5)
         public byte areaIcon { get; set; }
-        public byte mapName { get; set; }
-        public ushort musicDay { get; set; }
-        public ushort musicNight { get; set; }
+        public byte locationName { get; set; }
         public byte unknown1 { get; set; }
         #endregion Fields
 
@@ -259,7 +257,7 @@ namespace DSPRE
                     musicNight = reader.ReadUInt16();
                     wildPokémon = reader.ReadUInt16();
                     eventID = reader.ReadUInt16();
-                    mapName = reader.ReadByte();
+                    locationName = reader.ReadByte();
                     areaIcon = reader.ReadByte(); 
                     weather = reader.ReadByte();
                     camera = reader.ReadByte();
@@ -292,7 +290,7 @@ namespace DSPRE
                 writer.Write(musicNight);
                 writer.Write(wildPokémon);
                 writer.Write(eventID);
-                writer.Write(mapName);
+                writer.Write(locationName);
                 writer.Write(areaIcon);
                 writer.Write(weather);
                 writer.Write(camera);
@@ -313,9 +311,7 @@ namespace DSPRE
         #region Fields (7)
         public byte areaIcon { get; set; }
         public byte followMode { get; set; }
-        public byte mapName { get; set; }
-        public ushort musicDay { get; set; }
-        public ushort musicNight { get; set; }
+        public byte locationName { get; set; }
         public byte areaSettings { get; set; } // 4 bits only [4 bits for the camera as well]
         public byte unknown0 { get; set; } //4 bits only
         public byte worldmapX { get; set; } //6 bits only
@@ -344,7 +340,7 @@ namespace DSPRE
                     musicDay = reader.ReadUInt16();
                     musicNight = reader.ReadUInt16();
                     eventID = reader.ReadUInt16();
-                    mapName = reader.ReadByte();
+                    locationName = reader.ReadByte();
                     areaIcon = StandardizeAreaIcon(reader.ReadByte());
                     weather = reader.ReadByte();
                     
@@ -382,7 +378,7 @@ namespace DSPRE
                 writer.Write(musicDay);
                 writer.Write(musicNight);
                 writer.Write(eventID);
-                writer.Write(mapName);
+                writer.Write(locationName);
                 writer.Write(areaIcon);
                 writer.Write(weather);
 

@@ -874,6 +874,7 @@ namespace DSPRE {
             romToolboxButton.Enabled = true;
             buildingEditorButton.Enabled = true;
             wildEditorButton.Enabled = true;
+            headerSearchToolStripButton.Enabled = true;
 
             loadRomButton.Enabled = false;
             openROMToolStripMenuItem.Enabled = false;
@@ -1202,7 +1203,7 @@ namespace DSPRE {
                     break;
                 case "Plat":
                     areaIconComboBox.SelectedIndex = ((HeaderPt)currentHeader).areaIcon;
-                    locationNameComboBox.SelectedIndex = ((HeaderPt)currentHeader).mapName;
+                    locationNameComboBox.SelectedIndex = ((HeaderPt)currentHeader).locationName;
                     musicDayUpDown.Value = ((HeaderPt)currentHeader).musicDay;
                     musicNightUpDown.Value = ((HeaderPt)currentHeader).musicNight;
                     areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.showName:D3}");
@@ -1210,7 +1211,7 @@ namespace DSPRE {
                     break;
                 default:
                     areaIconComboBox.SelectedIndex = areaIconComboBox.FindString("[" + $"{((HeaderHGSS)currentHeader).areaIcon:D3}");
-                    locationNameComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).mapName;
+                    locationNameComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).locationName;
                     musicDayUpDown.Value = ((HeaderHGSS)currentHeader).musicDay;
                     musicNightUpDown.Value = ((HeaderHGSS)currentHeader).musicNight;
                     worldmapXCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapX;
@@ -1271,10 +1272,10 @@ namespace DSPRE {
                     ((HeaderDP)currentHeader).locationName = (ushort)locationNameComboBox.SelectedIndex;
                     break;
                 case "Plat":
-                    ((HeaderPt)currentHeader).mapName = (byte)locationNameComboBox.SelectedIndex;
+                    ((HeaderPt)currentHeader).locationName = (byte)locationNameComboBox.SelectedIndex;
                     break;
                 default:
-                    ((HeaderHGSS)currentHeader).mapName = (byte)locationNameComboBox.SelectedIndex;
+                    ((HeaderHGSS)currentHeader).locationName = (byte)locationNameComboBox.SelectedIndex;
                     break;
             }
         }
@@ -1289,13 +1290,13 @@ namespace DSPRE {
             switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
-                    ((HeaderDP)currentHeader).musicDay = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
+                    currentHeader.musicDay = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
                     break;
                 case "Plat":
-                    ((HeaderPt)currentHeader).musicDay = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.PtMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
+                    currentHeader.musicDay = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.PtMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
                     break;
                 default:
-                    ((HeaderHGSS)currentHeader).musicDay = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.HGSSMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
+                    currentHeader.musicDay = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.HGSSMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
                     break;
             }
         }
@@ -1306,13 +1307,13 @@ namespace DSPRE {
             switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
-                    ((HeaderDP)currentHeader).musicNight = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
+                    currentHeader.musicNight= (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
                     break;
                 case "Plat":
-                    ((HeaderPt)currentHeader).musicNight = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.PtMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
+                    currentHeader.musicNight = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.PtMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
                     break;
                 default:
-                    ((HeaderHGSS)currentHeader).musicNight = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.HGSSMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
+                    currentHeader.musicNight = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.HGSSMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
                     break;
             }
         }
@@ -1323,18 +1324,16 @@ namespace DSPRE {
             disableHandlers = true;
             try {
                 ushort updValue = (ushort)((NumericUpDown)sender).Value;
+                currentHeader.musicDay = updValue;
                 switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
-                        ((HeaderDP)currentHeader).musicDay = updValue;
                         musicDayComboBox.SelectedItem = PokeDatabase.MusicDB.DPMusicDict[updValue];
                         break;
                     case "Plat":
-                        ((HeaderPt)currentHeader).musicDay = updValue;
                         musicDayComboBox.SelectedItem = PokeDatabase.MusicDB.PtMusicDict[updValue];
                         break;
                     default:
-                        ((HeaderHGSS)currentHeader).musicDay = (ushort) ((NumericUpDown)sender).Value;
                         musicDayComboBox.SelectedItem = PokeDatabase.MusicDB.HGSSMusicDict[updValue];
                         break;
                 }
@@ -1350,18 +1349,16 @@ namespace DSPRE {
             disableHandlers = true;
             try {
                 ushort updValue = (ushort)((NumericUpDown)sender).Value;
+                currentHeader.musicNight = updValue;
                 switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
-                        ((HeaderDP)currentHeader).musicNight = updValue;
                         musicNightComboBox.SelectedItem = PokeDatabase.MusicDB.DPMusicDict[updValue];
                         break;
                     case "Plat":
-                        ((HeaderPt)currentHeader).musicNight = updValue;
                         musicNightComboBox.SelectedItem = PokeDatabase.MusicDB.PtMusicDict[updValue];
                         break;
                     default:
-                        ((HeaderHGSS)currentHeader).musicNight = updValue;
                         musicNightComboBox.SelectedItem = PokeDatabase.MusicDB.HGSSMusicDict[updValue];
                         break;
                 }
@@ -1574,7 +1571,7 @@ namespace DSPRE {
                         break;
                     case "Plat":
                         for (short i = 0; i < internalNames.Count; i++) {
-                            String locationName = locationNameComboBox.Items[((HeaderPt)Header.LoadFromARM9(i)).mapName].ToString();
+                            String locationName = locationNameComboBox.Items[((HeaderPt)Header.LoadFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
                                 noResult = false;
@@ -1584,7 +1581,7 @@ namespace DSPRE {
                     case "HG":
                     case "SS":
                         for (short i = 0; i < internalNames.Count; i++) {
-                            String locationName = locationNameComboBox.Items[((HeaderHGSS)Header.LoadFromARM9(i)).mapName].ToString();
+                            String locationName = locationNameComboBox.Items[((HeaderHGSS)Header.LoadFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 headerListBox.Items.Add(i.ToString("D3") + nameSeparator + internalNames[i]);
                                 noResult = false;
@@ -6426,7 +6423,8 @@ namespace DSPRE {
         #endregion
 
         private void headerSearchToolStripButton_Click(object sender, EventArgs e) {
-
+            HeaderSearch h = new HeaderSearch(ref internalNames);
+            h.Show();
         }
     }
 }
