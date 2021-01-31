@@ -5946,7 +5946,8 @@
             this.scriptTextBox.Size = new System.Drawing.Size(581, 562);
             this.scriptTextBox.TabIndex = 7;
             this.scriptTextBox.Text = "";
-            this.scriptTextBox.VScroll += new System.EventHandler(this.scriptTextBox_VScroll);
+            this.scriptTextBox.SelectionChanged += (sender, e) => this.AddLineNumbers(sender, e, LineNumberTextBoxScript);
+            this.scriptTextBox.VScroll += (sender, e) => this.AddLineNumbers(sender, e, LineNumberTextBoxScript);
             // 
             // LineNumberTextBoxScript
             // 
@@ -5994,8 +5995,8 @@
             this.functionTextBox.Size = new System.Drawing.Size(581, 562);
             this.functionTextBox.TabIndex = 14;
             this.functionTextBox.Text = "";
-            this.functionTextBox.VScroll += new System.EventHandler(this.functionTextBox_VScroll);
-            this.functionTextBox.TextChanged += new System.EventHandler(this.functionTextBox_SelectionChanged);
+            this.functionTextBox.SelectionChanged += (sender, e) => this.AddLineNumbers(sender, e, LineNumberTextBoxFunc);
+            this.functionTextBox.VScroll += (sender, e) => this.AddLineNumbers(sender, e, LineNumberTextBoxFunc);
             // 
             // LineNumberTextBoxFunc
             // 
@@ -6040,8 +6041,8 @@
             this.movementTextBox.Size = new System.Drawing.Size(581, 562);
             this.movementTextBox.TabIndex = 17;
             this.movementTextBox.Text = "";
-            this.movementTextBox.SelectionChanged += new System.EventHandler(this.movementTextBox_SelectionChanged);
-            this.movementTextBox.VScroll += new System.EventHandler(this.movementTextBox_VScroll);
+            this.movementTextBox.SelectionChanged += (sender, e) => this.AddLineNumbers(sender, e, LineNumberTextBoxMov);
+            this.movementTextBox.VScroll += (sender, e) => this.AddLineNumbers(sender, e, LineNumberTextBoxMov);
             // 
             // LineNumberTextBoxMov
             // 
