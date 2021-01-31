@@ -2940,9 +2940,9 @@ namespace DSPRE {
             int buildingNumber = buildingsListBox.SelectedIndex;
 
             buildIndexComboBox.SelectedIndex = (int)currentMapFile.buildings[buildingNumber].modelID;
-            xBuildUpDown.Value = currentMapFile.buildings[buildingNumber].xPosition + currentMapFile.buildings[buildingNumber].xFraction/65535;
-            zBuildUpDown.Value = currentMapFile.buildings[buildingNumber].zPosition + currentMapFile.buildings[buildingNumber].yFraction/65535;
-            yBuildUpDown.Value = currentMapFile.buildings[buildingNumber].yPosition + currentMapFile.buildings[buildingNumber].zFraction/65535;
+            xBuildUpDown.Value = currentMapFile.buildings[buildingNumber].xPosition + (decimal)currentMapFile.buildings[buildingNumber].xFraction/65535;
+            zBuildUpDown.Value = currentMapFile.buildings[buildingNumber].zPosition + (decimal)currentMapFile.buildings[buildingNumber].yFraction/65535;
+            yBuildUpDown.Value = currentMapFile.buildings[buildingNumber].yPosition + (decimal)currentMapFile.buildings[buildingNumber].zFraction/65535;
 
             buildingWidthUpDown.Value = currentMapFile.buildings[buildingNumber].width;
             buildingHeightUpDown.Value = currentMapFile.buildings[buildingNumber].height;
@@ -5002,60 +5002,26 @@ namespace DSPRE {
             return w;
         }
 
-        public void AddLineNumbers(RichTextBox mainbox, RichTextBox linebox) {
-            // create & set Point p to (0,0)    
-            Point p = new Point(0, 0);
+        public void AddLineNumbers(RichTextBox mainbox, RichTextBox numberBox) {
+            // get line indices
+            int indexFirstCharDisplayed = mainbox.GetCharIndexFromPosition(new Point(0, mainbox.Font.Height/2));
+            int firstLine = mainbox.GetLineFromCharIndex(indexFirstCharDisplayed);
 
-            // get First Index & First Line from scriptTextBox    
-            int First_Index = mainbox.GetCharIndexFromPosition(p);
-            int First_Line = mainbox.GetLineFromCharIndex(First_Index);
+            int indexLastCharDisplayed = mainbox.GetCharIndexFromPosition(new Point(0, mainbox.Height + mainbox.Font.Height / 2));
+            int lastLine = mainbox.GetLineFromCharIndex(indexLastCharDisplayed);
 
-            // set X & Y coordinates of Point p to ClientRectangle Width & Height respectively    
-            p.X = ClientRectangle.Width;
-            p.Y = ClientRectangle.Height;
-
-            // get Last Index & Last Line from scriptTextBox    
-            int Last_Index = mainbox.GetCharIndexFromPosition(p);
-            int Last_Line = mainbox.GetLineFromCharIndex(Last_Index);
-
-            // set Center alignment to LineNumberTextBox    
-            linebox.SelectionAlignment = HorizontalAlignment.Center;
+            // align line numbers to center
+            numberBox.SelectionAlignment = HorizontalAlignment.Center;
 
             // set LineNumberTextBox text to null & width to GetWidth() function value    
-            linebox.Text = "";
-            linebox.Width = GetWidthScript();
+            numberBox.Text = "";
+            numberBox.Width = GetWidthScript();
 
             // now add each line number to LineNumberTextBox upto last line    
-            for (int i = First_Line + 1; i <= Last_Line; i++) {
-                linebox.Text += i + "\n";
+            for (int i = firstLine; i <= lastLine+1; i++) {
+                numberBox.Text += i+1 + "\n";
             }
-            linebox.Invalidate();
-        }
-
-        private void scriptTextBox_SelectionChanged(object sender, EventArgs e) {
-            Point p = scriptTextBox.GetPositionFromCharIndex(scriptTextBox.SelectionStart);
-            if (p.X == 1) {
-                AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            }
-        }
-
-        private void scriptTextBox_VScroll(object sender, EventArgs e) {
-            LineNumberTextBoxScript.Text = "";
-            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-        }
-
-        private void scriptTextBox_TextChanged(object sender, EventArgs e) {
-            if (disableHandlers)
-                return;
-
-            if (scriptTextBox.Text == "") {
-                AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            }
-        }
-
-        private void LineNumberTextBoxScript_MouseDown(object sender, MouseEventArgs e) {
-            scriptTextBox.Select();
-            LineNumberTextBoxScript.DeselectAll();
+            numberBox.Invalidate();
         }
         #endregion
         #region LineNumbers Functions
@@ -5074,32 +5040,34 @@ namespace DSPRE {
 
             return w;
         }
-
+        private void scriptTextBox_SelectionChanged(object sender, EventArgs e) {
+            if (disableHandlers)
+                return;
+            AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
+        }
+        private void scriptTextBox_VScroll(object sender, EventArgs e) {
+            LineNumberTextBoxScript.Text = "";
+            AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
+        }
         private void functionTextBox_SelectionChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
-
-            Point p = functionTextBox.GetPositionFromCharIndex(functionTextBox.SelectionStart);
-            if (p.X == 1) {
-                AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
-            }
-        }
-
-        private void functionTextBox_VScroll(object sender, EventArgs e) {
-            LineNumberTextBoxFunc.Text = "";
             AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
-            LineNumberTextBoxFunc.Invalidate();
         }
-
-        private void functionTextBox_TextChanged(object sender, EventArgs e) {
-            if (functionTextBox.Text == "") {
-                AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
-            }
+        private void functionTextBox_VScroll(object sender, EventArgs e) {
+            if (disableHandlers)
+                return;
+            AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
         }
-
-        private void LineNumberTextBoxFunc_MouseDown(object sender, MouseEventArgs e) {
-            functionTextBox.Select();
-            LineNumberTextBoxFunc.DeselectAll();
+        private void movementTextBox_SelectionChanged(object sender, EventArgs e) {
+            if (disableHandlers)
+                return;
+            AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
+        }
+        private void movementTextBox_VScroll(object sender, EventArgs e) {
+            if (disableHandlers)
+                return;
+            AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
         }
         #endregion
         #region LineNumbers Movements
@@ -5117,30 +5085,6 @@ namespace DSPRE {
             }
 
             return w;
-        }
-
-        private void movementTextBox_SelectionChanged(object sender, EventArgs e) {
-            Point p = movementTextBox.GetPositionFromCharIndex(movementTextBox.SelectionStart);
-            if (p.X == 1) {
-                AddLineNumbers(movementTextBox, LineNumberTextBoxMov);
-            }
-        }
-
-        private void movementTextBox_VScroll(object sender, EventArgs e) {
-            LineNumberTextBoxMov.Text = "";
-            AddLineNumbers(movementTextBox, LineNumberTextBoxMov);
-            LineNumberTextBoxMov.Invalidate();
-        }
-
-        private void movementTextBox_TextChanged(object sender, EventArgs e) {
-            if (movementTextBox.Text == "") {
-                AddLineNumbers(movementTextBox, LineNumberTextBoxMov);
-            }
-        }
-
-        private void LineNumberTextBoxMov_MouseDown(object sender, MouseEventArgs e) {
-            movementTextBox.Select();
-            LineNumberTextBoxMov.DeselectAll();
         }
         #endregion
         private void addScriptFileButton_Click(object sender, EventArgs e) {
