@@ -16,6 +16,7 @@ namespace DSPRE {
 
         public ROMToolboxDialog(RomInfo romInfo) {
             InitializeComponent();
+
             this.romInfo = romInfo;
 
             DSUtils.UnpackNarc(12);

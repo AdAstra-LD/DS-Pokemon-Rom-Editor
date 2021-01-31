@@ -19,15 +19,11 @@ namespace DSPRE
                 selectEncounterComboBox.Items.Add("Encounters File " + i.ToString());
 
             foreach (TabPage page in mainTabControl.TabPages) {
-                foreach (Control g in page.Controls) {
-                    GroupBox group = g as GroupBox;
-                    
-                    if (group != null) {
-                        foreach (Control c in group.Controls) {
-                            ComboBox box = c as ComboBox;
-
-                            if (box != null) 
-                                box.Items.AddRange(names);
+                foreach (Control grp in page.Controls) {
+                    if (grp as GroupBox != null) {
+                        foreach (Control c in grp.Controls) {
+                            if (c as ComboBox != null)
+                                (c as ComboBox).Items.AddRange(names);
                         }
                     }                  
                 }               

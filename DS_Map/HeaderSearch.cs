@@ -41,6 +41,8 @@ namespace DSPRE {
         private List<string> intNames;
         private ListBox headerListBox;
 
+        public string status = "Ready";
+
         public HeaderSearch(ref List<string> internalNames, ListBox headerListBox) {
             InitializeComponent();
             searchableHeaderFields = searchableHeaderFieldsList.ToArray();
@@ -51,26 +53,12 @@ namespace DSPRE {
             this.headerListBox = headerListBox;
 
             fieldToSearch1ComboBox.Items.AddRange(searchableHeaderFields);
-            fieldToSearch2ComboBox.Items.AddRange(searchableHeaderFields);
-
             fieldToSearch1ComboBox.SelectedIndex = 0;
             operator1ComboBox.SelectedIndex = 0;
         }
 
         private void fieldToSearch1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             UpdateOperators(operator1ComboBox, fieldToSearch1ComboBox);
-        }
-
-        private void operator1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-
-        }
-
-        private void fieldToSearch2ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            UpdateOperators(operator2ComboBox, fieldToSearch2ComboBox);
-        }
-
-        private void operator2ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-
         }
 
         #region Helper Methods
@@ -116,21 +104,67 @@ namespace DSPRE {
                     string[] fieldSplit = fieldToSearch.Split();
                     fieldSplit[0] = fieldSplit[0].ToLower();
                     string property = String.Join("", fieldSplit);
+                    var headerFieldEntry = typeof(Header).GetProperty(property).GetValue(Header.LoadFromARM9(i), null);
 
-                    var headerField = typeof(Header).GetProperty(property).GetValue(Header.LoadFromARM9(i), null);
+                    int headerField = int.Parse(headerFieldEntry.ToString());
+                    int numToSearch = int.Parse(valToSearch);
 
-                    if (headerField.ToString().Equals(valToSearch))
-                        result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                    if (oper.Equals("Is Less than")) {
+                        if (headerField < numToSearch) {
+                            result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                        }
+                    } else if (oper.Equals("Equals")) {
+                        if (headerField == numToSearch) {
+                            result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                        }
+                    } else if (oper.Equals("Is Greater")) {
+                        if (headerField > numToSearch) {
+                            result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                        }
+                    } else if (oper.StartsWith("Is Less than or Equal")) {
+                        if (headerField <= numToSearch) {
+                            result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                        }
+                    } else if (oper.StartsWith("Is Greater than or Equal")) {
+                        if (headerField >= numToSearch) {
+                            result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                        }
+                    } else if (oper.StartsWith("Is Different")) {
+                        if (headerField != numToSearch) {
+                            result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                        }
+                    }
                 }
             }
             return result;
         }
         private void startSearchButton_Click(object sender, EventArgs e) {
             headerListBox.Items.Clear();
-            List<string> result = advancedSearch(0, (short)intNames.Count, intNames, fieldToSearch1ComboBox.Text, operator1ComboBox.SelectedItem.ToString(), value1TextBox.Text);
+            List<string> result;
 
-            if (result != null) {
+            try {
+                result = advancedSearch(0, (short)intNames.Count, intNames, fieldToSearch1ComboBox.Text, operator1ComboBox.SelectedItem.ToString(), value1TextBox.Text);
+            } catch (FormatException) {
+                MessageBox.Show("Make sure the value to search is correct.", "Format Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                headerListBox.Items.Add("Search parameters are invalid");
+                headerListBox.Enabled = false;
+                return;
+            }
+
+            if (result == null) {
+                if (value1TextBox.Text == "") {
+                    headerListBox.Items.Add("Value to search is empty");
+                } else {
+                    headerListBox.Items.Add("No result for " + '"' + value1TextBox.Text + '"');
+                }
+                headerListBox.Enabled = false;
+            } else {
                 headerListBox.Items.AddRange(result.ToArray());
+                headerListBox.SelectedIndex = 0;
+                headerListBox.Enabled = true;
+
+                status = "Showing headers whose " + fieldToSearch1ComboBox.Text + " " + operator1ComboBox.Text.ToLower() + " " + '"' + value1TextBox.Text + '"';
+                this.Dispose();
             }
         }
     }

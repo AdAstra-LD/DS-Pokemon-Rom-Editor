@@ -7421,7 +7421,7 @@
             this.asmHacksToolStripMenuItem.Name = "asmHacksToolStripMenuItem";
             this.asmHacksToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.asmHacksToolStripMenuItem.Text = "ROM Toolbox";
-            this.asmHacksToolStripMenuItem.Click += new System.EventHandler(this.asmHacksToolStripMenuItem_Click);
+            this.asmHacksToolStripMenuItem.Click += new System.EventHandler(this.romToolBoxToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem1
             // 
@@ -7570,7 +7570,7 @@
             this.romToolboxButton.Size = new System.Drawing.Size(36, 36);
             this.romToolboxButton.Text = "ROM Toolbox";
             this.romToolboxButton.ToolTipText = "ROM Toolbox";
-            this.romToolboxButton.Click += new System.EventHandler(this.asmHacksToolStripMenuItem_Click);
+            this.romToolboxButton.Click += new System.EventHandler(this.romToolBoxToolStripMenuItem_Click);
             // 
             // headerSearchToolStripButton
             // 

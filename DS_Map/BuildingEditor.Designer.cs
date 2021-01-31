@@ -132,6 +132,7 @@
             this.Controls.Add(this.interiorCheckBox);
             this.Controls.Add(this.buildingEditorBldListBox);
             this.Name = "BuildingEditor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Building Editor";
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();

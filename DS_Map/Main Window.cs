@@ -712,11 +712,17 @@ namespace DSPRE {
             unpack.WaitForExit();
         }
         #endregion
-        private void asmHacksToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void romToolBoxToolStripMenuItem_Click(object sender, EventArgs e) {
             using (ROMToolboxDialog window = new ROMToolboxDialog(romInfo)) {
                 window.ShowDialog();
                 if (ROMToolboxDialog.standardizedItems)
                     isItemRadioButton.Enabled = true;
+            }
+        }
+        private void headerSearchToolStripButton_Click(object sender, EventArgs e) {
+            using (HeaderSearch h = new HeaderSearch(ref internalNames, headerListBox)) {
+                h.ShowDialog();
+                statusLabel.Text = h.status;
             }
         }
         private void buildingEditorButton_Click(object sender, EventArgs e) {
@@ -1157,8 +1163,8 @@ namespace DSPRE {
             currentHeader.flags = flagVal;
         }
         private void headerListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers)
-                return;
+            if (disableHandlers || headerListBox.SelectedIndex < 0)
+                return; 
 
             /* Obtain current header ID from listbox*/
             short headerNumber = Int16.Parse(headerListBox.SelectedItem.ToString().Substring(0, internalNames.Count.ToString().Length));
@@ -1530,6 +1536,8 @@ namespace DSPRE {
             searchLocationTextBox.Clear();
             if (headerListBox.Items.Count < internalNames.Count)
                 resetHeaderSearchResults();
+
+            statusLabel.Text = "Ready";
         }
 
         private void resetHeaderSearchResults() {
@@ -5026,18 +5034,12 @@ namespace DSPRE {
             return w;
         }
         private void updateLineNumbersScripts(object sender, EventArgs e) {
-            if (disableHandlers)
-                return;
             AddLineNumbers(scriptTextBox, LineNumberTextBoxScript);
         }
         private void updateLineNumbersFunctions(object sender, EventArgs e) {
-            if (disableHandlers)
-                return;
             AddLineNumbers(functionTextBox, LineNumberTextBoxFunc);
         }
         private void updateLineNumbersMovements(object sender, EventArgs e) {
-            if (disableHandlers)
-                return;
             AddLineNumbers(functionTextBox, LineNumberTextBoxMov);
         }
         #endregion
@@ -6315,10 +6317,5 @@ namespace DSPRE {
             MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
-
-        private void headerSearchToolStripButton_Click(object sender, EventArgs e) {
-            HeaderSearch h = new HeaderSearch(ref internalNames, headerListBox);
-            h.Show();
-        }
     }
 }

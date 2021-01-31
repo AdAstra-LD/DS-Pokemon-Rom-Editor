@@ -235,6 +235,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ROMToolboxDialog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ROM Toolbox";
             this.ResumeLayout(false);
             this.PerformLayout();
