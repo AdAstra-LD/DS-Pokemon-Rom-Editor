@@ -592,9 +592,9 @@
             this.headerSearchToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.headersGridView = new DSPRE.DataGridViewDoubleBuffered();
-            this.heightsGridView = new DSPRE.DataGridViewDoubleBuffered();
-            this.mapFilesGridView = new DSPRE.DataGridViewDoubleBuffered();
+            this.headersGridView = new System.Windows.Forms.DataGridView();
+            this.heightsGridView = new System.Windows.Forms.DataGridView();
+            this.mapFilesGridView = new System.Windows.Forms.DataGridView();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -7424,6 +7424,7 @@
             // 
             // headersGridView
             // 
+            this.headersGridView.DoubleBuffered(true);
             this.headersGridView.AllowUserToAddRows = false;
             this.headersGridView.AllowUserToDeleteRows = false;
             this.headersGridView.AllowUserToResizeColumns = false;
@@ -7480,6 +7481,7 @@
             // 
             // heightsGridView
             // 
+            this.heightsGridView.DoubleBuffered(true);
             this.heightsGridView.AllowUserToAddRows = false;
             this.heightsGridView.AllowUserToDeleteRows = false;
             this.heightsGridView.AllowUserToResizeColumns = false;
@@ -7534,6 +7536,7 @@
             // 
             // mapFilesGridView
             // 
+            this.mapFilesGridView.DoubleBuffered(true);
             this.mapFilesGridView.AllowUserToAddRows = false;
             this.mapFilesGridView.AllowUserToDeleteRows = false;
             this.mapFilesGridView.AllowUserToResizeColumns = false;
@@ -7822,9 +7825,9 @@
         private System.Windows.Forms.TabControl matrixTabControl;
         private System.Windows.Forms.TabPage headersTabPage;
         private System.Windows.Forms.TabPage heightsTabPage;
-        private DSPRE.DataGridViewDoubleBuffered heightsGridView;
+        private System.Windows.Forms.DataGridView heightsGridView;
         private System.Windows.Forms.TabPage mapFilesTabPage;
-        private DSPRE.DataGridViewDoubleBuffered mapFilesGridView;
+        private System.Windows.Forms.DataGridView mapFilesGridView;
         private System.Windows.Forms.TextBox matrixNameTextBox;
         private System.Windows.Forms.NumericUpDown heightUpDown;
         private System.Windows.Forms.NumericUpDown widthUpDown;
@@ -7832,7 +7835,7 @@
         private System.Windows.Forms.Label widthLabel;
         private System.Windows.Forms.ComboBox selectMatrixComboBox;
         private System.Windows.Forms.Button saveMatrixButton;
-        private DSPRE.DataGridViewDoubleBuffered headersGridView;
+        private System.Windows.Forms.DataGridView headersGridView;
         private System.Windows.Forms.Button addHeadersButton;
         private System.Windows.Forms.Button addHeightsButton;
         private System.Windows.Forms.Button removeHeadersButton;
