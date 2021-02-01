@@ -739,7 +739,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.0.8" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.1.0" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks go to Trifindo, Mikelan98, JackHack96, Mixone and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS Rom Hacking made the development of this tool possible.";
@@ -5154,11 +5154,11 @@ namespace DSPRE {
             }
         }
         private void searchInScriptsButton_Click(object sender, EventArgs e) {
-            if (searchMessageTextBox.Text == "")
+            if (searchInScriptsTextBox.Text == "")
                 return;
 
             searchInScriptsResultListBox.Items.Clear();
-            string searchString = searchInScriptsUpDown.Text;
+            string searchString = searchInScriptsTextBox.Text;
             searchProgressBar.Maximum = selectScriptFileComboBox.Items.Count;
 
             string resultsBuffer = "";
@@ -6222,14 +6222,12 @@ namespace DSPRE {
             MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
-
         private void spawnableDirComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
                 return;
 
             currentEventFile.spawnables[spawnablesListBox.SelectedIndex].dir = (ushort)spawnableDirComboBox.SelectedIndex;
         }
-
         private void spawnableTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (spawnablesListBox.SelectedIndex < 0)
                 return;

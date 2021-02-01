@@ -2,70 +2,82 @@
 
 Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features and bugfixes.
 
-![Screenshot](aDSPRE_107.png)
-![Screenshot](bDSPRE_107.png)
+![Screenshot](aDSPRE_108.png)
+![Screenshot](bDSPRE_108.png)
 
-## Major Changes to Mixone's fork
+## Misc changes to the official DSPRE
 - Significantly shorter load and save times.
 - Fixed script editor (it's also much faster now).
-- Added mouse support and warps navigation feature to the Event Editor.
-- Support for custom color tables (matrix editor).
-
-- Added copy and paste buttons to header editor.
-- Added import and export buttons to header editor.
-- Updated Header Fields for all games (added WorldMap Coordinates to HGSS header editor)
-- Added more HGSS weather effects, redone weather preview pics
-
-- Search location feature.
 - Added Advanced Header Search feature.
-
-- Fixed Camera settings selector for HGSS roms.
-- Fixed Text Search and Replace.
-
-- Wild Encounter Editor allows adding and removing encounter files.
-- Wild Encounter Editor can now attempt to repair corrupted encounter files.
-
-- Partially redesigned Building Editor (now with fewer controls and a more straightforward GUI)
-
-- Redesigned NSBTX Editor
-- Added NSBTX editor button functions
-
-- Fixed "Open Matrix" not loading the correct textures and buildings, especially for interior maps.
-- Fixed map screen randomly becoming 3D, even with the collision tab open.
-- Fixed OW search algorithm for most (if not all) supported ROMs.
-- Added new patches to the ROM ToolBox (including ARM9 memory expander, BDHCAM and much more).
-- Replaced "Search Flag" with "Search any command".
-
-
-## Minor Changes to Mixone's fork
-
+- Fixed Overworld sprite search algorithm for most (if not all) supported ROMs.
 - Lots of new icons.
 - Fixed app name.
 - Fixed many Exceptions, which now show user-friendly messages.
 - Fixed error upon loading Dragon's Den header (Music not found).
 - Some fields will now show a coloured text depending on their value.
-
-- Added BDHCAM Support.
-
-- Fixed BGS signature of maps being overwritten upon saving.
+- New ROM Toolbox
 - Added new ALT key shortcuts (Hold alt to see which shortcuts are available).
 
+###ROM Toolbox
+Supported patches:
+- Expand ARM9
+- BDHCAM
+- Set Overlay1 as uncompressed
+- Standardize item numbers (fixed)
+- Pokémon names to Sentence Case
+
+###Wild Encounters Editor
+- Added missing button functions (add and remove)
+- Wild Encounter Editor can now attempt to repair corrupted encounter files.
+- Editor now detects the selected header.
+
+
+###Header Editor
+- Added copy and paste buttons to every header category editor.
+- Added import and export buttons to header editor.
+- New basic search location feature.
+- Updated Header Fields for all games (added WorldMap Coordinates to HGSS header editor)
+- Added more HGSS weather effects.
+- Redone HGSS weather preview pics.
+- Fixed HGSS Camera settings 
 - Fixed header flag names.
 - Editable Internal names.
+- Added text length label to Internal Names box (Header Editor).
 - Fixed a bug that prevented Internal Names from displaying correctly (String termination).
+- Fixed "Open Matrix" button not loading the correct textures and buildings, especially for interior maps.
 
-- Enabled some of the quick script cmd buttons.
-- Added New Movement names and changed some of the old ones.
+###Matrix Editor
+- Added support for custom color tables
+- Fixed "add matrix" and "remove matrix" buttons GUI numbering mismatch.
+- Fixed wrong row/col indices when resizing matrices.
+
+###Map Editor
+- Partial GUI redesign (now with fewer building controls and a more straightforward GUI).
+- New BGS Section
 - Expanded collisions database.
+- Added Section size labels to 3D Model, Terrain and BGS Tabs (Map Editor).
+- Added support for broken BTX detection to Map Editor and NSBTX Editor.
+- Fixed map screen randomly becoming 3D, even with the collision tab open.
+- Added BDHCAM Support to the import/export menu.
+- Added Map BIN Import button
+- Fixed BGS signature of maps being overwritten upon saving a map.
 
-- Fixed Matrix editor "add" and "remove" buttons GUI numbering mismatch.
-- Fixed wrong numbers when resizing matrices.
+###NSBTX Editor
+- GUI Redesign 
+- Added missing button functions (add and remove)
+- Created a palette match algorithm
 
-- Fixed "Text Editor" export button.
-- Added option to show row numbers as hex in the Text Editor.
+###Event Editor
+- Added mouse support and warps navigation feature.
+- Events can now be duplicated
+- New fields (for Spawnables and Triggers)
 
-- Fixed Encounters editor not opening.
-- the "Open Wild Pokémon" button in Header Editor is disabled when a NULL encounter file is detected.
-- Encounter Editor detects the selected header.
+###Script Editor
+- Replaced "Search Flag" with "Search any command".
+- Enabled some of the quick script cmd buttons.
 
-- Created a palette match algorithm for the Tileset Editor
+###Text Editor
+- Added New Movement names and changed some of the old ones.
+- Fixed export button.
+- Added option to show row numbers as hex.
+- Fixed Text Search and Replace.
