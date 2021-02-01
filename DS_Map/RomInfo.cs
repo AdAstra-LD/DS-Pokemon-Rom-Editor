@@ -422,11 +422,11 @@ namespace DSPRE {
                     pokémonNamesTextNumbers = new int[2] { 362, 363 };
                     break;
                 case "Plat":
-                    pokémonNamesTextNumbers = new int[4] { 412, 712, 715, 716}; //also 413?
+                    pokémonNamesTextNumbers = new int[6] { 412, 712, 713, 714, 715, 716}; //also 413?
                     break;
                 case "HG":
                 case "SS":
-                    pokémonNamesTextNumbers = new int[4] { 237, 817, 820, 821}; //also 238?
+                    pokémonNamesTextNumbers = new int[6] { 237, 817, 818, 819, 820, 821}; //also 238?
                     break;
             }
         }

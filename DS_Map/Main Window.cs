@@ -5852,6 +5852,9 @@ namespace DSPRE {
                 currentTextArchive.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
         }
         private void textSearchResultsListBox_SelectedIndexChanged(object sender, MouseEventArgs e) {
+            if (textSearchResultsListBox.SelectedIndex < 0)
+                return;
+
             string resultRow = textSearchResultsListBox.Text;
             resultRow = resultRow.Substring(1);
             string[] parts = resultRow.Split(new string[] { ") - #"}, StringSplitOptions.RemoveEmptyEntries);

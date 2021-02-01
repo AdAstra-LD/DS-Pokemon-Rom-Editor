@@ -156,7 +156,7 @@
             this.namesToSentenceCaseButton.Name = "namesToSentenceCaseButton";
             this.namesToSentenceCaseButton.Size = new System.Drawing.Size(100, 50);
             this.namesToSentenceCaseButton.TabIndex = 9;
-            this.namesToSentenceCaseButton.Text = "Coming soon";
+            this.namesToSentenceCaseButton.Text = "Apply Patch";
             this.namesToSentenceCaseButton.UseVisualStyleBackColor = true;
             this.namesToSentenceCaseButton.Click += new System.EventHandler(this.SentenceCasePatchButton_Click);
             // 

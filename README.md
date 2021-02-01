@@ -28,7 +28,7 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features a
 - Fixed "Open Matrix" not loading the correct textures and buildings, especially for interior maps.
 - Fixed map screen randomly becoming 3D, even with the collision tab open.
 - Fixed OW search algorithm for most (if not all) supported ROMs.
-- Added ARM9 memory expander to the new ROM Toolbox.
+- Added new patches to the ROM ToolBox (including ARM9 memory expander, BDHCAM and much more).
 - Replaced "Search Flag" with "Search any command".
 
 
