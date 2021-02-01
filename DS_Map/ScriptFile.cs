@@ -107,12 +107,11 @@ namespace DSPRE {
                         List<byte[]> parameters = new List<byte[]>();
                         if (id != 0xFE)
                             parameters.Add(scrReader.ReadBytes(2));
+                        else
+                            endMovement = true;
 
                         Command command = new Command(id, parameters, gameVersion, true);
                         commandsList.Add(command);
-
-                        if (command.id == 0xFE)
-                            endMovement = true;
                     }
                     this.movements.Add(new Script(commandsList));
                 }
@@ -406,7 +405,7 @@ namespace DSPRE {
             }
             return new Command(id, parameters, gameVersion, false);
         }
-        public byte[] Save() {
+        public byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 List<uint> scriptOffsets = new List<uint>();
@@ -487,7 +486,6 @@ namespace DSPRE {
                     }
                 }
 
-
                 // Movements must be halfword-aligned
                 if (writer.BaseStream.Position % 2 == 1) { //Check if the writer's head is on an odd byte
                     writer.Write((byte)0); //Add padding
@@ -531,7 +529,7 @@ namespace DSPRE {
         public void SaveToFile(int fileID) {
             using (BinaryWriter writer = new BinaryWriter((new FileStream(RomInfo.scriptDirPath +
                 "\\" + fileID.ToString("D4"), FileMode.Create))))
-                writer.Write(this.Save());
+                writer.Write(this.ToByteArray());
         }
         #endregion
     }

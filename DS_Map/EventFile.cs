@@ -1,5 +1,8 @@
+using DSPRE;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
 
 namespace LibNDSFormats.NSBMD
 {
@@ -16,10 +19,8 @@ namespace LibNDSFormats.NSBMD
         #endregion
 
         #region Constructors (1)
-        public EventFile(Stream data)
-        {
-            using (BinaryReader reader = new BinaryReader(data))
-            {
+        public EventFile(Stream data) {
+            using (BinaryReader reader = new BinaryReader(data)) {
                 /* Read spawnables */
                 uint spawnablesCount = reader.ReadUInt32();
                 for (int i = 0; i < spawnablesCount; i++) 
@@ -41,10 +42,11 @@ namespace LibNDSFormats.NSBMD
                     triggers.Add(new Trigger(new MemoryStream(reader.ReadBytes(0x10))));
             }
         }
+        public EventFile(int ID) : this(new FileStream(RomInfo.eventsDirPath + "\\" + ID.ToString("D4"), FileMode.Open)) { }
         #endregion
 
         #region Methods (1)
-        public byte[] Save()
+        public byte[] ToByteArray()
         {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData))
@@ -70,6 +72,25 @@ namespace LibNDSFormats.NSBMD
                     writer.Write(triggers[i].ToByteArray());
             }
             return newData.ToArray();
+        }
+        public void SaveToFile(string path) {
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
+                writer.Write(this.ToByteArray());
+        }
+        public void SaveToFileDefaultDir(int IDtoReplace) {
+            string path = RomInfo.eventsDirPath + "\\" + IDtoReplace.ToString("D4");
+            this.SaveToFile(path);
+        }
+        public void SaveToFileExplorePath(string suggestedFileName) {
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Filter = "Gen IV Event File (*.evt)|*.evt";
+
+            if (suggestedFileName != null && suggestedFileName != "")
+                sf.FileName = suggestedFileName;
+            if (sf.ShowDialog() != DialogResult.OK)
+                return;
+
+            this.SaveToFile(sf.FileName);
         }
         #endregion
 

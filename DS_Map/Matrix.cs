@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 
 namespace DSPRE
 {
@@ -24,8 +25,8 @@ namespace DSPRE
     public class Matrix
 	{
         #region Fields (8)
-        public bool hasHeadersSection = new bool();
-        public bool hasAltitudesSection = new bool();
+        public bool hasHeadersSection { get; set; }
+        public bool hasHeightsSection { get; set; }
         public string name { get; set; }
         public byte width { get; set; }
         public byte height { get; set; }
@@ -33,19 +34,17 @@ namespace DSPRE
         public byte[,] altitudes;
         public ushort[,] maps;
 
-        public static ushort EMPTY = 65535;
+        public static readonly ushort EMPTY = 65535;
         #endregion Fields
 
         #region Constructors(1)
-        public Matrix(Stream data)
-		{
-            using (BinaryReader reader = new BinaryReader(data))
-            {
+        public Matrix(Stream data) {
+            using (BinaryReader reader = new BinaryReader(data)) {
                 /* Read matrix size and sections included */
                 width = reader.ReadByte();
                 height = reader.ReadByte();
                 if (reader.ReadBoolean()) hasHeadersSection = true;
-                if (reader.ReadBoolean()) hasAltitudesSection = true;
+                if (reader.ReadBoolean()) hasHeightsSection = true;
                 
                 /* Read matrix's name */
                 byte nameLength = reader.ReadByte();
@@ -57,11 +56,22 @@ namespace DSPRE
                 maps = new ushort[height, width];
 
                 /* Read sections */
-                if (hasHeadersSection) for (int i = 0; i < height; i++) for (int j = 0; j < width; j++) headers[i, j] = reader.ReadUInt16();
-                if (hasAltitudesSection) for (int i = 0; i < height; i++) for (int j = 0; j < width; j++) altitudes[i, j] = reader.ReadByte();                            
-                for (int i = 0; i < height; i++) for (int j = 0; j < width; j++) maps[i, j] = reader.ReadUInt16();
+                if (hasHeadersSection) 
+                    for (int i = 0; i < height; i++) 
+                        for (int j = 0; j < width; j++) 
+                            headers[i, j] = reader.ReadUInt16();
+
+                if (hasHeightsSection) 
+                    for (int i = 0; i < height; i++) 
+                        for (int j = 0; j < width; j++) 
+                            altitudes[i, j] = reader.ReadByte();     
+                
+                for (int i = 0; i < height; i++) 
+                    for (int j = 0; j < width; j++) 
+                        maps[i, j] = reader.ReadUInt16();
             }
         }
+        public Matrix(int ID) : this (new FileStream(RomInfo.matrixDirPath + "\\" + ID.ToString("D4"), FileMode.Open)) { }
         #endregion
 
         #region Methods (6)
@@ -77,7 +87,7 @@ namespace DSPRE
                 for (int i = 0; i < Math.Min(height, newHeight); i++) 
                     for (int j = 0; j < Math.Min(width, newWidth); j++) 
                         newHeaders[i, j] = headers[i, j];
-            if (hasAltitudesSection) 
+            if (hasHeightsSection) 
                 for (int i = 0; i < Math.Min(height, newHeight); i++) 
                     for (int j = 0; j < Math.Min(width, newWidth); j++) 
                         newAltitudes[i, j] = altitudes[i, j];
@@ -108,31 +118,13 @@ namespace DSPRE
 
 
         }
-        public void AddHeadersSection()
-        {
-            hasHeadersSection = true;
-        }
-        public void AddHeightsSection()
-        {
-            hasAltitudesSection = true;
-        }
-        public void RemoveHeadersSection()
-        {
-            hasHeadersSection = false;
-        }
-        public void RemoveHeightsSection()
-        {
-            hasAltitudesSection = false;
-        }
-        public byte[] Save()
-        {
+        public byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData))
-            {
+            using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write(width);
                 writer.Write(height);
                 writer.Write(hasHeadersSection);
-                writer.Write(hasAltitudesSection);
+                writer.Write(hasHeightsSection);
                 writer.Write(name);
 
                 if (hasHeadersSection) {
@@ -141,7 +133,7 @@ namespace DSPRE
                             writer.Write(headers[i, j]);
                 }
 
-                if (hasAltitudesSection) {
+                if (hasHeightsSection) {
                     for (int i = 0; i < height; i++)
                         for (int j = 0; j < width; j++)
                             writer.Write(altitudes[i, j]);
@@ -154,6 +146,25 @@ namespace DSPRE
 
             }
             return newData.ToArray();
+        }
+        public void SaveToFile(string path) {
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
+                writer.Write(this.ToByteArray());
+        }
+        public void SaveToFileDefaultDir(int IDtoReplace) {
+            string path = RomInfo.matrixDirPath + "\\" + IDtoReplace.ToString("D4");
+            this.SaveToFile(path);
+        }
+        public void SaveToFileExplorePath(string suggestedFileName) {
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Filter = "Gen IV Matrix File (*.mtx)|*.mtx";
+
+            if (suggestedFileName != null && suggestedFileName != "")
+                sf.FileName = suggestedFileName;
+            if (sf.ShowDialog() != DialogResult.OK)
+                return;
+
+            this.SaveToFile(sf.FileName);
         }
         #endregion
 

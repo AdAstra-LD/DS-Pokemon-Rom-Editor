@@ -2135,11 +2135,11 @@
             // 
             this.importMatrixButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importMatrixButton.Location = new System.Drawing.Point(18, 199);
+            this.importMatrixButton.Location = new System.Drawing.Point(12, 199);
             this.importMatrixButton.Name = "importMatrixButton";
-            this.importMatrixButton.Size = new System.Drawing.Size(103, 29);
+            this.importMatrixButton.Size = new System.Drawing.Size(113, 29);
             this.importMatrixButton.TabIndex = 29;
-            this.importMatrixButton.Text = "Import Matrix";
+            this.importMatrixButton.Text = "Replace Matrix";
             this.importMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.importMatrixButton.UseVisualStyleBackColor = true;
             this.importMatrixButton.Click += new System.EventHandler(this.importMatrixButton_Click);
@@ -2148,9 +2148,9 @@
             // 
             this.exportMatrixButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportMatrixButton.Location = new System.Drawing.Point(18, 166);
+            this.exportMatrixButton.Location = new System.Drawing.Point(12, 166);
             this.exportMatrixButton.Name = "exportMatrixButton";
-            this.exportMatrixButton.Size = new System.Drawing.Size(103, 29);
+            this.exportMatrixButton.Size = new System.Drawing.Size(113, 29);
             this.exportMatrixButton.TabIndex = 28;
             this.exportMatrixButton.Text = "Export Matrix";
             this.exportMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2161,9 +2161,9 @@
             // 
             this.removeMatrixButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeMatrixButton.Location = new System.Drawing.Point(18, 131);
+            this.removeMatrixButton.Location = new System.Drawing.Point(12, 131);
             this.removeMatrixButton.Name = "removeMatrixButton";
-            this.removeMatrixButton.Size = new System.Drawing.Size(103, 29);
+            this.removeMatrixButton.Size = new System.Drawing.Size(113, 29);
             this.removeMatrixButton.TabIndex = 27;
             this.removeMatrixButton.Text = "Remove Last";
             this.removeMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2174,9 +2174,9 @@
             // 
             this.addMatrixButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addMatrixButton.Location = new System.Drawing.Point(18, 99);
+            this.addMatrixButton.Location = new System.Drawing.Point(12, 99);
             this.addMatrixButton.Name = "addMatrixButton";
-            this.addMatrixButton.Size = new System.Drawing.Size(103, 29);
+            this.addMatrixButton.Size = new System.Drawing.Size(113, 29);
             this.addMatrixButton.TabIndex = 2;
             this.addMatrixButton.Text = "Add Matrix";
             this.addMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3892,7 +3892,7 @@
             this.importNSBTXButton.Name = "importNSBTXButton";
             this.importNSBTXButton.Size = new System.Drawing.Size(100, 39);
             this.importNSBTXButton.TabIndex = 8;
-            this.importNSBTXButton.Text = "&Import and\r\nReplace";
+            this.importNSBTXButton.Text = "&Replace\r\nSelected...";
             this.importNSBTXButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.importNSBTXButton.UseVisualStyleBackColor = true;
             this.importNSBTXButton.Click += new System.EventHandler(this.importNSBTXButton_Click);
@@ -7320,7 +7320,7 @@
             this.addTextArchiveButton.Text = "Add Text \r\nArchive";
             this.addTextArchiveButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addTextArchiveButton.UseVisualStyleBackColor = true;
-            this.addTextArchiveButton.Click += new System.EventHandler(this.addMessageFileButton_Click);
+            this.addTextArchiveButton.Click += new System.EventHandler(this.addTextArchiveButton_Click);
             // 
             // label6
             // 

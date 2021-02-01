@@ -105,7 +105,7 @@ namespace DSPRE {
                 return null;
             }
 
-            String mapFilePath = romInfo.mapDirPath + "\\" + mapNumber.ToString("D4");
+            String mapFilePath = RomInfo.mapDirPath + "\\" + mapNumber.ToString("D4");
             try {
                 return new MapFile(new FileStream(mapFilePath, FileMode.Open), RomInfo.gameVersion);
             } catch (FileNotFoundException) {
@@ -113,30 +113,6 @@ namespace DSPRE {
                 return null;
             }
 
-        }
-
-        private Matrix LoadMatrix(int matrixNumber) {
-            if (matrixNumber < 0) {
-                MessageBox.Show("Negative matrix number received " + '(' + matrixNumber + ')', "Received negative integer!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
-            }
-
-            String matrixFilePath = romInfo.matrixDirPath + "\\" + matrixNumber.ToString("D4");
-            try {
-                return new Matrix(new FileStream(romInfo.matrixDirPath + "\\" + matrixNumber.ToString("D4"), FileMode.Open));
-            } catch (FileNotFoundException) {
-                MessageBox.Show("File " + '"' + matrixFilePath + " is missing.", "File not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
-            }
-        }
-
-        private EventFile LoadEventFile(int fileID) { 
-            try {
-                return new EventFile(new FileStream(romInfo.eventsDirPath + "\\" + fileID.ToString("D4"), FileMode.Open));
-            } catch (FileNotFoundException) {
-                MessageBox.Show("Event file not found.\n", "Can't load event", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return null;
         }
         private void PaintGameIcon(object sender, PaintEventArgs e) {
             if (iconON) {
@@ -292,7 +268,7 @@ namespace DSPRE {
             }
 
             /* Add event file numbers to box */
-            int eventCount = Directory.GetFiles(romInfo.eventsDirPath).Length;
+            int eventCount = Directory.GetFiles(RomInfo.eventsDirPath).Length;
             int owSpriteCount = Directory.GetFiles(romInfo.OWSpriteDirPath).Length;
             string[] trainerNames = GetTrainerNames();
 
@@ -356,7 +332,7 @@ namespace DSPRE {
             disableHandlers = false;
 
             /* Draw matrix 0 in matrix navigator */
-            eventMatrix = LoadMatrix(0);
+            eventMatrix = new Matrix(0);
             selectEventComboBox.SelectedIndex = 0;
             owItemComboBox.SelectedIndex = 0;
             owTrainerComboBox.SelectedIndex = 0;
@@ -487,7 +463,7 @@ namespace DSPRE {
 
             /* Add map names to box */
             for (int i = 0; i < romInfo.GetMapCount(); i++) {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(romInfo.mapDirPath + "\\" + i.ToString("D4")))) {
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.mapDirPath + "\\" + i.ToString("D4")))) {
                     switch (RomInfo.gameVersion) {
                         case "D":
                         case "P":
@@ -1995,46 +1971,40 @@ namespace DSPRE {
 
             if (currentMatrix.hasHeadersSection) 
                 matrixTabControl.TabPages.Add(headersTabPage);
-            if (currentMatrix.hasAltitudesSection) 
+            if (currentMatrix.hasHeightsSection) 
                 matrixTabControl.TabPages.Add(heightsTabPage);
         }
         #endregion
 
         private void addHeadersButton_Click(object sender, EventArgs e) {
-            if (currentMatrix.hasHeadersSection) 
-                return;
-            else {
-                currentMatrix.AddHeadersSection();
+            if (!currentMatrix.hasHeadersSection) {
+                currentMatrix.hasHeadersSection = true;
                 matrixTabControl.TabPages.Add(headersTabPage);
             }
         }
         private void addHeightsButton_Click(object sender, EventArgs e) {
-            if (currentMatrix.hasAltitudesSection) return;
-            else {
-                currentMatrix.AddHeightsSection();
+            if (!currentMatrix.hasHeightsSection) {
+                currentMatrix.hasHeightsSection = true;
                 matrixTabControl.TabPages.Add(heightsTabPage);
             }
         }
         private void addMatrixButton_Click(object sender, EventArgs e) {
             /* Load new matrix, a copy of Matrix 0 */
-            Matrix newMatrix = LoadMatrix(0);
+            Matrix newMatrix = new Matrix(0);
 
             /* Add new matrix file to matrix folder */
-            string matrixPath = romInfo.matrixDirPath + "\\" + romInfo.GetMatrixCount().ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(matrixPath, FileMode.Create))) writer.Write(newMatrix.Save());
+            string matrixPath = RomInfo.matrixDirPath + "\\" + romInfo.GetMatrixCount().ToString("D4");
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(matrixPath, FileMode.Create))) writer.Write(newMatrix.ToByteArray());
 
             /* Update ComboBox*/
             selectMatrixComboBox.Items.Add("Matrix " + (romInfo.GetMatrixCount()-1).ToString());
         }
         private void exportMatrixButton_Click(object sender, EventArgs e) {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "Matrix File (*.mtx)|*.mtx";
-            sf.FileName = "Matrix " + selectMatrixComboBox.SelectedIndex;
-            if (sf.ShowDialog(this) != DialogResult.OK)
-                return;
-
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) 
-                writer.Write(currentMatrix.Save());
+            currentMatrix.SaveToFileExplorePath("Matrix " + selectMatrixComboBox.SelectedIndex);
+        }
+        private void saveMatrixButton_Click(object sender, EventArgs e) {
+            currentMatrix.SaveToFileDefaultDir(selectMatrixComboBox.SelectedIndex);
+            eventMatrix = new Matrix(selectMatrixComboBox.SelectedIndex);
         }
         private void headersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
             if (headerListBox.Items.Count < internalNames.Count)
@@ -2141,7 +2111,6 @@ namespace DSPRE {
             widthUpDown.Value = currentMatrix.width;
             heightUpDown.Value = currentMatrix.height;
             disableHandlers = false;
-
         }
         private void heightUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) return;
@@ -2178,9 +2147,8 @@ namespace DSPRE {
 
             /* Modify matrix object */
             currentMatrix.ResizeMatrix((int)heightUpDown.Value, (int)widthUpDown.Value);
-
             disableHandlers = false;
-        }
+        }        
         private void mapFilesGridView_CellMouseDoubleClick(object sender, DataGridViewCellEventArgs e) {
             if (!mapEditorIsReady) {
                 SetupMapEditor();
@@ -2273,18 +2241,18 @@ namespace DSPRE {
         }
         private void removeHeadersButton_Click(object sender, EventArgs e) {
             matrixTabControl.TabPages.Remove(headersTabPage);
-            currentMatrix.RemoveHeadersSection();
+            currentMatrix.hasHeadersSection = false;
         }
         private void removeHeightsButton_Click(object sender, EventArgs e) {
             matrixTabControl.TabPages.Remove(heightsTabPage);
-            currentMatrix.RemoveHeightsSection();
+            currentMatrix.hasHeightsSection = false;
         }
         private void removeMatrixButton_Click(object sender, EventArgs e) {
             if (selectMatrixComboBox.Items.Count > 1) {
                 /* Delete matrix file */
                 int matrixToDelete = romInfo.GetMatrixCount() - 1;
 
-                string matrixPath = romInfo.matrixDirPath + "\\" + matrixToDelete.ToString("D4");
+                string matrixPath = RomInfo.matrixDirPath + "\\" + matrixToDelete.ToString("D4");
                 File.Delete(matrixPath);
 
                 /* Change selected index if the matrix to be deleted is currently selected */
@@ -2298,19 +2266,13 @@ namespace DSPRE {
                 return;
             }
         }
-        private void saveMatrixButton_Click(object sender, EventArgs e) {
-            string matrixPath = romInfo.matrixDirPath + "\\" + selectMatrixComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter matrixWriter = new BinaryWriter(new FileStream(matrixPath, FileMode.Create)))
-                matrixWriter.Write(currentMatrix.Save());
 
-            eventMatrix = LoadMatrix(selectMatrixComboBox.SelectedIndex);
-        }
         private void selectMatrixComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
 
             ClearMatrixTables();
-            currentMatrix = LoadMatrix(selectMatrixComboBox.SelectedIndex);
+            currentMatrix = new Matrix(selectMatrixComboBox.SelectedIndex);
             GenerateMatrixTables();
 
             /* Setup matrix editor controls */
@@ -2620,7 +2582,7 @@ namespace DSPRE {
 
         private void addMapFileButton_Click(object sender, EventArgs e) {
             /* Add new map file to map folder */
-            string mapFilePath = romInfo.mapDirPath + "\\" + selectMapComboBox.Items.Count.ToString("D4");
+            string mapFilePath = RomInfo.mapDirPath + "\\" + selectMapComboBox.Items.Count.ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(mapFilePath, FileMode.Create))) writer.Write(LoadMapFile(0).Save());
 
             /* Update ComboBox and select new file */
@@ -2635,7 +2597,7 @@ namespace DSPRE {
                 return;
 
             /* Update map object in memory */
-            string path = romInfo.mapDirPath + "\\" + selectMapComboBox.SelectedIndex.ToString("D4");
+            string path = RomInfo.mapDirPath + "\\" + selectMapComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Refresh controls */
@@ -2809,7 +2771,7 @@ namespace DSPRE {
 
         private void removeMapFileButton_Click(object sender, EventArgs e) {
             /* Delete last map file */
-            File.Delete(romInfo.mapDirPath + "\\" + (selectMapComboBox.Items.Count - 1).ToString("D4"));
+            File.Delete(RomInfo.mapDirPath + "\\" + (selectMapComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectMapComboBox.Items.Count - 1;
@@ -2820,7 +2782,7 @@ namespace DSPRE {
         }
         private void saveMapButton_Click(object sender, EventArgs e) {
             string mapIndex = selectMapComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.mapDirPath + "\\" + mapIndex, FileMode.Create)))
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.mapDirPath + "\\" + mapIndex, FileMode.Create)))
                 writer.Write(currentMapFile.Save());
         }
         private void selectMapComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -3681,7 +3643,7 @@ namespace DSPRE {
             int destAnchor = (int)warpAnchorUpDown.Value;
             short destHeader = (short)warpHeaderUpDown.Value;
             ushort destEventID = Header.LoadFromARM9(destHeader).eventFileID;
-            EventFile destEvent = LoadEventFile(destEventID);
+            EventFile destEvent = new EventFile(destEventID);
 
             if (destEvent.warps.Count < destAnchor + 1) {
                 DialogResult d = MessageBox.Show("The selected warp's destination anchor doesn't exist.\n" +
@@ -4033,7 +3995,6 @@ namespace DSPRE {
             }
             return -1; // If no match has been found, return -1, which loads bounding box
         }
-
         private Bitmap LoadTextureFromNSBTX(NSMBe4.NSBMD.NSBTX_File nsbtx, int imageIndex, int palIndex) {
             Bitmap b_ = new Bitmap(nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].width, nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].height);
             NSMBe4.NSBMD.ImageTexeler.LockBitmap b = new NSMBe4.NSBMD.ImageTexeler.LockBitmap(b_);
@@ -4103,11 +4064,9 @@ namespace DSPRE {
             return b_;
         }
         #endregion
-
         private void addEventFileButton_Click(object sender, EventArgs e) {
-            /* Add new event file to event folder */
-            string eventFilePath = romInfo.eventsDirPath + "\\" + selectEventComboBox.Items.Count.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(eventFilePath, FileMode.Create))) writer.Write(LoadEventFile(0).Save());
+            /* Add copy of event 0 to event folder */
+            new EventFile(0).SaveToFileDefaultDir(selectEventComboBox.Items.Count);
 
             /* Update ComboBox and select new file */
             selectEventComboBox.Items.Add("Event File " + selectEventComboBox.Items.Count);
@@ -4126,7 +4085,7 @@ namespace DSPRE {
                 return;
             disableHandlers = true;
 
-            eventMatrix = LoadMatrix((int)eventMatrixUpDown.Value);
+            eventMatrix = new Matrix((int)eventMatrixUpDown.Value);
             eventMatrixXUpDown.Value = 0;
             eventMatrixYUpDown.Value = 0;
             eventMatrixXUpDown.Maximum = eventMatrix.width - 1;
@@ -4169,14 +4128,10 @@ namespace DSPRE {
             DisplayActiveEvents();
         }
         private void exportEventFileButton_Click(object sender, EventArgs e) {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "Event File (*.evt)|*.evt";
-            sf.FileName = "Event File " + selectEventComboBox.SelectedIndex;
-            if (sf.ShowDialog(this) != DialogResult.OK)
-                return;
-
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) 
-                writer.Write(currentEventFile.Save());
+            currentEventFile.SaveToFileExplorePath("Event File " + selectEventComboBox.SelectedIndex);
+        }
+        private void saveEventsButton_Click(object sender, EventArgs e) {
+            currentEventFile.SaveToFileDefaultDir(selectEventComboBox.SelectedIndex);
         }
         private void importEventFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .evt file */
@@ -4186,7 +4141,7 @@ namespace DSPRE {
                 return;
 
             /* Update matrix object in memory */
-            string path = romInfo.eventsDirPath + "\\" + selectEventComboBox.SelectedIndex.ToString("D4");
+            string path = RomInfo.eventsDirPath + "\\" + selectEventComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Refresh controls */
@@ -4197,7 +4152,7 @@ namespace DSPRE {
         }
         private void removeEventFileButton_Click(object sender, EventArgs e) {
             /* Delete event file */
-            File.Delete(romInfo.eventsDirPath + "\\" + (selectEventComboBox.Items.Count - 1).ToString("D4"));
+            File.Delete(RomInfo.eventsDirPath + "\\" + (selectEventComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectEventComboBox.Items.Count - 1;
@@ -4206,17 +4161,13 @@ namespace DSPRE {
             /* Remove item from ComboBox */
             selectEventComboBox.Items.RemoveAt(lastIndex);
         }
-        private void saveEventsButton_Click(object sender, EventArgs e) {
-            string eventFile = selectEventComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(romInfo.eventsDirPath + "\\" + eventFile, FileMode.Create)))
-                writer.Write(currentEventFile.Save());
-        }
+        
         private void selectEventComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
 
             /* Load events data into EventFile class instance */
-            currentEventFile = LoadEventFile(selectEventComboBox.SelectedIndex);
+            currentEventFile = new EventFile(selectEventComboBox.SelectedIndex);
 
             /* Update ListBoxes */
             FillSpawnablesBox();
@@ -5029,7 +4980,7 @@ namespace DSPRE {
             /* Add new event file to event folder */
             string scriptFilePath = RomInfo.scriptDirPath + "\\" + selectScriptFileComboBox.Items.Count.ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(scriptFilePath, FileMode.Create))) 
-                writer.Write(new ScriptFile(0).Save());
+                writer.Write(new ScriptFile(0).ToByteArray());
 
             /* Update ComboBox and select new file */
             selectScriptFileComboBox.Items.Add("Script File " + selectScriptFileComboBox.Items.Count);
@@ -5049,7 +5000,7 @@ namespace DSPRE {
                 return;
 
             using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) 
-                writer.Write(currentScriptFile.Save());
+                writer.Write(currentScriptFile.ToByteArray());
         }
 
         private void importScriptFileButton_Click(object sender, EventArgs e) {
@@ -5125,7 +5076,7 @@ namespace DSPRE {
 
                         List<Command> commandList = new List<Command>();
                         while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump Function") && i < scriptTextBox.Lines.Length - 1) {
-                            Console.WriteLine("Script line " + i + 1.ToString());
+                            Console.WriteLine("Script line " + (i + 1).ToString());
                             Command cmd = new Command(scriptTextBox.Lines[i], RomInfo.gameVersion, false);
                             Console.WriteLine("----" + cmd + "----");
                             commandList.Add(cmd);
@@ -5160,7 +5111,7 @@ namespace DSPRE {
             for (int i = 0; i < movementTextBox.Lines.Length; i++) {
                 if (movementTextBox.Lines[i].Contains('@')) {  // Move on until script header is found
                     i++;
-                    while (functionTextBox.Lines[i].Length == 0)
+                    while (movementTextBox.Lines[i].Length == 0)
                         i++; //Skip all empty lines 
 
                     List<Command> commandList = new List<Command>();
@@ -5176,6 +5127,9 @@ namespace DSPRE {
             }
         }
         private void searchInScriptsButton_Click(object sender, EventArgs e) {
+            if (searchMessageTextBox.Text == "")
+                return;
+
             searchInScriptsResultListBox.Items.Clear();
             string searchString = searchInScriptsUpDown.Text;
             searchProgressBar.Maximum = selectScriptFileComboBox.Items.Count;
@@ -5239,7 +5193,6 @@ namespace DSPRE {
 
                 /* Add scripts */
                 disableHandlers = true;
-                statusLabel.Text = "Parsing Script commands...";
 
                 string buffer = "";
                 for (int i = 0; i < currentScriptFile.scripts.Count; i++) {
@@ -5669,11 +5622,9 @@ namespace DSPRE {
 
         #endregion
 
-        private void addMessageFileButton_Click(object sender, EventArgs e) {
-            /* Add new event file to event folder */
-            string messageFilePath = RomInfo.textArchivesPath + "\\" + selectTextFileComboBox.Items.Count.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(messageFilePath, FileMode.Create))) 
-                writer.Write(new TextArchive(0).toByteArray());
+        private void addTextArchiveButton_Click(object sender, EventArgs e) {
+            /* Add copy of message 0 to text archives folder */
+            new TextArchive(0).SaveToFileDefaultDir(selectTextFileComboBox.Items.Count);
 
             /* Update ComboBox and select new file */
             selectTextFileComboBox.Items.Add("Text Archive " + selectTextFileComboBox.Items.Count);
@@ -5691,13 +5642,10 @@ namespace DSPRE {
 
         }
         private void exportTextFileButton_Click(object sender, EventArgs e) {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "Text Archive (*.msg)|*.msg";
-            if (sf.ShowDialog(this) != DialogResult.OK)
-                return;
-
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) 
-                writer.Write(currentTextArchive.toByteArray());
+            currentTextArchive.SaveToFileExplorePath("Text Archive " + selectTextFileComboBox.SelectedIndex);
+        }
+        private void saveTextArchiveButton_Click(object sender, EventArgs e) {
+            currentTextArchive.SaveToFileDefaultDir(selectTextFileComboBox.SelectedIndex);
         }
         private void importTextFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .msg file */
@@ -5733,13 +5681,10 @@ namespace DSPRE {
                 textEditorDataGridView.Rows.RemoveAt(textEditorDataGridView.Rows.Count - 1);
             }
         }
-        private void saveTextArchiveButton_Click(object sender, EventArgs e) {
-            int ID = selectTextFileComboBox.SelectedIndex;
-            using (BinaryWriter textWriter = new BinaryWriter(new FileStream(RomInfo.textArchivesPath + "\\" + ID.ToString("D4"), FileMode.Create))) {
-                textWriter.Write(currentTextArchive.toByteArray());
-            }
-        }
         private void searchMessageButton_Click(object sender, EventArgs e) {
+            if (searchMessageTextBox.Text == "")
+                return;
+
             int firstArchive;
             int lastArchive;
 
@@ -5792,6 +5737,9 @@ namespace DSPRE {
             caseSensitiveSearchCheckbox.Enabled = true;
         }
         private void replaceMessageButton_Click(object sender, EventArgs e) {
+            if (searchMessageTextBox.Text == "")
+                return;
+
             int firstArchive;
             int lastArchive;
 
@@ -5851,9 +5799,7 @@ namespace DSPRE {
                         updateTextEditorFileView(false);
 
                         disableHandlers = false;
-                        using (BinaryWriter textWriter = new BinaryWriter(new FileStream(RomInfo.textArchivesPath + "\\" + k.ToString("D4"), FileMode.Create))) {
-                            textWriter.Write(currentTextArchive.toByteArray());
-                        }
+                        currentTextArchive.SaveToFileDefaultDir(k);
                     }
                     //else searchMessageResultTextBox.AppendText(searchString + " not found in this file");
                     //this.saveMessageFileButton_Click(sender, e);

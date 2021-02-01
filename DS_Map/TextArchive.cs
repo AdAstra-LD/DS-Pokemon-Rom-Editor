@@ -199,15 +199,12 @@ namespace DSPRE
                         }
                     }
                 } else {
-                    if (charArray[i] == '[')
-                    {
-                        if (charArray[i + 1] == 'P')
-                        {
+                    if (charArray[i] == '[') {
+                        if (charArray[i + 1] == 'P') {
                             pokemonMessage[count] = 0x01E0;
                             i += 3;
                         }
-                        if (charArray[i + 1] == 'M')
-                        {
+                        if (charArray[i + 1] == 'M') {
                             pokemonMessage[count] = 0x01E1;
                             i += 3;
                         }
@@ -219,56 +216,35 @@ namespace DSPRE
             }
             return pokemonMessage;
         }
-        public int GetStringLength(string currentMessage) // Calculates string length
-        {
+        public int GetStringLength(string currentMessage) { // Calculates string length 
             int count = 0;
             var charArray = currentMessage.ToCharArray();
-            for (int i = 0; i < currentMessage.Length; i++)
-            {
-                if (charArray[i] == '\\')
-                {
-                    if (charArray[i + 1] == 'r')
-                    {
+            for (int i = 0; i < currentMessage.Length; i++) {
+                if (charArray[i] == '\\') {
+                    if (charArray[i + 1] == 'r') {
                         count++;
                         i++;
-                    }
-                    else
-                    {
-                        if (charArray[i + 1] == 'n')
-                        {
+                    } else {
+                        if (charArray[i + 1] == 'n') {
                             count++;
                             i++;
-                        }
-                        else
-                        {
-                            if (charArray[i + 1] == 'f')
-                            {
+                        } else {
+                            if (charArray[i + 1] == 'f') {
                                 count++;
                                 i++;
-                            }
-                            else
-                            {
-                                if (charArray[i + 1] == 'v')
-                                {
+                            } else {
+                                if (charArray[i + 1] == 'v') {
                                     count += 2;
                                     i += 5;
-                                }
-                                else
-                                {
-                                    if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '0')
-                                    {
+                                } else {
+                                    if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '0') {
                                         count++;
                                         i += 5;
-                                    }
-                                    else
-                                    {
-                                        if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '1')
-                                        {
+                                    } else {
+                                        if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '1') {
                                             count++;
                                             i += 5;
-                                        }
-                                        else
-                                        {
+                                        } else {
                                             count++;
                                             i += 5;
                                         }
@@ -278,23 +254,17 @@ namespace DSPRE
                         }
                     }
                 }
-                else
-                {
-                    if (charArray[i] == '[')
-                    {
-                        if (charArray[i + 1] == 'P')
-                        {
+                else {
+                    if (charArray[i] == '[') {
+                        if (charArray[i + 1] == 'P') {
                             count++;
                             i += 3;
                         }
-                        if (charArray[i + 1] == 'M')
-                        {
+                        if (charArray[i + 1] == 'M') {
                             count++;
                             i += 3;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         count++;
                     }
                 }
@@ -335,8 +305,27 @@ namespace DSPRE
             }
             return newData.ToArray();
         }
-        public byte[] toByteArray() {
+        public byte[] ToByteArray() {
             return toByteArray(messages);
+        }
+        public void SaveToFile(string path) {
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
+                writer.Write(this.ToByteArray());
+        }
+        public void SaveToFileDefaultDir(int IDtoReplace) {
+            string path = RomInfo.textArchivesPath + "\\" + IDtoReplace.ToString("D4");
+            this.SaveToFile(path);
+        }
+        public void SaveToFileExplorePath(string suggestedFileName) {
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Filter = "Gen IV Text Archive (*.msg)|*.msg";
+
+            if (suggestedFileName != null && suggestedFileName != "")
+                sf.FileName = suggestedFileName;
+            if (sf.ShowDialog() != DialogResult.OK)
+                return;
+
+            this.SaveToFile(sf.FileName);
         }
         #endregion
     }

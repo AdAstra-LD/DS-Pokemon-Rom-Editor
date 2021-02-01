@@ -301,6 +301,7 @@ namespace DSPRE {
                     for(int i = 0; i < pokeName.messages.Count; i++) {
                         pokeName.messages[i] = char.ToUpper(pokeName.messages[i][0]) + pokeName.messages[i].Substring(1).ToLower();
                     }
+
                 }
 
                 //do things with   RomInfo.pokémonNamesTextNumbers;

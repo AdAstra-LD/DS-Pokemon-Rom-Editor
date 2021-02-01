@@ -34,9 +34,9 @@ namespace DSPRE {
         public string mapTexturesDirPath { get; private set; }
         public string buildingTexturesDirPath { get; private set; }
         public string buildingConfigFilesPath { get; private set; }
-        public string matrixDirPath { get; private set; }
-        public string mapDirPath { get; private set; }
-        public string eventsDirPath { get; private set; }
+        public static string matrixDirPath { get; private set; }
+        public static string mapDirPath { get; private set; }
+        public static string eventsDirPath { get; private set; }
         public static string scriptDirPath { get; private set; }
         public static string textArchivesPath { get; private set; }
         public string encounterDirPath { get; private set; }
