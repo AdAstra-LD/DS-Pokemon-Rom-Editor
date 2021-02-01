@@ -5651,7 +5651,8 @@ namespace DSPRE {
             /* Prompt user to select .msg file */
             OpenFileDialog of = new OpenFileDialog();
             of.Filter = "Text Archive (*.msg)|*.msg";
-            if (of.ShowDialog(this) != DialogResult.OK) return;
+            if (of.ShowDialog(this) != DialogResult.OK) 
+                return;
 
             /* Update Text Archive object in memory */
             string path = RomInfo.textArchivesPath + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4");
@@ -5811,7 +5812,6 @@ namespace DSPRE {
         private void selectTextFileComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             updateTextEditorFileView(true);
         }
-
         private void updateTextEditorFileView(bool readAgain) {
             disableHandlers = true;
 
@@ -5832,7 +5832,6 @@ namespace DSPRE {
 
             disableHandlers = false;
         }
-
         private void printTextEditorLinesHex() {
             disableHandlers = true;
             for (int i = 0; i < currentTextArchive.messages.Count; i++) {
