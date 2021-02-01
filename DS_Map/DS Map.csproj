@@ -475,9 +475,11 @@
     <None Include="Graphics\Program Icons\deleteIcon.png" />
     <Content Include="Graphics\Program Icons\addIcon.png" />
     <None Include="Graphics\Program Icons\copyIcon_small.png" />
+    <None Include="Graphics\Program Icons\checkmark.png" />
     <Content Include="Graphics\Program Icons\loadColorTable.png" />
     <Content Include="Graphics\Program Icons\resetColorTable.png" />
     <None Include="Graphics\Program Icons\wideLensImage.png" />
+    <None Include="Graphics\Program Icons\wideLensImageTransp.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

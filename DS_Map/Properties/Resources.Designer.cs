@@ -253,6 +253,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap checkmark {
+            get {
+                object obj = ResourceManager.GetObject("checkmark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap copyIcon {
             get {
                 object obj = ResourceManager.GetObject("copyIcon", resourceCulture);
@@ -1603,6 +1613,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap wideLensImage {
             get {
                 object obj = ResourceManager.GetObject("wideLensImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wideLensImageTransp {
+            get {
+                object obj = ResourceManager.GetObject("wideLensImageTransp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -68,8 +68,10 @@ namespace DSPRE {
 
             if (fieldToSearchComboBox.SelectedItem.ToString().Contains("ID")) {
                 operatorComboBox.Items.AddRange(headerSearchNumericOperators);
+                value1TextBox.MaxLength = 5;
             } else {
                 operatorComboBox.Items.AddRange(headerSearchTextOperators);
+                value1TextBox.MaxLength = 16;
             }
 
             operatorComboBox.SelectedIndex = 0;
@@ -115,7 +117,13 @@ namespace DSPRE {
                     fieldSplit[fieldSplit.Length - 1] = fieldSplit[fieldSplit.Length - 1].Replace(")", ""); //Remove ) from string
 
                     string property = String.Join("", fieldSplit);
-                    int numToSearch = int.Parse(valToSearch);
+                    ushort numToSearch = 0;
+                    try {
+                        numToSearch = ushort.Parse(valToSearch);
+                    } catch (OverflowException) {
+                        MessageBox.Show("Your input exceeds the range of 16-bit integers (" + ushort.MinValue + " - " + ushort.MaxValue + ").", "Overflow Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return null;
+                    }
 
                     for (short i = startID; i < finalID; i++) {
                         var headerFieldEntry = typeof(Header).GetProperty(property).GetValue(Header.LoadFromARM9(i), null);
@@ -164,13 +172,14 @@ namespace DSPRE {
                 result = advancedSearch(0, (short)intNames.Count, intNames, fieldToSearch1ComboBox.Text, operator1ComboBox.SelectedItem.ToString(), value1TextBox.Text);
             } catch (FormatException) {
                 MessageBox.Show("Make sure the value to search is correct.", "Format Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                value1TextBox.Clear();
                 headerListBox.Items.Add("Search parameters are invalid");
                 headerListBox.Enabled = false;
                 return;
             }
 
             string searchConfiguration = fieldToSearch1ComboBox.Text + " " + operator1ComboBox.Text.ToLower() + " " + '"' + value1TextBox.Text + '"';
-            if (result.Count <= 0) {
+            if (result == null || result.Count <= 0) {
                 headerListBox.Items.Add("No header's " + searchConfiguration);
                 headerListBox.Enabled = false;
             } else {
@@ -179,6 +188,18 @@ namespace DSPRE {
                 headerListBox.Enabled = true;
 
                 status = "Showing headers whose " + searchConfiguration;
+            }
+        }
+        private void headerSearchResetButton_Click(object sender, EventArgs e) {
+            headerSearchReset(headerListBox, intNames);
+        }
+        public static void headerSearchReset(ListBox headerListBox, List<string> intNames) {
+            headerListBox.Enabled = true;
+            headerListBox.Items.Clear();
+
+            for (int i = 0; i < intNames.Count; i++) {
+                String name = intNames[i];
+                headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + name);
             }
         }
     }

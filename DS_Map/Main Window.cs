@@ -720,10 +720,14 @@ namespace DSPRE {
             }
         }
         private void headerSearchToolStripButton_Click(object sender, EventArgs e) {
+            mainTabControl.SelectedIndex = 0; //Select Header Editor
             using (HeaderSearch h = new HeaderSearch(ref internalNames, headerListBox)) {
                 h.ShowDialog();
                 statusLabel.Text = h.status;
             }
+        }
+        private void advancedHeaderSearchToolStripMenuItem_Click(object sender, EventArgs e) {
+            headerSearchToolStripButton_Click(null, null);
         }
         private void buildingEditorButton_Click(object sender, EventArgs e) {
             unpackBuildingEditorNARCs();
@@ -1535,19 +1539,9 @@ namespace DSPRE {
         private void resetButton_Click(object sender, EventArgs e) {
             searchLocationTextBox.Clear();
             if (headerListBox.Items.Count < internalNames.Count)
-                resetHeaderSearchResults();
+                HeaderSearch.headerSearchReset(headerListBox, internalNames);
 
             statusLabel.Text = "Ready";
-        }
-
-        private void resetHeaderSearchResults() {
-            headerListBox.Enabled = true;
-            headerListBox.Items.Clear();
-
-            for (int i = 0; i < internalNames.Count; i++) {
-                String name = internalNames[i];
-                headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + name);
-            }
         }
         private void searchHeaderTextBox_KeyPress(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
@@ -1601,7 +1595,7 @@ namespace DSPRE {
                     headerListBox.Enabled = true;
                 }
             } else if (headerListBox.Items.Count < internalNames.Count) {
-                resetHeaderSearchResults();
+                HeaderSearch.headerSearchReset(headerListBox, internalNames);
             }
         }
         private void scriptFileUpDown_ValueChanged(object sender, EventArgs e) {
@@ -2055,7 +2049,7 @@ namespace DSPRE {
         }
         private void headersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
             if (headerListBox.Items.Count < internalNames.Count)
-                resetHeaderSearchResults();
+                HeaderSearch.headerSearchReset(headerListBox, internalNames);
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0) {
                 int headerNumber = Convert.ToInt32(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
                 headerListBox.SelectedIndex = headerNumber;
@@ -6316,5 +6310,6 @@ namespace DSPRE {
             MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
+
     }
 }

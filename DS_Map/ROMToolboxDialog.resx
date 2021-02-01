@@ -119,8 +119,7 @@
   </resheader>
   <data name="arm9expansionTextLBL.Text" xml:space="preserve">
     <value>Expands the ARM9's usable memory by repurposing a file
-inside an unused NARC and turning it into a synthetic overlay,
-in which you can place new code or new data.
+inside an unused NARC and turning it into a synthetic overlay, in which you can place new code or new data.
 This patch is necessary to accomplish most ASM edits.
 </value>
   </data>
