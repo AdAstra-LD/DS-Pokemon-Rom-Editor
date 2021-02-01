@@ -296,6 +296,13 @@ namespace DSPRE {
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
+                foreach (int ID in RomInfo.pokémonNamesTextNumbers) {
+                    TextArchive pokeName = new TextArchive(ID);
+                    for(int i = 0; i < pokeName.messages.Count; i++) {
+                        pokeName.messages[i] = char.ToUpper(pokeName.messages[i][0]) + pokeName.messages[i].Substring(1).ToLower();
+                    }
+                }
+
                 //do things with   RomInfo.pokémonNamesTextNumbers;
                 sentenceCaseCB.Visible = true;
                 MessageBox.Show("Pokémon names have been converted to Sentence Case.", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);

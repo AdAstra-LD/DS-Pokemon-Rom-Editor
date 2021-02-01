@@ -66,8 +66,8 @@ namespace DSPRE {
             List<string> trainerList = new List<string>();
 
             /* Store all trainer names and classes */
-            TextArchive trainerClasses = LoadMessageArchive(romInfo.GetTrainerClassMessageNumber());
-            TextArchive trainerNames = LoadMessageArchive(romInfo.GetTrainerNamesMessageNumber());
+            TextArchive trainerClasses = new TextArchive(romInfo.GetTrainerClassMessageNumber());
+            TextArchive trainerNames = new TextArchive(romInfo.GetTrainerNamesMessageNumber());
             BinaryReader trainerReader;
             int trainerCount = Directory.GetFiles(romInfo.trainerDataDirPath).Length;
 
@@ -80,19 +80,19 @@ namespace DSPRE {
         }
 
         private string[] GetItemNames() {
-            return LoadMessageArchive(RomInfo.itemNamesTextNumber).messages.ToArray();
+            return new TextArchive((RomInfo.itemNamesTextNumber)).messages.ToArray();
         }
 
         private string[] GetItemNames(int startIndex, int count) {
-            return LoadMessageArchive(RomInfo.itemNamesTextNumber).messages.GetRange(startIndex, count).ToArray();
+            return new TextArchive(RomInfo.itemNamesTextNumber).messages.GetRange(startIndex, count).ToArray();
         }
 
         private string[] GetPokémonNames() {
-            return LoadMessageArchive(RomInfo.pokémonNamesTextNumbers[0]).messages.ToArray();
+            return new TextArchive(RomInfo.pokémonNamesTextNumbers[0]).messages.ToArray();
         }
 
         private string[] GetAttackNames() {
-            return LoadMessageArchive(RomInfo.attackNamesTextNumber).messages.ToArray();
+            return new TextArchive(RomInfo.attackNamesTextNumber).messages.ToArray();
         }
 
         private AreaData LoadAreaData(uint areaDataID) {
@@ -128,17 +128,6 @@ namespace DSPRE {
                 MessageBox.Show("File " + '"' + matrixFilePath + " is missing.", "File not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
-        }
-
-        public TextArchive LoadMessageArchive(int fileID) {
-            try {
-                return new TextArchive(new FileStream(romInfo.textArchivesPath + "\\" + fileID.ToString("D4"), FileMode.Open));
-            } catch (FileNotFoundException) {
-                MessageBox.Show("Text archive not found.\n", "Can't load text", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } catch (IOException) {
-                MessageBox.Show("Couldn't access text archive.\n", "Can't load text", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return null;
         }
 
         private EventFile LoadEventFile(int fileID) { 
@@ -406,7 +395,7 @@ namespace DSPRE {
             }
 
             /*Add list of options to each control */
-            locationNameComboBox.Items.AddRange(LoadMessageArchive(romInfo.GetLocationNamesTextNumber()).messages.ToArray());
+            locationNameComboBox.Items.AddRange(new TextArchive(romInfo.GetLocationNamesTextNumber()).messages.ToArray());
             switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
@@ -5670,7 +5659,7 @@ namespace DSPRE {
         #region Text Editor
 
         #region Variables
-        TextArchive currentMessageFile;
+        TextArchive currentTextArchive;
         #endregion
 
         #region Subroutines
@@ -5679,15 +5668,16 @@ namespace DSPRE {
 
         private void addMessageFileButton_Click(object sender, EventArgs e) {
             /* Add new event file to event folder */
-            string messageFilePath = romInfo.textArchivesPath + "\\" + selectTextFileComboBox.Items.Count.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(messageFilePath, FileMode.Create))) writer.Write(LoadMessageArchive(0).Save());
+            string messageFilePath = RomInfo.textArchivesPath + "\\" + selectTextFileComboBox.Items.Count.ToString("D4");
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(messageFilePath, FileMode.Create))) 
+                writer.Write(new TextArchive(0).toByteArray());
 
             /* Update ComboBox and select new file */
             selectTextFileComboBox.Items.Add("Text Archive " + selectTextFileComboBox.Items.Count);
             selectTextFileComboBox.SelectedIndex = selectTextFileComboBox.Items.Count - 1;
         }
         private void addStringButton_Click(object sender, EventArgs e) {
-            currentMessageFile.messages.Add("");
+            currentTextArchive.messages.Add("");
             textEditorDataGridView.Rows.Add("");
 
             int rowInd = textEditorDataGridView.RowCount - 1;
@@ -5703,7 +5693,8 @@ namespace DSPRE {
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) writer.Write(currentMessageFile.Save());
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) 
+                writer.Write(currentTextArchive.toByteArray());
         }
         private void importTextFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .msg file */
@@ -5712,7 +5703,7 @@ namespace DSPRE {
             if (of.ShowDialog(this) != DialogResult.OK) return;
 
             /* Update Text Archive object in memory */
-            string path = romInfo.textArchivesPath + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4");
+            string path = RomInfo.textArchivesPath + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Refresh controls */
@@ -5723,57 +5714,27 @@ namespace DSPRE {
         }
         private void removeMessageFileButton_Click(object sender, EventArgs e) {
             /* Delete Text Archive */
-            File.Delete(romInfo.textArchivesPath + "\\" + (selectTextFileComboBox.Items.Count - 1).ToString("D4"));
+            File.Delete(RomInfo.textArchivesPath + "\\" + (selectTextFileComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectTextFileComboBox.Items.Count - 1;
-            if (selectTextFileComboBox.SelectedIndex == lastIndex) selectTextFileComboBox.SelectedIndex--;
+            if (selectTextFileComboBox.SelectedIndex == lastIndex) 
+                selectTextFileComboBox.SelectedIndex--;
 
             /* Remove item from ComboBox */
             selectTextFileComboBox.Items.RemoveAt(lastIndex);
         }
         private void removeStringButton_Click(object sender, EventArgs e) {
-            if (currentMessageFile.messages.Count > 0) {
-                currentMessageFile.messages.RemoveAt(currentMessageFile.messages.Count - 1);
+            if (currentTextArchive.messages.Count > 0) {
+                currentTextArchive.messages.RemoveAt(currentTextArchive.messages.Count - 1);
                 textEditorDataGridView.Rows.RemoveAt(textEditorDataGridView.Rows.Count - 1);
             }
         }
         private void saveTextArchiveButton_Click(object sender, EventArgs e) {
-            saveTextArchive();
-        }
-
-        private void saveTextArchive() {
-            BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.textArchivesPath + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4"), FileMode.Create));
-            textWriter.Write((UInt16)currentMessageFile.messages.Count);
-            textWriter.Write((UInt16)currentMessageFile.initialKey);
-            int key = (currentMessageFile.initialKey * 0x2FD) & 0xFFFF;
-            int key2 = 0;
-            int realKey = 0;
-            int offset = 0x4 + (currentMessageFile.messages.Count * 8);
-            int[] stringSize = new int[currentMessageFile.messages.Count];
-
-            for (int i = 0; i < currentMessageFile.messages.Count; i++) // Reads and stores string offsets and sizes
-            {
-                key2 = (key * (i + 1) & 0xFFFF);
-                realKey = key2 | (key2 << 16);
-                textWriter.Write(offset ^ realKey);
-                int length = currentMessageFile.GetStringLength(textEditorDataGridView[0, i].Value.ToString());
-                stringSize[i] = length;
-                textWriter.Write(length ^ realKey);
-                offset += length * 2;
+            int ID = selectTextFileComboBox.SelectedIndex;
+            using (BinaryWriter textWriter = new BinaryWriter(new FileStream(RomInfo.textArchivesPath + "\\" + ID.ToString("D4"), FileMode.Create))) {
+                textWriter.Write(currentTextArchive.toByteArray());
             }
-            for (int i = 0; i < currentMessageFile.messages.Count; i++) // Encodes strings and writes them to file
-            {
-                key = (0x91BD3 * (i + 1)) & 0xFFFF;
-                int[] currentString = currentMessageFile.EncodeString(textEditorDataGridView[0, i].Value.ToString(), i, stringSize[i]);
-                for (int j = 0; j < stringSize[i] - 1; j++) {
-                    textWriter.Write((UInt16)(currentString[j] ^ key));
-                    key += 0x493D;
-                    key &= 0xFFFF;
-                }
-                textWriter.Write((UInt16)(0xFFFF ^ key));
-            }
-            textWriter.Close();
         }
         private void searchMessageButton_Click(object sender, EventArgs e) {
             int firstArchive;
@@ -5799,7 +5760,7 @@ namespace DSPRE {
                 caseSensitiveSearchCheckbox.Enabled = false;
                 for (int i = firstArchive; i < lastArchive; i++) {
 
-                    TextArchive file = LoadMessageArchive(i);
+                    TextArchive file = new TextArchive(i);
 
                     for (int j = 0; j < file.messages.Count; j++) {
                         if (file.messages[j].Contains(searchString)) {
@@ -5812,7 +5773,7 @@ namespace DSPRE {
                 caseSensitiveSearchCheckbox.Enabled = false;
                 for (int i = firstArchive; i < lastArchive; i++) {
 
-                    TextArchive file = LoadMessageArchive(i);
+                    TextArchive file = new TextArchive(i);
 
                     for (int j = 0; j < file.messages.Count; j++) {
                         if (file.messages[j].IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) {
@@ -5858,8 +5819,8 @@ namespace DSPRE {
                 textSearchProgressBar.Maximum = lastArchive;
 
                 for (int k = firstArchive; k < lastArchive; k++) {
-                    TextArchive file = LoadMessageArchive(k);
-                    currentMessageFile = file;
+                    TextArchive file = new TextArchive(k);
+                    currentTextArchive = file;
                     bool found = false;
 
                     if (caseSensitiveReplaceCheckbox.Checked) {
@@ -5887,36 +5848,9 @@ namespace DSPRE {
                         updateTextEditorFileView(false);
 
                         disableHandlers = false;
-
-                        BinaryWriter textWriter = new BinaryWriter(new FileStream(romInfo.textArchivesPath + "\\" + k.ToString("D4"), FileMode.Create));
-                        textWriter.Write((UInt16)currentMessageFile.messages.Count);
-                        textWriter.Write((UInt16)currentMessageFile.initialKey);
-                        int key = (currentMessageFile.initialKey * 0x2FD) & 0xFFFF;
-                        int key2 = 0;
-                        int realKey = 0;
-                        int offset = 0x4 + (currentMessageFile.messages.Count * 8);
-                        int[] stringSize = new int[currentMessageFile.messages.Count];
-
-                        for (int i = 0; i < currentMessageFile.messages.Count; i++) { // Reads and stores string offsets and sizes
-                            key2 = (key * (i + 1) & 0xFFFF);
-                            realKey = key2 | (key2 << 16);
-                            textWriter.Write(offset ^ realKey);
-                            int length = currentMessageFile.GetStringLength(textEditorDataGridView[0, i].Value.ToString());
-                            stringSize[i] = length;
-                            textWriter.Write(length ^ realKey);
-                            offset += length * 2;
+                        using (BinaryWriter textWriter = new BinaryWriter(new FileStream(RomInfo.textArchivesPath + "\\" + k.ToString("D4"), FileMode.Create))) {
+                            textWriter.Write(currentTextArchive.toByteArray());
                         }
-                        for (int i = 0; i < currentMessageFile.messages.Count; i++) { // Encodes strings and writes them to file
-                            key = (0x91BD3 * (i + 1)) & 0xFFFF;
-                            int[] currentString = currentMessageFile.EncodeString(textEditorDataGridView[0, i].Value.ToString(), i, stringSize[i]);
-                            for (int j = 0; j < stringSize[i] - 1; j++) {
-                                textWriter.Write((UInt16)(currentString[j] ^ key));
-                                key += 0x493D;
-                                key &= 0xFFFF;
-                            }
-                            textWriter.Write((UInt16)(0xFFFF ^ key));
-                        }
-                        textWriter.Close();
                     }
                     //else searchMessageResultTextBox.AppendText(searchString + " not found in this file");
                     //this.saveMessageFileButton_Click(sender, e);
@@ -5933,12 +5867,12 @@ namespace DSPRE {
             disableHandlers = true;
 
             textEditorDataGridView.Rows.Clear();
-            if (currentMessageFile == null || readAgain) { 
-                currentMessageFile = LoadMessageArchive(selectTextFileComboBox.SelectedIndex);
+            if (currentTextArchive == null || readAgain) { 
+                currentTextArchive = new TextArchive(selectTextFileComboBox.SelectedIndex);
             }
 
-            for (int i = 0; i < currentMessageFile.messages.Count; i++) {
-                textEditorDataGridView.Rows.Add(currentMessageFile.messages[i]);
+            foreach (string msg in currentTextArchive.messages) {
+                textEditorDataGridView.Rows.Add(msg);
             }
 
             if (hexRadiobutton.Checked) {
@@ -5952,13 +5886,13 @@ namespace DSPRE {
 
         private void printTextEditorLinesHex() {
             disableHandlers = true;
-            for (int i = 0; i < currentMessageFile.messages.Count; i++) {
+            for (int i = 0; i < currentTextArchive.messages.Count; i++) {
                 textEditorDataGridView.Rows[i].HeaderCell.Value = "0x" + i.ToString("X");
             }
         }
 
         private void printTextEditorLinesDecimal() {
-            for (int i = 0; i < currentMessageFile.messages.Count; i++) {
+            for (int i = 0; i < currentTextArchive.messages.Count; i++) {
                 textEditorDataGridView.Rows[i].HeaderCell.Value = i.ToString();
             }
         }
@@ -5967,7 +5901,7 @@ namespace DSPRE {
             if (disableHandlers)
                 return;
             if (e.RowIndex > -1)
-                currentMessageFile.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                currentTextArchive.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
         }
         private void textSearchResultsListBox_SelectedIndexChanged(object sender, MouseEventArgs e) {
             string resultRow = textSearchResultsListBox.Text;

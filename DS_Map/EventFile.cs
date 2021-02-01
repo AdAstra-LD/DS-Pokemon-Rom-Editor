@@ -37,9 +37,8 @@ namespace LibNDSFormats.NSBMD
 
                 /* Read triggers */
                 uint triggersCount = reader.ReadUInt32();
-                for (int i = 0; i < triggersCount; i++) 
+                for (int i = 0; i < triggersCount; i++)
                     triggers.Add(new Trigger(new MemoryStream(reader.ReadBytes(0x10))));
-
             }
         }
         #endregion

@@ -152,7 +152,6 @@
             // 
             // namesToSentenceCaseButton
             // 
-            this.namesToSentenceCaseButton.Enabled = false;
             this.namesToSentenceCaseButton.Location = new System.Drawing.Point(335, 271);
             this.namesToSentenceCaseButton.Name = "namesToSentenceCaseButton";
             this.namesToSentenceCaseButton.Size = new System.Drawing.Size(100, 50);

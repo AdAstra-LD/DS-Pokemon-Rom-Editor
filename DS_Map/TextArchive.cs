@@ -149,6 +149,8 @@ namespace DSPRE
 
             readText.Dispose();
         }
+        public TextArchive(int ID) : this( (new FileStream(RomInfo.textArchivesPath + "\\" + ID.ToString("D4"), FileMode.Open))) {
+        }
         #endregion
 
         #region Methods (2)
@@ -300,35 +302,30 @@ namespace DSPRE
             count++;
             return count;
         }
-        public byte[] Save()
-        {
+        public byte[] toByteArray(List<string> msgSource) {
             MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData))
-            {
-                writer.Write((UInt16)messages.Count);
+            using (BinaryWriter writer = new BinaryWriter(newData)) {
+                writer.Write((UInt16)msgSource.Count);
                 writer.Write((UInt16)initialKey);
                 int key = (initialKey * 0x2FD) & 0xFFFF;
                 int key2 = 0;
                 int realKey = 0;
-                int offset = 0x4 + (messages.Count * 8);
-                int[] stringSize = new int[messages.Count];
+                int offset = 0x4 + (msgSource.Count * 8);
+                int[] stringSize = new int[msgSource.Count];
 
-                for (int i = 0; i < messages.Count; i++) // Reads and stores string offsets and sizes
-                {
+                for (int i = 0; i < msgSource.Count; i++) {// Reads and stores string offsets and sizes
                     key2 = (key * (i + 1) & 0xFFFF);
                     realKey = key2 | (key2 << 16);
                     writer.Write(offset ^ realKey);
-                    int length = GetStringLength(messages[i]);
+                    int length = GetStringLength(msgSource[i]);
                     stringSize[i] = length;
                     writer.Write(length ^ realKey);
                     offset += length * 2;
                 }
-                for (int i = 0; i < messages.Count; i++) // Encodes strings and writes them to file
-                {
+                for (int i = 0; i < msgSource.Count; i++) { // Encodes strings and writes them to file
                     key = (0x91BD3 * (i + 1)) & 0xFFFF;
-                    int[] currentString = EncodeString(messages[i], i, stringSize[i]);
-                    for (int j = 0; j < stringSize[i] - 1; j++)
-                    {
+                    int[] currentString = EncodeString(msgSource[i], i, stringSize[i]);
+                    for (int j = 0; j < stringSize[i] - 1; j++) {
                         writer.Write((UInt16)(currentString[j] ^ key));
                         key += 0x493D;
                         key &= 0xFFFF;
@@ -336,8 +333,10 @@ namespace DSPRE
                     writer.Write((UInt16)(0xFFFF ^ key));
                 }
             }
-
             return newData.ToArray();
+        }
+        public byte[] toByteArray() {
+            return toByteArray(messages);
         }
         #endregion
     }

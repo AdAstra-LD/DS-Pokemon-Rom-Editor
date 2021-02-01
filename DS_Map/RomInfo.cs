@@ -38,7 +38,7 @@ namespace DSPRE {
         public string mapDirPath { get; private set; }
         public string eventsDirPath { get; private set; }
         public static string scriptDirPath { get; private set; }
-        public string textArchivesPath { get; private set; }
+        public static string textArchivesPath { get; private set; }
         public string encounterDirPath { get; private set; }
         public string trainerDataDirPath { get; private set; }
         public static string[] narcPaths { get; private set; }
@@ -422,11 +422,11 @@ namespace DSPRE {
                     pokémonNamesTextNumbers = new int[2] { 362, 363 };
                     break;
                 case "Plat":
-                    pokémonNamesTextNumbers = new int[5] { 412, 413, 712, 715, 716};
+                    pokémonNamesTextNumbers = new int[4] { 412, 712, 715, 716}; //also 413?
                     break;
                 case "HG":
                 case "SS":
-                    pokémonNamesTextNumbers = new int[5] { 237, 238, 817, 820, 821};
+                    pokémonNamesTextNumbers = new int[4] { 237, 817, 820, 821}; //also 238?
                     break;
             }
         }
