@@ -5113,6 +5113,7 @@ namespace DSPRE {
         private void populateScriptCommands(ScriptFile scrFile) {
             for (int i = 0; i < scriptTextBox.Lines.Length; i++) {
                 if (scriptTextBox.Lines[i].Contains('@')) { // Move on until script header is found
+                    i++;  
                     while (scriptTextBox.Lines[i].Length == 0)
                         i++; //Skip all empty lines 
 
@@ -5139,6 +5140,7 @@ namespace DSPRE {
         private void populateFunctionCommands(ScriptFile scrFile) {
             for (int i = 0; i < functionTextBox.Lines.Length; i++) {
                 if (functionTextBox.Lines[i].Contains('@')) { // Move on until function header is found
+                    i++;
                     while (functionTextBox.Lines[i].Length == 0)
                         i++; //Skip all empty lines 
 
@@ -5157,6 +5159,7 @@ namespace DSPRE {
         private void populateMovementCommands(ScriptFile scrFile) {
             for (int i = 0; i < movementTextBox.Lines.Length; i++) {
                 if (movementTextBox.Lines[i].Contains('@')) {  // Move on until script header is found
+                    i++;
                     while (functionTextBox.Lines[i].Length == 0)
                         i++; //Skip all empty lines 
 
