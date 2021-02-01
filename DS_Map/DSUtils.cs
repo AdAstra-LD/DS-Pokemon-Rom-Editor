@@ -107,7 +107,7 @@ namespace DSPRE {
                 
             }
         }
-        public static bool CheckTableOverlayMustBeCompressed(int ovNumber) {
+        public static bool CheckOverlayHasCompressionFlag(int ovNumber) {
             bool result;
             BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath));
             f.BaseStream.Position = ovNumber * 32 + 31; //overlayNumber * size of entry + offset

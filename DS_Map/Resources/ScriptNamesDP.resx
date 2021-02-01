@@ -192,6 +192,9 @@
   <data name="002F" xml:space="preserve">
     <value>Message3</value>
   </data>
+  <data name="0030" xml:space="preserve">
+    <value>WaitAB</value>
+  </data>
   <data name="0031" xml:space="preserve">
     <value>WaitButton</value>
   </data>
@@ -655,19 +658,19 @@
     <value>PrepareDoorAnimation</value>
   </data>
   <data name="0169" xml:space="preserve">
-    <value>WaitAction</value>
+    <value>DoorWait</value>
   </data>
   <data name="016A" xml:space="preserve">
-    <value>WaitClose</value>
+    <value>DoorFree</value>
   </data>
   <data name="016B" xml:space="preserve">
-    <value>OpenDoor</value>
+    <value>DoorOpen</value>
   </data>
   <data name="016C" xml:space="preserve">
-    <value>CloseDoor</value>
+    <value>DoorOpen</value>
   </data>
   <data name="0177" xml:space="preserve">
-    <value>CheckPartyNumber</value>
+    <value>PartyCountCheck</value>
   </data>
   <data name="0178" xml:space="preserve">
     <value>OpenBerryPouch</value>
@@ -789,6 +792,12 @@
   <data name="0209" xml:space="preserve">
     <value>HidePicture</value>
   </data>
+  <data name="020D" xml:space="preserve">
+    <value>SpearPillarSequence</value>
+  </data>
+  <data name="021D" xml:space="preserve">
+    <value>Group</value>
+  </data>
   <data name="0221" xml:space="preserve">
     <value>RememberMove</value>
   </data>
@@ -807,14 +816,32 @@
   <data name="022A" xml:space="preserve">
     <value>StopTrade</value>
   </data>
+  <data name="022E" xml:space="preserve">
+    <value>PokéRibbonsCount</value>
+  </data>
+  <data name="022F" xml:space="preserve">
+    <value>PartyRibbonsCount</value>
+  </data>
+  <data name="0230" xml:space="preserve">
+    <value>RibbonCheck</value>
+  </data>
+  <data name="0231" xml:space="preserve">
+    <value>RibbonGive</value>
+  </data>
+  <data name="0232" xml:space="preserve">
+    <value>TextRibbon</value>
+  </data>
   <data name="0239" xml:space="preserve">
     <value>DecideRules</value>
   </data>
   <data name="023B" xml:space="preserve">
-    <value>HealPokémonAnimation</value>
+    <value>AnimationPCHeal</value>
+  </data>
+  <data name="023C" xml:space="preserve">
+    <value>AnimationElevator</value>
   </data>
   <data name="023D" xml:space="preserve">
-    <value>ShipAnimation</value>
+    <value>AnimationShip</value>
   </data>
   <data name="0243" xml:space="preserve">
     <value>PhraseBox1W</value>
@@ -856,7 +883,7 @@
     <value>CheckAccessories</value>
   </data>
   <data name="0267" xml:space="preserve">
-    <value>Pokecasino</value>
+    <value>SlotMachine</value>
   </data>
   <data name="026D" xml:space="preserve">
     <value>UnownMessageBox</value>
@@ -926,6 +953,9 @@
   </data>
   <data name="02CA" xml:space="preserve">
     <value>FloralClockAnimation</value>
+  </data>
+  <data name="02FB" xml:space="preserve">
+    <value>SpearPillarSequence2</value>
   </data>
   <data name="0328" xml:space="preserve">
     <value>PortalEffect</value>

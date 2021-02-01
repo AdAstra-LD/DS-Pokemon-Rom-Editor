@@ -80,19 +80,19 @@ namespace DSPRE {
         }
 
         private string[] GetItemNames() {
-            return LoadMessageArchive(romInfo.itemNamesTextNumber).messages.ToArray();
+            return LoadMessageArchive(RomInfo.itemNamesTextNumber).messages.ToArray();
         }
 
         private string[] GetItemNames(int startIndex, int count) {
-            return LoadMessageArchive(romInfo.itemNamesTextNumber).messages.GetRange(startIndex, count).ToArray();
+            return LoadMessageArchive(RomInfo.itemNamesTextNumber).messages.GetRange(startIndex, count).ToArray();
         }
 
         private string[] GetPokémonNames() {
-            return LoadMessageArchive(romInfo.pokémonNamesTextNumber).messages.ToArray();
+            return LoadMessageArchive(RomInfo.pokémonNamesTextNumbers[0]).messages.ToArray();
         }
 
         private string[] GetAttackNames() {
-            return LoadMessageArchive(romInfo.attackNamesTextNumber).messages.ToArray();
+            return LoadMessageArchive(RomInfo.attackNamesTextNumber).messages.ToArray();
         }
 
         private AreaData LoadAreaData(uint areaDataID) {
@@ -361,7 +361,7 @@ namespace DSPRE {
                     break;
             }
 
-            if (CheckStandardizedItemNumbers())
+            if (ScanScriptsCheckStandardizedItemNumbers())
                 isItemRadioButton.Enabled = true;
 
             disableHandlers = false;
@@ -715,7 +715,7 @@ namespace DSPRE {
         private void romToolBoxToolStripMenuItem_Click(object sender, EventArgs e) {
             using (ROMToolboxDialog window = new ROMToolboxDialog(romInfo)) {
                 window.ShowDialog();
-                if (ROMToolboxDialog.standardizedItems)
+                if (ROMToolboxDialog.flag_standardizedItems)
                     isItemRadioButton.Enabled = true;
             }
         }
@@ -902,7 +902,7 @@ namespace DSPRE {
             }
 
             if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
-                if (DSUtils.CheckTableOverlayMustBeCompressed(1)) {
+                if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
                     if (ROMToolboxDialog.overlayMustBeRestoredFromBackup) {
                         DSUtils.RestoreOverlayFromCompressedBackup(1, eventEditorIsReady);
                     } else {
@@ -1189,7 +1189,7 @@ namespace DSPRE {
             if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
                 areaSettingsComboBox.SelectedIndex = cameraComboBox.FindString("[" + ((HeaderHGSS)currentHeader).areaSettings.ToString("D2"));
 
-            if (currentHeader.wildPokémon == romInfo.nullEncounterID)
+            if (currentHeader.wildPokémon == RomInfo.nullEncounterID)
                 openWildEditorWithIdButton.Enabled = false;
             else
                 openWildEditorWithIdButton.Enabled = true;
@@ -1647,13 +1647,13 @@ namespace DSPRE {
                 return;
 
             currentHeader.wildPokémon = (ushort)wildPokeUpDown.Value;
-            if (wildPokeUpDown.Value == romInfo.nullEncounterID) {
+            if (wildPokeUpDown.Value == RomInfo.nullEncounterID) {
                 wildPokeUpDown.ForeColor = Color.Red;
             } else {
                 wildPokeUpDown.ForeColor = Color.Black;
             }
 
-            if (currentHeader.wildPokémon == romInfo.nullEncounterID)
+            if (currentHeader.wildPokémon == RomInfo.nullEncounterID)
                 openWildEditorWithIdButton.Enabled = false;
             else
                 openWildEditorWithIdButton.Enabled = true;
@@ -4501,7 +4501,7 @@ namespace DSPRE {
             if (owTrainerComboBox.SelectedIndex >= 0)
                 owTrainerComboBox_SelectedIndexChanged(null, null);
         }
-        public static bool CheckStandardizedItemNumbers() {
+        public static bool ScanScriptsCheckStandardizedItemNumbers() {
             ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
 
             for (ushort i = 0; i < itemScript.scripts.Count - 1; i++) {
@@ -4539,7 +4539,6 @@ namespace DSPRE {
 
             /* Set overworld type to item */
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].type = 0x3;
-
         }
         private void normalRadioButton_CheckedChanged(object sender, EventArgs e) {
             if (disableHandlers)
@@ -5131,7 +5130,6 @@ namespace DSPRE {
         private void populateScriptCommands(ScriptFile scrFile) {
             for (int i = 0; i < scriptTextBox.Lines.Length; i++) {
                 if (scriptTextBox.Lines[i].Contains('@')) { // Move on until script header is found
-                    i++; // Skip line
                     while (scriptTextBox.Lines[i].Length == 0)
                         i++; //Skip all empty lines 
 
@@ -5158,7 +5156,8 @@ namespace DSPRE {
         private void populateFunctionCommands(ScriptFile scrFile) {
             for (int i = 0; i < functionTextBox.Lines.Length; i++) {
                 if (functionTextBox.Lines[i].Contains('@')) { // Move on until function header is found
-                    i += 0x2; // Skip blank line
+                    while (functionTextBox.Lines[i].Length == 0)
+                        i++; //Skip all empty lines 
 
                     /* Read function commands */
                     List<Command> commandList = new List<Command>();
@@ -5175,7 +5174,8 @@ namespace DSPRE {
         private void populateMovementCommands(ScriptFile scrFile) {
             for (int i = 0; i < movementTextBox.Lines.Length; i++) {
                 if (movementTextBox.Lines[i].Contains('@')) {  // Move on until script header is found
-                    i += 0x2; // Skip blank line
+                    while (functionTextBox.Lines[i].Length == 0)
+                        i++; //Skip all empty lines 
 
                     List<Command> commandList = new List<Command>();
                     /* Read script commands */
@@ -5244,7 +5244,6 @@ namespace DSPRE {
             movementTextBox.Clear();
 
             if (currentScriptFile.isLevelScript) {
-                scriptTextBox.Focus();
                 scriptTextBox.Text += "Level script files are currently not supported.\nYou can use AdAstra's Level Scripts Editor.";
                 functionTextBox.Enabled = false;
                 movementTextBox.Enabled = false;

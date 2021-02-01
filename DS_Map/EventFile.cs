@@ -22,19 +22,23 @@ namespace LibNDSFormats.NSBMD
             {
                 /* Read spawnables */
                 uint spawnablesCount = reader.ReadUInt32();
-                for (int i = 0; i < spawnablesCount; i++) spawnables.Add(new Spawnable(new MemoryStream(reader.ReadBytes(0x14))));
+                for (int i = 0; i < spawnablesCount; i++) 
+                    spawnables.Add(new Spawnable(new MemoryStream(reader.ReadBytes(0x14))));
 
                 /* Read overworlds */
                 uint overworldsCount = reader.ReadUInt32();
-                for (int i = 0; i < overworldsCount; i++) overworlds.Add(new Overworld(new MemoryStream(reader.ReadBytes(0x20))));
+                for (int i = 0; i < overworldsCount; i++) 
+                    overworlds.Add(new Overworld(new MemoryStream(reader.ReadBytes(0x20))));
 
                 /* Read warps */
                 uint warpsCount = reader.ReadUInt32();
-                for (int i = 0; i < warpsCount; i++) warps.Add(new Warp(new MemoryStream(reader.ReadBytes(0xC))));
+                for (int i = 0; i < warpsCount; i++) 
+                    warps.Add(new Warp(new MemoryStream(reader.ReadBytes(0xC))));
 
                 /* Read triggers */
                 uint triggersCount = reader.ReadUInt32();
-                for (int i = 0; i < triggersCount; i++) triggers.Add(new Trigger(new MemoryStream(reader.ReadBytes(0x10))));
+                for (int i = 0; i < triggersCount; i++) 
+                    triggers.Add(new Trigger(new MemoryStream(reader.ReadBytes(0x10))));
 
             }
         }
@@ -48,19 +52,23 @@ namespace LibNDSFormats.NSBMD
             {
                 /* Write spawnables */
                 writer.Write((uint)spawnables.Count);
-                for (int i = 0; i < spawnables.Count; i++) writer.Write(spawnables[i].ToByteArray());
+                for (int i = 0; i < spawnables.Count; i++) 
+                    writer.Write(spawnables[i].ToByteArray());
 
                 /* Write overworlds */
                 writer.Write((uint)overworlds.Count);
-                for (int i = 0; i < overworlds.Count; i++) writer.Write(overworlds[i].ToByteArray());
+                for (int i = 0; i < overworlds.Count; i++) 
+                    writer.Write(overworlds[i].ToByteArray());
 
                 /* Write warps */
                 writer.Write((uint)warps.Count);
-                for (int i = 0; i < warps.Count; i++) writer.Write(warps[i].ToByteArray());
+                for (int i = 0; i < warps.Count; i++) 
+                    writer.Write(warps[i].ToByteArray());
 
                 /* Write triggers */
                 writer.Write((uint)triggers.Count);
-                for (int i = 0; i < triggers.Count; i++) writer.Write(triggers[i].ToByteArray());
+                for (int i = 0; i < triggers.Count; i++) 
+                    writer.Write(triggers[i].ToByteArray());
             }
             return newData.ToArray();
         }

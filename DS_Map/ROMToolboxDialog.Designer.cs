@@ -43,7 +43,7 @@
             this.overlay1uncompressedLBL = new System.Windows.Forms.Label();
             this.overlay1patchtextLBL = new System.Windows.Forms.Label();
             this.overlay1uncomprButton = new System.Windows.Forms.Button();
-            this.bdhcamARM9LBL = new System.Windows.Forms.Label();
+            this.bdhcamARM9requiredLBL = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // applyItemStandardizeButton
@@ -169,7 +169,7 @@
             this.namesToSentenceCaseButton.TabIndex = 9;
             this.namesToSentenceCaseButton.Text = "Coming soon";
             this.namesToSentenceCaseButton.UseVisualStyleBackColor = true;
-            this.namesToSentenceCaseButton.Click += new System.EventHandler(this.ApplyPokemonNamesToSentenceCase_Click);
+            this.namesToSentenceCaseButton.Click += new System.EventHandler(this.SentenceCasePatchButton_Click);
             // 
             // overlay1uncompressedLBL
             // 
@@ -202,13 +202,13 @@
             // 
             // bdhcamARM9LBL
             // 
-            this.bdhcamARM9LBL.AutoSize = true;
-            this.bdhcamARM9LBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bdhcamARM9LBL.Location = new System.Drawing.Point(117, 155);
-            this.bdhcamARM9LBL.Name = "bdhcamARM9LBL";
-            this.bdhcamARM9LBL.Size = new System.Drawing.Size(165, 13);
-            this.bdhcamARM9LBL.TabIndex = 15;
-            this.bdhcamARM9LBL.Text = "(Requires ARM9 Expansion)";
+            this.bdhcamARM9requiredLBL.AutoSize = true;
+            this.bdhcamARM9requiredLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bdhcamARM9requiredLBL.Location = new System.Drawing.Point(117, 155);
+            this.bdhcamARM9requiredLBL.Name = "bdhcamARM9LBL";
+            this.bdhcamARM9requiredLBL.Size = new System.Drawing.Size(165, 13);
+            this.bdhcamARM9requiredLBL.TabIndex = 15;
+            this.bdhcamARM9requiredLBL.Text = "(Requires ARM9 Expansion)";
             // 
             // ROMToolboxDialog
             // 
@@ -216,7 +216,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(442, 378);
-            this.Controls.Add(this.bdhcamARM9LBL);
+            this.Controls.Add(this.bdhcamARM9requiredLBL);
             this.Controls.Add(this.overlay1uncomprButton);
             this.Controls.Add(this.overlay1patchtextLBL);
             this.Controls.Add(this.overlay1uncompressedLBL);
@@ -259,6 +259,6 @@
         private System.Windows.Forms.Label overlay1uncompressedLBL;
         private System.Windows.Forms.Label overlay1patchtextLBL;
         private System.Windows.Forms.Button overlay1uncomprButton;
-        private System.Windows.Forms.Label bdhcamARM9LBL;
+        private System.Windows.Forms.Label bdhcamARM9requiredLBL;
     }
 }

@@ -44,10 +44,10 @@ namespace DSPRE {
         public static string[] narcPaths { get; private set; }
         public static string[] extractedNarcDirs { get; private set; }
 
-        public int nullEncounterID { get; private set; }
-        public int attackNamesTextNumber { get; private set; }
-        public int pokémonNamesTextNumber { get; private set; }
-        public int itemNamesTextNumber { get; private set; }
+        public static int nullEncounterID { get; private set; }
+        public static int attackNamesTextNumber { get; private set; }
+        public static int[] pokémonNamesTextNumbers { get; private set; }
+        public static int itemNamesTextNumber { get; private set; }
         public static int itemScriptFileNumber { get; internal set; }
 
 
@@ -228,40 +228,6 @@ namespace DSPRE {
                         @"data\a\1\4\8"
                     };
                     break;
-                    /*
-                default:
-                    extractedNarcDirs = new string[] {
-                        buildingTexturesDirPath,
-                        buildingConfigFilesPath,
-                        areaDataDirPath,
-                        mapTexturesDirPath,
-                        eventsDirPath,
-                        mapDirPath,
-                        matrixDirPath,
-                        textArchivesPath,
-                        scriptDirPath,
-                        GetOWSpriteDirPath(),
-                        GetTrainerDataDirPath(),
-                        encounterDirPath(),
-                    };
-                    narcPaths = new string[] {
-                        @"data\a\0\7\0",
-                        @"data\a\0\4\3",
-                        @"data\a\0\4\2",
-                        @"data\a\0\4\4",
-                        @"data\a\0\4\0",
-                        @"data\a\0\3\2",
-                        @"data\a\0\6\5",
-                        @"data\a\0\4\1",
-                        @"data\a\0\2\7",
-                        @"data\a\0\1\2",
-                        @"data\a\0\8\1",
-                        @"data\a\0\5\5",
-                        @"data\a\0\3\7",
-                        @"data\a\1\4\8"
-                    };
-                    break;
-                    */
             }
         }
         public void SetBuildingModelsDirPath() {
@@ -449,20 +415,18 @@ namespace DSPRE {
             }
             return fileNumber;
         }
-        public void SetPokémonNamesTextNumber() {
+        public static void SetPokémonNamesTextNumber() {
             switch (gameVersion) {
                 case "D":
                 case "P":
-                    pokémonNamesTextNumber = 362;
+                    pokémonNamesTextNumbers = new int[2] { 362, 363 };
                     break;
                 case "Plat":
-                    pokémonNamesTextNumber = 412;
+                    pokémonNamesTextNumbers = new int[5] { 412, 413, 712, 715, 716};
                     break;
-                default:
-                    if (gameLanguage == "JAP")
-                        pokémonNamesTextNumber = 232;
-                    else
-                        pokémonNamesTextNumber = 237;
+                case "HG":
+                case "SS":
+                    pokémonNamesTextNumbers = new int[5] { 237, 238, 817, 820, 821};
                     break;
             }
         }

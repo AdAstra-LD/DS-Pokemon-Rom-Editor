@@ -29,23 +29,33 @@ namespace DSPRE {
 
             using (BinaryReader scrReader = new BinaryReader(fs)) {
                 /* Read script offsets from the header */
+                isLevelScript = true; // Is Level Script as long as magic number FD13 doesn't exist
                 try {
-                    while (scrReader.ReadUInt16() != 0xFD13) {
+                    while (true) {
+                        uint checker = scrReader.ReadUInt16();
                         scrReader.BaseStream.Position -= 0x2;
                         uint value = scrReader.ReadUInt32();
 
                         if (value == 0) {
                             isLevelScript = true;
-                            return;
+                            break;
+                        } else if (checker == 0xFD13) {
+                            scrReader.BaseStream.Position -= 0x4;
+                            isLevelScript = false;
+                            break;
                         } else {
                             uint offsetFromStart = value + (uint)scrReader.BaseStream.Position;
                             scriptOffsets.Add(offsetFromStart); // Don't change order of addition
                         }
                     }
                 } catch (EndOfStreamException) {
-                    MessageBox.Show("Script File couldn't be read correctly.", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (!isLevelScript)
+                        MessageBox.Show("Script File couldn't be read correctly.", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error); // Now this may appear in a few level scripts that don't have a 4-byte aligned "00 00 00 00"
                 }
 
+                if (isLevelScript) {
+                    return;
+                }
                 /* Read scripts */
                 for (int i = 0; i < scriptOffsets.Count; i++) {
                     int duplicateIndex = scriptOffsets.FindIndex(offset => offset == scriptOffsets[i]); // Check for UseScript_#
