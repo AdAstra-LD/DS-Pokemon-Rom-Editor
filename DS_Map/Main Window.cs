@@ -896,7 +896,7 @@ namespace DSPRE {
         }
         private void unpackAllButton_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("Do you wish to unpack all extracted NARCS?\n" +
-                "This operation might be long and can't be interrupted.\n" +
+                "This operation might be long and can't be interrupted.\n\n" +
                 "Any unsaved changes made to the ROM in this session will be lost." +
                 "\nProceed?", "About to unpack all NARCS",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -930,7 +930,7 @@ namespace DSPRE {
         }
         private void updateMapNarcsButton_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("Do you wish to unpack all NARC files necessary for the Building Editor ?\n" +
-               "This operation might be long and can't be interrupted.\n" +
+               "This operation might be long and can't be interrupted.\n\n" +
                "Any unsaved changes made to building models and textures in this session will be lost." +
                "\nProceed?", "About to unpack Building NARCs",
                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -1210,7 +1210,6 @@ namespace DSPRE {
                 flag7CheckBox.Checked = ba[7];
             }
         }
-
         private void eventsTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (eventsTabControl.SelectedTab == signsTabPage) {
                 if (spawnablesListBox.Items.Count > 0)
@@ -3640,7 +3639,6 @@ namespace DSPRE {
             }
             disableHandlers = false;
         }
-
         private void centerEventViewOnSelectedEvent_Click(object sender, EventArgs e) {
             if (selectedEvent == null) {
                 MessageBox.Show("You haven't selected any event.", "Nothing to do here",
@@ -3651,38 +3649,7 @@ namespace DSPRE {
                 Update();
             }
         }
-        private bool isEventOnCurrentMatrix(Event ev) {
-            if (ev.xMatrixPosition == eventMatrixXUpDown.Value)
-                if (ev.yMatrixPosition == eventMatrixYUpDown.Value)
-                    return true;
-            return false;
-        }
 
-        private void goToWarpDestination_Click(object sender, EventArgs e) {
-            int destAnchor = (int)warpAnchorUpDown.Value;
-            short destHeader = (short)warpHeaderUpDown.Value;
-            ushort destEventID = Header.LoadFromARM9(destHeader).eventFileID;
-            EventFile destEvent = new EventFile(destEventID);
-
-            if (destEvent.warps.Count < destAnchor + 1) {
-                DialogResult d = MessageBox.Show("The selected warp's destination anchor doesn't exist.\n" +
-                    "Do you want to open the destination map anyway?", "Warp is not connected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (d == DialogResult.No)
-                    return;
-                else {
-                    eventMatrixUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).matrixID;
-                    eventAreaDataUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).areaDataID;
-                    selectEventComboBox.SelectedIndex = destEventID;
-                    centerEventviewOnEntities();
-                    return;
-                }
-            }
-            eventMatrixUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).matrixID;
-            eventAreaDataUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).areaDataID;
-            selectEventComboBox.SelectedIndex = destEventID;
-            warpsListBox.SelectedIndex = destAnchor;
-            centerEventViewOnSelectedEvent_Click(sender, e);
-        }
         private void DisplayActiveEvents() {
             eventPictureBox.Image = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
 
@@ -3757,10 +3724,8 @@ namespace DSPRE {
                     }
                 }
             }
-
             eventPictureBox.Invalidate();
         }
-
         private void drawSelectionRectangle(Graphics g, Event ev) {
             eventPen = Pens.Red;
             g.DrawRectangle(eventPen, (ev.xMapPosition) * 17 - 1, (ev.yMapPosition) * 17 - 1, 18, 18);
@@ -3777,9 +3742,6 @@ namespace DSPRE {
             g.DrawRectangle(eventPen, (ow.xMapPosition) * 17 - 8, (ow.yMapPosition - 1) * 17, 34, 34);
             g.DrawRectangle(eventPen, (ow.xMapPosition) * 17 - 9, (ow.yMapPosition - 1) * 17 - 1, 36, 36);
         }
-
-
-
         private void DisplayEventMap() {
             /* Determine map file to open and open it in BinaryReader, unless map is VOID */
             uint mapIndex = Matrix.EMPTY;
@@ -3974,7 +3936,6 @@ namespace DSPRE {
                 return archiveID;
             }
         }
-
         private int matchOverworldInTableHGSS(BinaryReader idReader, uint ID) {
             bool match = new bool();
             try {
@@ -3992,7 +3953,6 @@ namespace DSPRE {
             }
             return -1; // If no match has been found, return -1, which loads bounding box
         }
-
         private int matchOverworldInTableDPPt(BinaryReader idReader, uint ID) {
             bool match = new bool();
             try {
@@ -4081,6 +4041,20 @@ namespace DSPRE {
 
             b.UnlockBits();
             return b_;
+        }
+        private bool isEventOnCurrentMatrix(Event ev) {
+            if (ev.xMatrixPosition == eventMatrixXUpDown.Value)
+                if (ev.yMatrixPosition == eventMatrixYUpDown.Value)
+                    return true;
+            return false;
+        }
+        private bool isEventUnderMouse(Event ev, Point mouseTilePos) {
+            if (isEventOnCurrentMatrix(ev)) {
+                Point evLocalCoords = new Point(ev.xMapPosition, ev.yMapPosition);
+                if (evLocalCoords.Equals(mouseTilePos))
+                    return true;
+            }
+            return false;
         }
         #endregion
         private void addEventFileButton_Click(object sender, EventArgs e) {
@@ -4180,7 +4154,6 @@ namespace DSPRE {
             /* Remove item from ComboBox */
             selectEventComboBox.Items.RemoveAt(lastIndex);
         }
-        
         private void selectEventComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
@@ -4207,7 +4180,7 @@ namespace DSPRE {
         private void showEventsCheckBoxes_CheckedChanged(object sender, EventArgs e) {
             DisplayActiveEvents();
         }
-
+        
         private void eventPictureBox_Click(object sender, EventArgs e) {
             Point coordinates = eventPictureBox.PointToClient(Cursor.Position);
             Point mouseTilePos = new Point(coordinates.X / 17, coordinates.Y / 17);
@@ -4280,16 +4253,6 @@ namespace DSPRE {
                 }
             }
         }
-
-        private bool isEventUnderMouse(Event ev, Point mouseTilePos) {
-            if (isEventOnCurrentMatrix(ev)) {
-                Point evLocalCoords = new Point(ev.xMapPosition, ev.yMapPosition);
-                if (evLocalCoords.Equals(mouseTilePos))
-                    return true;
-            }
-            return false;
-        }
-
         #region Spawnables Editor
         private void addSpawnableButton_Click(object sender, EventArgs e) {
             currentEventFile.spawnables.Add(new Spawnable((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
@@ -4388,6 +4351,27 @@ namespace DSPRE {
 
             currentEventFile.spawnables[spawnablesListBox.SelectedIndex].zPosition = (short)spawnableUpDown.Value;
             DisplayActiveEvents();
+        }
+        private void spawnableDirComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
+                return;
+
+            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].dir = (ushort)spawnableDirComboBox.SelectedIndex;
+        }
+        private void spawnableTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (spawnablesListBox.SelectedIndex < 0)
+                return;
+
+            if (spawnableTypeComboBox.SelectedIndex == Spawnable.TYPE_HIDDENITEM) {
+                spawnableDirComboBox.Enabled = false;
+            } else {
+                spawnableDirComboBox.Enabled = true;
+            }
+
+            if (disableHandlers)
+                return;
+
+            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].type = (ushort)spawnableTypeComboBox.SelectedIndex;
         }
         #endregion
 
@@ -4813,6 +4797,31 @@ namespace DSPRE {
             currentEventFile.warps[warpsListBox.SelectedIndex].zPosition = (short)warpZUpDown.Value;
             DisplayActiveEvents();
         }
+        private void goToWarpDestination_Click(object sender, EventArgs e) {
+            int destAnchor = (int)warpAnchorUpDown.Value;
+            short destHeader = (short)warpHeaderUpDown.Value;
+            ushort destEventID = Header.LoadFromARM9(destHeader).eventFileID;
+            EventFile destEvent = new EventFile(destEventID);
+
+            if (destEvent.warps.Count < destAnchor + 1) {
+                DialogResult d = MessageBox.Show("The selected warp's destination anchor doesn't exist.\n" +
+                    "Do you want to open the destination map anyway?", "Warp is not connected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (d == DialogResult.No)
+                    return;
+                else {
+                    eventMatrixUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).matrixID;
+                    eventAreaDataUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).areaDataID;
+                    selectEventComboBox.SelectedIndex = destEventID;
+                    centerEventviewOnEntities();
+                    return;
+                }
+            }
+            eventMatrixUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).matrixID;
+            eventAreaDataUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).areaDataID;
+            selectEventComboBox.SelectedIndex = destEventID;
+            warpsListBox.SelectedIndex = destAnchor;
+            centerEventViewOnSelectedEvent_Click(sender, e);
+        }
         #endregion
 
         #region Triggers Editor
@@ -5201,6 +5210,55 @@ namespace DSPRE {
             }
             searchProgressBar.Value = 0;
             searchInScriptsResultListBox.Items.AddRange(results.ToArray());
+        }
+        private void searchInScriptsResultListBox_MouseDoubleClick(object sender, MouseEventArgs e) {
+            if (searchInScriptsResultListBox.SelectedIndex < 0)
+                return;
+
+            string[] split = searchInScriptsResultListBox.SelectedItem.ToString().Split();
+            selectScriptFileComboBox.SelectedIndex = int.Parse(split[1]);
+
+            string cmdSearched = null;
+            for (int i = 5; i < split.Length; i++) {
+                cmdSearched += split[i] + " ";
+            }
+            cmdSearched = cmdSearched.TrimEnd();
+
+            if (split[3].StartsWith("Script")) {
+                if (scriptEditorTabControl.SelectedIndex != 0)
+                    scriptEditorTabControl.SelectedIndex = 0;
+                int keywordPos = scriptTextBox.Find("@Script_#" + split[4].Replace(":", ""), RichTextBoxFinds.MatchCase);
+                TXTBoxScrollToResult(scriptTextBox, cmdSearched, keywordPos);
+            } else if (split[3].StartsWith("Function")) {
+                if (scriptEditorTabControl.SelectedIndex != 1)
+                    scriptEditorTabControl.SelectedIndex = 1;
+                int keywordPos = functionTextBox.Find("@Function_#" + split[4].Replace(":", ""), RichTextBoxFinds.MatchCase);
+                TXTBoxScrollToResult(functionTextBox, cmdSearched, keywordPos);
+            }
+        }
+
+        private void TXTBoxScrollToResult(RichTextBox tb, string cmdSearched, int after) {
+            int cmdPos = tb.Find(cmdSearched, after, RichTextBoxFinds.MatchCase);
+            try {
+                tb.SelectionStart = cmdPos - 120;
+            } catch (ArgumentOutOfRangeException) {
+                tb.SelectionStart = 0;
+            }
+            tb.ScrollToCaret();
+
+            tb.SelectionStart = cmdPos;
+            tb.SelectionLength = cmdSearched.Length;
+            tb.Focus();
+        }
+        private void searchInScriptsResultListBox_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                searchInScriptsResultListBox_MouseDoubleClick(null, null);
+            }
+        }
+        private void searchInScriptsTextBox_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                searchInScriptsResultListBox_MouseDoubleClick(null, null);
+            }
         }
         private void selectScriptFileComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             /* clear controls */
@@ -5900,10 +5958,12 @@ namespace DSPRE {
                 }
             }
         }
+        private void textSearchResultsListBox_KeyDown(object sender, KeyEventArgs e) {
+            textSearchResultsListBox_SelectedIndexChanged(null, null);
+        }
         private void hexRadiobutton_CheckedChanged(object sender, EventArgs e) {
             updateTextEditorLineNumbers();
         }
-
         private void updateTextEditorLineNumbers() {
             disableHandlers = true;
             if (hexRadiobutton.Checked) {
@@ -5916,11 +5976,8 @@ namespace DSPRE {
         #endregion
 
         #region Tileset Editor
-
-        #region Variables
         public NSMBe4.NSBMD.NSBTX_File currentTileset;
         public AreaData currentAreaData;
-        #endregion
 
         #region Subroutines
         public void FillTilesetBox() {
@@ -6222,26 +6279,5 @@ namespace DSPRE {
             MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
-        private void spawnableDirComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
-                return;
-
-            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].dir = (ushort)spawnableDirComboBox.SelectedIndex;
-        }
-        private void spawnableTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (spawnablesListBox.SelectedIndex < 0)
-                return;
-
-            if (spawnableTypeComboBox.SelectedIndex == Spawnable.TYPE_HIDDENITEM) {
-                spawnableDirComboBox.Enabled = false;
-            } else {
-                spawnableDirComboBox.Enabled = true;
-            }
-
-            if (disableHandlers)
-                return;
-
-            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].type = (ushort)spawnableTypeComboBox.SelectedIndex;
-        }
     }
 }
