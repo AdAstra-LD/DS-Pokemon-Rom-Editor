@@ -1692,6 +1692,7 @@ namespace DSPRE {
         decimal areadataCopy;
         decimal worldmapXCoordCopy;
         decimal worldmapYCoordCopy;
+        decimal battleBGCopy;
 
         byte flagsCopy;
 
@@ -1718,6 +1719,7 @@ namespace DSPRE {
             areadataCopy = areaDataUpDown.Value;
             worldmapXCoordCopy = worldmapXCoordUpDown.Value;
             worldmapYCoordCopy = worldmapYCoordUpDown.Value;
+            battleBGCopy = battleBackgroundUpDown.Value;
 
             /*Enable paste buttons*/
             pasteHeaderButton.Enabled = true;
@@ -1816,14 +1818,14 @@ namespace DSPRE {
             Clipboard.SetData(DataFormats.Text, areadataCopy);
             pasteAreaDataButton.Enabled = true;
         }
-
         private void worldmapCoordsCopyButton_Click(object sender, EventArgs e) {
             worldmapXCoordCopy = worldmapXCoordUpDown.Value;
             worldmapYCoordCopy = worldmapYCoordUpDown.Value;
             worldmapCoordsPasteButton.Enabled = true;
         }
-        private void copyFlagsButton_Click(object sender, EventArgs e) {
+        private void copyMapSettingsButton_Click(object sender, EventArgs e) {
             flagsCopy = currentHeader.flags;
+            battleBGCopy = currentHeader.battleBackground;
             pasteFlagsButton.Enabled = true;
         }
 
@@ -1832,7 +1834,18 @@ namespace DSPRE {
             locationNameComboBox.SelectedIndex = locationNameCopy;
             internalNameBox.Text = internalNameCopy;
             wildPokeUpDown.Value = encountersIDCopy;
-            areaSettingsComboBox.SelectedIndex = shownameCopy;
+
+            switch (RomInfo.gameVersion) {
+                case "D":
+                case "P":
+                case "Plat":
+                    areaSettingsComboBox.SelectedIndex = shownameCopy;
+                    break;
+                case "HG":
+                case "SS":
+                    areaSettingsComboBox.SelectedIndex = areaSettingsCopy;
+                    break;
+            }
             areaIconComboBox.SelectedIndex = areaIconCopy;
 
             musicDayComboBox.SelectedIndex = musicdayCopy;
@@ -1847,6 +1860,10 @@ namespace DSPRE {
 
             matrixUpDown.Value = matrixCopy;
             areaDataUpDown.Value = areadataCopy;
+
+            currentHeader.flags = flagsCopy;
+            battleBackgroundUpDown.Value = battleBGCopy;
+            refreshFlags();
         }
         private void pasteInternalNameButton_Click(object sender, EventArgs e) {
             internalNameBox.Text = internalNameCopy;
@@ -1898,17 +1915,16 @@ namespace DSPRE {
             worldmapXCoordUpDown.Value = worldmapXCoordCopy;
             worldmapYCoordUpDown.Value = worldmapYCoordCopy;
         }
-        private void pasteFlagsButton_Click(object sender, EventArgs e) {
+        private void pasteMapSettingsButton_Click(object sender, EventArgs e) {
             currentHeader.flags = flagsCopy;
+            battleBackgroundUpDown.Value = battleBGCopy;
             refreshFlags();
         }
         #endregion
 
         #region Matrix Editor
 
-        #region Variables
         Matrix currentMatrix;
-        #endregion
 
         #region Subroutines
         private void ClearMatrixTables() {
@@ -2113,7 +2129,9 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void heightUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) return;
+            if (disableHandlers) 
+                return;
+            
             disableHandlers = true;
 
             /* Add or remove rows in DataGridView control */
@@ -2124,8 +2142,7 @@ namespace DSPRE {
                     headersGridView.Rows.RemoveAt(currentMatrix.height - 1 - i);
                     heightsGridView.Rows.RemoveAt(currentMatrix.height - 1 - i);
                     mapFilesGridView.Rows.RemoveAt(currentMatrix.height - 1 - i);
-                } else // Add rows
-                  {
+                } else { 
                     /* Add row in DataGridView */
                     headersGridView.Rows.Add();
                     heightsGridView.Rows.Add();

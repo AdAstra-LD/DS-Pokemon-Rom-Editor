@@ -1917,7 +1917,7 @@
             this.pasteFlagsButton.Size = new System.Drawing.Size(35, 37);
             this.pasteFlagsButton.TabIndex = 52;
             this.pasteFlagsButton.UseVisualStyleBackColor = true;
-            this.pasteFlagsButton.Click += new System.EventHandler(this.pasteFlagsButton_Click);
+            this.pasteFlagsButton.Click += new System.EventHandler(this.pasteMapSettingsButton_Click);
             // 
             // battleBackgroundLabel
             // 
@@ -1936,7 +1936,7 @@
             this.copyFlagsButton.Size = new System.Drawing.Size(35, 37);
             this.copyFlagsButton.TabIndex = 53;
             this.copyFlagsButton.UseVisualStyleBackColor = true;
-            this.copyFlagsButton.Click += new System.EventHandler(this.copyFlagsButton_Click);
+            this.copyFlagsButton.Click += new System.EventHandler(this.copyMapSettingsButton_Click);
             // 
             // battleBackgroundUpDown
             // 

@@ -115,8 +115,6 @@ namespace DSPRE
             /* Set new width and height */
             height = (byte)newHeight;
             width = (byte)newWidth;
-
-
         }
         public byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();

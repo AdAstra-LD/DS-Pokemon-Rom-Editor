@@ -310,10 +310,13 @@ namespace LibNDSFormats.NSBMD
                 writer.Write(unknown2);
                 writer.Write(xRange);
                 writer.Write(yRange);
+
                 short xCoordinate = (short)(xMapPosition + 32 * xMatrixPosition);
                 writer.Write(xCoordinate);
+
                 short yCoordinate = (short)(yMapPosition + 32 * yMatrixPosition);
                 writer.Write(yCoordinate);
+
                 writer.Write(zPosition);
                 writer.Write(unknown3);
 
@@ -329,8 +332,7 @@ namespace LibNDSFormats.NSBMD
         #region Fields (4)
         public ushort header;
         public ushort anchor;
-        public ushort unknown1;
-        public ushort unknown2;
+        public uint height;
         #endregion
 
         #region Constructors (2)
@@ -348,8 +350,7 @@ namespace LibNDSFormats.NSBMD
 
                 header = reader.ReadUInt16();
                 anchor = reader.ReadUInt16();
-                unknown1 = reader.ReadUInt16();
-                unknown2 = reader.ReadUInt16();
+                height = reader.ReadUInt32();
             }
         }
         public Warp(int xMatrixPosition, int yMatrixPosition) {
@@ -377,12 +378,13 @@ namespace LibNDSFormats.NSBMD
             using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
                 ushort xCoordinate = (ushort)(xMapPosition + 32 * xMatrixPosition);
                 writer.Write(xCoordinate);
+
                 ushort yCoordinate = (ushort)(yMapPosition + 32 * yMatrixPosition);
                 writer.Write(yCoordinate);
+
                 writer.Write(header);
                 writer.Write(anchor);
-                writer.Write(unknown1);
-                writer.Write(unknown2);
+                writer.Write(height);
 
                 return ((MemoryStream)writer.BaseStream).ToArray();
             }
@@ -397,8 +399,8 @@ namespace LibNDSFormats.NSBMD
         public ushort scriptNumber;
         public ushort width;
         public ushort length;
-        public ushort unknown1;
-        public ushort unknown2;
+        public ushort height;
+        public ushort unknown;
         public ushort flag;
         #endregion Fields
 
@@ -417,8 +419,9 @@ namespace LibNDSFormats.NSBMD
 
                 width = reader.ReadUInt16();
                 length = reader.ReadUInt16();
-                unknown1 = reader.ReadUInt16();
-                unknown2 = reader.ReadUInt16();
+
+                height = reader.ReadUInt16();
+                unknown = reader.ReadUInt16();
                 flag = reader.ReadUInt16();
             }        
         }
@@ -458,8 +461,8 @@ namespace LibNDSFormats.NSBMD
                 writer.Write(yCoordinate);
                 writer.Write(width);
                 writer.Write(length);
-                writer.Write(unknown1);
-                writer.Write(unknown2);
+                writer.Write(height);
+                writer.Write(unknown);
                 writer.Write(flag);
 
                 return ((MemoryStream)writer.BaseStream).ToArray();
