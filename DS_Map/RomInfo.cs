@@ -372,10 +372,11 @@ namespace DSPRE {
                     attackNamesTextNumber = 647;
                     break;
                 default:
-                    if (gameLanguage == "JAP")
+                    if (gameLanguage == "JAP") {
                         attackNamesTextNumber = 739;
-                    else
+                    } else {
                         attackNamesTextNumber = 750;
+                    }
                     break;
             }
         }
@@ -389,10 +390,11 @@ namespace DSPRE {
                     itemNamesTextNumber = 392;
                     break;
                 default:
-                    if (gameLanguage == "JAP")
+                    if (gameLanguage == "JAP") {
                         itemNamesTextNumber = 219;
-                    else
+                    } else {
                         itemNamesTextNumber = 222;
+                    }
                     break;
             }
         }
@@ -407,10 +409,11 @@ namespace DSPRE {
                     fileNumber = 433;
                     break;
                 default:
-                    if (gameLanguage == "JAP") 
+                    if (gameLanguage == "JAP") {
                         fileNumber = 272;
-                    else 
+                    } else {
                         fileNumber = 279;
+                    }
                     break;
             }
             return fileNumber;
@@ -441,10 +444,11 @@ namespace DSPRE {
                     fileNumber = 618;
                     break;
                 default:
-                    if (gameLanguage == "JAP")
+                    if (gameLanguage == "JAP") {
                         fileNumber = 719;
-                    else
+                    } else {
                         fileNumber = 729;
+                    }
                     break;
             }
             return fileNumber;
@@ -460,10 +464,11 @@ namespace DSPRE {
                     fileNumber = 619;
                     break;
                 default:
-                    if (gameLanguage == "JAP")
+                    if (gameLanguage == "JAP") {
                         fileNumber = 720;
-                    else
+                    } else {
                         fileNumber = 730;
+                    }
                     break;
             }
             return fileNumber;

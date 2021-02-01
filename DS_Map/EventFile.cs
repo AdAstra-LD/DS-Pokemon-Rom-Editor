@@ -113,13 +113,17 @@ namespace LibNDSFormats.NSBMD
 
     public class Spawnable : Event
     {
+        public const int TYPE_MISC = 0;
+        public const int TYPE_BOARD = 1;
+        public const int TYPE_HIDDENITEM = 2;
+
         #region Fields (7)
         public ushort scriptNumber;
-        public ushort unknown1;
+        public ushort type;
         public ushort unknown2;
         public ushort unknown3;
         public ushort unknown4;
-        public ushort orientation;
+        public ushort dir;
         public ushort unknown5;
         #endregion
 
@@ -127,7 +131,7 @@ namespace LibNDSFormats.NSBMD
         public Spawnable(Stream data) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 scriptNumber = reader.ReadUInt16();
-                unknown1 = reader.ReadUInt16();
+                type = reader.ReadUInt16();
                 
                 /* Decompose x coordinate in matrix and map positions */
                 int xPosition = reader.ReadInt16();
@@ -144,18 +148,18 @@ namespace LibNDSFormats.NSBMD
                 unknown3 = reader.ReadUInt16();
                 zPosition = reader.ReadInt16();
                 unknown4 = reader.ReadUInt16();
-                orientation = reader.ReadUInt16();
+                dir = reader.ReadUInt16();
                 unknown5 = reader.ReadUInt16();
             }
         }
         public Spawnable(int xMatrixPosition, int yMatrixPosition) {
             scriptNumber = 0;
-            unknown1 = 0;
+            type = 0;
             unknown2 = 0;
             unknown3 = 0;
             unknown4 = 0;
             unknown5 = 0;
-            orientation = 0;
+            dir = 0;
 
             xMapPosition = 0;
             yMapPosition = 0;
@@ -165,12 +169,12 @@ namespace LibNDSFormats.NSBMD
         }
         public Spawnable(Spawnable toCopy) {
             scriptNumber = toCopy.scriptNumber;
-            unknown1 = toCopy.unknown1;
+            type = toCopy.type;
             unknown2 = toCopy.unknown2;
             unknown3 = toCopy.unknown3;
             unknown4 = toCopy.unknown4;
             unknown5 = toCopy.unknown5;
-            orientation = toCopy.orientation;
+            dir = toCopy.dir;
 
             xMapPosition = toCopy.xMapPosition;
             yMapPosition = toCopy.yMapPosition;
@@ -184,7 +188,7 @@ namespace LibNDSFormats.NSBMD
         public override byte[] ToByteArray() {
             using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
                 writer.Write(scriptNumber);
-                writer.Write(unknown1);
+                writer.Write(type);
                 short xCoordinate = (short)(xMapPosition + 32 * xMatrixPosition);
                 writer.Write(xCoordinate);
                 writer.Write(unknown2);
@@ -193,7 +197,7 @@ namespace LibNDSFormats.NSBMD
                 writer.Write(unknown3);
                 writer.Write(zPosition);
                 writer.Write(unknown4);
-                writer.Write(orientation);
+                writer.Write(dir);
                 writer.Write(unknown5);
 
                 return ((MemoryStream)writer.BaseStream).ToArray();
@@ -400,8 +404,8 @@ namespace LibNDSFormats.NSBMD
         public ushort width;
         public ushort length;
         public ushort height;
-        public ushort unknown;
-        public ushort flag;
+        public ushort expectedVarValue;
+        public ushort variableWatched;
         #endregion Fields
 
         #region Constructors (2)
@@ -421,13 +425,14 @@ namespace LibNDSFormats.NSBMD
                 length = reader.ReadUInt16();
 
                 height = reader.ReadUInt16();
-                unknown = reader.ReadUInt16();
-                flag = reader.ReadUInt16();
+                expectedVarValue = reader.ReadUInt16();
+                variableWatched = reader.ReadUInt16();
             }        
         }
         public Trigger(int xMatrixPosition, int yMatrixPosition) {
             scriptNumber = 0;
-            flag = 0;
+            variableWatched = 0;
+            expectedVarValue = 0;
             width = 1;
             length = 1;
 
@@ -438,7 +443,8 @@ namespace LibNDSFormats.NSBMD
         }
         public Trigger(Trigger toCopy) {
             scriptNumber = toCopy.scriptNumber;
-            flag = toCopy.flag;
+            variableWatched = toCopy.variableWatched;
+            expectedVarValue = toCopy.expectedVarValue;
             width = toCopy.width;
             length = toCopy.length;
 
@@ -462,8 +468,8 @@ namespace LibNDSFormats.NSBMD
                 writer.Write(width);
                 writer.Write(length);
                 writer.Write(height);
-                writer.Write(unknown);
-                writer.Write(flag);
+                writer.Write(expectedVarValue);
+                writer.Write(variableWatched);
 
                 return ((MemoryStream)writer.BaseStream).ToArray();
             }

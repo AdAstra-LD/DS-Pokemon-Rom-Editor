@@ -68,7 +68,6 @@ namespace DSPRE
                 int nsbmdSectionLength = reader.ReadInt32();
                 int bdhcSectionLength = reader.ReadInt32();
 
-
                 /* Read background sounds section */
                 if (gameVersion == "HG" || gameVersion == "SS") {
                     ushort signature = reader.ReadUInt16();

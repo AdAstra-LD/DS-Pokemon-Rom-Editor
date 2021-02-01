@@ -304,7 +304,9 @@ namespace DSPRE {
             }
 
             /* Add ow movement list to box */
-            owMovementComboBox.Items.AddRange(PokeDatabase.EventEditorMovements.moveArray);
+            owMovementComboBox.Items.AddRange(PokeDatabase.EventEditor.Overworlds.movementsArray);
+            spawnableDirComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.orientationsArray);
+            spawnableTypeComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.typesArray);
 
             /* Create dictionary for 3D overworlds */
             switch (RomInfo.gameVersion) {
@@ -4326,65 +4328,65 @@ namespace DSPRE {
             spawnablesListBox.SelectedIndex = currentEventFile.spawnables.Count - 1;
         }
         private void spawnablesListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            #region Disable events for fast execution
             if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
                 return;
             disableHandlers = true;
-            #endregion
 
+            /* Set Event */
             selectedEvent = currentEventFile.spawnables[spawnablesListBox.SelectedIndex];
 
-            signScriptUpDown.Value = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].scriptNumber;
-            signMapXUpDown.Value = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].xMapPosition;
-            signMapYUpDown.Value = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].yMapPosition;
-            signZUpDown.Value = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].zPosition;
-            signMatrixXUpDown.Value = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].xMatrixPosition;
-            signMatrixYUpDown.Value = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].yMatrixPosition;
+            /* Update Controls */
+            spawnableDirComboBox.SelectedIndex = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].dir;
+            spawnableTypeComboBox.SelectedIndex = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].type;
+
+            spawnableScriptUpDown.Value = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].scriptNumber;
+            spawnableMapXUpDown.Value = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].xMapPosition;
+            spawnableMapYUpDown.Value = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].yMapPosition;
+            spawnableUpDown.Value = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].zPosition;
+            spawnableMatrixXUpDown.Value = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].xMatrixPosition;
+            spawnableMatrixYUpDown.Value = currentEventFile.spawnables[spawnablesListBox.SelectedIndex].yMatrixPosition;
 
             DisplayActiveEvents();
-
-            #region Re-enable events
             disableHandlers = false;
-            #endregion
         }
         private void spawnableMatrixXUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
                 return;
 
-            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].xMatrixPosition = (ushort)signMatrixXUpDown.Value;
+            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].xMatrixPosition = (ushort)spawnableMatrixXUpDown.Value;
             DisplayActiveEvents();
         }
         private void spawnableMatrixYUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
                 return;
 
-            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].yMatrixPosition = (ushort)signMatrixYUpDown.Value;
+            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].yMatrixPosition = (ushort)spawnableMatrixYUpDown.Value;
             DisplayActiveEvents();
         }
         private void spawnableScriptUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
                 return;
-            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].scriptNumber = (ushort)signScriptUpDown.Value;
+            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].scriptNumber = (ushort)spawnableScriptUpDown.Value;
         }
-        private void signMapXUpDown_ValueChanged(object sender, EventArgs e) {
+        private void spawnableMapXUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
                 return;
 
-            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].xMapPosition = (short)signMapXUpDown.Value;
+            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].xMapPosition = (short)spawnableMapXUpDown.Value;
             DisplayActiveEvents();
         }
-        private void signMapYUpDown_ValueChanged(object sender, EventArgs e) {
+        private void spawnableMapYUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
 
-            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].yMapPosition = (short)signMapYUpDown.Value;
+            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].yMapPosition = (short)spawnableMapYUpDown.Value;
             DisplayActiveEvents();
         }
-        private void signZUpDown_ValueChanged(object sender, EventArgs e) {
+        private void spawnableZUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
 
-            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].zPosition = (short)signZUpDown.Value;
+            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].zPosition = (short)spawnableUpDown.Value;
             DisplayActiveEvents();
         }
         #endregion
@@ -4850,11 +4852,6 @@ namespace DSPRE {
             triggersListBox.Items.Add("Trigger " + (currentEventFile.triggers.Count - 1).ToString());
             triggersListBox.SelectedIndex = currentEventFile.triggers.Count - 1;
         }
-        private void triggerFlagUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || triggersListBox.SelectedIndex < 0) 
-                return;
-            currentEventFile.triggers[triggersListBox.SelectedIndex].flag = (ushort)triggerFlagUpDown.Value;
-        }
         private void triggersListBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) 
                 return;
@@ -4863,7 +4860,9 @@ namespace DSPRE {
             selectedEvent = currentEventFile.triggers[triggersListBox.SelectedIndex];
 
             triggerScriptUpDown.Value = currentEventFile.triggers[triggersListBox.SelectedIndex].scriptNumber;
-            triggerFlagUpDown.Value = currentEventFile.triggers[triggersListBox.SelectedIndex].flag;
+            triggerVariableWatchedUpDown.Value = currentEventFile.triggers[triggersListBox.SelectedIndex].variableWatched;
+            expectedVarValueTriggerUpDown.Value = currentEventFile.triggers[triggersListBox.SelectedIndex].expectedVarValue;
+
             triggerWidthUpDown.Value = currentEventFile.triggers[triggersListBox.SelectedIndex].width;
             triggerLengthUpDown.Value = currentEventFile.triggers[triggersListBox.SelectedIndex].length;
 
@@ -4878,6 +4877,17 @@ namespace DSPRE {
             #region Re-enable events
             disableHandlers = false;
             #endregion
+        }
+        private void triggerVariableWatchedUpDown_ValueChanged(object sender, EventArgs e) {
+            if (disableHandlers || triggersListBox.SelectedIndex < 0)
+                return;
+            currentEventFile.triggers[triggersListBox.SelectedIndex].variableWatched = (ushort)triggerVariableWatchedUpDown.Value;
+        }
+        private void expectedVarValueTriggerUpDown_ValueChanged(object sender, EventArgs e) {
+            if (disableHandlers || triggersListBox.SelectedIndex < 0)
+                return;
+
+            currentEventFile.triggers[triggersListBox.SelectedIndex].expectedVarValue = (ushort)expectedVarValueTriggerUpDown.Value;
         }
         private void triggerScriptUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || triggersListBox.SelectedIndex < 0) 
@@ -6213,5 +6223,27 @@ namespace DSPRE {
         }
         #endregion
 
+        private void spawnableDirComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
+                return;
+
+            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].dir = (ushort)spawnableDirComboBox.SelectedIndex;
+        }
+
+        private void spawnableTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (spawnablesListBox.SelectedIndex < 0)
+                return;
+
+            if (spawnableTypeComboBox.SelectedIndex == Spawnable.TYPE_HIDDENITEM) {
+                spawnableDirComboBox.Enabled = false;
+            } else {
+                spawnableDirComboBox.Enabled = true;
+            }
+
+            if (disableHandlers)
+                return;
+
+            currentEventFile.spawnables[spawnablesListBox.SelectedIndex].type = (ushort)spawnableTypeComboBox.SelectedIndex;
+        }
     }
 }

@@ -473,8 +473,26 @@ namespace DSPRE {
                 [1216] = "Route 17"
             };
         }
-        public static class EventEditorMovements {
-            public static string[] moveArray = new string[] {
+        public static class EventEditor {
+            public static class Spawnables {
+                public static string[] orientationsArray = new string[] {
+                    "Frontal Interaction",
+                    "Activated from the left",
+                    "Activated from the right",
+                    "Activated from behind",
+                    "Activated from any dir",
+                    "Activated from the sides",
+                    "Front/Back Interaction",
+                };
+           
+                public static string[] typesArray = new string[] {
+                    "Misc",
+                    "Board (Front Auto-Trigger)",
+                    "Hidden Item",
+                };
+            }
+            public static class Overworlds {
+                public static string[] movementsArray = new string[] {
                 "[00]  None",
                 "[01]  None",
                 "[02]  Looking in all directions",
@@ -548,6 +566,7 @@ namespace DSPRE {
                 "[70]  ?",
                 "[71]  Looking Left"
             };
+            }
         }
         public static class System {
             public static Dictionary<string, ushort> movementsDictDPPtHGSS = new Dictionary<string, ushort>() {
