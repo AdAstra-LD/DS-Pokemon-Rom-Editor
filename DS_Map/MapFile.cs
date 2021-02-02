@@ -72,9 +72,8 @@ namespace DSPRE
                 if (gameVersion == "HG" || gameVersion == "SS") {
                     ushort signature = reader.ReadUInt16();
                     if (signature != 0x1234) {
-                        MessageBox.Show("There was a problem reading the BackGround Sound data from this map file.",
+                        MessageBox.Show("The header section of this map's BackGround Sound data is corrupted.",
                             "BGS Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
                     }
                     ushort bgsSectionLength = reader.ReadUInt16();
 
