@@ -421,9 +421,7 @@ namespace DSPRE {
 
                 /* Write scripts */
                 for (int i = 0; i < scripts.Count; i++) {
-                    if (scripts[i].useScript != -1) {
-                        scriptOffsets.Add(scriptOffsets[scripts[i].useScript]);  // If script has UseScript, copy offset
-                    } else {
+                    if (scripts[i].useScript == -1) {
                         scriptOffsets.Add((uint)writer.BaseStream.Position);
 
                         for (int j = 0; j < scripts[i].commands.Count; j++) {
@@ -453,6 +451,8 @@ namespace DSPRE {
                                 references.Add(new Tuple<int, int, int>((int)writer.BaseStream.Position - 4, BitConverter.ToInt32(parameterList[index], 0), type));
                             }
                         }
+                    } else {
+                        scriptOffsets.Add(scriptOffsets[scripts[i].useScript]);  // If script has UseScript, copy offset
                     }
                 }
 
@@ -613,7 +613,22 @@ namespace DSPRE {
                     case 0x63:      // Release
                     case 0x64:      // AddPeople
                     case 0x65:      // RemoveOW
-                        this.cmdName += " " + "Overworld_#" + BitConverter.ToInt16(parameterList[0], 0).ToString("D");
+                        owToMove = BitConverter.ToUInt16(parameterList[0], 0).ToString("D");
+                        switch (owToMove) {
+                            case "255":
+                                owToMove = "Player";
+                                break;
+                            case "253":
+                                owToMove = "Following";
+                                break;
+                            case "241":
+                                owToMove = "Cam";
+                                break;
+                            default:
+                                owToMove = "Overworld_#" + owToMove;
+                                break;
+                        }
+                        this.cmdName += " " + owToMove;
                         break;
                     default:
                         for (int i = 0; i < parameterList.Count; i++) {
@@ -695,7 +710,7 @@ namespace DSPRE {
                             else
                                 style = NumberStyles.Integer;
 
-                            /* Convert strings of parameters into the correct datatypes */
+                            /* Convert strings of parameters to the correct datatypes */
                             switch (databaseResult[i]) {
                                 case "1":
                                     parameterList.Add(new byte[] { Byte.Parse(words[i].Substring(indexOfSpecialCharacter), style) });

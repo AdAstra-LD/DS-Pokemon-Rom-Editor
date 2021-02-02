@@ -5286,11 +5286,11 @@ namespace DSPRE {
                     buffer += Environment.NewLine;
 
                     /* If current script is identical to another, print UseScript instead of commands */
-                    if (currentScript.useScript != -1) {
-                        buffer += ("UseScript_#" + currentScript.useScript + Environment.NewLine);
-                    } else {
+                    if (currentScript.useScript == -1) {
                         for (int j = 0; j < currentScript.commands.Count; j++)
                             buffer += currentScript.commands[j].cmdName + Environment.NewLine;
+                    } else {
+                        buffer += ("UseScript_#" + currentScript.useScript + Environment.NewLine);
                     }
                 }
                 scriptTextBox.AppendText(buffer + Environment.NewLine, Color.FromArgb(0,140,0));
