@@ -14,7 +14,7 @@ namespace DSPRE {
             internal uint branchOffset;
             internal uint initOffset;
 
-            public ARM9PatchData() {
+            internal ARM9PatchData() {
                 ResourceManager arm9DB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.ARM9ExpansionDB", Assembly.GetExecutingAssembly());
 
                 switch (RomInfo.gameVersion) {
@@ -181,7 +181,7 @@ namespace DSPRE {
                     if (!branchCodeRead.SequenceEqual(branchCode))
                         return 0;
 
-                    byte[] initCode = HexStringtoByteArray(data.branchString);
+                    byte[] initCode = HexStringtoByteArray(data.initString);
                     byte[] initCodeRead = DSUtils.ReadFromArm9(data.initOffset, data.initString.Length / 3 + 1); //Read initCode
                     if (initCodeRead.Length != initCode.Length)
                         return 0;
