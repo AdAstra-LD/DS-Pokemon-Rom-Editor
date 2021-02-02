@@ -246,7 +246,8 @@ namespace DSPRE {
                                     parameters.Add(dataReader.ReadBytes(2));
                             }
                             break;
-                        case 0x2C5: {
+                        case 0x2C5: 
+                            {
                                 if (gameVersion == "Plat") {
                                     parameters.Add(dataReader.ReadBytes(2));
                                     parameters.Add(dataReader.ReadBytes(2));
