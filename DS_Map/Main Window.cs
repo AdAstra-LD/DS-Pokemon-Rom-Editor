@@ -873,7 +873,7 @@ namespace DSPRE {
 
             if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
                 if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
-                    if (ROMToolboxDialog.overlayMustBeRestoredFromBackup) {
+                    if (ROMToolboxDialog.overlay1MustBeRestoredFromBackup) {
                         DSUtils.RestoreOverlayFromCompressedBackup(1, eventEditorIsReady);
                     } else {
                         DSUtils.CompressOverlay(1);

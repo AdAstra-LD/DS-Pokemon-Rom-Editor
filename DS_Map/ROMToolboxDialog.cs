@@ -123,7 +123,7 @@ namespace DSPRE {
         public static bool flag_standardizedItems { get; private set; } = false;
         public static bool flag_arm9Expanded { get; private set; } = false;
         public static bool flag_BDHCAMpatchApplied { get; private set; } = false;
-        public static bool overlayMustBeRestoredFromBackup { get; private set; } = true;
+        public static bool overlay1MustBeRestoredFromBackup { get; private set; } = true;
 
         #region Constructor
         public ROMToolboxDialog(RomInfo romInfo) {
@@ -235,7 +235,6 @@ namespace DSPRE {
 
                     string overlayFilePath = romInfo.workDir + "overlay" + "\\" + "overlay_" + data.overlayNumber.ToString("D4") + ".bin";
                     DSUtils.DecompressOverlay(data.overlayNumber, true);
-                    overlayMustBeRestoredFromBackup = false;
 
                     byte[] overlayCode1 = HexStringtoByteArray(data.overlayString1);
                     byte[] overlayCode1Read = DSUtils.ReadFromFile(overlayFilePath, data.overlayOffset1, overlayCode1.Length);
@@ -350,7 +349,7 @@ namespace DSPRE {
 
                     DSUtils.WriteToFile(overlayFilePath, data.overlayOffset1, HexStringtoByteArray(data.overlayString1)); //Write new overlayCode1
                     DSUtils.WriteToFile(overlayFilePath, data.overlayOffset2, HexStringtoByteArray(data.overlayString2)); //Write new overlayCode2
-                    overlayMustBeRestoredFromBackup = false;
+                    overlay1MustBeRestoredFromBackup = false;
 
                     String fullFilePath = romInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
 
@@ -368,6 +367,7 @@ namespace DSPRE {
                 BDHCAMpatchLBL.Enabled = false;
                 BDHCAMpatchTextLBL.Enabled = false;
                 bdhcamCB.Visible = true;
+                overlay1MustBeRestoredFromBackup = false;
                 BDHCAMpatchButton.Text = "Already applied";
                 MessageBox.Show("The BDHCAM patch has been applied.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
