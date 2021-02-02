@@ -31,7 +31,6 @@ Supported patches:
 - Wild Encounter Editor can now attempt to repair corrupted encounter files.
 - Editor now detects the selected header.
 
-
 ###Header Editor
 - Added copy and paste buttons to every header category editor.
 - Added import and export buttons to header editor.
@@ -75,9 +74,10 @@ Supported patches:
 ###Script Editor
 - Replaced "Search Flag" with "Search any command".
 - Enabled some of the quick script cmd buttons.
+- Fixed Text Search and Replace (Results can be double-clicked). 
 
 ###Text Editor
 - Added New Movement names and changed some of the old ones.
 - Fixed export button.
 - Added option to show row numbers as hex.
-- Fixed Text Search and Replace.
+- Fixed Text Search and Replace (Results can be double-clicked).
