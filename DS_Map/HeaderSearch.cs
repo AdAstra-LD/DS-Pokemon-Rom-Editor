@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace DSPRE {
+    
     public partial class HeaderSearch : Form {
         private List<string> searchableHeaderFieldsList = new List<string>() {
             "Area Data (ID)",
@@ -41,10 +42,11 @@ namespace DSPRE {
 
         private List<string> intNames;
         private ListBox headerListBox;
+        private ToolStripStatusLabel statusLabel;
 
         public string status = "Ready";
 
-        public HeaderSearch(ref List<string> internalNames, ListBox headerListBox) {
+        public HeaderSearch(ref List<string> internalNames, ListBox headerListBox, ToolStripStatusLabel statusLabel) {
             InitializeComponent();
             searchableHeaderFields = searchableHeaderFieldsList.ToArray();
             headerSearchNumericOperators = headerSearchNumericOperatorsList.ToArray();
@@ -52,6 +54,7 @@ namespace DSPRE {
 
             intNames = internalNames;
             this.headerListBox = headerListBox;
+            this.statusLabel = statusLabel;
 
             fieldToSearch1ComboBox.Items.AddRange(searchableHeaderFields);
             fieldToSearch1ComboBox.SelectedIndex = 0;
@@ -180,26 +183,33 @@ namespace DSPRE {
 
             string searchConfiguration = fieldToSearch1ComboBox.Text + " " + operator1ComboBox.Text.ToLower() + " " + '"' + value1TextBox.Text + '"';
             if (result == null || result.Count <= 0) {
-                headerListBox.Items.Add("No header's " + searchConfiguration);
+                string res = "No header suits the search criteria.";
+                headerListBox.Items.Add(res);
                 headerListBox.Enabled = false;
+                statusLabel.Text = res;
             } else {
                 headerListBox.Items.AddRange(result.ToArray());
                 headerListBox.SelectedIndex = 0;
                 headerListBox.Enabled = true;
 
-                status = "Showing headers whose " + searchConfiguration;
+                statusLabel.Text = "Showing headers whose " + searchConfiguration;
             }
+            Update();
         }
         private void headerSearchResetButton_Click(object sender, EventArgs e) {
-            headerSearchReset(headerListBox, intNames);
+            HeaderSearchReset(headerListBox, intNames);
+            statusLabel.Text = "Ready";
         }
-        public static void headerSearchReset(ListBox headerListBox, List<string> intNames) {
-            headerListBox.Enabled = true;
-            headerListBox.Items.Clear();
+        public static void HeaderSearchReset(ListBox headerListBox, List<string> intNames) {
+            if (headerListBox.Items.Count < intNames.Count) {
 
-            for (int i = 0; i < intNames.Count; i++) {
-                String name = intNames[i];
-                headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + name);
+                headerListBox.Enabled = true;
+                headerListBox.Items.Clear();
+
+                for (int i = 0; i < intNames.Count; i++) {
+                    string name = intNames[i];
+                    headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + name);
+                }
             }
         }
     }

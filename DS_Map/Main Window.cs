@@ -688,9 +688,8 @@ namespace DSPRE {
         }
         private void headerSearchToolStripButton_Click(object sender, EventArgs e) {
             mainTabControl.SelectedIndex = 0; //Select Header Editor
-            using (HeaderSearch h = new HeaderSearch(ref internalNames, headerListBox)) {
+            using (HeaderSearch h = new HeaderSearch(ref internalNames, headerListBox, statusLabel)) {
                 h.ShowDialog();
-                statusLabel.Text = h.status;
             }
         }
         private void advancedHeaderSearchToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -1504,9 +1503,7 @@ namespace DSPRE {
 
         private void resetButton_Click(object sender, EventArgs e) {
             searchLocationTextBox.Clear();
-            if (headerListBox.Items.Count < internalNames.Count)
-                HeaderSearch.headerSearchReset(headerListBox, internalNames);
-
+            HeaderSearch.HeaderSearchReset(headerListBox, internalNames);
             statusLabel.Text = "Ready";
         }
         private void searchHeaderTextBox_KeyPress(object sender, KeyEventArgs e) {
@@ -1561,7 +1558,7 @@ namespace DSPRE {
                     headerListBox.Enabled = true;
                 }
             } else if (headerListBox.Items.Count < internalNames.Count) {
-                HeaderSearch.headerSearchReset(headerListBox, internalNames);
+                HeaderSearch.HeaderSearchReset(headerListBox, internalNames);
             }
         }
         private void scriptFileUpDown_ValueChanged(object sender, EventArgs e) {
@@ -2025,7 +2022,7 @@ namespace DSPRE {
         }
         private void headersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
             if (headerListBox.Items.Count < internalNames.Count)
-                HeaderSearch.headerSearchReset(headerListBox, internalNames);
+                HeaderSearch.HeaderSearchReset(headerListBox, internalNames);
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0) {
                 int headerNumber = Convert.ToInt32(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
                 headerListBox.SelectedIndex = headerNumber;
