@@ -5211,7 +5211,7 @@ namespace DSPRE {
             searchProgressBar.Value = 0;
             searchInScriptsResultListBox.Items.AddRange(results.ToArray());
         }
-        private void searchInScriptsResultListBox_MouseDoubleClick(object sender, MouseEventArgs e) {
+        private void searchInScripts_GoToEntryResult(object sender, MouseEventArgs e) {
             if (searchInScriptsResultListBox.SelectedIndex < 0)
                 return;
 
@@ -5252,12 +5252,12 @@ namespace DSPRE {
         }
         private void searchInScriptsResultListBox_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
-                searchInScriptsResultListBox_MouseDoubleClick(null, null);
+                searchInScripts_GoToEntryResult(null, null);
             }
         }
         private void searchInScriptsTextBox_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
-                searchInScriptsResultListBox_MouseDoubleClick(null, null);
+                searchInScriptsButton_Click(null, null);
             }
         }
         private void selectScriptFileComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -5791,27 +5791,23 @@ namespace DSPRE {
 
             List<string> results = new List<string>();
             if (caseSensitiveSearchCheckbox.Checked) {
-                caseSensitiveSearchCheckbox.Enabled = false;
                 for (int i = firstArchive; i < lastArchive; i++) {
 
                     TextArchive file = new TextArchive(i);
-
                     for (int j = 0; j < file.messages.Count; j++) {
                         if (file.messages[j].Contains(searchString)) {
-                            results.Add("(" + i + ")" + " - #" + j.ToString("D"));
+                            results.Add("(" + i.ToString("D3") + ")" + " - #" + j.ToString("D2") + " --- " + file.messages[j].Substring(0, Math.Min(file.messages[j].Length, 40)));
                         }
                     }
                     textSearchProgressBar.Value = i;
                 }
             } else {
-                caseSensitiveSearchCheckbox.Enabled = false;
                 for (int i = firstArchive; i < lastArchive; i++) {
 
                     TextArchive file = new TextArchive(i);
-
                     for (int j = 0; j < file.messages.Count; j++) {
                         if (file.messages[j].IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                            results.Add("(" + i + ")" + " - #" + j.ToString("D"));
+                            results.Add("(" + i.ToString("D3") + ")" + " - #" + j.ToString("D2") + " --- " + file.messages[j].Substring(0, Math.Min(file.messages[j].Length, 40)));
                         }
                     }
                     textSearchProgressBar.Value = i;
@@ -5821,6 +5817,10 @@ namespace DSPRE {
             textSearchResultsListBox.Items.AddRange(results.ToArray());
             textSearchProgressBar.Value = 0;
             caseSensitiveSearchCheckbox.Enabled = true;
+        }
+        private void searchMessageTextBox_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter)
+                searchMessageButton_Click(null, null);
         }
         private void replaceMessageButton_Click(object sender, EventArgs e) {
             if (searchMessageTextBox.Text == "")
@@ -5923,26 +5923,23 @@ namespace DSPRE {
                 textEditorDataGridView.Rows[i].HeaderCell.Value = "0x" + i.ToString("X");
             }
         }
-
         private void printTextEditorLinesDecimal() {
             for (int i = 0; i < currentTextArchive.messages.Count; i++) {
                 textEditorDataGridView.Rows[i].HeaderCell.Value = i.ToString();
             }
         }
-
         private void textEditorDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
             if (disableHandlers)
                 return;
             if (e.RowIndex > -1)
                 currentTextArchive.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
         }
-        private void textSearchResultsListBox_SelectedIndexChanged(object sender, MouseEventArgs e) {
+        private void textSearchResultsListBox_GoToEntryResult(object sender, MouseEventArgs e) {
             if (textSearchResultsListBox.SelectedIndex < 0)
                 return;
 
-            string resultRow = textSearchResultsListBox.Text;
-            resultRow = resultRow.Substring(1);
-            string[] parts = resultRow.Split(new string[] { ") - #"}, StringSplitOptions.RemoveEmptyEntries);
+            string[] msgResult = textSearchResultsListBox.Text.Split(new string[] { " --- "}, StringSplitOptions.RemoveEmptyEntries);
+            string[] parts = msgResult[0].Substring(1).Split(new string[] { ") - #" }, StringSplitOptions.RemoveEmptyEntries);
 
             int msg;
             int line;
@@ -5959,7 +5956,9 @@ namespace DSPRE {
             }
         }
         private void textSearchResultsListBox_KeyDown(object sender, KeyEventArgs e) {
-            textSearchResultsListBox_SelectedIndexChanged(null, null);
+            if (e.KeyCode == Keys.Enter) {
+                textSearchResultsListBox_GoToEntryResult(null, null);
+            }
         }
         private void hexRadiobutton_CheckedChanged(object sender, EventArgs e) {
             updateTextEditorLineNumbers();

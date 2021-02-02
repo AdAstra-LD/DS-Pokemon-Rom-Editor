@@ -157,7 +157,7 @@ namespace DSPRE
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "Gen IV Matrix File (*.mtx)|*.mtx";
 
-            if (suggestedFileName != null && suggestedFileName != "")
+            if (!string.IsNullOrEmpty(suggestedFileName))
                 sf.FileName = suggestedFileName;
             if (sf.ShowDialog() != DialogResult.OK)
                 return;

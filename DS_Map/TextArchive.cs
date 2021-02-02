@@ -320,7 +320,7 @@ namespace DSPRE
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "Gen IV Text Archive (*.msg)|*.msg";
 
-            if (suggestedFileName != null && suggestedFileName != "")
+            if (!string.IsNullOrEmpty(suggestedFileName))
                 sf.FileName = suggestedFileName;
             if (sf.ShowDialog() != DialogResult.OK)
                 return;
