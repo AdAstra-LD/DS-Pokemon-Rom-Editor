@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSPRE {
     public static class PokeDatabase {
@@ -662,6 +659,126 @@ namespace DSPRE {
                 ["WaitMoveForever"] = 0x0068,
                 ["End"] = 0x00FE
             };
+
+            // Maybe for the future... we might convert the RESX sheets to compact dictionaries
+            public static Dictionary<ushort, (string, byte[], bool, bool)> DPPtCommands = new Dictionary<ushort, (string, byte[], bool, bool)>() {
+                [0x0000] = ("Nop",
+                null,
+                false,
+                false),
+
+                [0x0001] = ("Dummy",
+                null,
+                false,
+                false),
+
+                [0x0002] = ("End",
+                null,
+                false,
+                false),
+
+                [0x0003] = ("WaitTime",
+                new byte[2] { 16, 16 },
+                false,
+                false),
+
+                [0x0004] = ("RegValueSet",
+                new byte[2] { 8, 8 },
+                false,
+                false),
+
+                [0x0005] = ("RegDataSet",
+                new byte[2] { 8, 32 },
+                false,
+                false),
+
+                [0x0006] = ("RegAdrsSet",
+                new byte[2] { 8, 32 },
+                false,
+                false),
+
+                [0x0007] = ("AdrsValueSet",
+                new byte[2] { 32, 8 },
+                false,
+                false),
+
+                [0x0008] = ("AdrsRegSet",
+                new byte[2] { 32, 8 },
+                false,
+                false),
+
+                [0x0009] = ("RegRegSet",
+                new byte[2] { 8, 8 },
+                false,
+                false),
+
+                [0x000A] = ("AdrsAdrsSet",
+                new byte[2] { 32, 32 },
+                false,
+                false),
+
+                [0x000B] = ("IfRegReg",
+                new byte[2] { 8, 8 },
+                false,
+                false),
+
+                [0x000C] = ("IfRegValue",
+                new byte[2] { 8, 8 },
+                false,
+                false),
+
+                [0x000D] = ("IfRegAdrs",
+                new byte[2] { 8, 32 },
+                false,
+                false),
+
+                [0x000E] = ("IfAdrsReg",
+                new byte[2] { 32, 8 },
+                false,
+                false),
+
+                [0x000F] = ("IfAdrsValue",
+                new byte[2] { 32, 8 },
+                false,
+                false),
+
+                [0x0010] = ("IfAdrsAdrs",
+                new byte[2] { 32, 32 },
+                false,
+                false),
+
+                [0x0011] = ("IfVarValue",
+                new byte[2] { 16, 16 },
+                false,
+                false),
+
+                [0x0012] = ("IfVarVar",
+                new byte[2] { 16, 16 },
+                false,
+                false),
+
+                [0x0013] = (null,
+                new byte[1] { 16 },
+                false,
+                false),
+
+                [0x0014] = ("CommonScript",
+                new byte[1] { 16 },
+                false,
+                false),
+
+                [0x0015] = ("LocalScript",
+                null,
+                false,
+                false),
+
+                [0x0016] = ("Jump",
+                new byte[1] { 32 },
+                true,
+                false)
+            };
+            // 
+
             public static Dictionary<string, uint> headerOffsetsDict = new Dictionary<string, uint>() {
                 ["ADAE"] = 0xEEDBC,
                 ["APAE"] = 0xEEDBC,
