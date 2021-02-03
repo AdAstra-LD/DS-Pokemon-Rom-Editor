@@ -973,7 +973,7 @@
     <value>1 2</value>
   </data>
   <data name="011D" xml:space="preserve">
-    <value>2 2 2</value>
+    <value>4 1 1 2 2</value>
   </data>
   <data name="011E" xml:space="preserve">
     <value>1 2</value>
@@ -2635,6 +2635,6 @@
     <value>1 1</value>
   </data>
   <data name="0347" xml:space="preserve">
-    <value>1 2</value>
+    <value>2 1 1</value>
   </data>
 </root>

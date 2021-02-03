@@ -78,6 +78,7 @@
             this.value1TextBox.Name = "value1TextBox";
             this.value1TextBox.Size = new System.Drawing.Size(190, 22);
             this.value1TextBox.TabIndex = 9;
+            this.value1TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.value1TextBox_KeyDown);
             // 
             // startSearchButton
             // 

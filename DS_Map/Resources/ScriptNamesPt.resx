@@ -187,7 +187,7 @@
     <value>Message</value>
   </data>
   <data name="002D" xml:space="preserve">
-    <value>Message2</value>
+    <value>MessageSp</value>
   </data>
   <data name="002F" xml:space="preserve">
     <value>Message3</value>
@@ -367,13 +367,22 @@
     <value>TakeCoins</value>
   </data>
   <data name="007B" xml:space="preserve">
-    <value>TakeItem</value>
+    <value>GiveItem</value>
   </data>
   <data name="007C" xml:space="preserve">
-    <value>CheckStoreItem</value>
+    <value>TakeItem</value>
   </data>
   <data name="007D" xml:space="preserve">
-    <value>CheckItem</value>
+    <value>GiveItemPrecheck</value>
+  </data>
+  <data name="007E" xml:space="preserve">
+    <value>CheckPlayerHasItem</value>
+  </data>
+  <data name="007F" xml:space="preserve">
+    <value>CheckItemIsMachine</value>
+  </data>
+  <data name="0080" xml:space="preserve">
+    <value>GetItemPocket</value>
   </data>
   <data name="0085" xml:space="preserve">
     <value>CheckUndergroundPcStatus</value>
@@ -398,6 +407,15 @@
   </data>
   <data name="009A" xml:space="preserve">
     <value>CheckPlaceStored</value>
+  </data>
+  <data name="009C" xml:space="preserve">
+    <value>SetWeather</value>
+  </data>
+  <data name="009D" xml:space="preserve">
+    <value>InitWeather</value>
+  </data>
+  <data name="009E" xml:space="preserve">
+    <value>UpdateWeather</value>
   </data>
   <data name="00A1" xml:space="preserve">
     <value>CallEnd</value>
@@ -457,10 +475,10 @@
     <value>ChoosePokémonName</value>
   </data>
   <data name="00BC" xml:space="preserve">
-    <value>FadeScreen</value>
+    <value>SetFadeScreen</value>
   </data>
   <data name="00BD" xml:space="preserve">
-    <value>ResetScreen</value>
+    <value>WaitFadeScreen</value>
   </data>
   <data name="00BE" xml:space="preserve">
     <value>Warp</value>
@@ -655,22 +673,22 @@
     <value>DisableBadge</value>
   </data>
   <data name="0168" xml:space="preserve">
-    <value>PrepareDoorAnimation</value>
+    <value>DoorAnimation</value>
   </data>
   <data name="0169" xml:space="preserve">
-    <value>DoorWait</value>
+    <value>WaitDoor</value>
   </data>
   <data name="016A" xml:space="preserve">
-    <value>DoorFree</value>
+    <value>FreeDoor</value>
   </data>
   <data name="016B" xml:space="preserve">
-    <value>DoorOpen</value>
+    <value>OpenDoor</value>
   </data>
   <data name="016C" xml:space="preserve">
-    <value>DoorOpen</value>
+    <value>CloseDoor</value>
   </data>
   <data name="0177" xml:space="preserve">
-    <value>PartyCountCheck</value>
+    <value>GetPartyCount</value>
   </data>
   <data name="0178" xml:space="preserve">
     <value>OpenBerryPouch</value>
@@ -724,7 +742,7 @@
     <value>RecordList</value>
   </data>
   <data name="01B9" xml:space="preserve">
-    <value>CheckHappiness</value>
+    <value>GetPokemonHappiness</value>
   </data>
   <data name="01BD" xml:space="preserve">
     <value>CheckPosition</value>
@@ -749,6 +767,9 @@
   </data>
   <data name="01C7" xml:space="preserve">
     <value>StoreMove</value>
+  </data>
+  <data name="01C8" xml:space="preserve">
+    <value>CheckMoveCount</value>
   </data>
   <data name="01C9" xml:space="preserve">
     <value>DeleteMove</value>

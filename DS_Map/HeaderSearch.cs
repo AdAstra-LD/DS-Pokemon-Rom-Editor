@@ -89,22 +89,23 @@ namespace DSPRE {
             switch (fieldToSearch) {
                 case "Internal Name":
                     for (short i = startID; i < finalID; i++) {
-                        if (oper.Equals("Is Exactly"))
+                        if (oper.Equals("Is Exactly")) {
                             if (intNames[i].Equals(valToSearch)) {
                                 result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
                             }
-                        if (oper.Equals("Is Not"))
+                        } else if (oper.Equals("Is Not")) {
                             if (!intNames[i].Equals(valToSearch)) {
                                 result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
                             }
-                        if (oper.Equals("Contains"))
-                            if (intNames[i].Contains(valToSearch)) {
+                        } else if (oper.Equals("Contains")) {
+                            if (intNames[i].IndexOf(valToSearch, StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                 result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
                             }
-                        if (oper.Equals("Does not contain"))
-                            if (!intNames[i].Contains(valToSearch)) {
+                        } else if (oper.Equals("Does not contain")) {
+                            if (intNames[i].IndexOf(valToSearch, StringComparison.InvariantCultureIgnoreCase) < 0) {
                                 result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
                             }
+                        }
                     }
                     break;
                 case "Music Day (Name)":
@@ -195,6 +196,11 @@ namespace DSPRE {
                 statusLabel.Text = "Showing headers whose " + searchConfiguration;
             }
             Update();
+        }
+        private void value1TextBox_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                startSearchButton_Click(null, null);
+            }
         }
         private void headerSearchResetButton_Click(object sender, EventArgs e) {
             HeaderSearchReset(headerListBox, intNames);

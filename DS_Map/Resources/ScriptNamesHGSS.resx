@@ -424,10 +424,10 @@
     <value>GivePokemonNickname</value>
   </data>
   <data name="00AE" xml:space="preserve">
-    <value>FadeScreen</value>
+    <value>SetFadeScreen</value>
   </data>
   <data name="00AF" xml:space="preserve">
-    <value>ResetScreen</value>
+    <value>WaitFadeScreen</value>
   </data>
   <data name="00B0" xml:space="preserve">
     <value>Warp</value>
@@ -437,6 +437,9 @@
   </data>
   <data name="00B3" xml:space="preserve">
     <value>WFC1</value>
+  </data>
+  <data name="00BA" xml:space="preserve">
+    <value>CyclingRoadMode</value>
   </data>
   <data name="00BE" xml:space="preserve">
     <value>SetVariableHero</value>
@@ -523,19 +526,19 @@
     <value>DisableBadge</value>
   </data>
   <data name="0133" xml:space="preserve">
-    <value>PrepareDoorAnimation</value>
+    <value>DoorAnimation</value>
   </data>
   <data name="0134" xml:space="preserve">
-    <value>CloseDoor</value>
+    <value>WaitDoor</value>
   </data>
   <data name="0135" xml:space="preserve">
-    <value>MoveDoor</value>
+    <value>FreeDoor</value>
   </data>
   <data name="0136" xml:space="preserve">
     <value>OpenDoor</value>
   </data>
   <data name="0137" xml:space="preserve">
-    <value>WaitDoor</value>
+    <value>CloseDoor</value>
   </data>
   <data name="0141" xml:space="preserve">
     <value>VermillionGymAnimation</value>
@@ -550,7 +553,7 @@
     <value>AzaleaGym2</value>
   </data>
   <data name="014C" xml:space="preserve">
-    <value>CheckPartyNumber</value>
+    <value>GetPartyCount</value>
   </data>
   <data name="0153" xml:space="preserve">
     <value>SetOverworldPosition</value>
@@ -573,11 +576,20 @@
   <data name="0170" xml:space="preserve">
     <value>CheckHiroMoneyNumber</value>
   </data>
+  <data name="0176" xml:space="preserve">
+    <value>OverworldUnvanish</value>
+  </data>
+  <data name="0177" xml:space="preserve">
+    <value>OverworldVanish</value>
+  </data>
   <data name="0178" xml:space="preserve">
     <value>OpenMail</value>
   </data>
   <data name="0179" xml:space="preserve">
     <value>CheckMail</value>
+  </data>
+  <data name="0182" xml:space="preserve">
+    <value>GetPlayerDirection</value>
   </data>
   <data name="0188" xml:space="preserve">
     <value>ComparePokemonHeight</value>
@@ -599,6 +611,9 @@
   </data>
   <data name="018F" xml:space="preserve">
     <value>SetVariableMoveDelete</value>
+  </data>
+  <data name="0190" xml:space="preserve">
+    <value>Strength</value>
   </data>
   <data name="0194" xml:space="preserve">
     <value>GiveItemStored</value>

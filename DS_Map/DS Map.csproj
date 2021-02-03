@@ -178,9 +178,9 @@
     <Compile Include="Header.cs" />
     <Compile Include="RichTextBoxExt.cs" />
     <Compile Include="Resources\MovementNames.Designer.cs" />
-    <Compile Include="Resources\ScriptNamesDP.Designer.cs" />
+    <Compile Include="Resources\ScriptNamesPt.Designer.cs" />
     <Compile Include="Resources\ScriptNamesHGSS.Designer.cs" />
-    <Compile Include="Resources\ScriptParametersDP.Designer.cs" />
+    <Compile Include="Resources\ScriptParametersPt.Designer.cs" />
     <Compile Include="Resources\ScriptParametersHGSS.Designer.cs" />
     <Compile Include="ScriptFile.cs" />
     <Compile Include="Matrix.cs" />
@@ -311,11 +311,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\MovementNames.resx" />
     <EmbeddedResource Include="Resources\ReadText.resx" />
-    <EmbeddedResource Include="Resources\ScriptNamesDP.resx">
+    <EmbeddedResource Include="Resources\ScriptNamesPt.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ScriptNamesHGSS.resx" />
-    <EmbeddedResource Include="Resources\ScriptParametersDP.resx" />
+    <EmbeddedResource Include="Resources\ScriptParametersPt.resx" />
     <EmbeddedResource Include="Resources\ScriptParametersHGSS.resx" />
     <EmbeddedResource Include="Resources\writeText.resx" />
     <EmbeddedResource Include="SPK.resx">

@@ -888,7 +888,6 @@ namespace DSPRE {
             //DeleteTempFolders();
             RepackRom(saveRom.FileName);
 
-
             if (RomInfo.gameVersion != "D" && RomInfo.gameVersion != "P" && RomInfo.gameVersion != "Plat")
                 if (eventEditorIsReady)
                     DSUtils.DecompressOverlay(1, true);
@@ -2090,27 +2089,65 @@ namespace DSPRE {
                     mapFilesGridView.Columns.RemoveAt(currentMatrix.width - 1 - i);
                 } else {
                     /* Add columns */
-                    headersGridView.Columns.Add(" ", (currentMatrix.width + i).ToString());
-                    heightsGridView.Columns.Add(" ", (currentMatrix.width + i).ToString());
-                    mapFilesGridView.Columns.Add(" ", (currentMatrix.width + i).ToString());
+                    int index = currentMatrix.width + i;
+                    headersGridView.Columns.Add(" ", (index).ToString());
+                    heightsGridView.Columns.Add(" ", (index).ToString());
+                    mapFilesGridView.Columns.Add(" ", (index).ToString());
 
                     /* Adjust column width */
-                    headersGridView.Columns[currentMatrix.width + i].Width = 34;
-                    heightsGridView.Columns[currentMatrix.width + i].Width = 22;
-                    mapFilesGridView.Columns[currentMatrix.width + i].Width = 34;
+                    headersGridView.Columns[index].Width = 34;
+                    heightsGridView.Columns[index].Width = 22;
+                    mapFilesGridView.Columns[index].Width = 34;
 
                     /* Fill new rows */
                     for (int j = 0; j < currentMatrix.height; j++) {
-                        headersGridView.Rows[j].Cells[currentMatrix.width + i].Value = 0;
-                        heightsGridView.Rows[j].Cells[currentMatrix.width + i].Value = 0;
-                        mapFilesGridView.Rows[j].Cells[currentMatrix.width + i].Value = Matrix.EMPTY;
+                        headersGridView.Rows[j].Cells[index].Value = 0;
+                        heightsGridView.Rows[j].Cells[index].Value = 0;
+                        mapFilesGridView.Rows[j].Cells[index].Value = Matrix.EMPTY;
                     }
                 }
             }
 
             /* Modify matrix object */
             currentMatrix.ResizeMatrix((int)heightUpDown.Value, (int)widthUpDown.Value);
+            disableHandlers = false;
+        }
+        private void heightUpDown_ValueChanged(object sender, EventArgs e) {
+            if (disableHandlers)
+                return;
 
+            disableHandlers = true;
+
+            /* Add or remove rows in DataGridView control */
+            int delta = (int)heightUpDown.Value - currentMatrix.height;
+            for (int i = 0; i < Math.Abs(delta); i++) {
+                if (delta < 0) // Remove rows
+                {
+                    headersGridView.Rows.RemoveAt(currentMatrix.height - 1 - i);
+                    heightsGridView.Rows.RemoveAt(currentMatrix.height - 1 - i);
+                    mapFilesGridView.Rows.RemoveAt(currentMatrix.height - 1 - i);
+                } else {
+                    /* Add row in DataGridView */
+                    headersGridView.Rows.Add();
+                    heightsGridView.Rows.Add();
+                    mapFilesGridView.Rows.Add();
+
+                    int index = currentMatrix.height + i;
+                    headersGridView.Rows[index].HeaderCell.Value = (index).ToString();
+                    heightsGridView.Rows[index].HeaderCell.Value = (index).ToString();
+                    mapFilesGridView.Rows[index].HeaderCell.Value = (index).ToString();
+                    
+                    /* Fill new rows */
+                    for (int j = 0; j < currentMatrix.width; j++) {
+                        headersGridView.Rows[index].Cells[j].Value = 0;
+                        heightsGridView.Rows[index].Cells[j].Value = 0;
+                        mapFilesGridView.Rows[index].Cells[j].Value = Matrix.EMPTY;
+                    }
+                }
+            }
+
+            /* Modify matrix object */
+            currentMatrix.ResizeMatrix((int)heightUpDown.Value, (int)widthUpDown.Value);
             disableHandlers = false;
         }
         private void heightsGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
@@ -2133,7 +2170,6 @@ namespace DSPRE {
                 e.Value = 0;
 
             disableHandlers = false;
-
         }
         private void importMatrixButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .mtx file */
@@ -2164,45 +2200,7 @@ namespace DSPRE {
             widthUpDown.Value = currentMatrix.width;
             heightUpDown.Value = currentMatrix.height;
             disableHandlers = false;
-        }
-        private void heightUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
-                return;
-            
-            disableHandlers = true;
-
-            /* Add or remove rows in DataGridView control */
-            int delta = (int)heightUpDown.Value - currentMatrix.height;
-            for (int i = 0; i < Math.Abs(delta); i++) {
-                if (delta < 0) // Remove rows
-                {
-                    headersGridView.Rows.RemoveAt(currentMatrix.height - 1 - i);
-                    heightsGridView.Rows.RemoveAt(currentMatrix.height - 1 - i);
-                    mapFilesGridView.Rows.RemoveAt(currentMatrix.height - 1 - i);
-                } else { 
-                    /* Add row in DataGridView */
-                    headersGridView.Rows.Add();
-                    heightsGridView.Rows.Add();
-                    mapFilesGridView.Rows.Add();
-
-                    /* Add row header */
-                    headersGridView.Rows[currentMatrix.height + i].HeaderCell.Value = (currentMatrix.height + i + 1).ToString();
-                    heightsGridView.Rows[currentMatrix.height + i].HeaderCell.Value = (currentMatrix.height + i + 1).ToString();
-                    mapFilesGridView.Rows[currentMatrix.height + i].HeaderCell.Value = (currentMatrix.height + i + 1).ToString();
-
-                    /* Fill new rows */
-                    for (int j = 0; j < currentMatrix.width; j++) {
-                        headersGridView.Rows[currentMatrix.height + i].Cells[j].Value = 0;
-                        heightsGridView.Rows[currentMatrix.height + i].Cells[j].Value = 0;
-                        mapFilesGridView.Rows[currentMatrix.height + i].Cells[j].Value = Matrix.EMPTY;
-                    }
-                }
-            }
-
-            /* Modify matrix object */
-            currentMatrix.ResizeMatrix((int)heightUpDown.Value, (int)widthUpDown.Value);
-            disableHandlers = false;
-        }        
+        }    
         private void mapFilesGridView_CellMouseDoubleClick(object sender, DataGridViewCellEventArgs e) {
             if (!mapEditorIsReady) {
                 SetupMapEditor();

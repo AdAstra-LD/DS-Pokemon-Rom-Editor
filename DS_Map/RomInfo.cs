@@ -275,8 +275,8 @@ namespace DSPRE {
                 case "D":
                 case "P":
                 case "Plat":
-                    scriptCommandNamesDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesDP", Assembly.GetExecutingAssembly());
-                    scriptParametersDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersDP", Assembly.GetExecutingAssembly());
+                    scriptCommandNamesDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesPt", Assembly.GetExecutingAssembly());
+                    scriptParametersDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersPt", Assembly.GetExecutingAssembly());
                     break;
                 default:
                     scriptCommandNamesDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
