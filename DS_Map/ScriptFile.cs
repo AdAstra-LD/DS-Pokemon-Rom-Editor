@@ -284,7 +284,8 @@ namespace DSPRE {
                                 }
                                 break;
                             } catch (NullReferenceException) {
-                                MessageBox.Show("Unrecognized script command " + id, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Unrecognized script command " + id + 
+                                    Environment.NewLine + "Reference offset 0x" + dataReader.BaseStream.Position.ToString("X"), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return null;
                             }
                     }

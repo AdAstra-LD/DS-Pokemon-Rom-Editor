@@ -160,59 +160,64 @@ namespace DSPRE
             int[] pokemonMessage = new int[stringSize - 1];
             var charArray = currentMessage.ToCharArray();
             int count = 0;
-            for (int i = 0; i < currentMessage.Length; i++) {
-                if (charArray[i] == '\\') {
-                    if (charArray[i + 1] == 'r') {
-                        pokemonMessage[count] = 0x25BC;
-                        i++;
-                    } else {
-                        if (charArray[i + 1] == 'n') {
-                            pokemonMessage[count] = 0xE000;
+            try {
+                for (int i = 0; i < currentMessage.Length; i++) {
+                    if (charArray[i] == '\\') {
+                        if (charArray[i + 1] == 'r') {
+                            pokemonMessage[count] = 0x25BC;
                             i++;
                         } else {
-                            if (charArray[i + 1] == 'f') {
-                                pokemonMessage[count] = 0x25BD;
+                            if (charArray[i + 1] == 'n') {
+                                pokemonMessage[count] = 0xE000;
                                 i++;
                             } else {
-                                if (charArray[i + 1] == 'v') {
-                                    pokemonMessage[count] = 0xFFFE;
-                                    count++;
-                                    string characterID = ((char)charArray[i + 2]).ToString() + ((char)charArray[i + 3]).ToString() + ((char)charArray[i + 4]).ToString() + ((char)charArray[i + 5]).ToString();
-                                    pokemonMessage[count] = (int)Convert.ToUInt32(characterID, 16);
-                                    i += 5;
+                                if (charArray[i + 1] == 'f') {
+                                    pokemonMessage[count] = 0x25BD;
+                                    i++;
                                 } else {
-                                    if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '0') {
-                                        pokemonMessage[count] = 0x0000;
+                                    if (charArray[i + 1] == 'v') {
+                                        pokemonMessage[count] = 0xFFFE;
+                                        count++;
+                                        string characterID = ((char)charArray[i + 2]).ToString() + ((char)charArray[i + 3]).ToString() + ((char)charArray[i + 4]).ToString() + ((char)charArray[i + 5]).ToString();
+                                        pokemonMessage[count] = (int)Convert.ToUInt32(characterID, 16);
                                         i += 5;
                                     } else {
-                                        if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '1') {
-                                            pokemonMessage[count] = 0x0001;
+                                        //This looks like it can be optimized
+                                        if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '0') {
+                                            pokemonMessage[count] = 0x0000;
                                             i += 5;
                                         } else {
-                                            string characterID = ((char)charArray[i + 2]).ToString() + ((char)charArray[i + 3]).ToString() + ((char)charArray[i + 4]).ToString() + ((char)charArray[i + 5]).ToString();
-                                            pokemonMessage[count] = (int)Convert.ToUInt32(characterID, 16);
-                                            i += 5;
+                                            if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '1') {
+                                                pokemonMessage[count] = 0x0001;
+                                                i += 5;
+                                            } else {
+                                                string characterID = ((char)charArray[i + 2]).ToString() + ((char)charArray[i + 3]).ToString() + ((char)charArray[i + 4]).ToString() + ((char)charArray[i + 5]).ToString();
+                                                pokemonMessage[count] = (int)Convert.ToUInt32(characterID, 16);
+                                                i += 5;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                } else {
-                    if (charArray[i] == '[') {
-                        if (charArray[i + 1] == 'P') {
-                            pokemonMessage[count] = 0x01E0;
-                            i += 3;
-                        }
-                        if (charArray[i + 1] == 'M') {
-                            pokemonMessage[count] = 0x01E1;
-                            i += 3;
-                        }
                     } else {
-                        pokemonMessage[count] = (int)Convert.ToUInt32(GetByte.GetString(((int)charArray[i]).ToString()), 16);
+                        if (charArray[i] == '[') {
+                            if (charArray[i + 1] == 'P') {
+                                pokemonMessage[count] = 0x01E0;
+                                i += 3;
+                            }
+                            if (charArray[i + 1] == 'M') {
+                                pokemonMessage[count] = 0x01E1;
+                                i += 3;
+                            }
+                        } else {
+                            pokemonMessage[count] = (int)Convert.ToUInt32(GetByte.GetString(((int)charArray[i]).ToString()), 16);
+                        }
                     }
+                    count++;
                 }
-                count++;
+            } catch (FormatException) {
+                MessageBox.Show("Format exception. Assembled so far: " + Environment.NewLine + pokemonMessage);
             }
             return pokemonMessage;
         }
