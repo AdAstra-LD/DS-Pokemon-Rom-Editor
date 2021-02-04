@@ -95,7 +95,7 @@
     <Compile Include="AB.cs" />
     <Compile Include="AreaData.cs" />
     <Compile Include="DSUtils.cs" />
-    <Compile Include="PokeDatabase.cs" />
+    <Compile Include="Resources\PokeDatabase.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -116,17 +116,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SyntheticOverlayFileNumber.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\ScriptComparisonOperators.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ScriptComparisonOperators.resx</DependentUpon>
-    </Compile>
     <Compile Include="HeaderSearch.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="HeaderSearch.Designer.cs">
       <DependentUpon>HeaderSearch.cs</DependentUpon>
     </Compile>
+    <Compile Include="Resources\TextDatabase.cs" />
     <Compile Include="ROMToolboxDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -180,11 +176,6 @@
     <Compile Include="TextArchive.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="RichTextBoxExt.cs" />
-    <Compile Include="Resources\MovementNames.Designer.cs" />
-    <Compile Include="Resources\ScriptNamesPt.Designer.cs" />
-    <Compile Include="Resources\ScriptNamesHGSS.Designer.cs" />
-    <Compile Include="Resources\ScriptParametersPt.Designer.cs" />
-    <Compile Include="Resources\ScriptParametersHGSS.Designer.cs" />
     <Compile Include="ScriptFile.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="EventFile.cs" />
@@ -278,10 +269,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SyntheticOverlayFileNumber.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\ScriptComparisonOperators.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ScriptComparisonOperators.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="ROMToolboxDialog.resx">
       <DependentUpon>ROMToolboxDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -312,14 +299,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\MovementNames.resx" />
     <EmbeddedResource Include="Resources\ReadText.resx" />
-    <EmbeddedResource Include="Resources\ScriptNamesPt.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\ScriptNamesHGSS.resx" />
-    <EmbeddedResource Include="Resources\ScriptParametersPt.resx" />
-    <EmbeddedResource Include="Resources\ScriptParametersHGSS.resx" />
     <EmbeddedResource Include="Resources\writeText.resx" />
     <EmbeddedResource Include="SPK.resx">
       <DependentUpon>SPK.cs</DependentUpon>

@@ -740,7 +740,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.1.1" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.1.2" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks go to Trifindo, Mikelan98, JackHack96, Mixone and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS Rom Hacking made the development of this tool possible.";
@@ -5123,12 +5123,12 @@ namespace DSPRE {
                         List<Command> commandList = new List<Command>();
                         while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump Function") && i < scriptTextBox.Lines.Length - 1) {
                             Console.WriteLine("Script line " + (i + 1).ToString());
-                            Command cmd = new Command(scriptTextBox.Lines[i], RomInfo.gameVersion, false);
+                            Command cmd = new Command(scriptTextBox.Lines[i]);
                             Console.WriteLine("----" + cmd + "----");
                             commandList.Add(cmd);
                             i++;
                         }
-                        commandList.Add(new Command(scriptTextBox.Lines[i], RomInfo.gameVersion, false)); // Add end or jump/call command
+                        commandList.Add(new Command(scriptTextBox.Lines[i])); // Add end or jump/call command
                         scrFile.scripts.Add(new Script(commandList));
                     }
                 }
@@ -5145,10 +5145,10 @@ namespace DSPRE {
                     List<Command> commandList = new List<Command>();
 
                     while (functionTextBox.Lines[i] != "End" && !functionTextBox.Lines[i].Contains("Return") && !functionTextBox.Lines[i].Contains("Jump F")) {
-                        commandList.Add(new Command(functionTextBox.Lines[i], RomInfo.gameVersion, false));
+                        commandList.Add(new Command(functionTextBox.Lines[i]));
                         i++;
                     }
-                    commandList.Add(new Command(functionTextBox.Lines[i], RomInfo.gameVersion, false)); // Add end command
+                    commandList.Add(new Command(functionTextBox.Lines[i])); // Add end command
                     scrFile.functions.Add(new Script(commandList));
                 } 
             }
@@ -5163,10 +5163,10 @@ namespace DSPRE {
                     List<Command> commandList = new List<Command>();
                     /* Read script commands */
                     while (movementTextBox.Lines[i] != "End") {
-                        commandList.Add(new Command(movementTextBox.Lines[i], RomInfo.gameVersion, true));
+                        commandList.Add(new Command(movementTextBox.Lines[i], true));
                         i++;
                     }
-                    commandList.Add(new Command(movementTextBox.Lines[i], RomInfo.gameVersion, true)); // Add end command
+                    commandList.Add(new Command(movementTextBox.Lines[i],true)); // Add end command
 
                     scrFile.movements.Add(new Script(commandList));
                 }

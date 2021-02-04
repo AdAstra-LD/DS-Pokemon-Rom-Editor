@@ -6,6 +6,7 @@ using System;
 using System.Drawing;
 using System.Resources;
 using System.Reflection;
+using System.Linq;
 
 namespace DSPRE {
 
@@ -54,10 +55,9 @@ namespace DSPRE {
         public static readonly byte internalNameLength = 16;
         public string internalNamesLocation { get; private set; }
         public Dictionary<List<uint>, Tuple<Color, Color>> mapCellsColorDictionary { get; private set; }
-        public static ResourceManager scriptCommandNamesDatabase { get; private set; }
-        public static ResourceManager scriptParametersDatabase { get; private set; }
-        public static ResourceManager scriptComparisonOperators { get; private set; }
-
+        public static Dictionary<ushort, string> scriptCommandNamesDict { get; private set; }
+        public static Dictionary<ushort, byte[]> scriptParametersDict { get; private set; }
+        
         #region Constructors (1)
         public RomInfo(string id, string workDir) {
             romID = id;
@@ -270,17 +270,29 @@ namespace DSPRE {
         }
 
         public void SetScriptDatabases() {
-            scriptComparisonOperators = new ResourceManager("DSPRE.Resources.ScriptComparisonOperators", Assembly.GetExecutingAssembly());
             switch (gameVersion) {
                 case "D":
                 case "P":
+                    var commonDictionaryNames = PokeDatabase.ScriptEditor.DPPtScrCmdNames;
+                    var specificDictionaryNames = PokeDatabase.ScriptEditor.DPScrCmdNames;
+                    scriptCommandNamesDict = commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+
+                    var commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
+                    var specificDictionaryParams = PokeDatabase.ScriptEditor.DPScrCmdParameters;
+                    scriptParametersDict = commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+                    break;
                 case "Plat":
-                    scriptCommandNamesDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesPt", Assembly.GetExecutingAssembly());
-                    scriptParametersDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersPt", Assembly.GetExecutingAssembly());
+                    commonDictionaryNames = PokeDatabase.ScriptEditor.DPPtScrCmdNames;
+                    specificDictionaryNames = PokeDatabase.ScriptEditor.PlatScrCmdNames;
+                    scriptCommandNamesDict = commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+
+                    commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
+                    specificDictionaryParams = PokeDatabase.ScriptEditor.PlatScrCmdParameters;
+                    scriptParametersDict = commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First()); break;
                     break;
                 default:
-                    scriptCommandNamesDatabase = new ResourceManager("DSPRE.Resources.ScriptNamesHGSS", Assembly.GetExecutingAssembly());
-                    scriptParametersDatabase = new ResourceManager("DSPRE.Resources.ScriptParametersHGSS", Assembly.GetExecutingAssembly());
+                    scriptCommandNamesDict = PokeDatabase.ScriptEditor.HGSSScrCmdNames;
+                    scriptParametersDict = PokeDatabase.ScriptEditor.HGSSScrCmdParameters;
                     break;
             }
         }
