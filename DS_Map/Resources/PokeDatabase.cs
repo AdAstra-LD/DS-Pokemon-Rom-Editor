@@ -3311,6 +3311,7 @@ namespace DSPRE {
                 "[DA] Bike Slope Bottom",
                 "[DB] Bike parking",
                 "[E4] Trash Can",
+                "[E1] Bookshelf",
                 "[E5] Shop items"
             };
 
