@@ -227,6 +227,8 @@ namespace DSPRE {
 
                         @"data\a\1\4\8"
                     };
+                    if (gameVersion == "SS")
+                        narcPaths[narcPaths.Length - 2] = @"data\a\1\3\6"; //Fix SS encounters
                     break;
             }
         }

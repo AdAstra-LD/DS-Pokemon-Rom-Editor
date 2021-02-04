@@ -106,7 +106,7 @@ namespace DSPRE
         public void AddBuilding(Building b) {
             buildings.Add(b);
         }
-        public byte[] ExportBuildings() {
+        public byte[] BuildingsToByteArray() {
             MemoryStream newData = new MemoryStream(0x30 * buildings.Count);
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 for (int i = 0; i < buildings.Count; i++) {
@@ -132,7 +132,7 @@ namespace DSPRE
         public byte[] ExportMapModel() {
             return mapModelData;
         }
-        public byte[] ExportPermissions() {
+        public byte[] CollisionsToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 for (int i = 0; i < 32; i++) {
@@ -205,7 +205,7 @@ namespace DSPRE
                 bdhc = reader.ReadBytes((int)newData.Length);
             }
         }
-        public byte[] Save() {
+        public byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 /* Write section lengths */
@@ -222,8 +222,8 @@ namespace DSPRE
                 }
 
                 /* Write sections */
-                writer.Write(ExportPermissions());
-                writer.Write(ExportBuildings());
+                writer.Write(CollisionsToByteArray());
+                writer.Write(BuildingsToByteArray());
                 writer.Write(ExportMapModel());
                 writer.Write(GetTerrain());
             }

@@ -192,33 +192,26 @@ namespace DSPRE
             LoadModelTextures(textureComboBox.SelectedIndex - 1);
             RenderModel();
         }
-        private void exportButton_Click(object sender, EventArgs e)
-        {
+        private void exportButton_Click(object sender, EventArgs e) {
             SaveFileDialog em = new SaveFileDialog();
             em.Filter = "NSBMD model (*.nsbmd)|*.nsbmd";
             em.FileName = buildingEditorBldListBox.SelectedItem.ToString();
             if (em.ShowDialog(this) != DialogResult.OK)
                 return;
-
-            else 
-                File.Copy(folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingEditorBldListBox.SelectedIndex.ToString("D4"), em.FileName, true);
+           
+            File.Copy(folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingEditorBldListBox.SelectedIndex.ToString("D4"), em.FileName, true);
         }
-        private void importButton_Click(object sender, EventArgs e)
-        {
+        private void importButton_Click(object sender, EventArgs e) {
             OpenFileDialog im = new OpenFileDialog();
             im.Filter = "NSBMD model (*.nsbmd)|*.nsbmd";
             if (im.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            using (BinaryReader reader = new BinaryReader(new FileStream(im.FileName, FileMode.Open)))
-            {
-                if (reader.ReadUInt32() != 0x30444D42)
-                {
+            using (BinaryReader reader = new BinaryReader(new FileStream(im.FileName, FileMode.Open))) {
+                if (reader.ReadUInt32() != 0x30444D42) {
                     MessageBox.Show("Please select an NSBMD file.", "Invalid File");
                     return;
-                }
-                else
-                {
+                } else {
                     File.Copy(im.FileName, folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingEditorBldListBox.SelectedIndex.ToString("D4"), true);
                     buildingsListBox_SelectedIndexChanged(null, null);
                 }                
@@ -237,12 +230,11 @@ namespace DSPRE
         private void textureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) 
                 return;
+
             LoadModelTextures(textureComboBox.SelectedIndex - 1);
             RenderModel();
         }
-
-        private void buildingOpenGLControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
+        private void buildingOpenGLControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
             switch (e.KeyCode) {
                 case Keys.Right:
                     ang += 1;

@@ -2599,7 +2599,7 @@ namespace DSPRE {
         private void addMapFileButton_Click(object sender, EventArgs e) {
             /* Add new map file to map folder */
             string mapFilePath = RomInfo.mapDirPath + "\\" + selectMapComboBox.Items.Count.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(mapFilePath, FileMode.Create))) writer.Write(LoadMapFile(0).Save());
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(mapFilePath, FileMode.Create))) writer.Write(LoadMapFile(0).ToByteArray());
 
             /* Update ComboBox and select new file */
             selectMapComboBox.Items.Add(selectMapComboBox.Items.Count.ToString("D3") + Header.nameSeparator + "newmap");
@@ -2770,28 +2770,26 @@ namespace DSPRE {
                 ang, dist, elev, perspective,
                 mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
-
         private void cam2Dmode() {
             perspective = 4f;
             ang = 0f;
             dist = 115.2f;
             elev = 90f;
         }
-
         private void cam3Dmode() {
             perspective = 45f;
             ang = 0f;
             dist = 12.8f;
             elev = 50.0f;
         }
-
         private void removeMapFileButton_Click(object sender, EventArgs e) {
             /* Delete last map file */
             File.Delete(RomInfo.mapDirPath + "\\" + (selectMapComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectMapComboBox.Items.Count - 1;
-            if (selectMapComboBox.SelectedIndex == lastIndex) selectMapComboBox.SelectedIndex--;
+            if (selectMapComboBox.SelectedIndex == lastIndex) 
+                selectMapComboBox.SelectedIndex--;
 
             /* Remove item from ComboBox */
             selectMapComboBox.Items.RemoveAt(lastIndex);
@@ -2799,7 +2797,20 @@ namespace DSPRE {
         private void saveMapButton_Click(object sender, EventArgs e) {
             string mapIndex = selectMapComboBox.SelectedIndex.ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.mapDirPath + "\\" + mapIndex, FileMode.Create)))
-                writer.Write(currentMapFile.Save());
+                writer.Write(currentMapFile.ToByteArray());
+        }
+        private void exportCurrentMapBinButton_Click(object sender, EventArgs e) {
+            SaveFileDialog eb = new SaveFileDialog();
+            eb.Filter = "Gen IV Map BIN File (*.bin)|*.bin";
+            eb.FileName = selectMapComboBox.SelectedItem.ToString();
+            if (eb.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) {
+                writer.Write(currentMapFile.ToByteArray());
+            }
+
+            MessageBox.Show("Map BIN exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void selectMapComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) 
@@ -2812,7 +2823,6 @@ namespace DSPRE {
             if (mapTextureComboBox.SelectedIndex > 0) 
                 currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, romInfo.mapTexturesDirPath, mapTextureComboBox.SelectedIndex - 1);
 
-
             /* Load buildings nsbmd and textures for renderer into MapFile's building objects */
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {
                 currentMapFile.buildings[i] = LoadBuildingModel(currentMapFile.buildings[i], interiorbldRadioButton.Checked); // Load building nsbmd
@@ -2824,18 +2834,19 @@ namespace DSPRE {
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
             /* Draw permissions in the small selection boxes */
-            Draw_Small_Collision();
-            Draw_Small_Type();
+            DrawSmallCollision();
+            DrawSmallTypeCollision();
 
             /* Draw selected permissions category */
             if (selectCollisionPanel.BackColor == Color.MidnightBlue) {
-                Draw_Collision_Grid();
+                DrawCollisionGrid();
             } else {
-                Draw_Type_Grid();
+                DrawTypeGrid();
             }
-
             /* Set map screenshot as background picture in permissions editor PictureBox */
             movPictureBox.BackgroundImage = GrabMapScreenshot(movPictureBox.Width, movPictureBox.Height);
+
+            RestorePainter();
 
             /* Fill buildings ListBox, and if not empty select first item */
             FillBuildingsBox();
@@ -2858,7 +2869,6 @@ namespace DSPRE {
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
-
         #region Building Editor
         private void addBuildingButton_Click(object sender, EventArgs e) {
             addBuildingToMap(new Building());
@@ -2867,7 +2877,6 @@ namespace DSPRE {
             if (buildingsListBox.SelectedIndex > -1)
                 addBuildingToMap(new Building(currentMapFile.buildings[buildingsListBox.SelectedIndex]));
         }
-
         private void addBuildingToMap(Building b) {
             currentMapFile.AddBuilding(b);
 
@@ -2883,7 +2892,6 @@ namespace DSPRE {
             /* Redraw scene with new building */
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
-
         private void buildIndexComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || buildingsListBox.SelectedIndex < 0) 
                 return;
@@ -2900,11 +2908,9 @@ namespace DSPRE {
 
         }
         private void buildingsListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            #region Temporarily disable events to allow for faster execution
             if (disableHandlers)
                 return;
             disableHandlers = true;
-            #endregion
 
             int buildingNumber = buildingsListBox.SelectedIndex;
 
@@ -2917,9 +2923,7 @@ namespace DSPRE {
             buildingHeightUpDown.Value = currentMapFile.buildings[buildingNumber].height;
             buildingLengthUpDown.Value = currentMapFile.buildings[buildingNumber].length;
 
-            #region Re-enable disabled events
             disableHandlers = false;
-            #endregion
         }
         private void buildingHeightUpDown_ValueChanged(object sender, EventArgs e) {
             if (buildingsListBox.SelectedIndex > -1) {
@@ -2947,7 +2951,7 @@ namespace DSPRE {
                 return;
 
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) {
-                writer.Write(currentMapFile.ExportBuildings());
+                writer.Write(currentMapFile.BuildingsToByteArray());
             }
 
             MessageBox.Show("Buildings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -3084,12 +3088,12 @@ namespace DSPRE {
             bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
             return bmp;
         }
-        private void Draw_Collision_Grid() {
+        private void DrawCollisionGrid() {
             Bitmap mainBm = new Bitmap(608, 608);
             using (Graphics gMain = Graphics.FromImage(mainBm)) {
                 for (int i = 0; i < 32; i++) {
                     for (int j = 0; j < 32; j++) {
-                        Set_Collision_Painter(currentMapFile.collisions[i, j]);
+                        SetCollisionPainter(currentMapFile.collisions[i, j]);
 
                         /* Draw collision on the main grid */
                         mainCell = new Rectangle(19 * j, 19 * i, 19, 19);
@@ -3101,12 +3105,12 @@ namespace DSPRE {
             movPictureBox.Image = mainBm;
             movPictureBox.Invalidate();
         }
-        private void Draw_Small_Collision() {
+        private void DrawSmallCollision() {
             Bitmap smallBm = new Bitmap(100, 100);
             using (Graphics gSmall = Graphics.FromImage(smallBm)) {
                 for (int i = 0; i < 32; i++) {
                     for (int j = 0; j < 32; j++) {
-                        Set_Collision_Painter(currentMapFile.collisions[i, j]);
+                        SetCollisionPainter(currentMapFile.collisions[i, j]);
 
                         /* Draw collision on the small image */
                         smallCell = new Rectangle(3 * j, 3 * i, 3, 3);
@@ -3118,12 +3122,12 @@ namespace DSPRE {
             collisionPictureBox.Image = smallBm;
             collisionPictureBox.Invalidate();
         }
-        private void Draw_Type_Grid() {
+        private void DrawTypeGrid() {
             Bitmap mainBm = new Bitmap(608, 608);
             using (Graphics gMain = Graphics.FromImage(mainBm)) {
                 for (int i = 0; i < 32; i++) {
                     for (int j = 0; j < 32; j++) {
-                        Set_Type_Painter(Convert.ToInt32(currentMapFile.types[i, j]));
+                        SetTypePainter(Convert.ToInt32(currentMapFile.types[i, j]));
 
                         /* Draw cell with color */
                         mainCell = new Rectangle(19 * j, 19 * i, 19, 19);
@@ -3142,12 +3146,12 @@ namespace DSPRE {
             movPictureBox.Image = mainBm;
             movPictureBox.Invalidate();
         }
-        private void Draw_Small_Type() {
+        private void DrawSmallTypeCollision() {
             Bitmap smallBm = new Bitmap(100, 100);
             using (Graphics gSmall = Graphics.FromImage(smallBm)) {
                 for (int i = 0; i < 32; i++) {
                     for (int j = 0; j < 32; j++) {
-                        Set_Type_Painter(currentMapFile.types[i, j]);
+                        SetTypePainter(currentMapFile.types[i, j]);
 
                         /* Draw collision on the small image */
                         smallCell = new Rectangle(3 * j, 3 * i, 3, 3);
@@ -3159,7 +3163,7 @@ namespace DSPRE {
             typePictureBox.Image = smallBm;
             typePictureBox.Invalidate();
         }
-        private void Edit_Cell(int xPosition, int yPosition) {
+        private void EditCell(int xPosition, int yPosition) {
             try {
                 mainCell = new Rectangle(xPosition * 19, yPosition * 19, 19, 19);
                 smallCell = new Rectangle(xPosition * 3, yPosition * 3, 3, 3);
@@ -3203,14 +3207,16 @@ namespace DSPRE {
                 movPictureBox.Invalidate();
             } catch { return; }
         }
-        private void Restore_Painter() {
-            if (selectCollisionPanel.BackColor == Color.MidnightBlue)
-                collisionPainterComboBox_SelectedIndexChanged(null, null); // Restore painters to original state
-            else if (collisionTypePainterComboBox.Enabled)
+        private void RestorePainter() {
+            if (selectCollisionPanel.BackColor == Color.MidnightBlue) {
+                collisionPainterComboBox_ResetSelection(null, null); // Restore painters to original state
+            } else if (collisionTypePainterComboBox.Enabled) {
                 typePainterComboBox_SelectedIndexChanged(null, null); // Restore painters to original state
-            else typePainterUpDown_ValueChanged(null, null);
+            } else {
+                typePainterUpDown_ValueChanged(null, null);
+            }
         }
-        private void Set_Collision_Painter(int collisionValue) {
+        private void SetCollisionPainter(int collisionValue) {
             switch (collisionValue) {
                 case 0x0:
                     paintPen = new Pen(Color.FromArgb(128, Color.White));
@@ -3227,7 +3233,7 @@ namespace DSPRE {
             }
             paintByte = (byte)collisionValue;
         }
-        private void Set_Type_Painter(int typeValue) {
+        private void SetTypePainter(int typeValue) {
             switch (typeValue) {
                 case 0x0:
                     paintPen = new Pen(Color.FromArgb(128, Color.White));
@@ -3252,7 +3258,7 @@ namespace DSPRE {
                     paintPen = new Pen(Color.FromArgb(128, Color.BurlyWood));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.BurlyWood));
                     textBrush = new SolidBrush(Color.White);
-                    textFont = new Font("Arial", 8.5f);
+                    textFont = new Font("Arial", 8.65f);
                     break;
                 case 0x10:
                     paintPen = new Pen(Color.FromArgb(128, Color.SkyBlue));
@@ -3290,6 +3296,23 @@ namespace DSPRE {
                     textBrush = new SolidBrush(Color.Black);
                     textFont = new Font("Arial", 9.0f);
                     break;
+                case 0x30:
+                case 0x31:
+                case 0x32:
+                case 0x33:
+                    paintPen = new Pen(Color.FromArgb(128, Color.Red));
+                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Red));
+                    textBrush = new SolidBrush(Color.White);
+                    textFont = new Font("Arial", 9.0f);
+                    break;
+                case 0x3C:
+                case 0x3D:
+                case 0x3E:
+                    paintPen = new Pen(Color.FromArgb(0x7F654321));
+                    paintBrush = new SolidBrush(Color.FromArgb(0x7F654321));
+                    textBrush = new SolidBrush(Color.White);
+                    textFont = new Font("Arial", 8.65f);
+                    break;
                 case 0x38:
                 case 0x39:
                 case 0x3A:
@@ -3297,7 +3320,7 @@ namespace DSPRE {
                     paintPen = new Pen(Color.FromArgb(128, Color.Maroon));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.Maroon));
                     textBrush = new SolidBrush(Color.White);
-                    textFont = new Font("Arial", 8.7f);
+                    textFont = new Font("Arial", 8.65f);
                     break;
                 case 0x40:
                 case 0x41:
@@ -3308,11 +3331,18 @@ namespace DSPRE {
                     textBrush = new SolidBrush(Color.Black);
                     textFont = new Font("Arial", 9.0f);
                     break;
+                case 0x4B:
+                case 0x4C:
+                    paintPen = new Pen(Color.FromArgb(128, Color.Sienna));
+                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Sienna));
+                    textBrush = new SolidBrush(Color.White);
+                    textFont = new Font("Arial", 9.0f);
+                    break;
                 case 0x5E:
                     paintPen = new Pen(Color.FromArgb(128, Color.DarkOrchid));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.DarkOrchid));
                     textBrush = new SolidBrush(Color.White);
-                    textFont = new Font("Arial", 8.7f);
+                    textFont = new Font("Arial", 8.65f);
                     break;
                 case 0x5F:
                 case 0x62:
@@ -3323,7 +3353,7 @@ namespace DSPRE {
                     paintPen = new Pen(Color.FromArgb(128, Color.DarkOrchid));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.DarkOrchid));
                     textBrush = new SolidBrush(Color.White);
-                    textFont = new Font("Arial", 9.0f);
+                    textFont = new Font("Arial", 8.65f);
                     break;
                 case 0x6C:
                 case 0x6D:
@@ -3332,7 +3362,7 @@ namespace DSPRE {
                     paintPen = new Pen(Color.FromArgb(128, Color.DarkOrchid));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.DarkOrchid));
                     textBrush = new SolidBrush(Color.White);
-                    textFont = new Font("Arial", 8.6f);
+                    textFont = new Font("Arial", 8.65f);
                     break;
                 case 0xA1:
                 case 0xA2:
@@ -3340,25 +3370,25 @@ namespace DSPRE {
                     paintPen = new Pen(Color.FromArgb(128, Color.Honeydew));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.Honeydew));
                     textBrush = new SolidBrush(Color.Black);
-                    textFont = new Font("Arial", 9.0f);
+                    textFont = new Font("Arial", 8.65f);
                     break;
                 case 0xA4:
                     paintPen = new Pen(Color.FromArgb(128, Color.Peru));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.Peru));
                     textBrush = new SolidBrush(Color.White);
-                    textFont = new Font("Arial", 9.0f);
+                    textFont = new Font("Arial", 8.65f);
                     break;
                 case 0xA6:
                     paintPen = new Pen(Color.FromArgb(128, Color.SeaGreen));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.SeaGreen));
                     textBrush = new SolidBrush(Color.White);
-                    textFont = new Font("Arial", 8.7f);
+                    textFont = new Font("Arial", 8.65f);
                     break;
                 default:
                     paintPen = new Pen(Color.FromArgb(128, Color.White));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.White));
                     textBrush = new SolidBrush(Color.Black);
-                    textFont = new Font("Arial", 8.7f);
+                    textFont = new Font("Arial", 8.65f);
                     break;
             }
             paintByte = (byte)typeValue;
@@ -3375,7 +3405,7 @@ namespace DSPRE {
             using (Graphics mainG = Graphics.FromImage(movPictureBox.Image)) {
                 smallG.Clear(Color.Transparent);
                 mainG.Clear(Color.Transparent);
-                Set_Collision_Painter(0x0);
+                SetCollisionPainter(0x0);
 
                 for (int i = 0; i < 32; i++) {
                     for (int j = 0; j < 32; j++) {
@@ -3391,17 +3421,24 @@ namespace DSPRE {
 
             movPictureBox.Invalidate(); // Refresh main image
             smallBox.Invalidate();
-            Restore_Painter();
+            RestorePainter();
         }
-        private void collisionPainterComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+        private void collisionPainterComboBox_ResetSelection(object sender, EventArgs e) {
             int collisionValue;
-            if (collisionPainterComboBox.SelectedIndex == 0) collisionValue = 0;
-            else if (collisionPainterComboBox.SelectedIndex == 1) collisionValue = 0x80;
-            else collisionValue = 1;
 
-            Set_Collision_Painter(collisionValue);
+            if (collisionPainterComboBox.SelectedIndex == 0) {
+                collisionValue = 0;
+            } else if (collisionPainterComboBox.SelectedIndex == 1) {
+                collisionValue = 0x80;
+            } else {
+                collisionValue = 1;
+            }
 
-            using (Graphics g = Graphics.FromImage(collisionPainterPictureBox.Image)) g.Clear(Color.FromArgb(255, paintBrush.Color));
+            SetCollisionPainter(collisionValue);
+
+            using (Graphics g = Graphics.FromImage(collisionPainterPictureBox.Image)) 
+                g.Clear(Color.FromArgb(255, paintBrush.Color));
+
             collisionPainterPictureBox.Invalidate();
         }
         private void collisionPictureBox_Click(object sender, EventArgs e) {
@@ -3410,8 +3447,8 @@ namespace DSPRE {
             selectCollisionPanel.BackColor = Color.MidnightBlue;
             collisionGroupBox.Enabled = true;
 
-            Draw_Collision_Grid();
-            Restore_Painter();
+            DrawCollisionGrid();
+            RestorePainter();
         }
         private void exportMovButton_Click(object sender, EventArgs e) {
             SaveFileDialog em = new SaveFileDialog();
@@ -3420,7 +3457,9 @@ namespace DSPRE {
             if (em.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(em.FileName))) writer.Write(currentMapFile.ExportPermissions());
+            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(em.FileName))) 
+                writer.Write(currentMapFile.CollisionsToByteArray());
+
             MessageBox.Show("Permissions exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void importMovButton_Click(object sender, EventArgs e) {
@@ -3431,47 +3470,40 @@ namespace DSPRE {
 
             currentMapFile.ImportPermissions(new FileStream(ip.FileName, FileMode.Open));
 
-            Draw_Small_Collision();
-            Draw_Small_Type();
-            if (selectCollisionPanel.BackColor == Color.MidnightBlue) Draw_Collision_Grid();
-            else Draw_Type_Grid();
-            Restore_Painter();
+            DrawSmallCollision();
+            DrawSmallTypeCollision();
+            if (selectCollisionPanel.BackColor == Color.MidnightBlue) { 
+                DrawCollisionGrid();
+            } else {
+                DrawTypeGrid();
+            }
+            RestorePainter();
 
             MessageBox.Show("Permissions imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void movPictureBox_Click(object sender, EventArgs e) {
-            Edit_Cell(movPictureBox.PointToClient(MousePosition).X / 19, movPictureBox.PointToClient(MousePosition).Y / 19);
+            EditCell(movPictureBox.PointToClient(MousePosition).X / 19, movPictureBox.PointToClient(MousePosition).Y / 19);
         }
         private void movPictureBox_MouseMove(object sender, MouseEventArgs e) {
             if ((Control.MouseButtons & MouseButtons.Left) == MouseButtons.Left) {
-                Edit_Cell(e.Location.X / 19, e.Location.Y / 19);
+                EditCell(e.Location.X / 19, e.Location.Y / 19);
             }
         }
         private void typePainterComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             string selectedType = collisionTypePainterComboBox.SelectedItem.ToString();
-            int typeValue = Convert.ToInt32(selectedType.Substring(1, 2), 16);
-
-            Set_Type_Painter(typeValue);
-
-            sf = new StringFormat();
-            sf.LineAlignment = StringAlignment.Center;
-            sf.Alignment = StringAlignment.Center;
-
-            using (Graphics g = Graphics.FromImage(typePainterPictureBox.Image)) {
-                g.Clear(Color.FromArgb(255, paintBrush.Color));
-                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                g.DrawString(typeValue.ToString("X2"), new Font("Microsoft Sans Serif", 24), textBrush, painterBox, sf);
-            }
-            typePainterPictureBox.Invalidate();
+            updateTypeCollisions(Convert.ToInt32(selectedType.Substring(1, 2), 16));
         }
         private void typePainterUpDown_ValueChanged(object sender, EventArgs e) {
             int typeValue = (int)typePainterUpDown.Value;
-            Set_Type_Painter(typeValue);
+            updateTypeCollisions(typeValue);
+        }
+        private void updateTypeCollisions(int typeValue) {
+            SetTypePainter(typeValue);
 
             sf = new StringFormat();
             sf.LineAlignment = StringAlignment.Center;
             sf.Alignment = StringAlignment.Center;
-            painterBox = new Rectangle(0, 0, 100, 100);
+
             using (Graphics g = Graphics.FromImage(typePainterPictureBox.Image)) {
                 g.Clear(Color.FromArgb(255, paintBrush.Color));
                 g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
@@ -3485,8 +3517,8 @@ namespace DSPRE {
             selectTypePanel.BackColor = Color.MidnightBlue;
             typeGroupBox.Enabled = true;
 
-            Draw_Type_Grid();
-            Restore_Painter();
+            DrawTypeGrid();
+            RestorePainter();
         }
         private void typesRadioButton_CheckedChanged(object sender, EventArgs e) {
             if (knownTypesRadioButton.Checked) {
@@ -5116,20 +5148,20 @@ namespace DSPRE {
 
                     if (scriptTextBox.Lines[i].Contains("UseScript")) {
                         int scriptNumber = Int16.Parse(scriptTextBox.Lines[i].Substring(1 + scriptTextBox.Lines[i].IndexOf('#')));
-                        scrFile.scripts.Add(new Script(scriptNumber));
+                        scrFile.scripts.Add(new Script(useScript: scriptNumber));
                     } else {
                         /* Read script commands */
 
-                        List<Command> commandList = new List<Command>();
+                        List<ScriptCommand> cmdList = new List<ScriptCommand>();
                         while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump Function") && i < scriptTextBox.Lines.Length - 1) {
                             Console.WriteLine("Script line " + (i + 1).ToString());
-                            Command cmd = new Command(scriptTextBox.Lines[i]);
+                            ScriptCommand cmd = new ScriptCommand(scriptTextBox.Lines[i]);
                             Console.WriteLine("----" + cmd + "----");
-                            commandList.Add(cmd);
+                            cmdList.Add(cmd);
                             i++;
                         }
-                        commandList.Add(new Command(scriptTextBox.Lines[i])); // Add end or jump/call command
-                        scrFile.scripts.Add(new Script(commandList));
+                        cmdList.Add(new ScriptCommand(scriptTextBox.Lines[i])); // Add end or jump/call command
+                        scrFile.scripts.Add(new Script(commandList: cmdList));
                     }
                 }
             }
@@ -5142,14 +5174,14 @@ namespace DSPRE {
                         i++; //Skip all empty lines 
 
                     /* Read function commands */
-                    List<Command> commandList = new List<Command>();
+                    List<ScriptCommand> cmdList = new List<ScriptCommand>();
 
                     while (functionTextBox.Lines[i] != "End" && !functionTextBox.Lines[i].Contains("Return") && !functionTextBox.Lines[i].Contains("Jump F")) {
-                        commandList.Add(new Command(functionTextBox.Lines[i]));
+                        cmdList.Add(new ScriptCommand(functionTextBox.Lines[i]));
                         i++;
                     }
-                    commandList.Add(new Command(functionTextBox.Lines[i])); // Add end command
-                    scrFile.functions.Add(new Script(commandList));
+                    cmdList.Add(new ScriptCommand(functionTextBox.Lines[i])); // Add end command
+                    scrFile.functions.Add(new Script(commandList: cmdList));
                 } 
             }
         }
@@ -5160,15 +5192,15 @@ namespace DSPRE {
                     while (movementTextBox.Lines[i].Length == 0)
                         i++; //Skip all empty lines 
 
-                    List<Command> commandList = new List<Command>();
+                    List<ScriptCommand> cmdList = new List<ScriptCommand>();
                     /* Read script commands */
                     while (movementTextBox.Lines[i] != "End") {
-                        commandList.Add(new Command(movementTextBox.Lines[i], true));
+                        cmdList.Add(new ScriptCommand(movementTextBox.Lines[i], true));
                         i++;
                     }
-                    commandList.Add(new Command(movementTextBox.Lines[i],true)); // Add end command
+                    cmdList.Add(new ScriptCommand(movementTextBox.Lines[i],true)); // Add end command
 
-                    scrFile.movements.Add(new Script(commandList));
+                    scrFile.movements.Add(new Script(commandList: cmdList));
                 }
             }
         }
@@ -5188,28 +5220,28 @@ namespace DSPRE {
                     ScriptFile file = new ScriptFile(i);
 
                     //Case Sensitive search
-                    if (caseSensitiveSearchCheckbox.Checked) {
+                    if (scriptSearchCaseSensitiveCheckBox.Checked) {
                         for (int j = 0; j < file.scripts.Count; j++) {
-                            foreach (Command cur in file.scripts[j].commands) {
+                            foreach (ScriptCommand cur in file.scripts[j].commands) {
                                 if (cur.cmdName.Contains(searchString))
                                     results.Add("File " + i + " - " + "Script " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
                             }
                         }
                         for (int j = 0; j < file.functions.Count; j++) {
-                            foreach (Command cur in file.functions[j].commands) {
+                            foreach (ScriptCommand cur in file.functions[j].commands) {
                                 if (cur.cmdName.Contains(searchString))
                                     results.Add("File " + i + " - " + "Function " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
                             }
                         }
                     } else { //Case Insensitive search
                         for (int j = 0; j < file.scripts.Count; j++) {
-                            foreach (Command cur in file.scripts[j].commands) { 
+                            foreach (ScriptCommand cur in file.scripts[j].commands) { 
                                 if (cur.cmdName.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0)
                                     results.Add("File " + i + " - " + "Script " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
                             }
                         }
                         for (int j = 0; j < file.functions.Count; j++) {
-                            foreach (Command cur in file.functions[j].commands) {
+                            foreach (ScriptCommand cur in file.functions[j].commands) {
                                 if (cur.cmdName.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0)
                                     results.Add("File " + i + " - " + "Function " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
                             }
@@ -5310,7 +5342,6 @@ namespace DSPRE {
                 buffer = "";
 
                 /* Add functions */
-                statusLabel.Text = "Parsing Functions...";
                 for (int i = 0; i < currentScriptFile.functions.Count; i++) {
                     Script currentFunction = currentScriptFile.functions[i];
 
@@ -5324,7 +5355,6 @@ namespace DSPRE {
                 buffer = "";
 
                 /* Add movements */
-                statusLabel.Text = "Parsing Movements...";
                 for (int i = 0; i < currentScriptFile.movements.Count; i++) {
                     Script currentMovement = currentScriptFile.movements[i];
 
@@ -5808,7 +5838,7 @@ namespace DSPRE {
             textSearchProgressBar.Maximum = lastArchive;
 
             List<string> results = new List<string>();
-            if (caseSensitiveSearchCheckbox.Checked) {
+            if (caseSensitiveTextSearchCheckbox.Checked) {
                 for (int i = firstArchive; i < lastArchive; i++) {
 
                     TextArchive file = new TextArchive(i);
@@ -5834,7 +5864,7 @@ namespace DSPRE {
 
             textSearchResultsListBox.Items.AddRange(results.ToArray());
             textSearchProgressBar.Value = 0;
-            caseSensitiveSearchCheckbox.Enabled = true;
+            caseSensitiveTextSearchCheckbox.Enabled = true;
         }
         private void searchMessageTextBox_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter)
@@ -5878,7 +5908,7 @@ namespace DSPRE {
                     currentTextArchive = file;
                     bool found = false;
 
-                    if (caseSensitiveReplaceCheckbox.Checked) {
+                    if (caseSensitiveTextReplaceCheckbox.Checked) {
                         for (int j = 0; j < file.messages.Count; j++) {
                             if (file.messages[j].Contains(searchString)) {
                                 file.messages[j] = file.messages[j].Replace(searchString, replaceString);
@@ -6010,7 +6040,6 @@ namespace DSPRE {
                 texturePacksListBox.Items.Add("Texture Pack " + i);
         }
         #endregion
-
         private void buildingsTilesetRadioButton_CheckedChanged(object sender, EventArgs e) {
             FillTilesetBox();
             texturePacksListBox.SelectedIndex = (int)areaDataBuildingTilesetUpDown.Value;
@@ -6214,7 +6243,6 @@ namespace DSPRE {
             texturePacksListBox.Items.Add("Texture Pack " + texturePacksListBox.Items.Count);
             texturePacksListBox.SelectedIndex = texturePacksListBox.Items.Count - 1;
         }
-
         private void removeNSBTXButton_Click(object sender, EventArgs e) {
             if (texturePacksListBox.Items.Count > 1) {
                 /* Delete NSBTX file */
