@@ -5,6 +5,7 @@ using System.Text;
 using System.Resources;
 using System.Reflection;
 using System.Windows.Forms;
+using DSPRE.Resources;
 
 namespace DSPRE
 {
@@ -21,7 +22,7 @@ namespace DSPRE
         #region Constructors (1)
         public TextArchive(FileStream messageStream)
         {
-            ResourceManager GetChar = new ResourceManager("DSPRE.Resources.ReadText", Assembly.GetExecutingAssembly());
+            Dictionary<int, string> GetChar = TextDatabase.readTextDictionary;
             BinaryReader readText = new BinaryReader(messageStream);
             int stringCount;
             try {
@@ -49,8 +50,7 @@ namespace DSPRE
                 currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
                 currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
             }
-            for (int i = 0; i < stringCount; i++) // Adds new string
-            {
+            for (int i = 0; i < stringCount; i++) {// Adds new string
                 key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
                 readText.BaseStream.Position = currentOffset[i];
                 StringBuilder pokemonText = new StringBuilder("");
@@ -100,9 +100,10 @@ namespace DSPRE
                                                 break;
                                             }
                                             if (tmp1 != 0x0 && tmp1 != 0x1) {
-                                                string character = GetChar.GetString(tmp1.ToString("X4"));
-                                                pokemonText.Append(character);
-                                                if (character == null) {
+                                                try {
+                                                    string character = GetChar[tmp1];
+                                                    pokemonText.Append(character);
+                                                } catch(KeyNotFoundException) { 
                                                     pokemonText.Append(@"\x" + tmp1.ToString("X4"));
                                                 }
                                             }
@@ -113,7 +114,7 @@ namespace DSPRE
                                             break;
                                         }
                                         if (tmp1 != 0x0 && tmp1 != 0x1) {
-                                            string character = GetChar.GetString(tmp1.ToString("X4"));
+                                            string character = GetChar[tmp1];
                                             pokemonText.Append(character);
                                             if (character == null) {
                                                 pokemonText.Append(@"\x" + tmp1.ToString("X4"));
@@ -133,9 +134,10 @@ namespace DSPRE
                                 #endregion
                                 pokemonText.Append(uncomp);
                             } else {
-                                string character = GetChar.GetString(car.ToString("X4"));
-                                pokemonText.Append(character);
-                                if (character == null) {
+                                try {
+                                    string character = GetChar[car];
+                                    pokemonText.Append(character);
+                                } catch (KeyNotFoundException) { 
                                     pokemonText.Append(@"\x" + car.ToString("X4"));
                                 }
                             }

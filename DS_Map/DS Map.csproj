@@ -245,7 +245,6 @@
     <Compile Include="MapFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\ReadText.Designer.cs" />
     <Compile Include="Resources\writeText.Designer.cs" />
     <Compile Include="SPK.cs">
       <SubType>Form</SubType>
@@ -299,7 +298,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\ReadText.resx" />
     <EmbeddedResource Include="Resources\writeText.resx" />
     <EmbeddedResource Include="SPK.resx">
       <DependentUpon>SPK.cs</DependentUpon>
