@@ -1434,7 +1434,7 @@ namespace DSPRE {
                 [0x01DE] = new byte[] { 2, 2, 2, 2 },
                 [0x01DF] = new byte[] { 2 },
                 [0x01E0] = new byte[] { 2 },
-                [0x01E1] = new byte[] { 2, 2, 2 },
+                
                 [0x01E2] = new byte[] { 2, 2 },
                 [0x01E3] = new byte[] { 2, 2 },
                 [0x01E4] = new byte[] { 2 },
@@ -1660,7 +1660,7 @@ namespace DSPRE {
                 [0x02C0] = new byte[] { 2 },
                 [0x02C1] = new byte[1] { 0 },
                 [0x02C2] = new byte[1] { 0 },
-                [0x02C3] = new byte[1] { 0 },
+                [0x02C3] = new byte[1] { 1 },
                 [0x02C4] = new byte[] { 1 },
                 [0x02C5] = new byte[] { 1, 2 },
                 [0x02C6] = new byte[] { 1, 2 },
@@ -1803,6 +1803,8 @@ namespace DSPRE {
             public static Dictionary<ushort, byte[]> DPScrCmdParameters = new Dictionary<ushort, byte[]>() {
                 [0x011D] = new byte[] { 1, 1, 2},
 
+                [0x01E1] = new byte[] { 2, 2},
+
                 [0x02C4] = new byte[] { 1, 2 },
                 [0x02C5] = new byte[] { 1, 2 },
                 [0x02C6] = new byte[] { 1, 2 },
@@ -1832,6 +1834,8 @@ namespace DSPRE {
             };
             public static Dictionary<ushort, byte[]> PlatScrCmdParameters = new Dictionary<ushort, byte[]>() {
                 [0x011D] = new byte[] { 1, 1, 2, 2 },
+
+                [0x01E1] = new byte[] { 2, 2, 2 },
 
                 [0x02C4] = new byte[] { 1 },
                 [0x02C5] = new byte[] { 1, 2 },

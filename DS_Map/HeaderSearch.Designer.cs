@@ -27,7 +27,7 @@
             this.fieldToSearch1ComboBox = new System.Windows.Forms.ComboBox();
             this.explanationLabel = new System.Windows.Forms.Label();
             this.operator1ComboBox = new System.Windows.Forms.ComboBox();
-            this.value1TextBox = new System.Windows.Forms.TextBox();
+            this.valueTextBox = new System.Windows.Forms.TextBox();
             this.startSearchButton = new System.Windows.Forms.Button();
             this.headerSearchResetButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -70,15 +70,15 @@
             this.operator1ComboBox.Size = new System.Drawing.Size(190, 24);
             this.operator1ComboBox.TabIndex = 8;
             // 
-            // value1TextBox
+            // valueTextBox
             // 
-            this.value1TextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.value1TextBox.Location = new System.Drawing.Point(11, 108);
-            this.value1TextBox.MaxLength = 16;
-            this.value1TextBox.Name = "value1TextBox";
-            this.value1TextBox.Size = new System.Drawing.Size(190, 22);
-            this.value1TextBox.TabIndex = 9;
-            this.value1TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.value1TextBox_KeyDown);
+            this.valueTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valueTextBox.Location = new System.Drawing.Point(11, 108);
+            this.valueTextBox.MaxLength = 16;
+            this.valueTextBox.Name = "valueTextBox";
+            this.valueTextBox.Size = new System.Drawing.Size(190, 22);
+            this.valueTextBox.TabIndex = 9;
+            this.valueTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.valueTextBox_KeyDown);
             // 
             // startSearchButton
             // 
@@ -116,7 +116,7 @@
             this.ClientSize = new System.Drawing.Size(304, 145);
             this.Controls.Add(this.headerSearchResetButton);
             this.Controls.Add(this.startSearchButton);
-            this.Controls.Add(this.value1TextBox);
+            this.Controls.Add(this.valueTextBox);
             this.Controls.Add(this.operator1ComboBox);
             this.Controls.Add(this.explanationLabel);
             this.Controls.Add(this.fieldToSearch1ComboBox);
@@ -136,7 +136,7 @@
         private System.Windows.Forms.ComboBox fieldToSearch1ComboBox;
         private System.Windows.Forms.Label explanationLabel;
         private System.Windows.Forms.ComboBox operator1ComboBox;
-        private System.Windows.Forms.TextBox value1TextBox;
+        private System.Windows.Forms.TextBox valueTextBox;
         private System.Windows.Forms.Button startSearchButton;
         private System.Windows.Forms.Button headerSearchResetButton;
     }

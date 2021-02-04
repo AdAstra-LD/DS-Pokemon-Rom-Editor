@@ -64,16 +64,16 @@ namespace DSPRE {
                         bool endScript = new bool();
                         while (!endScript) {
                             ScriptCommand command = ReadCommand(scrReader, ref functionOffsets, ref movementOffsets);
-                            if (command == null) {
+                            if (command.parameterList == null) 
                                 return;
-                            } else {
-                                commandsList.Add(command);
+                            
+                            commandsList.Add(command);
 
-                                if (endCodes.Contains(command.id))
-                                    endScript = true;
-                            }
+                            if (endCodes.Contains(command.id))
+                                endScript = true;
+                            
                         }
-                        this.scripts.Add(new Script(commandList: commandsList));
+                        scripts.Add(new Script(commandList: commandsList));
                     } else {
                         scripts.Add(new Script(useScript: duplicateIndex));
                     }
@@ -87,6 +87,9 @@ namespace DSPRE {
                     bool endFunction = new bool();
                     while (!endFunction) {
                         ScriptCommand command = ReadCommand(scrReader, ref functionOffsets, ref movementOffsets);
+                        if (command.parameterList == null)
+                            return;
+
                         cmdList.Add(command);
                         if (endCodes.Contains(command.id))
                             endFunction = true;
@@ -180,27 +183,23 @@ namespace DSPRE {
                             break;
                         case 0x21D: 
                             {
-                                if (RomInfo.gameVersion == "Plat") {
-                                    byte parameter1 = dataReader.ReadByte();
-                                    parameterList.Add(new byte[] { parameter1 });
+                                ushort parameter1 = dataReader.ReadUInt16();
+                                parameterList.Add(BitConverter.GetBytes( parameter1 ));
 
-                                    switch (parameter1) {
-                                        case 0:
-                                        case 1:
-                                        case 2:
-                                        case 3:
-                                            parameterList.Add(dataReader.ReadBytes(2));
-                                            parameterList.Add(dataReader.ReadBytes(2));
-                                            break;
-                                        case 4:
-                                        case 5:
-                                            parameterList.Add(dataReader.ReadBytes(2));
-                                            break;
-                                        case 6:
-                                            break;
-                                    }
-                                } else {
-                                    goto default;
+                                switch (parameter1) {
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                        parameterList.Add(dataReader.ReadBytes(2));
+                                        parameterList.Add(dataReader.ReadBytes(2));
+                                        break;
+                                    case 4:
+                                    case 5:
+                                        parameterList.Add(dataReader.ReadBytes(2));
+                                        break;
+                                    case 6:
+                                        break;
                                 }
                             }
                             break;
@@ -284,7 +283,7 @@ namespace DSPRE {
                             }
                             break;
                         default:
-                            addParametersToList(parameterList, id, dataReader);
+                            addParametersToList(ref parameterList, id, dataReader);
                             break;
                     }
                     break;
@@ -385,14 +384,14 @@ namespace DSPRE {
                             }
                             break;
                         default:
-                            addParametersToList(parameterList, id, dataReader);
+                            addParametersToList(ref parameterList, id, dataReader);
                             break;
                     }
                     break;
             }
             return new ScriptCommand(id, parameterList);
         }
-        private void addParametersToList(List<byte[]> parameterList, ushort id, BinaryReader dataReader) {
+        private void addParametersToList(ref List<byte[]> parameterList, ushort id, BinaryReader dataReader) {
             Console.WriteLine("Loaded command id: " + id.ToString("X4"));
             try {
                 foreach (int bytesToRead in RomInfo.scriptParametersDict[id])
@@ -401,10 +400,12 @@ namespace DSPRE {
                 MessageBox.Show("Script command " + id + "can't be handled for now." +
                     Environment.NewLine + "Reference offset 0x" + dataReader.BaseStream.Position.ToString("X"), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 parameterList = null;
+                return;
             } catch {
                 MessageBox.Show("Error: ID Read - " + id +
                     Environment.NewLine + "Reference offset 0x" + dataReader.BaseStream.Position.ToString("X"), "Unrecognized script command", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 parameterList = null;
+                return;
             }
         }
         public byte[] ToByteArray() {

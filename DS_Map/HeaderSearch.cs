@@ -71,10 +71,10 @@ namespace DSPRE {
 
             if (fieldToSearchComboBox.SelectedItem.ToString().Contains("ID")) {
                 operatorComboBox.Items.AddRange(headerSearchNumericOperators);
-                value1TextBox.MaxLength = 5;
+                valueTextBox.MaxLength = 5;
             } else {
                 operatorComboBox.Items.AddRange(headerSearchTextOperators);
-                value1TextBox.MaxLength = 16;
+                valueTextBox.MaxLength = 16;
             }
 
             operatorComboBox.SelectedIndex = 0;
@@ -167,22 +167,22 @@ namespace DSPRE {
             headerListBox.Items.Clear();
             List<string> result;
 
-            if (value1TextBox.Text == "") {
+            if (valueTextBox.Text == "") {
                 MessageBox.Show("Value to search is empty", "Can't search", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
             try {
-                result = advancedSearch(0, (short)intNames.Count, intNames, fieldToSearch1ComboBox.Text, operator1ComboBox.SelectedItem.ToString(), value1TextBox.Text);
+                result = advancedSearch(0, (short)intNames.Count, intNames, fieldToSearch1ComboBox.Text, operator1ComboBox.SelectedItem.ToString(), valueTextBox.Text);
             } catch (FormatException) {
                 MessageBox.Show("Make sure the value to search is correct.", "Format Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                value1TextBox.Clear();
+                valueTextBox.Clear();
                 headerListBox.Items.Add("Search parameters are invalid");
                 headerListBox.Enabled = false;
                 return;
             }
 
-            string searchConfiguration = fieldToSearch1ComboBox.Text + " " + operator1ComboBox.Text.ToLower() + " " + '"' + value1TextBox.Text + '"';
+            string searchConfiguration = fieldToSearch1ComboBox.Text + " " + operator1ComboBox.Text.ToLower() + " " + '"' + valueTextBox.Text + '"';
             if (result == null || result.Count <= 0) {
                 string res = "No header suits the search criteria.";
                 headerListBox.Items.Add(res);
@@ -197,13 +197,14 @@ namespace DSPRE {
             }
             Update();
         }
-        private void value1TextBox_KeyDown(object sender, KeyEventArgs e) {
+        private void valueTextBox_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
                 startSearchButton_Click(null, null);
             }
         }
         private void headerSearchResetButton_Click(object sender, EventArgs e) {
             HeaderSearchReset(headerListBox, intNames);
+            valueTextBox.Clear();
             statusLabel.Text = "Ready";
         }
         public static void HeaderSearchReset(ListBox headerListBox, List<string> intNames) {
