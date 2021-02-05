@@ -71,7 +71,7 @@ namespace DSPRE.ROMFiles {
                     case 0x5E:      // ApplyMovement
                         ushort flexID = BitConverter.ToUInt16(parameterList[0], 0);
                         this.cmdName += OverworldFlexDecode(flexID);
-                        this.cmdName += " " + "Movement_#" + (1 + (BitConverter.ToInt32(parameterList[1], 0))).ToString("D");
+                        this.cmdName += " " + "Action_#" + (1 + (BitConverter.ToInt32(parameterList[1], 0))).ToString("D");
                         break;
                     case 0x62:      // Lock
                     case 0x63:      // Release

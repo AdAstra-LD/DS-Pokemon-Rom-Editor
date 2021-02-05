@@ -2102,8 +2102,10 @@ namespace DSPRE.Resources {
                 [0x004F] = "WaitSound",
                 [0x0050] = "PlayMusic",
                 [0x0051] = "StopMusic",
-                [0x0052] = "RestartDefaultMusic",
-                [0x0054] = "SwitchMusic",
+                [0x0052] = "PlayDefaultMusic",
+                [0x0053] = "SetMusic",
+                [0x0054] = "FadeOutMusic",
+                [0x0055] = "FadeInMusic",
                 [0x0059] = "CheckChatotCry",
                 [0x005A] = "StartChatotCry",
                 [0x005B] = "StopChatotCry",
@@ -2141,20 +2143,25 @@ namespace DSPRE.Resources {
                 [0x0082] = "CheckItemPocket",
 
                 [0x0084] = "GenderMessage",
+
                 [0x0089] = "GiveStoredPokemon",
                 [0x008A] = "GivePokemonEgg",
                 [0x0092] = "RecordPokegearNumber",
+
                 [0x0096] = "ReturnScreen",
+
                 [0x0098] = "Wifi",
                 [0x009A] = "OpenPokemonDress",
                 [0x009D] = "WorldMapScreen",
                 [0x00A1] = "CallEnd2",
                 [0x00A3] = "EndGame",
                 [0x00A6] = "WFC",
+
                 [0x00AD] = "GivePokemonNickname",
                 [0x00AE] = "FadeScreen",
                 [0x00AF] = "WaitFadeScreen",
                 [0x00B0] = "Warp",
+
                 [0x00B1] = "HallFameData",
                 [0x00B3] = "WFC1",
                 [0x00BA] = "CyclingRoad",
@@ -2173,9 +2180,19 @@ namespace DSPRE.Resources {
                 [0x00CB] = "TextStarterPokemon",
                 [0x00CC] = "TextRivalStarter",
                 [0x00CD] = "TextCounterpartStarter",
+
+                [0x00D2] = "TextMapName",
+                [0x00D3] = "CheckSwarm",
+                [0x00D4] = "TrainerID",
                 [0x00D5] = "TrainerBattle",
+                [0x00D6] = "TrainerMessage",
+                [0x00D7] = "TrainerMsgCheck",
+                [0x00D8] = "TrainerRematchMsgCheck",
+                [0x00D9] = "TrainerTypeCheck",
+                [0x00DA] = "TrainerMusic",
                 [0x00DB] = "LostBattle",
                 [0x00DC] = "CheckBattleIsLost",
+
                 [0x00DE] = "StoreStarter",
                 [0x00EF] = "ChecPokemonGender",
                 [0x00F0] = "WarpLift",

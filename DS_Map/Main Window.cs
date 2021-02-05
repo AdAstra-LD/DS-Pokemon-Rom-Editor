@@ -5372,7 +5372,7 @@ namespace DSPRE {
                 for (int i = 0; i < currentScriptFile.movements.Count; i++) {
                     Script currentMovement = currentScriptFile.movements[i];
 
-                    string movHeader = "----- " + "@Movement_#" + (i + 1) + " -----" + Environment.NewLine;
+                    string movHeader = "----- " + "@Action_#" + (i + 1) + " -----" + Environment.NewLine;
                     buffer += movHeader;
                     buffer += Environment.NewLine;
                     for (int j = 0; j < currentMovement.commands.Count; j++)
@@ -5584,7 +5584,7 @@ namespace DSPRE {
             using (InsertValueDialog f = new InsertValueDialog("Insert movement ID to apply (decimal):", "dec")) {
                 f.ShowDialog();
                 if (f.okSelected) {
-                    currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nApplyMovement Cam Movement_#\n" + f.inputValUpDown.Value);
+                    currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nMovement Cam Action_#\n" + f.inputValUpDown.Value);
                     updateCurrentBoxLineNumbers(null, null);
                     currentScriptBox.ScrollToCaret();
                 }
