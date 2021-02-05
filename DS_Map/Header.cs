@@ -130,7 +130,7 @@ namespace DSPRE
             }
         }
         public static Header LoadFromARM9(short headerNumber) {
-            long headerOffset = PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + Header.length * headerNumber;
+            long headerOffset = Resources.PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + Header.length * headerNumber;
             return BuildFromFile(RomInfo.arm9Path, headerNumber, headerOffset);
         }
         #endregion

@@ -76,6 +76,8 @@ namespace LibNDSFormats.NSBMD
         public void SaveToFile(string path) {
             using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
                 writer.Write(this.ToByteArray());
+
+            MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public void SaveToFileDefaultDir(int IDtoReplace) {
             string path = RomInfo.eventsDirPath + "\\" + IDtoReplace.ToString("D4");

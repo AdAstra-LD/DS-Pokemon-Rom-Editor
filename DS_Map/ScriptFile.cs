@@ -528,10 +528,26 @@ namespace DSPRE {
 
             return newData.ToArray();
         }
-        public void SaveToFile(int fileID) {
-            using (BinaryWriter writer = new BinaryWriter((new FileStream(RomInfo.scriptDirPath +
-                "\\" + fileID.ToString("D4"), FileMode.Create))))
+        private void SaveToFile(string path) {
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
                 writer.Write(this.ToByteArray());
+
+            MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        public void SaveToFileDefaultDir(int IDtoReplace) {
+            string path = RomInfo.scriptDirPath + "\\" + IDtoReplace.ToString("D4");
+            this.SaveToFile(path);  
+        }
+        internal void SaveToFileExplorePath(string suggestedFileName) {
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Filter = "Gen IV Script File (*.scr)|*.scr";
+
+            if (!string.IsNullOrEmpty(suggestedFileName))
+                sf.FileName = suggestedFileName;
+            if (sf.ShowDialog() != DialogResult.OK)
+                return;
+
+            this.SaveToFile(sf.FileName);
         }
         #endregion
     }    

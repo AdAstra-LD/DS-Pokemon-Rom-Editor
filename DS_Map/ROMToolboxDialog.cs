@@ -406,7 +406,7 @@ namespace DSPRE {
                     itemScript.scripts[i].commands[0].parameterList[1] = BitConverter.GetBytes((ushort)i); // Fix item index
                     itemScript.scripts[i].commands[1].parameterList[1] = BitConverter.GetBytes((ushort)1); // Fix item quantity
                 }
-                itemScript.SaveToFile(RomInfo.itemScriptFileNumber);
+                itemScript.SaveToFileDefaultDir(RomInfo.itemScriptFileNumber);
                 MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 applyItemStandardizeButton.Enabled = false;

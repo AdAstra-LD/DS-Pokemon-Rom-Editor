@@ -14,6 +14,7 @@ using Tao.OpenGl;
 using LibNDSFormats.NSBMD;
 using LibNDSFormats.NSBTX;
 using System.Collections;
+using DSPRE.Resources;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -844,12 +845,16 @@ namespace DSPRE {
 
             mainTabControl.Show();
             saveRomButton.Enabled = true;
+
             unpackAllButton.Enabled = true;
             updateMapNarcsButton.Enabled = true;
-            romToolboxButton.Enabled = true;
+            
             buildingEditorButton.Enabled = true;
             wildEditorButton.Enabled = true;
+            
+            romToolboxButton.Enabled = true;
             headerSearchToolStripButton.Enabled = true;
+            scriptCommandsButton.Enabled = true;
 
             loadRomButton.Enabled = false;
             openROMToolStripMenuItem.Enabled = false;
@@ -4210,7 +4215,6 @@ namespace DSPRE {
         private void showEventsCheckBoxes_CheckedChanged(object sender, EventArgs e) {
             DisplayActiveEvents();
         }
-        
         private void eventPictureBox_Click(object sender, EventArgs e) {
             Point coordinates = eventPictureBox.PointToClient(Cursor.Position);
             Point mouseTilePos = new Point(coordinates.X / 17, coordinates.Y / 17);
@@ -5071,17 +5075,93 @@ namespace DSPRE {
             exportScriptFile();
         }
         private void exportScriptFile() {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "Script File (*.scr)|*.scr";
-            sf.FileName = "Script " + selectScriptFileComboBox.SelectedIndex;
-            if (currentScriptFile.isLevelScript)
-                sf.FileName += " (LS)";
+            currentScriptFile.scripts.Clear();
+            currentScriptFile.functions.Clear();
+            currentScriptFile.movements.Clear();
 
-            if (sf.ShowDialog(this) != DialogResult.OK)
-                return;
+            populateScriptCommands(currentScriptFile);
+            populateFunctionCommands(currentScriptFile);
+            populateMovementCommands(currentScriptFile);
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) 
-                writer.Write(currentScriptFile.ToByteArray());
+            currentScriptFile.SaveToFileExplorePath("Script File " + selectScriptFileComboBox.SelectedIndex);
+        }
+        private void saveScriptFileButton_Click(object sender, EventArgs e) {
+            /* Create new script objects */
+            currentScriptFile.scripts.Clear();
+            currentScriptFile.functions.Clear();
+            currentScriptFile.movements.Clear();
+
+            populateScriptCommands(currentScriptFile);
+            populateFunctionCommands(currentScriptFile);
+            populateMovementCommands(currentScriptFile);
+
+            /* Write new scripts to file */
+            currentScriptFile.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex);
+        }
+        private void populateScriptCommands(ScriptFile scrFile) {
+            for (int i = 0; i < scriptTextBox.Lines.Length; i++) {
+                if (scriptTextBox.Lines[i].Contains('@')) { // Move on until script header is found
+                    i++;
+                    while (scriptTextBox.Lines[i].Length == 0)
+                        i++; //Skip all empty lines 
+
+                    if (scriptTextBox.Lines[i].Contains("UseScript")) {
+                        int scriptNumber = Int16.Parse(scriptTextBox.Lines[i].Substring(1 + scriptTextBox.Lines[i].IndexOf('#')));
+                        scrFile.scripts.Add(new Script(useScript: scriptNumber));
+                    } else {
+                        /* Read script commands */
+
+                        List<ScriptCommand> cmdList = new List<ScriptCommand>();
+                        while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump Function") && i < scriptTextBox.Lines.Length - 1) {
+                            Console.WriteLine("Script line " + (i + 1).ToString());
+                            ScriptCommand cmd = new ScriptCommand(scriptTextBox.Lines[i]);
+                            Console.WriteLine("----" + cmd + "----");
+                            cmdList.Add(cmd);
+                            i++;
+                        }
+                        cmdList.Add(new ScriptCommand(scriptTextBox.Lines[i])); // Add end or jump/call command
+                        scrFile.scripts.Add(new Script(commandList: cmdList));
+                    }
+                }
+            }
+        }
+        private void populateFunctionCommands(ScriptFile scrFile) {
+            for (int i = 0; i < functionTextBox.Lines.Length; i++) {
+                if (functionTextBox.Lines[i].Contains('@')) { // Move on until function header is found
+                    i++;
+                    while (functionTextBox.Lines[i].Length == 0)
+                        i++; //Skip all empty lines 
+
+                    /* Read function commands */
+                    List<ScriptCommand> cmdList = new List<ScriptCommand>();
+
+                    while (functionTextBox.Lines[i] != "End" && !functionTextBox.Lines[i].Contains("Return") && !functionTextBox.Lines[i].Contains("Jump F")) {
+                        cmdList.Add(new ScriptCommand(functionTextBox.Lines[i]));
+                        i++;
+                    }
+                    cmdList.Add(new ScriptCommand(functionTextBox.Lines[i])); // Add end command
+                    scrFile.functions.Add(new Script(commandList: cmdList));
+                }
+            }
+        }
+        private void populateMovementCommands(ScriptFile scrFile) {
+            for (int i = 0; i < movementTextBox.Lines.Length; i++) {
+                if (movementTextBox.Lines[i].Contains('@')) {  // Move on until script header is found
+                    i++;
+                    while (movementTextBox.Lines[i].Length == 0)
+                        i++; //Skip all empty lines 
+
+                    List<ScriptCommand> cmdList = new List<ScriptCommand>();
+                    /* Read script commands */
+                    while (movementTextBox.Lines[i] != "End") {
+                        cmdList.Add(new ScriptCommand(movementTextBox.Lines[i], true));
+                        i++;
+                    }
+                    cmdList.Add(new ScriptCommand(movementTextBox.Lines[i], true)); // Add end command
+
+                    scrFile.movements.Add(new Script(commandList: cmdList));
+                }
+            }
         }
         private void importScriptFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .scr file */
@@ -5126,84 +5206,6 @@ namespace DSPRE {
             /* Remove item from ComboBox */
             selectScriptFileComboBox.Items.RemoveAt(lastIndex);
         }
-        private void saveScriptFileButton_Click(object sender, EventArgs e) {
-            /* Create new script objects */
-            currentScriptFile.scripts.Clear();
-            currentScriptFile.functions.Clear();
-            currentScriptFile.movements.Clear();
-
-            populateScriptCommands(currentScriptFile);
-            populateFunctionCommands(currentScriptFile);
-            populateMovementCommands(currentScriptFile);
-
-            /* Write new scripts to file */
-            currentScriptFile.SaveToFile(selectScriptFileComboBox.SelectedIndex);
-        }
-        private void populateScriptCommands(ScriptFile scrFile) {
-            for (int i = 0; i < scriptTextBox.Lines.Length; i++) {
-                if (scriptTextBox.Lines[i].Contains('@')) { // Move on until script header is found
-                    i++;  
-                    while (scriptTextBox.Lines[i].Length == 0)
-                        i++; //Skip all empty lines 
-
-                    if (scriptTextBox.Lines[i].Contains("UseScript")) {
-                        int scriptNumber = Int16.Parse(scriptTextBox.Lines[i].Substring(1 + scriptTextBox.Lines[i].IndexOf('#')));
-                        scrFile.scripts.Add(new Script(useScript: scriptNumber));
-                    } else {
-                        /* Read script commands */
-
-                        List<ScriptCommand> cmdList = new List<ScriptCommand>();
-                        while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump Function") && i < scriptTextBox.Lines.Length - 1) {
-                            Console.WriteLine("Script line " + (i + 1).ToString());
-                            ScriptCommand cmd = new ScriptCommand(scriptTextBox.Lines[i]);
-                            Console.WriteLine("----" + cmd + "----");
-                            cmdList.Add(cmd);
-                            i++;
-                        }
-                        cmdList.Add(new ScriptCommand(scriptTextBox.Lines[i])); // Add end or jump/call command
-                        scrFile.scripts.Add(new Script(commandList: cmdList));
-                    }
-                }
-            }
-        }
-        private void populateFunctionCommands(ScriptFile scrFile) {
-            for (int i = 0; i < functionTextBox.Lines.Length; i++) {
-                if (functionTextBox.Lines[i].Contains('@')) { // Move on until function header is found
-                    i++;
-                    while (functionTextBox.Lines[i].Length == 0)
-                        i++; //Skip all empty lines 
-
-                    /* Read function commands */
-                    List<ScriptCommand> cmdList = new List<ScriptCommand>();
-
-                    while (functionTextBox.Lines[i] != "End" && !functionTextBox.Lines[i].Contains("Return") && !functionTextBox.Lines[i].Contains("Jump F")) {
-                        cmdList.Add(new ScriptCommand(functionTextBox.Lines[i]));
-                        i++;
-                    }
-                    cmdList.Add(new ScriptCommand(functionTextBox.Lines[i])); // Add end command
-                    scrFile.functions.Add(new Script(commandList: cmdList));
-                } 
-            }
-        }
-        private void populateMovementCommands(ScriptFile scrFile) {
-            for (int i = 0; i < movementTextBox.Lines.Length; i++) {
-                if (movementTextBox.Lines[i].Contains('@')) {  // Move on until script header is found
-                    i++;
-                    while (movementTextBox.Lines[i].Length == 0)
-                        i++; //Skip all empty lines 
-
-                    List<ScriptCommand> cmdList = new List<ScriptCommand>();
-                    /* Read script commands */
-                    while (movementTextBox.Lines[i] != "End") {
-                        cmdList.Add(new ScriptCommand(movementTextBox.Lines[i], true));
-                        i++;
-                    }
-                    cmdList.Add(new ScriptCommand(movementTextBox.Lines[i],true)); // Add end command
-
-                    scrFile.movements.Add(new Script(commandList: cmdList));
-                }
-            }
-        }
         private void searchInScriptsButton_Click(object sender, EventArgs e) {
             if (searchInScriptsTextBox.Text == "")
                 return;
@@ -5219,33 +5221,12 @@ namespace DSPRE {
                     Console.WriteLine("Attempting to load script " + i);
                     ScriptFile file = new ScriptFile(i);
 
-                    //Case Sensitive search
                     if (scriptSearchCaseSensitiveCheckBox.Checked) {
-                        for (int j = 0; j < file.scripts.Count; j++) {
-                            foreach (ScriptCommand cur in file.scripts[j].commands) {
-                                if (cur.cmdName.Contains(searchString))
-                                    results.Add("File " + i + " - " + "Script " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
-                            }
-                        }
-                        for (int j = 0; j < file.functions.Count; j++) {
-                            foreach (ScriptCommand cur in file.functions[j].commands) {
-                                if (cur.cmdName.Contains(searchString))
-                                    results.Add("File " + i + " - " + "Function " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
-                            }
-                        }
-                    } else { //Case Insensitive search
-                        for (int j = 0; j < file.scripts.Count; j++) {
-                            foreach (ScriptCommand cur in file.scripts[j].commands) { 
-                                if (cur.cmdName.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0)
-                                    results.Add("File " + i + " - " + "Script " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
-                            }
-                        }
-                        for (int j = 0; j < file.functions.Count; j++) {
-                            foreach (ScriptCommand cur in file.functions[j].commands) {
-                                if (cur.cmdName.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0)
-                                    results.Add("File " + i + " - " + "Function " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
-                            }
-                        }
+                        results.AddRange(SearchInScripts(i, file.scripts, "Script", (string s) => s.Contains(searchString)));
+                        results.AddRange(SearchInScripts(i, file.functions, "Function", (string s) => s.Contains(searchString)));
+                    } else {
+                        results.AddRange(SearchInScripts(i, file.scripts, "Script", (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) );
+                        results.AddRange(SearchInScripts(i, file.functions, "Function", (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) );
                     }
                 } catch { }
                 searchProgressBar.Value = i;
@@ -5253,6 +5234,19 @@ namespace DSPRE {
             searchProgressBar.Value = 0;
             searchInScriptsResultListBox.Items.AddRange(results.ToArray());
         }
+
+        private List<string> SearchInScripts(int fileID, List<Script> ls, string entryType, Func<string, bool> criteria) {
+            List<string> results = new List<string>();
+
+            for (int j = 0; j < ls.Count; j++) {
+                foreach (ScriptCommand cur in ls[j].commands) {
+                    if (criteria(cur.cmdName))
+                        results.Add("File " + fileID + " - " + entryType + " " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
+                }
+            }
+            return results;
+        }
+
         private void searchInScripts_GoToEntryResult(object sender, MouseEventArgs e) {
             if (searchInScriptsResultListBox.SelectedIndex < 0)
                 return;
@@ -5830,42 +5824,40 @@ namespace DSPRE {
                 lastArchive = romInfo.GetTextArchivesCount();
             }
 
-            string searchString = searchMessageTextBox.Text;
             textSearchResultsListBox.Items.Clear();
 
             if (lastArchive > 828)
                 lastArchive = 828;
             textSearchProgressBar.Maximum = lastArchive;
 
-            List<string> results = new List<string>();
+            List<string> results = null;
             if (caseSensitiveTextSearchCheckbox.Checked) {
-                for (int i = firstArchive; i < lastArchive; i++) {
-
-                    TextArchive file = new TextArchive(i);
-                    for (int j = 0; j < file.messages.Count; j++) {
-                        if (file.messages[j].Contains(searchString)) {
-                            results.Add("(" + i.ToString("D3") + ")" + " - #" + j.ToString("D2") + " --- " + file.messages[j].Substring(0, Math.Min(file.messages[j].Length, 40)));
-                        }
-                    }
-                    textSearchProgressBar.Value = i;
-                }
+                results = searchTexts(firstArchive, lastArchive, (string x) => x.Contains(searchMessageTextBox.Text));
             } else {
-                for (int i = firstArchive; i < lastArchive; i++) {
-
-                    TextArchive file = new TextArchive(i);
-                    for (int j = 0; j < file.messages.Count; j++) {
-                        if (file.messages[j].IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                            results.Add("(" + i.ToString("D3") + ")" + " - #" + j.ToString("D2") + " --- " + file.messages[j].Substring(0, Math.Min(file.messages[j].Length, 40)));
-                        }
-                    }
-                    textSearchProgressBar.Value = i;
-                }
+                results = searchTexts(firstArchive, lastArchive, (string x) => x.IndexOf(searchMessageTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0);
             }
 
             textSearchResultsListBox.Items.AddRange(results.ToArray());
             textSearchProgressBar.Value = 0;
             caseSensitiveTextSearchCheckbox.Enabled = true;
         }
+
+        private List<string> searchTexts(int firstArchive, int lastArchive, Func<string, bool> criteria) {
+            List<string> results = new List<string>();
+
+            for (int i = firstArchive; i < lastArchive; i++) {
+
+                TextArchive file = new TextArchive(i);
+                for (int j = 0; j < file.messages.Count; j++) {
+                    if (criteria(file.messages[j])) {
+                        results.Add("(" + i.ToString("D3") + ")" + " - #" + j.ToString("D2") + " --- " + file.messages[j].Substring(0, Math.Min(file.messages[j].Length, 40)));
+                    }
+                }
+                textSearchProgressBar.Value = i;
+            }
+            return results;
+        }
+
         private void searchMessageTextBox_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter)
                 searchMessageButton_Click(null, null);
@@ -6324,5 +6316,10 @@ namespace DSPRE {
             MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
+
+        private void scriptCommandsButton_Click(object sender, EventArgs e) {
+            ScriptCommands form = new ScriptCommands();
+            form.Show();
+        }
     }
 }

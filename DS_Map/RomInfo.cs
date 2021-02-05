@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Resources;
 using System.Reflection;
 using System.Linq;
+using DSPRE.Resources;
 
 namespace DSPRE {
 
