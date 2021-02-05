@@ -692,6 +692,10 @@ namespace DSPRE {
                     isItemRadioButton.Enabled = true;
             }
         }
+        private void scriptCommandsDatabaseToolStripButton_Click(object sender, EventArgs e) {
+            ScriptCommands form = new ScriptCommands();
+            form.Show();
+        }
         private void headerSearchToolStripButton_Click(object sender, EventArgs e) {
             mainTabControl.SelectedIndex = 0; //Select Header Editor
             using (HeaderSearch h = new HeaderSearch(ref internalNames, headerListBox, statusLabel)) {
@@ -6320,9 +6324,5 @@ namespace DSPRE {
         }
         #endregion
 
-        private void scriptCommandsButton_Click(object sender, EventArgs e) {
-            ScriptCommands form = new ScriptCommands();
-            form.Show();
-        }
     }
 }

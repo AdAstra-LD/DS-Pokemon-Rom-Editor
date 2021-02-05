@@ -472,6 +472,7 @@
     <Content Include="Resources\Graphics\Program Icons\resetColorTable.png" />
     <None Include="Resources\Graphics\Program Icons\wideLensImage.png" />
     <None Include="Resources\Graphics\Program Icons\wideLensImageTransp.png" />
+    <None Include="Resources\Graphics\Program Icons\scriptDBIcon.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

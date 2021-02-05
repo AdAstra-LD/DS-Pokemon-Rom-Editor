@@ -24,7 +24,7 @@ namespace DSPRE.Resources {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.scriptcmdDataGridView = new System.Windows.Forms.DataGridView();
             this.CommandID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CommandName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -34,9 +34,9 @@ namespace DSPRE.Resources {
             this.startSearchButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.criteriaGroupBox = new System.Windows.Forms.GroupBox();
-            this.startsWithCB = new System.Windows.Forms.RadioButton();
-            this.containsCB = new System.Windows.Forms.RadioButton();
             this.matchCB = new System.Windows.Forms.RadioButton();
+            this.containsCB = new System.Windows.Forms.RadioButton();
+            this.startsWithCB = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.scriptcmdDataGridView)).BeginInit();
             this.criteriaGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -61,8 +61,8 @@ namespace DSPRE.Resources {
             // CommandID
             // 
             this.CommandID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle2.Format = "X4";
-            this.CommandID.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Format = "X4";
+            this.CommandID.DefaultCellStyle = dataGridViewCellStyle3;
             this.CommandID.FillWeight = 30F;
             this.CommandID.HeaderText = "Command ID";
             this.CommandID.MaxInputLength = 10;
@@ -138,44 +138,47 @@ namespace DSPRE.Resources {
             this.criteriaGroupBox.Controls.Add(this.matchCB);
             this.criteriaGroupBox.Controls.Add(this.containsCB);
             this.criteriaGroupBox.Controls.Add(this.startsWithCB);
-            this.criteriaGroupBox.Location = new System.Drawing.Point(164, 11);
+            this.criteriaGroupBox.Location = new System.Drawing.Point(164, 5);
             this.criteriaGroupBox.Name = "criteriaGroupBox";
-            this.criteriaGroupBox.Size = new System.Drawing.Size(271, 39);
+            this.criteriaGroupBox.Size = new System.Drawing.Size(271, 45);
             this.criteriaGroupBox.TabIndex = 19;
             this.criteriaGroupBox.TabStop = false;
             this.criteriaGroupBox.Text = "Criteria";
             // 
-            // startsWithCB
+            // matchCB
             // 
-            this.startsWithCB.AutoSize = true;
-            this.startsWithCB.Location = new System.Drawing.Point(72, 18);
-            this.startsWithCB.Name = "startsWithCB";
-            this.startsWithCB.Size = new System.Drawing.Size(74, 17);
-            this.startsWithCB.TabIndex = 0;
-            this.startsWithCB.Text = "Starts with";
-            this.startsWithCB.UseVisualStyleBackColor = true;
+            this.matchCB.Appearance = System.Windows.Forms.Appearance.Button;
+            this.matchCB.AutoSize = true;
+            this.matchCB.Location = new System.Drawing.Point(147, 15);
+            this.matchCB.Name = "matchCB";
+            this.matchCB.Size = new System.Drawing.Size(113, 23);
+            this.matchCB.TabIndex = 2;
+            this.matchCB.Text = "Match (Ignore Case)";
+            this.matchCB.UseVisualStyleBackColor = true;
             // 
             // containsCB
             // 
+            this.containsCB.Appearance = System.Windows.Forms.Appearance.Button;
             this.containsCB.AutoSize = true;
             this.containsCB.Checked = true;
-            this.containsCB.Location = new System.Drawing.Point(6, 18);
+            this.containsCB.Location = new System.Drawing.Point(8, 15);
             this.containsCB.Name = "containsCB";
-            this.containsCB.Size = new System.Drawing.Size(66, 17);
+            this.containsCB.Size = new System.Drawing.Size(58, 23);
             this.containsCB.TabIndex = 1;
             this.containsCB.TabStop = true;
             this.containsCB.Text = "Contains";
             this.containsCB.UseVisualStyleBackColor = true;
             // 
-            // matchCB
+            // startsWithCB
             // 
-            this.matchCB.AutoSize = true;
-            this.matchCB.Location = new System.Drawing.Point(147, 18);
-            this.matchCB.Name = "matchCB";
-            this.matchCB.Size = new System.Drawing.Size(121, 17);
-            this.matchCB.TabIndex = 2;
-            this.matchCB.Text = "Match (Ignore Case)";
-            this.matchCB.UseVisualStyleBackColor = true;
+            this.startsWithCB.Appearance = System.Windows.Forms.Appearance.Button;
+            this.startsWithCB.AutoSize = true;
+            this.startsWithCB.Location = new System.Drawing.Point(74, 15);
+            this.startsWithCB.Name = "startsWithCB";
+            this.startsWithCB.Size = new System.Drawing.Size(66, 23);
+            this.startsWithCB.TabIndex = 0;
+            this.startsWithCB.Text = "Starts with";
+            this.startsWithCB.UseVisualStyleBackColor = true;
             // 
             // ScriptCommands
             // 
