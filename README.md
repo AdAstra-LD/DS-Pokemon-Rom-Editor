@@ -2,8 +2,8 @@
 
 Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features and bugfixes.
 
-![Screenshot](aDSPRE_11.png)
-![Screenshot](bDSPRE_11.png)
+![Screenshot](aDSPRE_112.png)
+![Screenshot](bDSPRE_112.png)
 
 ## Misc changes to the official DSPRE
 - Significantly shorter load and save times.
@@ -17,6 +17,7 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features a
 - Some fields will now show a coloured text depending on their value.
 - New ROM Toolbox.
 - Added new ALT key shortcuts (Hold alt to see which shortcuts are available).
+- Fixed Encounter Editor unpacking HG encounters for SS ROMs.
 
 ### ROM Toolbox:
 Supported patches:
@@ -25,6 +26,10 @@ Supported patches:
 - Set Overlay1 as uncompressed.
 - Standardize item numbers (fixed).
 - Pokémon names to Sentence Case.
+
+### ROM Toolbox:
+A handy window that shows all the available script commands and the parameters they require.
+- Many commands have been identified and added.
 
 ### Wild Encounters Editor:
 - Added missing button functions (add and remove).
@@ -60,6 +65,10 @@ Supported patches:
 - Added BDHCAM Support to the import/export menu.
 - Added Map BIN Import button.
 - Fixed BGS signature of maps being overwritten upon saving a map.
+- Added Export MAP BIN button.
+- Fixed type painters resetting after changing map.
+- Fixed type painters font size and value [updown] limit.
+- Added more type painter colors and collisions.
 
 ### NSBTX Editor:
 - GUI Redesign.
@@ -74,10 +83,13 @@ Supported patches:
 ### Script Editor:
 - Replaced "Search Flag" with "Search any command".
 - Enabled some of the quick script cmd buttons.
-- Fixed Text Search and Replace (Results can be double-clicked). 
+- Fixed Text Search and Replace (Results can be double-clicked).
+- Improved search speed.
+- Fixed script export button.
 
 ### Text Editor:
 - Added New Movement names and changed some of the old ones.
 - Fixed export button.
 - Added option to show row numbers as hex.
 - Fixed Text Search and Replace (Results can be double-clicked).
+- Improved search speed.
