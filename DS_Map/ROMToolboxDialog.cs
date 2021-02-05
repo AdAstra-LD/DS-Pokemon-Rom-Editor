@@ -473,7 +473,7 @@ namespace DSPRE {
         }
         #endregion
         #region Utilities
-        private byte[] HexStringtoByteArray(string hexString) {
+        public static byte[] HexStringtoByteArray(string hexString) {
             //FC B5 05 48 C0 46 41 21 
             //09 22 02 4D A8 47 00 20 
             //03 21 FC BD F1 64 00 02 

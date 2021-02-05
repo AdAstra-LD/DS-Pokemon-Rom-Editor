@@ -668,6 +668,14 @@ namespace DSPRE.Resources {
                 [0xFF] = "TRUEUP"
             };
 
+            public static Dictionary<ushort, bool> commandsWithRelativeJump = new Dictionary<ushort, bool>() {
+                [0x0016] = true,
+                [0x001A] = true,
+                [0x001C] = true,
+                [0x001D] = true,
+                [0x005E] = true
+            };
+
             public static Dictionary<ushort, string> DPPtScrCmdNames = new Dictionary<ushort, string>() {
                 [0x0000] = "Nop",
                 [0x0001] = "Dummy",

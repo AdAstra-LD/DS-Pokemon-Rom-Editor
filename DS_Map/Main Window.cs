@@ -5140,14 +5140,19 @@ namespace DSPRE {
                         i++; //Skip all empty lines 
 
                     /* Read function commands */
-                    List<ScriptCommand> cmdList = new List<ScriptCommand>();
+                    if (functionTextBox.Lines[i].Contains("UseScript")) {
+                        int scriptNumber = Int16.Parse(functionTextBox.Lines[i].Substring(1 + functionTextBox.Lines[i].IndexOf('#')));
+                        scrFile.functions.Add(new Script(useScript: scriptNumber));
+                    } else {
+                        List<ScriptCommand> cmdList = new List<ScriptCommand>();
 
-                    while (functionTextBox.Lines[i] != "End" && !functionTextBox.Lines[i].Contains("Return") && !functionTextBox.Lines[i].Contains("Jump F")) {
-                        cmdList.Add(new ScriptCommand(functionTextBox.Lines[i]));
-                        i++;
+                        while (functionTextBox.Lines[i] != "End" && !functionTextBox.Lines[i].Contains("Return") && !functionTextBox.Lines[i].Contains("Jump F")) {
+                            cmdList.Add(new ScriptCommand(functionTextBox.Lines[i]));
+                            i++;
+                        }
+                        cmdList.Add(new ScriptCommand(functionTextBox.Lines[i])); // Add end command
+                        scrFile.functions.Add(new Script(commandList: cmdList));
                     }
-                    cmdList.Add(new ScriptCommand(functionTextBox.Lines[i])); // Add end command
-                    scrFile.functions.Add(new Script(commandList: cmdList));
                 }
             }
         }
@@ -5332,7 +5337,7 @@ namespace DSPRE {
                     buffer += Environment.NewLine;
 
                     /* If current script is identical to another, print UseScript instead of commands */
-                    if (currentScript.useScript == -1) {
+                    if (currentScript.useScript < 0) {
                         for (int j = 0; j < currentScript.commands.Count; j++)
                             buffer += currentScript.commands[j].cmdName + Environment.NewLine;
                     } else {
@@ -5346,11 +5351,19 @@ namespace DSPRE {
                 for (int i = 0; i < currentScriptFile.functions.Count; i++) {
                     Script currentFunction = currentScriptFile.functions[i];
 
+                    /* Write Heaader */
                     string funcHeader = "----- " + "@Function_#" + (i + 1) + " -----" + Environment.NewLine;
                     buffer += funcHeader;
                     buffer += Environment.NewLine;
-                    for (int j = 0; j < currentFunction.commands.Count; j++)
-                        buffer += currentFunction.commands[j].cmdName + Environment.NewLine;
+
+                    /* If current function is identical to a script, print UseScript instead of commands */
+                    if (currentFunction.useScript < 0) {
+                        for (int j = 0; j < currentFunction.commands.Count; j++)
+                            buffer += currentFunction.commands[j].cmdName + Environment.NewLine;
+                    } else {
+                        buffer += ("UseScript_#" + currentFunction.useScript + Environment.NewLine);
+                    }
+                    
                 }
                 functionTextBox.AppendText(buffer + Environment.NewLine, Color.Blue);
                 buffer = "";

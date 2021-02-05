@@ -14,6 +14,8 @@ namespace DSPRE.ROMFiles {
         public List<Script> functions = new List<Script>();
         public List<Script> movements = new List<Script>();
         public bool isLevelScript = new bool();
+
+        private readonly bool debug = true;
         #endregion
 
         #region Constructors (1)
@@ -54,11 +56,11 @@ namespace DSPRE.ROMFiles {
                 }
 
                 /* Read scripts */
-                for (int i = 0; i < scriptOffsets.Count; i++) {
-                    int duplicateIndex = scriptOffsets.FindIndex(offset => offset == scriptOffsets[i]); // Check for UseScript_#
+                for (int current = 0; current < scriptOffsets.Count; current++) {
+                    int index = scriptOffsets.FindIndex(x => x == scriptOffsets[current]); // Check for UseScript
 
-                    if (duplicateIndex == i) {
-                        scrReader.BaseStream.Position = scriptOffsets[i];
+                    if (index == current) {
+                        scrReader.BaseStream.Position = scriptOffsets[current];
 
                         List<ScriptCommand> commandsList = new List<ScriptCommand>();
                         bool endScript = new bool();
@@ -75,27 +77,31 @@ namespace DSPRE.ROMFiles {
                         }
                         scripts.Add(new Script(commandList: commandsList));
                     } else {
-                        scripts.Add(new Script(useScript: duplicateIndex));
+                        scripts.Add(new Script(useScript: index+1));
                     }
                 }
 
                 /* Read functions */
                 for (int i = 0; i < functionOffsets.Count; i++) {
                     scrReader.BaseStream.Position = functionOffsets[i];
+                    int posInList = scriptOffsets.IndexOf(functionOffsets[i]); // Check for UseScript_#
 
-                    List<ScriptCommand> cmdList = new List<ScriptCommand>();
-                    bool endFunction = new bool();
-                    while (!endFunction) {
-                        ScriptCommand command = ReadCommand(scrReader, ref functionOffsets, ref movementOffsets);
-                        if (command.parameterList == null)
-                            return;
+                    if (posInList == -1) {
+                        List<ScriptCommand> cmdList = new List<ScriptCommand>();
+                        bool endFunction = new bool();
+                        while (!endFunction) {
+                            ScriptCommand command = ReadCommand(scrReader, ref functionOffsets, ref movementOffsets);
+                            if (command.parameterList == null)
+                                return;
 
-                        cmdList.Add(command);
-                        if (endCodes.Contains(command.id))
-                            endFunction = true;
+                            cmdList.Add(command);
+                            if (endCodes.Contains(command.id))
+                                endFunction = true;
+                        }
+                        functions.Add(new Script(commandList: cmdList));
+                    } else {
+                        functions.Add(new Script(useScript: posInList+1));
                     }
-
-                    this.functions.Add(new Script(commandList: cmdList));
                 }
 
                 /* Read movements */
@@ -416,7 +422,6 @@ namespace DSPRE.ROMFiles {
                 List<uint> movementOffsets = new List<uint>();
 
                 List<(int, int, bool)> references = new List<(int, int, bool)>(); // Format: [address, function/movement #, isApplyMovement]
-                int[] commandsWithRelativeJump = new int[] { 0x16, 0x1A, 0x1C, 0x1D, 0x5E };
 
                 /* Allocate enough space for script pointers, which we do not know yet */
                 writer.BaseStream.Position += scripts.Count * 0x4;
@@ -430,61 +435,51 @@ namespace DSPRE.ROMFiles {
                         for (int j = 0; j < scripts[i].commands.Count; j++) {
                             ushort commandID = scripts[i].commands[j].id;
                             writer.Write(commandID);
+                            System.Diagnostics.Debug.Write(BitConverter.ToString(BitConverter.GetBytes(commandID)) + " ");
 
                             /* Get command parameters */
                             List<byte[]> parameterList = scripts[i].commands[j].parameterList;
-                            for (int k = 0; k < parameterList.Count; k++)
+                            for (int k = 0; k < parameterList.Count; k++) {
                                 writer.Write(parameterList[k]);
-
-                            Console.Write("\nCommand added: " + scripts[i].commands[j]);
+                                System.Diagnostics.Debug.WriteLine(BitConverter.ToString(parameterList[k]) + " ");
+                            }
 
                             /* If command calls a function/movement, store reference position */
-                            if (commandsWithRelativeJump.Contains(commandID)) {
-                                int positionOfJumpAddress;
-                                if (commandID == 0x16 || commandID == 0x1A)
-                                    positionOfJumpAddress = 0; // Jump, Call
-                                else
-                                    positionOfJumpAddress = 1;
-
-                                int referenceID = BitConverter.ToInt32(parameterList[positionOfJumpAddress], 0) - 1;
-                                references.Add(( (int)(writer.BaseStream.Position - 4), referenceID, commandID == 0x5E  ));
-                            }
+                            AddReference(ref references, commandID, parameterList, (int)writer.BaseStream.Position);
                         }
                     } else {
-                        scriptOffsets.Add(scriptOffsets[scripts[i].useScript]);  // If script has UseScript, copy offset
+                        scriptOffsets.Add(scriptOffsets[scripts[i].useScript - 1]);  // If script has UseScript, copy offset
                     }
                 }
 
                 /* Write functions */
                 for (int i = 0; i < functions.Count; i++) {
-                    functionOffsets.Add((uint)writer.BaseStream.Position);
+                    if (functions[i].useScript == -1) {
+                        functionOffsets.Add((uint)writer.BaseStream.Position);
 
-                    for (int j = 0; j < functions[i].commands.Count; j++) {
-                        ushort commandID = functions[i].commands[j].id;
-                        writer.Write(commandID);
+                        for (int j = 0; j < functions[i].commands.Count; j++) {
+                            ushort commandID = functions[i].commands[j].id;
+                            writer.Write(commandID);
+                            System.Diagnostics.Debug.Write(BitConverter.ToString(BitConverter.GetBytes(commandID)) + " ");
 
-                        /* Write command parameters */
-                        List<byte[]> parameterList = functions[i].commands[j].parameterList;
-                        for (int k = 0; k < parameterList.Count; k++) 
-                            writer.Write(parameterList[k]);
+                            /* Write command parameters */
+                            List<byte[]> parameterList = functions[i].commands[j].parameterList;
+                            for (int k = 0; k < parameterList.Count; k++) {
+                                writer.Write(parameterList[k]);
+                                System.Diagnostics.Debug.Write(BitConverter.ToString(parameterList[k]) + " ");
+                            }
 
-                        /* If command calls a function/movement, store reference position */
-                        if (commandsWithRelativeJump.Contains(commandID)) {
-                            int index;
-                            if (commandID == 0x16 || commandID == 0x1A) 
-                                index = 0;
-                            else 
-                                index = 1;
-
-                            int referenceID = BitConverter.ToInt32(parameterList[index], 0) - 1;
-                            references.Add(((int)(writer.BaseStream.Position - 4), referenceID, commandID == 0x5E));
+                            /* If command calls a function/movement, store reference position */
+                            AddReference(ref references, commandID, parameterList, (int)writer.BaseStream.Position);
                         }
+                    } else {
+                        functionOffsets.Add(scriptOffsets[functions[i].useScript - 1]);
                     }
                 }
 
                 // Movements must be halfword-aligned
                 if (writer.BaseStream.Position % 2 == 1) { //Check if the writer's head is on an odd byte
-                    writer.Write((byte)0); //Add padding
+                    writer.Write((byte)0x00); //Add padding
                 }
 
                 /* Write movements */
@@ -493,8 +488,7 @@ namespace DSPRE.ROMFiles {
 
                     for (int j = 0; j < movements[i].commands.Count; j++) {
                         /* Write movement command id */
-                        ushort id = movements[i].commands[j].id;
-                        writer.Write(id);
+                        writer.Write(movements[i].commands[j].id);
 
                         /* Write movement command parameters */
                         List<byte[]> parameterLists = movements[i].commands[j].parameterList;
@@ -512,17 +506,17 @@ namespace DSPRE.ROMFiles {
                 List<int> undeclaredFuncs = new List<int>();
                 List<int> undeclaredMovs = new List<int>();
                 for (int i = 0; i < references.Count; i++) {
-                    writer.BaseStream.Position = references[i].Item1;
+                    writer.BaseStream.Position = references[i].Item1; //go to parameter that must store the jump address
 
                     if (references[i].Item3 == true) { //isApplyMovement 
                         try {
-                            writer.Write((UInt32)(movementOffsets[references[i].Item2] - references[i].Item1 - 4));
+                            writer.Write((uint)(movementOffsets[references[i].Item2 - 1] - references[i].Item1 - 4));
                         } catch (ArgumentOutOfRangeException) {
                             undeclaredMovs.Add(1 + references[i].Item2);
                         }
                     } else {
                         try {
-                            writer.Write((UInt32)(functionOffsets[references[i].Item2] - references[i].Item1 - 4));
+                            writer.Write((uint)(functionOffsets[references[i].Item2 - 1] - references[i].Item1 - 4)); //
                         } catch ( ArgumentOutOfRangeException) {
                             undeclaredFuncs.Add(1 + references[i].Item2);
                         }
@@ -543,6 +537,22 @@ namespace DSPRE.ROMFiles {
 
             return newData.ToArray();
         }
+
+        private void AddReference(ref List<(int, int, bool)> references, ushort commandID, List<byte[]> parameterList, int pos) {
+            try {
+                if (Resources.PokeDatabase.ScriptEditor.commandsWithRelativeJump[commandID] == true) {
+                    byte[] parameterWithReferenceID;
+                    if (commandID == 0x16 || commandID == 0x1A)
+                        parameterWithReferenceID = parameterList[0]; // Jump, Call
+                    else
+                        parameterWithReferenceID = parameterList[1];
+
+                    int referenceID = BitConverter.ToInt32(parameterWithReferenceID, 0);
+                    references.Add((pos - 4, referenceID, commandID == 0x5E));
+                }
+            } catch (KeyNotFoundException) { }
+        }
+
         private void SaveToFile(string path) {
             using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
                 writer.Write(this.ToByteArray());
