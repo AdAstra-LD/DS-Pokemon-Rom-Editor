@@ -415,8 +415,8 @@ namespace DSPRE.ROMFiles {
                 List<uint> functionOffsets = new List<uint>();
                 List<uint> movementOffsets = new List<uint>();
 
-                List<Tuple<int, int, bool>> references = new List<Tuple<int, int, bool>>(); // Format: [address, function/movement #, isApplyMovement]
-                int[] referenceCodes = new int[] { 0x16, 0x1A, 0x1C, 0x1D, 0x5E };
+                List<(int, int, bool)> references = new List<(int, int, bool)>(); // Format: [address, function/movement #, isApplyMovement]
+                int[] commandsWithRelativeJump = new int[] { 0x16, 0x1A, 0x1C, 0x1D, 0x5E };
 
                 /* Allocate enough space for script pointers, which we do not know yet */
                 writer.BaseStream.Position += scripts.Count * 0x4;
@@ -439,14 +439,15 @@ namespace DSPRE.ROMFiles {
                             Console.Write("\nCommand added: " + scripts[i].commands[j]);
 
                             /* If command calls a function/movement, store reference position */
-                            if (referenceCodes.Contains(commandID)) {
+                            if (commandsWithRelativeJump.Contains(commandID)) {
                                 int positionOfJumpAddress;
                                 if (commandID == 0x16 || commandID == 0x1A)
                                     positionOfJumpAddress = 0; // Jump, Call
                                 else
                                     positionOfJumpAddress = 1;
 
-                                references.Add(new Tuple<int, int, bool>((int)(writer.BaseStream.Position - 4), BitConverter.ToInt32(parameterList[positionOfJumpAddress], 0)-1, commandID == 0x5E));
+                                int referenceID = BitConverter.ToInt32(parameterList[positionOfJumpAddress], 0) - 1;
+                                references.Add(( (int)(writer.BaseStream.Position - 4), referenceID, commandID == 0x5E  ));
                             }
                         }
                     } else {
@@ -468,14 +469,15 @@ namespace DSPRE.ROMFiles {
                             writer.Write(parameterList[k]);
 
                         /* If command calls a function/movement, store reference position */
-                        if (referenceCodes.Contains(commandID)) {
+                        if (commandsWithRelativeJump.Contains(commandID)) {
                             int index;
                             if (commandID == 0x16 || commandID == 0x1A) 
                                 index = 0;
                             else 
                                 index = 1;
 
-                            references.Add(new Tuple<int, int, bool>((int)(writer.BaseStream.Position - 4), BitConverter.ToInt32(parameterList[index], 0)-1, commandID == 0x5E));
+                            int referenceID = BitConverter.ToInt32(parameterList[index], 0) - 1;
+                            references.Add(((int)(writer.BaseStream.Position - 4), referenceID, commandID == 0x5E));
                         }
                     }
                 }
@@ -507,6 +509,8 @@ namespace DSPRE.ROMFiles {
                     writer.Write(scriptOffsets[i] - (uint)writer.BaseStream.Position - 0x4);
 
                 /* Fix references to functions and movements */
+                List<int> undeclaredFuncs = new List<int>();
+                List<int> undeclaredMovs = new List<int>();
                 for (int i = 0; i < references.Count; i++) {
                     writer.BaseStream.Position = references[i].Item1;
 
@@ -514,15 +518,26 @@ namespace DSPRE.ROMFiles {
                         try {
                             writer.Write((UInt32)(movementOffsets[references[i].Item2] - references[i].Item1 - 4));
                         } catch (ArgumentOutOfRangeException) {
-                            MessageBox.Show("Movement #" + (1+references[i].Item2) + " undeclared.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            undeclaredMovs.Add(1 + references[i].Item2);
                         }
                     } else {
                         try {
                             writer.Write((UInt32)(functionOffsets[references[i].Item2] - references[i].Item1 - 4));
                         } catch ( ArgumentOutOfRangeException) {
-                            MessageBox.Show("Function #" + (1+references[i].Item2) + " undeclared.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            undeclaredFuncs.Add(1 + references[i].Item2);
                         }
                     }
+                }
+                
+                if (undeclaredFuncs.Count > 0) {
+                    string[] result = undeclaredFuncs.ToArray().Select( x => x.ToString() ).ToArray();
+                    string funcs = string.Join(", ", result);
+                    MessageBox.Show("You must declare the function(s) below:" + Environment.NewLine + funcs, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                if (undeclaredMovs.Count > 0) {
+                    string[] result = undeclaredMovs.ToArray().Select(x => x.ToString()).ToArray();
+                    string movs = string.Join(",", result);
+                    MessageBox.Show("You must declare the movement(s) below:" + Environment.NewLine + movs, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
 
