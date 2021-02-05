@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSPRE.ROMFiles;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -91,19 +92,19 @@ namespace DSPRE {
                     for (short i = startID; i < finalID; i++) {
                         if (oper.Equals("Is Exactly")) {
                             if (intNames[i].Equals(valToSearch)) {
-                                result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                                result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
                             }
                         } else if (oper.Equals("Is Not")) {
                             if (!intNames[i].Equals(valToSearch)) {
-                                result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                                result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
                             }
                         } else if (oper.Equals("Contains")) {
                             if (intNames[i].IndexOf(valToSearch, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                                result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
                             }
                         } else if (oper.Equals("Does not contain")) {
                             if (intNames[i].IndexOf(valToSearch, StringComparison.InvariantCultureIgnoreCase) < 0) {
-                                result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                                result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
                             }
                         }
                     }
@@ -130,32 +131,32 @@ namespace DSPRE {
                     }
 
                     for (short i = startID; i < finalID; i++) {
-                        var headerFieldEntry = typeof(Header).GetProperty(property).GetValue(Header.LoadFromARM9(i), null);
+                        var headerFieldEntry = typeof(MapHeader).GetProperty(property).GetValue(MapHeader.LoadFromARM9(i), null);
                         int headerField = int.Parse(headerFieldEntry.ToString());
 
                         if (oper.Equals("Is Less than")) {
                             if (headerField < numToSearch) {
-                                result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                                result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
                             }
                         } else if (oper.Equals("Equals")) {
                             if (headerField == numToSearch) {
-                                result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                                result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
                             }
                         } else if (oper.Equals("Is Greater")) {
                             if (headerField > numToSearch) {
-                                result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                                result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
                             }
                         } else if (oper.StartsWith("Is Less than or Equal")) {
                             if (headerField <= numToSearch) {
-                                result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                                result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
                             }
                         } else if (oper.StartsWith("Is Greater than or Equal")) {
                             if (headerField >= numToSearch) {
-                                result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                                result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
                             }
                         } else if (oper.StartsWith("Is Different")) {
                             if (headerField != numToSearch) {
-                                result.Add(i.ToString("D3") + Header.nameSeparator + intNames[i]);
+                                result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
                             }
                         }
                     }
@@ -215,7 +216,7 @@ namespace DSPRE {
 
                 for (int i = 0; i < intNames.Count; i++) {
                     string name = intNames[i];
-                    headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + name);
+                    headerListBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + name);
                 }
             }
         }

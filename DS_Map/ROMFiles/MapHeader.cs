@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
-namespace DSPRE
-{
+namespace DSPRE.ROMFiles {
     /* ---------------------- HEADER DATA STRUCTURE (DPPt):----------------------------
         
        0x0  //  byte:       Area data value
@@ -84,7 +81,7 @@ namespace DSPRE
     /// <summary>
     /// General class to store common map header data across all Gen IV Pokémon NDS games
     /// </summary>
-    public abstract class Header {
+    public abstract class MapHeader {
         /*System*/
         public short ID { get; set; }
         public static readonly byte length = 24;
@@ -111,12 +108,12 @@ namespace DSPRE
 
         #region Methods (1)
         public abstract byte[] toByteArray();
-        public static Header BuildFromFile(string filename, short headerNumber, long offsetInFile) {
+        public static MapHeader BuildFromFile(string filename, short headerNumber, long offsetInFile) {
             /* Calculate header offset and load data */
-            byte[] headerData = DSUtils.ReadFromFile(filename, offsetInFile, Header.length);
+            byte[] headerData = DSUtils.ReadFromFile(filename, offsetInFile, MapHeader.length);
 
             /* Encapsulate header data into the class appropriate for the gameVersion */
-            if (headerData.Length < Header.length)
+            if (headerData.Length < MapHeader.length)
                 return null;
 
             switch (RomInfo.gameVersion) {
@@ -129,8 +126,8 @@ namespace DSPRE
                     return new HeaderHGSS(headerNumber, new MemoryStream(headerData));
             }
         }
-        public static Header LoadFromARM9(short headerNumber) {
-            long headerOffset = Resources.PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + Header.length * headerNumber;
+        public static MapHeader LoadFromARM9(short headerNumber) {
+            long headerOffset = Resources.PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * headerNumber;
             return BuildFromFile(RomInfo.arm9Path, headerNumber, headerOffset);
         }
         #endregion
@@ -139,7 +136,7 @@ namespace DSPRE
     /// <summary>
     /// Class to store map header data from Pokémon D and P
     /// </summary>
-    public class HeaderDP: Header
+    public class HeaderDP: MapHeader
     {
         #region Fields (5)
         public byte unknown1 { get; set; }
@@ -233,7 +230,7 @@ namespace DSPRE
     /// <summary>
     /// Class to store map header data from Pokémon Plat
     /// </summary>
-    public class HeaderPt : Header
+    public class HeaderPt : MapHeader
     {
         #region Fields (5)
         public byte areaIcon { get; set; }
@@ -307,7 +304,7 @@ namespace DSPRE
     /// <summary>
     /// Class to store map header data from Pokémon HG and SS
     /// </summary>
-    public class HeaderHGSS : Header
+    public class HeaderHGSS : MapHeader
     {
         #region Fields (7)
         public byte areaIcon { get; set; }

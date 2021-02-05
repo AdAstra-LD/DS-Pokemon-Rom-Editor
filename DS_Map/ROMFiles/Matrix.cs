@@ -3,8 +3,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
-namespace DSPRE
-{
+namespace DSPRE.ROMFiles {
    /* ---------------------- MATRIX DATA STRUCTURE (DPPtHGSS):-----------------------------
 
    0x0  //  byte:       Matrix width (a.k.a row length) (x)

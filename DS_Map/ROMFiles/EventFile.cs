@@ -1,11 +1,8 @@
-using DSPRE;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
-namespace LibNDSFormats.NSBMD
-{
+namespace DSPRE.ROMFiles {
     /// <summary>
     /// Classes to store event data in Pokémon NDS games
     /// </summary>

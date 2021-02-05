@@ -1,11 +1,9 @@
 using System.IO;
 using System.Collections.Generic;
 using LibNDSFormats.NSBMD;
-using System;
 using System.Windows.Forms;
 
-namespace DSPRE
-{
+namespace DSPRE.ROMFiles {
     /* ----------------------- MAP FILE DATA STRUCTURE (DPPtHGSS):--------------------------
 
     0x0  //  uint:       Length of permissions section (always 2048)

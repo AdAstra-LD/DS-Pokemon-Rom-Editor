@@ -1,20 +1,23 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
-using System.Diagnostics;
 using System.Resources;
 using System.Reflection;
+
 using NarcAPI;
 using Tao.OpenGl;
 using LibNDSFormats.NSBMD;
 using LibNDSFormats.NSBTX;
-using System.Collections;
 using DSPRE.Resources;
+using DSPRE.ROMFiles;
+using Matrix = DSPRE.ROMFiles.Matrix;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -364,7 +367,7 @@ namespace DSPRE {
                         byte[] row = reader.ReadBytes(RomInfo.internalNameLength);
 
                         string internalName = Encoding.ASCII.GetString(row);//.TrimEnd();
-                        headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + internalName);
+                        headerListBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + internalName);
                         internalNames.Add(internalName.TrimEnd('\0'));
                     }
                 }
@@ -481,7 +484,7 @@ namespace DSPRE {
                             break;
                     };
                     string nsbmdName = Encoding.UTF8.GetString(reader.ReadBytes(16));
-                    selectMapComboBox.Items.Add(i.ToString("D3") + Header.nameSeparator + nsbmdName);
+                    selectMapComboBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + nsbmdName);
                 }
 
             }
@@ -1036,7 +1039,7 @@ namespace DSPRE {
         #region Header Editor
 
         #region Variables
-        public Header currentHeader;
+        public MapHeader currentHeader;
         public List<string> internalNames;
         #endregion
         private void areaDataUpDown_ValueChanged(object sender, EventArgs e) {
@@ -1144,7 +1147,7 @@ namespace DSPRE {
 
             /* Obtain current header ID from listbox*/
             short headerNumber = Int16.Parse(headerListBox.SelectedItem.ToString().Substring(0, internalNames.Count.ToString().Length));
-            currentHeader = Header.LoadFromARM9(headerNumber);
+            currentHeader = MapHeader.LoadFromARM9(headerNumber);
             refreshHeaderEditorFields();
         }
 
@@ -1478,7 +1481,7 @@ namespace DSPRE {
             mainTabControl.SelectedTab = textEditorTabPage;
         }
         private void saveHeaderButton_Click(object sender, EventArgs e) {
-            uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + Header.length * currentHeader.ID);
+            uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
             DSUtils.WriteToArm9(headerOffset, currentHeader.toByteArray());
 
             disableHandlers = true;
@@ -1502,7 +1505,7 @@ namespace DSPRE {
         private void updateHeaderNameShown(int thisIndex, int headerNumber, string text) {
             disableHandlers = true;
 
-            headerListBox.Items[thisIndex] = headerNumber.ToString("D3") + Header.nameSeparator + text;
+            headerListBox.Items[thisIndex] = headerNumber.ToString("D3") + MapHeader.nameSeparator + text;
 
             disableHandlers = false;
         }
@@ -1529,18 +1532,18 @@ namespace DSPRE {
                     case "D":
                     case "P":
                         for (short i = 0; i < internalNames.Count; i++) {
-                            String locationName = locationNameComboBox.Items[((HeaderDP)Header.LoadFromARM9(i)).locationName].ToString();
+                            String locationName = locationNameComboBox.Items[((HeaderDP)MapHeader.LoadFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + internalNames[i]);
+                                headerListBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + internalNames[i]);
                                 noResult = false;
                             }
                         }
                         break;
                     case "Plat":
                         for (short i = 0; i < internalNames.Count; i++) {
-                            String locationName = locationNameComboBox.Items[((HeaderPt)Header.LoadFromARM9(i)).locationName].ToString();
+                            String locationName = locationNameComboBox.Items[((HeaderPt)MapHeader.LoadFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + internalNames[i]);
+                                headerListBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + internalNames[i]);
                                 noResult = false;
                             }
                         }
@@ -1548,9 +1551,9 @@ namespace DSPRE {
                     case "HG":
                     case "SS":
                         for (short i = 0; i < internalNames.Count; i++) {
-                            String locationName = locationNameComboBox.Items[((HeaderHGSS)Header.LoadFromARM9(i)).locationName].ToString();
+                            String locationName = locationNameComboBox.Items[((HeaderHGSS)MapHeader.LoadFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i.ToString("D3") + Header.nameSeparator + internalNames[i]);
+                                headerListBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + internalNames[i]);
                                 noResult = false;
                             }
                         }
@@ -1628,12 +1631,12 @@ namespace DSPRE {
             if (of.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            Header h = null;
+            MapHeader h = null;
             try {
                 if (new FileInfo(of.FileName).Length > 48)
                     throw new FileFormatException();
 
-                h = Header.BuildFromFile(of.FileName, currentHeader.ID, 0);
+                h = MapHeader.BuildFromFile(of.FileName, currentHeader.ID, 0);
                 if (h.ID == -1)
                     throw new FileFormatException();
 
@@ -1644,11 +1647,11 @@ namespace DSPRE {
             }
 
             currentHeader = h;
-            uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + Header.length * currentHeader.ID);
+            uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
             DSUtils.WriteToArm9(headerOffset, currentHeader.toByteArray());
             try {
                 using (BinaryReader reader = new BinaryReader(new FileStream(of.FileName, FileMode.Open))) {
-                    reader.BaseStream.Position = Header.length + 8;
+                    reader.BaseStream.Position = MapHeader.length + 8;
                     internalNameBox.Text = Encoding.UTF8.GetString(reader.ReadBytes(RomInfo.internalNameLength));
                     updateCurrentInternalName();
                 }
@@ -2237,7 +2240,7 @@ namespace DSPRE {
                 }
 
                 /* get texture file numbers from area data */
-                areaData = LoadAreaData(Header.LoadFromARM9(header).areaDataID);
+                areaData = LoadAreaData(MapHeader.LoadFromARM9(header).areaDataID);
                 /* Load Map File and switch to Map Editor tab */
                 disableHandlers = true;
 
@@ -2495,7 +2498,7 @@ namespace DSPRE {
             string[] bldList = GetBuildingsList(interiorbldRadioButton.Checked);
             for (int i = 0; i < currentMapFile.buildings.Count; i++)
                 // Add entry into buildings ListBox
-                buildingsListBox.Items.Add((i+1).ToString("D2") + Header.nameSeparator + buildIndexComboBox.Items[(int)currentMapFile.buildings[i].modelID]);
+                buildingsListBox.Items.Add((i+1).ToString("D2") + MapHeader.nameSeparator + buildIndexComboBox.Items[(int)currentMapFile.buildings[i].modelID]);
         }
         private Building LoadBuildingModel(Building building, bool interior) {
             string modelPath = romInfo.GetBuildingModelsDirPath(interior) + "\\" + building.modelID.ToString("D4");
@@ -2607,7 +2610,7 @@ namespace DSPRE {
             using (BinaryWriter writer = new BinaryWriter(new FileStream(mapFilePath, FileMode.Create))) writer.Write(LoadMapFile(0).ToByteArray());
 
             /* Update ComboBox and select new file */
-            selectMapComboBox.Items.Add(selectMapComboBox.Items.Count.ToString("D3") + Header.nameSeparator + "newmap");
+            selectMapComboBox.Items.Add(selectMapComboBox.Items.Count.ToString("D3") + MapHeader.nameSeparator + "newmap");
             selectMapComboBox.SelectedIndex = selectMapComboBox.Items.Count - 1;
         }
         private void replaceMapBinButton_Click(object sender, EventArgs e) {
@@ -2890,7 +2893,7 @@ namespace DSPRE {
             currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile = LoadModelTextures(b.NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1);
 
             /* Add new entry to buildings ListBox */
-            buildingsListBox.Items.Add((buildingsListBox.Items.Count + 1).ToString("D2") + Header.nameSeparator +
+            buildingsListBox.Items.Add((buildingsListBox.Items.Count + 1).ToString("D2") + MapHeader.nameSeparator +
                 buildIndexComboBox.Items[(int)b.modelID]);
             buildingsListBox.SelectedIndex = buildingsListBox.Items.Count - 1;
 
@@ -2902,7 +2905,7 @@ namespace DSPRE {
                 return;
 
             disableHandlers = true;
-            buildingsListBox.Items[buildingsListBox.SelectedIndex] = (buildingsListBox.SelectedIndex + 1).ToString("D2") + Header.nameSeparator + buildIndexComboBox.SelectedItem;
+            buildingsListBox.Items[buildingsListBox.SelectedIndex] = (buildingsListBox.SelectedIndex + 1).ToString("D2") + MapHeader.nameSeparator + buildIndexComboBox.SelectedItem;
             disableHandlers = false;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].modelID = (uint)buildIndexComboBox.SelectedIndex;
@@ -3796,7 +3799,7 @@ namespace DSPRE {
                 uint areaDataID;
                 if (eventMatrix.hasHeadersSection) {
                     short header = (short)eventMatrix.headers[(short)eventMatrixYUpDown.Value, (short)eventMatrixXUpDown.Value];
-                    areaDataID = Header.LoadFromARM9(header).areaDataID;
+                    areaDataID = MapHeader.LoadFromARM9(header).areaDataID;
                 } else areaDataID = (uint)eventAreaDataUpDown.Value;
 
                 /* get texture file numbers from area data */
@@ -4837,7 +4840,7 @@ namespace DSPRE {
         private void goToWarpDestination_Click(object sender, EventArgs e) {
             int destAnchor = (int)warpAnchorUpDown.Value;
             short destHeader = (short)warpHeaderUpDown.Value;
-            ushort destEventID = Header.LoadFromARM9(destHeader).eventFileID;
+            ushort destEventID = MapHeader.LoadFromARM9(destHeader).eventFileID;
             EventFile destEvent = new EventFile(destEventID);
 
             if (destEvent.warps.Count < destAnchor + 1) {
@@ -4846,15 +4849,15 @@ namespace DSPRE {
                 if (d == DialogResult.No)
                     return;
                 else {
-                    eventMatrixUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).matrixID;
-                    eventAreaDataUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).areaDataID;
+                    eventMatrixUpDown.Value = MapHeader.LoadFromARM9((short)warpHeaderUpDown.Value).matrixID;
+                    eventAreaDataUpDown.Value = MapHeader.LoadFromARM9((short)warpHeaderUpDown.Value).areaDataID;
                     selectEventComboBox.SelectedIndex = destEventID;
                     centerEventviewOnEntities();
                     return;
                 }
             }
-            eventMatrixUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).matrixID;
-            eventAreaDataUpDown.Value = Header.LoadFromARM9((short)warpHeaderUpDown.Value).areaDataID;
+            eventMatrixUpDown.Value = MapHeader.LoadFromARM9((short)warpHeaderUpDown.Value).matrixID;
+            eventAreaDataUpDown.Value = MapHeader.LoadFromARM9((short)warpHeaderUpDown.Value).areaDataID;
             selectEventComboBox.SelectedIndex = destEventID;
             warpsListBox.SelectedIndex = destAnchor;
             centerEventViewOnSelectedEvent_Click(sender, e);

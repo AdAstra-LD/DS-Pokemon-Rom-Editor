@@ -301,7 +301,7 @@ namespace DSPRE.Properties {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a dp.
+        ///   Cerca una stringa localizzata simile a D.
         /// </summary>
         internal static string Diamond {
             get {
@@ -706,6 +706,15 @@ namespace DSPRE.Properties {
             get {
                 object obj = ResourceManager.GetObject("gray_sign", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a HG.
+        /// </summary>
+        internal static string HeartGold {
+            get {
+                return ResourceManager.GetString("HeartGold", resourceCulture);
             }
         }
         
@@ -1120,7 +1129,7 @@ namespace DSPRE.Properties {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a dp.
+        ///   Cerca una stringa localizzata simile a P.
         /// </summary>
         internal static string Pearl {
             get {
@@ -1534,6 +1543,15 @@ namespace DSPRE.Properties {
             get {
                 object obj = ResourceManager.GetObject("sign", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a SS.
+        /// </summary>
+        internal static string SoulSilver {
+            get {
+                return ResourceManager.GetString("SoulSilver", resourceCulture);
             }
         }
         

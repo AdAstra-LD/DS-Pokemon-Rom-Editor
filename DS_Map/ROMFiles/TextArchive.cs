@@ -7,8 +7,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using DSPRE.Resources;
 
-namespace DSPRE
-{
+namespace DSPRE.ROMFiles {
 	/// <summary>
 	/// Class to store message data from DS Pokémon games
 	/// </summary>

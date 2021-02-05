@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Resources;
 using System.Windows.Forms;
 using System.Linq;
+using DSPRE.ROMFiles;
 
 namespace DSPRE {
     public partial class ROMToolboxDialog : Form {

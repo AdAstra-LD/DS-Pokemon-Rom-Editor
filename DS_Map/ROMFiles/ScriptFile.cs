@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace DSPRE {
+namespace DSPRE.ROMFiles {
     /// <summary>
     /// Class to store script file data in Pokémon NDS games
     /// </summary>

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace DSPRE {
+namespace DSPRE.ROMFiles {
     public class Script {
         public List<ScriptCommand> commands;
         public int useScript;

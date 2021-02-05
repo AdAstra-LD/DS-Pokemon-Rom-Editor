@@ -1,6 +1,5 @@
 using System.IO;
-namespace DSPRE
-{
+namespace DSPRE.ROMFiles {
 	/// <summary>
 	/// Class to store area data in Pokémon NDS games
 	/// </summary>

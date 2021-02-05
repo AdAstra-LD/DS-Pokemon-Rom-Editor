@@ -1,8 +1,7 @@
 using System.IO;
 using System.Windows.Forms;
 
-namespace DSPRE
-{
+namespace DSPRE.ROMFiles {
     /* ---------------------- WILD POKÈMON DATA STRUCTURE (DPPt):----------------------------
         
        0x0  //  byte:       Walking encounter rate
