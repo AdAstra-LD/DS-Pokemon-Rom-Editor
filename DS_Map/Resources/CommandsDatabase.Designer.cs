@@ -1,6 +1,6 @@
 ﻿
 namespace DSPRE.Resources {
-    partial class ScriptCommands {
+    partial class CommandsDatabase {
         /// <summary>
         /// Required designer variable.
         /// </summary>

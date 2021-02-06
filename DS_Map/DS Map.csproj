@@ -95,11 +95,11 @@
     <Compile Include="AB.cs" />
     <Compile Include="ROMFiles\AreaData.cs" />
     <Compile Include="DSUtils.cs" />
-    <Compile Include="Resources\ScriptCommands.cs">
+    <Compile Include="Resources\CommandsDatabase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Resources\ScriptCommands.Designer.cs">
-      <DependentUpon>ScriptCommands.cs</DependentUpon>
+    <Compile Include="Resources\CommandsDatabase.Designer.cs">
+      <DependentUpon>CommandsDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources\PokeDatabase.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -129,6 +129,7 @@
       <DependentUpon>HeaderSearch.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources\TextDatabase.cs" />
+    <Compile Include="ROMFiles\ScriptAction.cs" />
     <Compile Include="ROMToolboxDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -275,8 +276,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SyntheticOverlayFileNumber.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\ScriptCommands.resx">
-      <DependentUpon>ScriptCommands.cs</DependentUpon>
+    <EmbeddedResource Include="Resources\CommandsDatabase.resx">
+      <DependentUpon>CommandsDatabase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ROMToolboxDialog.resx">
       <DependentUpon>ROMToolboxDialog.cs</DependentUpon>

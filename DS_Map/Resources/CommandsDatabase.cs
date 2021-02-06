@@ -1,18 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace DSPRE.Resources {
-    public partial class ScriptCommands : Form {
+    public partial class CommandsDatabase : Form {
         private DataGridViewRow currentrow;
+        private Dictionary<ushort, string> namesDict;
+        private Dictionary<ushort, byte[]> paramsDict;
 
-        public ScriptCommands() {
+        public CommandsDatabase(Dictionary<ushort, string> namesDict, Dictionary<ushort, byte[]> paramsDict) {
+            this.namesDict = namesDict;
+            this.paramsDict = paramsDict;
+
             InitializeComponent();
             SetupFromScriptDictionaries();
         }
 
         private void SetupFromScriptDictionaries() {
-            for (int i = 0; i < RomInfo.scriptParametersDict.Count - 1; i++)
+            for (int i = 0; i < paramsDict.Count - 1; i++)
                 scriptcmdDataGridView.Rows.Add();
 
             foreach (DataGridViewRow r in scriptcmdDataGridView.Rows) { //loop through 
@@ -21,20 +27,20 @@ namespace DSPRE.Resources {
                 r.Cells[0].Value = u.ToString("X4");
 
                 try {
-                    r.Cells[1].Value = RomInfo.scriptCommandNamesDict[u];
+                    r.Cells[1].Value = namesDict[u];
                 } catch { }
 
                 try {
-                    if (RomInfo.scriptParametersDict[u][0] == 0) {
+                    if (paramsDict[u][0] == 0) {
                         r.Cells[2].Value = 0;
                     } else {
-                        r.Cells[2].Value = RomInfo.scriptParametersDict[u].Length;//.ToString();
+                        r.Cells[2].Value = paramsDict[u].Length;//.ToString();
                     }
                 } catch { }
 
                 string paramSize = "";
                 try {
-                    foreach (byte size in RomInfo.scriptParametersDict[u]) {
+                    foreach (byte size in paramsDict[u]) {
                         if (size != 0) {
                             paramSize += size + "B;  ";
                         }

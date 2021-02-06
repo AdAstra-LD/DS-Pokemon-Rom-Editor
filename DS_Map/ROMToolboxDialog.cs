@@ -339,7 +339,7 @@ namespace DSPRE {
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d2 == DialogResult.Yes) {
-                File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", true);
+                File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", overwrite: true);
 
                 try {
                     DSUtils.WriteToArm9(data.branchOffset, HexStringtoByteArray(data.branchString)); //Write new branchOffset
@@ -403,9 +403,9 @@ namespace DSPRE {
                 AlreadyApplied();
             } else {
                 ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
-                for (int i = 0; i < itemScript.scripts.Count - 1; i++) {
-                    itemScript.scripts[i].commands[0].parameterList[1] = BitConverter.GetBytes((ushort)i); // Fix item index
-                    itemScript.scripts[i].commands[1].parameterList[1] = BitConverter.GetBytes((ushort)1); // Fix item quantity
+                for (int i = 0; i < itemScript.allScripts.Count - 1; i++) {
+                    itemScript.allScripts[i].commands[0].commandParameters[1] = BitConverter.GetBytes((ushort)i); // Fix item index
+                    itemScript.allScripts[i].commands[1].commandParameters[1] = BitConverter.GetBytes((ushort)1); // Fix item quantity
                 }
                 itemScript.SaveToFileDefaultDir(RomInfo.itemScriptFileNumber);
                 MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -431,7 +431,7 @@ namespace DSPRE {
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
-                File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", true);
+                File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", overwrite: true);
 
                 try {
                     DSUtils.WriteToArm9(data.branchOffset, HexStringtoByteArray(data.branchString)); //Write new branchOffset

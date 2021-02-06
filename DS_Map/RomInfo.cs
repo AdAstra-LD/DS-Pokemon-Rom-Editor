@@ -57,7 +57,7 @@ namespace DSPRE {
         public string internalNamesLocation { get; private set; }
         public Dictionary<List<uint>, Tuple<Color, Color>> mapCellsColorDictionary { get; private set; }
         public static Dictionary<ushort, string> scriptCommandNamesDict { get; private set; }
-        public static Dictionary<ushort, byte[]> scriptParametersDict { get; private set; }
+        public static Dictionary<ushort, byte[]> commandParametersDict { get; private set; }
         
         #region Constructors (1)
         public RomInfo(string id, string workDir) {
@@ -100,7 +100,9 @@ namespace DSPRE {
             /* System */
             SetNarcDirs();
             LoadMapCellsColorDictionary();
-            SetScriptDatabases();
+            scriptCommandNamesDict = BuildCommandNamesDatabase(gameVersion);
+            commandParametersDict = BuildCommandParametersDatabase(gameVersion);
+
             /* * * * */
         }
         #endregion
@@ -271,32 +273,34 @@ namespace DSPRE {
                     break;
             }
         }
-
-        public void SetScriptDatabases() {
-            switch (gameVersion) {
+        public static Dictionary<ushort, string> BuildCommandNamesDatabase(string gameVer) {
+            switch (gameVer) {
                 case "D":
                 case "P":
                     var commonDictionaryNames = PokeDatabase.ScriptEditor.DPPtScrCmdNames;
                     var specificDictionaryNames = PokeDatabase.ScriptEditor.DPScrCmdNames;
-                    scriptCommandNamesDict = commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
-
-                    var commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
-                    var specificDictionaryParams = PokeDatabase.ScriptEditor.DPScrCmdParameters;
-                    scriptParametersDict = commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
-                    break;
+                    return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
                 case "Plat":
                     commonDictionaryNames = PokeDatabase.ScriptEditor.DPPtScrCmdNames;
                     specificDictionaryNames = PokeDatabase.ScriptEditor.PlatScrCmdNames;
-                    scriptCommandNamesDict = commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
-
+                    return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+                default:
+                    return PokeDatabase.ScriptEditor.HGSSScrCmdNames;
+            }
+        }        
+        public static Dictionary<ushort, byte[]> BuildCommandParametersDatabase(string gameVer) {
+            switch (gameVer) {
+                case "D":
+                case "P":
+                    var commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
+                    var specificDictionaryParams = PokeDatabase.ScriptEditor.DPScrCmdParameters;
+                    return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+                case "Plat":
                     commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
                     specificDictionaryParams = PokeDatabase.ScriptEditor.PlatScrCmdParameters;
-                    scriptParametersDict = commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First()); break;
-                    break;
+                    return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());                 
                 default:
-                    scriptCommandNamesDict = PokeDatabase.ScriptEditor.HGSSScrCmdNames;
-                    scriptParametersDict = PokeDatabase.ScriptEditor.HGSSScrCmdParameters;
-                    break;
+                    return PokeDatabase.ScriptEditor.HGSSScrCmdParameters;
             }
         }
         public void LoadGameVersion() {

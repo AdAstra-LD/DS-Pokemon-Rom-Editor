@@ -299,7 +299,7 @@ namespace DSPRE {
             /* Add item list to ow item box */
             int itemScriptId = RomInfo.itemScriptFileNumber;
             try {
-                int count = new ScriptFile(itemScriptId).scripts.Count - 1;
+                int count = new ScriptFile(itemScriptId).allScripts.Count - 1;
                 owItemComboBox.Items.AddRange(GetItemNames(0, count));
             } catch {
                 MessageBox.Show("There was a problem reading Script File #" + itemScriptId + ".\n" +
@@ -693,9 +693,17 @@ namespace DSPRE {
             }
         }
         private void scriptCommandsDatabaseToolStripButton_Click(object sender, EventArgs e) {
-            ScriptCommands form = new ScriptCommands();
-            form.Show();
+            openCommandsDatabase(RomInfo.scriptCommandNamesDict, RomInfo.commandParametersDict);
         }
+
+        private void openCommandsDatabase(Dictionary<ushort, string> namesDict, Dictionary<ushort, byte[]> paramsDict) {
+            statusLabel.Text = "Setting up Commands Database. Please wait...";
+            Update();
+            CommandsDatabase form = new CommandsDatabase(namesDict, paramsDict);
+            form.Show();
+            statusLabel.Text = "Ready";
+        }
+
         private void headerSearchToolStripButton_Click(object sender, EventArgs e) {
             mainTabControl.SelectedIndex = 0; //Select Header Editor
             using (HeaderSearch h = new HeaderSearch(ref internalNames, headerListBox, statusLabel)) {
@@ -748,7 +756,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.1.2" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.1.3" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks go to Trifindo, Mikelan98, JackHack96, Mixone and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS Rom Hacking made the development of this tool possible.";
@@ -851,7 +859,10 @@ namespace DSPRE {
             mapOpenGlControl.InitializeContexts();
 
             mainTabControl.Show();
+            loadRomButton.Enabled = false;
             saveRomButton.Enabled = true;
+            saveROMToolStripMenuItem.Enabled = true;
+            openROMToolStripMenuItem.Enabled = false;
 
             unpackAllButton.Enabled = true;
             updateMapNarcsButton.Enabled = true;
@@ -859,13 +870,12 @@ namespace DSPRE {
             buildingEditorButton.Enabled = true;
             wildEditorButton.Enabled = true;
             
-            romToolboxButton.Enabled = true;
+            romToolboxToolStripButton.Enabled = true;
+            romToolboxToolStripMenuItem.Enabled = true;
             headerSearchToolStripButton.Enabled = true;
+            headerSearchToolStripMenuItem.Enabled = true;
+
             scriptCommandsButton.Enabled = true;
-
-            loadRomButton.Enabled = false;
-            openROMToolStripMenuItem.Enabled = false;
-
             statusLabel.Text = "Ready";
         }
         private void saveRom_Click(object sender, EventArgs e) {
@@ -956,6 +966,17 @@ namespace DSPRE {
                 Update();
             }
         }
+        private void diamondAndPearlToolStripMenuItem_Click(object sender, EventArgs e) {
+            openCommandsDatabase(RomInfo.BuildCommandNamesDatabase("D"), RomInfo.BuildCommandParametersDatabase("D"));
+        }
+
+        private void platinumToolStripMenuItem_Click(object sender, EventArgs e) {
+            openCommandsDatabase(RomInfo.BuildCommandNamesDatabase("Plat"), RomInfo.BuildCommandParametersDatabase("Plat"));
+        }
+
+        private void heartGoldAndSoulSilverToolStripMenuItem_Click(object sender, EventArgs e) {
+            openCommandsDatabase(RomInfo.BuildCommandNamesDatabase("HG"), RomInfo.BuildCommandParametersDatabase("HG"));
+        }
         private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (mainTabControl.SelectedTab == headerEditorTabPage) {
                 //
@@ -993,7 +1014,10 @@ namespace DSPRE {
             statusLabel.Text = "Ready";
         }
         private void wildEditorButton_Click(object sender, EventArgs e) {
-            openWildEditor(false);
+            openWildEditor(loadCurrent: false);
+        }
+        private void openWildEditorWithIdButtonClick(object sender, EventArgs e) {
+            openWildEditor(loadCurrent: true);
         }
         private void openWildEditor(bool loadCurrent) {
             statusLabel.Text = "Attempting to extract Wild Encounters NARC...";
@@ -1034,9 +1058,6 @@ namespace DSPRE {
                     break;
             }
             statusLabel.Text = "Ready";
-        }
-        private void openWildEditorWithIdButtonClick(object sender, EventArgs e) {
-            openWildEditor(true);
         }
         #endregion
 
@@ -2928,8 +2949,8 @@ namespace DSPRE {
 
             buildIndexComboBox.SelectedIndex = (int)currentMapFile.buildings[buildingNumber].modelID;
             xBuildUpDown.Value = currentMapFile.buildings[buildingNumber].xPosition + (decimal)currentMapFile.buildings[buildingNumber].xFraction/65535;
-            zBuildUpDown.Value = currentMapFile.buildings[buildingNumber].zPosition + (decimal)currentMapFile.buildings[buildingNumber].yFraction/65535;
-            yBuildUpDown.Value = currentMapFile.buildings[buildingNumber].yPosition + (decimal)currentMapFile.buildings[buildingNumber].zFraction/65535;
+            zBuildUpDown.Value = currentMapFile.buildings[buildingNumber].zPosition + (decimal)currentMapFile.buildings[buildingNumber].zFraction/65535;
+            yBuildUpDown.Value = currentMapFile.buildings[buildingNumber].yPosition + (decimal)currentMapFile.buildings[buildingNumber].yFraction/65535;
 
             buildingWidthUpDown.Value = currentMapFile.buildings[buildingNumber].width;
             buildingHeightUpDown.Value = currentMapFile.buildings[buildingNumber].height;
@@ -4485,8 +4506,8 @@ namespace DSPRE {
         public static bool ScanScriptsCheckStandardizedItemNumbers() {
             ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
 
-            for (ushort i = 0; i < itemScript.scripts.Count - 1; i++) {
-                if (BitConverter.ToUInt16(itemScript.scripts[i].commands[0].parameterList[1], 0) != i || BitConverter.ToUInt16(itemScript.scripts[i].commands[1].parameterList[1], 0) != 1) {
+            for (ushort i = 0; i < itemScript.allScripts.Count - 1; i++) {
+                if (BitConverter.ToUInt16(itemScript.allScripts[i].commands[0].commandParameters[1], 0) != i || BitConverter.ToUInt16(itemScript.allScripts[i].commands[1].commandParameters[1], 0) != 1) {
                     return false;
                 }
             }
@@ -5079,101 +5100,21 @@ namespace DSPRE {
             selectScriptFileComboBox.SelectedIndex = selectScriptFileComboBox.Items.Count - 1;
         }
         private void exportScriptFileButton_Click(object sender, EventArgs e) {
-            exportScriptFile();
-        }
-        private void exportScriptFile() {
-            currentScriptFile.scripts.Clear();
-            currentScriptFile.functions.Clear();
-            currentScriptFile.movements.Clear();
-
-            populateScriptCommands(currentScriptFile);
-            populateFunctionCommands(currentScriptFile);
-            populateMovementCommands(currentScriptFile);
-
-            currentScriptFile.SaveToFileExplorePath("Script File " + selectScriptFileComboBox.SelectedIndex);
+            string suggestion;
+            if (currentScriptFile.isLevelScript) {
+                suggestion = "Level Script File ";
+            } else {
+                suggestion = "Script File ";
+            }
+            currentScriptFile.SaveToFileExplorePath(suggestion + selectScriptFileComboBox.SelectedIndex, blindmode: true);
         }
         private void saveScriptFileButton_Click(object sender, EventArgs e) {
-            /* Create new script objects */
-            currentScriptFile.scripts.Clear();
-            currentScriptFile.functions.Clear();
-            currentScriptFile.movements.Clear();
-
-            populateScriptCommands(currentScriptFile);
-            populateFunctionCommands(currentScriptFile);
-            populateMovementCommands(currentScriptFile);
+            /* Create new ScriptFile object */
+            ScriptFile userEdited = new ScriptFile(scriptTextBox.Lines, functionTextBox.Lines, movementTextBox.Lines, selectScriptFileComboBox.SelectedIndex);
 
             /* Write new scripts to file */
-            currentScriptFile.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex);
-        }
-        private void populateScriptCommands(ScriptFile scrFile) {
-            for (int i = 0; i < scriptTextBox.Lines.Length; i++) {
-                if (scriptTextBox.Lines[i].Contains('@')) { // Move on until script header is found
-                    i++;
-                    while (scriptTextBox.Lines[i].Length == 0)
-                        i++; //Skip all empty lines 
-
-                    if (scriptTextBox.Lines[i].Contains("UseScript")) {
-                        int scriptNumber = Int16.Parse(scriptTextBox.Lines[i].Substring(1 + scriptTextBox.Lines[i].IndexOf('#')));
-                        scrFile.scripts.Add(new Script(useScript: scriptNumber));
-                    } else {
-                        /* Read script commands */
-
-                        List<ScriptCommand> cmdList = new List<ScriptCommand>();
-                        while (scriptTextBox.Lines[i] != "End" && !scriptTextBox.Lines[i].Contains("Jump Function") && i < scriptTextBox.Lines.Length - 1) {
-                            Console.WriteLine("Script line " + (i + 1).ToString());
-                            ScriptCommand cmd = new ScriptCommand(scriptTextBox.Lines[i]);
-                            Console.WriteLine("----" + cmd + "----");
-                            cmdList.Add(cmd);
-                            i++;
-                        }
-                        cmdList.Add(new ScriptCommand(scriptTextBox.Lines[i])); // Add end or jump/call command
-                        scrFile.scripts.Add(new Script(commandList: cmdList));
-                    }
-                }
-            }
-        }
-        private void populateFunctionCommands(ScriptFile scrFile) {
-            for (int i = 0; i < functionTextBox.Lines.Length; i++) {
-                if (functionTextBox.Lines[i].Contains('@')) { // Move on until function header is found
-                    i++;
-                    while (functionTextBox.Lines[i].Length == 0)
-                        i++; //Skip all empty lines 
-
-                    /* Read function commands */
-                    if (functionTextBox.Lines[i].Contains("UseScript")) {
-                        int scriptNumber = Int16.Parse(functionTextBox.Lines[i].Substring(1 + functionTextBox.Lines[i].IndexOf('#')));
-                        scrFile.functions.Add(new Script(useScript: scriptNumber));
-                    } else {
-                        List<ScriptCommand> cmdList = new List<ScriptCommand>();
-
-                        while (functionTextBox.Lines[i] != "End" && !functionTextBox.Lines[i].Contains("Return") && !functionTextBox.Lines[i].Contains("Jump F")) {
-                            cmdList.Add(new ScriptCommand(functionTextBox.Lines[i]));
-                            i++;
-                        }
-                        cmdList.Add(new ScriptCommand(functionTextBox.Lines[i])); // Add end command
-                        scrFile.functions.Add(new Script(commandList: cmdList));
-                    }
-                }
-            }
-        }
-        private void populateMovementCommands(ScriptFile scrFile) {
-            for (int i = 0; i < movementTextBox.Lines.Length; i++) {
-                if (movementTextBox.Lines[i].Contains('@')) {  // Move on until script header is found
-                    i++;
-                    while (movementTextBox.Lines[i].Length == 0)
-                        i++; //Skip all empty lines 
-
-                    List<ScriptCommand> cmdList = new List<ScriptCommand>();
-                    /* Read script commands */
-                    while (movementTextBox.Lines[i] != "End") {
-                        cmdList.Add(new ScriptCommand(movementTextBox.Lines[i], true));
-                        i++;
-                    }
-                    cmdList.Add(new ScriptCommand(movementTextBox.Lines[i], true)); // Add end command
-
-                    scrFile.movements.Add(new Script(commandList: cmdList));
-                }
-            }
+            userEdited.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex);
+            currentScriptFile = userEdited;
         }
         private void importScriptFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .scr file */
@@ -5226,7 +5167,6 @@ namespace DSPRE {
             string searchString = searchInScriptsTextBox.Text;
             searchProgressBar.Maximum = selectScriptFileComboBox.Items.Count;
 
-            string resultsBuffer = "";
             List<string> results = new List<string>();
             for (int i = 0; i < selectScriptFileComboBox.Items.Count; i++) {
                 try {
@@ -5234,11 +5174,11 @@ namespace DSPRE {
                     ScriptFile file = new ScriptFile(i);
 
                     if (scriptSearchCaseSensitiveCheckBox.Checked) {
-                        results.AddRange(SearchInScripts(i, file.scripts, "Script", (string s) => s.Contains(searchString)));
-                        results.AddRange(SearchInScripts(i, file.functions, "Function", (string s) => s.Contains(searchString)));
+                        results.AddRange(SearchInScripts(i, file.allScripts, "Script", (string s) => s.Contains(searchString)));
+                        results.AddRange(SearchInScripts(i, file.allFunctions, "Function", (string s) => s.Contains(searchString)));
                     } else {
-                        results.AddRange(SearchInScripts(i, file.scripts, "Script", (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) );
-                        results.AddRange(SearchInScripts(i, file.functions, "Function", (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) );
+                        results.AddRange(SearchInScripts(i, file.allScripts, "Script", (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) );
+                        results.AddRange(SearchInScripts(i, file.allFunctions, "Function", (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) );
                     }
                 } catch { }
                 searchProgressBar.Value = i;
@@ -5247,13 +5187,13 @@ namespace DSPRE {
             searchInScriptsResultListBox.Items.AddRange(results.ToArray());
         }
 
-        private List<string> SearchInScripts(int fileID, List<Script> ls, string entryType, Func<string, bool> criteria) {
+        private List<string> SearchInScripts(int fileID, List<CommandContainer> ls, string entryType, Func<string, bool> criteria) {
             List<string> results = new List<string>();
 
             for (int j = 0; j < ls.Count; j++) {
                 foreach (ScriptCommand cur in ls[j].commands) {
-                    if (criteria(cur.cmdName))
-                        results.Add("File " + fileID + " - " + entryType + " " + (j + 1) + ": " + cur.cmdName + Environment.NewLine);
+                    if (criteria(cur.name))
+                        results.Add("File " + fileID + " - " + entryType + " " + (j + 1) + ": " + cur.name + Environment.NewLine);
                 }
             }
             return results;
@@ -5284,7 +5224,6 @@ namespace DSPRE {
                 TXTBoxScrollToResult(functionTextBox, cmdSearched, keywordPos);
             }
         }
-
         private void TXTBoxScrollToResult(RichTextBox tb, string cmdSearched, int after) {
             int cmdPos = tb.Find(cmdSearched, after, RichTextBoxFinds.MatchCase);
             try {
@@ -5320,7 +5259,9 @@ namespace DSPRE {
                 scriptTextBox.Text += "Level script files are currently not supported.\nYou can use AdAstra's Level Scripts Editor.";
                 functionTextBox.Enabled = false;
                 movementTextBox.Enabled = false;
+                saveScriptFileButton.Enabled = false;
             } else {
+                saveScriptFileButton.Enabled = true;
                 functionTextBox.Enabled = true;
                 movementTextBox.Enabled = true;
 
@@ -5328,8 +5269,8 @@ namespace DSPRE {
                 disableHandlers = true;
 
                 string buffer = "";
-                for (int i = 0; i < currentScriptFile.scripts.Count; i++) {
-                    Script currentScript = currentScriptFile.scripts[i];
+                for (int i = 0; i < currentScriptFile.allScripts.Count; i++) {
+                    CommandContainer currentScript = currentScriptFile.allScripts[i];
 
                     /* Write header */
                     string scrHeader = "----- " + "@Script_#" + (i + 1) + " -----" + Environment.NewLine;
@@ -5339,7 +5280,7 @@ namespace DSPRE {
                     /* If current script is identical to another, print UseScript instead of commands */
                     if (currentScript.useScript < 0) {
                         for (int j = 0; j < currentScript.commands.Count; j++)
-                            buffer += currentScript.commands[j].cmdName + Environment.NewLine;
+                            buffer += currentScript.commands[j].name + Environment.NewLine;
                     } else {
                         buffer += ("UseScript_#" + currentScript.useScript + Environment.NewLine);
                     }
@@ -5348,8 +5289,8 @@ namespace DSPRE {
                 buffer = "";
 
                 /* Add functions */
-                for (int i = 0; i < currentScriptFile.functions.Count; i++) {
-                    Script currentFunction = currentScriptFile.functions[i];
+                for (int i = 0; i < currentScriptFile.allFunctions.Count; i++) {
+                    CommandContainer currentFunction = currentScriptFile.allFunctions[i];
 
                     /* Write Heaader */
                     string funcHeader = "----- " + "@Function_#" + (i + 1) + " -----" + Environment.NewLine;
@@ -5359,7 +5300,7 @@ namespace DSPRE {
                     /* If current function is identical to a script, print UseScript instead of commands */
                     if (currentFunction.useScript < 0) {
                         for (int j = 0; j < currentFunction.commands.Count; j++)
-                            buffer += currentFunction.commands[j].cmdName + Environment.NewLine;
+                            buffer += currentFunction.commands[j].name + Environment.NewLine;
                     } else {
                         buffer += ("UseScript_#" + currentFunction.useScript + Environment.NewLine);
                     }
@@ -5369,14 +5310,14 @@ namespace DSPRE {
                 buffer = "";
 
                 /* Add movements */
-                for (int i = 0; i < currentScriptFile.movements.Count; i++) {
-                    Script currentMovement = currentScriptFile.movements[i];
+                for (int i = 0; i < currentScriptFile.allActions.Count; i++) {
+                    ActionContainer currentAction = currentScriptFile.allActions[i];
 
                     string movHeader = "----- " + "@Action_#" + (i + 1) + " -----" + Environment.NewLine;
                     buffer += movHeader;
                     buffer += Environment.NewLine;
-                    for (int j = 0; j < currentMovement.commands.Count; j++)
-                        buffer += currentMovement.commands[j].cmdName + Environment.NewLine;
+                    for (int j = 0; j < currentAction.actions.Count; j++)
+                        buffer += currentAction.actions[j].name + Environment.NewLine;
                 }
                 movementTextBox.AppendText(buffer + Environment.NewLine, Color.FromArgb(192, 40, 40));
                 buffer = "";
@@ -6336,6 +6277,5 @@ namespace DSPRE {
             MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
-
     }
 }
