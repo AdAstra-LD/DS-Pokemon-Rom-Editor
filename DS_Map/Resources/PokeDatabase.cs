@@ -942,7 +942,7 @@ namespace DSPRE.Resources {
                 [0x0161] = "SetPartner",
                 [0x0162] = "ClearPartner",
 
-                [0x0166] = "CheckGameIsCompleted"
+                [0x0166] = "CheckGameIsCompleted",
                 [0x0167] = "GameCompleted",
                 [0x0168] = "DoorAnimation",
                 [0x0169] = "WaitDoor",
@@ -1045,7 +1045,7 @@ namespace DSPRE.Resources {
                 
                 [0x0261] = "TextAccesory",
                 [0x0262] = "CheckPokemonInParty",
-                [0x0263] = "SetDeoxysForm"
+                [0x0263] = "SetDeoxysForm",
                 //0x0264 is different between DP/Plat
 
                 [0x0267] = "SlotMachine",
