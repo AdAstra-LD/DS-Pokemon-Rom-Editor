@@ -83,6 +83,7 @@ A handy window that shows all the available script commands and the parameters t
 ### Script Editor:
 - Replaced "Search Flag" with "Search any command".
 - Enabled some of the quick script cmd buttons.
+- Script editor can identify and report some errors.
 - Fixed Text Search and Replace (Results can be double-clicked).
 - Improved search speed.
 - Fixed script export button.
