@@ -5141,9 +5141,13 @@ namespace DSPRE {
             mainTabControl.SelectedTab = scriptEditorTabPage;
         }
         private void openLevelScriptButton_Click(object sender, EventArgs e) {
-            String errorMsg = "Level scripts are currently not supported.\n" +
-                    "For that, you can use AdAstra's Level Script Editor.";
-            MessageBox.Show(errorMsg, "Unimplemented feature", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (!scriptEditorIsReady) {
+                SetupScriptEditor();
+                scriptEditorIsReady = true;
+            }
+
+            selectScriptFileComboBox.SelectedIndex = (int)levelScriptUpDown.Value;
+            mainTabControl.SelectedTab = scriptEditorTabPage;
         }
         private void removeScriptFileButton_Click(object sender, EventArgs e) {
             /* Delete script file */
