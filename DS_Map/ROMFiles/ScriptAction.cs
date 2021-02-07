@@ -52,9 +52,15 @@ namespace DSPRE.ROMFiles {
                 try {
                     id = UInt16.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
                 } catch (FormatException) {
+                    string details;
+                    if (wholeLine.Contains('@')) {
+                        details = "Perhaps you forgot to End the Action above it...?";
+                    } else {
+                        details = "Are you sure it's a proper Action Command?";
+                    }
                     MessageBox.Show("This Script file could not be saved." +
                         Environment.NewLine + "Parser failed to interpret line " + lineNumber + ": \"" + wholeLine + "\"." +
-                        Environment.NewLine + "\nAre you sure it's a proper Action Command?", "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Environment.NewLine + "\n" + details, "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     id = UInt16.MaxValue;
                     return;
                 }

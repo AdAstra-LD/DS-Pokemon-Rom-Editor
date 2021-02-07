@@ -4649,13 +4649,11 @@ namespace DSPRE {
         private void owIDNumericUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || overworldsListBox.SelectedIndex < 0)
                 return;
-            if (currentEventFile.overworlds.Any() && overworldsListBox.SelectedIndex > 0)
-                currentEventFile.overworlds[overworldsListBox.SelectedIndex].owID = (ushort)owIDNumericUpDown.Value;
+            currentEventFile.overworlds[overworldsListBox.SelectedIndex].owID = (ushort)owIDNumericUpDown.Value;
         }
         private void owMovementComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || overworldsListBox.SelectedIndex < 0)
                 return;
-
             currentEventFile.overworlds[overworldsListBox.SelectedIndex].movement = (ushort)owMovementComboBox.SelectedIndex;
         }
         private void owOrientationComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -5933,7 +5931,11 @@ namespace DSPRE {
             if (disableHandlers)
                 return;
             if (e.RowIndex > -1)
-                currentTextArchive.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                try {
+                    currentTextArchive.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                } catch (NullReferenceException) {
+                    currentTextArchive.messages[e.RowIndex] = "";
+                }
         }
         private void textSearchResultsListBox_GoToEntryResult(object sender, MouseEventArgs e) {
             if (textSearchResultsListBox.SelectedIndex < 0)

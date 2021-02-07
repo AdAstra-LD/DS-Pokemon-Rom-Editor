@@ -629,10 +629,12 @@ namespace DSPRE.Resources {
                 [0x003A] = "JumpLeft2",
                 [0x003B] = "JumpRight2",
                 [0x0045] = "WaitDisappear",
+                [0x0047] = "LockDir",
+                [0x0048] = "ReleaseDir",
                 [0x004B] = "Exclamation",
                 [0x004C] = "WaitWalkUpSlow",
                 [0x004D] = "WaitWalkDownSlow",
-                [0x004E] = "WaitWalkLeftSlow",
+                [0x004E] = "WaitWalkLeftSlow",//Seems to make the player run in HGSS?
                 [0x004F] = "WaitWalkRightSlow",
                 [0x0050] = "WaitWalkUp",
                 [0x0051] = "WaitWalkDown",
