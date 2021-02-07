@@ -272,6 +272,7 @@
       <LastGenOutput>BDHCAMPatchDB.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ROMToolboxDB\CustomScrCmdDB.resx" />
     <EmbeddedResource Include="Resources\ROMToolboxDB\SyntheticOverlayFileNumber.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SyntheticOverlayFileNumber.Designer.cs</LastGenOutput>

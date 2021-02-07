@@ -471,8 +471,167 @@ namespace DSPRE {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+
+        private void applyCustomCommands(object sender, EventArgs e) {
+            if (new FileInfo(romInfo.syntheticOverlayPath + "\\0000").Length < 0x16000) {// ARM9 expansion hasn't been done in this ROM
+                MessageBox.Show("The ARM9 Expansion patch must be applied before using this feature", "ARM9 expansion needed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (RomInfo.gameVersion == "D" || RomInfo.gameVersion == "P" || RomInfo.gameVersion == "Plat") {
+                UnsupportedROM();
+                return;
+            }
+
+            if (RomInfo.gameLanguage != "ENG" && RomInfo.gameLanguage != "ESP") {
+                UnsupportedROMLanguage();
+                return;
+            }
+
+            int expTableOffset = GetCommandTableOffset();
+
+            if (expTableOffset < 0) {
+                DialogResult d;
+                d = MessageBox.Show("Script command table has not been repointed.\n\n" +
+                    "Do you wish to repoint it to the expanded ARM9 file?\n\n" +
+                    "By default it will be written from 0x200 to 0x1700.\n" +
+                    "If you already have something there, you must cancel this window and move these things to a new location, or you can manually repoint the script command table to a different free location in the expanded ARM9 file",
+                    "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (d == DialogResult.Yes) {
+                    RepointCommandTable();
+                } else {
+                    return;
+                }
+            }
+
+            if (ImportCustomCommand()) {
+                MessageBox.Show("Script commands succesfully installed in the ROM", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+        }
+        private int GetCommandTableOffset() { // Checks if command table is repointed IN THE EXPANDED ARM9 FILE, returns pointer inside this file
+
+            ResourceManager customcmdDB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.CustomScrCmdDB", Assembly.GetExecutingAssembly());
+            int pointerOffset = int.Parse(customcmdDB.GetString("pointerOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage));
+            using (BinaryReader arm9Reader = new BinaryReader(new FileStream(RomInfo.arm9Path, FileMode.Open))) {
+                arm9Reader.BaseStream.Position = pointerOffset;
+                int cmdTable = arm9Reader.ReadInt32();
+                if (((cmdTable - 0x023C8000) >= 0) && ((cmdTable - 0x023C8000) <= 0x12B00)) {
+                    return (cmdTable - 0x023C8000); // Table position inside the expanded arm9 file
+                }
+            }
+            return -1; // No table in expanded arm9 file
+        }
+        private void RepointCommandTable() {
+            string expandedPath = romInfo.syntheticOverlayPath + "\\0000";
+            ResourceManager customcmdDB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.CustomScrCmdDB", Assembly.GetExecutingAssembly());
+
+            FileStream arm9FileStream = new FileStream(RomInfo.arm9Path, FileMode.Open); // I make a copy of the stream so the file is free for writing
+            MemoryStream arm9Stream = new MemoryStream();
+            arm9FileStream.CopyTo(arm9Stream);
+            byte[] cmdTbl = arm9Stream.ToArray();
+
+            using (BinaryWriter expArmWriter = new BinaryWriter(new FileStream(expandedPath, FileMode.Open))) {
+                expArmWriter.BaseStream.Position = 0x200; // Command table default offset
+                expArmWriter.Write(cmdTbl, int.Parse(customcmdDB.GetString("originalTableOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage)), 4 * 0x355);
+            }
+
+            arm9FileStream.Close();
+
+            using (BinaryWriter arm9Writer = new BinaryWriter(new FileStream(RomInfo.arm9Path, FileMode.Open))) // Change both the pointer and the limit
+            {
+                arm9Writer.BaseStream.Position = int.Parse(customcmdDB.GetString("pointerOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage));
+                arm9Writer.Write((uint)0x023C8200);
+
+                arm9Writer.BaseStream.Position = int.Parse(customcmdDB.GetString("limitOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage));
+                arm9Writer.Write((uint)0x053C);
+            }
+        }
+        private bool ImportCustomCommand() {
+            string expandedPath = romInfo.syntheticOverlayPath + "\\0000";
+            int appliedPatches = 0;
+
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Custom Script Command File (*.scrcmd)|*.scrcmd";
+            if (of.ShowDialog(this) != DialogResult.OK)
+                return false;
+
+            FileStream expandedFileStream = new FileStream(expandedPath, FileMode.Open);
+            MemoryStream expandedStream = new MemoryStream();
+            expandedFileStream.CopyTo(expandedStream);
+            expandedFileStream.Close();
+
+            using (BinaryWriter expandedWriter = new BinaryWriter(new FileStream(expandedPath, FileMode.Open))) {
+                using (BinaryReader expandedReader = new BinaryReader(expandedStream)) {
+                    try {
+                        System.Xml.Linq.XDocument xmldoc = System.Xml.Linq.XDocument.Load(new FileStream(of.FileName, FileMode.Open));
+
+                        foreach (var node in xmldoc.Root.Elements("scriptcommand")) {
+                            ushort commandID = UInt16.Parse(node.Attribute("ID").Value, System.Globalization.NumberStyles.HexNumber);
+                            string targetROM = node.Element("ROM").Value;
+                            string targetLang = node.Element("lang").Value;
+                            string commandName = node.Element("name").Value;
+                            string paramCount = node.Element("paramcount").Value;
+                            string paramCode = node.Element("paramcode").Value;
+                            int asmOffset = Int32.Parse(node.Element("asmoffset").Value, System.Globalization.NumberStyles.HexNumber);
+                            string asmCode = node.Element("asmcode").Value.Replace("\n", "").Replace("\t", "").Replace(" ", "");
+
+                            if ((RomInfo.gameVersion != targetROM) || (RomInfo.gameLanguage != targetLang)) {
+                                continue;
+                            }
+
+                            expandedReader.BaseStream.Position = 0x200 + commandID * 4;
+                            if (expandedReader.ReadUInt32() != 0) {
+                                DialogResult d;
+                                d = MessageBox.Show("Script command " + commandID.ToString("X4") + " is already used.\n\n" +
+                                    "Do you really want to overwrite it?",
+                                    "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                                if (d == DialogResult.No) {
+                                    continue;
+                                }
+                            }
+
+                            expandedWriter.BaseStream.Position = 0x200 + commandID * 4;
+                            expandedWriter.Write((UInt32)(0x023C8000 + asmOffset + 1));
+
+                            byte[] asmCodeBytes = StringToByteArray(asmCode);
+                            expandedWriter.BaseStream.Position = asmOffset;
+                            expandedWriter.Write(asmCodeBytes);
+
+                            appliedPatches++;
+                        }
+
+                    } catch {
+                        MessageBox.Show("Selected command installation file is corrupted.\n\n" +
+                        "Please, download it again or contact its creator.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        return false;
+                    }
+                }
+            }
+
+            if (appliedPatches == 0) {
+                MessageBox.Show("No command could be installed from this file.\n\n" +
+                "Make sure the command installation file supports your current ROM.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
         #endregion
         #region Utilities
+        //Ummm what?
+        private byte[] StringToByteArray(String hex) {
+            int NumberChars = hex.Length;
+            byte[] bytes = new byte[NumberChars / 2];
+            for (int i = 0; i < NumberChars; i += 2)
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            return bytes;
+        }
+
         public static byte[] HexStringtoByteArray(string hexString) {
             //FC B5 05 48 C0 46 41 21 
             //09 22 02 4D A8 47 00 20 
@@ -501,9 +660,9 @@ namespace DSPRE {
                 "Unsupported ROM", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void UnsupportedROMRomLanguage() {
+        private void UnsupportedROMLanguage() {
             MessageBox.Show("This operation is currently impossible to carry out on the " + RomInfo.gameLanguage +
-                " RomInfo.gameVersion of this rom.", "Unsupported RomInfo.gameLanguageuage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                " version of this rom.", "Unsupported Language", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void AlreadyApplied() {
             MessageBox.Show("This patch has already been applied.", "Can't reapply patch", MessageBoxButtons.OK, MessageBoxIcon.Information);
