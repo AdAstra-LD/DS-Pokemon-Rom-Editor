@@ -73,10 +73,10 @@ namespace DSPRE.ROMFiles {
                         MessageBox.Show("The header section of this map's BackGround Sound data is corrupted.",
                             "BGS Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    ushort bgsSectionLength = reader.ReadUInt16();
+                    ushort bgsDataLength = reader.ReadUInt16();
 
-                    reader.BaseStream.Position -= 4;
-                    ImportSoundPlates(new MemoryStream(reader.ReadBytes(bgsSectionLength + 4)));
+                    reader.BaseStream.Position -= 4; //go back so that the signature "1234" + size can be read and stored
+                    ImportSoundPlates(new MemoryStream(reader.ReadBytes(bgsDataLength + 4)));
                 }
 
                 /* Read permission data */
@@ -213,9 +213,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(bdhc.Length);
 
                 /* Write soundplate section for HG/SS */
-                if (gameVersion == "HG" || gameVersion == "SS") { 
-                    writer.Write((ushort)0x1234);
-                    writer.Write((ushort)bgs.Length);
+                if (gameVersion == "HG" || gameVersion == "SS") {
                     writer.Write(bgs);
                 }
 

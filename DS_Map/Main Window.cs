@@ -3643,6 +3643,7 @@ namespace DSPRE {
 
             currentMapFile.ImportSoundPlates(new FileStream(it.FileName, FileMode.Open));
             MessageBox.Show("BackGround Sound data imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + "B";
         }
 
         private void soundPlatesExportButton_Click(object sender, EventArgs e) {

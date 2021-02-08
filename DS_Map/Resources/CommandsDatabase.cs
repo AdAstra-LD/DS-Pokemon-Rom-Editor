@@ -84,6 +84,5 @@ namespace DSPRE.Resources {
                 startSearchButton_Click(null, null);
             }
         }
-
     }
 }

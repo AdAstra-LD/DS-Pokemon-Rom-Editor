@@ -24,12 +24,8 @@ namespace DSPRE.Resources {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.scriptcmdDataGridView = new System.Windows.Forms.DataGridView();
-            this.CommandID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CommandName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ParamsCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Params = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmdSearchTextBox = new System.Windows.Forms.TextBox();
             this.startSearchButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -37,6 +33,10 @@ namespace DSPRE.Resources {
             this.matchCB = new System.Windows.Forms.RadioButton();
             this.containsCB = new System.Windows.Forms.RadioButton();
             this.startsWithCB = new System.Windows.Forms.RadioButton();
+            this.CommandID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CommandName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ParamsCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Params = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.scriptcmdDataGridView)).BeginInit();
             this.criteriaGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -57,49 +57,6 @@ namespace DSPRE.Resources {
             this.scriptcmdDataGridView.RowHeadersVisible = false;
             this.scriptcmdDataGridView.Size = new System.Drawing.Size(501, 602);
             this.scriptcmdDataGridView.TabIndex = 0;
-            // 
-            // CommandID
-            // 
-            this.CommandID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.Format = "X4";
-            this.CommandID.DefaultCellStyle = dataGridViewCellStyle3;
-            this.CommandID.FillWeight = 30F;
-            this.CommandID.HeaderText = "Command ID";
-            this.CommandID.MaxInputLength = 10;
-            this.CommandID.Name = "CommandID";
-            this.CommandID.ReadOnly = true;
-            this.CommandID.Width = 70;
-            // 
-            // CommandName
-            // 
-            this.CommandName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.CommandName.FillWeight = 60F;
-            this.CommandName.HeaderText = "Command Name";
-            this.CommandName.MaxInputLength = 200;
-            this.CommandName.MinimumWidth = 90;
-            this.CommandName.Name = "CommandName";
-            this.CommandName.ReadOnly = true;
-            this.CommandName.Width = 101;
-            // 
-            // ParamsCount
-            // 
-            this.ParamsCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ParamsCount.FillWeight = 110F;
-            this.ParamsCount.HeaderText = "Parameter Count";
-            this.ParamsCount.MaxInputLength = 10;
-            this.ParamsCount.MinimumWidth = 20;
-            this.ParamsCount.Name = "ParamsCount";
-            this.ParamsCount.ReadOnly = true;
-            // 
-            // Params
-            // 
-            this.Params.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Params.FillWeight = 190F;
-            this.Params.HeaderText = "Parameters";
-            this.Params.MaxInputLength = 200;
-            this.Params.MinimumWidth = 85;
-            this.Params.Name = "Params";
-            this.Params.ReadOnly = true;
             // 
             // cmdSearchTextBox
             // 
@@ -180,7 +137,50 @@ namespace DSPRE.Resources {
             this.startsWithCB.Text = "Starts with";
             this.startsWithCB.UseVisualStyleBackColor = true;
             // 
-            // ScriptCommands
+            // CommandID
+            // 
+            this.CommandID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle1.Format = "X4";
+            this.CommandID.DefaultCellStyle = dataGridViewCellStyle1;
+            this.CommandID.FillWeight = 30F;
+            this.CommandID.HeaderText = "Command ID";
+            this.CommandID.MaxInputLength = 10;
+            this.CommandID.Name = "CommandID";
+            this.CommandID.ReadOnly = true;
+            this.CommandID.Width = 70;
+            // 
+            // CommandName
+            // 
+            this.CommandName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.CommandName.FillWeight = 60F;
+            this.CommandName.HeaderText = "Command Name";
+            this.CommandName.MaxInputLength = 200;
+            this.CommandName.MinimumWidth = 90;
+            this.CommandName.Name = "CommandName";
+            this.CommandName.ReadOnly = true;
+            this.CommandName.Width = 101;
+            // 
+            // ParamsCount
+            // 
+            this.ParamsCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ParamsCount.FillWeight = 90F;
+            this.ParamsCount.HeaderText = "Parameter Count";
+            this.ParamsCount.MaxInputLength = 10;
+            this.ParamsCount.MinimumWidth = 20;
+            this.ParamsCount.Name = "ParamsCount";
+            this.ParamsCount.ReadOnly = true;
+            // 
+            // Params
+            // 
+            this.Params.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Params.FillWeight = 190F;
+            this.Params.HeaderText = "Parameters";
+            this.Params.MaxInputLength = 200;
+            this.Params.MinimumWidth = 85;
+            this.Params.Name = "Params";
+            this.Params.ReadOnly = true;
+            // 
+            // CommandsDatabase
             // 
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(536, 676);
@@ -190,7 +190,7 @@ namespace DSPRE.Resources {
             this.Controls.Add(this.cmdSearchTextBox);
             this.Controls.Add(this.scriptcmdDataGridView);
             this.DoubleBuffered = true;
-            this.Name = "ScriptCommands";
+            this.Name = "CommandsDatabase";
             this.Text = "Script Commands Database";
             ((System.ComponentModel.ISupportInitialize)(this.scriptcmdDataGridView)).EndInit();
             this.criteriaGroupBox.ResumeLayout(false);
@@ -206,13 +206,13 @@ namespace DSPRE.Resources {
         private System.Windows.Forms.TextBox cmdSearchTextBox;
         private System.Windows.Forms.Button startSearchButton;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CommandID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CommandName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ParamsCount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Params;
         private System.Windows.Forms.GroupBox criteriaGroupBox;
         private System.Windows.Forms.RadioButton matchCB;
         private System.Windows.Forms.RadioButton containsCB;
         private System.Windows.Forms.RadioButton startsWithCB;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CommandID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CommandName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ParamsCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Params;
     }
 }
