@@ -650,15 +650,15 @@ namespace DSPRE.ROMFiles {
             List<CommandContainer> ls = new List<CommandContainer>();
 
             for (int i = 0; i < lineSource.Length; i++) {
-                if (lineSource[i].Contains('@')) { // Move on until script header is found
-                    int positionOfScriptNumber = lineSource[i].IndexOf('#');
+                int positionOfScriptNumber = lineSource[i].IndexOf('#');
+                if (lineSource[i].Contains('@') && positionOfScriptNumber >= 0) { // Move on until script header is found
                     int scriptNumber = Int32.Parse(lineSource[i].Substring(positionOfScriptNumber + 1).Split()[0].Replace("-", ""));
 
                     i++;
                     while (lineSource[i].Length <= 0)
                         i++; //Skip all empty lines 
 
-                    if (lineSource[i].Contains("UseScript")) {
+                    if (lineSource[i].IndexOf("UseScript", StringComparison.InvariantCultureIgnoreCase) >= 0) {
                         int useScriptNumber = Int16.Parse(lineSource[i].Substring(1 + lineSource[i].IndexOf('#')));
                         ls.Add(new CommandContainer(scriptNumber, useScriptNumber));
                     } else {
@@ -684,9 +684,8 @@ namespace DSPRE.ROMFiles {
             List<ActionContainer> ls = new List<ActionContainer>();
 
             for (int i = 0; i < lineSource.Length; i++) {
-
-                if (lineSource[i].Contains('@')) {  // Move on until script header is found
-                    int positionOfActionNumber = lineSource[i].IndexOf('#');
+                int positionOfActionNumber = lineSource[i].IndexOf('#');
+                if (lineSource[i].Contains('@') && positionOfActionNumber >= 0) { // Move on until script header is found
                     int actionNumber = Int32.Parse(lineSource[i].Substring(positionOfActionNumber + 1).Split()[0].Replace("-", ""));
 
                     i++;
@@ -710,7 +709,6 @@ namespace DSPRE.ROMFiles {
             }
             return ls;
         }
-
         public static string OverworldFlexDecode(ushort flexID) {
             if (flexID > 255) {
                 return " " + "0x" + flexID.ToString("X4");

@@ -47,14 +47,14 @@ namespace DSPRE.ROMFiles {
             /* Get command id, which is always first in the description */
 
             try {
-                id = PokeDatabase.ScriptEditor.movementsDictIDName.First(x => x.Value == nameParts[0]).Key;
+                id = PokeDatabase.ScriptEditor.movementsDictIDName.First(x => x.Value.Equals(nameParts[0], StringComparison.InvariantCultureIgnoreCase)).Key;
             } catch (InvalidOperationException) {
                 try {
                     id = UInt16.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
                 } catch (FormatException) {
                     string details;
-                    if (wholeLine.Contains('@')) {
-                        details = "Perhaps you forgot to End the Action above it...?";
+                    if (wholeLine.Contains('@') && wholeLine.Contains('#')) {
+                        details = "This probably means you forgot to \"End\" the Action above it.";
                     } else {
                         details = "Are you sure it's a proper Action Command?";
                     }

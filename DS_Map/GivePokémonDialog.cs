@@ -4,7 +4,7 @@ namespace DSPRE
 {
     public partial class GivePokémonDialog : Form
     {
-        public string command = "\nGivePokémon ";
+        public string command = "\nGivePokemon ";
         public bool okSelected;
         public GivePokémonDialog(string[] pokémonNames, string[] itemNames, string[] moveNames)
         {

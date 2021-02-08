@@ -658,7 +658,7 @@ namespace DSPRE.Resources {
                 [0x0068] = "WaitMoveForever",
                 [0x00FE] = "End"
             };
-            public static Dictionary<ushort, string> comparisonOperators = new Dictionary<ushort, string>() {
+            public static Dictionary<ushort, string> comparisonOperatorsDict = new Dictionary<ushort, string>() {
                 [0] = "LOWER",
                 [1] = "EQUAL",
                 [2] = "GREATER",
@@ -906,9 +906,9 @@ namespace DSPRE.Resources {
                 [0x011A] = "CheckPokemonGender",
                
                 [0x011C] = "CheckElevatorFloor",
-                [0x001D] = "ElevatorBox",
-                [0x001E] = "SinnohDexSeen",
-                [0x001F] = "SinnohDexObtained",
+                [0x011D] = "ElevatorBox",
+                [0x011E] = "SinnohDexSeen",
+                [0x011F] = "SinnohDexObtained",
                 [0x0120] = "NationalDexSeen",
                 [0x0121] = "NationalDexObtained",
                 [0x0122] = "DummyNationalDexCheck",

@@ -5566,7 +5566,7 @@ namespace DSPRE {
                 if (f.okSelected) {
                     string firstLine = "SetVar 0x8004 0x" + f.itemComboBox.SelectedIndex.ToString("X");
                     string secondLine = "SetVar 0x8005 0x" + ((int)f.quantityNumericUpDown.Value).ToString("X");
-                    string thirdLine = "CallStandard 0x7FC";
+                    string thirdLine = "CommonScript 0x7FC";
 
                     currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, firstLine + "\r" + secondLine + "\r" + thirdLine);
                     updateCurrentBoxLineNumbers(null, null);

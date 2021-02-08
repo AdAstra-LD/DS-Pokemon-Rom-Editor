@@ -31,11 +31,8 @@ namespace DSPRE.ROMFiles {
             this.id = id;
             this.commandParameters = commandParameters;
 
-            Dictionary<ushort, string> commandNamesDatabase;
-            commandNamesDatabase = RomInfo.scriptCommandNamesDict;
-
             try {
-                name = commandNamesDatabase[id];
+                name = RomInfo.scriptCommandNamesDict[id];
             } catch (KeyNotFoundException) {
                 name = id.ToString("X4");
             }
@@ -53,7 +50,7 @@ namespace DSPRE.ROMFiles {
                 case 0x1C:      // CompareLastResultJump
                 case 0x1D:      // CompareLastResultCall
                     byte opcode = commandParameters[0][0];
-                    this.name += " " + PokeDatabase.ScriptEditor.comparisonOperators[opcode] + " " + "Function_#" + (1 + (BitConverter.ToInt32(commandParameters[1], 0))).ToString("D");
+                    this.name += " " + PokeDatabase.ScriptEditor.comparisonOperatorsDict[opcode] + " " + "Function_#" + (1 + (BitConverter.ToInt32(commandParameters[1], 0))).ToString("D");
                     break;
                 case 0x5E:      // ApplyMovement
                     ushort flexID = BitConverter.ToUInt16(commandParameters[0], 0);
@@ -88,14 +85,15 @@ namespace DSPRE.ROMFiles {
             /* Get command id, which is always first in the description */
 
             try {
-                id = RomInfo.scriptCommandNamesDict.First(x => x.Value == nameParts[0]).Key;
+                id = RomInfo.scriptCommandNamesDict.First(x => x.Value.Equals(nameParts[0], StringComparison.InvariantCultureIgnoreCase)).Key;
             } catch (InvalidOperationException) {
                 try {
                     id = UInt16.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
                 } catch (FormatException) {
                     string details;
-                    if (wholeLine.Contains('@')) {
-                        details = "Perhaps you forgot to End the Script or Function above it...?";
+                    if (wholeLine.Contains('@') && wholeLine.Contains('#')) {
+                        details = "This probably means you forgot to \"End\" the Script or Function above it.";
+                        details += Environment.NewLine + "Please, also note that only Functions can be terminated\nwith \"Return\".";
                     } else {
                         details = "Are you sure it's a proper Script Command?";
                     }
@@ -123,7 +121,7 @@ namespace DSPRE.ROMFiles {
                 for (int i = 0; i < paramLength; i++) {
                     Console.WriteLine("Parameter #" + i.ToString() + ": " + nameParts[i + 1]);
                     try {
-                        ushort comparisonOperator = PokeDatabase.ScriptEditor.comparisonOperators.First(x => x.Value == nameParts[i + 1]).Key;
+                        ushort comparisonOperator = PokeDatabase.ScriptEditor.comparisonOperatorsDict.First(x => x.Value.Equals(nameParts[i + 1], StringComparison.InvariantCultureIgnoreCase)).Key;
                         commandParameters.Add(new byte[] { (byte)comparisonOperator });
                     } catch { //Not a comparison
                         int indexOfSpecialCharacter = nameParts[i + 1].IndexOfAny(new char[] { 'x', '#' });
