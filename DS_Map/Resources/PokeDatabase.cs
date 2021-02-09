@@ -670,12 +670,14 @@ namespace DSPRE.Resources {
                 [0xFF] = "TRUEUP"
             };
 
-            public static Dictionary<ushort, bool> commandsWithRelativeJump = new Dictionary<ushort, bool>() {
-                [0x0016] = true,
-                [0x001A] = true,
-                [0x001C] = true,
-                [0x001D] = true,
-                [0x005E] = true
+            public static Dictionary<ushort, int> commandsWithRelativeJump = new Dictionary<ushort, int>() {
+                //commandID, ID of parameter With Jump Address
+
+                [0x0016] = 0,  //Jump
+                [0x001A] = 0,  //Call
+                [0x001C] = 1,  //Jump-If
+                [0x001D] = 1, //Call-If
+                [0x005E] = 1, //Movement
             };
 
             public static Dictionary<ushort, string> DPPtScrCmdNames = new Dictionary<ushort, string>() {
@@ -3586,26 +3588,26 @@ namespace DSPRE.Resources {
 
             public static class MatrixCellColors {
                 /* Initialize dictionary of colors corresponding to border maps in the matrix editor */
-                public static Dictionary<List<uint>, Tuple<Color, Color>> DPPtmatrixColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>> {
-                    [new List<uint> { 173, 176, 177, 179 }] = Tuple.Create(Color.ForestGreen, Color.White),
-                    [new List<uint> { 174 }] = Tuple.Create(Color.SteelBlue, Color.White),
-                    [new List<uint> { 175 }] = Tuple.Create(Color.Sienna, Color.White),
-                    [new List<uint> { 178 }] = Tuple.Create(Color.PowderBlue, Color.Black),
-                    [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
+                public static Dictionary<List<uint>, (Color back, Color fore)> DPPtmatrixColorsDict = new Dictionary<List<uint>, (Color back, Color fore)> {
+                    [new List<uint> { 173, 176, 177, 179 }] = (Color.ForestGreen, Color.White),
+                    [new List<uint> { 174 }] = (Color.SteelBlue, Color.White),
+                    [new List<uint> { 175 }] = (Color.Sienna, Color.White),
+                    [new List<uint> { 178 }] = (Color.PowderBlue, Color.Black),
+                    [new List<uint> { Matrix.EMPTY }] = (Color.Black, Color.White)
                 };
-                public static Dictionary<List<uint>, Tuple<Color, Color>> HGSSmatrixColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>> {
-                    [new List<uint> { 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
-                    [new List<uint> { 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
-                    [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
-                    [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
+                public static Dictionary<List<uint>, (Color back, Color fore)> HGSSmatrixColorsDict = new Dictionary<List<uint>, (Color back, Color fore)> {
+                    [new List<uint> { 208 }] = (Color.ForestGreen, Color.White),
+                    [new List<uint> { 209 }] = (Color.SteelBlue, Color.White),
+                    [new List<uint> { 210 }] = (Color.Sienna, Color.White),
+                    [new List<uint> { Matrix.EMPTY }] = (Color.Black, Color.White)
                 };
-                public static Dictionary<List<uint>, Tuple<Color, Color>> GenericMatrixColorsDict = new Dictionary<List<uint>, Tuple<Color, Color>> {
-                    [new List<uint> { 203 }] = Tuple.Create(Color.FromArgb(80, 200, 16), Color.White),
-                    [new List<uint> { 204, 209 }] = Tuple.Create(Color.SteelBlue, Color.White),
-                    [new List<uint> { 205, 206 }] = Tuple.Create(Color.DarkGreen, Color.White),
-                    [new List<uint> { 207, 208 }] = Tuple.Create(Color.ForestGreen, Color.White),
-                    [new List<uint> { 210 }] = Tuple.Create(Color.Sienna, Color.White),
-                    [new List<uint> { Matrix.EMPTY }] = Tuple.Create(Color.Black, Color.White)
+                public static Dictionary<List<uint>, (Color back, Color fore)> GenericMatrixColorsDict = new Dictionary<List<uint>, (Color back, Color fore)> {
+                    [new List<uint> { 203 }] = (Color.FromArgb(80, 200, 16), Color.White),
+                    [new List<uint> { 204, 209 }] = (Color.SteelBlue, Color.White),
+                    [new List<uint> { 205, 206 }] = (Color.DarkGreen, Color.White),
+                    [new List<uint> { 207, 208 }] = (Color.ForestGreen, Color.White),
+                    [new List<uint> { 210 }] = (Color.Sienna, Color.White),
+                    [new List<uint> { Matrix.EMPTY }] = (Color.Black, Color.White)
                 };
             }
             public static class AreaPics {

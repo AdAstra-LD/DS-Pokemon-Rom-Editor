@@ -22,14 +22,14 @@ namespace DSPRE.ROMFiles {
     public class ScriptCommand {
         #region Fields (4)
         public ushort id;
-        public List<byte[]> commandParameters;
+        public List<byte[]> cmdParams;
         public string name;
         #endregion
 
         #region Constructors (2)
         public ScriptCommand(ushort id, List<byte[]> commandParameters) {
             this.id = id;
-            this.commandParameters = commandParameters;
+            this.cmdParams = commandParameters;
 
             try {
                 name = RomInfo.scriptCommandNamesDict[id];
@@ -79,7 +79,7 @@ namespace DSPRE.ROMFiles {
         }
         public ScriptCommand(string wholeLine, int lineNumber) {
             name = wholeLine;
-            commandParameters = new List<byte[]>();
+            cmdParams = new List<byte[]>();
 
             string[] nameParts = wholeLine.Split(' '); // Separate command code from parameters
             /* Get command id, which is always first in the description */
@@ -108,13 +108,13 @@ namespace DSPRE.ROMFiles {
             /* Read parameters from remainder of the description */
             Console.WriteLine("ID = " + id.ToString("X4"));
 
-            byte[] parametersArr = RomInfo.commandParametersDict[id];
+            byte[] parametersSizeArr = RomInfo.commandParametersDict[id];
             
             int paramLength = 0;
-            if (parametersArr.Length == 1 && parametersArr.First() == 0) {
+            if (parametersSizeArr.Length == 1 && parametersSizeArr.First() == 0) {
                 paramLength = 0;
             } else {
-                paramLength = parametersArr.Length;
+                paramLength = parametersSizeArr.Length;
             }
 
             if (nameParts.Length - 1 == paramLength) {
@@ -122,7 +122,7 @@ namespace DSPRE.ROMFiles {
                     Console.WriteLine("Parameter #" + i.ToString() + ": " + nameParts[i + 1]);
                     try {
                         ushort comparisonOperator = PokeDatabase.ScriptEditor.comparisonOperatorsDict.First(x => x.Value.Equals(nameParts[i + 1], StringComparison.InvariantCultureIgnoreCase)).Key;
-                        commandParameters.Add(new byte[] { (byte)comparisonOperator });
+                        cmdParams.Add(new byte[] { (byte)comparisonOperator });
                     } catch { //Not a comparison
                         int indexOfSpecialCharacter = nameParts[i + 1].IndexOfAny(new char[] { 'x', '#' });
 
@@ -134,28 +134,28 @@ namespace DSPRE.ROMFiles {
                             style = NumberStyles.Integer;
 
                         /* Convert strings of parameters to the correct datatypes */
-                        switch (parametersArr[i]) {
+                        switch (parametersSizeArr[i]) {
                             case 1:
-                                commandParameters.Add(new byte[] { Byte.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style) });
+                                cmdParams.Add(new byte[] { Byte.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style) });
                                 break;
                             case 2:
                                 switch (nameParts[i + 1]) {
                                     case "Player":
-                                        commandParameters.Add(BitConverter.GetBytes((ushort)255));
+                                        cmdParams.Add(BitConverter.GetBytes((ushort)255));
                                         break;
                                     case "Following":
-                                        commandParameters.Add(BitConverter.GetBytes((ushort)253));
+                                        cmdParams.Add(BitConverter.GetBytes((ushort)253));
                                         break;
                                     case "Cam":
-                                        commandParameters.Add(BitConverter.GetBytes((ushort)241));
+                                        cmdParams.Add(BitConverter.GetBytes((ushort)241));
                                         break;
                                     default:
-                                        commandParameters.Add(BitConverter.GetBytes(Int16.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style)));
+                                        cmdParams.Add(BitConverter.GetBytes(Int16.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style)));
                                         break;
                                 }
                                 break;
                             case 4:
-                                commandParameters.Add(BitConverter.GetBytes(Int32.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style)));
+                                cmdParams.Add(BitConverter.GetBytes(Int32.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style)));
                                 break;
                         }
                     }

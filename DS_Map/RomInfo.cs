@@ -55,7 +55,7 @@ namespace DSPRE {
 
         public static readonly byte internalNameLength = 16;
         public string internalNamesLocation { get; private set; }
-        public Dictionary<List<uint>, Tuple<Color, Color>> mapCellsColorDictionary { get; private set; }
+        public Dictionary<List<uint>, (Color background, Color foreground)> mapCellsColorDictionary { get; private set; }
         public static Dictionary<ushort, string> scriptCommandNamesDict { get; private set; }
         public static Dictionary<ushort, byte[]> commandParametersDict { get; private set; }
         
@@ -532,7 +532,7 @@ namespace DSPRE {
                     break;
             }
         }
-        public void SetMapCellsColorDictionary(Dictionary<List<uint>, Tuple<Color, Color>> dict) {
+        public void SetMapCellsColorDictionary(Dictionary<List<uint>, (Color background, Color foreground)> dict) {
             mapCellsColorDictionary = dict;
         }
         #endregion

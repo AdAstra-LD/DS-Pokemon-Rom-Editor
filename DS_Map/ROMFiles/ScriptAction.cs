@@ -9,13 +9,13 @@ using System.Windows.Forms;
 
 namespace DSPRE.ROMFiles {
     public class ActionContainer {
-        public List<ScriptAction> actions;
+        public List<ScriptAction> actionCommandsList;
         public int manualUserID;
 
         #region Constructors (2)
-        public ActionContainer(int actionNumber, List<ScriptAction> actionList = null) {
+        public ActionContainer(int actionNumber, List<ScriptAction> actionCommandsList = null) {
             manualUserID = actionNumber;
-            actions = actionList;
+            this.actionCommandsList = actionCommandsList;
         }
         #endregion
     }

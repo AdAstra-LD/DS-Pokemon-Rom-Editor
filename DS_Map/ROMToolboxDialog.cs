@@ -404,8 +404,8 @@ namespace DSPRE {
             } else {
                 ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
                 for (int i = 0; i < itemScript.allScripts.Count - 1; i++) {
-                    itemScript.allScripts[i].commands[0].commandParameters[1] = BitConverter.GetBytes((ushort)i); // Fix item index
-                    itemScript.allScripts[i].commands[1].commandParameters[1] = BitConverter.GetBytes((ushort)1); // Fix item quantity
+                    itemScript.allScripts[i].commands[0].cmdParams[1] = BitConverter.GetBytes((ushort)i); // Fix item index
+                    itemScript.allScripts[i].commands[1].cmdParams[1] = BitConverter.GetBytes((ushort)1); // Fix item quantity
                 }
                 itemScript.SaveToFileDefaultDir(RomInfo.itemScriptFileNumber);
                 MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -471,8 +471,7 @@ namespace DSPRE {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-
-
+        #region Mikelan's custom commands
         private void applyCustomCommands(object sender, EventArgs e) {
             if (new FileInfo(romInfo.syntheticOverlayPath + "\\0000").Length < 0x16000) {// ARM9 expansion hasn't been done in this ROM
                 MessageBox.Show("The ARM9 Expansion patch must be applied before using this feature", "ARM9 expansion needed", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -620,6 +619,7 @@ namespace DSPRE {
 
             return true;
         }
+        #endregion
 
         #endregion
         #region Utilities

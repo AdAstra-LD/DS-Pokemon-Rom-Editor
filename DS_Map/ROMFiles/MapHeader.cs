@@ -366,7 +366,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write((byte)wildPokémon);
                 writer.Write(areaDataID);
 
-                ushort worldMapCoordinates = (ushort) ( unknown0 & 0b_1111 + ((worldmapX & 0b_1111_11) << 4) + ((worldmapY & 0b_1111_11) << 10) );
+                ushort worldMapCoordinates = (ushort) ( (unknown0 & 0b_1111) + ((worldmapX & 0b_1111_11) << 4) + ((worldmapY & 0b_1111_11) << 10) );
                 writer.Write(worldMapCoordinates);
 
                 writer.Write(matrixID);

@@ -836,9 +836,6 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack NARCs from folder...";
             Update();
 
-            /*foreach (Tuple<string, string> tuple in RomInfo.narcPaths.Zip(RomInfo.extractedNarcDirs, Tuple.Create))
-                Narc.Open(romInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);*/
-
             switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
@@ -1025,12 +1022,12 @@ namespace DSPRE {
 
             string[] narcPaths = RomInfo.narcPaths;
             string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
-            Tuple<string, string> t;
+            (string wildPokeNarcPath, string wildPokeUnpackedPath) t;
 
             if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
-                t = Tuple.Create(narcPaths[narcPaths.Length - 2], extractedNarcDirs[extractedNarcDirs.Length - 2]);
+                t = (narcPaths[narcPaths.Length - 2], extractedNarcDirs[extractedNarcDirs.Length - 2]);
             } else {
-                t = Tuple.Create(narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 2]);
+                t = (narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 2]);
             }
 
             DirectoryInfo di = new DirectoryInfo(t.Item2);
@@ -1969,12 +1966,12 @@ namespace DSPRE {
             matrixTabControl.TabPages.Remove(headersTabPage);
             matrixTabControl.TabPages.Remove(heightsTabPage);
         }
-        private Tuple<Color, Color> FormatMapCell(uint cellValue) {
-            foreach (KeyValuePair<List<uint>, Tuple<Color, Color>> entry in romInfo.mapCellsColorDictionary) {
+        private (Color background, Color foreground) FormatMapCell(uint cellValue) {
+            foreach (KeyValuePair<List<uint>, (Color background, Color foreground)> entry in romInfo.mapCellsColorDictionary) {
                 if (entry.Key.Contains(cellValue)) 
                     return entry.Value;
             }
-            return Tuple.Create(Color.White, Color.Black);
+            return (Color.White, Color.Black);
         }
         private void GenerateMatrixTables() {
             /* Generate table columns */
@@ -2085,9 +2082,9 @@ namespace DSPRE {
             ushort colorValue;
             if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = Matrix.EMPTY;
 
-            Tuple<Color, Color> cellColors = FormatMapCell(colorValue);
-            e.CellStyle.BackColor = cellColors.Item1;
-            e.CellStyle.ForeColor = cellColors.Item2;
+            (Color back, Color fore) cellColors = FormatMapCell(colorValue);
+            e.CellStyle.BackColor = cellColors.back;
+            e.CellStyle.ForeColor = cellColors.fore;
 
             /* If invalid input is entered, show 00 */
             ushort cellValue;
@@ -2193,9 +2190,9 @@ namespace DSPRE {
             if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) 
                 colorValue = Matrix.EMPTY;
 
-            Tuple<Color, Color> cellColors = FormatMapCell(colorValue);
-            e.CellStyle.BackColor = cellColors.Item1;
-            e.CellStyle.ForeColor = cellColors.Item2;
+            (Color back, Color fore) cellColors = FormatMapCell(colorValue);
+            e.CellStyle.BackColor = cellColors.fore;
+            e.CellStyle.ForeColor = cellColors.back;
 
             /* If invalid input is entered, show 00 */
             byte cellValue;
@@ -2309,9 +2306,9 @@ namespace DSPRE {
                 colorValue = UInt16.Parse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
             } catch { }
 
-            Tuple<Color, Color> cellColors = FormatMapCell(colorValue);
-            e.CellStyle.BackColor = cellColors.Item1;
-            e.CellStyle.ForeColor = cellColors.Item2;
+            (Color backColor, Color foreColor) cellColors = FormatMapCell(colorValue);
+            e.CellStyle.BackColor = cellColors.backColor;
+            e.CellStyle.ForeColor = cellColors.foreColor;
 
             if (colorValue == Matrix.EMPTY)
                 e.Value = '-';
@@ -2383,7 +2380,7 @@ namespace DSPRE {
             string dashSeparator = "-";
             string problematicSegment = "incomplete line";
              
-            Dictionary<List<uint>, Tuple<Color, Color>> colorsDict = new Dictionary<List<uint>, Tuple<Color, Color>>();
+            Dictionary<List<uint>, (Color background, Color foreground)> colorsDict = new Dictionary<List<uint>, (Color background, Color foreground)>();
             List<string> linesWithErrors = new List<string>();
 
             for (int i = 0; i < fileTableContent.Length; i++)   {
@@ -2448,14 +2445,14 @@ namespace DSPRE {
                         }
                         j++;
 
-                        colorsDict.Add(   mapList, Tuple.Create( Color.FromArgb(r, g, b), Color.FromName(lineParts[j++]) )    );
+                        colorsDict.Add(   mapList, ( Color.FromArgb(r, g, b), Color.FromName(lineParts[j++]) )    );
                     } catch {
                         linesWithErrors.Add(i + 1 + " (err. " + problematicSegment + ")\n");
                         continue;
                     }
                 }
             }
-            colorsDict.Add(new List<uint> { Matrix.EMPTY }, Tuple.Create(Color.Black, Color.White));
+            colorsDict.Add(new List<uint> { Matrix.EMPTY }, (Color.Black, Color.White));
 
             string errorMsg = "";
             MessageBoxIcon iconType = MessageBoxIcon.Information;
@@ -4508,7 +4505,7 @@ namespace DSPRE {
             ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
 
             for (ushort i = 0; i < itemScript.allScripts.Count - 1; i++) {
-                if (BitConverter.ToUInt16(itemScript.allScripts[i].commands[0].commandParameters[1], 0) != i || BitConverter.ToUInt16(itemScript.allScripts[i].commands[1].commandParameters[1], 0) != 1) {
+                if (BitConverter.ToUInt16(itemScript.allScripts[i].commands[0].cmdParams[1], 0) != i || BitConverter.ToUInt16(itemScript.allScripts[i].commands[1].cmdParams[1], 0) != 1) {
                     return false;
                 }
             }
@@ -5319,8 +5316,8 @@ namespace DSPRE {
                     string movHeader = "----- " + "@Action_#" + (i + 1) + " -----" + Environment.NewLine;
                     buffer += movHeader;
                     buffer += Environment.NewLine;
-                    for (int j = 0; j < currentAction.actions.Count; j++)
-                        buffer += currentAction.actions[j].name + Environment.NewLine;
+                    for (int j = 0; j < currentAction.actionCommandsList.Count; j++)
+                        buffer += currentAction.actionCommandsList[j].name + Environment.NewLine;
                 }
                 movementTextBox.AppendText(buffer + Environment.NewLine, Color.FromArgb(192, 40, 40));
                 buffer = "";
