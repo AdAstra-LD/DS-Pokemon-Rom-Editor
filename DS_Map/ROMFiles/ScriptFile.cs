@@ -550,6 +550,7 @@ namespace DSPRE.ROMFiles {
                     List<int> uninvokedFuncs = new List<int>(allFunctions.Select( x => x.manualUserID).ToArray());
                     List<int> unreferencedActions = new List<int>(allActions.Select(x => x.manualUserID).ToArray());
 
+                    
                     while (references.Count > 0) {
                         writer.BaseStream.Position = references[0].offsetAddress; //place seek head on parameter that is supposed to store the jump address
 
@@ -624,7 +625,7 @@ namespace DSPRE.ROMFiles {
                 if (commandID == 0x005E)
                     type = (int)typeInvoked.REFTYPE_MOVEMENT;
 
-                references.Add((pos, destinationID, type, callerID));
+                references.Add((pos-4, destinationID, type, callerID));
             } catch (KeyNotFoundException) { }
         }
         private void SaveToFile(string path) {

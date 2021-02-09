@@ -3892,14 +3892,13 @@ namespace DSPRE {
                 return (Bitmap)Properties.Resources.ResourceManager.GetObject(imageName);
             }
 
-            uint btxID = uint.MaxValue;
+            uint btxID;
             try {
                 btxID = RomInfo.OverworldTable[entryIDOfEventFile].spriteID;
             }catch (KeyNotFoundException) {
                 return (Bitmap)Properties.Resources.ResourceManager.GetObject("overworld"); //if there's no match, load bounding box
             }
 
-            
             try {
                 FileStream stream = new FileStream(RomInfo.OWSpriteDirPath + "\\" + btxID.ToString("D4"), FileMode.Open);
                 NSMBe4.NSBMD.NSBTX_File nsbtx = new NSMBe4.NSBMD.NSBTX_File(stream);
