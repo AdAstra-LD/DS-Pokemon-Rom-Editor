@@ -4556,7 +4556,7 @@ namespace DSPRE {
                     owSightRangeUpDown.Value = currentEvFile.overworlds[index].sightRange;
                     owXRangeUpDown.Value = currentEvFile.overworlds[index].xRange;
                     owYRangeUpDown.Value = currentEvFile.overworlds[index].yRange;
-
+                    spriteIDlabel.Text = "Sprite ID: " + RomInfo.OverworldTable[currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry].spriteID.ToString("D3");
                     DisplayActiveEvents();
                 } catch (ArgumentOutOfRangeException) {
                     String errorMsg = "There was a problem loading the overworld events of this Event file.";
@@ -4609,6 +4609,7 @@ namespace DSPRE {
                 return;
             
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry = (ushort)RomInfo.OverworldTable.Keys.ElementAt(owSpriteComboBox.SelectedIndex);
+            spriteIDlabel.Text = "Sprite ID: " + RomInfo.OverworldTable[currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry].spriteID.ToString("D3");
             owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry, currentEvFile.overworlds[overworldsListBox.SelectedIndex].orientation);
             DisplayActiveEvents();
             owSpritePictureBox.Invalidate();
