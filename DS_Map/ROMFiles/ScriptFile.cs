@@ -143,14 +143,14 @@ namespace DSPRE.ROMFiles {
             //once it's done, this Predicate below will be the only one needed, since there will be no distinction between
             //a script and a function
             Func<string[], int, bool> functionEndCondition =
-                (source, x) => !source[x].Equals(RomInfo.scriptCommandNamesDict[0x0002])    //End
-                            && !source[x].Contains(RomInfo.scriptCommandNamesDict[0x001B])  //Return
-                            && !source[x].Contains(RomInfo.scriptCommandNamesDict[0x0016] + " Function"); //Jump Function_#
+                (source, x) => !source[x].Equals(RomInfo.ScriptCommandNamesDict[0x0002])    //End
+                            && !source[x].Contains(RomInfo.ScriptCommandNamesDict[0x001B])  //Return
+                            && !source[x].Contains(RomInfo.ScriptCommandNamesDict[0x0016] + " Function"); //Jump Function_#
 
 
             Func<string[], int, bool> scriptEndCondition =
-            (source, x) => !source[x].Equals(RomInfo.scriptCommandNamesDict[0x0002])    //End
-                        && !source[x].Contains(RomInfo.scriptCommandNamesDict[0x0016] + " Function"); //Jump Function_#
+            (source, x) => !source[x].Equals(RomInfo.ScriptCommandNamesDict[0x0002])    //End
+                        && !source[x].Contains(RomInfo.ScriptCommandNamesDict[0x0016] + " Function"); //Jump Function_#
 
             allScripts = readCommandsFromLines(scriptLines, scriptEndCondition);  //Jump + whitespace
             if (allScripts == null)
@@ -432,7 +432,7 @@ namespace DSPRE.ROMFiles {
         private void addParametersToList(ref List<byte[]> parameterList, ushort id, BinaryReader dataReader) {
             Console.WriteLine("Loaded command id: " + id.ToString("X4"));
             try {
-                foreach (int bytesToRead in RomInfo.commandParametersDict[id])
+                foreach (int bytesToRead in RomInfo.CommandParametersDict[id])
                     parameterList.Add(dataReader.ReadBytes(bytesToRead));
             } catch (NullReferenceException) {
                 MessageBox.Show("Script command " + id + "can't be handled for now." +

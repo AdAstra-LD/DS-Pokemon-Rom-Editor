@@ -209,7 +209,7 @@ namespace DSPRE.ROMFiles {
     {
         #region Fields (14)
         public ushort owID;
-        public ushort spriteID;
+        public ushort overlayTableEntry;
         public ushort movement;
         public ushort type;
         public ushort flag;
@@ -228,7 +228,7 @@ namespace DSPRE.ROMFiles {
         public Overworld(Stream data) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 owID = reader.ReadUInt16();
-                spriteID = reader.ReadUInt16();
+                overlayTableEntry = reader.ReadUInt16();
                 movement = reader.ReadUInt16();
                 type = reader.ReadUInt16();
                 flag = reader.ReadUInt16();
@@ -254,7 +254,7 @@ namespace DSPRE.ROMFiles {
         }
         public Overworld(int owID, int xMatrixPosition, int yMatrixPosition) {
             this.owID = (ushort)owID;
-            spriteID = 1;
+            overlayTableEntry = 1;
             movement = 0;
             type = 0;
             flag = 0;
@@ -275,7 +275,7 @@ namespace DSPRE.ROMFiles {
         }
         public Overworld(Overworld toCopy) {
             this.owID = toCopy.owID;
-            spriteID = toCopy.spriteID;
+            overlayTableEntry = toCopy.overlayTableEntry;
             movement = toCopy.movement;
             type = toCopy.type;
             flag = toCopy.flag;
@@ -302,7 +302,7 @@ namespace DSPRE.ROMFiles {
             using (BinaryWriter writer = new BinaryWriter(new MemoryStream()))
             {
                 writer.Write(owID);
-                writer.Write(spriteID);
+                writer.Write(overlayTableEntry);
                 writer.Write(movement);
                 writer.Write(type);
                 writer.Write(flag);

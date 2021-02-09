@@ -32,7 +32,7 @@ namespace DSPRE.ROMFiles {
             this.cmdParams = commandParameters;
 
             try {
-                name = RomInfo.scriptCommandNamesDict[id];
+                name = RomInfo.ScriptCommandNamesDict[id];
             } catch (KeyNotFoundException) {
                 name = id.ToString("X4");
             }
@@ -85,7 +85,7 @@ namespace DSPRE.ROMFiles {
             /* Get command id, which is always first in the description */
 
             try {
-                id = RomInfo.scriptCommandNamesDict.First(x => x.Value.Equals(nameParts[0], StringComparison.InvariantCultureIgnoreCase)).Key;
+                id = RomInfo.ScriptCommandNamesDict.First(x => x.Value.Equals(nameParts[0], StringComparison.InvariantCultureIgnoreCase)).Key;
             } catch (InvalidOperationException) {
                 try {
                     id = UInt16.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
@@ -108,7 +108,7 @@ namespace DSPRE.ROMFiles {
             /* Read parameters from remainder of the description */
             Console.WriteLine("ID = " + id.ToString("X4"));
 
-            byte[] parametersSizeArr = RomInfo.commandParametersDict[id];
+            byte[] parametersSizeArr = RomInfo.CommandParametersDict[id];
             
             int paramLength = 0;
             if (parametersSizeArr.Length == 1 && parametersSizeArr.First() == 0) {

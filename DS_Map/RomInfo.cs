@@ -26,13 +26,14 @@ namespace DSPRE {
 
         public long headerTableOffset { get; private set; }
         public string syntheticOverlayPath { get; private set; }
-        public string OWSpriteDirPath { get; private set; }
+        public static string OWSpriteDirPath { get; private set; }
+        public static long OWTableOffset { get; internal set; }
 
         private string interiorBuildingsPath;
         private string exteriorBuildingModelsPath;
 
         public string areaDataDirPath { get; private set; }
-        public string OWtablePath { get; private set; }
+        public static string OWtablePath { get; private set; }
         public string mapTexturesDirPath { get; private set; }
         public string buildingTexturesDirPath { get; private set; }
         public string buildingConfigFilesPath { get; private set; }
@@ -54,11 +55,12 @@ namespace DSPRE {
 
 
         public static readonly byte internalNameLength = 16;
-        public string internalNamesLocation { get; private set; }
-        public Dictionary<List<uint>, (Color background, Color foreground)> mapCellsColorDictionary { get; private set; }
-        public static Dictionary<ushort, string> scriptCommandNamesDict { get; private set; }
-        public static Dictionary<ushort, byte[]> commandParametersDict { get; private set; }
-        
+        public string InternalNamesLocation { get; private set; }
+        public Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary { get; private set; }
+        public static Dictionary<ushort, string> ScriptCommandNamesDict { get; private set; }
+        public static Dictionary<ushort, byte[]> CommandParametersDict { get; private set; }
+        public static SortedDictionary<uint, (uint spriteID, ushort properties)> OverworldTable { get; private set; }
+
         #region Constructors (1)
         public RomInfo(string id, string workDir) {
             romID = id;
@@ -73,7 +75,7 @@ namespace DSPRE {
             arm9Path = workDir + @"arm9.bin";
             overlayTablePath = workDir + @"y9.bin";
 
-            internalNamesLocation = this.workDir + @"data\fielddata\maptable\mapname.bin";
+            InternalNamesLocation = this.workDir + @"data\fielddata\maptable\mapname.bin";
             mapTexturesDirPath = this.workDir + @"unpacked\maptex";
             buildingTexturesDirPath = this.workDir + @"unpacked\TextureBLD";
             buildingConfigFilesPath = this.workDir + @"unpacked\area_build";
@@ -90,7 +92,7 @@ namespace DSPRE {
 
             SetNullEncounterID();           
             SetBuildingModelsDirPath();
-            SetOWtablePath();
+            SetOWtable();
 
             SetAttackNamesTextNumber();
             SetPokémonNamesTextNumber();
@@ -100,8 +102,8 @@ namespace DSPRE {
             /* System */
             SetNarcDirs();
             LoadMapCellsColorDictionary();
-            scriptCommandNamesDict = BuildCommandNamesDatabase(gameVersion);
-            commandParametersDict = BuildCommandParametersDatabase(gameVersion);
+            ScriptCommandNamesDict = BuildCommandNamesDatabase(gameVersion);
+            CommandParametersDict = BuildCommandParametersDatabase(gameVersion);
 
             /* * * * */
         }
@@ -261,14 +263,30 @@ namespace DSPRE {
                 return Directory.GetFiles(exteriorBuildingModelsPath).Length;
         }
 
-        public void SetOWtablePath () {
+        public void SetOWtable () {
             switch (gameVersion) {
                 case "D":
                 case "P":
-                case "Plat":
+                    OWTableOffset = 0x22BCC;
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
                     break;
-                default:
+                case "Plat":
+                    OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
+                    switch (gameLanguage) { // Go to the beginning of the overworld table
+                        case "ITA":
+                            OWTableOffset = 0x2BC44;
+                            break;
+                        case "GER":
+                            OWTableOffset = 0x2BC50;
+                            break;
+                        default:
+                            OWTableOffset = 0x2BC34;
+                            break;
+                    }
+                    break;
+                case "HG":
+                case "SS":
+                    OWTableOffset = 0x21BA8;
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0001.bin";
                     break;
             }
@@ -379,7 +397,7 @@ namespace DSPRE {
             }
         }
         public int GetHeaderCount() {
-            return (int)new FileInfo(internalNamesLocation).Length / internalNameLength;
+            return (int)new FileInfo(InternalNamesLocation).Length / internalNameLength;
         }
         public void SetAttackNamesTextNumber() {
             switch (gameVersion) {
@@ -524,16 +542,52 @@ namespace DSPRE {
                 case "D":
                 case "P":
                 case "Plat":
-                    mapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.DPPtmatrixColorsDict;
+                    MapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.DPPtmatrixColorsDict;
                     break;
                 case "HG":
                 case "SS":
-                    mapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.HGSSmatrixColorsDict;
+                    MapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.HGSSmatrixColorsDict;
                     break;
             }
         }
         public void SetMapCellsColorDictionary(Dictionary<List<uint>, (Color background, Color foreground)> dict) {
-            mapCellsColorDictionary = dict;
+            MapCellsColorDictionary = dict;
+        }
+        public static void ReadOWTable () {
+            OverworldTable = new SortedDictionary<uint, (uint spriteID, ushort properties)>();
+            switch (gameVersion) {
+                case "D":
+                case "P":
+                case "Plat":
+                    
+                    using (BinaryReader idReader = new BinaryReader(new FileStream(OWtablePath, FileMode.Open))) {
+                        idReader.BaseStream.Position = OWTableOffset;
+                        
+                        uint entryID = idReader.ReadUInt32();
+                        idReader.BaseStream.Position -= 4;
+                        while ((entryID = idReader.ReadUInt32()) != 0xFFFF) {
+                            uint spriteID = idReader.ReadUInt32();
+                            (uint spriteID, ushort properties) tup = (spriteID, 0x0000);
+                            OverworldTable.Add(entryID, tup);
+                        }
+                    }
+                    break;
+                case "HG":
+                case "SS":
+                    using (BinaryReader idReader = new BinaryReader(new FileStream(OWtablePath, FileMode.Open))) {
+                        idReader.BaseStream.Position = OWTableOffset;
+
+                        ushort entryID = idReader.ReadUInt16();
+                        idReader.BaseStream.Position -= 2;
+                        while ((entryID = idReader.ReadUInt16()) != 0xFFFF) {
+                            uint spriteID = idReader.ReadUInt16();
+                            ushort properties = idReader.ReadUInt16();
+                            (uint spriteID, ushort properties) tup = (spriteID, properties);
+                            OverworldTable.Add(entryID, tup);
+                        }
+                    }
+                    break;
+            }
         }
         #endregion
     }

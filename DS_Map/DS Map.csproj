@@ -467,6 +467,7 @@
     <None Include="Resources\Graphics\Program Icons\importArrow.png" />
     <None Include="Resources\Graphics\Program Icons\unpackBuildingNarcsIcon.png" />
     <None Include="Resources\Graphics\Program Icons\deleteIcon.png" />
+    <None Include="Resources\Graphics\Event Icons\overworldUnreadable.png" />
     <Content Include="Resources\Graphics\Program Icons\addIcon.png" />
     <None Include="Resources\Graphics\Program Icons\copyIcon_small.png" />
     <None Include="Resources\Graphics\Program Icons\checkmark.png" />
