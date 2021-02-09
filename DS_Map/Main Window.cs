@@ -4503,10 +4503,11 @@ namespace DSPRE {
             if (index > -1) {
                 try {
                     selectedEvent = currentEvFile.overworlds[index];
+                    Overworld selectedOw = (Overworld)selectedEvent;
 
                     /* Sprite index and image controls */
-                    owSpriteComboBox.SelectedIndex = ((Overworld)selectedEvent).overlayTableEntry;
-                    owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEvFile.overworlds[index].overlayTableEntry, currentEvFile.overworlds[index].orientation);
+                    owSpriteComboBox.SelectedIndex = Array.IndexOf(RomInfo.overworldTableKeys, selectedOw.overlayTableEntry);
+                    owSpritePictureBox.BackgroundImage = GetOverworldImage(selectedOw.overlayTableEntry, selectedOw.orientation);
                 } catch (ArgumentOutOfRangeException) {
                     String errorMsg = "This Overworld's sprite ID couldn't be read correctly.";
                     MessageBox.Show(errorMsg, "Something went wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);

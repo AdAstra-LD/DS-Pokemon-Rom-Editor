@@ -60,6 +60,7 @@ namespace DSPRE {
         public static Dictionary<ushort, string> ScriptCommandNamesDict { get; private set; }
         public static Dictionary<ushort, byte[]> CommandParametersDict { get; private set; }
         public static SortedDictionary<uint, (uint spriteID, ushort properties)> OverworldTable { get; private set; }
+        public static uint[] overworldTableKeys { get; private set; }
 
         #region Constructors (1)
         public RomInfo(string id, string workDir) {
@@ -588,6 +589,7 @@ namespace DSPRE {
                     }
                     break;
             }
+            overworldTableKeys = OverworldTable.Keys.ToArray();
         }
         #endregion
     }
