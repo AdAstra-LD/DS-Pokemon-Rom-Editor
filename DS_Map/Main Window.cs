@@ -3899,13 +3899,39 @@ namespace DSPRE {
                 return (Bitmap)Properties.Resources.ResourceManager.GetObject("overworld"); //if there's no match, load bounding box
             }
 
+            
             try {
                 FileStream stream = new FileStream(RomInfo.OWSpriteDirPath + "\\" + btxID.ToString("D4"), FileMode.Open);
                 NSMBe4.NSBMD.NSBTX_File nsbtx = new NSMBe4.NSBMD.NSBTX_File(stream);
 
-
-                if (nsbtx.TexInfo.num_objs > 2) { // Read nsbtx slot corresponding to overworld's movement
-
+                if (nsbtx.TexInfo.num_objs <= 1) {
+                    return LoadTextureFromNSBTX(nsbtx, 0, 0); // Read nsbtx slot 0 if ow has only 2 frames
+                }
+                if (nsbtx.TexInfo.num_objs <= 4) {
+                    switch (orientation) {
+                        case 0:
+                            return LoadTextureFromNSBTX(nsbtx, 0, 0);
+                        case 1:
+                            return LoadTextureFromNSBTX(nsbtx, 1, 0);
+                        case 2:
+                            return LoadTextureFromNSBTX(nsbtx, 2, 0);
+                        default:
+                            return LoadTextureFromNSBTX(nsbtx, 3, 0);
+                    }
+                }
+                if (nsbtx.TexInfo.num_objs <= 8) { //Read nsbtx slot corresponding to overworld's movement
+                    switch (orientation) {
+                        case 0:
+                            return LoadTextureFromNSBTX(nsbtx, 0, 0);
+                        case 1:
+                            return LoadTextureFromNSBTX(nsbtx, 2, 0);
+                        case 2:
+                            return LoadTextureFromNSBTX(nsbtx, 4, 0);
+                        default:
+                            return LoadTextureFromNSBTX(nsbtx, 6, 0);
+                    }
+                }
+                if (nsbtx.TexInfo.num_objs <= 16) { // Read nsbtx slot corresponding to overworld's movement
                     switch (orientation) {
                         case 0:
                             return LoadTextureFromNSBTX(nsbtx, 0, 0);
@@ -3916,10 +3942,21 @@ namespace DSPRE {
                         default:
                             return LoadTextureFromNSBTX(nsbtx, 4, 0);
                     }
-                } else return LoadTextureFromNSBTX(nsbtx, 0, 0); // Read nsbtx slot 0 if ow has only 2 frames
+                } else {
+                    switch (orientation) {
+                        case 0:
+                            return LoadTextureFromNSBTX(nsbtx, 0, 0);
+                        case 1:
+                            return LoadTextureFromNSBTX(nsbtx, 27, 0);
+                        case 2:
+                            return LoadTextureFromNSBTX(nsbtx, 2, 0);
+                        default:
+                            return LoadTextureFromNSBTX(nsbtx, 4, 0);
+                    }
+                }
             } catch { // Load bounding box if sprite cannot be found
                 return (Bitmap)Properties.Resources.ResourceManager.GetObject("overworldUnreadable");
-            }   
+            }
         }
         private void MarkUsedCells() {
             using (Graphics g = Graphics.FromImage(eventMatrixPictureBox.Image)) {
