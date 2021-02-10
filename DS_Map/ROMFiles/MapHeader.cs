@@ -159,7 +159,7 @@ namespace DSPRE.ROMFiles {
                 wildPokémon = reader.ReadUInt16();
                 eventFileID = reader.ReadUInt16();
                 locationName = reader.ReadUInt16();
-                weatherID = StandardizeWeather(reader.ReadByte());
+                weatherID = reader.ReadByte();
                 cameraAngleID = reader.ReadByte();
                 showName = reader.ReadByte();
 
@@ -195,34 +195,6 @@ namespace DSPRE.ROMFiles {
                 writer.Write(mapSettings);
             }
             return newData.ToArray();
-        }
-        public byte StandardizeWeather(byte weather)
-        {
-            /* This function was written to avoid having to account 
-            for duplicate weather values , since  many share the same 
-            weather conditions */
-
-            switch (weather)
-            {
-                case 8:
-                case 13:
-                case 18:
-                case 19:
-                case 20:
-                case 23:
-                case 25:
-                    return 0; // Normal weather
-                case 21:
-                case 26:
-                case 27:
-                    return 6; // D snow
-                case 28:
-                    return 5; // Snowfall
-                case 24:
-                    return 4; // Thunderstorm
-                default:
-                    return weather;
-            }
         }
         #endregion
     }

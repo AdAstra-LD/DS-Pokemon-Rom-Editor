@@ -1325,9 +1325,9 @@ namespace DSPRE {
                 return;
 
             disableHandlers = true;
+            ushort updValue = (ushort)((NumericUpDown)sender).Value;
+            currentHeader.musicDayID = updValue;
             try {
-                ushort updValue = (ushort)((NumericUpDown)sender).Value;
-                currentHeader.musicDayID = updValue;
                 switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
@@ -1350,9 +1350,9 @@ namespace DSPRE {
                 return;
 
             disableHandlers = true;
+            ushort updValue = (ushort)((NumericUpDown)sender).Value;
+            currentHeader.musicNightID = updValue;
             try {
-                ushort updValue = (ushort)((NumericUpDown)sender).Value;
-                currentHeader.musicNightID = updValue;
                 switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
@@ -1407,28 +1407,30 @@ namespace DSPRE {
 
             /* Update Weather Picture */
             try {
-                string imageName = null;
+                Dictionary<byte[], string> dict;
                 switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
-                        imageName = PokeDatabase.System.WeatherPics.dpWeatherImageDict[weatherComboBox.SelectedIndex];
+                        dict = PokeDatabase.System.WeatherPics.dpWeatherImageDict;
                         break;
                     case "Plat":
-                        imageName = PokeDatabase.System.WeatherPics.ptWeatherImageDict[weatherComboBox.SelectedIndex];
+                        dict = PokeDatabase.System.WeatherPics.ptWeatherImageDict;
                         break;
                     default:
-                        foreach (KeyValuePair<List<int>, string> entry in PokeDatabase.System.WeatherPics.hgssweatherImageDict) {
-                            if (entry.Key.Contains(weatherComboBox.SelectedIndex)) {
-                                imageName = entry.Value;
-                                break;
-                            }
-                        }
-                        if (imageName == null)
-                            throw new KeyNotFoundException();
+                        dict = PokeDatabase.System.WeatherPics.hgssweatherImageDict;
                         break;
                 }
 
-                weatherPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName); 
+                bool found = false;
+                foreach (KeyValuePair<byte[], string> dictEntry in dict) {
+                    if (Array.IndexOf(dictEntry.Key, (byte)weatherUpDown.Value) >= 0) {
+                        weatherPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(dictEntry.Value);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                    throw new KeyNotFoundException();
             } catch (KeyNotFoundException) {
                 weatherPictureBox.Image = null;
             }
@@ -1484,7 +1486,6 @@ namespace DSPRE {
             centerEventviewOnEntities();
             eventMatrixXUpDown_ValueChanged(null, null);
         }
-
         private void openMatrixButton_Click(object sender, EventArgs e) {
             if (!matrixEditorIsReady) {
                 SetupMatrixEditor();
@@ -1513,7 +1514,6 @@ namespace DSPRE {
             headerListBox.Focus();
             disableHandlers = false;
         }
-
         private void updateCurrentInternalName() {
             /* Update internal name according to internalNameBox text*/
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(romInfo.InternalNamesLocation))) {
@@ -1531,7 +1531,6 @@ namespace DSPRE {
 
             disableHandlers = false;
         }
-
         private void resetButton_Click(object sender, EventArgs e) {
             searchLocationTextBox.Clear();
             HeaderSearch.HeaderSearchReset(headerListBox, internalNames);
@@ -3892,15 +3891,13 @@ namespace DSPRE {
                 return (Bitmap)Properties.Resources.ResourceManager.GetObject(imageName);
             }
 
-            uint btxID;
-            try {
-                btxID = RomInfo.OverworldTable[entryIDOfEventFile].spriteID;
-            }catch (KeyNotFoundException) {
+            (uint spriteID, ushort properties) result;
+            if (!RomInfo.OverworldTable.TryGetValue(entryIDOfEventFile, out result)) { // try loading image from dictionary
                 return (Bitmap)Properties.Resources.ResourceManager.GetObject("overworld"); //if there's no match, load bounding box
             }
 
             try {
-                FileStream stream = new FileStream(RomInfo.OWSpriteDirPath + "\\" + btxID.ToString("D4"), FileMode.Open);
+                FileStream stream = new FileStream(RomInfo.OWSpriteDirPath + "\\" + result.spriteID.ToString("D4"), FileMode.Open);
                 NSMBe4.NSBMD.NSBTX_File nsbtx = new NSMBe4.NSBMD.NSBTX_File(stream);
 
                 if (nsbtx.TexInfo.num_objs <= 1) {
@@ -4592,7 +4589,9 @@ namespace DSPRE {
                     owSightRangeUpDown.Value = currentEvFile.overworlds[index].sightRange;
                     owXRangeUpDown.Value = currentEvFile.overworlds[index].xRange;
                     owYRangeUpDown.Value = currentEvFile.overworlds[index].yRange;
-                    spriteIDlabel.Text = "Sprite ID: " + RomInfo.OverworldTable[currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry].spriteID.ToString("D3");
+                    try {
+                        spriteIDlabel.Text = "Sprite ID: " + RomInfo.OverworldTable[currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry].spriteID.ToString("D3");
+                    } catch { }
                     DisplayActiveEvents();
                 } catch (ArgumentOutOfRangeException) {
                     String errorMsg = "There was a problem loading the overworld events of this Event file.";

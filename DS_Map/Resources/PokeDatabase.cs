@@ -73,7 +73,7 @@ namespace DSPRE.Resources {
             };
         }
         public static class Weather {
-            public static Dictionary<int, string> DPWeatherDict = new Dictionary<int, string> {
+            public static Dictionary<int, string> DPWeatherDict = new Dictionary<int, string> { 
                 [00] = "Normal",
                 [01] = "Normal, somewhat dark",
                 [02] = "Rain",
@@ -82,15 +82,27 @@ namespace DSPRE.Resources {
                 [05] = "Snowfall, slow",
                 [06] = "Diamond dust",
                 [07] = "Blizzard",
+                [08] = "Normal [08]",
                 [09] = "Volcanic ash fall, slow",
                 [10] = "Sand storm",
                 [11] = "Hail",
                 [12] = "Rocks ascending (?)",
+                [13] = "Normal [13]",
                 [14] = "Fog",
                 [15] = "Deep fog",
                 [16] = "Dark, Flash usable",
                 [17] = "Lightning, no rain",
-                [22] = "Volcanic ash fall, steady",
+                [18] = "Normal [18]",
+                [19] = "Normal [19]",
+                [20] = "Normal [20]",
+                [21] = "Diamond dust [21]",
+                [22] = "Volcanic ash storm",
+                [23] = "Normal [23]",
+                [24] = "Thunderstorm [24]",
+                [25] = "Normal [25]",
+                [26] = "Diamond dust [26]",
+                [27] = "Diamond dust [27]",
+                [28] = "Snowfall, slow [28]",
             };
             public static Dictionary<int, string> PtWeatherDict = new Dictionary<int, string> {
                 [00] = "Normal",
@@ -146,6 +158,7 @@ namespace DSPRE.Resources {
                 [23] = "Darkness [23]",
                 [24] = "Darkness after flash",
                 [25] = "Darkness after flash [25]",
+
                 [26] = "Low Light (Battle Arcade)"
             };
         }
@@ -3630,57 +3643,57 @@ namespace DSPRE.Resources {
                 };
             }
             public static class WeatherPics {
-                public static Dictionary<int, string> dpWeatherImageDict = new Dictionary<int, string>() {
-                    [0] = "dpnormal",
-                    [1] = "dpcloudy",
-                    [2] = "dprain",
-                    [3] = "dpheavyrain",
-                    [4] = "dpthunderstorm",
-                    [5] = "dpsnowslow",
-                    [6] = "dpdiamondsnow",
-                    [7] = "dpblizzard",
-                    [8] = "dpsandfall",
-                    [9] = "dpsandstorm",
-                    [10] = "dphail",
-                    [11] = "dprocksascending",
-                    [12] = "dpfog",
-                    [13] = "dpfog",
-                    [14] = "dpdark",
-                    [15] = "dplightning",
-                    [16] = "dplightsandstorm"
+                public static Dictionary<byte[], string> dpWeatherImageDict = new Dictionary<byte[], string>() {
+                    [new byte[] { 0, 8, 13, 18, 19, 20, 23, 25 }] = "dpnormal",
+                    [new byte[] { 1 }] = "dpcloudy",
+                    [new byte[] { 2 }] = "dprain",
+                    [new byte[] { 3 }] = "dpheavyrain",
+                    [new byte[] { 4, 24}] = "dpthunderstorm",
+                    [new byte[] { 5, 28 }] = "dpsnowslow",
+                    [new byte[] { 6, 21, 26, 27 }] = "dpdiamondsnow",
+                    [new byte[] { 7 }] = "dpblizzard",
+                    [new byte[] { 9 }] = "dpsandfall",
+                    [new byte[] { 10 }] = "dpsandstorm",
+                    [new byte[] { 11 }] = "dphail",
+                    [new byte[] { 12 }] = "dprocksascending",
+                    [new byte[] { 14 }] = "dpfog",
+                    [new byte[] { 15 }] = "dpfog", //deep fog
+                    [new byte[] { 16 }] = "dpdark",
+                    [new byte[] { 17 }] = "dplightning",
+                    [new byte[] { 22 }] = "dplightsandstorm"
                 };
-                public static Dictionary<int, string> ptWeatherImageDict = new Dictionary<int, string>() {
-                    [0] = "ptnormal",
-                    [1] = "ptcloudy",
-                    [2] = "ptrain",
-                    [3] = "ptheavyrain",
-                    [4] = "ptthunderstorm",
-                    [5] = "ptsnowslow",
-                    [6] = "ptDsnow",
-                    [7] = "ptblizzard",
-                    [8] = "ptsandfall",
-                    [9] = "ptsandstorm",
-                    [10] = "pthail",
-                    [11] = "ptrocksascending",
-                    [12] = "ptfog",
-                    [13] = "ptfog",
-                    [14] = "ptdark",
-                    [15] = "ptlightning",
-                    [16] = "ptlightsandstorm",
-                    [17] = "ptforestweather",
-                    [18] = "ptspotlight",
-                    [19] = "ptspotlight"
+                public static Dictionary<byte[], string> ptWeatherImageDict = new Dictionary<byte[], string>() {
+                    [new byte[] { 0 } ] = "ptnormal",
+                    [new byte[] { 1 } ] = "ptcloudy",
+                    [new byte[] { 2 } ] = "ptrain",
+                    [new byte[] { 3 } ] = "ptheavyrain",
+                    [new byte[] { 4 } ] = "ptthunderstorm",
+                    [new byte[] { 5 } ] = "ptsnowslow",
+                    [new byte[] { 6 } ] = "ptDsnow",
+                    [new byte[] { 7 } ] = "ptblizzard",
+                    [new byte[] { 8 } ] = "ptsandfall",
+                    [new byte[] { 9 } ] = "ptsandstorm",
+                    [new byte[] { 10 } ] = "pthail",
+                    [new byte[] { 11 } ] = "ptrocksascending",
+                    [new byte[] { 12 } ] = "ptfog",
+                    [new byte[] { 13 } ] = "ptfog",
+                    [new byte[] { 14 } ] = "ptdark",
+                    [new byte[] { 15 } ] = "ptlightning",
+                    [new byte[] { 16 } ] = "ptlightsandstorm",
+                    [new byte[] { 17 } ] = "ptforestweather",
+                    [new byte[] { 18 } ] = "ptspotlight",
+                    [new byte[] { 19 } ] = "ptspotlight"
                 };
-                public static Dictionary<List<int>, string> hgssweatherImageDict = new Dictionary<List<int>, string>() {
-                    [new List<int> { 0, 1 }] = "hgssnormal",
-                    [new List<int> { 2, 3, 4, 5, 6, 7, 8 }] = "hgssrain",
-                    [new List<int> { 9, 10, 11, 12, 13, 15 }] = "hgsssnow",
-                    [new List<int> { 14 }] = "hgssnormal", //sandstorm in battle only
-                    [new List<int> { 16, 17 }] = "hgssdiamond",
-                    [new List<int> { 18, 19, 20, 21 }] = "hgssfog",
-                    [new List<int> { 22, 23 }] = "hgssdark",
-                    [new List<int> { 24, 25 }] = "hgssdark2",
-                    [new List<int> { 26 }] = "hgssArcade"
+                public static Dictionary<byte[], string> hgssweatherImageDict = new Dictionary<byte[], string>() {
+                    [new byte[] { 0, 1 }] = "hgssnormal",
+                    [new byte[] { 2, 3, 4, 5, 6, 7, 8 }] = "hgssrain",
+                    [new byte[] { 9, 10, 11, 12, 13, 15 }] = "hgsssnow",
+                    [new byte[] { 14 }] = "hgssnormal", //sandstorm in battle only
+                    [new byte[] { 16, 17 }] = "hgssdiamond",
+                    [new byte[] { 18, 19, 20, 21 }] = "hgssfog",
+                    [new byte[] { 22, 23 }] = "hgssdark",
+                    [new byte[] { 24, 25 }] = "hgssdark2",
+                    [new byte[] { 26 }] = "hgssArcade"
                 };
             }
         }
