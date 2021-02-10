@@ -28,7 +28,6 @@ namespace DSPRE.ROMFiles {
             List<int> scriptOffsets = new List<int>();
             List<int> functionOffsets = new List<int>();
             List<int> movementOffsets = new List<int>();
-            ushort[] endCodes = new ushort[] { 0x2, 0x16, 0x1B };
 
             using (BinaryReader scrReader = new BinaryReader(fs)) {
                 /* Read script offsets from the header */
@@ -76,7 +75,7 @@ namespace DSPRE.ROMFiles {
                             
                             cmdList.Add(cmd);
 
-                            if (endCodes.Contains(cmd.id))
+                            if (PokeDatabase.ScriptEditor.endCodes.Contains(cmd.id))
                                 endScript = true;
                             
                         }
@@ -100,7 +99,7 @@ namespace DSPRE.ROMFiles {
                                 return;
 
                             cmdList.Add(command);
-                            if (endCodes.Contains(command.id))
+                            if (PokeDatabase.ScriptEditor.endCodes.Contains(command.id))
                                 endFunction = true;
                         }
                         allFunctions.Add(new CommandContainer(i, commandList: cmdList));
@@ -144,9 +143,8 @@ namespace DSPRE.ROMFiles {
             //a script and a function
             Func<string[], int, bool> functionEndCondition =
                 (source, x) => !source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002])    //End
-                            && !source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x001B])  //Return
-                            && !source[x].Contains(RomInfo.ScriptCommandNamesDict[0x0016] + " Function"); //Jump Function_#
-
+                            && !source[x].Contains(RomInfo.ScriptCommandNamesDict[0x0016] + " Function") //Jump Function_#
+                            && !source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x001B]);  //Return
 
             Func<string[], int, bool> scriptEndCondition =
             (source, x) => !source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002])    //End

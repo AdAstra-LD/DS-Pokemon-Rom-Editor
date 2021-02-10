@@ -679,6 +679,11 @@ namespace DSPRE.Resources {
                 [0x001D] = 1, //Call-If
                 [0x005E] = 1, //Movement
             };
+            public static ushort[] endCodes = new ushort[] { 
+                0x2, 
+                0x16, 
+                0x1B 
+            };
 
             public static Dictionary<ushort, string> DPPtScrCmdNames = new Dictionary<ushort, string>() {
                 [0x0000] = "Nop",
