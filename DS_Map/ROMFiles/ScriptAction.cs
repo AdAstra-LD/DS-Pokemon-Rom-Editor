@@ -10,10 +10,10 @@ using System.Windows.Forms;
 namespace DSPRE.ROMFiles {
     public class ActionContainer {
         public List<ScriptAction> actionCommandsList;
-        public int manualUserID;
+        public uint manualUserID;
 
         #region Constructors (2)
-        public ActionContainer(int actionNumber, List<ScriptAction> actionCommandsList = null) {
+        public ActionContainer(uint actionNumber, List<ScriptAction> actionCommandsList = null) {
             manualUserID = actionNumber;
             this.actionCommandsList = actionCommandsList;
         }

@@ -4,17 +4,20 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using static DSPRE.ROMFiles.ScriptFile;
 
 namespace DSPRE.ROMFiles {
     public class CommandContainer {
         public List<ScriptCommand> commands;
-        public int manualUserID;
+        public uint manualUserID;
         public int useScript;
+        public containerTypes containerType;
 
         #region Constructors (2)
-        public CommandContainer(int scriptNumber, int useScript = -1, List<ScriptCommand> commandList = null) {
+        public CommandContainer(uint scriptNumber, containerTypes containerType, int useScript = -1, List<ScriptCommand> commandList = null) {
             manualUserID = scriptNumber;
             this.useScript = useScript;
+            this.containerType = containerType;
             commands = commandList;
         }
         #endregion
@@ -40,22 +43,22 @@ namespace DSPRE.ROMFiles {
             switch (id) {
                 case 0x16:      // Jump
                 case 0x1A:      // Call
-                    this.name += " " + "Function_#" + (1 + BitConverter.ToInt32(commandParameters[0], 0)).ToString("D");
+                    name += " " + "Function_#" + (BitConverter.ToInt32(commandParameters[0], 0)).ToString("D");
                     break;
                 case 0x17:      // JumpIfObjID
                 case 0x18:      // JumpIfBgID
                 case 0x19:      // JumpIfPlayerDir
-                    this.name += " " + (BitConverter.ToInt32(commandParameters[0], 0)).ToString("D") + " " + "Function_#" + (1 + (BitConverter.ToInt32(commandParameters[1], 0))).ToString("D");
+                    name += " " + BitConverter.ToInt32(commandParameters[0], 0).ToString("D") + " " + "Function_#" + BitConverter.ToInt32(commandParameters[1], 0).ToString("D");
                     break;
                 case 0x1C:      // CompareLastResultJump
                 case 0x1D:      // CompareLastResultCall
                     byte opcode = commandParameters[0][0];
-                    this.name += " " + PokeDatabase.ScriptEditor.comparisonOperatorsDict[opcode] + " " + "Function_#" + (1 + (BitConverter.ToInt32(commandParameters[1], 0))).ToString("D");
+                    name += " " + PokeDatabase.ScriptEditor.comparisonOperatorsDict[opcode] + " " + "Function_#" + BitConverter.ToInt32(commandParameters[1], 0).ToString("D");
                     break;
                 case 0x5E:      // ApplyMovement
                     ushort flexID = BitConverter.ToUInt16(commandParameters[0], 0);
                     this.name += ScriptFile.OverworldFlexDecode(flexID);
-                    this.name += " " + "Action_#" + (1 + (BitConverter.ToInt32(commandParameters[1], 0))).ToString("D");
+                    name += " " + "Action_#" + BitConverter.ToInt32(commandParameters[1], 0).ToString("D");
                     break;
                 case 0x62:      // Lock
                 case 0x63:      // Release
