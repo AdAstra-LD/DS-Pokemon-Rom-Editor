@@ -25,9 +25,9 @@ namespace DSPRE.ROMFiles {
         #region Constructors (1)
 
         public ScriptFile(Stream fs) {
-            List<uint> scriptOffsets = new List<uint>();
-            List<uint> functionOffsets = new List<uint>();
-            List<uint> movementOffsets = new List<uint>();
+            List<int> scriptOffsets = new List<int>();
+            List<int> functionOffsets = new List<int>();
+            List<int> movementOffsets = new List<int>();
             ushort[] endCodes = new ushort[] { 0x2, 0x16, 0x1B };
 
             using (BinaryReader scrReader = new BinaryReader(fs)) {
@@ -47,7 +47,7 @@ namespace DSPRE.ROMFiles {
                             isLevelScript = false;
                             break;
                         } else {
-                            uint offsetFromStart = value + (uint)scrReader.BaseStream.Position;
+                            int offsetFromStart = (int)(value + scrReader.BaseStream.Position);
                             scriptOffsets.Add(offsetFromStart); // Don't change order of addition
                         }
                     }
@@ -143,13 +143,13 @@ namespace DSPRE.ROMFiles {
             //once it's done, this Predicate below will be the only one needed, since there will be no distinction between
             //a script and a function
             Func<string[], int, bool> functionEndCondition =
-                (source, x) => !source[x].Equals(RomInfo.ScriptCommandNamesDict[0x0002])    //End
-                            && !source[x].Contains(RomInfo.ScriptCommandNamesDict[0x001B])  //Return
+                (source, x) => !source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002])    //End
+                            && !source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x001B])  //Return
                             && !source[x].Contains(RomInfo.ScriptCommandNamesDict[0x0016] + " Function"); //Jump Function_#
 
 
             Func<string[], int, bool> scriptEndCondition =
-            (source, x) => !source[x].Equals(RomInfo.ScriptCommandNamesDict[0x0002])    //End
+            (source, x) => !source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002])    //End
                         && !source[x].Contains(RomInfo.ScriptCommandNamesDict[0x0016] + " Function"); //Jump Function_#
 
             allScripts = readCommandsFromLines(scriptLines, scriptEndCondition);  //Jump + whitespace
@@ -169,7 +169,7 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Methods (1)
-        private ScriptCommand ReadCommand(BinaryReader dataReader, ref List<uint> functionOffsets, ref List<uint> movementOffsets) {
+        private ScriptCommand ReadCommand(BinaryReader dataReader, ref List<int> functionOffsets, ref List<int> movementOffsets) {
             ushort id = dataReader.ReadUInt16();
             List<byte[]> parameterList = new List<byte[]>();
 
@@ -180,28 +180,32 @@ namespace DSPRE.ROMFiles {
                 case "Plat":
                     switch (id)  {
                         case 0x16: //Jump
-                        case 0x1A: //Call
-                            uint offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
-                            if (!functionOffsets.Contains(offset))
-                                functionOffsets.Add(offset);
+                        case 0x1A: //Call 
+                            {
+                                int offset = (int)(dataReader.ReadInt32() + dataReader.BaseStream.Position); // Do not change order of addition
+                                if (!functionOffsets.Contains(offset))
+                                    functionOffsets.Add(offset);
 
-                            parameterList.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
-                            break;
+                                parameterList.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
+                                break;
+                            }
                         case 0x1C: //CompareLastResultJump
                         case 0x1D: //CompareLastResultCall
-                            byte opcode = dataReader.ReadByte();
-                            offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
-                            if (!functionOffsets.Contains(offset))
-                                functionOffsets.Add(offset);
+                            {
+                                byte opcode = dataReader.ReadByte();
+                                int offset = (int)(dataReader.ReadInt32() + dataReader.BaseStream.Position); // Do not change order of addition
+                                if (!functionOffsets.Contains(offset))
+                                    functionOffsets.Add(offset);
 
-                            parameterList.Add(new byte[] { opcode });
-                            parameterList.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
-                            break;
+                                parameterList.Add(new byte[] { opcode });
+                                parameterList.Add(BitConverter.GetBytes(functionOffsets.IndexOf(offset)));
+                                break;
+                            }
                         case 0x5E: // ApplyMovement
                         case 0x2A1: // ApplyMovement2
                             {
                                 ushort overworld = dataReader.ReadUInt16();
-                                offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
+                                int offset = (int)(dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position); // Do not change order of addition
                                 if (!movementOffsets.Contains(offset))
                                     movementOffsets.Add(offset);
 
@@ -330,7 +334,7 @@ namespace DSPRE.ROMFiles {
                     switch (id) {
                         case 0x16: //Jump
                         case 0x1A: //Call
-                            uint offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
+                            int offset = (int)(dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position); // Do not change order of addition
                             if (!functionOffsets.Contains(offset))
                                 functionOffsets.Add(offset);
 
@@ -339,7 +343,7 @@ namespace DSPRE.ROMFiles {
                         case 0x1C: //CompareLastResultJump
                         case 0x1D: //CompareLastResultCall
                             byte opcode = dataReader.ReadByte();
-                            offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
+                            offset = (int)(dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position); // Do not change order of addition
                             if (!functionOffsets.Contains(offset))
                                 functionOffsets.Add(offset);
 
@@ -349,7 +353,7 @@ namespace DSPRE.ROMFiles {
                         case 0x5E: // ApplyMovement
                             {
                                 ushort overworld = dataReader.ReadUInt16();
-                                offset = dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position; // Do not change order of addition
+                                offset = (int)(dataReader.ReadUInt32() + (uint)dataReader.BaseStream.Position); // Do not change order of addition
                                 if (!movementOffsets.Contains(offset))
                                     movementOffsets.Add(offset);
 
