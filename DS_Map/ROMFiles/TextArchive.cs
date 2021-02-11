@@ -21,7 +21,7 @@ namespace DSPRE.ROMFiles {
         #region Constructors (1)
         public TextArchive(FileStream messageStream)
         {
-            Dictionary<int, string> GetChar = TextDatabase.readTextDictionary;
+            Dictionary<int, string> GetCharDictionary = TextDatabase.readTextDictionary;
             BinaryReader readText = new BinaryReader(messageStream);
             int stringCount;
             try {
@@ -100,7 +100,7 @@ namespace DSPRE.ROMFiles {
                                             }
                                             if (tmp1 != 0x0 && tmp1 != 0x1) {
                                                 try {
-                                                    string character = GetChar[tmp1];
+                                                    string character = GetCharDictionary[tmp1];
                                                     pokemonText.Append(character);
                                                 } catch(KeyNotFoundException) { 
                                                     pokemonText.Append(@"\x" + tmp1.ToString("X4"));
@@ -113,7 +113,7 @@ namespace DSPRE.ROMFiles {
                                             break;
                                         }
                                         if (tmp1 != 0x0 && tmp1 != 0x1) {
-                                            string character = GetChar[tmp1];
+                                            string character = GetCharDictionary[tmp1];
                                             pokemonText.Append(character);
                                             if (character == null) {
                                                 pokemonText.Append(@"\x" + tmp1.ToString("X4"));
@@ -134,7 +134,7 @@ namespace DSPRE.ROMFiles {
                                 pokemonText.Append(uncomp);
                             } else {
                                 try {
-                                    string character = GetChar[car];
+                                    string character = GetCharDictionary[car];
                                     pokemonText.Append(character);
                                 } catch (KeyNotFoundException) { 
                                     pokemonText.Append(@"\x" + car.ToString("X4"));

@@ -31,11 +31,8 @@ namespace DSPRE.ROMFiles {
             this.id = id;
             this.repetitionCount = repetitionCount;
 
-            try {
-                name = PokeDatabase.ScriptEditor.movementsDictIDName[id];
-            } catch (KeyNotFoundException) {
+            if (!PokeDatabase.ScriptEditor.movementsDictIDName.TryGetValue(id, out name))
                 name = id.ToString("X4");
-            }
 
             if (repetitionCount != ushort.MaxValue)
                 name += " " + "0x" + repetitionCount.ToString("X");

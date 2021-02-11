@@ -293,6 +293,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap dawnSpawn {
+            get {
+                object obj = ResourceManager.GetObject("dawnSpawn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap deleteIcon {
             get {
                 object obj = ResourceManager.GetObject("deleteIcon", resourceCulture);
@@ -1519,6 +1529,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap resetIcon {
+            get {
+                object obj = ResourceManager.GetObject("resetIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RightClick {
             get {
                 object obj = ResourceManager.GetObject("RightClick", resourceCulture);
@@ -1572,6 +1592,16 @@ namespace DSPRE.Properties {
         internal static string SoulSilver {
             get {
                 return ResourceManager.GetString("SoulSilver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap spawnCoordsMatrixeditorIcon {
+            get {
+                object obj = ResourceManager.GetObject("spawnCoordsMatrixeditorIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

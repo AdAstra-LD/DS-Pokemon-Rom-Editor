@@ -45,7 +45,6 @@ namespace DSPRE.ROMFiles {
     public class MapFile
     {
         #region Fields
-        private string gameVersion;
         public byte[,] collisions = new byte[32, 32];
         public byte[,] types = new byte[32, 32];
         public List<Building> buildings;
@@ -56,8 +55,8 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (1)
-        public MapFile(Stream data, string gameVersion) {
-            this.gameVersion = gameVersion;
+        public MapFile(int mapNumber) : this(new FileStream(RomInfo.mapDirPath + "\\" + mapNumber.ToString("D4"), FileMode.Open)) { }
+        public MapFile(Stream data) {
             using (BinaryReader reader = new BinaryReader(data))
             {
                 /* Read sections lengths */
@@ -67,7 +66,7 @@ namespace DSPRE.ROMFiles {
                 int bdhcSectionLength = reader.ReadInt32();
 
                 /* Read background sounds section */
-                if (gameVersion == "HG" || gameVersion == "SS") {
+                if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
                     ushort signature = reader.ReadUInt16();
                     if (signature != 0x1234) {
                         MessageBox.Show("The header section of this map's BackGround Sound data is corrupted.",
@@ -213,7 +212,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(bdhc.Length);
 
                 /* Write soundplate section for HG/SS */
-                if (gameVersion == "HG" || gameVersion == "SS") {
+                if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
                     writer.Write(bgs);
                 }
 
@@ -224,6 +223,27 @@ namespace DSPRE.ROMFiles {
                 writer.Write(GetTerrain());
             }
             return newData.ToArray();
+        }
+        public void SaveToFile(string path) {
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
+                writer.Write(this.ToByteArray());
+
+            MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        public void SaveToFileDefaultDir(int destFileID) {
+            string path = RomInfo.mapDirPath + "\\" + destFileID.ToString("D4");
+            this.SaveToFile(path);
+        }
+        public void SaveToFileExplorePath(string suggestedFileName) {
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Filter = "Gen IV Map BIN (*.bin)|*.bin";
+
+            if (!string.IsNullOrEmpty(suggestedFileName))
+                sf.FileName = suggestedFileName;
+            if (sf.ShowDialog() != DialogResult.OK)
+                return;
+
+            this.SaveToFile(sf.FileName);
         }
         #endregion
     }

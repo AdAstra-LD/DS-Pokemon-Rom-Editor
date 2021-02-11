@@ -83,7 +83,7 @@ namespace DSPRE.ROMFiles {
     /// </summary>
     public abstract class MapHeader {
         /*System*/
-        public short ID { get; set; }
+        public ushort ID { get; set; }
         public static readonly byte length = 24;
         public static readonly string nameSeparator = " -   ";
         /**/
@@ -108,7 +108,7 @@ namespace DSPRE.ROMFiles {
 
         #region Methods (1)
         public abstract byte[] toByteArray();
-        public static MapHeader BuildFromFile(string filename, short headerNumber, long offsetInFile) {
+        public static MapHeader BuildFromFile(string filename, ushort headerNumber, long offsetInFile) {
             /* Calculate header offset and load data */
             byte[] headerData = DSUtils.ReadFromFile(filename, offsetInFile, MapHeader.length);
 
@@ -126,7 +126,7 @@ namespace DSPRE.ROMFiles {
                     return new HeaderHGSS(headerNumber, new MemoryStream(headerData));
             }
         }
-        public static MapHeader LoadFromARM9(short headerNumber) {
+        public static MapHeader LoadFromARM9(ushort headerNumber) {
             long headerOffset = Resources.PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * headerNumber;
             return BuildFromFile(RomInfo.arm9Path, headerNumber, headerOffset);
         }
@@ -144,8 +144,7 @@ namespace DSPRE.ROMFiles {
         #endregion Fields
 
         #region Constructors (1)
-        public HeaderDP(short headerNumber, Stream data)
-        {
+        public HeaderDP(ushort headerNumber, Stream data) {
             this.ID = headerNumber;
             using (BinaryReader reader = new BinaryReader(data)) {
                 areaDataID = reader.ReadByte();
@@ -171,11 +170,9 @@ namespace DSPRE.ROMFiles {
         #endregion Constructors
 
         #region Methods (1)
-        public override byte[] toByteArray()
-        {
+        public override byte[] toByteArray() {
             MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData))
-            {
+            using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write(areaDataID);
                 writer.Write(unknown1);
                 writer.Write(matrixID);
@@ -202,8 +199,7 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Class to store map header data from Pokémon Plat
     /// </summary>
-    public class HeaderPt : MapHeader
-    {
+    public class HeaderPt : MapHeader {
         #region Fields (5)
         public byte areaIcon { get; set; }
         public byte locationName { get; set; }
@@ -211,11 +207,9 @@ namespace DSPRE.ROMFiles {
         #endregion Fields
 
         #region Constructors (1)
-        public HeaderPt(short headerNumber, Stream data)
-        {
+        public HeaderPt(ushort headerNumber, Stream data) {
             this.ID = headerNumber;
-            using (BinaryReader reader = new BinaryReader(data))
-            {
+            using (BinaryReader reader = new BinaryReader(data)) {
                 try {
                     areaDataID = reader.ReadByte();
                     unknown1 = reader.ReadByte();
@@ -245,11 +239,9 @@ namespace DSPRE.ROMFiles {
         #endregion Constructors
 
         #region Methods(1)
-        public override byte[] toByteArray()
-        {
+        public override byte[] toByteArray() {
             MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData))
-            {
+            using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write(areaDataID);
                 writer.Write(unknown1);
                 writer.Write(matrixID);
@@ -276,8 +268,7 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Class to store map header data from Pokémon HG and SS
     /// </summary>
-    public class HeaderHGSS : MapHeader
-    {
+    public class HeaderHGSS : MapHeader {
         #region Fields (7)
         public byte areaIcon { get; set; }
         public byte followMode { get; set; }
@@ -289,7 +280,7 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (1)
-        public HeaderHGSS(short headerNumber, Stream data)
+        public HeaderHGSS(ushort headerNumber, Stream data)
         {
             this.ID = headerNumber;
             using (BinaryReader reader = new BinaryReader(data))
@@ -323,7 +314,7 @@ namespace DSPRE.ROMFiles {
                     flags = reader.ReadByte();
                 } catch (EndOfStreamException) {
                     MessageBox.Show("Error loading header " + ID + '.', "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    ID = -1;
+                    ID = ushort.MaxValue;
                 }
             }
         }

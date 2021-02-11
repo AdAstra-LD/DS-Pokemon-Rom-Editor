@@ -119,7 +119,6 @@ namespace DSPRE {
             }
         }
 
-        RomInfo romInfo;
         public int expandedARMfileID = byte.Parse(new ResourceManager("DSPRE.Resources.ROMToolboxDB.SyntheticOverlayFileNumber", Assembly.GetExecutingAssembly()).GetString("fileID" + "_" + RomInfo.gameVersion));
         public static bool flag_standardizedItems { get; private set; } = false;
         public static bool flag_arm9Expanded { get; private set; } = false;
@@ -129,8 +128,6 @@ namespace DSPRE {
         #region Constructor
         public ROMToolboxDialog(RomInfo romInfo) {
             InitializeComponent();
-
-            this.romInfo = romInfo;
 
             DSUtils.UnpackNarc(12);
             CheckStandardizedItems();
@@ -234,7 +231,7 @@ namespace DSPRE {
                         return 0;
 
 
-                    string overlayFilePath = romInfo.workDir + "overlay" + "\\" + "overlay_" + data.overlayNumber.ToString("D4") + ".bin";
+                    string overlayFilePath = RomInfo.workDir + "overlay" + "\\" + "overlay_" + data.overlayNumber.ToString("D4") + ".bin";
                     DSUtils.DecompressOverlay(data.overlayNumber, true);
 
                     byte[] overlayCode1 = HexStringtoByteArray(data.overlayString1);
@@ -252,7 +249,7 @@ namespace DSPRE {
                     if (!overlayCode2.SequenceEqual(overlayCode2Read))
                         return 0;
 
-                    String fullFilePath = romInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
+                    String fullFilePath = RomInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
                     byte[] subroutineRead = DSUtils.ReadFromFile(fullFilePath, data.subroutineOffset, data.subroutine.Length); //Write new overlayCode1
                     if (data.subroutine.Length != subroutineRead.Length)
                         return 0; //0 means BDHCAM patch has not been applied
@@ -334,7 +331,7 @@ namespace DSPRE {
                 "- Replace " + (data.branchString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.branchOffset.ToString("X") + " with " + '\n' + data.branchString + "\n\n" +
                 "- Replace " + (data.overlayString1.Length / 3 + 1) + " bytes of data at overlay" + data.overlayNumber + " offset 0x" + data.overlayOffset1.ToString("X") + " with " + '\n' + data.overlayString1 + "\n\n" +
                 "- Replace " + (data.overlayString2.Length / 3 + 1) + " bytes of data at overlay" + data.overlayNumber + " offset 0x" + data.overlayOffset2.ToString("X") + " with " + '\n' + data.overlayString2 + "\n\n" +
-                "- Modify file #" + expandedARMfileID + " inside " + '\n' + romInfo.syntheticOverlayPath + '\n' + "to insert the BDHCAM routine (any data between 0x" + data.subroutineOffset.ToString("X") + " and 0x" + data.subroutineOffset + data.subroutine.Length.ToString("X") + " will be overwritten)." + "\n\n" +
+                "- Modify file #" + expandedARMfileID + " inside " + '\n' + RomInfo.syntheticOverlayPath + '\n' + "to insert the BDHCAM routine (any data between 0x" + data.subroutineOffset.ToString("X") + " and 0x" + data.subroutineOffset + data.subroutine.Length.ToString("X") + " will be overwritten)." + "\n\n" +
                 "Do you wish to continue?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -345,14 +342,14 @@ namespace DSPRE {
                     DSUtils.WriteToArm9(data.branchOffset, HexStringtoByteArray(data.branchString)); //Write new branchOffset
 
                     /* Write to overlayfile */
-                    string overlayFilePath = romInfo.workDir + "overlay" + "\\" + "overlay_" + data.overlayNumber.ToString("D4") + ".bin";
+                    string overlayFilePath = RomInfo.workDir + "overlay" + "\\" + "overlay_" + data.overlayNumber.ToString("D4") + ".bin";
                     DSUtils.DecompressOverlay(data.overlayNumber, true);
 
                     DSUtils.WriteToFile(overlayFilePath, data.overlayOffset1, HexStringtoByteArray(data.overlayString1)); //Write new overlayCode1
                     DSUtils.WriteToFile(overlayFilePath, data.overlayOffset2, HexStringtoByteArray(data.overlayString2)); //Write new overlayCode2
                     overlay1MustBeRestoredFromBackup = false;
 
-                    String fullFilePath = romInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
+                    String fullFilePath = RomInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
 
                     /*Write Expanded ARM9 File*/
                     DSUtils.WriteToFile(fullFilePath, data.subroutineOffset, data.subroutine);
@@ -426,7 +423,7 @@ namespace DSPRE {
                 "- Backup ARM9 file (arm9.bin.backup will be created)." + "\n\n" +
                 "- Replace " + (data.branchString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.branchOffset.ToString("X") + " with " + '\n' + data.branchString + "\n\n" +
                 "- Replace " + (data.initString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.initOffset.ToString("X") + " with " + '\n' + data.initString + "\n\n" +
-                "- Modify file #" + expandedARMfileID + " inside " + '\n' + romInfo.syntheticOverlayPath + '\n' + " to accommodate for 88KB of data (no backup)." + "\n\n" +
+                "- Modify file #" + expandedARMfileID + " inside " + '\n' + RomInfo.syntheticOverlayPath + '\n' + " to accommodate for 88KB of data (no backup)." + "\n\n" +
                 "Do you wish to continue?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -437,7 +434,7 @@ namespace DSPRE {
                     DSUtils.WriteToArm9(data.branchOffset, HexStringtoByteArray(data.branchString)); //Write new branchOffset
                     DSUtils.WriteToArm9(data.initOffset, HexStringtoByteArray(data.initString)); //Write new initOffset
 
-                    string fullFilePath = romInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
+                    string fullFilePath = RomInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
                     File.Delete(fullFilePath);
                     using (BinaryWriter f = new BinaryWriter(File.Create(fullFilePath))) {
                         for (int i = 0; i < 0x16000; i++)
@@ -473,7 +470,7 @@ namespace DSPRE {
         }
         #region Mikelan's custom commands
         private void applyCustomCommands(object sender, EventArgs e) {
-            if (new FileInfo(romInfo.syntheticOverlayPath + "\\0000").Length < 0x16000) {// ARM9 expansion hasn't been done in this ROM
+            if (new FileInfo(RomInfo.syntheticOverlayPath + "\\0000").Length < 0x16000) {// ARM9 expansion hasn't been done in this ROM
                 MessageBox.Show("The ARM9 Expansion patch must be applied before using this feature", "ARM9 expansion needed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -524,7 +521,7 @@ namespace DSPRE {
             return -1; // No table in expanded arm9 file
         }
         private void RepointCommandTable() {
-            string expandedPath = romInfo.syntheticOverlayPath + "\\0000";
+            string expandedPath = RomInfo.syntheticOverlayPath + "\\0000";
             ResourceManager customcmdDB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.CustomScrCmdDB", Assembly.GetExecutingAssembly());
 
             FileStream arm9FileStream = new FileStream(RomInfo.arm9Path, FileMode.Open); // I make a copy of the stream so the file is free for writing
@@ -549,7 +546,7 @@ namespace DSPRE {
             }
         }
         private bool ImportCustomCommand() {
-            string expandedPath = romInfo.syntheticOverlayPath + "\\0000";
+            string expandedPath = RomInfo.syntheticOverlayPath + "\\0000";
             int appliedPatches = 0;
 
             OpenFileDialog of = new OpenFileDialog();
@@ -656,7 +653,7 @@ namespace DSPRE {
 
         #region Error Messsages
         private void UnsupportedROM() {
-            MessageBox.Show("This operation is currently impossible to carry out on any Pokémon " + romInfo.gameName + " rom.",
+            MessageBox.Show("This operation is currently impossible to carry out on any Pokémon " + RomInfo.gameName + " rom.",
                 "Unsupported ROM", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

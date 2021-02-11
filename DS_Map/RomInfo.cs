@@ -1,13 +1,10 @@
 using System.IO;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Forms;
-using System;
 using System.Drawing;
-using System.Resources;
-using System.Reflection;
 using System.Linq;
 using DSPRE.Resources;
+using System;
 
 namespace DSPRE {
 
@@ -17,15 +14,16 @@ namespace DSPRE {
 
     public class RomInfo {
         public static string romID { get; private set; }
-        public string workDir { get; private set; }
+        public static string workDir { get; private set; }
         public static string arm9Path { get; private set; }
         public static string overlayTablePath { get; private set; }
         public static string gameVersion { get; private set; }
         public static string gameLanguage { get; private set; }
-        public string gameName { get; private set; }
+        public static string gameName { get; private set; }
 
-        public long headerTableOffset { get; private set; }
-        public string syntheticOverlayPath { get; private set; }
+        public static long headerTableOffset { get; private set; }
+        public static uint arm9spawnOffset { get; private set; }
+        public static string syntheticOverlayPath { get; private set; }
         public static string OWSpriteDirPath { get; private set; }
         public static long OWTableOffset { get; internal set; }
 
@@ -52,20 +50,23 @@ namespace DSPRE {
         public static int[] pokémonNamesTextNumbers { get; private set; }
         public static int itemNamesTextNumber { get; private set; }
         public static int itemScriptFileNumber { get; internal set; }
+        public static int locationNamesTextNumber { get; private set; }
 
 
         public static readonly byte internalNameLength = 16;
-        public string InternalNamesLocation { get; private set; }
+        public static string InternalNamesLocation { get; private set; }
+
         public Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary { get; private set; }
         public static Dictionary<ushort, string> ScriptCommandNamesDict { get; private set; }
         public static Dictionary<ushort, byte[]> CommandParametersDict { get; private set; }
         public static SortedDictionary<uint, (uint spriteID, ushort properties)> OverworldTable { get; private set; }
         public static uint[] overworldTableKeys { get; private set; }
 
+
         #region Constructors (1)
-        public RomInfo(string id, string workDir) {
+        public RomInfo(string id, string dir) {
             romID = id;
-            this.workDir = workDir;
+            workDir = dir;
             LoadGameVersion();
             if (gameVersion == null)
                 return;
@@ -76,20 +77,20 @@ namespace DSPRE {
             arm9Path = workDir + @"arm9.bin";
             overlayTablePath = workDir + @"y9.bin";
 
-            InternalNamesLocation = this.workDir + @"data\fielddata\maptable\mapname.bin";
-            mapTexturesDirPath = this.workDir + @"unpacked\maptex";
-            buildingTexturesDirPath = this.workDir + @"unpacked\TextureBLD";
-            buildingConfigFilesPath = this.workDir + @"unpacked\area_build";
-            areaDataDirPath = this.workDir + @"unpacked\area_data";
-            textArchivesPath = this.workDir + @"unpacked\msg";
-            matrixDirPath = this.workDir + @"unpacked\matrix";
-            trainerDataDirPath = this.workDir + @"unpacked\trainerdata";
-            mapDirPath = this.workDir + @"unpacked\maps";
-            encounterDirPath = this.workDir + @"unpacked\wildPokeData";
-            eventsDirPath = this.workDir + @"unpacked\events";
-            scriptDirPath = this.workDir + @"unpacked\scripts";
-            syntheticOverlayPath = this.workDir + @"unpacked\syntheticOverlayNarc";
-            OWSpriteDirPath = this.workDir + @"unpacked\overworlds";
+            InternalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
+            mapTexturesDirPath = workDir + @"unpacked\maptex";
+            buildingTexturesDirPath = workDir + @"unpacked\TextureBLD";
+            buildingConfigFilesPath = workDir + @"unpacked\area_build";
+            areaDataDirPath = workDir + @"unpacked\area_data";
+            textArchivesPath = workDir + @"unpacked\msg";
+            matrixDirPath = workDir + @"unpacked\matrix";
+            trainerDataDirPath = workDir + @"unpacked\trainerdata";
+            mapDirPath = workDir + @"unpacked\maps";
+            encounterDirPath = workDir + @"unpacked\wildPokeData";
+            eventsDirPath = workDir + @"unpacked\events";
+            scriptDirPath = workDir + @"unpacked\scripts";
+            syntheticOverlayPath = workDir + @"unpacked\syntheticOverlayNarc";
+            OWSpriteDirPath = workDir + @"unpacked\overworlds";
 
             SetNullEncounterID();           
             SetBuildingModelsDirPath();
@@ -99,14 +100,87 @@ namespace DSPRE {
             SetPokémonNamesTextNumber();
             SetItemNamesTextNumber();
             SetItemScriptFileNumber();
+            SetLocationNamesTextNumber();
+            SetSpawnPointOffset();
 
             /* System */
             SetNarcDirs();
             LoadMapCellsColorDictionary();
             ScriptCommandNamesDict = BuildCommandNamesDatabase(gameVersion);
             CommandParametersDict = BuildCommandParametersDatabase(gameVersion);
-
             /* * * * */
+        }
+
+        private void SetSpawnPointOffset() {
+            switch (gameVersion) {
+                case "D":
+                case "P":
+                    switch (gameLanguage) {
+                        case "ENG":
+                            arm9spawnOffset = 0xF2B9C;
+                            break;
+                        case "ESP":
+                            arm9spawnOffset = 0xF2BE8;
+                            break;
+                        case "ITA":
+                            arm9spawnOffset = 0xF2B50;
+                            break;
+                        case "FRA":
+                            arm9spawnOffset = 0xF2BDC;
+                            break;
+                        case "GER":
+                            arm9spawnOffset = 0xF2BAC;
+                            break;
+                        case "JAP":
+                            arm9spawnOffset = 0xF4B48;
+                            break;
+                    }
+                    break;
+                case "Plat":
+                    switch (gameLanguage) {
+                        case "ENG":
+                            arm9spawnOffset = 0xEA12C;
+                            break;
+                        case "ESP":
+                            arm9spawnOffset = 0xEA1C0;
+                            break;
+                        case "ITA":
+                            arm9spawnOffset = 0xEA148;
+                            break;
+                        case "FRA":
+                            arm9spawnOffset = 0xEA1B4;
+                            break;
+                        case "GER":
+                            arm9spawnOffset = 0xEA184;
+                            break;
+                        case "JAP":
+                            arm9spawnOffset = 0xE9800;
+                            break;
+                    }
+                    break;
+                default:
+                    switch (gameLanguage) {
+                        case "ENG":
+                            arm9spawnOffset = 0xFA17C;
+                            break;
+                        case "ESP":
+                            arm9spawnOffset = 0xFA164;
+                            break;
+                        case "ITA":
+                            arm9spawnOffset = 0xFA0F4;
+                            break;
+                        case "FRA":
+                            arm9spawnOffset = 0xFA160;
+                            break;
+                        case "GER":
+                            arm9spawnOffset = 0xFA130;
+                            break;
+                        case "JAP":
+                            arm9spawnOffset = 0xF992C;
+                            break;
+                    }
+                    break;
+            }
         }
         #endregion
 
@@ -326,7 +400,7 @@ namespace DSPRE {
             try {
                 gameVersion = PokeDatabase.System.versionsDict[romID];
             } catch (KeyNotFoundException) {
-                System.Windows.Forms.MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
+                MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -436,25 +510,23 @@ namespace DSPRE {
                     break;
             }
         }
-        public int GetLocationNamesTextNumber() {
-            int fileNumber;
+        public void SetLocationNamesTextNumber() {;
             switch (gameVersion) {
                 case "D":
                 case "P":
-                    fileNumber = 382;
+                    locationNamesTextNumber = 382;
                     break;
                 case "Plat":
-                    fileNumber = 433;
+                    locationNamesTextNumber = 433;
                     break;
                 default:
                     if (gameLanguage == "JAP") {
-                        fileNumber = 272;
+                        locationNamesTextNumber = 272;
                     } else {
-                        fileNumber = 279;
+                        locationNamesTextNumber = 279;
                     }
                     break;
             }
-            return fileNumber;
         }
         public static void SetPokémonNamesTextNumber() {
             switch (gameVersion) {

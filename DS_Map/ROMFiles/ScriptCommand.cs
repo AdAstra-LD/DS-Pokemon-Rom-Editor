@@ -34,11 +34,8 @@ namespace DSPRE.ROMFiles {
             this.id = id;
             this.cmdParams = commandParameters;
 
-            try {
-                name = RomInfo.ScriptCommandNamesDict[id];
-            } catch (KeyNotFoundException) {
+            if (!RomInfo.ScriptCommandNamesDict.TryGetValue(id, out name))
                 name = id.ToString("X4");
-            }
 
             switch (id) {
                 case 0x16:      // Jump

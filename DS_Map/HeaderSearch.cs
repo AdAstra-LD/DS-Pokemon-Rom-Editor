@@ -81,7 +81,7 @@ namespace DSPRE {
             operatorComboBox.SelectedIndex = 0;
         }
         #endregion
-        public static List<string> advancedSearch(short startID, short finalID, List<string> intNames, string fieldToSearch, string oper, string valToSearch) {
+        public static List<string> advancedSearch(ushort startID, short finalID, List<string> intNames, string fieldToSearch, string oper, string valToSearch) {
             if (fieldToSearch == "" || oper == "" || valToSearch == "")
                 return null;
 
@@ -89,7 +89,7 @@ namespace DSPRE {
 
             switch (fieldToSearch) {
                 case "Internal Name":
-                    for (short i = startID; i < finalID; i++) {
+                    for (ushort i = startID; i < finalID; i++) {
                         if (oper.Equals("Is Exactly")) {
                             if (intNames[i].Equals(valToSearch)) {
                                 result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
@@ -130,7 +130,7 @@ namespace DSPRE {
                         return null;
                     }
 
-                    for (short i = startID; i < finalID; i++) {
+                    for (ushort i = startID; i < finalID; i++) {
                         var headerFieldEntry = typeof(MapHeader).GetProperty(property).GetValue(MapHeader.LoadFromARM9(i), null);
                         int headerField = int.Parse(headerFieldEntry.ToString());
 

@@ -662,19 +662,17 @@ namespace DSPRE.ROMFiles {
             
         }
         private void AddReference(ref List<(containerTypes callerType, uint callerID, containerTypes invokedType, uint invokedID, int offset)> references, ushort commandID, List<byte[]> parameterList, int pos, CommandContainer cont) {
-            try {
-                int parameterWithRelativeJump = PokeDatabase.ScriptEditor.commandsWithRelativeJump[commandID];
-                uint invokedID = BitConverter.ToUInt32(parameterList[parameterWithRelativeJump], 0);  // Jump, Call
+            int parameterWithRelativeJump;
+            if (!PokeDatabase.ScriptEditor.commandsWithRelativeJump.TryGetValue(commandID, out parameterWithRelativeJump))
+                return;
 
-                containerTypes invokedType;
-                if (commandID == 0x005E)
-                    invokedType = containerTypes.MOVEMENT;
-                else {
-                    invokedType = containerTypes.FUNCTION;
-                }
+            uint invokedID = BitConverter.ToUInt32(parameterList[parameterWithRelativeJump], 0);  // Jump, Call
 
-                references.Add((cont.containerType, cont.manualUserID, invokedType, invokedID, pos - 4));
-            } catch (KeyNotFoundException) { }
+            if (commandID == 0x005E)
+                references.Add((cont.containerType, cont.manualUserID, containerTypes.MOVEMENT, invokedID, pos - 4));
+            else {
+                references.Add((cont.containerType, cont.manualUserID, containerTypes.FUNCTION, invokedID, pos - 4));
+            }
         }
         private void SaveToFile(string path) {
             byte[] thisScript = ToByteArray();

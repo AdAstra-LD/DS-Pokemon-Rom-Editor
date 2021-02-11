@@ -150,6 +150,12 @@
     </Compile>
     <Compile Include="RomInfo.cs" />
     <Compile Include="ROMFiles\ScriptCommand.cs" />
+    <Compile Include="SpawnPointEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpawnPointEditor.Designer.cs">
+      <DependentUpon>SpawnPointEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="WildEditorHGSS.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -288,6 +294,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CameraView.resx">
       <DependentUpon>CameraView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpawnPointEditor.resx">
+      <DependentUpon>SpawnPointEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WildEditorHGSS.resx">
       <DependentUpon>WildEditorHGSS.cs</DependentUpon>
@@ -471,11 +480,14 @@
     <Content Include="Resources\Graphics\Program Icons\addIcon.png" />
     <None Include="Resources\Graphics\Program Icons\copyIcon_small.png" />
     <None Include="Resources\Graphics\Program Icons\checkmark.png" />
+    <None Include="Resources\Graphics\Program Icons\dawnSpawn.png" />
     <Content Include="Resources\Graphics\Program Icons\loadColorTable.png" />
     <Content Include="Resources\Graphics\Program Icons\resetColorTable.png" />
     <None Include="Resources\Graphics\Program Icons\wideLensImage.png" />
     <None Include="Resources\Graphics\Program Icons\wideLensImageTransp.png" />
     <None Include="Resources\Graphics\Program Icons\scriptDBIcon.png" />
+    <None Include="Resources\Graphics\Program Icons\resetIcon.png" />
+    <None Include="Resources\Graphics\Program Icons\spawnCoordsMatrixeditorIcon.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
