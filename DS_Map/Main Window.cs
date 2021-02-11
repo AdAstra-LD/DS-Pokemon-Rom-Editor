@@ -68,13 +68,13 @@ namespace DSPRE {
             List<string> trainerList = new List<string>();
 
             /* Store all trainer names and classes */
-            TextArchive trainerClasses = new TextArchive(romInfo.GetTrainerClassMessageNumber());
-            TextArchive trainerNames = new TextArchive(romInfo.GetTrainerNamesMessageNumber());
+            TextArchive trainerClasses = new TextArchive(RomInfo.trainerClassMessageNumber);
+            TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
             BinaryReader trainerReader;
-            int trainerCount = Directory.GetFiles(romInfo.trainerDataDirPath).Length;
+            int trainerCount = Directory.GetFiles(RomInfo.trainerDataDirPath).Length;
 
             for (int i = 0; i < trainerCount; i++) {
-                trainerReader = new BinaryReader(new FileStream(romInfo.trainerDataDirPath + "\\" + i.ToString("D4"), FileMode.Open));
+                trainerReader = new BinaryReader(new FileStream(RomInfo.trainerDataDirPath + "\\" + i.ToString("D4"), FileMode.Open));
                 trainerReader.BaseStream.Position += 0x1;
                 trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[trainerReader.ReadUInt16()] + " " + trainerNames.messages[i]);
             }
@@ -288,26 +288,6 @@ namespace DSPRE {
             owMovementComboBox.Items.AddRange(PokeDatabase.EventEditor.Overworlds.movementsArray);
             spawnableDirComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.orientationsArray);
             spawnableTypeComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.typesArray);
-
-            /* Create dictionary for 3D overworlds */
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
-                    break;
-                case "Plat":
-                    ow3DSpriteDict = new Dictionary<uint, string>() {
-                        [91] = "brown_sign",
-                        [92] = "red_sign",
-                        [93] = "gray_sign",
-                        [94] = "route_sign",
-                        [96] = "blue_sign",
-                        [101] = "dawn_platinum",
-                        [174] = "dppt_suitcase",
-                    };
-                    break;
-                default:
-                    break;
-            }
 
             if (ScanScriptsCheckStandardizedItemNumbers())
                 isItemRadioButton.Enabled = true;
@@ -1032,11 +1012,11 @@ namespace DSPRE {
                 case "D":
                 case "P":
                 case "Plat":
-                    using (WildEditorDPPt editor = new WildEditorDPPt(romInfo.encounterDirPath, GetPokémonNames(), encToOpen))
+                    using (WildEditorDPPt editor = new WildEditorDPPt(RomInfo.encounterDirPath, GetPokémonNames(), encToOpen))
                         editor.ShowDialog();
                     break;
                 default:
-                    using (WildEditorHGSS editor = new WildEditorHGSS(romInfo.encounterDirPath, GetPokémonNames(), encToOpen))
+                    using (WildEditorHGSS editor = new WildEditorHGSS(RomInfo.encounterDirPath, GetPokémonNames(), encToOpen))
                         editor.ShowDialog();
                     break;
             }
@@ -3680,7 +3660,6 @@ namespace DSPRE {
 
         public EventFile currentEvFile;
         public Event selectedEvent;
-        public Dictionary<uint, string> ow3DSpriteDict = new Dictionary<uint, string>();
 
         /* Painters to draw the matrix grid */
         public Pen eventPen;
@@ -3896,8 +3875,7 @@ namespace DSPRE {
         private Bitmap GetOverworldImage(ushort entryIDOfEventFile, ushort orientation) {
             /* Find sprite corresponding to ID and load it*/
             string imageName;
-
-            if (ow3DSpriteDict.TryGetValue(entryIDOfEventFile, out imageName)) { // If overworld is 3D, load image from dictionary
+            if (RomInfo.ow3DSpriteDict.TryGetValue(entryIDOfEventFile, out imageName)) { // If overworld is 3D, load image from dictionary
                 return (Bitmap)Properties.Resources.ResourceManager.GetObject(imageName);
             }
 
@@ -4537,8 +4515,10 @@ namespace DSPRE {
         }
         private void overworldsListBox_SelectedIndexChanged(object sender, EventArgs e) {
             #region Disable Events for fast execution
-            if (disableHandlers) 
+            if (disableHandlers) {
                 return;
+            }
+
             disableHandlers = true;
             #endregion
 
@@ -4600,7 +4580,12 @@ namespace DSPRE {
                     owXRangeUpDown.Value = currentEvFile.overworlds[index].xRange;
                     owYRangeUpDown.Value = currentEvFile.overworlds[index].yRange;
                     try {
-                        spriteIDlabel.Text = "Sprite ID: " + RomInfo.OverworldTable[currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry].spriteID.ToString("D3");
+                        uint spriteID = RomInfo.OverworldTable[currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry].spriteID;
+                        if (spriteID == 0x3D3D) {
+                            spriteIDlabel.Text = "3D Overworld";
+                        } else {
+                            spriteIDlabel.Text = "Sprite ID: " + spriteID;
+                        }
                     } catch { }
                     DisplayActiveEvents();
                 } catch (ArgumentOutOfRangeException) {
@@ -4654,7 +4639,13 @@ namespace DSPRE {
                 return;
             
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry = (ushort)RomInfo.OverworldTable.Keys.ElementAt(owSpriteComboBox.SelectedIndex);
-            spriteIDlabel.Text = "Sprite ID: " + RomInfo.OverworldTable[currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry].spriteID.ToString("D3");
+            
+            uint spriteID = RomInfo.OverworldTable[currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry].spriteID;
+            if (spriteID == 0x3D3D) {
+                spriteIDlabel.Text = "3D Overworld";
+            } else {
+                spriteIDlabel.Text = "Sprite ID: " + spriteID;
+            }
             owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry, currentEvFile.overworlds[overworldsListBox.SelectedIndex].orientation);
             DisplayActiveEvents();
             owSpritePictureBox.Invalidate();
@@ -6073,7 +6064,6 @@ namespace DSPRE {
                 texturePictureBox.Image = LoadTextureFromNSBTX(currentTileset, texturesListBox.SelectedIndex, palettesListBox.SelectedIndex);
             } catch { }
         }
-
         private string findAndSelectMatchingPalette(string findThis) {
             statusLabel.Text = "Searching palette...";
 
@@ -6097,7 +6087,6 @@ namespace DSPRE {
             statusLabel.Text = "Couldn't find a palette to match " + '"' + findThis + '"';
             return null;
         }
-
         private void areaDataBuildingTilesetUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) 
                 return;
@@ -6199,7 +6188,6 @@ namespace DSPRE {
             selectAreaDataListBox.Items.Add("AreaData File " + selectAreaDataListBox.Items.Count);
             selectAreaDataListBox.SelectedIndex = selectAreaDataListBox.Items.Count - 1;
         }
-
         private void removeAreaDataButton_Click(object sender, EventArgs e) {
             if (selectAreaDataListBox.Items.Count > 1) {
                 /* Delete AreaData file */

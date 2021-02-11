@@ -40,8 +40,8 @@ namespace DSPRE {
         public static string eventsDirPath { get; private set; }
         public static string scriptDirPath { get; private set; }
         public static string textArchivesPath { get; private set; }
-        public string encounterDirPath { get; private set; }
-        public string trainerDataDirPath { get; private set; }
+        public static string encounterDirPath { get; private set; }
+        public static string trainerDataDirPath { get; private set; }
         public static string[] narcPaths { get; private set; }
         public static string[] extractedNarcDirs { get; private set; }
 
@@ -49,7 +49,9 @@ namespace DSPRE {
         public static int attackNamesTextNumber { get; private set; }
         public static int[] pokémonNamesTextNumbers { get; private set; }
         public static int itemNamesTextNumber { get; private set; }
-        public static int itemScriptFileNumber { get; internal set; }
+        public static int itemScriptFileNumber { get; internal set; }      
+        public static int trainerClassMessageNumber { get; private set; }
+        public static int trainerNamesMessageNumber { get; private set; }
         public static int locationNamesTextNumber { get; private set; }
 
 
@@ -61,7 +63,7 @@ namespace DSPRE {
         public static Dictionary<ushort, byte[]> CommandParametersDict { get; private set; }
         public static SortedDictionary<uint, (uint spriteID, ushort properties)> OverworldTable { get; private set; }
         public static uint[] overworldTableKeys { get; private set; }
-
+        public static Dictionary<uint, string> ow3DSpriteDict { get; private set; }
 
         #region Constructors (1)
         public RomInfo(string id, string dir) {
@@ -101,7 +103,9 @@ namespace DSPRE {
             SetItemNamesTextNumber();
             SetItemScriptFileNumber();
             SetLocationNamesTextNumber();
+            SetTrainerClassMessageNumber();
             SetSpawnPointOffset();
+            Set3DOverworldsDict();
 
             /* System */
             SetNarcDirs();
@@ -111,6 +115,18 @@ namespace DSPRE {
             /* * * * */
         }
 
+        private void Set3DOverworldsDict() {
+            ow3DSpriteDict = new Dictionary<uint, string>() {
+                [91] = "brown_sign",
+                [92] = "red_sign",
+                [93] = "gray_sign",
+                [94] = "route_sign",
+                [95] = "blue_sign", //to fix this one (gym_sign)
+                [96] = "blue_sign",
+                [101] = "dawn_platinum",
+                //[174] = "dppt_suitcase",
+            };
+        }
         private void SetSpawnPointOffset() {
             switch (gameVersion) {
                 case "D":
@@ -342,8 +358,8 @@ namespace DSPRE {
             switch (gameVersion) {
                 case "D":
                 case "P":
-                    OWTableOffset = 0x22BCC;
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
+                    OWTableOffset = 0x22B84;
                     break;
                 case "Plat":
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
@@ -361,8 +377,8 @@ namespace DSPRE {
                     break;
                 case "HG":
                 case "SS":
-                    OWTableOffset = 0x21BA8;
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0001.bin";
+                    OWTableOffset = 0x21BA8;
                     break;
             }
         }
@@ -543,48 +559,44 @@ namespace DSPRE {
                     break;
             }
         }
-        public int GetTrainerNamesMessageNumber() {
-            int fileNumber;
+        public void SetTrainerNamesMessageNumber() {
             switch (gameVersion) {
                 case "D":
                 case "P":
-                    fileNumber = 559;
+                    trainerNamesMessageNumber = 559;
                     break;
                 case "Plat":
-                    fileNumber = 618;
+                    trainerNamesMessageNumber = 618;
                     break;
                 default:
                     if (gameLanguage == "JAP") {
-                        fileNumber = 719;
+                        trainerNamesMessageNumber = 719;
                     } else {
-                        fileNumber = 729;
+                        trainerNamesMessageNumber = 729;
                     }
                     break;
             }
-            return fileNumber;
         }
-        public int GetTrainerClassMessageNumber() {
-            int fileNumber;
+        public void SetTrainerClassMessageNumber() {
             switch (gameVersion) {
                 case "D":
                 case "P":
-                    fileNumber = 560;
+                    trainerClassMessageNumber = 560;
                     break;
                 case "Plat":
-                    fileNumber = 619;
+                    trainerClassMessageNumber = 619;
                     break;
                 default:
                     if (gameLanguage == "JAP") {
-                        fileNumber = 720;
+                        trainerClassMessageNumber = 720;
                     } else {
-                        fileNumber = 730;
+                        trainerClassMessageNumber = 730;
                     }
                     break;
             }
-            return fileNumber;
         }
         public int GetAreaDataCount() {
-            return Directory.GetFiles(areaDataDirPath).Length; ;
+            return Directory.GetFiles(areaDataDirPath).Length;
         }
         public int GetMapTexturesCount() {
             return Directory.GetFiles(mapTexturesDirPath).Length;
@@ -632,7 +644,6 @@ namespace DSPRE {
                 case "D":
                 case "P":
                 case "Plat":
-                    
                     using (BinaryReader idReader = new BinaryReader(new FileStream(OWtablePath, FileMode.Open))) {
                         idReader.BaseStream.Position = OWTableOffset;
                         
@@ -660,6 +671,9 @@ namespace DSPRE {
                         }
                     }
                     break;
+            }
+            foreach(uint k in ow3DSpriteDict.Keys) {
+                OverworldTable.Add(k, (0x3D3D, 0x3D3D)); //ADD 3D overworld data (spriteID and properties are dummy values)
             }
             overworldTableKeys = OverworldTable.Keys.ToArray();
         }
