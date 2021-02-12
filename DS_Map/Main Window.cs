@@ -715,7 +715,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.1.4" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.1.4a" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks go to Trifindo, Mikelan98, JackHack96, Mixone and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS Rom Hacking made the development of this tool possible.";
@@ -4447,33 +4447,6 @@ namespace DSPRE {
             overworldsListBox.Items.Add("Overworld " + (currentEvFile.overworlds.Count - 1).ToString());
             overworldsListBox.SelectedIndex = currentEvFile.overworlds.Count - 1;
         }
-        private void isTrainerRadioButton_CheckedChanged(object sender, EventArgs e) {
-            if (disableHandlers)
-                return;
-
-            /* Disable script number control */
-            owScriptNumericUpDown.Enabled = false;
-
-            /* Set special settings controls */
-            owSpecialGroupBox.Enabled = true;
-
-            owTrainerComboBox.Enabled = true;
-            owTrainerLabel.Enabled = true;
-
-            owSightRangeUpDown.Enabled = true;
-            owSightRangeLabel.Enabled = true;
-            owPartnerTrainerCheckBox.Enabled = true;
-
-            owItemComboBox.Enabled = false;
-            owItemLabel.Enabled = false;
-
-            /* Set trainer flag to true */
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x1;
-
-            /* Adjust script number */
-            if (owTrainerComboBox.SelectedIndex >= 0)
-                owTrainerComboBox_SelectedIndexChanged(null, null);
-        }
         public static bool ScanScriptsCheckStandardizedItemNumbers() {
             ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
 
@@ -4484,52 +4457,53 @@ namespace DSPRE {
             }
             return true;
         }
-        private void isItemRadioButton_CheckedChanged(object sender, EventArgs e) {
-            if (disableHandlers)
-                return;
+        private void OWTypeChanged(object sender, EventArgs e) {
+            if (normalRadioButton.Checked == true ) {
+                owScriptNumericUpDown.Enabled = true;
+                owSpecialGroupBox.Enabled = false;
 
-            /* Disable script number control */
-            owScriptNumericUpDown.Enabled = false;
+                if (disableHandlers)
+                    return;
+                currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x0;
+                currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(owScriptNumericUpDown.Value = 0);
+            } else if (isItemRadioButton.Checked == true) {
+                owScriptNumericUpDown.Enabled = false;
 
-            /* Set special settings controls */
-            owSpecialGroupBox.Enabled = true;
+                owSpecialGroupBox.Enabled = true;
+                owTrainerComboBox.Enabled = false;
+                owTrainerLabel.Enabled = false;
+                owSightRangeUpDown.Enabled = false;
+                owSightRangeLabel.Enabled = false;
+                owPartnerTrainerCheckBox.Enabled = false;
 
-            owTrainerComboBox.Enabled = false;
-            owTrainerLabel.Enabled = false;
-
-            owSightRangeUpDown.Enabled = false;
-            owSightRangeLabel.Enabled = false;
-            owPartnerTrainerCheckBox.Enabled = false;
-
-            if (isItemRadioButton.Enabled) {
-                if (isItemRadioButton.Checked) {
+                if (disableHandlers)
+                    return;
+                if (isItemRadioButton.Enabled) {
                     owItemComboBox.Enabled = true;
                     owItemLabel.Enabled = true;
 
+                    currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x3;
                     currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(owScriptNumericUpDown.Value = 7000 + owItemComboBox.SelectedIndex);
                 }
+            } else { //trainer
+                owScriptNumericUpDown.Enabled = false;
+
+                owSpecialGroupBox.Enabled = true;
+                owTrainerComboBox.Enabled = true;
+                owTrainerLabel.Enabled = true;
+                owItemLabel.Enabled = false;
+                owSightRangeUpDown.Enabled = true;
+                owSightRangeLabel.Enabled = true;
+                owPartnerTrainerCheckBox.Enabled = true;
+
+                owItemComboBox.Enabled = false;
+
+                if (disableHandlers)
+                    return;
+                currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x1;
+                if (owTrainerComboBox.SelectedIndex >= 0)
+                    owTrainerComboBox_SelectedIndexChanged(null, null);
             }
-
-            /* Set overworld type to item */
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x3;
-        }
-        private void normalRadioButton_CheckedChanged(object sender, EventArgs e) {
-            if (disableHandlers)
-                return;
-
-            /* Enable script number control buttons */
-            owScriptNumericUpDown.Enabled = true;
-
-            /* Set special settings controls */
-            owSpecialGroupBox.Enabled = false;
-
-            if (normalRadioButton.Checked) {
-                owScriptNumericUpDown.Value = 0;
-            }
-
-            /* Set trainer flag to false and correct script number */
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x0;
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)owScriptNumericUpDown.Value;
         }
         private void owItemComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || overworldsListBox.SelectedIndex < 0)
@@ -4538,89 +4512,75 @@ namespace DSPRE {
             owScriptNumericUpDown.Value = currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(7000 + owItemComboBox.SelectedIndex);
         }
         private void overworldsListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            #region Disable Events for fast execution
-            if (disableHandlers) {
+            int index = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || index < 0) {
                 return;
             }
-
             disableHandlers = true;
-            #endregion
 
-            int index = overworldsListBox.SelectedIndex;
-            if (index > -1) {
-                try {
-                    selectedEvent = currentEvFile.overworlds[index];
-                    Overworld selectedOw = (Overworld)selectedEvent;
-
-                    /* Sprite index and image controls */
-                    owSpriteComboBox.SelectedIndex = Array.IndexOf(RomInfo.overworldTableKeys, selectedOw.overlayTableEntry);
-                    owSpritePictureBox.BackgroundImage = GetOverworldImage(selectedOw.overlayTableEntry, selectedOw.orientation);
-                } catch (ArgumentOutOfRangeException) {
-                    String errorMsg = "This Overworld's sprite ID couldn't be read correctly.";
-                    MessageBox.Show(errorMsg, "Something went wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                try {
-                    /* Set coordinates controls */
-                    owXMapUpDown.Value = currentEvFile.overworlds[index].xMapPosition;
-                    owYMapUpDown.Value = currentEvFile.overworlds[index].yMapPosition;
-                    owXMatrixUpDown.Value = currentEvFile.overworlds[index].xMatrixPosition;
-                    owYMatrixUpDown.Value = currentEvFile.overworlds[index].yMatrixPosition;
-                    owZPositionUpDown.Value = currentEvFile.overworlds[index].zPosition;
-
-                    /*ID, Flag and Script number controls */
-                    owIDNumericUpDown.Value = currentEvFile.overworlds[index].owID;
-                    owFlagNumericUpDown.Value = currentEvFile.overworlds[index].flag;
-                    owScriptNumericUpDown.Value = currentEvFile.overworlds[index].scriptNumber;
-
-                    /* Special settings controls */
-                    if (currentEvFile.overworlds[index].type == 0x1) {
-                        disableHandlers = false;
-                        isTrainerRadioButton.Checked = true;
-                        disableHandlers = true;
-                        if (currentEvFile.overworlds[index].scriptNumber >= 4999) {
-                            owTrainerComboBox.SelectedIndex = Math.Max(currentEvFile.overworlds[index].scriptNumber - 4999, 0); // Partner of double battle trainer
-                            owPartnerTrainerCheckBox.Checked = true;
-                        } else {
-                            owTrainerComboBox.SelectedIndex = Math.Max(currentEvFile.overworlds[index].scriptNumber - 2999, 0); // Normal trainer
-                            owPartnerTrainerCheckBox.Checked = false;
-                        }
-                    } else if (currentEvFile.overworlds[index].type == 0x3 || currentEvFile.overworlds[index].scriptNumber >= 7000 && currentEvFile.overworlds[index].scriptNumber <= 8000) {
-                        disableHandlers = false;
-                        isItemRadioButton.Checked = true;
-                        owItemComboBox.SelectedIndex = Math.Max(currentEvFile.overworlds[index].scriptNumber - 7000, 0);
-                        disableHandlers = true;
-                    } else {
-                        disableHandlers = false;
-                        normalRadioButton.Checked = true;
-                        disableHandlers = true;
-                    }
-
-
-                    /* Movement settings */
-                    owMovementComboBox.SelectedIndex = currentEvFile.overworlds[index].movement;
-                    owOrientationComboBox.SelectedIndex = currentEvFile.overworlds[index].orientation;
-                    owSightRangeUpDown.Value = currentEvFile.overworlds[index].sightRange;
-                    owXRangeUpDown.Value = currentEvFile.overworlds[index].xRange;
-                    owYRangeUpDown.Value = currentEvFile.overworlds[index].yRange;
-                    try {
-                        uint spriteID = RomInfo.OverworldTable[currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry].spriteID;
-                        if (spriteID == 0x3D3D) {
-                            spriteIDlabel.Text = "3D Overworld";
-                        } else {
-                            spriteIDlabel.Text = "Sprite ID: " + spriteID;
-                        }
-                    } catch { }
-                    DisplayActiveEvents();
-                } catch (ArgumentOutOfRangeException) {
-                    String errorMsg = "There was a problem loading the overworld events of this Event file.";
-                    MessageBox.Show(errorMsg, "Something went wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            selectedEvent = currentEvFile.overworlds[index];
+            Overworld selectedOw = (Overworld)selectedEvent;
+            try {
+                /* Sprite index and image controls */
+                owSpriteComboBox.SelectedIndex = Array.IndexOf(RomInfo.overworldTableKeys, selectedOw.overlayTableEntry);
+                owSpritePictureBox.BackgroundImage = GetOverworldImage(selectedOw.overlayTableEntry, selectedOw.orientation);
+            } catch (ArgumentOutOfRangeException) {
+                String errorMsg = "This Overworld's sprite ID couldn't be read correctly.";
+                MessageBox.Show(errorMsg, "Something went wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            #region Re-enable events
+            try {
+                /* Special settings controls */
+                if (selectedOw.type == (ushort)Overworld.owType.TRAINER) {
+                    isTrainerRadioButton.Checked = true;
+                    if (selectedOw.scriptNumber >= 4999) {
+                        owTrainerComboBox.SelectedIndex = Math.Max(selectedOw.scriptNumber - 4999, 0); // Partner of double battle trainer
+                        owPartnerTrainerCheckBox.Checked = true;
+                    } else {
+                        owTrainerComboBox.SelectedIndex = Math.Max(selectedOw.scriptNumber - 2999, 0); // Normal trainer
+                        owPartnerTrainerCheckBox.Checked = false;
+                    }
+                } else if (selectedOw.type == (ushort)Overworld.owType.ITEM || selectedOw.scriptNumber >= 7000 && selectedOw.scriptNumber <= 8000) {
+                    isItemRadioButton.Checked = true;
+                    owItemComboBox.SelectedIndex = Math.Max(selectedOw.scriptNumber - 7000, 0);
+                } else {
+                    normalRadioButton.Checked = true;
+                }
+
+                /* Set coordinates controls */
+                owXMapUpDown.Value = selectedOw.xMapPosition;
+                owYMapUpDown.Value = selectedOw.yMapPosition;
+                owXMatrixUpDown.Value = selectedOw.xMatrixPosition;
+                owYMatrixUpDown.Value = selectedOw.yMatrixPosition;
+                owZPositionUpDown.Value = selectedOw.zPosition;
+
+                /*ID, Flag and Script number controls */
+                owIDNumericUpDown.Value = selectedOw.owID;
+                owFlagNumericUpDown.Value = selectedOw.flag;
+                owScriptNumericUpDown.Value = selectedOw.scriptNumber;
+
+                /* Movement settings */
+                owMovementComboBox.SelectedIndex = selectedOw.movement;
+                owOrientationComboBox.SelectedIndex = selectedOw.orientation;
+                owSightRangeUpDown.Value = selectedOw.sightRange;
+                owXRangeUpDown.Value = selectedOw.xRange;
+                owYRangeUpDown.Value = selectedOw.yRange;
+                try {
+                    uint spriteID = RomInfo.OverworldTable[currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry].spriteID;
+                    if (spriteID == 0x3D3D) {
+                        spriteIDlabel.Text = "3D Overworld";
+                    } else {
+                        spriteIDlabel.Text = "Sprite ID: " + spriteID;
+                    }
+                } catch { }
+                DisplayActiveEvents();
+            } catch (ArgumentOutOfRangeException) {
+                String errorMsg = "There was a problem loading the overworld events of this Event file.";
+                MessageBox.Show(errorMsg, "Something went wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+           
             disableHandlers = false;
-            #endregion
         }
         private void owFlagNumericUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || overworldsListBox.SelectedIndex < 0)
@@ -5094,11 +5054,16 @@ namespace DSPRE {
         }
         private void saveScriptFileButton_Click(object sender, EventArgs e) {
             /* Create new ScriptFile object */
+            int idToAssign = selectScriptFileComboBox.SelectedIndex;
             ScriptFile userEdited = new ScriptFile(scriptTextBox.Lines, functionTextBox.Lines, movementTextBox.Lines, selectScriptFileComboBox.SelectedIndex);
 
             /* Write new scripts to file */
-            userEdited.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex);
-            currentScriptFile = userEdited;
+            if (userEdited.fileID == idToAssign) { //check if ScriptFile instance was created succesfully
+                userEdited.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex);
+                currentScriptFile = userEdited;
+            } else {
+                MessageBox.Show("This " + typeof(ScriptFile).Name + " couldn't be saved.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
         private void importScriptFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .scr file */
@@ -5123,6 +5088,7 @@ namespace DSPRE {
                 scriptEditorIsReady = true;
             }
 
+            scriptEditorTabControl.SelectedIndex = 0;
             selectScriptFileComboBox.SelectedIndex = (int)scriptFileUpDown.Value;
             mainTabControl.SelectedTab = scriptEditorTabPage;
         }
@@ -5243,13 +5209,7 @@ namespace DSPRE {
 
             if (currentScriptFile.isLevelScript) {
                 scriptTextBox.Text += "Level script files are currently not supported.\nYou can use AdAstra's Level Scripts Editor.";
-                functionTextBox.Enabled = false;
-                movementTextBox.Enabled = false;
-                saveScriptFileButton.Enabled = false;
             } else {
-                saveScriptFileButton.Enabled = true;
-                functionTextBox.Enabled = true;
-                movementTextBox.Enabled = true;
 
                 /* Add scripts */
                 disableHandlers = true;

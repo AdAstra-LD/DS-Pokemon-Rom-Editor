@@ -18,7 +18,7 @@ namespace DSPRE.ROMFiles {
         public List<CommandContainer> allScripts = new List<CommandContainer>();
         public List<CommandContainer> allFunctions = new List<CommandContainer>();
         public List<ActionContainer> allActions = new List<ActionContainer>();
-        int fileID = -1;
+        public int fileID = -1;
         public bool isLevelScript = new bool();
         #endregion
 
@@ -131,13 +131,13 @@ namespace DSPRE.ROMFiles {
         "\\" + fileID.ToString("D4"), FileMode.Open)) {
             this.fileID = fileID;
         }
-        public ScriptFile(List<CommandContainer> scripts, List<CommandContainer> functions, List<ActionContainer> movements) {
+        public ScriptFile(List<CommandContainer> scripts, List<CommandContainer> functions, List<ActionContainer> movements, int fileID = -1) {
             allScripts = scripts;
             allFunctions = functions;
             allActions = movements;
             isLevelScript = false;
         }
-        public ScriptFile(string[] scriptLines, string[] functionLines, string[] actionLines, int ID = -1) {
+        public ScriptFile(string[] scriptLines, string[] functionLines, string[] actionLines, int fileID = -1) {
             //TODO: give user the possibility to jump to/call a script
             //once it's done, this Predicate below will be the only one needed, since there will be no distinction between
             //a script and a function
@@ -151,7 +151,7 @@ namespace DSPRE.ROMFiles {
                             || source[x].IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + " Function") >= 0; //Jump Function_#
 
             allScripts = readCommandsFromLines(scriptLines, containerTypes.SCRIPT, scriptEndCondition);  //Jump + whitespace
-            if (allScripts == null)
+            if (allScripts == null || allScripts.Count <= 0)
                 return;
 
             allFunctions = readCommandsFromLines(functionLines, containerTypes.FUNCTION, functionEndCondition);  //Jump + whitespace
@@ -162,7 +162,7 @@ namespace DSPRE.ROMFiles {
             if (allActions == null)
                 return;
 
-            this.fileID = ID;
+            this.fileID = fileID;
         }
         #endregion
 

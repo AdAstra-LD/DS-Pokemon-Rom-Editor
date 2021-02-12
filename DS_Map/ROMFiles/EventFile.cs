@@ -208,6 +208,8 @@ namespace DSPRE.ROMFiles {
     public class Overworld : Event
     {
         #region Fields (14)
+        public enum owType : ushort { NORMAL = 0, TRAINER = 1, ITEM = 3};
+
         public ushort owID;
         public ushort overlayTableEntry;
         public ushort movement;
