@@ -1,33 +1,49 @@
 ﻿using DSPRE.ROMFiles;
 using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace DSPRE {
     public partial class SpawnEditor : Form {
         private TextArchive locations;
-        public SpawnEditor(ListBox.ObjectCollection items, ushort headerNumber = 0, int matrixX = 0, int matrixY = 0) {
+        private List<string> names;
+        public SpawnEditor(List<string> results, List<string> allNames, ushort headerNumber = 0, int matrixX = 0, int matrixY = 0) {
             InitializeComponent();
-            SetupFields(items);
+            this.names = allNames;
+
+            if (results == null || results.Count <= 1) {
+                SetupFields(allNames);
+                spawnHeaderComboBox.SelectedIndex = headerNumber;
+            } else {
+                SetupFields(results);
+                spawnHeaderComboBox.SelectedIndex = 0;
+            }
 
             playerDirCombobox.SelectedIndex = 0;
-            spawnHeaderComboBox.SelectedIndex = headerNumber;
-
             matrixxUpDown.Value = matrixX;
             matrixyUpDown.Value = matrixY;
         }
-        public SpawnEditor(ListBox.ObjectCollection items) {
+        public SpawnEditor(List<string> allNames) {
             InitializeComponent();
-            SetupFields(items);
+            this.names = allNames;
+            SetupFields(allNames);
             readDefaultSpawnPosButton_Click(null, null);
         }              
-        private void SetupFields(ListBox.ObjectCollection items) {
-            playerDirCombobox.Items.AddRange(new string[4] { "Up", "Down", "Left", "Right" });
-            foreach (string s in items) {
-                spawnHeaderComboBox.Items.Add(s);
-            }
+        private void SetupFields(List<string> headersList) {
+            SetupDirections();
+            SetupHeadersList(headersList);
+
             locations = new TextArchive(RomInfo.locationNamesTextNumber);
             ReadDefaultMoney();
+        }
+
+        private void SetupHeadersList(List<string> headersList) {
+            spawnHeaderComboBox.Items.Clear();
+            spawnHeaderComboBox.Items.AddRange(headersList.ToArray());
+        }
+        private void SetupDirections () {
+            playerDirCombobox.Items.Clear();
+            playerDirCombobox.Items.AddRange(new string[4] { "Up", "Down", "Left", "Right" });
         }
         private void saveSpawnEditorButton_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("This operation will overwrite: " + Environment.NewLine
@@ -37,8 +53,9 @@ namespace DSPRE {
 
             if (d == DialogResult.Yes) {
                 string moneyOverlayPath = DSUtils.GetOverlayPath(RomInfo.initialMoneyOverlayNumber);
+                ushort headerNumber = ushort.Parse(spawnHeaderComboBox.SelectedItem.ToString().Split()[0]);
 
-                DSUtils.WriteToArm9(RomInfo.arm9spawnOffset, BitConverter.GetBytes(spawnHeaderComboBox.SelectedIndex));
+                DSUtils.WriteToArm9(RomInfo.arm9spawnOffset, BitConverter.GetBytes(headerNumber));
                 DSUtils.WriteToArm9(RomInfo.arm9spawnOffset + 8, BitConverter.GetBytes((short)(matrixxUpDown.Value * 32 + localmapxUpDown.Value)));
                 DSUtils.WriteToArm9(RomInfo.arm9spawnOffset + 12, BitConverter.GetBytes((short)(matrixyUpDown.Value * 32 + localmapyUpDown.Value)));
                 DSUtils.WriteToArm9(RomInfo.arm9spawnOffset + 16, BitConverter.GetBytes((short)playerDirCombobox.SelectedIndex));
@@ -49,13 +66,14 @@ namespace DSPRE {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-        private void readDefaultSpawnPosButton_Click(object sender, EventArgs e) {
-            ushort headerNumber = BitConverter.ToUInt16(DSUtils.ReadFromArm9(RomInfo.arm9spawnOffset, 2), 0);
-            spawnHeaderComboBox.SelectedIndex = headerNumber;
+        private void readDefaultSpawnPosButton_Click(object sender, EventArgs e) {;
+            SetupFields(names);
 
+            ushort headerNumber = BitConverter.ToUInt16(DSUtils.ReadFromArm9(RomInfo.arm9spawnOffset, 2), 0);
             ushort globalX = BitConverter.ToUInt16(DSUtils.ReadFromArm9(RomInfo.arm9spawnOffset + 8, 2), 0);
             ushort globalY = BitConverter.ToUInt16(DSUtils.ReadFromArm9(RomInfo.arm9spawnOffset + 12, 2), 0);
 
+            spawnHeaderComboBox.SelectedIndex = headerNumber;
             localmapxUpDown.Value = (short)(globalX % 32);
             localmapyUpDown.Value = (short)(globalY % 32);
             matrixxUpDown.Value = (ushort)(globalX / 32);
@@ -64,7 +82,6 @@ namespace DSPRE {
             ReadDefaultMoney();
             playerDirCombobox.SelectedIndex = BitConverter.ToUInt16(DSUtils.ReadFromArm9(RomInfo.arm9spawnOffset + 16, 2), 0);
         }
-
         private void ReadDefaultMoney() {
             if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.initialMoneyOverlayNumber))
                 if (DSUtils.OverlayIsCompressed(RomInfo.initialMoneyOverlayNumber))
@@ -75,7 +92,8 @@ namespace DSPRE {
         }
 
         private void spawnHeaderComboBox_IndexChanged(object sender, EventArgs e) {
-            MapHeader currentHeader = MapHeader.LoadFromARM9((ushort)spawnHeaderComboBox.SelectedIndex);      
+            ushort headerNumber = ushort.Parse(spawnHeaderComboBox.SelectedItem.ToString().Split()[0]);
+            MapHeader currentHeader = MapHeader.LoadFromARM9(headerNumber);
             Matrix headerMatrix = new Matrix(currentHeader.matrixID);
             matrixxUpDown.Maximum = headerMatrix.maps.GetLength(1) - 1;
             matrixyUpDown.Maximum = headerMatrix.maps.GetLength(0) - 1;
@@ -94,10 +112,12 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SpawnEditor_FormClosed(object sender, FormClosedEventArgs e) {
-            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.initialMoneyOverlayNumber))
-                if (!DSUtils.OverlayIsCompressed(RomInfo.initialMoneyOverlayNumber))                
-                    DSUtils.CompressOverlay(RomInfo.initialMoneyOverlayNumber);
+
+        private void resetFilterButton_Click(object sender, EventArgs e) {
+            if (spawnHeaderComboBox.Items.Count < names.Count) {
+                SetupHeadersList(names);
+                spawnHeaderComboBox.SelectedIndex = 0;
+            }
         }
     }
 }

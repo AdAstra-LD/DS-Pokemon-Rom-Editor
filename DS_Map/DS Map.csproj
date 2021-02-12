@@ -463,6 +463,7 @@
     <None Include="Resources\Graphics\Program Icons\scriptDBIcon.png" />
     <None Include="Resources\Graphics\Program Icons\resetIcon.png" />
     <None Include="Resources\Graphics\Program Icons\spawnCoordsMatrixeditorIcon.png" />
+    <None Include="Resources\Graphics\Program Icons\resetListIcon.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

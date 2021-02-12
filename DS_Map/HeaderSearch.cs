@@ -81,7 +81,7 @@ namespace DSPRE {
             operatorComboBox.SelectedIndex = 0;
         }
         #endregion
-        public static List<string> advancedSearch(ushort startID, short finalID, List<string> intNames, string fieldToSearch, string oper, string valToSearch) {
+        public static List<string> advancedSearch(ushort startID, ushort finalID, List<string> intNames, string fieldToSearch, string oper, string valToSearch) {
             if (fieldToSearch == "" || oper == "" || valToSearch == "")
                 return null;
 
@@ -167,17 +167,16 @@ namespace DSPRE {
             }
             return result;
         }
-        private void startSearchButton_Click(object sender, EventArgs e) {
-            headerListBox.Items.Clear();
-            List<string> result;
-
+        private void startSearchButton_Click(object sender, EventArgs e) { 
             if (valueTextBox.Text == "") {
                 MessageBox.Show("Value to search is empty", "Can't search", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
-            try {
-                result = advancedSearch(0, (short)intNames.Count, intNames, fieldToSearch1ComboBox.Text, operator1ComboBox.SelectedItem.ToString(), valueTextBox.Text);
+            List<string> result;
+            headerListBox.Items.Clear();
+            try { 
+                result = advancedSearch(0, (ushort)intNames.Count, intNames, fieldToSearch1ComboBox.Text, operator1ComboBox.SelectedItem.ToString(), valueTextBox.Text);
             } catch (FormatException) {
                 MessageBox.Show("Make sure the value to search is correct.", "Format Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 valueTextBox.Clear();
@@ -207,19 +206,23 @@ namespace DSPRE {
             }
         }
         private void headerSearchResetButton_Click(object sender, EventArgs e) {
-            HeaderSearchReset(headerListBox, intNames);
+            ResetResults(headerListBox, intNames, prependNumbers: true);
             valueTextBox.Clear();
             statusLabel.Text = "Ready";
         }
-        public static void HeaderSearchReset(ListBox headerListBox, List<string> intNames) {
+        public static void ResetResults(ListBox headerListBox, List<string> intNames, bool prependNumbers) {
             if (headerListBox.Items.Count < intNames.Count) {
 
                 headerListBox.Enabled = true;
                 headerListBox.Items.Clear();
 
-                for (int i = 0; i < intNames.Count; i++) {
-                    string name = intNames[i];
-                    headerListBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + name);
+                if (prependNumbers) {
+                    for (int i = 0; i < intNames.Count; i++) {
+                        string name = intNames[i];
+                        headerListBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + name);
+                    }
+                } else {
+                    headerListBox.Items.AddRange(intNames.ToArray());
                 }
             }
         }

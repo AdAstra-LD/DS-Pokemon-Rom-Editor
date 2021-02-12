@@ -318,6 +318,7 @@ namespace DSPRE {
 
             /* Read Header internal names */
             internalNames = new List<string>();
+            headerListBoxNames = new List<string>();
             try {
                 using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.InternalNamesLocation))) {
                     int headerCount = romInfo.GetHeaderCount();
@@ -326,10 +327,11 @@ namespace DSPRE {
                         byte[] row = reader.ReadBytes(RomInfo.internalNameLength);
 
                         string internalName = Encoding.ASCII.GetString(row);//.TrimEnd();
-                        headerListBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + internalName);
+                        headerListBoxNames.Add(i.ToString("D3") + MapHeader.nameSeparator + internalName);
                         internalNames.Add(internalName.TrimEnd('\0'));
                     }
                 }
+                headerListBox.Items.AddRange(headerListBoxNames.ToArray());
             } catch (FileNotFoundException) {
                 MessageBox.Show(RomInfo.InternalNamesLocation + " doesn't exist.", "Couldn't read internal names", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -859,6 +861,10 @@ namespace DSPRE {
                 }
             }
 
+            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.initialMoneyOverlayNumber))
+                if (!DSUtils.OverlayIsCompressed(RomInfo.initialMoneyOverlayNumber))
+                    DSUtils.CompressOverlay(RomInfo.initialMoneyOverlayNumber);
+
             statusLabel.Text = "Repacking ROM...";
             Update();
             //DeleteTempFolders();
@@ -970,7 +976,7 @@ namespace DSPRE {
             if (!matrixEditorIsReady) {
                 SetupMatrixEditor();
             }
-            using (SpawnEditor ed = new SpawnEditor(headerListBox.Items)) {
+            using (SpawnEditor ed = new SpawnEditor(headerListBoxNames))  {
                 ed.ShowDialog();
             }
         }
@@ -1030,6 +1036,7 @@ namespace DSPRE {
         #region Variables
         public MapHeader currentHeader;
         public List<string> internalNames;
+        public List<string> headerListBoxNames;
         #endregion
         private void areaDataUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers)
@@ -1490,7 +1497,7 @@ namespace DSPRE {
                 writer.BaseStream.Position = currentHeader.ID * RomInfo.internalNameLength;
 
                 writer.Write(Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0')));
-                internalNames[currentHeader.ID] = internalNameBox.Text;
+                headerListBoxNames[currentHeader.ID] = internalNames[currentHeader.ID] = internalNameBox.Text;
             }
         }
         private void updateHeaderNameShown(int thisIndex, int headerNumber, string text) {
@@ -1502,7 +1509,7 @@ namespace DSPRE {
         }
         private void resetButton_Click(object sender, EventArgs e) {
             searchLocationTextBox.Clear();
-            HeaderSearch.HeaderSearchReset(headerListBox, internalNames);
+            HeaderSearch.ResetResults(headerListBox, headerListBoxNames, prependNumbers: false);
             statusLabel.Text = "Ready";
         }
         private void searchHeaderTextBox_KeyPress(object sender, KeyEventArgs e) {
@@ -1557,7 +1564,7 @@ namespace DSPRE {
                     headerListBox.Enabled = true;
                 }
             } else if (headerListBox.Items.Count < internalNames.Count) {
-                HeaderSearch.HeaderSearchReset(headerListBox, internalNames);
+                HeaderSearch.ResetResults(headerListBox, headerListBoxNames, prependNumbers: false);
             }
         }
         private void scriptFileUpDown_ValueChanged(object sender, EventArgs e) {
@@ -2023,7 +2030,7 @@ namespace DSPRE {
         }
         private void headersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
             if (headerListBox.Items.Count < internalNames.Count)
-                HeaderSearch.HeaderSearchReset(headerListBox, internalNames);
+                HeaderSearch.ResetResults(headerListBox, headerListBoxNames, prependNumbers: false);
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0) {
                 int headerNumber = Convert.ToInt32(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
                 headerListBox.SelectedIndex = headerNumber;
@@ -2326,31 +2333,48 @@ namespace DSPRE {
         }
         private void setSpawnPointButton_Click(object sender, EventArgs e) {
             DataGridViewCell selectedCell = null;
+            switch (matrixTabControl.SelectedIndex) {
+                case 0: //Maps
+                    selectedCell = mapFilesGridView.SelectedCells[0];
+                    selectedCell = headersGridView.Rows[selectedCell.RowIndex].Cells[selectedCell.ColumnIndex];
+                    break;
+                case 1: //Headers
+                    selectedCell = headersGridView.SelectedCells[0];
+                    break;
+                case 2: //Altitudes
+                    selectedCell = heightsGridView.SelectedCells[0];
+                    selectedCell = headersGridView.Rows[selectedCell.RowIndex].Cells[selectedCell.ColumnIndex];
+                    break;
+            }
 
-            ushort headerNumber;
+            ushort headerNumber = 0;
+            List<string> result = null;
             if (currentMatrix.hasHeadersSection) {
-                switch (matrixTabControl.SelectedIndex) {
-                    case 0: //Maps
-                        selectedCell = mapFilesGridView.SelectedCells[0];
-                        selectedCell = headersGridView.Rows[selectedCell.RowIndex].Cells[selectedCell.ColumnIndex];
-                        break;
-                    case 1: //Headers
-                        selectedCell = headersGridView.SelectedCells[0];
-                        break;
-                    case 2: //Altitudes
-                        selectedCell = heightsGridView.SelectedCells[0];
-                        selectedCell = headersGridView.Rows[selectedCell.RowIndex].Cells[selectedCell.ColumnIndex];
-                        break;
-                }
                 headerNumber = Convert.ToUInt16(selectedCell.Value);
             } else {
-                headerNumber = currentHeader.ID;
+                DialogResult d;
+                d = MessageBox.Show("The current matrix doesn't have a Header Tab. " +
+                    Environment.NewLine + "Do you want to check if any Header is using it and choose that one as your Spawn Point? " +
+                    Environment.NewLine + "\nChoosing 'No' will pick the last selected Header.", "Couldn't find Header Tab", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (d == DialogResult.Yes) {
+                    result = HeaderSearch.advancedSearch(0, (ushort)internalNames.Count, internalNames, "Matrix (ID)", "Equals", selectMatrixComboBox.SelectedIndex.ToString());
+                    if (result.Count < 1) {
+                        MessageBox.Show("The current Matrix isn't assigned to any Header.\nThe default choice has been set to the last selected Header.", "No result", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        headerNumber = currentHeader.ID;
+                    } else if (result.Count == 1) {
+                        headerNumber = ushort.Parse(result.First().Split()[0]);
+                    } else {
+                        MessageBox.Show("Multiple Headers are using this Matrix.\nPick one from the list or reset the filter results to choose a different Header.", "Multiple results", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                } else {
+                    headerNumber = currentHeader.ID;
+                }
             }
 
             int matrixX = selectedCell.ColumnIndex;
             int matrixY = selectedCell.RowIndex;
 
-            using (SpawnEditor ed = new SpawnEditor(headerListBox.Items, headerNumber, matrixX, matrixY)) {
+            using (SpawnEditor ed = new SpawnEditor(result, headerListBoxNames, headerNumber, matrixX, matrixY)) {
                 ed.ShowDialog();
             }
         }
@@ -5686,7 +5710,15 @@ namespace DSPRE {
             int rowInd = textEditorDataGridView.RowCount - 1;
 
             disableHandlers = true;
-            textEditorDataGridView.Rows[rowInd].HeaderCell.Value = "0x" + rowInd.ToString("X");
+
+            string format = "X";
+            string prefix = "0x";
+            if (decimalRadioButton.Checked) {
+                format = "D";
+                prefix = "";
+            }
+
+            textEditorDataGridView.Rows[rowInd].HeaderCell.Value = prefix + rowInd.ToString(format);
             disableHandlers = false;
 
         }

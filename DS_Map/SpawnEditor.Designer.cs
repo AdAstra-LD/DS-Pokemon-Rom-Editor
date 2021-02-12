@@ -42,6 +42,7 @@ namespace DSPRE {
             this.locationNameLBL = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.initialMoneyUpDown = new System.Windows.Forms.NumericUpDown();
+            this.resetFilterButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.matrixxUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.matrixyUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.localmapyUpDown)).BeginInit();
@@ -174,7 +175,7 @@ namespace DSPRE {
             // 
             this.saveAndCloseSpawnEditorButton.Image = ((System.Drawing.Image)(resources.GetObject("saveAndCloseSpawnEditorButton.Image")));
             this.saveAndCloseSpawnEditorButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveAndCloseSpawnEditorButton.Location = new System.Drawing.Point(192, 168);
+            this.saveAndCloseSpawnEditorButton.Location = new System.Drawing.Point(241, 168);
             this.saveAndCloseSpawnEditorButton.Name = "saveAndCloseSpawnEditorButton";
             this.saveAndCloseSpawnEditorButton.Size = new System.Drawing.Size(110, 42);
             this.saveAndCloseSpawnEditorButton.TabIndex = 12;
@@ -187,7 +188,7 @@ namespace DSPRE {
             // 
             this.readDefaultSpawnPosButton.Image = global::DSPRE.Properties.Resources.resetIcon;
             this.readDefaultSpawnPosButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.readDefaultSpawnPosButton.Location = new System.Drawing.Point(72, 168);
+            this.readDefaultSpawnPosButton.Location = new System.Drawing.Point(123, 168);
             this.readDefaultSpawnPosButton.Name = "readDefaultSpawnPosButton";
             this.readDefaultSpawnPosButton.Size = new System.Drawing.Size(107, 42);
             this.readDefaultSpawnPosButton.TabIndex = 13;
@@ -226,11 +227,25 @@ namespace DSPRE {
             this.initialMoneyUpDown.Size = new System.Drawing.Size(68, 20);
             this.initialMoneyUpDown.TabIndex = 16;
             // 
+            // resetFilterButton
+            // 
+            this.resetFilterButton.Image = global::DSPRE.Properties.Resources.resetListIcon;
+            this.resetFilterButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.resetFilterButton.Location = new System.Drawing.Point(19, 168);
+            this.resetFilterButton.Name = "resetFilterButton";
+            this.resetFilterButton.Size = new System.Drawing.Size(71, 42);
+            this.resetFilterButton.TabIndex = 17;
+            this.resetFilterButton.Text = "Reset\r\nFilter";
+            this.resetFilterButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.resetFilterButton.UseVisualStyleBackColor = true;
+            this.resetFilterButton.Click += new System.EventHandler(this.resetFilterButton_Click);
+            // 
             // SpawnEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(371, 214);
+            this.Controls.Add(this.resetFilterButton);
             this.Controls.Add(this.initialMoneyUpDown);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.locationNameLBL);
@@ -254,7 +269,6 @@ namespace DSPRE {
             this.Name = "SpawnEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Spawn Settings Editor";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SpawnEditor_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.matrixxUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.matrixyUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.localmapyUpDown)).EndInit();
@@ -284,5 +298,6 @@ namespace DSPRE {
         private System.Windows.Forms.Label locationNameLBL;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.NumericUpDown initialMoneyUpDown;
+        private System.Windows.Forms.Button resetFilterButton;
     }
 }

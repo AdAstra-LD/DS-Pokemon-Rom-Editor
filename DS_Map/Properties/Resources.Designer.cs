@@ -1539,6 +1539,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap resetListIcon {
+            get {
+                object obj = ResourceManager.GetObject("resetListIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RightClick {
             get {
                 object obj = ResourceManager.GetObject("RightClick", resourceCulture);
