@@ -689,10 +689,10 @@ namespace DSPRE.Resources {
                 [0x00FE] = "End"
             };
             public static Dictionary<ushort, string> comparisonOperatorsDict = new Dictionary<ushort, string>() {
-                [0] = "LOWER",
+                [0] = "LESS",
                 [1] = "EQUAL",
                 [2] = "GREATER",
-                [3] = "LOWER/EQUAL",
+                [3] = "LESS/EQUAL",
                 [4] = "GREATER/EQUAL",
                 [5] = "DIFFERENT",
                 [6] = "OR",
