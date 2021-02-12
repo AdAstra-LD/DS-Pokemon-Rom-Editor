@@ -3632,7 +3632,6 @@ namespace DSPRE {
             MessageBox.Show("BackGround Sound data imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
         }
-
         private void soundPlatesExportButton_Click(object sender, EventArgs e) {
             SaveFileDialog eb = new SaveFileDialog();
             eb.Filter = "BackGround Sound File (*.bgs)|*.bgs";
