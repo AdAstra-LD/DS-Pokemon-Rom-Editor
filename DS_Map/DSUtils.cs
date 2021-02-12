@@ -7,13 +7,8 @@ using System.Windows.Forms;
 
 namespace DSPRE {
     static class DSUtils {
-        public static string workDir { get; private set; }
-        public static void SetWorkDir(string workDir) {
-            DSUtils.workDir = workDir;
-        }
-
         public static void CompressOverlay(int overlayNumber) {
-            string overlayFilePath = '"' + workDir + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin" + '"';
+            string overlayFilePath = '"' + GetOverlayPath(overlayNumber) + '"';
             Process unpack = new Process();
             unpack.StartInfo.FileName = @"Tools\blz.exe";
             unpack.StartInfo.Arguments = "-en " + overlayFilePath;
@@ -23,31 +18,28 @@ namespace DSPRE {
             unpack.Start();
             unpack.WaitForExit();
         }
-
         public static bool DecompressArm9() {
             Process decompress = new Process();
             decompress.StartInfo.FileName = @"Tools\blz.exe";
             decompress.StartInfo.Arguments = @" -d " + '"' + RomInfo.arm9Path + '"';
-            decompress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            decompress.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             decompress.StartInfo.CreateNoWindow = true;
             decompress.Start();
             decompress.WaitForExit();
 
             return new FileInfo(RomInfo.arm9Path).Length> 0xBC000;
         }
-
         public static void editARM9size (int increment) {
             FileStream arm = File.OpenWrite(RomInfo.arm9Path);
             BinaryWriter arm9Truncate = new BinaryWriter(arm);
             arm9Truncate.BaseStream.SetLength(arm.Length + increment);
             arm9Truncate.Close();
         }
-
         public static bool CompressArm9() {
             Process compress = new Process();
             compress.StartInfo.FileName = @"Tools\blz.exe";
             compress.StartInfo.Arguments = @" -en9 " + '"' + RomInfo.arm9Path + '"';
-            compress.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            compress.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             compress.StartInfo.CreateNoWindow = true;
             compress.Start();
             compress.WaitForExit();
@@ -56,8 +48,8 @@ namespace DSPRE {
         }
 
         public static int DecompressOverlay(int overlayNumber, bool makeBackup) {
-            String overlayFilePath = workDir + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
-
+            String overlayFilePath = GetOverlayPath(overlayNumber);
+            
             if (!File.Exists(overlayFilePath)) {
                 MessageBox.Show("Overlay to decompress #" + overlayNumber + " doesn't exist",
                     "Overlay not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -88,7 +80,7 @@ namespace DSPRE {
         }
 
         public static void RestoreOverlayFromCompressedBackup(int overlayNumber, bool eventEditorIsReady) {
-            String overlayFilePath = workDir + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
+            String overlayFilePath = GetOverlayPath(overlayNumber);
 
             if (File.Exists(overlayFilePath + ".backup")) {
                 if (new FileInfo(overlayFilePath).Length <= new FileInfo(overlayFilePath + ".backup").Length) { //if overlay is bigger than its backup
@@ -107,6 +99,10 @@ namespace DSPRE {
                 
             }
         }
+        public static string GetOverlayPath(int overlayNumber) {
+            return RomInfo.workDir + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
+        }
+
         public static bool CheckOverlayHasCompressionFlag(int ovNumber) {
             bool result;
             BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath));
@@ -119,6 +115,11 @@ namespace DSPRE {
             f.Close();
 
             return result;
+        }
+        public static uint GetOverlayUncompressedSize(int ovNumber) {
+            BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath));
+            f.BaseStream.Position = ovNumber * 32 + 8; //overlayNumber * size of entry + offset
+            return f.ReadUInt32();
         }
         public static void SetOverlayCompressionInTable(int ovNumber, byte compressStatus) {
             if (compressStatus < 0 || compressStatus > 3) {
@@ -172,7 +173,7 @@ namespace DSPRE {
                 
                 DirectoryInfo di = new DirectoryInfo(pathToExtracted);
                 if (!di.Exists || di.GetFiles().Length == 0) {
-                    Narc.Open(workDir + pathToPacked).ExtractToFolder(pathToExtracted);
+                    Narc.Open(RomInfo.workDir + pathToPacked).ExtractToFolder(pathToExtracted);
                 }
 
                 if (progress != null)
@@ -187,7 +188,7 @@ namespace DSPRE {
 
             foreach (int id in IDs) {
                 (string pathToPacked, string pathToExtracted) = (narcPaths[id], extractedNarcDirs[id]);
-                Narc.Open(workDir + pathToPacked).ExtractToFolder(pathToExtracted);
+                Narc.Open(RomInfo.workDir + pathToPacked).ExtractToFolder(pathToExtracted);
 
                 if (progress != null)
                     try {
@@ -202,7 +203,7 @@ namespace DSPRE {
             (string pathToPacked, string pathToExtracted) tuple = (narcPaths[id], extractedNarcDirs[id]);
             DirectoryInfo di = new DirectoryInfo(tuple.Item2);
             if (!di.Exists || di.GetFiles().Length == 0) {
-                Narc.Open(workDir + tuple.pathToPacked).ExtractToFolder(tuple.pathToExtracted);
+                Narc.Open(RomInfo.workDir + tuple.pathToPacked).ExtractToFolder(tuple.pathToExtracted);
             }
         }
         public static void ForceUnpackNarc(int id) {
@@ -210,7 +211,11 @@ namespace DSPRE {
             string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
 
             (string pathToPacked, string pathToExtracted) = (narcPaths[id], extractedNarcDirs[id]);
-            Narc.Open(workDir + pathToPacked).ExtractToFolder(pathToExtracted);
+            Narc.Open(RomInfo.workDir + pathToPacked).ExtractToFolder(pathToExtracted);
+        }
+
+        public static bool OverlayIsCompressed(int ovNumber) {
+            return (new FileInfo(GetOverlayPath(ovNumber)).Length < GetOverlayUncompressedSize(ovNumber));
         }
     }
 }

@@ -2,8 +2,9 @@
 
 Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features and bugfixes.
 
-![Screenshot](aDSPRE_112.png)
-![Screenshot](bDSPRE_112.png)
+![Screenshot](aDSPRE_114.png)
+![Screenshot](bDSPRE_114.png)
+![Screenshot](cDSPRE_114.png)
 
 ## Misc changes to the official DSPRE
 - Significantly shorter load and save times.
@@ -27,9 +28,12 @@ Supported patches:
 - Standardize item numbers (fixed).
 - Pokémon names to Sentence Case.
 
-### ROM Toolbox:
+### Script Command Database:
 A handy window that shows all the available script commands and the parameters they require.
 - Many commands have been identified and added.
+
+### Spawn Settings Editor:
+Allows you to change the first map where the adventure begins and the initial money.
 
 ### Wild Encounters Editor:
 - Added missing button functions (add and remove).
@@ -54,10 +58,11 @@ A handy window that shows all the available script commands and the parameters t
 - Added support for custom color tables.
 - Fixed "add matrix" and "remove matrix" buttons GUI numbering mismatch.
 - Fixed wrong row/col indices when resizing matrices.
+- Fixed junk input detector.
 
 ### Map Editor:
 - Partial GUI redesign (now with fewer building controls and a more straightforward GUI).
-- New BGS Section
+- New BGS Section.
 - Expanded collisions database.
 - Added Section size labels to 3D Model, Terrain and BGS Tabs (Map Editor).
 - Added support for broken BTX detection to Map Editor and NSBTX Editor.
@@ -79,11 +84,13 @@ A handy window that shows all the available script commands and the parameters t
 - Added mouse support and warps navigation feature.
 - Events can now be duplicated.
 - New fields (for Spawnables and Triggers).
+- Complete rewrite of the Sprite finder.
 
 ### Script Editor:
 - Replaced "Search Flag" with "Search any command".
 - Enabled some of the quick script cmd buttons.
 - Script editor can identify and report some errors.
+- Fixed problem with backward jumps.
 - Fixed Text Search and Replace (Results can be double-clicked).
 - Improved search speed.
 - Fixed script export button.
@@ -94,3 +101,4 @@ A handy window that shows all the available script commands and the parameters t
 - Added option to show row numbers as hex.
 - Fixed Text Search and Replace (Results can be double-clicked).
 - Improved search speed.
+- Added support for Chinese text.

@@ -16,13 +16,16 @@ namespace DSPRE {
         public static string romID { get; private set; }
         public static string workDir { get; private set; }
         public static string arm9Path { get; private set; }
-        public static string overlayTablePath { get; private set; }
+        public static string overlayTablePath { get; set; }
+        public static string overlayPath { get; set; }
         public static string gameVersion { get; private set; }
         public static string gameLanguage { get; private set; }
         public static string gameName { get; private set; }
 
         public static long headerTableOffset { get; private set; }
         public static uint arm9spawnOffset { get; private set; }
+        public static int initialMoneyOverlayNumber { get; private set; }
+        public static uint initialMoneyOffset { get; private set; }
         public static string syntheticOverlayPath { get; private set; }
         public static string OWSpriteDirPath { get; private set; }
         public static long OWTableOffset { get; internal set; }
@@ -78,6 +81,7 @@ namespace DSPRE {
 
             arm9Path = workDir + @"arm9.bin";
             overlayTablePath = workDir + @"y9.bin";
+            overlayPath = workDir + "overlay";
 
             InternalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
             mapTexturesDirPath = workDir + @"unpacked\maptex";
@@ -97,12 +101,14 @@ namespace DSPRE {
             SetNullEncounterID();           
             SetBuildingModelsDirPath();
             SetOWtable();
+            SetInitialMoneyOverlayAndOffset();
 
             SetAttackNamesTextNumber();
             SetPokémonNamesTextNumber();
             SetItemNamesTextNumber();
             SetItemScriptFileNumber();
             SetLocationNamesTextNumber();
+            SetTrainerNamesMessageNumber();
             SetTrainerClassMessageNumber();
             SetSpawnPointOffset();
             Set3DOverworldsDict();
@@ -126,6 +132,24 @@ namespace DSPRE {
                 [101] = "dawn_platinum",
                 //[174] = "dppt_suitcase",
             };
+        }
+        private void SetInitialMoneyOverlayAndOffset() {
+            switch (gameVersion) {
+                case "D":
+                case "P":
+                    initialMoneyOverlayNumber = 52;
+                    initialMoneyOffset = 0x1E4;
+                    break;
+                case "Plat":
+                    initialMoneyOverlayNumber = 57;
+                    initialMoneyOffset = 0x1EC;
+                    break;
+                case "HG":
+                case "SS":
+                    initialMoneyOverlayNumber = 36;
+                    initialMoneyOffset = 0x2FC;
+                    break;
+            }
         }
         private void SetSpawnPointOffset() {
             switch (gameVersion) {
@@ -174,13 +198,18 @@ namespace DSPRE {
                             break;
                     }
                     break;
-                default:
+                case "HG":
+                case "SS":
                     switch (gameLanguage) {
                         case "ENG":
                             arm9spawnOffset = 0xFA17C;
                             break;
                         case "ESP":
-                            arm9spawnOffset = 0xFA164;
+                            if (gameVersion == "HG") {
+                                arm9spawnOffset = 0xFA164;
+                            } else {
+                                arm9spawnOffset = 0xFA16C;
+                            }
                             break;
                         case "ITA":
                             arm9spawnOffset = 0xFA0F4;

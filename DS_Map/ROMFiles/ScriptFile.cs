@@ -79,9 +79,9 @@ namespace DSPRE.ROMFiles {
                                 endScript = true;
                             
                         }
-                        allScripts.Add(new CommandContainer(current, containerTypes.SCRIPT, commandList: cmdList));
+                        allScripts.Add(new CommandContainer(current+1, containerTypes.SCRIPT, commandList: cmdList));
                     } else {
-                        allScripts.Add(new CommandContainer(current, containerTypes.SCRIPT, useScript: index+1));
+                        allScripts.Add(new CommandContainer(current+1, containerTypes.SCRIPT, useScript: index+1));
                     }
                 }
 
@@ -102,9 +102,9 @@ namespace DSPRE.ROMFiles {
                             if (PokeDatabase.ScriptEditor.endCodes.Contains(command.id))
                                 endFunction = true;
                         }
-                        allFunctions.Add(new CommandContainer(current, containerTypes.FUNCTION, commandList: cmdList));
+                        allFunctions.Add(new CommandContainer(current+1, containerTypes.FUNCTION, commandList: cmdList));
                     } else {
-                        allFunctions.Add(new CommandContainer(current, containerTypes.FUNCTION, useScript: posInList +1));
+                        allFunctions.Add(new CommandContainer(current+1, containerTypes.FUNCTION, useScript: posInList +1));
                     }
                 }
 
@@ -123,7 +123,7 @@ namespace DSPRE.ROMFiles {
                             cmdList.Add(new ScriptAction(id, scrReader.ReadUInt16()));
                         }
                     }
-                    allActions.Add(new ActionContainer(current, actionCommandsList: cmdList));
+                    allActions.Add(new ActionContainer(current+1, actionCommandsList: cmdList));
                 }
             }
         }
@@ -674,7 +674,7 @@ namespace DSPRE.ROMFiles {
                 references.Add((cont.containerType, cont.manualUserID, containerTypes.FUNCTION, invokedID, pos - 4));
             }
         }
-        private void SaveToFile(string path) {
+        private void SaveToFile(string path, bool showSuccessMessage = true) {
             byte[] thisScript = ToByteArray();
             if (thisScript == null) {
                 Console.WriteLine(GetType().Name + " couldn't be saved!");
@@ -685,11 +685,12 @@ namespace DSPRE.ROMFiles {
                 writer.Write(thisScript);
             }
 
-            MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (showSuccessMessage)
+                MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        public void SaveToFileDefaultDir(int IDtoReplace) {
+        public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
             string path = RomInfo.scriptDirPath + "\\" + IDtoReplace.ToString("D4");
-            this.SaveToFile(path);  
+            this.SaveToFile(path, showSuccessMessage);  
         }
         public void SaveToFileExplorePath(string suggestedFileName, bool blindmode) {
             SaveFileDialog sf = new SaveFileDialog();

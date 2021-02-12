@@ -76,7 +76,8 @@ namespace DSPRE {
             for (int i = 0; i < trainerCount; i++) {
                 trainerReader = new BinaryReader(new FileStream(RomInfo.trainerDataDirPath + "\\" + i.ToString("D4"), FileMode.Open));
                 trainerReader.BaseStream.Position += 0x1;
-                trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[trainerReader.ReadUInt16()] + " " + trainerNames.messages[i]);
+                int classMessageID = trainerReader.ReadUInt16();
+                trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[classMessageID] + " " + trainerNames.messages[i]);
             }
             return trainerList.ToArray();
         }
@@ -239,10 +240,11 @@ namespace DSPRE {
                         break;
                     default:
                         // HGSS Overlay 1 must be decompressed in order to read the overworld table
-                        if (DSUtils.DecompressOverlay(1, true) == -1) {
-                            MessageBox.Show("Overlay 1 couldn't be decompressed.\nOverworld sprites in the Event Editor will be " +
+                        if (DSUtils.CheckOverlayHasCompressionFlag(1))
+                            if(DSUtils.OverlayIsCompressed(1))
+                                if (DSUtils.DecompressOverlay(1, true) == -1)
+                                    MessageBox.Show("Overlay 1 couldn't be decompressed.\nOverworld sprites in the Event Editor will be " +
                                 "displayed incorrectly or not displayed at all.", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
                         break;
                 }
             }
@@ -734,7 +736,6 @@ namespace DSPRE {
 
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, workDir);
-            DSUtils.SetWorkDir(workDir);
 
             if (RomInfo.gameVersion == null) {
                 statusLabel.Text = "Unsupported ROM";
@@ -826,8 +827,8 @@ namespace DSPRE {
             romToolboxToolStripMenuItem.Enabled = true;
             headerSearchToolStripButton.Enabled = true;
             headerSearchToolStripMenuItem.Enabled = true;
-            spawnPointEditorToolStripButton.Enabled = true;
-            spawnPointEditorToolStripMenuItem.Enabled = true;
+            spawnEditorToolStripButton.Enabled = true;
+            spawnEditorToolStripMenuItem.Enabled = true;
 
             scriptCommandsButton.Enabled = true;
             statusLabel.Text = "Ready";
@@ -849,13 +850,12 @@ namespace DSPRE {
                 }
             }
 
-            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
-                if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
-                    if (ROMToolboxDialog.overlay1MustBeRestoredFromBackup) {
-                        DSUtils.RestoreOverlayFromCompressedBackup(1, eventEditorIsReady);
-                    } else {
+            if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
+                if (ROMToolboxDialog.overlay1MustBeRestoredFromBackup) {
+                    DSUtils.RestoreOverlayFromCompressedBackup(1, eventEditorIsReady);
+                } else {
+                    if (!DSUtils.OverlayIsCompressed(1))
                         DSUtils.CompressOverlay(1);
-                    }
                 }
             }
 
@@ -866,7 +866,8 @@ namespace DSPRE {
 
             if (RomInfo.gameVersion != "D" && RomInfo.gameVersion != "P" && RomInfo.gameVersion != "Plat")
                 if (eventEditorIsReady)
-                    DSUtils.DecompressOverlay(1, true);
+                    if (DSUtils.OverlayIsCompressed(1))
+                        DSUtils.DecompressOverlay(1, true);
 
             statusLabel.Text = "Ready";
         }
@@ -965,16 +966,16 @@ namespace DSPRE {
             }
             statusLabel.Text = "Ready";
         }
-        private void spawnPointEditorToolStripButton_Click(object sender, EventArgs e) {
+        private void spawnEditorToolStripButton_Click(object sender, EventArgs e) {
             if (!matrixEditorIsReady) {
                 SetupMatrixEditor();
             }
-            using (SpawnPointEditor ed = new SpawnPointEditor(headerListBox.Items)) {
+            using (SpawnEditor ed = new SpawnEditor(headerListBox.Items)) {
                 ed.ShowDialog();
             }
         }
-        private void spawnPointEditorToolStripMenuItem_Click(object sender, EventArgs e) {
-            spawnPointEditorToolStripButton_Click(null, null);
+        private void spawnEditorToolStripMenuItem_Click(object sender, EventArgs e) {
+            spawnEditorToolStripButton_Click(null, null);
         }
         private void wildEditorButton_Click(object sender, EventArgs e) {
             openWildEditor(loadCurrent: false);
@@ -2349,7 +2350,7 @@ namespace DSPRE {
             int matrixX = selectedCell.ColumnIndex;
             int matrixY = selectedCell.RowIndex;
 
-            using (SpawnPointEditor ed = new SpawnPointEditor(headerListBox.Items, headerNumber, matrixX, matrixY)) {
+            using (SpawnEditor ed = new SpawnEditor(headerListBox.Items, headerNumber, matrixX, matrixY)) {
                 ed.ShowDialog();
             }
         }

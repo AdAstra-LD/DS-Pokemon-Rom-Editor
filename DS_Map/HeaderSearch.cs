@@ -142,7 +142,7 @@ namespace DSPRE {
                             if (headerField == numToSearch) {
                                 result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
                             }
-                        } else if (oper.Equals("Is Greater")) {
+                        } else if (oper.StartsWith("Is Greater")) {
                             if (headerField > numToSearch) {
                                 result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
                             }
@@ -158,6 +158,9 @@ namespace DSPRE {
                             if (headerField != numToSearch) {
                                 result.Add(i.ToString("D3") + MapHeader.nameSeparator + intNames[i]);
                             }
+                        } else {
+                            Console.WriteLine("Unrecognized operand!!!");
+                            break;
                         }
                     }
                     break;

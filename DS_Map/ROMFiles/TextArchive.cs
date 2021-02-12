@@ -314,15 +314,16 @@ namespace DSPRE.ROMFiles {
         public byte[] ToByteArray() {
             return toByteArray(messages);
         }
-        public void SaveToFile(string path) {
+        public void SaveToFile(string path, bool showSuccessMessage = true) {
             using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
                 writer.Write(this.ToByteArray());
 
-            MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (showSuccessMessage)
+                MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        public void SaveToFileDefaultDir(int IDtoReplace) {
+        public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
             string path = RomInfo.textArchivesPath + "\\" + IDtoReplace.ToString("D4");
-            this.SaveToFile(path);
+            this.SaveToFile(path, showSuccessMessage);
         }
         public void SaveToFileExplorePath(string suggestedFileName) {
             SaveFileDialog sf = new SaveFileDialog();

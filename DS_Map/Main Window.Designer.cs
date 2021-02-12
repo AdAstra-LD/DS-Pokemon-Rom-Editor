@@ -592,7 +592,7 @@
             this.diamondAndPearlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.platinumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.heartGoldAndSoulSilverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.spawnPointEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spawnEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -610,7 +610,7 @@
             this.romToolboxToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.headerSearchToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.scriptCommandsButton = new System.Windows.Forms.ToolStripButton();
-            this.spawnPointEditorToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.spawnEditorToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mainTabControl.SuspendLayout();
@@ -7555,7 +7555,7 @@
             this.romToolboxToolStripMenuItem,
             this.headerSearchToolStripMenuItem,
             this.scriptCommandsDatabaseToolStripMenuItem,
-            this.spawnPointEditorToolStripMenuItem});
+            this.spawnEditorToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.aboutToolStripMenuItem.Text = "Tools";
@@ -7609,11 +7609,11 @@
             // 
             // spawnPointEditorToolStripMenuItem
             // 
-            this.spawnPointEditorToolStripMenuItem.Enabled = false;
-            this.spawnPointEditorToolStripMenuItem.Name = "spawnPointEditorToolStripMenuItem";
-            this.spawnPointEditorToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.spawnPointEditorToolStripMenuItem.Text = "Spawn Point Editor";
-            this.spawnPointEditorToolStripMenuItem.Click += new System.EventHandler(this.spawnPointEditorToolStripMenuItem_Click);
+            this.spawnEditorToolStripMenuItem.Enabled = false;
+            this.spawnEditorToolStripMenuItem.Name = "spawnPointEditorToolStripMenuItem";
+            this.spawnEditorToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.spawnEditorToolStripMenuItem.Text = "Spawn Point Editor";
+            this.spawnEditorToolStripMenuItem.Click += new System.EventHandler(this.spawnEditorToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem1
             // 
@@ -7688,7 +7688,7 @@
             this.romToolboxToolStripButton,
             this.headerSearchToolStripButton,
             this.scriptCommandsButton,
-            this.spawnPointEditorToolStripButton});
+            this.spawnEditorToolStripButton});
             this.mainToolStrip.Location = new System.Drawing.Point(0, 24);
             this.mainToolStrip.Name = "mainToolStrip";
             this.mainToolStrip.Size = new System.Drawing.Size(1214, 44);
@@ -7807,16 +7807,16 @@
             // 
             // spawnPointEditorToolStripButton
             // 
-            this.spawnPointEditorToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.spawnPointEditorToolStripButton.Enabled = false;
-            this.spawnPointEditorToolStripButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
-            this.spawnPointEditorToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.spawnPointEditorToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.spawnPointEditorToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.spawnPointEditorToolStripButton.Name = "spawnPointEditorToolStripButton";
-            this.spawnPointEditorToolStripButton.Size = new System.Drawing.Size(57, 36);
-            this.spawnPointEditorToolStripButton.Text = "Spawn Point Editor";
-            this.spawnPointEditorToolStripButton.Click += new System.EventHandler(this.spawnPointEditorToolStripButton_Click);
+            this.spawnEditorToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.spawnEditorToolStripButton.Enabled = false;
+            this.spawnEditorToolStripButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
+            this.spawnEditorToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.spawnEditorToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.spawnEditorToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.spawnEditorToolStripButton.Name = "spawnPointEditorToolStripButton";
+            this.spawnEditorToolStripButton.Size = new System.Drawing.Size(57, 36);
+            this.spawnEditorToolStripButton.Text = "Spawn Point Editor";
+            this.spawnEditorToolStripButton.Click += new System.EventHandler(this.spawnEditorToolStripButton_Click);
             // 
             // versionLabel
             // 
@@ -8620,8 +8620,8 @@
         private System.Windows.Forms.ToolStripMenuItem heartGoldAndSoulSilverToolStripMenuItem;
         private System.Windows.Forms.Label spriteIDlabel;
         private System.Windows.Forms.Button setSpawnPointButton;
-        private System.Windows.Forms.ToolStripButton spawnPointEditorToolStripButton;
-        private System.Windows.Forms.ToolStripMenuItem spawnPointEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton spawnEditorToolStripButton;
+        private System.Windows.Forms.ToolStripMenuItem spawnEditorToolStripMenuItem;
     }
 }
 

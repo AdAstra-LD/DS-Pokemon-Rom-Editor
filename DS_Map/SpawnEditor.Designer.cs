@@ -1,6 +1,6 @@
 ﻿
 namespace DSPRE {
-    partial class SpawnPointEditor {
+    partial class SpawnEditor {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -24,7 +24,7 @@ namespace DSPRE {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpawnPointEditor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpawnEditor));
             this.spawnHeaderComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.matrixxUpDown = new System.Windows.Forms.NumericUpDown();
@@ -40,10 +40,13 @@ namespace DSPRE {
             this.saveAndCloseSpawnEditorButton = new System.Windows.Forms.Button();
             this.readDefaultSpawnPosButton = new System.Windows.Forms.Button();
             this.locationNameLBL = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.initialMoneyUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.matrixxUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.matrixyUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.localmapyUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.localmapxUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.initialMoneyUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // spawnHeaderComboBox
@@ -171,11 +174,11 @@ namespace DSPRE {
             // 
             this.saveAndCloseSpawnEditorButton.Image = ((System.Drawing.Image)(resources.GetObject("saveAndCloseSpawnEditorButton.Image")));
             this.saveAndCloseSpawnEditorButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveAndCloseSpawnEditorButton.Location = new System.Drawing.Point(192, 132);
+            this.saveAndCloseSpawnEditorButton.Location = new System.Drawing.Point(192, 168);
             this.saveAndCloseSpawnEditorButton.Name = "saveAndCloseSpawnEditorButton";
             this.saveAndCloseSpawnEditorButton.Size = new System.Drawing.Size(110, 42);
             this.saveAndCloseSpawnEditorButton.TabIndex = 12;
-            this.saveAndCloseSpawnEditorButton.Text = "Save Spawn\r\nSettings";
+            this.saveAndCloseSpawnEditorButton.Text = "Save Settings";
             this.saveAndCloseSpawnEditorButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.saveAndCloseSpawnEditorButton.UseVisualStyleBackColor = true;
             this.saveAndCloseSpawnEditorButton.Click += new System.EventHandler(this.saveSpawnEditorButton_Click);
@@ -184,11 +187,11 @@ namespace DSPRE {
             // 
             this.readDefaultSpawnPosButton.Image = global::DSPRE.Properties.Resources.resetIcon;
             this.readDefaultSpawnPosButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.readDefaultSpawnPosButton.Location = new System.Drawing.Point(72, 132);
+            this.readDefaultSpawnPosButton.Location = new System.Drawing.Point(72, 168);
             this.readDefaultSpawnPosButton.Name = "readDefaultSpawnPosButton";
             this.readDefaultSpawnPosButton.Size = new System.Drawing.Size(107, 42);
             this.readDefaultSpawnPosButton.TabIndex = 13;
-            this.readDefaultSpawnPosButton.Text = "Load Spawn\r\nSettings";
+            this.readDefaultSpawnPosButton.Text = "Load Saved\r\nSettings";
             this.readDefaultSpawnPosButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.readDefaultSpawnPosButton.UseVisualStyleBackColor = true;
             this.readDefaultSpawnPosButton.Click += new System.EventHandler(this.readDefaultSpawnPosButton_Click);
@@ -202,11 +205,34 @@ namespace DSPRE {
             this.locationNameLBL.TabIndex = 14;
             this.locationNameLBL.Text = "Location LBL";
             // 
-            // SpawnPointEditor
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(147, 122);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(69, 13);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Initial Money:";
+            // 
+            // initialMoneyUpDown
+            // 
+            this.initialMoneyUpDown.Location = new System.Drawing.Point(148, 138);
+            this.initialMoneyUpDown.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.initialMoneyUpDown.Name = "initialMoneyUpDown";
+            this.initialMoneyUpDown.Size = new System.Drawing.Size(68, 20);
+            this.initialMoneyUpDown.TabIndex = 16;
+            // 
+            // SpawnEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(371, 182);
+            this.ClientSize = new System.Drawing.Size(371, 214);
+            this.Controls.Add(this.initialMoneyUpDown);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.locationNameLBL);
             this.Controls.Add(this.readDefaultSpawnPosButton);
             this.Controls.Add(this.saveAndCloseSpawnEditorButton);
@@ -225,13 +251,15 @@ namespace DSPRE {
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "SpawnPointEditor";
+            this.Name = "SpawnEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Spawn Point Editor";
+            this.Text = "Spawn Settings Editor";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SpawnEditor_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.matrixxUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.matrixyUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.localmapyUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.localmapxUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.initialMoneyUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -254,5 +282,7 @@ namespace DSPRE {
         private System.Windows.Forms.Button saveAndCloseSpawnEditorButton;
         private System.Windows.Forms.Button readDefaultSpawnPosButton;
         private System.Windows.Forms.Label locationNameLBL;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown initialMoneyUpDown;
     }
 }

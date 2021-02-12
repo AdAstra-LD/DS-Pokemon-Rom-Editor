@@ -47,8 +47,8 @@
             this.bdhcamCB = new System.Windows.Forms.PictureBox();
             this.sentenceCaseCB = new System.Windows.Forms.PictureBox();
             this.itemNumbersCB = new System.Windows.Forms.PictureBox();
-            this.StandardizePatchLBL = new System.Windows.Forms.Label();
-            this.StandardizePatchTextLBL = new System.Windows.Forms.Label();
+            this.standardizePatchLBL = new System.Windows.Forms.Label();
+            this.standardizePatchTextLBL = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.arm9patchCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlay1CB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdhcamCB)).BeginInit();
@@ -97,7 +97,6 @@
             // 
             // BDHCAMpatchTextLBL
             // 
-            this.BDHCAMpatchTextLBL.Enabled = false;
             this.BDHCAMpatchTextLBL.Location = new System.Drawing.Point(15, 184);
             this.BDHCAMpatchTextLBL.Name = "BDHCAMpatchTextLBL";
             this.BDHCAMpatchTextLBL.Size = new System.Drawing.Size(293, 67);
@@ -110,7 +109,6 @@
             // BDHCAMpatchLBL
             // 
             this.BDHCAMpatchLBL.AutoSize = true;
-            this.BDHCAMpatchLBL.Enabled = false;
             this.BDHCAMpatchLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BDHCAMpatchLBL.Location = new System.Drawing.Point(14, 168);
             this.BDHCAMpatchLBL.Name = "BDHCAMpatchLBL";
@@ -120,7 +118,6 @@
             // 
             // BDHCAMpatchButton
             // 
-            this.BDHCAMpatchButton.Enabled = false;
             this.BDHCAMpatchButton.Location = new System.Drawing.Point(335, 183);
             this.BDHCAMpatchButton.Name = "BDHCAMpatchButton";
             this.BDHCAMpatchButton.Size = new System.Drawing.Size(100, 50);
@@ -255,23 +252,23 @@
             // 
             // StandardizePatchLBL
             // 
-            this.StandardizePatchLBL.AutoSize = true;
-            this.StandardizePatchLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StandardizePatchLBL.Location = new System.Drawing.Point(15, 343);
-            this.StandardizePatchLBL.Name = "StandardizePatchLBL";
-            this.StandardizePatchLBL.Size = new System.Drawing.Size(155, 13);
-            this.StandardizePatchLBL.TabIndex = 1;
-            this.StandardizePatchLBL.Text = "Standardize Item Numbers";
+            this.standardizePatchLBL.AutoSize = true;
+            this.standardizePatchLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.standardizePatchLBL.Location = new System.Drawing.Point(15, 343);
+            this.standardizePatchLBL.Name = "StandardizePatchLBL";
+            this.standardizePatchLBL.Size = new System.Drawing.Size(155, 13);
+            this.standardizePatchLBL.TabIndex = 1;
+            this.standardizePatchLBL.Text = "Standardize Item Numbers";
             // 
             // StandardizePatchTextLBL
             // 
-            this.StandardizePatchTextLBL.Location = new System.Drawing.Point(15, 358);
-            this.StandardizePatchTextLBL.Name = "StandardizePatchTextLBL";
-            this.StandardizePatchTextLBL.Size = new System.Drawing.Size(239, 40);
-            this.StandardizePatchTextLBL.TabIndex = 2;
-            this.StandardizePatchTextLBL.Text = "Makes it so that PokéBall item scripts follow the order of items\r\nas indexed in t" +
+            this.standardizePatchTextLBL.Location = new System.Drawing.Point(15, 358);
+            this.standardizePatchTextLBL.Name = "StandardizePatchTextLBL";
+            this.standardizePatchTextLBL.Size = new System.Drawing.Size(239, 40);
+            this.standardizePatchTextLBL.TabIndex = 2;
+            this.standardizePatchTextLBL.Text = "Makes it so that PokéBall item scripts follow the order of items\r\nas indexed in t" +
     "he ROM. Needed for \'Item\' option in Event Editor\r\n";
-            this.StandardizePatchTextLBL.UseMnemonic = false;
+            this.standardizePatchTextLBL.UseMnemonic = false;
             // 
             // ROMToolboxDialog
             // 
@@ -297,8 +294,8 @@
             this.Controls.Add(this.arm9expansionTextLBL);
             this.Controls.Add(this.arm9expansionLBL);
             this.Controls.Add(this.applyARM9ExpansionButton);
-            this.Controls.Add(this.StandardizePatchTextLBL);
-            this.Controls.Add(this.StandardizePatchLBL);
+            this.Controls.Add(this.standardizePatchTextLBL);
+            this.Controls.Add(this.standardizePatchLBL);
             this.Controls.Add(this.applyItemStandardizeButton);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -336,7 +333,7 @@
         private System.Windows.Forms.PictureBox bdhcamCB;
         private System.Windows.Forms.PictureBox sentenceCaseCB;
         private System.Windows.Forms.PictureBox itemNumbersCB;
-        private System.Windows.Forms.Label StandardizePatchLBL;
-        private System.Windows.Forms.Label StandardizePatchTextLBL;
+        private System.Windows.Forms.Label standardizePatchLBL;
+        private System.Windows.Forms.Label standardizePatchTextLBL;
     }
 }

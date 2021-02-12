@@ -9,7 +9,7 @@ using static DSPRE.ROMFiles.ScriptFile;
 namespace DSPRE.ROMFiles {
     public class CommandContainer {
         public List<ScriptCommand> commands;
-        public uint manualUserID;
+        public uint manualUserID = uint.MaxValue;
         public int useScript;
         public containerTypes containerType;
 
