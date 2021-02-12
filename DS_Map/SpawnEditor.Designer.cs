@@ -178,7 +178,7 @@ namespace DSPRE {
             this.saveAndCloseSpawnEditorButton.Name = "saveAndCloseSpawnEditorButton";
             this.saveAndCloseSpawnEditorButton.Size = new System.Drawing.Size(110, 42);
             this.saveAndCloseSpawnEditorButton.TabIndex = 12;
-            this.saveAndCloseSpawnEditorButton.Text = "Save Settings";
+            this.saveAndCloseSpawnEditorButton.Text = "Save Current\r\nSettings";
             this.saveAndCloseSpawnEditorButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.saveAndCloseSpawnEditorButton.UseVisualStyleBackColor = true;
             this.saveAndCloseSpawnEditorButton.Click += new System.EventHandler(this.saveSpawnEditorButton_Click);
