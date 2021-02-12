@@ -3617,7 +3617,7 @@ namespace DSPRE {
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) 
                 writer.Write(currentMapFile.GetTerrain());
 
-            TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + "B";
+            TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
             MessageBox.Show("Terrain settings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -3630,7 +3630,7 @@ namespace DSPRE {
 
             currentMapFile.ImportSoundPlates(new FileStream(it.FileName, FileMode.Open));
             MessageBox.Show("BackGround Sound data imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + "B";
+            BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
         }
 
         private void soundPlatesExportButton_Click(object sender, EventArgs e) {
@@ -3643,7 +3643,7 @@ namespace DSPRE {
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) 
                 writer.Write(currentMapFile.GetSoundPlates());
 
-            BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + "B";
+            BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
             MessageBox.Show("BackGround Sound data exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
