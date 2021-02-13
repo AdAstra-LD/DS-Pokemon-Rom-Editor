@@ -662,6 +662,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap dpthunderstorm1 {
+            get {
+                object obj = ResourceManager.GetObject("dpthunderstorm1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap exportArrow {
             get {
                 object obj = ResourceManager.GetObject("exportArrow", resourceCulture);
@@ -1179,6 +1189,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ptblueish {
+            get {
+                object obj = ResourceManager.GetObject("ptblueish", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ptcamera0 {
             get {
                 object obj = ResourceManager.GetObject("ptcamera0", resourceCulture);
@@ -1359,9 +1379,29 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ptdarkfog {
+            get {
+                object obj = ResourceManager.GetObject("ptdarkfog", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ptdiamondsnow {
             get {
                 object obj = ResourceManager.GetObject("ptdiamondsnow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ptdim {
+            get {
+                object obj = ResourceManager.GetObject("ptdim", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1389,6 +1429,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ptgreenish {
+            get {
+                object obj = ResourceManager.GetObject("ptgreenish", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pthail {
             get {
                 object obj = ResourceManager.GetObject("pthail", resourceCulture);
@@ -1399,9 +1449,29 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ptheavyfog {
+            get {
+                object obj = ResourceManager.GetObject("ptheavyfog", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ptheavyrain {
             get {
                 object obj = ResourceManager.GetObject("ptheavyrain", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ptlightfog {
+            get {
+                object obj = ResourceManager.GetObject("ptlightfog", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1442,6 +1512,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap ptrain {
             get {
                 object obj = ResourceManager.GetObject("ptrain", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ptredish {
+            get {
+                object obj = ResourceManager.GetObject("ptredish", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

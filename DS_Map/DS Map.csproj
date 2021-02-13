@@ -455,6 +455,13 @@
     <None Include="Resources\Graphics\Program Icons\resetIcon.png" />
     <None Include="Resources\Graphics\Program Icons\spawnCoordsMatrixeditorIcon.png" />
     <None Include="Resources\Graphics\Program Icons\resetListIcon.png" />
+    <Content Include="Resources\Graphics\Weather\DPPt\ptblueish.png" />
+    <Content Include="Resources\Graphics\Weather\DPPt\ptdarkfog.png" />
+    <Content Include="Resources\Graphics\Weather\DPPt\ptdim.png" />
+    <Content Include="Resources\Graphics\Weather\DPPt\ptgreenish.png" />
+    <Content Include="Resources\Graphics\Weather\DPPt\ptheavyfog.png" />
+    <Content Include="Resources\Graphics\Weather\DPPt\ptlightfog.png" />
+    <Content Include="Resources\Graphics\Weather\DPPt\ptredish.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

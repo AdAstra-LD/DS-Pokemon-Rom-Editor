@@ -123,19 +123,19 @@ namespace DSPRE.Resources {
                 [15] = "Deep fog",
                 [16] = "Dark, Flash usable",
                 [17] = "Lightning, no rain",
-                [18] = "Normal [18]",
-                [19] = "Normal [19]",
+                [18] = "Light fog",
+                [19] = "Heavy fog",
                 [20] = "Normal [20]",
                 [21] = "Diamond dust [21]",
                 [22] = "Volcanic ash fall, steady",
                 [23] = "Eterna forest weather",
                 [24] = "Player spotlight [24]",
                 [25] = "Player spotlight [25]",
-                [26] = "Normal [26]",
-                [27] = "Normal [27]",
-                [28] = "Normal [28]",
-                [29] = "Normal [29]",
-                [30] = "Normal [30]",
+                [26] = "Dark fog",
+                [27] = "Somewhat green",
+                [28] = "Somewhat red",
+                [29] = "Somewhat blue",
+                [30] = "Dim light",
                 [31] = "Normal [31]",
                 [32] = "Rain [32]",
                 [33] = "Normal [33]",
@@ -3684,7 +3684,7 @@ namespace DSPRE.Resources {
                     [new byte[] { 22 }] = "dplightsandstorm"
                 };
                 public static Dictionary<byte[], string> ptWeatherImageDict = new Dictionary<byte[], string>() {
-                    [new byte[] { 0, 8, 13, 18, 19, 20, 26, 27, 28, 29, 30, 31, 33 } ] = "ptnormal",
+                    [new byte[] { 0, 8, 13, 20, 31, 33 } ] = "ptnormal",
                     [new byte[] { 1 } ] = "ptcloudy",
                     [new byte[] { 2, 32 } ] = "ptrain",
                     [new byte[] { 3 } ] = "ptheavyrain",
@@ -3699,9 +3699,21 @@ namespace DSPRE.Resources {
                     [new byte[] { 14, 15 } ] = "ptfog",
                     [new byte[] { 16 } ] = "ptdark",
                     [new byte[] { 17 } ] = "ptlightning",
-                    [new byte[] { 22 } ] = "ptlightsandstorm",
-                    [new byte[] { 23 } ] = "ptforestweather",
-                    [new byte[] { 24, 25 } ] = "ptspotlight",
+
+                    [new byte[] { 18 }] = "ptlightfog",
+                    [new byte[] { 19 }] = "ptheavyfog",
+
+                    [new byte[] { 22 }] = "ptlightsandstorm",
+                    [new byte[] { 23 }] = "ptforestweather",
+                    [new byte[] { 24, 25 }] = "ptspotlight",
+
+                    [new byte[] { 26 }] = "ptdarkfog",
+                    [new byte[] { 27 }] = "ptgreenish",
+                    [new byte[] { 28 }] = "ptredish",
+                    [new byte[] { 29 }] = "ptblueish",
+                    [new byte[] { 30 }] = "ptdim",
+
+
                 };
                 public static Dictionary<byte[], string> hgssweatherImageDict = new Dictionary<byte[], string>() {
                     [new byte[] { 0, 1 }] = "hgssnormal",
