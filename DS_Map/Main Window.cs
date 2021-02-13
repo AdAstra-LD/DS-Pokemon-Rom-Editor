@@ -1487,7 +1487,7 @@ namespace DSPRE {
             disableHandlers = true;
 
             updateCurrentInternalName();
-            updateHeaderNameShown(headerListBox.SelectedIndex, currentHeader.ID, internalNames[currentHeader.ID]);
+            updateHeaderNameShown(headerListBox.SelectedIndex);
             headerListBox.Focus();
             disableHandlers = false;
         }
@@ -1497,14 +1497,13 @@ namespace DSPRE {
                 writer.BaseStream.Position = currentHeader.ID * RomInfo.internalNameLength;
 
                 writer.Write(Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0')));
-                headerListBoxNames[currentHeader.ID] = internalNames[currentHeader.ID] = internalNameBox.Text;
+                internalNames[currentHeader.ID] = internalNameBox.Text;
+                headerListBoxNames[currentHeader.ID] = currentHeader.ID.ToString("D3") + MapHeader.nameSeparator + internalNames[currentHeader.ID];
             }
         }
-        private void updateHeaderNameShown(int thisIndex, int headerNumber, string text) {
+        private void updateHeaderNameShown(int thisIndex) {
             disableHandlers = true;
-
-            headerListBox.Items[thisIndex] = headerNumber.ToString("D3") + MapHeader.nameSeparator + text;
-
+            headerListBox.Items[thisIndex] = headerListBoxNames[currentHeader.ID];
             disableHandlers = false;
         }
         private void resetButton_Click(object sender, EventArgs e) {
@@ -1651,7 +1650,7 @@ namespace DSPRE {
                     internalNameBox.Text = Encoding.UTF8.GetString(reader.ReadBytes(RomInfo.internalNameLength));
                     updateCurrentInternalName();
                 }
-                updateHeaderNameShown(headerListBox.SelectedIndex, currentHeader.ID, internalNames[currentHeader.ID]);
+                updateHeaderNameShown(headerListBox.SelectedIndex);
             } catch (EndOfStreamException) { }
 
             refreshHeaderEditorFields();
