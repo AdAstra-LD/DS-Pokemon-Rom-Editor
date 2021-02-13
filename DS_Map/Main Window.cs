@@ -2850,7 +2850,7 @@ namespace DSPRE {
             /* Remove item from ComboBox */
             selectMapComboBox.Items.RemoveAt(lastIndex);
         }
-        private void saveMapButton_Click(object sender, EventArgs e) {
+        private void saveMapButton_Click(object sender, EventArgs e)  {
             currentMapFile.SaveToFileDefaultDir(selectMapComboBox.SelectedIndex);
         }
         private void exportCurrentMapBinButton_Click(object sender, EventArgs e) {
@@ -3084,8 +3084,10 @@ namespace DSPRE {
             var wholePart = Math.Truncate(xBuildUpDown.Value);
             var decPart = xBuildUpDown.Value - wholePart;
 
-            if (decPart < 0)
+            if (decPart < 0) {
                 decPart += 1;
+                wholePart -= 1;
+            }
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xPosition = (short)wholePart;
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xFraction = (ushort)(decPart*65535);
@@ -3098,8 +3100,10 @@ namespace DSPRE {
             var wholePart = Math.Truncate(yBuildUpDown.Value);
             var decPart = yBuildUpDown.Value - wholePart;
 
-            if (decPart < 0)
+            if (decPart < 0) {
                 decPart += 1;
+                wholePart -= 1;
+            }
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yPosition = (short)wholePart;
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yFraction = (ushort)(decPart * 65535);
@@ -3112,8 +3116,10 @@ namespace DSPRE {
             var wholePart = Math.Truncate(zBuildUpDown.Value);
             var decPart = zBuildUpDown.Value - wholePart;
 
-            if (decPart < 0)
+            if (decPart < 0) {
                 decPart += 1;
+                wholePart -= 1;
+            }
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zPosition = (short)wholePart;
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zFraction = (ushort)(decPart*65535);

@@ -99,11 +99,11 @@ namespace DSPRE.ROMFiles {
                                                 break;
                                             }
                                             if (tmp1 != 0x0 && tmp1 != 0x1) {
-                                                try {
-                                                    string character = GetCharDictionary[tmp1];
-                                                    pokemonText.Append(character);
-                                                } catch(KeyNotFoundException) { 
+                                                string character = "";
+                                                if (!GetCharDictionary.TryGetValue(tmp1, out character)) {
                                                     pokemonText.Append(@"\x" + tmp1.ToString("X4"));
+                                                } else {
+                                                    pokemonText.Append(character);
                                                 }
                                             }
                                         }
@@ -113,10 +113,11 @@ namespace DSPRE.ROMFiles {
                                             break;
                                         }
                                         if (tmp1 != 0x0 && tmp1 != 0x1) {
-                                            string character = GetCharDictionary[tmp1];
-                                            pokemonText.Append(character);
-                                            if (character == null) {
+                                            string character = "";
+                                            if (!GetCharDictionary.TryGetValue(tmp1, out character))
                                                 pokemonText.Append(@"\x" + tmp1.ToString("X4"));
+                                            else {
+                                                pokemonText.Append(character);
                                             }
                                         }
                                         shift += 9;
@@ -133,11 +134,11 @@ namespace DSPRE.ROMFiles {
                                 #endregion
                                 pokemonText.Append(uncomp);
                             } else {
-                                try {
-                                    string character = GetCharDictionary[car];
-                                    pokemonText.Append(character);
-                                } catch (KeyNotFoundException) { 
+                                string character = "";
+                                if (!GetCharDictionary.TryGetValue(car, out character)) {
                                     pokemonText.Append(@"\x" + car.ToString("X4"));
+                                } else {
+                                    pokemonText.Append(character);
                                 }
                             }
                             break;
