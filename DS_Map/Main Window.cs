@@ -4419,7 +4419,7 @@ namespace DSPRE {
 
         #region Overworlds Editor
         private void addOverworldButton_Click(object sender, EventArgs e) {
-            currentEvFile.overworlds.Add(new Overworld(currentEvFile.overworlds.Count, (int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
+            currentEvFile.overworlds.Add(new Overworld(currentEvFile.overworlds.Count + 1, (int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
             overworldsListBox.Items.Add("Overworld " + (currentEvFile.overworlds.Count - 1).ToString());
             overworldsListBox.SelectedIndex = currentEvFile.overworlds.Count - 1;
         }        
