@@ -388,7 +388,17 @@ namespace DSPRE {
                 case "D":
                 case "P":
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
-                    OWTableOffset = 0x22B84;
+                    switch (gameLanguage) { // Go to the beginning of the overworld table
+                        case "ENG":
+                            OWTableOffset = 0x22BCC;
+                            break;
+                        case "JAP":
+                            OWTableOffset = 0x23BB8;
+                            break;
+                        default:
+                            OWTableOffset = 0x22B84;
+                            break;
+                    }
                     break;
                 case "Plat":
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
@@ -396,8 +406,15 @@ namespace DSPRE {
                         case "ITA":
                             OWTableOffset = 0x2BC44;
                             break;
+                        case "FRA":
+                        case "ESP":
+                            OWTableOffset = 0x2BC3C;
+                            break;
                         case "GER":
                             OWTableOffset = 0x2BC50;
+                            break;
+                        case "JAP":
+                            OWTableOffset = 0x2BA24;
                             break;
                         default:
                             OWTableOffset = 0x2BC34;

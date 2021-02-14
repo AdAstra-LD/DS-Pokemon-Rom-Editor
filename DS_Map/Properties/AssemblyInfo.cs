@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // Le informazioni generali relative a un assembly sono controllate dal seguente 
 // set di attributi. Modificare i valori di questi attributi per modificare le informazioni
 // associate a un assembly.
-[assembly: AssemblyTitle("DSPRE Reloaded 1.1.4b")]
+[assembly: AssemblyTitle("DSPRE Reloaded 1.1.4d")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DSPRE Reloaded 1.1.4b")]
+[assembly: AssemblyProduct("DSPRE Reloaded 1.1.4d")]
 [assembly: AssemblyCopyright("Copyright © 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -32,4 +32,4 @@ using System.Runtime.InteropServices;
 // usando l'asterisco '*' come illustrato di seguito:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.1.4")]
-[assembly: AssemblyFileVersion("1.1.4b")]
+[assembly: AssemblyFileVersion("1.1.4d")]

@@ -7858,7 +7858,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
-            this.Text = "DS Pokémon Rom Editor 1.1.4b (Nømura, AdAstra/LD3005)";
+            this.Text = "DS Pokémon Rom Editor 1.1.4d (Nømura, AdAstra/LD3005)";
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);
             this.headerEditorTabPage.PerformLayout();
