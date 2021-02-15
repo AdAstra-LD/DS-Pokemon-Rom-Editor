@@ -2,9 +2,9 @@
 
 Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features and bugfixes.
 
-![Screenshot](aDSPRE_114.png)
-![Screenshot](bDSPRE_114.png)
-![Screenshot](cDSPRE_114.png)
+![Screenshot](aDSPRE_114c.png)
+![Screenshot](bDSPRE_114c.png)
+![Screenshot](cDSPRE_114c.png)
 
 ## Misc changes to the official DSPRE
 - Significantly shorter load and save times.
