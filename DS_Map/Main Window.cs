@@ -647,8 +647,10 @@ namespace DSPRE {
         private void romToolBoxToolStripMenuItem_Click(object sender, EventArgs e) {
             using (ROMToolboxDialog window = new ROMToolboxDialog(romInfo)) {
                 window.ShowDialog();
-                if (ROMToolboxDialog.flag_standardizedItems)
+                if (ROMToolboxDialog.flag_standardizedItems) {
                     isItemRadioButton.Enabled = true;
+                    OWTypeChanged(null, null);
+                }
             }
         }
         private void scriptCommandsDatabaseToolStripButton_Click(object sender, EventArgs e) {
