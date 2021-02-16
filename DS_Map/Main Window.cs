@@ -2953,7 +2953,7 @@ namespace DSPRE {
 
         }
         private void buildingsListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || buildIndexComboBox.SelectedIndex < 0)
                 return;
             disableHandlers = true;
 
@@ -3701,22 +3701,24 @@ namespace DSPRE {
         #region Subroutines
         private void centerEventviewOnEntities() {
             disableHandlers = true;
-            if (currentEvFile.overworlds.Count > 0) {
-                eventMatrixXUpDown.Value = currentEvFile.overworlds[0].xMatrixPosition;
-                eventMatrixYUpDown.Value = currentEvFile.overworlds[0].yMatrixPosition;
-            } else if (currentEvFile.warps.Count > 0) {
-                eventMatrixXUpDown.Value = currentEvFile.warps[0].xMatrixPosition;
-                eventMatrixYUpDown.Value = currentEvFile.warps[0].yMatrixPosition;
-            } else if (currentEvFile.spawnables.Count > 0) {
-                eventMatrixXUpDown.Value = currentEvFile.spawnables[0].xMatrixPosition;
-                eventMatrixYUpDown.Value = currentEvFile.spawnables[0].yMatrixPosition;
-            } else if (currentEvFile.triggers.Count > 0) {
-                eventMatrixXUpDown.Value = currentEvFile.triggers[0].xMatrixPosition;
-                eventMatrixYUpDown.Value = currentEvFile.triggers[0].yMatrixPosition;
-            } else {
-                eventMatrixXUpDown.Value = 0;
-                eventMatrixYUpDown.Value = 0;
-            }
+            try {
+                if (currentEvFile.overworlds.Count > 0) {
+                    eventMatrixXUpDown.Value = currentEvFile.overworlds[0].xMatrixPosition;
+                    eventMatrixYUpDown.Value = currentEvFile.overworlds[0].yMatrixPosition;
+                } else if (currentEvFile.warps.Count > 0) {
+                    eventMatrixXUpDown.Value = currentEvFile.warps[0].xMatrixPosition;
+                    eventMatrixYUpDown.Value = currentEvFile.warps[0].yMatrixPosition;
+                } else if (currentEvFile.spawnables.Count > 0) {
+                    eventMatrixXUpDown.Value = currentEvFile.spawnables[0].xMatrixPosition;
+                    eventMatrixYUpDown.Value = currentEvFile.spawnables[0].yMatrixPosition;
+                } else if (currentEvFile.triggers.Count > 0) {
+                    eventMatrixXUpDown.Value = currentEvFile.triggers[0].xMatrixPosition;
+                    eventMatrixYUpDown.Value = currentEvFile.triggers[0].yMatrixPosition;
+                } else {
+                    eventMatrixXUpDown.Value = 0;
+                    eventMatrixYUpDown.Value = 0;
+                }
+            } catch (ArgumentOutOfRangeException) { }
             disableHandlers = false;
         }
         private void centerEventViewOnSelectedEvent_Click(object sender, EventArgs e) {
@@ -4465,6 +4467,9 @@ namespace DSPRE {
             return true;
         }
         private void OWTypeChanged(object sender, EventArgs e) {
+            if (overworldsListBox.SelectedIndex < 0)
+                return;
+
             if (normalRadioButton.Checked == true ) {
                 owScriptNumericUpDown.Enabled = true;
                 owSpecialGroupBox.Enabled = false;
