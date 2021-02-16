@@ -287,7 +287,7 @@ namespace DSPRE {
             return 0;
         }
         public bool CheckStandardizedItems() {
-            DSUtils.UnpackNarc(12);
+            DSUtils.TryUnpackNarc(12);
             if ( flag_standardizedItems || MainProgram.ScanScriptsCheckStandardizedItemNumbers() ) {
                 itemNumbersCB.Visible = true;
                 flag_standardizedItems = true;
@@ -409,35 +409,45 @@ namespace DSPRE {
             }
         }
         private void ApplyItemStandardizeButton_Click(object sender, EventArgs e) {
-            DSUtils.UnpackNarc(12);
+            DialogResult d = MessageBox.Show("This process will apply the following changes:\n\n" +
+                "- Item scripts will be rearranged to follow the natural, ascending index order.\n\n" +
+                "- Consequently, every Item event already on the ground will be changed.",
+                "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-            if (flag_standardizedItems) {
-                AlreadyApplied();
-            } else {
-                ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
+            if (d == DialogResult.Yes) {
 
-                int itemCount = new TextArchive(RomInfo.itemNamesTextNumber).messages.Count;
-                CommandContainer executeGive = new CommandContainer((uint)itemCount, itemScript.allScripts[itemScript.allScripts.Count-1]);
-                itemScript.allScripts.Clear();
+                DSUtils.TryUnpackNarc(12);
 
-                for (ushort i = 0; i < itemCount; i++) {
-                    List<ScriptCommand> cmdList = new List<ScriptCommand>();
-                    cmdList.Add(new ScriptCommand("SetVar 0x8008 " + i));
-                    cmdList.Add(new ScriptCommand("SetVar 0x8009 0x1"));
-                    cmdList.Add(new ScriptCommand("Jump Function_#1"));
+                if (flag_standardizedItems) {
+                    AlreadyApplied();
+                } else {
+                    ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
 
-                    itemScript.allScripts.Add(new CommandContainer((ushort)(i + 1), ScriptFile.containerTypes.SCRIPT, commandList: cmdList));
+                    int itemCount = new TextArchive(RomInfo.itemNamesTextNumber).messages.Count;
+                    CommandContainer executeGive = new CommandContainer((uint)itemCount, itemScript.allScripts[itemScript.allScripts.Count - 1]);
+                    itemScript.allScripts.Clear();
+
+                    for (ushort i = 0; i < itemCount; i++) {
+                        List<ScriptCommand> cmdList = new List<ScriptCommand>();
+                        cmdList.Add(new ScriptCommand("SetVar 0x8008 " + i));
+                        cmdList.Add(new ScriptCommand("SetVar 0x8009 0x1"));
+                        cmdList.Add(new ScriptCommand("Jump Function_#1"));
+
+                        itemScript.allScripts.Add(new CommandContainer((ushort)(i + 1), ScriptFile.containerTypes.SCRIPT, commandList: cmdList));
+                    }
+                    itemScript.allScripts.Add(executeGive);
+                    //itemScript.allFunctions[1].commands[0].cmdParams[]
+
+                    itemScript.SaveToFileDefaultDir(RomInfo.itemScriptFileNumber, showSuccessMessage: false);
+                    MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    itemNumbersCB.Visible = true;
+                    flag_standardizedItems = true;
+                    disableStandardizeItemsPatch();
+                    applyItemStandardizeButton.Text = "Already applied";
                 }
-                itemScript.allScripts.Add(executeGive);
-                //itemScript.allFunctions[1].commands[0].cmdParams[]
-
-                itemScript.SaveToFileDefaultDir(RomInfo.itemScriptFileNumber, showSuccessMessage: false);
-                MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                itemNumbersCB.Visible = true;
-                flag_standardizedItems = true;
-                disableStandardizeItemsPatch();
-                applyItemStandardizeButton.Text = "Already applied";
+            } else {
+                MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         private void ApplyARM9ExpansionButton_Click(object sender, EventArgs e) {

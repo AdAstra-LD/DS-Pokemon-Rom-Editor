@@ -196,7 +196,7 @@ namespace DSPRE {
                     } catch (ArgumentOutOfRangeException) { }
             }
         }
-        public static void UnpackNarc(int id) {
+        public static void TryUnpackNarc(int id) {
             string[] narcPaths = RomInfo.narcPaths;
             string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
 

@@ -58,7 +58,7 @@
             // 
             // applyItemStandardizeButton
             // 
-            this.applyItemStandardizeButton.Location = new System.Drawing.Point(335, 346);
+            this.applyItemStandardizeButton.Location = new System.Drawing.Point(335, 366);
             this.applyItemStandardizeButton.Name = "applyItemStandardizeButton";
             this.applyItemStandardizeButton.Size = new System.Drawing.Size(100, 50);
             this.applyItemStandardizeButton.TabIndex = 0;
@@ -147,7 +147,7 @@
             // 
             // namesToSentenceCaseButton
             // 
-            this.namesToSentenceCaseButton.Location = new System.Drawing.Point(335, 271);
+            this.namesToSentenceCaseButton.Location = new System.Drawing.Point(335, 275);
             this.namesToSentenceCaseButton.Name = "namesToSentenceCaseButton";
             this.namesToSentenceCaseButton.Size = new System.Drawing.Size(100, 50);
             this.namesToSentenceCaseButton.TabIndex = 9;
@@ -176,7 +176,7 @@
             // 
             // overlay1uncomprButton
             // 
-            this.overlay1uncomprButton.Location = new System.Drawing.Point(335, 101);
+            this.overlay1uncomprButton.Location = new System.Drawing.Point(335, 102);
             this.overlay1uncomprButton.Name = "overlay1uncomprButton";
             this.overlay1uncomprButton.Size = new System.Drawing.Size(100, 50);
             this.overlay1uncomprButton.TabIndex = 14;
@@ -209,7 +209,7 @@
             // overlay1CB
             // 
             this.overlay1CB.Image = global::DSPRE.Properties.Resources.checkmark;
-            this.overlay1CB.Location = new System.Drawing.Point(309, 116);
+            this.overlay1CB.Location = new System.Drawing.Point(309, 117);
             this.overlay1CB.Name = "overlay1CB";
             this.overlay1CB.Size = new System.Drawing.Size(20, 20);
             this.overlay1CB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -231,7 +231,7 @@
             // sentenceCaseCB
             // 
             this.sentenceCaseCB.Image = global::DSPRE.Properties.Resources.checkmark;
-            this.sentenceCaseCB.Location = new System.Drawing.Point(309, 286);
+            this.sentenceCaseCB.Location = new System.Drawing.Point(309, 290);
             this.sentenceCaseCB.Name = "sentenceCaseCB";
             this.sentenceCaseCB.Size = new System.Drawing.Size(20, 20);
             this.sentenceCaseCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -242,7 +242,7 @@
             // itemNumbersCB
             // 
             this.itemNumbersCB.Image = global::DSPRE.Properties.Resources.checkmark;
-            this.itemNumbersCB.Location = new System.Drawing.Point(309, 359);
+            this.itemNumbersCB.Location = new System.Drawing.Point(309, 379);
             this.itemNumbersCB.Name = "itemNumbersCB";
             this.itemNumbersCB.Size = new System.Drawing.Size(20, 20);
             this.itemNumbersCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -250,24 +250,23 @@
             this.itemNumbersCB.TabStop = false;
             this.itemNumbersCB.Visible = false;
             // 
-            // StandardizePatchLBL
+            // standardizePatchLBL
             // 
             this.standardizePatchLBL.AutoSize = true;
             this.standardizePatchLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.standardizePatchLBL.Location = new System.Drawing.Point(15, 343);
-            this.standardizePatchLBL.Name = "StandardizePatchLBL";
+            this.standardizePatchLBL.Location = new System.Drawing.Point(15, 341);
+            this.standardizePatchLBL.Name = "standardizePatchLBL";
             this.standardizePatchLBL.Size = new System.Drawing.Size(155, 13);
             this.standardizePatchLBL.TabIndex = 1;
             this.standardizePatchLBL.Text = "Standardize Item Numbers";
             // 
-            // StandardizePatchTextLBL
+            // standardizePatchTextLBL
             // 
-            this.standardizePatchTextLBL.Location = new System.Drawing.Point(15, 358);
-            this.standardizePatchTextLBL.Name = "StandardizePatchTextLBL";
-            this.standardizePatchTextLBL.Size = new System.Drawing.Size(239, 40);
+            this.standardizePatchTextLBL.Location = new System.Drawing.Point(15, 356);
+            this.standardizePatchTextLBL.Name = "standardizePatchTextLBL";
+            this.standardizePatchTextLBL.Size = new System.Drawing.Size(239, 78);
             this.standardizePatchTextLBL.TabIndex = 2;
-            this.standardizePatchTextLBL.Text = "Makes it so that PokéBall item scripts follow the order of items\r\nas indexed in t" +
-    "he ROM. Needed for \'Item\' option in Event Editor\r\n";
+            this.standardizePatchTextLBL.Text = resources.GetString("standardizePatchTextLBL.Text");
             this.standardizePatchTextLBL.UseMnemonic = false;
             // 
             // ROMToolboxDialog
@@ -275,7 +274,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(448, 411);
+            this.ClientSize = new System.Drawing.Size(448, 443);
             this.Controls.Add(this.itemNumbersCB);
             this.Controls.Add(this.sentenceCaseCB);
             this.Controls.Add(this.bdhcamCB);

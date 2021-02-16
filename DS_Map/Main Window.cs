@@ -228,7 +228,7 @@ namespace DSPRE {
 
             DSUtils.UnpackNarcs(new List<int> { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }, toolStripProgressBar);
             if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
-                DSUtils.UnpackNarc(RomInfo.narcPaths.Length - 1);
+                DSUtils.TryUnpackNarc(RomInfo.narcPaths.Length - 1);
             }
 
             disableHandlers = true;
@@ -398,7 +398,7 @@ namespace DSPRE {
 
             DSUtils.UnpackNarcs(new List<int> { 3, 4, 5, 6, 7, 8 }, toolStripProgressBar);
             if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
-                DSUtils.UnpackNarc(RomInfo.narcPaths.Length - 1 );
+                DSUtils.TryUnpackNarc(RomInfo.narcPaths.Length - 1 );
             }
 
             disableHandlers = true;
@@ -508,7 +508,7 @@ namespace DSPRE {
             statusLabel.Text = "Setting up Matrix Editor...";
             Update();
 
-            DSUtils.UnpackNarc( 2 ); // 2 = matrixDir
+            DSUtils.TryUnpackNarc( 2 ); // 2 = matrixDir
 
             disableHandlers = true;
 
@@ -519,13 +519,14 @@ namespace DSPRE {
 
             disableHandlers = false;
             selectMatrixComboBox.SelectedIndex = 0;
+            statusLabel.Text = "Ready";
         }
         public void SetupScriptEditor() {
             /* Extract essential NARCs sub-archives*/
             statusLabel.Text = "Setting up Script Editor...";
             Update();
 
-            DSUtils.UnpackNarc(12); //12 = scripts Narc Dir
+            DSUtils.TryUnpackNarc(12); //12 = scripts Narc Dir
 
             int scriptCount = Directory.GetFiles(RomInfo.scriptDirPath).Length;
             for (int i = 0; i < scriptCount; i++)
@@ -538,12 +539,13 @@ namespace DSPRE {
             selectScriptFileComboBox.SelectedIndex = 0;
             currentScriptBox = scriptTextBox;
             currentLineNumbersBox = LineNumberTextBoxScript;
+            statusLabel.Text = "Ready";
         }
         private void SetupTextEditor() {
             string[] narcPaths = RomInfo.narcPaths;
             string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
 
-            DSUtils.UnpackNarc( 1 );
+            DSUtils.TryUnpackNarc( 1 );
 
             statusLabel.Text = "Setting up Text Editor...";
             Update();
@@ -552,6 +554,7 @@ namespace DSPRE {
                 selectTextFileComboBox.Items.Add("Text Archive " + i);
 
             selectTextFileComboBox.SelectedIndex = 0;
+            statusLabel.Text = "Ready";
         }
         private void SetupTilesetEditor() {
             statusLabel.Text = "Attempting to unpack Tileset Editor NARCs... Please wait.";
@@ -684,7 +687,7 @@ namespace DSPRE {
 
             DSUtils.UnpackNarcs(new List<int> { 4, 5, 6 }, toolStripProgressBar);
             if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
-                DSUtils.UnpackNarc(RomInfo.narcPaths.Length - 1 );// Last = interior buildings dir
+                DSUtils.TryUnpackNarc(RomInfo.narcPaths.Length - 1 );// Last = interior buildings dir
 
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
@@ -4451,6 +4454,8 @@ namespace DSPRE {
         }
         public static bool ScanScriptsCheckStandardizedItemNumbers() {
             ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
+            if (itemScript.allScripts.Count - 1 < new TextArchive(RomInfo.itemNamesTextNumber).messages.Count)
+                return false;
 
             for (ushort i = 0; i < itemScript.allScripts.Count - 1; i++) {
                 if (BitConverter.ToUInt16(itemScript.allScripts[i].commands[0].cmdParams[1], 0) != i || BitConverter.ToUInt16(itemScript.allScripts[i].commands[1].cmdParams[1], 0) != 1) {

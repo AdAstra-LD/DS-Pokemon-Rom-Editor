@@ -123,4 +123,11 @@ inside an unused NARC and turning it into a synthetic overlay, in which you can 
 This patch is necessary to accomplish most ASM edits.
 </value>
   </data>
+  <data name="standardizePatchTextLBL.Text" xml:space="preserve">
+    <value>Makes all PokéBall item scripts follow the order of items as indexed in the ROM. 
+Inevitably, every Item already on the ground will change.
+This patch is necessary in order to 
+edit 'Items' in Event Editor.
+</value>
+  </data>
 </root>
