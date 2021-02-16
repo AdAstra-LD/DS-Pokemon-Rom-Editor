@@ -276,15 +276,8 @@ namespace DSPRE {
             owTrainerComboBox.Items.AddRange(trainerNames);
 
             /* Add item list to ow item box */
-            int itemScriptId = RomInfo.itemScriptFileNumber;
-            try {
-                int count = new ScriptFile(itemScriptId).allScripts.Count - 1;
-                owItemComboBox.Items.AddRange(GetItemNames(0, count));
-            } catch {
-                MessageBox.Show("There was a problem reading Script File #" + itemScriptId + ".\n" +
-                    "It is strongly adviced that you restore this file from a clean backup.", "Item script couldn't be loaded",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            owItemComboBox.Items.AddRange(GetItemNames(0, new TextArchive(RomInfo.itemNamesTextNumber).messages.Count-1));
+            
 
             /* Add ow movement list to box */
             owMovementComboBox.Items.AddRange(PokeDatabase.EventEditor.Overworlds.movementsArray);

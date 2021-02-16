@@ -5,6 +5,7 @@ using System.Resources;
 using System.Windows.Forms;
 using System.Linq;
 using DSPRE.ROMFiles;
+using System.Collections.Generic;
 
 namespace DSPRE {
     public partial class ROMToolboxDialog : Form {
@@ -415,10 +416,21 @@ namespace DSPRE {
             } else {
                 ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
 
-                for (ushort i = 0; i < itemScript.allScripts.Count - 1; i++) {
-                    itemScript.allScripts[i].commands[0].cmdParams[1] = BitConverter.GetBytes(i); // Fix item index
-                    itemScript.allScripts[i].commands[1].cmdParams[1] = BitConverter.GetBytes((ushort)1); // Fix item quantity
+                int itemCount = new TextArchive(RomInfo.itemNamesTextNumber).messages.Count;
+                CommandContainer executeGive = new CommandContainer((uint)itemCount, itemScript.allScripts[itemScript.allScripts.Count-1]);
+                itemScript.allScripts.Clear();
+
+                for (ushort i = 0; i < itemCount; i++) {
+                    List<ScriptCommand> cmdList = new List<ScriptCommand>();
+                    cmdList.Add(new ScriptCommand("SetVar 0x8008 " + i));
+                    cmdList.Add(new ScriptCommand("SetVar 0x8009 0x1"));
+                    cmdList.Add(new ScriptCommand("Jump Function_#1"));
+
+                    itemScript.allScripts.Add(new CommandContainer((ushort)(i + 1), ScriptFile.containerTypes.SCRIPT, commandList: cmdList));
                 }
+                itemScript.allScripts.Add(executeGive);
+                //itemScript.allFunctions[1].commands[0].cmdParams[]
+
                 itemScript.SaveToFileDefaultDir(RomInfo.itemScriptFileNumber, showSuccessMessage: false);
                 MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

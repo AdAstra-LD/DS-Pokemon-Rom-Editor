@@ -20,6 +20,12 @@ namespace DSPRE.ROMFiles {
             this.containerType = containerType;
             commands = commandList;
         }
+        public CommandContainer(uint newID, CommandContainer toCopy) {
+            manualUserID = newID;
+            useScript = toCopy.useScript;
+            containerType = toCopy.containerType;
+            commands = new List<ScriptCommand>(toCopy.commands); //command parameters need to be copied recursively
+        }
         #endregion
     }
     public class ScriptCommand {
@@ -77,7 +83,7 @@ namespace DSPRE.ROMFiles {
                 
             }
         }
-        public ScriptCommand(string wholeLine, int lineNumber) {
+        public ScriptCommand(string wholeLine, int lineNumber = 0) {
             name = wholeLine;
             cmdParams = new List<byte[]>();
 
