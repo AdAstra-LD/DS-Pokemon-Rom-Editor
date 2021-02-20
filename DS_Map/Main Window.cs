@@ -5377,9 +5377,21 @@ namespace DSPRE {
             updateCurrentBoxLineNumbers(null, null);
             currentScriptBox.ScrollToCaret();
         }
-        private void townSignButton_Click(object sender, EventArgs e) {
-            updateCurrentBoxLineNumbers(null, null);
-            currentScriptBox.ScrollToCaret();
+        private void townSignButton_Click(object sender, EventArgs e)
+        {
+            using (InsertValueDialog f = new InsertValueDialog("Insert message number (hex):", "hex"))
+            {
+                f.ShowDialog();
+                if (f.okSelected)
+                {
+                    String cmd = "\nMakeBoard 0x" + ((int)f.inputValUpDown.Value).ToString("X4") + " 0x0 0x0 0x800C" +
+                        "\nShowBoard 0x3" + "\nWaitBoard" + "\nEndBoard 0x800C" + "\nCommonScript 0x7D0" + "\nEnd";
+                    currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, cmd);
+
+                    updateCurrentBoxLineNumbers(null, null);
+                    currentScriptBox.ScrollToCaret();
+                }
+            }
         }
         private void greySignButton_Click(object sender, EventArgs e) {
             updateCurrentBoxLineNumbers(null, null);
@@ -5459,6 +5471,7 @@ namespace DSPRE {
             currentScriptBox.ScrollToCaret();
         }
         private void givePokégearButton_Click(object sender, EventArgs e) {
+            currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nSetFlag 0x9C\n");
             updateCurrentBoxLineNumbers(null, null);
             currentScriptBox.ScrollToCaret();
         }
