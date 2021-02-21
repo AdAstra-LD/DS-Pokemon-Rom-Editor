@@ -32,6 +32,9 @@
             this.arm9expansionTextLBL = new System.Windows.Forms.Label();
             this.arm9expansionLBL = new System.Windows.Forms.Label();
             this.applyARM9ExpansionButton = new System.Windows.Forms.Button();
+            this.matrixexpansionTextLBL = new System.Windows.Forms.Label();
+            this.matrixexpansionLBL = new System.Windows.Forms.Label();
+            this.applyMatrixExpansionButton = new System.Windows.Forms.Button();
             this.BDHCAMpatchTextLBL = new System.Windows.Forms.Label();
             this.BDHCAMpatchLBL = new System.Windows.Forms.Label();
             this.BDHCAMpatchButton = new System.Windows.Forms.Button();
@@ -43,6 +46,7 @@
             this.overlay1uncomprButton = new System.Windows.Forms.Button();
             this.bdhcamARM9requiredLBL = new System.Windows.Forms.Label();
             this.arm9patchCB = new System.Windows.Forms.PictureBox();
+            this.matrixpatchCB = new System.Windows.Forms.PictureBox();
             this.overlay1CB = new System.Windows.Forms.PictureBox();
             this.bdhcamCB = new System.Windows.Forms.PictureBox();
             this.sentenceCaseCB = new System.Windows.Forms.PictureBox();
@@ -50,6 +54,7 @@
             this.standardizePatchLBL = new System.Windows.Forms.Label();
             this.standardizePatchTextLBL = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.arm9patchCB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.matrixpatchCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlay1CB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdhcamCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sentenceCaseCB)).BeginInit();
@@ -74,6 +79,7 @@
             this.arm9expansionTextLBL.TabIndex = 5;
             this.arm9expansionTextLBL.Text = resources.GetString("arm9expansionTextLBL.Text");
             this.arm9expansionTextLBL.UseMnemonic = false;
+            this.arm9expansionTextLBL.Click += new System.EventHandler(this.arm9expansionTextLBL_Click);
             // 
             // arm9expansionLBL
             // 
@@ -84,16 +90,46 @@
             this.arm9expansionLBL.Size = new System.Drawing.Size(103, 13);
             this.arm9expansionLBL.TabIndex = 4;
             this.arm9expansionLBL.Text = "ARM9 Expansion";
+            this.arm9expansionLBL.Click += new System.EventHandler(this.arm9expansionLBL_Click);
             // 
             // applyARM9ExpansionButton
             // 
             this.applyARM9ExpansionButton.Location = new System.Drawing.Point(335, 29);
             this.applyARM9ExpansionButton.Name = "applyARM9ExpansionButton";
             this.applyARM9ExpansionButton.Size = new System.Drawing.Size(100, 50);
-            this.applyARM9ExpansionButton.TabIndex = 3;
+            this.applyARM9ExpansionButton.TabIndex = 21;
             this.applyARM9ExpansionButton.Text = "Expand ARM9";
             this.applyARM9ExpansionButton.UseVisualStyleBackColor = true;
             this.applyARM9ExpansionButton.Click += new System.EventHandler(this.ApplyARM9ExpansionButton_Click);
+            // 
+            // matrixexpansionTextLBL
+            // 
+            this.matrixexpansionTextLBL.Location = new System.Drawing.Point(15, 468);
+            this.matrixexpansionTextLBL.Name = "matrixexpansionTextLBL";
+            this.matrixexpansionTextLBL.Size = new System.Drawing.Size(288, 58);
+            this.matrixexpansionTextLBL.TabIndex = 22;
+            this.matrixexpansionTextLBL.Text = "Makes it so that twice the number of maps can be accomated in Matrix 0.";
+            this.matrixexpansionTextLBL.UseMnemonic = false;
+            // 
+            // matrixexpansionLBL
+            // 
+            this.matrixexpansionLBL.AutoSize = true;
+            this.matrixexpansionLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.matrixexpansionLBL.Location = new System.Drawing.Point(15, 447);
+            this.matrixexpansionLBL.Name = "matrixexpansionLBL";
+            this.matrixexpansionLBL.Size = new System.Drawing.Size(103, 13);
+            this.matrixexpansionLBL.TabIndex = 23;
+            this.matrixexpansionLBL.Text = "Matrix Expansion";
+            // 
+            // applyMatrixExpansionButton
+            // 
+            this.applyMatrixExpansionButton.Location = new System.Drawing.Point(335, 449);
+            this.applyMatrixExpansionButton.Name = "applyMatrixExpansionButton";
+            this.applyMatrixExpansionButton.Size = new System.Drawing.Size(100, 50);
+            this.applyMatrixExpansionButton.TabIndex = 3;
+            this.applyMatrixExpansionButton.Text = "Expand Matrix";
+            this.applyMatrixExpansionButton.UseVisualStyleBackColor = true;
+            this.applyMatrixExpansionButton.Click += new System.EventHandler(this.ApplyMatrixExpansionButton_Click);
             // 
             // BDHCAMpatchTextLBL
             // 
@@ -206,6 +242,17 @@
             this.arm9patchCB.TabStop = false;
             this.arm9patchCB.Visible = false;
             // 
+            // matrixpatchCB
+            // 
+            this.matrixpatchCB.Image = global::DSPRE.Properties.Resources.checkmark;
+            this.matrixpatchCB.Location = new System.Drawing.Point(309, 468);
+            this.matrixpatchCB.Name = "matrixpatchCB";
+            this.matrixpatchCB.Size = new System.Drawing.Size(20, 20);
+            this.matrixpatchCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.matrixpatchCB.TabIndex = 16;
+            this.matrixpatchCB.TabStop = false;
+            this.matrixpatchCB.Visible = false;
+            // 
             // overlay1CB
             // 
             this.overlay1CB.Image = global::DSPRE.Properties.Resources.checkmark;
@@ -274,12 +321,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(448, 443);
+            this.ClientSize = new System.Drawing.Size(448, 528);
             this.Controls.Add(this.itemNumbersCB);
             this.Controls.Add(this.sentenceCaseCB);
             this.Controls.Add(this.bdhcamCB);
             this.Controls.Add(this.overlay1CB);
             this.Controls.Add(this.arm9patchCB);
+            this.Controls.Add(this.matrixpatchCB);
             this.Controls.Add(this.bdhcamARM9requiredLBL);
             this.Controls.Add(this.overlay1uncomprButton);
             this.Controls.Add(this.overlay1patchtextLBL);
@@ -293,15 +341,20 @@
             this.Controls.Add(this.arm9expansionTextLBL);
             this.Controls.Add(this.arm9expansionLBL);
             this.Controls.Add(this.applyARM9ExpansionButton);
+            this.Controls.Add(this.matrixexpansionTextLBL);
+            this.Controls.Add(this.matrixexpansionLBL);
+            this.Controls.Add(this.applyMatrixExpansionButton);
             this.Controls.Add(this.standardizePatchTextLBL);
             this.Controls.Add(this.standardizePatchLBL);
             this.Controls.Add(this.applyItemStandardizeButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ROMToolboxDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ROM Toolbox";
             ((System.ComponentModel.ISupportInitialize)(this.arm9patchCB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.matrixpatchCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlay1CB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdhcamCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sentenceCaseCB)).EndInit();
@@ -317,6 +370,9 @@
         private System.Windows.Forms.Label arm9expansionTextLBL;
         private System.Windows.Forms.Label arm9expansionLBL;
         private System.Windows.Forms.Button applyARM9ExpansionButton;
+        private System.Windows.Forms.Label matrixexpansionTextLBL;
+        private System.Windows.Forms.Label matrixexpansionLBL;
+        private System.Windows.Forms.Button applyMatrixExpansionButton;
         private System.Windows.Forms.Label BDHCAMpatchTextLBL;
         private System.Windows.Forms.Label BDHCAMpatchLBL;
         private System.Windows.Forms.Button BDHCAMpatchButton;
@@ -328,6 +384,7 @@
         private System.Windows.Forms.Button overlay1uncomprButton;
         private System.Windows.Forms.Label bdhcamARM9requiredLBL;
         private System.Windows.Forms.PictureBox arm9patchCB;
+        private System.Windows.Forms.PictureBox matrixpatchCB;
         private System.Windows.Forms.PictureBox overlay1CB;
         private System.Windows.Forms.PictureBox bdhcamCB;
         private System.Windows.Forms.PictureBox sentenceCaseCB;

@@ -93,6 +93,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AB.cs" />
+    <Compile Include="Resources\ROMToolboxDB\MatrixExpansionDB.Designer.cs">
+      <DependentUpon>MatrixExpansionDB.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="ROMFiles\AreaData.cs" />
     <Compile Include="DSUtils.cs" />
     <Compile Include="Resources\CommandsDatabase.cs">
@@ -262,6 +267,10 @@
     <Compile Include="Resources\writeText.Designer.cs" />
     <EmbeddedResource Include="HeaderSearch.resx">
       <DependentUpon>HeaderSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ROMToolboxDB\MatrixExpansionDB.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MatrixExpansionDB.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ROMToolboxDB\ARM9ExpansionDB.resx">
       <Generator>ResXFileCodeGenerator</Generator>

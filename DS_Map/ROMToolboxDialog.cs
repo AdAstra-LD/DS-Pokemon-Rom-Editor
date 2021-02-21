@@ -64,8 +64,107 @@ namespace DSPRE {
                 }
                 initOffset -= 0x02000000;
                 branchOffset -= 0x02000000;
+
             }
+
         }
+
+        internal class MatrixPatchData
+        {
+            internal string String1;
+            internal string String2;
+            internal string String3;
+            internal string String4;
+            internal string String5;
+            internal string String6;
+            internal string String7;
+            internal string String8;
+            internal string String9;
+            internal string String10;
+            internal string String11;
+            internal string String12;
+            internal string String13;
+
+            internal uint Offset1;
+            internal uint Offset2;
+            internal uint Offset3;
+            internal uint Offset4;
+            internal uint Offset5;
+            internal uint Offset6;
+            internal uint Offset7;
+            internal uint Offset8;
+            internal uint Offset9;
+            internal uint Offset10;
+            internal uint Offset11;
+            internal uint Offset12;
+            internal uint Offset13;
+
+            internal MatrixPatchData()
+            {
+                ResourceManager matrixDB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.MatrixExpansionDB", Assembly.GetExecutingAssembly());
+                String1 = matrixDB.GetString(nameof(String1));
+                String2 = matrixDB.GetString(nameof(String2));
+                String3 = matrixDB.GetString(nameof(String3));
+                String4 = matrixDB.GetString(nameof(String4));
+                String5 = matrixDB.GetString(nameof(String5));
+                String6 = matrixDB.GetString(nameof(String6));
+                String7 = matrixDB.GetString(nameof(String7));
+                String8 = matrixDB.GetString(nameof(String8));
+                String9 = matrixDB.GetString(nameof(String9));
+                String10 = matrixDB.GetString(nameof(String10));
+                String11 = matrixDB.GetString(nameof(String11));
+                String12 = matrixDB.GetString(nameof(String12));
+                String13 = matrixDB.GetString(nameof(String13));
+
+                switch (RomInfo.gameLanguage)
+                        {
+                            case "ESP":
+                        Offset1 = 0x0203AF8C;
+                        Offset2 = 0x0203AF90;
+                        Offset3 = 0x0203AFA8;
+                        Offset4 = 0x0203AEBE;
+                        Offset5 = 0x0203AEC0;
+                        Offset6 = 0x0203AF58;
+                        Offset7 = 0x0203AF72;
+                        Offset8 = 0x0203B088;
+                        Offset9 = 0x0203B0BC;
+                        Offset10 = 0x0203AFF8;
+                        Offset11 = 0x0203B108;
+                        Offset12 = 0x0203B1F0;
+                        Offset13 = 0x0203B25C;
+                        break;
+                            case "ENG":
+                        Offset1 = 0x0203AF94;
+                        Offset2 = 0x0203AF98;
+                        Offset3 = 0x0203AFB0;
+                        Offset4 = 0x0203AEC6;
+                        Offset5 = 0x0203AEC8;
+                        Offset6 = 0x0203AF60;
+                        Offset7 = 0x0203AF7A;
+                        Offset8 = 0x0203B090;
+                        Offset9 = 0x0203B0C4;
+                        Offset10 = 0x0203B000;
+                        Offset11 = 0x0203B110;
+                        Offset12 = 0x0203B1F8;
+                        Offset13 = 0x0203B264;
+                        break;
+                        }
+                Offset1 -= 0x02000000;
+                Offset2 -= 0x02000000;
+                Offset3 -= 0x02000000;
+                Offset4 -= 0x02000000;
+                Offset5 -= 0x02000000;
+                Offset6 -= 0x02000000;
+                Offset7 -= 0x02000000;
+                Offset8 -= 0x02000000;
+                Offset9 -= 0x02000000;
+                Offset10 -= 0x02000000;
+                Offset11 -= 0x02000000;
+                Offset12 -= 0x02000000;
+                Offset13 -= 0x02000000;
+            }
+            }
+
         internal class BDHCAMPatchData {
             internal byte overlayNumber;
 
@@ -125,6 +224,7 @@ namespace DSPRE {
         public static bool flag_arm9Expanded { get; private set; } = false;
         public static bool flag_BDHCAMpatchApplied { get; private set; } = false;
         public static bool overlay1MustBeRestoredFromBackup { get; private set; } = true;
+        public static bool flag_matrixExpanded { get; private set; } = false;
 
         #region Constructor
         public ROMToolboxDialog(RomInfo romInfo) {
@@ -146,10 +246,15 @@ namespace DSPRE {
                 case "P":
                     disableOverlay1patch();
                     overlay1uncomprButton.Text = "Unsupported";
+                    disableMatrixpatch();
+                    applyMatrixExpansionButton.Text = "Unsupported";
                     break;
                 case "Plat":
                     disableOverlay1patch();
                     overlay1uncomprButton.Text = "Unsupported";
+                     disableMatrixpatch();
+                    applyMatrixExpansionButton.Text = "Unsupported";
+
 
                     CheckFilesBDHCAMpatchApplied();
                     break;
@@ -162,8 +267,14 @@ namespace DSPRE {
                     }
                     CheckFilesBDHCAMpatchApplied();
                     break;
+                    CheckMatrixExpansion();
+                    disableMatrixpatch();
+                    applyMatrixExpansionButton.Text = "Unsupported";
+                    break;
+
             }
         }
+
         #region Patch Disable
         private void disableOverlay1patch() {
             overlay1uncomprButton.Enabled = false;
@@ -187,6 +298,12 @@ namespace DSPRE {
             applyItemStandardizeButton.Enabled = false;
             standardizePatchLBL.Enabled = false;
             standardizePatchTextLBL.Enabled = false;
+        }
+        private void disableMatrixpatch()
+        {
+            applyMatrixExpansionButton.Enabled = false;
+            matrixexpansionTextLBL.Enabled = false;
+            matrixexpansionLBL.Enabled = false;
         }
         #endregion
         #endregion
@@ -230,6 +347,118 @@ namespace DSPRE {
                     BDHCAMpatchTextLBL.Enabled = true;
                     break;
             }
+            return 1; //arm9 Expansion has already been applied
+        }
+        private int CheckMatrixExpansion()
+        {
+            if (!flag_matrixExpanded)
+            {
+                MatrixPatchData data = new MatrixPatchData();
+
+                try
+                {
+                    byte[] String1Code = HexStringtoByteArray(data.String1);
+                    byte[] String1CodeRead = DSUtils.ReadFromArm9(data.Offset1, data.String1.Length / 3 + 1);
+                    if (String1CodeRead.Length != String1Code.Length)
+                        return 0;
+                    if (!String1CodeRead.SequenceEqual(String1Code))
+                        return 0;
+
+                    byte[] String2Code = HexStringtoByteArray(data.String2);
+                    byte[] String2CodeRead = DSUtils.ReadFromArm9(data.Offset2, data.String2.Length / 3 + 1);
+                    if (String2CodeRead.Length != String2Code.Length)
+                        return 0;
+                    if (!String2CodeRead.SequenceEqual(String2Code))
+                        return 0;
+
+                    byte[] String3Code = HexStringtoByteArray(data.String3);
+                    byte[] String3CodeRead = DSUtils.ReadFromArm9(data.Offset3, data.String3.Length / 3 + 1);
+                    if (String3CodeRead.Length != String3Code.Length)
+                        return 0;
+                    if (!String3CodeRead.SequenceEqual(String3Code))
+                        return 0;
+
+                    byte[] String4Code = HexStringtoByteArray(data.String4);
+                    byte[] String4CodeRead = DSUtils.ReadFromArm9(data.Offset4, data.String4.Length / 3 + 1);
+                    if (String4CodeRead.Length != String4Code.Length)
+                        return 0;
+                    if (!String4CodeRead.SequenceEqual(String4Code))
+                        return 0;
+
+                    byte[] String5Code = HexStringtoByteArray(data.String5);
+                    byte[] String5CodeRead = DSUtils.ReadFromArm9(data.Offset5, data.String5.Length / 3 + 1);
+                    if (String5CodeRead.Length != String5Code.Length)
+                        return 0;
+                    if (!String5CodeRead.SequenceEqual(String5Code))
+                        return 0;
+
+                    byte[] String6Code = HexStringtoByteArray(data.String6);
+                    byte[] String6CodeRead = DSUtils.ReadFromArm9(data.Offset6, data.String6.Length / 3 + 1);
+                    if (String6CodeRead.Length != String6Code.Length)
+                        return 0;
+                    if (!String6CodeRead.SequenceEqual(String6Code))
+                        return 0;
+
+                    byte[] String7Code = HexStringtoByteArray(data.String7);
+                    byte[] String7CodeRead = DSUtils.ReadFromArm9(data.Offset7, data.String7.Length / 3 + 1);
+                    if (String7CodeRead.Length != String7Code.Length)
+                        return 0;
+                    if (!String7CodeRead.SequenceEqual(String7Code))
+                        return 0;
+
+                    byte[] String8Code = HexStringtoByteArray(data.String8);
+                    byte[] String8CodeRead = DSUtils.ReadFromArm9(data.Offset8, data.String8.Length / 3 + 1);
+                    if (String8CodeRead.Length != String8Code.Length)
+                        return 0;
+                    if (!String8CodeRead.SequenceEqual(String8Code))
+                        return 0;
+
+                    byte[] String9Code = HexStringtoByteArray(data.String9);
+                    byte[] String9CodeRead = DSUtils.ReadFromArm9(data.Offset9, data.String9.Length / 3 + 1);
+                    if (String9CodeRead.Length != String9Code.Length)
+                        return 0;
+                    if (!String9CodeRead.SequenceEqual(String9Code))
+                        return 0;
+
+                    byte[] String10Code = HexStringtoByteArray(data.String10);
+                    byte[] String10CodeRead = DSUtils.ReadFromArm9(data.Offset10, data.String10.Length / 3 + 1);
+                    if (String10CodeRead.Length != String10Code.Length)
+                        return 0;
+                    if (!String10CodeRead.SequenceEqual(String10Code))
+                        return 0;
+
+                    byte[] String11Code = HexStringtoByteArray(data.String11);
+                    byte[] String11CodeRead = DSUtils.ReadFromArm9(data.Offset11, data.String11.Length / 3 + 1);
+                    if (String11CodeRead.Length != String11Code.Length)
+                        return 0;
+                    if (!String11CodeRead.SequenceEqual(String11Code))
+                        return 0;
+
+                    byte[] String12Code = HexStringtoByteArray(data.String12);
+                    byte[] String12CodeRead = DSUtils.ReadFromArm9(data.Offset11, data.String12.Length / 3 + 1);
+                    if (String12CodeRead.Length != String12Code.Length)
+                        return 0;
+                    if (!String12CodeRead.SequenceEqual(String12Code))
+                        return 0;
+
+                    byte[] String13Code = HexStringtoByteArray(data.String13);
+                    byte[] String13CodeRead = DSUtils.ReadFromArm9(data.Offset11, data.String13.Length / 3 + 1);
+                    if (String13CodeRead.Length != String13Code.Length)
+                        return 0;
+                    if (!String13CodeRead.SequenceEqual(String13Code))
+                        return 0;
+                }
+                catch
+                {
+                    return -1; //1 means Check failure
+                }
+            }
+
+            flag_matrixExpanded = true;
+            matrixpatchCB.Visible = true;
+            disableMatrixpatch();
+            applyMatrixExpansionButton.Text = "Already applied";
+
             return 1; //arm9 Expansion has already been applied
         }
         private int CheckFilesBDHCAMpatchApplied() {
@@ -501,6 +730,66 @@ namespace DSPRE {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+        private void ApplyMatrixExpansionButton_Click(object sender, EventArgs e)
+        {
+            MatrixPatchData data = new MatrixPatchData();
+
+            DialogResult d;
+            d = MessageBox.Show("Confirming this process will apply the following changes:\n\n" +
+                "- Backup ARM9 file (arm9.bin.backup will be created)." + "\n\n" +
+                "- Replace " + (data.String1.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.Offset1.ToString("X") + " with " + '\n' + data.String1 + "\n\n" +
+                "- Replace " + (data.String2.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.Offset2.ToString("X") + " with " + '\n' + data.String2 + "\n\n" +
+                "- Replace " + (data.String3.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.Offset3.ToString("X") + " with " + '\n' + data.String3 + "\n\n" +
+                "- Replace " + (data.String4.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.Offset4.ToString("X") + " with " + '\n' + data.String4 + "\n\n" +
+                "- Replace " + (data.String5.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.Offset5.ToString("X") + " with " + '\n' + data.String5 + "\n\n" +
+                "- Replace " + (data.String6.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.Offset6.ToString("X") + " with " + '\n' + data.String6 + "\n\n" +
+                "- Replace " + (data.String7.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.Offset7.ToString("X") + " with " + '\n' + data.String7 + "\n\n" +
+                "- Replace " + (data.String8.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.Offset8.ToString("X") + " with " + '\n' + data.String8 + "\n\n" +
+                "- Replace " + (data.String9.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.Offset9.ToString("X") + " with " + '\n' + data.String9 + "\n\n" +
+                "- Replace " + (data.String10.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.Offset10.ToString("X") + " with " + '\n' + data.String10 + "\n\n" +
+                "- Replace " + (data.String11.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.Offset11.ToString("X") + " with " + '\n' + data.String11 + "\n\n" +
+                "- Replace " + (data.String12.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.Offset12.ToString("X") + " with " + '\n' + data.String12 + "\n\n" +
+                "- Replace " + (data.String13.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.Offset13.ToString("X") + " with " + '\n' + data.String13 + "\n\n" +
+                "Do you wish to continue?",
+                "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (d == DialogResult.Yes)
+            {
+                File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", overwrite: true);
+
+                try
+                {
+                    DSUtils.WriteToArm9(data.Offset1, HexStringtoByteArray(data.String1));
+                    DSUtils.WriteToArm9(data.Offset2, HexStringtoByteArray(data.String2));
+                    DSUtils.WriteToArm9(data.Offset3, HexStringtoByteArray(data.String3));
+                    DSUtils.WriteToArm9(data.Offset4, HexStringtoByteArray(data.String4));
+                    DSUtils.WriteToArm9(data.Offset5, HexStringtoByteArray(data.String5));
+                    DSUtils.WriteToArm9(data.Offset6, HexStringtoByteArray(data.String6));
+                    DSUtils.WriteToArm9(data.Offset7, HexStringtoByteArray(data.String7));
+                    DSUtils.WriteToArm9(data.Offset8, HexStringtoByteArray(data.String8));
+                    DSUtils.WriteToArm9(data.Offset9, HexStringtoByteArray(data.String9));
+                    DSUtils.WriteToArm9(data.Offset10, HexStringtoByteArray(data.String10));
+                    DSUtils.WriteToArm9(data.Offset11, HexStringtoByteArray(data.String11));
+                    DSUtils.WriteToArm9(data.Offset12, HexStringtoByteArray(data.String12));
+                    DSUtils.WriteToArm9(data.Offset13, HexStringtoByteArray(data.String13));
+
+                    matrixpatchCB.Visible = true;
+                    flag_matrixExpanded = true;
+                    disableMatrixpatch();
+                    applyMatrixExpansionButton.Text = "Already applied";
+                    MessageBox.Show("The Matrix has been expanded.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch
+                {
+                    MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 backup (arm9.bin.backup).", "Something went wrong",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
         #region Mikelan's custom commands
         private void applyCustomCommands(object sender, EventArgs e) {
             if (new FileInfo(RomInfo.syntheticOverlayPath + "\\0000").Length < 0x16000) {// ARM9 expansion hasn't been done in this ROM
@@ -698,5 +987,25 @@ namespace DSPRE {
             MessageBox.Show("This patch has already been applied.", "Can't reapply patch", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
+
+        private void arm9expansionLBL_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void arm9expansionTextLBL_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void matrixexpansionLBL_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void matrixexpansionTextLBL_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
