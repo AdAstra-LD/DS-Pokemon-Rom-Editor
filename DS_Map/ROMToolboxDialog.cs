@@ -265,11 +265,10 @@ namespace DSPRE {
                         overlay1CB.Visible = true;
                         overlay1uncomprButton.Text = "Already applied";
                     }
-                    CheckFilesBDHCAMpatchApplied();
-                    break;
                     CheckMatrixExpansion();
                     disableMatrixpatch();
-                    applyMatrixExpansionButton.Text = "Unsupported";
+                    matrixpatchCB.Visible = true;
+                    applyMatrixExpansionButton.Text = "Already applied";
                     break;
 
             }
@@ -459,7 +458,7 @@ namespace DSPRE {
             disableMatrixpatch();
             applyMatrixExpansionButton.Text = "Already applied";
 
-            return 1; //arm9 Expansion has already been applied
+            return 1;
         }
         private int CheckFilesBDHCAMpatchApplied() {
             if (!flag_arm9Expanded) { 
