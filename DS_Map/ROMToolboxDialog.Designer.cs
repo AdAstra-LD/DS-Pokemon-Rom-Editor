@@ -245,7 +245,7 @@
             // matrixpatchCB
             // 
             this.matrixpatchCB.Image = global::DSPRE.Properties.Resources.checkmark;
-            this.matrixpatchCB.Location = new System.Drawing.Point(309, 468);
+            this.matrixpatchCB.Location = new System.Drawing.Point(309, 463);
             this.matrixpatchCB.Name = "matrixpatchCB";
             this.matrixpatchCB.Size = new System.Drawing.Size(20, 20);
             this.matrixpatchCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;

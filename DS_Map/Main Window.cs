@@ -956,6 +956,14 @@ namespace DSPRE {
                 if (!scriptEditorIsReady) {
                     SetupScriptEditor();
                     scriptEditorIsReady = true;
+                    if (RomInfo.gameVersion == "D" || RomInfo.gameVersion == "P" || RomInfo.gameVersion == "Plat")
+                    {
+                        givePokégearButton.Enabled = false;
+                        button3.Enabled = false;
+                        button1.Enabled = false;
+                        button4.Enabled = false;
+                        button2.Enabled = false;
+                    }
                 }
             } else if (mainTabControl.SelectedTab == textEditorTabPage) {
                 if (!textEditorIsReady) {
@@ -5373,28 +5381,11 @@ namespace DSPRE {
             updateCurrentBoxLineNumbers(null, null);
             currentScriptBox.ScrollToCaret();
         }
-        private void checkMoneyButton_Click(object sender, EventArgs e) {
-            updateCurrentBoxLineNumbers(null, null);
-            currentScriptBox.ScrollToCaret();
-        }
         private void givePokégearButton_Click(object sender, EventArgs e)
         {
-            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
-            {
                 currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nSetFlag 0x9C\n");
                 updateCurrentBoxLineNumbers(null, null);
                 currentScriptBox.ScrollToCaret();
-            }
-            else
-            {
-                MessageBox.Show("Pokegear is HGSS exclusive.");
-                updateCurrentBoxLineNumbers(null, null);
-                currentScriptBox.ScrollToCaret();
-            }
-        }
-        private void checkBadgeButton_Click(object sender, EventArgs e) {
-            updateCurrentBoxLineNumbers(null, null);
-            currentScriptBox.ScrollToCaret();
         }
         private void checkPokemonButton_Click(object sender, EventArgs e) {
             updateCurrentBoxLineNumbers(null, null);
@@ -5496,26 +5487,6 @@ namespace DSPRE {
                 }
             }
         }
-        private void giveMoneyButton_Click(object sender, EventArgs e) {
-            using (InsertValueDialog f = new InsertValueDialog("Insert money amount:", "dec")) {
-                f.ShowDialog();
-                if (f.okSelected) {
-                    currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nGiveMoney" + " " + "0x" + ((int)f.inputValUpDown.Value).ToString("X"));
-                    updateCurrentBoxLineNumbers(null, null);
-                    currentScriptBox.ScrollToCaret();
-                }
-            }
-        }
-        private void takeMoneyButton_Click(object sender, EventArgs e) {
-            using (InsertValueDialog f = new InsertValueDialog("Insert money amount:", "dec")) {
-                f.ShowDialog();
-                if (f.okSelected) {
-                    currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nTakeMoney" + " " + "0x" + ((int)f.inputValUpDown.Value).ToString("X"));
-                    updateCurrentBoxLineNumbers(null, null);
-                    currentScriptBox.ScrollToCaret();
-                }
-            }
-        }
         private void takeItemButton_Click(object sender, EventArgs e) {
             using (GiveItemDialog f = new GiveItemDialog(GetItemNames())) {
                 f.ShowDialog();
@@ -5529,28 +5500,6 @@ namespace DSPRE {
                 }
 
             }
-        }
-        private void giveBadgeButton_Click(object sender, EventArgs e) {
-            using (InsertValueDialog f = new InsertValueDialog("Insert badge number:", "dec")) {
-                f.ShowDialog();
-                if (f.okSelected) {
-                    currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nEnableBadge 0x" + ((int)f.inputValUpDown.Value).ToString("X"));
-                    updateCurrentBoxLineNumbers(null, null);
-                    currentScriptBox.ScrollToCaret();
-                }
-            }
-            
-        }
-        private void takeBadgeButton_Click(object sender, EventArgs e) {
-            using (InsertValueDialog f = new InsertValueDialog("Insert badge number:", "dec")) {
-                f.ShowDialog();
-                if (f.okSelected) {
-                    currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nDisableBadge 0x" + ((int)f.inputValUpDown.Value).ToString("X"));
-                    updateCurrentBoxLineNumbers(null, null);
-                    currentScriptBox.ScrollToCaret();
-                }
-            }
-            
         }
         #endregion
 
@@ -6147,6 +6096,34 @@ namespace DSPRE {
         private void MainProgram_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nSetFlag 0x11E\n");
+            updateCurrentBoxLineNumbers(null, null);
+            currentScriptBox.ScrollToCaret();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nSetFlag 0x11B\n");
+            updateCurrentBoxLineNumbers(null, null);
+            currentScriptBox.ScrollToCaret();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nSetFlag 0x11D\n");
+            updateCurrentBoxLineNumbers(null, null);
+            currentScriptBox.ScrollToCaret();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nSetFlag 0x11C\n");
+            updateCurrentBoxLineNumbers(null, null);
+            currentScriptBox.ScrollToCaret();
         }
     }
 }
