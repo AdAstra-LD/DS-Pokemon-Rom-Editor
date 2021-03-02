@@ -65,143 +65,143 @@ namespace DSPRE
             oneSecondLevelUpDown.Value = currentFile.walkingLevels[11];
 
             /* Setup walking encounters controls */
-            morningTwentyFirstComboBox.SelectedIndex = currentFile.morningPokémon[0];
-            morningTwentySecondComboBox.SelectedIndex = currentFile.morningPokémon[1];
-            morningTenFirstComboBox.SelectedIndex = currentFile.morningPokémon[2];
-            morningTenSecondComboBox.SelectedIndex = currentFile.morningPokémon[3];
-            morningTenThirdComboBox.SelectedIndex = currentFile.morningPokémon[4];
-            morningTenFourthComboBox.SelectedIndex = currentFile.morningPokémon[5];
-            morningFiveFirstComboBox.SelectedIndex = currentFile.morningPokémon[6];
-            morningFiveSecondComboBox.SelectedIndex = currentFile.morningPokémon[7];
-            morningFourFirstComboBox.SelectedIndex = currentFile.morningPokémon[8];
-            morningFourSecondComboBox.SelectedIndex = currentFile.morningPokémon[9];
-            morningOneFirstComboBox.SelectedIndex = currentFile.morningPokémon[10];
-            morningOneSecondComboBox.SelectedIndex = currentFile.morningPokémon[11];
+            morningTwentyFirstComboBox.SelectedIndex = currentFile.morningPokemon[0];
+            morningTwentySecondComboBox.SelectedIndex = currentFile.morningPokemon[1];
+            morningTenFirstComboBox.SelectedIndex = currentFile.morningPokemon[2];
+            morningTenSecondComboBox.SelectedIndex = currentFile.morningPokemon[3];
+            morningTenThirdComboBox.SelectedIndex = currentFile.morningPokemon[4];
+            morningTenFourthComboBox.SelectedIndex = currentFile.morningPokemon[5];
+            morningFiveFirstComboBox.SelectedIndex = currentFile.morningPokemon[6];
+            morningFiveSecondComboBox.SelectedIndex = currentFile.morningPokemon[7];
+            morningFourFirstComboBox.SelectedIndex = currentFile.morningPokemon[8];
+            morningFourSecondComboBox.SelectedIndex = currentFile.morningPokemon[9];
+            morningOneFirstComboBox.SelectedIndex = currentFile.morningPokemon[10];
+            morningOneSecondComboBox.SelectedIndex = currentFile.morningPokemon[11];
 
-            dayTwentyFirstComboBox.SelectedIndex = currentFile.dayPokémon[0];
-            dayTwentySecondComboBox.SelectedIndex = currentFile.dayPokémon[1];
-            dayTenFirstComboBox.SelectedIndex = currentFile.dayPokémon[2];
-            dayTenSecondComboBox.SelectedIndex = currentFile.dayPokémon[3];
-            dayTenThirdComboBox.SelectedIndex = currentFile.dayPokémon[4];
-            dayTenFourthComboBox.SelectedIndex = currentFile.dayPokémon[5];
-            dayFiveFirstComboBox.SelectedIndex = currentFile.dayPokémon[6];
-            dayFiveSecondComboBox.SelectedIndex = currentFile.dayPokémon[7];
-            dayFourFirstComboBox.SelectedIndex = currentFile.dayPokémon[8];
-            dayFourSecondComboBox.SelectedIndex = currentFile.dayPokémon[9];
-            dayOneFirstComboBox.SelectedIndex = currentFile.dayPokémon[10];
-            dayOneSecondComboBox.SelectedIndex = currentFile.dayPokémon[11];
+            dayTwentyFirstComboBox.SelectedIndex = currentFile.dayPokemon[0];
+            dayTwentySecondComboBox.SelectedIndex = currentFile.dayPokemon[1];
+            dayTenFirstComboBox.SelectedIndex = currentFile.dayPokemon[2];
+            dayTenSecondComboBox.SelectedIndex = currentFile.dayPokemon[3];
+            dayTenThirdComboBox.SelectedIndex = currentFile.dayPokemon[4];
+            dayTenFourthComboBox.SelectedIndex = currentFile.dayPokemon[5];
+            dayFiveFirstComboBox.SelectedIndex = currentFile.dayPokemon[6];
+            dayFiveSecondComboBox.SelectedIndex = currentFile.dayPokemon[7];
+            dayFourFirstComboBox.SelectedIndex = currentFile.dayPokemon[8];
+            dayFourSecondComboBox.SelectedIndex = currentFile.dayPokemon[9];
+            dayOneFirstComboBox.SelectedIndex = currentFile.dayPokemon[10];
+            dayOneSecondComboBox.SelectedIndex = currentFile.dayPokemon[11];
 
-            nightTwentyFirstComboBox.SelectedIndex = currentFile.nightPokémon[0];
-            nightTwentySecondComboBox.SelectedIndex = currentFile.nightPokémon[1];
-            nightTenFirstComboBox.SelectedIndex = currentFile.nightPokémon[2];
-            nightTenSecondComboBox.SelectedIndex = currentFile.nightPokémon[3];
-            nightTenThirdComboBox.SelectedIndex = currentFile.nightPokémon[4];
-            nightTenFourthComboBox.SelectedIndex = currentFile.nightPokémon[5];
-            nightFiveFirstComboBox.SelectedIndex = currentFile.nightPokémon[6];
-            nightFiveSecondComboBox.SelectedIndex = currentFile.nightPokémon[7];
-            nightFourFirstComboBox.SelectedIndex = currentFile.nightPokémon[8];
-            nightFourSecondComboBox.SelectedIndex = currentFile.nightPokémon[9];
-            nightOneFirstComboBox.SelectedIndex = currentFile.nightPokémon[10];
-            nightOneSecondComboBox.SelectedIndex = currentFile.nightPokémon[11];
+            nightTwentyFirstComboBox.SelectedIndex = currentFile.nightPokemon[0];
+            nightTwentySecondComboBox.SelectedIndex = currentFile.nightPokemon[1];
+            nightTenFirstComboBox.SelectedIndex = currentFile.nightPokemon[2];
+            nightTenSecondComboBox.SelectedIndex = currentFile.nightPokemon[3];
+            nightTenThirdComboBox.SelectedIndex = currentFile.nightPokemon[4];
+            nightTenFourthComboBox.SelectedIndex = currentFile.nightPokemon[5];
+            nightFiveFirstComboBox.SelectedIndex = currentFile.nightPokemon[6];
+            nightFiveSecondComboBox.SelectedIndex = currentFile.nightPokemon[7];
+            nightFourFirstComboBox.SelectedIndex = currentFile.nightPokemon[8];
+            nightFourSecondComboBox.SelectedIndex = currentFile.nightPokemon[9];
+            nightOneFirstComboBox.SelectedIndex = currentFile.nightPokemon[10];
+            nightOneSecondComboBox.SelectedIndex = currentFile.nightPokemon[11];
 
             /* Setup radio sound encounters controls */
-            hoennFirstComboBox.SelectedIndex = currentFile.hoennMusicPokémon[0];
-            hoennSecondComboBox.SelectedIndex = currentFile.hoennMusicPokémon[1];
-            sinnohFirstComboBox.SelectedIndex = currentFile.sinnohMusicPokémon[0];
-            sinnohSecondComboBox.SelectedIndex = currentFile.sinnohMusicPokémon[1];
+            hoennFirstComboBox.SelectedIndex = currentFile.hoennMusicPokemon[0];
+            hoennSecondComboBox.SelectedIndex = currentFile.hoennMusicPokemon[1];
+            sinnohFirstComboBox.SelectedIndex = currentFile.sinnohMusicPokemon[0];
+            sinnohSecondComboBox.SelectedIndex = currentFile.sinnohMusicPokemon[1];
 
             /* Setup rock smash controls */
-            rockSmashNinetyComboBox.SelectedIndex = currentFile.rockSmashPokémon[0];
-            rockSmashTenComboBox.SelectedIndex = currentFile.rockSmashPokémon[1];
+            rockSmashNinetyComboBox.SelectedIndex = currentFile.rockSmashPokemon[0];
+            rockSmashTenComboBox.SelectedIndex = currentFile.rockSmashPokemon[1];
             rockSmashNinetyMinUpDown.Value = currentFile.rockSmashMinLevels[0];
             rockSmashTenMinUpDown.Value = currentFile.rockSmashMinLevels[1];
             rockSmashNinetyMaxUpDown.Value = currentFile.rockSmashMaxLevels[0];
             rockSmashTenMaxUpDown.Value = currentFile.rockSmashMaxLevels[1];
 
             /* Setup sawrm encounters controls */
-            grassSwarmComboBox.SelectedIndex = currentFile.swarmPokémon[0];
-            surfSwarmComboBox.SelectedIndex = currentFile.swarmPokémon[1];
-            goodRodSwarmComboBox.SelectedIndex = currentFile.swarmPokémon[2];
-            superRodSwarmComboBox.SelectedIndex = currentFile.swarmPokémon[3];
+            grassSwarmComboBox.SelectedIndex = currentFile.swarmPokemon[0];
+            surfSwarmComboBox.SelectedIndex = currentFile.swarmPokemon[1];
+            goodRodSwarmComboBox.SelectedIndex = currentFile.swarmPokemon[2];
+            superRodSwarmComboBox.SelectedIndex = currentFile.swarmPokemon[3];
 
             /* Water encounters controls setup */
-            surfSixtyComboBox.SelectedIndex = currentFile.surfPokémon[0];
+            surfSixtyComboBox.SelectedIndex = currentFile.surfPokemon[0];
             surfSixtyMinUpDown.Value = currentFile.surfMinLevels[0];
             surfSixtyMaxUpDown.Value = currentFile.surfMaxLevels[0];
 
-            surfThirtyComboBox.SelectedIndex = currentFile.surfPokémon[1];
+            surfThirtyComboBox.SelectedIndex = currentFile.surfPokemon[1];
             surfThirtyMinUpDown.Value = currentFile.surfMinLevels[1];
             surfThirtyMaxUpDown.Value = currentFile.surfMaxLevels[1];
 
-            surfFiveComboBox.SelectedIndex = currentFile.surfPokémon[2];
+            surfFiveComboBox.SelectedIndex = currentFile.surfPokemon[2];
             surfFiveMinUpDown.Value = currentFile.surfMinLevels[2];
             surfFiveMaxUpDown.Value = currentFile.surfMaxLevels[2];
 
-            surfFourComboBox.SelectedIndex = currentFile.surfPokémon[3];
+            surfFourComboBox.SelectedIndex = currentFile.surfPokemon[3];
             surfFourMinUpDown.Value = currentFile.surfMinLevels[3];
             surfFourMaxUpDown.Value = currentFile.surfMaxLevels[3];
 
-            surfOneComboBox.SelectedIndex = currentFile.surfPokémon[4];
+            surfOneComboBox.SelectedIndex = currentFile.surfPokemon[4];
             surfOneMinUpDown.Value = currentFile.surfMinLevels[4];
             surfOneMaxUpDown.Value = currentFile.surfMaxLevels[4];
 
-            oldRodSixtyComboBox.SelectedIndex = currentFile.oldRodPokémon[0];
+            oldRodSixtyComboBox.SelectedIndex = currentFile.oldRodPokemon[0];
             oldRodSixtyMinUpDown.Value = currentFile.oldRodMinLevels[0];
             oldRodSixtyMinUpDown.Value = currentFile.oldRodMaxLevels[0];
 
-            oldRodThirtyComboBox.SelectedIndex = currentFile.oldRodPokémon[1];
+            oldRodThirtyComboBox.SelectedIndex = currentFile.oldRodPokemon[1];
             oldRodThirtyMinUpDown.Value = currentFile.oldRodMinLevels[1];
             oldRodThirtyMaxUpDown.Value = currentFile.oldRodMaxLevels[1];
 
-            oldRodFiveComboBox.SelectedIndex = currentFile.oldRodPokémon[2];
+            oldRodFiveComboBox.SelectedIndex = currentFile.oldRodPokemon[2];
             oldRodFiveMinUpDown.Value = currentFile.oldRodMinLevels[2];
             oldRodFiveMaxUpDown.Value = currentFile.oldRodMaxLevels[2];
 
-            oldRodFourComboBox.SelectedIndex = currentFile.oldRodPokémon[3];
+            oldRodFourComboBox.SelectedIndex = currentFile.oldRodPokemon[3];
             oldRodFourMinUpDown.Value = currentFile.oldRodMinLevels[3];
             oldRodFourMaxUpDown.Value = currentFile.oldRodMaxLevels[3];
 
-            oldRodOneComboBox.SelectedIndex = currentFile.oldRodPokémon[4];
+            oldRodOneComboBox.SelectedIndex = currentFile.oldRodPokemon[4];
             oldRodOneMinUpDown.Value = currentFile.oldRodMinLevels[4];
             oldRodOneMaxUpDown.Value = currentFile.oldRodMaxLevels[4];
 
-            goodRodSixtyComboBox.SelectedIndex = currentFile.goodRodPokémon[0];
+            goodRodSixtyComboBox.SelectedIndex = currentFile.goodRodPokemon[0];
             goodRodSixtyMinUpDown.Value = currentFile.goodRodMinLevels[0];
             goodRodSixtyMinUpDown.Value = currentFile.goodRodMaxLevels[0];
 
-            goodRodThirtyComboBox.SelectedIndex = currentFile.goodRodPokémon[1];
+            goodRodThirtyComboBox.SelectedIndex = currentFile.goodRodPokemon[1];
             goodRodThirtyMinUpDown.Value = currentFile.goodRodMinLevels[1];
             goodRodThirtyMaxUpDown.Value = currentFile.goodRodMaxLevels[1];
 
-            goodRodFiveComboBox.SelectedIndex = currentFile.goodRodPokémon[2];
+            goodRodFiveComboBox.SelectedIndex = currentFile.goodRodPokemon[2];
             goodRodFiveMinUpDown.Value = currentFile.goodRodMinLevels[2];
             goodRodFiveMaxUpDown.Value = currentFile.goodRodMaxLevels[2];
 
-            goodRodFourComboBox.SelectedIndex = currentFile.goodRodPokémon[3];
+            goodRodFourComboBox.SelectedIndex = currentFile.goodRodPokemon[3];
             goodRodFourMinUpDown.Value = currentFile.goodRodMinLevels[3];
             goodRodFourMaxUpDown.Value = currentFile.goodRodMaxLevels[3];
 
-            goodRodOneComboBox.SelectedIndex = currentFile.goodRodPokémon[4];
+            goodRodOneComboBox.SelectedIndex = currentFile.goodRodPokemon[4];
             goodRodOneMinUpDown.Value = currentFile.goodRodMinLevels[4];
             goodRodOneMaxUpDown.Value = currentFile.goodRodMaxLevels[4];
 
-            superRodSixtyComboBox.SelectedIndex = currentFile.superRodPokémon[0];
+            superRodSixtyComboBox.SelectedIndex = currentFile.superRodPokemon[0];
             superRodSixtyMinUpDown.Value = currentFile.superRodMinLevels[0];
             superRodSixtyMinUpDown.Value = currentFile.superRodMaxLevels[0];
 
-            superRodThirtyComboBox.SelectedIndex = currentFile.superRodPokémon[1];
+            superRodThirtyComboBox.SelectedIndex = currentFile.superRodPokemon[1];
             superRodThirtyMinUpDown.Value = currentFile.superRodMinLevels[1];
             superRodThirtyMaxUpDown.Value = currentFile.superRodMaxLevels[1];
 
-            superRodFiveComboBox.SelectedIndex = currentFile.superRodPokémon[2];
+            superRodFiveComboBox.SelectedIndex = currentFile.superRodPokemon[2];
             superRodFiveMinUpDown.Value = currentFile.superRodMinLevels[2];
             superRodFiveMaxUpDown.Value = currentFile.superRodMaxLevels[2];
 
-            superRodFourComboBox.SelectedIndex = currentFile.superRodPokémon[3];
+            superRodFourComboBox.SelectedIndex = currentFile.superRodPokemon[3];
             superRodFourMinUpDown.Value = currentFile.superRodMinLevels[3];
             superRodFourMaxUpDown.Value = currentFile.superRodMaxLevels[3];
 
-            superRodOneComboBox.SelectedIndex = currentFile.superRodPokémon[4];
+            superRodOneComboBox.SelectedIndex = currentFile.superRodPokemon[4];
             superRodOneMinUpDown.Value = currentFile.superRodMinLevels[4];
             superRodOneMaxUpDown.Value = currentFile.superRodMaxLevels[4];
 
@@ -269,147 +269,147 @@ namespace DSPRE
 
         private void morningTwentyFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.morningPokémon[0] = (ushort)morningTwentyFirstComboBox.SelectedIndex;
+            currentFile.morningPokemon[0] = (ushort)morningTwentyFirstComboBox.SelectedIndex;
         }
         private void morningTwentySecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.morningPokémon[1] = (ushort)morningTwentySecondComboBox.SelectedIndex;
+            currentFile.morningPokemon[1] = (ushort)morningTwentySecondComboBox.SelectedIndex;
         }
         private void morningTenFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.morningPokémon[2] = (ushort)morningTenFirstComboBox.SelectedIndex;
+            currentFile.morningPokemon[2] = (ushort)morningTenFirstComboBox.SelectedIndex;
         }
         private void morningTenSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.morningPokémon[3] = (ushort)morningTenSecondComboBox.SelectedIndex;
+            currentFile.morningPokemon[3] = (ushort)morningTenSecondComboBox.SelectedIndex;
         }
         private void morningTenThirdComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.morningPokémon[4] = (ushort)morningTenThirdComboBox.SelectedIndex;
+            currentFile.morningPokemon[4] = (ushort)morningTenThirdComboBox.SelectedIndex;
         }
         private void morningTenFourthComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.morningPokémon[5] = (ushort)morningTenFourthComboBox.SelectedIndex;
+            currentFile.morningPokemon[5] = (ushort)morningTenFourthComboBox.SelectedIndex;
         }
         private void morningFiveFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.morningPokémon[6] = (ushort)morningFiveFirstComboBox.SelectedIndex;
+            currentFile.morningPokemon[6] = (ushort)morningFiveFirstComboBox.SelectedIndex;
         }
         private void morningFiveSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.morningPokémon[7] = (ushort)morningFiveSecondComboBox.SelectedIndex;
+            currentFile.morningPokemon[7] = (ushort)morningFiveSecondComboBox.SelectedIndex;
         }
         private void morningFourFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.morningPokémon[8] = (ushort)morningFourFirstComboBox.SelectedIndex;
+            currentFile.morningPokemon[8] = (ushort)morningFourFirstComboBox.SelectedIndex;
         }
         private void morningFourSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.morningPokémon[9] = (ushort)morningFourSecondComboBox.SelectedIndex;
+            currentFile.morningPokemon[9] = (ushort)morningFourSecondComboBox.SelectedIndex;
         }
         private void morningOneFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.morningPokémon[10] = (ushort)morningOneFirstComboBox.SelectedIndex;
+            currentFile.morningPokemon[10] = (ushort)morningOneFirstComboBox.SelectedIndex;
         }
         private void morningOneSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.morningPokémon[11] = (ushort)morningOneSecondComboBox.SelectedIndex;
+            currentFile.morningPokemon[11] = (ushort)morningOneSecondComboBox.SelectedIndex;
         }
         private void dayTwentyFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.dayPokémon[0] = (ushort)dayTwentyFirstComboBox.SelectedIndex;
+            currentFile.dayPokemon[0] = (ushort)dayTwentyFirstComboBox.SelectedIndex;
         }
         private void dayTwentySecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.dayPokémon[1] = (ushort)dayTwentySecondComboBox.SelectedIndex;
+            currentFile.dayPokemon[1] = (ushort)dayTwentySecondComboBox.SelectedIndex;
         }
         private void dayTenFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.dayPokémon[2] = (ushort)dayTenFirstComboBox.SelectedIndex;
+            currentFile.dayPokemon[2] = (ushort)dayTenFirstComboBox.SelectedIndex;
         }
         private void dayTenSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.dayPokémon[3] = (ushort)dayTenSecondComboBox.SelectedIndex;
+            currentFile.dayPokemon[3] = (ushort)dayTenSecondComboBox.SelectedIndex;
         }
         private void dayTenThirdComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.dayPokémon[4] = (ushort)dayTenThirdComboBox.SelectedIndex;
+            currentFile.dayPokemon[4] = (ushort)dayTenThirdComboBox.SelectedIndex;
         }
         private void dayTenFourthComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.dayPokémon[5] = (ushort)dayTenFourthComboBox.SelectedIndex;
+            currentFile.dayPokemon[5] = (ushort)dayTenFourthComboBox.SelectedIndex;
         }
         private void dayFiveFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.dayPokémon[6] = (ushort)dayFiveFirstComboBox.SelectedIndex;
+            currentFile.dayPokemon[6] = (ushort)dayFiveFirstComboBox.SelectedIndex;
         }
         private void dayFiveSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.dayPokémon[7] = (ushort)dayFiveSecondComboBox.SelectedIndex;
+            currentFile.dayPokemon[7] = (ushort)dayFiveSecondComboBox.SelectedIndex;
         }
         private void dayFourFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.dayPokémon[8] = (ushort)dayFourFirstComboBox.SelectedIndex;
+            currentFile.dayPokemon[8] = (ushort)dayFourFirstComboBox.SelectedIndex;
         }
         private void dayFourSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.dayPokémon[9] = (ushort)dayFourSecondComboBox.SelectedIndex;
+            currentFile.dayPokemon[9] = (ushort)dayFourSecondComboBox.SelectedIndex;
         }
         private void dayOneFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.dayPokémon[10] = (ushort)dayOneFirstComboBox.SelectedIndex;
+            currentFile.dayPokemon[10] = (ushort)dayOneFirstComboBox.SelectedIndex;
         }
         private void dayOneSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.dayPokémon[11] = (ushort)dayOneSecondComboBox.SelectedIndex;
+            currentFile.dayPokemon[11] = (ushort)dayOneSecondComboBox.SelectedIndex;
         }
         private void nightTwentyFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.nightPokémon[0] = (ushort)nightTwentyFirstComboBox.SelectedIndex;
+            currentFile.nightPokemon[0] = (ushort)nightTwentyFirstComboBox.SelectedIndex;
         }
         private void nightTwentySecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.nightPokémon[1] = (ushort)nightTwentySecondComboBox.SelectedIndex;
+            currentFile.nightPokemon[1] = (ushort)nightTwentySecondComboBox.SelectedIndex;
         }
         private void nightTenFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.nightPokémon[2] = (ushort)nightTenFirstComboBox.SelectedIndex;
+            currentFile.nightPokemon[2] = (ushort)nightTenFirstComboBox.SelectedIndex;
         }
         private void nightTenSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.nightPokémon[3] = (ushort)nightTenSecondComboBox.SelectedIndex;
+            currentFile.nightPokemon[3] = (ushort)nightTenSecondComboBox.SelectedIndex;
         }
         private void nightTenThirdComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.nightPokémon[4] = (ushort)nightTenThirdComboBox.SelectedIndex;
+            currentFile.nightPokemon[4] = (ushort)nightTenThirdComboBox.SelectedIndex;
         }
         private void nightTenFourthComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.nightPokémon[5] = (ushort)nightTenFourthComboBox.SelectedIndex;
+            currentFile.nightPokemon[5] = (ushort)nightTenFourthComboBox.SelectedIndex;
         }
         private void nightFiveFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.nightPokémon[6] = (ushort)nightFiveFirstComboBox.SelectedIndex;
+            currentFile.nightPokemon[6] = (ushort)nightFiveFirstComboBox.SelectedIndex;
         }
         private void nightFiveSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.nightPokémon[7] = (ushort)nightFiveSecondComboBox.SelectedIndex;
+            currentFile.nightPokemon[7] = (ushort)nightFiveSecondComboBox.SelectedIndex;
         }
         private void nightFourFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.nightPokémon[8] = (ushort)nightFourFirstComboBox.SelectedIndex;
+            currentFile.nightPokemon[8] = (ushort)nightFourFirstComboBox.SelectedIndex;
         }
         private void nightFourSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.nightPokémon[9] = (ushort)nightFourSecondComboBox.SelectedIndex;
+            currentFile.nightPokemon[9] = (ushort)nightFourSecondComboBox.SelectedIndex;
         }
         private void nightOneFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.nightPokémon[10] = (ushort)nightOneFirstComboBox.SelectedIndex;
+            currentFile.nightPokemon[10] = (ushort)nightOneFirstComboBox.SelectedIndex;
         }
         private void nightOneSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.nightPokémon[11] = (ushort)nightOneSecondComboBox.SelectedIndex;
+            currentFile.nightPokemon[11] = (ushort)nightOneSecondComboBox.SelectedIndex;
         }
 
         private void twentyFirstLevelUpDown_ValueChanged(object sender, EventArgs e)
@@ -463,28 +463,28 @@ namespace DSPRE
 
         private void hoennFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.hoennMusicPokémon[0] = (ushort)hoennFirstComboBox.SelectedIndex;
+            currentFile.hoennMusicPokemon[0] = (ushort)hoennFirstComboBox.SelectedIndex;
         }
         private void hoennSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.hoennMusicPokémon[1] = (ushort)hoennSecondComboBox.SelectedIndex;
+            currentFile.hoennMusicPokemon[1] = (ushort)hoennSecondComboBox.SelectedIndex;
         }
         private void sinnohFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.sinnohMusicPokémon[0] = (ushort)sinnohFirstComboBox.SelectedIndex;
+            currentFile.sinnohMusicPokemon[0] = (ushort)sinnohFirstComboBox.SelectedIndex;
         }
         private void sinnohSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.sinnohMusicPokémon[1] = (ushort)sinnohSecondComboBox.SelectedIndex;
+            currentFile.sinnohMusicPokemon[1] = (ushort)sinnohSecondComboBox.SelectedIndex;
         }
 
         private void rockSmashNinetyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.rockSmashPokémon[0] = (ushort)rockSmashNinetyComboBox.SelectedIndex;
+            currentFile.rockSmashPokemon[0] = (ushort)rockSmashNinetyComboBox.SelectedIndex;
         }
         private void rockSmashTenComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.rockSmashPokémon[1] = (ushort)rockSmashTenComboBox.SelectedIndex;
+            currentFile.rockSmashPokemon[1] = (ushort)rockSmashTenComboBox.SelectedIndex;
         }
         private void rockSmashNinetyMinUpDown_ValueChanged(object sender, EventArgs e)
         {
@@ -513,120 +513,120 @@ namespace DSPRE
 
         private void grassSwarmComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.swarmPokémon[0] = (ushort)grassSwarmComboBox.SelectedIndex;
+            currentFile.swarmPokemon[0] = (ushort)grassSwarmComboBox.SelectedIndex;
         }
         private void surfSwarmComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.swarmPokémon[1] = (ushort)surfSwarmComboBox.SelectedIndex;
+            currentFile.swarmPokemon[1] = (ushort)surfSwarmComboBox.SelectedIndex;
         }
         private void goodRodSwarmComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.swarmPokémon[2] = (ushort)goodRodSwarmComboBox.SelectedIndex;
+            currentFile.swarmPokemon[2] = (ushort)goodRodSwarmComboBox.SelectedIndex;
         }
         private void superRodSwarmComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            currentFile.swarmPokémon[3] = (ushort)superRodSwarmComboBox.SelectedIndex;
+            currentFile.swarmPokemon[3] = (ushort)superRodSwarmComboBox.SelectedIndex;
         }
 
         private void surfSixtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.surfPokémon[0] = (ushort)surfSixtyComboBox.SelectedIndex;
+            currentFile.surfPokemon[0] = (ushort)surfSixtyComboBox.SelectedIndex;
         }
         private void surfThirtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.surfPokémon[1] = (ushort)surfThirtyComboBox.SelectedIndex;
+            currentFile.surfPokemon[1] = (ushort)surfThirtyComboBox.SelectedIndex;
         }
         private void surfFiveComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.surfPokémon[2] = (ushort)surfFiveComboBox.SelectedIndex;
+            currentFile.surfPokemon[2] = (ushort)surfFiveComboBox.SelectedIndex;
         }
         private void surfFourComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.surfPokémon[3] = (ushort)surfFourComboBox.SelectedIndex;
+            currentFile.surfPokemon[3] = (ushort)surfFourComboBox.SelectedIndex;
         }
         private void surfOneComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.surfPokémon[4] = (ushort)surfOneComboBox.SelectedIndex;
+            currentFile.surfPokemon[4] = (ushort)surfOneComboBox.SelectedIndex;
         }
         private void oldRodSixtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.oldRodPokémon[0] = (ushort)oldRodSixtyComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[0] = (ushort)oldRodSixtyComboBox.SelectedIndex;
         }
         private void oldRodThirtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.oldRodPokémon[1] = (ushort)oldRodThirtyComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[1] = (ushort)oldRodThirtyComboBox.SelectedIndex;
         }
         private void oldRodFiveComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.oldRodPokémon[2] = (ushort)oldRodFiveComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[2] = (ushort)oldRodFiveComboBox.SelectedIndex;
         }
         private void oldRodFourComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.oldRodPokémon[3] = (ushort)oldRodFourComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[3] = (ushort)oldRodFourComboBox.SelectedIndex;
         }
         private void oldRodOneComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.oldRodPokémon[4] = (ushort)oldRodOneComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[4] = (ushort)oldRodOneComboBox.SelectedIndex;
         }
         private void goodRodSixtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.goodRodPokémon[0] = (ushort)goodRodSixtyComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[0] = (ushort)goodRodSixtyComboBox.SelectedIndex;
         }
         private void goodRodThirtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.goodRodPokémon[1] = (ushort)goodRodThirtyComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[1] = (ushort)goodRodThirtyComboBox.SelectedIndex;
         }
         private void goodRodFiveComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.goodRodPokémon[2] = (ushort)goodRodFiveComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[2] = (ushort)goodRodFiveComboBox.SelectedIndex;
         }
         private void goodRodFourComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.goodRodPokémon[3] = (ushort)goodRodFourComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[3] = (ushort)goodRodFourComboBox.SelectedIndex;
         }
         private void goodRodOneComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.goodRodPokémon[4] = (ushort)goodRodOneComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[4] = (ushort)goodRodOneComboBox.SelectedIndex;
         }
         private void superRodSixtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.superRodPokémon[0] = (ushort)superRodSixtyComboBox.SelectedIndex;
+            currentFile.superRodPokemon[0] = (ushort)superRodSixtyComboBox.SelectedIndex;
         }
         private void superRodThirtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.superRodPokémon[1] = (ushort)superRodThirtyComboBox.SelectedIndex;
+            currentFile.superRodPokemon[1] = (ushort)superRodThirtyComboBox.SelectedIndex;
         }
         private void superRodFiveComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.superRodPokémon[2] = (ushort)superRodFiveComboBox.SelectedIndex;
+            currentFile.superRodPokemon[2] = (ushort)superRodFiveComboBox.SelectedIndex;
         }
         private void superRodFourComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.superRodPokémon[3] = (ushort)superRodFourComboBox.SelectedIndex;
+            currentFile.superRodPokemon[3] = (ushort)superRodFourComboBox.SelectedIndex;
         }
         private void superRodOneComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.superRodPokémon[4] = (ushort)superRodOneComboBox.SelectedIndex;
+            currentFile.superRodPokemon[4] = (ushort)superRodOneComboBox.SelectedIndex;
         }
 
         /* Water levels controls */

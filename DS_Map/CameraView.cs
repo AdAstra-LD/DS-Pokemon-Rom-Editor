@@ -17,7 +17,6 @@ namespace DSPRE
         #region Variables
         string folder;
         bool disableHandlers = new bool();
-        RomInfo info;
         NSBMD currentNSBMD;
         NSBMDGlRenderer renderer = new NSBMDGlRenderer();
 
@@ -30,15 +29,13 @@ namespace DSPRE
         public float perspective = 45f;
         #endregion
 
-        public CameraView(RomInfo romInfo)
+        public CameraView()
         {
             InitializeComponent();
-            info = romInfo;
 
             cameraOpenGLControl.InitializeContexts();
             cameraOpenGLControl.MakeCurrent();
             Gl.glEnable(Gl.GL_TEXTURE_2D);
-
         }
     }
 }

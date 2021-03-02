@@ -53,135 +53,135 @@ namespace DSPRE
             superRodRateUpDown.Value = currentFile.superRodRate;
 
             /* Walking encounters controls setup */
-            walkingTwentyFirstComboBox.SelectedIndex = (int)currentFile.walkingPokémon[0];
+            walkingTwentyFirstComboBox.SelectedIndex = (int)currentFile.walkingPokemon[0];
             walkingTwentyFirstUpDown.Value = currentFile.walkingLevels[0];
-            walkingTwentySecondComboBox.SelectedIndex = (int)currentFile.walkingPokémon[1];
+            walkingTwentySecondComboBox.SelectedIndex = (int)currentFile.walkingPokemon[1];
             walkingTwentySecondUpDown.Value = currentFile.walkingLevels[1];
-            walkingTenFirstComboBox.SelectedIndex = (int)currentFile.walkingPokémon[2];
+            walkingTenFirstComboBox.SelectedIndex = (int)currentFile.walkingPokemon[2];
             walkingTenFirstUpDown.Value = currentFile.walkingLevels[2];
-            walkingTenSecondComboBox.SelectedIndex = (int)currentFile.walkingPokémon[3];
+            walkingTenSecondComboBox.SelectedIndex = (int)currentFile.walkingPokemon[3];
             walkingTenSecondUpDown.Value = currentFile.walkingLevels[3];
-            walkingTenThirdComboBox.SelectedIndex = (int)currentFile.walkingPokémon[4];
+            walkingTenThirdComboBox.SelectedIndex = (int)currentFile.walkingPokemon[4];
             walkingTenThirdUpDown.Value = currentFile.walkingLevels[4];
-            walkingTenFourthComboBox.SelectedIndex = (int)currentFile.walkingPokémon[5];
+            walkingTenFourthComboBox.SelectedIndex = (int)currentFile.walkingPokemon[5];
             walkingTenFourthUpDown.Value = currentFile.walkingLevels[5];
-            walkingFiveFirstComboBox.SelectedIndex = (int)currentFile.walkingPokémon[6];
+            walkingFiveFirstComboBox.SelectedIndex = (int)currentFile.walkingPokemon[6];
             walkingFiveFirstUpDown.Value = currentFile.walkingLevels[6];
-            walkingFiveSecondComboBox.SelectedIndex = (int)currentFile.walkingPokémon[7];
+            walkingFiveSecondComboBox.SelectedIndex = (int)currentFile.walkingPokemon[7];
             walkingFiveSecondUpDown.Value = currentFile.walkingLevels[7];
-            walkingFourFirstComboBox.SelectedIndex = (int)currentFile.walkingPokémon[8];
+            walkingFourFirstComboBox.SelectedIndex = (int)currentFile.walkingPokemon[8];
             walkingFourFirstUpDown.Value = currentFile.walkingLevels[8];
-            walkingFourSecondComboBox.SelectedIndex = (int)currentFile.walkingPokémon[9];
+            walkingFourSecondComboBox.SelectedIndex = (int)currentFile.walkingPokemon[9];
             walkingFourSecondUpDown.Value = currentFile.walkingLevels[9];
-            walkingOneFirstComboBox.SelectedIndex = (int)currentFile.walkingPokémon[10];
+            walkingOneFirstComboBox.SelectedIndex = (int)currentFile.walkingPokemon[10];
             walkingOneFirstUpDown.Value = currentFile.walkingLevels[10];
-            walkingOneSecondComboBox.SelectedIndex = (int)currentFile.walkingPokémon[11];
+            walkingOneSecondComboBox.SelectedIndex = (int)currentFile.walkingPokemon[11];
             walkingOneSecondUpDown.Value = currentFile.walkingLevels[11];
 
             /* Time dependent encounters controls setup */
-            morningFirstComboBox.SelectedIndex = (int)currentFile.morningPokémon[0];
-            morningSecondComboBox.SelectedIndex = (int)currentFile.morningPokémon[1];
-            nightFirstComboBox.SelectedIndex = (int)currentFile.nightPokémon[0];
-            nightSecondComboBox.SelectedIndex = (int)currentFile.nightPokémon[1];
-            swarmFirstComboBox.SelectedIndex = currentFile.swarmPokémon[0];
-            swarmSecondComboBox.SelectedIndex = currentFile.swarmPokémon[1];
+            morningFirstComboBox.SelectedIndex = (int)currentFile.morningPokemon[0];
+            morningSecondComboBox.SelectedIndex = (int)currentFile.morningPokemon[1];
+            nightFirstComboBox.SelectedIndex = (int)currentFile.nightPokemon[0];
+            nightSecondComboBox.SelectedIndex = (int)currentFile.nightPokemon[1];
+            swarmFirstComboBox.SelectedIndex = currentFile.swarmPokemon[0];
+            swarmSecondComboBox.SelectedIndex = currentFile.swarmPokemon[1];
 
             /* Dual Slot encounters controls setup */
-            rubyFirstComboBox.SelectedIndex = (int)currentFile.rubyPokémon[0];
-            rubySecondComboBox.SelectedIndex = (int)currentFile.rubyPokémon[1];
-            sapphireFirstComboBox.SelectedIndex = (int)currentFile.sapphirePokémon[0];
-            sapphireSecondComboBox.SelectedIndex = (int)currentFile.sapphirePokémon[1];
-            emeraldFirstComboBox.SelectedIndex = (int)currentFile.emeraldPokémon[0];
-            emeraldSecondComboBox.SelectedIndex = (int)currentFile.emeraldPokémon[1];
-            fireRedFirstComboBox.SelectedIndex = (int)currentFile.fireRedPokémon[0];
-            fireRedSecondComboBox.SelectedIndex = (int)currentFile.fireRedPokémon[1];
-            leafGreenFirstComboBox.SelectedIndex = (int)currentFile.leafGreenPokémon[0];
-            leafGreenSecondComboBox.SelectedIndex = (int)currentFile.leafGreenPokémon[1];
+            rubyFirstComboBox.SelectedIndex = (int)currentFile.rubyPokemon[0];
+            rubySecondComboBox.SelectedIndex = (int)currentFile.rubyPokemon[1];
+            sapphireFirstComboBox.SelectedIndex = (int)currentFile.sapphirePokemon[0];
+            sapphireSecondComboBox.SelectedIndex = (int)currentFile.sapphirePokemon[1];
+            emeraldFirstComboBox.SelectedIndex = (int)currentFile.emeraldPokemon[0];
+            emeraldSecondComboBox.SelectedIndex = (int)currentFile.emeraldPokemon[1];
+            fireRedFirstComboBox.SelectedIndex = (int)currentFile.fireRedPokemon[0];
+            fireRedSecondComboBox.SelectedIndex = (int)currentFile.fireRedPokemon[1];
+            leafGreenFirstComboBox.SelectedIndex = (int)currentFile.leafGreenPokemon[0];
+            leafGreenSecondComboBox.SelectedIndex = (int)currentFile.leafGreenPokemon[1];
 
             /* PokéRadar encounters controls setup */
-            radarFirstComboBox.SelectedIndex = (int)currentFile.radarPokémon[0];
-            radarSecondComboBox.SelectedIndex = (int)currentFile.radarPokémon[1];
-            radarThirdComboBox.SelectedIndex = (int)currentFile.radarPokémon[2];
-            radarFourthComboBox.SelectedIndex = (int)currentFile.radarPokémon[3];
+            radarFirstComboBox.SelectedIndex = (int)currentFile.radarPokemon[0];
+            radarSecondComboBox.SelectedIndex = (int)currentFile.radarPokemon[1];
+            radarThirdComboBox.SelectedIndex = (int)currentFile.radarPokemon[2];
+            radarFourthComboBox.SelectedIndex = (int)currentFile.radarPokemon[3];
 
             /* Water encounters controls setup */
-            surfSixtyComboBox.SelectedIndex = currentFile.surfPokémon[0];
+            surfSixtyComboBox.SelectedIndex = currentFile.surfPokemon[0];
             surfSixtyMinUpDown.Value = currentFile.surfMinLevels[0];
             surfSixtyMaxUpDown.Value = currentFile.surfMaxLevels[0];
 
-            surfThirtyComboBox.SelectedIndex = currentFile.surfPokémon[1];
+            surfThirtyComboBox.SelectedIndex = currentFile.surfPokemon[1];
             surfThirtyMinUpDown.Value = currentFile.surfMinLevels[1];
             surfThirtyMaxUpDown.Value = currentFile.surfMaxLevels[1];
 
-            surfFiveComboBox.SelectedIndex = currentFile.surfPokémon[2];
+            surfFiveComboBox.SelectedIndex = currentFile.surfPokemon[2];
             surfFiveMinUpDown.Value = currentFile.surfMinLevels[2];
             surfFiveMaxUpDown.Value = currentFile.surfMaxLevels[2];
 
-            surfFourComboBox.SelectedIndex = currentFile.surfPokémon[3];
+            surfFourComboBox.SelectedIndex = currentFile.surfPokemon[3];
             surfFourMinUpDown.Value = currentFile.surfMinLevels[3];
             surfFourMaxUpDown.Value = currentFile.surfMaxLevels[3];
 
-            surfOneComboBox.SelectedIndex = currentFile.surfPokémon[4];
+            surfOneComboBox.SelectedIndex = currentFile.surfPokemon[4];
             surfOneMinUpDown.Value = currentFile.surfMinLevels[4];
             surfOneMaxUpDown.Value = currentFile.surfMaxLevels[4];
 
-            oldRodSixtyComboBox.SelectedIndex = currentFile.oldRodPokémon[0];
+            oldRodSixtyComboBox.SelectedIndex = currentFile.oldRodPokemon[0];
             oldRodSixtyMinUpDown.Value = currentFile.oldRodMinLevels[0];
             oldRodSixtyMinUpDown.Value = currentFile.oldRodMaxLevels[0];
 
-            oldRodThirtyComboBox.SelectedIndex = currentFile.oldRodPokémon[1];
+            oldRodThirtyComboBox.SelectedIndex = currentFile.oldRodPokemon[1];
             oldRodThirtyMinUpDown.Value = currentFile.oldRodMinLevels[1];
             oldRodThirtyMaxUpDown.Value = currentFile.oldRodMaxLevels[1];
 
-            oldRodFiveComboBox.SelectedIndex = currentFile.oldRodPokémon[2];
+            oldRodFiveComboBox.SelectedIndex = currentFile.oldRodPokemon[2];
             oldRodFiveMinUpDown.Value = currentFile.oldRodMinLevels[2];
             oldRodFiveMaxUpDown.Value = currentFile.oldRodMaxLevels[2];
 
-            oldRodFourComboBox.SelectedIndex = currentFile.oldRodPokémon[3];
+            oldRodFourComboBox.SelectedIndex = currentFile.oldRodPokemon[3];
             oldRodFourMinUpDown.Value = currentFile.oldRodMinLevels[3];
             oldRodFourMaxUpDown.Value = currentFile.oldRodMaxLevels[3];
 
-            oldRodOneComboBox.SelectedIndex = currentFile.oldRodPokémon[4];
+            oldRodOneComboBox.SelectedIndex = currentFile.oldRodPokemon[4];
             oldRodOneMinUpDown.Value = currentFile.oldRodMinLevels[4];
             oldRodOneMaxUpDown.Value = currentFile.oldRodMaxLevels[4];
 
-            goodRodSixtyComboBox.SelectedIndex = currentFile.goodRodPokémon[0];
+            goodRodSixtyComboBox.SelectedIndex = currentFile.goodRodPokemon[0];
             goodRodSixtyMinUpDown.Value = currentFile.goodRodMinLevels[0];
             goodRodSixtyMinUpDown.Value = currentFile.goodRodMaxLevels[0];
 
-            goodRodThirtyComboBox.SelectedIndex = currentFile.goodRodPokémon[1];
+            goodRodThirtyComboBox.SelectedIndex = currentFile.goodRodPokemon[1];
             goodRodThirtyMinUpDown.Value = currentFile.goodRodMinLevels[1];
             goodRodThirtyMaxUpDown.Value = currentFile.goodRodMaxLevels[1];
 
-            goodRodFiveComboBox.SelectedIndex = currentFile.goodRodPokémon[2];
+            goodRodFiveComboBox.SelectedIndex = currentFile.goodRodPokemon[2];
             goodRodFiveMinUpDown.Value = currentFile.goodRodMinLevels[2];
             goodRodFiveMaxUpDown.Value = currentFile.goodRodMaxLevels[2];
 
-            goodRodFourComboBox.SelectedIndex = currentFile.goodRodPokémon[3];
+            goodRodFourComboBox.SelectedIndex = currentFile.goodRodPokemon[3];
             goodRodFourMinUpDown.Value = currentFile.goodRodMinLevels[3];
             goodRodFourMaxUpDown.Value = currentFile.goodRodMaxLevels[3];
 
-            goodRodOneComboBox.SelectedIndex = currentFile.goodRodPokémon[4];
+            goodRodOneComboBox.SelectedIndex = currentFile.goodRodPokemon[4];
             goodRodOneMinUpDown.Value = currentFile.goodRodMinLevels[4];
             goodRodOneMaxUpDown.Value = currentFile.goodRodMaxLevels[4];
 
-            superRodSixtyComboBox.SelectedIndex = currentFile.superRodPokémon[0];
+            superRodSixtyComboBox.SelectedIndex = currentFile.superRodPokemon[0];
             superRodSixtyMinUpDown.Value = currentFile.superRodMinLevels[0];
             superRodSixtyMinUpDown.Value = currentFile.superRodMaxLevels[0];
 
-            superRodThirtyComboBox.SelectedIndex = currentFile.superRodPokémon[1];
+            superRodThirtyComboBox.SelectedIndex = currentFile.superRodPokemon[1];
             superRodThirtyMinUpDown.Value = currentFile.superRodMinLevels[1];
             superRodThirtyMaxUpDown.Value = currentFile.superRodMaxLevels[1];
 
-            superRodFiveComboBox.SelectedIndex = currentFile.superRodPokémon[2];
+            superRodFiveComboBox.SelectedIndex = currentFile.superRodPokemon[2];
             superRodFiveMinUpDown.Value = currentFile.superRodMinLevels[2];
             superRodFiveMaxUpDown.Value = currentFile.superRodMaxLevels[2];
 
-            superRodFourComboBox.SelectedIndex = currentFile.superRodPokémon[3];
+            superRodFourComboBox.SelectedIndex = currentFile.superRodPokemon[3];
             superRodFourMinUpDown.Value = currentFile.superRodMinLevels[3];
             superRodFourMaxUpDown.Value = currentFile.superRodMaxLevels[3];
 
-            superRodOneComboBox.SelectedIndex = currentFile.superRodPokémon[4];
+            superRodOneComboBox.SelectedIndex = currentFile.superRodPokemon[4];
             superRodOneMinUpDown.Value = currentFile.superRodMinLevels[4];
             superRodOneMaxUpDown.Value = currentFile.superRodMaxLevels[4];
 
@@ -227,262 +227,262 @@ namespace DSPRE
         private void walkingTwentyFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.walkingPokémon[0] = (uint)walkingTwentyFirstComboBox.SelectedIndex;
+            currentFile.walkingPokemon[0] = (uint)walkingTwentyFirstComboBox.SelectedIndex;
         }
         private void walkingTwentySecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.walkingPokémon[1] = (uint)walkingTwentySecondComboBox.SelectedIndex;
+            currentFile.walkingPokemon[1] = (uint)walkingTwentySecondComboBox.SelectedIndex;
         }
         private void walkingTenFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.walkingPokémon[2] = (uint)walkingTenFirstComboBox.SelectedIndex;
+            currentFile.walkingPokemon[2] = (uint)walkingTenFirstComboBox.SelectedIndex;
         }
         private void walkingTenSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.walkingPokémon[3] = (uint)walkingTenSecondComboBox.SelectedIndex;
+            currentFile.walkingPokemon[3] = (uint)walkingTenSecondComboBox.SelectedIndex;
         }
         private void walkingTenThirdComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.walkingPokémon[4] = (uint)walkingTenThirdComboBox.SelectedIndex;
+            currentFile.walkingPokemon[4] = (uint)walkingTenThirdComboBox.SelectedIndex;
         }
         private void walkingTenFourthComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.walkingPokémon[5] = (uint)walkingTenFourthComboBox.SelectedIndex;
+            currentFile.walkingPokemon[5] = (uint)walkingTenFourthComboBox.SelectedIndex;
         }
         private void walkingFiveFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.walkingPokémon[6] = (uint)walkingFiveFirstComboBox.SelectedIndex;
+            currentFile.walkingPokemon[6] = (uint)walkingFiveFirstComboBox.SelectedIndex;
         }
         private void walkingFiveSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.walkingPokémon[7] = (uint)walkingFiveSecondComboBox.SelectedIndex;
+            currentFile.walkingPokemon[7] = (uint)walkingFiveSecondComboBox.SelectedIndex;
         }
         private void walkingFourFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.walkingPokémon[8] = (uint)walkingFourFirstComboBox.SelectedIndex;
+            currentFile.walkingPokemon[8] = (uint)walkingFourFirstComboBox.SelectedIndex;
         }
         private void walkingFourSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.walkingPokémon[9] = (uint)walkingFourSecondComboBox.SelectedIndex;
+            currentFile.walkingPokemon[9] = (uint)walkingFourSecondComboBox.SelectedIndex;
         }
         private void walkingOneFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.walkingPokémon[10] = (uint)walkingOneFirstComboBox.SelectedIndex;
+            currentFile.walkingPokemon[10] = (uint)walkingOneFirstComboBox.SelectedIndex;
         }
         private void walkingOneSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.walkingPokémon[11] = (uint)walkingOneSecondComboBox.SelectedIndex;
+            currentFile.walkingPokemon[11] = (uint)walkingOneSecondComboBox.SelectedIndex;
         }
         private void morningFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.morningPokémon[0] = (uint)morningFirstComboBox.SelectedIndex;
+            currentFile.morningPokemon[0] = (uint)morningFirstComboBox.SelectedIndex;
         }
         private void morningSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.morningPokémon[1] = (uint)morningSecondComboBox.SelectedIndex;
+            currentFile.morningPokemon[1] = (uint)morningSecondComboBox.SelectedIndex;
         }
         private void nightFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.nightPokémon[0] = (uint)nightFirstComboBox.SelectedIndex;
+            currentFile.nightPokemon[0] = (uint)nightFirstComboBox.SelectedIndex;
         }
         private void nightSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.nightPokémon[0] = (uint)nightSecondComboBox.SelectedIndex;
+            currentFile.nightPokemon[0] = (uint)nightSecondComboBox.SelectedIndex;
         }
         private void swarmFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.swarmPokémon[0] = (ushort)swarmFirstComboBox.SelectedIndex;
+            currentFile.swarmPokemon[0] = (ushort)swarmFirstComboBox.SelectedIndex;
         }
         private void swarmSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.swarmPokémon[1] = (ushort)swarmSecondComboBox.SelectedIndex;
+            currentFile.swarmPokemon[1] = (ushort)swarmSecondComboBox.SelectedIndex;
         }
         private void rubyFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.rubyPokémon[0] = (uint)rubyFirstComboBox.SelectedIndex;
+            currentFile.rubyPokemon[0] = (uint)rubyFirstComboBox.SelectedIndex;
         }
         private void rubySecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.rubyPokémon[1] = (uint)rubySecondComboBox.SelectedIndex;
+            currentFile.rubyPokemon[1] = (uint)rubySecondComboBox.SelectedIndex;
         }
         private void sapphireFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.sapphirePokémon[0] = (uint)sapphireFirstComboBox.SelectedIndex;
+            currentFile.sapphirePokemon[0] = (uint)sapphireFirstComboBox.SelectedIndex;
         }
         private void sapphireSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.sapphirePokémon[1] = (uint)sapphireSecondComboBox.SelectedIndex;
+            currentFile.sapphirePokemon[1] = (uint)sapphireSecondComboBox.SelectedIndex;
         }
         private void emeraldFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.emeraldPokémon[0] = (uint)emeraldFirstComboBox.SelectedIndex;
+            currentFile.emeraldPokemon[0] = (uint)emeraldFirstComboBox.SelectedIndex;
         }
         private void emeraldSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.emeraldPokémon[1] = (uint)emeraldSecondComboBox.SelectedIndex;
+            currentFile.emeraldPokemon[1] = (uint)emeraldSecondComboBox.SelectedIndex;
         }
         private void fireRedFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.fireRedPokémon[0] = (uint)fireRedFirstComboBox.SelectedIndex;
+            currentFile.fireRedPokemon[0] = (uint)fireRedFirstComboBox.SelectedIndex;
         }
         private void fireRedSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.fireRedPokémon[1] = (uint)fireRedSecondComboBox.SelectedIndex;
+            currentFile.fireRedPokemon[1] = (uint)fireRedSecondComboBox.SelectedIndex;
         }
         private void leafGreenFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.leafGreenPokémon[0] = (uint)leafGreenFirstComboBox.SelectedIndex;
+            currentFile.leafGreenPokemon[0] = (uint)leafGreenFirstComboBox.SelectedIndex;
         }
         private void leafGreenSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.leafGreenPokémon[1] = (uint)leafGreenSecondComboBox.SelectedIndex;
+            currentFile.leafGreenPokemon[1] = (uint)leafGreenSecondComboBox.SelectedIndex;
         }
         private void radarFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.radarPokémon[0] = (uint)radarFirstComboBox.SelectedIndex;
+            currentFile.radarPokemon[0] = (uint)radarFirstComboBox.SelectedIndex;
         }
         private void radarSecondComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.radarPokémon[1] = (uint)radarSecondComboBox.SelectedIndex;
+            currentFile.radarPokemon[1] = (uint)radarSecondComboBox.SelectedIndex;
         }
         private void radarThirdComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.radarPokémon[2] = (uint)radarThirdComboBox.SelectedIndex;
+            currentFile.radarPokemon[2] = (uint)radarThirdComboBox.SelectedIndex;
         }
         private void radarFourthComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.radarPokémon[3] = (uint)radarThirdComboBox.SelectedIndex;
+            currentFile.radarPokemon[3] = (uint)radarThirdComboBox.SelectedIndex;
         }
         private void surfSixtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.surfPokémon[0] = (ushort)surfSixtyComboBox.SelectedIndex;
+            currentFile.surfPokemon[0] = (ushort)surfSixtyComboBox.SelectedIndex;
         }
         private void surfThirtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.surfPokémon[1] = (ushort)surfThirtyComboBox.SelectedIndex;
+            currentFile.surfPokemon[1] = (ushort)surfThirtyComboBox.SelectedIndex;
         }
         private void surfFiveComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.surfPokémon[2] = (ushort)surfFiveComboBox.SelectedIndex;
+            currentFile.surfPokemon[2] = (ushort)surfFiveComboBox.SelectedIndex;
         }
         private void surfFourComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.surfPokémon[3] = (ushort)surfFourComboBox.SelectedIndex;
+            currentFile.surfPokemon[3] = (ushort)surfFourComboBox.SelectedIndex;
         }
         private void surfOneComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.surfPokémon[4] = (ushort)surfOneComboBox.SelectedIndex;
+            currentFile.surfPokemon[4] = (ushort)surfOneComboBox.SelectedIndex;
         }
         private void oldRodSixtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.oldRodPokémon[0] = (ushort)oldRodSixtyComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[0] = (ushort)oldRodSixtyComboBox.SelectedIndex;
         }
         private void oldRodThirtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.oldRodPokémon[1] = (ushort)oldRodThirtyComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[1] = (ushort)oldRodThirtyComboBox.SelectedIndex;
         }
         private void oldRodFiveComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.oldRodPokémon[2] = (ushort)oldRodFiveComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[2] = (ushort)oldRodFiveComboBox.SelectedIndex;
         }
         private void oldRodFourComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.oldRodPokémon[3] = (ushort)oldRodFourComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[3] = (ushort)oldRodFourComboBox.SelectedIndex;
         }
         private void oldRodOneComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.oldRodPokémon[4] = (ushort)oldRodOneComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[4] = (ushort)oldRodOneComboBox.SelectedIndex;
         }
         private void goodRodSixtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.goodRodPokémon[0] = (ushort)goodRodSixtyComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[0] = (ushort)goodRodSixtyComboBox.SelectedIndex;
         }
         private void goodRodThirtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.goodRodPokémon[1] = (ushort)goodRodThirtyComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[1] = (ushort)goodRodThirtyComboBox.SelectedIndex;
         }
         private void goodRodFiveComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.goodRodPokémon[2] = (ushort)goodRodFiveComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[2] = (ushort)goodRodFiveComboBox.SelectedIndex;
         }
         private void goodRodFourComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.goodRodPokémon[3] = (ushort)goodRodFourComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[3] = (ushort)goodRodFourComboBox.SelectedIndex;
         }
         private void goodRodOneComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.goodRodPokémon[4] = (ushort)goodRodOneComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[4] = (ushort)goodRodOneComboBox.SelectedIndex;
         }
         private void superRodSixtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.superRodPokémon[0] = (ushort)superRodSixtyComboBox.SelectedIndex;
+            currentFile.superRodPokemon[0] = (ushort)superRodSixtyComboBox.SelectedIndex;
         }
         private void superRodThirtyComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.superRodPokémon[1] = (ushort)superRodThirtyComboBox.SelectedIndex;
+            currentFile.superRodPokemon[1] = (ushort)superRodThirtyComboBox.SelectedIndex;
         }
         private void superRodFiveComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.superRodPokémon[2] = (ushort)superRodFiveComboBox.SelectedIndex;
+            currentFile.superRodPokemon[2] = (ushort)superRodFiveComboBox.SelectedIndex;
         }
         private void superRodFourComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.superRodPokémon[3] = (ushort)superRodFourComboBox.SelectedIndex;
+            currentFile.superRodPokemon[3] = (ushort)superRodFourComboBox.SelectedIndex;
         }
         private void superRodOneComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (disableHandlers) return;
-            currentFile.superRodPokémon[4] = (ushort)superRodOneComboBox.SelectedIndex;
+            currentFile.superRodPokemon[4] = (ushort)superRodOneComboBox.SelectedIndex;
         }
 
         /* Walking levels controls */

@@ -50,7 +50,7 @@ namespace DSPRE {
 
         public static int nullEncounterID { get; private set; }
         public static int attackNamesTextNumber { get; private set; }
-        public static int[] pokémonNamesTextNumbers { get; private set; }
+        public static int[] pokemonNamesTextNumbers { get; private set; }
         public static int itemNamesTextNumber { get; private set; }
         public static int itemScriptFileNumber { get; internal set; }      
         public static int trainerClassMessageNumber { get; private set; }
@@ -594,14 +594,14 @@ namespace DSPRE {
             switch (gameVersion) {
                 case "D":
                 case "P":
-                    pokémonNamesTextNumbers = new int[2] { 362, 363 };
+                    pokemonNamesTextNumbers = new int[2] { 362, 363 };
                     break;
                 case "Plat":
-                    pokémonNamesTextNumbers = new int[6] { 412, 712, 713, 714, 715, 716}; //also 413?
+                    pokemonNamesTextNumbers = new int[7] { 412, 413, 712, 713, 714, 715, 716}; //413?
                     break;
                 case "HG":
                 case "SS":
-                    pokémonNamesTextNumbers = new int[6] { 237, 817, 818, 819, 820, 821}; //also 238?
+                    pokemonNamesTextNumbers = new int[7] { 237, 238, 817, 818, 819, 820, 821}; //238?
                     break;
             }
         }

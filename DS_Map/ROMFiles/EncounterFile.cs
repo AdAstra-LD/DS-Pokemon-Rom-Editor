@@ -12,7 +12,7 @@ namespace DSPRE.ROMFiles {
        0x8  //  ushort:     Text Archive number
        0xA  //  ushort:     Day music track number
        0xC  //  ushort:     Night music track number
-       0xE  //  ushort:     Wild Pokémon file number
+       0xE  //  ushort:     Wild Pokemon file number
        0x10 //  ushort:     Event file number
 
        * Diamond/Pearl:
@@ -38,7 +38,7 @@ namespace DSPRE.ROMFiles {
 
     /* ---------------------- WILD POKéMON DATA STRUCTURE (HGSS):----------------------------
         
-       0x0  //  byte:       Wild Pokémon file number
+       0x0  //  byte:       Wild Pokemon file number
        0x1  //  byte:       Area data value
        0x2  //  byte:       ?
        0x3  //  byte:       ?
@@ -53,7 +53,7 @@ namespace DSPRE.ROMFiles {
        0x13 //  byte:       Map name textbox type value
        0x14 //  byte:       Weather value
        0x15 //  byte:       Camera value
-       0x16 //  byte:       Follow mode (for the Pokémon following hero)
+       0x16 //  byte:       Follow mode (for the Pokemon following hero)
        0x17 //  byte:       Bitwise permission flags:
 
        -----------------    1: Allow Fly
@@ -68,7 +68,7 @@ namespace DSPRE.ROMFiles {
     ----------------------------------------------------------------------------------*/
 
     /// <summary>
-    /// General class to store common wild Pokémon data across all Gen IV Pokémon NDS games
+    /// General class to store common wild Pokemon data across all Gen IV Pokemon NDS games
     /// </summary>
     public abstract class EncounterFile
 	{
@@ -93,11 +93,11 @@ namespace DSPRE.ROMFiles {
         public byte[] surfMinLevels = new byte[5];
 
         /* Encounters */
-        public ushort[] goodRodPokémon = new ushort[5];
-        public ushort[] oldRodPokémon = new ushort[5];
-        public ushort[] superRodPokémon = new ushort[5];
-        public ushort[] surfPokémon = new ushort[5];
-        public ushort[] swarmPokémon { get; set; }
+        public ushort[] goodRodPokemon = new ushort[5];
+        public ushort[] oldRodPokemon = new ushort[5];
+        public ushort[] superRodPokemon = new ushort[5];
+        public ushort[] surfPokemon = new ushort[5];
+        public ushort[] swarmPokemon { get; set; }
         #endregion
 
         #region Methods (1)
@@ -106,25 +106,25 @@ namespace DSPRE.ROMFiles {
     }
 
     /// <summary>
-    /// Class to store wild Pokémon data from Pokémon Diamond, Pearl and Platinum
+    /// Class to store wild Pokemon data from Pokemon Diamond, Pearl and Platinum
     /// </summary>
     public class EncounterFileDPPt: EncounterFile
     {
         #region Fields (9)       
         /* Field encounters */
-        public uint[] radarPokémon = new uint[4];
-        public uint[] walkingPokémon = new uint[12];
+        public uint[] radarPokemon = new uint[4];
+        public uint[] walkingPokemon = new uint[12];
 
         /* Time-specific encounters */
-        public uint[] morningPokémon = new uint[2];
-        public uint[] nightPokémon = new uint[2];
+        public uint[] morningPokemon = new uint[2];
+        public uint[] nightPokemon = new uint[2];
 
         /* Dual slot exclusives */
-        public uint[] rubyPokémon = new uint[2];
-        public uint[] sapphirePokémon = new uint[2];
-        public uint[] emeraldPokémon = new uint[2];
-        public uint[] fireRedPokémon = new uint[2];
-        public uint[] leafGreenPokémon = new uint[2];
+        public uint[] rubyPokemon = new uint[2];
+        public uint[] sapphirePokemon = new uint[2];
+        public uint[] emeraldPokemon = new uint[2];
+        public uint[] fireRedPokemon = new uint[2];
+        public uint[] leafGreenPokemon = new uint[2];
         #endregion
 
         #region Constructors (1)
@@ -134,31 +134,39 @@ namespace DSPRE.ROMFiles {
             {
                 /* Walking encounters */
                 walkingRate = (byte)reader.ReadInt32();
-                for (int i = 0; i < 12; i++)
-                {
+                for (int i = 0; i < 12; i++) {
                     walkingLevels[i] = (byte)reader.ReadUInt32();
-                    walkingPokémon[i] = reader.ReadUInt32();
+                    walkingPokemon[i] = reader.ReadUInt32();
                 }
 
                 /* Swarms */
-                swarmPokémon = new ushort[2];
-                for (int i = 0; i < 2; i++) swarmPokémon[i] = (ushort)reader.ReadUInt32();
+                swarmPokemon = new ushort[2];
+                for (int i = 0; i < 2; i++) 
+                    swarmPokemon[i] = (ushort)reader.ReadUInt32();
                 
                 /* Time-specific encounters */
-                for (int i = 0; i < 2; i++) morningPokémon[i] = reader.ReadUInt32();
-                for (int i = 0; i < 2; i++) nightPokémon[i] = reader.ReadUInt32();
+                for (int i = 0; i < 2; i++) 
+                    morningPokemon[i] = reader.ReadUInt32();
+                for (int i = 0; i < 2; i++) 
+                    nightPokemon[i] = reader.ReadUInt32();
 
                 /* Poké-Radar encounters */
-                for (int i = 0; i < 4; i++) radarPokémon[i] = reader.ReadUInt32();
+                for (int i = 0; i < 4; i++) 
+                    radarPokemon[i] = reader.ReadUInt32();
 
                 reader.BaseStream.Position = 0xA4;
 
                 /* Dual-slot encounters */
-                for (int i = 0; i < 2; i++) rubyPokémon[i] = reader.ReadUInt32();
-                for (int i = 0; i < 2; i++) sapphirePokémon[i] = reader.ReadUInt32();
-                for (int i = 0; i < 2; i++) emeraldPokémon[i] = reader.ReadUInt32();
-                for (int i = 0; i < 2; i++) fireRedPokémon[i] = reader.ReadUInt32();
-                for (int i = 0; i < 2; i++) leafGreenPokémon[i] = reader.ReadUInt32();
+                for (int i = 0; i < 2; i++) 
+                    rubyPokemon[i] = reader.ReadUInt32();
+                for (int i = 0; i < 2; i++) 
+                    sapphirePokemon[i] = reader.ReadUInt32();
+                for (int i = 0; i < 2; i++)
+                    emeraldPokemon[i] = reader.ReadUInt32();
+                for (int i = 0; i < 2; i++) 
+                    fireRedPokemon[i] = reader.ReadUInt32();
+                for (int i = 0; i < 2; i++) 
+                    leafGreenPokemon[i] = reader.ReadUInt32();
 
                 /* Surf encounters */
                 surfRate = (byte)reader.ReadInt32();
@@ -167,7 +175,7 @@ namespace DSPRE.ROMFiles {
                     surfMaxLevels[i] = reader.ReadByte();
                     surfMinLevels[i] = reader.ReadByte();
                     reader.BaseStream.Position += 0x2;
-                    surfPokémon[i] = (ushort)reader.ReadUInt32();
+                    surfPokemon[i] = (ushort)reader.ReadUInt32();
                 }
 
                 reader.BaseStream.Position = 0x124;
@@ -179,7 +187,7 @@ namespace DSPRE.ROMFiles {
                     oldRodMaxLevels[i] = reader.ReadByte();
                     oldRodMinLevels[i] = reader.ReadByte();
                     reader.BaseStream.Position += 0x2;
-                    oldRodPokémon[i] = (ushort)reader.ReadUInt32();
+                    oldRodPokemon[i] = (ushort)reader.ReadUInt32();
                 }
 
                 /* Good Rod encounters */
@@ -189,7 +197,7 @@ namespace DSPRE.ROMFiles {
                     goodRodMaxLevels[i] = reader.ReadByte();
                     goodRodMinLevels[i] = reader.ReadByte();
                     reader.BaseStream.Position += 0x2;
-                    goodRodPokémon[i] = (ushort)reader.ReadUInt32();
+                    goodRodPokemon[i] = (ushort)reader.ReadUInt32();
                 }
 
                 /* Super Rod encounters */
@@ -199,7 +207,7 @@ namespace DSPRE.ROMFiles {
                     superRodMaxLevels[i] = reader.ReadByte();
                     superRodMinLevels[i] = reader.ReadByte();
                     reader.BaseStream.Position += 0x2;
-                    superRodPokémon[i] = (ushort)reader.ReadUInt32();
+                    superRodPokemon[i] = (ushort)reader.ReadUInt32();
                 }
             }
         }
@@ -217,27 +225,27 @@ namespace DSPRE.ROMFiles {
                 for (int i = 0; i < 12; i++)
                 {
                     writer.Write((uint)walkingLevels[i]);
-                    writer.Write(walkingPokémon[i]);
+                    writer.Write(walkingPokemon[i]);
                 }
 
                 /* Swarms */
-                for (int i = 0; i < 2; i++) writer.Write((uint)swarmPokémon[i]);
+                for (int i = 0; i < 2; i++) writer.Write((uint)swarmPokemon[i]);
 
                 /* Time-specific encounters */
-                for (int i = 0; i < 2; i++) writer.Write(morningPokémon[i]);
-                for (int i = 0; i < 2; i++) writer.Write(nightPokémon[i]);
+                for (int i = 0; i < 2; i++) writer.Write(morningPokemon[i]);
+                for (int i = 0; i < 2; i++) writer.Write(nightPokemon[i]);
 
                 /* Poké-Radar encounters */
-                for (int i = 0; i < 4; i++) writer.Write(radarPokémon[i]);
+                for (int i = 0; i < 4; i++) writer.Write(radarPokemon[i]);
 
                 writer.BaseStream.Position = 0xA4;
 
                 /* Dual-slot encounters */
-                for (int i = 0; i < 2; i++) writer.Write(rubyPokémon[i]);
-                for (int i = 0; i < 2; i++) writer.Write(sapphirePokémon[i]);
-                for (int i = 0; i < 2; i++) writer.Write(emeraldPokémon[i]);
-                for (int i = 0; i < 2; i++) writer.Write(fireRedPokémon[i]);
-                for (int i = 0; i < 2; i++) writer.Write(leafGreenPokémon[i]);
+                for (int i = 0; i < 2; i++) writer.Write(rubyPokemon[i]);
+                for (int i = 0; i < 2; i++) writer.Write(sapphirePokemon[i]);
+                for (int i = 0; i < 2; i++) writer.Write(emeraldPokemon[i]);
+                for (int i = 0; i < 2; i++) writer.Write(fireRedPokemon[i]);
+                for (int i = 0; i < 2; i++) writer.Write(leafGreenPokemon[i]);
 
                 /* Surf encounters */
                 writer.Write((uint)surfRate);
@@ -246,7 +254,7 @@ namespace DSPRE.ROMFiles {
                     writer.Write(surfMaxLevels[i]);
                     writer.Write(surfMinLevels[i]);
                     writer.BaseStream.Position += 0x2;
-                    writer.Write((uint)surfPokémon[i]);
+                    writer.Write((uint)surfPokemon[i]);
                 }
 
                 writer.BaseStream.Position = 0x124;
@@ -258,7 +266,7 @@ namespace DSPRE.ROMFiles {
                     writer.Write(oldRodMaxLevels[i]);
                     writer.Write(oldRodMinLevels[i]);
                     writer.BaseStream.Position += 0x2;
-                    writer.Write((uint)oldRodPokémon[i]);
+                    writer.Write((uint)oldRodPokemon[i]);
                 }
 
                 /* Good Rod encounters */
@@ -268,7 +276,7 @@ namespace DSPRE.ROMFiles {
                     writer.Write(goodRodMaxLevels[i]);
                     writer.Write(goodRodMinLevels[i]);
                     writer.BaseStream.Position += 0x2;
-                    writer.Write((uint)goodRodPokémon[i]);
+                    writer.Write((uint)goodRodPokemon[i]);
                 }
 
                 /* Super Rod encounters */
@@ -278,7 +286,7 @@ namespace DSPRE.ROMFiles {
                     writer.Write(superRodMaxLevels[i]);
                     writer.Write(superRodMinLevels[i]);
                     writer.BaseStream.Position += 0x2;
-                    writer.Write((uint)superRodPokémon[i]);
+                    writer.Write((uint)superRodPokemon[i]);
                 }
             }
             return newData.ToArray();
@@ -287,18 +295,18 @@ namespace DSPRE.ROMFiles {
     }
    
     /// <summary>
-    /// Class to store wild Pokémon data from Pokémon HeartGold and SoulSilver
+    /// Class to store wild Pokemon data from Pokemon HeartGold and SoulSilver
     /// </summary>
     public class EncounterFileHGSS : EncounterFile
     {
         #region Fields (9)
         public byte rockSmashRate;
-        public ushort[] morningPokémon = new ushort[12];
-        public ushort[] dayPokémon = new ushort[12];
-        public ushort[] nightPokémon = new ushort[12];
-        public ushort[] hoennMusicPokémon = new ushort[2];
-        public ushort[] sinnohMusicPokémon = new ushort[2];
-        public ushort[] rockSmashPokémon = new ushort[2];
+        public ushort[] morningPokemon = new ushort[12];
+        public ushort[] dayPokemon = new ushort[12];
+        public ushort[] nightPokemon = new ushort[12];
+        public ushort[] hoennMusicPokemon = new ushort[2];
+        public ushort[] sinnohMusicPokemon = new ushort[2];
+        public ushort[] rockSmashPokemon = new ushort[2];
         public byte[] rockSmashMinLevels = new byte[2];
         public byte[] rockSmashMaxLevels = new byte[2];
         #endregion
@@ -326,65 +334,65 @@ namespace DSPRE.ROMFiles {
 
                 /* Morning walking encounters */
                 for (int i = 0; i < 12; i++) 
-                    morningPokémon[i] = reader.ReadUInt16();
+                    morningPokemon[i] = reader.ReadUInt16();
 
                 /* Day walking encounters */
                 for (int i = 0; i < 12; i++) 
-                    dayPokémon[i] = reader.ReadUInt16();
+                    dayPokemon[i] = reader.ReadUInt16();
 
                 /* Night walking encounters */
                 for (int i = 0; i < 12; i++) 
-                    nightPokémon[i] = reader.ReadUInt16();
+                    nightPokemon[i] = reader.ReadUInt16();
 
                 /* PokéGear music encounters */
                 for (int i = 0; i < 2; i++) 
-                    hoennMusicPokémon[i] = reader.ReadUInt16();
+                    hoennMusicPokemon[i] = reader.ReadUInt16();
                 for (int i = 0; i < 2; i++) 
-                    sinnohMusicPokémon[i] = reader.ReadUInt16();
+                    sinnohMusicPokemon[i] = reader.ReadUInt16();
 
                 /* Surf encounters */
                 for (int i = 0; i < 5; i++) {
                     surfMinLevels[i] = reader.ReadByte();
                     surfMaxLevels[i] = reader.ReadByte();
-                    surfPokémon[i] = reader.ReadUInt16();
+                    surfPokemon[i] = reader.ReadUInt16();
                 }
 
                 /* Rock Smash encounters */
                 for (int i = 0; i < 2; i++) {
                     rockSmashMinLevels[i] = reader.ReadByte();
                     rockSmashMaxLevels[i] = reader.ReadByte();
-                    rockSmashPokémon[i] = reader.ReadUInt16();
+                    rockSmashPokemon[i] = reader.ReadUInt16();
                 }
 
                 /* Old Rod encounters */
                 for (int i = 0; i < 5; i++) {
                     oldRodMinLevels[i] = reader.ReadByte();
                     oldRodMaxLevels[i] = reader.ReadByte();
-                    oldRodPokémon[i] = reader.ReadUInt16();
+                    oldRodPokemon[i] = reader.ReadUInt16();
                 }
 
                 /* Good Rod encounters */
                 for (int i = 0; i < 5; i++) {
                     goodRodMinLevels[i] = reader.ReadByte();
                     goodRodMaxLevels[i] = reader.ReadByte();
-                    goodRodPokémon[i] = reader.ReadUInt16();
+                    goodRodPokemon[i] = reader.ReadUInt16();
                 }
 
                 /* Super Rod encounters */
                 for (int i = 0; i < 5; i++) {
                     superRodMinLevels[i] = reader.ReadByte();
                     superRodMaxLevels[i] = reader.ReadByte();
-                    superRodPokémon[i] = reader.ReadUInt16();
+                    superRodPokemon[i] = reader.ReadUInt16();
                 }
 
                 /* Swarm encounters */
-                swarmPokémon = new ushort[4];
+                swarmPokemon = new ushort[4];
                 for (int i = 0; i < 4; i++) {
                     try {
-                        swarmPokémon[i] = reader.ReadUInt16();
+                        swarmPokemon[i] = reader.ReadUInt16();
                     } catch (EndOfStreamException) {
                         error = true;
-                        swarmPokémon[i] = 0x00;
+                        swarmPokemon[i] = 0x00;
                     } 
                 }
 
@@ -417,24 +425,24 @@ namespace DSPRE.ROMFiles {
                 for (int i = 0; i < 12; i++) writer.Write(walkingLevels[i]);
 
                 /* Morning walking encounters */
-                for (int i = 0; i < 12; i++) writer.Write(morningPokémon[i]);
+                for (int i = 0; i < 12; i++) writer.Write(morningPokemon[i]);
 
                 /* Day walking encounters */
-                for (int i = 0; i < 12; i++) writer.Write(dayPokémon[i]);
+                for (int i = 0; i < 12; i++) writer.Write(dayPokemon[i]);
 
                 /* Night walking encounters */
-                for (int i = 0; i < 12; i++) writer.Write(nightPokémon[i]);
+                for (int i = 0; i < 12; i++) writer.Write(nightPokemon[i]);
 
                 /* PokéGear music encounters */
-                for (int i = 0; i < 2; i++) writer.Write(hoennMusicPokémon[i]);
-                for (int i = 0; i < 2; i++) writer.Write(sinnohMusicPokémon[i]);
+                for (int i = 0; i < 2; i++) writer.Write(hoennMusicPokemon[i]);
+                for (int i = 0; i < 2; i++) writer.Write(sinnohMusicPokemon[i]);
 
                 /* Surf encounters */
                 for (int i = 0; i < 5; i++)
                 {
                     writer.Write(surfMinLevels[i]);
                     writer.Write(surfMaxLevels[i]);
-                    writer.Write(surfPokémon[i]);
+                    writer.Write(surfPokemon[i]);
                 }
 
                 /* Rock Smash encounters */
@@ -442,7 +450,7 @@ namespace DSPRE.ROMFiles {
                 {
                     writer.Write(rockSmashMinLevels[i]);
                     writer.Write(rockSmashMaxLevels[i]);
-                    writer.Write(rockSmashPokémon[i]);
+                    writer.Write(rockSmashPokemon[i]);
                 }
 
                 /* Old Rod encounters */
@@ -450,7 +458,7 @@ namespace DSPRE.ROMFiles {
                 {
                     writer.Write(oldRodMinLevels[i]);
                     writer.Write(oldRodMaxLevels[i]);
-                    writer.Write(oldRodPokémon[i]);
+                    writer.Write(oldRodPokemon[i]);
                 }
 
                 /* Good Rod encounters */
@@ -458,7 +466,7 @@ namespace DSPRE.ROMFiles {
                 {
                     writer.Write(goodRodMinLevels[i]);
                     writer.Write(goodRodMaxLevels[i]);
-                    writer.Write(goodRodPokémon[i]);
+                    writer.Write(goodRodPokemon[i]);
                 }
 
                 /* Super Rod encounters */
@@ -466,11 +474,11 @@ namespace DSPRE.ROMFiles {
                 {
                     writer.Write(superRodMinLevels[i]);
                     writer.Write(superRodMaxLevels[i]);
-                    writer.Write(superRodPokémon[i]);
+                    writer.Write(superRodPokemon[i]);
                 }
 
                 /* Swarm encounters */
-                for (int i = 0; i < 4; i++) writer.Write(swarmPokémon[i]);
+                for (int i = 0; i < 4; i++) writer.Write(swarmPokemon[i]);
             }
             return newData.ToArray();
         }
