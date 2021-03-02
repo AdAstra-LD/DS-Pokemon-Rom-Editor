@@ -309,12 +309,21 @@ namespace DSPRE {
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
-                foreach (int ID in RomInfo.pokémonNamesTextNumbers) {
+                foreach (int ID in RomInfo.pokemonNamesTextNumbers) {
                     TextArchive pokeName = new TextArchive(ID);
                     for(int i = 0; i < pokeName.messages.Count; i++) {
-                        if (pokeName.messages[i] == "")
+                        if (pokeName.messages[i].Length <= 1)
                             i++;
-                        pokeName.messages[i] = char.ToUpper(pokeName.messages[i][0]) + pokeName.messages[i].Substring(1).ToLower();
+
+                        string[] splitName = pokeName.messages[i].Split(new char[] { ' ' });
+                        string newName = "";
+                        for (int cur = 0; cur < splitName.Length; cur++) {
+                            string part = splitName[cur];
+                            newName += char.ToUpper(part[0]) + part.Substring(1).ToLower();
+                            if (splitName.Length > 1 && cur < splitName.Length - 1)
+                                newName += " ";
+                        }
+                        pokeName.messages[i] = newName;
                     }
                     pokeName.SaveToFileDefaultDir(ID, showSuccessMessage: false);
                 }
