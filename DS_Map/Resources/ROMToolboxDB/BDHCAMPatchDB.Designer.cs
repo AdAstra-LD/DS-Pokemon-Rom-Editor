@@ -61,33 +61,6 @@ namespace DSPRE.Resources.ROMToolboxDB {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a B6 F3 2E FA.
-        /// </summary>
-        internal static string branchString_HG {
-            get {
-                return ResourceManager.GetString("branchString_HG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a B9 F3 E2 F8.
-        /// </summary>
-        internal static string branchString_Plat_ENG {
-            get {
-                return ResourceManager.GetString("branchString_Plat_ENG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a B9 F3 AA F8.
-        /// </summary>
-        internal static string branchString_Plat_ESP {
-            get {
-                return ResourceManager.GetString("branchString_Plat_ESP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
         internal static byte[] cpue_cam {
@@ -144,33 +117,6 @@ namespace DSPRE.Resources.ROMToolboxDB {
             get {
                 object obj = ResourceManager.GetObject("ipks_cam", resourceCulture);
                 return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a 00 4B 18 47 41 9C 3D 02.
-        /// </summary>
-        internal static string overlayString1 {
-            get {
-                return ResourceManager.GetString("overlayString1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a 00 4B 18 47 01 9C 3D 02.
-        /// </summary>
-        internal static string overlayString2 {
-            get {
-                return ResourceManager.GetString("overlayString2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a 71088.
-        /// </summary>
-        internal static string subroutineOffset {
-            get {
-                return ResourceManager.GetString("subroutineOffset", resourceCulture);
             }
         }
     }

@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Linq;
 using DSPRE.ROMFiles;
 using System.Collections.Generic;
+using DSPRE.Resources.ROMToolboxDB;
 
 namespace DSPRE {
     public partial class ROMToolboxDialog : Form {
@@ -17,53 +18,27 @@ namespace DSPRE {
             internal uint initOffset;
 
             internal ARM9PatchData() {
-                ResourceManager arm9DB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.ARM9ExpansionDB", Assembly.GetExecutingAssembly());
-
                 switch (RomInfo.gameVersion) {
                     case "D":
                     case "P":
-                        initString = arm9DB.GetString(nameof(initString) + "_" + "D");
-                        branchString = arm9DB.GetString(nameof(branchString) + "_" + "D" + "_" + RomInfo.gameLanguage);
-                        branchOffset = 0x02000C80;
-                        switch (RomInfo.gameLanguage) {
-                            case "ENG":
-                                initOffset = 0x021064EC;
-                                break;
-                            case "ESP":
-                                initOffset = 0x0210668C;
-                                break;
-                        }
+                        initString = ToolboxDB.arm9ExpansionCodeDB[nameof(initString) + "_" + "D"];
+                        branchString = ToolboxDB.arm9ExpansionCodeDB[nameof(branchString) + "_" + "D" + "_" + RomInfo.gameLanguage];
+                        branchOffset = ToolboxDB.arm9ExpansionOffsetsDB[nameof(branchOffset) + "_" + "D"];
                         break;
                     case "Plat":
-                        initString = arm9DB.GetString(nameof(initString) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage);
-                        branchString = arm9DB.GetString(nameof(branchString) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage);
-                        branchOffset = 0x02000CB4;
-                        switch (RomInfo.gameLanguage) {
-                            case "ENG":
-                                initOffset = 0x02100E20;
-                                break;
-                            case "ESP":
-                                initOffset = 0x0210101C;
-                                break;
-                        }
+                        initString = ToolboxDB.arm9ExpansionCodeDB[nameof(initString) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
+                        branchString = ToolboxDB.arm9ExpansionCodeDB[nameof(branchString) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
+                        branchOffset = ToolboxDB.arm9ExpansionOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameVersion];
                         break;
                     case "HG":
                     case "SS":
-                        initString = arm9DB.GetString(nameof(initString) + "_" + "HG");
-                        branchString = arm9DB.GetString(nameof(branchString) + "_" + "HG" + "_" + RomInfo.gameLanguage);
-                        branchOffset = 0x02000CD0;
-                        switch (RomInfo.gameLanguage) {
-                            case "ENG":
-                                initOffset = 0x02110334;
-                                break;
-                            case "ESP":
-                                initOffset = 0x02110354;
-                                break;
-                        }
+                        initString = ToolboxDB.arm9ExpansionCodeDB[nameof(initString) + "_" + "HG"];
+                        branchString = ToolboxDB.arm9ExpansionCodeDB[nameof(branchString) + "_" + "HG" + "_" + RomInfo.gameLanguage];
+                        branchOffset = ToolboxDB.arm9ExpansionOffsetsDB[nameof(branchOffset) + "_" + "HG"];
                         break;
                 }
-                initOffset -= 0x02000000;
                 branchOffset -= 0x02000000;
+                initOffset = ToolboxDB.arm9ExpansionOffsetsDB[nameof(initOffset) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage] - 0x02000000;
             }
         }
         internal class BDHCAMPatchData {
@@ -78,49 +53,36 @@ namespace DSPRE {
             internal string overlayString1;
             internal string overlayString2;
 
-            internal uint subroutineOffset;
             internal byte[] subroutine;
 
             internal BDHCAMPatchData () {
-                ResourceManager bdhcamDB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.BDHCAMPatchDB", Assembly.GetExecutingAssembly());
-
                 switch (RomInfo.gameVersion) {
                     case "Plat":
                         overlayNumber = 5;
-                        branchString = bdhcamDB.GetString(nameof(branchString) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage);
-                        switch (RomInfo.gameLanguage) {
-                            case "ENG":
-                                branchOffset = 0x0202040C;
-                                overlayOffset1 = 0x0001E1B4;
-                                overlayOffset2 = 0x0001E2CC;
-                                break;
-                            case "ESP":
-                                branchOffset = 0x0202047C;
-                                overlayOffset1 = 0x0001E1BC;
-                                overlayOffset2 = 0x0001E2D4;
-                                break;
-                        }
+                        branchString = ToolboxDB.bdhcamCodeDB[nameof(branchString) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
+                        
+                        branchOffset = ToolboxDB.bdhcamOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
+                        overlayOffset1 = ToolboxDB.bdhcamOffsetsDB[nameof(overlayOffset1) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
+                        overlayOffset2 = ToolboxDB.bdhcamOffsetsDB[nameof(overlayOffset2) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
                         break;
                     case "HG":
                     case "SS":
-                        branchString = bdhcamDB.GetString(nameof(branchString) + "_" + "HG");
                         overlayNumber = 1;
+                        branchString = ToolboxDB.bdhcamCodeDB[nameof(branchString) + "_" + "HG"];
 
-                        branchOffset = 0x02023174;
-                        overlayOffset1 = 0x0001574C;
-                        overlayOffset2 = 0x00015864;
+                        branchOffset = ToolboxDB.bdhcamOffsetsDB[nameof(branchOffset) + "_" + "HG"];
+                        overlayOffset1 = ToolboxDB.bdhcamOffsetsDB[nameof(overlayOffset1) + "_" + "HG"];
+                        overlayOffset2 = ToolboxDB.bdhcamOffsetsDB[nameof(overlayOffset2) + "_" + "HG"];
                         break;
                 }
                 branchOffset -= 0x02000000;
-                overlayString1 = bdhcamDB.GetString(nameof(overlayString1));
-                overlayString2 = bdhcamDB.GetString(nameof(overlayString2));
-
-                subroutineOffset = 0x115b0;
-                subroutine = (byte[])new ResourceManager("DSPRE.Resources.ROMToolboxDB.BDHCAMPatchDB", Assembly.GetExecutingAssembly()).GetObject(RomInfo.romID.ToLower() + "_cam");
+                overlayString1 = ToolboxDB.bdhcamCodeDB[nameof(overlayString1)];
+                overlayString2 = ToolboxDB.bdhcamCodeDB[nameof(overlayString2)];
+                subroutine = (byte[])new ResourceManager("DSPRE.Resources.ROMToolboxDB.BDHCAMPatchDB", Assembly.GetExecutingAssembly()).GetObject(RomInfo.romID + "_cam");
             }
         }
 
-        public int expandedARMfileID = byte.Parse(new ResourceManager("DSPRE.Resources.ROMToolboxDB.SyntheticOverlayFileNumber", Assembly.GetExecutingAssembly()).GetString("fileID" + "_" + RomInfo.gameVersion));
+        public uint expandedARMfileID = ToolboxDB.syntheticOverlayFileNumbersDB[RomInfo.gameVersion];
         public static bool flag_standardizedItems { get; private set; } = false;
         public static bool flag_arm9Expanded { get; private set; } = false;
         public static bool flag_BDHCAMpatchApplied { get; private set; } = false;
@@ -270,7 +232,7 @@ namespace DSPRE {
                         return 0;
 
                     String fullFilePath = RomInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
-                    byte[] subroutineRead = DSUtils.ReadFromFile(fullFilePath, data.subroutineOffset, data.subroutine.Length); //Write new overlayCode1
+                    byte[] subroutineRead = DSUtils.ReadFromFile(fullFilePath, ToolboxDB.bdhcamSubroutineOffset, data.subroutine.Length); //Write new overlayCode1
                     if (data.subroutine.Length != subroutineRead.Length)
                         return 0; //0 means BDHCAM patch has not been applied
                     if (!data.subroutine.SequenceEqual(subroutineRead))
@@ -356,7 +318,7 @@ namespace DSPRE {
                 "- Replace " + (data.branchString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.branchOffset.ToString("X") + " with " + '\n' + data.branchString + "\n\n" +
                 "- Replace " + (data.overlayString1.Length / 3 + 1) + " bytes of data at overlay" + data.overlayNumber + " offset 0x" + data.overlayOffset1.ToString("X") + " with " + '\n' + data.overlayString1 + "\n\n" +
                 "- Replace " + (data.overlayString2.Length / 3 + 1) + " bytes of data at overlay" + data.overlayNumber + " offset 0x" + data.overlayOffset2.ToString("X") + " with " + '\n' + data.overlayString2 + "\n\n" +
-                "- Modify file #" + expandedARMfileID + " inside " + '\n' + RomInfo.syntheticOverlayPath + '\n' + "to insert the BDHCAM routine (any data between 0x" + data.subroutineOffset.ToString("X") + " and 0x" + data.subroutineOffset + data.subroutine.Length.ToString("X") + " will be overwritten)." + "\n\n" +
+                "- Modify file #" + expandedARMfileID + " inside " + '\n' + RomInfo.syntheticOverlayPath + '\n' + "to insert the BDHCAM routine (any data between 0x" + ToolboxDB.bdhcamSubroutineOffset.ToString("X") + " and 0x" + (ToolboxDB.bdhcamSubroutineOffset + data.subroutine.Length).ToString("X") + " will be overwritten)." + "\n\n" +
                 "Do you wish to continue?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -378,7 +340,7 @@ namespace DSPRE {
                     String fullFilePath = RomInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
 
                     /*Write Expanded ARM9 File*/
-                    DSUtils.WriteToFile(fullFilePath, data.subroutineOffset, data.subroutine);
+                    DSUtils.WriteToFile(fullFilePath, ToolboxDB.bdhcamSubroutineOffset, data.subroutine);
                 } catch {
                     MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 and overlay from their respective backups.", "Something went wrong",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -707,5 +669,9 @@ namespace DSPRE {
             MessageBox.Show("This patch has already been applied.", "Can't reapply patch", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
+
+        private void expandMatrixButton_Click(object sender, EventArgs e) {
+
+        }
     }
 }

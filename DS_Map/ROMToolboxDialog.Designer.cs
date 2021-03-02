@@ -49,11 +49,16 @@
             this.itemNumbersCB = new System.Windows.Forms.PictureBox();
             this.standardizePatchLBL = new System.Windows.Forms.Label();
             this.standardizePatchTextLBL = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.expandMatrixButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.arm9patchCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlay1CB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdhcamCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sentenceCaseCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemNumbersCB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // applyItemStandardizeButton
@@ -197,7 +202,6 @@
             // 
             // arm9patchCB
             // 
-            this.arm9patchCB.Image = global::DSPRE.Properties.Resources.checkmark;
             this.arm9patchCB.Location = new System.Drawing.Point(309, 45);
             this.arm9patchCB.Name = "arm9patchCB";
             this.arm9patchCB.Size = new System.Drawing.Size(20, 20);
@@ -208,7 +212,6 @@
             // 
             // overlay1CB
             // 
-            this.overlay1CB.Image = global::DSPRE.Properties.Resources.checkmark;
             this.overlay1CB.Location = new System.Drawing.Point(309, 117);
             this.overlay1CB.Name = "overlay1CB";
             this.overlay1CB.Size = new System.Drawing.Size(20, 20);
@@ -219,7 +222,6 @@
             // 
             // bdhcamCB
             // 
-            this.bdhcamCB.Image = global::DSPRE.Properties.Resources.checkmark;
             this.bdhcamCB.Location = new System.Drawing.Point(309, 199);
             this.bdhcamCB.Name = "bdhcamCB";
             this.bdhcamCB.Size = new System.Drawing.Size(20, 20);
@@ -230,7 +232,6 @@
             // 
             // sentenceCaseCB
             // 
-            this.sentenceCaseCB.Image = global::DSPRE.Properties.Resources.checkmark;
             this.sentenceCaseCB.Location = new System.Drawing.Point(309, 290);
             this.sentenceCaseCB.Name = "sentenceCaseCB";
             this.sentenceCaseCB.Size = new System.Drawing.Size(20, 20);
@@ -241,7 +242,6 @@
             // 
             // itemNumbersCB
             // 
-            this.itemNumbersCB.Image = global::DSPRE.Properties.Resources.checkmark;
             this.itemNumbersCB.Location = new System.Drawing.Point(309, 379);
             this.itemNumbersCB.Name = "itemNumbersCB";
             this.itemNumbersCB.Size = new System.Drawing.Size(20, 20);
@@ -269,12 +269,55 @@
             this.standardizePatchTextLBL.Text = resources.GetString("standardizePatchTextLBL.Text");
             this.standardizePatchTextLBL.UseMnemonic = false;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(309, 462);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(20, 20);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 24;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(15, 473);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(239, 35);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "Allows to expand Matrix 0 up to twice its size.\r\n";
+            this.label1.UseMnemonic = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(15, 458);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(98, 13);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Expand Matrix 0";
+            // 
+            // expandMatrixButton
+            // 
+            this.expandMatrixButton.Location = new System.Drawing.Point(335, 449);
+            this.expandMatrixButton.Name = "expandMatrixButton";
+            this.expandMatrixButton.Size = new System.Drawing.Size(100, 50);
+            this.expandMatrixButton.TabIndex = 21;
+            this.expandMatrixButton.Text = "Apply Patch";
+            this.expandMatrixButton.UseVisualStyleBackColor = true;
+            this.expandMatrixButton.Click += new System.EventHandler(this.expandMatrixButton_Click);
+            // 
             // ROMToolboxDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(448, 443);
+            this.ClientSize = new System.Drawing.Size(448, 508);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.expandMatrixButton);
             this.Controls.Add(this.itemNumbersCB);
             this.Controls.Add(this.sentenceCaseCB);
             this.Controls.Add(this.bdhcamCB);
@@ -306,6 +349,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bdhcamCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sentenceCaseCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemNumbersCB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -334,5 +378,9 @@
         private System.Windows.Forms.PictureBox itemNumbersCB;
         private System.Windows.Forms.Label standardizePatchLBL;
         private System.Windows.Forms.Label standardizePatchTextLBL;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button expandMatrixButton;
     }
 }
