@@ -402,9 +402,9 @@ namespace DSPRE.ROMFiles {
     {
         #region Fields (7)
         public ushort scriptNumber;
-        public ushort width;
-        public ushort length;
-        public ushort height;
+        public ushort widthX;
+        public ushort heightY;
+        new public ushort zPosition;
         public ushort expectedVarValue;
         public ushort variableWatched;
         #endregion Fields
@@ -422,10 +422,10 @@ namespace DSPRE.ROMFiles {
                 xMatrixPosition = (ushort)(xPosition / 32);
                 yMatrixPosition = (ushort)(yPosition / 32);
 
-                width = reader.ReadUInt16();
-                length = reader.ReadUInt16();
+                widthX = reader.ReadUInt16();
+                heightY = reader.ReadUInt16();
 
-                height = reader.ReadUInt16();
+                zPosition = reader.ReadUInt16();
                 expectedVarValue = reader.ReadUInt16();
                 variableWatched = reader.ReadUInt16();
             }        
@@ -434,8 +434,8 @@ namespace DSPRE.ROMFiles {
             scriptNumber = 0;
             variableWatched = 0;
             expectedVarValue = 0;
-            width = 1;
-            length = 1;
+            widthX = 1;
+            heightY = 1;
 
             xMapPosition = 0;
             yMapPosition = 0;
@@ -446,8 +446,8 @@ namespace DSPRE.ROMFiles {
             scriptNumber = toCopy.scriptNumber;
             variableWatched = toCopy.variableWatched;
             expectedVarValue = toCopy.expectedVarValue;
-            width = toCopy.width;
-            length = toCopy.length;
+            widthX = toCopy.widthX;
+            heightY = toCopy.heightY;
 
             xMapPosition = toCopy.xMapPosition;
             yMapPosition = toCopy.xMapPosition;
@@ -466,9 +466,9 @@ namespace DSPRE.ROMFiles {
                 writer.Write(xCoordinate);
                 ushort yCoordinate = (ushort)(yMapPosition + 32 * yMatrixPosition);
                 writer.Write(yCoordinate);
-                writer.Write(width);
-                writer.Write(length);
-                writer.Write(height);
+                writer.Write(widthX);
+                writer.Write(heightY);
+                writer.Write(zPosition);
                 writer.Write(expectedVarValue);
                 writer.Write(variableWatched);
 

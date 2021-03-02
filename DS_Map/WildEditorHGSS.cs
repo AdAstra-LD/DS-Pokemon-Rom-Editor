@@ -207,7 +207,6 @@ namespace DSPRE
 
             disableHandlers = false;
         }
-
         private void exportEncounterFileButton_Click(object sender, EventArgs e)
         {
             SaveFileDialog sf = new SaveFileDialog();
@@ -266,7 +265,6 @@ namespace DSPRE
         {
             currentFile.superRodRate = (byte)superRodRateUpDown.Value;
         }
-
         private void morningTwentyFirstComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             currentFile.morningPokemon[0] = (ushort)morningTwentyFirstComboBox.SelectedIndex;

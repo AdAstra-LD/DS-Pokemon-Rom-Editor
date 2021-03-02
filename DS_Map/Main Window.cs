@@ -23,10 +23,7 @@ namespace DSPRE {
         public MainProgram() {
             InitializeComponent();
         }
-
-        #region RM
         ResourceManager rm = new ResourceManager("DSPRE.WinFormStrings", Assembly.GetExecutingAssembly());
-        #endregion
 
         #region Program Window
 
@@ -45,11 +42,17 @@ namespace DSPRE {
         /* ROM Information */
         public static string gameCode;
         public static byte europeByte;
+        private readonly string folderSuffix = "_DSPRE_contents";
         RomInfo romInfo;
 
         #endregion
 
         #region Subroutines
+        private void MainProgram_FormClosing(object sender, FormClosingEventArgs e) {
+            if (MessageBox.Show("Are you sure you want to quit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
+                e.Cancel = true;
+            }
+        }
         private string[] GetBuildingsList(bool interior) {
             List<string> names = new List<string>();
             string path = romInfo.GetBuildingModelsDirPath(interior);
@@ -88,7 +91,7 @@ namespace DSPRE {
             return new TextArchive(RomInfo.itemNamesTextNumber).messages.GetRange(startIndex, count).ToArray();
         }
         private string[] GetPokémonNames() {
-            return new TextArchive(RomInfo.pokémonNamesTextNumbers[0]).messages.ToArray();
+            return new TextArchive(RomInfo.pokemonNamesTextNumbers[0]).messages.ToArray();
         }
         private string[] GetAttackNames() {
             return new TextArchive(RomInfo.attackNamesTextNumber).messages.ToArray();
@@ -617,7 +620,7 @@ namespace DSPRE {
                 return 2; //No data found
             }
         }
-        private void UnpackRom(string ndsFileName) {
+        private bool UnpackRom(string ndsFileName) {
             statusLabel.Text = "Unpacking ROM contents to " + RomInfo.workDir + " ...";
             Update();
 
@@ -636,8 +639,15 @@ namespace DSPRE {
             Application.DoEvents();
             unpack.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             unpack.StartInfo.CreateNoWindow = true;
-            unpack.Start();
-            unpack.WaitForExit();
+            try {
+                unpack.Start();
+                unpack.WaitForExit();
+            } catch (System.ComponentModel.Win32Exception) {
+                MessageBox.Show("Failed to call ndstool.exe" + Environment.NewLine + "Make sure DSPRE's Tools folder is intact.",
+                    "Couldn't unpack ROM", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
         }
         #endregion
         private void romToolBoxToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -652,7 +662,6 @@ namespace DSPRE {
         private void scriptCommandsDatabaseToolStripButton_Click(object sender, EventArgs e) {
             openCommandsDatabase(RomInfo.ScriptCommandNamesDict, RomInfo.CommandParametersDict);
         }
-
         private void openCommandsDatabase(Dictionary<ushort, string> namesDict, Dictionary<ushort, byte[]> paramsDict) {
             statusLabel.Text = "Setting up Commands Database. Please wait...";
             Update();
@@ -660,7 +669,6 @@ namespace DSPRE {
             form.Show();
             statusLabel.Text = "Ready";
         }
-
         private void headerSearchToolStripButton_Click(object sender, EventArgs e) {
             mainTabControl.SelectedIndex = 0; //Select Header Editor
             using (HeaderSearch h = new HeaderSearch(ref internalNames, headerListBox, statusLabel)) {
@@ -713,7 +721,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.1.4d" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.1.5" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks go to Trifindo, Mikelan98, JackHack96, Mixone and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS Rom Hacking made the development of this tool possible.";
@@ -732,7 +740,7 @@ namespace DSPRE {
                 br.BaseStream.Position = 0x1E;
                 europeByte = br.ReadByte();
             }
-            string workDir = Path.GetDirectoryName(openRom.FileName) + "\\" + Path.GetFileNameWithoutExtension(openRom.FileName) + "_DSPRE_contents" + "\\";
+            string workDir = Path.GetDirectoryName(openRom.FileName) + "\\" + Path.GetFileNameWithoutExtension(openRom.FileName) + folderSuffix + "\\";
 
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, workDir);
@@ -776,7 +784,12 @@ namespace DSPRE {
                     }
 
                     try {
-                        UnpackRom(openRom.FileName);
+                        if (!UnpackRom(openRom.FileName)) {
+                            statusLabel.Text = "Error";
+                            languageLabel.Text = "";
+                            versionLabel.Text = "Error";
+                            return;
+                        }
                         DSUtils.editARM9size(-12);
                     } catch (IOException) {
                         MessageBox.Show("Can't access temp directory: \n" + RomInfo.workDir + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -832,6 +845,7 @@ namespace DSPRE {
 
             scriptCommandsButton.Enabled = true;
             statusLabel.Text = "Ready";
+            this.Text += "  -  " + RomInfo.workDir.Substring(0, RomInfo.workDir.Length - folderSuffix.Length - 1) + ".nds";
         }
         private void saveRom_Click(object sender, EventArgs e) {
             SaveFileDialog saveRom = new SaveFileDialog();
@@ -1722,6 +1736,8 @@ namespace DSPRE {
             worldmapYCoordCopy = worldmapYCoordUpDown.Value;
             battleBGCopy = battleBackgroundUpDown.Value;
 
+            flagsCopy = currentHeader.flags;
+
             /*Enable paste buttons*/
             pasteHeaderButton.Enabled = true;
 
@@ -1863,6 +1879,8 @@ namespace DSPRE {
             areaDataUpDown.Value = areadataCopy;
 
             currentHeader.flags = flagsCopy;
+            worldmapXCoordUpDown.Value = worldmapXCoordCopy;
+            worldmapYCoordUpDown.Value = worldmapYCoordCopy;
             battleBackgroundUpDown.Value = battleBGCopy;
             refreshFlags();
         }
@@ -2949,7 +2967,7 @@ namespace DSPRE {
 
         }
         private void buildingsListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || buildIndexComboBox.SelectedIndex < 0)
+            if (disableHandlers || buildingsListBox.SelectedIndex < 0)
                 return;
             disableHandlers = true;
 
@@ -3602,7 +3620,7 @@ namespace DSPRE {
                 currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, romInfo.mapTexturesDirPath, mapTextureComboBox.SelectedIndex - 1);
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
-            ModelSizeTXT.Text = currentMapFile.mapModelData.Length.ToString();
+            ModelSizeTXT.Text = currentMapFile.mapModelData.Length.ToString() + " B";
             MessageBox.Show("Map model imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void exportMapButton_Click(object sender, EventArgs e) {
@@ -3632,6 +3650,7 @@ namespace DSPRE {
                 return;
 
             currentMapFile.ImportTerrain(new FileStream(it.FileName, FileMode.Open));
+            TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
             MessageBox.Show("Terrain settings imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void bdhcExportButton_Click(object sender, EventArgs e) {
@@ -3656,8 +3675,8 @@ namespace DSPRE {
                 return;
 
             currentMapFile.ImportSoundPlates(new FileStream(it.FileName, FileMode.Open));
-            MessageBox.Show("BackGround Sound data imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
+            MessageBox.Show("BackGround Sound data imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void soundPlatesExportButton_Click(object sender, EventArgs e) {
             SaveFileDialog eb = new SaveFileDialog();
@@ -3790,8 +3809,8 @@ namespace DSPRE {
                     if (isEventOnCurrentMatrix(trigger)) {
                         using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
                             g.CompositingMode = CompositingMode.SourceOver;
-                            for (int y = 0; y < currentEvFile.triggers[i].length; y++) {
-                                for (int x = 0; x < currentEvFile.triggers[i].width; x++) {
+                            for (int y = 0; y < currentEvFile.triggers[i].heightY; y++) {
+                                for (int x = 0; x < currentEvFile.triggers[i].widthX; x++) {
                                     g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("trigger"), (trigger.xMapPosition + x) * 17, (trigger.yMapPosition + y) * 17);
                                 }
                             }
@@ -3811,8 +3830,8 @@ namespace DSPRE {
         }
         private void drawSelectionRectangleTrigger(Graphics g, Trigger t) {
             eventPen = Pens.Red;
-            g.DrawRectangle(eventPen, (t.xMapPosition) * 17 - 1, (t.yMapPosition) * 17 - 1, 17 * t.width + 1, 17 * t.length + 1);
-            g.DrawRectangle(eventPen, (t.xMapPosition) * 17 - 2, (t.yMapPosition) * 17 - 2, 17 * t.width + 3, 17 * t.length + 3);
+            g.DrawRectangle(eventPen, (t.xMapPosition) * 17 - 1, (t.yMapPosition) * 17 - 1, 17 * t.widthX + 1, 17 * t.heightY + 1);
+            g.DrawRectangle(eventPen, (t.xMapPosition) * 17 - 2, (t.yMapPosition) * 17 - 2, 17 * t.widthX + 3, 17 * t.heightY + 3);
 
         }
         private void drawSelectionRectangleOverworld(Graphics g, Overworld ow) {
@@ -4087,10 +4106,12 @@ namespace DSPRE {
                     return true;
             return false;
         }
-        private bool isEventUnderMouse(Event ev, Point mouseTilePos) {
+        private bool isEventUnderMouse(Event ev, Point mouseTilePos, int widthX = 0, int heightY = 0) {
             if (isEventOnCurrentMatrix(ev)) {
                 Point evLocalCoords = new Point(ev.xMapPosition, ev.yMapPosition);
-                if (evLocalCoords.Equals(mouseTilePos))
+                Func<int, int, int, bool> checkRange = (mouseCoord, evCoord, extension) => mouseCoord >= evCoord && mouseCoord <= evCoord + extension;
+  
+                if (checkRange(mouseTilePos.X, evLocalCoords.X, widthX) && checkRange(mouseTilePos.Y, evLocalCoords.Y, heightY))
                     return true;
             }
             return false;
@@ -4274,7 +4295,7 @@ namespace DSPRE {
                     }
                 for (int i = 0; i < currentEvFile.triggers.Count; i++) {
                     Trigger ev = currentEvFile.triggers[i];
-                    if (isEventUnderMouse(ev, mouseTilePos)) {
+                    if (isEventUnderMouse(ev, mouseTilePos, ev.widthX-1, ev.heightY-1)) {
                         selectedEvent = ev;
                         eventsTabControl.SelectedTab = triggersTabPage;
                         triggersListBox.SelectedIndex = i;
@@ -4447,8 +4468,10 @@ namespace DSPRE {
             if (overworldsListBox.SelectedIndex < 0) {
                 return;
             }
+            Overworld NPCcopy = new Overworld((Overworld)selectedEvent);
+            currentEvFile.overworlds.Add(NPCcopy);
+            selectedEvent = NPCcopy;
 
-            currentEvFile.overworlds.Add(new Overworld((Overworld)selectedEvent));
             overworldsListBox.Items.Add("Overworld " + (currentEvFile.overworlds.Count - 1).ToString());
             overworldsListBox.SelectedIndex = currentEvFile.overworlds.Count - 1;
         }
@@ -4893,8 +4916,8 @@ namespace DSPRE {
             triggerVariableWatchedUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].variableWatched;
             expectedVarValueTriggerUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].expectedVarValue;
 
-            triggerWidthUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].width;
-            triggerLengthUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].length;
+            triggerWidthUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].widthX;
+            triggerLengthUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].heightY;
 
             triggerXMapUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].xMapPosition;
             triggerYMapUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].yMapPosition;
@@ -4942,7 +4965,7 @@ namespace DSPRE {
             if (disableHandlers || triggersListBox.SelectedIndex < 0) 
                 return;
 
-            currentEvFile.triggers[triggersListBox.SelectedIndex].zPosition = (short)triggerZUpDown.Value;
+            currentEvFile.triggers[triggersListBox.SelectedIndex].zPosition = (ushort)triggerZUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerXMatrixUpDown_ValueChanged(object sender, EventArgs e) {
@@ -4963,14 +4986,14 @@ namespace DSPRE {
             if (disableHandlers || triggersListBox.SelectedIndex < 0)
                 return;
 
-            currentEvFile.triggers[triggersListBox.SelectedIndex].width = (ushort)triggerWidthUpDown.Value;
+            currentEvFile.triggers[triggersListBox.SelectedIndex].widthX = (ushort)triggerWidthUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerLengthUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || triggersListBox.SelectedIndex < 0)
                 return;
 
-            currentEvFile.triggers[triggersListBox.SelectedIndex].length = (ushort)triggerLengthUpDown.Value;
+            currentEvFile.triggers[triggersListBox.SelectedIndex].heightY = (ushort)triggerLengthUpDown.Value;
             DisplayActiveEvents();
         }
         #endregion
@@ -5945,6 +5968,7 @@ namespace DSPRE {
         #region Tileset Editor
         public NSMBe4.NSBMD.NSBTX_File currentTileset;
         public AreaData currentAreaData;
+        
 
         #region Subroutines
         public void FillTilesetBox() {
