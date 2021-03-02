@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="cpue_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="CPUE_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>cpue_cam.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="cpus_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="CPUS_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>cpus_cam.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ipge_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="IPGE_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ipge_cam.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ipgs_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="IPGS_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ipgs_cam.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ipke_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="IPKE_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ipke_cam.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ipks_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="IPKS_cam" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ipks_cam.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

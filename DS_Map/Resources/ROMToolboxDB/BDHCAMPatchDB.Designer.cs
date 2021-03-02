@@ -63,9 +63,9 @@ namespace DSPRE.Resources.ROMToolboxDB {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
-        internal static byte[] cpue_cam {
+        internal static byte[] CPUE_cam {
             get {
-                object obj = ResourceManager.GetObject("cpue_cam", resourceCulture);
+                object obj = ResourceManager.GetObject("CPUE_cam", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace DSPRE.Resources.ROMToolboxDB {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
-        internal static byte[] cpus_cam {
+        internal static byte[] CPUS_cam {
             get {
-                object obj = ResourceManager.GetObject("cpus_cam", resourceCulture);
+                object obj = ResourceManager.GetObject("CPUS_cam", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace DSPRE.Resources.ROMToolboxDB {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
-        internal static byte[] ipge_cam {
+        internal static byte[] IPGE_cam {
             get {
-                object obj = ResourceManager.GetObject("ipge_cam", resourceCulture);
+                object obj = ResourceManager.GetObject("IPGE_cam", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace DSPRE.Resources.ROMToolboxDB {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
-        internal static byte[] ipgs_cam {
+        internal static byte[] IPGS_cam {
             get {
-                object obj = ResourceManager.GetObject("ipgs_cam", resourceCulture);
+                object obj = ResourceManager.GetObject("IPGS_cam", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace DSPRE.Resources.ROMToolboxDB {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
-        internal static byte[] ipke_cam {
+        internal static byte[] IPKE_cam {
             get {
-                object obj = ResourceManager.GetObject("ipke_cam", resourceCulture);
+                object obj = ResourceManager.GetObject("IPKE_cam", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace DSPRE.Resources.ROMToolboxDB {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
-        internal static byte[] ipks_cam {
+        internal static byte[] IPKS_cam {
             get {
-                object obj = ResourceManager.GetObject("ipks_cam", resourceCulture);
+                object obj = ResourceManager.GetObject("IPKS_cam", resourceCulture);
                 return ((byte[])(obj));
             }
         }
