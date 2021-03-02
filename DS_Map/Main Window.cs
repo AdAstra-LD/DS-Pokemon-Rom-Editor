@@ -1299,7 +1299,7 @@ namespace DSPRE {
             switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
-                    currentHeader.musicNightID= (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
+                    currentHeader.musicNightID = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
                     break;
                 case "Plat":
                     currentHeader.musicNightID = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.PtMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
@@ -2273,10 +2273,11 @@ namespace DSPRE {
                 //what's this IF for??
                 //if (mapPartsTabControl.SelectedTab == permissionsTabPage) 
 
-                if (areaData.areaType == AreaData.TYPE_INDOOR)
+                if (areaData.areaType == AreaData.TYPE_INDOOR) {
                     interiorbldRadioButton.Checked = true;
-                else 
+                } else {
                     exteriorbldRadioButton.Checked = true;
+                }
 
                 disableHandlers = false;
                 selectMapComboBox_SelectedIndexChanged(null, null);
@@ -5481,10 +5482,6 @@ namespace DSPRE {
             updateCurrentBoxLineNumbers(null, null);
             currentScriptBox.ScrollToCaret();
         }
-        private void givePokégearButton_Click(object sender, EventArgs e) {
-            updateCurrentBoxLineNumbers(null, null);
-            currentScriptBox.ScrollToCaret();
-        }
         private void checkBadgeButton_Click(object sender, EventArgs e) {
             updateCurrentBoxLineNumbers(null, null);
             currentScriptBox.ScrollToCaret();
@@ -5672,6 +5669,32 @@ namespace DSPRE {
                 }
             }
             
+        }
+
+        private void enableBagButton_Click(object sender, EventArgs e) {
+            currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nSetFlag 0x11B");
+            updateCurrentBoxLineNumbers(null, null);
+            currentScriptBox.ScrollToCaret();
+        }
+        private void enableTrCardButton_Click(object sender, EventArgs e) {
+            currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nSetFlag 0x11C");
+            updateCurrentBoxLineNumbers(null, null);
+            currentScriptBox.ScrollToCaret();
+        }
+        private void enableSaveButton_Click(object sender, EventArgs e) {
+            currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nSetFlag 0x11D");
+            updateCurrentBoxLineNumbers(null, null);
+            currentScriptBox.ScrollToCaret();
+        }
+        private void enableOptionsButton_Click(object sender, EventArgs e) {
+            currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nSetFlag 0x11E");
+            updateCurrentBoxLineNumbers(null, null);
+            currentScriptBox.ScrollToCaret();
+        }
+        private void givePokégearButton_Click(object sender, EventArgs e) {
+            currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, "\nSetFlag 0x9C");
+            updateCurrentBoxLineNumbers(null, null);
+            currentScriptBox.ScrollToCaret();
         }
         #endregion
 
