@@ -317,7 +317,6 @@
     <EmbeddedResource Include="WildEditorDPPt.resx">
       <DependentUpon>WildEditorDPPt.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
