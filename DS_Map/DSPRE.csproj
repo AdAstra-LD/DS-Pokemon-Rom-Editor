@@ -468,10 +468,10 @@
     <Content Include="Tools\ndstool.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="HelixToolkit.dll" />
-    <Content Include="OpenTK.dll" />
-    <Content Include="Tao.OpenGl.dll" />
-    <Content Include="Tao.Platform.Windows.dll" />
+    <Content Include="Resources\DLLs\HelixToolkit.dll" />
+    <Content Include="Resources\DLLs\OpenTK.dll" />
+    <Content Include="Resources\DLLs\Tao.OpenGl.dll" />
+    <Content Include="Resources\DLLs\Tao.Platform.Windows.dll" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
