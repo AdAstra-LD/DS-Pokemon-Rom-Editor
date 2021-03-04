@@ -32,33 +32,33 @@
             this.arm9expansionTextLBL = new System.Windows.Forms.Label();
             this.arm9expansionLBL = new System.Windows.Forms.Label();
             this.applyARM9ExpansionButton = new System.Windows.Forms.Button();
-            this.BDHCAMpatchTextLBL = new System.Windows.Forms.Label();
-            this.BDHCAMpatchLBL = new System.Windows.Forms.Label();
-            this.BDHCAMpatchButton = new System.Windows.Forms.Button();
+            this.BDHCamPatchTextLBL = new System.Windows.Forms.Label();
+            this.BDHCamPatchLBL = new System.Windows.Forms.Label();
+            this.BDHCamPatchButton = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.namesToSentenceCaseButton = new System.Windows.Forms.Button();
             this.overlay1uncompressedLBL = new System.Windows.Forms.Label();
             this.overlay1patchtextLBL = new System.Windows.Forms.Label();
             this.overlay1uncomprButton = new System.Windows.Forms.Button();
-            this.bdhcamARM9requiredLBL = new System.Windows.Forms.Label();
+            this.BDHCamARM9requiredLBL = new System.Windows.Forms.Label();
             this.arm9patchCB = new System.Windows.Forms.PictureBox();
             this.overlay1CB = new System.Windows.Forms.PictureBox();
-            this.bdhcamCB = new System.Windows.Forms.PictureBox();
+            this.BDHCamCB = new System.Windows.Forms.PictureBox();
             this.sentenceCaseCB = new System.Windows.Forms.PictureBox();
             this.itemNumbersCB = new System.Windows.Forms.PictureBox();
             this.standardizePatchLBL = new System.Windows.Forms.Label();
             this.standardizePatchTextLBL = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.expandedMatrixCB = new System.Windows.Forms.PictureBox();
+            this.matrixExpansionTextLBL = new System.Windows.Forms.Label();
+            this.matrixExpansionLBL = new System.Windows.Forms.Label();
             this.expandMatrixButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.arm9patchCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlay1CB)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bdhcamCB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BDHCamCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sentenceCaseCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemNumbersCB)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.expandedMatrixCB)).BeginInit();
             this.SuspendLayout();
             // 
             // applyItemStandardizeButton
@@ -100,36 +100,36 @@
             this.applyARM9ExpansionButton.UseVisualStyleBackColor = true;
             this.applyARM9ExpansionButton.Click += new System.EventHandler(this.ApplyARM9ExpansionButton_Click);
             // 
-            // BDHCAMpatchTextLBL
+            // BDHCamPatchTextLBL
             // 
-            this.BDHCAMpatchTextLBL.Location = new System.Drawing.Point(15, 184);
-            this.BDHCAMpatchTextLBL.Name = "BDHCAMpatchTextLBL";
-            this.BDHCAMpatchTextLBL.Size = new System.Drawing.Size(293, 67);
-            this.BDHCAMpatchTextLBL.TabIndex = 8;
-            this.BDHCAMpatchTextLBL.Text = "Adds Dynamic BDHC Cameras to current ROM.\r\nWith this patch, you have more control" +
+            this.BDHCamPatchTextLBL.Location = new System.Drawing.Point(15, 184);
+            this.BDHCamPatchTextLBL.Name = "BDHCamPatchTextLBL";
+            this.BDHCamPatchTextLBL.Size = new System.Drawing.Size(293, 67);
+            this.BDHCamPatchTextLBL.TabIndex = 8;
+            this.BDHCamPatchTextLBL.Text = "Adds Dynamic BDHC Cameras to current ROM.\r\nWith this patch, you have more control" +
     " over \r\nthe game camera\'s rotation and position.\r\nYou will need Trifindo\'s PDSMS" +
     "\r\nin order to make BDHCAM Files.\r\n";
-            this.BDHCAMpatchTextLBL.UseMnemonic = false;
+            this.BDHCamPatchTextLBL.UseMnemonic = false;
             // 
-            // BDHCAMpatchLBL
+            // BDHCamPatchLBL
             // 
-            this.BDHCAMpatchLBL.AutoSize = true;
-            this.BDHCAMpatchLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BDHCAMpatchLBL.Location = new System.Drawing.Point(14, 168);
-            this.BDHCAMpatchLBL.Name = "BDHCAMpatchLBL";
-            this.BDHCAMpatchLBL.Size = new System.Drawing.Size(107, 13);
-            this.BDHCAMpatchLBL.TabIndex = 7;
-            this.BDHCAMpatchLBL.Text = "Dynamic Cameras";
+            this.BDHCamPatchLBL.AutoSize = true;
+            this.BDHCamPatchLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BDHCamPatchLBL.Location = new System.Drawing.Point(14, 168);
+            this.BDHCamPatchLBL.Name = "BDHCamPatchLBL";
+            this.BDHCamPatchLBL.Size = new System.Drawing.Size(107, 13);
+            this.BDHCamPatchLBL.TabIndex = 7;
+            this.BDHCamPatchLBL.Text = "Dynamic Cameras";
             // 
-            // BDHCAMpatchButton
+            // BDHCamPatchButton
             // 
-            this.BDHCAMpatchButton.Location = new System.Drawing.Point(335, 183);
-            this.BDHCAMpatchButton.Name = "BDHCAMpatchButton";
-            this.BDHCAMpatchButton.Size = new System.Drawing.Size(100, 50);
-            this.BDHCAMpatchButton.TabIndex = 6;
-            this.BDHCAMpatchButton.Text = "Apply Patch";
-            this.BDHCAMpatchButton.UseVisualStyleBackColor = true;
-            this.BDHCAMpatchButton.Click += new System.EventHandler(this.BDHCAMPatchButton_Click);
+            this.BDHCamPatchButton.Location = new System.Drawing.Point(335, 183);
+            this.BDHCamPatchButton.Name = "BDHCamPatchButton";
+            this.BDHCamPatchButton.Size = new System.Drawing.Size(100, 50);
+            this.BDHCamPatchButton.TabIndex = 6;
+            this.BDHCamPatchButton.Text = "Apply Patch";
+            this.BDHCamPatchButton.UseVisualStyleBackColor = true;
+            this.BDHCamPatchButton.Click += new System.EventHandler(this.BDHCAMPatchButton_Click);
             // 
             // label7
             // 
@@ -189,19 +189,20 @@
             this.overlay1uncomprButton.UseVisualStyleBackColor = true;
             this.overlay1uncomprButton.Click += new System.EventHandler(this.overlay1uncomprButton_Click);
             // 
-            // bdhcamARM9requiredLBL
+            // BDHCamARM9requiredLBL
             // 
-            this.bdhcamARM9requiredLBL.AutoSize = true;
-            this.bdhcamARM9requiredLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bdhcamARM9requiredLBL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.bdhcamARM9requiredLBL.Location = new System.Drawing.Point(118, 168);
-            this.bdhcamARM9requiredLBL.Name = "bdhcamARM9requiredLBL";
-            this.bdhcamARM9requiredLBL.Size = new System.Drawing.Size(165, 13);
-            this.bdhcamARM9requiredLBL.TabIndex = 15;
-            this.bdhcamARM9requiredLBL.Text = "(Requires ARM9 Expansion)";
+            this.BDHCamARM9requiredLBL.AutoSize = true;
+            this.BDHCamARM9requiredLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BDHCamARM9requiredLBL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.BDHCamARM9requiredLBL.Location = new System.Drawing.Point(118, 168);
+            this.BDHCamARM9requiredLBL.Name = "BDHCamARM9requiredLBL";
+            this.BDHCamARM9requiredLBL.Size = new System.Drawing.Size(165, 13);
+            this.BDHCamARM9requiredLBL.TabIndex = 15;
+            this.BDHCamARM9requiredLBL.Text = "(Requires ARM9 Expansion)";
             // 
             // arm9patchCB
             // 
+            this.arm9patchCB.Image = ((System.Drawing.Image)(resources.GetObject("arm9patchCB.Image")));
             this.arm9patchCB.Location = new System.Drawing.Point(309, 45);
             this.arm9patchCB.Name = "arm9patchCB";
             this.arm9patchCB.Size = new System.Drawing.Size(20, 20);
@@ -212,6 +213,7 @@
             // 
             // overlay1CB
             // 
+            this.overlay1CB.Image = global::DSPRE.Properties.Resources.checkmark;
             this.overlay1CB.Location = new System.Drawing.Point(309, 117);
             this.overlay1CB.Name = "overlay1CB";
             this.overlay1CB.Size = new System.Drawing.Size(20, 20);
@@ -220,18 +222,20 @@
             this.overlay1CB.TabStop = false;
             this.overlay1CB.Visible = false;
             // 
-            // bdhcamCB
+            // BDHCamCB
             // 
-            this.bdhcamCB.Location = new System.Drawing.Point(309, 199);
-            this.bdhcamCB.Name = "bdhcamCB";
-            this.bdhcamCB.Size = new System.Drawing.Size(20, 20);
-            this.bdhcamCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.bdhcamCB.TabIndex = 18;
-            this.bdhcamCB.TabStop = false;
-            this.bdhcamCB.Visible = false;
+            this.BDHCamCB.Image = ((System.Drawing.Image)(resources.GetObject("BDHCamCB.Image")));
+            this.BDHCamCB.Location = new System.Drawing.Point(309, 199);
+            this.BDHCamCB.Name = "BDHCamCB";
+            this.BDHCamCB.Size = new System.Drawing.Size(20, 20);
+            this.BDHCamCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.BDHCamCB.TabIndex = 18;
+            this.BDHCamCB.TabStop = false;
+            this.BDHCamCB.Visible = false;
             // 
             // sentenceCaseCB
             // 
+            this.sentenceCaseCB.Image = ((System.Drawing.Image)(resources.GetObject("sentenceCaseCB.Image")));
             this.sentenceCaseCB.Location = new System.Drawing.Point(309, 290);
             this.sentenceCaseCB.Name = "sentenceCaseCB";
             this.sentenceCaseCB.Size = new System.Drawing.Size(20, 20);
@@ -242,6 +246,7 @@
             // 
             // itemNumbersCB
             // 
+            this.itemNumbersCB.Image = ((System.Drawing.Image)(resources.GetObject("itemNumbersCB.Image")));
             this.itemNumbersCB.Location = new System.Drawing.Point(309, 379);
             this.itemNumbersCB.Name = "itemNumbersCB";
             this.itemNumbersCB.Size = new System.Drawing.Size(20, 20);
@@ -269,34 +274,35 @@
             this.standardizePatchTextLBL.Text = resources.GetString("standardizePatchTextLBL.Text");
             this.standardizePatchTextLBL.UseMnemonic = false;
             // 
-            // pictureBox1
+            // expandedMatrixCB
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(309, 462);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(20, 20);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 24;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
+            this.expandedMatrixCB.Image = ((System.Drawing.Image)(resources.GetObject("expandedMatrixCB.Image")));
+            this.expandedMatrixCB.Location = new System.Drawing.Point(309, 462);
+            this.expandedMatrixCB.Name = "expandedMatrixCB";
+            this.expandedMatrixCB.Size = new System.Drawing.Size(20, 20);
+            this.expandedMatrixCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.expandedMatrixCB.TabIndex = 24;
+            this.expandedMatrixCB.TabStop = false;
+            this.expandedMatrixCB.Visible = false;
             // 
-            // label1
+            // matrixExpansionTextLBL
             // 
-            this.label1.Location = new System.Drawing.Point(15, 473);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(239, 35);
-            this.label1.TabIndex = 23;
-            this.label1.Text = "Allows to expand Matrix 0 up to twice its size.\r\n";
-            this.label1.UseMnemonic = false;
+            this.matrixExpansionTextLBL.Location = new System.Drawing.Point(15, 473);
+            this.matrixExpansionTextLBL.Name = "matrixExpansionTextLBL";
+            this.matrixExpansionTextLBL.Size = new System.Drawing.Size(239, 35);
+            this.matrixExpansionTextLBL.TabIndex = 23;
+            this.matrixExpansionTextLBL.Text = "Allows expansion of Matrix 0 up to twice its size.\r\n";
+            this.matrixExpansionTextLBL.UseMnemonic = false;
             // 
-            // label2
+            // matrixExpansionLBL
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(15, 458);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(98, 13);
-            this.label2.TabIndex = 22;
-            this.label2.Text = "Expand Matrix 0";
+            this.matrixExpansionLBL.AutoSize = true;
+            this.matrixExpansionLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.matrixExpansionLBL.Location = new System.Drawing.Point(15, 458);
+            this.matrixExpansionLBL.Name = "matrixExpansionLBL";
+            this.matrixExpansionLBL.Size = new System.Drawing.Size(98, 13);
+            this.matrixExpansionLBL.TabIndex = 22;
+            this.matrixExpansionLBL.Text = "Expand Matrix 0";
             // 
             // expandMatrixButton
             // 
@@ -314,25 +320,25 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(448, 508);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.expandedMatrixCB);
+            this.Controls.Add(this.matrixExpansionTextLBL);
+            this.Controls.Add(this.matrixExpansionLBL);
             this.Controls.Add(this.expandMatrixButton);
             this.Controls.Add(this.itemNumbersCB);
             this.Controls.Add(this.sentenceCaseCB);
-            this.Controls.Add(this.bdhcamCB);
+            this.Controls.Add(this.BDHCamCB);
             this.Controls.Add(this.overlay1CB);
             this.Controls.Add(this.arm9patchCB);
-            this.Controls.Add(this.bdhcamARM9requiredLBL);
+            this.Controls.Add(this.BDHCamARM9requiredLBL);
             this.Controls.Add(this.overlay1uncomprButton);
             this.Controls.Add(this.overlay1patchtextLBL);
             this.Controls.Add(this.overlay1uncompressedLBL);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.namesToSentenceCaseButton);
-            this.Controls.Add(this.BDHCAMpatchTextLBL);
-            this.Controls.Add(this.BDHCAMpatchLBL);
-            this.Controls.Add(this.BDHCAMpatchButton);
+            this.Controls.Add(this.BDHCamPatchTextLBL);
+            this.Controls.Add(this.BDHCamPatchLBL);
+            this.Controls.Add(this.BDHCamPatchButton);
             this.Controls.Add(this.arm9expansionTextLBL);
             this.Controls.Add(this.arm9expansionLBL);
             this.Controls.Add(this.applyARM9ExpansionButton);
@@ -346,10 +352,10 @@
             this.Text = "ROM Toolbox";
             ((System.ComponentModel.ISupportInitialize)(this.arm9patchCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlay1CB)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bdhcamCB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BDHCamCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sentenceCaseCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemNumbersCB)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.expandedMatrixCB)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -361,26 +367,26 @@
         private System.Windows.Forms.Label arm9expansionTextLBL;
         private System.Windows.Forms.Label arm9expansionLBL;
         private System.Windows.Forms.Button applyARM9ExpansionButton;
-        private System.Windows.Forms.Label BDHCAMpatchTextLBL;
-        private System.Windows.Forms.Label BDHCAMpatchLBL;
-        private System.Windows.Forms.Button BDHCAMpatchButton;
+        private System.Windows.Forms.Label BDHCamPatchTextLBL;
+        private System.Windows.Forms.Label BDHCamPatchLBL;
+        private System.Windows.Forms.Button BDHCamPatchButton;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button namesToSentenceCaseButton;
         private System.Windows.Forms.Label overlay1uncompressedLBL;
         private System.Windows.Forms.Label overlay1patchtextLBL;
         private System.Windows.Forms.Button overlay1uncomprButton;
-        private System.Windows.Forms.Label bdhcamARM9requiredLBL;
+        private System.Windows.Forms.Label BDHCamARM9requiredLBL;
         private System.Windows.Forms.PictureBox arm9patchCB;
         private System.Windows.Forms.PictureBox overlay1CB;
-        private System.Windows.Forms.PictureBox bdhcamCB;
+        private System.Windows.Forms.PictureBox BDHCamCB;
         private System.Windows.Forms.PictureBox sentenceCaseCB;
         private System.Windows.Forms.PictureBox itemNumbersCB;
         private System.Windows.Forms.Label standardizePatchLBL;
         private System.Windows.Forms.Label standardizePatchTextLBL;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox expandedMatrixCB;
+        private System.Windows.Forms.Label matrixExpansionTextLBL;
+        private System.Windows.Forms.Label matrixExpansionLBL;
         private System.Windows.Forms.Button expandMatrixButton;
     }
 }

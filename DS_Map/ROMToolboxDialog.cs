@@ -59,25 +59,25 @@ namespace DSPRE {
                 switch (RomInfo.gameVersion) {
                     case "Plat":
                         overlayNumber = 5;
-                        branchString = ToolboxDB.bdhcamCodeDB[nameof(branchString) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
+                        branchString = ToolboxDB.BDHCamCodeDB[nameof(branchString) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
                         
-                        branchOffset = ToolboxDB.bdhcamOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
-                        overlayOffset1 = ToolboxDB.bdhcamOffsetsDB[nameof(overlayOffset1) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
-                        overlayOffset2 = ToolboxDB.bdhcamOffsetsDB[nameof(overlayOffset2) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
+                        branchOffset = ToolboxDB.BDHCamOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
+                        overlayOffset1 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset1) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
+                        overlayOffset2 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset2) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
                         break;
                     case "HG":
                     case "SS":
                         overlayNumber = 1;
-                        branchString = ToolboxDB.bdhcamCodeDB[nameof(branchString) + "_" + "HG"];
+                        branchString = ToolboxDB.BDHCamCodeDB[nameof(branchString) + "_" + "HG"];
 
-                        branchOffset = ToolboxDB.bdhcamOffsetsDB[nameof(branchOffset) + "_" + "HG"];
-                        overlayOffset1 = ToolboxDB.bdhcamOffsetsDB[nameof(overlayOffset1) + "_" + "HG"];
-                        overlayOffset2 = ToolboxDB.bdhcamOffsetsDB[nameof(overlayOffset2) + "_" + "HG"];
+                        branchOffset = ToolboxDB.BDHCamOffsetsDB[nameof(branchOffset) + "_" + "HG"];
+                        overlayOffset1 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset1) + "_" + "HG"];
+                        overlayOffset2 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset2) + "_" + "HG"];
                         break;
                 }
                 branchOffset -= 0x02000000;
-                overlayString1 = ToolboxDB.bdhcamCodeDB[nameof(overlayString1)];
-                overlayString2 = ToolboxDB.bdhcamCodeDB[nameof(overlayString2)];
+                overlayString1 = ToolboxDB.BDHCamCodeDB[nameof(overlayString1)];
+                overlayString2 = ToolboxDB.BDHCamCodeDB[nameof(overlayString2)];
                 subroutine = (byte[])new ResourceManager("DSPRE.Resources.ROMToolboxDB.BDHCAMPatchDB", Assembly.GetExecutingAssembly()).GetObject(RomInfo.romID + "_cam");
             }
         }
@@ -85,11 +85,12 @@ namespace DSPRE {
         public uint expandedARMfileID = ToolboxDB.syntheticOverlayFileNumbersDB[RomInfo.gameVersion];
         public static bool flag_standardizedItems { get; private set; } = false;
         public static bool flag_arm9Expanded { get; private set; } = false;
-        public static bool flag_BDHCAMpatchApplied { get; private set; } = false;
+        public static bool flag_BDHCamPatchApplied { get; private set; } = false;
+        public static bool flag_MatrixExpansionApplied { get; private set; } = false;
         public static bool overlay1MustBeRestoredFromBackup { get; private set; } = true;
 
         #region Constructor
-        public ROMToolboxDialog(RomInfo romInfo) {
+        public ROMToolboxDialog() {
             InitializeComponent();
             
             CheckStandardizedItems();
@@ -97,58 +98,69 @@ namespace DSPRE {
             if (RomInfo.gameLanguage == "ENG" || RomInfo.gameLanguage == "ESP") {
                 CheckARM9Expansion();
             } else {
-                disableARM9patch();
-                applyARM9ExpansionButton.Text = "Unsupported\nlanguage";
-
-                disableBDHCAMpatch();
-                BDHCAMpatchButton.Text = "Unsupported\nlanguage";
+                DisableARM9patch("Unsupported\nlanguage");
+                DisableBDHCamPatch("Unsupported\nlanguage");
             }
+
             switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
-                    disableOverlay1patch();
-                    overlay1uncomprButton.Text = "Unsupported";
+                    DisableOverlay1patch("Unsupported");
+                    DisableMatrixExpansionPatch("Unsupported");
                     break;
                 case "Plat":
-                    disableOverlay1patch();
-                    overlay1uncomprButton.Text = "Unsupported";
-
-                    CheckFilesBDHCAMpatchApplied();
+                    DisableOverlay1patch("Unsupported");
+                    DisableMatrixExpansionPatch("Unsupported");
+                    CheckFilesBDHCamPatchApplied();
                     break;
                 case "HG":
                 case "SS":
                     if (!DSUtils.CheckOverlayHasCompressionFlag(1)) {
-                        disableOverlay1patch();
+                        DisableOverlay1patch("Already applied");
                         overlay1CB.Visible = true;
-                        overlay1uncomprButton.Text = "Already applied";
                     }
-                    CheckFilesBDHCAMpatchApplied();
+                    CheckFilesBDHCamPatchApplied();
+
+                    if (RomInfo.gameLanguage == "ENG" || RomInfo.gameLanguage == "ESP") {
+                        CheckMatrixPatchApplied();
+                    } else {
+                        DisableMatrixExpansionPatch("Unsupported\nlanguage");
+                    }
                     break;
             }
         }
+
         #region Patch Disable
-        private void disableOverlay1patch() {
+        private void DisableOverlay1patch(string reason) {
             overlay1uncomprButton.Enabled = false;
             overlay1uncompressedLBL.Enabled = false;
             overlay1patchtextLBL.Enabled = false;
+            overlay1uncomprButton.Text = reason;
         }
-
-        private void disableBDHCAMpatch() {
-            BDHCAMpatchButton.Enabled = false;
-            BDHCAMpatchLBL.Enabled = false;
-            BDHCAMpatchTextLBL.Enabled = false;
-            bdhcamARM9requiredLBL.Enabled = false;
+        private void DisableBDHCamPatch(string reason) {
+            BDHCamPatchButton.Enabled = false;
+            BDHCamPatchLBL.Enabled = false;
+            BDHCamPatchTextLBL.Enabled = false;
+            BDHCamARM9requiredLBL.Enabled = false;
+            BDHCamPatchButton.Text = reason;
         }
-
-        private void disableARM9patch() {
+        private void DisableARM9patch(string reason) {
             applyARM9ExpansionButton.Enabled = false;
             arm9expansionTextLBL.Enabled = false;
             arm9expansionLBL.Enabled = false;
+            applyARM9ExpansionButton.Text = reason;
         }
-        private void disableStandardizeItemsPatch() {
+        private void DisableMatrixExpansionPatch(string reason) {
+            expandMatrixButton.Enabled = false;
+            matrixExpansionLBL.Enabled = false;
+            matrixExpansionTextLBL.Enabled = false;
+            expandMatrixButton.Text = reason;
+        }
+        private void DisableStandardizeItemsPatch(string reason) {
             applyItemStandardizeButton.Enabled = false;
             standardizePatchLBL.Enabled = false;
             standardizePatchTextLBL.Enabled = false;
+            applyItemStandardizeButton.Text = reason;
         }
         #endregion
         #endregion
@@ -159,52 +171,51 @@ namespace DSPRE {
                 ARM9PatchData data = new ARM9PatchData();
 
                 try { 
-                    byte[] branchCode = HexStringtoByteArray(data.branchString);
+                    byte[] branchCode = HexStringToByteArray(data.branchString);
                     byte[] branchCodeRead = DSUtils.ReadFromArm9(data.branchOffset, data.branchString.Length / 3 + 1); //Read branchCode
                     if (branchCodeRead.Length != branchCode.Length)
                         return 0; //0 means ARM9 Expansion has never been applied
                     if (!branchCodeRead.SequenceEqual(branchCode))
                         return 0;
 
-                    byte[] initCode = HexStringtoByteArray(data.initString);
+                    byte[] initCode = HexStringToByteArray(data.initString);
                     byte[] initCodeRead = DSUtils.ReadFromArm9(data.initOffset, data.initString.Length / 3 + 1); //Read initCode
                     if (initCodeRead.Length != initCode.Length)
                         return 0;
                     if (!initCodeRead.SequenceEqual(initCode))
                         return 0;
                 } catch {
-                    return -1; //1 means Check failure
+                    return -1; //-1 means Check failure
                 }
             }
 
             flag_arm9Expanded = true;
             arm9patchCB.Visible = true;
-            disableARM9patch();
-            applyARM9ExpansionButton.Text = "Already applied";
+            DisableARM9patch("Already applied");
 
             switch (RomInfo.gameVersion) {
                 case "Plat":
                 case "HG":
                 case "SS":
-                    bdhcamARM9requiredLBL.Visible = false;
-                    BDHCAMpatchButton.Enabled = true;
-                    BDHCAMpatchLBL.Enabled = true;
-                    BDHCAMpatchTextLBL.Enabled = true;
+                    BDHCamARM9requiredLBL.Visible = false;
+                    BDHCamPatchButton.Enabled = true;
+                    BDHCamPatchLBL.Enabled = true;
+                    BDHCamPatchTextLBL.Enabled = true;
                     break;
             }
             return 1; //arm9 Expansion has already been applied
         }
-        private int CheckFilesBDHCAMpatchApplied() {
+        private int CheckFilesBDHCamPatchApplied() {
             if (!flag_arm9Expanded) { 
-                bdhcamARM9requiredLBL.Visible = true;
-                disableBDHCAMpatch();
+                BDHCamARM9requiredLBL.Visible = true;
+                DisableBDHCamPatch("!");
                 return 0;
             }
 
-            if (!flag_BDHCAMpatchApplied) {
+            if (!flag_BDHCamPatchApplied) {
                 BDHCAMPatchData data = new BDHCAMPatchData();
                 try {
-                    byte[] branchCode = HexStringtoByteArray(data.branchString);
+                    byte[] branchCode = HexStringToByteArray(data.branchString);
                     byte[] branchCodeRead = DSUtils.ReadFromArm9(data.branchOffset, branchCode.Length);
 
                     if (branchCode.Length != branchCodeRead.Length)
@@ -216,7 +227,7 @@ namespace DSPRE {
                     string overlayFilePath = RomInfo.workDir + "overlay" + "\\" + "overlay_" + data.overlayNumber.ToString("D4") + ".bin";
                     DSUtils.DecompressOverlay(data.overlayNumber, true);
 
-                    byte[] overlayCode1 = HexStringtoByteArray(data.overlayString1);
+                    byte[] overlayCode1 = HexStringToByteArray(data.overlayString1);
                     byte[] overlayCode1Read = DSUtils.ReadFromFile(overlayFilePath, data.overlayOffset1, overlayCode1.Length);
                     if (overlayCode1.Length != overlayCode1Read.Length)
                         return 0; //0 means BDHCAM patch has not been applied
@@ -224,7 +235,7 @@ namespace DSPRE {
                         return 0;
 
 
-                    byte[] overlayCode2 = HexStringtoByteArray(data.overlayString2);
+                    byte[] overlayCode2 = HexStringToByteArray(data.overlayString2);
                     byte[] overlayCode2Read = DSUtils.ReadFromFile(overlayFilePath, data.overlayOffset2, overlayCode2.Length); //Write new overlayCode1
                     if (overlayCode2.Length != overlayCode2Read.Length)
                         return 0; //0 means BDHCAM patch has not been applied
@@ -232,7 +243,7 @@ namespace DSPRE {
                         return 0;
 
                     String fullFilePath = RomInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
-                    byte[] subroutineRead = DSUtils.ReadFromFile(fullFilePath, ToolboxDB.bdhcamSubroutineOffset, data.subroutine.Length); //Write new overlayCode1
+                    byte[] subroutineRead = DSUtils.ReadFromFile(fullFilePath, ToolboxDB.BDHCamSubroutineOffset, data.subroutine.Length); //Write new overlayCode1
                     if (data.subroutine.Length != subroutineRead.Length)
                         return 0; //0 means BDHCAM patch has not been applied
                     if (!data.subroutine.SequenceEqual(subroutineRead))
@@ -241,11 +252,10 @@ namespace DSPRE {
                     return -1;
                 }
             }
-            flag_BDHCAMpatchApplied = true;
-            bdhcamCB.Visible = true;
+            flag_BDHCamPatchApplied = true;
+            BDHCamCB.Visible = true;
 
-            disableBDHCAMpatch();
-            BDHCAMpatchButton.Text = "Already applied";
+            DisableBDHCamPatch("Already applied");
             return 0;
         }
         public bool CheckStandardizedItems() {
@@ -254,11 +264,37 @@ namespace DSPRE {
                 itemNumbersCB.Visible = true;
                 flag_standardizedItems = true;
 
-                disableStandardizeItemsPatch();
-                applyItemStandardizeButton.Text = "Already applied";
+                DisableStandardizeItemsPatch("Already applied");
                 return true;
             }
             return false;
+        }
+        private int CheckMatrixPatchApplied() {
+            if (!flag_MatrixExpansionApplied) {
+                try {
+                    foreach (KeyValuePair<uint[], string> kv in ToolboxDB.matrixExpansionDB) {
+                        foreach (uint offset in kv.Key) {
+                            int languageOffset = 0;
+                            if (RomInfo.romID == "IPKE" || RomInfo.romID == "IPGE" || RomInfo.romID == "IPGS")
+                                languageOffset = +8;
+
+                            byte[] read = DSUtils.ReadFromArm9((uint)(offset - 0x02000000 + languageOffset), kv.Value.Length / 3 + 1);
+                            byte[] code = HexStringToByteArray(kv.Value); 
+                            if (read.Length != code.Length)
+                                return 0;
+                            if (!read.SequenceEqual(code))
+                                return 0;
+                        }
+                    }
+                } catch {
+                    return -1; //-1 means Check failure
+                }
+            }
+
+            DisableMatrixExpansionPatch("Already applied");
+            flag_MatrixExpansionApplied = true;
+            expandedMatrixCB.Visible = true;
+            return 1; //arm9 Expansion has already been applied
         }
         #endregion
 
@@ -318,7 +354,7 @@ namespace DSPRE {
                 "- Replace " + (data.branchString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.branchOffset.ToString("X") + " with " + '\n' + data.branchString + "\n\n" +
                 "- Replace " + (data.overlayString1.Length / 3 + 1) + " bytes of data at overlay" + data.overlayNumber + " offset 0x" + data.overlayOffset1.ToString("X") + " with " + '\n' + data.overlayString1 + "\n\n" +
                 "- Replace " + (data.overlayString2.Length / 3 + 1) + " bytes of data at overlay" + data.overlayNumber + " offset 0x" + data.overlayOffset2.ToString("X") + " with " + '\n' + data.overlayString2 + "\n\n" +
-                "- Modify file #" + expandedARMfileID + " inside " + '\n' + RomInfo.syntheticOverlayPath + '\n' + "to insert the BDHCAM routine (any data between 0x" + ToolboxDB.bdhcamSubroutineOffset.ToString("X") + " and 0x" + (ToolboxDB.bdhcamSubroutineOffset + data.subroutine.Length).ToString("X") + " will be overwritten)." + "\n\n" +
+                "- Modify file #" + expandedARMfileID + " inside " + '\n' + RomInfo.syntheticOverlayPath + '\n' + "to insert the BDHCAM routine (any data between 0x" + ToolboxDB.BDHCamSubroutineOffset.ToString("X") + " and 0x" + (ToolboxDB.BDHCamSubroutineOffset + data.subroutine.Length).ToString("X") + " will be overwritten)." + "\n\n" +
                 "Do you wish to continue?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -326,33 +362,31 @@ namespace DSPRE {
                 File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", overwrite: true);
 
                 try {
-                    DSUtils.WriteToArm9(data.branchOffset, HexStringtoByteArray(data.branchString)); //Write new branchOffset
+                    DSUtils.WriteToArm9(data.branchOffset, HexStringToByteArray(data.branchString)); //Write new branchOffset
 
                     /* Write to overlayfile */
                     string overlayFilePath = RomInfo.workDir + "overlay" + "\\" + "overlay_" + data.overlayNumber.ToString("D4") + ".bin";
                     if (DSUtils.OverlayIsCompressed(data.overlayNumber))
                         DSUtils.DecompressOverlay(data.overlayNumber, true);
 
-                    DSUtils.WriteToFile(overlayFilePath, data.overlayOffset1, HexStringtoByteArray(data.overlayString1)); //Write new overlayCode1
-                    DSUtils.WriteToFile(overlayFilePath, data.overlayOffset2, HexStringtoByteArray(data.overlayString2)); //Write new overlayCode2
+                    DSUtils.WriteToFile(overlayFilePath, data.overlayOffset1, HexStringToByteArray(data.overlayString1)); //Write new overlayCode1
+                    DSUtils.WriteToFile(overlayFilePath, data.overlayOffset2, HexStringToByteArray(data.overlayString2)); //Write new overlayCode2
                     overlay1MustBeRestoredFromBackup = false;
 
                     String fullFilePath = RomInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
 
                     /*Write Expanded ARM9 File*/
-                    DSUtils.WriteToFile(fullFilePath, ToolboxDB.bdhcamSubroutineOffset, data.subroutine);
+                    DSUtils.WriteToFile(fullFilePath, ToolboxDB.BDHCamSubroutineOffset, data.subroutine);
                 } catch {
                     MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 and overlay from their respective backups.", "Something went wrong",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                flag_BDHCAMpatchApplied = true;
                 overlay1MustBeRestoredFromBackup = false;
-
-                disableBDHCAMpatch();
-                bdhcamCB.Visible = true;
-                BDHCAMpatchButton.Text = "Already applied";
+                DisableBDHCamPatch("Already applied");
+                flag_BDHCamPatchApplied = true;
+                BDHCamCB.Visible = true;
 
                 MessageBox.Show("The BDHCAM patch has been applied.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
@@ -371,9 +405,8 @@ namespace DSPRE {
                 if (DSUtils.OverlayIsCompressed(1))
                     DSUtils.DecompressOverlay(1, true);
 
-                disableOverlay1patch();
+                DisableOverlay1patch("Already applied");
                 overlay1CB.Visible = true;
-                overlay1uncomprButton.Text = "Already applied";
                 MessageBox.Show("Overlay1 is now configured as uncompressed.", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -412,10 +445,9 @@ namespace DSPRE {
                     itemScript.SaveToFileDefaultDir(RomInfo.itemScriptFileNumber, showSuccessMessage: false);
                     MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                    DisableStandardizeItemsPatch("Already applied");
                     itemNumbersCB.Visible = true;
                     flag_standardizedItems = true;
-                    disableStandardizeItemsPatch();
-                    applyItemStandardizeButton.Text = "Already applied";
                 }
             } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -437,8 +469,8 @@ namespace DSPRE {
                 File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", overwrite: true);
 
                 try {
-                    DSUtils.WriteToArm9(data.branchOffset, HexStringtoByteArray(data.branchString)); //Write new branchOffset
-                    DSUtils.WriteToArm9(data.initOffset, HexStringtoByteArray(data.initString)); //Write new initOffset
+                    DSUtils.WriteToArm9(data.branchOffset, HexStringToByteArray(data.branchString)); //Write new branchOffset
+                    DSUtils.WriteToArm9(data.initOffset, HexStringToByteArray(data.initString)); //Write new initOffset
 
                     string fullFilePath = RomInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
                     File.Delete(fullFilePath);
@@ -447,19 +479,18 @@ namespace DSPRE {
                             f.Write((byte)0x00); // Write Expanded ARM9 File 
                     }
 
+                    DisableARM9patch("Already applied");
                     arm9patchCB.Visible = true;
                     flag_arm9Expanded = true;
-                    disableARM9patch();
-                    applyARM9ExpansionButton.Text = "Already applied";
 
                     switch (RomInfo.gameVersion) {
                         case "Plat":
                         case "HG":
                         case "SS":
-                            bdhcamARM9requiredLBL.Visible = false;
-                            BDHCAMpatchButton.Enabled = true;
-                            BDHCAMpatchLBL.Enabled = true;
-                            BDHCAMpatchTextLBL.Enabled = true;
+                            BDHCamARM9requiredLBL.Visible = false;
+                            BDHCamPatchButton.Enabled = true;
+                            BDHCamPatchLBL.Enabled = true;
+                            BDHCamPatchTextLBL.Enabled = true;
                             break;
                     }
 
@@ -468,6 +499,52 @@ namespace DSPRE {
                     MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 backup (arm9.bin.backup).", "Something went wrong",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            } else {
+                MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void expandMatrixButton_Click(object sender, EventArgs e) {
+            string listOfChanges = "";
+            int languageOffset = 0;
+
+            if (RomInfo.romID == "IPKE" || RomInfo.romID == "IPGE" || RomInfo.romID == "IPGS")
+                languageOffset = +8;
+
+            foreach (KeyValuePair<uint[], string> kv in ToolboxDB.matrixExpansionDB) {
+                listOfChanges += " - Replace " + (kv.Value.Length / 3 + 1) + " bytes of data at arm9 offset";
+                if (kv.Key.Length > 1)
+                    listOfChanges += "s";
+
+                for (int i = 0; i < kv.Key.Length; i++) {
+                    listOfChanges += " 0x" + (kv.Key[i] - 0x02000000 + languageOffset).ToString("X");
+
+                    if (i < kv.Key.Length - 1)
+                        listOfChanges += ",";
+                }
+                listOfChanges += " with " + '\n' + kv.Value + "\n\n";
+            }
+
+            DialogResult d;
+            d = MessageBox.Show("Confirming this process will apply the following changes:\n\n" +
+                listOfChanges +
+                "Do you wish to continue?",
+                "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (d == DialogResult.Yes) {
+                try {
+                    foreach (KeyValuePair<uint[], string> kv in ToolboxDB.matrixExpansionDB) {
+                        foreach(uint offset in kv.Key) {
+                            DSUtils.WriteToArm9((uint)(offset - 0x02000000 + languageOffset), HexStringToByteArray(kv.Value));
+                        }
+                    }
+                } catch {
+                    MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 backup (arm9.bin.backup).", "Something went wrong",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                DisableMatrixExpansionPatch("Already applied");
+                expandedMatrixCB.Visible = true;
+                flag_MatrixExpansionApplied = true;
+                MessageBox.Show("Matrix 0 can now be freely expanded up to twice its size.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -633,7 +710,7 @@ namespace DSPRE {
             return bytes;
         }
 
-        public static byte[] HexStringtoByteArray(string hexString) {
+        public static byte[] HexStringToByteArray(string hexString) {
             //FC B5 05 48 C0 46 41 21 
             //09 22 02 4D A8 47 00 20 
             //03 21 FC BD F1 64 00 02 
@@ -660,7 +737,6 @@ namespace DSPRE {
             MessageBox.Show("This operation is currently impossible to carry out on any Pokémon " + RomInfo.gameName + " rom.",
                 "Unsupported ROM", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
         private void UnsupportedROMLanguage() {
             MessageBox.Show("This operation is currently impossible to carry out on the " + RomInfo.gameLanguage +
                 " version of this rom.", "Unsupported Language", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -669,9 +745,5 @@ namespace DSPRE {
             MessageBox.Show("This patch has already been applied.", "Can't reapply patch", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
-
-        private void expandMatrixButton_Click(object sender, EventArgs e) {
-
-        }
     }
 }

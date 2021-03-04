@@ -695,19 +695,21 @@ namespace DSPRE.Resources {
                 [3] = "LESS/EQUAL",
                 [4] = "GREATER/EQUAL",
                 [5] = "DIFFERENT",
-                [6] = "OR",
-                [7] = "AND",
-                [0xFF] = "TRUEUP"
+
+                /* GEN V ONLY */
+                //[6] = "OR",
+                //[7] = "AND",
+                //[0xFF] = "TRUEUP"
             };
 
             public static Dictionary<ushort, int> commandsWithRelativeJump = new Dictionary<ushort, int>() {
                 //commandID, ID of parameter With Jump Address
 
-                [0x0016] = 0,  //Jump
-                [0x001A] = 0,  //Call
-                [0x001C] = 1,  //Jump-If
-                [0x001D] = 1, //Call-If
-                [0x005E] = 1, //Movement
+                [0x0016] = 0,   //Jump
+                [0x001A] = 0,   //Call
+                [0x001C] = 1,   //Jump-If
+                [0x001D] = 1,   //Call-If
+                [0x005E] = 1,   //Movement
             };
             public static ushort[] endCodes = new ushort[] { 
                 0x2, 

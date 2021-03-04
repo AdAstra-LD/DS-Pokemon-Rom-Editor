@@ -40,7 +40,7 @@ namespace DSPRE.Resources.ROMToolboxDB {
             ["initOffset_HG_ESP"] = 0x02110354
         };
 
-        public static Dictionary<string, string> bdhcamCodeDB = new Dictionary<string, string>() {
+        public static Dictionary<string, string> BDHCamCodeDB = new Dictionary<string, string>() {
             ["branchString_Plat_ENG"] = "B9 F3 E2 F8",
             ["branchString_Plat_ESP"] = "B9 F3 AA F8",
             ["branchString_HG"] = "B6 F3 2E FA", //Also valid for SS, both ESP and ENG
@@ -48,7 +48,7 @@ namespace DSPRE.Resources.ROMToolboxDB {
             ["overlayString1"] = "00 4B 18 47 41 9C 3D 02",
             ["overlayString2"] = "00 4B 18 47 01 9C 3D 02",
         };
-        public static Dictionary<string, uint> bdhcamOffsetsDB = new Dictionary<string, uint>() {
+        public static Dictionary<string, uint> BDHCamOffsetsDB = new Dictionary<string, uint>() {
             ["branchOffset_Plat_ENG"] = 0x0202040C,
             ["branchOffset_Plat_ESP"] = 0x0202047C,
             ["branchOffset_HG"] = 0x02023174, //Also valid for SS, both ESP and ENG
@@ -61,6 +61,22 @@ namespace DSPRE.Resources.ROMToolboxDB {
             ["overlayOffset2_Plat_ESP"] = 0x0001E2D4,
             ["overlayOffset2_HG"] = 0x00015864,
         };
-        public static uint bdhcamSubroutineOffset = 0x000115B0;
+        public static uint BDHCamSubroutineOffset = 0x000115B0;
+
+        public static Dictionary<uint[], string> matrixExpansionDB = new Dictionary<uint[], string>() {
+            [new uint[] { 0x0203AEBE }] = "FF 01",
+            [new uint[] { 0x0203AEC0 }] = "76 01",
+            [new uint[] { 0x0203AF58 }] = "C9 01",
+            [new uint[] { 0x0203AF72 }] = "49 01",
+            [new uint[] { 0x0203AF8C }] = "3E 06 00 00",
+            [new uint[] { 0x0203AF90 }] = "3C 1F 00 00",
+            [new uint[] { 0x0203AFA8 }] = "50 1F 00 00",
+            [new uint[] { 0x0203AFF8, 
+                0x0203B108, 
+                0x0203B1F0, 
+                0x0203B25C }] = "C4 12 00 00",
+            [new uint[] { 0x0203B088 }] = "84 0C 00 00",
+            [new uint[] { 0x0203B0BC }] = "7C 0C 00 00",
+        };
     }
 }

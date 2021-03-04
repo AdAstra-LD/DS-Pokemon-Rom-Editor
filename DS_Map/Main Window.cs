@@ -651,7 +651,7 @@ namespace DSPRE {
         }
         #endregion
         private void romToolBoxToolStripMenuItem_Click(object sender, EventArgs e) {
-            using (ROMToolboxDialog window = new ROMToolboxDialog(romInfo)) {
+            using (ROMToolboxDialog window = new ROMToolboxDialog()) {
                 window.ShowDialog();
                 if (ROMToolboxDialog.flag_standardizedItems) {
                     isItemRadioButton.Enabled = true;
