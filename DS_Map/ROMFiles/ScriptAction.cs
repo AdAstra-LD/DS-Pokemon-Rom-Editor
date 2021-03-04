@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSPRE.ROMFiles {
@@ -34,7 +32,7 @@ namespace DSPRE.ROMFiles {
             if (!PokeDatabase.ScriptEditor.movementsDictIDName.TryGetValue(id, out name))
                 name = id.ToString("X4");
 
-            if (repetitionCount != ushort.MaxValue)
+            if (repetitionCount != ushort.MaxValue && id != 0x00FE)
                 name += " " + "0x" + repetitionCount.ToString("X");
         }
         public ScriptAction(string wholeLine, int lineNumber) {
@@ -64,24 +62,29 @@ namespace DSPRE.ROMFiles {
             }
 
             /* Read parameters from remainder of the description */
+            /*
             if (id == 0x00FE) { 
                 return;
-            }
+            }*/
 
-            if (nameParts.Length > 2) {
+            if (nameParts.Length > 2) { //E.g.: LookUp 0x1 0x3
                 MessageBox.Show("Wrong number of parameters for action " + nameParts[0] + " at line " + lineNumber + "." + Environment.NewLine +
                     "Received: " + (nameParts.Length - 1) + Environment.NewLine + "Action Commands need at most one parameter. "
                     + Environment.NewLine + "\nThis Script File can not be saved.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 id = ushort.MaxValue; //ERROR VALUE
             } else {
-                NumberStyles style;
-                if (nameParts[1].StartsWith("0x")) { 
-                    style = NumberStyles.HexNumber;
-                    nameParts[1] = nameParts[1].Substring(2);
+                if (id == 0x00FE) {
+                    repetitionCount = 0;
                 } else {
-                    style = NumberStyles.Integer;
+                    NumberStyles style;
+                    if (nameParts[1].StartsWith("0x")) {
+                        style = NumberStyles.HexNumber;
+                        nameParts[1] = nameParts[1].Substring(2);
+                    } else {
+                        style = NumberStyles.Integer;
+                    }
+                    repetitionCount = ushort.Parse(nameParts[1], style);
                 }
-                repetitionCount = ushort.Parse(nameParts[1], style);
             }
         }
     }

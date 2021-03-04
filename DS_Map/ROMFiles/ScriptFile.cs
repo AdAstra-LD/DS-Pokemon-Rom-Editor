@@ -118,7 +118,7 @@ namespace DSPRE.ROMFiles {
                         ushort id = scrReader.ReadUInt16();
                         if (id == 0xFE) {
                             endMovement = true;
-                            cmdList.Add(new ScriptAction(id));
+                            cmdList.Add(new ScriptAction(id, 0));
                         } else {
                             cmdList.Add(new ScriptAction(id, scrReader.ReadUInt16()));
                         }
@@ -572,8 +572,7 @@ namespace DSPRE.ROMFiles {
                             writer.Write(currentCmd.id);
 
                             /* Write movement command parameters */
-                            if (currentCmd.id != 0x00FE)
-                                writer.Write(currentCmd.repetitionCount);
+                            writer.Write(currentCmd.repetitionCount);
                         }
                     }
 
