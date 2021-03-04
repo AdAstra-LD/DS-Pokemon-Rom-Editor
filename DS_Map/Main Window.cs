@@ -6015,7 +6015,7 @@ namespace DSPRE {
         private void exportNSBTXButton_Click(object sender, EventArgs e) {
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "NSBTX File (*.nsbtx)|*.nsbtx";
-            sf.FileName = "Texture Pack " + texturesListBox.SelectedIndex;
+            sf.FileName = "Texture Pack " + texturePacksListBox.SelectedIndex;
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
