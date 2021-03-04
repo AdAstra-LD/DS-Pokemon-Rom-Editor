@@ -2560,10 +2560,18 @@ namespace DSPRE {
         private void FillBuildingsBox() {
             buildingsListBox.Items.Clear();
 
-            string[] bldList = GetBuildingsList(interiorbldRadioButton.Checked);
-            for (int i = 0; i < currentMapFile.buildings.Count; i++)
-                // Add entry into buildings ListBox
-                buildingsListBox.Items.Add((i+1).ToString("D2") + MapHeader.nameSeparator + buildIndexComboBox.Items[(int)currentMapFile.buildings[i].modelID]);
+            uint id = 0;
+            
+            for (int i = 0; i < currentMapFile.buildings.Count; i++) {
+                id = currentMapFile.buildings[i].modelID;
+                try {
+                    buildingsListBox.Items.Add((i + 1).ToString("D2") + MapHeader.nameSeparator + buildIndexComboBox.Items[(int)id]);
+                } catch (ArgumentOutOfRangeException) {
+                    MessageBox.Show("Building #" + id + " couldn't be found in the Building List.\nBuilding 0 will be loaded in its place.", "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    buildingsListBox.Items.Add((i + 1).ToString("D2") + MapHeader.nameSeparator + buildIndexComboBox.Items[0]);
+                }
+            }
+            
         }
         private Building LoadBuildingModel(Building building, bool interior) {
             string modelPath = romInfo.GetBuildingModelsDirPath(interior) + "\\" + building.modelID.ToString("D4");
@@ -2965,7 +2973,6 @@ namespace DSPRE {
             currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile = LoadModelTextures(currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1);
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
-
         }
         private void buildingsListBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || buildingsListBox.SelectedIndex < 0)
@@ -3046,15 +3053,6 @@ namespace DSPRE {
             try {
                 buildIndexComboBox.SelectedIndex = index;
             } catch (ArgumentOutOfRangeException) {
-                string bldType;
-                if (interiorbldRadioButton.Checked)
-                    bldType = "interior";
-                else
-                    bldType = "exterior";
-
-                MessageBox.Show("Couldn't find " + bldType + " building #" + index + '.' +
-                    "\nBuilding 0 will be loaded in its place.", "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                 buildIndexComboBox.SelectedIndex = 0;
                 currentMapFile.buildings[buildIndexComboBox.SelectedIndex].modelID = 0;
             }
@@ -3869,9 +3867,8 @@ namespace DSPRE {
                 eventMapFile = new MapFile((int)mapIndex);
                 eventMapFile.mapModel = LoadModelTextures(eventMapFile.mapModel, romInfo.mapTexturesDirPath, areaData.mapTileset);
 
-                bool isInteriorMap = new bool();
-                if ((RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
-                && areaData.areaType == 0x0)
+                bool isInteriorMap = false;
+                if ((RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") && areaData.areaType == 0x0)
                     isInteriorMap = true;
 
                 for (int i = 0; i < eventMapFile.buildings.Count; i++) {
