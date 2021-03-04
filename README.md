@@ -22,11 +22,12 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features a
 
 ### ROM Toolbox:
 Supported patches:
-- Expand ARM9.
+- Expand ARM9 usable memory.
 - BDHCAM.
 - Set Overlay1 as uncompressed.
 - Standardize item numbers (fixed).
 - Pokémon names to Sentence Case.
+- Expand matrix 0.
 
 ### Script Command Database:
 A handy window that shows all the available script commands and the parameters they require.
