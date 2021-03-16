@@ -7,6 +7,7 @@ using System.Linq;
 using DSPRE.ROMFiles;
 using System.Collections.Generic;
 using DSPRE.Resources.ROMToolboxDB;
+using DSPRE.Resources;
 
 namespace DSPRE {
     public partial class ROMToolboxDialog : Form {
@@ -326,19 +327,11 @@ namespace DSPRE {
             if (d == DialogResult.Yes) {
                 foreach (int ID in RomInfo.pokemonNamesTextNumbers) {
                     TextArchive pokeName = new TextArchive(ID);
-                    for(int i = 0; i < pokeName.messages.Count; i++) {
+                    for(ushort i = 1; i < pokeName.messages.Count; i++) {
                         if (pokeName.messages[i].Length <= 1)
                             i++;
 
-                        string[] splitName = pokeName.messages[i].Split(new char[] { ' ' });
-                        string newName = "";
-                        for (int cur = 0; cur < splitName.Length; cur++) {
-                            string part = splitName[cur];
-                            newName += char.ToUpper(part[0]) + part.Substring(1).ToLower();
-                            if (splitName.Length > 1 && cur < splitName.Length - 1)
-                                newName += " ";
-                        }
-                        pokeName.messages[i] = newName;
+                        pokeName.messages[i] = pokeName.messages[i].Replace(PokeDatabase.System.pokeNames[i].ToUpper(), PokeDatabase.System.pokeNames[i]);
                     }
                     pokeName.SaveToFileDefaultDir(ID, showSuccessMessage: false);
                 }

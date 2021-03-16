@@ -601,11 +601,11 @@ namespace DSPRE {
                     pokemonNamesTextNumbers = new int[2] { 362, 363 };
                     break;
                 case "Plat":
-                    pokemonNamesTextNumbers = new int[7] { 412, 413, 712, 713, 714, 715, 716}; //413?
+                    pokemonNamesTextNumbers = new int[7] { 412, 413, 712, 713, 714, 715, 716 }; //413?
                     break;
                 case "HG":
                 case "SS":
-                    pokemonNamesTextNumbers = new int[7] { 237, 238, 817, 818, 819, 820, 821}; //238?
+                    pokemonNamesTextNumbers = new int[7] { 237, 238, 817, 818, 819, 820, 821 }; //238?
                     break;
             }
         }

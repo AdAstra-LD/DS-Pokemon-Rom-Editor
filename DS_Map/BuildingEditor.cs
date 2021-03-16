@@ -178,8 +178,7 @@ namespace DSPRE
                 dist -= (float)e.Delta / 200;
             RenderModel();
         }
-        private void buildingEditorListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void buildingEditorListBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || buildingEditorBldListBox.SelectedIndex < 0) 
                 return;
 
