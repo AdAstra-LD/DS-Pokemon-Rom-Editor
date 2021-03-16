@@ -100,6 +100,7 @@ namespace DSPRE {
             } else {
                 DisableARM9patch("Unsupported\nlanguage");
                 DisableBDHCamPatch("Unsupported\nlanguage");
+                DisableScrcmdRepointPatch("Unsupported\nlanguage");
             }
 
             switch (RomInfo.gameVersion) {
@@ -107,10 +108,12 @@ namespace DSPRE {
                 case "P":
                     DisableOverlay1patch("Unsupported");
                     DisableMatrixExpansionPatch("Unsupported");
+                    DisableScrcmdRepointPatch("Unsupported");
                     break;
                 case "Plat":
                     DisableOverlay1patch("Unsupported");
                     DisableMatrixExpansionPatch("Unsupported");
+                    DisableScrcmdRepointPatch("Unsupported");
                     CheckFilesBDHCamPatchApplied();
                     break;
                 case "HG":
@@ -119,12 +122,15 @@ namespace DSPRE {
                         DisableOverlay1patch("Already applied");
                         overlay1CB.Visible = true;
                     }
+
                     CheckFilesBDHCamPatchApplied();
 
                     if (RomInfo.gameLanguage == "ENG" || RomInfo.gameLanguage == "ESP") {
                         CheckMatrixPatchApplied();
+                        CheckScrcmdRepointPatchApplied();
                     } else {
                         DisableMatrixExpansionPatch("Unsupported\nlanguage");
+                        DisableScrcmdRepointPatch("Unsupported\nlanguage");
                     }
                     break;
             }
@@ -161,6 +167,13 @@ namespace DSPRE {
             standardizePatchLBL.Enabled = false;
             standardizePatchTextLBL.Enabled = false;
             applyItemStandardizeButton.Text = reason;
+        }
+        private void DisableScrcmdRepointPatch(string reason) {
+            repointScrcmdButton.Enabled = false;
+            repointScrcmdLBL.Enabled = false;
+            repointScrcmdTextLBL.Enabled = false;
+            scrcmdARM9requiredLBL.Enabled = false;
+            repointScrcmdButton.Text = reason;
         }
         #endregion
         #endregion
@@ -295,6 +308,10 @@ namespace DSPRE {
             flag_MatrixExpansionApplied = true;
             expandedMatrixCB.Visible = true;
             return 1; //arm9 Expansion has already been applied
+        }
+
+        private void CheckScrcmdRepointPatchApplied() {
+            throw new NotImplementedException();
         }
         #endregion
 
@@ -487,10 +504,11 @@ namespace DSPRE {
                         case "Plat":
                         case "HG":
                         case "SS":
-                            BDHCamARM9requiredLBL.Visible = false;
+                            BDHCamPatchButton.Text = "Apply Patch";
                             BDHCamPatchButton.Enabled = true;
                             BDHCamPatchLBL.Enabled = true;
                             BDHCamPatchTextLBL.Enabled = true;
+                            BDHCamARM9requiredLBL.Visible = false;
                             break;
                     }
 
@@ -551,21 +569,6 @@ namespace DSPRE {
         }
         #region Mikelan's custom commands
         private void applyCustomCommands(object sender, EventArgs e) {
-            if (new FileInfo(RomInfo.syntheticOverlayPath + "\\0000").Length < 0x16000) {// ARM9 expansion hasn't been done in this ROM
-                MessageBox.Show("The ARM9 Expansion patch must be applied before using this feature", "ARM9 expansion needed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (RomInfo.gameVersion == "D" || RomInfo.gameVersion == "P" || RomInfo.gameVersion == "Plat") {
-                UnsupportedROM();
-                return;
-            }
-
-            if (RomInfo.gameLanguage != "ENG" && RomInfo.gameLanguage != "ESP") {
-                UnsupportedROMLanguage();
-                return;
-            }
-
             int expTableOffset = GetCommandTableOffset();
 
             if (expTableOffset < 0) {
@@ -589,7 +592,6 @@ namespace DSPRE {
 
         }
         private int GetCommandTableOffset() { // Checks if command table is repointed IN THE EXPANDED ARM9 FILE, returns pointer inside this file
-
             ResourceManager customcmdDB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.CustomScrCmdDB", Assembly.GetExecutingAssembly());
             int pointerOffset = int.Parse(customcmdDB.GetString("pointerOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage));
             using (BinaryReader arm9Reader = new BinaryReader(new FileStream(RomInfo.arm9Path, FileMode.Open))) {
@@ -745,5 +747,9 @@ namespace DSPRE {
             MessageBox.Show("This patch has already been applied.", "Can't reapply patch", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
+
+        private void repointScrcmdButton_Click(object sender, EventArgs e) {
+
+        }
     }
 }

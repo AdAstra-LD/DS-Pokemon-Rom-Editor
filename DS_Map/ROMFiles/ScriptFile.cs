@@ -150,15 +150,15 @@ namespace DSPRE.ROMFiles {
                 (source, x) => source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002], StringComparison.InvariantCultureIgnoreCase)    //End
                             || source[x].IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + " Function") >= 0; //Jump Function_#
 
-            allScripts = readCommandsFromLines(scriptLines, containerTypes.SCRIPT, scriptEndCondition);  //Jump + whitespace
+            allScripts = ReadCommandsFromLines(scriptLines, containerTypes.SCRIPT, scriptEndCondition);  //Jump + whitespace
             if (allScripts == null || allScripts.Count <= 0)
                 return;
 
-            allFunctions = readCommandsFromLines(functionLines, containerTypes.FUNCTION, functionEndCondition);  //Jump + whitespace
+            allFunctions = ReadCommandsFromLines(functionLines, containerTypes.FUNCTION, functionEndCondition);  //Jump + whitespace
             if (allFunctions == null)
                 return;
 
-            allActions = readActionsFromLines(actionLines);
+            allActions = ReadActionsFromLines(actionLines);
             if (allActions == null)
                 return;
 
@@ -179,59 +179,24 @@ namespace DSPRE.ROMFiles {
                     switch (id)  {
                         case 0x16: //Jump
                         case 0x1A: //Call 
-                            {
-                                int relativeOffset = dataReader.ReadInt32();
-                                int offsetFromScriptFileStart = (int)(relativeOffset + dataReader.BaseStream.Position);
-
-                                if (!functionOffsets.Contains(offsetFromScriptFileStart))
-                                    functionOffsets.Add(offsetFromScriptFileStart);
-
-                                int functionNumber = functionOffsets.IndexOf(offsetFromScriptFileStart);
-                                if (functionNumber < 0)
-                                    throw new InvalidOperationException();
-
-                                parameterList.Add(BitConverter.GetBytes(functionNumber + 1));
-                                break;
-                            }
-                        case 0x1C: //CompareLastResultJump
-                        case 0x1D: //CompareLastResultCall
-                            {
-                                byte comparisonOperator = dataReader.ReadByte();
-
-                                int relativeOffset = dataReader.ReadInt32();
-                                int offsetFromScriptFileStart = (int)(relativeOffset + dataReader.BaseStream.Position);
-
-                                if (!functionOffsets.Contains(offsetFromScriptFileStart))
-                                    functionOffsets.Add(offsetFromScriptFileStart);
-
-                                parameterList.Add(new byte[] { comparisonOperator });
-
-                                int functionNumber = functionOffsets.IndexOf(offsetFromScriptFileStart);
-                                if (functionNumber < 0)
-                                    throw new InvalidOperationException();
-
-                                parameterList.Add(BitConverter.GetBytes(functionNumber + 1));
-                                break;
-                            }
-                        case 0x5E: // ApplyMovement
-                        case 0x2A1: // ApplyMovement2
-                            {
-                                ushort overworld = dataReader.ReadUInt16();
-
-                                int relativeOffset = dataReader.ReadInt32();
-                                int offsetFromScriptFileStart = (int)(relativeOffset + dataReader.BaseStream.Position);
-
-                                if (!actionOffsets.Contains(offsetFromScriptFileStart))
-                                    actionOffsets.Add(offsetFromScriptFileStart);
-
-                                parameterList.Add(BitConverter.GetBytes(overworld));
-
-                                int actionNumber = actionOffsets.IndexOf(offsetFromScriptFileStart);
-                                if (actionNumber < 0)
-                                    throw new InvalidOperationException();
-
-                                parameterList.Add(BitConverter.GetBytes(actionNumber + 1));
-                            }
+                            ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
+                            break;
+                        case 0x17: //JumpIfObjID
+                        case 0x18: //JumpIfBgID
+                        case 0x19: //JumpIfPlayerDir
+                        case 0x1C: //Jump-If
+                        case 0x1D: //Call-If
+                            //in the case of Jump-If and Call-If, the first param is a comparisonOperator
+                            //for JumpIfPlayerDir it's a directionID
+                            //for JumpIfObjID, it's an EventID
+                            parameterList.Add(new byte[] { dataReader.ReadByte() }); 
+                            ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
+                            break;
+                        case 0x5E: // Movement
+                        case 0x2A1: // Movement2
+                            //in the case of Movement, the first param is an overworld ID
+                            parameterList.Add(BitConverter.GetBytes(dataReader.ReadUInt16())); 
+                            ProcessRelativeJump(dataReader, ref parameterList, ref actionOffsets);
                             break;
                         case 0x1CF:
                         case 0x1D0:
@@ -354,58 +319,19 @@ namespace DSPRE.ROMFiles {
                     switch (id) {
                         case 0x16: //Jump
                         case 0x1A: //Call 
-                            {
-                                int relativeOffset = dataReader.ReadInt32();
-                                int offsetFromScriptFileStart = (int)(relativeOffset + dataReader.BaseStream.Position);
-
-                                if (!functionOffsets.Contains(offsetFromScriptFileStart))
-                                    functionOffsets.Add(offsetFromScriptFileStart);
-
-                                int functionNumber = functionOffsets.IndexOf(offsetFromScriptFileStart);
-                                if (functionNumber < 0)
-                                    throw new InvalidOperationException();
-
-                                parameterList.Add(BitConverter.GetBytes(functionNumber+1));
-                                break;
-                            }
-                        case 0x1C: //CompareLastResultJump
-                        case 0x1D: //CompareLastResultCall
-                            {
-                                byte comparisonOperator = dataReader.ReadByte();
-
-                                int relativeOffset = dataReader.ReadInt32();
-                                int offsetFromScriptFileStart = (int)(relativeOffset + dataReader.BaseStream.Position);
-
-                                if (!functionOffsets.Contains(offsetFromScriptFileStart))
-                                    functionOffsets.Add(offsetFromScriptFileStart);
-
-                                parameterList.Add(new byte[] { comparisonOperator });
-
-                                int functionNumber = functionOffsets.IndexOf(offsetFromScriptFileStart);
-                                if (functionNumber < 0)
-                                    throw new InvalidOperationException();
-
-                                parameterList.Add(BitConverter.GetBytes(functionNumber + 1));
-                                break;
-                            }
-                        case 0x5E: // ApplyMovement
-                            {
-                                ushort overworld = dataReader.ReadUInt16();
-
-                                int relativeOffset = dataReader.ReadInt32();
-                                int offsetFromScriptFileStart = (int)(relativeOffset + dataReader.BaseStream.Position);
-
-                                if (!actionOffsets.Contains(offsetFromScriptFileStart))
-                                    actionOffsets.Add(offsetFromScriptFileStart);
-
-                                parameterList.Add(BitConverter.GetBytes(overworld));
-
-                                int actionNumber = actionOffsets.IndexOf(offsetFromScriptFileStart);
-                                if (actionNumber < 0)
-                                    throw new InvalidOperationException();
-
-                                parameterList.Add(BitConverter.GetBytes(actionNumber + 1));
-                            }
+                            ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
+                            break;
+                        case 0x17: //JumpIfObjID
+                        case 0x18: //JumpIfBgID
+                        case 0x19: //JumpIfPlayerDir
+                        case 0x1C: //Jump-If
+                        case 0x1D: //Call-If
+                            parameterList.Add(new byte[] { dataReader.ReadByte() }); //in the case of Jump-If and Call-If, the first param is a comparisonOperator
+                            ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
+                            break;
+                        case 0x5E: // Movement
+                            parameterList.Add(BitConverter.GetBytes(dataReader.ReadUInt16())); //in the case of Movement, the first param is an overworld ID
+                            ProcessRelativeJump(dataReader, ref parameterList, ref actionOffsets);
                             break;
                         case 0x190:
                         case 0x191:
@@ -415,7 +341,6 @@ namespace DSPRE.ROMFiles {
                                 parameterList.Add(new byte[] { parameter1 });
                                 if (parameter1 == 0x2)
                                     parameterList.Add(dataReader.ReadBytes(2));
-
                             }
                             break;
                         case 0x1D1: // Number of parameters differ depending on the first parameter value
@@ -479,6 +404,21 @@ namespace DSPRE.ROMFiles {
             }
             return new ScriptCommand(id, parameterList);
         }
+
+        private void ProcessRelativeJump(BinaryReader dataReader, ref List<byte[]> parameterList, ref List<int> offsetsList) {
+            int relativeOffset = dataReader.ReadInt32();
+            int offsetFromScriptFileStart = (int)(relativeOffset + dataReader.BaseStream.Position);
+
+            if (!offsetsList.Contains(offsetFromScriptFileStart))
+                offsetsList.Add(offsetFromScriptFileStart);
+
+            int functionNumber = offsetsList.IndexOf(offsetFromScriptFileStart);
+            if (functionNumber < 0)
+                throw new InvalidOperationException();
+
+            parameterList.Add(BitConverter.GetBytes(functionNumber + 1));
+        }
+
         private void addParametersToList(ref List<byte[]> parameterList, ushort id, BinaryReader dataReader) {
             Console.WriteLine("Loaded command id: " + id.ToString("X4"));
             try {
@@ -496,6 +436,7 @@ namespace DSPRE.ROMFiles {
                 return;
             }
         }
+
         public byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
@@ -711,7 +652,7 @@ namespace DSPRE.ROMFiles {
                 this.SaveToFile(sf.FileName);
             }
         }
-        private List<CommandContainer> readCommandsFromLines(string[] lineSource, containerTypes containerType, Func<string[], int, bool> endConditions) {
+        private List<CommandContainer> ReadCommandsFromLines(string[] lineSource, containerTypes containerType, Func<string[], int, bool> endConditions) {
             List<CommandContainer> ls = new List<CommandContainer>();
 
             try {
@@ -747,7 +688,7 @@ namespace DSPRE.ROMFiles {
             } catch (IndexOutOfRangeException) { }
             return ls;
         }
-        private List<ActionContainer> readActionsFromLines(string[] lineSource) {
+        private List<ActionContainer> ReadActionsFromLines(string[] lineSource) {
             List<ActionContainer> ls = new List<ActionContainer>();
 
             try {

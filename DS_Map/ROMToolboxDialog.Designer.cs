@@ -53,12 +53,18 @@
             this.matrixExpansionTextLBL = new System.Windows.Forms.Label();
             this.matrixExpansionLBL = new System.Windows.Forms.Label();
             this.expandMatrixButton = new System.Windows.Forms.Button();
+            this.repointScrcmdCB = new System.Windows.Forms.PictureBox();
+            this.repointScrcmdTextLBL = new System.Windows.Forms.Label();
+            this.repointScrcmdLBL = new System.Windows.Forms.Label();
+            this.repointScrcmdButton = new System.Windows.Forms.Button();
+            this.scrcmdARM9requiredLBL = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.arm9patchCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlay1CB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BDHCamCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sentenceCaseCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemNumbersCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.expandedMatrixCB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repointScrcmdCB)).BeginInit();
             this.SuspendLayout();
             // 
             // applyItemStandardizeButton
@@ -314,12 +320,69 @@
             this.expandMatrixButton.UseVisualStyleBackColor = true;
             this.expandMatrixButton.Click += new System.EventHandler(this.expandMatrixButton_Click);
             // 
+            // repointScrcmdCB
+            // 
+            this.repointScrcmdCB.Image = ((System.Drawing.Image)(resources.GetObject("repointScrcmdCB.Image")));
+            this.repointScrcmdCB.Location = new System.Drawing.Point(803, 49);
+            this.repointScrcmdCB.Name = "repointScrcmdCB";
+            this.repointScrcmdCB.Size = new System.Drawing.Size(20, 20);
+            this.repointScrcmdCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.repointScrcmdCB.TabIndex = 28;
+            this.repointScrcmdCB.TabStop = false;
+            this.repointScrcmdCB.Visible = false;
+            // 
+            // repointScrcmdTextLBL
+            // 
+            this.repointScrcmdTextLBL.Location = new System.Drawing.Point(509, 48);
+            this.repointScrcmdTextLBL.Name = "repointScrcmdTextLBL";
+            this.repointScrcmdTextLBL.Size = new System.Drawing.Size(288, 37);
+            this.repointScrcmdTextLBL.TabIndex = 27;
+            this.repointScrcmdTextLBL.Text = "Moves the Script Commands Table to a new location in the Synthetic Overlay and re" +
+    "assigns the pointer accordingly.";
+            this.repointScrcmdTextLBL.UseMnemonic = false;
+            // 
+            // repointScrcmdLBL
+            // 
+            this.repointScrcmdLBL.AutoSize = true;
+            this.repointScrcmdLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.repointScrcmdLBL.Location = new System.Drawing.Point(509, 31);
+            this.repointScrcmdLBL.Name = "repointScrcmdLBL";
+            this.repointScrcmdLBL.Size = new System.Drawing.Size(157, 13);
+            this.repointScrcmdLBL.TabIndex = 26;
+            this.repointScrcmdLBL.Text = "Move ScrCommands Table";
+            // 
+            // repointScrcmdButton
+            // 
+            this.repointScrcmdButton.Location = new System.Drawing.Point(829, 33);
+            this.repointScrcmdButton.Name = "repointScrcmdButton";
+            this.repointScrcmdButton.Size = new System.Drawing.Size(100, 50);
+            this.repointScrcmdButton.TabIndex = 25;
+            this.repointScrcmdButton.Text = "Expand ARM9";
+            this.repointScrcmdButton.UseVisualStyleBackColor = true;
+            this.repointScrcmdButton.Click += new System.EventHandler(this.repointScrcmdButton_Click);
+            // 
+            // scrcmdARM9requiredLBL
+            // 
+            this.scrcmdARM9requiredLBL.AutoSize = true;
+            this.scrcmdARM9requiredLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scrcmdARM9requiredLBL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.scrcmdARM9requiredLBL.Location = new System.Drawing.Point(663, 30);
+            this.scrcmdARM9requiredLBL.Name = "scrcmdARM9requiredLBL";
+            this.scrcmdARM9requiredLBL.Size = new System.Drawing.Size(165, 13);
+            this.scrcmdARM9requiredLBL.TabIndex = 29;
+            this.scrcmdARM9requiredLBL.Text = "(Requires ARM9 Expansion)";
+            // 
             // ROMToolboxDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(448, 508);
+            this.ClientSize = new System.Drawing.Size(950, 513);
+            this.Controls.Add(this.scrcmdARM9requiredLBL);
+            this.Controls.Add(this.repointScrcmdCB);
+            this.Controls.Add(this.repointScrcmdTextLBL);
+            this.Controls.Add(this.repointScrcmdLBL);
+            this.Controls.Add(this.repointScrcmdButton);
             this.Controls.Add(this.expandedMatrixCB);
             this.Controls.Add(this.matrixExpansionTextLBL);
             this.Controls.Add(this.matrixExpansionLBL);
@@ -356,6 +419,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.sentenceCaseCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemNumbersCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.expandedMatrixCB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repointScrcmdCB)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -388,5 +452,10 @@
         private System.Windows.Forms.Label matrixExpansionTextLBL;
         private System.Windows.Forms.Label matrixExpansionLBL;
         private System.Windows.Forms.Button expandMatrixButton;
+        private System.Windows.Forms.PictureBox repointScrcmdCB;
+        private System.Windows.Forms.Label repointScrcmdTextLBL;
+        private System.Windows.Forms.Label repointScrcmdLBL;
+        private System.Windows.Forms.Button repointScrcmdButton;
+        private System.Windows.Forms.Label scrcmdARM9requiredLBL;
     }
 }

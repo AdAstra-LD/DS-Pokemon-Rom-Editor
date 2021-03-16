@@ -51,10 +51,11 @@ namespace DSPRE.ROMFiles {
                 case 0x17:      // JumpIfObjID
                 case 0x18:      // JumpIfBgID
                 case 0x19:      // JumpIfPlayerDir
-                    name += " " + BitConverter.ToInt32(commandParameters[0], 0).ToString("D") + " " + "Function_#" + BitConverter.ToInt32(commandParameters[1], 0).ToString("D");
+                    byte param = commandParameters[0][0];
+                    name += " " + param.ToString("X") + " " + "Function_#" + BitConverter.ToInt32(commandParameters[1], 0).ToString("D");
                     break;
-                case 0x1C:      // CompareLastResultJump
-                case 0x1D:      // CompareLastResultCall
+                case 0x1C:      // Jump-If
+                case 0x1D:      // Call-If
                     byte opcode = commandParameters[0][0];
                     name += " " + PokeDatabase.ScriptEditor.comparisonOperatorsDict[opcode] + " " + "Function_#" + BitConverter.ToInt32(commandParameters[1], 0).ToString("D");
                     break;
@@ -93,9 +94,9 @@ namespace DSPRE.ROMFiles {
             try {
                 id = RomInfo.ScriptCommandNamesDict.First(x => x.Value.Equals(nameParts[0], StringComparison.InvariantCultureIgnoreCase)).Key;
             } catch (InvalidOperationException) {
-                try {
-                    id = UInt16.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
-                } catch (FormatException) {
+                id = UInt16.MaxValue;
+
+                if (!UInt16.TryParse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out id)) { 
                     string details;
                     if (wholeLine.Contains('@') && wholeLine.Contains('#')) {
                         details = "This probably means you forgot to \"End\" the Script or Function above it.";
@@ -104,9 +105,8 @@ namespace DSPRE.ROMFiles {
                         details = "Are you sure it's a proper Script Command?";
                     }
                     MessageBox.Show("This Script file could not be saved." +
-                        Environment.NewLine + "Parser failed to interpret line " + lineNumber +  ": \"" + wholeLine + "\"." +
+                        Environment.NewLine + "Parser failed to interpret line " + lineNumber + ": \"" + wholeLine + "\"." +
                         Environment.NewLine + "\n" + details, "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    id = UInt16.MaxValue;
                     return;
                 }
             }
@@ -156,7 +156,7 @@ namespace DSPRE.ROMFiles {
                                         cmdParams.Add(BitConverter.GetBytes((ushort)241));
                                         break;
                                     default:
-                                        cmdParams.Add(BitConverter.GetBytes(Int16.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style)));
+                                        cmdParams.Add(BitConverter.GetBytes(UInt16.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style)));
                                         break;
                                 }
                                 break;

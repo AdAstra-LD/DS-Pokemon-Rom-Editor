@@ -660,9 +660,9 @@ namespace DSPRE {
             }
         }
         private void scriptCommandsDatabaseToolStripButton_Click(object sender, EventArgs e) {
-            openCommandsDatabase(RomInfo.ScriptCommandNamesDict, RomInfo.CommandParametersDict);
+            OpenCommandsDatabase(RomInfo.ScriptCommandNamesDict, RomInfo.CommandParametersDict);
         }
-        private void openCommandsDatabase(Dictionary<ushort, string> namesDict, Dictionary<ushort, byte[]> paramsDict) {
+        private void OpenCommandsDatabase(Dictionary<ushort, string> namesDict, Dictionary<ushort, byte[]> paramsDict) {
             statusLabel.Text = "Setting up Commands Database. Please wait...";
             Update();
             CommandsDatabase form = new CommandsDatabase(namesDict, paramsDict);
@@ -910,6 +910,7 @@ namespace DSPRE {
                 MessageBox.Show("Operation completed.", "Success",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 statusLabel.Text = "Ready";
+
                 toolStripProgressBar.Value = 0;
                 toolStripProgressBar.Visible = false;
 
@@ -920,6 +921,9 @@ namespace DSPRE {
                 textEditorIsReady = false;
                 tilesetEditorIsReady = false;
 
+                if (mapEditorIsReady) {
+                    updateBuildingListComboBox(interiorbldRadioButton.Checked);
+                }
                 Update();
             }
         }
@@ -936,17 +940,21 @@ namespace DSPRE {
                 MessageBox.Show("Operation completed.", "Success",
                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 statusLabel.Text = "Ready";
+
+                if (mapEditorIsReady) {
+                    updateBuildingListComboBox(interiorbldRadioButton.Checked);
+                }
                 Update();
             }
         }
         private void diamondAndPearlToolStripMenuItem_Click(object sender, EventArgs e) {
-            openCommandsDatabase(RomInfo.BuildCommandNamesDatabase("D"), RomInfo.BuildCommandParametersDatabase("D"));
+            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase("D"), RomInfo.BuildCommandParametersDatabase("D"));
         }
         private void platinumToolStripMenuItem_Click(object sender, EventArgs e) {
-            openCommandsDatabase(RomInfo.BuildCommandNamesDatabase("Plat"), RomInfo.BuildCommandParametersDatabase("Plat"));
+            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase("Plat"), RomInfo.BuildCommandParametersDatabase("Plat"));
         }
         private void heartGoldAndSoulSilverToolStripMenuItem_Click(object sender, EventArgs e) {
-            openCommandsDatabase(RomInfo.BuildCommandNamesDatabase("HG"), RomInfo.BuildCommandParametersDatabase("HG"));
+            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase("HG"), RomInfo.BuildCommandParametersDatabase("HG"));
         }
         private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (mainTabControl.SelectedTab == headerEditorTabPage) {
@@ -5995,10 +6003,11 @@ namespace DSPRE {
             texturePacksListBox.Items.Clear();
 
             int tilesetFileCount;
-            if (mapTilesetRadioButton.Checked)
+            if (mapTilesetRadioButton.Checked) {
                 tilesetFileCount = romInfo.GetMapTexturesCount();
-            else
+            } else {
                 tilesetFileCount = romInfo.GetBuildingTexturesCount();
+            }
 
             for (int i = 0; i < tilesetFileCount; i++)
                 texturePacksListBox.Items.Add("Texture Pack " + i);
@@ -6047,11 +6056,16 @@ namespace DSPRE {
         }
         private void mapTilesetRadioButton_CheckedChanged(object sender, EventArgs e) {
             FillTilesetBox();
-            texturePacksListBox.SelectedIndex = (int)areaDataMapTilesetUpDown.Value;
-            if (texturesListBox.Items.Count > 0)
-                texturesListBox.SelectedIndex = 0;
-            if (palettesListBox.Items.Count > 0)
-                palettesListBox.SelectedIndex = 0;
+
+            try {
+                if (mapTilesetRadioButton.Checked) {
+                    texturePacksListBox.SelectedIndex = (int)areaDataMapTilesetUpDown.Value;
+                } else if (buildingsTilesetRadioButton.Checked) {
+                    texturePacksListBox.SelectedIndex = (int)areaDataBuildingTilesetUpDown.Value;
+                }
+            } catch (ArgumentOutOfRangeException) {
+                texturePacksListBox.SelectedIndex = 0;
+            }
         }
         private void palettesListBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers)

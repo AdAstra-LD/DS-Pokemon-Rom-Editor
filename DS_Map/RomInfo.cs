@@ -440,7 +440,9 @@ namespace DSPRE {
                     specificDictionaryNames = PokeDatabase.ScriptEditor.PlatScrCmdNames;
                     return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
                 default:
-                    return PokeDatabase.ScriptEditor.HGSSScrCmdNames;
+                    commonDictionaryNames = PokeDatabase.ScriptEditor.HGSSScrCmdNames;
+                    var customDictionaryNames = PokeDatabase.ScriptEditor.CustomScrCmdNames;
+                    return commonDictionaryNames.Concat(customDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
             }
         }        
         public static Dictionary<ushort, byte[]> BuildCommandParametersDatabase(string gameVer) {
@@ -455,7 +457,9 @@ namespace DSPRE {
                     specificDictionaryParams = PokeDatabase.ScriptEditor.PlatScrCmdParameters;
                     return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());                 
                 default:
-                    return PokeDatabase.ScriptEditor.HGSSScrCmdParameters;
+                    commonDictionaryParams = PokeDatabase.ScriptEditor.HGSSScrCmdParameters;
+                    var customDictionaryParams = PokeDatabase.ScriptEditor.CustomScrCmdParameters;
+                    return commonDictionaryParams.Concat(customDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
             }
         }
         public void LoadGameVersion() {

@@ -21,33 +21,39 @@ namespace DSPRE.Resources {
             for (int i = 0; i < paramsDict.Count - 1; i++)
                 scriptcmdDataGridView.Rows.Add();
 
-            foreach (DataGridViewRow r in scriptcmdDataGridView.Rows) { //loop through 
-                ushort u = (ushort)r.Index;
+            var paramDictKeys = paramsDict.Keys;
+            var paramDictValues = paramsDict.Values;
+            var namesDictValues = namesDict.Values;
 
-                r.Cells[0].Value = u.ToString("X4");
+            System.Collections.IList list = scriptcmdDataGridView.Rows;
+            for (int i = 0; i < list.Count; i++) { //loop through 
+                DataGridViewRow r = (DataGridViewRow)list[i];
+
+                ushort currentID = paramDictKeys.ElementAt(i);
+                r.Cells[0].Value = currentID.ToString("X4");
+
+                string commandName;
+                if (namesDict.TryGetValue(currentID, out commandName))
+                    r.Cells[1].Value = commandName;
 
                 try {
-                    r.Cells[1].Value = namesDict[u];
-                } catch { }
-
-                try {
-                    if (paramsDict[u][0] == 0) {
+                    if (paramDictValues.ElementAt(i)[0] == 0) {
                         r.Cells[2].Value = 0;
                     } else {
-                        r.Cells[2].Value = paramsDict[u].Length;//.ToString();
+                        r.Cells[2].Value = paramDictValues.ElementAt(i).Length;//.ToString();
                     }
                 } catch { }
 
                 string paramSize = "";
                 try {
-                    foreach (byte size in paramsDict[u]) {
+                    foreach (byte size in paramDictValues.ElementAt(i)) {
                         if (size != 0) {
                             paramSize += size + "B;  ";
                         }
                     }
                 } catch { }
 
-                scriptcmdDataGridView.Rows[u].Cells[3].Value = paramSize;
+                scriptcmdDataGridView.Rows[i].Cells[3].Value = paramSize;
             }
         }
 

@@ -110,7 +110,7 @@
             this.buildingEditorBldListBox.Name = "buildingEditorBldListBox";
             this.buildingEditorBldListBox.Size = new System.Drawing.Size(248, 446);
             this.buildingEditorBldListBox.TabIndex = 19;
-            this.buildingEditorBldListBox.SelectedIndexChanged += new System.EventHandler(this.buildingsListBox_SelectedIndexChanged);
+            this.buildingEditorBldListBox.SelectedIndexChanged += new System.EventHandler(this.buildingEditorListBox_SelectedIndexChanged);
             // 
             // panel1
             // 

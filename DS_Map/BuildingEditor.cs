@@ -65,7 +65,8 @@ namespace DSPRE
                 reader.BaseStream.Position = texturesOffset;
 
                 writer.Write((UInt32)0x30585442); // Write magic code BTX0
-                writer.Write((UInt32)0x0001FEFF); // Sequence needed after BTX0
+                writer.Write((UInt16)0xFEFF); // Byte order
+                writer.Write((UInt16)0x0001); // ???
                 writer.Write((UInt32)texturesSize); // Write size of textures block
                 writer.Write((UInt32)0x00010010); // Needed sequence
                 writer.Write((UInt32)0x00000014); // Needed sequence
@@ -78,20 +79,15 @@ namespace DSPRE
         }
         private void FillListBox(bool interior) {
             int modelCount = Directory.GetFiles(folder + rom.GetBuildingModelsDirPath(interior)).Length;
-            for (int i = 0; i < modelCount; i++) {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(folder + rom.GetBuildingModelsDirPath(interior) + "\\" + i.ToString("D4"))))
+            for (int currentIndex = 0; currentIndex < modelCount; currentIndex++) {
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(folder + rom.GetBuildingModelsDirPath(interior) + "\\" + currentIndex.ToString("D4"))))
                 {
-                    reader.BaseStream.Position = 0x14;
-                    if (reader.ReadUInt32() == 0x304C444D) 
-                        reader.BaseStream.Position = 0x34;
-                    else 
-                        reader.BaseStream.Position = 0x38;
-                    
-                    string nsbmdName = Encoding.UTF8.GetString(reader.ReadBytes(16));
-                    buildingEditorBldListBox.Items.Add("[" + (i+1).ToString("D2") + "] " + nsbmdName);
+                    string nsbmdName = ReadNSBMDname(reader);
+                    buildingEditorBldListBox.Items.Add("[" + currentIndex.ToString("D3") + "] " + nsbmdName);
                 }
             }
         }
+
         private void FillTexturesBox()
         {
             int texturesCount = Directory.GetFiles(folder + rom.buildingTexturesDirPath).Length;
@@ -182,9 +178,9 @@ namespace DSPRE
                 dist -= (float)e.Delta / 200;
             RenderModel();
         }
-        private void buildingsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void buildingEditorListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (disableHandlers) 
+            if (disableHandlers || buildingEditorBldListBox.SelectedIndex < 0) 
                 return;
 
             LoadBuildingModel(buildingEditorBldListBox.SelectedIndex, interiorCheckBox.Checked);
@@ -208,12 +204,16 @@ namespace DSPRE
                 return;
 
             using (BinaryReader reader = new BinaryReader(new FileStream(im.FileName, FileMode.Open))) {
-                if (reader.ReadUInt32() != 0x30444D42) {
+                if (reader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0) {
                     MessageBox.Show("Please select an NSBMD file.", "Invalid File");
                     return;
                 } else {
-                    File.Copy(im.FileName, folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingEditorBldListBox.SelectedIndex.ToString("D4"), true);
-                    buildingsListBox_SelectedIndexChanged(null, null);
+                    int currentIndex = buildingEditorBldListBox.SelectedIndex;
+
+                    File.Copy(im.FileName, folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + currentIndex.ToString("D4"), true);
+                    string nsbmdName = ReadNSBMDname(reader);
+                    buildingEditorBldListBox.Items[currentIndex] = "[" + currentIndex.ToString("D3") + "] " + nsbmdName;
+                    buildingEditorListBox_SelectedIndexChanged(null, null);
                 }                
             }
         }
@@ -251,5 +251,19 @@ namespace DSPRE
             } 
             RenderModel();
         }
+
+        #region Utils
+        private string ReadNSBMDname(BinaryReader reader) {
+            reader.BaseStream.Position = 0x14;
+
+            if (reader.ReadUInt32() == NSBMD.NDS_TYPE_MDL0) { //MDL0
+                reader.BaseStream.Position = 0x34;
+            } else {
+                reader.BaseStream.Position = 0x38;
+            }
+
+            return Encoding.UTF8.GetString(reader.ReadBytes(16));
+        }
+        #endregion
     }
 }
