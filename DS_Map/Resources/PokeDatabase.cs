@@ -706,6 +706,9 @@ namespace DSPRE.Resources {
                 //commandID, ID of parameter With Jump Address
 
                 [0x0016] = 0,   //Jump
+                [0x0017] = 1,   //Call
+                [0x0018] = 1,   //Call
+                [0x0019] = 1,   //Call
                 [0x001A] = 0,   //Call
                 [0x001C] = 1,   //Jump-If
                 [0x001D] = 1,   //Call-If
@@ -2468,6 +2471,10 @@ namespace DSPRE.Resources {
                 [0x02EF] = "CreateMultiTouchBox",
                 [0x02F0] = "CloseMultiTouch"
             };
+
+            public static Dictionary<ushort, string> CustomScrCmdNames = new Dictionary<ushort, string>() {
+                
+            };
             public static Dictionary<ushort, byte[]> HGSSScrCmdParameters = new Dictionary<ushort, byte[]>() {
                 [0x0000] = new byte[1] { 0 },
                 [0x0001] = new byte[1] { 0 },
@@ -3322,6 +3329,9 @@ namespace DSPRE.Resources {
                 [0x0352] = new byte[] { 1, 2 },
                 [0x0353] = new byte[] { 1 },
                 [0x0354] = new byte[] { 1, 1 }
+            };
+            public static Dictionary<ushort, byte[]> CustomScrCmdParameters = new Dictionary<ushort, byte[]>() {
+                
             };
 
             // Maybe for the future... we might merge the Params and Names dictionaries
