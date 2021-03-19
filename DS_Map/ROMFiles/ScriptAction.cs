@@ -20,20 +20,20 @@ namespace DSPRE.ROMFiles {
     public class ScriptAction {
 
         #region Fields (4)
-        public ushort id;
-        public ushort repetitionCount = ushort.MaxValue;
+        public ushort? id;
+        public ushort? repetitionCount;
         public string name;
         #endregion
 
-        public ScriptAction(ushort id, ushort repetitionCount = ushort.MaxValue) {
+        public ScriptAction(ushort id, ushort? repetitionCount = null) {
             this.id = id;
             this.repetitionCount = repetitionCount;
 
             if (!PokeDatabase.ScriptEditor.movementsDictIDName.TryGetValue(id, out name))
                 name = id.ToString("X4");
 
-            if (repetitionCount != ushort.MaxValue && id != 0x00FE)
-                name += " " + "0x" + repetitionCount.ToString("X");
+            if (repetitionCount != null && id != 0x00FE)
+                name += " " + "0x" + ((ushort)repetitionCount).ToString("X");
         }
         public ScriptAction(string wholeLine, int lineNumber) {
             name = wholeLine;
@@ -56,22 +56,16 @@ namespace DSPRE.ROMFiles {
                     MessageBox.Show("This Script file could not be saved." +
                         Environment.NewLine + "Parser failed to interpret line " + lineNumber + ": \"" + wholeLine + "\"." +
                         Environment.NewLine + "\n" + details, "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    id = UInt16.MaxValue;
+                    id = null;
                     return;
                 }
             }
 
-            /* Read parameters from remainder of the description */
-            /*
-            if (id == 0x00FE) { 
-                return;
-            }*/
-
-            if (nameParts.Length > 2) { //E.g.: LookUp 0x1 0x3
+            if (id != 0x00FE && nameParts.Length < 2 || nameParts.Length > 2) { //E.g.: End 0x2 0x40    OR     LookUp
                 MessageBox.Show("Wrong number of parameters for action " + nameParts[0] + " at line " + lineNumber + "." + Environment.NewLine +
-                    "Received: " + (nameParts.Length - 1) + Environment.NewLine + "Action Commands need at most one parameter. "
+                    "Received: " + (nameParts.Length - 1) + Environment.NewLine + "Expected: 1"
                     + Environment.NewLine + "\nThis Script File can not be saved.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                id = ushort.MaxValue; //ERROR VALUE
+                id = null;
             } else {
                 if (id == 0x00FE) {
                     repetitionCount = 0;

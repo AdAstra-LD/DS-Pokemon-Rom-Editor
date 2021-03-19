@@ -714,10 +714,10 @@ namespace DSPRE.Resources {
                 [0x001D] = 1,   //Call-If
                 [0x005E] = 1,   //Movement
             };
-            public static ushort[] endCodes = new ushort[] { 
-                0x2, 
-                0x16, 
-                0x1B 
+            public static ushort[] endCodes = new ushort[] {
+                0x2,
+                0x16,
+                0x1B
             };
 
             public static Dictionary<ushort, string> DPPtScrCmdNames = new Dictionary<ushort, string>() {
@@ -828,7 +828,7 @@ namespace DSPRE.Resources {
                 [0x006A] = "CheckOverworldPosition",
 
                 [0x006C] = "KeepOverworld",
-                [0x006D] = "SetOverworldMovement",
+                [0x006D] = "SetObjectDefaultMovement",
                 [0x006E] = "SetFollowingOverworld",
                 [0x006F] = "GiveMoney",
                 [0x0070] = "TakeMoney",
@@ -1086,9 +1086,9 @@ namespace DSPRE.Resources {
 
                 [0x0200] = "GetPreviousHeader",
                 [0x0201] = "GetCurrentHeader",
-                
+
                 [0x0205] = "GeonetScreen",
-                
+
                 [0x0208] = "ShowPokemonPic",
                 [0x0209] = "HidePokemonPic",
 
@@ -1130,12 +1130,12 @@ namespace DSPRE.Resources {
                 [0x023C] = "ElevatorAnimation",
                 [0x023D] = "ShipAnimation",
                 [0x023E] = "MysteryGiftGive",
-                
+
                 [0x0246] = "CheckVersion",
                 [0x0247] = "GetFirstPokemon",
-                
+
                 [0x0252] = "CountPCFreeSpace",
-                
+
                 [0x0261] = "TextAccesory",
                 [0x0262] = "CheckPokemonInParty",
                 [0x0263] = "SetDeoxysForm",
@@ -1150,7 +1150,7 @@ namespace DSPRE.Resources {
                 [0x026D] = "MessageUnown",
                 [0x026E] = "CheckGBACartidge",
                 [0x026F] = "ResetSpiritombCounter",
-                
+
                 [0x0280] = "TextNumberSp",
 
                 [0x0282] = "CheckBirthday",
@@ -1357,7 +1357,7 @@ namespace DSPRE.Resources {
                 [0x00B8] = new byte[] { 2 },
                 [0x00B9] = new byte[] { 2, 2 },
                 [0x00BA] = new byte[] { 2 },
-                [0x00BB] = new byte[] { 2, 2},
+                [0x00BB] = new byte[] { 2, 2 },
                 [0x00BC] = new byte[] { 2, 2, 2, 2 },
                 [0x00BD] = new byte[1] { 0 },
                 [0x00BE] = new byte[] { 2, 2, 2, 2, 2 },
@@ -1651,7 +1651,7 @@ namespace DSPRE.Resources {
                 [0x01DE] = new byte[] { 2, 2, 2, 2 },
                 [0x01DF] = new byte[] { 2 },
                 [0x01E0] = new byte[] { 2 },
-                
+
                 [0x01E2] = new byte[] { 2, 2 },
                 [0x01E3] = new byte[] { 2, 2 },
                 [0x01E4] = new byte[] { 2 },
@@ -2181,7 +2181,7 @@ namespace DSPRE.Resources {
                 [0x006A] = "CheckOverworldPosition",
 
                 [0x006C] = "KeepOverworld",
-                [0x006D] = "OverworldDefaultMovement",
+                [0x006D] = "SetObjectDefaultMovement",
                 [0x006E] = "GiveMoney",
                 [0x006F] = "TakeMoney",
                 [0x0070] = "CompareMoney",
@@ -2273,7 +2273,7 @@ namespace DSPRE.Resources {
 
                 [0x00EE] = "CheckPokerus",
                 [0x00EF] = "CheckPokemonGender",
-                
+
                 [0x00F1] = "CheckElevatorFloor",
                 [0x00F2] = "ElevatorBox",
                 [0x00F3] = "GetJohtoDexSeenCount",
@@ -2473,7 +2473,13 @@ namespace DSPRE.Resources {
             };
 
             public static Dictionary<ushort, string> CustomScrCmdNames = new Dictionary<ushort, string>() {
-                
+                [0x0360] = "AddCameraMovementParam",
+                [0x0361] = "OverrideDefaultCam",
+                [0x0362] = "ResetCamMovement",
+                [0x0363] = "RestoreDefaultCam",
+                [0x0364] = "SetSSEQTrackVol",
+                [0x0365] = "ClearSSEQTrackChanges",
+                [0x0366] = "GetSSEQTrackVol",
             };
             public static Dictionary<ushort, byte[]> HGSSScrCmdParameters = new Dictionary<ushort, byte[]>() {
                 [0x0000] = new byte[1] { 0 },
@@ -3331,127 +3337,14 @@ namespace DSPRE.Resources {
                 [0x0354] = new byte[] { 1, 1 }
             };
             public static Dictionary<ushort, byte[]> CustomScrCmdParameters = new Dictionary<ushort, byte[]>() {
-                
+                [0x0360] = new byte[] { 2, 2, 2, 2 },
+                [0x0361] = new byte[1] { 0 },
+                [0x0362] = new byte[1] { 0 },
+                [0x0363] = new byte[1] { 0 },
+                [0x0364] = new byte[] { 2, 2, 2, 2, 2, 2, 2 },
+                [0x0365] = new byte[1] { 0 },
+                [0x0366] = new byte[] { 2, 2 }
             };
-
-            // Maybe for the future... we might merge the Params and Names dictionaries
-            public static Dictionary<ushort, (string, byte[], bool, bool)> DPPtCommands = new Dictionary<ushort, (string, byte[], bool, bool)>() {
-                    [0x0000] = ("Nop",
-                    null,
-                    false,
-                    false),
-
-                    [0x0001] = ("Dummy",
-                    null,
-                    false,
-                    false),
-
-                    [0x0002] = ("End",
-                    null,
-                    false,
-                    false),
-
-                    [0x0003] = ("WaitTime",
-                    new byte[2] { 16, 16 },
-                    false,
-                    false),
-
-                    [0x0004] = ("RegValueSet",
-                    new byte[2] { 8, 8 },
-                    false,
-                    false),
-
-                    [0x0005] = ("RegDataSet",
-                    new byte[2] { 8, 32 },
-                    false,
-                    false),
-
-                    [0x0006] = ("RegAdrsSet",
-                    new byte[2] { 8, 32 },
-                    false,
-                    false),
-
-                    [0x0007] = ("AdrsValueSet",
-                    new byte[2] { 32, 8 },
-                    false,
-                    false),
-
-                    [0x0008] = ("AdrsRegSet",
-                    new byte[2] { 32, 8 },
-                    false,
-                    false),
-
-                    [0x0009] = ("RegRegSet",
-                    new byte[2] { 8, 8 },
-                    false,
-                    false),
-
-                    [0x000A] = ("AdrsAdrsSet",
-                    new byte[2] { 32, 32 },
-                    false,
-                    false),
-
-                    [0x000B] = ("IfRegReg",
-                    new byte[2] { 8, 8 },
-                    false,
-                    false),
-
-                    [0x000C] = ("IfRegValue",
-                    new byte[2] { 8, 8 },
-                    false,
-                    false),
-
-                    [0x000D] = ("IfRegAdrs",
-                    new byte[2] { 8, 32 },
-                    false,
-                    false),
-
-                    [0x000E] = ("IfAdrsReg",
-                    new byte[2] { 32, 8 },
-                    false,
-                    false),
-
-                    [0x000F] = ("IfAdrsValue",
-                    new byte[2] { 32, 8 },
-                    false,
-                    false),
-
-                    [0x0010] = ("IfAdrsAdrs",
-                    new byte[2] { 32, 32 },
-                    false,
-                    false),
-
-                    [0x0011] = ("IfVarValue",
-                    new byte[2] { 16, 16 },
-                    false,
-                    false),
-
-                    [0x0012] = ("IfVarVar",
-                    new byte[2] { 16, 16 },
-                    false,
-                    false),
-
-                    [0x0013] = (null,
-                    new byte[1] { 16 },
-                    false,
-                    false),
-
-                    [0x0014] = ("CommonScript",
-                    new byte[1] { 16 },
-                    false,
-                    false),
-
-                    [0x0015] = ("LocalScript",
-                    null,
-                    false,
-                    false),
-
-                    [0x0016] = ("Jump",
-                    new byte[1] { 32 },
-                    true,
-                    false)
-                };
-            // 
         }
         public static class System {
             public static Dictionary<string, uint> headerOffsetsDict = new Dictionary<string, uint>() {

@@ -9,7 +9,7 @@ using static DSPRE.ROMFiles.ScriptFile;
 namespace DSPRE.ROMFiles {
     public class CommandContainer {
         public List<ScriptCommand> commands;
-        public uint manualUserID = uint.MaxValue;
+        public uint manualUserID;
         public int useScript;
         public containerTypes containerType;
 
@@ -30,13 +30,18 @@ namespace DSPRE.ROMFiles {
     }
     public class ScriptCommand {
         #region Fields (4)
-        public ushort id;
+        public ushort? id;
         public List<byte[]> cmdParams;
         public string name;
         #endregion
 
         #region Constructors (2)
         public ScriptCommand(ushort id, List<byte[]> commandParameters) {
+            if (commandParameters == null) {
+                this.id = null;
+                return;
+            }
+
             this.id = id;
             this.cmdParams = commandParameters;
 
@@ -94,9 +99,10 @@ namespace DSPRE.ROMFiles {
             try {
                 id = RomInfo.ScriptCommandNamesDict.First(x => x.Value.Equals(nameParts[0], StringComparison.InvariantCultureIgnoreCase)).Key;
             } catch (InvalidOperationException) {
-                id = UInt16.MaxValue;
 
-                if (!UInt16.TryParse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out id)) { 
+                try {
+                    id = UInt16.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+                } catch {
                     string details;
                     if (wholeLine.Contains('@') && wholeLine.Contains('#')) {
                         details = "This probably means you forgot to \"End\" the Script or Function above it.";
@@ -112,9 +118,9 @@ namespace DSPRE.ROMFiles {
             }
 
             /* Read parameters from remainder of the description */
-            Console.WriteLine("ID = " + id.ToString("X4"));
+            //Console.WriteLine("ID = " + ((ushort)id).ToString("X4"));
 
-            byte[] parametersSizeArr = RomInfo.CommandParametersDict[id];
+            byte[] parametersSizeArr = RomInfo.CommandParametersDict[(ushort)id];
             
             int paramLength = 0;
             if (parametersSizeArr.Length == 1 && parametersSizeArr.First() == 0) {
@@ -170,14 +176,14 @@ namespace DSPRE.ROMFiles {
                 MessageBox.Show("Wrong number of parameters for command " + nameParts[0] + " at line " + lineNumber + "." + Environment.NewLine + 
                     "Received: " + (nameParts.Length - 1) + Environment.NewLine + "Expected: " + paramLength
                     + Environment.NewLine + "\nThis Script File can not be saved.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                id = ushort.MaxValue; //ERROR VALUE
+                id = null;
             }
         }
         #endregion
 
         #region Utilities
         public override string ToString() {
-            return name + " (" + id.ToString("X") + ")";
+            return name + " (" + ((ushort)id).ToString("X") + ")";
         }
         #endregion
     }

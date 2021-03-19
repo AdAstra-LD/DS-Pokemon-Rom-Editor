@@ -34,10 +34,11 @@ namespace DSPRE {
         /* Editors Setup */
         public bool matrixEditorIsReady { get; private set; } = false;
         public bool mapEditorIsReady { get; private set; } = false;
+        public bool nsbtxEditorIsReady { get; private set; } = false;
         public bool eventEditorIsReady { get; private set; } = false;
         public bool scriptEditorIsReady { get; private set; } = false;
         public bool textEditorIsReady { get; private set; } = false;
-        public bool tilesetEditorIsReady { get; private set; } = false;
+        public bool cameraEditorIsReady { get; private set; } = false;
 
         /* ROM Information */
         public static string gameCode;
@@ -500,6 +501,42 @@ namespace DSPRE {
                     break;
             };
         }
+        private void SetupNSBTXEditor() {
+            statusLabel.Text = "Attempting to unpack Tileset Editor NARCs... Please wait.";
+            Update();
+
+            DSUtils.UnpackNarcs(new List<int> { 6, 7, 8 }, toolStripProgressBar);
+
+            /* Fill Tileset ListBox */
+            FillTilesetBox();
+
+            /* Fill AreaData ComboBox */
+            int areaDataCount = romInfo.GetAreaDataCount();
+            for (int i = 0; i < areaDataCount; i++)
+                selectAreaDataListBox.Items.Add("AreaData File " + i);
+
+            /* Enable gameVersion-specific controls */
+
+            switch (RomInfo.gameVersion) {
+                case "D":
+                case "P":
+                case "Plat":
+                    break;
+                default:
+                    areaDataDynamicTexturesNumericUpDown.Enabled = true;
+                    areaTypeGroupbox.Enabled = true;
+                    break;
+            };
+
+            if (selectAreaDataListBox.Items.Count > 0)
+                selectAreaDataListBox.SelectedIndex = 0;
+            if (texturePacksListBox.Items.Count > 0)
+                texturePacksListBox.SelectedIndex = 0;
+            if (texturesListBox.Items.Count > 0)
+                texturesListBox.SelectedIndex = 0;
+            if (palettesListBox.Items.Count > 0)
+                palettesListBox.SelectedIndex = 0;
+        }
         private void updateBuildingListComboBox(bool interior) {
             string[] bldList = GetBuildingsList(interior);
             for (int i = 0; i < bldList.Length; i++) {
@@ -545,9 +582,6 @@ namespace DSPRE {
             statusLabel.Text = "Ready";
         }
         private void SetupTextEditor() {
-            string[] narcPaths = RomInfo.narcPaths;
-            string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
-
             DSUtils.TryUnpackNarc( 1 );
 
             statusLabel.Text = "Setting up Text Editor...";
@@ -559,41 +593,8 @@ namespace DSPRE {
             selectTextFileComboBox.SelectedIndex = 0;
             statusLabel.Text = "Ready";
         }
-        private void SetupTilesetEditor() {
-            statusLabel.Text = "Attempting to unpack Tileset Editor NARCs... Please wait.";
-            Update();
-
-            DSUtils.UnpackNarcs(new List<int> { 6, 7, 8 }, toolStripProgressBar);
-
-            /* Fill Tileset ListBox */
-            FillTilesetBox();
-
-            /* Fill AreaData ComboBox */
-            int areaDataCount = romInfo.GetAreaDataCount();
-            for (int i = 0; i < areaDataCount; i++)
-                selectAreaDataListBox.Items.Add("AreaData File " + i);
-
-            /* Enable gameVersion-specific controls */
-
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
-                case "Plat":
-                    break;
-                default:
-                    areaDataDynamicTexturesNumericUpDown.Enabled = true;
-                    areaTypeGroupbox.Enabled = true;
-                    break;
-            };
-
-            if (selectAreaDataListBox.Items.Count > 0)
-                selectAreaDataListBox.SelectedIndex = 0;
-            if (texturePacksListBox.Items.Count > 0)
-                texturePacksListBox.SelectedIndex = 0;
-            if (texturesListBox.Items.Count > 0)
-                texturesListBox.SelectedIndex = 0;
-            if (palettesListBox.Items.Count > 0)
-                palettesListBox.SelectedIndex = 0;
+        private void SetupCameraEditor () {
+            
         }
         private int UnpackRomCheckUserChoice() {
             // Check if extracted data for the ROM exists, and ask user if they want to load it.
@@ -919,7 +920,7 @@ namespace DSPRE {
                 eventEditorIsReady = false;
                 scriptEditorIsReady = false;
                 textEditorIsReady = false;
-                tilesetEditorIsReady = false;
+                nsbtxEditorIsReady = false;
 
                 if (mapEditorIsReady) {
                     updateBuildingListComboBox(interiorbldRadioButton.Checked);
@@ -969,6 +970,11 @@ namespace DSPRE {
                     SetupMapEditor();
                     mapEditorIsReady = true;
                 }
+            } else if (mainTabControl.SelectedTab == nsbtxEditorTabPage) {
+                if (!nsbtxEditorIsReady) {
+                    SetupNSBTXEditor();
+                    nsbtxEditorIsReady = true;
+                }
             } else if (mainTabControl.SelectedTab == eventEditorTabPage) {
                 if (!eventEditorIsReady) {
                     SetupEventEditor();
@@ -984,10 +990,10 @@ namespace DSPRE {
                     SetupTextEditor();
                     textEditorIsReady = true;
                 }
-            } else if (mainTabControl.SelectedTab == nsbtxEditorTabPage) {
-                if (!tilesetEditorIsReady) {
-                    SetupTilesetEditor();
-                    tilesetEditorIsReady = true;
+            } else if (mainTabControl.SelectedTab == cameraEditorTabPage) {
+                if (!cameraEditorIsReady) {
+                    SetupCameraEditor();
+                    cameraEditorIsReady = true;
                 }
             }
             statusLabel.Text = "Ready";
@@ -1453,9 +1459,9 @@ namespace DSPRE {
             
         }
         private void openAreaDataButton_Click(object sender, EventArgs e) {
-            if (!tilesetEditorIsReady) {
-                SetupTilesetEditor();
-                tilesetEditorIsReady = true;
+            if (!nsbtxEditorIsReady) {
+                SetupNSBTXEditor();
+                nsbtxEditorIsReady = true;
             }
 
             selectAreaDataListBox.SelectedIndex = (int)areaDataUpDown.Value;
@@ -1513,17 +1519,21 @@ namespace DSPRE {
         }
         private void updateCurrentInternalName() {
             /* Update internal name according to internalNameBox text*/
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(RomInfo.InternalNamesLocation))) {
-                writer.BaseStream.Position = currentHeader.ID * RomInfo.internalNameLength;
+            if (currentHeader.ID != null) {
+                ushort headerID = (ushort)currentHeader.ID;
 
-                writer.Write(Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0')));
-                internalNames[currentHeader.ID] = internalNameBox.Text;
-                headerListBoxNames[currentHeader.ID] = currentHeader.ID.ToString("D3") + MapHeader.nameSeparator + internalNames[currentHeader.ID];
+                using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(RomInfo.InternalNamesLocation))) {
+                    writer.BaseStream.Position = headerID * RomInfo.internalNameLength;
+
+                    writer.Write(Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0')));
+                    internalNames[headerID] = internalNameBox.Text;
+                    headerListBoxNames[headerID] = headerID.ToString("D3") + MapHeader.nameSeparator + internalNames[headerID];
+                }
             }
         }
         private void updateHeaderNameShown(int thisIndex) {
             disableHandlers = true;
-            headerListBox.Items[thisIndex] = headerListBoxNames[currentHeader.ID];
+            headerListBox.Items[thisIndex] = headerListBoxNames[(ushort)currentHeader.ID];
             disableHandlers = false;
         }
         private void resetButton_Click(object sender, EventArgs e) {
@@ -5897,7 +5907,7 @@ namespace DSPRE {
 
                         textEditorDataGridView.Rows.Clear();
                         textSearchResultsListBox.Items.Add("Text archive (" + k + ") - Succesfully edited");
-                        updateTextEditorFileView(false);
+                        UpdateTextEditorFileView(false);
 
                         disableHandlers = false;
                         currentTextArchive.SaveToFileDefaultDir(k);
@@ -5905,14 +5915,14 @@ namespace DSPRE {
                     //else searchMessageResultTextBox.AppendText(searchString + " not found in this file");
                     //this.saveMessageFileButton_Click(sender, e);
                 }
-                updateTextEditorFileView(true);
+                UpdateTextEditorFileView(true);
                 textSearchProgressBar.Value = 0;
             }
         }
         private void selectTextFileComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            updateTextEditorFileView(true);
+            UpdateTextEditorFileView(true);
         }
-        private void updateTextEditorFileView(bool readAgain) {
+        private void UpdateTextEditorFileView(bool readAgain) {
             disableHandlers = true;
 
             textEditorDataGridView.Rows.Clear();
@@ -5925,14 +5935,14 @@ namespace DSPRE {
             }
 
             if (hexRadiobutton.Checked) {
-                printTextEditorLinesHex();
+                PrintTextEditorLinesHex();
             } else {
                 printTextEditorLinesDecimal();
             }
 
             disableHandlers = false;
         }
-        private void printTextEditorLinesHex() {
+        private void PrintTextEditorLinesHex() {
             disableHandlers = true;
             for (int i = 0; i < currentTextArchive.messages.Count; i++) {
                 textEditorDataGridView.Rows[i].HeaderCell.Value = "0x" + i.ToString("X");
@@ -5985,7 +5995,7 @@ namespace DSPRE {
         private void updateTextEditorLineNumbers() {
             disableHandlers = true;
             if (hexRadiobutton.Checked) {
-                printTextEditorLinesHex();
+                PrintTextEditorLinesHex();
             } else {
                 printTextEditorLinesDecimal();
             }

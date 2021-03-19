@@ -75,7 +75,7 @@ namespace DSPRE.ROMFiles {
                             
                             cmdList.Add(cmd);
 
-                            if (PokeDatabase.ScriptEditor.endCodes.Contains(cmd.id))
+                            if (PokeDatabase.ScriptEditor.endCodes.Contains((ushort)cmd.id))
                                 endScript = true;
                             
                         }
@@ -99,7 +99,7 @@ namespace DSPRE.ROMFiles {
                                 return;
 
                             cmdList.Add(command);
-                            if (PokeDatabase.ScriptEditor.endCodes.Contains(command.id))
+                            if (PokeDatabase.ScriptEditor.endCodes.Contains((ushort)command.id))
                                 endFunction = true;
                         }
                         allFunctions.Add(new CommandContainer(current+1, containerTypes.FUNCTION, commandList: cmdList));
@@ -457,7 +457,7 @@ namespace DSPRE.ROMFiles {
                             scriptOffsets.Add((currentScript.manualUserID, (uint)writer.BaseStream.Position));
 
                             foreach (ScriptCommand currentCmd in currentScript.commands) {
-                                writer.Write(currentCmd.id);
+                                writer.Write((ushort)currentCmd.id);
                                 //System.Diagnostics.Debug.Write(BitConverter.ToString(BitConverter.GetBytes(commandID)) + " ");
 
                                 /* Get command parameters */
@@ -468,7 +468,7 @@ namespace DSPRE.ROMFiles {
                                 }
 
                                 /* If command calls a function/movement, store reference position */
-                                AddReference(ref references, currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentScript);
+                                AddReference(ref references, (ushort)currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentScript);
                             }
                         } else {
                             scriptOffsets.Add((currentScript.manualUserID, scriptOffsets[currentScript.useScript - 1].offsetInFile));  // If script has UseScript, copy offset
@@ -481,7 +481,7 @@ namespace DSPRE.ROMFiles {
                             functionOffsets.Add((currentFunction.manualUserID, (uint)writer.BaseStream.Position));
 
                             foreach (ScriptCommand currentCmd in currentFunction.commands) {
-                                writer.Write(currentCmd.id);
+                                writer.Write((ushort)currentCmd.id);
                                 //System.Diagnostics.Debug.Write(BitConverter.ToString(BitConverter.GetBytes(commandID)) + " ");
 
                                 /* Write command parameters */
@@ -492,7 +492,7 @@ namespace DSPRE.ROMFiles {
                                 }
 
                                 /* If command calls a function/movement, store reference position */
-                                AddReference(ref references, currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentFunction);
+                                AddReference(ref references, (ushort)currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentFunction);
                             }
                         } else {
                             functionOffsets.Add((currentFunction.manualUserID, scriptOffsets[currentFunction.useScript - 1].offsetInFile));
@@ -510,10 +510,10 @@ namespace DSPRE.ROMFiles {
 
                         foreach (ScriptAction currentCmd in currentAction.actionCommandsList) {
                             /* Write movement command id */
-                            writer.Write(currentCmd.id);
+                            writer.Write((ushort)currentCmd.id);
 
                             /* Write movement command parameters */
-                            writer.Write(currentCmd.repetitionCount);
+                            writer.Write((ushort)currentCmd.repetitionCount);
                         }
                     }
 
@@ -523,11 +523,11 @@ namespace DSPRE.ROMFiles {
                         writer.Write(scriptOffsets[i].offsetInFile - (uint)writer.BaseStream.Position - 0x4);
 
                     /* Fix references to functions and movements */
-                    List<uint> undeclaredFuncs = new List<uint>();
-                    List<uint> undeclaredActions = new List<uint>();
+                    SortedSet<uint> undeclaredFuncs = new SortedSet<uint>();
+                    SortedSet<uint> undeclaredActions = new SortedSet<uint>();
 
-                    List<uint> uninvokedFuncs = new List<uint>(allFunctions.Select( x => x.manualUserID).ToArray());
-                    List<uint> unreferencedActions = new List<uint>(allActions.Select(x => x.manualUserID).ToArray());
+                    SortedSet<uint> uninvokedFuncs = new SortedSet<uint>(allFunctions.Select( x => x.manualUserID).ToArray());
+                    SortedSet<uint> unreferencedActions = new SortedSet<uint>(allActions.Select(x => x.manualUserID).ToArray());
 
                     while (references.Count > 0) {
                         writer.BaseStream.Position = references[0].invokedOffset; //place seek head on parameter that is supposed to store the jump address
@@ -674,7 +674,7 @@ namespace DSPRE.ROMFiles {
                             List<ScriptCommand> cmdList = new List<ScriptCommand>();
                             while (!endConditions(lineSource, i)) {
                                 ScriptCommand toAdd = new ScriptCommand(lineSource[i], i + 1);
-                                if (toAdd.id == ushort.MaxValue)
+                                if (toAdd.id == null)
                                     return null;
 
                                 cmdList.Add(toAdd);
@@ -705,7 +705,7 @@ namespace DSPRE.ROMFiles {
                         /* Read script commands */
                         while (!lineSource[i].Equals(PokeDatabase.ScriptEditor.movementsDictIDName[0x00FE], StringComparison.InvariantCultureIgnoreCase)) { //End
                             ScriptAction toAdd = new ScriptAction(lineSource[i], i + 1);
-                            if (toAdd.id == UInt16.MaxValue)
+                            if (toAdd.id == null)
                                 return null;
 
                             cmdList.Add(toAdd);
