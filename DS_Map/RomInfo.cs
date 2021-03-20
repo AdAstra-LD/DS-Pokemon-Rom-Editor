@@ -131,9 +131,8 @@ namespace DSPRE {
             };
         }
         private void SetInitialMoneyOverlayAndOffset() {
-            switch (gameVersion) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                     initialMoneyOverlayNumber = 52;
                     initialMoneyOverlayOffset = 0x1E4;
                     break;
@@ -141,17 +140,15 @@ namespace DSPRE {
                     initialMoneyOverlayNumber = 57;
                     initialMoneyOverlayOffset = 0x1EC;
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     initialMoneyOverlayNumber = 36;
                     initialMoneyOverlayOffset = 0x2FC;
                     break;
             }
         }
         private void SetSpawnPointOffset() {
-            switch (gameVersion) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                     switch (gameLanguage) {
                         case "ENG":
                             arm9spawnOffset = 0xF2B9C;
@@ -195,8 +192,7 @@ namespace DSPRE {
                             break;
                     }
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     switch (gameLanguage) {
                         case "ENG":
                             arm9spawnOffset = 0xFA17C;
@@ -225,9 +221,8 @@ namespace DSPRE {
             }
         }
         private void SetCameraTableOverlayAndOffset() {
-            switch (gameVersion) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                     cameraTableOverlayNumber = 5;
                     cameraTableOverlayPointers = new uint[] { 0 };
                     break;
@@ -235,8 +230,7 @@ namespace DSPRE {
                     cameraTableOverlayNumber = 5;
                     cameraTableOverlayPointers = new uint[] { 0x4E24 };
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     cameraTableOverlayNumber = 1;
                     cameraTableOverlayPointers = new uint[] { 0x532C, 0x547C };
                     break;
@@ -246,9 +240,8 @@ namespace DSPRE {
 
         #region Methods (22)
         private void SetItemScriptFileNumber() {
-            switch (gameVersion) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                     itemScriptFileNumber = 370;
                     break;
                 case "Plat":
@@ -260,23 +253,20 @@ namespace DSPRE {
             }
         }
         private void SetNullEncounterID() {
-            switch (gameVersion) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                 case "Plat":
                     nullEncounterID = ushort.MaxValue;
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     nullEncounterID = Byte.MaxValue;
                     break;
             }
         }
         public void SetNarcDirs () {
             Dictionary<DirNames, string> packedDirsDict = null;
-            switch (gameVersion) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                      packedDirsDict = new Dictionary<DirNames, string>() {
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.textArchives] = @"data\msgdata\msg.narc",
@@ -320,8 +310,7 @@ namespace DSPRE {
                         [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.Substring(0,2).ToLower() + '_' + "enc_data.narc"
                     };
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     packedDirsDict = new Dictionary<DirNames, string>() {
                         [DirNames.synthOverlay] = @"data\a\0\2\8",
                         [DirNames.textArchives] = @"data\a\0\2\7",
@@ -366,9 +355,8 @@ namespace DSPRE {
             }
         }
         public void SetOWtable () {
-            switch (gameVersion) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
                     switch (gameLanguage) { // Go to the beginning of the overworld table
                         case "ENG":
@@ -403,8 +391,7 @@ namespace DSPRE {
                             break;
                     }
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0001.bin";
                     OWTableOffset = 0x21BA8;
                     break;
@@ -539,8 +526,7 @@ namespace DSPRE {
         }
         public void SetAttackNamesTextNumber() {
             switch (gameVersion) {
-                case "D":
-                case "P":
+                case "DP":
                     attackNamesTextNumber = 588;
                     break;
                 case "Plat":
@@ -556,9 +542,8 @@ namespace DSPRE {
             }
         }
         public void SetItemNamesTextNumber() {
-            switch (gameVersion) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                     itemNamesTextNumber = 344;
                     break;
                 case "Plat":
@@ -574,9 +559,8 @@ namespace DSPRE {
             }
         }
         public void SetLocationNamesTextNumber() {;
-            switch (gameVersion) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                     locationNamesTextNumber = 382;
                     break;
                 case "Plat":
@@ -592,24 +576,21 @@ namespace DSPRE {
             }
         }
         public static void SetPokémonNamesTextNumber() {
-            switch (gameVersion) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                     pokemonNamesTextNumbers = new int[2] { 362, 363 };
                     break;
                 case "Plat":
                     pokemonNamesTextNumbers = new int[7] { 412, 413, 712, 713, 714, 715, 716 }; //413?
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     pokemonNamesTextNumbers = new int[7] { 237, 238, 817, 818, 819, 820, 821 }; //238?
                     break;
             }
         }
         public void SetTrainerNamesMessageNumber() {
-            switch (gameVersion) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                     trainerNamesMessageNumber = 559;
                     break;
                 case "Plat":
@@ -626,8 +607,7 @@ namespace DSPRE {
         }
         public void SetTrainerClassMessageNumber() {
             switch (gameVersion) {
-                case "D":
-                case "P":
+                case "DP":
                     trainerClassMessageNumber = 560;
                     break;
                 case "Plat":
@@ -657,14 +637,12 @@ namespace DSPRE {
 
         #region System Methods
         public void LoadMapCellsColorDictionary() {
-            switch (gameVersion) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                 case "Plat":
                     MapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.DPPtmatrixColorsDict;
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     MapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.HGSSmatrixColorsDict;
                     break;
             }
@@ -674,9 +652,8 @@ namespace DSPRE {
         }
         public static void ReadOWTable () {
             OverworldTable = new SortedDictionary<uint, (uint spriteID, ushort properties)>();
-            switch (gameVersion) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                 case "Plat":
                     using (BinaryReader idReader = new BinaryReader(new FileStream(OWtablePath, FileMode.Open))) {
                         idReader.BaseStream.Position = OWTableOffset;
@@ -690,8 +667,7 @@ namespace DSPRE {
                         }
                     }
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     using (BinaryReader idReader = new BinaryReader(new FileStream(OWtablePath, FileMode.Open))) {
                         idReader.BaseStream.Position = OWTableOffset;
 
