@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using static DSPRE.RomInfo;
 
 namespace DSPRE {
     static class DSUtils {
@@ -164,54 +165,46 @@ namespace DSPRE {
             }
         }
 
-        public static void UnpackNarcs(List<int> IDs, ToolStripProgressBar progress) {
-            string[] narcPaths = RomInfo.narcPaths;
-            string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
+        public static void TryUnpackNarcs(List<DirNames> IDs, ToolStripProgressBar progress = null) {
+            foreach (DirNames id in IDs) {
 
-            foreach (int id in IDs) {
-                (string pathToPacked, string pathToExtracted) = (narcPaths[id], extractedNarcDirs[id]);
-                
-                DirectoryInfo di = new DirectoryInfo(pathToExtracted);
-                if (!di.Exists || di.GetFiles().Length == 0) {
-                    Narc.Open(RomInfo.workDir + pathToPacked).ExtractToFolder(pathToExtracted);
+                if (gameDirs.TryGetValue(id, out (string packedPath, string unpackedPath) paths)) {
+                    DirectoryInfo di = new DirectoryInfo(paths.unpackedPath);
+
+                    if (!di.Exists || di.GetFiles().Length == 0) {
+                        Narc opened = Narc.Open(RomInfo.workDir + paths.packedPath);
+
+                        if (opened == null)
+                            throw new NullReferenceException();
+
+                        opened.ExtractToFolder(paths.unpackedPath);
+                    }
+
+                    if (progress != null) {
+                        try {
+                            progress.Value++;
+                        } catch (ArgumentOutOfRangeException) { }
+                    }
                 }
-
-                if (progress != null)
-                    try {
-                        progress.Value++;
-                    } catch (ArgumentOutOfRangeException) { }
             }
         }
-        public static void ForceUnpackNarcs(List<int> IDs, ToolStripProgressBar progress) {
-            string[] narcPaths = RomInfo.narcPaths;
-            string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
+        public static void ForceUnpackNarcs(List<DirNames> IDs, ToolStripProgressBar progress = null) {
+            foreach (DirNames id in IDs) {
 
-            foreach (int id in IDs) {
-                (string pathToPacked, string pathToExtracted) = (narcPaths[id], extractedNarcDirs[id]);
-                Narc.Open(RomInfo.workDir + pathToPacked).ExtractToFolder(pathToExtracted);
+                if (gameDirs.TryGetValue(id, out (string packedPath, string unpackedPath) paths)) {
+                    Narc opened = Narc.Open(RomInfo.workDir + paths.packedPath);
 
-                if (progress != null)
-                    try {
-                        progress.Value++;
-                    } catch (ArgumentOutOfRangeException) { }
+                    if (opened == null)
+                        throw new NullReferenceException();
+
+                    opened.ExtractToFolder(paths.unpackedPath);
+
+                    if (progress != null)
+                        try {
+                            progress.Value++;
+                        } catch (ArgumentOutOfRangeException) { }
+                }
             }
-        }
-        public static void TryUnpackNarc(int id) {
-            string[] narcPaths = RomInfo.narcPaths;
-            string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
-
-            (string pathToPacked, string pathToExtracted) tuple = (narcPaths[id], extractedNarcDirs[id]);
-            DirectoryInfo di = new DirectoryInfo(tuple.Item2);
-            if (!di.Exists || di.GetFiles().Length == 0) {
-                Narc.Open(RomInfo.workDir + tuple.pathToPacked).ExtractToFolder(tuple.pathToExtracted);
-            }
-        }
-        public static void ForceUnpackNarc(int id) {
-            string[] narcPaths = RomInfo.narcPaths;
-            string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
-
-            (string pathToPacked, string pathToExtracted) = (narcPaths[id], extractedNarcDirs[id]);
-            Narc.Open(RomInfo.workDir + pathToPacked).ExtractToFolder(pathToExtracted);
         }
 
         public static bool OverlayIsCompressed(int ovNumber) {

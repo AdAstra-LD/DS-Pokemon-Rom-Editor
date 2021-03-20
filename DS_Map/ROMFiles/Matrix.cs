@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using static DSPRE.RomInfo;
 
 namespace DSPRE.ROMFiles {
    /* ---------------------- MATRIX DATA STRUCTURE (DPPtHGSS):-----------------------------
@@ -70,7 +71,7 @@ namespace DSPRE.ROMFiles {
                         maps[i, j] = reader.ReadUInt16();
             }
         }
-        public Matrix(int ID) : this (new FileStream(RomInfo.matrixDirPath + "\\" + ID.ToString("D4"), FileMode.Open)) { }
+        public Matrix(int ID) : this (new FileStream(RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
         #endregion
 
         #region Methods (6)
@@ -151,7 +152,7 @@ namespace DSPRE.ROMFiles {
             MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public void SaveToFileDefaultDir(int IDtoReplace) {
-            string path = RomInfo.matrixDirPath + "\\" + IDtoReplace.ToString("D4");
+            string path = RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + IDtoReplace.ToString("D4");
             this.SaveToFile(path);
         }
         public void SaveToFileExplorePath(string suggestedFileName) {

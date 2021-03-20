@@ -17,6 +17,7 @@ using LibNDSFormats.NSBTX;
 using DSPRE.Resources;
 using DSPRE.ROMFiles;
 using Matrix = DSPRE.ROMFiles.Matrix;
+using static DSPRE.RomInfo;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -75,10 +76,10 @@ namespace DSPRE {
             TextArchive trainerClasses = new TextArchive(RomInfo.trainerClassMessageNumber);
             TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
             BinaryReader trainerReader;
-            int trainerCount = Directory.GetFiles(RomInfo.trainerDataDirPath).Length;
+            int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerData].unpackedDir).Length;
 
             for (int i = 0; i < trainerCount; i++) {
-                trainerReader = new BinaryReader(new FileStream(RomInfo.trainerDataDirPath + "\\" + i.ToString("D4"), FileMode.Open));
+                trainerReader = new BinaryReader(new FileStream(RomInfo.gameDirs[DirNames.trainerData].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
                 trainerReader.BaseStream.Position += 0x1;
                 int classMessageID = trainerReader.ReadUInt16();
                 trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[classMessageID] + " " + trainerNames.messages[i]);
@@ -98,7 +99,7 @@ namespace DSPRE {
             return new TextArchive(RomInfo.attackNamesTextNumber).messages.ToArray();
         }
         private AreaData LoadAreaData(uint areaDataID) {
-            return new AreaData(new FileStream(romInfo.areaDataDirPath + "//" + areaDataID.ToString("D4"), FileMode.Open), RomInfo.gameVersion);
+            return new AreaData(new FileStream(RomInfo.gameDirs[DirNames.areaData].unpackedDir + "//" + areaDataID.ToString("D4"), FileMode.Open), RomInfo.gameVersion);
         }
         private void PaintGameIcon(object sender, PaintEventArgs e) {
             if (iconON) {
@@ -198,8 +199,8 @@ namespace DSPRE {
             } else return;
         }
         private void DeleteTempFolders() {
-            foreach (var tuple in RomInfo.narcPaths.Zip(RomInfo.extractedNarcDirs, Tuple.Create)) {
-                Directory.Delete(tuple.Item2, true); // Delete folder
+            foreach (DirNames fname in RomInfo.gameDirs.Keys) {
+                Directory.Delete(RomInfo.gameDirs[fname].unpackedDir, true); // Delete folder
             }
         }
         private void RepackRom(string ndsFileName) {
@@ -230,9 +231,22 @@ namespace DSPRE {
             toolStripProgressBar.Value = 0;
             Update();
 
-            DSUtils.UnpackNarcs(new List<int> { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }, toolStripProgressBar);
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.matrices, 
+                DirNames.maps, 
+                DirNames.exteriorBuildingModels, 
+                DirNames.buildingConfigFiles, 
+                DirNames.buildingTextures,
+                DirNames.mapTextures,
+                DirNames.areaData,
+
+                DirNames.eventFiles,
+                DirNames.trainerData,
+                DirNames.OWSprites,
+
+                DirNames.scripts, }, toolStripProgressBar);
+
             if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
-                DSUtils.TryUnpackNarc(RomInfo.narcPaths.Length - 1);
+                DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
             }
 
             disableHandlers = true;
@@ -254,8 +268,8 @@ namespace DSPRE {
             }
 
             /* Add event file numbers to box */
-            int eventCount = Directory.GetFiles(RomInfo.eventsDirPath).Length;
-            int owSpriteCount = Directory.GetFiles(RomInfo.OWSpriteDirPath).Length;
+            int eventCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir).Length;
+            int owSpriteCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.OWSprites].unpackedDir).Length;
             string[] trainerNames = GetTrainerNames();
             RomInfo.ReadOWTable();
 
@@ -308,7 +322,7 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack Header Editor NARCs... Please wait.";
             Update();
 
-            DSUtils.UnpackNarcs(new List<int> { 0, 1 }, toolStripProgressBar);
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.synthOverlay, DirNames.textArchives }, toolStripProgressBar);
 
             statusLabel.Text = "Reading internal names... Please wait.";
             Update();
@@ -317,7 +331,7 @@ namespace DSPRE {
             internalNames = new List<string>();
             headerListBoxNames = new List<string>();
             try {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.InternalNamesLocation))) {
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.internalNamesLocation))) {
                     int headerCount = romInfo.GetHeaderCount();
 
                     for (int i = 0; i < headerCount; i++) {
@@ -330,7 +344,7 @@ namespace DSPRE {
                 }
                 headerListBox.Items.AddRange(headerListBoxNames.ToArray());
             } catch (FileNotFoundException) {
-                MessageBox.Show(RomInfo.InternalNamesLocation + " doesn't exist.", "Couldn't read internal names", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(RomInfo.internalNamesLocation + " doesn't exist.", "Couldn't read internal names", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -400,9 +414,16 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack Map Editor NARCs... Please wait.";
             Update();
 
-            DSUtils.UnpackNarcs(new List<int> { 3, 4, 5, 6, 7, 8 }, toolStripProgressBar);
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.maps,
+                DirNames.exteriorBuildingModels,
+                DirNames.buildingConfigFiles,
+                DirNames.buildingTextures,
+                DirNames.mapTextures,
+                DirNames.areaData,
+            }, toolStripProgressBar);
+
             if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
-                DSUtils.TryUnpackNarc(RomInfo.narcPaths.Length - 1 );
+                DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
             }
 
             disableHandlers = true;
@@ -425,7 +446,7 @@ namespace DSPRE {
 
             /* Add map names to box */
             for (int i = 0; i < romInfo.GetMapCount(); i++) {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.mapsDirPath + "\\" + i.ToString("D4")))) {
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + i.ToString("D4")))) {
                     switch (RomInfo.gameVersion) {
                         case "D":
                         case "P":
@@ -505,7 +526,11 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack Tileset Editor NARCs... Please wait.";
             Update();
 
-            DSUtils.UnpackNarcs(new List<int> { 6, 7, 8 }, toolStripProgressBar);
+            DSUtils.TryUnpackNarcs(new List<DirNames> { 
+                DirNames.buildingTextures,
+                DirNames.mapTextures,
+                DirNames.areaData, 
+            }, toolStripProgressBar);
 
             /* Fill Tileset ListBox */
             FillTilesetBox();
@@ -548,7 +573,7 @@ namespace DSPRE {
             statusLabel.Text = "Setting up Matrix Editor...";
             Update();
 
-            DSUtils.TryUnpackNarc( 2 ); // 2 = matrixDir
+            DSUtils.TryUnpackNarcs( new List<DirNames> { DirNames.matrices } ); 
 
             disableHandlers = true;
 
@@ -566,9 +591,9 @@ namespace DSPRE {
             statusLabel.Text = "Setting up Script Editor...";
             Update();
 
-            DSUtils.TryUnpackNarc(12); //12 = scripts Narc Dir
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.scripts } ); //12 = scripts Narc Dir
 
-            int scriptCount = Directory.GetFiles(RomInfo.scriptDirPath).Length;
+            int scriptCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.scripts].unpackedDir).Length;
             for (int i = 0; i < scriptCount; i++)
                 selectScriptFileComboBox.Items.Add("Script File " + i);
 
@@ -576,13 +601,37 @@ namespace DSPRE {
                 "Always keep an eye out for unexpected behavior.\n";
             MessageBox.Show(exclMSG, "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
-            selectScriptFileComboBox.SelectedIndex = 0;
             currentScriptBox = scriptTextBox;
             currentLineNumbersBox = LineNumberTextBoxScript;
+            selectScriptFileComboBox.SelectedIndex = 0;
             statusLabel.Text = "Ready";
         }
+
+        /*
+        private void SetupScriptSource() {
+            uint magicNumber;
+            using (BinaryReader reader = new BinaryReader(new FileStream(RomInfo.syntheticOverlayPath + "//0002", FileMode.Open)))
+                magicNumber = reader.ReadUInt32();
+
+            try {
+                DSUtils.UnpackNarcs(new List<int> { 16 }, toolStripProgressBar);
+
+                int i = 1; // Starts at 1 so 0000.txt (FNTB) is ignored, because it's always the first listed file
+                string[] scriptDir = Directory.GetFiles(RomInfo.scriptSource);
+                string[] scriptFNTB = File.ReadAllText(RomInfo.scriptSource + "\\0000").Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (string scriptFilename in scriptFNTB) {
+                    File.Move(scriptDir[i], RomInfo.scriptSource + "\\" + scriptFilename);
+                    i++;
+                }
+                File.Delete(RomInfo.scriptSource + "\\0000");
+            } catch (NullReferenceException) {
+                string scriptSourceDir = RomInfo.scriptSource;
+                Directory.CreateDirectory(scriptSourceDir);
+            }
+        }*/
         private void SetupTextEditor() {
-            DSUtils.TryUnpackNarc( 1 );
+            DSUtils.TryUnpackNarcs( new List<DirNames> { DirNames.textArchives } );
 
             statusLabel.Text = "Setting up Text Editor...";
             Update();
@@ -596,6 +645,7 @@ namespace DSPRE {
         private void SetupCameraEditor () {
             
         }
+
         private int UnpackRomCheckUserChoice() {
             // Check if extracted data for the ROM exists, and ask user if they want to load it.
             // Returns true if user aborted the process
@@ -685,7 +735,7 @@ namespace DSPRE {
             using (BuildingEditor editor = new BuildingEditor(romInfo))
                 editor.ShowDialog();
         }
-        private void unpackBuildingEditorNARCs() {
+        private void unpackBuildingEditorNARCs(bool forceUnpack = false) {
             toolStripProgressBar.Visible = true;
 
             statusLabel.Text = "Attempting to unpack Building Editor NARCs... Please wait. This might take a while";
@@ -694,27 +744,22 @@ namespace DSPRE {
             toolStripProgressBar.Value = 0;
             Update();
 
-            DSUtils.UnpackNarcs(new List<int> { 4, 5, 6 }, toolStripProgressBar);
-            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
-                DSUtils.TryUnpackNarc(RomInfo.narcPaths.Length - 1 );// Last = interior buildings dir
+            List<DirNames> toUnpack = new List<DirNames> {
+                    DirNames.exteriorBuildingModels,
+                    DirNames.buildingConfigFiles,
+                    DirNames.buildingTextures,
+                };
 
-            toolStripProgressBar.Value = 0;
-            toolStripProgressBar.Visible = false;
-            statusLabel.Text = "Ready";
-            Update();
-        }
-        private void ForceUnpackBuildingEditorNARCs() {
-            toolStripProgressBar.Visible = true;
+            if (forceUnpack) {
+                DSUtils.ForceUnpackNarcs(toUnpack, toolStripProgressBar);
 
-            statusLabel.Text = "Attempting to unpack Building Editor NARCs... Please wait. This might take a while";
-            toolStripProgressBar.Visible = true;
-            toolStripProgressBar.Maximum = 4;
-            toolStripProgressBar.Value = 0;
-            Update();
-
-            DSUtils.ForceUnpackNarcs(new List<int> { 4, 5, 6 }, toolStripProgressBar);
-            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
-                DSUtils.ForceUnpackNarcs(new List<int> { RomInfo.narcPaths.Length - 1 }, toolStripProgressBar);// Last = interior buildings dir
+                if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
+                    DSUtils.ForceUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);// Last = interior buildings dir
+            } else {
+                DSUtils.TryUnpackNarcs(toUnpack, toolStripProgressBar);
+                if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
+                    DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
+            }
 
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
@@ -722,7 +767,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.1.5" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.2" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks go to Trifindo, Mikelan98, JackHack96, Mixone and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS Rom Hacking made the development of this tool possible.";
@@ -858,10 +903,10 @@ namespace DSPRE {
             Update();
 
             // Repack NARCs
-            foreach (var tuple in RomInfo.narcPaths.Zip(RomInfo.extractedNarcDirs, Tuple.Create)) {
-                DirectoryInfo di = new DirectoryInfo(tuple.Item2);
+            foreach (KeyValuePair<DirNames, (string packedDir, string unpackedDir)> kvp in RomInfo.gameDirs) {
+                DirectoryInfo di = new DirectoryInfo(kvp.Value.unpackedDir);
                 if (di.Exists) {
-                    Narc.FromFolder(tuple.Item2).Save(RomInfo.workDir + tuple.Item1); // Make new NARC from folder
+                    Narc.FromFolder(kvp.Value.unpackedDir).Save(RomInfo.workDir + kvp.Value.packedDir); // Make new NARC from folder
                 }
             }
 
@@ -898,15 +943,13 @@ namespace DSPRE {
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (d == DialogResult.Yes) {
-                toolStripProgressBar.Maximum = RomInfo.narcPaths.Length;
+                toolStripProgressBar.Maximum = RomInfo.gameDirs.Count;
                 toolStripProgressBar.Visible = true;
                 toolStripProgressBar.Value = 0;
                 statusLabel.Text = "Attempting to unpack all NARCs... Be patient. This might take a while...";
                 Update();
-                foreach (var tuple in RomInfo.narcPaths.Zip(RomInfo.extractedNarcDirs, Tuple.Create)) {
-                    Narc.Open(RomInfo.workDir + tuple.Item1).ExtractToFolder(tuple.Item2);
-                    toolStripProgressBar.Value++;
-                }
+
+                DSUtils.ForceUnpackNarcs(Enum.GetValues(typeof(DirNames)).Cast<DirNames>().ToList(), toolStripProgressBar);
 
                 MessageBox.Show("Operation completed.", "Success",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -936,7 +979,7 @@ namespace DSPRE {
                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (d == DialogResult.Yes) {
-                ForceUnpackBuildingEditorNARCs();
+                unpackBuildingEditorNARCs(forceUnpack: true);
 
                 MessageBox.Show("Operation completed.", "Success",
                    MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1019,37 +1062,31 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to extract Wild Encounters NARC...";
             Update();
 
-            string[] narcPaths = RomInfo.narcPaths;
-            string[] extractedNarcDirs = RomInfo.extractedNarcDirs;
-            (string wildPokeNarcPath, string wildPokeUnpackedPath) t;
+            string wildPokeUnpackedPath = RomInfo.gameDirs[RomInfo.DirNames.encounters].unpackedDir;
 
-            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
-                t = (narcPaths[narcPaths.Length - 2], extractedNarcDirs[extractedNarcDirs.Length - 2]);
-            } else {
-                t = (narcPaths[narcPaths.Length - 1], extractedNarcDirs[extractedNarcDirs.Length - 2]);
-            }
-
-            DirectoryInfo di = new DirectoryInfo(t.Item2);
+            DirectoryInfo di = new DirectoryInfo(wildPokeUnpackedPath);
             if (!di.Exists || di.GetFiles().Length == 0) {
-                Narc.Open(RomInfo.workDir + t.Item1).ExtractToFolder(t.Item2);
+                Narc.Open(RomInfo.workDir + gameDirs[DirNames.encounters]).ExtractToFolder(wildPokeUnpackedPath);
             }
             statusLabel.Text = "Passing control to Wild Pokémon Editor...";
             Update();
 
             int encToOpen;
-            if (loadCurrent)
+            if (loadCurrent) {
                 encToOpen = (int)wildPokeUpDown.Value;
-            else
+            } else {
                 encToOpen = 0;
+            }
+
             switch (RomInfo.gameVersion) {
                 case "D":
                 case "P":
                 case "Plat":
-                    using (WildEditorDPPt editor = new WildEditorDPPt(RomInfo.encounterDirPath, GetPokémonNames(), encToOpen))
+                    using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, GetPokémonNames(), encToOpen))
                         editor.ShowDialog();
                     break;
                 default:
-                    using (WildEditorHGSS editor = new WildEditorHGSS(RomInfo.encounterDirPath, GetPokémonNames(), encToOpen))
+                    using (WildEditorHGSS editor = new WildEditorHGSS(wildPokeUnpackedPath, GetPokémonNames(), encToOpen))
                         editor.ShowDialog();
                     break;
             }
@@ -1522,7 +1559,7 @@ namespace DSPRE {
             if (currentHeader.ID != null) {
                 ushort headerID = (ushort)currentHeader.ID;
 
-                using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(RomInfo.InternalNamesLocation))) {
+                using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(RomInfo.internalNamesLocation))) {
                     writer.BaseStream.Position = headerID * RomInfo.internalNameLength;
 
                     writer.Write(Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0')));
@@ -2048,7 +2085,7 @@ namespace DSPRE {
             Matrix newMatrix = new Matrix(0);
 
             /* Add new matrix file to matrix folder */
-            string matrixPath = RomInfo.matrixDirPath + "\\" + romInfo.GetMatrixCount().ToString("D4");
+            string matrixPath = RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + romInfo.GetMatrixCount().ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(matrixPath, FileMode.Create))) writer.Write(newMatrix.ToByteArray());
 
             /* Update ComboBox*/
@@ -2351,7 +2388,7 @@ namespace DSPRE {
                 /* Delete matrix file */
                 int matrixToDelete = romInfo.GetMatrixCount() - 1;
 
-                string matrixPath = RomInfo.matrixDirPath + "\\" + matrixToDelete.ToString("D4");
+                string matrixPath = RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + matrixToDelete.ToString("D4");
                 File.Delete(matrixPath);
 
                 /* Change selected index if the matrix to be deleted is currently selected */
@@ -2711,7 +2748,7 @@ namespace DSPRE {
                 return;
 
             /* Update map object in memory */
-            string path = RomInfo.mapsDirPath + "\\" + selectMapComboBox.SelectedIndex.ToString("D4");
+            string path = RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + selectMapComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Refresh controls */
@@ -2728,7 +2765,7 @@ namespace DSPRE {
             if (buildTextureComboBox.SelectedIndex == 0) {
                 showBuildingTextures = false;
             } else {
-                string texturePath = romInfo.buildingTexturesDirPath + "\\" + (buildTextureComboBox.SelectedIndex - 1).ToString("D4");
+                string texturePath = RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (buildTextureComboBox.SelectedIndex - 1).ToString("D4");
                 byte[] textureFile = File.ReadAllBytes(texturePath);
 
                 Stream str = new MemoryStream(textureFile);
@@ -2763,7 +2800,7 @@ namespace DSPRE {
             else {
                 mapTexturesOn = true;
 
-                string texturePath = romInfo.mapTexturesDirPath + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4");
+                string texturePath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4");
                 currentMapFile.mapModel.materials = NSBTXLoader.LoadNsbtx(new MemoryStream(File.ReadAllBytes(texturePath)), out currentMapFile.mapModel.Textures, out currentMapFile.mapModel.Palettes);
                 try {
                     currentMapFile.mapModel.MatchTextures();
@@ -2882,7 +2919,7 @@ namespace DSPRE {
         }
         private void removeMapFileButton_Click(object sender, EventArgs e) {
             /* Delete last map file */
-            File.Delete(RomInfo.mapsDirPath + "\\" + (selectMapComboBox.Items.Count - 1).ToString("D4"));
+            File.Delete(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + (selectMapComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectMapComboBox.Items.Count - 1;
@@ -2907,13 +2944,13 @@ namespace DSPRE {
 
             /* Load map textures for renderer */
             if (mapTextureComboBox.SelectedIndex > 0) 
-                currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, romInfo.mapTexturesDirPath, mapTextureComboBox.SelectedIndex - 1);
+                currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, mapTextureComboBox.SelectedIndex - 1);
 
             /* Load buildings nsbmd and textures for renderer into MapFile's building objects */
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {
                 currentMapFile.buildings[i] = LoadBuildingModel(currentMapFile.buildings[i], interiorbldRadioButton.Checked); // Load building nsbmd
                 if (buildTextureComboBox.SelectedIndex > 0) 
-                    currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
+                    currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
             }
 
             /* Render the map */
@@ -2968,7 +3005,7 @@ namespace DSPRE {
 
             /* Load new building's model and textures for the renderer */
             currentMapFile.buildings[currentMapFile.buildings.Count - 1] = LoadBuildingModel(b, interiorbldRadioButton.Checked);
-            currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile = LoadModelTextures(b.NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1);
+            currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile = LoadModelTextures(b.NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1);
 
             /* Add new entry to buildings ListBox */
             buildingsListBox.Items.Add((buildingsListBox.Items.Count + 1).ToString("D2") + MapHeader.nameSeparator +
@@ -2988,7 +3025,7 @@ namespace DSPRE {
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].modelID = (uint)buildIndexComboBox.SelectedIndex;
             currentMapFile.buildings[buildingsListBox.SelectedIndex] = LoadBuildingModel(currentMapFile.buildings[buildingsListBox.SelectedIndex], interiorbldRadioButton.Checked);
-            currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile = LoadModelTextures(currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1);
+            currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile = LoadModelTextures(currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1);
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
@@ -3053,7 +3090,7 @@ namespace DSPRE {
 
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {
                 currentMapFile.buildings[i] = LoadBuildingModel(currentMapFile.buildings[i], interiorbldRadioButton.Checked); // Load building nsbmd
-                currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
+                currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
             }
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
@@ -3078,7 +3115,7 @@ namespace DSPRE {
             /* Load buildings nsbmd and textures for renderer into MapFile's building objects */
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {
                 currentMapFile.buildings[i] = LoadBuildingModel(currentMapFile.buildings[i], interiorbldRadioButton.Checked); // Load building nsbmd
-                currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, romInfo.buildingTexturesDirPath, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
+                currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
             }
 
             /* Render the map */
@@ -3634,7 +3671,7 @@ namespace DSPRE {
             }
 
             if (mapTextureComboBox.SelectedIndex > 0) 
-                currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, romInfo.mapTexturesDirPath, mapTextureComboBox.SelectedIndex - 1);
+                currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, mapTextureComboBox.SelectedIndex - 1);
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
             ModelSizeTXT.Text = currentMapFile.mapModelData.Length.ToString() + " B";
@@ -3883,7 +3920,7 @@ namespace DSPRE {
 
                 /* Read map and building models, match them with textures and render them*/
                 eventMapFile = new MapFile((int)mapIndex);
-                eventMapFile.mapModel = LoadModelTextures(eventMapFile.mapModel, romInfo.mapTexturesDirPath, areaData.mapTileset);
+                eventMapFile.mapModel = LoadModelTextures(eventMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, areaData.mapTileset);
 
                 bool isInteriorMap = false;
                 if ((RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") && areaData.areaType == 0x0)
@@ -3891,7 +3928,7 @@ namespace DSPRE {
 
                 for (int i = 0; i < eventMapFile.buildings.Count; i++) {
                     eventMapFile.buildings[i] = LoadBuildingModel(eventMapFile.buildings[i], isInteriorMap); // Load building nsbmd
-                    eventMapFile.buildings[i].NSBMDFile = LoadModelTextures(eventMapFile.buildings[i].NSBMDFile, romInfo.buildingTexturesDirPath, areaData.buildingsTileset); // Load building textures                
+                    eventMapFile.buildings[i].NSBMDFile = LoadModelTextures(eventMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, areaData.buildingsTileset); // Load building textures                
                 }
 
                 RenderMap(ref eventMapRenderer, ref eventBuildingsRenderer, ref eventMapFile, 0f, 115.0f, 90f, 4f, eventOpenGlControl.Width, eventOpenGlControl.Height, true, true);
@@ -3949,7 +3986,7 @@ namespace DSPRE {
             }
 
             try {
-                FileStream stream = new FileStream(RomInfo.OWSpriteDirPath + "\\" + result.spriteID.ToString("D4"), FileMode.Open);
+                FileStream stream = new FileStream(RomInfo.gameDirs[DirNames.OWSprites].unpackedDir + "\\" + result.spriteID.ToString("D4"), FileMode.Open);
                 NSMBe4.NSBMD.NSBTX_File nsbtx = new NSMBe4.NSBMD.NSBTX_File(stream);
 
                 if (nsbtx.TexInfo.num_objs <= 1) {
@@ -4210,7 +4247,7 @@ namespace DSPRE {
                 return;
 
             /* Update matrix object in memory */
-            string path = RomInfo.eventsDirPath + "\\" + selectEventComboBox.SelectedIndex.ToString("D4");
+            string path = RomInfo.gameDirs[DirNames.eventFiles].unpackedDir + "\\" + selectEventComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Refresh controls */
@@ -4221,7 +4258,7 @@ namespace DSPRE {
         }
         private void removeEventFileButton_Click(object sender, EventArgs e) {
             /* Delete event file */
-            File.Delete(RomInfo.eventsDirPath + "\\" + (selectEventComboBox.Items.Count - 1).ToString("D4"));
+            File.Delete(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir + "\\" + (selectEventComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectEventComboBox.Items.Count - 1;
@@ -5084,7 +5121,7 @@ namespace DSPRE {
         #endregion
         private void addScriptFileButton_Click(object sender, EventArgs e) {
             /* Add new event file to event folder */
-            string scriptFilePath = RomInfo.scriptDirPath + "\\" + selectScriptFileComboBox.Items.Count.ToString("D4");
+            string scriptFilePath = RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + selectScriptFileComboBox.Items.Count.ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(scriptFilePath, FileMode.Create))) 
                 writer.Write(new ScriptFile(0).ToByteArray());
 
@@ -5122,7 +5159,7 @@ namespace DSPRE {
                 return;
 
             /* Update scriptFile object in memory */
-            string path = RomInfo.scriptDirPath + "\\" + selectScriptFileComboBox.SelectedIndex.ToString("D4");
+            string path = RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + selectScriptFileComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Refresh controls */
@@ -5152,7 +5189,7 @@ namespace DSPRE {
         }
         private void removeScriptFileButton_Click(object sender, EventArgs e) {
             /* Delete script file */
-            File.Delete(RomInfo.scriptDirPath + "\\" + (selectScriptFileComboBox.Items.Count - 1).ToString("D4"));
+            File.Delete(RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + (selectScriptFileComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectScriptFileComboBox.Items.Count - 1;
@@ -5767,7 +5804,7 @@ namespace DSPRE {
                 return;
 
             /* Update Text Archive object in memory */
-            string path = RomInfo.textArchivesPath + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4");
+            string path = RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Refresh controls */
@@ -5778,7 +5815,7 @@ namespace DSPRE {
         }
         private void removeMessageFileButton_Click(object sender, EventArgs e) {
             /* Delete Text Archive */
-            File.Delete(RomInfo.textArchivesPath + "\\" + (selectTextFileComboBox.Items.Count - 1).ToString("D4"));
+            File.Delete(RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + (selectTextFileComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectTextFileComboBox.Items.Count - 1;
@@ -6040,9 +6077,9 @@ namespace DSPRE {
 
             string tilesetPath;
             if (mapTilesetRadioButton.Checked) 
-                tilesetPath = romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+                tilesetPath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             else 
-                tilesetPath = romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+                tilesetPath = RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             File.Copy(tilesetPath, sf.FileName);
         }
         private void importNSBTXButton_Click(object sender, EventArgs e) {
@@ -6055,9 +6092,9 @@ namespace DSPRE {
             /* Update nsbtx file */
             string tilesetPath;
             if (mapTilesetRadioButton.Checked) 
-                tilesetPath = romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+                tilesetPath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             else 
-                tilesetPath = romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+                tilesetPath = RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             File.Copy(ofd.FileName, tilesetPath, true);
 
             /* Update nsbtx object in memory and controls */
@@ -6096,9 +6133,9 @@ namespace DSPRE {
             /* Load tileset file */
             string tilesetPath;
             if (mapTilesetRadioButton.Checked) {
-                tilesetPath = romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+                tilesetPath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             } else {
-                tilesetPath = romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+                tilesetPath = RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             }
 
             currentTileset = new NSMBe4.NSBMD.NSBTX_File(new FileStream(tilesetPath, FileMode.Open));
@@ -6184,7 +6221,7 @@ namespace DSPRE {
             currentAreaData.mapTileset = (ushort)areaDataMapTilesetUpDown.Value;
         }
         private void saveAreaDataButton_Click(object sender, EventArgs e) {
-            string areaDataPath = romInfo.areaDataDirPath + "\\" + selectAreaDataListBox.SelectedIndex.ToString("D4");
+            string areaDataPath = workDir + @"\unpacked" + RomInfo.DirNames.areaData.ToString() + "\\" + selectAreaDataListBox.SelectedIndex.ToString("D4");
             using (BinaryWriter writer = new BinaryWriter(new FileStream(areaDataPath, FileMode.Create)))
                 writer.Write(currentAreaData.Save(RomInfo.gameVersion));
         }
@@ -6220,9 +6257,9 @@ namespace DSPRE {
         private void addNSBTXButton_Click(object sender, EventArgs e) {
             /* Add new NSBTX file to the correct folder */
             if (mapTilesetRadioButton.Checked) {
-                File.Copy(romInfo.mapTexturesDirPath + "\\" + 0.ToString("D4"), romInfo.mapTexturesDirPath + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
+                File.Copy(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + 0.ToString("D4"), RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
             } else {
-                File.Copy(romInfo.buildingTexturesDirPath + "\\" + 0.ToString("D4"), romInfo.buildingTexturesDirPath + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
+                File.Copy(RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + 0.ToString("D4"), RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
             }
            
             /* Update ComboBox and select new file */
@@ -6233,9 +6270,9 @@ namespace DSPRE {
             if (texturePacksListBox.Items.Count > 1) {
                 /* Delete NSBTX file */
                 if (mapTilesetRadioButton.Checked)
-                    File.Delete(romInfo.mapTexturesDirPath + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
+                    File.Delete(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
                 else {
-                    File.Delete(romInfo.buildingTexturesDirPath + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
+                    File.Delete(RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
                 }
 
                 /* Check if currently selected file is the last one, and in that case select the one before it */
@@ -6252,7 +6289,8 @@ namespace DSPRE {
         }
         private void addAreaDataButton_Click(object sender, EventArgs e) {
             /* Add new NSBTX file to the correct folder */
-            File.Copy(romInfo.areaDataDirPath + "\\" + 0.ToString("D4"), romInfo.areaDataDirPath + "\\" + selectAreaDataListBox.Items.Count.ToString("D4"));
+            string areaDataDirPath = RomInfo.gameDirs[DirNames.areaData].unpackedDir;
+            File.Copy(areaDataDirPath + "\\" + 0.ToString("D4"), areaDataDirPath + "\\" + selectAreaDataListBox.Items.Count.ToString("D4"));
 
             /* Update ComboBox and select new file */
             selectAreaDataListBox.Items.Add("AreaData File " + selectAreaDataListBox.Items.Count);
@@ -6261,7 +6299,7 @@ namespace DSPRE {
         private void removeAreaDataButton_Click(object sender, EventArgs e) {
             if (selectAreaDataListBox.Items.Count > 1) {
                 /* Delete AreaData file */
-                File.Delete(romInfo.areaDataDirPath + "\\" + (selectAreaDataListBox.Items.Count - 1).ToString("D4"));
+                File.Delete(RomInfo.gameDirs[DirNames.areaData].unpackedDir + "\\" + (selectAreaDataListBox.Items.Count - 1).ToString("D4"));
 
                 /* Check if currently selected file is the last one, and in that case select the one before it */
                 int lastIndex = selectAreaDataListBox.Items.Count - 1;
@@ -6299,7 +6337,7 @@ namespace DSPRE {
                 return;
 
             /* Update areadata object in memory */
-            string path = romInfo.areaDataDirPath + "\\" + selectAreaDataListBox.SelectedIndex.ToString("D4");
+            string path = RomInfo.gameDirs[DirNames.areaData].unpackedDir + "\\" + selectAreaDataListBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Refresh controls */

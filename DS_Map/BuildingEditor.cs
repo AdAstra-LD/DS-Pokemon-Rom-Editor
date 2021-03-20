@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using LibNDSFormats.NSBMD;
 using LibNDSFormats.NSBTX;
 using Tao.OpenGl;
+using static DSPRE.RomInfo;
 
 namespace DSPRE
 {
@@ -87,26 +88,22 @@ namespace DSPRE
                 }
             }
         }
-
-        private void FillTexturesBox()
-        {
-            int texturesCount = Directory.GetFiles(folder + rom.buildingTexturesDirPath).Length;
+        private void FillTexturesBox() {
+            int texturesCount = Directory.GetFiles(folder + RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir).Length;
             textureComboBox.Items.Add("Embedded textures");
 
             for (int i = 0; i < texturesCount; i++) 
                 textureComboBox.Items.Add("Texture " + i);
         }
-        private void LoadBuildingModel(int modelID, bool interior)
-        {
+        private void LoadBuildingModel(int modelID, bool interior) {
             string path = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + modelID.ToString("D4");
             using (Stream fs = new FileStream(path, FileMode.Open)) 
                 currentNSBMD = NSBMDLoader.LoadNSBMD(fs);
         }
-        private void LoadModelTextures(int fileID)
-        {
+        private void LoadModelTextures(int fileID) {
             string path;
             if (fileID > -1) 
-                path = folder + rom.buildingTexturesDirPath + "\\" + fileID.ToString("D4");
+                path = folder + RomInfo.gameDirs[RomInfo.DirNames.buildingTextures].unpackedDir + "\\" + fileID.ToString("D4");
             else 
                 path = Path.GetTempPath() + "BLDtexture.nsbtx"; // Load Embedded textures if the argument passed to this function is -1
             try {

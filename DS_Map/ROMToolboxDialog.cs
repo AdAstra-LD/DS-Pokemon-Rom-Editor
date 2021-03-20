@@ -8,6 +8,7 @@ using DSPRE.ROMFiles;
 using System.Collections.Generic;
 using DSPRE.Resources.ROMToolboxDB;
 using DSPRE.Resources;
+using static DSPRE.RomInfo;
 
 namespace DSPRE {
     public partial class ROMToolboxDialog : Form {
@@ -256,7 +257,7 @@ namespace DSPRE {
                     if (!overlayCode2.SequenceEqual(overlayCode2Read))
                         return 0;
 
-                    String fullFilePath = RomInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
+                    String fullFilePath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + expandedARMfileID.ToString("D4");
                     byte[] subroutineRead = DSUtils.ReadFromFile(fullFilePath, ToolboxDB.BDHCamSubroutineOffset, data.subroutine.Length); //Write new overlayCode1
                     if (data.subroutine.Length != subroutineRead.Length)
                         return 0; //0 means BDHCAM patch has not been applied
@@ -273,7 +274,8 @@ namespace DSPRE {
             return 0;
         }
         public bool CheckStandardizedItems() {
-            DSUtils.TryUnpackNarc(12);
+            DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.scripts });
+
             if ( flag_standardizedItems || MainProgram.ScanScriptsCheckStandardizedItemNumbers() ) {
                 itemNumbersCB.Visible = true;
                 flag_standardizedItems = true;
@@ -364,7 +366,7 @@ namespace DSPRE {
                 "- Replace " + (data.branchString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.branchOffset.ToString("X") + " with " + '\n' + data.branchString + "\n\n" +
                 "- Replace " + (data.overlayString1.Length / 3 + 1) + " bytes of data at overlay" + data.overlayNumber + " offset 0x" + data.overlayOffset1.ToString("X") + " with " + '\n' + data.overlayString1 + "\n\n" +
                 "- Replace " + (data.overlayString2.Length / 3 + 1) + " bytes of data at overlay" + data.overlayNumber + " offset 0x" + data.overlayOffset2.ToString("X") + " with " + '\n' + data.overlayString2 + "\n\n" +
-                "- Modify file #" + expandedARMfileID + " inside " + '\n' + RomInfo.syntheticOverlayPath + '\n' + "to insert the BDHCAM routine (any data between 0x" + ToolboxDB.BDHCamSubroutineOffset.ToString("X") + " and 0x" + (ToolboxDB.BDHCamSubroutineOffset + data.subroutine.Length).ToString("X") + " will be overwritten)." + "\n\n" +
+                "- Modify file #" + expandedARMfileID + " inside " + '\n' + RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\n' + "to insert the BDHCAM routine (any data between 0x" + ToolboxDB.BDHCamSubroutineOffset.ToString("X") + " and 0x" + (ToolboxDB.BDHCamSubroutineOffset + data.subroutine.Length).ToString("X") + " will be overwritten)." + "\n\n" +
                 "Do you wish to continue?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -383,7 +385,7 @@ namespace DSPRE {
                     DSUtils.WriteToFile(overlayFilePath, data.overlayOffset2, HexStringToByteArray(data.overlayString2)); //Write new overlayCode2
                     overlay1MustBeRestoredFromBackup = false;
 
-                    String fullFilePath = RomInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
+                    String fullFilePath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + expandedARMfileID.ToString("D4");
 
                     /*Write Expanded ARM9 File*/
                     DSUtils.WriteToFile(fullFilePath, ToolboxDB.BDHCamSubroutineOffset, data.subroutine);
@@ -430,7 +432,7 @@ namespace DSPRE {
 
             if (d == DialogResult.Yes) {
 
-                DSUtils.TryUnpackNarc(12);
+                DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.scripts });
 
                 if (flag_standardizedItems) {
                     AlreadyApplied();
@@ -471,7 +473,7 @@ namespace DSPRE {
                 "- Backup ARM9 file (arm9.bin.backup will be created)." + "\n\n" +
                 "- Replace " + (data.branchString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.branchOffset.ToString("X") + " with " + '\n' + data.branchString + "\n\n" +
                 "- Replace " + (data.initString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.initOffset.ToString("X") + " with " + '\n' + data.initString + "\n\n" +
-                "- Modify file #" + expandedARMfileID + " inside " + '\n' + RomInfo.syntheticOverlayPath + '\n' + " to accommodate for 88KB of data (no backup)." + "\n\n" +
+                "- Modify file #" + expandedARMfileID + " inside " + '\n' + RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\n' + " to accommodate for 88KB of data (no backup)." + "\n\n" +
                 "Do you wish to continue?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -482,7 +484,7 @@ namespace DSPRE {
                     DSUtils.WriteToArm9(data.branchOffset, HexStringToByteArray(data.branchString)); //Write new branchOffset
                     DSUtils.WriteToArm9(data.initOffset, HexStringToByteArray(data.initString)); //Write new initOffset
 
-                    string fullFilePath = RomInfo.syntheticOverlayPath + '\\' + expandedARMfileID.ToString("D4");
+                    string fullFilePath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + expandedARMfileID.ToString("D4");
                     File.Delete(fullFilePath);
                     using (BinaryWriter f = new BinaryWriter(File.Create(fullFilePath))) {
                         for (int i = 0; i < 0x16000; i++)
@@ -597,7 +599,7 @@ namespace DSPRE {
             return -1; // No table in expanded arm9 file
         }
         private void RepointCommandTable() {
-            string expandedPath = RomInfo.syntheticOverlayPath + "\\0000";
+            string expandedPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + "\\0000";
             ResourceManager customcmdDB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.CustomScrCmdDB", Assembly.GetExecutingAssembly());
 
             FileStream arm9FileStream = new FileStream(RomInfo.arm9Path, FileMode.Open); // I make a copy of the stream so the file is free for writing
@@ -622,7 +624,7 @@ namespace DSPRE {
             }
         }
         private bool ImportCustomCommand() {
-            string expandedPath = RomInfo.syntheticOverlayPath + "\\0000";
+            string expandedPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + "\\0000";
             int appliedPatches = 0;
 
             OpenFileDialog of = new OpenFileDialog();

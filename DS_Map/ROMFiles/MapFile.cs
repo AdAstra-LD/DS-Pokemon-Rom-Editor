@@ -2,6 +2,7 @@ using System.IO;
 using System.Collections.Generic;
 using LibNDSFormats.NSBMD;
 using System.Windows.Forms;
+using static DSPRE.RomInfo;
 
 namespace DSPRE.ROMFiles {
     /* ----------------------- MAP FILE DATA STRUCTURE (DPPtHGSS):--------------------------
@@ -55,7 +56,7 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (1)
-        public MapFile(int mapNumber) : this(new FileStream(RomInfo.mapsDirPath + "\\" + mapNumber.ToString("D4"), FileMode.Open)) { }
+        public MapFile(int mapNumber) : this(new FileStream(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + mapNumber.ToString("D4"), FileMode.Open)) { }
         public MapFile(Stream data) {
             using (BinaryReader reader = new BinaryReader(data))
             {
@@ -231,7 +232,7 @@ namespace DSPRE.ROMFiles {
             MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public void SaveToFileDefaultDir(int destFileID) {
-            string path = RomInfo.mapsDirPath + "\\" + destFileID.ToString("D4");
+            string path = RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + destFileID.ToString("D4");
             this.SaveToFile(path);
         }
         public void SaveToFileExplorePath(string suggestedFileName) {

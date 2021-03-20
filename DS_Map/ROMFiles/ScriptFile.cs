@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using static DSPRE.RomInfo;
 
 namespace DSPRE.ROMFiles {
     /// <summary>
@@ -127,7 +128,7 @@ namespace DSPRE.ROMFiles {
                 }
             }
         }
-        public ScriptFile(int fileID) : this(new FileStream(RomInfo.scriptDirPath +
+        public ScriptFile(int fileID) : this(new FileStream(RomInfo.gameDirs[DirNames.scripts].unpackedDir +
         "\\" + fileID.ToString("D4"), FileMode.Open)) {
             this.fileID = fileID;
         }
@@ -629,7 +630,7 @@ namespace DSPRE.ROMFiles {
                 MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
-            string path = RomInfo.scriptDirPath + "\\" + IDtoReplace.ToString("D4");
+            string path = RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + IDtoReplace.ToString("D4");
             this.SaveToFile(path, showSuccessMessage);  
         }
         public void SaveToFileExplorePath(string suggestedFileName, bool blindmode) {
@@ -642,7 +643,7 @@ namespace DSPRE.ROMFiles {
                 return;
 
             if (blindmode) {
-                File.Copy(RomInfo.scriptDirPath + "\\" + fileID.ToString("D4"), sf.FileName, overwrite: true);
+                File.Copy(RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + fileID.ToString("D4"), sf.FileName, overwrite: true);
                 
                 string msg = "";
                 if (!isLevelScript)

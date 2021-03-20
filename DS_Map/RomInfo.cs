@@ -22,11 +22,6 @@ namespace DSPRE {
         public static string gameLanguage { get; private set; }
         public static string gameName { get; private set; }
 
-        public static string[] narcPaths { get; private set; }
-        public static string[] extractedNarcDirs { get; private set; }
-
-        public static string syntheticOverlayPath { get; private set; }
-
         public static uint arm9spawnOffset { get; private set; }
         public static int initialMoneyOverlayNumber { get; private set; }
         public static uint initialMoneyOverlayOffset { get; private set; }
@@ -34,26 +29,8 @@ namespace DSPRE {
         public static int cameraTableOverlayNumber { get; private set; }
         public static uint[] cameraTableOverlayPointers { get; private set; }
 
-        public static string OWSpriteDirPath { get; private set; }
         public static uint OWTableOffset { get; internal set; }
         public static string OWtablePath { get; private set; }
-
-        public string interiorBuildingsPath { get; private set; }
-        public string exteriorBuildingModelsPath { get; private set; }
-        public string areaDataDirPath { get; private set; }
-
-        public static string matrixDirPath { get; private set; }
-        public string mapTexturesDirPath { get; private set; }
-        public string buildingTexturesDirPath { get; private set; }
-        public string buildingConfigFilesPath { get; private set; }
-
-        public static string mapsDirPath { get; private set; }
-        public static string eventsDirPath { get; private set; }
-        public static string scriptDirPath { get; private set; }
-        public static string textArchivesPath { get; private set; }
-        public static string encounterDirPath { get; private set; }
-        public static string trainerDataDirPath { get; private set; }
-
         public static int nullEncounterID { get; private set; }
         public static int attackNamesTextNumber { get; private set; }
         public static int[] pokemonNamesTextNumbers { get; private set; }
@@ -65,7 +42,7 @@ namespace DSPRE {
 
 
         public static readonly byte internalNameLength = 16;
-        public static string InternalNamesLocation { get; private set; }
+        public static string internalNamesLocation { get; private set; }
 
         public Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary { get; private set; }
         public static Dictionary<ushort, string> ScriptCommandNamesDict { get; private set; }
@@ -73,6 +50,30 @@ namespace DSPRE {
         public static SortedDictionary<uint, (uint spriteID, ushort properties)> OverworldTable { get; private set; }
         public static uint[] overworldTableKeys { get; private set; }
         public static Dictionary<uint, string> ow3DSpriteDict { get; private set; }
+
+        public enum DirNames : byte {
+            synthOverlay,
+            textArchives,
+
+            matrices,
+
+            maps,
+            exteriorBuildingModels,
+            buildingConfigFiles,
+            buildingTextures,
+            mapTextures,
+            areaData,
+
+            eventFiles,
+            trainerData,
+            OWSprites,
+
+            scripts,
+            encounters,
+
+            interiorBuildingModels
+        };
+        public static Dictionary<DirNames, (string packedDir, string unpackedDir)> gameDirs { get; private set; }
 
         #region Constructors (1)
         public RomInfo(string id, string dir) {
@@ -89,24 +90,9 @@ namespace DSPRE {
             overlayTablePath = workDir + @"y9.bin";
             overlayPath = workDir + "overlay";
 
-            InternalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
-            mapTexturesDirPath = workDir + @"unpacked\maptex";
-            buildingTexturesDirPath = workDir + @"unpacked\TextureBLD";
-            buildingConfigFilesPath = workDir + @"unpacked\area_build";
-            areaDataDirPath = workDir + @"unpacked\area_data";
-            textArchivesPath = workDir + @"unpacked\msg";
-            matrixDirPath = workDir + @"unpacked\matrix";
-            trainerDataDirPath = workDir + @"unpacked\trainerdata";
-            mapsDirPath = workDir + @"unpacked\maps";
-            encounterDirPath = workDir + @"unpacked\wildPokeData";
-            eventsDirPath = workDir + @"unpacked\events";
-            scriptDirPath = workDir + @"unpacked\scripts";
-            syntheticOverlayPath = workDir + @"unpacked\syntheticOverlayNarc";
-            OWSpriteDirPath = workDir + @"unpacked\overworlds";
+            internalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
 
-            SetBuildingModelsDirPath();
             SetNullEncounterID();           
-            
             SetOWtable();
             Set3DOverworldsDict();
 
@@ -285,130 +271,96 @@ namespace DSPRE {
             }
         }
         public void SetNarcDirs () {
-            extractedNarcDirs = new string[] {
-                syntheticOverlayPath,
-                textArchivesPath,
-
-                matrixDirPath,
-
-                mapsDirPath,
-                exteriorBuildingModelsPath,
-                buildingConfigFilesPath,
-                buildingTexturesDirPath,
-                mapTexturesDirPath,
-                areaDataDirPath,
-
-                eventsDirPath,
-                trainerDataDirPath,
-                OWSpriteDirPath,
-
-                scriptDirPath,
-                encounterDirPath,
-
-                interiorBuildingsPath
-            };
-            
+            Dictionary<DirNames, string> packedDirsDict = null;
             switch (gameVersion) {
                 case "D":
                 case "P":
-                    narcPaths = new string[] {
-                        @"data\data\weather_sys.narc",
-                        @"data\msgdata\msg.narc",
+                     packedDirsDict = new Dictionary<DirNames, string>() {
+                        [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
+                        [DirNames.textArchives] = @"data\msgdata\msg.narc",
 
-                        @"data\fielddata\mapmatrix\map_matrix.narc",
+                        [DirNames.matrices] = @"data\fielddata\mapmatrix\map_matrix.narc",
 
-                        @"data\fielddata\land_data\land_data_release.narc",
-                        @"data\fielddata\build_model\build_model.narc",
-                        @"data\fielddata\areadata\area_build_model\area_build.narc",
-                        @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
-                        @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
-                        @"data\fielddata\areadata\area_data.narc",
+                        [DirNames.maps] = @"data\fielddata\land_data\land_data_release.narc",
+                        [DirNames.exteriorBuildingModels] = @"data\fielddata\build_model\build_model.narc",
+                        [DirNames.buildingConfigFiles] = @"data\fielddata\areadata\area_build_model\area_build.narc",
+                        [DirNames.buildingTextures] = @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
+                        [DirNames.mapTextures] = @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
+                        [DirNames.areaData] = @"data\fielddata\areadata\area_data.narc",
 
-                        @"data\fielddata\eventdata\zone_event_release.narc",
-                        @"data\poketool\trainer\trdata.narc",
-                        @"data\data\mmodel\mmodel.narc",
+                        [DirNames.eventFiles] = @"data\fielddata\eventdata\zone_event_release.narc",
+                        [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
+                        [DirNames.OWSprites] = @"data\data\mmodel\mmodel.narc",
 
-                        @"data\fielddata\script\scr_seq_release.narc",
-                        @"data\fielddata\encountdata\" + char.ToLower(gameVersion[0]) + '_' + "enc_data.narc"
-
+                        [DirNames.scripts] = @"data\fielddata\script\scr_seq_release.narc",
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion[0]) + '_' + "enc_data.narc",
                     };
                     break;
                 case "Plat":
-                    narcPaths = new string[] {
-                        @"data\data\weather_sys.narc",
-                        @"data\msgdata\" + gameVersion.Substring(0,2).ToLower() + '_' + "msg.narc",
+                    packedDirsDict = new Dictionary<DirNames, string>() {
+                        [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
+                        [DirNames.textArchives] = @"data\msgdata\" + gameVersion.Substring(0,2).ToLower() + '_' + "msg.narc",
 
-                        @"data\fielddata\mapmatrix\map_matrix.narc",
+                        [DirNames.matrices] = @"data\fielddata\mapmatrix\map_matrix.narc",
 
-                        @"data\fielddata\land_data\land_data.narc",
-                        @"data\fielddata\build_model\build_model.narc",
-                        @"data\fielddata\areadata\area_build_model\area_build.narc",
-                        @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
-                        @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
-                        @"data\fielddata\areadata\area_data.narc",
+                        [DirNames.maps] = @"data\fielddata\land_data\land_data.narc",
+                        [DirNames.exteriorBuildingModels] = @"data\fielddata\build_model\build_model.narc",
+                        [DirNames.buildingConfigFiles] = @"data\fielddata\areadata\area_build_model\area_build.narc",
+                        [DirNames.buildingTextures] = @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
+                        [DirNames.mapTextures] = @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
+                        [DirNames.areaData] = @"data\fielddata\areadata\area_data.narc",
 
-                        @"data\fielddata\eventdata\zone_event.narc",
-                        @"data\poketool\trainer\trdata.narc",
-                        @"data\data\mmodel\mmodel.narc",
+                        [DirNames.eventFiles] = @"data\fielddata\eventdata\zone_event.narc",
+                        [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
+                        [DirNames.OWSprites] = @"data\data\mmodel\mmodel.narc",
 
-                        @"data\fielddata\script\scr_seq.narc",
-                        @"data\fielddata\encountdata\" + gameVersion.Substring(0,2).ToLower() + '_' + "enc_data.narc"
+                        [DirNames.scripts] = @"data\fielddata\script\scr_seq.narc",
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.Substring(0,2).ToLower() + '_' + "enc_data.narc"
                     };
                     break;
                 case "HG":
                 case "SS":
-                    narcPaths = new string[] {
-                        @"data\a\0\2\8",
-                        @"data\a\0\2\7",
+                    packedDirsDict = new Dictionary<DirNames, string>() {
+                        [DirNames.synthOverlay] = @"data\a\0\2\8",
+                        [DirNames.textArchives] = @"data\a\0\2\7",
 
-                        @"data\a\0\4\1",
+                        [DirNames.matrices] = @"data\a\0\4\1",
 
-                        @"data\a\0\6\5",
-                        @"data\a\0\4\0",
-                        @"data\a\0\4\3",
-                        @"data\a\0\7\0",
-                        @"data\a\0\4\4",
-                        @"data\a\0\4\2",
+                        [DirNames.maps] = @"data\a\0\6\5",
+                        [DirNames.exteriorBuildingModels] = @"data\a\0\4\0",
+                        [DirNames.buildingConfigFiles] = @"data\a\0\4\3",
+                        [DirNames.buildingTextures] = @"data\a\0\7\0",
+                        [DirNames.mapTextures] = @"data\a\0\4\4",
+                        [DirNames.areaData] = @"data\a\0\4\2",
 
-                        @"data\a\0\3\2",
-                        @"data\a\0\5\5",
-                        @"data\a\0\8\1",
+                        [DirNames.eventFiles] = @"data\a\0\3\2",
+                        [DirNames.trainerData] = @"data\a\0\5\5",
+                        [DirNames.OWSprites] = @"data\a\0\8\1",
 
-                        @"data\a\0\1\2",
-                        @"data\a\0\3\7",
+                        [DirNames.scripts] = @"data\a\0\1\2",
+                        //ENCOUNTERS FOLDER DEPENDS ON VERSION
 
-                        @"data\a\1\4\8"
+                        [DirNames.interiorBuildingModels] = @"data\a\1\4\8"
                     };
-                    if (gameVersion == "SS")
-                        narcPaths[narcPaths.Length - 2] = @"data\a\1\3\6"; //Fix SS encounters
+
+                    if (gameVersion == "HG") {
+                        packedDirsDict[DirNames.encounters] = @"data\a\0\3\7";
+                    } else {
+                        packedDirsDict[DirNames.encounters] = @"data\a\1\3\6"; //Fix SS encounters
+                    }
                     break;
             }
-        }
-        public void SetBuildingModelsDirPath() {
-            switch (gameVersion) {
-                case "D":
-                case "P":
-                case "Plat":
-                    exteriorBuildingModelsPath = workDir + @"unpacked\DPPtBuildings";
-                    break;
-                default:
-                    interiorBuildingsPath = workDir + @"unpacked\HGSSBuildingsIN";
-                    exteriorBuildingModelsPath = workDir + @"unpacked\HGSSBuildingsOUT";
-                    break;
+
+            gameDirs = new Dictionary<DirNames, (string packedDir, string unpackedDir)>();
+            foreach (KeyValuePair<DirNames, string> kvp in packedDirsDict) {
+                gameDirs.Add(kvp.Key, (kvp.Value, workDir + @"\unpacked" + '\\' + kvp.Key.ToString()) );
             }
         }
         public string GetBuildingModelsDirPath(bool interior) {
             if (interior) {
-                return interiorBuildingsPath;
+                return gameDirs[DirNames.interiorBuildingModels].unpackedDir;
             } else {
-                return exteriorBuildingModelsPath;
-            }
-        }
-        public int GetBuildingCount(bool interior) {
-            if (interior) {
-                return Directory.GetFiles(interiorBuildingsPath).Length;
-            } else {
-                return Directory.GetFiles(exteriorBuildingModelsPath).Length;
+                return gameDirs[DirNames.exteriorBuildingModels].unpackedDir;
             }
         }
 
@@ -567,7 +519,7 @@ namespace DSPRE {
             }
         }
         public int GetHeaderCount() {
-            return (int)new FileInfo(InternalNamesLocation).Length / internalNameLength;
+            return (int)new FileInfo(internalNamesLocation).Length / internalNameLength;
         }
         public void SetAttackNamesTextNumber() {
             switch (gameVersion) {
@@ -674,29 +626,16 @@ namespace DSPRE {
                     break;
             }
         }
-        public int GetAreaDataCount() {
-            return Directory.GetFiles(areaDataDirPath).Length;
-        }
-        public int GetMapTexturesCount() {
-            return Directory.GetFiles(mapTexturesDirPath).Length;
-        }
-        public int GetBuildingTexturesCount() {
-            return Directory.GetFiles(buildingTexturesDirPath).Length;
-        }
-        public int GetMatrixCount() {
-            return Directory.GetFiles(matrixDirPath).Length;
-        }
-        public int GetTextArchivesCount() {
-            return Directory.GetFiles(textArchivesPath).Length;
-        }
-        public int GetMapCount() {
-            return Directory.GetFiles(mapsDirPath).Length;
-        }
-        public int GetEventCount() {
-            return Directory.GetFiles(eventsDirPath).Length;
-        }
-        public int GetScriptCount() {
-            return Directory.GetFiles(scriptDirPath).Length;
+        public int GetAreaDataCount() => Directory.GetFiles(gameDirs[DirNames.areaData].unpackedDir).Length;
+        public int GetMapTexturesCount() => Directory.GetFiles(gameDirs[DirNames.mapTextures].unpackedDir).Length;
+        public int GetBuildingTexturesCount() => Directory.GetFiles(gameDirs[DirNames.buildingTextures].unpackedDir).Length;
+        public int GetMatrixCount() => Directory.GetFiles(gameDirs[DirNames.matrices].unpackedDir).Length;
+        public int GetTextArchivesCount() => Directory.GetFiles(gameDirs[DirNames.textArchives].unpackedDir).Length;
+        public int GetMapCount() => Directory.GetFiles(gameDirs[DirNames.maps].unpackedDir).Length;
+        public int GetEventCount() => Directory.GetFiles(gameDirs[DirNames.eventFiles].unpackedDir).Length;
+        public int GetScriptCount() => Directory.GetFiles(gameDirs[DirNames.scripts].unpackedDir).Length;       
+        public int GetBuildingCount(bool interior) {
+            return Directory.GetFiles(GetBuildingModelsDirPath(interior)).Length;
         }
         #endregion
 

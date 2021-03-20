@@ -6,6 +6,7 @@ using System.Resources;
 using System.Reflection;
 using System.Windows.Forms;
 using DSPRE.Resources;
+using static DSPRE.RomInfo;
 
 namespace DSPRE.ROMFiles {
 	/// <summary>
@@ -151,7 +152,7 @@ namespace DSPRE.ROMFiles {
 
             readText.Dispose();
         }
-        public TextArchive(int ID) : this( (new FileStream(RomInfo.textArchivesPath + "\\" + ID.ToString("D4"), FileMode.Open))) {
+        public TextArchive(int ID) : this( (new FileStream(RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open))) {
         }
         #endregion
 
@@ -323,7 +324,7 @@ namespace DSPRE.ROMFiles {
                 MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
-            string path = RomInfo.textArchivesPath + "\\" + IDtoReplace.ToString("D4");
+            string path = RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + IDtoReplace.ToString("D4");
             this.SaveToFile(path, showSuccessMessage);
         }
         public void SaveToFileExplorePath(string suggestedFileName) {

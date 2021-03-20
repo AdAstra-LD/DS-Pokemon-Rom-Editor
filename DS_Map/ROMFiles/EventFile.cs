@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using static DSPRE.RomInfo;
 
 namespace DSPRE.ROMFiles {
     /// <summary>
@@ -39,7 +40,7 @@ namespace DSPRE.ROMFiles {
                     triggers.Add(new Trigger(new MemoryStream(reader.ReadBytes(0x10))));
             }
         }
-        public EventFile(int ID) : this(new FileStream(RomInfo.eventsDirPath + "\\" + ID.ToString("D4"), FileMode.Open)) { }
+        public EventFile(int ID) : this(new FileStream(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
         #endregion
 
         #region Methods (1)
@@ -77,7 +78,7 @@ namespace DSPRE.ROMFiles {
             MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public void SaveToFileDefaultDir(int IDtoReplace) {
-            string path = RomInfo.eventsDirPath + "\\" + IDtoReplace.ToString("D4");
+            string path = RomInfo.gameDirs[DirNames.eventFiles].unpackedDir + "\\" + IDtoReplace.ToString("D4");
             this.SaveToFile(path);
         }
         public void SaveToFileExplorePath(string suggestedFileName) {

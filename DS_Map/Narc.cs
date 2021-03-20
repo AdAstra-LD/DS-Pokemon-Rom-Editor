@@ -26,6 +26,11 @@ namespace NarcAPI
             FileStream file = File.OpenRead(filePath);
             Narc narc = new Narc(Path.GetFileNameWithoutExtension(filePath));
             BinaryReader br = new BinaryReader(file);
+
+            uint magicNumber = br.ReadUInt32();
+            if (magicNumber != 0x4352414E)
+                return null;
+
             narc.ReadOffsets(br);
             narc.ReadElements(br);
             br.Close();
