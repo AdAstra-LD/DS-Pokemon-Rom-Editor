@@ -245,15 +245,14 @@ namespace DSPRE {
 
                 DirNames.scripts, }, toolStripProgressBar);
 
-            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
+            if (RomInfo.gameFamily == "HGSS") {
                 DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
             }
 
             disableHandlers = true;
             if (File.Exists(RomInfo.OWtablePath)) {
-                switch (RomInfo.gameVersion) {
-                    case "D":
-                    case "P":
+                switch (RomInfo.gameFamily) {
+                    case "DP":
                     case "Plat":
                         break;
                     default:
@@ -350,9 +349,8 @@ namespace DSPRE {
 
             /*Add list of options to each control */
             locationNameComboBox.Items.AddRange(new TextArchive(RomInfo.locationNamesTextNumber).messages.ToArray());
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                     areaIconComboBox.Enabled = false;
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("dpareaicon");
                     areaSettingsLabel.Text = "Show nametag:";
@@ -422,7 +420,7 @@ namespace DSPRE {
                 DirNames.areaData,
             }, toolStripProgressBar);
 
-            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
+            if (RomInfo.gameFamily == "HGSS") {
                 DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
             }
 
@@ -432,9 +430,8 @@ namespace DSPRE {
             mapOpenGlControl.MouseWheel += new MouseEventHandler(mapOpenGlControl_MouseWheel);
             collisionPainterPictureBox.Image = new Bitmap(100, 100);
             typePainterPictureBox.Image = new Bitmap(100, 100);
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                 case "Plat":
                     mapPartsTabControl.TabPages.Remove(bgsTabPage);
                     break;
@@ -447,9 +444,8 @@ namespace DSPRE {
             /* Add map names to box */
             for (int i = 0; i < romInfo.GetMapCount(); i++) {
                 using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + i.ToString("D4")))) {
-                    switch (RomInfo.gameVersion) {
-                        case "D":
-                        case "P":
+                    switch (RomInfo.gameFamily) {
+                        case "DP":
                         case "Plat":
                             reader.BaseStream.Position = 0x10 + reader.ReadUInt32() + reader.ReadUInt32() + 0x34;
                             break;
@@ -504,15 +500,13 @@ namespace DSPRE {
             //Default selections
             selectMapComboBox.SelectedIndex = 0;
             exteriorbldRadioButton.Checked = true;
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                 case "Plat":
                     mapTextureComboBox.SelectedIndex = 7;
                     buildTextureComboBox.SelectedIndex = 1;
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     mapTextureComboBox.SelectedIndex = 3;
                     buildTextureComboBox.SelectedIndex = 1;
                     break;
@@ -542,9 +536,8 @@ namespace DSPRE {
 
             /* Enable gameVersion-specific controls */
 
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                 case "Plat":
                     break;
                 default:
@@ -753,11 +746,11 @@ namespace DSPRE {
             if (forceUnpack) {
                 DSUtils.ForceUnpackNarcs(toUnpack, toolStripProgressBar);
 
-                if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
+                if (RomInfo.gameFamily == "HGSS")
                     DSUtils.ForceUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);// Last = interior buildings dir
             } else {
                 DSUtils.TryUnpackNarcs(toUnpack, toolStripProgressBar);
-                if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
+                if (RomInfo.gameFamily == "HGSS")
                     DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
             }
 
@@ -851,9 +844,8 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack NARCs from folder...";
             Update();
 
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                 case "Plat":
                     break;
                 default:
@@ -1078,9 +1070,8 @@ namespace DSPRE {
                 encToOpen = 0;
             }
 
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                 case "Plat":
                     using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, GetPokémonNames(), encToOpen))
                         editor.ShowDialog();
@@ -1121,9 +1112,8 @@ namespace DSPRE {
             if (disableHandlers) return;
 
             string imageName;
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                     break;
                 case "Plat":
                     ((HeaderPt)currentHeader).areaIcon = (byte)areaIconComboBox.SelectedIndex;
@@ -1143,9 +1133,8 @@ namespace DSPRE {
 
             string imageName;
             try {
-                switch (RomInfo.gameVersion) {
-                    case "D":
-                    case "P":
+                switch (RomInfo.gameFamily) {
+                    case "DP":
                         currentHeader.cameraAngleID = (byte)cameraComboBox.SelectedIndex;
                         imageName = "dpcamera" + cameraComboBox.SelectedIndex.ToString();
                         break;
@@ -1188,18 +1177,15 @@ namespace DSPRE {
             if (flag3CheckBox.Checked)
                 flagVal += (byte)Math.Pow(2, 3);
 
-            switch (RomInfo.gameVersion) {
-                case "HG":
-                case "SS":
-                    if (flag4CheckBox.Checked)
-                        flagVal += (byte)Math.Pow(2, 4);
-                    if (flag5CheckBox.Checked)
-                        flagVal += (byte)Math.Pow(2, 5);
-                    if (flag6CheckBox.Checked)
-                        flagVal += (byte)Math.Pow(2, 6);
-                    if (flag7CheckBox.Checked)
-                        flagVal += (byte)Math.Pow(2, 7);
-                    break;
+            if (RomInfo.gameFamily == "HGSS") { 
+                if (flag4CheckBox.Checked)
+                    flagVal += (byte)Math.Pow(2, 4);
+                if (flag5CheckBox.Checked)
+                    flagVal += (byte)Math.Pow(2, 5);
+                if (flag6CheckBox.Checked)
+                    flagVal += (byte)Math.Pow(2, 6);
+                if (flag7CheckBox.Checked)
+                    flagVal += (byte)Math.Pow(2, 7);
             }
             currentHeader.flags = flagVal;
         }
@@ -1227,7 +1213,7 @@ namespace DSPRE {
 
             cameraComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.cameraAngleID.ToString("D2"));
 
-            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS")
+            if (RomInfo.gameFamily == "HGSS")
                 areaSettingsComboBox.SelectedIndex = cameraComboBox.FindString("[" + ((HeaderHGSS)currentHeader).areaSettings.ToString("D2"));
 
             if (currentHeader.wildPokémon == RomInfo.nullEncounterID)
@@ -1236,9 +1222,8 @@ namespace DSPRE {
                 openWildEditorWithIdButton.Enabled = true;
 
             /* Setup controls for fields with version-specific differences */
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                     locationNameComboBox.SelectedIndex = ((HeaderDP)currentHeader).locationName;
                     musicDayUpDown.Value = ((HeaderDP)currentHeader).musicDayID;
                     musicNightUpDown.Value = ((HeaderDP)currentHeader).musicNightID;
@@ -1273,7 +1258,7 @@ namespace DSPRE {
             flag2CheckBox.Checked = ba[2];
             flag3CheckBox.Checked = ba[3];
 
-            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
+            if (RomInfo.gameFamily == "HGSS") {
                 flag4CheckBox.Checked = ba[4];
                 flag5CheckBox.Checked = ba[5];
                 flag6CheckBox.Checked = ba[6];
@@ -1309,9 +1294,8 @@ namespace DSPRE {
             if (disableHandlers)
                 return;
 
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                     ((HeaderDP)currentHeader).locationName = (ushort)locationNameComboBox.SelectedIndex;
                     break;
                 case "Plat":
@@ -1330,9 +1314,8 @@ namespace DSPRE {
         private void musicDayComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) 
                 return;
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                     currentHeader.musicDayID = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
                     break;
                 case "Plat":
@@ -1347,9 +1330,8 @@ namespace DSPRE {
             if (disableHandlers) 
                 return;
 
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                     currentHeader.musicNightID = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
                     break;
                 case "Plat":
@@ -1368,9 +1350,8 @@ namespace DSPRE {
             ushort updValue = (ushort)((NumericUpDown)sender).Value;
             currentHeader.musicDayID = updValue;
             try {
-                switch (RomInfo.gameVersion) {
-                    case "D":
-                    case "P":
+                switch (RomInfo.gameFamily) {
+                    case "DP":
                         musicDayComboBox.SelectedItem = PokeDatabase.MusicDB.DPMusicDict[updValue];
                         break;
                     case "Plat":
@@ -1393,9 +1374,8 @@ namespace DSPRE {
             ushort updValue = (ushort)((NumericUpDown)sender).Value;
             currentHeader.musicNightID = updValue;
             try {
-                switch (RomInfo.gameVersion) {
-                    case "D":
-                    case "P":
+                switch (RomInfo.gameFamily) {
+                    case "DP":
                         musicNightComboBox.SelectedItem = PokeDatabase.MusicDB.DPMusicDict[updValue];
                         break;
                     case "Plat":
@@ -1428,9 +1408,8 @@ namespace DSPRE {
             /* Update Weather Combobox*/
             disableHandlers = true;
             try {
-                switch (RomInfo.gameVersion) {
-                    case "D":
-                    case "P":
+                switch (RomInfo.gameFamily) {
+                    case "DP":
                         weatherComboBox.SelectedItem = PokeDatabase.Weather.DPWeatherDict[currentHeader.weatherID];
                         break;
                     case "Plat":
@@ -1448,9 +1427,8 @@ namespace DSPRE {
             /* Update Weather Picture */
             try {
                 Dictionary<byte[], string> dict;
-                switch (RomInfo.gameVersion) {
-                    case "D":
-                    case "P":
+                switch (RomInfo.gameFamily) {
+                    case "DP":
                         dict = PokeDatabase.System.WeatherPics.dpWeatherImageDict;
                         break;
                     case "Plat":
@@ -1480,9 +1458,8 @@ namespace DSPRE {
             if (disableHandlers || weatherComboBox.SelectedIndex < 0)
                 return;
 
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                     weatherUpDown.Value = PokeDatabase.Weather.DPWeatherDict.Keys.ElementAt(weatherComboBox.SelectedIndex);
                     break;
                 case "Plat":
@@ -1591,9 +1568,8 @@ namespace DSPRE {
                 headerListBox.Items.Clear();
                 bool noResult = true;
 
-                switch (RomInfo.gameVersion) {
-                    case "D":
-                    case "P":
+                switch (RomInfo.gameFamily) {
+                    case "DP":
                         for (ushort i = 0; i < internalNames.Count; i++) {
                             String locationName = locationNameComboBox.Items[((HeaderDP)MapHeader.LoadFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
@@ -1611,8 +1587,7 @@ namespace DSPRE {
                             }
                         }
                         break;
-                    case "HG":
-                    case "SS":
+                    case "HGSS":
                         for (ushort i = 0; i < internalNames.Count; i++) {
                             String locationName = locationNameComboBox.Items[((HeaderHGSS)MapHeader.LoadFromARM9(i)).locationName].ToString();
                             if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
@@ -1642,14 +1617,12 @@ namespace DSPRE {
             if (disableHandlers || areaSettingsComboBox.SelectedItem == null)
                 return;
 
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                 case "Plat":
                     currentHeader.showName = Byte.Parse(areaSettingsComboBox.SelectedItem.ToString().Substring(1, 3));
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     HeaderHGSS ch = ((HeaderHGSS)currentHeader);
 
                     ch.areaSettings = (byte)areaSettingsComboBox.SelectedIndex;
@@ -1907,14 +1880,12 @@ namespace DSPRE {
             internalNameBox.Text = internalNameCopy;
             wildPokeUpDown.Value = encountersIDCopy;
 
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                 case "Plat":
                     areaSettingsComboBox.SelectedIndex = shownameCopy;
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     areaSettingsComboBox.SelectedIndex = areaSettingsCopy;
                     break;
             }
@@ -2979,7 +2950,7 @@ namespace DSPRE {
             ModelSizeTXT.Text = currentMapFile.mapModelData.Length.ToString() + " B";
             TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
 
-            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
+            if (RomInfo.gameFamily == "HGSS") {
                 BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
             }
         }
@@ -3695,10 +3666,11 @@ namespace DSPRE {
         #region BDHC Editor
         private void bdhcImportButton_Click(object sender, EventArgs e) {
             OpenFileDialog it = new OpenFileDialog();
-            if (RomInfo.gameVersion == "D" || RomInfo.gameVersion == "P")
+            if (RomInfo.gameFamily == "DP") {
                 it.Filter = "Terrain File (*.bdhc)|*.bdhc";
-            else
+            } else {
                 it.Filter = "Terrain File (*.bdhc, *.bdhcam)|*.bdhc;*.bdhcam";
+            }
 
             if (it.ShowDialog(this) != DialogResult.OK)
                 return;
@@ -3720,7 +3692,6 @@ namespace DSPRE {
             TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
             MessageBox.Show("Terrain settings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
         private void soundPlatesImportButton_Click(object sender, EventArgs e) {
             OpenFileDialog it = new OpenFileDialog();
             it.Filter = "BackGround Sound File (*.bgs)|*.bgs";
@@ -6233,9 +6204,8 @@ namespace DSPRE {
             areaDataLightTypeComboBox.SelectedIndex = currentAreaData.lightType;
 
             disableHandlers = true;
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                 case "Plat":
                     break;
                 default:

@@ -116,9 +116,8 @@ namespace DSPRE.ROMFiles {
             if (headerData.Length < MapHeader.length)
                 return null;
 
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                     return new HeaderDP(headerNumber, new MemoryStream(headerData));
                 case "Plat":
                     return new HeaderPt(headerNumber, new MemoryStream(headerData));

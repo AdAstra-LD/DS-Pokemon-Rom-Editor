@@ -20,27 +20,15 @@ namespace DSPRE {
             internal uint initOffset;
 
             internal ARM9PatchData() {
-                switch (RomInfo.gameVersion) {
-                    case "D":
-                    case "P":
-                        initString = ToolboxDB.arm9ExpansionCodeDB[nameof(initString) + "_" + "D"];
-                        branchString = ToolboxDB.arm9ExpansionCodeDB[nameof(branchString) + "_" + "D" + "_" + RomInfo.gameLanguage];
-                        branchOffset = ToolboxDB.arm9ExpansionOffsetsDB[nameof(branchOffset) + "_" + "D"];
-                        break;
-                    case "Plat":
-                        initString = ToolboxDB.arm9ExpansionCodeDB[nameof(initString) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
-                        branchString = ToolboxDB.arm9ExpansionCodeDB[nameof(branchString) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
-                        branchOffset = ToolboxDB.arm9ExpansionOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameVersion];
-                        break;
-                    case "HG":
-                    case "SS":
-                        initString = ToolboxDB.arm9ExpansionCodeDB[nameof(initString) + "_" + "HG"];
-                        branchString = ToolboxDB.arm9ExpansionCodeDB[nameof(branchString) + "_" + "HG" + "_" + RomInfo.gameLanguage];
-                        branchOffset = ToolboxDB.arm9ExpansionOffsetsDB[nameof(branchOffset) + "_" + "HG"];
-                        break;
+                branchOffset = ToolboxDB.arm9ExpansionOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameFamily] - 0x02000000;
+                initOffset = ToolboxDB.arm9ExpansionOffsetsDB[nameof(initOffset) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage] - 0x02000000;
+                branchString = ToolboxDB.arm9ExpansionCodeDB[nameof(branchString) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
+
+                if (RomInfo.gameFamily == "Plat" ) {
+                    initString = ToolboxDB.arm9ExpansionCodeDB[nameof(initString) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
+                } else {
+                    initString = ToolboxDB.arm9ExpansionCodeDB[nameof(initString) + "_" + RomInfo.gameFamily];
                 }
-                branchOffset -= 0x02000000;
-                initOffset = ToolboxDB.arm9ExpansionOffsetsDB[nameof(initOffset) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage] - 0x02000000;
             }
         }
         internal class BDHCAMPatchData {
@@ -58,23 +46,22 @@ namespace DSPRE {
             internal byte[] subroutine;
 
             internal BDHCAMPatchData () {
-                switch (RomInfo.gameVersion) {
+                switch (RomInfo.gameFamily) {
                     case "Plat":
                         overlayNumber = 5;
-                        branchString = ToolboxDB.BDHCamCodeDB[nameof(branchString) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
+                        branchString = ToolboxDB.BDHCamCodeDB[nameof(branchString) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
                         
-                        branchOffset = ToolboxDB.BDHCamOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
-                        overlayOffset1 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset1) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
-                        overlayOffset2 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset2) + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage];
+                        branchOffset = ToolboxDB.BDHCamOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
+                        overlayOffset1 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset1) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
+                        overlayOffset2 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset2) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
                         break;
-                    case "HG":
-                    case "SS":
+                    case "HGSS":
                         overlayNumber = 1;
-                        branchString = ToolboxDB.BDHCamCodeDB[nameof(branchString) + "_" + "HG"];
+                        branchString = ToolboxDB.BDHCamCodeDB[nameof(branchString) + "_" + RomInfo.gameFamily];
 
-                        branchOffset = ToolboxDB.BDHCamOffsetsDB[nameof(branchOffset) + "_" + "HG"];
-                        overlayOffset1 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset1) + "_" + "HG"];
-                        overlayOffset2 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset2) + "_" + "HG"];
+                        branchOffset = ToolboxDB.BDHCamOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameFamily];
+                        overlayOffset1 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset1) + "_" + RomInfo.gameFamily];
+                        overlayOffset2 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset2) + "_" + RomInfo.gameFamily];
                         break;
                 }
                 branchOffset -= 0x02000000;
@@ -84,7 +71,7 @@ namespace DSPRE {
             }
         }
 
-        public uint expandedARMfileID = ToolboxDB.syntheticOverlayFileNumbersDB[RomInfo.gameVersion];
+        public uint expandedARMfileID = ToolboxDB.syntheticOverlayFileNumbersDB[RomInfo.gameFamily];
         public static bool flag_standardizedItems { get; private set; } = false;
         public static bool flag_arm9Expanded { get; private set; } = false;
         public static bool flag_BDHCamPatchApplied { get; private set; } = false;
@@ -105,9 +92,8 @@ namespace DSPRE {
                 DisableScrcmdRepointPatch("Unsupported\nlanguage");
             }
 
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                     DisableOverlay1patch("Unsupported");
                     DisableMatrixExpansionPatch("Unsupported");
                     DisableScrcmdRepointPatch("Unsupported");
@@ -118,8 +104,7 @@ namespace DSPRE {
                     DisableScrcmdRepointPatch("Unsupported");
                     CheckFilesBDHCamPatchApplied();
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     if (!DSUtils.CheckOverlayHasCompressionFlag(1)) {
                         DisableOverlay1patch("Already applied");
                         overlay1CB.Visible = true;
@@ -208,10 +193,9 @@ namespace DSPRE {
             arm9patchCB.Visible = true;
             DisableARM9patch("Already applied");
 
-            switch (RomInfo.gameVersion) {
+            switch (RomInfo.gameFamily) {
                 case "Plat":
-                case "HG":
-                case "SS":
+                case "HGSS":
                     BDHCamARM9requiredLBL.Visible = false;
                     BDHCamPatchButton.Enabled = true;
                     BDHCamPatchLBL.Enabled = true;
@@ -346,7 +330,7 @@ namespace DSPRE {
         private void BDHCAMPatchButton_Click(object sender, EventArgs e) {
             BDHCAMPatchData data = new BDHCAMPatchData();
 
-            if (RomInfo.gameVersion == "HG" || RomInfo.gameVersion == "SS") {
+            if (RomInfo.gameFamily == "HGSS") {
                 if (DSUtils.CheckOverlayHasCompressionFlag(data.overlayNumber)) { 
                     DialogResult d1;
                     d1 = MessageBox.Show("It is STRONGLY recommended to configure Overlay1 as uncompressed before proceeding.\n\n" +
@@ -495,10 +479,9 @@ namespace DSPRE {
                     arm9patchCB.Visible = true;
                     flag_arm9Expanded = true;
 
-                    switch (RomInfo.gameVersion) {
+                    switch (RomInfo.gameFamily) {
                         case "Plat":
-                        case "HG":
-                        case "SS":
+                        case "HGSS":
                             BDHCamPatchButton.Text = "Apply Patch";
                             BDHCamPatchButton.Enabled = true;
                             BDHCamPatchLBL.Enabled = true;

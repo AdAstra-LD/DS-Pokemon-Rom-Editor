@@ -20,6 +20,7 @@ namespace DSPRE {
         public static string overlayPath { get; set; }
         public static string gameVersion { get; private set; }
         public static string gameLanguage { get; private set; }
+        public static string gameFamily { get; private set; }
         public static string gameName { get; private set; }
 
         public static uint arm9spawnOffset { get; private set; }
@@ -83,6 +84,7 @@ namespace DSPRE {
             if (gameVersion == null)
                 return;
 
+            LoadGameFamily();
             LoadGameName();
             LoadGameLanguage();
 
@@ -363,7 +365,6 @@ namespace DSPRE {
                 return gameDirs[DirNames.exteriorBuildingModels].unpackedDir;
             }
         }
-
         public void SetOWtable () {
             switch (gameVersion) {
                 case "D":
@@ -515,6 +516,21 @@ namespace DSPRE {
 
                 default:
                     gameLanguage = "JAP";
+                    break;
+            }
+        }
+        public void LoadGameFamily() {
+            switch (gameVersion) {
+                case "D":
+                case "P":
+                    gameFamily = "DP";
+                    break;
+                case "Plat":
+                    gameFamily = "Plat";
+                    break;
+                case "HG":
+                case "SS":
+                    gameFamily = "HGSS";
                     break;
             }
         }

@@ -173,9 +173,8 @@ namespace DSPRE.ROMFiles {
             List<byte[]> parameterList = new List<byte[]>();
 
             /* How to read parameters for different commands for DPPt*/
-            switch (RomInfo.gameVersion) {
-                case "D":
-                case "P":
+            switch (RomInfo.gameFamily) {
+                case "DP":
                 case "Plat":
                     switch (id)  {
                         case 0x16: //Jump
@@ -315,8 +314,7 @@ namespace DSPRE.ROMFiles {
                             break;
                     }
                     break;
-                case "HG":
-                case "SS":
+                case "HGSS":
                     switch (id) {
                         case 0x16: //Jump
                         case 0x1A: //Call 
