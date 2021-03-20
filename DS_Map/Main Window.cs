@@ -425,7 +425,7 @@ namespace DSPRE {
 
             /* Add map names to box */
             for (int i = 0; i < romInfo.GetMapCount(); i++) {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.mapDirPath + "\\" + i.ToString("D4")))) {
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.mapsDirPath + "\\" + i.ToString("D4")))) {
                     switch (RomInfo.gameVersion) {
                         case "D":
                         case "P":
@@ -2711,7 +2711,7 @@ namespace DSPRE {
                 return;
 
             /* Update map object in memory */
-            string path = RomInfo.mapDirPath + "\\" + selectMapComboBox.SelectedIndex.ToString("D4");
+            string path = RomInfo.mapsDirPath + "\\" + selectMapComboBox.SelectedIndex.ToString("D4");
             File.Copy(of.FileName, path, true);
 
             /* Refresh controls */
@@ -2882,7 +2882,7 @@ namespace DSPRE {
         }
         private void removeMapFileButton_Click(object sender, EventArgs e) {
             /* Delete last map file */
-            File.Delete(RomInfo.mapDirPath + "\\" + (selectMapComboBox.Items.Count - 1).ToString("D4"));
+            File.Delete(RomInfo.mapsDirPath + "\\" + (selectMapComboBox.Items.Count - 1).ToString("D4"));
 
             /* Check if currently selected file is the last one, and in that case select the one before it */
             int lastIndex = selectMapComboBox.Items.Count - 1;

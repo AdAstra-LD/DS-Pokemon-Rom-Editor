@@ -312,7 +312,7 @@ namespace DSPRE {
         }
 
         private void CheckScrcmdRepointPatchApplied() {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
         #endregion
 

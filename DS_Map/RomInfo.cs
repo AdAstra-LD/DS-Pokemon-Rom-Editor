@@ -22,31 +22,37 @@ namespace DSPRE {
         public static string gameLanguage { get; private set; }
         public static string gameName { get; private set; }
 
-        public static long headerTableOffset { get; private set; }
+        public static string[] narcPaths { get; private set; }
+        public static string[] extractedNarcDirs { get; private set; }
+
+        public static string syntheticOverlayPath { get; private set; }
+
         public static uint arm9spawnOffset { get; private set; }
         public static int initialMoneyOverlayNumber { get; private set; }
-        public static uint initialMoneyOffset { get; private set; }
-        public static string syntheticOverlayPath { get; private set; }
+        public static uint initialMoneyOverlayOffset { get; private set; }
+
+        public static int cameraTableOverlayNumber { get; private set; }
+        public static uint[] cameraTableOverlayPointers { get; private set; }
+
         public static string OWSpriteDirPath { get; private set; }
-        public static long OWTableOffset { get; internal set; }
-
-        private string interiorBuildingsPath;
-        private string exteriorBuildingModelsPath;
-
-        public string areaDataDirPath { get; private set; }
+        public static uint OWTableOffset { get; internal set; }
         public static string OWtablePath { get; private set; }
+
+        public string interiorBuildingsPath { get; private set; }
+        public string exteriorBuildingModelsPath { get; private set; }
+        public string areaDataDirPath { get; private set; }
+
+        public static string matrixDirPath { get; private set; }
         public string mapTexturesDirPath { get; private set; }
         public string buildingTexturesDirPath { get; private set; }
         public string buildingConfigFilesPath { get; private set; }
-        public static string matrixDirPath { get; private set; }
-        public static string mapDirPath { get; private set; }
+
+        public static string mapsDirPath { get; private set; }
         public static string eventsDirPath { get; private set; }
         public static string scriptDirPath { get; private set; }
         public static string textArchivesPath { get; private set; }
         public static string encounterDirPath { get; private set; }
         public static string trainerDataDirPath { get; private set; }
-        public static string[] narcPaths { get; private set; }
-        public static string[] extractedNarcDirs { get; private set; }
 
         public static int nullEncounterID { get; private set; }
         public static int attackNamesTextNumber { get; private set; }
@@ -91,17 +97,18 @@ namespace DSPRE {
             textArchivesPath = workDir + @"unpacked\msg";
             matrixDirPath = workDir + @"unpacked\matrix";
             trainerDataDirPath = workDir + @"unpacked\trainerdata";
-            mapDirPath = workDir + @"unpacked\maps";
+            mapsDirPath = workDir + @"unpacked\maps";
             encounterDirPath = workDir + @"unpacked\wildPokeData";
             eventsDirPath = workDir + @"unpacked\events";
             scriptDirPath = workDir + @"unpacked\scripts";
             syntheticOverlayPath = workDir + @"unpacked\syntheticOverlayNarc";
             OWSpriteDirPath = workDir + @"unpacked\overworlds";
 
-            SetNullEncounterID();           
             SetBuildingModelsDirPath();
+            SetNullEncounterID();           
+            
             SetOWtable();
-            SetInitialMoneyOverlayAndOffset();
+            Set3DOverworldsDict();
 
             SetAttackNamesTextNumber();
             SetPokémonNamesTextNumber();
@@ -110,8 +117,10 @@ namespace DSPRE {
             SetLocationNamesTextNumber();
             SetTrainerNamesMessageNumber();
             SetTrainerClassMessageNumber();
+
+            SetInitialMoneyOverlayAndOffset();
             SetSpawnPointOffset();
-            Set3DOverworldsDict();
+            
 
             /* System */
             SetNarcDirs();
@@ -138,16 +147,16 @@ namespace DSPRE {
                 case "D":
                 case "P":
                     initialMoneyOverlayNumber = 52;
-                    initialMoneyOffset = 0x1E4;
+                    initialMoneyOverlayOffset = 0x1E4;
                     break;
                 case "Plat":
                     initialMoneyOverlayNumber = 57;
-                    initialMoneyOffset = 0x1EC;
+                    initialMoneyOverlayOffset = 0x1EC;
                     break;
                 case "HG":
                 case "SS":
                     initialMoneyOverlayNumber = 36;
-                    initialMoneyOffset = 0x2FC;
+                    initialMoneyOverlayOffset = 0x2FC;
                     break;
             }
         }
@@ -227,6 +236,24 @@ namespace DSPRE {
                     break;
             }
         }
+        private void SetCameraTableOverlayAndOffset() {
+            switch (gameVersion) {
+                case "D":
+                case "P":
+                    cameraTableOverlayNumber = 5;
+                    cameraTableOverlayPointers = new uint[] { 0 };
+                    break;
+                case "Plat":
+                    cameraTableOverlayNumber = 5;
+                    cameraTableOverlayPointers = new uint[] { 0x4E24 };
+                    break;
+                case "HG":
+                case "SS":
+                    cameraTableOverlayNumber = 1;
+                    cameraTableOverlayPointers = new uint[] { 0x532C, 0x547C };
+                    break;
+            }
+        }
         #endregion
 
         #region Methods (22)
@@ -249,11 +276,11 @@ namespace DSPRE {
                 case "D":
                 case "P":
                 case "Plat":
-                    nullEncounterID = 65535;
+                    nullEncounterID = ushort.MaxValue;
                     break;
                 case "HG":
                 case "SS":
-                    nullEncounterID = 255;
+                    nullEncounterID = Byte.MaxValue;
                     break;
             }
         }
@@ -264,7 +291,7 @@ namespace DSPRE {
 
                 matrixDirPath,
 
-                mapDirPath,
+                mapsDirPath,
                 exteriorBuildingModelsPath,
                 buildingConfigFilesPath,
                 buildingTexturesDirPath,
@@ -371,16 +398,18 @@ namespace DSPRE {
             }
         }
         public string GetBuildingModelsDirPath(bool interior) {
-            if (interior)
+            if (interior) {
                 return interiorBuildingsPath;
-            else
+            } else {
                 return exteriorBuildingModelsPath;
+            }
         }
         public int GetBuildingCount(bool interior) {
-            if (interior)
+            if (interior) {
                 return Directory.GetFiles(interiorBuildingsPath).Length;
-            else
+            } else {
                 return Directory.GetFiles(exteriorBuildingModelsPath).Length;
+            }
         }
 
         public void SetOWtable () {
@@ -661,7 +690,7 @@ namespace DSPRE {
             return Directory.GetFiles(textArchivesPath).Length;
         }
         public int GetMapCount() {
-            return Directory.GetFiles(mapDirPath).Length;
+            return Directory.GetFiles(mapsDirPath).Length;
         }
         public int GetEventCount() {
             return Directory.GetFiles(eventsDirPath).Length;

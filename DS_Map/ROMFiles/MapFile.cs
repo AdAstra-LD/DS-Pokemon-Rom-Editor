@@ -55,7 +55,7 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (1)
-        public MapFile(int mapNumber) : this(new FileStream(RomInfo.mapDirPath + "\\" + mapNumber.ToString("D4"), FileMode.Open)) { }
+        public MapFile(int mapNumber) : this(new FileStream(RomInfo.mapsDirPath + "\\" + mapNumber.ToString("D4"), FileMode.Open)) { }
         public MapFile(Stream data) {
             using (BinaryReader reader = new BinaryReader(data))
             {
@@ -231,7 +231,7 @@ namespace DSPRE.ROMFiles {
             MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public void SaveToFileDefaultDir(int destFileID) {
-            string path = RomInfo.mapDirPath + "\\" + destFileID.ToString("D4");
+            string path = RomInfo.mapsDirPath + "\\" + destFileID.ToString("D4");
             this.SaveToFile(path);
         }
         public void SaveToFileExplorePath(string suggestedFileName) {

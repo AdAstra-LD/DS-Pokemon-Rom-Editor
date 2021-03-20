@@ -48,7 +48,7 @@ namespace DSPRE {
         private void saveSpawnEditorButton_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("This operation will overwrite: " + Environment.NewLine
                 + "- 10 bytes of data at ARM9 offset 0x" + RomInfo.arm9spawnOffset.ToString("X") + Environment.NewLine
-                + "- 4 bytes of data at Overlay" + RomInfo.initialMoneyOverlayNumber + " offset 0x" + RomInfo.initialMoneyOffset.ToString("X") + 
+                + "- 4 bytes of data at Overlay" + RomInfo.initialMoneyOverlayNumber + " offset 0x" + RomInfo.initialMoneyOverlayOffset.ToString("X") + 
                 Environment.NewLine + "\nProceed?", "Confirmation required",  MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (d == DialogResult.Yes) {
@@ -60,7 +60,7 @@ namespace DSPRE {
                 DSUtils.WriteToArm9(RomInfo.arm9spawnOffset + 12, BitConverter.GetBytes((short)(matrixyUpDown.Value * 32 + localmapyUpDown.Value)));
                 DSUtils.WriteToArm9(RomInfo.arm9spawnOffset + 16, BitConverter.GetBytes((short)playerDirCombobox.SelectedIndex));
 
-                DSUtils.WriteToFile(moneyOverlayPath, RomInfo.initialMoneyOffset, BitConverter.GetBytes((int)initialMoneyUpDown.Value));
+                DSUtils.WriteToFile(moneyOverlayPath, RomInfo.initialMoneyOverlayOffset, BitConverter.GetBytes((int)initialMoneyUpDown.Value));
                 MessageBox.Show("Your spawn settings have been changed.", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -88,7 +88,7 @@ namespace DSPRE {
                     DSUtils.DecompressOverlay(RomInfo.initialMoneyOverlayNumber, makeBackup: true);
 
             string pathToMoneyOverlay = DSUtils.GetOverlayPath(RomInfo.initialMoneyOverlayNumber);
-            initialMoneyUpDown.Value = BitConverter.ToUInt32(DSUtils.ReadFromFile(pathToMoneyOverlay, RomInfo.initialMoneyOffset, 4), 0);
+            initialMoneyUpDown.Value = BitConverter.ToUInt32(DSUtils.ReadFromFile(pathToMoneyOverlay, RomInfo.initialMoneyOverlayOffset, 4), 0);
         }
 
         private void spawnHeaderComboBox_IndexChanged(object sender, EventArgs e) {
