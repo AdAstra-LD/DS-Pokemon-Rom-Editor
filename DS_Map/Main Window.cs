@@ -1058,7 +1058,7 @@ namespace DSPRE {
 
             DirectoryInfo di = new DirectoryInfo(wildPokeUnpackedPath);
             if (!di.Exists || di.GetFiles().Length == 0) {
-                Narc.Open(RomInfo.workDir + gameDirs[DirNames.encounters]).ExtractToFolder(wildPokeUnpackedPath);
+                Narc.Open(RomInfo.gameDirs[DirNames.encounters].packedDir).ExtractToFolder(wildPokeUnpackedPath);
             }
             statusLabel.Text = "Passing control to Wild Pokémon Editor...";
             Update();

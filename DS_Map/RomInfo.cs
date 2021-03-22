@@ -344,7 +344,7 @@ namespace DSPRE {
 
             gameDirs = new Dictionary<DirNames, (string packedDir, string unpackedDir)>();
             foreach (KeyValuePair<DirNames, string> kvp in packedDirsDict) {
-                gameDirs.Add(kvp.Key, (kvp.Value, workDir + @"\unpacked" + '\\' + kvp.Key.ToString()) );
+                gameDirs.Add(kvp.Key, (workDir + kvp.Value, workDir + @"unpacked" + '\\' + kvp.Key.ToString()) );
             }
         }
         public string GetBuildingModelsDirPath(bool interior) {
@@ -525,7 +525,7 @@ namespace DSPRE {
             return (int)new FileInfo(internalNamesLocation).Length / internalNameLength;
         }
         public void SetAttackNamesTextNumber() {
-            switch (gameVersion) {
+            switch (gameFamily) {
                 case "DP":
                     attackNamesTextNumber = 588;
                     break;

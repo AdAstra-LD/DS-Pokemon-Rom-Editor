@@ -172,7 +172,7 @@ namespace DSPRE {
                     DirectoryInfo di = new DirectoryInfo(paths.unpackedPath);
 
                     if (!di.Exists || di.GetFiles().Length == 0) {
-                        Narc opened = Narc.Open(RomInfo.workDir + paths.packedPath);
+                        Narc opened = Narc.Open(paths.packedPath);
 
                         if (opened == null)
                             throw new NullReferenceException();
@@ -192,7 +192,7 @@ namespace DSPRE {
             foreach (DirNames id in IDs) {
 
                 if (gameDirs.TryGetValue(id, out (string packedPath, string unpackedPath) paths)) {
-                    Narc opened = Narc.Open(RomInfo.workDir + paths.packedPath);
+                    Narc opened = Narc.Open(paths.packedPath);
 
                     if (opened == null)
                         throw new NullReferenceException();
