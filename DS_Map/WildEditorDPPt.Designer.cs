@@ -325,7 +325,7 @@
             // 
             // removeEventFileButton
             // 
-            this.removeEventFileButton.Location = new System.Drawing.Point(500, 12);
+            this.removeEventFileButton.Location = new System.Drawing.Point(500, 13);
             this.removeEventFileButton.Name = "removeEventFileButton";
             this.removeEventFileButton.Size = new System.Drawing.Size(80, 35);
             this.removeEventFileButton.TabIndex = 60;
@@ -335,7 +335,7 @@
             // 
             // addEventFileButton
             // 
-            this.addEventFileButton.Location = new System.Drawing.Point(414, 12);
+            this.addEventFileButton.Location = new System.Drawing.Point(414, 13);
             this.addEventFileButton.Name = "addEventFileButton";
             this.addEventFileButton.Size = new System.Drawing.Size(80, 35);
             this.addEventFileButton.TabIndex = 59;
@@ -355,7 +355,7 @@
             // 
             // exportEncounterFileButton
             // 
-            this.exportEncounterFileButton.Location = new System.Drawing.Point(281, 12);
+            this.exportEncounterFileButton.Location = new System.Drawing.Point(281, 13);
             this.exportEncounterFileButton.Name = "exportEncounterFileButton";
             this.exportEncounterFileButton.Size = new System.Drawing.Size(80, 35);
             this.exportEncounterFileButton.TabIndex = 57;
@@ -365,7 +365,7 @@
             // 
             // importEncounterFileButton
             // 
-            this.importEncounterFileButton.Location = new System.Drawing.Point(195, 12);
+            this.importEncounterFileButton.Location = new System.Drawing.Point(195, 13);
             this.importEncounterFileButton.Name = "importEncounterFileButton";
             this.importEncounterFileButton.Size = new System.Drawing.Size(80, 35);
             this.importEncounterFileButton.TabIndex = 56;
@@ -375,7 +375,7 @@
             // 
             // saveEventsButton
             // 
-            this.saveEventsButton.Location = new System.Drawing.Point(655, 14);
+            this.saveEventsButton.Location = new System.Drawing.Point(655, 15);
             this.saveEventsButton.Name = "saveEventsButton";
             this.saveEventsButton.Size = new System.Drawing.Size(117, 35);
             this.saveEventsButton.TabIndex = 55;
@@ -2394,7 +2394,7 @@
             // repairAllButton
             // 
             this.repairAllButton.Image = global::DSPRE.Properties.Resources.wrenchIcon;
-            this.repairAllButton.Location = new System.Drawing.Point(614, 11);
+            this.repairAllButton.Location = new System.Drawing.Point(614, 12);
             this.repairAllButton.Name = "repairAllButton";
             this.repairAllButton.Size = new System.Drawing.Size(38, 40);
             this.repairAllButton.TabIndex = 61;

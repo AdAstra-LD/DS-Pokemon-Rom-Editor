@@ -898,7 +898,7 @@ namespace DSPRE {
             foreach (KeyValuePair<DirNames, (string packedDir, string unpackedDir)> kvp in RomInfo.gameDirs) {
                 DirectoryInfo di = new DirectoryInfo(kvp.Value.unpackedDir);
                 if (di.Exists) {
-                    Narc.FromFolder(kvp.Value.unpackedDir).Save(RomInfo.workDir + kvp.Value.packedDir); // Make new NARC from folder
+                    Narc.FromFolder(kvp.Value.unpackedDir).Save(kvp.Value.packedDir); // Make new NARC from folder
                 }
             }
 

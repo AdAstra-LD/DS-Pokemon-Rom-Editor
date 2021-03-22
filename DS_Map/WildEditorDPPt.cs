@@ -687,7 +687,6 @@ namespace DSPRE {
                 return;
             }
         }
-
         private void repairAllButton_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("DSPRE is about to open every Encounter File and attempt to reset every corrupted field to its default value.\n" +
                 "Do you wish to proceed?", "Repair all Encounter Files?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
