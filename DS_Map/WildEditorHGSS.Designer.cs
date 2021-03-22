@@ -240,6 +240,7 @@
             this.surfSixtyMinUpDown = new System.Windows.Forms.NumericUpDown();
             this.label66 = new System.Windows.Forms.Label();
             this.surfSixtyComboBox = new System.Windows.Forms.ComboBox();
+            this.repairAllButton = new System.Windows.Forms.Button();
             this.mainTabControl.SuspendLayout();
             this.grassGroundTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -324,7 +325,7 @@
             // 
             // removeEncounterFileButton
             // 
-            this.removeEncounterFileButton.Location = new System.Drawing.Point(505, 11);
+            this.removeEncounterFileButton.Location = new System.Drawing.Point(489, 12);
             this.removeEncounterFileButton.Name = "removeEncounterFileButton";
             this.removeEncounterFileButton.Size = new System.Drawing.Size(80, 35);
             this.removeEncounterFileButton.TabIndex = 67;
@@ -334,7 +335,7 @@
             // 
             // addEncounterFileButton
             // 
-            this.addEncounterFileButton.Location = new System.Drawing.Point(419, 11);
+            this.addEncounterFileButton.Location = new System.Drawing.Point(403, 12);
             this.addEncounterFileButton.Name = "addEncounterFileButton";
             this.addEncounterFileButton.Size = new System.Drawing.Size(80, 35);
             this.addEncounterFileButton.TabIndex = 66;
@@ -354,7 +355,7 @@
             // 
             // exportEncounterFileButton
             // 
-            this.exportEncounterFileButton.Location = new System.Drawing.Point(272, 11);
+            this.exportEncounterFileButton.Location = new System.Drawing.Point(256, 12);
             this.exportEncounterFileButton.Name = "exportEncounterFileButton";
             this.exportEncounterFileButton.Size = new System.Drawing.Size(80, 35);
             this.exportEncounterFileButton.TabIndex = 64;
@@ -364,9 +365,9 @@
             // 
             // importEncounterFileButton
             // 
-            this.importEncounterFileButton.Location = new System.Drawing.Point(186, 11);
+            this.importEncounterFileButton.Location = new System.Drawing.Point(170, 12);
             this.importEncounterFileButton.Name = "importEncounterFileButton";
-            this.importEncounterFileButton.Size = new System.Drawing.Size(80, 36);
+            this.importEncounterFileButton.Size = new System.Drawing.Size(80, 35);
             this.importEncounterFileButton.TabIndex = 63;
             this.importEncounterFileButton.Text = "Import File";
             this.importEncounterFileButton.UseVisualStyleBackColor = true;
@@ -374,9 +375,9 @@
             // 
             // saveEncountersButton
             // 
-            this.saveEncountersButton.Location = new System.Drawing.Point(630, 11);
+            this.saveEncountersButton.Location = new System.Drawing.Point(630, 12);
             this.saveEncountersButton.Name = "saveEncountersButton";
-            this.saveEncountersButton.Size = new System.Drawing.Size(117, 34);
+            this.saveEncountersButton.Size = new System.Drawing.Size(117, 35);
             this.saveEncountersButton.TabIndex = 62;
             this.saveEncountersButton.Text = "Save Encounters";
             this.saveEncountersButton.UseVisualStyleBackColor = true;
@@ -2504,11 +2505,22 @@
             this.surfSixtyComboBox.TabIndex = 3;
             this.surfSixtyComboBox.SelectedIndexChanged += new System.EventHandler(this.surfSixtyComboBox_SelectedIndexChanged);
             // 
+            // repairAllButton
+            // 
+            this.repairAllButton.Image = global::DSPRE.Properties.Resources.wrenchIcon;
+            this.repairAllButton.Location = new System.Drawing.Point(588, 9);
+            this.repairAllButton.Name = "repairAllButton";
+            this.repairAllButton.Size = new System.Drawing.Size(38, 40);
+            this.repairAllButton.TabIndex = 69;
+            this.repairAllButton.UseVisualStyleBackColor = true;
+            this.repairAllButton.Click += new System.EventHandler(this.repairAllButton_Click);
+            // 
             // WildEditorHGSS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(758, 555);
+            this.Controls.Add(this.repairAllButton);
             this.Controls.Add(this.mainTabControl);
             this.Controls.Add(this.removeEncounterFileButton);
             this.Controls.Add(this.addEncounterFileButton);
@@ -2825,5 +2837,6 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox surfPicture;
+        private System.Windows.Forms.Button repairAllButton;
     }
 }

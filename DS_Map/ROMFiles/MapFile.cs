@@ -43,7 +43,7 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Class to store map data in Pokémon NDS games
     /// </summary>
-    public class MapFile
+    public class MapFile: RomFile
     {
         #region Fields
         public byte[,] collisions = new byte[32, 32];
@@ -203,7 +203,7 @@ namespace DSPRE.ROMFiles {
                 bdhc = reader.ReadBytes((int)newData.Length);
             }
         }
-        public byte[] ToByteArray() {
+        public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 /* Write section lengths */
@@ -225,26 +225,11 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
-        public void SaveToFile(string path) {
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
-                writer.Write(this.ToByteArray());
-
-            MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
+            SaveToFileDefaultDir(DirNames.maps, IDtoReplace, showSuccessMessage);
         }
-        public void SaveToFileDefaultDir(int destFileID) {
-            string path = RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + destFileID.ToString("D4");
-            this.SaveToFile(path);
-        }
-        public void SaveToFileExplorePath(string suggestedFileName) {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "Gen IV Map BIN (*.bin)|*.bin";
-
-            if (!string.IsNullOrEmpty(suggestedFileName))
-                sf.FileName = suggestedFileName;
-            if (sf.ShowDialog() != DialogResult.OK)
-                return;
-
-            this.SaveToFile(sf.FileName);
+        public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
+            SaveToFileExplorePath("Gen IV Map Bin", "bin", suggestedFileName, showSuccessMessage);
         }
         #endregion
     }

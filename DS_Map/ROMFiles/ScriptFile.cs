@@ -10,7 +10,7 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Class to store script file data in Pokémon NDS games
     /// </summary>
-    public class ScriptFile {
+    public class ScriptFile: RomFile {
         #region Constants
         //this enum doesn't really make much sense now but it will, once scripts can be called and jumped to
         public enum containerTypes { FUNCTION, MOVEMENT, SCRIPT };
@@ -435,171 +435,6 @@ namespace DSPRE.ROMFiles {
                 return;
             }
         }
-
-        public byte[] ToByteArray() {
-            MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData)) {
-                List<(uint scriptID, uint offsetInFile)> scriptOffsets = new List<(uint, uint)>(); //uint OFFSET, int Function/Script/Action ID
-                List<(uint functionID, uint offsetInFile)> functionOffsets = new List<(uint, uint)>();
-                List<(uint actionID, uint offsetInFile)> actionOffsets = new List<(uint, uint)>();
-
-                List<(containerTypes callerType, uint callerID, containerTypes invokedType, uint invokedID, int invokedOffset) > references = new List<(containerTypes, uint, containerTypes, uint, int)>();
-
-                /* Allocate enough space for script pointers, which we do not know yet */
-                try {
-                    writer.BaseStream.Position += allScripts.Count * 0x4;
-                    writer.Write((ushort)0xFD13); // Signal the end of header section
-
-                    /* Write scripts */
-                    foreach (CommandContainer currentScript in allScripts) {
-                        if (currentScript.useScript == -1) {
-                            scriptOffsets.Add((currentScript.manualUserID, (uint)writer.BaseStream.Position));
-
-                            foreach (ScriptCommand currentCmd in currentScript.commands) {
-                                writer.Write((ushort)currentCmd.id);
-                                //System.Diagnostics.Debug.Write(BitConverter.ToString(BitConverter.GetBytes(commandID)) + " ");
-
-                                /* Get command parameters */
-                                List<byte[]> parameterList = currentCmd.cmdParams;
-                                foreach (byte[] b in parameterList) {
-                                    writer.Write(b);
-                                    //System.Diagnostics.Debug.WriteLine(BitConverter.ToString(parameterList[k]) + " ");
-                                }
-
-                                /* If command calls a function/movement, store reference position */
-                                AddReference(ref references, (ushort)currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentScript);
-                            }
-                        } else {
-                            scriptOffsets.Add((currentScript.manualUserID, scriptOffsets[currentScript.useScript - 1].offsetInFile));  // If script has UseScript, copy offset
-                        }
-                    }
-
-                    /* Write functions */
-                    foreach (CommandContainer currentFunction in allFunctions) {
-                        if (currentFunction.useScript == -1) {
-                            functionOffsets.Add((currentFunction.manualUserID, (uint)writer.BaseStream.Position));
-
-                            foreach (ScriptCommand currentCmd in currentFunction.commands) {
-                                writer.Write((ushort)currentCmd.id);
-                                //System.Diagnostics.Debug.Write(BitConverter.ToString(BitConverter.GetBytes(commandID)) + " ");
-
-                                /* Write command parameters */
-                                List<byte[]> parameterList = currentCmd.cmdParams;
-                                foreach (byte[] b in parameterList) {
-                                    writer.Write(b);
-                                    //System.Diagnostics.Debug.Write(BitConverter.ToString(parameterList[k]) + " ");
-                                }
-
-                                /* If command calls a function/movement, store reference position */
-                                AddReference(ref references, (ushort)currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentFunction);
-                            }
-                        } else {
-                            functionOffsets.Add((currentFunction.manualUserID, scriptOffsets[currentFunction.useScript - 1].offsetInFile));
-                        }
-                    }
-
-                    // Movements must be halfword-aligned
-                    if (writer.BaseStream.Position % 2 == 1) { //Check if the writer's head is on an odd byte
-                        writer.Write((byte)0x00); //Add padding
-                    }
-
-                    /* Write movements */
-                    foreach (ActionContainer currentAction in allActions) {
-                        actionOffsets.Add((currentAction.manualUserID, (uint)writer.BaseStream.Position));
-
-                        foreach (ScriptAction currentCmd in currentAction.actionCommandsList) {
-                            /* Write movement command id */
-                            writer.Write((ushort)currentCmd.id);
-
-                            /* Write movement command parameters */
-                            writer.Write((ushort)currentCmd.repetitionCount);
-                        }
-                    }
-
-                    /* Write script offsets to header */
-                    writer.BaseStream.Position = 0x0;
-                    for (int i = 0; i < scriptOffsets.Count; i++) 
-                        writer.Write(scriptOffsets[i].offsetInFile - (uint)writer.BaseStream.Position - 0x4);
-
-                    /* Fix references to functions and movements */
-                    SortedSet<uint> undeclaredFuncs = new SortedSet<uint>();
-                    SortedSet<uint> undeclaredActions = new SortedSet<uint>();
-
-                    SortedSet<uint> uninvokedFuncs = new SortedSet<uint>(allFunctions.Select( x => x.manualUserID).ToArray());
-                    SortedSet<uint> unreferencedActions = new SortedSet<uint>(allActions.Select(x => x.manualUserID).ToArray());
-
-                    while (references.Count > 0) {
-                        writer.BaseStream.Position = references[0].invokedOffset; //place seek head on parameter that is supposed to store the jump address
-                        (uint actionID, uint offsetInFile) result;
-
-                        if (references[0].invokedType == containerTypes.MOVEMENT) { //isApplyMovement 
-                            result = actionOffsets.Find(x => x.actionID == references[0].invokedID);
-
-                            if (result == (0, 0))
-                                undeclaredActions.Add(references[0].invokedID);
-                            else {
-                                int relativeOffset = (int)(result.offsetInFile - references[0].invokedOffset - 4);
-                                writer.Write(relativeOffset);
-                                unreferencedActions.Remove(references[0].invokedID);
-                            }
-                        } else {
-                            result = functionOffsets.Find(x => x.functionID == references[0].invokedID);
-
-                            if (result == (0, 0))
-                                undeclaredFuncs.Add(references[0].invokedID);
-                            else {
-                                int relativeOffset = (int)(result.offsetInFile - references[0].invokedOffset - 4);
-                                writer.Write(relativeOffset);
-                                if (references[0].callerType != containerTypes.FUNCTION || !uninvokedFuncs.Contains(references[0].callerID)) { //remove reference if caller is a script or a function that's been invoked already
-                                    uninvokedFuncs.Remove(references[0].invokedID);
-                                }
-                            }
-                        }
-                        references.RemoveAt(0);
-                    }
-
-                    string errorMsg = "";
-                    if (undeclaredFuncs.Count > 0) {
-                        string[] errorFunctionsUndeclared = undeclaredFuncs.ToArray().Select( x => x.ToString() ).ToArray();
-                        errorMsg += "These Functions have been invoked but not declared: " + Environment.NewLine + string.Join(",", errorFunctionsUndeclared);
-                        errorMsg += Environment.NewLine;
-                    }
-                    if (undeclaredActions.Count > 0) {
-                        string[] errorActionsUndeclared = undeclaredActions.ToArray().Select( x => x.ToString() ).ToArray();
-                        errorMsg += "These Actions have been referenced but not declared: " + Environment.NewLine + string.Join(",", errorActionsUndeclared);
-                        errorMsg += Environment.NewLine;
-                    }
-                    if (!string.IsNullOrEmpty(errorMsg)) {
-                        MessageBox.Show(errorMsg + Environment.NewLine + "This Script File has not been overwritten since it can not be saved.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        errorMsg = "";
-                        return null;
-                    }
-                    
-                    if (uninvokedFuncs.Count > 0) {
-                        string[] orphanedFunctions = uninvokedFuncs.ToArray().Select(x => x.ToString()).ToArray();
-                        errorMsg += "Unused Function IDs detected: " + Environment.NewLine + string.Join(",", orphanedFunctions);
-                        errorMsg += Environment.NewLine;
-                        errorMsg += "\nIn order for a Function to be saved, it must be invoked by a Script or by another used Function.";
-                        errorMsg += Environment.NewLine;
-                    }
-                    if (unreferencedActions.Count > 0) {
-                        string[] orphanedActions = unreferencedActions.ToArray().Select(x => x.ToString()).ToArray();
-                        errorMsg += "Unused Action IDs detected: " + Environment.NewLine + string.Join(",", orphanedActions);
-                        errorMsg += Environment.NewLine;
-                    }
-                    if (!string.IsNullOrEmpty(errorMsg)) {
-                        MessageBox.Show(errorMsg + Environment.NewLine + "Remember that every unused Function or Action is always lost upon reloading the Script File.", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        errorMsg = "";
-                    }
-                } catch (NullReferenceException nre) {
-                    Console.WriteLine(nre);
-                    return null;
-                }
-            }
-
-            return newData.ToArray();
-            
-        }
         private void AddReference(ref List<(containerTypes callerType, uint callerID, containerTypes invokedType, uint invokedID, int offset)> references, ushort commandID, List<byte[]> parameterList, int pos, CommandContainer cont) {
             int parameterWithRelativeJump;
             if (!PokeDatabase.ScriptEditor.commandsWithRelativeJump.TryGetValue(commandID, out parameterWithRelativeJump))
@@ -611,44 +446,6 @@ namespace DSPRE.ROMFiles {
                 references.Add((cont.containerType, cont.manualUserID, containerTypes.MOVEMENT, invokedID, pos - 4));
             else {
                 references.Add((cont.containerType, cont.manualUserID, containerTypes.FUNCTION, invokedID, pos - 4));
-            }
-        }
-        private void SaveToFile(string path, bool showSuccessMessage = true) {
-            byte[] thisScript = ToByteArray();
-            if (thisScript == null) {
-                Console.WriteLine(GetType().Name + " couldn't be saved!");
-                return;
-            }
-
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create))) {
-                writer.Write(thisScript);
-            }
-
-            if (showSuccessMessage)
-                MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
-            string path = RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + IDtoReplace.ToString("D4");
-            this.SaveToFile(path, showSuccessMessage);  
-        }
-        public void SaveToFileExplorePath(string suggestedFileName, bool blindmode) {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "Gen IV Script File (*.scr)|*.scr";
-
-            if (!string.IsNullOrEmpty(suggestedFileName))
-                sf.FileName = suggestedFileName;
-            if (sf.ShowDialog() != DialogResult.OK)
-                return;
-
-            if (blindmode) {
-                File.Copy(RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + fileID.ToString("D4"), sf.FileName, overwrite: true);
-                
-                string msg = "";
-                if (!isLevelScript)
-                    msg += "The last saved version of this ";
-                MessageBox.Show(msg + GetType().Name + " has been exported successfully.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            } else {
-                this.SaveToFile(sf.FileName);
             }
         }
         private List<CommandContainer> ReadCommandsFromLines(string[] lineSource, containerTypes containerType, Func<string[], int, bool> endConditions) {
@@ -734,6 +531,195 @@ namespace DSPRE.ROMFiles {
                 }
             }
         }
+
+        #region Output
+        public override byte[] ToByteArray() {
+            MemoryStream newData = new MemoryStream();
+            using (BinaryWriter writer = new BinaryWriter(newData)) {
+                List<(uint scriptID, uint offsetInFile)> scriptOffsets = new List<(uint, uint)>(); //uint OFFSET, int Function/Script/Action ID
+                List<(uint functionID, uint offsetInFile)> functionOffsets = new List<(uint, uint)>();
+                List<(uint actionID, uint offsetInFile)> actionOffsets = new List<(uint, uint)>();
+
+                List<(containerTypes callerType, uint callerID, containerTypes invokedType, uint invokedID, int invokedOffset)> references = new List<(containerTypes, uint, containerTypes, uint, int)>();
+
+                /* Allocate enough space for script pointers, which we do not know yet */
+                try {
+                    writer.BaseStream.Position += allScripts.Count * 0x4;
+                    writer.Write((ushort)0xFD13); // Signal the end of header section
+
+                    /* Write scripts */
+                    foreach (CommandContainer currentScript in allScripts) {
+                        if (currentScript.useScript == -1) {
+                            scriptOffsets.Add((currentScript.manualUserID, (uint)writer.BaseStream.Position));
+
+                            foreach (ScriptCommand currentCmd in currentScript.commands) {
+                                writer.Write((ushort)currentCmd.id);
+                                //System.Diagnostics.Debug.Write(BitConverter.ToString(BitConverter.GetBytes(commandID)) + " ");
+
+                                /* Get command parameters */
+                                List<byte[]> parameterList = currentCmd.cmdParams;
+                                foreach (byte[] b in parameterList) {
+                                    writer.Write(b);
+                                    //System.Diagnostics.Debug.WriteLine(BitConverter.ToString(parameterList[k]) + " ");
+                                }
+
+                                /* If command calls a function/movement, store reference position */
+                                AddReference(ref references, (ushort)currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentScript);
+                            }
+                        } else {
+                            scriptOffsets.Add((currentScript.manualUserID, scriptOffsets[currentScript.useScript - 1].offsetInFile));  // If script has UseScript, copy offset
+                        }
+                    }
+
+                    /* Write functions */
+                    foreach (CommandContainer currentFunction in allFunctions) {
+                        if (currentFunction.useScript == -1) {
+                            functionOffsets.Add((currentFunction.manualUserID, (uint)writer.BaseStream.Position));
+
+                            foreach (ScriptCommand currentCmd in currentFunction.commands) {
+                                writer.Write((ushort)currentCmd.id);
+                                //System.Diagnostics.Debug.Write(BitConverter.ToString(BitConverter.GetBytes(commandID)) + " ");
+
+                                /* Write command parameters */
+                                List<byte[]> parameterList = currentCmd.cmdParams;
+                                foreach (byte[] b in parameterList) {
+                                    writer.Write(b);
+                                    //System.Diagnostics.Debug.Write(BitConverter.ToString(parameterList[k]) + " ");
+                                }
+
+                                /* If command calls a function/movement, store reference position */
+                                AddReference(ref references, (ushort)currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentFunction);
+                            }
+                        } else {
+                            functionOffsets.Add((currentFunction.manualUserID, scriptOffsets[currentFunction.useScript - 1].offsetInFile));
+                        }
+                    }
+
+                    // Movements must be halfword-aligned
+                    if (writer.BaseStream.Position % 2 == 1) { //Check if the writer's head is on an odd byte
+                        writer.Write((byte)0x00); //Add padding
+                    }
+
+                    /* Write movements */
+                    foreach (ActionContainer currentAction in allActions) {
+                        actionOffsets.Add((currentAction.manualUserID, (uint)writer.BaseStream.Position));
+
+                        foreach (ScriptAction currentCmd in currentAction.actionCommandsList) {
+                            /* Write movement command id */
+                            writer.Write((ushort)currentCmd.id);
+
+                            /* Write movement command parameters */
+                            writer.Write((ushort)currentCmd.repetitionCount);
+                        }
+                    }
+
+                    /* Write script offsets to header */
+                    writer.BaseStream.Position = 0x0;
+                    for (int i = 0; i < scriptOffsets.Count; i++)
+                        writer.Write(scriptOffsets[i].offsetInFile - (uint)writer.BaseStream.Position - 0x4);
+
+                    /* Fix references to functions and movements */
+                    SortedSet<uint> undeclaredFuncs = new SortedSet<uint>();
+                    SortedSet<uint> undeclaredActions = new SortedSet<uint>();
+
+                    SortedSet<uint> uninvokedFuncs = new SortedSet<uint>(allFunctions.Select(x => x.manualUserID).ToArray());
+                    SortedSet<uint> unreferencedActions = new SortedSet<uint>(allActions.Select(x => x.manualUserID).ToArray());
+
+                    while (references.Count > 0) {
+                        writer.BaseStream.Position = references[0].invokedOffset; //place seek head on parameter that is supposed to store the jump address
+                        (uint actionID, uint offsetInFile) result;
+
+                        if (references[0].invokedType == containerTypes.MOVEMENT) { //isApplyMovement 
+                            result = actionOffsets.Find(x => x.actionID == references[0].invokedID);
+
+                            if (result == (0, 0))
+                                undeclaredActions.Add(references[0].invokedID);
+                            else {
+                                int relativeOffset = (int)(result.offsetInFile - references[0].invokedOffset - 4);
+                                writer.Write(relativeOffset);
+                                unreferencedActions.Remove(references[0].invokedID);
+                            }
+                        } else {
+                            result = functionOffsets.Find(x => x.functionID == references[0].invokedID);
+
+                            if (result == (0, 0))
+                                undeclaredFuncs.Add(references[0].invokedID);
+                            else {
+                                int relativeOffset = (int)(result.offsetInFile - references[0].invokedOffset - 4);
+                                writer.Write(relativeOffset);
+                                if (references[0].callerType != containerTypes.FUNCTION || !uninvokedFuncs.Contains(references[0].callerID)) { //remove reference if caller is a script or a function that's been invoked already
+                                    uninvokedFuncs.Remove(references[0].invokedID);
+                                }
+                            }
+                        }
+                        references.RemoveAt(0);
+                    }
+
+                    string errorMsg = "";
+                    if (undeclaredFuncs.Count > 0) {
+                        string[] errorFunctionsUndeclared = undeclaredFuncs.ToArray().Select(x => x.ToString()).ToArray();
+                        errorMsg += "These Functions have been invoked but not declared: " + Environment.NewLine + string.Join(",", errorFunctionsUndeclared);
+                        errorMsg += Environment.NewLine;
+                    }
+                    if (undeclaredActions.Count > 0) {
+                        string[] errorActionsUndeclared = undeclaredActions.ToArray().Select(x => x.ToString()).ToArray();
+                        errorMsg += "These Actions have been referenced but not declared: " + Environment.NewLine + string.Join(",", errorActionsUndeclared);
+                        errorMsg += Environment.NewLine;
+                    }
+                    if (!string.IsNullOrEmpty(errorMsg)) {
+                        MessageBox.Show(errorMsg + Environment.NewLine + "This Script File has not been overwritten since it can not be saved.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        errorMsg = "";
+                        return null;
+                    }
+
+                    if (uninvokedFuncs.Count > 0) {
+                        string[] orphanedFunctions = uninvokedFuncs.ToArray().Select(x => x.ToString()).ToArray();
+                        errorMsg += "Unused Function IDs detected: " + Environment.NewLine + string.Join(",", orphanedFunctions);
+                        errorMsg += Environment.NewLine;
+                        errorMsg += "\nIn order for a Function to be saved, it must be invoked by a Script or by another used Function.";
+                        errorMsg += Environment.NewLine;
+                    }
+                    if (unreferencedActions.Count > 0) {
+                        string[] orphanedActions = unreferencedActions.ToArray().Select(x => x.ToString()).ToArray();
+                        errorMsg += "Unused Action IDs detected: " + Environment.NewLine + string.Join(",", orphanedActions);
+                        errorMsg += Environment.NewLine;
+                    }
+                    if (!string.IsNullOrEmpty(errorMsg)) {
+                        MessageBox.Show(errorMsg + Environment.NewLine + "Remember that every unused Function or Action is always lost upon reloading the Script File.", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        errorMsg = "";
+                    }
+                } catch (NullReferenceException nre) {
+                    Console.WriteLine(nre);
+                    return null;
+                }
+            }
+
+            return newData.ToArray();
+        }
+        public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
+            SaveToFileDefaultDir(DirNames.scripts, IDtoReplace, showSuccessMessage);
+        }
+        public void SaveToFileExplorePath(string suggestedFileName, bool blindmode) {
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Filter = "Gen IV Script File (*.scr)|*.scr";
+
+            if (!string.IsNullOrEmpty(suggestedFileName))
+                sf.FileName = suggestedFileName;
+            if (sf.ShowDialog() != DialogResult.OK)
+                return;
+
+            if (blindmode) {
+                File.Copy(RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + fileID.ToString("D4"), sf.FileName, overwrite: true);
+
+                string msg = "";
+                if (!isLevelScript)
+                    msg += "The last saved version of this ";
+                MessageBox.Show(msg + GetType().Name + " has been exported successfully.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            } else {
+                this.SaveToFile(sf.FileName, showSuccessMessage: true);
+            }
+        }
         #endregion
-    }    
+        #endregion
+    }
 }

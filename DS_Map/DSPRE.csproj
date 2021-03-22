@@ -120,6 +120,7 @@
       <DependentUpon>HeaderSearch.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources\TextDatabase.cs" />
+    <Compile Include="ROMFiles\RomFile.cs" />
     <Compile Include="ROMFiles\ScriptAction.cs" />
     <Compile Include="ROMToolboxDialog.cs">
       <SubType>Form</SubType>
@@ -444,6 +445,7 @@
     <Content Include="Resources\Graphics\Weather\DPPt\ptheavyfog.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptlightfog.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptredish.png" />
+    <None Include="Resources\wrenchIcon.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

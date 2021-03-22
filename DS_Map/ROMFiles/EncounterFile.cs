@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using static DSPRE.RomInfo;
 
 namespace DSPRE.ROMFiles {
     /* ---------------------- WILD POKÈMON DATA STRUCTURE (DPPt):----------------------------
@@ -72,7 +73,7 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// General class to store common wild Pokemon data across all Gen IV Pokemon NDS games
     /// </summary>
-    public abstract class EncounterFile {
+    public abstract class EncounterFile : RomFile {
         public const string msgFixed = " (already fixed)";
         #region Fields (19)
 
@@ -103,7 +104,7 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Methods (1)
-        public abstract byte[] SaveEncounterFile();
+        public void SaveToFileDefaultDir(int IDtoReplace) => SaveToFileDefaultDir(DirNames.encounters, IDtoReplace);
 
         public void ReportErrors(List<string> errorList) {
             string fullError = "The following sections of this encounter file couldn't be read correctly: " + Environment.NewLine;
@@ -312,10 +313,12 @@ namespace DSPRE.ROMFiles {
                 }
             }
         }
+
+        public EncounterFileDPPt(int ID) : this(new FileStream(RomInfo.gameDirs[DirNames.encounters].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
         #endregion†Constructors
 
         #region Methods (1)
-        public override byte[] SaveEncounterFile() {
+        public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write((uint)walkingRate);
@@ -408,6 +411,7 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
+        public void SaveToFileExplorePath(string suggestedFileName) => SaveToFileExplorePath("DPPt Encounter File", "enc", suggestedFileName);
         #endregion
     }
 
@@ -587,10 +591,11 @@ namespace DSPRE.ROMFiles {
                 }
             }
         }
+        public EncounterFileHGSS(int ID) : this(new FileStream(RomInfo.gameDirs[DirNames.encounters].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
         #endregion
 
         #region Methods(1)
-        public override byte[] SaveEncounterFile() {
+        public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 /* Encounter rates */
@@ -674,6 +679,7 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
+        public void SaveToFileExplorePath(string suggestedFileName) => SaveToFileExplorePath("HGSS Encounter File", "enc", suggestedFileName);
         #endregion
     }
 }

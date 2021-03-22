@@ -12,8 +12,7 @@ namespace DSPRE.ROMFiles {
 	/// <summary>
 	/// Class to store message data from DS Pokémon games
 	/// </summary>
-	public class TextArchive
-	{
+	public class TextArchive : RomFile {
         #region Fields (2)
         public List<string> messages = new List<string>();
         public int initialKey;
@@ -43,14 +42,13 @@ namespace DSPRE.ROMFiles {
             int car = 0;
             bool compressed = new bool();
 
-            for (int i = 0; i < stringCount; i++) // Reads and stores string offsets and sizes
-            {
+            for (int i = 0; i < stringCount; i++) { // Reads and stores string offsets and sizes 
                 key2 = (key1 * (i + 1) & 0xFFFF);
                 realKey = key2 | (key2 << 16);
                 currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
                 currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
             }
-            for (int i = 0; i < stringCount; i++) {// Adds new string
+            for (int i = 0; i < stringCount; i++) { // Adds new string
                 key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
                 readText.BaseStream.Position = currentOffset[i];
                 StringBuilder pokemonText = new StringBuilder("");
@@ -280,18 +278,19 @@ namespace DSPRE.ROMFiles {
             count++;
             return count;
         }
-        public byte[] toByteArray(List<string> msgSource) {
+        private byte[] ToByteArray(List<string> msgSource) {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write((UInt16)msgSource.Count);
                 writer.Write((UInt16)initialKey);
+
                 int key = (initialKey * 0x2FD) & 0xFFFF;
                 int key2 = 0;
                 int realKey = 0;
                 int offset = 0x4 + (msgSource.Count * 8);
                 int[] stringSize = new int[msgSource.Count];
 
-                for (int i = 0; i < msgSource.Count; i++) {// Reads and stores string offsets and sizes
+                for (int i = 0; i < msgSource.Count; i++) { // Reads and stores string offsets and sizes
                     key2 = (key * (i + 1) & 0xFFFF);
                     realKey = key2 | (key2 << 16);
                     writer.Write(offset ^ realKey);
@@ -300,9 +299,11 @@ namespace DSPRE.ROMFiles {
                     writer.Write(length ^ realKey);
                     offset += length * 2;
                 }
+
                 for (int i = 0; i < msgSource.Count; i++) { // Encodes strings and writes them to file
                     key = (0x91BD3 * (i + 1)) & 0xFFFF;
                     int[] currentString = EncodeString(msgSource[i], i, stringSize[i]);
+
                     for (int j = 0; j < stringSize[i] - 1; j++) {
                         writer.Write((UInt16)(currentString[j] ^ key));
                         key += 0x493D;
@@ -313,30 +314,14 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
-        public byte[] ToByteArray() {
-            return toByteArray(messages);
-        }
-        public void SaveToFile(string path, bool showSuccessMessage = true) {
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
-                writer.Write(this.ToByteArray());
-
-            if (showSuccessMessage)
-                MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        public override byte[] ToByteArray() {
+            return this.ToByteArray(messages);
         }
         public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
-            string path = RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + IDtoReplace.ToString("D4");
-            this.SaveToFile(path, showSuccessMessage);
+            SaveToFileDefaultDir(DirNames.textArchives, IDtoReplace, showSuccessMessage);
         }
-        public void SaveToFileExplorePath(string suggestedFileName) {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "Gen IV Text Archive (*.msg)|*.msg";
-
-            if (!string.IsNullOrEmpty(suggestedFileName))
-                sf.FileName = suggestedFileName;
-            if (sf.ShowDialog() != DialogResult.OK)
-                return;
-
-            this.SaveToFile(sf.FileName);
+        public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
+            SaveToFileExplorePath("Gen IV Text Archive", "msg", suggestedFileName, showSuccessMessage);
         }
         #endregion
     }

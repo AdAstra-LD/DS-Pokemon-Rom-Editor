@@ -7,7 +7,7 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Classes to store event data in Pokémon NDS games
     /// </summary>
-    public class EventFile
+    public class EventFile: RomFile
     {
         #region Fields (4)
         public List<Spawnable> spawnables = new List<Spawnable>();
@@ -44,7 +44,7 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Methods (1)
-        public byte[] ToByteArray()
+        public override byte[] ToByteArray()
         {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData))
@@ -71,26 +71,11 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
-        public void SaveToFile(string path) {
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
-                writer.Write(this.ToByteArray());
-
-            MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
+            SaveToFileDefaultDir(DirNames.eventFiles, IDtoReplace, showSuccessMessage);
         }
-        public void SaveToFileDefaultDir(int IDtoReplace) {
-            string path = RomInfo.gameDirs[DirNames.eventFiles].unpackedDir + "\\" + IDtoReplace.ToString("D4");
-            this.SaveToFile(path);
-        }
-        public void SaveToFileExplorePath(string suggestedFileName) {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "Gen IV Event File (*.evt)|*.evt";
-
-            if (!string.IsNullOrEmpty(suggestedFileName))
-                sf.FileName = suggestedFileName;
-            if (sf.ShowDialog() != DialogResult.OK)
-                return;
-
-            this.SaveToFile(sf.FileName);
+        public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
+            SaveToFileExplorePath("Gen IV Event File", "evt", suggestedFileName, showSuccessMessage);
         }
         #endregion
 

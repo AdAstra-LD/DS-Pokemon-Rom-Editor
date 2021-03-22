@@ -1,9 +1,11 @@
 using System.IO;
+using static DSPRE.RomInfo;
+
 namespace DSPRE.ROMFiles {
-	/// <summary>
-	/// Class to store area data in Pokémon NDS games
-	/// </summary>
-	public class AreaData
+    /// <summary>
+    /// Class to store area data in Pokémon NDS games
+    /// </summary>
+    public class AreaData : RomFile
 	{
         internal static readonly byte TYPE_INDOOR = 0;
         internal static readonly byte TYPE_OUTDOOR = 1;
@@ -38,15 +40,14 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Methods (1)
-        public byte[] Save(string gameVersion)
-        {
+        public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData))
             {
                 writer.Write(buildingsTileset);
                 writer.Write(mapTileset);
 
-                if (gameVersion == "D" || gameVersion == "P" || gameVersion == "Plat") {
+                if (RomInfo.gameFamily.Equals("DP") || RomInfo.gameFamily.Equals("Plat")) {
                     writer.Write(unknown1);
                     writer.Write(lightType);
                 } else {
@@ -56,6 +57,15 @@ namespace DSPRE.ROMFiles {
                 }
             }
             return newData.ToArray();
+            
+        }
+
+        public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
+            SaveToFileDefaultDir(DirNames.areaData, IDtoReplace, showSuccessMessage);
+        }
+
+        public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
+            SaveToFileExplorePath("Gen IV Area Data File", "bin", suggestedFileName, showSuccessMessage);
         }
         #endregion
     }

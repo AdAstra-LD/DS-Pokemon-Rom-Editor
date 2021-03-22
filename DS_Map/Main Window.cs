@@ -1522,7 +1522,7 @@ namespace DSPRE {
         }
         private void saveHeaderButton_Click(object sender, EventArgs e) {
             uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
-            DSUtils.WriteToArm9(headerOffset, currentHeader.toByteArray());
+            DSUtils.WriteToArm9(headerOffset, currentHeader.ToByteArray());
 
             disableHandlers = true;
 
@@ -1683,7 +1683,7 @@ namespace DSPRE {
 
             currentHeader = h;
             uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
-            DSUtils.WriteToArm9(headerOffset, currentHeader.toByteArray());
+            DSUtils.WriteToArm9(headerOffset, currentHeader.ToByteArray());
             try {
                 using (BinaryReader reader = new BinaryReader(new FileStream(of.FileName, FileMode.Open))) {
                     reader.BaseStream.Position = MapHeader.length + 8;
@@ -1704,7 +1704,7 @@ namespace DSPRE {
                 return;
 
             using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) {
-                writer.Write(currentHeader.toByteArray()); //Write full header
+                writer.Write(currentHeader.ToByteArray()); //Write full header
                 writer.Write((byte)0x00); //Padding
                 writer.Write(Encoding.UTF8.GetBytes("INTNAME")); //Signature
                 writer.Write(Encoding.UTF8.GetBytes(internalNames[currentHeader.ID])); //Save Internal name
@@ -1768,7 +1768,6 @@ namespace DSPRE {
 
             /*Enable paste buttons*/
             pasteHeaderButton.Enabled = true;
-
 
             pasteLocationNameButton.Enabled = true;
             pasteInternalNameButton.Enabled = true;
@@ -6192,9 +6191,7 @@ namespace DSPRE {
             currentAreaData.mapTileset = (ushort)areaDataMapTilesetUpDown.Value;
         }
         private void saveAreaDataButton_Click(object sender, EventArgs e) {
-            string areaDataPath = workDir + @"\unpacked" + RomInfo.DirNames.areaData.ToString() + "\\" + selectAreaDataListBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(areaDataPath, FileMode.Create)))
-                writer.Write(currentAreaData.Save(RomInfo.gameVersion));
+            currentAreaData.SaveToFileDefaultDir(selectMatrixComboBox.SelectedIndex);
         }
         private void selectAreaDataListBox_SelectedIndexChanged(object sender, EventArgs e) {
             currentAreaData = LoadAreaData((uint)selectAreaDataListBox.SelectedIndex);
@@ -6284,17 +6281,7 @@ namespace DSPRE {
             }
         }
         private void exportAreaDataButton_Click(object sender, EventArgs e) {
-            if (selectAreaDataListBox.SelectedIndex < 0)
-                return;
-
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "AreaData File (*.bin)|*.bin";
-            sf.FileName = "AreaData File " + selectAreaDataListBox.SelectedIndex;
-            if (sf.ShowDialog(this) != DialogResult.OK)
-                return;
-
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create)))
-                writer.Write(currentAreaData.Save(RomInfo.gameVersion));
+            currentAreaData.SaveToFileExplorePath("Area Data " + selectMatrixComboBox.SelectedIndex);
         }
         private void importAreaDataButton_Click(object sender, EventArgs e) {
             if (selectAreaDataListBox.SelectedIndex < 0)

@@ -81,7 +81,7 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// General class to store common map header data across all Gen IV Pokémon NDS games
     /// </summary>
-    public abstract class MapHeader {
+    public abstract class MapHeader : RomFile {
         /*System*/
         public ushort ID { get; set; }
         public static readonly byte length = 24;
@@ -107,7 +107,6 @@ namespace DSPRE.ROMFiles {
         #endregion Fields
 
         #region Methods (1)
-        public abstract byte[] toByteArray();
         public static MapHeader BuildFromFile(string filename, ushort headerNumber, long offsetInFile) {
             /* Calculate header offset and load data */
             byte[] headerData = DSUtils.ReadFromFile(filename, offsetInFile, MapHeader.length);
@@ -169,7 +168,7 @@ namespace DSPRE.ROMFiles {
         #endregion Constructors
 
         #region Methods (1)
-        public override byte[] toByteArray() {
+        public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write(areaDataID);
@@ -238,7 +237,7 @@ namespace DSPRE.ROMFiles {
         #endregion Constructors
 
         #region Methods(1)
-        public override byte[] toByteArray() {
+        public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write(areaDataID);
@@ -320,7 +319,7 @@ namespace DSPRE.ROMFiles {
         #endregion Constructors
 
         #region Methods(1)
-        public override byte[] toByteArray()
+        public override byte[] ToByteArray()
         {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData))
