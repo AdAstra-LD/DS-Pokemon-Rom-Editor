@@ -104,7 +104,10 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Methods (1)
-        public void SaveToFileDefaultDir(int IDtoReplace) => SaveToFileDefaultDir(DirNames.encounters, IDtoReplace);
+        public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
+            SaveToFileDefaultDir(DirNames.encounters, IDtoReplace, showSuccessMessage);
+        }
+
 
         public void ReportErrors(List<string> errorList) {
             string fullError = "The following sections of this encounter file couldn't be read correctly: " + Environment.NewLine;
@@ -411,7 +414,9 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
-        public void SaveToFileExplorePath(string suggestedFileName) => SaveToFileExplorePath("DPPt Encounter File", "enc", suggestedFileName);
+        public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
+            SaveToFileExplorePath("DPPt Encounter File", "enc", suggestedFileName, showSuccessMessage);
+        }
         #endregion
     }
 
@@ -679,7 +684,10 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
-        public void SaveToFileExplorePath(string suggestedFileName) => SaveToFileExplorePath("HGSS Encounter File", "enc", suggestedFileName);
+
+        public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
+            SaveToFileExplorePath("HGSS Encounter File", "enc", suggestedFileName, showSuccessMessage);
+        }
         #endregion
     }
 }

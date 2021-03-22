@@ -694,10 +694,10 @@ namespace DSPRE {
 
             if (d == DialogResult.Yes) {
                 for (int i = 0; i < Directory.GetFiles(encounterFileFolder).Length; i++) {
-                    currentFile.SaveToFileDefaultDir(i);
+                    currentFile.SaveToFileDefaultDir(i, showSuccessMessage: false);
                 }
 
-                MessageBox.Show("Operation completed", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("All repairable fields have been fixed.", "Operation completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
