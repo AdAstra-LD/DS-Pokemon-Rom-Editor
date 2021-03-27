@@ -71,7 +71,7 @@ namespace DSPRE.ROMFiles {
                     repetitionCount = 0;
                 } else {
                     NumberStyles style;
-                    if (nameParts[1].StartsWith("0x")) {
+                    if (nameParts[1].StartsWith("0x", StringComparison.InvariantCultureIgnoreCase)) {
                         style = NumberStyles.HexNumber;
                         nameParts[1] = nameParts[1].Substring(2);
                     } else {

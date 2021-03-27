@@ -140,42 +140,42 @@ namespace DSPRE.ROMFiles {
 
                         /* If number is preceded by 0x parse it as hex, otherwise as decimal */
                         NumberStyles style;
-                        if (nameParts[i + 1].StartsWith("0x"))
+                        if (nameParts[i + 1].StartsWith("0x", StringComparison.InvariantCultureIgnoreCase)) {
                             style = NumberStyles.HexNumber;
-                        else
+                        } else {
                             style = NumberStyles.Integer;
+                        }
 
                         /* Convert strings of parameters to the correct datatypes */
-                        switch (parametersSizeArr[i]) {
-                            case 1:
-                                cmdParams.Add(new byte[] { Byte.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style) });
-                                break;
-                            case 2:
-                                switch (nameParts[i + 1]) {
-                                    case "Player":
+                        try {
+                            switch (parametersSizeArr[i]) {
+                                case 1:
+                                    cmdParams.Add(new byte[] { Byte.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style) });
+                                    break;
+                                case 2:
+                                    if (nameParts[i + 1].Equals("Player", StringComparison.InvariantCultureIgnoreCase)) {
                                         cmdParams.Add(BitConverter.GetBytes((ushort)255));
-                                        break;
-                                    case "Following":
+                                    } else if (nameParts[i + 1].Equals("Following", StringComparison.InvariantCultureIgnoreCase)) {
                                         cmdParams.Add(BitConverter.GetBytes((ushort)253));
-                                        break;
-                                    case "Cam":
+                                    } else if (nameParts[i + 1].Equals("Camera", StringComparison.InvariantCultureIgnoreCase)) {
                                         cmdParams.Add(BitConverter.GetBytes((ushort)241));
-                                        break;
-                                    default:
+                                    } else {
                                         cmdParams.Add(BitConverter.GetBytes(UInt16.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style)));
-                                        break;
-                                }
-                                break;
-                            case 4:
-                                cmdParams.Add(BitConverter.GetBytes(Int32.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style)));
-                                break;
+                                    }
+                                    break;
+                                case 4:
+                                    cmdParams.Add(BitConverter.GetBytes(Int32.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style)));
+                                    break;
+                            }
+                        } catch (FormatException) {
+                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not a valid number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            id = null;
                         }
                     }
                 }
             } else {
                 MessageBox.Show("Wrong number of parameters for command " + nameParts[0] + " at line " + lineNumber + "." + Environment.NewLine + 
-                    "Received: " + (nameParts.Length - 1) + Environment.NewLine + "Expected: " + paramLength
-                    + Environment.NewLine + "\nThis Script File can not be saved.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "Received: " + (nameParts.Length - 1) + Environment.NewLine + "Expected: " + paramLength, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 id = null;
             }
         }

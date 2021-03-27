@@ -43,13 +43,14 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Class to store map data in Pokémon NDS games
     /// </summary>
-    public class MapFile: RomFile
-    {
+    public class MapFile : RomFile {
         #region Fields
         public byte[,] collisions = new byte[32, 32];
         public byte[,] types = new byte[32, 32];
+
         public List<Building> buildings;
         public NSBMD mapModel;
+
         public byte[] mapModelData;
         public byte[] bdhc;
         public byte[] bgs;
@@ -58,8 +59,7 @@ namespace DSPRE.ROMFiles {
         #region Constructors (1)
         public MapFile(int mapNumber) : this(new FileStream(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + mapNumber.ToString("D4"), FileMode.Open)) { }
         public MapFile(Stream data) {
-            using (BinaryReader reader = new BinaryReader(data))
-            {
+            using (BinaryReader reader = new BinaryReader(data)) {
                 /* Read sections lengths */
                 int permissionsSectionLength = reader.ReadInt32();
                 int buildingsSectionLength = reader.ReadInt32();
@@ -94,16 +94,7 @@ namespace DSPRE.ROMFiles {
         }
         #endregion
 
-        #region Methods (2)
-        /* Creates new standard building object, adds it to the current map and returns it*/
-        public Building AddNewBuilding() {
-            Building b = new Building();
-            buildings.Add(b);
-            return b;
-        }
-        public void AddBuilding(Building b) {
-            buildings.Add(b);
-        }
+        #region Methods
         public byte[] BuildingsToByteArray() {
             MemoryStream newData = new MemoryStream(0x30 * buildings.Count);
             using (BinaryWriter writer = new BinaryWriter(newData)) {
@@ -127,9 +118,6 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
-        public byte[] ExportMapModel() {
-            return mapModelData;
-        }
         public byte[] CollisionsToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
@@ -141,12 +129,6 @@ namespace DSPRE.ROMFiles {
                 }
             }
             return newData.ToArray();
-        }       
-        public byte[] GetTerrain() {
-            return bdhc;
-        }
-        public byte[] GetSoundPlates() {
-            return bgs;
         }
         public void ImportBuildings(Stream newData) {
             buildings = new List<Building>();
@@ -220,8 +202,8 @@ namespace DSPRE.ROMFiles {
                 /* Write sections */
                 writer.Write(CollisionsToByteArray());
                 writer.Write(BuildingsToByteArray());
-                writer.Write(ExportMapModel());
-                writer.Write(GetTerrain());
+                writer.Write(this.mapModelData);
+                writer.Write(bdhc);
             }
             return newData.ToArray();
         }
@@ -237,8 +219,7 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Class to store building data from Pokémon NDS games
     /// </summary>
-    public class Building
-	{
+    public class Building {
         #region Fields (11)
         public NSBMD NSBMDFile;
         public uint modelID { get; set; }
@@ -254,10 +235,8 @@ namespace DSPRE.ROMFiles {
         #endregion Fields
 
         #region Constructors (2)
-        public Building(Stream data)
-		{
-            using (BinaryReader reader = new BinaryReader(data))
-            {
+        public Building(Stream data) {
+            using (BinaryReader reader = new BinaryReader(data)) {
                 modelID = reader.ReadUInt32();
                 xFraction = reader.ReadUInt16();
                 xPosition = reader.ReadInt16();
@@ -276,20 +255,19 @@ namespace DSPRE.ROMFiles {
                 reader.BaseStream.Position += 0x2;
             }
         }
-        public Building()
-        {
-           modelID = 0;
-           xFraction = 0;
-           xPosition = 0;
-           zFraction = 0;
-           zPosition = 1;
-           yFraction = 0;
-           yPosition = 0;
-           width = 16;
-           height = 16;
-           length = 16;
+        public Building() {
+            modelID = 0;
+            xFraction = 0;
+            xPosition = 0;
+            zFraction = 0;
+            zPosition = 1;
+            yFraction = 0;
+            yPosition = 0;
+            width = 16;
+            height = 16;
+            length = 16;
         }
-        
+
         public Building(Building toCopy) {
             modelID = toCopy.modelID;
             xFraction = toCopy.xFraction;

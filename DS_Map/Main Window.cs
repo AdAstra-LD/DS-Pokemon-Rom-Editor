@@ -557,6 +557,8 @@ namespace DSPRE {
         }
         private void updateBuildingListComboBox(bool interior) {
             string[] bldList = GetBuildingsList(interior);
+
+            buildIndexComboBox.Items.Clear();
             for (int i = 0; i < bldList.Length; i++) {
                 buildIndexComboBox.Items.Add("[" + i + "] " + bldList[i]);
             }
@@ -2613,7 +2615,7 @@ namespace DSPRE {
             } catch { }
             return model;
         }
-        private void RenderMap(ref NSBMDGlRenderer mapRenderer, ref NSBMDGlRenderer buildingsRenderer, ref MapFile mapFile, float ang, float dist, float elev, float perspective, int width, int height, bool mapTexturesON, bool buildingTexturesON) {
+        private void RenderMap(ref NSBMDGlRenderer mapRenderer, ref NSBMDGlRenderer buildingsRenderer, ref MapFile mapFile, float ang, float dist, float elev, float perspective, int width, int height, bool mapTexturesON = true, bool buildingTexturesON = true) {
             #region Useless variables that the rendering API still needs
             MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File ani = new MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File();
             MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File tp = new MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File();
@@ -2639,8 +2641,9 @@ namespace DSPRE {
             mapRenderer.RenderModel("", ani, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, ca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, tp, mapFile.mapModel); // Render map model
 
             if (!hideBuildings) {
-                if (!buildingTexturesON) Gl.glDisable(Gl.GL_TEXTURE_2D);
-                else Gl.glEnable(Gl.GL_TEXTURE_2D);
+                if (buildingTexturesON)
+                    Gl.glEnable(Gl.GL_TEXTURE_2D);
+                else Gl.glDisable(Gl.GL_TEXTURE_2D);
 
                 for (int i = 0; i < mapFile.buildings.Count; i++) {
                     buildingsRenderer.Model = mapFile.buildings[i].NSBMDFile.models[0];
@@ -2659,6 +2662,7 @@ namespace DSPRE {
 
             float scaleFactor = (building.NSBMDFile.models[0].modelScale / 64);
             float translateFactor = 16 / building.NSBMDFile.models[0].modelScale;
+            //float translateFactor = 1;
 
             Gl.glScalef(scaleFactor * building.width / 16, scaleFactor * building.length / 16, scaleFactor * building.height / 16);
             Gl.glTranslatef((xPosition + (xFraction / 65536f)) * translateFactor, (zPosition + (zFraction / 65536f)) * translateFactor, (yPosition + (yFraction / 65536f)) * translateFactor);
@@ -2964,14 +2968,14 @@ namespace DSPRE {
         }
         #region Building Editor
         private void addBuildingButton_Click(object sender, EventArgs e) {
-            addBuildingToMap(new Building());
+            AddBuildingToMap(new Building());
         }
         private void duplicateBuildingButton_Click(object sender, EventArgs e) {
             if (buildingsListBox.SelectedIndex > -1)
-                addBuildingToMap(new Building(currentMapFile.buildings[buildingsListBox.SelectedIndex]));
+                AddBuildingToMap(new Building(currentMapFile.buildings[buildingsListBox.SelectedIndex]));
         }
-        private void addBuildingToMap(Building b) {
-            currentMapFile.AddBuilding(b);
+        private void AddBuildingToMap(Building b) {
+            currentMapFile.buildings.Add(b);
 
             /* Load new building's model and textures for the renderer */
             currentMapFile.buildings[currentMapFile.buildings.Count - 1] = LoadBuildingModel(b, interiorbldRadioButton.Checked);
@@ -3655,7 +3659,7 @@ namespace DSPRE {
                 return;
 
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(em.FileName))) {
-                writer.Write(currentMapFile.ExportMapModel());
+                writer.Write(currentMapFile.mapModelData);
             }
 
             MessageBox.Show("Map model exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -3686,7 +3690,7 @@ namespace DSPRE {
                 return;
 
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) 
-                writer.Write(currentMapFile.GetTerrain());
+                writer.Write(currentMapFile.bdhc);
 
             TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
             MessageBox.Show("Terrain settings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -3710,7 +3714,7 @@ namespace DSPRE {
                 return;
 
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) 
-                writer.Write(currentMapFile.GetSoundPlates());
+                writer.Write(currentMapFile.bgs);
 
             BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
             MessageBox.Show("BackGround Sound data exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);

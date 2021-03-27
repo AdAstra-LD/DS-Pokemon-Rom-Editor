@@ -2130,8 +2130,8 @@ namespace DSPRE.Resources {
                 [0x0034] = "OpenMessage",
                 [0x0035] = "CloseMessage",
                 [0x0036] = "FreezeMessage",
-                [0x0037] = "MakeBoard",
-                [0x0038] = "BoardInfo",
+                [0x0037] = "SetIconBoard",
+                [0x0038] = "SetTextBoard",
                 [0x0039] = "ShowBoard",
                 [0x003A] = "WaitBoard",
                 [0x003B] = "BoardMessage",
@@ -2480,6 +2480,11 @@ namespace DSPRE.Resources {
                 [0x0364] = "SetSSEQTrackVol",
                 [0x0365] = "ClearSSEQTrackChanges",
                 [0x0366] = "GetSSEQTrackVol",
+
+                [0x036A] = "DoubleFadeScreen",
+                [0x036B] = "MessageAllTextbox",
+                [0x036C] = "MessageTextbox",
+                [0x036D] = "SetTextboxAlpha"
             };
             public static Dictionary<ushort, byte[]> HGSSScrCmdParameters = new Dictionary<ushort, byte[]>() {
                 [0x0000] = new byte[1] { 0 },
@@ -3343,7 +3348,12 @@ namespace DSPRE.Resources {
                 [0x0363] = new byte[1] { 0 },
                 [0x0364] = new byte[] { 2, 2, 2, 2, 2, 2, 2 },
                 [0x0365] = new byte[1] { 0 },
-                [0x0366] = new byte[] { 2, 2 }
+                [0x0366] = new byte[] { 2, 2 },
+
+                [0x036A] = new byte[] { 2, 2, 2, 2, 2, 2 },
+                [0x036B] = new byte[] { 2, 2, 2, 2, 2 },
+                [0x036C] = new byte[] { 2, 2, 2, 2, 2},
+                [0x036D] = new byte[] { 2, 2 }
             };
         }
         public static class System {
