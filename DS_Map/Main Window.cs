@@ -2653,19 +2653,15 @@ namespace DSPRE {
             }
         }
         private void ScaleTranslateBuilding(Building building) {
-            float xFraction = building.xFraction;
-            float xPosition = building.xPosition;
-            float yFraction = building.yFraction;
-            float yPosition = building.yPosition;
-            float zFraction = building.zFraction;
-            float zPosition = building.zPosition;
-
+            float fullXcoord = building.xPosition + building.xFraction / 65536f;
+            float fullYcoord = building.yPosition + building.yFraction / 65536f;
+            float fullZcoord = building.zPosition + building.zFraction / 65536f;
+            
             float scaleFactor = (building.NSBMDFile.models[0].modelScale / 64);
             float translateFactor = 16 / building.NSBMDFile.models[0].modelScale;
-            Console.WriteLine(translateFactor);
 
             Gl.glScalef(scaleFactor * building.width / 16, scaleFactor * building.height / 16, scaleFactor * building.length / 16);
-            Gl.glTranslatef((xPosition + (xFraction / 65536f)) * translateFactor, (yPosition + (yFraction / 65536f)) * translateFactor, (zPosition + (zFraction / 65536f)) * translateFactor);
+            Gl.glTranslatef(fullXcoord * translateFactor, fullYcoord * translateFactor, fullZcoord * translateFactor);
         }
         private void SetupRenderer(float ang, float dist, float elev, float perspective, int width, int height) {
             Gl.glEnable(Gl.GL_RESCALE_NORMAL);
