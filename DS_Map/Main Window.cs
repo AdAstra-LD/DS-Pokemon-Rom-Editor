@@ -2657,11 +2657,11 @@ namespace DSPRE {
             float fullYcoord = building.yPosition + building.yFraction / 65536f;
             float fullZcoord = building.zPosition + building.zFraction / 65536f;
             
-            float scaleFactor = (building.NSBMDFile.models[0].modelScale / 64);
-            float translateFactor = 16 / building.NSBMDFile.models[0].modelScale;
+            float scaleFactor = (building.NSBMDFile.models[0].modelScale / 1024);
+            float translateFactor = 256 / building.NSBMDFile.models[0].modelScale;
 
-            Gl.glScalef(scaleFactor * building.width / 16, scaleFactor * building.height / 16, scaleFactor * building.length / 16);
-            Gl.glTranslatef(fullXcoord * translateFactor, fullYcoord * translateFactor, fullZcoord * translateFactor);
+            Gl.glScalef(scaleFactor * building.width, scaleFactor * building.height , scaleFactor * building.length);
+            Gl.glTranslatef(fullXcoord * translateFactor / building.width, fullYcoord * translateFactor / building.height, fullZcoord * translateFactor / building.length);
         }
         private void SetupRenderer(float ang, float dist, float elev, float perspective, int width, int height) {
             Gl.glEnable(Gl.GL_RESCALE_NORMAL);
