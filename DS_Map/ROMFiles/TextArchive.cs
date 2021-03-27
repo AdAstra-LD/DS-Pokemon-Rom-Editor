@@ -9,18 +9,17 @@ using DSPRE.Resources;
 using static DSPRE.RomInfo;
 
 namespace DSPRE.ROMFiles {
-	/// <summary>
-	/// Class to store message data from DS Pokémon games
-	/// </summary>
-	public class TextArchive : RomFile {
+    /// <summary>
+    /// Class to store message data from DS Pokémon games
+    /// </summary>
+    public class TextArchive : RomFile {
         #region Fields (2)
         public List<string> messages = new List<string>();
         public int initialKey;
         #endregion Fields
 
         #region Constructors (1)
-        public TextArchive(FileStream messageStream)
-        {
+        public TextArchive(FileStream messageStream) {
             Dictionary<int, string> GetCharDictionary = TextDatabase.readTextDictionary;
             BinaryReader readText = new BinaryReader(messageStream);
             int stringCount;
@@ -150,7 +149,7 @@ namespace DSPRE.ROMFiles {
 
             readText.Dispose();
         }
-        public TextArchive(int ID) : this( (new FileStream(RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open))) {
+        public TextArchive(int ID) : this((new FileStream(RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open))) {
         }
         #endregion
 
@@ -259,8 +258,7 @@ namespace DSPRE.ROMFiles {
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     if (charArray[i] == '[') {
                         if (charArray[i + 1] == 'P') {
                             count++;

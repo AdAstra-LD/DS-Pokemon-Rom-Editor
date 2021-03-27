@@ -102,10 +102,10 @@ namespace DSPRE.ROMFiles {
                     writer.Write(buildings[i].modelID);
                     writer.Write(buildings[i].xFraction);
                     writer.Write(buildings[i].xPosition);
-                    writer.Write(buildings[i].zFraction);
-                    writer.Write(buildings[i].zPosition);
                     writer.Write(buildings[i].yFraction);
                     writer.Write(buildings[i].yPosition);
+                    writer.Write(buildings[i].zFraction);
+                    writer.Write(buildings[i].zPosition);
 
                     writer.BaseStream.Position += 0xD; // First filler section
 
@@ -224,11 +224,11 @@ namespace DSPRE.ROMFiles {
         public NSBMD NSBMDFile;
         public uint modelID { get; set; }
         public short xPosition { get; set; }
-        public short yPosition { get; set; }
         public short zPosition { get; set; }
+        public short yPosition { get; set; }
         public ushort xFraction { get; set; }
-        public ushort yFraction { get; set; }
         public ushort zFraction { get; set; }
+        public ushort yFraction { get; set; }
         public uint width { get; set; }
         public uint height { get; set; }
         public uint length { get; set; }
@@ -240,10 +240,10 @@ namespace DSPRE.ROMFiles {
                 modelID = reader.ReadUInt32();
                 xFraction = reader.ReadUInt16();
                 xPosition = reader.ReadInt16();
-                zFraction = reader.ReadUInt16();
-                zPosition = reader.ReadInt16();
                 yFraction = reader.ReadUInt16();
                 yPosition = reader.ReadInt16();
+                zFraction = reader.ReadUInt16();
+                zPosition = reader.ReadInt16();
 
                 reader.BaseStream.Position += 0xD; // Skip first filler section
 
@@ -259,10 +259,10 @@ namespace DSPRE.ROMFiles {
             modelID = 0;
             xFraction = 0;
             xPosition = 0;
-            zFraction = 0;
-            zPosition = 1;
             yFraction = 0;
-            yPosition = 0;
+            yPosition = 1;
+            zFraction = 0;
+            zPosition = 0;
             width = 16;
             height = 16;
             length = 16;
@@ -272,10 +272,10 @@ namespace DSPRE.ROMFiles {
             modelID = toCopy.modelID;
             xFraction = toCopy.xFraction;
             xPosition = toCopy.xPosition;
-            zFraction = toCopy.zFraction;
-            zPosition = (short)(toCopy.zPosition + 1);
             yFraction = toCopy.yFraction;
-            yPosition = toCopy.yPosition;
+            yPosition = (short)(toCopy.yPosition + 1);
+            zFraction = toCopy.zFraction;
+            zPosition = toCopy.zPosition;
             width = toCopy.width;
             height = toCopy.height;
             length = toCopy.length;

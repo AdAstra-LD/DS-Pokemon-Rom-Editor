@@ -134,8 +134,7 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Class to store map header data from Pokémon D and P
     /// </summary>
-    public class HeaderDP: MapHeader
-    {
+    public class HeaderDP : MapHeader {
         #region Fields (5)
         public byte unknown1 { get; set; }
         public ushort locationName { get; set; }
@@ -185,15 +184,15 @@ namespace DSPRE.ROMFiles {
                 writer.Write(weatherID);
                 writer.Write(cameraAngleID);
                 writer.Write(showName);
-                
-                byte mapSettings = (byte) ((battleBackground & 0b_1111) + ((flags & 0b_1111) << 4));
+
+                byte mapSettings = (byte)((battleBackground & 0b_1111) + ((flags & 0b_1111) << 4));
                 writer.Write(mapSettings);
             }
             return newData.ToArray();
         }
         #endregion
     }
-    
+
     /// <summary>
     /// Class to store map header data from Pokémon Plat
     /// </summary>
@@ -220,7 +219,7 @@ namespace DSPRE.ROMFiles {
                     wildPokémon = reader.ReadUInt16();
                     eventFileID = reader.ReadUInt16();
                     locationName = reader.ReadByte();
-                    areaIcon = reader.ReadByte(); 
+                    areaIcon = reader.ReadByte();
                     weatherID = reader.ReadByte();
                     cameraAngleID = reader.ReadByte();
 
@@ -262,7 +261,7 @@ namespace DSPRE.ROMFiles {
         }
         #endregion
     }
-    
+
     /// <summary>
     /// Class to store map header data from Pokémon HG and SS
     /// </summary>
@@ -278,15 +277,13 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (1)
-        public HeaderHGSS(ushort headerNumber, Stream data)
-        {
+        public HeaderHGSS(ushort headerNumber, Stream data) {
             this.ID = headerNumber;
-            using (BinaryReader reader = new BinaryReader(data))
-            {
+            using (BinaryReader reader = new BinaryReader(data)) {
                 try {
                     wildPokémon = reader.ReadByte();
                     areaDataID = reader.ReadByte();
-                    
+
                     ushort coords = reader.ReadUInt16();
                     unknown0 = (byte)(coords & 0b_1111); //get 4 bits
                     worldmapX = (byte)((coords >> 4) & 0b_1111_11); //get 6 bits after the first 4
@@ -302,11 +299,11 @@ namespace DSPRE.ROMFiles {
                     locationName = reader.ReadByte();
                     areaIcon = StandardizeAreaIcon(reader.ReadByte());
                     weatherID = reader.ReadByte();
-                    
+
                     byte cameraAndArea = reader.ReadByte();
                     areaSettings = (byte)(cameraAndArea & 0b_1111); //get 4 bits 
                     cameraAngleID = (byte)(cameraAndArea >> 4 & 0b_1111); //get 4 bits after the first 4
-                    
+
 
                     followMode = reader.ReadByte();
                     flags = reader.ReadByte();
@@ -319,15 +316,13 @@ namespace DSPRE.ROMFiles {
         #endregion Constructors
 
         #region Methods(1)
-        public override byte[] ToByteArray()
-        {
+        public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData))
-            {
+            using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write((byte)wildPokémon);
                 writer.Write(areaDataID);
 
-                ushort worldMapCoordinates = (ushort) ( (unknown0 & 0b_1111) + ((worldmapX & 0b_1111_11) << 4) + ((worldmapY & 0b_1111_11) << 10) );
+                ushort worldMapCoordinates = (ushort)((unknown0 & 0b_1111) + ((worldmapX & 0b_1111_11) << 4) + ((worldmapY & 0b_1111_11) << 10));
                 writer.Write(worldMapCoordinates);
 
                 writer.Write(matrixID);
@@ -341,7 +336,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(areaIcon);
                 writer.Write(weatherID);
 
-                byte cameraAndArea = (byte)  ((areaSettings & 0b_1111) + ((cameraAngleID & 0b_1111) << 4));
+                byte cameraAndArea = (byte)((areaSettings & 0b_1111) + ((cameraAngleID & 0b_1111) << 4));
                 writer.Write(cameraAndArea);
 
                 writer.Write(followMode);
@@ -349,8 +344,7 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
-        public byte StandardizeAreaIcon(byte areaIcon)
-        {
+        public byte StandardizeAreaIcon(byte areaIcon) {
             //TO DO: improve this
             //The AreaIcon byte is probably split into bits by the game engine,
             //each with a specific purpose...
@@ -360,9 +354,8 @@ namespace DSPRE.ROMFiles {
             /* This function was written to avoid having to account 
             for duplicate values of the map name textbox types, since 
             many share the same textbox image */
-             
-            switch (areaIcon)
-            {
+
+            switch (areaIcon) {
                 /* Water textbox values */
                 case 182:
                 case 198:

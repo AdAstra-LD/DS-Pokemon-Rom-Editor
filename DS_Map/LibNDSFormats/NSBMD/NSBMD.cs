@@ -918,7 +918,7 @@ namespace LibNDSFormats.NSBMD
                 nsbmdObject.X = (float)reader.ReadInt32() / 4096f / modelscale;//(float)getdword(reader.ReadBytes(4)) / 4096f; //(float)(reader.ReadDouble() / 4096d);//.ReadUInt32() / 4096;
                 nsbmdObject.Y = (float)reader.ReadInt32() / 4096f / modelscale;//(float)getdword(reader.ReadBytes(4)) / 4096f;//(float)(reader.ReadDouble() / 4096d);
                 nsbmdObject.Z = (float)reader.ReadInt32() / 4096f / modelscale;//(float)getdword(reader.ReadBytes(4)) / 4096f;//(float)(reader.ReadDouble() / 4096d);
-                t = NSBMDGlRenderer.translate(t, nsbmdObject.X, nsbmdObject.Y, nsbmdObject.Z);
+                t = NSBMDGlRenderer.Translate(t, nsbmdObject.X, nsbmdObject.Y, nsbmdObject.Z);
             }
             if ((v >> 3 & 0x1) == 0x1)
             {

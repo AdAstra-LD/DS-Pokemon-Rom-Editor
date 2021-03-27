@@ -5,8 +5,7 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Class to store area data in Pokémon NDS games
     /// </summary>
-    public class AreaData : RomFile
-	{
+    public class AreaData : RomFile {
         internal static readonly byte TYPE_INDOOR = 0;
         internal static readonly byte TYPE_OUTDOOR = 1;
 
@@ -20,10 +19,8 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (1)
-        public AreaData(Stream data, string gameVersion)
-		{
-            using (BinaryReader reader = new BinaryReader(data))
-            {
+        public AreaData(Stream data, string gameVersion) {
+            using (BinaryReader reader = new BinaryReader(data)) {
                 buildingsTileset = reader.ReadUInt16();
                 mapTileset = reader.ReadUInt16();
 
@@ -42,8 +39,7 @@ namespace DSPRE.ROMFiles {
         #region Methods (1)
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData))
-            {
+            using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write(buildingsTileset);
                 writer.Write(mapTileset);
 
@@ -57,7 +53,7 @@ namespace DSPRE.ROMFiles {
                 }
             }
             return newData.ToArray();
-            
+
         }
 
         public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {

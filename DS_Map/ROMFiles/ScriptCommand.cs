@@ -86,7 +86,7 @@ namespace DSPRE.ROMFiles {
                             this.name += " " + "0x" + (BitConverter.ToInt32(commandParameters[i], 0)).ToString("X1");
                     }
                     break;
-                
+
             }
         }
         public ScriptCommand(string wholeLine, int lineNumber = 0) {
@@ -121,7 +121,7 @@ namespace DSPRE.ROMFiles {
             //Console.WriteLine("ID = " + ((ushort)id).ToString("X4"));
 
             byte[] parametersSizeArr = RomInfo.CommandParametersDict[(ushort)id];
-            
+
             int paramLength = 0;
             if (parametersSizeArr.Length == 1 && parametersSizeArr.First() == 0) {
                 paramLength = 0;
@@ -174,7 +174,7 @@ namespace DSPRE.ROMFiles {
                     }
                 }
             } else {
-                MessageBox.Show("Wrong number of parameters for command " + nameParts[0] + " at line " + lineNumber + "." + Environment.NewLine + 
+                MessageBox.Show("Wrong number of parameters for command " + nameParts[0] + " at line " + lineNumber + "." + Environment.NewLine +
                     "Received: " + (nameParts.Length - 1) + Environment.NewLine + "Expected: " + paramLength, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 id = null;
             }

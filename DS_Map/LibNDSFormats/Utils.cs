@@ -20,13 +20,11 @@
 using System;
 using System.IO;
 
-namespace LibNDSFormats
-{
-	/// <summary>
-	/// Utility class.
-	/// </summary>
-    public static class Utils
-    {
+namespace LibNDSFormats {
+    /// <summary>
+    /// Utility class.
+    /// </summary>
+    public static class Utils {
         #region Methods (1) 
 
         // Public Methods (1) 
@@ -36,26 +34,24 @@ namespace LibNDSFormats
         /// </summary>
         /// <param name="reader">Binary reader to use.</param>
         /// <returns>Trimmed string.</returns>
-        public static string ReadNSBMDString(EndianBinaryReader reader)
-        {
+        public static string ReadNSBMDString(EndianBinaryReader reader) {
             var str = new String(reader.ReadChars(System.Text.Encoding.ASCII, 16));
             str = str.Replace("\0", "");
 
             return str;
         }
-        
+
         /// <summary>
         /// Read 2 Bytes as UInt16
         /// </summary>
         /// <param name="bytes">Byte array.</param>
         /// <param name="s">Offset in array.</param>
         /// <returns>2 Bytes as UInt16.</returns>
-        public static UInt16 Read2BytesAsUInt16(byte[] bytes, int offset)
-        {
+        public static UInt16 Read2BytesAsUInt16(byte[] bytes, int offset) {
             int result = 0;
             for (int i = 0; i < 2; ++i)
-                result |= bytes[offset + i] << (8*(i));
-            return (ushort) result;
+                result |= bytes[offset + i] << (8 * (i));
+            return (ushort)result;
         }
 
         /// <summary>
@@ -64,8 +60,7 @@ namespace LibNDSFormats
         /// <param name="bytes">Byte array.</param>
         /// <param name="s">Offset in array.</param>
         /// <returns>2 Bytes as Int16.</returns>
-        public static Int16 Read2BytesAsInt16(byte[] bytes, int offset)
-        {
+        public static Int16 Read2BytesAsInt16(byte[] bytes, int offset) {
             int result = 0;
             for (int i = 0; i < 2; ++i)
                 result |= bytes[offset + i] << (8 * (i));
@@ -78,8 +73,7 @@ namespace LibNDSFormats
         /// <param name="bytes">Byte array.</param>
         /// <param name="s">Offset in array.</param>
         /// <returns>3 Bytes as Int32.</returns>
-        public static int Read3BytesAsInt24(byte[] bytes, int offset)
-        {
+        public static int Read3BytesAsInt24(byte[] bytes, int offset) {
             int result = 0;
             for (int i = 0; i < 3; ++i)
                 result |= bytes[offset + i] << (8 * i);
@@ -92,11 +86,10 @@ namespace LibNDSFormats
         /// <param name="bytes">Byte array.</param>
         /// <param name="s">Offset in array.</param>
         /// <returns>4 Bytes as Int32.</returns>
-        public static int Read4BytesAsInt32(byte[] bytes, int offset)
-        {
+        public static int Read4BytesAsInt32(byte[] bytes, int offset) {
             int result = 0;
             for (int i = 0; i < 4; ++i)
-                result |= bytes[offset + i] << (8*i);
+                result |= bytes[offset + i] << (8 * i);
             return result;
         }
         /// <summary>
@@ -105,8 +98,7 @@ namespace LibNDSFormats
         /// <param name="bytes">Byte array.</param>
         /// <param name="s">Offset in array.</param>
         /// <returns>4 Bytes as Int32.</returns>
-        public static float Read4BytesAsFloat(byte[] bytes, int offset)
-        {
+        public static float Read4BytesAsFloat(byte[] bytes, int offset) {
             int result = 0;
             for (int i = 0; i < 4; ++i)
                 result |= bytes[offset + i] << (8 * i);
@@ -119,11 +111,10 @@ namespace LibNDSFormats
         /// <param name="bytes">Byte array.</param>
         /// <param name="s">Offset in array.</param>
         /// <returns>4 Bytes as Int32.</returns>
-        public static UInt32 Read4BytesAsUInt32(byte[] bytes, int offset)
-        {
+        public static UInt32 Read4BytesAsUInt32(byte[] bytes, int offset) {
             UInt32 result = 0;
             for (int i = 0; i < 4; ++i)
-            	result |= (UInt32)(bytes[offset + i] << (8*(i)));
+                result |= (UInt32)(bytes[offset + i] << (8 * (i)));
             return result;
         }
 

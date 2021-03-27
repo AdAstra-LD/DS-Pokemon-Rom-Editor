@@ -221,8 +221,8 @@
             this.yLabel = new System.Windows.Forms.Label();
             this.zLabel = new System.Windows.Forms.Label();
             this.xLabel = new System.Windows.Forms.Label();
-            this.zBuildUpDown = new System.Windows.Forms.NumericUpDown();
             this.yBuildUpDown = new System.Windows.Forms.NumericUpDown();
+            this.zBuildUpDown = new System.Windows.Forms.NumericUpDown();
             this.xBuildUpDown = new System.Windows.Forms.NumericUpDown();
             this.buildingsListBox = new System.Windows.Forms.ListBox();
             this.permissionsTabPage = new System.Windows.Forms.TabPage();
@@ -676,8 +676,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.buildingLengthUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buildingWidthUpDown)).BeginInit();
             this.buildPositionGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.zBuildUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yBuildUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zBuildUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xBuildUpDown)).BeginInit();
             this.permissionsTabPage.SuspendLayout();
             this.typeGroupBox.SuspendLayout();
@@ -2861,9 +2861,9 @@
             this.buildPositionGroupBox.Controls.Add(this.yLabel);
             this.buildPositionGroupBox.Controls.Add(this.zLabel);
             this.buildPositionGroupBox.Controls.Add(this.xLabel);
-            this.buildPositionGroupBox.Controls.Add(this.zBuildUpDown);
-            this.buildPositionGroupBox.Controls.Add(this.xBuildUpDown);
             this.buildPositionGroupBox.Controls.Add(this.yBuildUpDown);
+            this.buildPositionGroupBox.Controls.Add(this.xBuildUpDown);
+            this.buildPositionGroupBox.Controls.Add(this.zBuildUpDown);
             this.buildPositionGroupBox.Location = new System.Drawing.Point(194, 206);
             this.buildPositionGroupBox.Name = "buildPositionGroupBox";
             this.buildPositionGroupBox.Size = new System.Drawing.Size(101, 123);
@@ -2906,27 +2906,8 @@
             // 
             // zBuildUpDown
             // 
-            this.zBuildUpDown.DecimalPlaces = 4;
-            this.zBuildUpDown.Location = new System.Drawing.Point(22, 56);
-            this.zBuildUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.zBuildUpDown.Minimum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            -2147483648});
-            this.zBuildUpDown.Name = "zBuildUpDown";
-            this.zBuildUpDown.Size = new System.Drawing.Size(69, 20);
-            this.zBuildUpDown.TabIndex = 7;
-            this.zBuildUpDown.ValueChanged += new System.EventHandler(this.zBuildUpDown_ValueChanged);
-            // 
-            // yBuildUpDown
-            // 
             this.yBuildUpDown.DecimalPlaces = 4;
-            this.yBuildUpDown.Location = new System.Drawing.Point(22, 93);
+            this.yBuildUpDown.Location = new System.Drawing.Point(22, 56);
             this.yBuildUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -2937,10 +2918,29 @@
             0,
             0,
             -2147483648});
-            this.yBuildUpDown.Name = "yBuildUpDown";
+            this.yBuildUpDown.Name = "zBuildUpDown";
             this.yBuildUpDown.Size = new System.Drawing.Size(69, 20);
-            this.yBuildUpDown.TabIndex = 6;
+            this.yBuildUpDown.TabIndex = 7;
             this.yBuildUpDown.ValueChanged += new System.EventHandler(this.yBuildUpDown_ValueChanged);
+            // 
+            // yBuildUpDown
+            // 
+            this.zBuildUpDown.DecimalPlaces = 4;
+            this.zBuildUpDown.Location = new System.Drawing.Point(22, 93);
+            this.zBuildUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.zBuildUpDown.Minimum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            -2147483648});
+            this.zBuildUpDown.Name = "yBuildUpDown";
+            this.zBuildUpDown.Size = new System.Drawing.Size(69, 20);
+            this.zBuildUpDown.TabIndex = 6;
+            this.zBuildUpDown.ValueChanged += new System.EventHandler(this.zBuildUpDown_ValueChanged);
             // 
             // xBuildUpDown
             // 
@@ -8083,8 +8083,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.buildingWidthUpDown)).EndInit();
             this.buildPositionGroupBox.ResumeLayout(false);
             this.buildPositionGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.zBuildUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.yBuildUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zBuildUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xBuildUpDown)).EndInit();
             this.permissionsTabPage.ResumeLayout(false);
             this.permissionsTabPage.PerformLayout();
@@ -8285,8 +8285,8 @@
         private System.Windows.Forms.Label yLabel;
         private System.Windows.Forms.Label zLabel;
         private System.Windows.Forms.Label xLabel;
-        private System.Windows.Forms.NumericUpDown zBuildUpDown;
         private System.Windows.Forms.NumericUpDown yBuildUpDown;
+        private System.Windows.Forms.NumericUpDown zBuildUpDown;
         private System.Windows.Forms.NumericUpDown xBuildUpDown;
         private System.Windows.Forms.RadioButton exteriorbldRadioButton;
         private System.Windows.Forms.RadioButton interiorbldRadioButton;

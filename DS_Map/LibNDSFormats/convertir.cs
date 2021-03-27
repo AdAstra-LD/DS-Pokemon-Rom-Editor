@@ -25,22 +25,18 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace Tinke
-{
-    public static class Convertir
-    {
+namespace Tinke {
+    public static class Convertir {
         #region Paleta
         /// <summary>
         /// A partir de un array de bytes devuelve un array de colores.
         /// </summary>
         /// <param name="bytes">Bytes para convertir</param>
         /// <returns>Colores de la paleta.</returns>
-        public static Color[] BGR555(byte[] bytes)
-        {
+        public static Color[] BGR555(byte[] bytes) {
             Color[] paleta = new Color[bytes.Length / 2];
 
-            for (int i = 0; i < bytes.Length / 2; i++)
-            {
+            for (int i = 0; i < bytes.Length / 2; i++) {
                 paleta[i] = BGR555(bytes[i * 2], bytes[i * 2 + 1]);
             }
             return paleta;
@@ -51,8 +47,7 @@ namespace Tinke
         /// <param name="byte1">Primer byte</param>
         /// <param name="byte2">Segundo byte</param>
         /// <returns>Color convertido</returns>
-        public static Color BGR555(byte byte1, byte byte2)
-        {
+        public static Color BGR555(byte byte1, byte byte2) {
             /*int r, b; double g;
 
             r = (byte1 % 0x20) * 0x8;
@@ -67,22 +62,17 @@ namespace Tinke
                 return Color.Black;
             }*/
             return Color.FromArgb(decodeColor(BitConverter.ToInt16(new byte[] { byte1, byte2 }, 0), BGR555_));
-            
+
         }
-        public static byte[][] BytesToTiles_NoChanged(byte[] bytes, int tilesX, int tilesY)
-        {
+        public static byte[][] BytesToTiles_NoChanged(byte[] bytes, int tilesX, int tilesY) {
             List<byte[]> tiles = new List<byte[]>();
             List<byte> temp = new List<byte>();
 
-            for (int ht = 0; ht < tilesY; ht++)
-            {
-                for (int wt = 0; wt < tilesX; wt++)
-                {
+            for (int ht = 0; ht < tilesY; ht++) {
+                for (int wt = 0; wt < tilesX; wt++) {
                     // Get the tile data
-                    for (int h = 0; h < 8; h++)
-                    {
-                        for (int w = 0; w < 8; w++)
-                        {
+                    for (int h = 0; h < 8; h++) {
+                        for (int w = 0; w < 8; w++) {
                             temp.Add(bytes[wt * 8 + ht * tilesX * 64 + (w + h * 8 * tilesX)]);
                         }
                     }
@@ -98,21 +88,18 @@ namespace Tinke
         3, 2, 1, 5, 5, 5
     });
         public static int[][] shiftList = new int[][] { new int[] { 0, 0 }, new int[] { 1, 255 }, new int[] { 3, 85 }, new int[] { 7, 36 }, new int[] { 15, 17 }, new int[] { 31, 8 }, new int[] { 63, 4 }, new int[] { 127, 2 }, new int[] { 255, 1 } };
-        public static int decodeColor(int value, MKDS_Course_Editor.nclr_e.CColorFormat format)
-        {
+        public static int decodeColor(int value, MKDS_Course_Editor.nclr_e.CColorFormat format) {
             int[] res = format.getResolution();
             int rgb = Color.FromArgb(255, 0, 0, 0).ToArgb();
             int shift = 0;
             int length = res.Length / 2;
-            for (int i = 0; i < length; i++)
-            {
+            for (int i = 0; i < length; i++) {
                 int mode = res[length - i - 1];
                 int nshift = res[length * 2 - i - 1];
                 int mult = shiftList[nshift][1];
                 int and = shiftList[nshift][0];
                 int n = (value >> shift & and) * mult;
-                switch (mode)
-                {
+                switch (mode) {
                     case 0: // '\0'
                         rgb |= n << 24;
                         break;
@@ -146,8 +133,7 @@ namespace Tinke
         /// </summary>
         /// <param name="tiles">Tiles para convertir</param>
         /// <returns>Array de bytes</returns>
-        public static byte[] TilesToBytes(byte[][] tiles)
-        {
+        public static byte[] TilesToBytes(byte[][] tiles) {
             List<byte> resul = new List<byte>();
 
             for (int i = 0; i < tiles.Length; i++)
@@ -162,13 +148,11 @@ namespace Tinke
         /// </summary>
         /// <param name="bytes">Bytes para convertir</param>
         /// <returns>Array de tiles</returns>
-        public static byte[][] BytesToTiles(byte[] bytes)
-        {
+        public static byte[][] BytesToTiles(byte[] bytes) {
             List<byte[]> resul = new List<byte[]>();
             List<byte> temp = new List<byte>();
 
-            for (int i = 0; i < bytes.Length / 64; i++)
-            {
+            for (int i = 0; i < bytes.Length / 64; i++) {
                 for (int j = 0; j < 64; j++)
                     temp.Add(bytes[j + i * 64]);
 
@@ -186,12 +170,10 @@ namespace Tinke
         /// </summary>
         /// <param name="bits4">Datos de entrada en formato 4-bit (valor máximo 15 (0xF))</param>
         /// <returns>Devuelve una array de bytes en 8-bit</returns>
-        public static Byte[] Bit4ToBit8(byte[] bits4)
-        {
+        public static Byte[] Bit4ToBit8(byte[] bits4) {
             List<byte> bits8 = new List<byte>();
 
-            for (int i = 0; i < bits4.Length; i += 2)
-            {
+            for (int i = 0; i < bits4.Length; i += 2) {
                 string nByte = String.Format("{0:X}", bits4[i]);
                 nByte += String.Format("{0:X}", bits4[i + 1]);
 
@@ -206,12 +188,10 @@ namespace Tinke
         /// </summary>
         /// <param name="bits8">Datos de entrada en formato 8-bit</param>
         /// <returns>Devuelve una array de bytes en 4-bit</returns>
-        public static Byte[] Bit8ToBit4(byte[] bits8)
-        {
+        public static Byte[] Bit8ToBit4(byte[] bits8) {
             List<byte> bits4 = new List<byte>();
 
-            for (int i = 0; i < bits8.Length; i++)
-            {
+            for (int i = 0; i < bits8.Length; i++) {
                 string nByte = String.Format("{0:X}", bits8[i]);
                 if (nByte.Length == 1)
                     nByte = '0' + nByte;
@@ -229,8 +209,7 @@ namespace Tinke
         /// <param name="gif">Ruta donde se encuentra el archivo a modificar</param>
         /// <param name="delay">1/100 segundos entre frames</param>
         /// <param name="loops">Número de repeticiones. 0 para infinito, -1 para ninguna</param>
-        public static void ModificarGif(string gif, int delay, int loops)
-        {
+        public static void ModificarGif(string gif, int delay, int loops) {
             BinaryReader br = new BinaryReader(File.OpenRead(gif));
             MemoryStream ms = new MemoryStream();
             BinaryWriter bw = new BinaryWriter(ms);
@@ -238,12 +217,11 @@ namespace Tinke
             // Cabecera por defecto
             bw.Write(br.ReadBytes(0xD));
             // Añadimos campo de animación
-            if (loops >= 0)
-            {
+            if (loops >= 0) {
                 List<byte> bAni = new List<byte>();
                 byte[] rawData = new Byte[] {
-	                0x21, 0xFF, 0x0B, 0x4E, 0x45, 0x54, 0x53, 0x43, 0x41, 0x50, 0x45, 0x32,
-	                0x2E, 0x30, 0x03, 0x01 };
+                    0x21, 0xFF, 0x0B, 0x4E, 0x45, 0x54, 0x53, 0x43, 0x41, 0x50, 0x45, 0x32,
+                    0x2E, 0x30, 0x03, 0x01 };
                 bAni.AddRange(rawData);
                 bAni.Add(Convert.ToByte(loops & 0xff));
                 bAni.Add(Convert.ToByte((loops >> 8) & 0xff));
@@ -255,21 +233,16 @@ namespace Tinke
             first = br.ReadByte();
             bw.Write(first);
 
-            while (br.BaseStream.Position + 1 != br.BaseStream.Length)
-            {
-                if (first == 0x21)
-                {
+            while (br.BaseStream.Position + 1 != br.BaseStream.Length) {
+                if (first == 0x21) {
                     second = br.ReadByte();
                     bw.Write(second);
-                    if (second == 0xF9)
-                    {
+                    if (second == 0xF9) {
                         bw.Write(br.ReadBytes(2));
                         bw.Write(Convert.ToByte(delay & 0xff));
                         bw.Write(Convert.ToByte((delay >> 8) & 0xff));
                         br.ReadBytes(2); // Cambiamos esos dos bytes que son el valor del delay
-                    }
-                    else
-                    {
+                    } else {
                         first = second;
                         continue;
                     }
@@ -299,13 +272,11 @@ namespace Tinke
         /// <param name="frames">Cada uno de los frames</param>
         /// <param name="delay">1/100 seg entre frame</param>
         /// <param name="loops">Número de repeticiones. 0 para infinito, -1 para ninguna</param>
-        public static void CrearGif(string fout, Image[] frames, int delay, int loops)
-        {
+        public static void CrearGif(string fout, Image[] frames, int delay, int loops) {
             // ¡¡No funciona con mono!!
             GifBitmapEncoder encoder = new GifBitmapEncoder();
-            
-            for (int i = 0; i < frames.Length; i++)
-            {
+
+            for (int i = 0; i < frames.Length; i++) {
                 MemoryStream ms = new MemoryStream();
                 frames[i].Save(ms, System.Drawing.Imaging.ImageFormat.Png);
 
@@ -316,7 +287,7 @@ namespace Tinke
             encoder.Save(fs);
             fs.Close();
             fs.Dispose();
-            
+
             ModificarGif(fout, delay, loops);
         }
     }
