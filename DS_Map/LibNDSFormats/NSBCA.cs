@@ -346,7 +346,7 @@ namespace MKDS_Course_Editor.NSBCA {
                                                     dataoffset = toffset;
                                                 }
                                                 float keyFrame = (width != 2 ? (float)er.ReadInt32() : (float)er.ReadInt16());
-                                                ns.JAC[i].ObjInfo[j].translate_keyframes[k].Add((float)LibNDSFormats.NSBMD.NSBMDGlRenderer.sign((int)keyFrame, (width != 2 ? 32 : 16)) / 4096f);
+                                                ns.JAC[i].ObjInfo[j].translate_keyframes[k].Add((float)LibNDSFormats.NSBMD.NSBMDGlRenderer.Sign((int)keyFrame, (width != 2 ? 32 : 16)) / 4096f);
                                                 //m = (new StringBuilder()).append(m).append("\n     -> #").append(t).append(": ").append(keyFrame).toString();
                                             }
                                             er.BaseStream.Position = curpos;

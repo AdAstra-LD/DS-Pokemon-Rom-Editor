@@ -514,12 +514,12 @@ namespace LibNDSFormats.NSBMD
             model[0].laststackid = laststack;
             model[0].modelScale = modelscale;
             model[0].boundScale = boundscale;
-            model[0].boundXmin = (float)NSBMDGlRenderer.sign(reader.ReadInt16(), 16) / 4096f;
-            model[0].boundYmin = (float)NSBMDGlRenderer.sign(reader.ReadInt16(), 16) / 4096f;
-            model[0].boundZmin = (float)NSBMDGlRenderer.sign(reader.ReadInt16(), 16) / 4096f;
-            model[0].boundXmax = (float)NSBMDGlRenderer.sign(reader.ReadInt16(), 16) / 4096f;
-            model[0].boundYmax = (float)NSBMDGlRenderer.sign(reader.ReadInt16(), 16) / 4096f;
-            model[0].boundZmax = (float)NSBMDGlRenderer.sign(reader.ReadInt16(), 16) / 4096f;
+            model[0].boundXmin = (float)NSBMDGlRenderer.Sign(reader.ReadInt16(), 16) / 4096f;
+            model[0].boundYmin = (float)NSBMDGlRenderer.Sign(reader.ReadInt16(), 16) / 4096f;
+            model[0].boundZmin = (float)NSBMDGlRenderer.Sign(reader.ReadInt16(), 16) / 4096f;
+            model[0].boundXmax = (float)NSBMDGlRenderer.Sign(reader.ReadInt16(), 16) / 4096f;
+            model[0].boundYmax = (float)NSBMDGlRenderer.Sign(reader.ReadInt16(), 16) / 4096f;
+            model[0].boundZmax = (float)NSBMDGlRenderer.Sign(reader.ReadInt16(), 16) / 4096f;
 
             var polyOffsets = new UInt32[polynum];
             var polyDataSize = new UInt32[polynum];
@@ -670,9 +670,9 @@ namespace LibNDSFormats.NSBMD
                         case 1:
                             {
                                 int sscale = (int)reader.ReadInt32();// >> 0 & 0xFFFFFFFF;
-                                sscale = NSBMDGlRenderer.sign(sscale, 32);
+                                sscale = NSBMDGlRenderer.Sign(sscale, 32);
                                 int tscale = (int)reader.ReadInt32();// >> 0 & 0xFFFFFFFF;
-                                tscale = NSBMDGlRenderer.sign(tscale, 32);
+                                tscale = NSBMDGlRenderer.Sign(tscale, 32);
                                 //int strans = (int)unknown2 >> 0 & 0xFFFF;
                                 //int ttrans = (int)unknown2 >> 16 & 0xFFFF;
 
@@ -874,7 +874,7 @@ namespace LibNDSFormats.NSBMD
             float fixe = value;
             if (sign == 1)
             {
-                fixe = NSBMDGlRenderer.sign(value, GetSizeOfObject(value));
+                fixe = NSBMDGlRenderer.Sign(value, GetSizeOfObject(value));
             }
             float divide = 1 << frac;
             fixe /= divide;
@@ -904,7 +904,7 @@ namespace LibNDSFormats.NSBMD
         {
             UInt16 v = reader.ReadUInt16();
             Int16 divide = reader.ReadInt16();
-            divide = (short)NSBMDGlRenderer.sign(divide, 16);
+            divide = (short)NSBMDGlRenderer.Sign(divide, 16);
             int unknown = v >> 12 & 0xf;
             nsbmdObject.StackID = unknown;
             //nsbmdObject.isBillboard = ((v >> 12 & 0xf) == 1?true:false);
@@ -924,9 +924,9 @@ namespace LibNDSFormats.NSBMD
             {
                 nsbmdObject.IsRotated = true;
                 float a = reader.ReadInt16();
-                a = NSBMDGlRenderer.sign((int)a, 16) / 4096f;
+                a = NSBMDGlRenderer.Sign((int)a, 16) / 4096f;
                 float b = reader.ReadInt16();
-                b = NSBMDGlRenderer.sign((int)b, 16) / 4096f;
+                b = NSBMDGlRenderer.Sign((int)b, 16) / 4096f;
                 nsbmdObject.Pivot = (int)(v >> 4) & 0x0f;
                 nsbmdObject.Neg = (int)(v >> 8) & 0x0f;
                 nsbmdObject.RotA = a;
@@ -946,7 +946,7 @@ namespace LibNDSFormats.NSBMD
                 for (int j = 0; j < rotate.Length; j++)
                 {
                     //dataParser _tmp4 = pa;
-                    int value = NSBMDGlRenderer.sign(reader.ReadInt16(),16); //dataParser.getSign(data, offset + 4 + j * 2 + jump, 2);
+                    int value = NSBMDGlRenderer.Sign(reader.ReadInt16(),16); //dataParser.getSign(data, offset + 4 + j * 2 + jump, 2);
                     rotate[j] = (float)value / 4096f;
                     //msg = (new StringBuilder()).append(msg).append(pad(Integer.valueOf(value), 4)).toString();
                     //if(j + 1 < rotate.length)

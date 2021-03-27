@@ -645,18 +645,18 @@ namespace LibNDSFormats.NSBMD {
 								int pvneg = ca.JAC[selectedanim].JointData[(((int)ca.JAC[selectedanim].ObjInfo[i].rotate[0]) & 0x7fff) * 6];//Utils.Read2BytesAsInt16(ca.JAC[selectedanim].JointData, (int)ca.JAC[selectedanim].ObjInfo[i].rotate_keyframes[0][R[i]] * 6 + 0);
 								int a = Utils.Read2BytesAsInt16(ca.JAC[selectedanim].JointData, (((int)ca.JAC[selectedanim].ObjInfo[i].rotate[0]) & 0x7fff) * 6 + 2);
 								int b = Utils.Read2BytesAsInt16(ca.JAC[selectedanim].JointData, (((int)ca.JAC[selectedanim].ObjInfo[i].rotate[0]) & 0x7fff) * 6 + 4);
-								a = sign(a, 16);
-								b = sign(b, 16);
+								a = Sign(a, 16);
+								b = Sign(b, 16);
 								//mt = multMatrix(mt, Nsbmd.mtxPivot(new float[] { (float)a / 4096f, (float)b / 4096f }, (pvneg >> 0 & 0x0f), (pvneg >> 4 & 0x0f)));
 								//Gl.glMultMatrixf(Nsbmd.mtxPivot(new float[] { (float)a / 4096f, (float)b / 4096f }, (pvneg >> 0 & 0x0f), (pvneg >> 4 & 0x0f)));
 								r = NSBMD.mtxPivot(new float[] { (float)a / 4096f, (float)b / 4096f }, (pvneg >> 0 & 0x0f), (pvneg >> 4 & 0x0f));//multMatrix(r, Nsbmd.mtxPivot(new float[] { (float)a / 4096f, (float)b / 4096f }, (pvneg >> 0 & 0x0f), (pvneg >> 4 & 0x0f)));
 							} else {
 								int x = Utils.Read2BytesAsInt16(ca.JAC[selectedanim].RotationData, (((int)ca.JAC[selectedanim].ObjInfo[i].rotate[0]) & 0x7fff) * 10 + 2);
-								x = sign(x, 16);
+								x = Sign(x, 16);
 								int y = Utils.Read2BytesAsInt16(ca.JAC[selectedanim].RotationData, (((int)ca.JAC[selectedanim].ObjInfo[i].rotate[0]) & 0x7fff) * 10 + 4);
-								y = sign(y, 16);
+								y = Sign(y, 16);
 								int z = Utils.Read2BytesAsInt16(ca.JAC[selectedanim].RotationData, (((int)ca.JAC[selectedanim].ObjInfo[i].rotate[0]) & 0x7fff) * 10 + 6);
-								z = sign(z, 16);
+								z = Sign(z, 16);
 								OpenTK.Matrix4 X = OpenTK.Matrix4.CreateRotationX((float)x / 131072F);//((float)x * (float)Math.PI) / 32768F);
 								OpenTK.Matrix4 Y = OpenTK.Matrix4.CreateRotationY((float)y / 131072F);//((float)y * (float)Math.PI) / 32768F);
 								OpenTK.Matrix4 Z = OpenTK.Matrix4.CreateRotationZ((float)z / 131072F);//((float)z * (float)Math.PI) / 32768F);
@@ -672,8 +672,8 @@ namespace LibNDSFormats.NSBMD {
 								int pvneg = ca.JAC[selectedanim].JointData[(int)ca.JAC[selectedanim].ObjInfo[i].rotate_keyframes[0][R[i]] * 6];//Utils.Read2BytesAsInt16(ca.JAC[selectedanim].JointData, (int)ca.JAC[selectedanim].ObjInfo[i].rotate_keyframes[0][R[i]] * 6 + 0);
 								int a = Utils.Read2BytesAsInt16(ca.JAC[selectedanim].JointData, (int)ca.JAC[selectedanim].ObjInfo[i].rotate_keyframes[0][R[i]] * 6 + 2);
 								int b = Utils.Read2BytesAsInt16(ca.JAC[selectedanim].JointData, (int)ca.JAC[selectedanim].ObjInfo[i].rotate_keyframes[0][R[i]] * 6 + 4);
-								a = sign(a, 16);
-								b = sign(b, 16);
+								a = Sign(a, 16);
+								b = Sign(b, 16);
 								//mt = multMatrix(mt, Nsbmd.mtxPivot(new float[] { (float)a / 4096f, (float)b / 4096f }, (pvneg >> 0 & 0x0f), (pvneg >> 4 & 0x0f)));
 								//Gl.glMultMatrixf(Nsbmd.mtxPivot(new float[] { (float)a / 4096f, (float)b / 4096f }, (pvneg >> 0 & 0x0f), (pvneg >> 4 & 0x0f)));
 								r = NSBMD.mtxPivot(new float[] { (float)a / 4096f, (float)b / 4096f }, (pvneg >> 0 & 0x0f), (pvneg >> 4 & 0x0f));//multMatrix(r, Nsbmd.mtxPivot(new float[] { (float)a / 4096f, (float)b / 4096f }, (pvneg >> 0 & 0x0f), (pvneg >> 4 & 0x0f)));
@@ -681,11 +681,11 @@ namespace LibNDSFormats.NSBMD {
 								float param = ca.JAC[selectedanim].RotationData[(int)ca.JAC[selectedanim].ObjInfo[i].rotate_keyframes[0][R[i]] * 10];
 								//float u = (float)Math.Pow(2.0f, param) * (float)180 / 131072F;
 								int x = Utils.Read2BytesAsInt16(ca.JAC[selectedanim].RotationData, (int)ca.JAC[selectedanim].ObjInfo[i].rotate_keyframes[0][R[i]] * 10 + 2);
-								x = sign(x, 16);
+								x = Sign(x, 16);
 								int y = Utils.Read2BytesAsInt16(ca.JAC[selectedanim].RotationData, (int)ca.JAC[selectedanim].ObjInfo[i].rotate_keyframes[0][R[i]] * 10 + 4);
-								y = sign(y, 16);
+								y = Sign(y, 16);
 								int z = Utils.Read2BytesAsInt16(ca.JAC[selectedanim].RotationData, (int)ca.JAC[selectedanim].ObjInfo[i].rotate_keyframes[0][R[i]] * 10 + 6);
-								z = sign(z, 16);
+								z = Sign(z, 16);
 								OpenTK.Matrix4 X = OpenTK.Matrix4.CreateRotationX((float)x / 131072F);//((float)x * (float)Math.PI) / 32768F);
 								OpenTK.Matrix4 Y = OpenTK.Matrix4.CreateRotationY((float)y / 131072F);//((float)y * (float)Math.PI) / 32768F);
 								OpenTK.Matrix4 Z = OpenTK.Matrix4.CreateRotationZ((float)z / 131072F);//((float)z * (float)Math.PI) / 32768F);
@@ -1646,7 +1646,7 @@ namespace LibNDSFormats.NSBMD {
 								commandptr += 4;
 								z = Utils.Read4BytesAsInt32(polydata, commandptr);
 								commandptr += 4;
-								CurrentMatrix.translate((float)sign(x, 32) / SCALE_IV / Model.modelScale, (float)sign(y, 32) / SCALE_IV / Model.modelScale, (float)sign(z, 32) / SCALE_IV / Model.modelScale);
+								CurrentMatrix.translate((float)Sign(x, 32) / SCALE_IV / Model.modelScale, (float)Sign(y, 32) / SCALE_IV / Model.modelScale, (float)Sign(z, 32) / SCALE_IV / Model.modelScale);
 								break;
 							}
 						case 0x20: // Directly Set Vertex Color (W)
@@ -1736,14 +1736,14 @@ namespace LibNDSFormats.NSBMD {
 								parameter = Utils.Read4BytesAsInt32(polydata, commandptr);
 								commandptr += 4;
 
-								x = sign((parameter >> 0) & 0xFFFF, 16);
+								x = Sign((parameter >> 0) & 0xFFFF, 16);
 								//if ((x & 0x8000) != 0) x |= unchecked((int)0xFFFF0000);//-65536;
-								y = sign((parameter >> 16) & 0xFFFF, 16);
+								y = Sign((parameter >> 16) & 0xFFFF, 16);
 								//if ((y & 0x8000) != 0) y |= unchecked((int)0xFFFF0000);//-65536;
 
 								parameter = Utils.Read4BytesAsInt32(polydata, commandptr);
 								commandptr += 4;
-								z = sign(parameter & 0xFFFF, 16);
+								z = Sign(parameter & 0xFFFF, 16);
 								// if ((z & 0x8000) != 0) z |= unchecked((int)0xFFFF0000);//-65536;
 
 								vtx_state[0] = ((float)x) / SCALE_IV;
@@ -1804,11 +1804,11 @@ namespace LibNDSFormats.NSBMD {
 								xyz = Utils.Read4BytesAsInt32(polydata, commandptr);
 								commandptr += 4;
 
-								x = sign((xyz >> 0) & 0x3FF, 10);
+								x = Sign((xyz >> 0) & 0x3FF, 10);
 								// if ((x & 0x200) != 0) x |=  unchecked((int)0xFFFFFC00);//-1024;
-								y = sign((xyz >> 10) & 0x3FF, 10);
+								y = Sign((xyz >> 10) & 0x3FF, 10);
 								//if ((y & 0x200) != 0) y |=  unchecked((int)0xFFFFFC00);//-1024;
-								z = sign((xyz >> 20) & 0x3FF, 10);
+								z = Sign((xyz >> 20) & 0x3FF, 10);
 								// if ((z & 0x200) != 0) z |= unchecked((int)0xFFFFFC00);//-1024;
 
 								vtx_state[0] = (float)x / 64.0f;
@@ -1867,9 +1867,9 @@ namespace LibNDSFormats.NSBMD {
 								xy = Utils.Read4BytesAsInt32(polydata, commandptr);
 								commandptr += 4;
 
-								x = sign((xy >> 0) & 0xFFFF, 16);
+								x = Sign((xy >> 0) & 0xFFFF, 16);
 								//if ((x & 0x8000) != 0) x |=  unchecked((int)0xFFFF0000);//-65536;
-								y = sign((xy >> 16) & 0xFFFF, 16);
+								y = Sign((xy >> 16) & 0xFFFF, 16);
 								//if ((y & 0x8000) != 0) y |= unchecked((int)0xFFFF0000);//-65536;
 
 								vtx_state[0] = ((float)x) / SCALE_IV;
@@ -1927,9 +1927,9 @@ namespace LibNDSFormats.NSBMD {
 								xz = Utils.Read4BytesAsInt32(polydata, commandptr);
 								commandptr += 4;
 
-								x = sign((xz >> 0) & 0xFFFF, 16);
+								x = Sign((xz >> 0) & 0xFFFF, 16);
 								// if ((x & 0x8000) != 0) x |= unchecked((int)0xFFFF0000);//-65536;
-								z = sign((xz >> 16) & 0xFFFF, 16);
+								z = Sign((xz >> 16) & 0xFFFF, 16);
 								// if ((z & 0x8000) != 0) z |= unchecked((int)0xFFFF0000);//-65536;
 
 								vtx_state[0] = ((float)x) / SCALE_IV;
@@ -1986,9 +1986,9 @@ namespace LibNDSFormats.NSBMD {
 								yz = Utils.Read4BytesAsInt32(polydata, commandptr);
 								commandptr += 4;
 
-								y = sign((yz >> 0) & 0xFFFF, 16);
+								y = Sign((yz >> 0) & 0xFFFF, 16);
 								//if ((y & 0x8000) != 0) y |= unchecked((int)0xFFFF0000);//-65536;
-								z = sign((yz >> 16) & 0xFFFF, 16);
+								z = Sign((yz >> 16) & 0xFFFF, 16);
 								//if ((z & 0x8000) != 0) z |= unchecked((int)0xFFFF0000);//-65536;
 
 								vtx_state[1] = ((float)y) / SCALE_IV;
@@ -2047,11 +2047,11 @@ namespace LibNDSFormats.NSBMD {
 								xyz = Utils.Read4BytesAsInt32(polydata, commandptr);
 								commandptr += 4;
 
-								x = sign((xyz >> 0) & 0x3FF, 10);
+								x = Sign((xyz >> 0) & 0x3FF, 10);
 								//if ((x & 0x200) != 0) x |= unchecked((int)0xFFFFFC00);//-1024;
-								y = sign((xyz >> 10) & 0x3FF, 10);
+								y = Sign((xyz >> 10) & 0x3FF, 10);
 								//if ((y & 0x200) != 0) y |= unchecked((int)0xFFFFFC00);
-								z = sign((xyz >> 20) & 0x3FF, 10);
+								z = Sign((xyz >> 20) & 0x3FF, 10);
 								//if ((z & 0x200) != 0) z |= unchecked((int)0xFFFFFC00);
 
 
@@ -2241,7 +2241,7 @@ namespace LibNDSFormats.NSBMD {
 				}
 			}
 		}
-		public static int sign(int data, int size) {
+		public static int Sign(int data, int size) {
 			if ((data & 1 << size - 1) != 0)
 				data |= -1 << size;
 			return data;
@@ -2609,7 +2609,7 @@ namespace LibNDSFormats.NSBMD {
 									index += 4;
 									num13 = Utils.Read4BytesAsInt32(polydata, index);
 									index += 4;
-									CurrentMatrix.translate((((float)sign(num11, 0x20)) / 4096f) / this.Model.modelScale, (((float)sign(num12, 0x20)) / 4096f) / this.Model.modelScale, (((float)sign(num13, 0x20)) / 4096f) / this.Model.modelScale);
+									CurrentMatrix.translate((((float)Sign(num11, 0x20)) / 4096f) / this.Model.modelScale, (((float)Sign(num12, 0x20)) / 4096f) / this.Model.modelScale, (((float)Sign(num13, 0x20)) / 4096f) / this.Model.modelScale);
 									continue;
 								}
 							case 0x20: {
@@ -2660,11 +2660,11 @@ namespace LibNDSFormats.NSBMD {
 							case 0x23: {
 									int num25 = Utils.Read4BytesAsInt32(polydata, index);
 									index += 4;
-									num11 = sign(num25 & 0xffff, 0x10);
-									num12 = sign((num25 >> 0x10) & 0xffff, 0x10);
+									num11 = Sign(num25 & 0xffff, 0x10);
+									num12 = Sign((num25 >> 0x10) & 0xffff, 0x10);
 									num25 = Utils.Read4BytesAsInt32(polydata, index);
 									index += 4;
-									num13 = sign(num25 & 0xffff, 0x10);
+									num13 = Sign(num25 & 0xffff, 0x10);
 									v[0] = ((float)num11) / 4096f;
 									v[1] = ((float)num12) / 4096f;
 									v[2] = ((float)num13) / 4096f;
@@ -2680,9 +2680,9 @@ namespace LibNDSFormats.NSBMD {
 							case 0x24:
 								num26 = Utils.Read4BytesAsInt32(polydata, index);
 								index += 4;
-								num11 = sign(num26 & 0x3ff, 10);
-								num12 = sign((num26 >> 10) & 0x3ff, 10);
-								num13 = sign((num26 >> 20) & 0x3ff, 10);
+								num11 = Sign(num26 & 0x3ff, 10);
+								num12 = Sign((num26 >> 10) & 0x3ff, 10);
+								num13 = Sign((num26 >> 20) & 0x3ff, 10);
 								v[0] = ((float)num11) / 64f;
 								v[1] = ((float)num12) / 64f;
 								v[2] = ((float)num13) / 64f;
@@ -2698,8 +2698,8 @@ namespace LibNDSFormats.NSBMD {
 							case 0x25: {
 									int num27 = Utils.Read4BytesAsInt32(polydata, index);
 									index += 4;
-									num11 = sign(num27 & 0xffff, 0x10);
-									num12 = sign((num27 >> 0x10) & 0xffff, 0x10);
+									num11 = Sign(num27 & 0xffff, 0x10);
+									num12 = Sign((num27 >> 0x10) & 0xffff, 0x10);
 									v[0] = ((float)num11) / 4096f;
 									v[1] = ((float)num12) / 4096f;
 									if (stackID == -1) {
@@ -2714,8 +2714,8 @@ namespace LibNDSFormats.NSBMD {
 							case 0x26: {
 									int num28 = Utils.Read4BytesAsInt32(polydata, index);
 									index += 4;
-									num11 = sign(num28 & 0xffff, 0x10);
-									num13 = sign((num28 >> 0x10) & 0xffff, 0x10);
+									num11 = Sign(num28 & 0xffff, 0x10);
+									num13 = Sign((num28 >> 0x10) & 0xffff, 0x10);
 									v[0] = ((float)num11) / 4096f;
 									v[2] = ((float)num13) / 4096f;
 									if (stackID == -1) {
@@ -2730,8 +2730,8 @@ namespace LibNDSFormats.NSBMD {
 							case 0x27: {
 									int num29 = Utils.Read4BytesAsInt32(polydata, index);
 									index += 4;
-									num12 = sign(num29 & 0xffff, 0x10);
-									num13 = sign((num29 >> 0x10) & 0xffff, 0x10);
+									num12 = Sign(num29 & 0xffff, 0x10);
+									num13 = Sign((num29 >> 0x10) & 0xffff, 0x10);
 									v[1] = ((float)num12) / 4096f;
 									v[2] = ((float)num13) / 4096f;
 									if (stackID == -1) {
@@ -2746,9 +2746,9 @@ namespace LibNDSFormats.NSBMD {
 							case 40:
 								num26 = Utils.Read4BytesAsInt32(polydata, index);
 								index += 4;
-								num11 = sign(num26 & 0x3ff, 10);
-								num12 = sign((num26 >> 10) & 0x3ff, 10);
-								num13 = sign((num26 >> 20) & 0x3ff, 10);
+								num11 = Sign(num26 & 0x3ff, 10);
+								num12 = Sign((num26 >> 10) & 0x3ff, 10);
+								num13 = Sign((num26 >> 20) & 0x3ff, 10);
 								v[0] += ((float)num11) / 4096f;
 								v[1] += ((float)num12) / 4096f;
 								v[2] += ((float)num13) / 4096f;
