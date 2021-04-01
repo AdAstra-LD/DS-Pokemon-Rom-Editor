@@ -2484,7 +2484,11 @@ namespace DSPRE.Resources {
                 [0x036A] = "DoubleFadeScreen",
                 [0x036B] = "MessageAllTextbox",
                 [0x036C] = "MessageTextbox",
-                [0x036D] = "SetTextboxAlpha"
+                [0x036D] = "SetTextboxAlpha",
+                [0x036E] = "TextPocketWhite",
+                [0x036F] = "SetLayerVisibility",
+                [0x0370] = "StopWeatherAlphaBlend",
+                [0x0371] = "SetRepelSteps",
             };
             public static Dictionary<ushort, byte[]> HGSSScrCmdParameters = new Dictionary<ushort, byte[]>() {
                 [0x0000] = new byte[1] { 0 },
@@ -3353,7 +3357,11 @@ namespace DSPRE.Resources {
                 [0x036A] = new byte[] { 2, 2, 2, 2, 2, 2 },
                 [0x036B] = new byte[] { 2, 2, 2, 2, 2 },
                 [0x036C] = new byte[] { 2, 2, 2, 2, 2},
-                [0x036D] = new byte[] { 2, 2 }
+                [0x036D] = new byte[] { 2, 2 },
+                [0x036E] = new byte[] { 1, 2 },
+                [0x036F] = new byte[] { 2, 2 },
+                [0x0370] = new byte[] { 2 },
+                [0x0371] = new byte[] { 2 }
             };
         }
         public static class System {

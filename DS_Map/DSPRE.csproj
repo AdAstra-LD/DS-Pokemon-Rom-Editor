@@ -204,7 +204,7 @@
     <Compile Include="LibNDSFormats\nclr_e.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LibNDSFormats\NSBCA.cs" />
+    <Compile Include="LibNDSFormats\NSBCA\NSBCA.cs" />
     <Compile Include="LibNDSFormats\NSBCA\NSBCALoader.cs" />
     <Compile Include="LibNDSFormats\NSBMD\MTX44.cs" />
     <Compile Include="LibNDSFormats\NSBMD\NSBMD.cs" />

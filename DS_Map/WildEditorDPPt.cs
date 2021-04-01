@@ -266,7 +266,7 @@ namespace DSPRE {
         }
         private void nightSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) return;
-            currentFile.nightPokemon[0] = (uint)nightSecondComboBox.SelectedIndex;
+            currentFile.nightPokemon[1] = (uint)nightSecondComboBox.SelectedIndex;
         }
         private void swarmFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) return;

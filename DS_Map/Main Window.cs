@@ -6191,7 +6191,7 @@ namespace DSPRE {
             currentAreaData.mapTileset = (ushort)areaDataMapTilesetUpDown.Value;
         }
         private void saveAreaDataButton_Click(object sender, EventArgs e) {
-            currentAreaData.SaveToFileDefaultDir(selectMatrixComboBox.SelectedIndex);
+            currentAreaData.SaveToFileDefaultDir(selectAreaDataListBox.SelectedIndex);
         }
         private void selectAreaDataListBox_SelectedIndexChanged(object sender, EventArgs e) {
             currentAreaData = LoadAreaData((uint)selectAreaDataListBox.SelectedIndex);
@@ -6281,7 +6281,7 @@ namespace DSPRE {
             }
         }
         private void exportAreaDataButton_Click(object sender, EventArgs e) {
-            currentAreaData.SaveToFileExplorePath("Area Data " + selectMatrixComboBox.SelectedIndex);
+            currentAreaData.SaveToFileExplorePath("Area Data " + selectAreaDataListBox.SelectedIndex);
         }
         private void importAreaDataButton_Click(object sender, EventArgs e) {
             if (selectAreaDataListBox.SelectedIndex < 0)
