@@ -143,14 +143,16 @@ namespace DSPRE.ROMFiles {
             //TODO: give user the possibility to jump to/call a script
             //once it's done, this Predicate below will be the only one needed, since there will be no distinction between
             //a script and a function
-            Func<string[], int, bool> functionEndCondition =
-                (source, x) => source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002], StringComparison.InvariantCultureIgnoreCase)    //End
+            Func<string[], int, ushort?, bool> functionEndCondition =
+                (source, x, id) => source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002], StringComparison.InvariantCultureIgnoreCase)    //End
                             || source[x].IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + " Function", StringComparison.InvariantCultureIgnoreCase) >= 0 //Jump Function_#
-                            || source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x001B], StringComparison.InvariantCultureIgnoreCase);  //Return
+                            || source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x001B], StringComparison.InvariantCultureIgnoreCase)
+                            || PokeDatabase.ScriptEditor.endCodes.Contains(id);  //Return
 
-            Func<string[], int, bool> scriptEndCondition =
-                (source, x) => source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002], StringComparison.InvariantCultureIgnoreCase)    //End
-                            || source[x].IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + " Function") >= 0; //Jump Function_#
+            Func<string[], int, ushort?, bool> scriptEndCondition =
+                (source, x, id) => source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002], StringComparison.InvariantCultureIgnoreCase)    //End
+                            || source[x].IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + " Function") >= 0 //Jump Function_#
+                            || PokeDatabase.ScriptEditor.endCodes.Contains(id);
 
             allScripts = ReadCommandsFromLines(scriptLines, containerTypes.SCRIPT, scriptEndCondition);  //Jump + whitespace
             if (allScripts == null || allScripts.Count <= 0)
@@ -449,18 +451,19 @@ namespace DSPRE.ROMFiles {
                 references.Add(new ScriptReference(cont.containerType, cont.manualUserID, containerTypes.FUNCTION, invokedID, pos - 4));
             }
         }
-        private List<CommandContainer> ReadCommandsFromLines(string[] lineSource, containerTypes containerType, Func<string[], int, bool> endConditions) {
+        private List<CommandContainer> ReadCommandsFromLines(string[] lineSource, containerTypes containerType, Func<string[], int, ushort?, bool> endConditions) {
             List<CommandContainer> ls = new List<CommandContainer>();
 
             try {
                 for (int i = 0; i < lineSource.Length; i++) {
-                    int positionOfScriptNumber = lineSource[i].IndexOf('#');
-                    if (lineSource[i].Contains('@') && positionOfScriptNumber >= 0) { // Move on until script header is found
-                        uint scriptNumber = uint.Parse(lineSource[i].Substring(positionOfScriptNumber + 1).Split()[0].Replace("-", ""));
+                    int positionOfScriptNumber = lineSource[i].IndexOfAny("0123456789".ToCharArray());
+                    if (positionOfScriptNumber >= 0) { // Move on until script header is found
+                        uint scriptNumber = uint.Parse(lineSource[i].Substring(positionOfScriptNumber).Split()[0].Replace(":", ""));
 
                         i++;
-                        while (lineSource[i].Length <= 0)
+                        while (lineSource[i].Length <= 0) {
                             i++; //Skip all empty lines 
+                        }
 
                         if (lineSource[i].IndexOf("UseScript", StringComparison.InvariantCultureIgnoreCase) >= 0) {
                             int useScriptNumber = Int16.Parse(lineSource[i].Substring(1 + lineSource[i].IndexOf('#')));
@@ -469,15 +472,15 @@ namespace DSPRE.ROMFiles {
 
                             /* Read script commands */
                             List<ScriptCommand> cmdList = new List<ScriptCommand>();
-                            while (!endConditions(lineSource, i)) {
-                                ScriptCommand toAdd = new ScriptCommand(lineSource[i], i + 1);
-                                if (toAdd.id == null)
+                            ScriptCommand lastRead;
+                            do {
+                                lastRead = new ScriptCommand(lineSource[i], i + 1);
+                                if (lastRead.id == null)
                                     return null;
 
-                                cmdList.Add(toAdd);
-                                i++;
-                            }
-                            cmdList.Add(new ScriptCommand(lineSource[i], i + 1)); // Add end or jump/call command
+                                cmdList.Add(lastRead);
+                            } while (!endConditions(lineSource, i++, lastRead.id));
+                            
                             ls.Add(new CommandContainer(scriptNumber, containerType, commandList: cmdList));
                         }
                     }
@@ -490,9 +493,9 @@ namespace DSPRE.ROMFiles {
 
             try {
                 for (int i = 0; i < lineSource.Length; i++) {
-                    int positionOfActionNumber = lineSource[i].IndexOf('#');
-                    if (lineSource[i].Contains('@') && positionOfActionNumber >= 0) { // Move on until script header is found
-                        uint actionNumber = uint.Parse(lineSource[i].Substring(positionOfActionNumber + 1).Split()[0].Replace("-", ""));
+                    int positionOfActionNumber = lineSource[i].IndexOfAny("0123456789".ToCharArray());
+                    if (positionOfActionNumber >= 0) { // Move on until script header is found
+                        uint actionNumber = uint.Parse(lineSource[i].Substring(positionOfActionNumber).Split()[0].Replace(":", ""));
 
                         i++;
                         while (lineSource[i].Length <= 0)
@@ -500,15 +503,13 @@ namespace DSPRE.ROMFiles {
 
                         List<ScriptAction> cmdList = new List<ScriptAction>();
                         /* Read script commands */
-                        while (!lineSource[i].Equals(PokeDatabase.ScriptEditor.movementsDictIDName[0x00FE], StringComparison.InvariantCultureIgnoreCase)) { //End
+                        do {
                             ScriptAction toAdd = new ScriptAction(lineSource[i], i + 1);
                             if (toAdd.id == null)
                                 return null;
 
                             cmdList.Add(toAdd);
-                            i++;
-                        }
-                        cmdList.Add(new ScriptAction(lineSource[i], i + 1)); // Read and add end command
+                        } while (!lineSource[i++].Equals(PokeDatabase.ScriptEditor.movementsDictIDName[0x00FE], StringComparison.InvariantCultureIgnoreCase));
 
                         ls.Add(new ActionContainer(actionNumber, actionCommandsList: cmdList));
                     }
@@ -587,6 +588,7 @@ namespace DSPRE.ROMFiles {
                                 }
 
                                 /* If command calls a function/movement, store reference position */
+                                
                                 AddReference(ref refList, (ushort)currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentFunction);
                             }
                         } else {

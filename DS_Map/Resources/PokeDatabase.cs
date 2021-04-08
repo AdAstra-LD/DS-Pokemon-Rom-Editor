@@ -714,7 +714,7 @@ namespace DSPRE.Resources {
                 [0x001D] = 1,   //Call-If
                 [0x005E] = 1,   //Movement
             };
-            public static ushort[] endCodes = new ushort[] {
+            public static HashSet<ushort?> endCodes = new HashSet<ushort?>() {
                 0x2,
                 0x16,
                 0x1B
@@ -2473,6 +2473,7 @@ namespace DSPRE.Resources {
             };
 
             public static Dictionary<ushort, string> CustomScrCmdNames = new Dictionary<ushort, string>() {
+                [0x0357] = "DivVar",
                 [0x0360] = "AddCameraMovementParam",
                 [0x0361] = "OverrideDefaultCam",
                 [0x0362] = "ResetCamMovement",
@@ -3346,6 +3347,7 @@ namespace DSPRE.Resources {
                 [0x0354] = new byte[] { 1, 1 }
             };
             public static Dictionary<ushort, byte[]> CustomScrCmdParameters = new Dictionary<ushort, byte[]>() {
+                [0x0357] = new byte[] { 2, 2 },
                 [0x0360] = new byte[] { 2, 2, 2, 2 },
                 [0x0361] = new byte[1] { 0 },
                 [0x0362] = new byte[1] { 0 },

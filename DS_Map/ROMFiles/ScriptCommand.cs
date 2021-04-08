@@ -12,6 +12,7 @@ namespace DSPRE.ROMFiles {
         public uint manualUserID;
         public int useScript;
         public containerTypes containerType;
+        internal static readonly string functionStart;
 
         #region Constructors (2)
         public CommandContainer(uint scriptNumber, containerTypes containerType, int useScript = -1, List<ScriptCommand> commandList = null) {
@@ -93,7 +94,7 @@ namespace DSPRE.ROMFiles {
             name = wholeLine;
             cmdParams = new List<byte[]>();
 
-            string[] nameParts = wholeLine.Split(' '); // Separate command code from parameters
+            string[] nameParts = wholeLine.Replace("\t", "").Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries); // Separate command code from parameters
             /* Get command id, which is always first in the description */
 
             try {
@@ -169,6 +170,9 @@ namespace DSPRE.ROMFiles {
                             }
                         } catch (FormatException) {
                             MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not a valid number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            id = null;
+                        } catch (OverflowException) {
+                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not in the range [" + byte.MinValue + ", " + byte.MaxValue + "].", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             id = null;
                         }
                     }

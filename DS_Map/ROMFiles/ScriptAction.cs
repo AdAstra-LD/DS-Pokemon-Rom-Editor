@@ -38,7 +38,7 @@ namespace DSPRE.ROMFiles {
         public ScriptAction(string wholeLine, int lineNumber) {
             name = wholeLine;
 
-            string[] nameParts = wholeLine.Split(' '); // Separate command code from parameters
+            string[] nameParts = wholeLine.Replace("\t", "").Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries); // Separate command code from parameters
             /* Get command id, which is always first in the description */
 
             try {

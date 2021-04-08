@@ -524,6 +524,7 @@ namespace DSPRE {
                 DirNames.buildingTextures,
                 DirNames.mapTextures,
                 DirNames.areaData,
+                DirNames.buildingConfigFiles
             }, toolStripProgressBar);
 
             /* Fill Tileset ListBox */
@@ -5037,7 +5038,7 @@ namespace DSPRE {
                 currentScriptBox = functionTextBox;
                 currentLineNumbersBox = LineNumberTextBoxFunc;
             } else if (scriptEditorTabControl.SelectedIndex == 2) {
-                currentScriptBox = movementTextBox;
+                currentScriptBox = actionsTextBox;
                 currentLineNumbersBox = LineNumberTextBoxMov;
             } else {
                 currentScriptBox = null;
@@ -5111,7 +5112,7 @@ namespace DSPRE {
         private void saveScriptFileButton_Click(object sender, EventArgs e) {
             /* Create new ScriptFile object */
             int idToAssign = selectScriptFileComboBox.SelectedIndex;
-            ScriptFile userEdited = new ScriptFile(scriptTextBox.Lines, functionTextBox.Lines, movementTextBox.Lines, selectScriptFileComboBox.SelectedIndex);
+               ScriptFile userEdited = new ScriptFile(scriptTextBox.Lines, functionTextBox.Lines, actionsTextBox.Lines, selectScriptFileComboBox.SelectedIndex);
 
             /* Write new scripts to file */
             if (userEdited.fileID == idToAssign) { //check if ScriptFile instance was created succesfully
@@ -5223,12 +5224,12 @@ namespace DSPRE {
             if (split[3].StartsWith("Script")) {
                 if (scriptEditorTabControl.SelectedIndex != 0)
                     scriptEditorTabControl.SelectedIndex = 0;
-                int keywordPos = scriptTextBox.Find("@Script_#" + split[4].Replace(":", ""), RichTextBoxFinds.MatchCase);
+                int keywordPos = scriptTextBox.Find("Script " + split[4].Replace(":", ""), RichTextBoxFinds.MatchCase);
                 TXTBoxScrollToResult(scriptTextBox, cmdSearched, keywordPos);
             } else if (split[3].StartsWith("Function")) {
                 if (scriptEditorTabControl.SelectedIndex != 1)
                     scriptEditorTabControl.SelectedIndex = 1;
-                int keywordPos = functionTextBox.Find("@Function_#" + split[4].Replace(":", ""), RichTextBoxFinds.MatchCase);
+                int keywordPos = functionTextBox.Find("Function " + split[4].Replace(":", ""), RichTextBoxFinds.MatchCase);
                 TXTBoxScrollToResult(functionTextBox, cmdSearched, keywordPos);
             }
         }
@@ -5261,75 +5262,90 @@ namespace DSPRE {
 
             scriptTextBox.Clear();
             functionTextBox.Clear();
-            movementTextBox.Clear();
+            actionsTextBox.Clear();
 
             if (currentScriptFile.isLevelScript) {
                 scriptTextBox.Text += "Level script files are currently not supported.\nYou can use AdAstra's Level Scripts Editor.";
             } else {
 
-                /* Add scripts */
                 disableHandlers = true;
-
                 string buffer = "";
+
+                /* Add scripts */
+                Color headerTextColor = Color.FromArgb(210, 0, 0);
+
+                Color scriptTextColor = Color.FromArgb(0, 100, 0);
+                Color funcTextColor = Color.FromArgb(0, 0, 100);
+                Color actionTextColor = Color.FromArgb(100, 0, 0);
                 for (int i = 0; i < currentScriptFile.allScripts.Count; i++) {
                     CommandContainer currentScript = currentScriptFile.allScripts[i];
 
                     /* Write header */
-                    string scrHeader = "----- " + "@Script_#" + (i + 1) + " -----" + Environment.NewLine;
-                    buffer += scrHeader;
-                    buffer += Environment.NewLine;
+                    scriptTextBox.AppendText("Script " + (i + 1) + ':' + Environment.NewLine, headerTextColor);
 
                     /* If current script is identical to another, print UseScript instead of commands */
                     if (currentScript.useScript < 0) {
-                        for (int j = 0; j < currentScript.commands.Count; j++)
+                        for (int j = 0; j < currentScript.commands.Count; j++) {
+                            if (!PokeDatabase.ScriptEditor.endCodes.Contains(currentScript.commands[j].id)) {
+                                buffer += '\t';
+                            }
                             buffer += currentScript.commands[j].name + Environment.NewLine;
+                        }
                     } else {
-                        buffer += ("UseScript_#" + currentScript.useScript + Environment.NewLine);
+                        buffer += '\t' + "UseScript_#" + currentScript.useScript + Environment.NewLine;
                     }
+
+                    scriptTextBox.AppendText(buffer + Environment.NewLine, scriptTextColor);
+                    buffer = "";
                 }
-                scriptTextBox.AppendText(buffer + Environment.NewLine, Color.FromArgb(0, 140, 0));
-                buffer = "";
+
 
                 /* Add functions */
                 for (int i = 0; i < currentScriptFile.allFunctions.Count; i++) {
                     CommandContainer currentFunction = currentScriptFile.allFunctions[i];
 
                     /* Write Heaader */
-                    string funcHeader = "----- " + "@Function_#" + (i + 1) + " -----" + Environment.NewLine;
-                    buffer += funcHeader;
-                    buffer += Environment.NewLine;
+                    functionTextBox.AppendText("Function " + (i + 1) + ':' + Environment.NewLine, headerTextColor);
 
                     /* If current function is identical to a script, print UseScript instead of commands */
                     if (currentFunction.useScript < 0) {
-                        for (int j = 0; j < currentFunction.commands.Count; j++)
+                        for (int j = 0; j < currentFunction.commands.Count; j++) {
+                            if(!PokeDatabase.ScriptEditor.endCodes.Contains(currentFunction.commands[j].id)) {
+                                buffer += '\t';
+                            }
                             buffer += currentFunction.commands[j].name + Environment.NewLine;
+                        }
                     } else {
-                        buffer += ("UseScript_#" + currentFunction.useScript + Environment.NewLine);
+                        buffer += '\t' + "UseScript_#" + currentFunction.useScript + Environment.NewLine;
                     }
 
+                    functionTextBox.AppendText(buffer + Environment.NewLine, funcTextColor);
+                    buffer = "";
                 }
-                functionTextBox.AppendText(buffer + Environment.NewLine, Color.Blue);
-                buffer = "";
 
                 /* Add movements */
                 for (int i = 0; i < currentScriptFile.allActions.Count; i++) {
                     ActionContainer currentAction = currentScriptFile.allActions[i];
 
-                    string movHeader = "----- " + "@Action_#" + (i + 1) + " -----" + Environment.NewLine;
-                    buffer += movHeader;
-                    buffer += Environment.NewLine;
-                    for (int j = 0; j < currentAction.actionCommandsList.Count; j++)
+                    actionsTextBox.AppendText("Action " + (i + 1) + ':' + Environment.NewLine, headerTextColor);
+
+                    for (int j = 0; j < currentAction.actionCommandsList.Count; j++) {
+                        if (currentAction.actionCommandsList[j].id != 0x00FE) {
+                            buffer += '\t';
+                        }
                         buffer += currentAction.actionCommandsList[j].name + Environment.NewLine;
+                    }
+
+                    actionsTextBox.AppendText(buffer + Environment.NewLine, actionTextColor);
+                    buffer = "";
                 }
-                movementTextBox.AppendText(buffer + Environment.NewLine, Color.FromArgb(192, 40, 40));
-                buffer = "";
             }
 
             statusLabel.Text = "Ready";
             disableHandlers = false;
             UpdateLineNumbers(scriptTextBox, LineNumberTextBoxScript);
             UpdateLineNumbers(functionTextBox, LineNumberTextBoxFunc);
-            UpdateLineNumbers(movementTextBox, LineNumberTextBoxMov);
+            UpdateLineNumbers(actionsTextBox, LineNumberTextBoxMov);
         }
 
         #region Script Macros
@@ -6045,12 +6061,12 @@ namespace DSPRE {
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            string tilesetPath;
-            if (mapTilesetRadioButton.Checked)
-                tilesetPath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-            else
-                tilesetPath = RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+            string tilesetPath = mapTilesetRadioButton.Checked
+                ? RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4")
+                : RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             File.Copy(tilesetPath, sf.FileName);
+
+            MessageBox.Show("NSBTX tileset exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void importNSBTXButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .nsbtx file */
@@ -6060,16 +6076,15 @@ namespace DSPRE {
                 return;
 
             /* Update nsbtx file */
-            string tilesetPath;
-            if (mapTilesetRadioButton.Checked)
-                tilesetPath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-            else
-                tilesetPath = RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
+            string tilesetPath = mapTilesetRadioButton.Checked
+                ? RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4")
+                : RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
             File.Copy(ofd.FileName, tilesetPath, true);
 
             /* Update nsbtx object in memory and controls */
             currentTileset = new NSMBe4.NSBMD.NSBTX_File(new FileStream(ofd.FileName, FileMode.Open));
-
+            texturePacksListBox_SelectedIndexChanged(null, null);
+            MessageBox.Show("NSBTX tileset imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void mapTilesetRadioButton_CheckedChanged(object sender, EventArgs e) {
             FillTilesetBox();
@@ -6101,19 +6116,18 @@ namespace DSPRE {
             palettesListBox.Items.Clear();
 
             /* Load tileset file */
-            string tilesetPath;
-            if (mapTilesetRadioButton.Checked) {
-                tilesetPath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-            } else {
-                tilesetPath = RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-            }
+            string tilesetPath = mapTilesetRadioButton.Checked
+                ? RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4")
+                : RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
 
             currentTileset = new NSMBe4.NSBMD.NSBTX_File(new FileStream(tilesetPath, FileMode.Open));
             string currentItemName = texturePacksListBox.Items[texturePacksListBox.SelectedIndex].ToString();
 
             if (currentTileset.TexInfo.names == null || currentTileset.PalInfo.names == null) {
-                if (!currentItemName.StartsWith("Error!"))
+                if (!currentItemName.StartsWith("Error!")) {
                     texturePacksListBox.Items[texturePacksListBox.SelectedIndex] = "Error! - " + currentItemName;
+                }
+
                 disableHandlers = false;
                 return;
             }
@@ -6227,8 +6241,9 @@ namespace DSPRE {
                 File.Copy(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + 0.ToString("D4"), RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
             } else {
                 File.Copy(RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + 0.ToString("D4"), RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
+				File.Copy(RomInfo.gameDirs[DirNames.buildingConfigFiles].unpackedDir + "\\" + 0.ToString("D4"), RomInfo.gameDirs[DirNames.buildingConfigFiles].unpackedDir + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
             }
-
+            
             /* Update ComboBox and select new file */
             texturePacksListBox.Items.Add("Texture Pack " + texturePacksListBox.Items.Count);
             texturePacksListBox.SelectedIndex = texturePacksListBox.Items.Count - 1;
@@ -6240,6 +6255,7 @@ namespace DSPRE {
                     File.Delete(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
                 else {
                     File.Delete(RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
+                    File.Delete(RomInfo.gameDirs[DirNames.buildingConfigFiles].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
                 }
 
                 /* Check if currently selected file is the last one, and in that case select the one before it */
