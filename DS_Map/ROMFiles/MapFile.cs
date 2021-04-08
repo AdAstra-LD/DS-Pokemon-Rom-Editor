@@ -86,7 +86,7 @@ namespace DSPRE.ROMFiles {
                 ImportBuildings(new MemoryStream(reader.ReadBytes(buildingsSectionLength)));
 
                 /* Read nsbmd model */
-                ImportMapModel(new MemoryStream(reader.ReadBytes(nsbmdSectionLength)));
+                LoadMapModel(reader.ReadBytes(nsbmdSectionLength));
 
                 /* Read bdhc data */
                 ImportTerrain(new MemoryStream(reader.ReadBytes(bdhcSectionLength)));
@@ -138,33 +138,26 @@ namespace DSPRE.ROMFiles {
                 }
             }
         }
-        public void ImportMapModel(Stream newData) {
-            using (BinaryReader reader = new BinaryReader(newData)) {
-                reader.BaseStream.Position = 0xE;
-                if (reader.ReadInt16() > 1) {// If there is more than one file, it means there are embedded textures we must remove
-                    using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
-                        reader.BaseStream.Position = 0x1C;
-                        uint mdl0Size = reader.ReadUInt32(); // Read mdl0 file size
+        public void LoadMapModel(byte[] newData) {
+            using (BinaryReader modelReader = new BinaryReader(new MemoryStream(newData))) {
 
-                        reader.BaseStream.Position = 0x0;
-                        writer.Write(reader.ReadBytes(0x8)); // Write firt header bytes, same for all NSBMD.
-                        writer.Write(mdl0Size + 0x14);
-                        writer.Write((short)0x10); // Writes BMD0 header size (always 16)
-                        writer.Write((short)0x1); // Write new number of sub-files, since embedded textures are removed
-                        writer.Write(0x14); // Writes new start offset of MDL0
-                        reader.BaseStream.Position = 0x18;
-                        writer.Write(reader.ReadBytes((int)mdl0Size)); // Writes MDL0;
+                if (modelReader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0) {
+                    MessageBox.Show("Please select an NSBMD file.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error));
+                    return;
+                }
 
-                        mapModelData = ((MemoryStream)writer.BaseStream).ToArray();
-                    }
+                modelReader.BaseStream.Position = 0xE;
+                if (modelReader.ReadInt16() > 1) { // If there is more than one file, it means there are embedded textures we must remove
+                    mapModelData = DSUtils.GetModelWithoutTextures(newData);
                 } else {
-                    reader.BaseStream.Position = 0x0;
-                    mapModelData = reader.ReadBytes((int)newData.Length);
+                    modelReader.BaseStream.Position = 0x0;
+                    mapModelData = modelReader.ReadBytes((int)modelReader.BaseStream.Length);
                 }
 
                 mapModel = NSBMDLoader.LoadNSBMD(new MemoryStream(mapModelData));
             }
         }
+        
         public void ImportPermissions(Stream newData) {
             using (BinaryReader reader = new BinaryReader(newData)) {
                 for (int i = 0; i < 32; i++) {

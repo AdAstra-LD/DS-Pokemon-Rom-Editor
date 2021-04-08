@@ -71,6 +71,16 @@ namespace DSPRE.Properties {
         }
         
         /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap addTextureToNSBMD {
+            get {
+                object obj = ResourceManager.GetObject("addTextureToNSBMD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
         /// </summary>
         internal static System.Drawing.Icon appIcon {
@@ -1599,6 +1609,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap removeTextureNSBMD {
+            get {
+                object obj = ResourceManager.GetObject("removeTextureNSBMD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap resetColorTable {
             get {
                 object obj = ResourceManager.GetObject("resetColorTable", resourceCulture);
@@ -1652,6 +1672,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap save_rom {
             get {
                 object obj = ResourceManager.GetObject("save_rom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap saveTextureFromNSBMD {
+            get {
+                object obj = ResourceManager.GetObject("saveTextureFromNSBMD", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
