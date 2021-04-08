@@ -741,20 +741,23 @@ namespace DSPRE {
             Update();
 
             List<DirNames> toUnpack = new List<DirNames> {
-                    DirNames.exteriorBuildingModels,
-                    DirNames.buildingConfigFiles,
-                    DirNames.buildingTextures,
-                };
+                DirNames.exteriorBuildingModels,
+                DirNames.buildingConfigFiles,
+                DirNames.buildingTextures,
+            };
 
             if (forceUnpack) {
                 DSUtils.ForceUnpackNarcs(toUnpack, toolStripProgressBar);
 
-                if (RomInfo.gameFamily == "HGSS")
+                if (RomInfo.gameFamily == "HGSS") {
                     DSUtils.ForceUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);// Last = interior buildings dir
+                }
             } else {
                 DSUtils.TryUnpackNarcs(toUnpack, toolStripProgressBar);
-                if (RomInfo.gameFamily == "HGSS")
+
+                if (RomInfo.gameFamily == "HGSS") {
                     DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
+                }
             }
 
             toolStripProgressBar.Value = 0;
@@ -6328,6 +6331,7 @@ namespace DSPRE {
 
             byte[] modelFile = DSUtils.ReadFromFile(of.FileName);
 
+            string extramsg = "";
             using (BinaryReader reader = new BinaryReader(new MemoryStream(modelFile))) {
                 if (reader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0) {
                     MessageBox.Show("Please select an NSBMD file.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -6339,16 +6343,39 @@ namespace DSPRE {
                     MessageBox.Show("This NSBMD file doesn't contain any textures.", "No textures found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                
+                DialogResult d = MessageBox.Show("Would you like to save the removed textures to a file?", "Save textures?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (d.Equals(DialogResult.Yes)) {
+                    MessageBox.Show("Choose where to save the textures.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    SaveFileDialog texSf = new SaveFileDialog();
+                    texSf.Filter = "NSBTX File(*.nsbtx)|*.nsbtx";
+                    texSf.FileName = Path.GetFileNameWithoutExtension(of.FileName);
+                    if (texSf.ShowDialog(this) != DialogResult.OK)
+                        return;
+
+                    int bmdAbsoluteOffset = reader.ReadInt32();
+                    int texAbsoluteOffset = reader.ReadInt32();
+
+                    reader.BaseStream.Position = texAbsoluteOffset + 4;
+                    int textureSize = reader.ReadInt32();
+
+                    DSUtils.WriteToFile(texSf.FileName, DSUtils.BuildNSBTXHeader(20 + textureSize));
+                    DSUtils.WriteToFile(texSf.FileName, DSUtils.ReadFromFile(of.FileName, texAbsoluteOffset), 20);
+
+                    extramsg = "and exported";
+                }
             }
 
-            MessageBox.Show
+            MessageBox.Show("Choose where to save the untextured model.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "Untextured NSBMD File(*.nsbmd)|*.nsbmd";
+            sf.FileName = Path.GetFileNameWithoutExtension(of.FileName) + "_untextured";
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
             DSUtils.WriteToFile(sf.FileName, DSUtils.GetModelWithoutTextures(modelFile));
-            MessageBox.Show("BackGround Sound data exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Textures correctly removed " + extramsg + '!', "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void nsbmdAddTexButton_Click(object sender, EventArgs e) {

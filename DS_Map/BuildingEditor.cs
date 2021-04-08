@@ -7,17 +7,15 @@ using LibNDSFormats.NSBTX;
 using Tao.OpenGl;
 using static DSPRE.RomInfo;
 
-namespace DSPRE
-{
-    public partial class BuildingEditor : Form
-    {
+namespace DSPRE {
+    public partial class BuildingEditor : Form {
         #region Variables
         string folder;
         bool disableHandlers = new bool();
         RomInfo rom;
         NSBMD currentNSBMD;
         NSBMDGlRenderer renderer = new NSBMDGlRenderer();
-        
+
         public static float ang = 0.0f;
         public static float dist = 12.8f;
         public static float elev = 50.0f;
@@ -27,8 +25,7 @@ namespace DSPRE
         public float perspective = 45f;
         #endregion
 
-        public BuildingEditor(RomInfo romInfo)
-        {
+        public BuildingEditor(RomInfo romInfo) {
             InitializeComponent();
             rom = romInfo;
 
@@ -37,7 +34,7 @@ namespace DSPRE
             buildingOpenGLControl.MouseWheel += new MouseEventHandler(buildingOpenGLControl_MouseWheel);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
 
-            if (RomInfo.gameFamily == "HGSS") 
+            if (RomInfo.gameFamily == "HGSS")
                 interiorCheckBox.Enabled = true;
 
             disableHandlers = true;
@@ -45,44 +42,38 @@ namespace DSPRE
             FillTexturesBox();
             textureComboBox.SelectedIndex = 0;
             disableHandlers = false;
-            buildingEditorBldListBox.SelectedIndex = 0;            
+            buildingEditorBldListBox.SelectedIndex = 0;
         }
 
         #region Subroutines
-        private void CreateEmbeddedTexturesFile(int modelID, bool interior)
-        {
+        private void CreateEmbeddedTexturesFile(int modelID, bool interior) {
             string readingPath = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + modelID.ToString("D4");
             string writingPath = Path.GetTempPath() + "BLDtexture.nsbtx";
 
-            using (BinaryReader reader = new BinaryReader(new FileStream(readingPath, FileMode.Open)))
-            {
-                BinaryWriter writer = new BinaryWriter(new FileStream(writingPath, FileMode.Create));
+            byte[] txFile = File.ReadAllBytes(readingPath);
+            using (BinaryReader reader = new BinaryReader(new MemoryStream(txFile))) {
 
                 reader.BaseStream.Position = 0x8;
                 int nsbmdSize = reader.ReadInt32(); // Read size of NSBMD file
+
                 reader.BaseStream.Position = 0x14;
                 int texturesOffset = reader.ReadInt32(); // Read starting offset of embedded textures sections
+
                 int texturesSize = nsbmdSize - texturesOffset + 0x14; // Calculate size of embedded textures section
                 reader.BaseStream.Position = texturesOffset;
 
-                writer.Write((UInt32)0x30585442); // Write magic code BTX0
-                writer.Write((UInt16)0xFEFF); // Byte order
-                writer.Write((UInt16)0x0001); // ???
-                writer.Write((UInt32)texturesSize); // Write size of textures block
-                writer.Write((UInt32)0x00010010); // Needed sequence
-                writer.Write((UInt32)0x00000014); // Needed sequence
-                while (reader.BaseStream.Position < reader.BaseStream.Length) writer.Write(reader.ReadByte()); // Write texture data to file
-
-                writer.Close();
+                int lastReadPos;
+                using (BinaryWriter writer = new BinaryWriter(new FileStream(writingPath, FileMode.Create))) {
+                    writer.Write(DSUtils.BuildNSBTXHeader(texturesSize));
+                    lastReadPos = (int)reader.BaseStream.Position;
+                    writer.Write(txFile, lastReadPos, txFile.Length - lastReadPos);
+                }
             }
-
-
         }
         private void FillListBox(bool interior) {
             int modelCount = Directory.GetFiles(folder + rom.GetBuildingModelsDirPath(interior)).Length;
             for (int currentIndex = 0; currentIndex < modelCount; currentIndex++) {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(folder + rom.GetBuildingModelsDirPath(interior) + "\\" + currentIndex.ToString("D4"))))
-                {
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(folder + rom.GetBuildingModelsDirPath(interior) + "\\" + currentIndex.ToString("D4")))) {
                     string nsbmdName = ReadNSBMDname(reader);
                     buildingEditorBldListBox.Items.Add("[" + currentIndex.ToString("D3") + "] " + nsbmdName);
                 }
@@ -92,28 +83,26 @@ namespace DSPRE
             int texturesCount = Directory.GetFiles(folder + RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir).Length;
             textureComboBox.Items.Add("Embedded textures");
 
-            for (int i = 0; i < texturesCount; i++) 
+            for (int i = 0; i < texturesCount; i++)
                 textureComboBox.Items.Add("Texture " + i);
         }
         private void LoadBuildingModel(int modelID, bool interior) {
             string path = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + modelID.ToString("D4");
-            using (Stream fs = new FileStream(path, FileMode.Open)) 
+            using (Stream fs = new FileStream(path, FileMode.Open))
                 currentNSBMD = NSBMDLoader.LoadNSBMD(fs);
         }
         private void LoadModelTextures(int fileID) {
             string path;
-            if (fileID > -1) 
+            if (fileID > -1)
                 path = folder + RomInfo.gameDirs[RomInfo.DirNames.buildingTextures].unpackedDir + "\\" + fileID.ToString("D4");
-            else 
+            else
                 path = Path.GetTempPath() + "BLDtexture.nsbtx"; // Load Embedded textures if the argument passed to this function is -1
             try {
                 currentNSBMD.materials = NSBTXLoader.LoadNsbtx(new MemoryStream(File.ReadAllBytes(path)), out currentNSBMD.Textures, out currentNSBMD.Palettes);
                 currentNSBMD.MatchTextures();
-            }
-            catch { }
+            } catch { }
         }
-        private void RenderModel()
-        {
+        private void RenderModel() {
             MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File bta = new MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File();
             MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File btp = new MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File();
             MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File bca = new MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File();
@@ -127,8 +116,7 @@ namespace DSPRE
             Gl.glScalef(currentNSBMD.models[0].modelScale / 32, currentNSBMD.models[0].modelScale / 32, currentNSBMD.models[0].modelScale / 32);
             renderer.RenderModel("", bta, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, bca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, btp, currentNSBMD);
         }
-        private void SetupRenderer(float ang, float dist, float elev, float perspective)
-        {
+        private void SetupRenderer(float ang, float dist, float elev, float perspective) {
             Gl.glEnable(Gl.GL_RESCALE_NORMAL);
             Gl.glEnable(Gl.GL_COLOR_MATERIAL);
             Gl.glEnable(Gl.GL_DEPTH_TEST);
@@ -169,14 +157,14 @@ namespace DSPRE
 
         private void buildingOpenGLControl_MouseWheel(object sender, MouseEventArgs e) // Zoom In/Out
         {
-            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift) 
+            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
                 dist += (float)e.Delta / 200;
-            else 
+            else
                 dist -= (float)e.Delta / 200;
             RenderModel();
         }
         private void buildingEditorListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || buildingEditorBldListBox.SelectedIndex < 0) 
+            if (disableHandlers || buildingEditorBldListBox.SelectedIndex < 0)
                 return;
 
             LoadBuildingModel(buildingEditorBldListBox.SelectedIndex, interiorCheckBox.Checked);
@@ -190,7 +178,7 @@ namespace DSPRE
             em.FileName = buildingEditorBldListBox.SelectedItem.ToString();
             if (em.ShowDialog(this) != DialogResult.OK)
                 return;
-           
+
             File.Copy(folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingEditorBldListBox.SelectedIndex.ToString("D4"), em.FileName, true);
         }
         private void importButton_Click(object sender, EventArgs e) {
@@ -210,7 +198,7 @@ namespace DSPRE
                     string nsbmdName = ReadNSBMDname(reader);
                     buildingEditorBldListBox.Items[currentIndex] = "[" + currentIndex.ToString("D3") + "] " + nsbmdName;
                     buildingEditorListBox_SelectedIndexChanged(null, null);
-                }                
+                }
             }
         }
         private void interiorCheckBox_CheckedChanged(object sender, EventArgs e) {
@@ -224,7 +212,7 @@ namespace DSPRE
             buildingEditorBldListBox.SelectedIndex = 0;
         }
         private void textureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) 
+            if (disableHandlers)
                 return;
 
             LoadModelTextures(textureComboBox.SelectedIndex - 1);
@@ -244,7 +232,7 @@ namespace DSPRE
                 case Keys.Up:
                     elev -= 1;
                     break;
-            } 
+            }
             RenderModel();
         }
 

@@ -142,7 +142,7 @@ namespace DSPRE.ROMFiles {
             using (BinaryReader modelReader = new BinaryReader(new MemoryStream(newData))) {
 
                 if (modelReader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0) {
-                    MessageBox.Show("Please select an NSBMD file.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error));
+                    MessageBox.Show("Please select an NSBMD file.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 

@@ -8,10 +8,10 @@ using static DSPRE.RomInfo;
 
 namespace DSPRE {
     static class DSUtils {
-        public static void WriteToFile(string filepath, byte[] bytesToWrite, uint startOffset = 0) {
+        public static void WriteToFile(string filepath, byte[] bytesToWrite, uint writeAt = 0, int readFrom = 0) {
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(filepath))) {
-                writer.BaseStream.Position = startOffset;
-                writer.Write(bytesToWrite, 0, bytesToWrite.Length);
+                writer.BaseStream.Position = writeAt;
+                writer.Write(bytesToWrite, readFrom, bytesToWrite.Length - readFrom);
             }
         }
         public static byte[] ReadFromFile(string filepath, long startOffset = 0, long numberOfBytes = 0) {
@@ -66,6 +66,7 @@ namespace DSPRE {
             unpack.WaitForExit();
             return unpack.ExitCode;
         }
+
         public static void CompressOverlay(int overlayNumber) {
             string overlayFilePath = '"' + GetOverlayPath(overlayNumber) + '"';
             Process unpack = new Process();
@@ -165,8 +166,8 @@ namespace DSPRE {
         public static byte[] ReadFromArm9(uint startOffset, long numberOfBytes = 0) {
             return ReadFromFile(RomInfo.arm9Path, startOffset, numberOfBytes);
         }
-        public static void WriteToArm9(byte[] bytesToWrite, uint startOffset = 0) {
-            WriteToFile(RomInfo.arm9Path, bytesToWrite, startOffset);
+        public static void WriteToArm9(byte[] bytesToWrite, uint writeAt = 0, int readFrom = 0) {
+            WriteToFile(RomInfo.arm9Path, bytesToWrite, writeAt, readFrom);
         }
 
         public static void TryUnpackNarcs(List<DirNames> IDs, ToolStripProgressBar progress = null) {
@@ -239,6 +240,20 @@ namespace DSPRE {
 
                 return ((MemoryStream)writer.BaseStream).ToArray();
             }
+        }
+        public static byte[] BuildNSBTXHeader(int texturesSize) {
+            MemoryStream ms = new MemoryStream();
+
+            using (BinaryWriter bw = new BinaryWriter(ms)) {
+                bw.Write((UInt32)0x30585442); // Write magic code BTX0
+                bw.Write((UInt16)0xFEFF); // Byte order
+                bw.Write((UInt16)0x0001); // ???
+                bw.Write((UInt32)texturesSize); // Write size of textures block
+                bw.Write((UInt16)0x0010); //Header size???
+                bw.Write((UInt16)0x0001); //Number of blocks???
+                bw.Write((UInt32)0x00000014); // Offset to block
+            }
+            return ms.ToArray();
         }
     }
 }
