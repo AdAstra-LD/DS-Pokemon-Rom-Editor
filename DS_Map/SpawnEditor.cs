@@ -55,12 +55,12 @@ namespace DSPRE {
                 string moneyOverlayPath = DSUtils.GetOverlayPath(RomInfo.initialMoneyOverlayNumber);
                 ushort headerNumber = ushort.Parse(spawnHeaderComboBox.SelectedItem.ToString().Split()[0]);
 
-                DSUtils.WriteToArm9(RomInfo.arm9spawnOffset, BitConverter.GetBytes(headerNumber));
-                DSUtils.WriteToArm9(RomInfo.arm9spawnOffset + 8, BitConverter.GetBytes((short)(matrixxUpDown.Value * 32 + localmapxUpDown.Value)));
-                DSUtils.WriteToArm9(RomInfo.arm9spawnOffset + 12, BitConverter.GetBytes((short)(matrixyUpDown.Value * 32 + localmapyUpDown.Value)));
-                DSUtils.WriteToArm9(RomInfo.arm9spawnOffset + 16, BitConverter.GetBytes((short)playerDirCombobox.SelectedIndex));
+                DSUtils.WriteToArm9(BitConverter.GetBytes(headerNumber), RomInfo.arm9spawnOffset);
+                DSUtils.WriteToArm9(BitConverter.GetBytes((short)(matrixxUpDown.Value * 32 + localmapxUpDown.Value)), RomInfo.arm9spawnOffset + 8);
+                DSUtils.WriteToArm9(BitConverter.GetBytes((short)(matrixyUpDown.Value * 32 + localmapyUpDown.Value)), RomInfo.arm9spawnOffset + 12);
+                DSUtils.WriteToArm9(BitConverter.GetBytes((short)playerDirCombobox.SelectedIndex), RomInfo.arm9spawnOffset + 16);
 
-                DSUtils.WriteToFile(moneyOverlayPath, RomInfo.initialMoneyOverlayOffset, BitConverter.GetBytes((int)initialMoneyUpDown.Value));
+                DSUtils.WriteToFile(moneyOverlayPath, BitConverter.GetBytes((int)initialMoneyUpDown.Value), RomInfo.initialMoneyOverlayOffset);
                 MessageBox.Show("Your spawn settings have been changed.", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);

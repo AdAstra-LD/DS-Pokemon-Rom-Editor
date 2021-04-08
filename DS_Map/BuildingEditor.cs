@@ -201,7 +201,7 @@ namespace DSPRE
 
             using (BinaryReader reader = new BinaryReader(new FileStream(im.FileName, FileMode.Open))) {
                 if (reader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0) {
-                    MessageBox.Show("Please select an NSBMD file.", "Invalid File");
+                    MessageBox.Show("Please select an NSBMD file.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 } else {
                     int currentIndex = buildingEditorBldListBox.SelectedIndex;

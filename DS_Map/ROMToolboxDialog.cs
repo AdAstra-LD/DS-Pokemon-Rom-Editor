@@ -358,21 +358,21 @@ namespace DSPRE {
                 File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", overwrite: true);
 
                 try {
-                    DSUtils.WriteToArm9(data.branchOffset, HexStringToByteArray(data.branchString)); //Write new branchOffset
+                    DSUtils.WriteToArm9(HexStringToByteArray(data.branchString), data.branchOffset); //Write new branchOffset
 
                     /* Write to overlayfile */
                     string overlayFilePath = RomInfo.workDir + "overlay" + "\\" + "overlay_" + data.overlayNumber.ToString("D4") + ".bin";
                     if (DSUtils.OverlayIsCompressed(data.overlayNumber))
                         DSUtils.DecompressOverlay(data.overlayNumber, true);
 
-                    DSUtils.WriteToFile(overlayFilePath, data.overlayOffset1, HexStringToByteArray(data.overlayString1)); //Write new overlayCode1
-                    DSUtils.WriteToFile(overlayFilePath, data.overlayOffset2, HexStringToByteArray(data.overlayString2)); //Write new overlayCode2
+                    DSUtils.WriteToFile(overlayFilePath, HexStringToByteArray(data.overlayString1), data.overlayOffset1); //Write new overlayCode1
+                    DSUtils.WriteToFile(overlayFilePath, HexStringToByteArray(data.overlayString2), data.overlayOffset2); //Write new overlayCode2
                     overlay1MustBeRestoredFromBackup = false;
 
                     String fullFilePath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + expandedARMfileID.ToString("D4");
 
                     /*Write Expanded ARM9 File*/
-                    DSUtils.WriteToFile(fullFilePath, ToolboxDB.BDHCamSubroutineOffset, data.subroutine);
+                    DSUtils.WriteToFile(fullFilePath, data.subroutine, ToolboxDB.BDHCamSubroutineOffset);
                 } catch {
                     MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 and overlay from their respective backups.", "Something went wrong",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -465,8 +465,8 @@ namespace DSPRE {
                 File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", overwrite: true);
 
                 try {
-                    DSUtils.WriteToArm9(data.branchOffset, HexStringToByteArray(data.branchString)); //Write new branchOffset
-                    DSUtils.WriteToArm9(data.initOffset, HexStringToByteArray(data.initString)); //Write new initOffset
+                    DSUtils.WriteToArm9(HexStringToByteArray(data.branchString), data.branchOffset); //Write new branchOffset
+                    DSUtils.WriteToArm9(HexStringToByteArray(data.initString), data.initOffset); //Write new initOffset
 
                     string fullFilePath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + expandedARMfileID.ToString("D4");
                     File.Delete(fullFilePath);
@@ -530,7 +530,7 @@ namespace DSPRE {
                 try {
                     foreach (KeyValuePair<uint[], string> kv in ToolboxDB.matrixExpansionDB) {
                         foreach(uint offset in kv.Key) {
-                            DSUtils.WriteToArm9((uint)(offset - 0x02000000 + languageOffset), HexStringToByteArray(kv.Value));
+                            DSUtils.WriteToArm9(HexStringToByteArray(kv.Value), (uint)(offset - 0x02000000 + languageOffset));
                         }
                     }
                 } catch {
