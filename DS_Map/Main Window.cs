@@ -832,7 +832,7 @@ namespace DSPRE {
                             versionLabel.Text = "Error";
                             return;
                         }
-                        DSUtils.editARM9size(-12);
+                        DSUtils.EditARM9size(-12);
                     } catch (IOException) {
                         MessageBox.Show("Can't access temp directory: \n" + RomInfo.workDir + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         statusLabel.Text = "Error: concurrent access to " + RomInfo.workDir;
@@ -1525,7 +1525,7 @@ namespace DSPRE {
         }
         private void saveHeaderButton_Click(object sender, EventArgs e) {
             uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
-            DSUtils.WriteToArm9(headerOffset, currentHeader.ToByteArray());
+            DSUtils.WriteToArm9(currentHeader.ToByteArray(), headerOffset);
 
             disableHandlers = true;
 
@@ -1686,7 +1686,7 @@ namespace DSPRE {
 
             currentHeader = h;
             uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
-            DSUtils.WriteToArm9(headerOffset, currentHeader.ToByteArray());
+            DSUtils.WriteToArm9(currentHeader.ToByteArray(), headerOffset);
             try {
                 using (BinaryReader reader = new BinaryReader(new FileStream(of.FileName, FileMode.Open))) {
                     reader.BaseStream.Position = MapHeader.length + 8;
@@ -3634,12 +3634,7 @@ namespace DSPRE {
             if (im.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            using (BinaryReader modelReader = new BinaryReader(new FileStream(im.FileName, FileMode.Open))) {
-                if (modelReader.ReadUInt32() != 0x30444D42) {
-                    MessageBox.Show("Please select an NSBMD file.", "Invalid File");
-                    return;
-                } else currentMapFile.ImportMapModel(modelReader.BaseStream);
-            }
+            currentMapFile.LoadMapModel(DSUtils.ReadFromFile(im.FileName));
 
             if (mapTextureComboBox.SelectedIndex > 0)
                 currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, mapTextureComboBox.SelectedIndex - 1);
@@ -6320,5 +6315,44 @@ namespace DSPRE {
             MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
+
+        private void nsbmdExportTexButton_Click(object sender, EventArgs e) {
+
+        }
+
+        private void nsbmdRemoveTexButton_Click(object sender, EventArgs e) {
+            OpenFileDialog of = new OpenFileDialog();
+            of.Filter = "Textured NSBMD File(*.nsbmd)|*.nsbmd";
+            if (of.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            byte[] modelFile = DSUtils.ReadFromFile(of.FileName);
+
+            using (BinaryReader reader = new BinaryReader(new MemoryStream(modelFile))) {
+                if (reader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0) {
+                    MessageBox.Show("Please select an NSBMD file.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                reader.BaseStream.Position = 0xE;
+                if (reader.ReadInt16() < 2) {
+                    MessageBox.Show("This NSBMD file doesn't contain any textures.", "No textures found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            MessageBox.Show
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Filter = "Untextured NSBMD File(*.nsbmd)|*.nsbmd";
+            if (sf.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            DSUtils.WriteToFile(sf.FileName, DSUtils.GetModelWithoutTextures(modelFile));
+            MessageBox.Show("BackGround Sound data exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void nsbmdAddTexButton_Click(object sender, EventArgs e) {
+
+        }
     }
 }
