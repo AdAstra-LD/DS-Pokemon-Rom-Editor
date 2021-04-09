@@ -709,6 +709,108 @@ namespace DSPRE {
         private void scriptCommandsDatabaseToolStripButton_Click(object sender, EventArgs e) {
             OpenCommandsDatabase(RomInfo.ScriptCommandNamesDict, RomInfo.CommandParametersDict);
         }
+        private void nsbmdExportTexButton_Click(object sender, EventArgs e) {
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "Textured NSBMD File(*.nsbmd)|*.nsbmd"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            byte[] modelFile = DSUtils.ReadFromFile(of.FileName);
+            if (DSUtils.CheckNSBMDHeader(modelFile) == DSUtils.NSBMD_DOESNTHAVE_TEXTURE) {
+                MessageBox.Show("This NSBMD file is already untextured.", "No textures to remove", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            MessageBox.Show("Choose where to save the textures.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            SaveFileDialog texSf = new SaveFileDialog {
+                Filter = "NSBTX File(*.nsbtx)|*.nsbtx",
+                FileName = Path.GetFileNameWithoutExtension(of.FileName)
+            };
+            if (texSf.ShowDialog() != DialogResult.OK)
+                return;
+
+            DSUtils.WriteToFile(texSf.FileName, DSUtils.GetTexturesFromTexturedNSBMD(modelFile));
+        }
+
+        private void nsbmdRemoveTexButton_Click(object sender, EventArgs e) {
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "Textured NSBMD File(*.nsbmd)|*.nsbmd"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            byte[] modelFile = DSUtils.ReadFromFile(of.FileName);
+            if (DSUtils.CheckNSBMDHeader(modelFile) == DSUtils.NSBMD_DOESNTHAVE_TEXTURE) {
+                MessageBox.Show("This NSBMD file is already untextured.", "No textures to remove", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string extramsg = "";
+            DialogResult d = MessageBox.Show("Would you like to save the removed textures to a file?", "Save textures?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (d.Equals(DialogResult.Yes)) {
+
+                MessageBox.Show("Choose where to save the textures.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SaveFileDialog texSf = new SaveFileDialog {
+                    Filter = "NSBTX File(*.nsbtx)|*.nsbtx",
+                    FileName = Path.GetFileNameWithoutExtension(of.FileName)
+                };
+
+                if (texSf.ShowDialog() == DialogResult.OK) {
+                    DSUtils.WriteToFile(texSf.FileName, DSUtils.GetTexturesFromTexturedNSBMD(modelFile));
+                    extramsg = " exported and";
+                }
+            }
+
+            MessageBox.Show("Choose where to save the untextured model.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            SaveFileDialog sf = new SaveFileDialog {
+                Filter = "Untextured NSBMD File(*.nsbmd)|*.nsbmd",
+                FileName = Path.GetFileNameWithoutExtension(of.FileName) + "_untextured"
+            };
+            if (sf.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            DSUtils.WriteToFile(sf.FileName, DSUtils.GetModelWithoutTextures(modelFile));
+            MessageBox.Show("Textures correctly" + extramsg + " removed!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        private void nsbmdAddTexButton_Click(object sender, EventArgs e) {
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "NSBMD File(*.nsbmd)|*.nsbmd"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            byte[] modelFile = File.ReadAllBytes(of.FileName);
+            if (DSUtils.CheckNSBMDHeader(modelFile) == DSUtils.NSBMD_HAS_TEXTURE) {
+                DialogResult d = MessageBox.Show("This NSBMD file is already textured.\nDo you want to overwrite its textures?", "Textures found", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (d.Equals(DialogResult.No)) {
+                    return;
+                }
+            }
+
+            MessageBox.Show("Select the new NSBTX texture file.", "Choose NSBTX", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            OpenFileDialog openNsbtx = new OpenFileDialog {
+                Filter = "NSBTX File(*.nsbtx)|*.nsbtx"
+            };
+            if (openNsbtx.ShowDialog(this) != DialogResult.OK)
+                return;
+            byte[] textureFile = File.ReadAllBytes(openNsbtx.FileName);
+
+            MessageBox.Show("Choose where to save the new textured model.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            string texturedPath = Path.GetFileNameWithoutExtension(of.FileName);
+            SaveFileDialog sf = new SaveFileDialog {
+                Filter = "Textured NSBMD File(*.nsbmd)|*.nsbmd",
+                FileName = texturedPath.Substring(0, texturedPath.Length - "_untextured".Length) + "_textured"
+            };
+
+            if (sf.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            DSUtils.WriteToFile(sf.FileName, DSUtils.BuildNSBMDwithTextures(modelFile, textureFile), fromScratch: true);
+            MessageBox.Show("Textures correctly written to NSBMD file.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
         private void OpenCommandsDatabase(Dictionary<ushort, string> namesDict, Dictionary<ushort, byte[]> paramsDict) {
             statusLabel.Text = "Setting up Commands Database. Please wait...";
             Update();
@@ -6318,68 +6420,5 @@ namespace DSPRE {
             MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
-
-        private void nsbmdExportTexButton_Click(object sender, EventArgs e) {
-
-        }
-
-        private void nsbmdRemoveTexButton_Click(object sender, EventArgs e) {
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Textured NSBMD File(*.nsbmd)|*.nsbmd";
-            if (of.ShowDialog(this) != DialogResult.OK)
-                return;
-
-            byte[] modelFile = DSUtils.ReadFromFile(of.FileName);
-
-            string extramsg = "";
-            using (BinaryReader reader = new BinaryReader(new MemoryStream(modelFile))) {
-                if (reader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0) {
-                    MessageBox.Show("Please select an NSBMD file.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                reader.BaseStream.Position = 0xE;
-                if (reader.ReadInt16() < 2) {
-                    MessageBox.Show("This NSBMD file doesn't contain any textures.", "No textures found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                
-                DialogResult d = MessageBox.Show("Would you like to save the removed textures to a file?", "Save textures?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (d.Equals(DialogResult.Yes)) {
-                    MessageBox.Show("Choose where to save the textures.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
-                    SaveFileDialog texSf = new SaveFileDialog();
-                    texSf.Filter = "NSBTX File(*.nsbtx)|*.nsbtx";
-                    texSf.FileName = Path.GetFileNameWithoutExtension(of.FileName);
-                    if (texSf.ShowDialog(this) != DialogResult.OK)
-                        return;
-
-                    int bmdAbsoluteOffset = reader.ReadInt32();
-                    int texAbsoluteOffset = reader.ReadInt32();
-
-                    reader.BaseStream.Position = texAbsoluteOffset + 4;
-                    int textureSize = reader.ReadInt32();
-
-                    DSUtils.WriteToFile(texSf.FileName, DSUtils.BuildNSBTXHeader(20 + textureSize));
-                    DSUtils.WriteToFile(texSf.FileName, DSUtils.ReadFromFile(of.FileName, texAbsoluteOffset), 20);
-
-                    extramsg = "and exported";
-                }
-            }
-
-            MessageBox.Show("Choose where to save the untextured model.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "Untextured NSBMD File(*.nsbmd)|*.nsbmd";
-            sf.FileName = Path.GetFileNameWithoutExtension(of.FileName) + "_untextured";
-            if (sf.ShowDialog(this) != DialogResult.OK)
-                return;
-
-            DSUtils.WriteToFile(sf.FileName, DSUtils.GetModelWithoutTextures(modelFile));
-            MessageBox.Show("Textures correctly removed " + extramsg + '!', "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void nsbmdAddTexButton_Click(object sender, EventArgs e) {
-
-        }
     }
 }

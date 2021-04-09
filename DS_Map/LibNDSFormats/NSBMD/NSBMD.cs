@@ -20,12 +20,14 @@ namespace LibNDSFormats.NSBMD
 
         #region Constants
 
-        public const int NDS_TYPE_MDL0 = 0x304c444d;
-        public const int NDS_TYPE_TEX0 = 0x30584554;
-        public const int NDS_TYPE_BMD0 = 0x30444d42;
-        public const int NDS_TYPE_MAGIC2 = 0x0002feff;
-        public const int NDS_TYPE_MAGIC1 = 0x0001feff;
-        public const int NDS_TYPE_BTX0 = 0x30585442;
+        public const uint NDS_TYPE_MDL0 = 0x304c444d;
+        public const uint NDS_TYPE_TEX0 = 0x30584554;
+        public const uint NDS_TYPE_BMD0 = 0x30444d42;
+        public const ushort NDS_TYPE_BYTEORDER = 0xfeff;
+        public const ushort NDS_TYPE_UNK2 = 0x0002;
+        public const ushort NDS_TYPE_UNK1 = 0x0001;
+        public const uint NDS_TYPE_BTX0 = 0x30585442;
+        public const uint HEADERSIZE = 16;
 
         #endregion Constants
 
@@ -1166,12 +1168,19 @@ namespace LibNDSFormats.NSBMD
             tmp = reader.ReadInt32();
             if (tmp != NDS_TYPE_BMD0)
                 throw new Exception();
-            tmp = reader.ReadInt32();
-            if (tmp != NDS_TYPE_MAGIC2)
+
+            tmp = reader.ReadUInt16();
+            if (tmp != NDS_TYPE_BYTEORDER)
                 throw new Exception();
+
+            tmp = reader.ReadUInt16();
+            if (tmp != NDS_TYPE_UNK2)
+                throw new Exception();
+
             int filesize = reader.ReadInt32();
             if (filesize > stream.Length)
                 throw new Exception();
+
             int numblock = reader.ReadInt32();
             numblock >>= 16;
             if (numblock == 0)
@@ -1192,11 +1201,10 @@ namespace LibNDSFormats.NSBMD
             for (int i = 0; i < numblock; i++)
             {
                 stream.Position = blockoffset[i];
-                int id = reader.ReadInt32();
+                uint id = reader.ReadUInt32();
                 int texnum = 0, palnum = 0;
 
-                switch (id)
-                {
+                switch (id) {
                     case NDS_TYPE_MDL0:
                         result.models = ReadMdl0(stream, blockoffset[i]);
 

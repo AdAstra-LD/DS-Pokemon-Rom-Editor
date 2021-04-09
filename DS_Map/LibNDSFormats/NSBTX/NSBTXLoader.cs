@@ -37,8 +37,9 @@ namespace LibNDSFormats.NSBTX
                 return null;
             }
 
-            int i = reader.ReadInt32();
-            if (i == NSBMD.NSBMD.NDS_TYPE_MAGIC1) {
+            reader.BaseStream.Position += 2;
+            int i = reader.ReadUInt16();
+            if (i == NSBMD.NSBMD.NDS_TYPE_UNK1) {
                 i = reader.ReadInt32();
 
                 if (i == stream.Length) {

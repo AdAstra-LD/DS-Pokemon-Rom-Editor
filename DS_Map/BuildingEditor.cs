@@ -51,29 +51,14 @@ namespace DSPRE {
             string writingPath = Path.GetTempPath() + "BLDtexture.nsbtx";
 
             byte[] txFile = File.ReadAllBytes(readingPath);
-            using (BinaryReader reader = new BinaryReader(new MemoryStream(txFile))) {
-
-                reader.BaseStream.Position = 0x8;
-                int nsbmdSize = reader.ReadInt32(); // Read size of NSBMD file
-
-                reader.BaseStream.Position = 0x14;
-                int texturesOffset = reader.ReadInt32(); // Read starting offset of embedded textures sections
-
-                int texturesSize = nsbmdSize - texturesOffset + 0x14; // Calculate size of embedded textures section
-                reader.BaseStream.Position = texturesOffset;
-
-                int lastReadPos;
-                using (BinaryWriter writer = new BinaryWriter(new FileStream(writingPath, FileMode.Create))) {
-                    writer.Write(DSUtils.BuildNSBTXHeader(texturesSize));
-                    lastReadPos = (int)reader.BaseStream.Position;
-                    writer.Write(txFile, lastReadPos, txFile.Length - lastReadPos);
-                }
-            }
+            DSUtils.WriteToFile(writingPath, DSUtils.GetTexturesFromTexturedNSBMD(txFile), fromScratch: true);
         }
         private void FillListBox(bool interior) {
             int modelCount = Directory.GetFiles(folder + rom.GetBuildingModelsDirPath(interior)).Length;
             for (int currentIndex = 0; currentIndex < modelCount; currentIndex++) {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(folder + rom.GetBuildingModelsDirPath(interior) + "\\" + currentIndex.ToString("D4")))) {
+                string filePath = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + currentIndex.ToString("D4");
+
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(filePath))) {
                     string nsbmdName = ReadNSBMDname(reader);
                     buildingEditorBldListBox.Items.Add("[" + currentIndex.ToString("D3") + "] " + nsbmdName);
                 }
