@@ -40,6 +40,7 @@ namespace DSPRE {
         public bool scriptEditorIsReady { get; private set; } = false;
         public bool textEditorIsReady { get; private set; } = false;
         public bool cameraEditorIsReady { get; private set; } = false;
+        public const ushort MAPMODEL_CRITICALSIZE = 61000;
 
         /* ROM Information */
         public static string gameCode;
@@ -3733,9 +3734,9 @@ namespace DSPRE {
 
         #region 3D Model Editor
         private void importMapButton_Click(object sender, EventArgs e) {
-
-            OpenFileDialog im = new OpenFileDialog();
-            im.Filter = "NSBMD model (*.nsbmd)|*.nsbmd";
+            OpenFileDialog im = new OpenFileDialog {
+                Filter = "NSBMD model (*.nsbmd)|*.nsbmd"
+            };
             if (im.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -3746,7 +3747,18 @@ namespace DSPRE {
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
             ModelSizeTXT.Text = currentMapFile.mapModelData.Length.ToString() + " B";
-            MessageBox.Show("Map model imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            string message;
+            string title;
+            if (currentMapFile.mapModelData.Length > MAPMODEL_CRITICALSIZE) {
+                message = "You imported a map model that exceeds " + MAPMODEL_CRITICALSIZE + " bytes." + Environment.NewLine
+                    + "This may lead to unexpected behavior in game.";
+                title = "Imported correctly, but...";
+            } else {
+                message = "Map model imported successfully!";
+                title = "Success!";
+            }
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void exportMapButton_Click(object sender, EventArgs e) {
             SaveFileDialog em = new SaveFileDialog();
