@@ -317,27 +317,27 @@ namespace DSPRE {
         }
 
         public static byte[] BuildNSBMDwithTextures(byte[] nsbmd, byte[] nsbtx) {
-            byte[] wholeTEX0 = GetFirstBlock(nsbtx);
             byte[] wholeMDL0 = GetFirstBlock(nsbmd);
+            byte[] wholeTEX0 = GetFirstBlock(nsbtx);
 
             MemoryStream ms = new MemoryStream();
-            using (BinaryReader nsbmdReader = new BinaryReader(new MemoryStream(nsbmd))) {
-                using (BinaryWriter msWriter = new BinaryWriter(ms)) {
-                    msWriter.Write(nsbmdReader.ReadInt32()); //BMD0 segment
-                    msWriter.Write(nsbmdReader.ReadInt32()); //Byte order??? segment
-                    msWriter.Write(wholeMDL0.Length + wholeTEX0.Length + NSBMD.HEADERSIZE);
-                    nsbmdReader.BaseStream.Position += 4;
+            using (BinaryWriter msWriter = new BinaryWriter(ms)) {
+                msWriter.Write(NSBMD.NDS_TYPE_BMD0);
+                msWriter.Write(NSBMD.NDS_TYPE_BYTEORDER);
+                msWriter.Write(NSBMD.NDS_TYPE_UNK2);
 
-                    msWriter.Write(nsbmdReader.ReadUInt16()); //Header size, always 16
-                    msWriter.Write((ushort)0x2); //Number of blocks, now it's 2 because we are inserting textures
-                    nsbmdReader.BaseStream.Position += 2;
+                ushort nBlocks = 2;
+                uint modelLength = (uint)(wholeMDL0.Length + NSBMD.HEADERSIZE + 4 * nBlocks);
+                msWriter.Write((uint)(modelLength + wholeTEX0.Length));
+                msWriter.Write(NSBMD.HEADERSIZE); //Header size, always 16
+                msWriter.Write(nBlocks); //Number of blocks, now it's 2 because we are inserting textures
 
-                    msWriter.Write((uint)msWriter.BaseStream.Position + (4 * 2)); //Absolute offset to model data. We are gonna have to write two offsets
-                    nsbmdReader.BaseStream.Position += 4;
-                    msWriter.Write((uint)nsbmdReader.ReadUInt32()); //Copy offset to TEX0
-                    msWriter.Write(wholeMDL0);
-                    msWriter.Write(wholeTEX0);
-                }
+                msWriter.Write((uint)(msWriter.BaseStream.Position + 4 * nBlocks)); //Absolute offset to model data. We are gonna have to write two offsets
+                    
+                msWriter.Write(modelLength); //Copy offset to TEX0
+                msWriter.Write(wholeMDL0);
+                msWriter.Write(wholeTEX0);
+                
             }
             return ms.ToArray();
         }

@@ -3755,8 +3755,12 @@ namespace DSPRE {
             if (em.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(em.FileName))) {
-                writer.Write(currentMapFile.mapModelData);
+            if (embedTexturesInMapModelCheckBox.Checked) {
+                string texturePath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4");
+                byte[] texturesToEmbed = File.ReadAllBytes(texturePath);
+                File.WriteAllBytes(em.FileName, DSUtils.BuildNSBMDwithTextures(currentMapFile.mapModelData, texturesToEmbed));
+            } else {
+                File.WriteAllBytes(em.FileName, currentMapFile.mapModelData);
             }
 
             MessageBox.Show("Map model exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -27,7 +27,7 @@ namespace LibNDSFormats.NSBMD
         public const ushort NDS_TYPE_UNK2 = 0x0002;
         public const ushort NDS_TYPE_UNK1 = 0x0001;
         public const uint NDS_TYPE_BTX0 = 0x30585442;
-        public const uint HEADERSIZE = 16;
+        public const ushort HEADERSIZE = 16;
 
         #endregion Constants
 
