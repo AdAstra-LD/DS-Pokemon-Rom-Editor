@@ -24,7 +24,6 @@ namespace DSPRE {
                 writer.Write(bytesToWrite, readFrom, bytesToWrite.Length - readFrom);
             }
         }
-
         public static byte[] ReadFromFile(string filepath, long startOffset = 0, long numberOfBytes = 0) {
             byte[] buffer = null;
 
@@ -63,7 +62,6 @@ namespace DSPRE {
             }
             return buffer;
         }
-
         public static int DecompressOverlay(int overlayNumber, bool makeBackup) {
             String overlayFilePath = GetOverlayPath(overlayNumber);
 
@@ -95,7 +93,6 @@ namespace DSPRE {
             unpack.WaitForExit();
             return unpack.ExitCode;
         }
-
         public static void CompressOverlay(int overlayNumber) {
             string overlayFilePath = '"' + GetOverlayPath(overlayNumber) + '"';
             Process unpack = new Process();
@@ -151,6 +148,11 @@ namespace DSPRE {
             f.BaseStream.Position = ovNumber * 32 + 8; //overlayNumber * size of entry + offset
             return f.ReadUInt32();
         }
+        public static uint GetOverlayRAMOffset(int ovNumber) {
+            BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath));
+            f.BaseStream.Position = ovNumber * 32 + 4; //overlayNumber * size of entry + offset
+            return f.ReadUInt32();
+        }
         public static void SetOverlayCompressionInTable(int ovNumber, byte compressStatus) {
             if (compressStatus < 0 || compressStatus > 3) {
                 Console.WriteLine("Compression status " + compressStatus + " is invalid. No operation performed.");
@@ -190,6 +192,25 @@ namespace DSPRE {
             BinaryWriter arm9Truncate = new BinaryWriter(arm);
             arm9Truncate.BaseStream.SetLength(arm.Length + increment);
             arm9Truncate.Close();
+        }
+        public static void RepackROM(string ndsFileName) {
+            Process repack = new Process();
+            repack.StartInfo.FileName = @"Tools\ndstool.exe";
+            repack.StartInfo.Arguments = "-c " + '"' + ndsFileName + '"'
+                + " -9 " + '"' + RomInfo.arm9Path + '"'
+                + " -7 " + '"' + RomInfo.workDir + "arm7.bin" + '"'
+                + " -y9 " + '"' + RomInfo.workDir + "y9.bin" + '"'
+                + " -y7 " + '"' + RomInfo.workDir + "y7.bin" + '"'
+                + " -d " + '"' + RomInfo.workDir + "data" + '"'
+                + " -y " + '"' + RomInfo.workDir + "overlay" + '"'
+                + " -t " + '"' + RomInfo.workDir + "banner.bin" + '"'
+                + " -h " + '"' + RomInfo.workDir + "header.bin" + '"';
+
+            Application.DoEvents();
+            repack.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            repack.StartInfo.CreateNoWindow = true;
+            repack.Start();
+            repack.WaitForExit();
         }
 
         public static byte[] ReadFromArm9(uint startOffset, long numberOfBytes = 0) {

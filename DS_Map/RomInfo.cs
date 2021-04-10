@@ -45,7 +45,7 @@ namespace DSPRE {
         public static readonly byte internalNameLength = 16;
         public static string internalNamesLocation { get; private set; }
 
-        public Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary { get; private set; }
+        public static Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary { get; private set; }
         public static Dictionary<ushort, string> ScriptCommandNamesDict { get; private set; }
         public static Dictionary<ushort, byte[]> CommandParametersDict { get; private set; }
         public static SortedDictionary<uint, (uint spriteID, ushort properties)> OverworldTable { get; private set; }
@@ -93,10 +93,9 @@ namespace DSPRE {
             overlayPath = workDir + "overlay";
 
             internalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
+            SetNarcDirs();
 
             SetNullEncounterID();           
-            SetOWtable();
-            Set3DOverworldsDict();
 
             SetAttackNamesTextNumber();
             SetPokémonNamesTextNumber();
@@ -106,19 +105,12 @@ namespace DSPRE {
             SetTrainerNamesMessageNumber();
             SetTrainerClassMessageNumber();
 
-            SetInitialMoneyOverlayAndOffset();
-            SetSpawnPointOffset();
-            
-
             /* System */
-            SetNarcDirs();
-            LoadMapCellsColorDictionary();
             ScriptCommandNamesDict = BuildCommandNamesDatabase(gameVersion);
             CommandParametersDict = BuildCommandParametersDatabase(gameVersion);
-            /* * * * */
         }
 
-        private void Set3DOverworldsDict() {
+        public static void Set3DOverworldsDict() {
             ow3DSpriteDict = new Dictionary<uint, string>() {
                 [91] = "brown_sign",
                 [92] = "red_sign",
@@ -130,25 +122,11 @@ namespace DSPRE {
                 //[174] = "dppt_suitcase",
             };
         }
-        private void SetInitialMoneyOverlayAndOffset() {
+        public static void SetupSpawnSettings() {
             switch (gameFamily) {
                 case "DP":
                     initialMoneyOverlayNumber = 52;
                     initialMoneyOverlayOffset = 0x1E4;
-                    break;
-                case "Plat":
-                    initialMoneyOverlayNumber = 57;
-                    initialMoneyOverlayOffset = 0x1EC;
-                    break;
-                case "HGSS":
-                    initialMoneyOverlayNumber = 36;
-                    initialMoneyOverlayOffset = 0x2FC;
-                    break;
-            }
-        }
-        private void SetSpawnPointOffset() {
-            switch (gameFamily) {
-                case "DP":
                     switch (gameLanguage) {
                         case "ENG":
                             arm9spawnOffset = 0xF2B9C;
@@ -171,6 +149,8 @@ namespace DSPRE {
                     }
                     break;
                 case "Plat":
+                    initialMoneyOverlayNumber = 57;
+                    initialMoneyOverlayOffset = 0x1EC;
                     switch (gameLanguage) {
                         case "ENG":
                             arm9spawnOffset = 0xEA12C;
@@ -193,6 +173,8 @@ namespace DSPRE {
                     }
                     break;
                 case "HGSS":
+                    initialMoneyOverlayNumber = 36;
+                    initialMoneyOverlayOffset = 0x2FC;
                     switch (gameLanguage) {
                         case "ENG":
                             arm9spawnOffset = 0xFA17C;
@@ -232,7 +214,18 @@ namespace DSPRE {
                     break;
                 case "HGSS":
                     cameraTableOverlayNumber = 1;
-                    cameraTableOverlayPointers = new uint[] { 0x532C, 0x547C };
+                    switch (gameLanguage) {
+                        case "ENG":
+                        case "ESP":
+                        case "FRA":
+                        case "GER":
+                        case "ITA":
+                            cameraTableOverlayPointers = new uint[] { 0x532C, 0x547C };
+                            break;
+                        case "JAP":
+                            cameraTableOverlayPointers = new uint[] { 0x5324, 0x5474 };
+                            break;
+                    }                    
                     break;
             }
         }
@@ -354,7 +347,7 @@ namespace DSPRE {
                 return gameDirs[DirNames.exteriorBuildingModels].unpackedDir;
             }
         }
-        public void SetOWtable () {
+        public static void SetOWtable () {
             switch (gameFamily) {
                 case "DP":
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
@@ -636,7 +629,7 @@ namespace DSPRE {
         #endregion
 
         #region System Methods
-        public void LoadMapCellsColorDictionary() {
+        public static void LoadMapCellsColorDictionary() {
             switch (gameFamily) {
                 case "DP":
                 case "Plat":

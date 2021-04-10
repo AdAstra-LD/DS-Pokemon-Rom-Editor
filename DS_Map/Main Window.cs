@@ -204,25 +204,6 @@ namespace DSPRE {
                 Directory.Delete(RomInfo.gameDirs[fname].unpackedDir, true); // Delete folder
             }
         }
-        private void RepackRom(string ndsFileName) {
-            Process repack = new Process();
-            repack.StartInfo.FileName = @"Tools\ndstool.exe";
-            repack.StartInfo.Arguments = "-c " + '"' + ndsFileName + '"'
-                + " -9 " + '"' + RomInfo.arm9Path + '"'
-                + " -7 " + '"' + RomInfo.workDir + "arm7.bin" + '"'
-                + " -y9 " + '"' + RomInfo.workDir + "y9.bin" + '"'
-                + " -y7 " + '"' + RomInfo.workDir + "y7.bin" + '"'
-                + " -d " + '"' + RomInfo.workDir + "data" + '"'
-                + " -y " + '"' + RomInfo.workDir + "overlay" + '"'
-                + " -t " + '"' + RomInfo.workDir + "banner.bin" + '"'
-                + " -h " + '"' + RomInfo.workDir + "header.bin" + '"';
-
-            Application.DoEvents();
-            repack.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            repack.StartInfo.CreateNoWindow = true;
-            repack.Start();
-            repack.WaitForExit();
-        }
         private void SetupEventEditor() {
             /* Extract essential NARCs sub-archives*/
 
@@ -245,6 +226,9 @@ namespace DSPRE {
                 DirNames.OWSprites,
 
                 DirNames.scripts, }, toolStripProgressBar);
+
+            RomInfo.SetOWtable();
+            RomInfo.Set3DOverworldsDict();
 
             if (RomInfo.gameFamily == "HGSS") {
                 DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
@@ -273,7 +257,7 @@ namespace DSPRE {
             string[] trainerNames = GetTrainerNames();
             RomInfo.ReadOWTable();
 
-            statusLabel.Text = "Loading Events... Please wait";
+            statusLabel.Text = "Loading Events... Please wait.";
             toolStripProgressBar.Maximum = (int)(eventCount + RomInfo.OverworldTable.Keys.Max() + trainerNames.Length);
             toolStripProgressBar.Value = 0;
             Update();
@@ -576,8 +560,12 @@ namespace DSPRE {
 
             /* Add matrix entries to ComboBox */
             selectMatrixComboBox.Items.Add("Matrix 0 - Main");
-            for (int i = 1; i < romInfo.GetMatrixCount(); i++)
+            for (int i = 1; i < romInfo.GetMatrixCount(); i++) {
                 selectMatrixComboBox.Items.Add("Matrix " + i);
+            }
+
+            RomInfo.LoadMapCellsColorDictionary();
+            RomInfo.SetupSpawnSettings();
 
             disableHandlers = false;
             selectMatrixComboBox.SelectedIndex = 0;
@@ -1027,7 +1015,7 @@ namespace DSPRE {
             statusLabel.Text = "Repacking ROM...";
             Update();
             //DeleteTempFolders();
-            RepackRom(saveRom.FileName);
+            DSUtils.RepackROM(saveRom.FileName);
 
             if (RomInfo.gameVersion != "D" && RomInfo.gameVersion != "P" && RomInfo.gameVersion != "Plat")
                 if (eventEditorIsReady)
@@ -2093,7 +2081,7 @@ namespace DSPRE {
             matrixTabControl.TabPages.Remove(heightsTabPage);
         }
         private (Color background, Color foreground) FormatMapCell(uint cellValue) {
-            foreach (KeyValuePair<List<uint>, (Color background, Color foreground)> entry in romInfo.MapCellsColorDictionary) {
+            foreach (KeyValuePair<List<uint>, (Color background, Color foreground)> entry in RomInfo.MapCellsColorDictionary) {
                 if (entry.Key.Contains(cellValue))
                     return entry.Value;
             }
@@ -2653,7 +2641,7 @@ namespace DSPRE {
             b = temp;
         }
         private void resetColorTableButton_Click(object sender, EventArgs e) {
-            romInfo.LoadMapCellsColorDictionary();
+            RomInfo.LoadMapCellsColorDictionary();
             ClearMatrixTables();
             GenerateMatrixTables();
         }
