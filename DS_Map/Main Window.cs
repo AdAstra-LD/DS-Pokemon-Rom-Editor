@@ -18,6 +18,7 @@ using DSPRE.Resources;
 using DSPRE.ROMFiles;
 using Matrix = DSPRE.ROMFiles.Matrix;
 using static DSPRE.RomInfo;
+using static GameCamera;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -242,11 +243,15 @@ namespace DSPRE {
                         break;
                     default:
                         // HGSS Overlay 1 must be decompressed in order to read the overworld table
-                        if (DSUtils.CheckOverlayHasCompressionFlag(1))
-                            if (DSUtils.OverlayIsCompressed(1))
-                                if (DSUtils.DecompressOverlay(1, true) == -1)
+                        if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
+                            if (DSUtils.OverlayIsCompressed(1)) {
+                                if (DSUtils.DecompressOverlay(1) < 0) {
                                     MessageBox.Show("Overlay 1 couldn't be decompressed.\nOverworld sprites in the Event Editor will be " +
                                 "displayed incorrectly or not displayed at all.", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                        }
+
                         break;
                 }
             }
@@ -591,30 +596,6 @@ namespace DSPRE {
             selectScriptFileComboBox.SelectedIndex = 0;
             statusLabel.Text = "Ready";
         }
-
-        /*
-        private void SetupScriptSource() {
-            uint magicNumber;
-            using (BinaryReader reader = new BinaryReader(new FileStream(RomInfo.syntheticOverlayPath + "//0002", FileMode.Open)))
-                magicNumber = reader.ReadUInt32();
-
-            try {
-                DSUtils.UnpackNarcs(new List<int> { 16 }, toolStripProgressBar);
-
-                int i = 1; // Starts at 1 so 0000.txt (FNTB) is ignored, because it's always the first listed file
-                string[] scriptDir = Directory.GetFiles(RomInfo.scriptSource);
-                string[] scriptFNTB = File.ReadAllText(RomInfo.scriptSource + "\\0000").Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-                foreach (string scriptFilename in scriptFNTB) {
-                    File.Move(scriptDir[i], RomInfo.scriptSource + "\\" + scriptFilename);
-                    i++;
-                }
-                File.Delete(RomInfo.scriptSource + "\\0000");
-            } catch (NullReferenceException) {
-                string scriptSourceDir = RomInfo.scriptSource;
-                Directory.CreateDirectory(scriptSourceDir);
-            }
-        }*/
         private void SetupTextEditor() {
             DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.textArchives });
 
@@ -628,7 +609,58 @@ namespace DSPRE {
             statusLabel.Text = "Ready";
         }
         private void SetupCameraEditor() {
+            RomInfo.SetCameraTableOverlayAndOffsets();
 
+            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.cameraTblOverlayNumber)) {
+                if (DSUtils.OverlayIsCompressed(RomInfo.cameraTblOverlayNumber)) {
+                    DSUtils.DecompressOverlay(RomInfo.cameraTblOverlayNumber);
+                }
+            }
+
+            uint[] RAMaddresses = new uint[RomInfo.cameraTblOffsetsToRAMaddress.Length];
+            string camOverlayPath = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
+            using (BinaryReader br = new BinaryReader(File.OpenRead(camOverlayPath))) {
+                for (int i = 0; i < RomInfo.cameraTblOffsetsToRAMaddress.Length; i++) {
+                    br.BaseStream.Position = RomInfo.cameraTblOffsetsToRAMaddress[i];
+                    RAMaddresses[i] = br.ReadUInt32();
+                }
+            }
+
+            uint referenceAddress = RAMaddresses[0];
+            for (int i = 1; i < RAMaddresses.Length; i++) {
+                uint ramAddress = RAMaddresses[i];
+                if (ramAddress != referenceAddress) {
+                    MessageBox.Show("Value of RAM Pointer to the overlay table is different between Offset #1 and Offset #" + (i + 1) + Environment.NewLine +
+                        "The camera values might be wrong.", "Possible errors ahead", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+
+            using (BinaryReader br = new BinaryReader(File.OpenRead(camOverlayPath))) {
+                br.BaseStream.Position = overlayCameraTblOffset = RAMaddresses[0] - DSUtils.GetOverlayRAMAddress(RomInfo.cameraTblOverlayNumber);
+                
+                currentCameraTable = new GameCamera[16];
+                if (RomInfo.gameFamily.Equals("HGSS")) {
+                    for (int i = 0; i < currentCameraTable.Length; i++) {
+                        currentCameraTable[i] = new GameCamera(br.ReadUInt32(), br.ReadInt16(), br.ReadInt16(), br.ReadInt16(), 
+                                                br.ReadInt16(), br.ReadByte(), br.ReadByte(), 
+                                                br.ReadUInt16(), br.ReadUInt32(), br.ReadUInt32(), 
+                                                br.ReadInt32(), br.ReadInt32(), br.ReadInt32());
+                        
+                    }
+                } else {
+                    for (int i = 0; i < 3; i++) {
+                        cameraEditorDataGridView.Columns.RemoveAt(cameraEditorDataGridView.Columns.Count - 3);
+                    }
+                    for (int i = 0; i < currentCameraTable.Length; i++) {
+                        currentCameraTable[i] = new GameCamera(br.ReadUInt32(), br.ReadInt16(), br.ReadInt16(), br.ReadInt16(),
+                                                br.ReadInt16(), br.ReadByte(), br.ReadByte(),
+                                                br.ReadUInt16(), br.ReadUInt32(), br.ReadUInt32());
+                    }
+                }
+                foreach (GameCamera v in currentCameraTable) { 
+                    v.AddToGridView(cameraEditorDataGridView);
+                }
+            }
         }
 
         private int UnpackRomCheckUserChoice() {
@@ -865,8 +897,9 @@ namespace DSPRE {
             MessageBox.Show(message, "About...", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void loadRom_Click(object sender, EventArgs e) {
-            OpenFileDialog openRom = new OpenFileDialog(); // Select ROM
-            openRom.Filter = "NDS File (*.nds)|*.nds";
+            OpenFileDialog openRom = new OpenFileDialog {
+                Filter = "NDS File (*.nds)|*.nds"
+            }; // Select ROM
             if (openRom.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -1003,24 +1036,30 @@ namespace DSPRE {
                 if (ROMToolboxDialog.overlay1MustBeRestoredFromBackup) {
                     DSUtils.RestoreOverlayFromCompressedBackup(1, eventEditorIsReady);
                 } else {
-                    if (!DSUtils.OverlayIsCompressed(1))
+                    if (!DSUtils.OverlayIsCompressed(1)) {
                         DSUtils.CompressOverlay(1);
+                    }
                 }
             }
 
-            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.initialMoneyOverlayNumber))
-                if (!DSUtils.OverlayIsCompressed(RomInfo.initialMoneyOverlayNumber))
+            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.initialMoneyOverlayNumber)) {
+                if (!DSUtils.OverlayIsCompressed(RomInfo.initialMoneyOverlayNumber)) {
                     DSUtils.CompressOverlay(RomInfo.initialMoneyOverlayNumber);
+                }
+            }
 
             statusLabel.Text = "Repacking ROM...";
             Update();
             //DeleteTempFolders();
             DSUtils.RepackROM(saveRom.FileName);
 
-            if (RomInfo.gameVersion != "D" && RomInfo.gameVersion != "P" && RomInfo.gameVersion != "Plat")
-                if (eventEditorIsReady)
-                    if (DSUtils.OverlayIsCompressed(1))
-                        DSUtils.DecompressOverlay(1, true);
+            if (RomInfo.gameFamily != "DP" && RomInfo.gameFamily != "Plat") {
+                if (eventEditorIsReady) {
+                    if (DSUtils.OverlayIsCompressed(1)) {
+                        DSUtils.DecompressOverlay(1);
+                    }
+                }
+            }
 
             statusLabel.Text = "Ready";
         }
@@ -2309,9 +2348,9 @@ namespace DSPRE {
                 colorValue = UInt16.Parse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
             } catch { }
 
-            (Color back, Color fore) cellColors = FormatMapCell(colorValue);
-            e.CellStyle.BackColor = cellColors.back;
-            e.CellStyle.ForeColor = cellColors.fore;
+            (Color back, Color fore) = FormatMapCell(colorValue);
+            e.CellStyle.BackColor = back;
+            e.CellStyle.ForeColor = fore;
 
             /* If invalid input is entered, show 00 */
             byte cellValue = 0;
@@ -5278,12 +5317,23 @@ namespace DSPRE {
             if (searchInScriptsTextBox.Text == "")
                 return;
 
+            int firstArchive;
+            int lastArchive;
+
+            if (searchOnlyCurrentScriptCheckBox.Checked) {
+                firstArchive = selectScriptFileComboBox.SelectedIndex;
+                lastArchive = firstArchive + 1;
+            } else {
+                firstArchive = 0;
+                lastArchive = romInfo.GetScriptCount();
+            }
+
             searchInScriptsResultListBox.Items.Clear();
             string searchString = searchInScriptsTextBox.Text;
             searchProgressBar.Maximum = selectScriptFileComboBox.Items.Count;
 
             List<string> results = new List<string>();
-            for (int i = 0; i < selectScriptFileComboBox.Items.Count; i++) {
+            for (int i = firstArchive; i < lastArchive; i++) {
                 try {
                     Console.WriteLine("Attempting to load script " + i);
                     ScriptFile file = new ScriptFile(i);
@@ -5301,11 +5351,11 @@ namespace DSPRE {
             searchProgressBar.Value = 0;
             searchInScriptsResultListBox.Items.AddRange(results.ToArray());
         }
-        private List<string> SearchInScripts(int fileID, List<CommandContainer> ls, string entryType, Func<string, bool> criteria) {
+        private List<string> SearchInScripts(int fileID, List<CommandContainer> cmdList, string entryType, Func<string, bool> criteria) {
             List<string> results = new List<string>();
 
-            for (int j = 0; j < ls.Count; j++) {
-                foreach (ScriptCommand cur in ls[j].commands) {
+            for (int j = 0; j < cmdList.Count; j++) {
+                foreach (ScriptCommand cur in cmdList[j].commands) {
                     if (criteria(cur.name))
                         results.Add("File " + fileID + " - " + entryType + " " + (j + 1) + ": " + cur.name + Environment.NewLine);
                 }
@@ -6422,6 +6472,40 @@ namespace DSPRE {
 
             /* Display success message */
             MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        #endregion
+
+        #region Camera Editor
+        GameCamera[] currentCameraTable;
+        uint overlayCameraTblOffset;
+
+        private void saveCameraTableButton_Click(object sender, EventArgs e) {
+            SaveCameraTable(DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber));
+        }
+
+        private void cameraEditorDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e) {
+            cameraEditorDataGridView.Columns[0].ValueType = typeof(int);
+            currentCameraTable[e.RowIndex][e.ColumnIndex] = cameraEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+        }
+
+        private void exportCameraTableButton_Click(object sender, EventArgs e) {
+            SaveFileDialog of = new SaveFileDialog();
+            of.Filter = "Camera Table File (*.bin)|*.bin";
+            of.FileName = Path.GetFileNameWithoutExtension(RomInfo.workDir) + " - CameraTable.bin";
+            if (of.ShowDialog(this) != DialogResult.OK)
+                return;
+
+            SaveCameraTable(of.FileName);
+        }
+
+        private void SaveCameraTable (string path) {
+            int size = RomInfo.gameFamily.Equals("HGSS") ? 36 : 24;
+
+            File.Delete(path);
+            for (int i = 0; i < currentCameraTable.Length; i++) {
+                DSUtils.WriteToFile(path, currentCameraTable[i].ToByteArray(), (uint)(overlayCameraTblOffset + i * size));
+            }
+            MessageBox.Show("Camera table correctly saved.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
     }
