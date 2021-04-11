@@ -15,6 +15,9 @@ namespace DSPRE {
         public const int NSBMD_DOESNTHAVE_TEXTURE = 0;
         public const int NSBMD_HAS_TEXTURE = 1;
 
+        public const int ERR_OVERLAY_NOTFOUND = -1;
+        public const int ERR_OVERLAY_ALREADY_UNCOMPRESSED = -2;
+
         public static void WriteToFile(string filepath, byte[] bytesToWrite, uint writeAt = 0, int readFrom = 0, bool fromScratch = false) {
             if (fromScratch)
                 File.Delete(filepath);
@@ -62,24 +65,25 @@ namespace DSPRE {
             }
             return buffer;
         }
-        public static int DecompressOverlay(int overlayNumber, bool makeBackup) {
-            String overlayFilePath = GetOverlayPath(overlayNumber);
+        public static int DecompressOverlay(int overlayNumber, bool makeBackup = true) {
+            string overlayFilePath = GetOverlayPath(overlayNumber);
 
             if (!File.Exists(overlayFilePath)) {
                 MessageBox.Show("Overlay to decompress #" + overlayNumber + " doesn't exist",
                     "Overlay not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return -1;
+                return ERR_OVERLAY_NOTFOUND;
             }
 
             if (makeBackup) {
-                if (File.Exists(overlayFilePath + ".backup")) {
-                    if (new FileInfo(overlayFilePath).Length > new FileInfo(overlayFilePath + ".backup").Length) { //if overlay is bigger than its backup
+                if (File.Exists(overlayFilePath + ".compressedBackup")) {
+                    if (new FileInfo(overlayFilePath).Length > new FileInfo(overlayFilePath + ".compressedBackup").Length) { //if overlay is bigger than its backup
                         Console.WriteLine("Overlay " + overlayNumber + " is already uncompressed and its compressed backup exists.");
-                        return 1;
+                        return ERR_OVERLAY_ALREADY_UNCOMPRESSED;
+                    } else {
+                        File.Delete(overlayFilePath + ".compressedBackup");
                     }
-                    File.Delete(overlayFilePath + ".backup");
                 }
-                File.Copy(overlayFilePath, overlayFilePath + ".backup");
+                File.Copy(overlayFilePath, overlayFilePath + ".compressedBackup");
             }
 
             Process unpack = new Process();
@@ -93,16 +97,24 @@ namespace DSPRE {
             unpack.WaitForExit();
             return unpack.ExitCode;
         }
-        public static void CompressOverlay(int overlayNumber) {
-            string overlayFilePath = '"' + GetOverlayPath(overlayNumber) + '"';
-            Process unpack = new Process();
-            unpack.StartInfo.FileName = @"Tools\blz.exe";
-            unpack.StartInfo.Arguments = "-en " + overlayFilePath;
+        public static int CompressOverlay(int overlayNumber) {
+            string overlayFilePath = GetOverlayPath(overlayNumber);
+
+            if (!File.Exists(overlayFilePath)) {
+                MessageBox.Show("Overlay to decompress #" + overlayNumber + " doesn't exist",
+                    "Overlay not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return ERR_OVERLAY_NOTFOUND;
+            }
+
+            Process compress = new Process();
+            compress.StartInfo.FileName = @"Tools\blz.exe";
+            compress.StartInfo.Arguments = "-en " + overlayFilePath;
             Application.DoEvents();
-            unpack.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            unpack.StartInfo.CreateNoWindow = true;
-            unpack.Start();
-            unpack.WaitForExit();
+            compress.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            compress.StartInfo.CreateNoWindow = true;
+            compress.Start();
+            compress.WaitForExit();
+            return compress.ExitCode;
         }
         public static string GetOverlayPath(int overlayNumber) {
             return RomInfo.workDir + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
@@ -127,41 +139,44 @@ namespace DSPRE {
 
             }
         }
+        
+        /**
+         * Only checks if the overlay is CONFIGURED as compressed
+         **/
         public static bool CheckOverlayHasCompressionFlag(int ovNumber) {
-            bool result;
-            BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath));
-            f.BaseStream.Position = ovNumber * 32 + 31; //overlayNumber * size of entry + offset
-            if (f.ReadByte() % 2 == 0)  //even
-                result = false;
-            else {
-                result = true; //odd
+            using (BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath))) {
+                f.BaseStream.Position = ovNumber * 32 + 31; //overlayNumber * size of entry + offset
+                return f.ReadByte() % 2 != 0;
             }
-            f.Close();
-
-            return result;
         }
+
+        /**
+         * Checks the actual size of the overlay file
+         **/
         public static bool OverlayIsCompressed(int ovNumber) {
             return (new FileInfo(GetOverlayPath(ovNumber)).Length < GetOverlayUncompressedSize(ovNumber));
         }
         public static uint GetOverlayUncompressedSize(int ovNumber) {
-            BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath));
-            f.BaseStream.Position = ovNumber * 32 + 8; //overlayNumber * size of entry + offset
-            return f.ReadUInt32();
+            using (BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath))) {
+                f.BaseStream.Position = ovNumber * 32 + 8; //overlayNumber * size of entry + offset
+                return f.ReadUInt32();
+            }
         }
-        public static uint GetOverlayRAMOffset(int ovNumber) {
-            BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath));
-            f.BaseStream.Position = ovNumber * 32 + 4; //overlayNumber * size of entry + offset
-            return f.ReadUInt32();
+        public static uint GetOverlayRAMAddress(int ovNumber) {
+            using (BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath))) {
+                f.BaseStream.Position = ovNumber * 32 + 4; //overlayNumber * size of entry + offset
+                return f.ReadUInt32();
+            }
         }
         public static void SetOverlayCompressionInTable(int ovNumber, byte compressStatus) {
             if (compressStatus < 0 || compressStatus > 3) {
                 Console.WriteLine("Compression status " + compressStatus + " is invalid. No operation performed.");
                 return;
             }
-            BinaryWriter f = new BinaryWriter(File.OpenWrite(RomInfo.overlayTablePath));
-            f.BaseStream.Position = ovNumber * 32 + 31; //overlayNumber * size of entry + offset
-            f.Write(compressStatus);
-            f.Close();
+            using (BinaryWriter f = new BinaryWriter(File.OpenWrite(RomInfo.overlayTablePath))) {
+                f.BaseStream.Position = ovNumber * 32 + 31; //overlayNumber * size of entry + offset
+                f.Write(compressStatus);
+            }
         }
 
 

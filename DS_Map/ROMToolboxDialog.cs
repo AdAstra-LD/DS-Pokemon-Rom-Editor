@@ -224,7 +224,7 @@ namespace DSPRE {
 
 
                     string overlayFilePath = RomInfo.workDir + "overlay" + "\\" + "overlay_" + data.overlayNumber.ToString("D4") + ".bin";
-                    DSUtils.DecompressOverlay(data.overlayNumber, true);
+                    DSUtils.DecompressOverlay(data.overlayNumber);
 
                     byte[] overlayCode1 = HexStringToByteArray(data.overlayString1);
                     byte[] overlayCode1Read = DSUtils.ReadFromFile(overlayFilePath, data.overlayOffset1, overlayCode1.Length);
@@ -362,8 +362,9 @@ namespace DSPRE {
 
                     /* Write to overlayfile */
                     string overlayFilePath = RomInfo.workDir + "overlay" + "\\" + "overlay_" + data.overlayNumber.ToString("D4") + ".bin";
-                    if (DSUtils.OverlayIsCompressed(data.overlayNumber))
-                        DSUtils.DecompressOverlay(data.overlayNumber, true);
+                    if (DSUtils.OverlayIsCompressed(data.overlayNumber)) {
+                        DSUtils.DecompressOverlay(data.overlayNumber);
+                    }
 
                     DSUtils.WriteToFile(overlayFilePath, HexStringToByteArray(data.overlayString1), data.overlayOffset1); //Write new overlayCode1
                     DSUtils.WriteToFile(overlayFilePath, HexStringToByteArray(data.overlayString2), data.overlayOffset2); //Write new overlayCode2
@@ -398,8 +399,9 @@ namespace DSPRE {
 
             if (d == DialogResult.Yes) {
                 DSUtils.SetOverlayCompressionInTable(1, 0);
-                if (DSUtils.OverlayIsCompressed(1))
-                    DSUtils.DecompressOverlay(1, true);
+                if (DSUtils.OverlayIsCompressed(1)) {
+                    DSUtils.DecompressOverlay(1);
+                }
 
                 DisableOverlay1patch("Already applied");
                 overlay1CB.Visible = true;

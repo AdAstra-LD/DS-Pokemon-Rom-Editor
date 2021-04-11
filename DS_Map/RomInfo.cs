@@ -27,8 +27,8 @@ namespace DSPRE {
         public static int initialMoneyOverlayNumber { get; private set; }
         public static uint initialMoneyOverlayOffset { get; private set; }
 
-        public static int cameraTableOverlayNumber { get; private set; }
-        public static uint[] cameraTableOverlayPointers { get; private set; }
+        public static int cameraTblOverlayNumber { get; private set; }
+        public static uint[] cameraTblOffsetsToRAMaddress { get; private set; }
 
         public static uint OWTableOffset { get; internal set; }
         public static string OWtablePath { get; private set; }
@@ -73,7 +73,7 @@ namespace DSPRE {
             encounters,
 
             interiorBuildingModels
-        };
+        }; 
         public static Dictionary<DirNames, (string packedDir, string unpackedDir)> gameDirs { get; private set; }
 
         #region Constructors (1)
@@ -202,28 +202,28 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetCameraTableOverlayAndOffset() {
+        public static void SetCameraTableOverlayAndOffsets() {
             switch (gameFamily) {
                 case "DP":
-                    cameraTableOverlayNumber = 5;
-                    cameraTableOverlayPointers = new uint[] { 0 };
+                    cameraTblOverlayNumber = 5;
+                    cameraTblOffsetsToRAMaddress = new uint[] { 0 };
                     break;
                 case "Plat":
-                    cameraTableOverlayNumber = 5;
-                    cameraTableOverlayPointers = new uint[] { 0x4E24 };
+                    cameraTblOverlayNumber = 5;
+                    cameraTblOffsetsToRAMaddress = new uint[] { 0x4E24 };
                     break;
                 case "HGSS":
-                    cameraTableOverlayNumber = 1;
+                    cameraTblOverlayNumber = 1;
                     switch (gameLanguage) {
                         case "ENG":
                         case "ESP":
                         case "FRA":
                         case "GER":
                         case "ITA":
-                            cameraTableOverlayPointers = new uint[] { 0x532C, 0x547C };
+                            cameraTblOffsetsToRAMaddress = new uint[] { 0x532C, 0x547C };
                             break;
                         case "JAP":
-                            cameraTableOverlayPointers = new uint[] { 0x5324, 0x5474 };
+                            cameraTblOffsetsToRAMaddress = new uint[] { 0x5324, 0x5474 };
                             break;
                     }                    
                     break;
