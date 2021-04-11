@@ -83,9 +83,11 @@ namespace DSPRE {
             playerDirCombobox.SelectedIndex = BitConverter.ToUInt16(DSUtils.ReadFromArm9(RomInfo.arm9spawnOffset + 16, 2), 0);
         }
         private void ReadDefaultMoney() {
-            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.initialMoneyOverlayNumber))
-                if (DSUtils.OverlayIsCompressed(RomInfo.initialMoneyOverlayNumber))
-                    DSUtils.DecompressOverlay(RomInfo.initialMoneyOverlayNumber, makeBackup: true);
+            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.initialMoneyOverlayNumber)) {
+                if (DSUtils.OverlayIsCompressed(RomInfo.initialMoneyOverlayNumber)) {
+                    DSUtils.DecompressOverlay(RomInfo.initialMoneyOverlayNumber);
+                }
+            }
 
             string pathToMoneyOverlay = DSUtils.GetOverlayPath(RomInfo.initialMoneyOverlayNumber);
             initialMoneyUpDown.Value = BitConverter.ToUInt32(DSUtils.ReadFromFile(pathToMoneyOverlay, RomInfo.initialMoneyOverlayOffset, 4), 0);
