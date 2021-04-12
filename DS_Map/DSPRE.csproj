@@ -432,6 +432,7 @@
     <None Include="Resources\Graphics\Program Icons\checkmark.png" />
     <None Include="Resources\Graphics\Program Icons\dawnSpawn.png" />
     <None Include="Resources\Graphics\Program Icons\addTextureToNSBMD.png" />
+    <None Include="Resources\Graphics\Program Icons\destroyLevelScript.png" />
     <Content Include="Resources\Graphics\Program Icons\loadColorTable.png" />
     <None Include="Resources\Graphics\Program Icons\removeTextureNSBMD.png" />
     <Content Include="Resources\Graphics\Program Icons\resetColorTable.png" />

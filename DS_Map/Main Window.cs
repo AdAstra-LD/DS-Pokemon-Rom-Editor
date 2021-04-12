@@ -5420,9 +5420,17 @@ namespace DSPRE {
 
             if (currentScriptFile.isLevelScript) {
                 scriptTextBox.Text += "Level script files are currently not supported.\nYou can use AdAstra's Level Scripts Editor.";
-            } else {
+                addScriptFileButton.Visible = false;
+                removeScriptFileButton.Visible = false;
 
+                clearCurrentLevelScriptButton.Visible = true;
+            } else {
                 disableHandlers = true;
+                addScriptFileButton.Visible = true;
+                removeScriptFileButton.Visible = true;
+
+                clearCurrentLevelScriptButton.Visible = false;
+
                 string buffer = "";
 
                 /* Add scripts */
