@@ -821,9 +821,13 @@ namespace DSPRE {
             MessageBox.Show("Choose where to save the new textured model.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             string texturedPath = Path.GetFileNameWithoutExtension(of.FileName);
+            if (texturedPath.Contains("_untextured")) {
+                texturedPath = texturedPath.Substring(0, texturedPath.Length - "_untextured".Length);
+            }
+
             SaveFileDialog sf = new SaveFileDialog {
                 Filter = "Textured NSBMD File(*.nsbmd)|*.nsbmd",
-                FileName = texturedPath.Substring(0, texturedPath.Length - "_untextured".Length) + "_textured"
+                FileName = texturedPath + "_textured"
             };
 
             if (sf.ShowDialog(this) != DialogResult.OK)
@@ -6488,7 +6492,8 @@ namespace DSPRE {
         uint overlayCameraTblOffset;
 
         private void saveCameraTableButton_Click(object sender, EventArgs e) {
-            SaveCameraTable(DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber));
+            string path = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
+            SaveCameraTable(path);
         }
 
         private void cameraEditorDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e) {
@@ -6503,18 +6508,34 @@ namespace DSPRE {
             if (of.ShowDialog(this) != DialogResult.OK)
                 return;
 
+            File.Delete(of.FileName);
             SaveCameraTable(of.FileName);
         }
 
         private void SaveCameraTable (string path) {
             int size = RomInfo.gameFamily.Equals("HGSS") ? 36 : 24;
 
-            File.Delete(path);
             for (int i = 0; i < currentCameraTable.Length; i++) {
                 DSUtils.WriteToFile(path, currentCameraTable[i].ToByteArray(), (uint)(overlayCameraTblOffset + i * size));
             }
             MessageBox.Show("Camera table correctly saved.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
+
+        private void headersGridView_SelectionChanged(object sender, EventArgs e) {
+            DisplaySelection(headersGridView.SelectedCells);
+        }
+
+        private void heightsGridView_SelectionChanged(object sender, EventArgs e) {
+            DisplaySelection(heightsGridView.SelectedCells);
+        }
+
+        private void mapFilesGridView_SelectionChanged(object sender, EventArgs e) {
+            DisplaySelection(mapFilesGridView.SelectedCells);
+        }
+        private void DisplaySelection(DataGridViewSelectedCellCollection selectedCells) {
+            if (selectedCells.Count > 0)
+                statusLabel.Text = "Selection:   " + selectedCells[0].ColumnIndex + ", " + selectedCells[0].RowIndex;
+        }
     }
 }

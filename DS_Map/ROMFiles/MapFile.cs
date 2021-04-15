@@ -147,7 +147,7 @@ namespace DSPRE.ROMFiles {
                 }
 
                 modelReader.BaseStream.Position = 0xE;
-                if (modelReader.ReadInt16() > 1) { // If there is more than one file, it means there are embedded textures we must remove
+                if (modelReader.ReadInt16() > 1) { // If NSBMD contains more than one segment, it means there are embedded textures we must remove
                     mapModelData = DSUtils.GetModelWithoutTextures(newData);
                 } else {
                     modelReader.BaseStream.Position = 0x0;
