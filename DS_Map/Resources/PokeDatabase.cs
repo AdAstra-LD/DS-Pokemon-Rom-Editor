@@ -3450,9 +3450,9 @@ namespace DSPRE.Resources {
             };
 
             public static Dictionary<byte, string> MapCollisionPainters = new Dictionary<byte, string>() {
-                [0x00] = "Walkable",
-                [0x80] = "Blocked",
-                [0x04] = "Grass Sound"
+                [0x00] = "[00] Walkable",
+                [0x04] = "[04] Grass Sound",
+                [0x80] = "[80] Blocked"
             };
             public static Dictionary<byte, string> MapCollisionTypePainters = new Dictionary<byte, string>() {
                 [0x00] = "[00] None",

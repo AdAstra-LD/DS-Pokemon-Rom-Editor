@@ -19,21 +19,22 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (1)
-        public AreaData(Stream data, string gameVersion) {
+        public AreaData(Stream data) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 buildingsTileset = reader.ReadUInt16();
                 mapTileset = reader.ReadUInt16();
 
-                if (gameVersion == "D" || gameVersion == "P" || gameVersion == "Plat") {
-                    unknown1 = reader.ReadUInt16();
-                    lightType = reader.ReadByte();
-                } else {
+                if (RomInfo.gameFamily.Equals("HGSS")) {
                     dynamicTextureType = reader.ReadUInt16();
                     areaType = reader.ReadByte();
+                    lightType = reader.ReadByte();
+                } else {
+                    unknown1 = reader.ReadUInt16();
                     lightType = reader.ReadByte();
                 }
             }
         }
+        public AreaData (byte ID) : this(new FileStream(RomInfo.gameDirs[DirNames.areaData].unpackedDir + "//" + ID.ToString("D4"), FileMode.Open)) {}
         #endregion
 
         #region Methods (1)

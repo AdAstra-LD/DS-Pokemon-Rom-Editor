@@ -100,9 +100,6 @@ namespace DSPRE {
         private string[] GetAttackNames() {
             return new TextArchive(RomInfo.attackNamesTextNumber).messages.ToArray();
         }
-        private AreaData LoadAreaData(uint areaDataID) {
-            return new AreaData(new FileStream(RomInfo.gameDirs[DirNames.areaData].unpackedDir + "//" + areaDataID.ToString("D4"), FileMode.Open), RomInfo.gameVersion);
-        }
         private void PaintGameIcon(object sender, PaintEventArgs e) {
             if (iconON) {
                 BinaryReader readIcon;
@@ -1640,7 +1637,7 @@ namespace DSPRE {
             selectEventComboBox.SelectedIndex = (int)eventFileUpDown.Value; // Select event file
             mainTabControl.SelectedTab = eventEditorTabPage;
 
-            centerEventviewOnEntities();
+            CenterEventviewOnEntities();
             eventMatrixXUpDown_ValueChanged(null, null);
         }
         private void openMatrixButton_Click(object sender, EventArgs e) {
@@ -2441,7 +2438,7 @@ namespace DSPRE {
                 }
 
                 /* get texture file numbers from area data */
-                areaData = LoadAreaData(MapHeader.LoadFromARM9(header).areaDataID);
+                areaData = new AreaData((MapHeader.LoadFromARM9(header).areaDataID));
                 /* Load Map File and switch to Map Editor tab */
                 disableHandlers = true;
 
@@ -2968,10 +2965,8 @@ namespace DSPRE {
         private void mapOpenGlControl_Click(object sender, EventArgs e) {
             if (radio2D.Checked && bldPlaceWithMouseCheckbox.Checked) {
                 PointF coordinates = mapRenderPanel.PointToClient(Cursor.Position);
-                PointF mouseTilePos = new PointF(coordinates.X / 17, coordinates.Y / 17);
-                MouseEventArgs mea = (MouseEventArgs)e;
-
-
+                PointF mouseTilePos = new PointF(coordinates.X / mapEditorSquareSize, coordinates.Y / mapEditorSquareSize);
+                
                 if (buildingsListBox.SelectedIndex > -1) {
                     if (!bldPlaceLockXcheckbox.Checked)
                         xBuildUpDown.Value = (decimal)(Math.Round(mouseTilePos.X, bldDecimalPositions) - 16);
@@ -2999,6 +2994,9 @@ namespace DSPRE {
 
         private void bldRoundDecmil_CheckedChanged(object sender, EventArgs e) {
             bldDecimalPositions = 4;
+        }
+        private void bldRoundCentMil_CheckedChanged(object sender, EventArgs e) {
+            bldDecimalPositions = 5;
         }
         private void mapPartsTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (mapPartsTabControl.SelectedTab == buildingsTabPage) {
@@ -3068,6 +3066,8 @@ namespace DSPRE {
 
             bldPlaceWithMouseCheckbox.Enabled = _2dmodeSelected;
             radio3D.Checked = !_2dmodeSelected;
+
+            bldPlaceWithMouseCheckbox_CheckedChanged(null, null);
         }
         private void SetCam2D() {
             perspective = 4f;
@@ -3115,14 +3115,16 @@ namespace DSPRE {
             currentMapFile = new MapFile(selectMapComboBox.SelectedIndex);
 
             /* Load map textures for renderer */
-            if (mapTextureComboBox.SelectedIndex > 0)
+            if (mapTextureComboBox.SelectedIndex > 0) {
                 currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, mapTextureComboBox.SelectedIndex - 1);
+            }
 
             /* Load buildings nsbmd and textures for renderer into MapFile's building objects */
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {
                 currentMapFile.buildings[i] = LoadBuildingModel(currentMapFile.buildings[i], interiorbldRadioButton.Checked); // Load building nsbmd
-                if (buildTextureComboBox.SelectedIndex > 0)
+                if (buildTextureComboBox.SelectedIndex > 0) {
                     currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
+                }
             }
 
             /* Render the map */
@@ -3145,8 +3147,9 @@ namespace DSPRE {
 
             /* Fill buildings ListBox, and if not empty select first item */
             FillBuildingsBox();
-            if (buildingsListBox.Items.Count > 0)
+            if (buildingsListBox.Items.Count > 0) {
                 buildingsListBox.SelectedIndex = 0;
+            }
 
             ModelSizeTXT.Text = currentMapFile.mapModelData.Length.ToString() + " B";
             TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
@@ -3169,8 +3172,9 @@ namespace DSPRE {
             AddBuildingToMap(new Building());
         }
         private void duplicateBuildingButton_Click(object sender, EventArgs e) {
-            if (buildingsListBox.SelectedIndex > -1)
+            if (buildingsListBox.SelectedIndex > -1) {
                 AddBuildingToMap(new Building(currentMapFile.buildings[buildingsListBox.SelectedIndex]));
+            }
         }
         private void AddBuildingToMap(Building b) {
             currentMapFile.buildings.Add(b);
@@ -3238,9 +3242,10 @@ namespace DSPRE {
             }
         }
         private void exportBuildingsButton_Click(object sender, EventArgs e) {
-            SaveFileDialog eb = new SaveFileDialog();
-            eb.Filter = "Buildings File (*.bld)|*.bld";
-            eb.FileName = selectMapComboBox.SelectedItem.ToString();
+            SaveFileDialog eb = new SaveFileDialog {
+                Filter = "Buildings File (*.bld)|*.bld",
+                FileName = selectMapComboBox.SelectedItem.ToString()
+            };
             if (eb.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -3251,8 +3256,9 @@ namespace DSPRE {
             MessageBox.Show("Buildings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void importBuildingsButton_Click(object sender, EventArgs e) {
-            OpenFileDialog ib = new OpenFileDialog();
-            ib.Filter = "Buildings File (*.bld)|*.bld";
+            OpenFileDialog ib = new OpenFileDialog {
+                Filter = "Buildings File (*.bld)|*.bld"
+            };
             if (ib.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -3384,7 +3390,7 @@ namespace DSPRE {
             using (Graphics gMain = Graphics.FromImage(mainBm)) {
                 for (int i = 0; i < 32; i++) {
                     for (int j = 0; j < 32; j++) {
-                        SetCollisionPainter(currentMapFile.collisions[i, j]);
+                        PrepareCollisionPainterGraphics(currentMapFile.collisions[i, j]);
 
                         /* Draw collision on the main grid */
                         mainCell = new Rectangle(19 * j, 19 * i, 19, 19);
@@ -3401,7 +3407,7 @@ namespace DSPRE {
             using (Graphics gSmall = Graphics.FromImage(smallBm)) {
                 for (int i = 0; i < 32; i++) {
                     for (int j = 0; j < 32; j++) {
-                        SetCollisionPainter(currentMapFile.collisions[i, j]);
+                        PrepareCollisionPainterGraphics(currentMapFile.collisions[i, j]);
 
                         /* Draw collision on the small image */
                         smallCell = new Rectangle(3 * j, 3 * i, 3, 3);
@@ -3418,7 +3424,7 @@ namespace DSPRE {
             using (Graphics gMain = Graphics.FromImage(mainBm)) {
                 for (int i = 0; i < 32; i++) {
                     for (int j = 0; j < 32; j++) {
-                        SetTypePainter(currentMapFile.types[i, j]);
+                        PrepareTypePainterGraphics(paintByte = currentMapFile.types[i, j]);
 
                         /* Draw cell with color */
                         mainCell = new Rectangle(19 * j, 19 * i, 19, 19);
@@ -3426,9 +3432,10 @@ namespace DSPRE {
                         gMain.FillRectangle(paintBrush, mainCell);
 
                         /* Draw byte on cell */
-                        StringFormat sf = new StringFormat();
-                        sf.LineAlignment = StringAlignment.Center;
-                        sf.Alignment = StringAlignment.Center;
+                        StringFormat sf = new StringFormat {
+                            LineAlignment = StringAlignment.Center,
+                            Alignment = StringAlignment.Center
+                        };
                         gMain.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
                         gMain.DrawString(currentMapFile.types[i, j].ToString("X2"), textFont, textBrush, mainCell, sf);
                     }
@@ -3442,7 +3449,7 @@ namespace DSPRE {
             using (Graphics gSmall = Graphics.FromImage(smallBm)) {
                 for (int i = 0; i < 32; i++) {
                     for (int j = 0; j < 32; j++) {
-                        SetTypePainter(currentMapFile.types[i, j]);
+                        PrepareTypePainterGraphics(paintByte = currentMapFile.types[i, j]);
 
                         /* Draw collision on the small image */
                         smallCell = new Rectangle(3 * j, 3 * i, 3, 3);
@@ -3466,9 +3473,10 @@ namespace DSPRE {
                     mainG.DrawRectangle(paintPen, mainCell);
                     mainG.FillRectangle(paintBrush, mainCell);
                     if (selectTypePanel.BackColor == Color.MidnightBlue) {
-                        sf = new StringFormat();
-                        sf.LineAlignment = StringAlignment.Center;
-                        sf.Alignment = StringAlignment.Center;
+                        sf = new StringFormat {
+                            LineAlignment = StringAlignment.Center,
+                            Alignment = StringAlignment.Center
+                        };
                         mainG.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
                         mainG.DrawString(paintByte.ToString("X2"), textFont, textBrush, mainCell, sf);
                     }
@@ -3518,32 +3526,37 @@ namespace DSPRE {
             FloodFillUtil(screen, x, y - 1, prevC, newC, sizeX, sizeY);
         }
         private void FloodFillCell(int x, int y) {
+            byte toPaint = paintByte;
             if (selectCollisionPanel.BackColor == Color.MidnightBlue) {
                 if (currentMapFile.collisions[y, x] != paintByte) {
                     FloodFillUtil(currentMapFile.collisions, x, y, currentMapFile.collisions[y, x], paintByte, 32, 32);
                     DrawCollisionGrid();
+                    DrawSmallCollision();
+                    PrepareCollisionPainterGraphics(paintByte);
                 }
             } else {
                 if (currentMapFile.types[y, x] != paintByte) {
                     FloodFillUtil(currentMapFile.types, x, y, currentMapFile.types[y, x], paintByte, 32, 32);
                     DrawTypeGrid();
+                    DrawSmallTypeCollision();
+                    PrepareTypePainterGraphics(paintByte);
                 }
             }
 
             /* Draw permissions in the small selection boxes */
-            DrawSmallCollision();
-            DrawSmallTypeCollision();
+            
+            
         }
         private void RestorePainter() {
             if (selectCollisionPanel.BackColor == Color.MidnightBlue) {
-                collisionPainterComboBox_ResetSelection(null, null); // Restore painters to original state
+                collisionPainterComboBox_SelectedIndexChange(null, null);
             } else if (collisionTypePainterComboBox.Enabled) {
-                typePainterComboBox_SelectedIndexChanged(null, null); // Restore painters to original state
+                typePainterComboBox_SelectedIndexChanged(null, null); 
             } else {
                 typePainterUpDown_ValueChanged(null, null);
             }
         }
-        private void SetCollisionPainter(int collisionValue) {
+        private void PrepareCollisionPainterGraphics(byte collisionValue) {
             switch (collisionValue) {
                 case 0x0:
                     paintPen = new Pen(Color.FromArgb(128, Color.White));
@@ -3558,9 +3571,8 @@ namespace DSPRE {
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.LimeGreen));
                     break;
             }
-            paintByte = (byte)collisionValue;
         }
-        private void SetTypePainter(byte typeValue) {
+        private void PrepareTypePainterGraphics(byte typeValue) {
             switch (typeValue) {
                 case 0x0:
                     paintPen = new Pen(Color.FromArgb(128, Color.White));
@@ -3718,7 +3730,6 @@ namespace DSPRE {
                     textFont = new Font("Arial", 8.65f);
                     break;
             }
-            paintByte = (byte)typeValue;
         }
         #endregion
 
@@ -3729,7 +3740,7 @@ namespace DSPRE {
                 using (Graphics mainG = Graphics.FromImage(movPictureBox.Image)) {
                     smallG.Clear(Color.Transparent);
                     mainG.Clear(Color.Transparent);
-                    SetCollisionPainter(0x0);
+                    PrepareCollisionPainterGraphics(0x0);
 
                     for (int i = 0; i < 32; i++) {
                         for (int j = 0; j < 32; j++) {
@@ -3751,24 +3762,7 @@ namespace DSPRE {
             smallBox.Invalidate();
             RestorePainter();
         }
-        private void collisionPainterComboBox_ResetSelection(object sender, EventArgs e) {
-            int collisionValue;
 
-            if (collisionPainterComboBox.SelectedIndex == 0) {
-                collisionValue = 0;
-            } else if (collisionPainterComboBox.SelectedIndex == 1) {
-                collisionValue = 0x80;
-            } else {
-                collisionValue = 1;
-            }
-
-            SetCollisionPainter(collisionValue);
-
-            using (Graphics g = Graphics.FromImage(collisionPainterPictureBox.Image))
-                g.Clear(Color.FromArgb(255, paintBrush.Color));
-
-            collisionPainterPictureBox.Invalidate();
-        }
         private void collisionPictureBox_Click(object sender, EventArgs e) {
             selectTypePanel.BackColor = Color.Transparent;
             typeGroupBox.Enabled = false;
@@ -3779,9 +3773,10 @@ namespace DSPRE {
             RestorePainter();
         }
         private void exportMovButton_Click(object sender, EventArgs e) {
-            SaveFileDialog em = new SaveFileDialog();
-            em.Filter = "Permissions File (*.per)|*.per";
-            em.FileName = selectMapComboBox.SelectedItem.ToString();
+            SaveFileDialog em = new SaveFileDialog {
+                Filter = "Permissions File (*.per)|*.per",
+                FileName = selectMapComboBox.SelectedItem.ToString()
+            };
             if (em.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -3791,8 +3786,9 @@ namespace DSPRE {
             MessageBox.Show("Permissions exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void importMovButton_Click(object sender, EventArgs e) {
-            OpenFileDialog ip = new OpenFileDialog();
-            ip.Filter = "Permissions File (*.per)|*.per";
+            OpenFileDialog ip = new OpenFileDialog {
+                Filter = "Permissions File (*.per)|*.per"
+            };
             if (ip.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -3821,12 +3817,13 @@ namespace DSPRE {
                 EditCell(xCoord, yCoord);
             } else {
                 if (selectCollisionPanel.BackColor == Color.MidnightBlue) {
-                    SetCollisionPainter(currentMapFile.collisions[yCoord, xCoord]);
+                    byte newValue = currentMapFile.collisions[yCoord, xCoord];
+                    updateCollisions(newValue);
                 } else {
                     byte newValue = currentMapFile.types[yCoord, xCoord];
-                    updateTypeCollisions(newValue);
                     typePainterUpDown.Value = newValue;
-                }
+                    updateTypeCollisions(newValue);
+                };
             }
         }
         private void movPictureBox_MouseMove(object sender, MouseEventArgs e) {
@@ -3834,19 +3831,62 @@ namespace DSPRE {
                 EditCell(e.Location.X / mapEditorSquareSize, e.Location.Y / mapEditorSquareSize);
             }
         }
+        private void collisionPainterComboBox_SelectedIndexChange(object sender, EventArgs e) {
+            byte? collisionByte = StringToCollisionByte((string)collisionPainterComboBox.SelectedItem);
+
+            if (collisionByte != null) {
+                updateCollisions((byte)collisionByte);
+            }
+        }
         private void typePainterComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            string selectedType = collisionTypePainterComboBox.SelectedItem.ToString();
-            updateTypeCollisions(Convert.ToByte(selectedType.Substring(1, 2), 16));
+            byte? collisionByte = StringToCollisionByte((string)collisionTypePainterComboBox.SelectedItem);
+
+            if (collisionByte != null) {
+                updateTypeCollisions((byte)collisionByte);
+            }
+        }
+
+        private byte? StringToCollisionByte(string selectedItem) {
+            byte? result;
+            try {
+                result = Convert.ToByte(selectedItem.Substring(1, 2), 16);
+            } catch (FormatException) {
+                Console.WriteLine("Format incompatible");
+                result = null;
+            }
+            return result;
         }
         private void typePainterUpDown_ValueChanged(object sender, EventArgs e) {
             updateTypeCollisions((byte)typePainterUpDown.Value);
         }
-        private void updateTypeCollisions(byte typeValue) {
-            SetTypePainter(typeValue);
+        private void updateCollisions(byte typeValue) {
+            PrepareCollisionPainterGraphics(typeValue);
+            paintByte = (byte)typeValue;
 
-            sf = new StringFormat();
-            sf.LineAlignment = StringAlignment.Center;
-            sf.Alignment = StringAlignment.Center;
+            sf = new StringFormat {
+                LineAlignment = StringAlignment.Center,
+                Alignment = StringAlignment.Center
+            };
+
+            using (Graphics g = Graphics.FromImage(collisionPainterPictureBox.Image)) {
+                g.Clear(Color.FromArgb(255, paintBrush.Color));
+                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                g.DrawString(typeValue.ToString("X2"), new Font("Microsoft Sans Serif", 24), textBrush, painterBox, sf);
+            }
+
+            if (PokeDatabase.System.MapCollisionPainters.TryGetValue(typeValue, out string dictResult)) {
+                collisionPainterComboBox.SelectedItem = dictResult;
+            }
+            collisionPainterPictureBox.Invalidate();
+        }
+        private void updateTypeCollisions(byte typeValue) {
+            PrepareTypePainterGraphics(typeValue);
+            paintByte = typeValue;
+
+            sf = new StringFormat {
+                LineAlignment = StringAlignment.Center,
+                Alignment = StringAlignment.Center
+            };
 
             using (Graphics g = Graphics.FromImage(typePainterPictureBox.Image)) {
                 g.Clear(Color.FromArgb(255, paintBrush.Color));
@@ -3854,8 +3894,7 @@ namespace DSPRE {
                 g.DrawString(typeValue.ToString("X2"), new Font("Microsoft Sans Serif", 24), textBrush, painterBox, sf);
             }
 
-            string dictResult;
-            if (PokeDatabase.System.MapCollisionTypePainters.TryGetValue(typeValue, out dictResult)) {
+            if (PokeDatabase.System.MapCollisionTypePainters.TryGetValue(typeValue, out string dictResult)) {
                 collisionTypePainterComboBox.SelectedItem = dictResult;
             } else {
                 valueTypeRadioButton.Checked = true;
@@ -3898,8 +3937,9 @@ namespace DSPRE {
 
             currentMapFile.LoadMapModel(DSUtils.ReadFromFile(im.FileName));
 
-            if (mapTextureComboBox.SelectedIndex > 0)
+            if (mapTextureComboBox.SelectedIndex > 0) {
                 currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, mapTextureComboBox.SelectedIndex - 1);
+            }
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
             ModelSizeTXT.Text = currentMapFile.mapModelData.Length.ToString() + " B";
@@ -3952,9 +3992,10 @@ namespace DSPRE {
             MessageBox.Show("Terrain settings imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void bdhcExportButton_Click(object sender, EventArgs e) {
-            SaveFileDialog eb = new SaveFileDialog();
-            eb.Filter = "Terrain File (*.bdhc)|*.bdhc";
-            eb.FileName = selectMapComboBox.SelectedItem.ToString();
+            SaveFileDialog eb = new SaveFileDialog {
+                Filter = "Terrain File (*.bdhc)|*.bdhc",
+                FileName = selectMapComboBox.SelectedItem.ToString()
+            };
             if (eb.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -3965,8 +4006,9 @@ namespace DSPRE {
             MessageBox.Show("Terrain settings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void soundPlatesImportButton_Click(object sender, EventArgs e) {
-            OpenFileDialog it = new OpenFileDialog();
-            it.Filter = "BackGround Sound File (*.bgs)|*.bgs";
+            OpenFileDialog it = new OpenFileDialog {
+                Filter = "BackGround Sound File (*.bgs)|*.bgs"
+            };
 
             if (it.ShowDialog(this) != DialogResult.OK)
                 return;
@@ -3976,9 +4018,10 @@ namespace DSPRE {
             MessageBox.Show("BackGround Sound data imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void soundPlatesExportButton_Click(object sender, EventArgs e) {
-            SaveFileDialog eb = new SaveFileDialog();
-            eb.Filter = "BackGround Sound File (*.bgs)|*.bgs";
-            eb.FileName = selectMapComboBox.SelectedItem.ToString();
+            SaveFileDialog eb = new SaveFileDialog {
+                Filter = "BackGround Sound File (*.bgs)|*.bgs",
+                FileName = selectMapComboBox.SelectedItem.ToString()
+            };
             if (eb.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -4011,7 +4054,7 @@ namespace DSPRE {
         #endregion
 
         #region Subroutines
-        private void centerEventviewOnEntities() {
+        private void CenterEventviewOnEntities() {
             disableHandlers = true;
             try {
                 if (currentEvFile.overworlds.Count > 0) {
@@ -4051,12 +4094,13 @@ namespace DSPRE {
             if (showSignsCheckBox.Checked) {
                 for (int i = 0; i < currentEvFile.spawnables.Count; i++) {
                     Spawnable spawnable = currentEvFile.spawnables[i];
+                    
                     if (spawnable.xMatrixPosition == eventMatrixXUpDown.Value && spawnable.yMatrixPosition == eventMatrixYUpDown.Value) {
                         using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
                             g.CompositingMode = CompositingMode.SourceOver;
                             g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("sign"), (spawnable.xMapPosition) * 17, (spawnable.yMapPosition) * 17);
                             if (selectedEvent == spawnable) { // Draw selection rectangle if event is the selected one
-                                drawSelectionRectangle(g, spawnable);
+                                DrawSelectionRectangle(g, spawnable);
                             }
                         }
                     }
@@ -4067,6 +4111,7 @@ namespace DSPRE {
             if (showOwsCheckBox.Checked) {
                 for (int i = 0; i < currentEvFile.overworlds.Count; i++) {
                     Overworld overworld = currentEvFile.overworlds[i];
+                    
                     if (isEventOnCurrentMatrix(overworld)) { // Draw image only if event is in current map
                         using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
                             g.CompositingMode = CompositingMode.SourceOver;
@@ -4075,7 +4120,7 @@ namespace DSPRE {
                             g.DrawImage(sprite, (overworld.xMapPosition) * 17 - 7 + (32 - sprite.Width) / 2, (overworld.yMapPosition - 1) * 17 + (32 - sprite.Height));
 
                             if (selectedEvent == overworld) {
-                                drawSelectionRectangleOverworld(g, overworld);
+                                DrawSelectionRectangleOverworld(g, overworld);
                             }
                         }
                     }
@@ -4086,13 +4131,14 @@ namespace DSPRE {
             if (showWarpsCheckBox.Checked) {
                 for (int i = 0; i < currentEvFile.warps.Count; i++) {
                     Warp warp = currentEvFile.warps[i];
+                    
                     if (isEventOnCurrentMatrix(warp)) {
                         using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
                             g.CompositingMode = CompositingMode.SourceOver;
                             g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("warp"), (warp.xMapPosition) * 17, (warp.yMapPosition) * 17);
                             if (selectedEvent == warp) { // Draw selection rectangle if event is the selected one
 
-                                drawSelectionRectangle(g, warp);
+                                DrawSelectionRectangle(g, warp);
                             }
                         }
                     }
@@ -4103,6 +4149,7 @@ namespace DSPRE {
             if (showTriggersCheckBox.Checked) {
                 for (int i = 0; i < currentEvFile.triggers.Count; i++) {
                     Trigger trigger = currentEvFile.triggers[i];
+                    
                     if (isEventOnCurrentMatrix(trigger)) {
                         using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
                             g.CompositingMode = CompositingMode.SourceOver;
@@ -4112,7 +4159,7 @@ namespace DSPRE {
                                 }
                             }
                             if (selectedEvent == trigger) {// Draw selection rectangle if event is the selected one
-                                drawSelectionRectangleTrigger(g, trigger);
+                                DrawSelectionRectangleTrigger(g, trigger);
                             }
                         }
                     }
@@ -4120,18 +4167,18 @@ namespace DSPRE {
             }
             eventPictureBox.Invalidate();
         }
-        private void drawSelectionRectangle(Graphics g, Event ev) {
+        private void DrawSelectionRectangle(Graphics g, Event ev) {
             eventPen = Pens.Red;
             g.DrawRectangle(eventPen, (ev.xMapPosition) * 17 - 1, (ev.yMapPosition) * 17 - 1, 18, 18);
             g.DrawRectangle(eventPen, (ev.xMapPosition) * 17 - 2, (ev.yMapPosition) * 17 - 2, 20, 20);
         }
-        private void drawSelectionRectangleTrigger(Graphics g, Trigger t) {
+        private void DrawSelectionRectangleTrigger(Graphics g, Trigger t) {
             eventPen = Pens.Red;
             g.DrawRectangle(eventPen, (t.xMapPosition) * 17 - 1, (t.yMapPosition) * 17 - 1, 17 * t.widthX + 1, 17 * t.heightY + 1);
             g.DrawRectangle(eventPen, (t.xMapPosition) * 17 - 2, (t.yMapPosition) * 17 - 2, 17 * t.widthX + 3, 17 * t.heightY + 3);
 
         }
-        private void drawSelectionRectangleOverworld(Graphics g, Overworld ow) {
+        private void DrawSelectionRectangleOverworld(Graphics g, Overworld ow) {
             eventPen = Pens.Red;
             g.DrawRectangle(eventPen, (ow.xMapPosition) * 17 - 8, (ow.yMapPosition - 1) * 17, 34, 34);
             g.DrawRectangle(eventPen, (ow.xMapPosition) * 17 - 9, (ow.yMapPosition - 1) * 17 - 1, 36, 36);
@@ -4152,14 +4199,16 @@ namespace DSPRE {
                 using (Graphics g = Graphics.FromImage(eventPictureBox.BackgroundImage)) g.Clear(Color.Black);
             } else {
                 /* Determine area data */
-                uint areaDataID;
+                byte areaDataID;
                 if (eventMatrix.hasHeadersSection) {
                     ushort header = (ushort)eventMatrix.headers[(short)eventMatrixYUpDown.Value, (short)eventMatrixXUpDown.Value];
                     areaDataID = MapHeader.LoadFromARM9(header).areaDataID;
-                } else areaDataID = (uint)eventAreaDataUpDown.Value;
+                } else {
+                    areaDataID = (byte)eventAreaDataUpDown.Value;
+                }
 
                 /* get texture file numbers from area data */
-                AreaData areaData = LoadAreaData(areaDataID);
+                AreaData areaData = new AreaData(areaDataID);
 
                 /* Read map and building models, match them with textures and render them*/
                 eventMapFile = new MapFile((int)mapIndex);
@@ -5157,7 +5206,7 @@ namespace DSPRE {
                     eventMatrixUpDown.Value = MapHeader.LoadFromARM9((ushort)warpHeaderUpDown.Value).matrixID;
                     eventAreaDataUpDown.Value = MapHeader.LoadFromARM9((ushort)warpHeaderUpDown.Value).areaDataID;
                     selectEventComboBox.SelectedIndex = destEventID;
-                    centerEventviewOnEntities();
+                    CenterEventviewOnEntities();
                     return;
                 }
             }
@@ -6504,32 +6553,24 @@ namespace DSPRE {
             currentAreaData.SaveToFileDefaultDir(selectAreaDataListBox.SelectedIndex);
         }
         private void selectAreaDataListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            currentAreaData = LoadAreaData((uint)selectAreaDataListBox.SelectedIndex);
+            currentAreaData = new AreaData((byte)selectAreaDataListBox.SelectedIndex);
 
             areaDataBuildingTilesetUpDown.Value = currentAreaData.buildingsTileset;
             areaDataMapTilesetUpDown.Value = currentAreaData.mapTileset;
             areaDataLightTypeComboBox.SelectedIndex = currentAreaData.lightType;
 
             disableHandlers = true;
-            switch (RomInfo.gameFamily) {
-                case "DP":
-                case "Plat":
-                    break;
-                default:
-                    areaDataDynamicTexturesNumericUpDown.Value = currentAreaData.dynamicTextureType;
-                    if (currentAreaData.areaType == 0)
-                        indoorAreaRadioButton.Checked = true;
-                    else
-                        outdoorAreaRadioButton.Checked = true;
-                    break;
+            if (RomInfo.gameFamily.Equals("HGSS")) {
+                areaDataDynamicTexturesNumericUpDown.Value = currentAreaData.dynamicTextureType;
+
+                bool interior = currentAreaData.areaType == 0;
+                indoorAreaRadioButton.Checked = interior;
+                outdoorAreaRadioButton.Checked = !interior;
             }
             disableHandlers = false;
         }
         private void indoorAreaRadioButton_CheckedChanged(object sender, EventArgs e) {
-            if (indoorAreaRadioButton.Checked == true)
-                currentAreaData.areaType = AreaData.TYPE_INDOOR; //0
-            else
-                currentAreaData.areaType = AreaData.TYPE_OUTDOOR; //1
+            currentAreaData.areaType = indoorAreaRadioButton.Checked ? AreaData.TYPE_INDOOR : AreaData.TYPE_OUTDOOR;
         }
         private void addNSBTXButton_Click(object sender, EventArgs e) {
             /* Add new NSBTX file to the correct folder */
@@ -6600,8 +6641,9 @@ namespace DSPRE {
                 return;
 
             /* Prompt user to select .evt file */
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "AreaData File (*.bin)|*.bin";
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "AreaData File (*.bin)|*.bin"
+            };
             if (of.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -6632,9 +6674,10 @@ namespace DSPRE {
         }
 
         private void exportCameraTableButton_Click(object sender, EventArgs e) {
-            SaveFileDialog of = new SaveFileDialog();
-            of.Filter = "Camera Table File (*.bin)|*.bin";
-            of.FileName = Path.GetFileNameWithoutExtension(RomInfo.workDir) + " - CameraTable.bin";
+            SaveFileDialog of = new SaveFileDialog {
+                Filter = "Camera Table File (*.bin)|*.bin",
+                FileName = Path.GetFileNameWithoutExtension(RomInfo.workDir) + " - CameraTable.bin"
+            };
             if (of.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -6653,14 +6696,36 @@ namespace DSPRE {
         #endregion
 
         private void bldPlaceWithMouseCheckbox_CheckedChanged(object sender, EventArgs e) {
-            bool status = bldPlaceWithMouseCheckbox.Checked;
+            bool status = bldPlaceWithMouseCheckbox.Checked && radio2D.Checked;
             bldPlaceLockXcheckbox.Enabled = status;
             bldPlaceLockZcheckbox.Enabled = status;
             bldRoundGroupbox.Enabled = status;
+            lockXZgroupbox.Enabled = status;
 
             if (status) {
                 SetCam2D();
             }
+        }
+
+        private void bldPlaceLockXcheckbox_CheckedChanged(object sender, EventArgs e) {
+            ExclusiveCBInvert(bldPlaceLockZcheckbox);
+        }       
+
+        private void bldPlaceLockZcheckbox_CheckedChanged(object sender, EventArgs e) {
+            ExclusiveCBInvert(bldPlaceLockXcheckbox);
+        }
+
+        private void ExclusiveCBInvert (CheckBox cb) {
+            if (disableHandlers)
+                return;
+
+            disableHandlers = true;
+
+            if (cb.Checked) {
+                cb.Checked = !cb.Checked;
+            }
+
+            disableHandlers = false;
         }
     }
 }
