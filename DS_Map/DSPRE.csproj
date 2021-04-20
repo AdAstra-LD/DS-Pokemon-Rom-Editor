@@ -451,6 +451,7 @@
     <Content Include="Resources\Graphics\Weather\DPPt\ptlightfog.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptredish.png" />
     <None Include="Resources\wrenchIcon.png" />
+    <None Include="Resources\selectBldWithMouse.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
