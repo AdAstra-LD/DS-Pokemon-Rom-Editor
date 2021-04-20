@@ -3424,7 +3424,7 @@ namespace DSPRE {
             using (Graphics gMain = Graphics.FromImage(mainBm)) {
                 for (int i = 0; i < 32; i++) {
                     for (int j = 0; j < 32; j++) {
-                        PrepareTypePainterGraphics(paintByte = currentMapFile.types[i, j]);
+                        PrepareTypePainterGraphics(currentMapFile.types[i, j]);
 
                         /* Draw cell with color */
                         mainCell = new Rectangle(19 * j, 19 * i, 19, 19);
