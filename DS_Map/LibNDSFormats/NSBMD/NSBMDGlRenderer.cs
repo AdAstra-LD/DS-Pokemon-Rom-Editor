@@ -217,8 +217,10 @@ namespace LibNDSFormats.NSBMD {
 							mattt.Add(matt[matid]);
 						}
 						NSBMDMaterial mat = Model.Materials[matid];
-						if ((mat.format == 1 || mat.format == 6) && r == RenderMode.Translucent) continue;
-						if ((mat.format == 0 || mat.format == 2 || mat.format == 3 || mat.format == 4 || mat.format == 5 || mat.format == 7) && r != RenderMode.Opaque) continue;
+						if ((mat.format == 0 || (mat.format >= 2 && mat.format <= 5) || mat.format == 7) && r != RenderMode.Opaque)
+							continue;
+						if ((mat.format == 1 || mat.format == 6) && r == RenderMode.Translucent)
+							continue;
 						Gl.glBindTexture(Gl.GL_TEXTURE_2D, matid + 1 + matstart);
 
 						// Convert pixel coords to normalised STs
@@ -228,7 +230,10 @@ namespace LibNDSFormats.NSBMD {
 							NSBMDMaterial mmm = mat;
 							int texid = 0;
 							for (int l = 0; l < nsb.Textures.Count; l++) {
-								if (nsb.Textures[l].texname == p.AnimData[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)].KeyFrames[frame_[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)]].texName) { texid = l; break; }
+								if (nsb.Textures[l].texname == p.AnimData[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)].KeyFrames[frame_[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)]].texName) {
+									texid = l;
+									break;
+								}
 							}
 							mmm.spdata = nsb.Textures[texid].spdata;
 							mmm.texdata = nsb.Textures[texid].texdata;
@@ -242,35 +247,42 @@ namespace LibNDSFormats.NSBMD {
 
 							int palid = 0;
 							for (int l = 0; l < nsb.Textures.Count; l++) {
-								if (nsb.Palettes[l].palname == p.AnimData[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)].KeyFrames[frame_[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)]].palName) { palid = l; break; }
+								if (nsb.Palettes[l].palname == p.AnimData[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)].KeyFrames[frame_[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)]].palName) {
+									palid = l;
+									break;
+								}
 							}
 							mmm.paldata = nsb.Palettes[palid].paldata;
 							mmm.palname = nsb.Palettes[palid].palname;
 							mmm.paloffset = nsb.Palettes[palid].paloffset;
 							mmm.palsize = nsb.Palettes[palid].palsize;
 							MakeTexture(matid, mmm);
+
 							if (anim2) {
-								if (nr[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)] == Math.Round((float)(p.MPT.infoBlock.Data[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)].Unknown1) / 512f)) {
-									nr[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)] = 0;
-									if (frame[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)] == p.MPT.NoFrames - 1) {
-										frame[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)] = 0;
-										frame_[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)] = 0;
+								int index = new List<string>(p.MPT.names).IndexOf(mat.MaterialName);
+
+								if (nr[index] == Math.Round(p.MPT.infoBlock.Data[index].Unknown1 / 512f)) {
+									nr[index] = 0;
+									if (frame[index] == p.MPT.NoFrames - 1) {
+										frame[index] = 0;
+										frame_[index] = 0;
 									} else {
-										frame[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)]++;
-										if (p.AnimData[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)].KeyFrames.Length != frame_[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)] + 1) {
-											if (frame[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)] == p.AnimData[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)].KeyFrames[frame_[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)] + 1].Start) {
-												frame_[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)]++;
+										frame[index]++;
+										if (p.AnimData[index].KeyFrames.Length != frame_[index] + 1) {
+											if (frame[index] == p.AnimData[index].KeyFrames[frame_[index] + 1].Start) {
+												frame_[index]++;
 											}
 										}
 									}
 								} else {
-									nr[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)]++;//= (float)p.MPT.infoBlock.Data[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)].Unknown1 / 4096f;
+									nr[index]++;//= (float)p.MPT.infoBlock.Data[index].Unknown1 / 4096f;
 								}
 							}
 						}
 						try {
 							if (ani.Header.file_size != 0 && new List<string>(ani.MAT.names).Contains(mat.MaterialName)) {
 								int index = new List<string>(ani.MAT.names).IndexOf(mat.MaterialName);
+
 								Gl.glScaled((double)ani.SRTData[index].scaleS[aniframeScaleS[index]], (double)ani.SRTData[index].scaleT[aniframeScaleT[index]], 1);
 								Gl.glRotated((double)ani.SRTData[index].rotate[aniframeR[index]], 1, 0, 0);
 								Gl.glTranslated((double)ani.SRTData[index].translateS[aniframeS[index]], (double)ani.SRTData[index].translateT[aniframeT[index]], 0);
@@ -310,17 +322,17 @@ namespace LibNDSFormats.NSBMD {
 						}
 					noscale:
 						if (!mat.isEnvironmentMap) {
-							Gl.glScalef(1.0f / ((float)mat.width), 1.0f / ((float)mat.height), 1.0f);
+							Gl.glScalef(1.0f / mat.width, 1.0f / mat.height, 1.0f);
 						}
 						goto end;
 					scale:
 						if (!mat.isEnvironmentMap) {
 							if (mat.mtx == null) {
-								Gl.glScalef((float)mat.scaleS / (mat.width), (mat.scaleT / mat.height), 1.0f);
+								Gl.glScalef(mat.scaleS / mat.width, mat.scaleT / mat.height, 1.0f);
 								Gl.glRotatef(mat.rot, 0, 1, 0);
 								Gl.glTranslatef(mat.transS, mat.transT, 0);
 							} else {
-								Gl.glScalef(1.0f / ((float)mat.width), 1.0f / ((float)mat.height), 1.0f);
+								Gl.glScalef(1.0f / mat.width, 1.0f / mat.height, 1.0f);
 								Gl.glMultMatrixf(mat.mtx);
 							}
 						}
@@ -353,14 +365,28 @@ namespace LibNDSFormats.NSBMD {
 							Gl.glLightfv(Gl.GL_LIGHT3, Gl.GL_EMISSION, new float[] { (float)mat.EmissionColor.R / 255f, (float)mat.EmissionColor.G / 255f, (float)mat.EmissionColor.B / 255f, (float)mat.EmissionColor.A / 255f });
 
 							Gl.glEnable(Gl.GL_LIGHTING);
-							if (((mat.PolyAttrib >> 0) & 0x1) == 1) Gl.glEnable(Gl.GL_LIGHT0);
-							else Gl.glDisable(Gl.GL_LIGHT0);
-							if (((mat.PolyAttrib >> 1) & 0x1) == 1) Gl.glEnable(Gl.GL_LIGHT1);
-							else Gl.glDisable(Gl.GL_LIGHT1);
-							if (((mat.PolyAttrib >> 2) & 0x1) == 1) Gl.glEnable(Gl.GL_LIGHT2);
-							else Gl.glDisable(Gl.GL_LIGHT2);
-							if (((mat.PolyAttrib >> 3) & 0x1) == 1) Gl.glEnable(Gl.GL_LIGHT3);
-							else Gl.glDisable(Gl.GL_LIGHT3);
+							if (((mat.PolyAttrib >> 0) & 0x1) == 1) {
+								Gl.glEnable(Gl.GL_LIGHT0);
+							} else {
+								Gl.glDisable(Gl.GL_LIGHT0);
+							}
+
+							if (((mat.PolyAttrib >> 1) & 0x1) == 1) {
+								Gl.glEnable(Gl.GL_LIGHT1);
+							} else {
+								Gl.glDisable(Gl.GL_LIGHT1);
+							}
+							if (((mat.PolyAttrib >> 2) & 0x1) == 1) {
+								Gl.glEnable(Gl.GL_LIGHT2);
+							} else {
+								Gl.glDisable(Gl.GL_LIGHT2);
+							}
+
+							if (((mat.PolyAttrib >> 3) & 0x1) == 1) {
+								Gl.glEnable(Gl.GL_LIGHT3);
+							} else {
+								Gl.glDisable(Gl.GL_LIGHT3);
+							}
 
 							if (mat.diffuseColor) {
 								Gl.glColor4f((float)mat.DiffuseColor.R / 255f, (float)mat.DiffuseColor.G / 255f, (float)mat.DiffuseColor.B / 255f, (float)mat.DiffuseColor.A / 255f);
@@ -372,6 +398,7 @@ namespace LibNDSFormats.NSBMD {
 							Gl.glDisable(Gl.GL_LIGHT1);
 							Gl.glDisable(Gl.GL_LIGHT2);
 							Gl.glDisable(Gl.GL_LIGHT3);
+
 							if (mat.diffuseColor) {
 								Gl.glColor4f((float)mat.DiffuseColor.R / 255f, (float)mat.DiffuseColor.G / 255f, (float)mat.DiffuseColor.B / 255f, (float)mat.DiffuseColor.A / 255f);
 							}
@@ -409,10 +436,18 @@ namespace LibNDSFormats.NSBMD {
 						int cullmode = -1;
 
 						switch (mat.PolyAttrib >> 6 & 0x03) {
-							case 0x03: cullmode = Gl.GL_NONE; break;
-							case 0x02: cullmode = Gl.GL_BACK; break;
-							case 0x01: cullmode = Gl.GL_FRONT; break;
-							case 0x00: cullmode = Gl.GL_FRONT_AND_BACK; break;
+							case 0x03:
+								cullmode = Gl.GL_NONE;
+								break;
+							case 0x02:
+								cullmode = Gl.GL_BACK;
+								break;
+							case 0x01:
+								cullmode = Gl.GL_FRONT;
+								break;
+							case 0x00:
+								cullmode = Gl.GL_FRONT_AND_BACK;
+								break;
 						}
 						Gl.glCullFace(cullmode);
 					}
@@ -512,11 +547,11 @@ namespace LibNDSFormats.NSBMD {
 						Gl.glMatrixMode(Gl.GL_TEXTURE);
 						Gl.glLoadIdentity();
 
-					scale:
+						//scale
 						if (!mat.isEnvironmentMap) {
 							Gl.glScalef((float)mat.scaleS / ((float)mat.width), (float)mat.scaleT / ((float)mat.height), 1.0f);
 						}
-					end:
+						//end
 						//Gl.glColor4f(1, 1, 0, 0);
 						Gl.glEnable(Gl.GL_ALPHA_TEST);
 						Gl.glAlphaFunc(Gl.GL_GREATER, 0f);
@@ -601,7 +636,7 @@ namespace LibNDSFormats.NSBMD {
 			}
 			writevertex = false;
 		}
-		public bool doJointAnimation(MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File ca, int selectedanim, bool anim, int i) {
+		public bool DoJointAnimation(MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File ca, int selectedanim, bool anim, int i) {
 			try {
 				if (ca.Header.file_size != 0 && selectedanim != -1) {
 					float[] s = loadIdentity();
