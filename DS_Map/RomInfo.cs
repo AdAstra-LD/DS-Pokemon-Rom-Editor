@@ -81,7 +81,7 @@ namespace DSPRE {
             romID = id;
             workDir = dir;
             LoadGameVersion();
-            if (gameVersion == null)
+            if (gameVersion is null)
                 return;
 
             LoadGameFamily();

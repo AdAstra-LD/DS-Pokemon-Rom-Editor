@@ -9,7 +9,7 @@ namespace DSPRE.ROMFiles {
         public void SaveToFile(string path, bool showSuccessMessage = true) {
             
             byte[] romFileToByteArray = ToByteArray();
-            if (romFileToByteArray == null) {
+            if (romFileToByteArray is null) {
                 Console.WriteLine(GetType().Name + " couldn't be saved!");
                 return;
             }

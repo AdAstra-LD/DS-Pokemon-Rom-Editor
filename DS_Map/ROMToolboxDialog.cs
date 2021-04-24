@@ -697,7 +697,7 @@ namespace DSPRE {
             //09 22 02 4D A8 47 00 20 
             //03 21 FC BD F1 64 00 02 
             //00 80 3C 02
-            if (hexString == null)
+            if (hexString is null)
                 return null;
 
             hexString = hexString.Trim();

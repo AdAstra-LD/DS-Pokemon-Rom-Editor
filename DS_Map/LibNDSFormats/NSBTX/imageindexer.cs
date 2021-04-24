@@ -100,7 +100,7 @@ namespace NSMBe4 {
                 if (!c.deleteFlag) {
                     int cnt = freqTable[c];
                     foreach (MultiColor c2 in freqTable.Keys) {
-                        if (c2 == null) continue;
+                        if (c2 is null) continue;
                         if (c2.deleteFlag) continue;
                         if (c2 == c) continue;
 
@@ -130,7 +130,7 @@ namespace NSMBe4 {
             while (boxes.Count < (useAlpha ? paletteCount - 1 : paletteCount)) {
                 Console.Out.WriteLine(boxes.Count);
                 Box bo = getDominantBox();
-                if (bo == null)
+                if (bo is null)
                     break;
 
                 split(bo);
@@ -246,7 +246,7 @@ namespace NSMBe4 {
                 int best = -1;
                 float bestd = float.PositiveInfinity;
                 for (int i = 0; i < multiPalette.Length; i++) {
-                    if (multiPalette[i] == null) continue;
+                    if (multiPalette[i] is null) continue;
                     float d = mc.diff(multiPalette[i]);
                     if (d < bestd || best == -1) {
                         best = i;
@@ -314,7 +314,7 @@ namespace NSMBe4 {
 
             foreach (Box b in boxes) {
                 int dim = b.dominantDimension(freqTable);
-                if ((dim > bestDim || best == null) && b.canSplit(freqTable)) {
+                if ((dim > bestDim || best is null) && b.canSplit(freqTable)) {
                     bestDim = dim;
                     best = b;
                 }

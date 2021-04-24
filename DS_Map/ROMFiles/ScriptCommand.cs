@@ -38,7 +38,7 @@ namespace DSPRE.ROMFiles {
 
         #region Constructors (2)
         public ScriptCommand(ushort id, List<byte[]> commandParameters) {
-            if (commandParameters == null) {
+            if (commandParameters is null) {
                 this.id = null;
                 return;
             }

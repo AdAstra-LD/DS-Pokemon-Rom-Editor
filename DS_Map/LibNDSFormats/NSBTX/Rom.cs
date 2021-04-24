@@ -95,7 +95,7 @@ namespace NSMBe4
 
         //public static void close()
         //{
-        //    if (FS == null) return;
+        //    if (FS is null) return;
         //    FS.close();
         //}
 

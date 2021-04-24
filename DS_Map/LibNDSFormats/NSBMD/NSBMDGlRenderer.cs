@@ -148,7 +148,7 @@ namespace LibNDSFormats.NSBMD {
 				S2z = new int[ca.JAC[selectedani].ObjInfo.Length];
 				lastselectedanim = selectedani;
 			}
-			if (frame == null && p.Header.file_size != 0) {
+			if (frame is null && p.Header.file_size != 0) {
 				frame = new int[p.MPT.names.Length];
 				frame_ = new int[p.MPT.names.Length];
 				nr = new int[p.MPT.names.Length];
@@ -327,7 +327,7 @@ namespace LibNDSFormats.NSBMD {
 						goto end;
 					scale:
 						if (!mat.isEnvironmentMap) {
-							if (mat.mtx == null) {
+							if (mat.mtx is null) {
 								Gl.glScalef(mat.scaleS / mat.width, mat.scaleT / mat.height, 1.0f);
 								Gl.glRotatef(mat.rot, 0, 1, 0);
 								Gl.glTranslatef(mat.transS, mat.transT, 0);
@@ -1148,7 +1148,7 @@ namespace LibNDSFormats.NSBMD {
 						continue;
 					}
 					var mat = mod.Materials[i];
-					if (mat == null || (mat.paldata == null && mat.format != 7)) {
+					if (mat is null || (mat.paldata is null && mat.format != 7)) {
 						matt.Add(new ImageBrush());
 						continue;
 					}
@@ -1192,7 +1192,7 @@ namespace LibNDSFormats.NSBMD {
 									continue;
 								int index = mat.texdata[matindex];
 								index = (index >> ((j % 2) << 2)) & 0x0f;
-								if (mat.paldata == null)
+								if (mat.paldata is null)
 									continue;
 								if (index < 0 || index >= mat.paldata.Length)
 									continue;
@@ -1344,7 +1344,7 @@ namespace LibNDSFormats.NSBMD {
 					return;
 				}
 				var mat = m;
-				if (mat == null || (mat.paldata == null && mat.format != 7)) {
+				if (mat is null || (mat.paldata is null && mat.format != 7)) {
 					//matt.Add(new System.Windows.Media.ImageBrush());
 					return;
 				}
@@ -1388,7 +1388,7 @@ namespace LibNDSFormats.NSBMD {
 								continue;
 							int index = mat.texdata[matindex];
 							index = (index >> ((j % 2) << 2)) & 0x0f;
-							if (mat.paldata == null)
+							if (mat.paldata is null)
 								continue;
 							if (index < 0 || index >= mat.paldata.Length)
 								continue;
@@ -1488,7 +1488,7 @@ namespace LibNDSFormats.NSBMD {
 		private static extern bool DeleteObject(IntPtr hObject);
 
 		public static System.Windows.Media.Imaging.BitmapSource CreateBitmapSourceFromBitmap(System.Drawing.Bitmap bitmap) {
-			if (bitmap == null)
+			if (bitmap is null)
 				throw new ArgumentNullException("bitmap");
 
 			IntPtr hBitmap = bitmap.GetHbitmap();
@@ -1528,7 +1528,7 @@ namespace LibNDSFormats.NSBMD {
 			IList<Vector3D> nor = new List<Vector3D>();
 			IList<Point> tex = new List<Point>();
 			int typ = -1;
-			if (polydata == null)
+			if (polydata is null)
 				return;
 			int commandptr = 0;
 			int commandlimit = polydata.Length;

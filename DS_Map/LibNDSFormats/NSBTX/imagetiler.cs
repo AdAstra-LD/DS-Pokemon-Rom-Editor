@@ -74,11 +74,11 @@ namespace NSMBe4
             for (int xt = 0; xt < (b.Height/8) * (b.Width/8); xt++)
             {
                 //p.setValue(xt);
-                if (tiles[xt] == null) continue;
+                if (tiles[xt] is null) continue;
 
                 for (int yt = 0; yt < xt; yt++)
                 {
-                    if (tiles[yt] == null) continue;
+                    if (tiles[yt] is null) continue;
                     float diff = tiles[xt].difference(tiles[yt]);
                     if (diff < 0.5)
                         mergeTiles(xt, yt);
@@ -116,8 +116,8 @@ namespace NSMBe4
                     TileDiff td = en.Current;
                     int t1 = td.t1;
                     int t2 = td.t2;
-                    if (tiles[t1] == null) continue;
-                    if (tiles[t2] == null) continue;
+                    if (tiles[t1] is null) continue;
+                    if (tiles[t2] is null) continue;
                     if (t1 == t2) throw new Exception("Should never happen");
 
                     mergeTiles(t1, t2);
@@ -214,7 +214,7 @@ namespace NSMBe4
             for (int t = 0; t < tileCount; t++)
             {
                 if (t == tile) continue;
-                if (tiles[t] == null) continue;
+                if (tiles[t] is null) continue;
                 float diff = tiles[tile].difference(tiles[t]);
                 if (diff == 0)
                     return t;

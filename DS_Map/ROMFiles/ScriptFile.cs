@@ -72,7 +72,7 @@ namespace DSPRE.ROMFiles {
                         bool endScript = new bool();
                         while (!endScript) {
                             ScriptCommand cmd = ReadCommand(scrReader, ref functionOffsets, ref movementOffsets);
-                            if (cmd.cmdParams == null) 
+                            if (cmd.cmdParams is null) 
                                 return;
                             
                             cmdList.Add(cmd);
@@ -97,7 +97,7 @@ namespace DSPRE.ROMFiles {
                         bool endFunction = new bool();
                         while (!endFunction) {
                             ScriptCommand command = ReadCommand(scrReader, ref functionOffsets, ref movementOffsets);
-                            if (command.cmdParams == null)
+                            if (command.cmdParams is null)
                                 return;
 
                             cmdList.Add(command);
@@ -155,15 +155,15 @@ namespace DSPRE.ROMFiles {
                             || PokeDatabase.ScriptEditor.endCodes.Contains(id);
 
             allScripts = ReadCommandsFromLines(scriptLines, containerTypes.SCRIPT, scriptEndCondition);  //Jump + whitespace
-            if (allScripts == null || allScripts.Count <= 0)
+            if (allScripts is null || allScripts.Count <= 0)
                 return;
 
             allFunctions = ReadCommandsFromLines(functionLines, containerTypes.FUNCTION, functionEndCondition);  //Jump + whitespace
-            if (allFunctions == null)
+            if (allFunctions is null)
                 return;
 
             allActions = ReadActionsFromLines(actionLines);
-            if (allActions == null)
+            if (allActions is null)
                 return;
 
             this.fileID = fileID;
@@ -475,7 +475,7 @@ namespace DSPRE.ROMFiles {
                             ScriptCommand lastRead;
                             do {
                                 lastRead = new ScriptCommand(lineSource[i], i + 1);
-                                if (lastRead.id == null)
+                                if (lastRead.id is null)
                                     return null;
 
                                 cmdList.Add(lastRead);
@@ -505,7 +505,7 @@ namespace DSPRE.ROMFiles {
                         /* Read script commands */
                         do {
                             ScriptAction toAdd = new ScriptAction(lineSource[i], i + 1);
-                            if (toAdd.id == null)
+                            if (toAdd.id is null)
                                 return null;
 
                             cmdList.Add(toAdd);

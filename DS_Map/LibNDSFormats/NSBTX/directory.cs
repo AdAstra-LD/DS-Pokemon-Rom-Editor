@@ -67,7 +67,7 @@ namespace NSMBe4.DSFileSystem
 
         public string getPath()
         {
-            if (parentDir == null)
+            if (parentDir is null)
                 return "FS";
             else
                 return parentDir.getPath() + "/" + name;

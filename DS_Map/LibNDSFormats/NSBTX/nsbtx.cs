@@ -159,7 +159,7 @@ namespace NSMBe4.NSBMD
 
             for (int i = 0; i < textures.Length; i++)
             {
-                if (textures[i] == null) continue;
+                if (textures[i] is null) continue;
                 textures[i].name = str.ReadString(16);
                 //mgr.m.addImage(textures[i]);
             }

@@ -11,7 +11,7 @@ namespace DSPRE {
             InitializeComponent();
             this.names = allNames;
 
-            if (results == null || results.Count <= 1) {
+            if (results is null || results.Count <= 1) {
                 SetupFields(allNames);
                 spawnHeaderComboBox.SelectedIndex = headerNumber;
             } else {

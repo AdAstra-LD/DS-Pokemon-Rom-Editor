@@ -186,7 +186,7 @@ namespace DSPRE {
             }
 
             string searchConfiguration = fieldToSearch1ComboBox.Text + " " + operator1ComboBox.Text.ToLower() + " " + '"' + valueTextBox.Text + '"';
-            if (result == null || result.Count <= 0) {
+            if (result is null || result.Count <= 0) {
                 string res = "No header suits the search criteria.";
                 headerListBox.Items.Add(res);
                 headerListBox.Enabled = false;

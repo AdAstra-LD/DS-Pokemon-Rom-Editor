@@ -32,7 +32,7 @@ namespace System.IO {
             : this(baseStream, Endianness.BigEndian) { }
 
         public EndianBinaryReader(Stream baseStream, Endianness endianness) {
-            if (baseStream == null) throw new ArgumentNullException("baseStream");
+            if (baseStream is null) throw new ArgumentNullException("baseStream");
             if (!baseStream.CanRead) throw new ArgumentException("baseStream");
 
             BaseStream = baseStream;
@@ -44,7 +44,7 @@ namespace System.IO {
         }
 
         private void FillBuffer(int bytes, int stride) {
-            if (buffer == null || buffer.Length < bytes)
+            if (buffer is null || buffer.Length < bytes)
                 buffer = new byte[bytes];
 
             BaseStream.Read(buffer, 0, bytes);

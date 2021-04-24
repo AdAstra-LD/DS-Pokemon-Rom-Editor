@@ -915,7 +915,7 @@ namespace DSPRE {
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, workDir);
 
-            if (RomInfo.gameVersion == null) {
+            if (RomInfo.gameVersion is null) {
                 statusLabel.Text = "Unsupported ROM";
                 Update();
                 return;
@@ -1751,7 +1751,7 @@ namespace DSPRE {
             currentHeader.scriptFileID = (ushort)scriptFileUpDown.Value;
         }
         private void areaSettingsComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || areaSettingsComboBox.SelectedItem == null)
+            if (disableHandlers || areaSettingsComboBox.SelectedItem is null)
                 return;
 
             switch (RomInfo.gameFamily) {
@@ -2129,7 +2129,7 @@ namespace DSPRE {
         }
         private void GenerateMatrixTables() {
             /* Generate table columns */
-            if (currentMatrix == null)
+            if (currentMatrix is null)
                 return;
 
             for (int i = 0; i < currentMatrix.width; i++) {
@@ -2246,7 +2246,7 @@ namespace DSPRE {
             }
         }
         private void headersGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
-            if (e.Value == null)
+            if (e.Value is null)
                 return;
             disableHandlers = true;
 
@@ -2354,7 +2354,7 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void heightsGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
-            if (e.Value == null)
+            if (e.Value is null)
                 return;
             disableHandlers = true;
 
@@ -4077,7 +4077,7 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void centerEventViewOnSelectedEvent_Click(object sender, EventArgs e) {
-            if (selectedEvent == null) {
+            if (selectedEvent is null) {
                 MessageBox.Show("You haven't selected any event.", "Nothing to do here",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
@@ -6294,7 +6294,7 @@ namespace DSPRE {
             disableHandlers = true;
 
             textEditorDataGridView.Rows.Clear();
-            if (currentTextArchive == null || readAgain) {
+            if (currentTextArchive is null || readAgain) {
                 currentTextArchive = new TextArchive(selectTextFileComboBox.SelectedIndex);
             }
 
@@ -6468,7 +6468,7 @@ namespace DSPRE {
             currentTileset = new NSMBe4.NSBMD.NSBTX_File(new FileStream(tilesetPath, FileMode.Open));
             string currentItemName = texturePacksListBox.Items[texturePacksListBox.SelectedIndex].ToString();
 
-            if (currentTileset.TexInfo.names == null || currentTileset.PalInfo.names == null) {
+            if (currentTileset.TexInfo.names is null || currentTileset.PalInfo.names is null) {
                 if (!currentItemName.StartsWith("Error!")) {
                     texturePacksListBox.Items[texturePacksListBox.SelectedIndex] = "Error! - " + currentItemName;
                 }

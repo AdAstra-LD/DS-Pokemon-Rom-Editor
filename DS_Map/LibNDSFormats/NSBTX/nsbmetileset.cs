@@ -815,7 +815,7 @@ namespace NSMBe4
 
             for (int i = 0; i < Objects.Length; i++)
             {
-                if (Objects[i] == null)
+                if (Objects[i] is null)
                     break;
 
                 eObjIndexFile.writeUShort((ushort)eObjFile.getPos());
@@ -834,7 +834,7 @@ namespace NSMBe4
             int[,] Dest = new int[Width, Height];
 
             // Non-existent objects can just be made out of 0s
-            if (ObjNum >= Objects.Length || ObjNum < 0 || Objects[ObjNum] == null)
+            if (ObjNum >= Objects.Length || ObjNum < 0 || Objects[ObjNum] is null)
                 return Dest;
 
             ObjectDef obj = Objects[ObjNum];
@@ -1067,7 +1067,7 @@ namespace NSMBe4
         {
             if (objNum < 0) return false;
             if (objNum >= Objects.Length) return false;
-            if (Objects[objNum] == null) return false;
+            if (Objects[objNum] is null) return false;
             return true;
         }
         #endregion
