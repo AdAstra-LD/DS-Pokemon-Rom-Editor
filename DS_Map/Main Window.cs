@@ -6665,7 +6665,7 @@ namespace DSPRE {
 
         private void saveCameraTableButton_Click(object sender, EventArgs e) {
             string path = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
-            SaveCameraTable(path);
+            SaveCameraTable(path, overlayCameraTblOffset);
         }
 
         private void cameraEditorDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e) {
@@ -6682,14 +6682,14 @@ namespace DSPRE {
                 return;
 
             File.Delete(of.FileName);
-            SaveCameraTable(of.FileName);
+            SaveCameraTable(of.FileName, 0);
         }
 
-        private void SaveCameraTable (string path) {
+        private void SaveCameraTable (string path, uint destFileOffset) {
             int size = RomInfo.gameFamily.Equals("HGSS") ? 36 : 24;
 
             for (int i = 0; i < currentCameraTable.Length; i++) {
-                DSUtils.WriteToFile(path, currentCameraTable[i].ToByteArray(), (uint)(overlayCameraTblOffset + i * size));
+                DSUtils.WriteToFile(path, currentCameraTable[i].ToByteArray(), (uint)(destFileOffset + i * size));
             }
             MessageBox.Show("Camera table correctly saved.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
