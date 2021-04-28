@@ -42,8 +42,9 @@ namespace DSPRE {
         public static int locationNamesTextNumber { get; private set; }
 
 
-        public static readonly byte internalNameLength = 16;
         public static string internalNamesLocation { get; private set; }
+        public static readonly byte internalNameLength = 16;
+        public static int cameraSize { get; private set; }
 
         public static Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary { get; private set; }
         public static Dictionary<ushort, string> ScriptCommandNamesDict { get; private set; }
@@ -75,6 +76,7 @@ namespace DSPRE {
             interiorBuildingModels
         }; 
         public static Dictionary<DirNames, (string packedDir, string unpackedDir)> gameDirs { get; private set; }
+        
 
         #region Constructors (1)
         public RomInfo(string id, string dir) {
@@ -202,18 +204,21 @@ namespace DSPRE {
                     break;
             }
         }
-        public static void SetCameraTableOverlayAndOffsets() {
+        public static void PrepareCameraData() {
             switch (gameFamily) {
                 case "DP":
                     cameraTblOverlayNumber = 5;
                     cameraTblOffsetsToRAMaddress = new uint[] { 0 };
+                    cameraSize = 24;
                     break;
                 case "Plat":
                     cameraTblOverlayNumber = 5;
                     cameraTblOffsetsToRAMaddress = new uint[] { 0x4E24 };
+                    cameraSize = 24;
                     break;
                 case "HGSS":
                     cameraTblOverlayNumber = 1;
+                    cameraSize = 36;
                     switch (gameLanguage) {
                         case "ENG":
                         case "ESP":

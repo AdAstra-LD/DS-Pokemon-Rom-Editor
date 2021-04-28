@@ -606,7 +606,7 @@ namespace DSPRE {
             statusLabel.Text = "Ready";
         }
         private void SetupCameraEditor() {
-            RomInfo.SetCameraTableOverlayAndOffsets();
+            RomInfo.PrepareCameraData();
 
             if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.cameraTblOverlayNumber)) {
                 if (DSUtils.OverlayIsCompressed(RomInfo.cameraTblOverlayNumber)) {
@@ -654,8 +654,8 @@ namespace DSPRE {
                                                 br.ReadUInt16(), br.ReadUInt32(), br.ReadUInt32());
                     }
                 }
-                foreach (GameCamera v in currentCameraTable) { 
-                    v.AddToGridView(cameraEditorDataGridView);
+                for (int i = 0; i < currentCameraTable.Length; i++) {
+                    currentCameraTable[i].ShowInGridView(cameraEditorDataGridView, i);
                 }
             }
         }
@@ -2855,7 +2855,6 @@ namespace DSPRE {
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
         }
         #endregion
-
         private void addMapFileButton_Click(object sender, EventArgs e) {
             /* Add new map file to map folder */
             new MapFile(0).SaveToFileDefaultDir(selectMapComboBox.Items.Count);
@@ -2910,8 +2909,6 @@ namespace DSPRE {
                     }
                 }
                 //buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = "Error - Building Texture Pack too small [" + (buildTextureComboBox.SelectedIndex - 1).ToString("D2") + "]";
-
-
             }
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
@@ -2975,28 +2972,41 @@ namespace DSPRE {
                 }
             }
         }
-
         private void bldRoundWhole_CheckedChanged(object sender, EventArgs e) {
             bldDecimalPositions = 0;
         }
-
         private void bldRoundDec_CheckedChanged(object sender, EventArgs e) {
             bldDecimalPositions = 1;
         }
-
         private void bldRoundCent_CheckedChanged(object sender, EventArgs e) {
             bldDecimalPositions = 2;
         }
-
         private void bldRoundMil_CheckedChanged(object sender, EventArgs e) {
             bldDecimalPositions = 3;
         }
-
         private void bldRoundDecmil_CheckedChanged(object sender, EventArgs e) {
             bldDecimalPositions = 4;
         }
         private void bldRoundCentMil_CheckedChanged(object sender, EventArgs e) {
             bldDecimalPositions = 5;
+        }
+        private void bldPlaceWithMouseCheckbox_CheckedChanged(object sender, EventArgs e) {
+            bool status = bldPlaceWithMouseCheckbox.Checked && radio2D.Checked;
+            bldPlaceLockXcheckbox.Enabled = status;
+            bldPlaceLockZcheckbox.Enabled = status;
+            bldRoundGroupbox.Enabled = status;
+            lockXZgroupbox.Enabled = status;
+
+            if (status) {
+                SetCam2D();
+            }
+        }
+        private void bldPlaceLockXcheckbox_CheckedChanged(object sender, EventArgs e) {
+            ExclusiveCBInvert(bldPlaceLockZcheckbox);
+        }
+
+        private void bldPlaceLockZcheckbox_CheckedChanged(object sender, EventArgs e) {
+            ExclusiveCBInvert(bldPlaceLockXcheckbox);
         }
         private void mapPartsTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (mapPartsTabControl.SelectedTab == buildingsTabPage) {
@@ -4030,6 +4040,11 @@ namespace DSPRE {
 
             BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
             MessageBox.Show("BackGround Sound data exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        private void soundPlatesBlankButton_Click(object sender, EventArgs e) {
+            currentMapFile.bgs = new byte[] { 0x34, 0x12, 0x00, 0x00 };
+            BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
+            MessageBox.Show("BackGround Sound data successfull blanked.\nRemember to save the current map file.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 
@@ -6667,12 +6682,11 @@ namespace DSPRE {
             string path = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
             SaveCameraTable(path, overlayCameraTblOffset);
         }
-
         private void cameraEditorDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e) {
-            cameraEditorDataGridView.Columns[0].ValueType = typeof(int);
+            //cameraEditorDataGridView.Columns[0].ValueType = typeof(int);
             currentCameraTable[e.RowIndex][e.ColumnIndex] = cameraEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            cameraEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = currentCameraTable[e.RowIndex][e.ColumnIndex];
         }
-
         private void exportCameraTableButton_Click(object sender, EventArgs e) {
             SaveFileDialog of = new SaveFileDialog {
                 Filter = "Camera Table File (*.bin)|*.bin",
@@ -6684,37 +6698,69 @@ namespace DSPRE {
             File.Delete(of.FileName);
             SaveCameraTable(of.FileName, 0);
         }
-
         private void SaveCameraTable (string path, uint destFileOffset) {
-            int size = RomInfo.gameFamily.Equals("HGSS") ? 36 : 24;
-
             for (int i = 0; i < currentCameraTable.Length; i++) {
-                DSUtils.WriteToFile(path, currentCameraTable[i].ToByteArray(), (uint)(destFileOffset + i * size));
+                DSUtils.WriteToFile(path, currentCameraTable[i].ToByteArray(), (uint)(destFileOffset + i * RomInfo.cameraSize));
             }
             MessageBox.Show("Camera table correctly saved.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        #endregion
+        private void cameraEditorDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e) {
+            var senderTable = (DataGridView)sender;
 
-        private void bldPlaceWithMouseCheckbox_CheckedChanged(object sender, EventArgs e) {
-            bool status = bldPlaceWithMouseCheckbox.Checked && radio2D.Checked;
-            bldPlaceLockXcheckbox.Enabled = status;
-            bldPlaceLockZcheckbox.Enabled = status;
-            bldRoundGroupbox.Enabled = status;
-            lockXZgroupbox.Enabled = status;
+            if (senderTable.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0) {
+                string type = "Camera File";
+                if (e.ColumnIndex == cameraEditorDataGridView.Columns.Count - 2) { //Export
+                    SaveFileDialog sf = new SaveFileDialog {
+                        Filter = type + " (*.bin)|*.bin",
+                        FileName = Path.GetFileNameWithoutExtension(RomInfo.workDir) + " - Camera " + e.RowIndex + ".bin"
+                    };
 
-            if (status) {
-                SetCam2D();
+                    if (sf.ShowDialog(this) != DialogResult.OK) {
+                        return;
+                    }
+
+                    DSUtils.WriteToFile(sf.FileName, currentCameraTable[e.RowIndex].ToByteArray(), fromScratch: true);
+                    MessageBox.Show("Camera correctly saved.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } else if (e.ColumnIndex == cameraEditorDataGridView.Columns.Count - 1) { //Import
+                    OpenFileDialog of = new OpenFileDialog {
+                        Filter = type + " (*.bin)|*.bin",
+                    };
+
+                    if (of.ShowDialog(this) != DialogResult.OK) {
+                        return;
+                    }
+
+                    currentCameraTable[e.RowIndex] = new GameCamera(File.ReadAllBytes(of.FileName));
+                    currentCameraTable[e.RowIndex].ShowInGridView(senderTable, e.RowIndex);
+                    MessageBox.Show("Camera correctly imported.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
+        private void importCameraTableButton_Click(object sender, EventArgs e) {
+            string fileType = "Camera Table File";
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = fileType + " (*.bin)|*.bin",
+            };
 
-        private void bldPlaceLockXcheckbox_CheckedChanged(object sender, EventArgs e) {
-            ExclusiveCBInvert(bldPlaceLockZcheckbox);
-        }       
+            if (of.ShowDialog(this) != DialogResult.OK) {
+                return;
+            }
 
-        private void bldPlaceLockZcheckbox_CheckedChanged(object sender, EventArgs e) {
-            ExclusiveCBInvert(bldPlaceLockXcheckbox);
+            long l = new FileInfo(of.FileName).Length;
+            if (l % RomInfo.cameraSize != 0) {
+                MessageBox.Show("This is not a " + RomInfo.gameFamily + ' ' + fileType +
+                    "\nMake sure the file length is a multiple of " + RomInfo.cameraSize + " and try again.", "Wrong file!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            byte nCameras = (byte)(l / RomInfo.cameraSize);
+            for (byte b = 0; b < nCameras; b++) {
+                currentCameraTable[b] = new GameCamera(DSUtils.ReadFromFile(of.FileName, b*RomInfo.cameraSize, RomInfo.cameraSize));
+                currentCameraTable[b].ShowInGridView(cameraEditorDataGridView, b);
+            }
+            MessageBox.Show("Camera Table imported correctly.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
+        #endregion
         private void ExclusiveCBInvert (CheckBox cb) {
             if (disableHandlers)
                 return;

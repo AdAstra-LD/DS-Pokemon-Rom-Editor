@@ -57,41 +57,46 @@ public class GameCamera {
             }
         }
         set {
-            switch (index) {
-                case 0:
-                    distance = Convert.ToUInt32(value);
-                    break;
-                case 1:
-                    vertRot = Convert.ToInt16(value);
-                    break;
-                case 2:
-                    horiRot = Convert.ToInt16(value);
-                    break;
-                case 3:
-                    zRot = Convert.ToInt16(value);
-                    break;
-                case 4:
-                    perspMode = (byte)(Convert.ToBoolean(value) ? 1 : 0);
-                    break;
-                case 5:
-                    fov = Convert.ToUInt16(value);
-                    break;
-                case 6:
-                    nearClip = Convert.ToUInt32(value);
-                    break;
-                case 7:
-                    farClip = Convert.ToUInt32(value);
-                    break;
-                case 8:
-                    xOffset = Convert.ToInt32(value);
-                    break;
-                case 9:
-                    yOffset = Convert.ToInt32(value);
-                    break;
-                case 10:
-                    zOffset = Convert.ToInt32(value);
-                    break;
-
+            try {
+                switch (index) {
+                    case 0:
+                        distance = Convert.ToUInt32(value);
+                        break;
+                    case 1:
+                        vertRot = Convert.ToInt16(value);
+                        break;
+                    case 2:
+                        horiRot = Convert.ToInt16(value);
+                        break;
+                    case 3:
+                        zRot = Convert.ToInt16(value);
+                        break;
+                    case 4:
+                        perspMode = (byte)(Convert.ToBoolean(value) ? 1 : 0);
+                        break;
+                    case 5:
+                        fov = Convert.ToUInt16(value);
+                        break;
+                    case 6:
+                        nearClip = Convert.ToUInt32(value);
+                        break;
+                    case 7:
+                        farClip = Convert.ToUInt32(value);
+                        break;
+                    case 8:
+                        xOffset = Convert.ToInt32(value);
+                        break;
+                    case 9:
+                        yOffset = Convert.ToInt32(value);
+                        break;
+                    case 10:
+                        zOffset = Convert.ToInt32(value);
+                        break;
+                }
+            } catch (OverflowException e) {
+                MessageBox.Show("The value you selected is invalid.\n\n" + '"' + e.Message + '"', "Overflow", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } catch (FormatException) {
+                MessageBox.Show("Only numeric values are allowed.", "Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
@@ -104,9 +109,11 @@ public class GameCamera {
         this.distance = distance;
         this.vertRot = vertRot;
         this.horiRot = horiRot;
+        this.zRot = zRot;
 
         this.unk1 = unk1;
         this.perspMode = perspMode;
+        this.unk2 = unk2;
 
         this.fov = fov;
         this.nearClip = nearClip;
@@ -115,6 +122,37 @@ public class GameCamera {
         this.xOffset = xOffset;
         this.yOffset = yOffset;
         this.zOffset = zOffset;
+    }
+
+    public GameCamera(byte[] camData) {
+        if (camData.Length != 36 && camData.Length != 24) {
+            MessageBox.Show("This is not a camera file.\nMake sure the file is 36 or 24 bytes long and try again.", "Wrong file!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+        try {
+            using (BinaryReader b = new BinaryReader(new MemoryStream(camData))) {
+                distance = b.ReadUInt32();
+                vertRot = b.ReadInt16();
+                horiRot = b.ReadInt16();
+                zRot = b.ReadInt16();
+
+                unk1 = b.ReadInt16();
+                perspMode = b.ReadByte();
+                unk2 = b.ReadByte();
+
+                fov = b.ReadUInt16();
+                nearClip = b.ReadUInt32();
+                farClip = b.ReadUInt32();
+
+                if (DSPRE.RomInfo.gameFamily.Equals("HGSS")) {
+                    xOffset = b.ReadInt32();
+                    yOffset = b.ReadInt32();
+                    zOffset = b.ReadInt32();
+                }
+            }
+        } catch (EndOfStreamException) {
+            MessageBox.Show("You might have to manually fill in the last three camera fields, since DPPt cameras don't have them.", "DPPt Cam detected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
     public byte[] ToByteArray() {
         MemoryStream newData = new MemoryStream();
@@ -143,29 +181,33 @@ public class GameCamera {
         return newData.ToArray();
     }
 
-    public void AddToGridView(DataGridView dgv) {
-        dgv.Rows.Add();
-        int cRows = dgv.RowCount;
-        int cellIndex = 0;
+    public void ShowInGridView(DataGridView dgv, int rowIndex) {
+        if (rowIndex > dgv.Rows.Count - 1) {
+            dgv.Rows.Add();
+        }
 
-        dgv.Rows[cRows-1].HeaderCell.Value = String.Format("{0}", dgv.Rows[cRows - 1].Index);
+        int colIndex = 0;
 
-        dgv.Rows[cRows - 1].Cells[cellIndex++].Value = distance;
-        dgv.Rows[cRows - 1].Cells[cellIndex++].Value = vertRot;
-        dgv.Rows[cRows - 1].Cells[cellIndex++].Value = horiRot;
-        dgv.Rows[cRows - 1].Cells[cellIndex++].Value = zRot;
+        dgv.Rows[rowIndex].HeaderCell.Value = String.Format("{0}", dgv.Rows[rowIndex].Index);
 
-        dgv.Rows[cRows - 1].Cells[cellIndex++].Value = perspMode == ORTHO;
+        dgv.Rows[rowIndex].Cells[colIndex++].Value = distance;
+        dgv.Rows[rowIndex].Cells[colIndex++].Value = vertRot;
+        dgv.Rows[rowIndex].Cells[colIndex++].Value = horiRot;
+        dgv.Rows[rowIndex].Cells[colIndex++].Value = zRot;
 
-        dgv.Rows[cRows - 1].Cells[cellIndex++].Value = fov;
-        dgv.Rows[cRows - 1].Cells[cellIndex++].Value = nearClip;
-        dgv.Rows[cRows - 1].Cells[cellIndex++].Value = farClip;
+        dgv.Rows[rowIndex].Cells[colIndex++].Value = perspMode == ORTHO;
 
-        if (xOffset != null)
-            dgv.Rows[cRows - 1].Cells[cellIndex++].Value = xOffset;
-        if (yOffset != null)
-            dgv.Rows[cRows - 1].Cells[cellIndex++].Value = yOffset;
-        if (zOffset != null)
-            dgv.Rows[cRows - 1].Cells[cellIndex++].Value = zOffset;
+        dgv.Rows[rowIndex].Cells[colIndex++].Value = fov;
+        dgv.Rows[rowIndex].Cells[colIndex++].Value = nearClip;
+        dgv.Rows[rowIndex].Cells[colIndex++].Value = farClip;
+
+        if (colIndex < dgv.Columns.Count-3) {
+            if (xOffset != null)
+                dgv.Rows[rowIndex].Cells[colIndex++].Value = xOffset;
+            if (yOffset != null)
+                dgv.Rows[rowIndex].Cells[colIndex++].Value = yOffset;
+            if (zOffset != null)
+                dgv.Rows[rowIndex].Cells[colIndex++].Value = zOffset;
+        }
     }
 }

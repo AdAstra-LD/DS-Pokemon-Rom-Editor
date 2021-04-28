@@ -271,6 +271,7 @@
             this.bdhcImportButton = new System.Windows.Forms.Button();
             this.bdhcExportButton = new System.Windows.Forms.Button();
             this.bgsTabPage = new System.Windows.Forms.TabPage();
+            this.blankBGSButton = new System.Windows.Forms.Button();
             this.BGSSizeTXT = new System.Windows.Forms.TextBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -3558,6 +3559,7 @@
             // 
             // bgsTabPage
             // 
+            this.bgsTabPage.Controls.Add(this.blankBGSButton);
             this.bgsTabPage.Controls.Add(this.BGSSizeTXT);
             this.bgsTabPage.Controls.Add(this.textBox7);
             this.bgsTabPage.Controls.Add(this.textBox2);
@@ -3569,6 +3571,19 @@
             this.bgsTabPage.TabIndex = 4;
             this.bgsTabPage.Text = "Sound Plates";
             this.bgsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // blankBGSButton
+            // 
+            this.blankBGSButton.Image = global::DSPRE.Properties.Resources.destroyLevelScript;
+            this.blankBGSButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.blankBGSButton.Location = new System.Drawing.Point(277, 109);
+            this.blankBGSButton.Name = "blankBGSButton";
+            this.blankBGSButton.Size = new System.Drawing.Size(120, 38);
+            this.blankBGSButton.TabIndex = 34;
+            this.blankBGSButton.Text = "Blank BGS";
+            this.blankBGSButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.blankBGSButton.UseVisualStyleBackColor = true;
+            this.blankBGSButton.Click += new System.EventHandler(this.soundPlatesBlankButton_Click);
             // 
             // BGSSizeTXT
             // 
@@ -7606,6 +7621,7 @@
             this.importCameraTableButton.Text = "Import\r\nCamera Table";
             this.importCameraTableButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.importCameraTableButton.UseVisualStyleBackColor = true;
+            this.importCameraTableButton.Click += new System.EventHandler(this.importCameraTableButton_Click);
             // 
             // saveCameraTableButton
             // 
@@ -7657,12 +7673,13 @@
             this.cameraEditorDataGridView.MultiSelect = false;
             this.cameraEditorDataGridView.Name = "cameraEditorDataGridView";
             this.cameraEditorDataGridView.RowHeadersWidth = 60;
-            this.cameraEditorDataGridView.RowTemplate.DividerHeight = 2;
-            this.cameraEditorDataGridView.RowTemplate.Height = 30;
+            this.cameraEditorDataGridView.RowTemplate.DividerHeight = 1;
+            this.cameraEditorDataGridView.RowTemplate.Height = 32;
             this.cameraEditorDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.cameraEditorDataGridView.Size = new System.Drawing.Size(1172, 551);
             this.cameraEditorDataGridView.TabIndex = 0;
             this.cameraEditorDataGridView.TabStop = false;
+            this.cameraEditorDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.cameraEditorDataGridView_CellContentClick);
             this.cameraEditorDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.cameraEditorDataGridView_CellValidated);
             // 
             // DistanceGVCol
@@ -9178,6 +9195,7 @@
         private System.Windows.Forms.RadioButton bldRoundCentMil;
         private System.Windows.Forms.CheckBox bldPlaceWithMouseCheckbox;
         private System.Windows.Forms.GroupBox lockXZgroupbox;
+        private System.Windows.Forms.Button blankBGSButton;
     }
 }
 
