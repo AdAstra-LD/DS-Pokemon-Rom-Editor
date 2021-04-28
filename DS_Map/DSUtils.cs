@@ -324,6 +324,10 @@ namespace DSPRE {
 
         public static byte[] GetTexturesFromTexturedNSBMD(byte[] modelFile) {
             using (BinaryReader byteArrReader = new BinaryReader(new MemoryStream(modelFile))) {
+                byteArrReader.BaseStream.Position = 14;
+                if (byteArrReader.ReadUInt16() < 2) //No textures
+                    return new byte[0];
+
                 byteArrReader.BaseStream.Position = 20;
                 int texAbsoluteOffset = byteArrReader.ReadInt32();
 

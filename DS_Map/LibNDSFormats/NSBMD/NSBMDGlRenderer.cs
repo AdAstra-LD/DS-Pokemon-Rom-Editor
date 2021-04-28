@@ -184,14 +184,16 @@ namespace LibNDSFormats.NSBMD {
 				var m_trans = obj.TransVect;
 
 
-				if (obj.RestoreID != -1)
-					Gl.glLoadMatrixf(MatrixStack[obj.RestoreID].Floats);
-				if (obj.StackID != -1) {
-					if (obj.Trans)
-						Gl.glTranslatef(m_trans[0], m_trans[1], m_trans[2]);
+				if (obj.RestoreID != -1) {
+                    Gl.glLoadMatrixf(MatrixStack[obj.RestoreID].Floats);
+                }
 
+                if (obj.StackID != -1) {
+					if (obj.Trans) {
+                        Gl.glTranslatef(m_trans[0], m_trans[1], m_trans[2]);
+                    }
 
-					Gl.glGetFloatv(Gl.GL_MODELVIEW_MATRIX, MatrixStack[obj.StackID].Floats);
+                    Gl.glGetFloatv(Gl.GL_MODELVIEW_MATRIX, MatrixStack[obj.StackID].Floats);
 					stackID = obj.StackID; // save the last stackID
 				}
 			}
@@ -217,16 +219,20 @@ namespace LibNDSFormats.NSBMD {
 							mattt.Add(matt[matid]);
 						}
 						NSBMDMaterial mat = Model.Materials[matid];
-						if ((mat.format == 0 || (mat.format >= 2 && mat.format <= 5) || mat.format == 7) && r != RenderMode.Opaque)
-							continue;
-						if ((mat.format == 1 || mat.format == 6) && r == RenderMode.Translucent)
-							continue;
-						Gl.glBindTexture(Gl.GL_TEXTURE_2D, matid + 1 + matstart);
+						if ((mat.format == 0 || (mat.format >= 2 && mat.format <= 5) || mat.format == 7) && r != RenderMode.Opaque) {
+                            continue;
+                        }
+
+						if ((mat.format == 1 || mat.format == 6) && r == RenderMode.Translucent) {
+                            continue;
+                        }
+
+                        Gl.glBindTexture(Gl.GL_TEXTURE_2D, matid + 1 + matstart);
 
 						// Convert pixel coords to normalised STs
 						Gl.glMatrixMode(Gl.GL_TEXTURE);
 						Gl.glLoadIdentity();
-						if (p.Header.file_size != 0 && new List<string>(p.MPT.names).Contains(mat.MaterialName)) {
+                        if (p.Header.file_size != 0 && new List<string>(p.MPT.names).Contains(mat.MaterialName)) {
 							NSBMDMaterial mmm = mat;
 							int texid = 0;
 							for (int l = 0; l < nsb.Textures.Count; l++) {
@@ -292,52 +298,49 @@ namespace LibNDSFormats.NSBMD {
 									} else {
 										aniframeS[index]++;
 									}
+
 									if (aniframeT[index] == ani.SRTData[index].translateT.Length - 1) {
 										aniframeT[index] = 0;
 									} else {
 										aniframeT[index]++;
 									}
+
 									if (aniframeR[index] == (ani.SRTData[index].rotate.Length - 2) / 2) {
 										aniframeR[index] = 0;
 									} else {
 										aniframeR[index]++;
 									}
+
 									if (aniframeScaleS[index] == ani.SRTData[index].scaleS.Length - 1) {
 										aniframeScaleS[index] = 0;
 									} else {
 										aniframeScaleS[index]++;
 									}
+
 									if (aniframeScaleT[index] == ani.SRTData[index].scaleT.Length - 1) {
 										aniframeScaleT[index] = 0;
 									} else {
 										aniframeScaleT[index]++;
 									}
 								}
-								goto noscale;
+								if (!mat.isEnvironmentMap) {
+									Gl.glScalef(1.0f / mat.width, 1.0f / mat.height, 1.0f);
+								}
 							} else {
-								goto scale;
+								if (!mat.isEnvironmentMap) {
+									if (mat.mtx is null) {
+										Gl.glScalef(mat.scaleS / mat.width, mat.scaleT / mat.height, 1.0f);
+										Gl.glRotatef(mat.rot, 0, 1, 0);
+										Gl.glTranslatef(mat.transS, mat.transT, 0);
+									} else {
+										Gl.glScalef(1.0f / mat.width, 1.0f / mat.height, 1.0f);
+										Gl.glMultMatrixf(mat.mtx);
+									}
+								}
 							}
 						} catch {
 
 						}
-					noscale:
-						if (!mat.isEnvironmentMap) {
-							Gl.glScalef(1.0f / mat.width, 1.0f / mat.height, 1.0f);
-						}
-						goto end;
-					scale:
-						if (!mat.isEnvironmentMap) {
-							if (mat.mtx is null) {
-								Gl.glScalef(mat.scaleS / mat.width, mat.scaleT / mat.height, 1.0f);
-								Gl.glRotatef(mat.rot, 0, 1, 0);
-								Gl.glTranslatef(mat.transS, mat.transT, 0);
-							} else {
-								Gl.glScalef(1.0f / mat.width, 1.0f / mat.height, 1.0f);
-								Gl.glMultMatrixf(mat.mtx);
-							}
-						}
-					end:
-
 						Gl.glEnable(Gl.GL_ALPHA_TEST);
 						Gl.glAlphaFunc(Gl.GL_GREATER, 0f);
 						Gl.glColor4f(0xff, 0xff, 0xff, 0xff);

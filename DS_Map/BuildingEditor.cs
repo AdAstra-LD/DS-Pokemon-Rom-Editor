@@ -51,7 +51,13 @@ namespace DSPRE {
             string writingPath = Path.GetTempPath() + "BLDtexture.nsbtx";
 
             byte[] txFile = File.ReadAllBytes(readingPath);
-            DSUtils.WriteToFile(writingPath, DSUtils.GetTexturesFromTexturedNSBMD(txFile), fromScratch: true);
+            byte[] texData = DSUtils.GetTexturesFromTexturedNSBMD(txFile);
+
+            if (texData.Length <= 4) {
+                Console.WriteLine("No textures found");
+                return;
+            }
+            DSUtils.WriteToFile(writingPath, texData, fromScratch: true);
         }
         private void FillListBox(bool interior) {
             int modelCount = Directory.GetFiles(folder + rom.GetBuildingModelsDirPath(interior)).Length;
