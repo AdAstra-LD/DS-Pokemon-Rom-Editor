@@ -38,19 +38,19 @@ public class GameCamera {
                     return horiRot;
                 case 3:
                     return zRot;
-                case 5:
+                case 4:
                     return perspMode;
-                case 6:
+                case 5:
                     return fov;
-                case 7:
+                case 6:
                     return nearClip;
-                case 8:
+                case 7:
                     return farClip;
-                case 9:
+                case 8:
                     return xOffset;
-                case 10:
+                case 9:
                     return yOffset;
-                case 11:
+                case 10:
                     return zOffset;
                 default:
                     throw new ArgumentOutOfRangeException();
