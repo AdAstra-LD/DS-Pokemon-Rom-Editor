@@ -3383,8 +3383,8 @@ namespace DSPRE.Resources {
                 ["ADAD"] = 0xEEDCC,
                 ["APAD"] = 0xEEDCC,
 
-                ["ADAJ"] = 0xF0C28,
-                ["APAJ"] = 0xF0C28,
+                ["ADAJ"] = 0xF0D68,
+                ["APAJ"] = 0xF0D6C,
 
                 ["CPUE"] = 0xE601C,
                 ["CPUS"] = 0xE60B0,
@@ -4070,13 +4070,13 @@ namespace DSPRE.Resources {
                     [new List<uint> { 174 }] = (Color.SteelBlue, Color.White),
                     [new List<uint> { 175 }] = (Color.Sienna, Color.White),
                     [new List<uint> { 178 }] = (Color.PowderBlue, Color.Black),
-                    [new List<uint> { Matrix.EMPTY }] = (Color.Black, Color.White)
+                    [new List<uint> { GameMatrix.EMPTY }] = (Color.Black, Color.White)
                 };
                 public static Dictionary<List<uint>, (Color back, Color fore)> HGSSmatrixColorsDict = new Dictionary<List<uint>, (Color back, Color fore)> {
                     [new List<uint> { 208 }] = (Color.ForestGreen, Color.White),
                     [new List<uint> { 209 }] = (Color.SteelBlue, Color.White),
                     [new List<uint> { 210 }] = (Color.Sienna, Color.White),
-                    [new List<uint> { Matrix.EMPTY }] = (Color.Black, Color.White)
+                    [new List<uint> { GameMatrix.EMPTY }] = (Color.Black, Color.White)
                 };
                 public static Dictionary<List<uint>, (Color back, Color fore)> GenericMatrixColorsDict = new Dictionary<List<uint>, (Color back, Color fore)> {
                     [new List<uint> { 203 }] = (Color.FromArgb(80, 200, 16), Color.White),
@@ -4084,7 +4084,7 @@ namespace DSPRE.Resources {
                     [new List<uint> { 205, 206 }] = (Color.DarkGreen, Color.White),
                     [new List<uint> { 207, 208 }] = (Color.ForestGreen, Color.White),
                     [new List<uint> { 210 }] = (Color.Sienna, Color.White),
-                    [new List<uint> { Matrix.EMPTY }] = (Color.Black, Color.White)
+                    [new List<uint> { GameMatrix.EMPTY }] = (Color.Black, Color.White)
                 };
             }
             public static class AreaPics {

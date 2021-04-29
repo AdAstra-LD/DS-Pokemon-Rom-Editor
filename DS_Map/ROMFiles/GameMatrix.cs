@@ -22,7 +22,7 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Class to store map matrix data from Pokémon NDS games
     /// </summary>
-    public class Matrix: RomFile
+    public class GameMatrix: RomFile
 	{
         #region Fields (8)
         public bool hasHeadersSection { get; set; }
@@ -38,7 +38,7 @@ namespace DSPRE.ROMFiles {
         #endregion Fields
 
         #region Constructors(1)
-        public Matrix(Stream data) {
+        public GameMatrix(Stream data) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 /* Read matrix size and sections included */
                 width = reader.ReadByte();
@@ -74,7 +74,7 @@ namespace DSPRE.ROMFiles {
                         maps[i, j] = reader.ReadUInt16();
             }
         }
-        public Matrix(int ID) : this (new FileStream(RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
+        public GameMatrix(int ID) : this (new FileStream(RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
         #endregion
 
         #region Methods (6)
@@ -103,12 +103,12 @@ namespace DSPRE.ROMFiles {
             if (newHeight > height) 
                 for (int i = height; i < newHeight; i++) 
                     for (int j = 0; j < newWidth; j++) 
-                        newMaps[i, j] = Matrix.EMPTY;
+                        newMaps[i, j] = GameMatrix.EMPTY;
 
             if (newWidth > width)   
                 for (int j = width; j < newWidth; j++) 
                     for (int i = 0; i < newHeight; i++) 
-                        newMaps[i, j] = Matrix.EMPTY;
+                        newMaps[i, j] = GameMatrix.EMPTY;
 
             /* Substitute old arrays with new arrays */
             headers = newHeaders;

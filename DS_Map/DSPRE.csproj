@@ -184,7 +184,7 @@
     <Compile Include="ROMFiles\MapHeader.cs" />
     <Compile Include="RichTextBoxExt.cs" />
     <Compile Include="ROMFiles\ScriptFile.cs" />
-    <Compile Include="ROMFiles\Matrix.cs" />
+    <Compile Include="ROMFiles\GameMatrix.cs" />
     <Compile Include="ROMFiles\EventFile.cs" />
     <Compile Include="DataGridViewDoubleBuffered.cs">
       <SubType>Component</SubType>

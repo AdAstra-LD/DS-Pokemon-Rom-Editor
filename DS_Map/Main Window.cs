@@ -16,9 +16,7 @@ using LibNDSFormats.NSBMD;
 using LibNDSFormats.NSBTX;
 using DSPRE.Resources;
 using DSPRE.ROMFiles;
-using Matrix = DSPRE.ROMFiles.Matrix;
 using static DSPRE.RomInfo;
-using static GameCamera;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -87,18 +85,6 @@ namespace DSPRE {
                 trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[classMessageID] + " " + trainerNames.messages[i]);
             }
             return trainerList.ToArray();
-        }
-        private string[] GetItemNames() {
-            return new TextArchive((RomInfo.itemNamesTextNumber)).messages.ToArray();
-        }
-        private string[] GetItemNames(int startIndex, int count) {
-            return new TextArchive(RomInfo.itemNamesTextNumber).messages.GetRange(startIndex, count).ToArray();
-        }
-        private string[] GetPokémonNames() {
-            return new TextArchive(RomInfo.pokemonNamesTextNumbers[0]).messages.ToArray();
-        }
-        private string[] GetAttackNames() {
-            return new TextArchive(RomInfo.attackNamesTextNumber).messages.ToArray();
         }
         private void PaintGameIcon(object sender, PaintEventArgs e) {
             if (iconON) {
@@ -196,353 +182,7 @@ namespace DSPRE {
                 #endregion
                 readIcon.Close();
             } else return;
-        }
-        private void DeleteTempFolders() {
-            foreach (DirNames fname in RomInfo.gameDirs.Keys) {
-                Directory.Delete(RomInfo.gameDirs[fname].unpackedDir, true); // Delete folder
-            }
-        }
-        private void SetupEventEditor() {
-            /* Extract essential NARCs sub-archives*/
-
-            statusLabel.Text = "Attempting to unpack Event Editor NARCs... Please wait. This might take a while";
-            toolStripProgressBar.Visible = true;
-            toolStripProgressBar.Maximum = 12;
-            toolStripProgressBar.Value = 0;
-            Update();
-
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.matrices,
-                DirNames.maps,
-                DirNames.exteriorBuildingModels,
-                DirNames.buildingConfigFiles,
-                DirNames.buildingTextures,
-                DirNames.mapTextures,
-                DirNames.areaData,
-
-                DirNames.eventFiles,
-                DirNames.trainerData,
-                DirNames.OWSprites,
-
-                DirNames.scripts, }, toolStripProgressBar);
-
-            RomInfo.SetOWtable();
-            RomInfo.Set3DOverworldsDict();
-
-            if (RomInfo.gameFamily == "HGSS") {
-                DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
-            }
-
-            disableHandlers = true;
-            if (File.Exists(RomInfo.OWtablePath)) {
-                switch (RomInfo.gameFamily) {
-                    case "DP":
-                    case "Plat":
-                        break;
-                    default:
-                        // HGSS Overlay 1 must be decompressed in order to read the overworld table
-                        if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
-                            if (DSUtils.OverlayIsCompressed(1)) {
-                                if (DSUtils.DecompressOverlay(1) < 0) {
-                                    MessageBox.Show("Overlay 1 couldn't be decompressed.\nOverworld sprites in the Event Editor will be " +
-                                "displayed incorrectly or not displayed at all.", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                            }
-                        }
-
-                        break;
-                }
-            }
-
-            /* Add event file numbers to box */
-            int eventCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir).Length;
-            int owSpriteCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.OWSprites].unpackedDir).Length;
-            string[] trainerNames = GetTrainerNames();
-            RomInfo.ReadOWTable();
-
-            statusLabel.Text = "Loading Events... Please wait.";
-            toolStripProgressBar.Maximum = (int)(eventCount + RomInfo.OverworldTable.Keys.Max() + trainerNames.Length);
-            toolStripProgressBar.Value = 0;
-            Update();
-
-            /* Add event list to event combobox */
-            for (int i = 0; i < eventCount; i++) {
-                selectEventComboBox.Items.Add("Event File " + i);
-                toolStripProgressBar.Value++;
-            }
-
-            /* Add sprite list to ow sprite box */
-            foreach (ushort key in RomInfo.OverworldTable.Keys) {
-                owSpriteComboBox.Items.Add("OW Entry " + key);
-                toolStripProgressBar.Value++;
-            }
-
-            /* Add trainer list to ow trainer box */
-            owTrainerComboBox.Items.AddRange(trainerNames);
-
-            /* Add item list to ow item box */
-            owItemComboBox.Items.AddRange(GetItemNames(0, new TextArchive(RomInfo.itemNamesTextNumber).messages.Count - 1));
-
-
-            /* Add ow movement list to box */
-            owMovementComboBox.Items.AddRange(PokeDatabase.EventEditor.Overworlds.movementsArray);
-            spawnableDirComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.orientationsArray);
-            spawnableTypeComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.typesArray);
-
-            if (ScanScriptsCheckStandardizedItemNumbers())
-                isItemRadioButton.Enabled = true;
-
-            disableHandlers = false;
-
-            /* Draw matrix 0 in matrix navigator */
-            eventMatrix = new Matrix(0);
-            selectEventComboBox.SelectedIndex = 0;
-            owItemComboBox.SelectedIndex = 0;
-            owTrainerComboBox.SelectedIndex = 0;
-
-            toolStripProgressBar.Value = 0;
-            toolStripProgressBar.Visible = false;
-        }
-        private void SetupHeaderEditor() {
-            /* Extract essential NARCs sub-archives*/
-
-            statusLabel.Text = "Attempting to unpack Header Editor NARCs... Please wait.";
-            Update();
-
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.synthOverlay, DirNames.textArchives }, toolStripProgressBar);
-
-            statusLabel.Text = "Reading internal names... Please wait.";
-            Update();
-
-            /* Read Header internal names */
-            internalNames = new List<string>();
-            headerListBoxNames = new List<string>();
-            try {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.internalNamesLocation))) {
-                    int headerCount = romInfo.GetHeaderCount();
-
-                    for (int i = 0; i < headerCount; i++) {
-                        byte[] row = reader.ReadBytes(RomInfo.internalNameLength);
-
-                        string internalName = Encoding.ASCII.GetString(row);//.TrimEnd();
-                        headerListBoxNames.Add(i.ToString("D3") + MapHeader.nameSeparator + internalName);
-                        internalNames.Add(internalName.TrimEnd('\0'));
-                    }
-                }
-                headerListBox.Items.AddRange(headerListBoxNames.ToArray());
-            } catch (FileNotFoundException) {
-                MessageBox.Show(RomInfo.internalNamesLocation + " doesn't exist.", "Couldn't read internal names", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            /*Add list of options to each control */
-            locationNameComboBox.Items.AddRange(new TextArchive(RomInfo.locationNamesTextNumber).messages.ToArray());
-            switch (RomInfo.gameFamily) {
-                case "DP":
-                    areaIconComboBox.Enabled = false;
-                    areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("dpareaicon");
-                    areaSettingsLabel.Text = "Show nametag:";
-                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraValues);
-                    musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicDict.Values.ToArray());
-                    musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicDict.Values.ToArray());
-                    areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.DPShowNameValues);
-                    weatherComboBox.Items.AddRange(PokeDatabase.Weather.DPWeatherDict.Values.ToArray());
-                    wildPokeUpDown.Maximum = 65535;
-                    break;
-                case "Plat":
-                    areaIconComboBox.Items.AddRange(PokeDatabase.Area.PtAreaIconValues);
-                    areaSettingsLabel.Text = "Show nametag:";
-                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraValues);
-                    musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicDict.Values.ToArray());
-                    musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicDict.Values.ToArray());
-                    areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.PtShowNameValues);
-                    weatherComboBox.Items.AddRange(PokeDatabase.Weather.PtWeatherDict.Values.ToArray());
-                    wildPokeUpDown.Maximum = 65535;
-                    break;
-                default:
-                    areaIconComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaIconValues);
-                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.HGSSCameraValues);
-                    areaSettingsComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaProperties);
-                    areaSettingsLabel.Text = "Area Settings:";
-                    musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicDict.Values.ToArray());
-                    musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicDict.Values.ToArray());
-                    weatherComboBox.Items.AddRange(PokeDatabase.Weather.HGSSWeatherDict.Values.ToArray());
-                    wildPokeUpDown.Maximum = 255;
-
-                    flag7CheckBox.Visible = true;
-                    flag6CheckBox.Visible = true;
-                    flag5CheckBox.Visible = true;
-                    flag4CheckBox.Visible = true;
-                    flag7CheckBox.Text = "Flag 7";
-                    flag6CheckBox.Text = "Flag 6";
-                    flag5CheckBox.Text = "Flag 5";
-                    flag4CheckBox.Text = "Fly";
-
-                    flag3CheckBox.Text = "Esc. Rope";
-                    flag2CheckBox.Text = "Flag 2";
-                    flag1CheckBox.Text = "Bicycle";
-                    flag0CheckBox.Text = "Flag 0";
-
-                    worldmapCoordsGroupBox.Enabled = true;
-                    battleBackgroundUpDown.Visible = false;
-                    battleBackgroundLabel.Visible = false;
-                    break;
-            }
-            if (headerListBox.Items.Count > 0)
-                headerListBox.SelectedIndex = 0;
-        }
-
-        private void SetupMapEditor() {
-            /* Extract essential NARCs sub-archives*/
-            toolStripProgressBar.Visible = true;
-            toolStripProgressBar.Maximum = 14;
-            toolStripProgressBar.Value = 0;
-            statusLabel.Text = "Attempting to unpack Map Editor NARCs... Please wait.";
-            Update();
-
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.maps,
-                DirNames.exteriorBuildingModels,
-                DirNames.buildingConfigFiles,
-                DirNames.buildingTextures,
-                DirNames.mapTextures,
-                DirNames.areaData,
-            }, toolStripProgressBar);
-
-            if (RomInfo.gameFamily == "HGSS") {
-                DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
-            }
-
-            disableHandlers = true;
-
-            mapOpenGlControl.MakeCurrent();
-            mapOpenGlControl.MouseWheel += new MouseEventHandler(mapOpenGlControl_MouseWheel);
-            collisionPainterPictureBox.Image = new Bitmap(100, 100);
-            typePainterPictureBox.Image = new Bitmap(100, 100);
-            switch (RomInfo.gameFamily) {
-                case "DP":
-                case "Plat":
-                    mapPartsTabControl.TabPages.Remove(bgsTabPage);
-                    break;
-                default:
-                    interiorbldRadioButton.Enabled = true;
-                    exteriorbldRadioButton.Enabled = true;
-                    break;
-            };
-
-            /* Add map names to box */
-            for (int i = 0; i < romInfo.GetMapCount(); i++) {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + i.ToString("D4")))) {
-                    switch (RomInfo.gameFamily) {
-                        case "DP":
-                        case "Plat":
-                            reader.BaseStream.Position = 0x10 + reader.ReadUInt32() + reader.ReadUInt32() + 0x34;
-                            break;
-                        default:
-                            reader.BaseStream.Position = 0x12;
-                            short bgsSize = reader.ReadInt16();
-                            reader.BaseStream.Position = 0x0;
-                            reader.BaseStream.Position = 0x14 + bgsSize + reader.ReadUInt32() + reader.ReadUInt32() + 0x34;
-                            break;
-                    };
-                    string nsbmdName = Encoding.UTF8.GetString(reader.ReadBytes(16));
-                    selectMapComboBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + nsbmdName);
-                }
-
-            }
-            toolStripProgressBar.Value++;
-
-            /* Fill building models list */
-            updateBuildingListComboBox(false);
-
-            /*  Fill map textures list */
-            mapTextureComboBox.Items.Add("Untextured");
-            for (int i = 0; i < romInfo.GetMapTexturesCount(); i++)
-                mapTextureComboBox.Items.Add("Map Texture Pack [" + i.ToString("D2") + "]");
-            toolStripProgressBar.Value++;
-
-            /*  Fill building textures list */
-            buildTextureComboBox.Items.Add("Untextured");
-            for (int i = 0; i < romInfo.GetBuildingTexturesCount(); i++)
-                buildTextureComboBox.Items.Add("Building Texture Pack [" + i.ToString("D2") + "]");
-            toolStripProgressBar.Value++;
-
-            foreach (string s in PokeDatabase.System.MapCollisionPainters.Values) {
-                collisionPainterComboBox.Items.Add(s);
-            }
-
-            foreach (string s in PokeDatabase.System.MapCollisionTypePainters.Values) {
-                collisionTypePainterComboBox.Items.Add(s);
-            }
-
-            toolStripProgressBar.Value++;
-
-            /* Set controls' initial values */
-            selectCollisionPanel.BackColor = Color.MidnightBlue;
-            collisionTypePainterComboBox.SelectedIndex = 0;
-            collisionPainterComboBox.SelectedIndex = 1;
-
-            toolStripProgressBar.Value = 0;
-            toolStripProgressBar.Visible = false;
-            disableHandlers = false;
-
-            //Default selections
-            selectMapComboBox.SelectedIndex = 0;
-            exteriorbldRadioButton.Checked = true;
-            switch (RomInfo.gameFamily) {
-                case "DP":
-                case "Plat":
-                    mapTextureComboBox.SelectedIndex = 7;
-                    buildTextureComboBox.SelectedIndex = 1;
-                    break;
-                case "HGSS":
-                    mapTextureComboBox.SelectedIndex = 3;
-                    buildTextureComboBox.SelectedIndex = 1;
-                    break;
-                default:
-                    mapTextureComboBox.SelectedIndex = 2;
-                    buildTextureComboBox.SelectedIndex = 1;
-                    break;
-            };
-        }
-        private void SetupNSBTXEditor() {
-            statusLabel.Text = "Attempting to unpack Tileset Editor NARCs... Please wait.";
-            Update();
-
-            DSUtils.TryUnpackNarcs(new List<DirNames> {
-                DirNames.buildingTextures,
-                DirNames.mapTextures,
-                DirNames.areaData,
-                DirNames.buildingConfigFiles
-            }, toolStripProgressBar);
-
-            /* Fill Tileset ListBox */
-            FillTilesetBox();
-
-            /* Fill AreaData ComboBox */
-            int areaDataCount = romInfo.GetAreaDataCount();
-            for (int i = 0; i < areaDataCount; i++)
-                selectAreaDataListBox.Items.Add("AreaData File " + i);
-
-            /* Enable gameVersion-specific controls */
-
-            switch (RomInfo.gameFamily) {
-                case "DP":
-                case "Plat":
-                    break;
-                default:
-                    areaDataDynamicTexturesNumericUpDown.Enabled = true;
-                    areaTypeGroupbox.Enabled = true;
-                    break;
-            };
-
-            if (selectAreaDataListBox.Items.Count > 0)
-                selectAreaDataListBox.SelectedIndex = 0;
-            if (texturePacksListBox.Items.Count > 0)
-                texturePacksListBox.SelectedIndex = 0;
-            if (texturesListBox.Items.Count > 0)
-                texturesListBox.SelectedIndex = 0;
-            if (palettesListBox.Items.Count > 0)
-                palettesListBox.SelectedIndex = 0;
-        }
+        }      
         private void updateBuildingListComboBox(bool interior) {
             string[] bldList = GetBuildingsList(interior);
 
@@ -552,27 +192,7 @@ namespace DSPRE {
             }
             toolStripProgressBar.Value++;
         }
-        private void SetupMatrixEditor() {
-            statusLabel.Text = "Setting up Matrix Editor...";
-            Update();
 
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.matrices });
-
-            disableHandlers = true;
-
-            /* Add matrix entries to ComboBox */
-            selectMatrixComboBox.Items.Add("Matrix 0 - Main");
-            for (int i = 1; i < romInfo.GetMatrixCount(); i++) {
-                selectMatrixComboBox.Items.Add("Matrix " + i);
-            }
-
-            RomInfo.LoadMapCellsColorDictionary();
-            RomInfo.SetupSpawnSettings();
-
-            disableHandlers = false;
-            selectMatrixComboBox.SelectedIndex = 0;
-            statusLabel.Text = "Ready";
-        }
         public void SetupScriptEditor() {
             /* Extract essential NARCs sub-archives*/
             statusLabel.Text = "Setting up Script Editor...";
@@ -605,60 +225,7 @@ namespace DSPRE {
             selectTextFileComboBox.SelectedIndex = 0;
             statusLabel.Text = "Ready";
         }
-        private void SetupCameraEditor() {
-            RomInfo.PrepareCameraData();
 
-            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.cameraTblOverlayNumber)) {
-                if (DSUtils.OverlayIsCompressed(RomInfo.cameraTblOverlayNumber)) {
-                    DSUtils.DecompressOverlay(RomInfo.cameraTblOverlayNumber);
-                }
-            }
-
-            uint[] RAMaddresses = new uint[RomInfo.cameraTblOffsetsToRAMaddress.Length];
-            string camOverlayPath = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
-            using (BinaryReader br = new BinaryReader(File.OpenRead(camOverlayPath))) {
-                for (int i = 0; i < RomInfo.cameraTblOffsetsToRAMaddress.Length; i++) {
-                    br.BaseStream.Position = RomInfo.cameraTblOffsetsToRAMaddress[i];
-                    RAMaddresses[i] = br.ReadUInt32();
-                }
-            }
-
-            uint referenceAddress = RAMaddresses[0];
-            for (int i = 1; i < RAMaddresses.Length; i++) {
-                uint ramAddress = RAMaddresses[i];
-                if (ramAddress != referenceAddress) {
-                    MessageBox.Show("Value of RAM Pointer to the overlay table is different between Offset #1 and Offset #" + (i + 1) + Environment.NewLine +
-                        "The camera values might be wrong.", "Possible errors ahead", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-
-            using (BinaryReader br = new BinaryReader(File.OpenRead(camOverlayPath))) {
-                br.BaseStream.Position = overlayCameraTblOffset = RAMaddresses[0] - DSUtils.GetOverlayRAMAddress(RomInfo.cameraTblOverlayNumber);
-                
-                currentCameraTable = new GameCamera[16];
-                if (RomInfo.gameFamily.Equals("HGSS")) {
-                    for (int i = 0; i < currentCameraTable.Length; i++) {
-                        currentCameraTable[i] = new GameCamera(br.ReadUInt32(), br.ReadInt16(), br.ReadInt16(), br.ReadInt16(), 
-                                                br.ReadInt16(), br.ReadByte(), br.ReadByte(), 
-                                                br.ReadUInt16(), br.ReadUInt32(), br.ReadUInt32(), 
-                                                br.ReadInt32(), br.ReadInt32(), br.ReadInt32());
-                        
-                    }
-                } else {
-                    for (int i = 0; i < 3; i++) {
-                        cameraEditorDataGridView.Columns.RemoveAt(cameraEditorDataGridView.Columns.Count - 3);
-                    }
-                    for (int i = 0; i < currentCameraTable.Length; i++) {
-                        currentCameraTable[i] = new GameCamera(br.ReadUInt32(), br.ReadInt16(), br.ReadInt16(), br.ReadInt16(),
-                                                br.ReadInt16(), br.ReadByte(), br.ReadByte(),
-                                                br.ReadUInt16(), br.ReadUInt32(), br.ReadUInt32());
-                    }
-                }
-                for (int i = 0; i < currentCameraTable.Length; i++) {
-                    currentCameraTable[i].ShowInGridView(cameraEditorDataGridView, i);
-                }
-            }
-        }
 
         private int UnpackRomCheckUserChoice() {
             // Check if extracted data for the ROM exists, and ask user if they want to load it.
@@ -1210,11 +777,11 @@ namespace DSPRE {
             switch (RomInfo.gameFamily) {
                 case "DP":
                 case "Plat":
-                    using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, GetPokémonNames(), encToOpen))
+                    using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, romInfo.GetPokémonNames(), encToOpen))
                         editor.ShowDialog();
                     break;
                 default:
-                    using (WildEditorHGSS editor = new WildEditorHGSS(wildPokeUnpackedPath, GetPokémonNames(), encToOpen))
+                    using (WildEditorHGSS editor = new WildEditorHGSS(wildPokeUnpackedPath, romInfo.GetPokémonNames(), encToOpen))
                         editor.ShowDialog();
                     break;
             }
@@ -1229,6 +796,94 @@ namespace DSPRE {
         public List<string> internalNames;
         public List<string> headerListBoxNames;
         #endregion
+        private void SetupHeaderEditor() {
+            /* Extract essential NARCs sub-archives*/
+
+            statusLabel.Text = "Attempting to unpack Header Editor NARCs... Please wait.";
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.synthOverlay, DirNames.textArchives }, toolStripProgressBar);
+
+            statusLabel.Text = "Reading internal names... Please wait.";
+            Update();
+
+            /* Read Header internal names */
+            internalNames = new List<string>();
+            headerListBoxNames = new List<string>();
+            try {
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.internalNamesLocation))) {
+                    int headerCount = romInfo.GetHeaderCount();
+
+                    for (int i = 0; i < headerCount; i++) {
+                        byte[] row = reader.ReadBytes(RomInfo.internalNameLength);
+
+                        string internalName = Encoding.ASCII.GetString(row);//.TrimEnd();
+                        headerListBoxNames.Add(i.ToString("D3") + MapHeader.nameSeparator + internalName);
+                        internalNames.Add(internalName.TrimEnd('\0'));
+                    }
+                }
+                headerListBox.Items.AddRange(headerListBoxNames.ToArray());
+            } catch (FileNotFoundException) {
+                MessageBox.Show(RomInfo.internalNamesLocation + " doesn't exist.", "Couldn't read internal names", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            /*Add list of options to each control */
+            locationNameComboBox.Items.AddRange(new TextArchive(RomInfo.locationNamesTextNumber).messages.ToArray());
+            switch (RomInfo.gameFamily) {
+                case "DP":
+                    areaIconComboBox.Enabled = false;
+                    areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("dpareaicon");
+                    areaSettingsLabel.Text = "Show nametag:";
+                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraValues);
+                    musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicDict.Values.ToArray());
+                    musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicDict.Values.ToArray());
+                    areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.DPShowNameValues);
+                    weatherComboBox.Items.AddRange(PokeDatabase.Weather.DPWeatherDict.Values.ToArray());
+                    wildPokeUpDown.Maximum = 65535;
+                    break;
+                case "Plat":
+                    areaIconComboBox.Items.AddRange(PokeDatabase.Area.PtAreaIconValues);
+                    areaSettingsLabel.Text = "Show nametag:";
+                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraValues);
+                    musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicDict.Values.ToArray());
+                    musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicDict.Values.ToArray());
+                    areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.PtShowNameValues);
+                    weatherComboBox.Items.AddRange(PokeDatabase.Weather.PtWeatherDict.Values.ToArray());
+                    wildPokeUpDown.Maximum = 65535;
+                    break;
+                default:
+                    areaIconComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaIconValues);
+                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.HGSSCameraValues);
+                    areaSettingsComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaProperties);
+                    areaSettingsLabel.Text = "Area Settings:";
+                    musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicDict.Values.ToArray());
+                    musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicDict.Values.ToArray());
+                    weatherComboBox.Items.AddRange(PokeDatabase.Weather.HGSSWeatherDict.Values.ToArray());
+                    wildPokeUpDown.Maximum = 255;
+
+                    flag7CheckBox.Visible = true;
+                    flag6CheckBox.Visible = true;
+                    flag5CheckBox.Visible = true;
+                    flag4CheckBox.Visible = true;
+                    flag7CheckBox.Text = "Flag 7";
+                    flag6CheckBox.Text = "Flag 6";
+                    flag5CheckBox.Text = "Flag 5";
+                    flag4CheckBox.Text = "Fly";
+
+                    flag3CheckBox.Text = "Esc. Rope";
+                    flag2CheckBox.Text = "Flag 2";
+                    flag1CheckBox.Text = "Bicycle";
+                    flag0CheckBox.Text = "Flag 0";
+
+                    worldmapCoordsGroupBox.Enabled = true;
+                    battleBackgroundUpDown.Visible = false;
+                    battleBackgroundLabel.Visible = false;
+                    break;
+            }
+            if (headerListBox.Items.Count > 0)
+                headerListBox.SelectedIndex = 0;
+        }
         private void areaDataUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
@@ -1359,30 +1014,34 @@ namespace DSPRE {
                 openWildEditorWithIdButton.Enabled = true;
 
             /* Setup controls for fields with version-specific differences */
-            switch (RomInfo.gameFamily) {
-                case "DP":
-                    locationNameComboBox.SelectedIndex = ((HeaderDP)currentHeader).locationName;
-                    musicDayUpDown.Value = ((HeaderDP)currentHeader).musicDayID;
-                    musicNightUpDown.Value = ((HeaderDP)currentHeader).musicNightID;
-                    areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.showName:D3}");
-                    battleBackgroundUpDown.Value = currentHeader.battleBackground;
-                    break;
-                case "Plat":
-                    areaIconComboBox.SelectedIndex = ((HeaderPt)currentHeader).areaIcon;
-                    locationNameComboBox.SelectedIndex = ((HeaderPt)currentHeader).locationName;
-                    musicDayUpDown.Value = ((HeaderPt)currentHeader).musicDayID;
-                    musicNightUpDown.Value = ((HeaderPt)currentHeader).musicNightID;
-                    areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.showName:D3}");
-                    battleBackgroundUpDown.Value = currentHeader.battleBackground;
-                    break;
-                default:
-                    areaIconComboBox.SelectedIndex = areaIconComboBox.FindString("[" + $"{((HeaderHGSS)currentHeader).areaIcon:D3}");
-                    locationNameComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).locationName;
-                    musicDayUpDown.Value = ((HeaderHGSS)currentHeader).musicDayID;
-                    musicNightUpDown.Value = ((HeaderHGSS)currentHeader).musicNightID;
-                    worldmapXCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapX;
-                    worldmapYCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapY;
-                    break;
+            try {
+                switch (RomInfo.gameFamily) {
+                    case "DP":
+                        locationNameComboBox.SelectedIndex = ((HeaderDP)currentHeader).locationName;
+                        musicDayUpDown.Value = ((HeaderDP)currentHeader).musicDayID;
+                        musicNightUpDown.Value = ((HeaderDP)currentHeader).musicNightID;
+                        areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.locationSpecifier:D3}");
+                        battleBackgroundUpDown.Value = currentHeader.battleBackground;
+                        break;
+                    case "Plat":
+                        areaIconComboBox.SelectedIndex = ((HeaderPt)currentHeader).areaIcon;
+                        locationNameComboBox.SelectedIndex = ((HeaderPt)currentHeader).locationName;
+                        musicDayUpDown.Value = ((HeaderPt)currentHeader).musicDayID;
+                        musicNightUpDown.Value = ((HeaderPt)currentHeader).musicNightID;
+                        areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.locationSpecifier:D3}");
+                        battleBackgroundUpDown.Value = currentHeader.battleBackground;
+                        break;
+                    default:
+                        areaIconComboBox.SelectedIndex = areaIconComboBox.FindString("[" + $"{((HeaderHGSS)currentHeader).areaIcon:D3}");
+                        locationNameComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).locationName;
+                        musicDayUpDown.Value = ((HeaderHGSS)currentHeader).musicDayID;
+                        musicNightUpDown.Value = ((HeaderHGSS)currentHeader).musicNightID;
+                        worldmapXCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapX;
+                        worldmapYCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapY;
+                        break;
+                }
+            } catch (ArgumentOutOfRangeException) {
+                MessageBox.Show("This header contains an irregular/unsupported field.", "Error loading header file", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             refreshFlags();
             updateWeatherPicAndComboBox();
@@ -1757,7 +1416,7 @@ namespace DSPRE {
             switch (RomInfo.gameFamily) {
                 case "DP":
                 case "Plat":
-                    currentHeader.showName = Byte.Parse(areaSettingsComboBox.SelectedItem.ToString().Substring(1, 3));
+                    currentHeader.locationSpecifier = Byte.Parse(areaSettingsComboBox.SelectedItem.ToString().Substring(1, 3));
                     break;
                 case "HGSS":
                     HeaderHGSS ch = ((HeaderHGSS)currentHeader);
@@ -2107,7 +1766,7 @@ namespace DSPRE {
 
         #region Matrix Editor
 
-        Matrix currentMatrix;
+        GameMatrix currentMatrix;
 
         #region Subroutines
         private void ClearMatrixTables() {
@@ -2174,7 +1833,27 @@ namespace DSPRE {
                 matrixTabControl.TabPages.Add(heightsTabPage);
         }
         #endregion
+        private void SetupMatrixEditor() {
+            statusLabel.Text = "Setting up Matrix Editor...";
+            Update();
 
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.matrices });
+
+            disableHandlers = true;
+
+            /* Add matrix entries to ComboBox */
+            selectMatrixComboBox.Items.Add("Matrix 0 - Main");
+            for (int i = 1; i < romInfo.GetMatrixCount(); i++) {
+                selectMatrixComboBox.Items.Add("Matrix " + i);
+            }
+
+            RomInfo.LoadMapCellsColorDictionary();
+            RomInfo.SetupSpawnSettings();
+
+            disableHandlers = false;
+            selectMatrixComboBox.SelectedIndex = 0;
+            statusLabel.Text = "Ready";
+        }
         private void addHeadersButton_Click(object sender, EventArgs e) {
             if (!currentMatrix.hasHeadersSection) {
                 currentMatrix.hasHeadersSection = true;
@@ -2189,7 +1868,7 @@ namespace DSPRE {
         }
         private void addMatrixButton_Click(object sender, EventArgs e) {
             /* Load new matrix, a copy of Matrix 0 */
-            Matrix newMatrix = new Matrix(0);
+            GameMatrix newMatrix = new GameMatrix(0);
 
             /* Add new matrix file to matrix folder */
             string matrixPath = RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + romInfo.GetMatrixCount().ToString("D4");
@@ -2203,7 +1882,7 @@ namespace DSPRE {
         }
         private void saveMatrixButton_Click(object sender, EventArgs e) {
             currentMatrix.SaveToFileDefaultDir(selectMatrixComboBox.SelectedIndex);
-            eventMatrix = new Matrix(selectMatrixComboBox.SelectedIndex);
+            eventMatrix = new GameMatrix(selectMatrixComboBox.SelectedIndex);
         }
         private void headersGridView_SelectionChanged(object sender, EventArgs e) {
             DisplaySelection(headersGridView.SelectedCells);
@@ -2252,7 +1931,7 @@ namespace DSPRE {
 
             /* Format table cells corresponding to border maps or void */
             ushort colorValue;
-            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = Matrix.EMPTY;
+            if (!UInt16.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = GameMatrix.EMPTY;
 
             (Color back, Color fore) cellColors = FormatMapCell(colorValue);
             e.CellStyle.BackColor = cellColors.back;
@@ -2306,7 +1985,7 @@ namespace DSPRE {
                     for (int j = 0; j < currentMatrix.height; j++) {
                         headersGridView.Rows[j].Cells[index].Value = 0;
                         heightsGridView.Rows[j].Cells[index].Value = 0;
-                        mapFilesGridView.Rows[j].Cells[index].Value = Matrix.EMPTY;
+                        mapFilesGridView.Rows[j].Cells[index].Value = GameMatrix.EMPTY;
                     }
                 }
             }
@@ -2344,7 +2023,7 @@ namespace DSPRE {
                     for (int j = 0; j < currentMatrix.width; j++) {
                         headersGridView.Rows[index].Cells[j].Value = 0;
                         heightsGridView.Rows[index].Cells[j].Value = 0;
-                        mapFilesGridView.Rows[index].Cells[j].Value = Matrix.EMPTY;
+                        mapFilesGridView.Rows[index].Cells[j].Value = GameMatrix.EMPTY;
                     }
                 }
             }
@@ -2394,7 +2073,7 @@ namespace DSPRE {
                 return;
 
             /* Update matrix object in memory */
-            currentMatrix = new Matrix(new FileStream(importMatrix.FileName, FileMode.Open));
+            currentMatrix = new GameMatrix(new FileStream(importMatrix.FileName, FileMode.Open));
 
             /* Refresh DataGridView tables */
             ClearMatrixTables();
@@ -2414,7 +2093,7 @@ namespace DSPRE {
             }
 
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0) {
-                if (currentMatrix.maps[e.RowIndex, e.ColumnIndex] == Matrix.EMPTY) {
+                if (currentMatrix.maps[e.RowIndex, e.ColumnIndex] == GameMatrix.EMPTY) {
                     MessageBox.Show("You can't load an empty map.\nSelect a valid map and try again.\n" +
                         "If you only meant to change the value of this cell, wait some time between one mouse click and the other.\n" +
                         "Alternatively, highlight the cell and press F2 on your keyboard.",
@@ -2465,7 +2144,7 @@ namespace DSPRE {
                 return;
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0) {
                 /* If input is junk, use '\' (FF FF) as placeholder value */
-                ushort cellValue = Matrix.EMPTY;
+                ushort cellValue = GameMatrix.EMPTY;
                 try {
                     cellValue = UInt16.Parse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
                 } catch { }
@@ -2478,7 +2157,7 @@ namespace DSPRE {
             disableHandlers = true;
 
             /* Format table cells corresponding to border maps or void */
-            ushort colorValue = Matrix.EMPTY;
+            ushort colorValue = GameMatrix.EMPTY;
             try {
                 colorValue = UInt16.Parse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
             } catch { }
@@ -2487,7 +2166,7 @@ namespace DSPRE {
             e.CellStyle.BackColor = cellColors.backColor;
             e.CellStyle.ForeColor = cellColors.foreColor;
 
-            if (colorValue == Matrix.EMPTY)
+            if (colorValue == GameMatrix.EMPTY)
                 e.Value = '-';
 
             disableHandlers = false;
@@ -2576,7 +2255,7 @@ namespace DSPRE {
                 return;
 
             ClearMatrixTables();
-            currentMatrix = new Matrix(selectMatrixComboBox.SelectedIndex);
+            currentMatrix = new GameMatrix(selectMatrixComboBox.SelectedIndex);
             GenerateMatrixTables();
 
             /* Setup matrix editor controls */
@@ -2672,7 +2351,7 @@ namespace DSPRE {
                     }
                 }
             }
-            colorsDict.Add(new List<uint> { Matrix.EMPTY }, (Color.Black, Color.White));
+            colorsDict.Add(new List<uint> { GameMatrix.EMPTY }, (Color.Black, Color.White));
 
             string errorMsg = "";
             MessageBoxIcon iconType = MessageBoxIcon.Information;
@@ -2855,6 +2534,118 @@ namespace DSPRE {
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
         }
         #endregion
+        private void SetupMapEditor() {
+            /* Extract essential NARCs sub-archives*/
+            toolStripProgressBar.Visible = true;
+            toolStripProgressBar.Maximum = 14;
+            toolStripProgressBar.Value = 0;
+            statusLabel.Text = "Attempting to unpack Map Editor NARCs... Please wait.";
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.maps,
+                DirNames.exteriorBuildingModels,
+                DirNames.buildingConfigFiles,
+                DirNames.buildingTextures,
+                DirNames.mapTextures,
+                DirNames.areaData,
+            }, toolStripProgressBar);
+
+            if (RomInfo.gameFamily == "HGSS") {
+                DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
+            }
+
+            disableHandlers = true;
+
+            mapOpenGlControl.MakeCurrent();
+            mapOpenGlControl.MouseWheel += new MouseEventHandler(mapOpenGlControl_MouseWheel);
+            collisionPainterPictureBox.Image = new Bitmap(100, 100);
+            typePainterPictureBox.Image = new Bitmap(100, 100);
+            switch (RomInfo.gameFamily) {
+                case "DP":
+                case "Plat":
+                    mapPartsTabControl.TabPages.Remove(bgsTabPage);
+                    break;
+                default:
+                    interiorbldRadioButton.Enabled = true;
+                    exteriorbldRadioButton.Enabled = true;
+                    break;
+            };
+
+            /* Add map names to box */
+            for (int i = 0; i < romInfo.GetMapCount(); i++) {
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + i.ToString("D4")))) {
+                    switch (RomInfo.gameFamily) {
+                        case "DP":
+                        case "Plat":
+                            reader.BaseStream.Position = 0x10 + reader.ReadUInt32() + reader.ReadUInt32() + 0x34;
+                            break;
+                        default:
+                            reader.BaseStream.Position = 0x12;
+                            short bgsSize = reader.ReadInt16();
+                            reader.BaseStream.Position = 0x0;
+                            reader.BaseStream.Position = 0x14 + bgsSize + reader.ReadUInt32() + reader.ReadUInt32() + 0x34;
+                            break;
+                    };
+                    string nsbmdName = Encoding.UTF8.GetString(reader.ReadBytes(16));
+                    selectMapComboBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + nsbmdName);
+                }
+
+            }
+            toolStripProgressBar.Value++;
+
+            /* Fill building models list */
+            updateBuildingListComboBox(false);
+
+            /*  Fill map textures list */
+            mapTextureComboBox.Items.Add("Untextured");
+            for (int i = 0; i < romInfo.GetMapTexturesCount(); i++)
+                mapTextureComboBox.Items.Add("Map Texture Pack [" + i.ToString("D2") + "]");
+            toolStripProgressBar.Value++;
+
+            /*  Fill building textures list */
+            buildTextureComboBox.Items.Add("Untextured");
+            for (int i = 0; i < romInfo.GetBuildingTexturesCount(); i++)
+                buildTextureComboBox.Items.Add("Building Texture Pack [" + i.ToString("D2") + "]");
+            toolStripProgressBar.Value++;
+
+            foreach (string s in PokeDatabase.System.MapCollisionPainters.Values) {
+                collisionPainterComboBox.Items.Add(s);
+            }
+
+            foreach (string s in PokeDatabase.System.MapCollisionTypePainters.Values) {
+                collisionTypePainterComboBox.Items.Add(s);
+            }
+
+            toolStripProgressBar.Value++;
+
+            /* Set controls' initial values */
+            selectCollisionPanel.BackColor = Color.MidnightBlue;
+            collisionTypePainterComboBox.SelectedIndex = 0;
+            collisionPainterComboBox.SelectedIndex = 1;
+
+            toolStripProgressBar.Value = 0;
+            toolStripProgressBar.Visible = false;
+            disableHandlers = false;
+
+            //Default selections
+            selectMapComboBox.SelectedIndex = 0;
+            exteriorbldRadioButton.Checked = true;
+            switch (RomInfo.gameFamily) {
+                case "DP":
+                case "Plat":
+                    mapTextureComboBox.SelectedIndex = 7;
+                    buildTextureComboBox.SelectedIndex = 1;
+                    break;
+                case "HGSS":
+                    mapTextureComboBox.SelectedIndex = 3;
+                    buildTextureComboBox.SelectedIndex = 1;
+                    break;
+                default:
+                    mapTextureComboBox.SelectedIndex = 2;
+                    buildTextureComboBox.SelectedIndex = 1;
+                    break;
+            };
+        }
         private void addMapFileButton_Click(object sender, EventArgs e) {
             /* Add new map file to map folder */
             new MapFile(0).SaveToFileDefaultDir(selectMapComboBox.Items.Count);
@@ -4057,7 +3848,7 @@ namespace DSPRE {
         public static NSBMDGlRenderer eventBuildingsRenderer = new NSBMDGlRenderer();
         public static MapFile eventMapFile;
         public NSMBe4.NSBMD.NSBTX_File overworldFrames;
-        public Matrix eventMatrix;
+        public GameMatrix eventMatrix;
 
         public EventFile currentEvFile;
         public Event selectedEvent;
@@ -4200,7 +3991,7 @@ namespace DSPRE {
         }
         private void DisplayEventMap() {
             /* Determine map file to open and open it in BinaryReader, unless map is VOID */
-            uint mapIndex = Matrix.EMPTY;
+            uint mapIndex = GameMatrix.EMPTY;
             if (eventMatrixXUpDown.Value > eventMatrix.width || eventMatrixYUpDown.Value > eventMatrix.height) {
                 String errorMsg = "This event file contains elements located on an unreachable map, beyond the current matrix.\n" +
                     "It is strongly advised that you bring every Overworld, Spawnable, Warp and Trigger of this event to a map that belongs to the matrix's range.";
@@ -4209,7 +4000,7 @@ namespace DSPRE {
                 mapIndex = eventMatrix.maps[(int)(eventMatrixYUpDown.Value), (int)(eventMatrixXUpDown.Value)];
             }
 
-            if (mapIndex == Matrix.EMPTY) {
+            if (mapIndex == GameMatrix.EMPTY) {
                 eventPictureBox.BackgroundImage = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
                 using (Graphics g = Graphics.FromImage(eventPictureBox.BackgroundImage)) g.Clear(Color.Black);
             } else {
@@ -4477,6 +4268,105 @@ namespace DSPRE {
             return false;
         }
         #endregion
+        private void SetupEventEditor() {
+            /* Extract essential NARCs sub-archives*/
+
+            statusLabel.Text = "Attempting to unpack Event Editor NARCs... Please wait. This might take a while";
+            toolStripProgressBar.Visible = true;
+            toolStripProgressBar.Maximum = 12;
+            toolStripProgressBar.Value = 0;
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.matrices,
+                DirNames.maps,
+                DirNames.exteriorBuildingModels,
+                DirNames.buildingConfigFiles,
+                DirNames.buildingTextures,
+                DirNames.mapTextures,
+                DirNames.areaData,
+
+                DirNames.eventFiles,
+                DirNames.trainerData,
+                DirNames.OWSprites,
+
+                DirNames.scripts, }, toolStripProgressBar);
+
+            RomInfo.SetOWtable();
+            RomInfo.Set3DOverworldsDict();
+
+            if (RomInfo.gameFamily == "HGSS") {
+                DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
+            }
+
+            disableHandlers = true;
+            if (File.Exists(RomInfo.OWtablePath)) {
+                switch (RomInfo.gameFamily) {
+                    case "DP":
+                    case "Plat":
+                        break;
+                    default:
+                        // HGSS Overlay 1 must be decompressed in order to read the overworld table
+                        if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
+                            if (DSUtils.OverlayIsCompressed(1)) {
+                                if (DSUtils.DecompressOverlay(1) < 0) {
+                                    MessageBox.Show("Overlay 1 couldn't be decompressed.\nOverworld sprites in the Event Editor will be " +
+                                "displayed incorrectly or not displayed at all.", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                        }
+
+                        break;
+                }
+            }
+
+            /* Add event file numbers to box */
+            int eventCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir).Length;
+            int owSpriteCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.OWSprites].unpackedDir).Length;
+            string[] trainerNames = GetTrainerNames();
+            RomInfo.ReadOWTable();
+
+            statusLabel.Text = "Loading Events... Please wait.";
+            toolStripProgressBar.Maximum = (int)(eventCount + RomInfo.OverworldTable.Keys.Max() + trainerNames.Length);
+            toolStripProgressBar.Value = 0;
+            Update();
+
+            /* Add event list to event combobox */
+            for (int i = 0; i < eventCount; i++) {
+                selectEventComboBox.Items.Add("Event File " + i);
+                toolStripProgressBar.Value++;
+            }
+
+            /* Add sprite list to ow sprite box */
+            foreach (ushort key in RomInfo.OverworldTable.Keys) {
+                owSpriteComboBox.Items.Add("OW Entry " + key);
+                toolStripProgressBar.Value++;
+            }
+
+            /* Add trainer list to ow trainer box */
+            owTrainerComboBox.Items.AddRange(trainerNames);
+
+            /* Add item list to ow item box */
+            owItemComboBox.Items.AddRange(romInfo.GetItemNames(0, new TextArchive(RomInfo.itemNamesTextNumber).messages.Count - 1));
+
+            /* Add ow movement list to box */
+            owMovementComboBox.Items.AddRange(PokeDatabase.EventEditor.Overworlds.movementsArray);
+            spawnableDirComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.orientationsArray);
+            spawnableTypeComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.typesArray);
+
+            if (ScanScriptsCheckStandardizedItemNumbers())
+                isItemRadioButton.Enabled = true;
+
+            disableHandlers = false;
+
+            /* Draw matrix 0 in matrix navigator */
+            eventMatrix = new GameMatrix(0);
+            selectEventComboBox.SelectedIndex = 0;
+            owItemComboBox.SelectedIndex = 0;
+            owTrainerComboBox.SelectedIndex = 0;
+
+            toolStripProgressBar.Value = 0;
+            toolStripProgressBar.Visible = false;
+        }
         private void addEventFileButton_Click(object sender, EventArgs e) {
             /* Add copy of event 0 to event folder */
             new EventFile(0).SaveToFileDefaultDir(selectEventComboBox.Items.Count);
@@ -4502,7 +4392,7 @@ namespace DSPRE {
                 return;
             disableHandlers = true;
 
-            eventMatrix = new Matrix((int)eventMatrixUpDown.Value);
+            eventMatrix = new GameMatrix((int)eventMatrixUpDown.Value);
             eventMatrixXUpDown.Value = 0;
             eventMatrixYUpDown.Value = 0;
             eventMatrixXUpDown.Maximum = eventMatrix.width - 1;
@@ -5931,7 +5821,7 @@ namespace DSPRE {
 
         #region Overworlds
         private void giveItemButton_Click(object sender, EventArgs e) {
-            using (GiveItemDialog f = new GiveItemDialog(GetItemNames())) {
+            using (GiveItemDialog f = new GiveItemDialog(romInfo.GetItemNames())) {
                 f.ShowDialog();
                 if (f.okSelected) {
                     string firstLine = "SetVar 0x8004 0x" + f.itemComboBox.SelectedIndex.ToString("X");
@@ -6003,7 +5893,7 @@ namespace DSPRE {
 
         #region Give/Take
         private void givePokémonButton_Click(object sender, EventArgs e) {
-            using (GivePokémonDialog f = new GivePokémonDialog(GetPokémonNames(), GetItemNames(), GetAttackNames())) {
+            using (GivePokémonDialog f = new GivePokémonDialog(romInfo.GetPokémonNames(), romInfo.GetItemNames(), romInfo.GetAttackNames())) {
                 f.ShowDialog();
                 if (f.okSelected) {
                     currentScriptBox.Text = currentScriptBox.Text.Insert(currentScriptBox.SelectionStart, f.command);
@@ -6033,7 +5923,7 @@ namespace DSPRE {
             }
         }
         private void takeItemButton_Click(object sender, EventArgs e) {
-            using (GiveItemDialog f = new GiveItemDialog(GetItemNames())) {
+            using (GiveItemDialog f = new GiveItemDialog(romInfo.GetItemNames())) {
                 f.ShowDialog();
                 if (f.okSelected) {
                     string item = f.itemComboBox.SelectedIndex.ToString("X");
@@ -6406,6 +6296,46 @@ namespace DSPRE {
                 texturePacksListBox.Items.Add("Texture Pack " + i);
         }
         #endregion
+        private void SetupNSBTXEditor() {
+            statusLabel.Text = "Attempting to unpack Tileset Editor NARCs... Please wait.";
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> {
+                DirNames.buildingTextures,
+                DirNames.mapTextures,
+                DirNames.areaData,
+                DirNames.buildingConfigFiles
+            }, toolStripProgressBar);
+
+            /* Fill Tileset ListBox */
+            FillTilesetBox();
+
+            /* Fill AreaData ComboBox */
+            int areaDataCount = romInfo.GetAreaDataCount();
+            for (int i = 0; i < areaDataCount; i++)
+                selectAreaDataListBox.Items.Add("AreaData File " + i);
+
+            /* Enable gameVersion-specific controls */
+
+            switch (RomInfo.gameFamily) {
+                case "DP":
+                case "Plat":
+                    break;
+                default:
+                    areaDataDynamicTexturesNumericUpDown.Enabled = true;
+                    areaTypeGroupbox.Enabled = true;
+                    break;
+            };
+
+            if (selectAreaDataListBox.Items.Count > 0)
+                selectAreaDataListBox.SelectedIndex = 0;
+            if (texturePacksListBox.Items.Count > 0)
+                texturePacksListBox.SelectedIndex = 0;
+            if (texturesListBox.Items.Count > 0)
+                texturesListBox.SelectedIndex = 0;
+            if (palettesListBox.Items.Count > 0)
+                palettesListBox.SelectedIndex = 0;
+        }
         private void buildingsTilesetRadioButton_CheckedChanged(object sender, EventArgs e) {
             FillTilesetBox();
             texturePacksListBox.SelectedIndex = (int)areaDataBuildingTilesetUpDown.Value;
@@ -6678,6 +6608,60 @@ namespace DSPRE {
         GameCamera[] currentCameraTable;
         uint overlayCameraTblOffset;
 
+        private void SetupCameraEditor() {
+            RomInfo.PrepareCameraData();
+
+            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.cameraTblOverlayNumber)) {
+                if (DSUtils.OverlayIsCompressed(RomInfo.cameraTblOverlayNumber)) {
+                    DSUtils.DecompressOverlay(RomInfo.cameraTblOverlayNumber);
+                }
+            }
+
+            uint[] RAMaddresses = new uint[RomInfo.cameraTblOffsetsToRAMaddress.Length];
+            string camOverlayPath = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
+            using (BinaryReader br = new BinaryReader(File.OpenRead(camOverlayPath))) {
+                for (int i = 0; i < RomInfo.cameraTblOffsetsToRAMaddress.Length; i++) {
+                    br.BaseStream.Position = RomInfo.cameraTblOffsetsToRAMaddress[i];
+                    RAMaddresses[i] = br.ReadUInt32();
+                }
+            }
+
+            uint referenceAddress = RAMaddresses[0];
+            for (int i = 1; i < RAMaddresses.Length; i++) {
+                uint ramAddress = RAMaddresses[i];
+                if (ramAddress != referenceAddress) {
+                    MessageBox.Show("Value of RAM Pointer to the overlay table is different between Offset #1 and Offset #" + (i + 1) + Environment.NewLine +
+                        "The camera values might be wrong.", "Possible errors ahead", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+
+            using (BinaryReader br = new BinaryReader(File.OpenRead(camOverlayPath))) {
+                br.BaseStream.Position = overlayCameraTblOffset = RAMaddresses[0] - DSUtils.GetOverlayRAMAddress(RomInfo.cameraTblOverlayNumber);
+
+                currentCameraTable = new GameCamera[16];
+                if (RomInfo.gameFamily.Equals("HGSS")) {
+                    for (int i = 0; i < currentCameraTable.Length; i++) {
+                        currentCameraTable[i] = new GameCamera(br.ReadUInt32(), br.ReadInt16(), br.ReadInt16(), br.ReadInt16(),
+                                                br.ReadInt16(), br.ReadByte(), br.ReadByte(),
+                                                br.ReadUInt16(), br.ReadUInt32(), br.ReadUInt32(),
+                                                br.ReadInt32(), br.ReadInt32(), br.ReadInt32());
+
+                    }
+                } else {
+                    for (int i = 0; i < 3; i++) {
+                        cameraEditorDataGridView.Columns.RemoveAt(cameraEditorDataGridView.Columns.Count - 3);
+                    }
+                    for (int i = 0; i < currentCameraTable.Length; i++) {
+                        currentCameraTable[i] = new GameCamera(br.ReadUInt32(), br.ReadInt16(), br.ReadInt16(), br.ReadInt16(),
+                                                br.ReadInt16(), br.ReadByte(), br.ReadByte(),
+                                                br.ReadUInt16(), br.ReadUInt32(), br.ReadUInt32());
+                    }
+                }
+                for (int i = 0; i < currentCameraTable.Length; i++) {
+                    currentCameraTable[i].ShowInGridView(cameraEditorDataGridView, i);
+                }
+            }
+        }
         private void saveCameraTableButton_Click(object sender, EventArgs e) {
             string path = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
             SaveCameraTable(path, overlayCameraTblOffset);

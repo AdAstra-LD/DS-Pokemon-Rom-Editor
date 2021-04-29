@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using DSPRE.Resources;
 using System;
+using DSPRE.ROMFiles;
 
 namespace DSPRE {
 
@@ -208,7 +209,11 @@ namespace DSPRE {
             switch (gameFamily) {
                 case "DP":
                     cameraTblOverlayNumber = 5;
-                    cameraTblOffsetsToRAMaddress = new uint[] { 0 };
+                    if (gameLanguage.Equals("JAP")) {
+                        cameraTblOffsetsToRAMaddress = new uint[] { 0x4C50 };
+                    } else {
+                        cameraTblOffsetsToRAMaddress = new uint[] { 0x4908 };
+                    }
                     cameraSize = 24;
                     break;
                 case "Plat":
@@ -265,25 +270,29 @@ namespace DSPRE {
             Dictionary<DirNames, string> packedDirsDict = null;
             switch (gameFamily) {
                 case "DP":
+                    string suffix = "";
+                    if (!gameLanguage.Equals("JAP"))
+                        suffix = "_release";
+
                      packedDirsDict = new Dictionary<DirNames, string>() {
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.textArchives] = @"data\msgdata\msg.narc",
 
                         [DirNames.matrices] = @"data\fielddata\mapmatrix\map_matrix.narc",
 
-                        [DirNames.maps] = @"data\fielddata\land_data\land_data_release.narc",
+                        [DirNames.maps] = @"data\fielddata\land_data\land_data" + suffix + ".narc",
                         [DirNames.exteriorBuildingModels] = @"data\fielddata\build_model\build_model.narc",
                         [DirNames.buildingConfigFiles] = @"data\fielddata\areadata\area_build_model\area_build.narc",
                         [DirNames.buildingTextures] = @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
                         [DirNames.mapTextures] = @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
                         [DirNames.areaData] = @"data\fielddata\areadata\area_data.narc",
 
-                        [DirNames.eventFiles] = @"data\fielddata\eventdata\zone_event_release.narc",
-                        [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
+                        [DirNames.eventFiles] = @"data\fielddata\eventdata\zone_event" + suffix + ".narc",
+                         [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
                         [DirNames.OWSprites] = @"data\data\mmodel\mmodel.narc",
 
-                        [DirNames.scripts] = @"data\fielddata\script\scr_seq_release.narc",
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion[0]) + '_' + "enc_data.narc",
+                        [DirNames.scripts] = @"data\fielddata\script\scr_seq" + suffix + ".narc",
+                         [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion[0]) + '_' + "enc_data.narc",
                     };
                     break;
                 case "Plat":
@@ -396,9 +405,8 @@ namespace DSPRE {
             }
         }
         public static Dictionary<ushort, string> BuildCommandNamesDatabase(string gameVer) {
-            switch (gameVer) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                     var commonDictionaryNames = PokeDatabase.ScriptEditor.DPPtScrCmdNames;
                     var specificDictionaryNames = PokeDatabase.ScriptEditor.DPScrCmdNames;
                     return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
@@ -413,9 +421,8 @@ namespace DSPRE {
             }
         }        
         public static Dictionary<ushort, byte[]> BuildCommandParametersDatabase(string gameVer) {
-            switch (gameVer) {
-                case "D":
-                case "P":
+            switch (gameFamily) {
+                case "DP":
                     var commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
                     var specificDictionaryParams = PokeDatabase.ScriptEditor.DPScrCmdParameters;
                     return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
@@ -522,6 +529,18 @@ namespace DSPRE {
         public int GetHeaderCount() {
             return (int)new FileInfo(internalNamesLocation).Length / internalNameLength;
         }
+        public string[] GetItemNames() {
+            return new TextArchive(itemNamesTextNumber).messages.ToArray();
+        }
+        public string[] GetItemNames(int startIndex, int count) {
+            return new TextArchive(itemNamesTextNumber).messages.GetRange(startIndex, count).ToArray();
+        }
+        public string[] GetPokémonNames() {
+            return new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
+        }
+        public string[] GetAttackNames() {
+            return new TextArchive(attackNamesTextNumber).messages.ToArray();
+        }
         public void SetAttackNamesTextNumber() {
             switch (gameFamily) {
                 case "DP":
@@ -590,32 +609,36 @@ namespace DSPRE {
             switch (gameFamily) {
                 case "DP":
                     trainerNamesMessageNumber = 559;
+                    if (gameLanguage.Equals("JAP")) {
+                        trainerNamesMessageNumber -= 9;
+                    }
                     break;
                 case "Plat":
                     trainerNamesMessageNumber = 618;
                     break;
                 default:
+                    trainerNamesMessageNumber = 729;
                     if (gameLanguage == "JAP") {
-                        trainerNamesMessageNumber = 719;
-                    } else {
-                        trainerNamesMessageNumber = 729;
+                        trainerNamesMessageNumber -= 10;
                     }
                     break;
             }
         }
         public void SetTrainerClassMessageNumber() {
-            switch (gameVersion) {
+            switch (gameFamily) {
                 case "DP":
                     trainerClassMessageNumber = 560;
+                    if (gameLanguage.Equals("JAP")) {
+                        trainerClassMessageNumber -= 9;
+                    }
                     break;
                 case "Plat":
                     trainerClassMessageNumber = 619;
                     break;
                 default:
-                    if (gameLanguage == "JAP") {
-                        trainerClassMessageNumber = 720;
-                    } else {
-                        trainerClassMessageNumber = 730;
+                    trainerClassMessageNumber = 730;
+                    if (gameLanguage.Equals("JAP")) {
+                        trainerClassMessageNumber -= 10;
                     }
                     break;
             }

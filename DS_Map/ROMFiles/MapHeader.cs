@@ -98,7 +98,7 @@ namespace DSPRE.ROMFiles {
         public ushort scriptFileID { get; set; }
         public ushort musicDayID { get; set; }
         public ushort musicNightID { get; set; }
-        public byte showName { get; set; }
+        public byte locationSpecifier { get; set; }
         public byte battleBackground { get; set; }
         public ushort textArchiveID { get; set; }
         public byte weatherID { get; set; }
@@ -112,8 +112,10 @@ namespace DSPRE.ROMFiles {
             byte[] headerData = DSUtils.ReadFromFile(filename, offsetInFile, MapHeader.length);
 
             /* Encapsulate header data into the class appropriate for the gameVersion */
-            if (headerData.Length < MapHeader.length)
+            if (headerData.Length < MapHeader.length) {
+                MessageBox.Show(filename + " is too small and can't store header data.", "Header file too small", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
+            }
 
             switch (RomInfo.gameFamily) {
                 case "DP":
@@ -157,7 +159,7 @@ namespace DSPRE.ROMFiles {
                 locationName = reader.ReadUInt16();
                 weatherID = reader.ReadByte();
                 cameraAngleID = reader.ReadByte();
-                showName = reader.ReadByte();
+                locationSpecifier = reader.ReadByte();
 
                 byte mapSettings = reader.ReadByte();
                 battleBackground = (byte)(mapSettings & 0b_1111);
@@ -183,7 +185,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(locationName);
                 writer.Write(weatherID);
                 writer.Write(cameraAngleID);
-                writer.Write(showName);
+                writer.Write(locationSpecifier);
 
                 byte mapSettings = (byte)((battleBackground & 0b_1111) + ((flags & 0b_1111) << 4));
                 writer.Write(mapSettings);
@@ -224,7 +226,7 @@ namespace DSPRE.ROMFiles {
                     cameraAngleID = reader.ReadByte();
 
                     ushort mapSettings = reader.ReadUInt16();
-                    showName = (byte)(mapSettings & 0b_1111_111);
+                    locationSpecifier = (byte)(mapSettings & 0b_1111_111);
                     battleBackground = (byte)(mapSettings >> 7 & 0b_1111_1);
                     flags = (byte)(mapSettings >> 12 & 0b_1111);
 
@@ -254,7 +256,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(weatherID);
                 writer.Write(cameraAngleID);
 
-                ushort mapSettings = (ushort)((showName & 0b_1111_111) + ((battleBackground & 0b_1111_1) << 7) + ((flags & 0b_1111) << 12));
+                ushort mapSettings = (ushort)((locationSpecifier & 0b_1111_111) + ((battleBackground & 0b_1111_1) << 7) + ((flags & 0b_1111) << 12));
                 writer.Write(mapSettings);
             }
             return newData.ToArray();
