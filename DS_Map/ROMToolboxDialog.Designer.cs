@@ -58,6 +58,7 @@
             this.repointScrcmdLBL = new System.Windows.Forms.Label();
             this.repointScrcmdButton = new System.Windows.Forms.Button();
             this.scrcmdARM9requiredLBL = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.arm9patchCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlay1CB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BDHCamCB)).BeginInit();
@@ -372,12 +373,22 @@
             this.scrcmdARM9requiredLBL.TabIndex = 29;
             this.scrcmdARM9requiredLBL.Text = "(Requires ARM9 Expansion)";
             // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(509, 81);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(288, 37);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "[ B E T A     |    Needs testing]";
+            this.label1.UseMnemonic = false;
+            // 
             // ROMToolboxDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(950, 513);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.scrcmdARM9requiredLBL);
             this.Controls.Add(this.repointScrcmdCB);
             this.Controls.Add(this.repointScrcmdTextLBL);
@@ -457,5 +468,6 @@
         private System.Windows.Forms.Label repointScrcmdLBL;
         private System.Windows.Forms.Button repointScrcmdButton;
         private System.Windows.Forms.Label scrcmdARM9requiredLBL;
+        private System.Windows.Forms.Label label1;
     }
 }

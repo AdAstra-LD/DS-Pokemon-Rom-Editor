@@ -44,7 +44,6 @@ namespace DSPRE {
         /* ROM Information */
         public static string gameCode;
         public static byte europeByte;
-        private readonly string folderSuffix = "_DSPRE_contents";
         RomInfo romInfo;
 
         #endregion
@@ -472,10 +471,8 @@ namespace DSPRE {
                 br.BaseStream.Position = 0x1E;
                 europeByte = br.ReadByte();
             }
-            string workDir = Path.GetDirectoryName(openRom.FileName) + "\\" + Path.GetFileNameWithoutExtension(openRom.FileName) + folderSuffix + "\\";
-
             /* Set ROM gameVersion and language */
-            romInfo = new RomInfo(gameCode, workDir);
+            romInfo = new RomInfo(gameCode, openRom.FileName);
 
             if (RomInfo.gameVersion is null) {
                 statusLabel.Text = "Unsupported ROM";
@@ -576,7 +573,7 @@ namespace DSPRE {
 
             scriptCommandsButton.Enabled = true;
             statusLabel.Text = "Ready";
-            this.Text += "  -  " + RomInfo.workDir.Substring(0, RomInfo.workDir.Length - folderSuffix.Length - 1) + ".nds";
+            this.Text += "  -  " + RomInfo.fileName;
         }
         private void saveRom_Click(object sender, EventArgs e) {
             SaveFileDialog saveRom = new SaveFileDialog();
@@ -6669,7 +6666,7 @@ namespace DSPRE {
         private void exportCameraTableButton_Click(object sender, EventArgs e) {
             SaveFileDialog of = new SaveFileDialog {
                 Filter = "Camera Table File (*.bin)|*.bin",
-                FileName = Path.GetFileNameWithoutExtension(RomInfo.workDir) + " - CameraTable.bin"
+                FileName = Path.GetFileNameWithoutExtension(RomInfo.fileName) + " - CameraTable.bin"
             };
             if (of.ShowDialog(this) != DialogResult.OK)
                 return;
@@ -6691,7 +6688,7 @@ namespace DSPRE {
                 if (e.ColumnIndex == cameraEditorDataGridView.Columns.Count - 2) { //Export
                     SaveFileDialog sf = new SaveFileDialog {
                         Filter = type + " (*.bin)|*.bin",
-                        FileName = Path.GetFileNameWithoutExtension(RomInfo.workDir) + " - Camera " + e.RowIndex + ".bin"
+                        FileName = Path.GetFileNameWithoutExtension(RomInfo.fileName) + " - Camera " + e.RowIndex + ".bin"
                     };
 
                     if (sf.ShowDialog(this) != DialogResult.OK) {

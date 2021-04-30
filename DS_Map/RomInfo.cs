@@ -14,7 +14,9 @@ namespace DSPRE {
     /// </summary>
 
     public class RomInfo {
+        private static readonly string folderSuffix = "_DSPRE_contents";
         public static string romID { get; private set; }
+        public static string fileName { get; private set; }
         public static string workDir { get; private set; }
         public static string arm9Path { get; private set; }
         public static string overlayTablePath { get; set; }
@@ -80,9 +82,10 @@ namespace DSPRE {
         
 
         #region Constructors (1)
-        public RomInfo(string id, string dir) {
+        public RomInfo(string id, string romName) {
             romID = id;
-            workDir = dir;
+            fileName = romName;
+            workDir = Path.GetDirectoryName(romName) + "\\" + Path.GetFileNameWithoutExtension(romName) + folderSuffix + "\\";;
             LoadGameVersion();
             if (gameVersion is null)
                 return;
@@ -113,6 +116,9 @@ namespace DSPRE {
             CommandParametersDict = BuildCommandParametersDatabase(gameVersion);
         }
 
+        public static string GetRomNameFromWorkdir () {
+            return workDir.Substring(0, workDir.Length - folderSuffix.Length - 1);
+        }
         public static void Set3DOverworldsDict() {
             ow3DSpriteDict = new Dictionary<uint, string>() {
                 [91] = "brown_sign",
