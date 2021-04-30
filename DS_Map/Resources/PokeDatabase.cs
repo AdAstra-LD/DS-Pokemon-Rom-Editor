@@ -511,8 +511,7 @@ namespace DSPRE.Resources {
                     "Activated from any dir",
                     "Activated from the sides",
                     "Front/Back Interaction",
-                };
-           
+                };        
                 public static string[] typesArray = new string[] {
                     "Misc",
                     "Board (Front Auto-Trigger)",
@@ -2138,6 +2137,7 @@ namespace DSPRE.Resources {
                 [0x003C] = "EndBoard",
                 [0x003D] = "Menu",
 
+                [0x003F] = "YesNoBox",
                 [0x0040] = "MultiStandardText",
                 [0x0041] = "MultiLocalText",
                 [0x0042] = "AddMultiOption",
@@ -2208,17 +2208,19 @@ namespace DSPRE.Resources {
 
                 [0x008F] = "ChooseRivalName",
 
+                [0x0091] = "UpgradePokegear",
                 [0x0092] = "RecordPokegearNumber",
 
                 [0x0096] = "ReturnScreen",
 
                 [0x009D] = "WorldMapScreen",
 
-                [0x00A3] = "EndGame",
+                [0x00A3] = "EndGameScreen",
 
                 [0x00A7] = "StarterSelectionScreen",
 
-                [0x00AD] = "ChooseNickname",
+                [0x00AC] = "ChoosePlayerName",
+                [0x00AD] = "ChoosePokemonNickname",
                 [0x00AE] = "FadeScreen",
                 [0x00AF] = "WaitFadeScreen",
                 [0x00B0] = "Warp",
@@ -2286,6 +2288,12 @@ namespace DSPRE.Resources {
                 [0x00FA] = "FirstBattle",
                 [0x00FB] = "CatchTutorial",
 
+                [0x00FD] = "CheckSaveGame",
+
+                [0x0113] = "MartScreen",
+                [0x0114] = "SpMartScreen",
+                [0x0115] = "GoodsMartScreen",
+                [0x0116] = "SealMartScreen",
                 [0x0117] = "DummyLostBattle",
                 [0x0118] = "SetLastWarp",
                 [0x0119] = "CheckPlayerGender",
@@ -2316,24 +2324,39 @@ namespace DSPRE.Resources {
 
                 [0x0141] = "VermillionGymAnimation",
                 [0x0142] = "VermillionGymBin",
+
+                [0x0144] = "InitVioletGym",
+                [0x0145] = "VioletGymElevator",
+
                 [0x0147] = "AzaleaGym",
                 [0x0148] = "AzaleaGym2",
+
                 [0x014C] = "GetPartyCount",
 
                 [0x0152] = "SetOverworldPosition",
                 [0x0153] = "SetOverworldFullPosition",
                 [0x0154] = "SetOverworldMovement",
                 [0x0155] = "SetOverworldDirection",
+                [0x0156] = "SetWarpPosition",
+                [0x0157] = "SetSpawnablePosition",
+
+                [0x015C] = "WaitTimeOrAB",
 
                 [0x015F] = "GetSelectedPartySlot",
 
                 [0x0162] = "GetPartyPokemonID",
                 [0x0163] = "CheckTradedPokemon",
+                [0x0164] = "CountPartyBornPokemon",
+                [0x0165] = "CountAlivePokemonExceptFirst",
+                [0x0166] = "CountTotalAlivePokemon",
+                [0x0167] = "CountPartyEggs",
+                [0x0168] = "TakeMoneyFlex",
 
                 [0x016C] = "DeletePartyPokemon",
 
                 [0x0170] = "CheckHiroMoneyNumber",
                 [0x0171] = "EggHatchScreen", //This command is dangerous when used without an egg in party
+
                 [0x0176] = "UnvanishOverworld",
                 [0x0177] = "VanishOverworld",
                 [0x0178] = "OpenMail",
@@ -2348,13 +2371,16 @@ namespace DSPRE.Resources {
 
                 [0x0182] = "GetPlayerDirection",
 
-                [0x0188] = "ComparePokemonHeight",
+                [0x0185] = "CheckBornPokemonInParty",
+                [0x0186] = "ComparePokemonPlayerSize",
+                [0x0187] = "SetPokemonSizeRecord",
+                [0x0188] = "TextPartyPokemonSize",
                 [0x0189] = "CheckPokemonHeight",
-                [0x018A] = "ChoosePokemonDelete",
-                [0x018B] = "StoreMoveDelete",
-                [0x018c] = "GetMoveCount",
-                [0x018D] = "DeleteMove",
 
+                [0x018C] = "GetMoveCount",
+                [0x018D] = "DeletePokemonMove",
+                [0x018E] = "GetPartyPokemonMoveID",
+                [0x018F] = "TextPartyPokemonMoveID",
                 [0x0190] = "Strength",
 
                 [0x01A7] = "CheckCompleteJohtoDex",
@@ -2367,8 +2393,8 @@ namespace DSPRE.Resources {
                 [0x01B2] = "CountPokemonUnderLevel",
                 [0x01B3] = "SurvivePoison",
 
-                [0x01BD] = "CheckPreviousMap",
-                [0x01BE] = "CheckCurrentMap",
+                [0x01BD] = "GetPreviousHeaderID",
+                [0x01BE] = "GetCurrentHeaderID",
                 [0x01BF] = "SetSafariFlag",
 
                 [0x01C2] = "GeonetScreen",
@@ -2395,15 +2421,17 @@ namespace DSPRE.Resources {
                 [0x01E3] = "PokemonEVCount",
                 [0x01E4] = "GetDayOfWeek",
                 [0x01E5] = "ShowRulesList",
-                [0x01E6] = "DummyGetPokemonFootprint",
+                [0x01E6] = "DummyGetFootprint",
                 [0x01E7] = "PCHealAnimation",
-                [0x01E7] = "ElevatorAnimation",
+                [0x01E8] = "ElevatorAnimation",
                 [0x01E9] = "MysteryGiftGive",
 
                 [0x01EF] = "CheckVersion",
+
                 [0x01F0] = "FirstPokemonInParty",
 
                 [0x01FB] = "CountPCFreeSpace",
+
                 [0x01FF] = "StoreFriendParkResult",
 
                 [0x0204] = "TextAccessory",
@@ -2458,6 +2486,8 @@ namespace DSPRE.Resources {
 
                 [0x026E] = "GetOverworldDirection",
 
+                [0x02C4] = "FloorTrapAnimation",
+
                 [0x02C7] = "TalkFollowingPoke",
 
                 [0x02D9] = "CheckPokemonAlive",
@@ -2469,27 +2499,9 @@ namespace DSPRE.Resources {
                 [0x02ED] = "MultiTouchStandardText",
                 [0x02EE] = "MultiTouchLocalText",
                 [0x02EF] = "CreateMultiTouchBox",
-                [0x02F0] = "CloseMultiTouch"
-            };
+                [0x02F0] = "CloseMultiTouch",
 
-            public static Dictionary<ushort, string> CustomScrCmdNames = new Dictionary<ushort, string>() {
-                [0x0357] = "DivVar",
-                [0x0360] = "AddCameraMovementParam",
-                [0x0361] = "OverrideDefaultCam",
-                [0x0362] = "ResetCamMovement",
-                [0x0363] = "RestoreDefaultCam",
-                [0x0364] = "SetSSEQTrackVol",
-                [0x0365] = "ClearSSEQTrackChanges",
-                [0x0366] = "GetSSEQTrackVol",
-
-                [0x036A] = "DoubleFadeScreen",
-                [0x036B] = "MessageAllTextbox",
-                [0x036C] = "MessageTextbox",
-                [0x036D] = "SetTextboxAlpha",
-                [0x036E] = "TextPocketWhite",
-                [0x036F] = "SetLayerVisibility",
-                [0x0370] = "StopWeatherAlphaBlend",
-                [0x0371] = "SetRepelSteps",
+                [0x0344] = "CheckJadeOrbRequirements"
             };
             public static Dictionary<ushort, byte[]> HGSSScrCmdParameters = new Dictionary<ushort, byte[]>() {
                 [0x0000] = new byte[1] { 0 },
@@ -2675,7 +2687,7 @@ namespace DSPRE.Resources {
                 [0x00B4] = new byte[1] { 0 },
                 [0x00B5] = new byte[1] { 0 },
                 [0x00B6] = new byte[] { 2 },
-                [0x00B7] = new byte[] { 2, 2 },
+                [0x00B7] = new byte[] { 2 },
                 [0x00B8] = new byte[] { 2 },
                 [0x00B9] = new byte[] { 1 },
                 [0x00BA] = new byte[] { 1 },
@@ -3220,7 +3232,7 @@ namespace DSPRE.Resources {
                 [0x02D5] = new byte[] { 1, 2 },
                 [0x02D6] = new byte[1] { 0 },
                 [0x02D7] = new byte[] { 2 },
-                [0x02D8] = new byte[] { 1 },
+                [0x02D8] = new byte[] { 1, 1 },
                 [0x02D9] = new byte[] { 2 },
                 [0x02DA] = new byte[] { 2 },
                 [0x02DB] = new byte[1] { 0 },
@@ -3345,6 +3357,26 @@ namespace DSPRE.Resources {
                 [0x0352] = new byte[] { 1, 2 },
                 [0x0353] = new byte[] { 1 },
                 [0x0354] = new byte[] { 1, 1 }
+            };
+
+            public static Dictionary<ushort, string> CustomScrCmdNames = new Dictionary<ushort, string>() {
+                [0x0357] = "DivVar",
+                [0x0360] = "AddCameraMovementParam",
+                [0x0361] = "OverrideDefaultCam",
+                [0x0362] = "ResetCamMovement",
+                [0x0363] = "RestoreDefaultCam",
+                [0x0364] = "SetSSEQTrackVol",
+                [0x0365] = "ClearSSEQTrackChanges",
+                [0x0366] = "GetSSEQTrackVol",
+
+                [0x036A] = "DoubleFadeScreen",
+                [0x036B] = "MessageAllTextbox",
+                [0x036C] = "MessageTextbox",
+                [0x036D] = "SetTextboxAlpha",
+                [0x036E] = "TextPocketWhite",
+                [0x036F] = "SetLayerVisibility",
+                [0x0370] = "StopWeatherAlphaBlend",
+                [0x0371] = "SetRepelSteps",
             };
             public static Dictionary<ushort, byte[]> CustomScrCmdParameters = new Dictionary<ushort, byte[]>() {
                 [0x0357] = new byte[] { 2, 2 },
