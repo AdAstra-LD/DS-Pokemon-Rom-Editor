@@ -204,10 +204,6 @@ namespace DSPRE {
             for (int i = 0; i < scriptCount; i++)
                 selectScriptFileComboBox.Items.Add("Script File " + i);
 
-            String exclMSG = "The script editor has been recently \"fixed\".\n" +
-                "Always keep an eye out for unexpected behavior.\n";
-            MessageBox.Show(exclMSG, "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
             currentScriptBox = scriptTextBox;
             currentLineNumbersBox = LineNumberTextBoxScript;
             selectScriptFileComboBox.SelectedIndex = 0;
@@ -225,7 +221,6 @@ namespace DSPRE {
             selectTextFileComboBox.SelectedIndex = 0;
             statusLabel.Text = "Ready";
         }
-
 
         private int UnpackRomCheckUserChoice() {
             // Check if extracted data for the ROM exists, and ask user if they want to load it.
