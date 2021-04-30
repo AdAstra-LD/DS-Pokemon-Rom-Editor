@@ -2,20 +2,22 @@
 
 Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features and bugfixes.
 
-![Screenshot](aDSPRE_114d.png)
-![Screenshot](bDSPRE_114d.png)
-![Screenshot](cDSPRE_114d.png)
+![Screenshot](aDSPRE_12.png)
+![Screenshot](bDSPRE_12.png)
+![Screenshot](cDSPRE_12.png)
 
 ## Misc changes to the official DSPRE
 - Significantly shorter load and save times.
 - Fixed script editor (it's also much faster now).
+- Fixed lots of problems with Japanese DP roms [either not loading or only partially functioning].
+
 - Added Advanced Header Search feature.
+- New NSBMD and NSBTX utilities.
 - Fixed Overworld sprite search algorithm for most (if not all) supported ROMs.
-- Lots of new icons.
+- Lots of new buttons and icons.
 - Fixed app name.
 - Fixed many Exceptions, which now show user-friendly messages.
-- Fixed error upon loading Dragon's Den header (Music not found).
-- Some fields will now show a coloured text depending on their value.
+- Some fields will now show a colored text depending on their value.
 - New ROM Toolbox.
 - Added new ALT key shortcuts (Hold alt to see which shortcuts are available).
 - Fixed Encounter Editor unpacking HG encounters for SS ROMs.
@@ -37,6 +39,7 @@ A handy window that shows all the available script commands and the parameters t
 Allows you to change the first map where the adventure begins and the initial money.
 
 ### Wild Encounters Editor:
+- Added wrench button to fix broken encounter files [whenever possible].
 - Added missing button functions (add and remove).
 - Wild Encounter Editor can now attempt to repair corrupted encounter files.
 - Editor now detects the selected header.
@@ -60,11 +63,17 @@ Allows you to change the first map where the adventure begins and the initial mo
 - Fixed "add matrix" and "remove matrix" buttons GUI numbering mismatch.
 - Fixed wrong row/col indices when resizing matrices.
 - Fixed junk input detector.
+- The coordinates of the selected map appear in the status bar.
 
 ### Map Editor:
 - Partial GUI redesign (now with fewer building controls and a more straightforward GUI).
 - New BGS Section.
 - Expanded collisions database.
+- Buildings can now be placed and moved with the mouse.
+- Fixed buildings wrong scale transform pivot.
+- Map models can be exported with embedded textures.
+- Sound Plates can be cleared with a button click.
+- Added flood fill feature to Permissions tab.
 - Added Section size labels to 3D Model, Terrain and BGS Tabs (Map Editor).
 - Added support for broken BTX detection to Map Editor and NSBTX Editor.
 - Fixed map screen randomly becoming 3D, even with the collision tab open.
@@ -90,7 +99,8 @@ Allows you to change the first map where the adventure begins and the initial mo
 ### Script Editor:
 - Replaced "Search Flag" with "Search any command".
 - Enabled some of the quick script cmd buttons.
-- Script editor can identify and report some errors.
+- Level scripts can be cleared with a button click.
+- The Script Editor can identify and report some errors.
 - Fixed problem with backward jumps.
 - Fixed Text Search and Replace (Results can be double-clicked).
 - Improved search speed.
@@ -103,3 +113,6 @@ Allows you to change the first map where the adventure begins and the initial mo
 - Fixed Text Search and Replace (Results can be double-clicked).
 - Improved search speed.
 - Added support for Chinese text.
+
+### Camera Editor:
+You can easily change the default camera position in game.
