@@ -451,7 +451,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.2" + Environment.NewLine
+            string message = "DS Pokémon Rom Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.2.1" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's Spiky's DS Map Editor, from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks go to Trifindo, Mikelan98, JackHack96, Mixone and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS Rom Hacking made the development of this tool possible.";
@@ -5267,6 +5267,9 @@ namespace DSPRE {
                 currentScriptBox = null;
                 currentLineNumbersBox = null;
             }
+
+            if (SyncNavigatorCB.Checked)
+                ScriptNavigatorTabControl.SelectedIndex = scriptEditorTabControl.SelectedIndex;
         }
         #endregion
         #region LineNumbers
@@ -5467,8 +5470,12 @@ namespace DSPRE {
                 TXTBoxScrollToResult(functionTextBox, cmdSearched, keywordPos);
             }
         }
-        private void TXTBoxScrollToResult(RichTextBox tb, string cmdSearched, int after) {
-            int cmdPos = tb.Find(cmdSearched, after, RichTextBoxFinds.MatchCase);
+        private void TXTBoxScrollToResult(RichTextBox tb, string cmdSearched, int searchFrom) {
+            int cmdPos = tb.Find(cmdSearched, searchFrom, RichTextBoxFinds.MatchCase);
+
+            if (cmdPos < 0)
+                return; //not found
+
             try {
                 tb.SelectionStart = cmdPos - 120;
             } catch (ArgumentOutOfRangeException) {
@@ -5498,6 +5505,10 @@ namespace DSPRE {
             functionTextBox.Clear();
             actionsTextBox.Clear();
 
+            scriptsNavListbox.Items.Clear();
+            functionsNavListbox.Items.Clear();
+            actionsNavListbox.Items.Clear();
+
             if (currentScriptFile.isLevelScript) {
                 scriptTextBox.Text += "Level script files are currently not supported.\nYou can use AdAstra's Level Scripts Editor.";
                 addScriptFileButton.Visible = false;
@@ -5523,7 +5534,9 @@ namespace DSPRE {
                     CommandContainer currentScript = currentScriptFile.allScripts[i];
 
                     /* Write header */
-                    scriptTextBox.AppendText("Script " + (i + 1) + ':' + Environment.NewLine, headerTextColor);
+                    string header = "Script " + (i + 1);
+                    scriptsNavListbox.Items.Add(header);
+                    scriptTextBox.AppendText(header + ':' + Environment.NewLine, headerTextColor);
 
                     /* If current script is identical to another, print UseScript instead of commands */
                     if (currentScript.useScript < 0) {
@@ -5547,7 +5560,9 @@ namespace DSPRE {
                     CommandContainer currentFunction = currentScriptFile.allFunctions[i];
 
                     /* Write Heaader */
-                    functionTextBox.AppendText("Function " + (i + 1) + ':' + Environment.NewLine, headerTextColor);
+                    string header = "Function " + (i + 1);
+                    functionsNavListbox.Items.Add(header);
+                    functionTextBox.AppendText(header + ':' + Environment.NewLine, headerTextColor);
 
                     /* If current function is identical to a script, print UseScript instead of commands */
                     if (currentFunction.useScript < 0) {
@@ -5569,7 +5584,9 @@ namespace DSPRE {
                 for (int i = 0; i < currentScriptFile.allActions.Count; i++) {
                     ActionContainer currentAction = currentScriptFile.allActions[i];
 
-                    actionsTextBox.AppendText("Action " + (i + 1) + ':' + Environment.NewLine, headerTextColor);
+                    string header = "Action " + (i + 1);
+                    actionsNavListbox.Items.Add(header);
+                    actionsTextBox.AppendText(header + ':' + Environment.NewLine, headerTextColor);
 
                     for (int j = 0; j < currentAction.actionCommandsList.Count; j++) {
                         if (currentAction.actionCommandsList[j].id != 0x00FE) {
@@ -6748,6 +6765,30 @@ namespace DSPRE {
             }
 
             disableHandlers = false;
+        }
+
+        private void scriptsNavListbox_SelectedIndexChanged(object sender, EventArgs e) {
+            NavigatorGoTo((ListBox)sender, 0, scriptTextBox, "Script");
+        }
+
+        private void functionsNavListbox_SelectedIndexChanged(object sender, EventArgs e) {
+            NavigatorGoTo((ListBox)sender, 1, functionTextBox, "Function");
+        }
+
+        private void actionsNavListbox_SelectedIndexChanged(object sender, EventArgs e) {
+            NavigatorGoTo((ListBox)sender, 2, actionsTextBox, "Action");
+        }
+
+        private void NavigatorGoTo(ListBox currentLB, int indexToSwitchTo, RichTextBox findHere, string keyword) {
+            int ind = currentLB.SelectedIndex;
+            if (ind < 0)
+                return;
+
+            if (scriptEditorTabControl.SelectedIndex != indexToSwitchTo) {
+                scriptEditorTabControl.SelectedIndex = indexToSwitchTo;
+            }
+
+            TXTBoxScrollToResult(findHere, keyword + ' ' + (ind + 1) + ':', 0);
         }
     }
 }

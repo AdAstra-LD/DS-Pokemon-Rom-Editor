@@ -108,7 +108,7 @@ namespace DSPRE {
 
             Process compress = new Process();
             compress.StartInfo.FileName = @"Tools\blz.exe";
-            compress.StartInfo.Arguments = "-en " + overlayFilePath;
+            compress.StartInfo.Arguments = "-en " + '"' + overlayFilePath + '"';
             Application.DoEvents();
             compress.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             compress.StartInfo.CreateNoWindow = true;
