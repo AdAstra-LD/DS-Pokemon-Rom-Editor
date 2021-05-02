@@ -5338,15 +5338,22 @@ namespace DSPRE {
         private void saveScriptFileButton_Click(object sender, EventArgs e) {
             /* Create new ScriptFile object */
             int idToAssign = selectScriptFileComboBox.SelectedIndex;
-               ScriptFile userEdited = new ScriptFile(scriptTextBox.Lines, functionTextBox.Lines, actionsTextBox.Lines, selectScriptFileComboBox.SelectedIndex);
+            ScriptFile userEdited = new ScriptFile(scriptTextBox.Lines, functionTextBox.Lines, actionsTextBox.Lines, selectScriptFileComboBox.SelectedIndex);
 
             /* Write new scripts to file */
-            if (userEdited.fileID == idToAssign) { //check if ScriptFile instance was created succesfully
+            if (userEdited.fileID != null){ //check if ScriptFile instance was created succesfully
                 userEdited.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex);
                 currentScriptFile = userEdited;
             } else {
                 MessageBox.Show("This " + typeof(ScriptFile).Name + " couldn't be saved.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+        private void clearCurrentLevelScriptButton_Click(object sender, EventArgs e) {
+            string path = RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + selectScriptFileComboBox.SelectedIndex.ToString("D4");
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create))) {
+                writer.Write(new byte[4]);
+            }
+            MessageBox.Show("Level script correctly cleared.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void importScriptFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .scr file */
@@ -6398,10 +6405,6 @@ namespace DSPRE {
             }
 
             disableHandlers = false;
-        }
-
-        private void clearCurrentLevelScriptButton_Click(object sender, EventArgs e) {
-            
         }
     }
 }

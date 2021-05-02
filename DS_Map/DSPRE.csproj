@@ -161,25 +161,7 @@
     <Compile Include="WildEditorDPPt.Designer.cs">
       <DependentUpon>WildEditorDPPt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Script Macros Forms\GiveItemDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Script Macros Forms\GiveItemDialog.Designer.cs">
-      <DependentUpon>GiveItemDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Script Macros Forms\GivePokémonDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Script Macros Forms\GivePokémonDialog.Designer.cs">
-      <DependentUpon>GivePokémonDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="ROMFiles\EncounterFile.cs" />
-    <Compile Include="Script Macros Forms\InsertValueDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Script Macros Forms\InsertValueDialog.Designer.cs">
-      <DependentUpon>InsertValueDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="ROMFiles\TextArchive.cs" />
     <Compile Include="ROMFiles\MapHeader.cs" />
     <Compile Include="RichTextBoxExt.cs" />
@@ -279,15 +261,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WildEditorHGSS.resx">
       <DependentUpon>WildEditorHGSS.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Script Macros Forms\GiveItemDialog.resx">
-      <DependentUpon>GiveItemDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Script Macros Forms\GivePokémonDialog.resx">
-      <DependentUpon>GivePokémonDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Script Macros Forms\InsertValueDialog.resx">
-      <DependentUpon>InsertValueDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main Window.resx">
       <DependentUpon>Main Window.cs</DependentUpon>

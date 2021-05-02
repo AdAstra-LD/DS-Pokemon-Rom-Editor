@@ -20,7 +20,7 @@ namespace DSPRE.ROMFiles {
         public List<CommandContainer> allScripts = new List<CommandContainer>();
         public List<CommandContainer> allFunctions = new List<CommandContainer>();
         public List<ActionContainer> allActions = new List<ActionContainer>();
-        public int fileID = -1;
+        public int? fileID = null;
         public bool isLevelScript = new bool();
         #endregion
 
@@ -709,7 +709,7 @@ namespace DSPRE.ROMFiles {
                 return;
 
             if (blindmode) {
-                File.Copy(RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + fileID.ToString("D4"), sf.FileName, overwrite: true);
+                File.Copy(RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + ((int)fileID).ToString("D4"), sf.FileName, overwrite: true);
 
                 string msg = "";
                 if (!isLevelScript)
