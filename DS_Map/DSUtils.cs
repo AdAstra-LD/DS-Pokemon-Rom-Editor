@@ -18,6 +18,8 @@ namespace DSPRE {
         public const int ERR_OVERLAY_NOTFOUND = -1;
         public const int ERR_OVERLAY_ALREADY_UNCOMPRESSED = -2;
 
+        public const string backupSuffix = ".compressedBackup";
+
         public static void WriteToFile(string filepath, byte[] bytesToWrite, uint writeAt = 0, int readFrom = 0, bool fromScratch = false) {
             if (fromScratch)
                 File.Delete(filepath);
@@ -75,15 +77,10 @@ namespace DSPRE {
             }
 
             if (makeBackup) {
-                if (File.Exists(overlayFilePath + ".compressedBackup")) {
-                    if (new FileInfo(overlayFilePath).Length > new FileInfo(overlayFilePath + ".compressedBackup").Length) { //if overlay is bigger than its backup
-                        Console.WriteLine("Overlay " + overlayNumber + " is already uncompressed and its compressed backup exists.");
-                        return ERR_OVERLAY_ALREADY_UNCOMPRESSED;
-                    } else {
-                        File.Delete(overlayFilePath + ".compressedBackup");
-                    }
+                if (File.Exists(overlayFilePath + backupSuffix)) {
+                    File.Delete(overlayFilePath + backupSuffix);
                 }
-                File.Copy(overlayFilePath, overlayFilePath + ".compressedBackup");
+                File.Copy(overlayFilePath, overlayFilePath + backupSuffix);
             }
 
             Process unpack = new Process();
@@ -122,16 +119,16 @@ namespace DSPRE {
         public static void RestoreOverlayFromCompressedBackup(int overlayNumber, bool eventEditorIsReady) {
             String overlayFilePath = GetOverlayPath(overlayNumber);
 
-            if (File.Exists(overlayFilePath + ".backup")) {
-                if (new FileInfo(overlayFilePath).Length <= new FileInfo(overlayFilePath + ".backup").Length) { //if overlay is bigger than its backup
+            if (File.Exists(overlayFilePath + backupSuffix)) {
+                if (new FileInfo(overlayFilePath).Length <= new FileInfo(overlayFilePath + backupSuffix).Length) { //if overlay is bigger than its backup
                     Console.WriteLine("Overlay " + overlayNumber + " is already compressed.");
                     return;
                 } else {
                     File.Delete(overlayFilePath);
-                    File.Move(overlayFilePath + ".backup", overlayFilePath);
+                    File.Move(overlayFilePath + backupSuffix, overlayFilePath);
                 }
             } else {
-                string msg = "Overlay File " + '"' + overlayFilePath + ".backup" + '"' + " couldn't be found and restored.";
+                string msg = "Overlay File " + '"' + overlayFilePath + backupSuffix + '"' + " couldn't be found and restored.";
                 Console.WriteLine(msg);
 
                 if (eventEditorIsReady)

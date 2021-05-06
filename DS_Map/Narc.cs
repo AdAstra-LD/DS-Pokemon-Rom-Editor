@@ -2,27 +2,22 @@
 using System.IO;
 using System.Windows.Forms;
 
-namespace NarcAPI
-{
-    public class Narc
-    {
+namespace NarcAPI {
+    public class Narc {
         public String Name { get; set; }
         private MemoryStream[] Elements;
         private int FatbOffset, FntbOffset, FimgOffset;
 
-        private Narc(String name)
-        {
+        private Narc(String name) {
             this.Name = name;
         }
 
-        public static Narc NewEmpty(String name = "NewNarc")
-        {
+        public static Narc NewEmpty(String name = "NewNarc") {
             Narc narc = new Narc(name);
             return narc;
         }
 
-        public static Narc Open(String filePath)
-        {
+        public static Narc Open(String filePath) {
             FileStream file = File.OpenRead(filePath);
             Narc narc = new Narc(Path.GetFileNameWithoutExtension(filePath));
             BinaryReader br = new BinaryReader(file);
@@ -37,14 +32,12 @@ namespace NarcAPI
             return narc;
         }
 
-        public static Narc FromFolder(String dirPath)
-        {
+        public static Narc FromFolder(String dirPath) {
             Narc narc = new Narc(Path.GetDirectoryName(dirPath));
             String[] fileNames = Directory.GetFiles(dirPath, "*.*", SearchOption.AllDirectories);
             uint numberOfElements = (uint)fileNames.Length;
             narc.Elements = new MemoryStream[numberOfElements];
-            for (int i = 0; i < numberOfElements; i++)
-            {
+            for (int i = 0; i < numberOfElements; i++) {
                 FileStream fs = File.OpenRead(fileNames[i]);
                 MemoryStream ms = new MemoryStream();
                 byte[] buffer = new byte[fs.Length];
@@ -56,8 +49,7 @@ namespace NarcAPI
             return narc;
         }
 
-        public void Save(String filePath)
-        {
+        public void Save(String filePath) {
             uint fileSizeOffset, fimgSizeOffset, curOffset;
 
             FileStream file = File.Create(filePath);
@@ -74,8 +66,7 @@ namespace NarcAPI
             bw.Write((UInt32)(0xC + Elements.Length * 8));  // FATB Size
             bw.Write((UInt32)Elements.Length);              // Number of elements
             curOffset = 0;
-            for (int i = 0; i < Elements.Length; i++)
-            {
+            for (int i = 0; i < Elements.Length; i++) {
                 while (curOffset % 4 != 0) curOffset++;     // Force offsets to be a multiple of 4
                 bw.Write(curOffset);
                 curOffset += (uint)Elements[i].Length;
@@ -92,8 +83,7 @@ namespace NarcAPI
             bw.Write((UInt32)0x0);
             curOffset = 0;
             byte[] buffer;
-            for (int i = 0; i < Elements.Length; i++)
-            {
+            for (int i = 0; i < Elements.Length; i++) {
                 while (curOffset % 4 != 0) { bw.Write((Byte)0xFF); curOffset++; }     // Force offsets to be a multiple of 4
                 // Data writin'
                 buffer = new byte[Elements[i].Length];
@@ -111,14 +101,13 @@ namespace NarcAPI
             bw.Close();
         }
 
-        public void ExtractToFolder(String dirPath)
-        {
+        public void ExtractToFolder(String dirPath) {
             Console.WriteLine(dirPath);
             if (Directory.Exists(dirPath)) {
                 try {
                     Directory.Delete(dirPath, true);
                 } catch (IOException) {
-                    MessageBox.Show("Can't access temp directory: \n" + dirPath +"\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Can't access temp directory: \n" + dirPath + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -131,8 +120,7 @@ namespace NarcAPI
 
             FileStream file;
             byte[] buffer;
-            for (int i = 0; i < Elements.Length; i++)
-            {
+            for (int i = 0; i < Elements.Length; i++) {
                 file = File.Create(Path.Combine(dirPath, i.ToString("D4")));
                 buffer = new byte[Elements[i].Length];
                 Elements[i].Seek(0, SeekOrigin.Begin);
@@ -144,31 +132,25 @@ namespace NarcAPI
 
         public void Free()              // Libera todos los recursos de memoria asociados (cierra los streams)
         {
-            for (int i = 0; i < Elements.Length; i++)
-            {
+            for (int i = 0; i < Elements.Length; i++) {
                 Elements[i].Close();
             }
         }
 
-        public MemoryStream this[int elemIndex]
-        {
-            get
-            {
+        public MemoryStream this[int elemIndex] {
+            get {
                 return Elements[elemIndex];
             }
-            set
-            {
+            set {
                 Elements[elemIndex] = value;
             }
         }
 
-        public int GetElementsLength()
-        {
+        public int GetElementsLength() {
             return Elements.Length;
         }
 
-        private void ReadOffsets(BinaryReader br)
-        {
+        private void ReadOffsets(BinaryReader br) {
             FatbOffset = 0x10;
             br.BaseStream.Position = 0x18;                  // Number of elements
             FntbOffset = (int)br.ReadUInt32() * 8 + FatbOffset + 12;
@@ -176,8 +158,7 @@ namespace NarcAPI
             FimgOffset = (int)br.ReadUInt32() + FntbOffset;
         }
 
-        private void ReadElements(BinaryReader br)
-        {
+        private void ReadElements(BinaryReader br) {
             uint numberOfElements;
             uint[] startOffsets, endOffsets;
             // Create array of elements
@@ -188,8 +169,7 @@ namespace NarcAPI
             br.BaseStream.Position = FatbOffset + 0xC;
             for (int i = 0; i < numberOfElements; i++) { startOffsets[i] = br.ReadUInt32(); endOffsets[i] = br.ReadUInt32(); }
             // Read elements
-            for (int i = 0; i < numberOfElements; i++)
-            {
+            for (int i = 0; i < numberOfElements; i++) {
                 MemoryStream ms;
                 byte[] buffer;
                 br.BaseStream.Position = FimgOffset + startOffsets[i] + 0x8;
