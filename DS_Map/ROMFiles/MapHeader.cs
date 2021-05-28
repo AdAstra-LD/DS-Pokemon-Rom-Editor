@@ -162,8 +162,8 @@ namespace DSPRE.ROMFiles {
                 locationSpecifier = reader.ReadByte();
 
                 byte mapSettings = reader.ReadByte();
-                battleBackground = (byte)(mapSettings & 0b_1111);
-                flags = (byte)(mapSettings >> 4 & 0b_1111);
+                battleBackground = (byte)(mapSettings & 0b1111);
+                flags = (byte)(mapSettings >> 4 & 0b1111);
             }
         }
         #endregion Constructors
@@ -187,7 +187,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(cameraAngleID);
                 writer.Write(locationSpecifier);
 
-                byte mapSettings = (byte)((battleBackground & 0b_1111) + ((flags & 0b_1111) << 4));
+                byte mapSettings = (byte)((battleBackground & 0b1111) + ((flags & 0b1111) << 4));
                 writer.Write(mapSettings);
             }
             return newData.ToArray();
@@ -226,9 +226,9 @@ namespace DSPRE.ROMFiles {
                     cameraAngleID = reader.ReadByte();
 
                     ushort mapSettings = reader.ReadUInt16();
-                    locationSpecifier = (byte)(mapSettings & 0b_1111_111);
-                    battleBackground = (byte)(mapSettings >> 7 & 0b_1111_1);
-                    flags = (byte)(mapSettings >> 12 & 0b_1111);
+                    locationSpecifier = (byte)(mapSettings & 0b1111_111);
+                    battleBackground = (byte)(mapSettings >> 7 & 0b1111_1);
+                    flags = (byte)(mapSettings >> 12 & 0b1111);
 
                 } catch (EndOfStreamException) {
                     MessageBox.Show("Error loading header " + ID + '.', "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -256,7 +256,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(weatherID);
                 writer.Write(cameraAngleID);
 
-                ushort mapSettings = (ushort)((locationSpecifier & 0b_1111_111) + ((battleBackground & 0b_1111_1) << 7) + ((flags & 0b_1111) << 12));
+                ushort mapSettings = (ushort)((locationSpecifier & 0b1111_111) + ((battleBackground & 0b1111_1) << 7) + ((flags & 0b1111) << 12));
                 writer.Write(mapSettings);
             }
             return newData.ToArray();
@@ -287,9 +287,9 @@ namespace DSPRE.ROMFiles {
                     areaDataID = reader.ReadByte();
 
                     ushort coords = reader.ReadUInt16();
-                    unknown0 = (byte)(coords & 0b_1111); //get 4 bits
-                    worldmapX = (byte)((coords >> 4) & 0b_1111_11); //get 6 bits after the first 4
-                    worldmapY = (byte)((coords >> 10) & 0b_1111_11); //get 6 bits after the first 10
+                    unknown0 = (byte)(coords & 0b1111); //get 4 bits
+                    worldmapX = (byte)((coords >> 4) & 0b1111_11); //get 6 bits after the first 4
+                    worldmapY = (byte)((coords >> 10) & 0b1111_11); //get 6 bits after the first 10
 
                     matrixID = reader.ReadUInt16();
                     scriptFileID = reader.ReadUInt16();
@@ -303,8 +303,8 @@ namespace DSPRE.ROMFiles {
                     weatherID = reader.ReadByte();
 
                     byte cameraAndArea = reader.ReadByte();
-                    areaSettings = (byte)(cameraAndArea & 0b_1111); //get 4 bits 
-                    cameraAngleID = (byte)(cameraAndArea >> 4 & 0b_1111); //get 4 bits after the first 4
+                    areaSettings = (byte)(cameraAndArea & 0b1111); //get 4 bits 
+                    cameraAngleID = (byte)(cameraAndArea >> 4 & 0b1111); //get 4 bits after the first 4
 
 
                     followMode = reader.ReadByte();
@@ -324,7 +324,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write((byte)wildPokémon);
                 writer.Write(areaDataID);
 
-                ushort worldMapCoordinates = (ushort)((unknown0 & 0b_1111) + ((worldmapX & 0b_1111_11) << 4) + ((worldmapY & 0b_1111_11) << 10));
+                ushort worldMapCoordinates = (ushort)((unknown0 & 0b1111) + ((worldmapX & 0b1111_11) << 4) + ((worldmapY & 0b1111_11) << 10));
                 writer.Write(worldMapCoordinates);
 
                 writer.Write(matrixID);
@@ -338,7 +338,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(areaIcon);
                 writer.Write(weatherID);
 
-                byte cameraAndArea = (byte)((areaSettings & 0b_1111) + ((cameraAngleID & 0b_1111) << 4));
+                byte cameraAndArea = (byte)((areaSettings & 0b1111) + ((cameraAngleID & 0b1111) << 4));
                 writer.Write(cameraAndArea);
 
                 writer.Write(followMode);

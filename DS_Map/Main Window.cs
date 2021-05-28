@@ -283,6 +283,7 @@ namespace DSPRE {
                     isItemRadioButton.Enabled = true;
                     OWTypeChanged(null, null);
                 }
+                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied) addHeaderBTN.Enabled = true;
             }
         }
         private void scriptCommandsDatabaseToolStripButton_Click(object sender, EventArgs e) {
@@ -794,7 +795,7 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack Header Editor NARCs... Please wait.";
             Update();
 
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.synthOverlay, DirNames.textArchives }, toolStripProgressBar);
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.synthOverlay, DirNames.textArchives, DirNames.dynamicHeaders }, toolStripProgressBar);
 
             statusLabel.Text = "Reading internal names... Please wait.";
             Update();
@@ -804,7 +805,7 @@ namespace DSPRE {
             headerListBoxNames = new List<string>();
             try {
                 using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.internalNamesLocation))) {
-                    int headerCount = romInfo.GetHeaderCount();
+                    int headerCount = RomInfo.GetHeaderCount();
 
                     for (int i = 0; i < headerCount; i++) {
                         byte[] row = reader.ReadBytes(RomInfo.internalNameLength);
@@ -875,6 +876,28 @@ namespace DSPRE {
             }
             if (headerListBox.Items.Count > 0)
                 headerListBox.SelectedIndex = 0;
+
+            ROMToolboxDialog dialog = new ROMToolboxDialog();
+            if (dialog.CheckDynamicHeaders()) addHeaderBTN.Enabled = true;
+        }
+        private void addHeaderBTN_Click(object sender, EventArgs e)
+        {
+            // Add new file in the dynamic headers directory
+            string sourcePath = RomInfo.GetDynamicHeadersDirPath() + "\\" + "0000";
+            string destPath = RomInfo.GetDynamicHeadersDirPath() + "\\" + RomInfo.GetHeaderCount().ToString("D4");
+            File.Copy(sourcePath, destPath);
+            
+            // Add row to internal names table
+            string nameString = "4E 45 57 4D 41 50 00 00 00 00 00 00 00 00 00 00";
+            DSUtils.WriteToFile(RomInfo.internalNamesLocation, ROMToolboxDialog.HexStringToByteArray(nameString), (uint)RomInfo.internalNamesLocation.Length);
+
+            // Update headers ListBox and internal names list
+            headerListBox.Items.Add(headerListBox.Items.Count + " -   NEWMAP");
+            headerListBoxNames.Add(headerListBox.Items.Count + " -   NEWMAP");
+            internalNames.Add("NEWMAP");
+
+            // Select new header
+            headerListBox.SelectedIndex = headerListBox.Items.Count - 1;
         }
         private void areaDataUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers)
@@ -979,7 +1002,14 @@ namespace DSPRE {
 
             /* Obtain current header ID from listbox*/
             ushort headerNumber = ushort.Parse(headerListBox.SelectedItem.ToString().Substring(0, internalNames.Count.ToString().Length));
-            currentHeader = MapHeader.LoadFromARM9(headerNumber);
+
+            /* Check if dynamic headers patch has been applied, and load header from arm9 or a/0/5/0 accordingly */
+            ROMToolboxDialog dialog = new ROMToolboxDialog();
+            if (dialog.CheckDynamicHeaders())
+            {
+                currentHeader = MapHeader.BuildFromFile(RomInfo.GetDynamicHeadersDirPath() + "\\" + headerNumber.ToString("D4"), headerNumber, 0);
+            }
+            else currentHeader = MapHeader.LoadFromARM9(headerNumber);
             refreshHeaderEditorFields();
         }
 
@@ -1309,9 +1339,18 @@ namespace DSPRE {
             mainTabControl.SelectedTab = textEditorTabPage;
         }
         private void saveHeaderButton_Click(object sender, EventArgs e) {
-            uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
-            DSUtils.WriteToArm9(currentHeader.ToByteArray(), headerOffset);
 
+            /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
+            ROMToolboxDialog dialog = new ROMToolboxDialog();
+            if (dialog.CheckDynamicHeaders())
+            {
+                DSUtils.WriteToFile(RomInfo.GetDynamicHeadersDirPath() + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, true);
+            }
+            else
+            {
+                uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
+                DSUtils.WriteToArm9(currentHeader.ToByteArray(), headerOffset);
+            }
             disableHandlers = true;
 
             updateCurrentInternalName();

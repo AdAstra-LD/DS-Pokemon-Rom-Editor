@@ -60,6 +60,8 @@ namespace DSPRE {
             synthOverlay,
             textArchives,
 
+            dynamicHeaders,
+
             matrices,
 
             maps,
@@ -294,17 +296,19 @@ namespace DSPRE {
                         [DirNames.areaData] = @"data\fielddata\areadata\area_data.narc",
 
                         [DirNames.eventFiles] = @"data\fielddata\eventdata\zone_event" + suffix + ".narc",
-                         [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
+                        [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
                         [DirNames.OWSprites] = @"data\data\mmodel\mmodel.narc",
 
                         [DirNames.scripts] = @"data\fielddata\script\scr_seq" + suffix + ".narc",
-                         [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion[0]) + '_' + "enc_data.narc",
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion[0]) + '_' + "enc_data.narc",
                     };
                     break;
                 case "Plat":
                     packedDirsDict = new Dictionary<DirNames, string>() {
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.textArchives] = @"data\msgdata\" + gameVersion.Substring(0,2).ToLower() + '_' + "msg.narc",
+
+                        [DirNames.dynamicHeaders] = @"data\debug\cb_edit\d_test.narc",
 
                         [DirNames.matrices] = @"data\fielddata\mapmatrix\map_matrix.narc",
 
@@ -327,6 +331,8 @@ namespace DSPRE {
                     packedDirsDict = new Dictionary<DirNames, string>() {
                         [DirNames.synthOverlay] = @"data\a\0\2\8",
                         [DirNames.textArchives] = @"data\a\0\2\7",
+
+                        [DirNames.dynamicHeaders] = @"data\a\0\5\0",
 
                         [DirNames.matrices] = @"data\a\0\4\1",
 
@@ -366,6 +372,10 @@ namespace DSPRE {
             } else {
                 return gameDirs[DirNames.exteriorBuildingModels].unpackedDir;
             }
+        }
+        public static string GetDynamicHeadersDirPath()
+        {
+            return workDir + "\\" + "unpacked" + "\\" + "dynamicHeaders";
         }
         public static void SetOWtable () {
             switch (gameFamily) {
@@ -532,7 +542,7 @@ namespace DSPRE {
                     break;
             }
         }
-        public int GetHeaderCount() {
+        public static int GetHeaderCount() {
             return (int)new FileInfo(internalNamesLocation).Length / internalNameLength;
         }
         public string[] GetItemNames() {

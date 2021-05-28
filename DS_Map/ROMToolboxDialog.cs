@@ -70,11 +70,33 @@ namespace DSPRE {
                 subroutine = (byte[])new ResourceManager("DSPRE.Resources.ROMToolboxDB.BDHCAMPatchDB", Assembly.GetExecutingAssembly()).GetObject(RomInfo.romID + "_cam");
             }
         }
+        internal class DynamicHeadersPatchData
+        {
+            internal uint initOffset;
+            internal string initString;
+            internal string REFERENCE_STRING = "19 00 C0 46";
+            internal int pointerDiff;
 
+            internal DynamicHeadersPatchData()
+            {
+                initOffset = ToolboxDB.getDynamicHeadersInitOffset(RomInfo.romID);
+                initString = ToolboxDB.getDynamicHeadersInitString(RomInfo.romID);
+
+                if (RomInfo.gameFamily == "HGSS")
+                {
+                    pointerDiff = (int)(initOffset - ToolboxDB.getDynamicHeadersInitOffset("IPKE"));
+                }
+                else
+                {
+                    pointerDiff = (int)(initOffset - ToolboxDB.getDynamicHeadersInitOffset("CPUE"));
+                }
+            }
+        }
         public uint expandedARMfileID = ToolboxDB.syntheticOverlayFileNumbersDB[RomInfo.gameFamily];
         public static bool flag_standardizedItems { get; private set; } = false;
         public static bool flag_arm9Expanded { get; private set; } = false;
         public static bool flag_BDHCamPatchApplied { get; private set; } = false;
+        public static bool flag_DynamicHeadersPatchApplied { get; private set; } = false;
         public static bool flag_MatrixExpansionApplied { get; private set; } = false;
         public static bool overlay1MustBeRestoredFromBackup { get; private set; } = true;
 
@@ -95,6 +117,7 @@ namespace DSPRE {
             switch (RomInfo.gameFamily) {
                 case "DP":
                     DisableOverlay1patch("Unsupported");
+                    DisableDynamicHeadersPatch("Unsupported");
                     DisableMatrixExpansionPatch("Unsupported");
                     DisableScrcmdRepointPatch("Unsupported");
                     break;
@@ -103,6 +126,7 @@ namespace DSPRE {
                     DisableMatrixExpansionPatch("Unsupported");
                     DisableScrcmdRepointPatch("Unsupported");
                     CheckFilesBDHCamPatchApplied();
+                    CheckDynamicHeadersPatchApplied();
                     break;
                 case "HGSS":
                     if (!DSUtils.CheckOverlayHasCompressionFlag(1)) {
@@ -119,6 +143,8 @@ namespace DSPRE {
                         DisableMatrixExpansionPatch("Unsupported\nlanguage");
                         DisableScrcmdRepointPatch("Unsupported\nlanguage");
                     }
+
+                    CheckDynamicHeadersPatchApplied();
                     break;
             }
         }
@@ -142,6 +168,13 @@ namespace DSPRE {
             arm9expansionTextLBL.Enabled = false;
             arm9expansionLBL.Enabled = false;
             applyARM9ExpansionButton.Text = reason;
+        }
+        private void DisableDynamicHeadersPatch(string reason)
+        {
+            applyDynamicHeadersButton.Enabled = false;
+            dynamicHeadersTextLBL.Enabled = false;
+            dynamicHeadersLBL.Enabled = false;
+            applyDynamicHeadersButton.Text = reason;
         }
         private void DisableMatrixExpansionPatch(string reason) {
             expandMatrixButton.Enabled = false;
@@ -203,6 +236,27 @@ namespace DSPRE {
                     break;
             }
             return 1; //arm9 Expansion has already been applied
+        }
+        private int CheckDynamicHeadersPatchApplied()
+        {
+            if (!flag_DynamicHeadersPatchApplied)
+            {
+                if (!CheckDynamicHeaders()) return 0;
+            }
+
+            flag_DynamicHeadersPatchApplied = true;
+            dynamicHeadersPatchCB.Visible = true;
+
+            DisableDynamicHeadersPatch("Already applied");
+            return 1;
+        }
+        public bool CheckDynamicHeaders()
+        {
+            DynamicHeadersPatchData data = new DynamicHeadersPatchData();
+            ushort initValue = BitConverter.ToUInt16(DSUtils.ReadFromArm9(data.initOffset, 0x2), 0);
+
+            if (initValue == 0xB500) return true;
+            else return false;
         }
         private int CheckFilesBDHCamPatchApplied() {
             if (!flag_arm9Expanded) { 
@@ -547,6 +601,131 @@ namespace DSPRE {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+        private void dynamicHeadersButton_Click(object sender, EventArgs e)
+        {
+            DynamicHeadersPatchData data = new DynamicHeadersPatchData();
+
+            DialogResult d;
+            d = MessageBox.Show("Confirming this process will apply the following changes:\n\n" +
+                "- Backup ARM9 file (arm9.bin.backup will be created)." + "\n\n" +
+                "- Non ho sbatti di listare i cambiamenti" + "\n\n" +
+                "Do you wish to continue?",
+                "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (d == DialogResult.Yes)
+            {
+                File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", overwrite: true);
+
+                try
+                {
+                    /* Write main routine (HG USA):
+
+                     00 B5		        push (lr)
+                     01 1C		        mov r1, r0
+                     32 20*		        mov r0, #0x32
+                     00 22		        mov r2, #0x0
+                     CC F7 58 F9**	    bl 0x02007524	@Load_Memory
+                     03 1C		        mov r3, r0
+                     DF F7 49 FC**	    bl 0x0201AB0C	@Free_Memory
+                     00 BD		        pop, pc
+
+                    *FOR PLATINUM (all languages):
+                     94 20		        mov r0, #0x94
+
+                    **BRANCHES FOR OTHER VERSIONS/LANGUAGES:
+
+                     HG ESP (IPKS): 
+                     CC F7 5C F9	    bl 0x02007524	@Load_Memory
+                     DF F7 4D FC	    bl 0x0201AB0C	@Free_Memory
+
+                     HG JAP (IPKJ) and SS JAP (IPGJ):
+                     CC F7 08 FB	    bl 0x0200743C	@Load_Memory
+                     DF F7 C7 FC	    bl 0x0201A7C0	@Free_Memory
+
+                     Plat USA (CPUE):
+                     CC F7 48 FD	    bl 0x02006AC0	@Load_Memory
+                     DE F7 C7 F8	    bl 0x020181C4	@Free_Memory
+                    
+                     Plat ESP (CPUS), ITA (CPUI), FRA (CPUF), GER (CPUD):
+                     CC F7 00 FD	    bl 0x02006AD4	@Load_Memory
+                     CC F7 74 FC	    bl 0x02018234	@Free_Memory
+
+                     Plat JAP (CPUJ):
+                     CC F7 0A FF	    bl 0x02006A00	@Load_Memory
+                     DE F7 3D F9	    bl 0x02017E6C	@Free_Memory
+                     */
+
+                    DSUtils.WriteToArm9(HexStringToByteArray(data.initString), data.initOffset);
+
+                    /* - Neutralize instances of HeaderID * 0x18 so the base offset the data is read from is always 0x0:
+                           
+                            Replace this:
+                            18 21       mov r1, #0x18
+                            41 43       mul r1, r0
+
+                            with this:
+                            19 00       lsl r1, r3, 0
+                            C0 46       nop
+        
+                      - Change pointers to header fields from ARM9_HEADER_TABLE_OFFSET + n to simply 0 + n
+                     
+                       * for ESP HG (IPKS): subtract 0x8 from every reference offset
+                       * for JAP HG (IPKJ) and SS (IPGJ): subtract 0x448 from every reference offset
+                       * for Plat ESP, ITA, FRA, GER, JAP: add 0xA4 to every reference offset
+                       * for Plat JAP: subtract 0x444 from every reference offset
+
+                     */
+
+                    foreach (Tuple<uint, uint> reference in ToolboxDB.dynamicHeadersPointersDB[RomInfo.gameFamily])
+                    {
+                        DSUtils.WriteToArm9(HexStringToByteArray(data.REFERENCE_STRING), (uint)(reference.Item1 + data.pointerDiff));
+
+                        uint pointerValue = BitConverter.ToUInt32(DSUtils.ReadFromArm9((uint)(reference.Item2 + data.pointerDiff), 4), 0) - PokeDatabase.System.headerOffsetsDict[RomInfo.romID] - 0x02000000;
+                        DSUtils.WriteToArm9(BitConverter.GetBytes(pointerValue), (uint)(reference.Item2 + data.pointerDiff));
+                    }
+
+                    if (RomInfo.gameFamily == "HGSS")
+                    {
+                        /*  Special case: at 0x3B522 (non-JAP and non-Spanish HG offset) there is an instruction 
+                            between the mov r1, #0x18 and mul r1, r0 commands, so we must handle this separately */
+
+                        DSUtils.WriteToArm9(HexStringToByteArray("19 00"), (uint)(0x3B522 + data.pointerDiff));
+                        DSUtils.WriteToArm9(HexStringToByteArray("C0 46"), (uint)(0x3B526 + data.pointerDiff));
+                        DSUtils.WriteToArm9(HexStringToByteArray("00 00 00 00"), (uint)(0x3B53C + data.pointerDiff));
+                    }
+
+                    // Clear the dynamic headers directory in 'unpacked'
+                    string headersDir = RomInfo.GetDynamicHeadersDirPath();
+                    Directory.Delete(headersDir, true);
+                    Directory.CreateDirectory(headersDir);
+
+                    /* Now move the headers data from arm9 to the new directory. Upon saving the ROM,
+                       the data will be packed into a NARC and replace a/0/5/0 in HGSS or 
+                       debug/cb_edit/d_test.narc in Platinum */
+
+                    for (int i = 0; i < RomInfo.GetHeaderCount(); i++)
+                    {
+                        byte[] headerData = MapHeader.LoadFromARM9((ushort)i).ToByteArray();
+                        DSUtils.WriteToFile(headersDir + "\\" + i.ToString("D4"), headerData);
+                    }
+
+                    DisableDynamicHeadersPatch("Already applied");
+                    dynamicHeadersPatchCB.Visible = true;
+                    flag_DynamicHeadersPatchApplied = true;
+
+                    MessageBox.Show("The headers are now dynamically allocated in memory.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch
+                {
+                    MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 backup (arm9.bin.backup).", "Something went wrong",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
         #region Mikelan's custom commands
         private void applyCustomCommands(object sender, EventArgs e) {
             int expTableOffset = GetCommandTableOffset();
@@ -731,5 +910,7 @@ namespace DSPRE {
         private void repointScrcmdButton_Click(object sender, EventArgs e) {
 
         }
+
+
     }
 }
