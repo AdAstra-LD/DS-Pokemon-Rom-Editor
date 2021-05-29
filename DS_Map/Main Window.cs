@@ -889,7 +889,7 @@ namespace DSPRE {
             
             // Add row to internal names table
             string nameString = "4E 45 57 4D 41 50 00 00 00 00 00 00 00 00 00 00";
-            DSUtils.WriteToFile(RomInfo.internalNamesLocation, ROMToolboxDialog.HexStringToByteArray(nameString), (uint)RomInfo.internalNamesLocation.Length);
+            DSUtils.WriteToFile(RomInfo.internalNamesLocation, ROMToolboxDialog.HexStringToByteArray(nameString), (uint)RomInfo.GetHeaderCount() * 0x10);
 
             // Update headers ListBox and internal names list
             headerListBox.Items.Add(headerListBox.Items.Count + " -   NEWMAP");
