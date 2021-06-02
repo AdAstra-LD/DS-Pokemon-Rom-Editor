@@ -58,10 +58,8 @@ namespace DSPRE.Resources.ROMToolboxDB {
         };
         public static uint BDHCamSubroutineOffset = 0x000115B0;
 
-        public static uint getDynamicHeadersInitOffset(string romID)
-        {
-            switch(romID)
-            {
+        public static uint getDynamicHeadersInitOffset(string romID) {
+            switch (romID) {
                 case "CPUE":
                     return 0x3A024;
                 case "CPUS":
@@ -80,10 +78,8 @@ namespace DSPRE.Resources.ROMToolboxDB {
                     return 0x3B268;
             }
         }
-        public static string getDynamicHeadersInitString(string romID)
-        {
-            switch (romID)
-            {
+        public static string getDynamicHeadersInitString(string romID) {
+            switch (romID) {
                 case "CPUE":
                     return "00 B5 01 1C 94 20 00 22 CC F7 48 FD 03 1C DE F7 C7 F8 00 BD";
                 case "CPUS":
@@ -102,8 +98,7 @@ namespace DSPRE.Resources.ROMToolboxDB {
                     return "00 B5 01 1C 32 20 00 22 CC F7 58 F9 03 1C DF F7 49 FC 00 BD";
             }
         }
-        public static Dictionary<string, Tuple<uint, uint>[]> dynamicHeadersPointersDB = new Dictionary<string, Tuple<uint, uint>[]>()
-        {
+        public static Dictionary<string, Tuple<uint, uint>[]> dynamicHeadersPointersDB = new Dictionary<string, Tuple<uint, uint>[]>() {
             // format: headerID*18 offset, (ARM9_HEADER_TABLE_OFFSET + n) offset
 
             ["Plat"] = new Tuple<uint, uint>[] {
@@ -168,10 +163,10 @@ namespace DSPRE.Resources.ROMToolboxDB {
             [new uint[] { 0x0203AF8C }] = "3E 06 00 00",
             [new uint[] { 0x0203AF90 }] = "3C 1F 00 00",
             [new uint[] { 0x0203AFA8 }] = "50 1F 00 00",
-            [new uint[] {   0x0203AFF8, 
-                            0x0203B108, 
-                            0x0203B1F0, 
-                            0x0203B25C  }] = "C4 12 00 00",
+            [new uint[] { 0x0203AFF8,
+                          0x0203B108,
+                          0x0203B1F0,
+                          0x0203B25C }] = "C4 12 00 00",
             [new uint[] { 0x0203B088 }] = "84 0C 00 00",
             [new uint[] { 0x0203B0BC }] = "7C 0C 00 00",
         };

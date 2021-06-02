@@ -24,7 +24,7 @@ namespace DSPRE {
                 initOffset = ToolboxDB.arm9ExpansionOffsetsDB[nameof(initOffset) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage] - 0x02000000;
                 branchString = ToolboxDB.arm9ExpansionCodeDB[nameof(branchString) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
 
-                if (RomInfo.gameFamily == "Plat" ) {
+                if (RomInfo.gameFamily == "Plat") {
                     initString = ToolboxDB.arm9ExpansionCodeDB[nameof(initString) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
                 } else {
                     initString = ToolboxDB.arm9ExpansionCodeDB[nameof(initString) + "_" + RomInfo.gameFamily];
@@ -45,12 +45,12 @@ namespace DSPRE {
 
             internal byte[] subroutine;
 
-            internal BDHCAMPatchData () {
+            internal BDHCAMPatchData() {
                 switch (RomInfo.gameFamily) {
                     case "Plat":
                         overlayNumber = 5;
                         branchString = ToolboxDB.BDHCamCodeDB[nameof(branchString) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
-                        
+
                         branchOffset = ToolboxDB.BDHCamOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
                         overlayOffset1 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset1) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
                         overlayOffset2 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset2) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
@@ -70,24 +70,19 @@ namespace DSPRE {
                 subroutine = (byte[])new ResourceManager("DSPRE.Resources.ROMToolboxDB.BDHCAMPatchDB", Assembly.GetExecutingAssembly()).GetObject(RomInfo.romID + "_cam");
             }
         }
-        internal class DynamicHeadersPatchData
-        {
+        internal class DynamicHeadersPatchData {
             internal uint initOffset;
             internal string initString;
             internal string REFERENCE_STRING = "19 00 C0 46";
             internal int pointerDiff;
 
-            internal DynamicHeadersPatchData()
-            {
+            internal DynamicHeadersPatchData() {
                 initOffset = ToolboxDB.getDynamicHeadersInitOffset(RomInfo.romID);
                 initString = ToolboxDB.getDynamicHeadersInitString(RomInfo.romID);
 
-                if (RomInfo.gameFamily == "HGSS")
-                {
+                if (RomInfo.gameFamily == "HGSS") {
                     pointerDiff = (int)(initOffset - ToolboxDB.getDynamicHeadersInitOffset("IPKE"));
-                }
-                else
-                {
+                } else {
                     pointerDiff = (int)(initOffset - ToolboxDB.getDynamicHeadersInitOffset("CPUE"));
                 }
             }
@@ -103,9 +98,9 @@ namespace DSPRE {
         #region Constructor
         public ROMToolboxDialog() {
             InitializeComponent();
-            
+
             CheckStandardizedItems();
-            
+
             if (RomInfo.gameLanguage == "ENG" || RomInfo.gameLanguage == "ESP") {
                 CheckARM9Expansion();
             } else {
@@ -169,8 +164,7 @@ namespace DSPRE {
             arm9expansionLBL.Enabled = false;
             applyARM9ExpansionButton.Text = reason;
         }
-        private void DisableDynamicHeadersPatch(string reason)
-        {
+        private void DisableDynamicHeadersPatch(string reason) {
             applyDynamicHeadersButton.Enabled = false;
             dynamicHeadersTextLBL.Enabled = false;
             dynamicHeadersLBL.Enabled = false;
@@ -203,7 +197,7 @@ namespace DSPRE {
             if (!flag_arm9Expanded) {
                 ARM9PatchData data = new ARM9PatchData();
 
-                try { 
+                try {
                     byte[] branchCode = HexStringToByteArray(data.branchString);
                     byte[] branchCodeRead = DSUtils.ReadFromArm9(data.branchOffset, data.branchString.Length / 3 + 1); //Read branchCode
                     if (branchCodeRead.Length != branchCode.Length)
@@ -237,10 +231,8 @@ namespace DSPRE {
             }
             return 1; //arm9 Expansion has already been applied
         }
-        private int CheckDynamicHeadersPatchApplied()
-        {
-            if (!flag_DynamicHeadersPatchApplied)
-            {
+        private int CheckDynamicHeadersPatchApplied() {
+            if (!flag_DynamicHeadersPatchApplied) {
                 if (!CheckDynamicHeaders()) return 0;
             }
 
@@ -250,8 +242,7 @@ namespace DSPRE {
             DisableDynamicHeadersPatch("Already applied");
             return 1;
         }
-        public bool CheckDynamicHeaders()
-        {
+        public bool CheckDynamicHeaders() {
             DynamicHeadersPatchData data = new DynamicHeadersPatchData();
             ushort initValue = BitConverter.ToUInt16(DSUtils.ReadFromArm9(data.initOffset, 0x2), 0);
 
@@ -259,7 +250,7 @@ namespace DSPRE {
             else return false;
         }
         private int CheckFilesBDHCamPatchApplied() {
-            if (!flag_arm9Expanded) { 
+            if (!flag_arm9Expanded) {
                 BDHCamARM9requiredLBL.Visible = true;
                 DisableBDHCamPatch("!");
                 return 0;
@@ -314,7 +305,7 @@ namespace DSPRE {
         public bool CheckStandardizedItems() {
             DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.scripts });
 
-            if ( flag_standardizedItems || MainProgram.ScanScriptsCheckStandardizedItemNumbers() ) {
+            if (flag_standardizedItems || MainProgram.ScanScriptsCheckStandardizedItemNumbers()) {
                 itemNumbersCB.Visible = true;
                 flag_standardizedItems = true;
 
@@ -333,7 +324,7 @@ namespace DSPRE {
                                 languageOffset = +8;
 
                             byte[] read = DSUtils.ReadFromArm9((uint)(offset - 0x02000000 + languageOffset), kv.Value.Length / 3 + 1);
-                            byte[] code = HexStringToByteArray(kv.Value); 
+                            byte[] code = HexStringToByteArray(kv.Value);
                             if (read.Length != code.Length)
                                 return 0;
                             if (!read.SequenceEqual(code))
@@ -367,7 +358,7 @@ namespace DSPRE {
             if (d == DialogResult.Yes) {
                 foreach (int ID in RomInfo.pokemonNamesTextNumbers) {
                     TextArchive pokeName = new TextArchive(ID);
-                    for(ushort i = 1; i < pokeName.messages.Count; i++) {
+                    for (ushort i = 1; i < pokeName.messages.Count; i++) {
                         if (pokeName.messages[i].Length <= 1)
                             i++;
 
@@ -385,7 +376,7 @@ namespace DSPRE {
             BDHCAMPatchData data = new BDHCAMPatchData();
 
             if (RomInfo.gameFamily == "HGSS") {
-                if (DSUtils.CheckOverlayHasCompressionFlag(data.overlayNumber)) { 
+                if (DSUtils.CheckOverlayHasCompressionFlag(data.overlayNumber)) {
                     DialogResult d1;
                     d1 = MessageBox.Show("It is STRONGLY recommended to configure Overlay1 as uncompressed before proceeding.\n\n" +
                         "More details in the following dialog.\n\n" + "Do you want to know more?",
@@ -585,7 +576,7 @@ namespace DSPRE {
             if (d == DialogResult.Yes) {
                 try {
                     foreach (KeyValuePair<uint[], string> kv in ToolboxDB.matrixExpansionDB) {
-                        foreach(uint offset in kv.Key) {
+                        foreach (uint offset in kv.Key) {
                             DSUtils.WriteToArm9(HexStringToByteArray(kv.Value), (uint)(offset - 0x02000000 + languageOffset));
                         }
                     }
@@ -601,8 +592,7 @@ namespace DSPRE {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-        private void dynamicHeadersButton_Click(object sender, EventArgs e)
-        {
+        private void dynamicHeadersButton_Click(object sender, EventArgs e) {
             DynamicHeadersPatchData data = new DynamicHeadersPatchData();
 
             DialogResult d;
@@ -612,12 +602,10 @@ namespace DSPRE {
                 "Do you wish to continue?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-            if (d == DialogResult.Yes)
-            {
+            if (d == DialogResult.Yes) {
                 File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", overwrite: true);
 
-                try
-                {
+                try {
                     /* Write main routine (HG USA):
 
                      00 B5		        push (lr)
@@ -676,16 +664,14 @@ namespace DSPRE {
 
                      */
 
-                    foreach (Tuple<uint, uint> reference in ToolboxDB.dynamicHeadersPointersDB[RomInfo.gameFamily])
-                    {
+                    foreach (Tuple<uint, uint> reference in ToolboxDB.dynamicHeadersPointersDB[RomInfo.gameFamily]) {
                         DSUtils.WriteToArm9(HexStringToByteArray(data.REFERENCE_STRING), (uint)(reference.Item1 + data.pointerDiff));
 
                         uint pointerValue = BitConverter.ToUInt32(DSUtils.ReadFromArm9((uint)(reference.Item2 + data.pointerDiff), 4), 0) - PokeDatabase.System.headerOffsetsDict[RomInfo.romID] - 0x02000000;
                         DSUtils.WriteToArm9(BitConverter.GetBytes(pointerValue), (uint)(reference.Item2 + data.pointerDiff));
                     }
 
-                    if (RomInfo.gameFamily == "HGSS")
-                    {
+                    if (RomInfo.gameFamily == "HGSS") {
                         /*  Special case: at 0x3B522 (non-JAP and non-Spanish HG offset) there is an instruction 
                             between the mov r1, #0x18 and mul r1, r0 commands, so we must handle this separately */
 
@@ -703,8 +689,7 @@ namespace DSPRE {
                        the data will be packed into a NARC and replace a/0/5/0 in HGSS or 
                        debug/cb_edit/d_test.narc in Platinum */
 
-                    for (int i = 0; i < RomInfo.GetHeaderCount(); i++)
-                    {
+                    for (int i = 0; i < RomInfo.GetHeaderCount(); i++) {
                         byte[] headerData = MapHeader.LoadFromARM9((ushort)i).ToByteArray();
                         DSUtils.WriteToFile(headersDir + "\\" + i.ToString("D4"), headerData);
                     }
@@ -714,15 +699,11 @@ namespace DSPRE {
                     flag_DynamicHeadersPatchApplied = true;
 
                     MessageBox.Show("The headers are now dynamically allocated in memory.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch
-                {
+                } catch {
                     MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 backup (arm9.bin.backup).", "Something went wrong",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-            else
-            {
+            } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }

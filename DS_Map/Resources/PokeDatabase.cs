@@ -72,7 +72,7 @@ namespace DSPRE.Resources {
             };
         }
         public static class Weather {
-            public static Dictionary<int, string> DPWeatherDict = new Dictionary<int, string> { 
+            public static Dictionary<int, string> DPWeatherDict = new Dictionary<int, string> {
                 [00] = "Normal",
                 [01] = "Normal, somewhat dark",
                 [02] = "Rain",
@@ -510,7 +510,7 @@ namespace DSPRE.Resources {
                     "Activated from any dir",
                     "Activated from the sides",
                     "Front/Back Interaction",
-                };        
+                };
                 public static string[] typesArray = new string[] {
                     "Misc",
                     "Board (Front Auto-Trigger)",
@@ -3389,7 +3389,7 @@ namespace DSPRE.Resources {
 
                 [0x036A] = new byte[] { 2, 2, 2, 2, 2, 2 },
                 [0x036B] = new byte[] { 2, 2, 2, 2, 2 },
-                [0x036C] = new byte[] { 2, 2, 2, 2, 2},
+                [0x036C] = new byte[] { 2, 2, 2, 2, 2 },
                 [0x036D] = new byte[] { 2, 2 },
                 [0x036E] = new byte[] { 1, 2 },
                 [0x036F] = new byte[] { 2, 2 },
@@ -4094,7 +4094,7 @@ namespace DSPRE.Resources {
                 [495] = "Bad Egg"
             };
 
-        public static class MatrixCellColors {
+            public static class MatrixCellColors {
                 /* Initialize dictionary of colors corresponding to border maps in the matrix editor */
                 public static Dictionary<List<uint>, (Color back, Color fore)> DPPtmatrixColorsDict = new Dictionary<List<uint>, (Color back, Color fore)> {
                     [new List<uint> { 173, 176, 177, 179 }] = (Color.ForestGreen, Color.White),
@@ -4138,7 +4138,7 @@ namespace DSPRE.Resources {
                     [new byte[] { 1 }] = "dpcloudy",
                     [new byte[] { 2 }] = "dprain",
                     [new byte[] { 3 }] = "dpheavyrain",
-                    [new byte[] { 4, 24}] = "dpthunderstorm",
+                    [new byte[] { 4, 24 }] = "dpthunderstorm",
                     [new byte[] { 5, 28 }] = "dpsnowslow",
                     [new byte[] { 6, 21, 26, 27 }] = "dpdiamondsnow",
                     [new byte[] { 7 }] = "dpblizzard",
@@ -4153,21 +4153,21 @@ namespace DSPRE.Resources {
                     [new byte[] { 22 }] = "dplightsandstorm"
                 };
                 public static Dictionary<byte[], string> ptWeatherImageDict = new Dictionary<byte[], string>() {
-                    [new byte[] { 0, 8, 13, 20, 31, 33 } ] = "ptnormal",
-                    [new byte[] { 1 } ] = "ptcloudy",
-                    [new byte[] { 2, 32 } ] = "ptrain",
-                    [new byte[] { 3 } ] = "ptheavyrain",
-                    [new byte[] { 4 } ] = "ptthunderstorm",
-                    [new byte[] { 5, 36 } ] = "ptsnowslow",
-                    [new byte[] { 6, 21, 34, 35 } ] = "ptdiamondsnow",
-                    [new byte[] { 7 } ] = "ptblizzard",
-                    [new byte[] { 9 } ] = "ptsandfall",
-                    [new byte[] { 10 } ] = "ptsandstorm",
-                    [new byte[] { 11 } ] = "pthail",
-                    [new byte[] { 12 } ] = "ptrocksascending",
-                    [new byte[] { 14, 15 } ] = "ptfog",
-                    [new byte[] { 16 } ] = "ptdark",
-                    [new byte[] { 17 } ] = "ptlightning",
+                    [new byte[] { 0, 8, 13, 20, 31, 33 }] = "ptnormal",
+                    [new byte[] { 1 }] = "ptcloudy",
+                    [new byte[] { 2, 32 }] = "ptrain",
+                    [new byte[] { 3 }] = "ptheavyrain",
+                    [new byte[] { 4 }] = "ptthunderstorm",
+                    [new byte[] { 5, 36 }] = "ptsnowslow",
+                    [new byte[] { 6, 21, 34, 35 }] = "ptdiamondsnow",
+                    [new byte[] { 7 }] = "ptblizzard",
+                    [new byte[] { 9 }] = "ptsandfall",
+                    [new byte[] { 10 }] = "ptsandstorm",
+                    [new byte[] { 11 }] = "pthail",
+                    [new byte[] { 12 }] = "ptrocksascending",
+                    [new byte[] { 14, 15 }] = "ptfog",
+                    [new byte[] { 16 }] = "ptdark",
+                    [new byte[] { 17 }] = "ptlightning",
 
                     [new byte[] { 18 }] = "ptlightfog",
                     [new byte[] { 19 }] = "ptheavyfog",

@@ -181,7 +181,7 @@ namespace DSPRE {
                 #endregion
                 readIcon.Close();
             } else return;
-        }      
+        }
         private void updateBuildingListComboBox(bool interior) {
             string[] bldList = GetBuildingsList(interior);
 
@@ -880,13 +880,12 @@ namespace DSPRE {
             ROMToolboxDialog dialog = new ROMToolboxDialog();
             if (dialog.CheckDynamicHeaders()) addHeaderBTN.Enabled = true;
         }
-        private void addHeaderBTN_Click(object sender, EventArgs e)
-        {
+        private void addHeaderBTN_Click(object sender, EventArgs e) {
             // Add new file in the dynamic headers directory
             string sourcePath = RomInfo.GetDynamicHeadersDirPath() + "\\" + "0000";
             string destPath = RomInfo.GetDynamicHeadersDirPath() + "\\" + RomInfo.GetHeaderCount().ToString("D4");
             File.Copy(sourcePath, destPath);
-            
+
             // Add row to internal names table
             string nameString = "4E 45 57 4D 41 50 00 00 00 00 00 00 00 00 00 00";
             DSUtils.WriteToFile(RomInfo.internalNamesLocation, ROMToolboxDialog.HexStringToByteArray(nameString), (uint)RomInfo.GetHeaderCount() * 0x10);
@@ -1005,11 +1004,9 @@ namespace DSPRE {
 
             /* Check if dynamic headers patch has been applied, and load header from arm9 or a/0/5/0 accordingly */
             ROMToolboxDialog dialog = new ROMToolboxDialog();
-            if (dialog.CheckDynamicHeaders())
-            {
+            if (dialog.CheckDynamicHeaders()) {
                 currentHeader = MapHeader.BuildFromFile(RomInfo.GetDynamicHeadersDirPath() + "\\" + headerNumber.ToString("D4"), headerNumber, 0);
-            }
-            else currentHeader = MapHeader.LoadFromARM9(headerNumber);
+            } else currentHeader = MapHeader.LoadFromARM9(headerNumber);
             refreshHeaderEditorFields();
         }
 
@@ -1342,12 +1339,9 @@ namespace DSPRE {
 
             /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
             ROMToolboxDialog dialog = new ROMToolboxDialog();
-            if (dialog.CheckDynamicHeaders())
-            {
+            if (dialog.CheckDynamicHeaders()) {
                 DSUtils.WriteToFile(RomInfo.GetDynamicHeadersDirPath() + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, true);
-            }
-            else
-            {
+            } else {
                 uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
                 DSUtils.WriteToArm9(currentHeader.ToByteArray(), headerOffset);
             }
@@ -2520,11 +2514,11 @@ namespace DSPRE {
             float fullXcoord = building.xPosition + building.xFraction / 65536f;
             float fullYcoord = building.yPosition + building.yFraction / 65536f;
             float fullZcoord = building.zPosition + building.zFraction / 65536f;
-            
+
             float scaleFactor = (building.NSBMDFile.models[0].modelScale / 1024);
             float translateFactor = 256 / building.NSBMDFile.models[0].modelScale;
 
-            Gl.glScalef(scaleFactor * building.width, scaleFactor * building.height , scaleFactor * building.length);
+            Gl.glScalef(scaleFactor * building.width, scaleFactor * building.height, scaleFactor * building.length);
             Gl.glTranslatef(fullXcoord * translateFactor / building.width, fullYcoord * translateFactor / building.height, fullZcoord * translateFactor / building.length);
         }
         private void SetupRenderer(float ang, float dist, float elev, float perspective, int width, int height) {
@@ -2785,7 +2779,7 @@ namespace DSPRE {
             if (radio2D.Checked && bldPlaceWithMouseCheckbox.Checked) {
                 PointF coordinates = mapRenderPanel.PointToClient(Cursor.Position);
                 PointF mouseTilePos = new PointF(coordinates.X / mapEditorSquareSize, coordinates.Y / mapEditorSquareSize);
-                
+
                 if (buildingsListBox.SelectedIndex > -1) {
                     if (!bldPlaceLockXcheckbox.Checked)
                         xBuildUpDown.Value = (decimal)(Math.Round(mouseTilePos.X, bldDecimalPositions) - 16);
@@ -3349,7 +3343,7 @@ namespace DSPRE {
             }
 
             // Replace the color at (x, y) 
-            screen[y,x] = newC;
+            screen[y, x] = newC;
 
             // Recur for north, east, south and west 
             FloodFillUtil(screen, x + 1, y, prevC, newC, sizeX, sizeY);
@@ -3376,14 +3370,14 @@ namespace DSPRE {
             }
 
             /* Draw permissions in the small selection boxes */
-            
-            
+
+
         }
         private void RestorePainter() {
             if (selectCollisionPanel.BackColor == Color.MidnightBlue) {
                 collisionPainterComboBox_SelectedIndexChange(null, null);
             } else if (collisionTypePainterComboBox.Enabled) {
-                typePainterComboBox_SelectedIndexChanged(null, null); 
+                typePainterComboBox_SelectedIndexChanged(null, null);
             } else {
                 typePainterUpDown_ValueChanged(null, null);
             }
@@ -3931,7 +3925,7 @@ namespace DSPRE {
             if (showSignsCheckBox.Checked) {
                 for (int i = 0; i < currentEvFile.spawnables.Count; i++) {
                     Spawnable spawnable = currentEvFile.spawnables[i];
-                    
+
                     if (spawnable.xMatrixPosition == eventMatrixXUpDown.Value && spawnable.yMatrixPosition == eventMatrixYUpDown.Value) {
                         using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
                             g.CompositingMode = CompositingMode.SourceOver;
@@ -3948,7 +3942,7 @@ namespace DSPRE {
             if (showOwsCheckBox.Checked) {
                 for (int i = 0; i < currentEvFile.overworlds.Count; i++) {
                     Overworld overworld = currentEvFile.overworlds[i];
-                    
+
                     if (isEventOnCurrentMatrix(overworld)) { // Draw image only if event is in current map
                         using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
                             g.CompositingMode = CompositingMode.SourceOver;
@@ -3968,7 +3962,7 @@ namespace DSPRE {
             if (showWarpsCheckBox.Checked) {
                 for (int i = 0; i < currentEvFile.warps.Count; i++) {
                     Warp warp = currentEvFile.warps[i];
-                    
+
                     if (isEventOnCurrentMatrix(warp)) {
                         using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
                             g.CompositingMode = CompositingMode.SourceOver;
@@ -3986,7 +3980,7 @@ namespace DSPRE {
             if (showTriggersCheckBox.Checked) {
                 for (int i = 0; i < currentEvFile.triggers.Count; i++) {
                     Trigger trigger = currentEvFile.triggers[i];
-                    
+
                     if (isEventOnCurrentMatrix(trigger)) {
                         using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
                             g.CompositingMode = CompositingMode.SourceOver;
@@ -5380,7 +5374,7 @@ namespace DSPRE {
             ScriptFile userEdited = new ScriptFile(scriptTextBox.Lines, functionTextBox.Lines, actionsTextBox.Lines, selectScriptFileComboBox.SelectedIndex);
 
             /* Write new scripts to file */
-            if (userEdited.fileID != null){ //check if ScriptFile instance was created succesfully
+            if (userEdited.fileID != null) { //check if ScriptFile instance was created succesfully
                 userEdited.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex);
                 currentScriptFile = userEdited;
             } else {
@@ -5613,7 +5607,7 @@ namespace DSPRE {
                     /* If current function is identical to a script, print UseScript instead of commands */
                     if (currentFunction.useScript < 0) {
                         for (int j = 0; j < currentFunction.commands.Count; j++) {
-                            if(!PokeDatabase.ScriptEditor.endCodes.Contains(currentFunction.commands[j].id)) {
+                            if (!PokeDatabase.ScriptEditor.endCodes.Contains(currentFunction.commands[j].id)) {
                                 buffer += '\t';
                             }
                             buffer += currentFunction.commands[j].name + Environment.NewLine;
@@ -6211,9 +6205,9 @@ namespace DSPRE {
                 File.Copy(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + 0.ToString("D4"), RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
             } else {
                 File.Copy(RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + 0.ToString("D4"), RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
-				File.Copy(RomInfo.gameDirs[DirNames.buildingConfigFiles].unpackedDir + "\\" + 0.ToString("D4"), RomInfo.gameDirs[DirNames.buildingConfigFiles].unpackedDir + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
+                File.Copy(RomInfo.gameDirs[DirNames.buildingConfigFiles].unpackedDir + "\\" + 0.ToString("D4"), RomInfo.gameDirs[DirNames.buildingConfigFiles].unpackedDir + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
             }
-            
+
             /* Update ComboBox and select new file */
             texturePacksListBox.Items.Add("Texture Pack " + texturePacksListBox.Items.Count);
             texturePacksListBox.SelectedIndex = texturePacksListBox.Items.Count - 1;
@@ -6370,7 +6364,7 @@ namespace DSPRE {
             File.Delete(of.FileName);
             SaveCameraTable(of.FileName, 0);
         }
-        private void SaveCameraTable (string path, uint destFileOffset) {
+        private void SaveCameraTable(string path, uint destFileOffset) {
             for (int i = 0; i < currentCameraTable.Length; i++) {
                 DSUtils.WriteToFile(path, currentCameraTable[i].ToByteArray(), (uint)(destFileOffset + i * RomInfo.cameraSize));
             }
@@ -6427,13 +6421,13 @@ namespace DSPRE {
 
             byte nCameras = (byte)(l / RomInfo.cameraSize);
             for (byte b = 0; b < nCameras; b++) {
-                currentCameraTable[b] = new GameCamera(DSUtils.ReadFromFile(of.FileName, b*RomInfo.cameraSize, RomInfo.cameraSize));
+                currentCameraTable[b] = new GameCamera(DSUtils.ReadFromFile(of.FileName, b * RomInfo.cameraSize, RomInfo.cameraSize));
                 currentCameraTable[b].ShowInGridView(cameraEditorDataGridView, b);
             }
             MessageBox.Show("Camera Table imported correctly.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
-        private void ExclusiveCBInvert (CheckBox cb) {
+        private void ExclusiveCBInvert(CheckBox cb) {
             if (disableHandlers)
                 return;
 
