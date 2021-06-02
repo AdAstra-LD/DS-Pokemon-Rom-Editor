@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSPRE.Resources.ROMToolboxDB {
     public class ToolboxDB {
@@ -60,6 +57,108 @@ namespace DSPRE.Resources.ROMToolboxDB {
             ["overlayOffset2_HGSS"] = 0x00015864,
         };
         public static uint BDHCamSubroutineOffset = 0x000115B0;
+
+        public static uint getDynamicHeadersInitOffset(string romID)
+        {
+            switch(romID)
+            {
+                case "CPUE":
+                    return 0x3A024;
+                case "CPUS":
+                case "CPUI":
+                case "CPUF":
+                case "CPUD":
+                    return 0x3A0C8;
+                case "CPUJ":
+                    return 0x39BE0;
+                case "IPKS":
+                    return 0x3B260;
+                case "IPKJ":
+                case "IPGJ":
+                    return 0x3AE20;
+                default:
+                    return 0x3B268;
+            }
+        }
+        public static string getDynamicHeadersInitString(string romID)
+        {
+            switch (romID)
+            {
+                case "CPUE":
+                    return "00 B5 01 1C 94 20 00 22 CC F7 48 FD 03 1C DE F7 C7 F8 00 BD";
+                case "CPUS":
+                case "CPUI":
+                case "CPUF":
+                case "CPUD":
+                    return "00 B5 01 1C 94 20 00 22 CC F7 00 FD 03 1C CC F7 74 FC 00 BD";
+                case "CPUJ":
+                    return "00 B5 01 1C 94 20 00 22 CC F7 0A FF 03 1C DE F7 3D F9 00 BD";
+                case "IPKS":
+                    return "00 B5 01 1C 32 20 00 22 CC F7 5C F9 03 1C DF F7 4D FC 00 BD";
+                case "IPKJ":
+                case "IPGJ":
+                    return "00 B5 01 1C 32 20 00 22 CC F7 08 FB 03 1C DF F7 C7 FC 00 BD";
+                default:
+                    return "00 B5 01 1C 32 20 00 22 CC F7 58 F9 03 1C DF F7 49 FC 00 BD";
+            }
+        }
+        public static Dictionary<string, Tuple<uint, uint>[]> dynamicHeadersPointersDB = new Dictionary<string, Tuple<uint, uint>[]>()
+        {
+            // format: headerID*18 offset, (ARM9_HEADER_TABLE_OFFSET + n) offset
+
+            ["Plat"] = new Tuple<uint, uint>[] {
+            new Tuple<uint, uint>(0x3A03E, 0x3A048),
+            new Tuple<uint, uint>(0x3A052, 0x3A05C),
+            new Tuple<uint, uint>(0x3A066, 0x3A080),
+            new Tuple<uint, uint>(0x3A08E, 0x3A098),
+            new Tuple<uint, uint>(0x3A0A2, 0x3A0AC),
+            new Tuple<uint, uint>(0x3A0B6, 0x3A0C0),
+            new Tuple<uint, uint>(0x3A0CA, 0x3A0D4),
+            new Tuple<uint, uint>(0x3A0DE, 0x3A0E8),
+            new Tuple<uint, uint>(0x3A0F2, 0x3A108),
+            new Tuple<uint, uint>(0x3A116, 0x3A120),
+            new Tuple<uint, uint>(0x3A12A, 0x3A134),
+            new Tuple<uint, uint>(0x3A13E, 0x3A150),
+            new Tuple<uint, uint>(0x3A15A, 0x3A170),
+            new Tuple<uint, uint>(0x3A17A, 0x3A184),
+            new Tuple<uint, uint>(0x3A18E, 0x3A198),
+            new Tuple<uint, uint>(0x3A1A2, 0x3A1B4),
+            new Tuple<uint, uint>(0x3A1BE, 0x3A1D0),
+            new Tuple<uint, uint>(0x3A1DA, 0x3A1EC),
+            new Tuple<uint, uint>(0x3A1F6, 0x3A208),
+            new Tuple<uint, uint>(0x3A212, 0x3A224),
+            },
+
+            ["HGSS"] = new Tuple<uint, uint>[] {
+            new Tuple<uint, uint>(0x3B282, 0x3B28C),
+            new Tuple<uint, uint>(0x3B296, 0x3B2A8),
+            new Tuple<uint, uint>(0x3B2B2, 0x3B2BC),
+            new Tuple<uint, uint>(0x3B2C6, 0x3B2D0),
+            new Tuple<uint, uint>(0x3B2DA, 0x3B2E4),
+            new Tuple<uint, uint>(0x3B2EE, 0x3B2F8),
+            new Tuple<uint, uint>(0x3B302, 0x3B30C),
+            new Tuple<uint, uint>(0x3B316, 0x3B320),
+            new Tuple<uint, uint>(0x3B32A, 0x3B340),
+            new Tuple<uint, uint>(0x3B34A, 0x3B354),
+            new Tuple<uint, uint>(0x3B35E, 0x3B368),
+            new Tuple<uint, uint>(0x3B372, 0x3B384),
+            new Tuple<uint, uint>(0x3B38E, 0x3B3A4),
+            new Tuple<uint, uint>(0x3B3AE, 0x3B3C4),
+            new Tuple<uint, uint>(0x3B3CE, 0x3B3E0),
+            new Tuple<uint, uint>(0x3B3EA, 0x3B3FC),
+            new Tuple<uint, uint>(0x3B406, 0x3B418),
+            new Tuple<uint, uint>(0x3B422, 0x3B434),
+            new Tuple<uint, uint>(0x3B43E, 0x3B450),
+            new Tuple<uint, uint>(0x3B45A, 0x3B46C),
+            new Tuple<uint, uint>(0x3B476, 0x3B488),
+            new Tuple<uint, uint>(0x3B492, 0x3B4A4),
+            new Tuple<uint, uint>(0x3B4AE, 0x3B4C0),
+            new Tuple<uint, uint>(0x3B4CA, 0x3B4D8),
+            new Tuple<uint, uint>(0x3B4E2, 0x3B4F4),
+            new Tuple<uint, uint>(0x3B4FE, 0x3B514),
+            },
+
+        };
 
         public static Dictionary<uint[], string> matrixExpansionDB = new Dictionary<uint[], string>() {
             [new uint[] { 0x0203AEBE }] = "FF 01",

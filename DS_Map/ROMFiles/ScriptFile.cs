@@ -630,7 +630,7 @@ namespace DSPRE.ROMFiles {
                         if (refList[0].invokedType == containerTypes.MOVEMENT) { //isApplyMovement 
                             result = actionOffsets.Find(x => x.actionID == refList[0].invokedID);
 
-                            if (result == (0, 0))
+                            if (result.Equals((0, 0)))
                                 undeclaredActions.Add(refList[0].invokedID);
                             else {
                                 int relativeOffset = (int)(result.offsetInFile - refList[0].invokedOffset - 4);
@@ -640,7 +640,7 @@ namespace DSPRE.ROMFiles {
                         } else {
                             result = functionOffsets.Find(x => x.functionID == refList[0].invokedID);
 
-                            if (result == (0, 0))
+                            if (result.Equals((0, 0)))
                                 undeclaredFuncs.Add(refList[0].invokedID);
                             else {
                                 int relativeOffset = (int)(result.offsetInFile - refList[0].invokedOffset - 4);

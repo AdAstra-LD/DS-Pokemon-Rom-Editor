@@ -59,6 +59,11 @@
             this.repointScrcmdButton = new System.Windows.Forms.Button();
             this.scrcmdARM9requiredLBL = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dynamicHeadersPatchCB = new System.Windows.Forms.PictureBox();
+            this.dynamicHeadersTextLBL = new System.Windows.Forms.Label();
+            this.dynamicHeadersLBL = new System.Windows.Forms.Label();
+            this.applyDynamicHeadersButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.arm9patchCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlay1CB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BDHCamCB)).BeginInit();
@@ -66,6 +71,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.itemNumbersCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.expandedMatrixCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repointScrcmdCB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dynamicHeadersPatchCB)).BeginInit();
             this.SuspendLayout();
             // 
             // applyItemStandardizeButton
@@ -382,12 +388,67 @@
             this.label1.Text = "[ B E T A     |    Needs testing]";
             this.label1.UseMnemonic = false;
             // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(509, 188);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(288, 37);
+            this.label2.TabIndex = 34;
+            this.label2.Text = "[ B E T A     |    Needs testing]";
+            this.label2.UseMnemonic = false;
+            // 
+            // dynamicHeadersPatchCB
+            // 
+            this.dynamicHeadersPatchCB.Image = ((System.Drawing.Image)(resources.GetObject("dynamicHeadersPatchCB.Image")));
+            this.dynamicHeadersPatchCB.Location = new System.Drawing.Point(803, 140);
+            this.dynamicHeadersPatchCB.Name = "dynamicHeadersPatchCB";
+            this.dynamicHeadersPatchCB.Size = new System.Drawing.Size(20, 20);
+            this.dynamicHeadersPatchCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.dynamicHeadersPatchCB.TabIndex = 33;
+            this.dynamicHeadersPatchCB.TabStop = false;
+            this.dynamicHeadersPatchCB.Visible = false;
+            // 
+            // dynamicHeadersTextLBL
+            // 
+            this.dynamicHeadersTextLBL.Location = new System.Drawing.Point(509, 139);
+            this.dynamicHeadersTextLBL.Name = "dynamicHeadersTextLBL";
+            this.dynamicHeadersTextLBL.Size = new System.Drawing.Size(288, 59);
+            this.dynamicHeadersTextLBL.TabIndex = 32;
+            this.dynamicHeadersTextLBL.Text = "Makes the ROM load headers dynamically from a NARC, removing the need for a heade" +
+    "r table in arm9.bin\r\nThis patch is necessary to add new headers.\r\n ";
+            this.dynamicHeadersTextLBL.UseMnemonic = false;
+            // 
+            // dynamicHeadersLBL
+            // 
+            this.dynamicHeadersLBL.AutoSize = true;
+            this.dynamicHeadersLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dynamicHeadersLBL.Location = new System.Drawing.Point(509, 122);
+            this.dynamicHeadersLBL.Name = "dynamicHeadersLBL";
+            this.dynamicHeadersLBL.Size = new System.Drawing.Size(160, 13);
+            this.dynamicHeadersLBL.TabIndex = 31;
+            this.dynamicHeadersLBL.Text = "Dynamic Header Allocation";
+            // 
+            // applyDynamicHeadersButton
+            // 
+            this.applyDynamicHeadersButton.Location = new System.Drawing.Point(829, 131);
+            this.applyDynamicHeadersButton.Name = "applyDynamicHeadersButton";
+            this.applyDynamicHeadersButton.Size = new System.Drawing.Size(100, 50);
+            this.applyDynamicHeadersButton.TabIndex = 35;
+            this.applyDynamicHeadersButton.Text = "Apply Patch";
+            this.applyDynamicHeadersButton.UseVisualStyleBackColor = true;
+            this.applyDynamicHeadersButton.Click += new System.EventHandler(this.dynamicHeadersButton_Click);
+            // 
             // ROMToolboxDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(950, 513);
+            this.Controls.Add(this.applyDynamicHeadersButton);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.dynamicHeadersPatchCB);
+            this.Controls.Add(this.dynamicHeadersTextLBL);
+            this.Controls.Add(this.dynamicHeadersLBL);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.scrcmdARM9requiredLBL);
             this.Controls.Add(this.repointScrcmdCB);
@@ -431,6 +492,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.itemNumbersCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.expandedMatrixCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repointScrcmdCB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dynamicHeadersPatchCB)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -469,5 +531,10 @@
         private System.Windows.Forms.Button repointScrcmdButton;
         private System.Windows.Forms.Label scrcmdARM9requiredLBL;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox dynamicHeadersPatchCB;
+        private System.Windows.Forms.Label dynamicHeadersTextLBL;
+        private System.Windows.Forms.Label dynamicHeadersLBL;
+        private System.Windows.Forms.Button applyDynamicHeadersButton;
     }
 }

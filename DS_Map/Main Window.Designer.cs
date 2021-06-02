@@ -49,6 +49,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
+            this.removeLastHeaderBTN = new System.Windows.Forms.Button();
+            this.addHeaderBTN = new System.Windows.Forms.Button();
             this.worldmapCoordsGroupBox = new System.Windows.Forms.GroupBox();
             this.worldmapCoordsPasteButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -793,6 +795,8 @@
             // headerEditorTabPage
             // 
             this.headerEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
+            this.headerEditorTabPage.Controls.Add(this.removeLastHeaderBTN);
+            this.headerEditorTabPage.Controls.Add(this.addHeaderBTN);
             this.headerEditorTabPage.Controls.Add(this.worldmapCoordsGroupBox);
             this.headerEditorTabPage.Controls.Add(this.groupBox18);
             this.headerEditorTabPage.Controls.Add(this.importHeaderFromFileButton);
@@ -821,6 +825,27 @@
             this.headerEditorTabPage.Size = new System.Drawing.Size(1185, 619);
             this.headerEditorTabPage.TabIndex = 0;
             this.headerEditorTabPage.Text = "Header Editor";
+            // 
+            // removeLastHeaderBTN
+            // 
+            this.removeLastHeaderBTN.Enabled = false;
+            this.removeLastHeaderBTN.Location = new System.Drawing.Point(13, 578);
+            this.removeLastHeaderBTN.Name = "removeLastHeaderBTN";
+            this.removeLastHeaderBTN.Size = new System.Drawing.Size(214, 26);
+            this.removeLastHeaderBTN.TabIndex = 52;
+            this.removeLastHeaderBTN.Text = "Remove Last";
+            this.removeLastHeaderBTN.UseVisualStyleBackColor = true;
+            // 
+            // addHeaderBTN
+            // 
+            this.addHeaderBTN.Enabled = false;
+            this.addHeaderBTN.Location = new System.Drawing.Point(13, 552);
+            this.addHeaderBTN.Name = "addHeaderBTN";
+            this.addHeaderBTN.Size = new System.Drawing.Size(214, 26);
+            this.addHeaderBTN.TabIndex = 48;
+            this.addHeaderBTN.Text = "Add Header";
+            this.addHeaderBTN.UseVisualStyleBackColor = true;
+            this.addHeaderBTN.Click += new System.EventHandler(this.addHeaderBTN_Click);
             // 
             // worldmapCoordsGroupBox
             // 
@@ -1888,7 +1913,7 @@
             this.headerListBox.ItemHeight = 15;
             this.headerListBox.Location = new System.Drawing.Point(13, 67);
             this.headerListBox.Name = "headerListBox";
-            this.headerListBox.Size = new System.Drawing.Size(214, 529);
+            this.headerListBox.Size = new System.Drawing.Size(214, 484);
             this.headerListBox.TabIndex = 2;
             this.headerListBox.SelectedValueChanged += new System.EventHandler(this.headerListBox_SelectedIndexChanged);
             this.headerListBox.Leave += new System.EventHandler(this.headerListBox_Leave);
@@ -7662,7 +7687,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
-            this.Text = "DS Pokémon Rom Editor 1.2.1 (Nømura, AdAstra/LD3005)";
+            this.Text = "DS Pokémon Rom Editor 1.2.2 (Nømura, AdAstra/LD3005)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainProgram_FormClosing);
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);
@@ -8440,6 +8465,8 @@
         private System.Windows.Forms.TabPage ActionsNavTab;
         private System.Windows.Forms.ListBox actionsNavListbox;
         private System.Windows.Forms.CheckBox SyncNavigatorCB;
+        private System.Windows.Forms.Button removeLastHeaderBTN;
+        private System.Windows.Forms.Button addHeaderBTN;
     }
 }
 
