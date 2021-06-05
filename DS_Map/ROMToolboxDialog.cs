@@ -483,7 +483,7 @@ namespace DSPRE {
                         itemScript.allScripts.Add(new CommandContainer((ushort)(i + 1), ScriptFile.containerTypes.SCRIPT, commandList: cmdList));
                     }
                     itemScript.allScripts.Add(executeGive);
-                    //itemScript.allFunctions[1].commands[0].cmdParams[]
+                    itemScript.allFunctions[0].useScript = itemCount + 1;
 
                     itemScript.SaveToFileDefaultDir(RomInfo.itemScriptFileNumber, showSuccessMessage: false);
                     MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
