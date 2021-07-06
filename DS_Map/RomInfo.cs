@@ -39,7 +39,7 @@ namespace DSPRE {
         public static int attackNamesTextNumber { get; private set; }
         public static int[] pokemonNamesTextNumbers { get; private set; }
         public static int itemNamesTextNumber { get; private set; }
-        public static int itemScriptFileNumber { get; internal set; }      
+        public static int itemScriptFileNumber { get; internal set; }
         public static int trainerClassMessageNumber { get; private set; }
         public static int trainerNamesMessageNumber { get; private set; }
         public static int locationNamesTextNumber { get; private set; }
@@ -57,11 +57,10 @@ namespace DSPRE {
         public static Dictionary<uint, string> ow3DSpriteDict { get; private set; }
 
         public enum DirNames : byte {
-            synthOverlay,
-            textArchives,
-
+            synthOverlay,            
             dynamicHeaders,
-
+            
+            textArchives,
             matrices,
 
             maps,
@@ -79,15 +78,15 @@ namespace DSPRE {
             encounters,
 
             interiorBuildingModels
-        }; 
+        };
         public static Dictionary<DirNames, (string packedDir, string unpackedDir)> gameDirs { get; private set; }
-        
+
 
         #region Constructors (1)
         public RomInfo(string id, string romName) {
             romID = id;
             fileName = romName;
-            workDir = Path.GetDirectoryName(romName) + "\\" + Path.GetFileNameWithoutExtension(romName) + folderSuffix + "\\";;
+            workDir = Path.GetDirectoryName(romName) + "\\" + Path.GetFileNameWithoutExtension(romName) + folderSuffix + "\\";
             LoadGameVersion();
             if (gameVersion is null)
                 return;
@@ -103,7 +102,7 @@ namespace DSPRE {
             internalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
             SetNarcDirs();
 
-            SetNullEncounterID();           
+            SetNullEncounterID();
 
             SetAttackNamesTextNumber();
             SetPokémonNamesTextNumber();
@@ -118,7 +117,7 @@ namespace DSPRE {
             CommandParametersDict = BuildCommandParametersDatabase(gameVersion);
         }
 
-        public static string GetRomNameFromWorkdir () {
+        public static string GetRomNameFromWorkdir() {
             return workDir.Substring(0, workDir.Length - folderSuffix.Length - 1);
         }
         public static void Set3DOverworldsDict() {
@@ -243,7 +242,7 @@ namespace DSPRE {
                         case "JAP":
                             cameraTblOffsetsToRAMaddress = new uint[] { 0x5324, 0x5474 };
                             break;
-                    }                    
+                    }
                     break;
             }
         }
@@ -274,7 +273,7 @@ namespace DSPRE {
                     break;
             }
         }
-        public void SetNarcDirs () {
+        public void SetNarcDirs() {
             Dictionary<DirNames, string> packedDirsDict = null;
             switch (gameFamily) {
                 case "DP":
@@ -282,7 +281,7 @@ namespace DSPRE {
                     if (!gameLanguage.Equals("JAP"))
                         suffix = "_release";
 
-                     packedDirsDict = new Dictionary<DirNames, string>() {
+                    packedDirsDict = new Dictionary<DirNames, string>() {
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.textArchives] = @"data\msgdata\msg.narc",
 
@@ -306,9 +305,9 @@ namespace DSPRE {
                 case "Plat":
                     packedDirsDict = new Dictionary<DirNames, string>() {
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
-                        [DirNames.textArchives] = @"data\msgdata\" + gameVersion.Substring(0,2).ToLower() + '_' + "msg.narc",
-
                         [DirNames.dynamicHeaders] = @"data\debug\cb_edit\d_test.narc",
+
+                        [DirNames.textArchives] = @"data\msgdata\" + gameVersion.Substring(0, 2).ToLower() + '_' + "msg.narc",                        
 
                         [DirNames.matrices] = @"data\fielddata\mapmatrix\map_matrix.narc",
 
@@ -324,15 +323,15 @@ namespace DSPRE {
                         [DirNames.OWSprites] = @"data\data\mmodel\mmodel.narc",
 
                         [DirNames.scripts] = @"data\fielddata\script\scr_seq.narc",
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.Substring(0,2).ToLower() + '_' + "enc_data.narc"
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.Substring(0, 2).ToLower() + '_' + "enc_data.narc"
                     };
                     break;
                 case "HGSS":
                     packedDirsDict = new Dictionary<DirNames, string>() {
                         [DirNames.synthOverlay] = @"data\a\0\2\8",
-                        [DirNames.textArchives] = @"data\a\0\2\7",
-
                         [DirNames.dynamicHeaders] = @"data\a\0\5\0",
+
+                        [DirNames.textArchives] = @"data\a\0\2\7",                        
 
                         [DirNames.matrices] = @"data\a\0\4\1",
 
@@ -363,7 +362,7 @@ namespace DSPRE {
 
             gameDirs = new Dictionary<DirNames, (string packedDir, string unpackedDir)>();
             foreach (KeyValuePair<DirNames, string> kvp in packedDirsDict) {
-                gameDirs.Add(kvp.Key, (workDir + kvp.Value, workDir + @"unpacked" + '\\' + kvp.Key.ToString()) );
+                gameDirs.Add(kvp.Key, (workDir + kvp.Value, workDir + @"unpacked" + '\\' + kvp.Key.ToString()));
             }
         }
         public string GetBuildingModelsDirPath(bool interior) {
@@ -373,11 +372,7 @@ namespace DSPRE {
                 return gameDirs[DirNames.exteriorBuildingModels].unpackedDir;
             }
         }
-        public static string GetDynamicHeadersDirPath()
-        {
-            return workDir + "\\" + "unpacked" + "\\" + "dynamicHeaders";
-        }
-        public static void SetOWtable () {
+        public static void SetOWtable() {
             switch (gameFamily) {
                 case "DP":
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
@@ -435,7 +430,7 @@ namespace DSPRE {
                     var customDictionaryNames = PokeDatabase.ScriptEditor.CustomScrCmdNames;
                     return commonDictionaryNames.Concat(customDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
             }
-        }        
+        }
         public static Dictionary<ushort, byte[]> BuildCommandParametersDatabase(string gameVer) {
             switch (gameFamily) {
                 case "DP":
@@ -445,7 +440,7 @@ namespace DSPRE {
                 case "Plat":
                     commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
                     specificDictionaryParams = PokeDatabase.ScriptEditor.PlatScrCmdParameters;
-                    return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());                 
+                    return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
                 default:
                     commonDictionaryParams = PokeDatabase.ScriptEditor.HGSSScrCmdParameters;
                     var customDictionaryParams = PokeDatabase.ScriptEditor.CustomScrCmdParameters;
@@ -591,7 +586,8 @@ namespace DSPRE {
                     break;
             }
         }
-        public void SetLocationNamesTextNumber() {;
+        public void SetLocationNamesTextNumber() {
+            ;
             switch (gameFamily) {
                 case "DP":
                     locationNamesTextNumber = 382;
@@ -666,7 +662,7 @@ namespace DSPRE {
         public int GetTextArchivesCount() => Directory.GetFiles(gameDirs[DirNames.textArchives].unpackedDir).Length;
         public int GetMapCount() => Directory.GetFiles(gameDirs[DirNames.maps].unpackedDir).Length;
         public int GetEventCount() => Directory.GetFiles(gameDirs[DirNames.eventFiles].unpackedDir).Length;
-        public int GetScriptCount() => Directory.GetFiles(gameDirs[DirNames.scripts].unpackedDir).Length;       
+        public int GetScriptCount() => Directory.GetFiles(gameDirs[DirNames.scripts].unpackedDir).Length;
         public int GetBuildingCount(bool interior) {
             return Directory.GetFiles(GetBuildingModelsDirPath(interior)).Length;
         }
@@ -687,14 +683,14 @@ namespace DSPRE {
         public void SetMapCellsColorDictionary(Dictionary<List<uint>, (Color background, Color foreground)> dict) {
             MapCellsColorDictionary = dict;
         }
-        public static void ReadOWTable () {
+        public static void ReadOWTable() {
             OverworldTable = new SortedDictionary<uint, (uint spriteID, ushort properties)>();
             switch (gameFamily) {
                 case "DP":
                 case "Plat":
                     using (BinaryReader idReader = new BinaryReader(new FileStream(OWtablePath, FileMode.Open))) {
                         idReader.BaseStream.Position = OWTableOffset;
-                        
+
                         uint entryID = idReader.ReadUInt32();
                         idReader.BaseStream.Position -= 4;
                         while ((entryID = idReader.ReadUInt32()) != 0xFFFF) {
@@ -719,7 +715,7 @@ namespace DSPRE {
                     }
                     break;
             }
-            foreach(uint k in ow3DSpriteDict.Keys) {
+            foreach (uint k in ow3DSpriteDict.Keys) {
                 OverworldTable.Add(k, (0x3D3D, 0x3D3D)); //ADD 3D overworld data (spriteID and properties are dummy values)
             }
             overworldTableKeys = OverworldTable.Keys.ToArray();

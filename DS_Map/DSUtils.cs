@@ -232,6 +232,35 @@ namespace DSPRE {
             WriteToFile(RomInfo.arm9Path, bytesToWrite, writeAt, readFrom);
         }
 
+        public static byte[] StringToByteArray(String hex) {
+            //Ummm what?
+            int NumberChars = hex.Length;
+            byte[] bytes = new byte[NumberChars / 2];
+            for (int i = 0; i < NumberChars; i += 2)
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            return bytes;
+        }
+        public static byte[] HexStringToByteArray(string hexString) {
+            //FC B5 05 48 C0 46 41 21 
+            //09 22 02 4D A8 47 00 20 
+            //03 21 FC BD F1 64 00 02 
+            //00 80 3C 02
+            if (hexString is null)
+                return null;
+
+            hexString = hexString.Trim();
+
+            byte[] b = new byte[hexString.Length / 3 + 1];
+            for (int i = 0; i < hexString.Length; i += 2) {
+                if (hexString[i] == ' ') {
+                    hexString = hexString.Substring(1, hexString.Length - 1);
+                }
+
+                b[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
+            }
+            return b;
+        }
+
         public static void TryUnpackNarcs(List<DirNames> IDs, ToolStripProgressBar progress = null) {
             foreach (DirNames id in IDs) {
 
@@ -304,21 +333,7 @@ namespace DSPRE {
             }
             return output.ToArray();
         }
-        public static byte[] BuildNSBTXHeader(uint texturesSize) {
-            MemoryStream ms = new MemoryStream();
-
-            using (BinaryWriter bw = new BinaryWriter(ms)) {
-                bw.Write(Encoding.UTF8.GetBytes("BTX0")); // Write magic code BTX0
-                bw.Write((ushort)0xFEFF); // Byte order
-                bw.Write((ushort)0x0001); // ???
-                bw.Write(texturesSize); // Write size of textures block
-                bw.Write((short)0x10); //Header size 
-                bw.Write((short)0x01); //Number of sub-files???
-                bw.Write((uint)0x14); // Offset to sub-file
-            }
-            return ms.ToArray();
-        }
-
+        
         public static byte[] GetTexturesFromTexturedNSBMD(byte[] modelFile) {
             using (BinaryReader byteArrReader = new BinaryReader(new MemoryStream(modelFile))) {
                 byteArrReader.BaseStream.Position = 14;
@@ -340,7 +355,6 @@ namespace DSPRE {
                 return output;
             }
         }
-
         public static int CheckNSBMDHeader(byte[] modelFile) {
             using (BinaryReader byteArrReader = new BinaryReader(new MemoryStream(modelFile))) {
                 if (byteArrReader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0) {
@@ -352,7 +366,20 @@ namespace DSPRE {
                 return byteArrReader.ReadInt16() >= 2 ? NSBMD_HAS_TEXTURE : NSBMD_DOESNTHAVE_TEXTURE;
             }
         }
+        public static byte[] BuildNSBTXHeader(uint texturesSize) {
+            MemoryStream ms = new MemoryStream();
 
+            using (BinaryWriter bw = new BinaryWriter(ms)) {
+                bw.Write(Encoding.UTF8.GetBytes("BTX0")); // Write magic code BTX0
+                bw.Write((ushort)0xFEFF); // Byte order
+                bw.Write((ushort)0x0001); // ???
+                bw.Write(texturesSize); // Write size of textures block
+                bw.Write((short)0x10); //Header size 
+                bw.Write((short)0x01); //Number of sub-files???
+                bw.Write((uint)0x14); // Offset to sub-file
+            }
+            return ms.ToArray();
+        }
         public static byte[] BuildNSBMDwithTextures(byte[] nsbmd, byte[] nsbtx) {
             byte[] wholeMDL0 = GetFirstBlock(nsbmd);
             byte[] wholeTEX0 = GetFirstBlock(nsbtx);
@@ -378,7 +405,6 @@ namespace DSPRE {
             }
             return ms.ToArray();
         }
-
         private static byte[] GetFirstBlock(byte[] NSBFile) {
             int blockSize;
             uint offsetToMainBlock;

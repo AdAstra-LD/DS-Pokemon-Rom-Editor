@@ -74,11 +74,23 @@ namespace DSPRE {
             ushort globalY = BitConverter.ToUInt16(DSUtils.ReadFromArm9(RomInfo.arm9spawnOffset + 12, 2), 0);
 
             spawnHeaderComboBox.SelectedIndex = headerNumber;
+            
             localmapxUpDown.Value = (short)(globalX % 32);
             localmapyUpDown.Value = (short)(globalY % 32);
-            matrixxUpDown.Value = (ushort)(globalX / 32);
-            matrixyUpDown.Value = (ushort)(globalY / 32);
 
+
+            try {
+                matrixxUpDown.Value = (ushort)Math.Min(globalX / 32, matrixxUpDown.Maximum);
+            } catch (ArgumentOutOfRangeException) {
+                matrixxUpDown.Value = matrixxUpDown.Maximum;
+            }
+
+            try {
+                matrixyUpDown.Value = (ushort)Math.Min(globalY / 32, matrixyUpDown.Maximum);
+            } catch (ArgumentOutOfRangeException) {
+                matrixyUpDown.Value = matrixyUpDown.Maximum;
+            }
+            
             ReadDefaultMoney();
             playerDirCombobox.SelectedIndex = BitConverter.ToUInt16(DSUtils.ReadFromArm9(RomInfo.arm9spawnOffset + 16, 2), 0);
         }

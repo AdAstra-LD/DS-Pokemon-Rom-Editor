@@ -283,7 +283,9 @@ namespace DSPRE {
                     isItemRadioButton.Enabled = true;
                     OWTypeChanged(null, null);
                 }
-                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied) addHeaderBTN.Enabled = true;
+                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied) {
+                    addHeaderBTN.Enabled = true;
+                }
             }
         }
         private void scriptCommandsDatabaseToolStripButton_Click(object sender, EventArgs e) {
@@ -877,18 +879,18 @@ namespace DSPRE {
             if (headerListBox.Items.Count > 0)
                 headerListBox.SelectedIndex = 0;
 
-            ROMToolboxDialog dialog = new ROMToolboxDialog();
-            if (dialog.CheckDynamicHeaders()) addHeaderBTN.Enabled = true;
+            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied())
+                addHeaderBTN.Enabled = true;
         }
         private void addHeaderBTN_Click(object sender, EventArgs e) {
             // Add new file in the dynamic headers directory
-            string sourcePath = RomInfo.GetDynamicHeadersDirPath() + "\\" + "0000";
-            string destPath = RomInfo.GetDynamicHeadersDirPath() + "\\" + RomInfo.GetHeaderCount().ToString("D4");
+            string sourcePath = RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + "0000";
+            string destPath = RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + RomInfo.GetHeaderCount().ToString("D4");
             File.Copy(sourcePath, destPath);
 
             // Add row to internal names table
             string nameString = "4E 45 57 4D 41 50 00 00 00 00 00 00 00 00 00 00";
-            DSUtils.WriteToFile(RomInfo.internalNamesLocation, ROMToolboxDialog.HexStringToByteArray(nameString), (uint)RomInfo.GetHeaderCount() * 0x10);
+            DSUtils.WriteToFile(RomInfo.internalNamesLocation, DSUtils.HexStringToByteArray(nameString), (uint)RomInfo.GetHeaderCount() * 0x10);
 
             // Update headers ListBox and internal names list
             headerListBox.Items.Add(headerListBox.Items.Count + " -   NEWMAP");
@@ -1003,10 +1005,11 @@ namespace DSPRE {
             ushort headerNumber = ushort.Parse(headerListBox.SelectedItem.ToString().Substring(0, internalNames.Count.ToString().Length));
 
             /* Check if dynamic headers patch has been applied, and load header from arm9 or a/0/5/0 accordingly */
-            ROMToolboxDialog dialog = new ROMToolboxDialog();
-            if (dialog.CheckDynamicHeaders()) {
-                currentHeader = MapHeader.BuildFromFile(RomInfo.GetDynamicHeadersDirPath() + "\\" + headerNumber.ToString("D4"), headerNumber, 0);
-            } else currentHeader = MapHeader.LoadFromARM9(headerNumber);
+            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) { 
+                currentHeader = MapHeader.BuildFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + headerNumber.ToString("D4"), headerNumber, 0);
+            } else {
+                currentHeader = MapHeader.LoadFromARM9(headerNumber);
+            }
             refreshHeaderEditorFields();
         }
 
@@ -1338,9 +1341,8 @@ namespace DSPRE {
         private void saveHeaderButton_Click(object sender, EventArgs e) {
 
             /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
-            ROMToolboxDialog dialog = new ROMToolboxDialog();
-            if (dialog.CheckDynamicHeaders()) {
-                DSUtils.WriteToFile(RomInfo.GetDynamicHeadersDirPath() + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, true);
+            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) { 
+                DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, true);
             } else {
                 uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
                 DSUtils.WriteToArm9(currentHeader.ToByteArray(), headerOffset);
@@ -1820,14 +1822,17 @@ namespace DSPRE {
                 headersGridView.Columns.Add("Column" + i, i.ToString("D"));
                 headersGridView.Columns[i].Width = 32; // Set column size
                 headersGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                headersGridView.Columns[i].Frozen = (i == 0);
 
                 heightsGridView.Columns.Add("Column" + i, i.ToString("D"));
                 heightsGridView.Columns[i].Width = 21; // Set column size
                 heightsGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                headersGridView.Columns[i].Frozen = (i == 0);
 
                 mapFilesGridView.Columns.Add("Column" + i, i.ToString("D"));
                 mapFilesGridView.Columns[i].Width = 32; // Set column size
                 mapFilesGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                headersGridView.Columns[i].Frozen = (i == 0);
 
             }
 
@@ -4378,7 +4383,7 @@ namespace DSPRE {
             spawnableDirComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.orientationsArray);
             spawnableTypeComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.typesArray);
 
-            if (ScanScriptsCheckStandardizedItemNumbers())
+            if (ROMToolboxDialog.CheckScriptsStandardizedItemNumbers())
                 isItemRadioButton.Enabled = true;
 
             disableHandlers = false;
@@ -4754,18 +4759,6 @@ namespace DSPRE {
 
             overworldsListBox.Items.Add("Overworld " + (currentEvFile.overworlds.Count - 1).ToString());
             overworldsListBox.SelectedIndex = currentEvFile.overworlds.Count - 1;
-        }
-        public static bool ScanScriptsCheckStandardizedItemNumbers() {
-            ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
-            if (itemScript.allScripts.Count - 1 < new TextArchive(RomInfo.itemNamesTextNumber).messages.Count)
-                return false;
-
-            for (ushort i = 0; i < itemScript.allScripts.Count - 1; i++) {
-                if (BitConverter.ToUInt16(itemScript.allScripts[i].commands[0].cmdParams[1], 0) != i || BitConverter.ToUInt16(itemScript.allScripts[i].commands[1].cmdParams[1], 0) != 1) {
-                    return false;
-                }
-            }
-            return true;
         }
         private void OWTypeChanged(object sender, EventArgs e) {
             if (overworldsListBox.SelectedIndex < 0)
