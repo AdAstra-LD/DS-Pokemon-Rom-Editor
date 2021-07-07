@@ -285,6 +285,7 @@ namespace DSPRE {
                 }
                 if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied) {
                     addHeaderBTN.Enabled = true;
+                    removeLastHeaderBTN.Enabled = true;
                 }
             }
         }
@@ -802,12 +803,21 @@ namespace DSPRE {
             statusLabel.Text = "Reading internal names... Please wait.";
             Update();
 
-            /* Read Header internal names */
             internalNames = new List<string>();
             headerListBoxNames = new List<string>();
+
+            int headerCount;
+            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                addHeaderBTN.Enabled = true;
+                removeLastHeaderBTN.Enabled = true;
+                headerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir).Length;
+            } else {
+                headerCount = RomInfo.GetHeaderCount();
+            }
+
+            /* Read Header internal names */
             try {
                 using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.internalNamesLocation))) {
-                    int headerCount = RomInfo.GetHeaderCount();
 
                     for (int i = 0; i < headerCount; i++) {
                         byte[] row = reader.ReadBytes(RomInfo.internalNameLength);
@@ -878,9 +888,6 @@ namespace DSPRE {
             }
             if (headerListBox.Items.Count > 0)
                 headerListBox.SelectedIndex = 0;
-
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied())
-                addHeaderBTN.Enabled = true;
         }
         private void addHeaderBTN_Click(object sender, EventArgs e) {
             // Add new file in the dynamic headers directory
@@ -899,6 +906,26 @@ namespace DSPRE {
 
             // Select new header
             headerListBox.SelectedIndex = headerListBox.Items.Count - 1;
+        }
+        private void removeLastHeaderBTN_Click(object sender, EventArgs e) {
+            /* Check if currently selected file is the last one, and in that case select the one before it */
+            int lastIndex = headerListBox.Items.Count - 1;
+
+            if (lastIndex > 0) { //there are at least 2 elements
+                if (headerListBox.SelectedIndex == lastIndex) {
+                    headerListBox.SelectedIndex--;
+                }
+ 
+                /* Physically delete last header file */
+                File.Delete(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + lastIndex.ToString("D4"));
+
+                /* Remove item from collections */
+                headerListBox.Items.RemoveAt(lastIndex);
+                internalNames.RemoveAt(lastIndex);
+                headerListBoxNames.RemoveAt(lastIndex);
+            } else {
+                MessageBox.Show("You must have at least one header!", "Can't delete last header", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void areaDataUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers)
@@ -1006,7 +1033,7 @@ namespace DSPRE {
 
             /* Check if dynamic headers patch has been applied, and load header from arm9 or a/0/5/0 accordingly */
             if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) { 
-                currentHeader = MapHeader.BuildFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + headerNumber.ToString("D4"), headerNumber, 0);
+                currentHeader = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + headerNumber.ToString("D4"), headerNumber, 0);
             } else {
                 currentHeader = MapHeader.LoadFromARM9(headerNumber);
             }
@@ -1318,7 +1345,7 @@ namespace DSPRE {
             selectEventComboBox.SelectedIndex = (int)eventFileUpDown.Value; // Select event file
             mainTabControl.SelectedTab = eventEditorTabPage;
 
-            CenterEventviewOnEntities();
+            CenterEventViewOnEntities();
             eventMatrixXUpDown_ValueChanged(null, null);
         }
         private void openMatrixButton_Click(object sender, EventArgs e) {
@@ -1391,35 +1418,35 @@ namespace DSPRE {
                 headerListBox.Items.Clear();
                 bool noResult = true;
 
-                switch (RomInfo.gameFamily) {
-                    case "DP":
-                        for (ushort i = 0; i < internalNames.Count; i++) {
-                            String locationName = locationNameComboBox.Items[((HeaderDP)MapHeader.LoadFromARM9(i)).locationName].ToString();
-                            if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + internalNames[i]);
-                                noResult = false;
-                            }
-                        }
-                        break;
-                    case "Plat":
-                        for (ushort i = 0; i < internalNames.Count; i++) {
-                            String locationName = locationNameComboBox.Items[((HeaderPt)MapHeader.LoadFromARM9(i)).locationName].ToString();
-                            if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + internalNames[i]);
-                                noResult = false;
-                            }
-                        }
-                        break;
-                    case "HGSS":
-                        for (ushort i = 0; i < internalNames.Count; i++) {
-                            String locationName = locationNameComboBox.Items[((HeaderHGSS)MapHeader.LoadFromARM9(i)).locationName].ToString();
-                            if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                headerListBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + internalNames[i]);
-                                noResult = false;
-                            }
-                        }
-                        break;
+                /* Check if dynamic headers patch has been applied, and load header from arm9 or a/0/5/0 accordingly */
+                for (ushort i = 0; i < internalNames.Count; i++) {
+                    MapHeader h;
+                    if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                        h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
+                    } else {
+                        h = MapHeader.LoadFromARM9(i);
+                    }
+
+                    string locationName = "";
+                    switch (RomInfo.gameFamily) {
+                        case "DP":
+                            locationName = locationNameComboBox.Items[((HeaderDP)h).locationName].ToString();
+                            break;
+                        case "Plat":
+                            locationName = locationNameComboBox.Items[((HeaderPt)h).locationName].ToString();
+                            break;
+                        case "HGSS":
+                            locationName = locationNameComboBox.Items[((HeaderHGSS)h).locationName].ToString();
+                            break;
+                    }
+
+                    if (locationName.IndexOf(searchLocationTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0) {
+                        headerListBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + internalNames[i]);
+                        noResult = false;
+                    }
                 }
+
+                
                 if (noResult) {
                     headerListBox.Items.Add("No result for " + '"' + searchLocationTextBox.Text + '"');
                     headerListBox.Enabled = false;
@@ -1494,8 +1521,8 @@ namespace DSPRE {
                 if (new FileInfo(of.FileName).Length > 48)
                     throw new FileFormatException();
 
-                h = MapHeader.BuildFromFile(of.FileName, currentHeader.ID, 0);
-                if (h.ID == ushort.MaxValue)
+                h = MapHeader.LoadFromFile(of.FileName, currentHeader.ID, 0);
+                if (h == null)
                     throw new FileFormatException();
 
             } catch (FileFormatException) {
@@ -1505,8 +1532,14 @@ namespace DSPRE {
             }
 
             currentHeader = h;
-            uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
-            DSUtils.WriteToArm9(currentHeader.ToByteArray(), headerOffset);
+            /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
+            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, true);
+            } else {
+                uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
+                DSUtils.WriteToArm9(currentHeader.ToByteArray(), headerOffset);
+            }
+
             try {
                 using (BinaryReader reader = new BinaryReader(new FileStream(of.FileName, FileMode.Open))) {
                     reader.BaseStream.Position = MapHeader.length + 8;
@@ -1884,7 +1917,7 @@ namespace DSPRE {
             selectMatrixComboBox.SelectedIndex = 0;
             statusLabel.Text = "Ready";
         }
-        private void addHeadersButton_Click(object sender, EventArgs e) {
+        private void addHeaderSectionButton_Click(object sender, EventArgs e) {
             if (!currentMatrix.hasHeadersSection) {
                 currentMatrix.hasHeadersSection = true;
                 matrixTabControl.TabPages.Add(headersTabPage);
@@ -2132,22 +2165,29 @@ namespace DSPRE {
                 }
 
                 /* Determine area data */
-                ushort header;
+                ushort headerID;
                 if (currentMatrix.hasHeadersSection) {
-                    header = currentMatrix.headers[e.RowIndex, e.ColumnIndex];
+                    headerID = currentMatrix.headers[e.RowIndex, e.ColumnIndex];
                 } else {
-                    header = currentHeader.ID;
+                    headerID = currentHeader.ID;
                 }
 
                 AreaData areaData;
-                if (header > internalNames.Count) {
+                if (headerID > internalNames.Count) {
                     MessageBox.Show("This map is associated to a non-existent header.\nThis will lead to unpredictable behaviour and, possibily, problems, if you attempt to load it in game.",
                         "Invalid header", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    header = 0;
+                    headerID = 0;
                 }
 
                 /* get texture file numbers from area data */
-                areaData = new AreaData((MapHeader.LoadFromARM9(header).areaDataID));
+                MapHeader h;
+                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                    h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + headerID.ToString("D4"), headerID, 0);
+                } else {
+                    h = MapHeader.LoadFromARM9(headerID);
+                }
+
+                areaData = new AreaData(h.areaDataID);
                 /* Load Map File and switch to Map Editor tab */
                 disableHandlers = true;
 
@@ -2920,7 +2960,7 @@ namespace DSPRE {
                 ang, dist, elev, perspective,
                 mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
-        private void removeMapFileButton_Click(object sender, EventArgs e) {
+        private void removeLastMapFileButton_Click(object sender, EventArgs e) {
             /* Delete last map file */
             File.Delete(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + (selectMapComboBox.Items.Count - 1).ToString("D4"));
 
@@ -3890,7 +3930,7 @@ namespace DSPRE {
         #endregion
 
         #region Subroutines
-        private void CenterEventviewOnEntities() {
+        private void CenterEventViewOnEntities() {
             disableHandlers = true;
             try {
                 if (currentEvFile.overworlds.Count > 0) {
@@ -4037,8 +4077,15 @@ namespace DSPRE {
                 /* Determine area data */
                 byte areaDataID;
                 if (eventMatrix.hasHeadersSection) {
-                    ushort header = (ushort)eventMatrix.headers[(short)eventMatrixYUpDown.Value, (short)eventMatrixXUpDown.Value];
-                    areaDataID = MapHeader.LoadFromARM9(header).areaDataID;
+                    ushort headerID = (ushort)eventMatrix.headers[(short)eventMatrixYUpDown.Value, (short)eventMatrixXUpDown.Value];
+                    MapHeader h;
+                    if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                        h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + headerID.ToString("D4"), headerID, 0);
+                    } else {
+                        h = MapHeader.LoadFromARM9(headerID);
+                    }
+
+                    areaDataID = h.areaDataID;
                 } else {
                     areaDataID = (byte)eventAreaDataUpDown.Value;
                 }
@@ -5116,26 +5163,26 @@ namespace DSPRE {
         }
         private void goToWarpDestination_Click(object sender, EventArgs e) {
             int destAnchor = (int)warpAnchorUpDown.Value;
-            ushort destHeader = (ushort)warpHeaderUpDown.Value;
-            ushort destEventID = MapHeader.LoadFromARM9(destHeader).eventFileID;
-            EventFile destEvent = new EventFile(destEventID);
+            ushort destHeaderID = (ushort)warpHeaderUpDown.Value;
+            MapHeader destHeader = MapHeader.LoadFromARM9(destHeaderID);
 
-            if (destEvent.warps.Count < destAnchor + 1) {
+            if (new EventFile(destHeader.eventFileID).warps.Count < destAnchor + 1) {
                 DialogResult d = MessageBox.Show("The selected warp's destination anchor doesn't exist.\n" +
                     "Do you want to open the destination map anyway?", "Warp is not connected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (d == DialogResult.No)
                     return;
                 else {
-                    eventMatrixUpDown.Value = MapHeader.LoadFromARM9((ushort)warpHeaderUpDown.Value).matrixID;
-                    eventAreaDataUpDown.Value = MapHeader.LoadFromARM9((ushort)warpHeaderUpDown.Value).areaDataID;
-                    selectEventComboBox.SelectedIndex = destEventID;
-                    CenterEventviewOnEntities();
+                    eventMatrixUpDown.Value = destHeader.matrixID;
+                    eventAreaDataUpDown.Value = destHeader.areaDataID;
+                    selectEventComboBox.SelectedIndex = destHeader.eventFileID;
+                    CenterEventViewOnEntities();
                     return;
                 }
             }
-            eventMatrixUpDown.Value = MapHeader.LoadFromARM9((ushort)warpHeaderUpDown.Value).matrixID;
-            eventAreaDataUpDown.Value = MapHeader.LoadFromARM9((ushort)warpHeaderUpDown.Value).areaDataID;
-            selectEventComboBox.SelectedIndex = destEventID;
+            eventMatrixUpDown.Value = destHeader.matrixID;
+            eventAreaDataUpDown.Value = destHeader.areaDataID;
+            selectEventComboBox.SelectedIndex = destHeader.eventFileID;
+
             warpsListBox.SelectedIndex = destAnchor;
             centerEventViewOnSelectedEvent_Click(sender, e);
         }

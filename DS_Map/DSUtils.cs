@@ -18,7 +18,7 @@ namespace DSPRE {
         public const int ERR_OVERLAY_NOTFOUND = -1;
         public const int ERR_OVERLAY_ALREADY_UNCOMPRESSED = -2;
 
-        public const string backupSuffix = ".compressedBackup";
+        public const string backupSuffix = ".backup";
 
         public static void WriteToFile(string filepath, byte[] bytesToWrite, uint writeAt = 0, int readFrom = 0, bool fromScratch = false) {
             if (fromScratch)

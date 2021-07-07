@@ -835,6 +835,7 @@
             this.removeLastHeaderBTN.TabIndex = 52;
             this.removeLastHeaderBTN.Text = "Remove Last";
             this.removeLastHeaderBTN.UseVisualStyleBackColor = true;
+            this.removeLastHeaderBTN.Click += new System.EventHandler(this.removeLastHeaderBTN_Click);
             // 
             // addHeaderBTN
             // 
@@ -2282,7 +2283,7 @@
             this.addHeadersButton.TabIndex = 23;
             this.addHeadersButton.Text = "Add \r\nHeader Tab";
             this.addHeadersButton.UseVisualStyleBackColor = true;
-            this.addHeadersButton.Click += new System.EventHandler(this.addHeadersButton_Click);
+            this.addHeadersButton.Click += new System.EventHandler(this.addHeaderSectionButton_Click);
             // 
             // saveMatrixButton
             // 
@@ -2699,7 +2700,7 @@
             this.removeMapFileButton.Text = "Remove \r\nLast Map";
             this.removeMapFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.removeMapFileButton.UseVisualStyleBackColor = true;
-            this.removeMapFileButton.Click += new System.EventHandler(this.removeMapFileButton_Click);
+            this.removeMapFileButton.Click += new System.EventHandler(this.removeLastMapFileButton_Click);
             // 
             // mapRenderPanel
             // 

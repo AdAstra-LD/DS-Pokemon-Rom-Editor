@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -107,13 +108,10 @@ namespace DSPRE.ROMFiles {
         #endregion Fields
 
         #region Methods (1)
-        public static MapHeader BuildFromFile(string filename, ushort headerNumber, long offsetInFile) {
-            /* Calculate header offset and load data */
-            byte[] headerData = DSUtils.ReadFromFile(filename, offsetInFile, MapHeader.length);
-
+        public static MapHeader LoadFromByteArray(byte[] headerData, ushort headerNumber) {
             /* Encapsulate header data into the class appropriate for the gameVersion */
             if (headerData.Length < MapHeader.length) {
-                MessageBox.Show(filename + " is too small and can't store header data.", "Header file too small", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("File of header " + headerNumber + " is too small and can't store header data.", "Header file too small", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
@@ -126,10 +124,17 @@ namespace DSPRE.ROMFiles {
                     return new HeaderHGSS(headerNumber, new MemoryStream(headerData));
             }
         }
+        public static MapHeader LoadFromFile(string filename, ushort headerNumber, long offsetInFile) {
+            /* Calculate header offset and load data */
+            byte[] headerData = DSUtils.ReadFromFile(filename, offsetInFile, MapHeader.length);
+            return LoadFromByteArray(headerData, headerNumber);
+        }
         public static MapHeader LoadFromARM9(ushort headerNumber) {
             long headerOffset = Resources.PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * headerNumber;
-            return BuildFromFile(RomInfo.arm9Path, headerNumber, headerOffset);
+            return LoadFromFile(RomInfo.arm9Path, headerNumber, headerOffset);
         }
+
+        
         #endregion
     }
 

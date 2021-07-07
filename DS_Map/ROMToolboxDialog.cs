@@ -294,6 +294,7 @@ namespace DSPRE {
             expandedMatrixCB.Visible = true;
             return true;
         }
+        public string backupSuffix = ".backup";
         private bool CheckARM9ExpansionApplied() {
             if (!ROMToolboxDialog.flag_arm9Expanded) {
                 if (!ROMToolboxDialog.CheckFilesArm9ExpansionApplied())
@@ -401,8 +402,8 @@ namespace DSPRE {
 
             DialogResult d2;
             d2 = MessageBox.Show("This process will apply the following changes:\n\n" +
-                "- Backup ARM9 file (arm9.bin.backup will be created)." + "\n\n" +
-                "- Backup Overlay" + data.overlayNumber + " file (overlay" + data.overlayNumber + ".bin.backup will be created)." + "\n\n" +
+                "- Backup ARM9 file (arm9.bin" + backupSuffix + " will be created)." + "\n\n" +
+                "- Backup Overlay" + data.overlayNumber + " file (overlay" + data.overlayNumber + ".bin" + backupSuffix + " will be created)." + "\n\n" +
                 "- Replace " + (data.branchString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.branchOffset.ToString("X") + " with " + '\n' + data.branchString + "\n\n" +
                 "- Replace " + (data.overlayString1.Length / 3 + 1) + " bytes of data at overlay" + data.overlayNumber + " offset 0x" + data.overlayOffset1.ToString("X") + " with " + '\n' + data.overlayString1 + "\n\n" +
                 "- Replace " + (data.overlayString2.Length / 3 + 1) + " bytes of data at overlay" + data.overlayNumber + " offset 0x" + data.overlayOffset2.ToString("X") + " with " + '\n' + data.overlayString2 + "\n\n" +
@@ -411,7 +412,7 @@ namespace DSPRE {
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d2 == DialogResult.Yes) {
-                File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", overwrite: true);
+                File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + backupSuffix, overwrite: true);
 
                 try {
                     DSUtils.WriteToArm9(DSUtils.HexStringToByteArray(data.branchString), data.branchOffset); //Write new branchOffset
@@ -512,7 +513,7 @@ namespace DSPRE {
 
             DialogResult d;
             d = MessageBox.Show("Confirming this process will apply the following changes:\n\n" +
-                "- Backup ARM9 file (arm9.bin.backup will be created)." + "\n\n" +
+                "- Backup ARM9 file (arm9.bin" + backupSuffix + " will be created)." + "\n\n" +
                 "- Replace " + (data.branchString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.branchOffset.ToString("X") + " with " + '\n' + data.branchString + "\n\n" +
                 "- Replace " + (data.initString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.initOffset.ToString("X") + " with " + '\n' + data.initString + "\n\n" +
                 "- Modify file #" + expandedARMfileID + " inside " + '\n' + RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\n' + " to accommodate for 88KB of data (no backup)." + "\n\n" +
@@ -520,7 +521,7 @@ namespace DSPRE {
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
-                File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", overwrite: true);
+                File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + backupSuffix, overwrite: true);
 
                 try {
                     DSUtils.WriteToArm9(DSUtils.HexStringToByteArray(data.branchString), data.branchOffset); //Write new branchOffset
@@ -550,7 +551,7 @@ namespace DSPRE {
 
                     MessageBox.Show("The ARM9's usable memory has been expanded.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 } catch {
-                    MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 backup (arm9.bin.backup).", "Something went wrong",
+                    MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 backup (arm9.bin" + backupSuffix + ").", "Something went wrong",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             } else {
@@ -592,7 +593,7 @@ namespace DSPRE {
                         }
                     }
                 } catch {
-                    MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 backup (arm9.bin.backup).", "Something went wrong",
+                    MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 backup (arm9.bin" + backupSuffix + ").", "Something went wrong",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 DisableMatrixExpansionPatch("Already applied");
@@ -608,13 +609,13 @@ namespace DSPRE {
 
             DialogResult d;
             d = MessageBox.Show("Confirming this process will apply the following changes:\n\n" +
-                "- Backup ARM9 file (arm9.bin.backup will be created)." + "\n\n" +
+                "- Backup ARM9 file (arm9.bin" + backupSuffix + " will be created)." + "\n\n" +
                 "- Non ho sbatti di listare i cambiamenti" + "\n\n" +
                 "Do you wish to continue?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
-                File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + ".backup", overwrite: true);
+                File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + backupSuffix, overwrite: true);
 
                 try {
                     /* Write main routine (HG USA):
@@ -677,12 +678,11 @@ namespace DSPRE {
 
                     foreach (Tuple<uint, uint> reference in ToolboxDB.dynamicHeadersPointersDB[RomInfo.gameFamily]) {
                         DSUtils.WriteToArm9(DSUtils.HexStringToByteArray(data.REFERENCE_STRING), (uint)(reference.Item1 + data.pointerDiff));
-
                         uint pointerValue = BitConverter.ToUInt32(DSUtils.ReadFromArm9((uint)(reference.Item2 + data.pointerDiff), 4), 0) - PokeDatabase.System.headerOffsetsDict[RomInfo.romID] - 0x02000000;
                         DSUtils.WriteToArm9(BitConverter.GetBytes(pointerValue), (uint)(reference.Item2 + data.pointerDiff));
                     }
 
-                    if (RomInfo.gameFamily == "HGSS") {
+                    if (RomInfo.gameFamily == "HGSS" && RomInfo.gameLanguage != "JAP" && RomInfo.gameLanguage != "ESP") {
                         /*  Special case: at 0x3B522 (non-JAP and non-Spanish HG offset) there is an instruction 
                             between the mov r1, #0x18 and mul r1, r0 commands, so we must handle this separately */
 
@@ -711,7 +711,7 @@ namespace DSPRE {
 
                     MessageBox.Show("The headers are now dynamically allocated in memory.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 } catch {
-                    MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 backup (arm9.bin.backup).", "Something went wrong",
+                    MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 backup (arm9.bin" + backupSuffix + ").", "Something went wrong",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             } else {
