@@ -840,7 +840,7 @@ namespace DSPRE {
                     areaIconComboBox.Enabled = false;
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("dpareaicon");
                     areaSettingsLabel.Text = "Show nametag:";
-                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraValues);
+                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraDict.Values.ToArray());
                     musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicDict.Values.ToArray());
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicDict.Values.ToArray());
                     areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.DPShowNameValues);
@@ -850,7 +850,7 @@ namespace DSPRE {
                 case "Plat":
                     areaIconComboBox.Items.AddRange(PokeDatabase.Area.PtAreaIconValues);
                     areaSettingsLabel.Text = "Show nametag:";
-                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraValues);
+                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraDict.Values.ToArray());
                     musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicDict.Values.ToArray());
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicDict.Values.ToArray());
                     areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.PtShowNameValues);
@@ -858,8 +858,8 @@ namespace DSPRE {
                     wildPokeUpDown.Maximum = 65535;
                     break;
                 default:
-                    areaIconComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaIconValues);
-                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.HGSSCameraValues);
+                    areaIconComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaIconsDict.Values.ToArray());
+                    cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.HGSSCameraDict.Values.ToArray());
                     areaSettingsComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaProperties);
                     areaSettingsLabel.Text = "Area Settings:";
                     musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicDict.Values.ToArray());
@@ -956,35 +956,10 @@ namespace DSPRE {
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
                     break;
                 default:
-                    ((HeaderHGSS)currentHeader).areaIcon = Byte.Parse(areaIconComboBox.SelectedItem.ToString().Substring(1, 3));
+                    ((HeaderHGSS)currentHeader).areaIcon = (byte)areaIconComboBox.SelectedIndex;
                     imageName = PokeDatabase.System.AreaPics.hgssAreaPicDict[areaIconComboBox.SelectedIndex];
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
                     break;
-            }
-        }
-        private void cameraComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers)
-                return;
-
-            string imageName;
-            try {
-                switch (RomInfo.gameFamily) {
-                    case "DP":
-                        currentHeader.cameraAngleID = (byte)cameraComboBox.SelectedIndex;
-                        imageName = "dpcamera" + cameraComboBox.SelectedIndex.ToString();
-                        break;
-                    case "Plat":
-                        currentHeader.cameraAngleID = (byte)cameraComboBox.SelectedIndex;
-                        imageName = "ptcamera" + cameraComboBox.SelectedIndex.ToString();
-                        break;
-                    default:
-                        currentHeader.cameraAngleID = Byte.Parse(cameraComboBox.SelectedItem.ToString().Substring(1, 2));
-                        imageName = "hgsscamera" + currentHeader.cameraAngleID.ToString("D2");
-                        break;
-                }
-                cameraPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
-            } catch (NullReferenceException) {
-                MessageBox.Show("The current header uses an unrecognized camera.\n", "Unknown camera settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void eventFileUpDown_ValueChanged(object sender, EventArgs e) {
@@ -1037,10 +1012,10 @@ namespace DSPRE {
             } else {
                 currentHeader = MapHeader.LoadFromARM9(headerNumber);
             }
-            refreshHeaderEditorFields();
+            RefreshHeaderEditorFields();
         }
 
-        private void refreshHeaderEditorFields() {
+        private void RefreshHeaderEditorFields() {
             /* Setup controls for common fields across headers */
             internalNameBox.Text = internalNames[currentHeader.ID];
             matrixUpDown.Value = currentHeader.matrixID;
@@ -1051,16 +1026,13 @@ namespace DSPRE {
             textFileUpDown.Value = currentHeader.textArchiveID;
             wildPokeUpDown.Value = currentHeader.wildPokémon;
             weatherUpDown.Value = currentHeader.weatherID;
+            cameraUpDown.Value = currentHeader.cameraAngleID;
 
-            cameraComboBox.SelectedIndex = cameraComboBox.FindString("[" + currentHeader.cameraAngleID.ToString("D2"));
+            if (RomInfo.gameFamily == "HGSS") {
+                areaSettingsComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).locationType;
+            }
 
-            if (RomInfo.gameFamily == "HGSS")
-                areaSettingsComboBox.SelectedIndex = cameraComboBox.FindString("[" + ((HeaderHGSS)currentHeader).areaSettings.ToString("D2"));
-
-            if (currentHeader.wildPokémon == RomInfo.nullEncounterID)
-                openWildEditorWithIdButton.Enabled = false;
-            else
-                openWildEditorWithIdButton.Enabled = true;
+            openWildEditorWithIdButton.Enabled = currentHeader.wildPokémon != RomInfo.nullEncounterID;
 
             /* Setup controls for fields with version-specific differences */
             try {
@@ -1081,21 +1053,24 @@ namespace DSPRE {
                         battleBackgroundUpDown.Value = currentHeader.battleBackground;
                         break;
                     default:
-                        areaIconComboBox.SelectedIndex = areaIconComboBox.FindString("[" + $"{((HeaderHGSS)currentHeader).areaIcon:D3}");
+                        areaIconComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).areaIcon;
                         locationNameComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).locationName;
                         musicDayUpDown.Value = ((HeaderHGSS)currentHeader).musicDayID;
                         musicNightUpDown.Value = ((HeaderHGSS)currentHeader).musicNightID;
                         worldmapXCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapX;
                         worldmapYCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapY;
                         break;
+
+                    
                 }
             } catch (ArgumentOutOfRangeException) {
                 MessageBox.Show("This header contains an irregular/unsupported field.", "Error loading header file", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            refreshFlags();
+            RefreshFlags();
             updateWeatherPicAndComboBox();
+            updateCameraPicAndComboBox();
         }
-        private void refreshFlags() {
+        private void RefreshFlags() {
             BitArray ba = new BitArray(new byte[] { currentHeader.flags });
 
             flag0CheckBox.Checked = ba[0];
@@ -1235,11 +1210,6 @@ namespace DSPRE {
             }
             disableHandlers = false;
         }
-
-        private void weatherUpDown_ValueChanged(object sender, EventArgs e) {
-            currentHeader.weatherID = (byte)weatherUpDown.Value;
-            updateWeatherPicAndComboBox();
-        }
         private void worldmapXCoordUpDown_ValueChanged(object sender, EventArgs e) {
             ((HeaderHGSS)currentHeader).worldmapX = (byte)worldmapXCoordUpDown.Value;
         }
@@ -1298,6 +1268,51 @@ namespace DSPRE {
                 weatherPictureBox.Image = null;
             }
         }
+        private void updateCameraPicAndComboBox() {
+            if (disableHandlers)
+                return;
+
+            /* Update Camera Combobox*/
+            disableHandlers = true;
+            try {
+                switch (RomInfo.gameFamily) {
+                    case "DP":
+                        cameraComboBox.SelectedItem = PokeDatabase.CameraAngles.DPPtCameraDict[currentHeader.cameraAngleID];
+                        break;
+                    case "Plat":
+                        cameraComboBox.SelectedItem = PokeDatabase.CameraAngles.DPPtCameraDict[currentHeader.cameraAngleID];
+                        break;
+                    default:
+                        cameraComboBox.SelectedItem = PokeDatabase.CameraAngles.HGSSCameraDict[currentHeader.cameraAngleID];
+                        break;
+                }
+            } catch (KeyNotFoundException) {
+                cameraComboBox.SelectedItem = null;
+            }
+            disableHandlers = false;
+
+            /* Update Camera Picture */
+            string imageName;
+            try {
+                switch (RomInfo.gameFamily) {
+                    case "DP":
+                        currentHeader.cameraAngleID = (byte)cameraComboBox.SelectedIndex;
+                        imageName = "dpcamera" + cameraUpDown.Value.ToString();
+                        break;
+                    case "Plat":
+                        currentHeader.cameraAngleID = (byte)cameraComboBox.SelectedIndex;
+                        imageName = "ptcamera" + cameraUpDown.Value.ToString();
+                        break;
+                    default:
+                        currentHeader.cameraAngleID = (byte)cameraComboBox.SelectedIndex;
+                        imageName = "hgsscamera" + cameraUpDown.Value.ToString();
+                        break;
+                }
+                cameraPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
+            } catch (NullReferenceException) {
+                MessageBox.Show("The current header uses an unrecognized camera.\n", "Unknown camera settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void weatherComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || weatherComboBox.SelectedIndex < 0)
@@ -1315,7 +1330,31 @@ namespace DSPRE {
                     break;
             }
             currentHeader.weatherID = (byte)weatherUpDown.Value;
+        }
+        private void weatherUpDown_ValueChanged(object sender, EventArgs e) {
+            currentHeader.weatherID = (byte)weatherUpDown.Value;
+            updateWeatherPicAndComboBox();
+        }
+        private void cameraComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (disableHandlers || cameraComboBox.SelectedIndex < 0)
+                return;
 
+            switch (RomInfo.gameFamily) {
+                case "DP":
+                    cameraUpDown.Value = PokeDatabase.CameraAngles.DPPtCameraDict.Keys.ElementAt(cameraComboBox.SelectedIndex);
+                    break;
+                case "Plat":
+                    cameraUpDown.Value = PokeDatabase.CameraAngles.DPPtCameraDict.Keys.ElementAt(cameraComboBox.SelectedIndex);
+                    break;
+                default:
+                    cameraUpDown.Value = PokeDatabase.CameraAngles.HGSSCameraDict.Keys.ElementAt(cameraComboBox.SelectedIndex);
+                    break;
+            }
+            currentHeader.cameraAngleID = (byte)cameraUpDown.Value;
+        }
+        private void cameraUpDown_ValueChanged(object sender, EventArgs e) {
+            currentHeader.cameraAngleID = (byte)cameraUpDown.Value;
+            updateCameraPicAndComboBox();
         }
         private void openAreaDataButton_Click(object sender, EventArgs e) {
             if (!nsbtxEditorIsReady) {
@@ -1338,8 +1377,9 @@ namespace DSPRE {
                 eventEditorIsReady = true;
             }
 
-            if (matrixUpDown.Value != 0)
+            if (matrixUpDown.Value != 0) {
                 eventAreaDataUpDown.Value = areaDataUpDown.Value; // Use Area Data for textures if matrix is not 0
+            }
 
             eventMatrixUpDown.Value = matrixUpDown.Value; // Open the right matrix in event editor
             selectEventComboBox.SelectedIndex = (int)eventFileUpDown.Value; // Select event file
@@ -1473,18 +1513,11 @@ namespace DSPRE {
                     currentHeader.locationSpecifier = Byte.Parse(areaSettingsComboBox.SelectedItem.ToString().Substring(1, 3));
                     break;
                 case "HGSS":
-                    HeaderHGSS ch = ((HeaderHGSS)currentHeader);
-
-                    ch.areaSettings = (byte)areaSettingsComboBox.SelectedIndex;
-                    if (ch.areaSettings == 4) {
-                        areaImageLabel.Text = "[Location Tag hidden]";
-                        areaIconComboBox.Enabled = false;
-                        areaIconPictureBox.Visible = false;
-                    } else {
-                        areaImageLabel.Text = "Area icon";
-                        areaIconComboBox.Enabled = true;
-                        areaIconPictureBox.Visible = true;
-                    }
+                    HeaderHGSS ch = (HeaderHGSS)currentHeader;
+                    ch.locationType = (byte)areaSettingsComboBox.SelectedIndex;
+                    //areaImageLabel.Text = "Area icon";
+                    //areaIconComboBox.Enabled = true;
+                    //areaIconPictureBox.Visible = true;
                     break;
             }
         }
@@ -1549,7 +1582,7 @@ namespace DSPRE {
                 updateHeaderNameShown(headerListBox.SelectedIndex);
             } catch (EndOfStreamException) { }
 
-            refreshHeaderEditorFields();
+            RefreshHeaderEditorFields();
         }
 
         private void exportHeaderToFileButton_Click(object sender, EventArgs e) {
@@ -1763,7 +1796,7 @@ namespace DSPRE {
             worldmapXCoordUpDown.Value = worldmapXCoordCopy;
             worldmapYCoordUpDown.Value = worldmapYCoordCopy;
             battleBackgroundUpDown.Value = battleBGCopy;
-            refreshFlags();
+            RefreshFlags();
         }
         private void pasteInternalNameButton_Click(object sender, EventArgs e) {
             internalNameBox.Text = internalNameCopy;
@@ -1818,7 +1851,7 @@ namespace DSPRE {
         private void pasteMapSettingsButton_Click(object sender, EventArgs e) {
             currentHeader.flags = flagsCopy;
             battleBackgroundUpDown.Value = battleBGCopy;
-            refreshFlags();
+            RefreshFlags();
         }
         #endregion
 
@@ -2299,7 +2332,7 @@ namespace DSPRE {
                     Environment.NewLine + "Do you want to check if any Header is using it and choose that one as your Spawn Point? " +
                     Environment.NewLine + "\nChoosing 'No' will pick the last selected Header.", "Couldn't find Header Tab", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (d == DialogResult.Yes) {
-                    result = HeaderSearch.advancedSearch(0, (ushort)internalNames.Count, internalNames, "Matrix (ID)", "Equals", selectMatrixComboBox.SelectedIndex.ToString());
+                    result = HeaderSearch.AdvancedSearch(0, (ushort)internalNames.Count, internalNames, (int)MapHeader.SearchableFields.MatrixID, (int)HeaderSearch.NumOperators.Equal, selectMatrixComboBox.SelectedIndex.ToString());
                     if (result.Count < 1) {
                         MessageBox.Show("The current Matrix isn't assigned to any Header.\nThe default choice has been set to the last selected Header.", "No result", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         headerNumber = currentHeader.ID;
@@ -4059,7 +4092,7 @@ namespace DSPRE {
             g.DrawRectangle(eventPen, (ow.xMapPosition) * 17 - 8, (ow.yMapPosition - 1) * 17, 34, 34);
             g.DrawRectangle(eventPen, (ow.xMapPosition) * 17 - 9, (ow.yMapPosition - 1) * 17 - 1, 36, 36);
         }
-        private void DisplayEventMap() {
+        private void DisplayEventMap(bool readGraphicsFromHeader = true) {
             /* Determine map file to open and open it in BinaryReader, unless map is VOID */
             uint mapIndex = GameMatrix.EMPTY;
             if (eventMatrixXUpDown.Value > eventMatrix.width || eventMatrixYUpDown.Value > eventMatrix.height) {
@@ -4076,7 +4109,7 @@ namespace DSPRE {
             } else {
                 /* Determine area data */
                 byte areaDataID;
-                if (eventMatrix.hasHeadersSection) {
+                if (eventMatrix.hasHeadersSection && readGraphicsFromHeader) {
                     ushort headerID = (ushort)eventMatrix.headers[(short)eventMatrixYUpDown.Value, (short)eventMatrixXUpDown.Value];
                     MapHeader h;
                     if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
@@ -4571,6 +4604,9 @@ namespace DSPRE {
         private void showEventsCheckBoxes_CheckedChanged(object sender, EventArgs e) {
             DisplayActiveEvents();
         }
+        private void eventAreaDataUpDown_ValueChanged(object sender, EventArgs e) {
+            DisplayEventMap(readGraphicsFromHeader: false);
+        }
         private void eventPictureBox_Click(object sender, EventArgs e) {
             int squareSize = 17;
             Point coordinates = eventPictureBox.PointToClient(Cursor.Position);
@@ -4579,12 +4615,32 @@ namespace DSPRE {
 
             if (mea.Button == MouseButtons.Left) {
                 if (selectedEvent != null) {
-
-                    selectedEvent.xMapPosition = (short)mouseTilePos.X;
-                    selectedEvent.yMapPosition = (short)mouseTilePos.Y;
-                    selectedEvent.xMatrixPosition = (ushort)eventMatrixXUpDown.Value;
-                    selectedEvent.yMatrixPosition = (ushort)eventMatrixYUpDown.Value;
-
+                    switch (selectedEvent.evType) {
+                        case Event.EventType.SPAWNABLE:
+                            spawnablexMapUpDown.Value = (short)mouseTilePos.X;
+                            spawnableYMapUpDown.Value = (short)mouseTilePos.Y;
+                            spawnableXMatrixUpDown.Value = (short)eventMatrixXUpDown.Value;
+                            spawnableYMatrixUpDown.Value = (short)eventMatrixYUpDown.Value;
+                            break;
+                        case Event.EventType.OVERWORLD:
+                            owXMapUpDown.Value = (short)mouseTilePos.X;
+                            owYMapUpDown.Value = (short)mouseTilePos.Y;
+                            owXMatrixUpDown.Value = (short)eventMatrixXUpDown.Value;
+                            owYMatrixUpDown.Value = (short)eventMatrixYUpDown.Value;
+                            break;
+                        case Event.EventType.WARP:
+                            warpXMapUpDown.Value = (short)mouseTilePos.X;
+                            warpYMapUpDown.Value = (short)mouseTilePos.Y;
+                            warpXMatrixUpDown.Value = (short)eventMatrixXUpDown.Value;
+                            warpYMatrixUpDown.Value = (short)eventMatrixYUpDown.Value;
+                            break;
+                        case Event.EventType.TRIGGER:
+                            triggerXMapUpDown.Value = (short)mouseTilePos.X;
+                            triggerYMapUpDown.Value = (short)mouseTilePos.Y;
+                            triggerXMatrixUpDown.Value = (short)eventMatrixXUpDown.Value;
+                            triggerYMatrixUpDown.Value = (short)eventMatrixYUpDown.Value;
+                            break;
+                    }
                     DisplayActiveEvents();
                 }
             } else if (mea.Button == MouseButtons.Right) {
@@ -4647,7 +4703,7 @@ namespace DSPRE {
                 }
             }
         }
-        #region Spawnables Editor
+        #region Spawnables Tab
         private void addSpawnableButton_Click(object sender, EventArgs e) {
             currentEvFile.spawnables.Add(new Spawnable((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
             spawnablesListBox.Items.Add("Spawnable " + (currentEvFile.spawnables.Count - 1).ToString());
@@ -4697,11 +4753,11 @@ namespace DSPRE {
             spawnableTypeComboBox.SelectedIndex = currentEvFile.spawnables[spawnablesListBox.SelectedIndex].type;
 
             spawnableScriptUpDown.Value = currentEvFile.spawnables[spawnablesListBox.SelectedIndex].scriptNumber;
-            spawnableMapXUpDown.Value = currentEvFile.spawnables[spawnablesListBox.SelectedIndex].xMapPosition;
-            spawnableMapYUpDown.Value = currentEvFile.spawnables[spawnablesListBox.SelectedIndex].yMapPosition;
+            spawnablexMapUpDown.Value = currentEvFile.spawnables[spawnablesListBox.SelectedIndex].xMapPosition;
+            spawnableYMapUpDown.Value = currentEvFile.spawnables[spawnablesListBox.SelectedIndex].yMapPosition;
             spawnableUpDown.Value = currentEvFile.spawnables[spawnablesListBox.SelectedIndex].zPosition;
-            spawnableMatrixXUpDown.Value = currentEvFile.spawnables[spawnablesListBox.SelectedIndex].xMatrixPosition;
-            spawnableMatrixYUpDown.Value = currentEvFile.spawnables[spawnablesListBox.SelectedIndex].yMatrixPosition;
+            spawnableXMatrixUpDown.Value = currentEvFile.spawnables[spawnablesListBox.SelectedIndex].xMatrixPosition;
+            spawnableYMatrixUpDown.Value = currentEvFile.spawnables[spawnablesListBox.SelectedIndex].yMatrixPosition;
 
             DisplayActiveEvents();
             disableHandlers = false;
@@ -4710,14 +4766,14 @@ namespace DSPRE {
             if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
                 return;
 
-            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].xMatrixPosition = (ushort)spawnableMatrixXUpDown.Value;
+            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].xMatrixPosition = (ushort)spawnableXMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void spawnableMatrixYUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
                 return;
 
-            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].yMatrixPosition = (ushort)spawnableMatrixYUpDown.Value;
+            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].yMatrixPosition = (ushort)spawnableYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void spawnableScriptUpDown_ValueChanged(object sender, EventArgs e) {
@@ -4729,18 +4785,18 @@ namespace DSPRE {
             if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
                 return;
 
-            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].xMapPosition = (short)spawnableMapXUpDown.Value;
+            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].xMapPosition = (short)spawnablexMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void spawnableMapYUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
                 return;
 
-            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].yMapPosition = (short)spawnableMapYUpDown.Value;
+            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].yMapPosition = (short)spawnableYMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void spawnableZUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
                 return;
 
             currentEvFile.spawnables[spawnablesListBox.SelectedIndex].zPosition = (short)spawnableUpDown.Value;
@@ -4769,7 +4825,7 @@ namespace DSPRE {
         }
         #endregion
 
-        #region Overworlds Editor
+        #region Overworlds Tab
         private void addOverworldButton_Click(object sender, EventArgs e) {
             currentEvFile.overworlds.Add(new Overworld(currentEvFile.overworlds.Count + 1, (int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
             overworldsListBox.Items.Add("Overworld " + (currentEvFile.overworlds.Count - 1).ToString());
@@ -5058,7 +5114,7 @@ namespace DSPRE {
 
         #endregion
 
-        #region Warps Editor
+        #region Warps Tab
         private void addWarpButton_Click(object sender, EventArgs e) {
             currentEvFile.warps.Add(new Warp((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
             warpsListBox.Items.Add("Warp " + (currentEvFile.warps.Count - 1).ToString());
@@ -5164,7 +5220,13 @@ namespace DSPRE {
         private void goToWarpDestination_Click(object sender, EventArgs e) {
             int destAnchor = (int)warpAnchorUpDown.Value;
             ushort destHeaderID = (ushort)warpHeaderUpDown.Value;
-            MapHeader destHeader = MapHeader.LoadFromARM9(destHeaderID);
+
+            MapHeader destHeader;
+            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                destHeader = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + destHeaderID.ToString("D4"), destHeaderID, 0);
+            } else {
+                destHeader = MapHeader.LoadFromARM9(destHeaderID);
+            }
 
             if (new EventFile(destHeader.eventFileID).warps.Count < destAnchor + 1) {
                 DialogResult d = MessageBox.Show("The selected warp's destination anchor doesn't exist.\n" +
@@ -5188,7 +5250,7 @@ namespace DSPRE {
         }
         #endregion
 
-        #region Triggers Editor
+        #region Triggers Tab
         private void addTriggerButton_Click(object sender, EventArgs e) {
             currentEvFile.triggers.Add(new Trigger((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
             triggersListBox.Items.Add("Trigger " + (currentEvFile.triggers.Count - 1).ToString());
@@ -6334,10 +6396,28 @@ namespace DSPRE {
             RomInfo.PrepareCameraData();
 
             if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.cameraTblOverlayNumber)) {
-                if (DSUtils.OverlayIsCompressed(RomInfo.cameraTblOverlayNumber)) {
-                    DSUtils.DecompressOverlay(RomInfo.cameraTblOverlayNumber);
+                DialogResult d1 = MessageBox.Show("It is STRONGLY recommended to configure Overlay1 as uncompressed before proceeding.\n\n" +
+                        "More details in the following dialog.\n\n" + "Do you want to know more?",
+                        "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                bool userConfirmed;
+                if (d1 == DialogResult.Yes) {
+                    userConfirmed = ROMToolboxDialog.ConfigureOverlay1Uncompressed();
+                } else {
+                    userConfirmed = false;
+                }
+
+                if (!userConfirmed) {
+                    MessageBox.Show("You chose not to apply the patch. Use this editor responsibly.\n\n" +
+                            "If you change your mind, you can apply it later by accessing the ROM Toolbox.",
+                            "Caution", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    if (DSUtils.OverlayIsCompressed(RomInfo.cameraTblOverlayNumber)) {
+                        DSUtils.DecompressOverlay(RomInfo.cameraTblOverlayNumber);
+                    }
                 }
             }
+        
 
             uint[] RAMaddresses = new uint[RomInfo.cameraTblOffsetsToRAMaddress.Length];
             string camOverlayPath = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
@@ -6360,8 +6440,9 @@ namespace DSPRE {
             using (BinaryReader br = new BinaryReader(File.OpenRead(camOverlayPath))) {
                 br.BaseStream.Position = overlayCameraTblOffset = RAMaddresses[0] - DSUtils.GetOverlayRAMAddress(RomInfo.cameraTblOverlayNumber);
 
-                currentCameraTable = new GameCamera[16];
+                
                 if (RomInfo.gameFamily.Equals("HGSS")) {
+                    currentCameraTable = new GameCamera[17];
                     for (int i = 0; i < currentCameraTable.Length; i++) {
                         currentCameraTable[i] = new GameCamera(br.ReadUInt32(), br.ReadInt16(), br.ReadInt16(), br.ReadInt16(),
                                                 br.ReadInt16(), br.ReadByte(), br.ReadByte(),
@@ -6370,6 +6451,7 @@ namespace DSPRE {
 
                     }
                 } else {
+                    currentCameraTable = new GameCamera[16];
                     for (int i = 0; i < 3; i++) {
                         cameraEditorDataGridView.Columns.RemoveAt(cameraEditorDataGridView.Columns.Count - 3);
                     }
@@ -6379,6 +6461,7 @@ namespace DSPRE {
                                                 br.ReadUInt16(), br.ReadUInt32(), br.ReadUInt32());
                     }
                 }
+                cameraEditorDataGridView.RowTemplate.Height = 32*16 / currentCameraTable.Length;
                 for (int i = 0; i < currentCameraTable.Length; i++) {
                     currentCameraTable[i].ShowInGridView(cameraEditorDataGridView, i);
                 }

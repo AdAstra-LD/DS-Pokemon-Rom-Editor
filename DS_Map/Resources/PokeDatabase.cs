@@ -17,36 +17,37 @@ namespace DSPRE.Resources {
                 "[08] Island",
                 "[09] Wood"
             };
-            public static string[] HGSSAreaIconValues = new string[] {
-                "[002] Wood",
-                "[009] Gray",
-                "[017] Wall",
-                "[048] Not displayed",
-                "[131] Town",
-                "[132] Cave",
-                "[135] Field",
-                "[152] Lake",
-                "[165] Forest",
-                "[166] Water"
+            public static Dictionary<byte, string> HGSSAreaIconsDict = new Dictionary<byte, string>() {
+                [00] = "Not displayed",
+                [01] = "Wall",
+                [02] = "Wood",
+                [03] = "Town",
+                [04] = "Cave",
+                [05] = "Forest",
+                [06] = "Water",
+                [07] = "Field",
+                [08] = "Lake",
+                [09] = "Gray"
             };
+
             public static string[] HGSSAreaProperties = new string[] {
-                "[00] Unknown",
-                "[01] Unknown",
-                "[02] Unknown",
-                "[03] Cave Animation",
-                "[04] Hide Location Tag",
-                "[05] Unknown",
-                "[06] Unknown",
-                "[07] Unknown",
-                "[08] Unknown",
-                "[09] Unknown",
-                "[10] Unknown",
-                "[11] Unknown",
-                "[12] Unknown",
-                "[13] Unknown",
-                "[14] Unknown",
-                "[15] Unknown",
-                "[16] Unknown",
+                "[00] Mystery Zone",
+                "[01] City/Town",
+                "[02] Route",
+                "[03] Cave",
+                "[04] Interior [Hide Name]",
+                "[05] Pokémon Center",
+                "[06] Underground",
+                "[07] Unknown/Unused",
+                "[08] Unknown/Unused",
+                "[09] Unknown/Unused",
+                "[10] Unknown/Unused",
+                "[11] Unknown/Unused",
+                "[12] Unknown/Unused",
+                "[13] Unknown/Unused",
+                "[14] Unknown/Unused",
+                "[15] Unknown/Unused",
+                "[16] Unknown/Unused",
             };
         }
         public static class ShowName {
@@ -144,76 +145,58 @@ namespace DSPRE.Resources {
             };
             public static Dictionary<int, string> HGSSWeatherDict = new Dictionary<int, string> {
                 [00] = "Normal",
-                [01] = "Normal [1]",
-
-                [02] = "Rain",
+                [01] = "Rain",
+                [02] = "Rain [2]",
                 [03] = "Rain [3]",
                 [04] = "Rain [4]",
-                [05] = "Rain [5]",
-                [06] = "Rain [6]",
-                [07] = "Rain [7]",
-                [08] = "Rain [8]",
-
-                [09] = "Snow [9]",
-                [10] = "Snow [10]",
-                [11] = "Snow [11]",
-                [12] = "Snow [12]",
-                [13] = "Snow [13]",
-                [14] = "Sandstorm (in battle only)",
-                [15] = "Snow [15]",
-
-                [16] = "Diamond Dust",
-                [17] = "Diamond Dust [17]",
-
-                [18] = "Fog",
-                [19] = "Fog [19]",
-                [20] = "Fog [20]",
-                [21] = "Fog [21]",
-
-                [22] = "Darkness",
-                [23] = "Darkness [23]",
-                [24] = "Darkness after flash",
-                [25] = "Darkness after flash [25]",
-
-                [26] = "Low Light (Battle Arcade)"
+                [05] = "Snow [5]",
+                [06] = "Snow [6]",
+                [07] = "Sandstorm (in battle only)",
+                [08] = "Diamond Dust",
+                [09] = "Fog",
+                [10] = "Fog [10]",
+                [11] = "Darkness",
+                [12] = "Darkness after flash",
+                [13] = "Low Light (Battle Arcade)"
             };
         }
         public static class CameraAngles {
-            public static string[] DPPtCameraValues = new string[] {
-                "[00] 3D Normal",
-                "[01] 3D Top View (Higher than [12])",
-                "[02] 3D Frontal Low (Wider than [15])",
-                "[03] 3D Frontal",
-                "[04] 2D Ortho",
-                "[05] 3D Normal - Wide FOV",
-                "[06] 3D Bird View",
-                "[07] 3D Normal",
-                "[08] 3D Bird View Far",
-                "[09] 3D Frontal - Wide FOV",
-                "[10] 3D Top View - Narrow",
-                "[11] Normal 3D",
-                "[12] 3D Top View",
-                "[13] Frontal 3D",
-                "[14] 3D Top View - Wide FOV",
-                "[15] 3D Frontal Low"
+            public static Dictionary<int, string> DPPtCameraDict = new Dictionary<int, string>() {
+                [00] = "3D Normal",
+                [01] = "3D Top Higher",
+                [02] = "3D Front Low - Wide FOV",
+                [03] = "3D Front",
+                [04] = "2D Ortho",
+                [05] = "3D Normal - Wide FOV",
+                [06] = "3D Bird View",
+                [07] = "3D Normal [07]",
+                [08] = "3D Bird View Far",
+                [09] = "3D Front - Wide FOV",
+                [10] = "3D Top - Narrow",
+                [11] = "3D Normal [11]",
+                [12] = "3D Top",
+                [13] = "Front 3D",
+                [14] = "3D Top - Wide FOV",
+                [15] = "3D Front Low"
             };
-            public static string[] HGSSCameraValues = new string[] {
-                "[00] 3D Top",
-                "[01] 3D Front High",
-                "[02] 3D Lower",
-                "[03] 3D Frontal",
-                "[04] 2D Top View",
-                "[05] Normal 3D",
-                "[06] 3D Normal",
-                "[07] High 3D",
-                "[08] 3D Top View",
-                "[09] 3D Top View",
-                "[10] 3D High Wide",
-                "[11] 3D Frontal Wide",
-                "[12] 3D Lower Close",
-                "[13] 3D Full Frontal",
-                "[14] 3D Top View",
-                "[15] 2D Higher"
+            public static Dictionary<int, string> HGSSCameraDict = new Dictionary<int, string>() {
+                [00] = "3D Top View [00]",
+                [01] = "3D Front High",
+                [02] = "3D Lower",
+                [03] = "3D Front",
+                [04] = "2D Top View",
+                [05] = "Normal 3D",
+                [06] = "Normal 3D [06]",
+                [07] = "High 3D",
+                [08] = "3D Top View [08]",
+                [09] = "3D Top View [09]",
+                [10] = "3D High Wide",
+                [11] = "3D Front Wide",
+                [12] = "3D Lower Close",
+                [13] = "3D Full Front",
+                [14] = "3D Top View [14]",
+                [15] = "2D Higher",
+                [16] = "3D Top View [16]"
             };
         }
         public abstract class MusicDB {
@@ -503,7 +486,7 @@ namespace DSPRE.Resources {
         public static class EventEditor {
             public static class Spawnables {
                 public static string[] orientationsArray = new string[] {
-                    "Frontal Interaction",
+                    "Front Interaction",
                     "Activated from the left",
                     "Activated from the right",
                     "Activated from behind",
@@ -4120,16 +4103,16 @@ namespace DSPRE.Resources {
             }
             public static class AreaPics {
                 public static Dictionary<int, string> hgssAreaPicDict = new Dictionary<int, string>() {
-                    [0] = "hgsswood",
-                    [1] = "hgssgray",
-                    [2] = "hgsswall",
-                    [3] = "empty",
-                    [4] = "hgsstown",
-                    [5] = "hgsscave",
-                    [6] = "hgssfield",
-                    [7] = "hgsslake",
-                    [8] = "hgssforest",
-                    [9] = "hgsswater",
+                    [0] = "empty",
+                    [1] = "hgsswall",
+                    [2] = "hgsswood",
+                    [3] = "hgsstown",
+                    [4] = "hgsscave",
+                    [5] = "hgssforest",
+                    [6] = "hgsswater",
+                    [7] = "hgssfield",
+                    [8] = "hgsslake",
+                    [9] = "hgssgray"
                 };
             }
             public static class WeatherPics {
@@ -4185,15 +4168,15 @@ namespace DSPRE.Resources {
 
                 };
                 public static Dictionary<byte[], string> hgssweatherImageDict = new Dictionary<byte[], string>() {
-                    [new byte[] { 0, 1 }] = "hgssnormal",
-                    [new byte[] { 2, 3, 4, 5, 6, 7, 8 }] = "hgssrain",
-                    [new byte[] { 9, 10, 11, 12, 13, 15 }] = "hgsssnow",
-                    [new byte[] { 14 }] = "hgssnormal", //sandstorm in battle only
-                    [new byte[] { 16, 17 }] = "hgssdiamond",
-                    [new byte[] { 18, 19, 20, 21 }] = "hgssfog",
-                    [new byte[] { 22, 23 }] = "hgssdark",
-                    [new byte[] { 24, 25 }] = "hgssdark2",
-                    [new byte[] { 26 }] = "hgssArcade"
+                    [new byte[] { 0}] = "hgssnormal",
+                    [new byte[] { 1, 2, 3, 4 }] = "hgssrain",
+                    [new byte[] { 5, 6 }] = "hgsssnow",
+                    [new byte[] { 7 }] = "hgssnormal", //sandstorm in battle only
+                    [new byte[] { 8 }] = "hgssdiamond",
+                    [new byte[] { 9, 10 }] = "hgssfog",
+                    [new byte[] { 11 }] = "hgssdark",
+                    [new byte[] { 12 }] = "hgssdark2",
+                    [new byte[] { 13 }] = "hgssArcade"
                 };
             }
         }

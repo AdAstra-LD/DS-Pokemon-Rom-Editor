@@ -87,6 +87,22 @@ namespace DSPRE.ROMFiles {
         public ushort ID { get; set; }
         public static readonly byte length = 24;
         public static readonly string nameSeparator = " -   ";
+
+        public enum SearchableFields: byte {
+            AreaDataID,
+            CameraAngleID,
+            EventFileID,
+            InternalName,
+            LevelScriptID,
+            MatrixID,
+            MusicDayID,
+            //MusicDayName,
+            MusicNightID,
+            //MusicNightName,
+            ScriptFileID,
+            TextArchiveID,
+            WeatherID,
+        };
         /**/
 
 
@@ -277,10 +293,12 @@ namespace DSPRE.ROMFiles {
         public byte areaIcon { get; set; }
         public byte followMode { get; set; }
         public byte locationName { get; set; }
-        public byte areaSettings { get; set; } // 4 bits only [4 bits for the camera as well]
+        public byte locationType { get; set; }  //4 bits only
         public byte unknown0 { get; set; } //4 bits only
+        public byte unknown1 { get; set; } //4 bits only
         public byte worldmapX { get; set; } //6 bits only
         public byte worldmapY { get; set; } //6 bits only
+        public bool kantoFlag { get; set; }
         #endregion
 
         #region Constructors (1)
@@ -304,16 +322,21 @@ namespace DSPRE.ROMFiles {
                     musicNightID = reader.ReadUInt16();
                     eventFileID = reader.ReadUInt16();
                     locationName = reader.ReadByte();
-                    areaIcon = StandardizeAreaIcon(reader.ReadByte());
-                    weatherID = reader.ReadByte();
+                    
+                    byte areaProperties = reader.ReadByte();
+                    areaIcon = (byte)(areaProperties & 0b_1111); //get 4 bits
+                    unknown1 = (byte)((areaProperties >> 4) & 0b_1111); //get 4 bits after the first 4
 
-                    byte cameraAndArea = reader.ReadByte();
-                    areaSettings = (byte)(cameraAndArea & 0b_1111); //get 4 bits 
-                    cameraAngleID = (byte)(cameraAndArea >> 4 & 0b_1111); //get 4 bits after the first 4
+                    uint last32 = reader.ReadUInt32();
+                    kantoFlag = (last32 & 0b_1) == 1; //get 1 bit
+                    weatherID = (byte)((last32 >> 1) & 0b_1111_111); //get 7 bits after the first one
 
+                    locationType = (byte)((last32 >> 8) & 0b_1111); //get 4 bits after the first 8
+                    cameraAngleID = (byte)((last32 >> 12) & 0b_1111_11); //get 6 bits after the first 12
+                    followMode = (byte)((last32 >> 18) & 0b_11); //get 2 bits after the first 17
+                    battleBackground = (byte)((last32 >> 20) & 0b_1111_1); //get 5 bits after the first 19
+                    flags = (byte)(last32 >> 25 & 0b_1111_111); //get 7 bits after the first 24
 
-                    followMode = reader.ReadByte();
-                    flags = reader.ReadByte();
                 } catch (EndOfStreamException) {
                     MessageBox.Show("Error loading header " + ID + '.', "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     ID = ushort.MaxValue;
@@ -340,85 +363,24 @@ namespace DSPRE.ROMFiles {
                 writer.Write(musicNightID);
                 writer.Write(eventFileID);
                 writer.Write(locationName);
-                writer.Write(areaIcon);
-                writer.Write(weatherID);
 
-                byte cameraAndArea = (byte)((areaSettings & 0b_1111) + ((cameraAngleID & 0b_1111) << 4));
-                writer.Write(cameraAndArea);
+                byte areaProperties = (byte)((areaIcon & 0b_1111) + ((unknown1 & 0b_1111) << 4));
+                writer.Write(areaProperties);
 
-                writer.Write(followMode);
-                writer.Write(flags);
+                uint last32 = (uint)(((weatherID & 0b_1111_111) << 1) +
+                    ((locationType & 0b_1111) << 8) +
+                    ((cameraAngleID & 0b_1111_1) << 12) +
+                    ((followMode & 0b_11) << 18) +
+                    ((battleBackground & 0b_1111_1) << 20) +
+                    ((flags & 0b_1111_111) << 25));
+
+                if (kantoFlag) {
+                    last32++;
+                }
+
+                writer.Write(last32);
             }
             return newData.ToArray();
-        }
-        public byte StandardizeAreaIcon(byte areaIcon) {
-            //TO DO: improve this
-            //The AreaIcon byte is probably split into bits by the game engine,
-            //each with a specific purpose...
-            //there is a very interesting pattern here
-
-
-            /* This function was written to avoid having to account 
-            for duplicate values of the map name textbox types, since 
-            many share the same textbox image */
-
-            switch (areaIcon) {
-                /* Water textbox values */
-                case 182:
-                case 198:
-                    return 166;
-                /* Town textbox values*/
-                case 147:
-                case 163:
-                case 179:
-                case 195:
-                    return 131;
-                /* Wall textbox values */
-                case 33:
-                case 65:
-                case 81:
-                case 97:
-                case 113:
-                case 145:
-                case 161:
-                case 193:
-                case 209:
-                    return 17;
-                /* Gray textbox values */
-                case 25:
-                case 41:
-                case 57:
-                case 73:
-                case 89:
-                case 105:
-                case 121:
-                case 137:
-                case 153:
-                case 169:
-                case 185:
-                case 201:
-                case 217:
-                    return 9;
-                /* Cave textbox values */
-                case 148:
-                case 164:
-                case 180:
-                case 196:
-                    return 132;
-                /* Field textbox values */
-                case 151:
-                    return 135;
-                /* Wooden textbox values */
-                case 50:
-                case 162:
-                case 194:
-                    return 2;
-                /* Forest textbox values */
-                case 181:
-                    return 165;
-                default:
-                    return areaIcon;
-            }
         }
         #endregion
     }

@@ -7,8 +7,7 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Classes to store event data in Pokémon NDS games
     /// </summary>
-    public class EventFile: RomFile
-    {
+    public class EventFile : RomFile {
         #region Fields (4)
         public List<Spawnable> spawnables = new List<Spawnable>();
         public List<Overworld> overworlds = new List<Overworld>();
@@ -21,17 +20,17 @@ namespace DSPRE.ROMFiles {
             using (BinaryReader reader = new BinaryReader(data)) {
                 /* Read spawnables */
                 uint spawnablesCount = reader.ReadUInt32();
-                for (int i = 0; i < spawnablesCount; i++) 
+                for (int i = 0; i < spawnablesCount; i++)
                     spawnables.Add(new Spawnable(new MemoryStream(reader.ReadBytes(0x14))));
 
                 /* Read overworlds */
                 uint overworldsCount = reader.ReadUInt32();
-                for (int i = 0; i < overworldsCount; i++) 
+                for (int i = 0; i < overworldsCount; i++)
                     overworlds.Add(new Overworld(new MemoryStream(reader.ReadBytes(0x20))));
 
                 /* Read warps */
                 uint warpsCount = reader.ReadUInt32();
-                for (int i = 0; i < warpsCount; i++) 
+                for (int i = 0; i < warpsCount; i++)
                     warps.Add(new Warp(new MemoryStream(reader.ReadBytes(0xC))));
 
                 /* Read triggers */
@@ -44,29 +43,27 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Methods (1)
-        public override byte[] ToByteArray()
-        {
+        public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData))
-            {
+            using (BinaryWriter writer = new BinaryWriter(newData)) {
                 /* Write spawnables */
                 writer.Write((uint)spawnables.Count);
-                for (int i = 0; i < spawnables.Count; i++) 
+                for (int i = 0; i < spawnables.Count; i++)
                     writer.Write(spawnables[i].ToByteArray());
 
                 /* Write overworlds */
                 writer.Write((uint)overworlds.Count);
-                for (int i = 0; i < overworlds.Count; i++) 
+                for (int i = 0; i < overworlds.Count; i++)
                     writer.Write(overworlds[i].ToByteArray());
 
                 /* Write warps */
                 writer.Write((uint)warps.Count);
-                for (int i = 0; i < warps.Count; i++) 
+                for (int i = 0; i < warps.Count; i++)
                     writer.Write(warps[i].ToByteArray());
 
                 /* Write triggers */
                 writer.Write((uint)triggers.Count);
-                for (int i = 0; i < triggers.Count; i++) 
+                for (int i = 0; i < triggers.Count; i++)
                     writer.Write(triggers[i].ToByteArray());
             }
             return newData.ToArray();
@@ -81,9 +78,16 @@ namespace DSPRE.ROMFiles {
 
     }
 
-    public abstract class Event
-	{
+    public abstract class Event {
+        public enum EventType : byte {
+            SPAWNABLE,
+            OVERWORLD,
+            WARP,
+            TRIGGER
+        }
         #region Fields (6)
+        public EventType evType;
+
         public short xMapPosition;
         public short yMapPosition;
         public short zPosition;
@@ -96,8 +100,7 @@ namespace DSPRE.ROMFiles {
         #endregion
     }
 
-    public class Spawnable : Event
-    {
+    public class Spawnable : Event {
         public const int TYPE_MISC = 0;
         public const int TYPE_BOARD = 1;
         public const int TYPE_HIDDENITEM = 2;
@@ -114,22 +117,23 @@ namespace DSPRE.ROMFiles {
 
         #region Constructors (2)
         public Spawnable(Stream data) {
+            evType = EventType.SPAWNABLE;
             using (BinaryReader reader = new BinaryReader(data)) {
                 scriptNumber = reader.ReadUInt16();
                 type = reader.ReadUInt16();
-                
+
                 /* Decompose x coordinate in matrix and map positions */
                 int xPosition = reader.ReadInt16();
                 xMapPosition = (short)(xPosition % 32);
                 xMatrixPosition = (ushort)(xPosition / 32);
 
                 unknown2 = reader.ReadUInt16();
-                
+
                 /* Decompose y coordinate in matrix and map positions */
                 int yPosition = reader.ReadInt16();
                 yMapPosition = (short)(yPosition % 32);
                 yMatrixPosition = (ushort)(yPosition / 32);
-                
+
                 unknown3 = reader.ReadUInt16();
                 zPosition = reader.ReadInt16();
                 unknown4 = reader.ReadUInt16();
@@ -138,6 +142,8 @@ namespace DSPRE.ROMFiles {
             }
         }
         public Spawnable(int xMatrixPosition, int yMatrixPosition) {
+            evType = EventType.SPAWNABLE;
+
             scriptNumber = 0;
             type = 0;
             unknown2 = 0;
@@ -153,6 +159,8 @@ namespace DSPRE.ROMFiles {
             this.yMatrixPosition = (ushort)yMatrixPosition;
         }
         public Spawnable(Spawnable toCopy) {
+            evType = EventType.SPAWNABLE;
+
             scriptNumber = toCopy.scriptNumber;
             type = toCopy.type;
             unknown2 = toCopy.unknown2;
@@ -186,15 +194,14 @@ namespace DSPRE.ROMFiles {
                 writer.Write(unknown5);
 
                 return ((MemoryStream)writer.BaseStream).ToArray();
-            }           
+            }
         }
         #endregion
     }
 
-    public class Overworld : Event
-    {
+    public class Overworld : Event {
         #region Fields (14)
-        public enum owType : ushort { NORMAL = 0, TRAINER = 1, ITEM = 3};
+        public enum owType : ushort { NORMAL = 0, TRAINER = 1, ITEM = 3 };
 
         public ushort owID;
         public ushort overlayTableEntry;
@@ -214,6 +221,7 @@ namespace DSPRE.ROMFiles {
 
         #region Constructors (2)
         public Overworld(Stream data) {
+            evType = EventType.OVERWORLD;
             using (BinaryReader reader = new BinaryReader(data)) {
                 owID = reader.ReadUInt16();
                 overlayTableEntry = reader.ReadUInt16();
@@ -227,7 +235,7 @@ namespace DSPRE.ROMFiles {
                 unknown2 = reader.ReadUInt16();
                 xRange = reader.ReadUInt16();
                 yRange = reader.ReadUInt16();
-                
+
                 /* Decompose x-y coordinates in matrix and map positions */
                 int xPosition = reader.ReadInt16();
                 int yPosition = reader.ReadInt16();
@@ -235,12 +243,14 @@ namespace DSPRE.ROMFiles {
                 yMapPosition = (short)(yPosition % 32);
                 xMatrixPosition = (ushort)(xPosition / 32);
                 yMatrixPosition = (ushort)(yPosition / 32);
-                
+
                 zPosition = reader.ReadInt16();
                 unknown3 = reader.ReadUInt16();
             }
         }
         public Overworld(int owID, int xMatrixPosition, int yMatrixPosition) {
+            evType = EventType.OVERWORLD;
+
             this.owID = (ushort)owID;
             overlayTableEntry = 1;
             movement = 0;
@@ -262,6 +272,8 @@ namespace DSPRE.ROMFiles {
             this.yMatrixPosition = (ushort)yMatrixPosition;
         }
         public Overworld(Overworld toCopy) {
+            evType = EventType.OVERWORLD;
+
             this.owID = toCopy.owID;
             overlayTableEntry = toCopy.overlayTableEntry;
             movement = toCopy.movement;
@@ -285,10 +297,8 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Methods (1)
-        public override byte[] ToByteArray()
-        {
-            using (BinaryWriter writer = new BinaryWriter(new MemoryStream()))
-            {
+        public override byte[] ToByteArray() {
+            using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
                 writer.Write(owID);
                 writer.Write(overlayTableEntry);
                 writer.Write(movement);
@@ -318,8 +328,7 @@ namespace DSPRE.ROMFiles {
 
     }
 
-    public class Warp : Event
-    {
+    public class Warp : Event {
         #region Fields (4)
         public ushort header;
         public ushort anchor;
@@ -327,10 +336,9 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (2)
-        public Warp(Stream data)
-        {
-            using (BinaryReader reader = new BinaryReader(data))
-            {
+        public Warp(Stream data) {
+            evType = EventType.WARP;
+            using (BinaryReader reader = new BinaryReader(data)) {
                 /* Decompose x-y coordinates in matrix and map positions */
                 int xPosition = reader.ReadInt16();
                 int yPosition = reader.ReadInt16();
@@ -345,6 +353,8 @@ namespace DSPRE.ROMFiles {
             }
         }
         public Warp(int xMatrixPosition, int yMatrixPosition) {
+            evType = EventType.WARP;
+
             header = 0;
             anchor = 0;
 
@@ -354,6 +364,8 @@ namespace DSPRE.ROMFiles {
             this.yMatrixPosition = (ushort)yMatrixPosition;
         }
         public Warp(Warp toCopy) {
+            evType = EventType.WARP;
+
             header = toCopy.header;
             anchor = toCopy.anchor;
 
@@ -384,8 +396,7 @@ namespace DSPRE.ROMFiles {
 
     }
 
-    public class Trigger : Event
-    {
+    public class Trigger : Event {
         #region Fields (7)
         public ushort scriptNumber;
         public ushort widthX;
@@ -397,6 +408,7 @@ namespace DSPRE.ROMFiles {
 
         #region Constructors (2)
         public Trigger(Stream data) {
+            evType = EventType.TRIGGER;
             using (BinaryReader reader = new BinaryReader(data)) {
                 scriptNumber = reader.ReadUInt16();
 
@@ -414,9 +426,11 @@ namespace DSPRE.ROMFiles {
                 zPosition = reader.ReadUInt16();
                 expectedVarValue = reader.ReadUInt16();
                 variableWatched = reader.ReadUInt16();
-            }        
+            }
         }
         public Trigger(int xMatrixPosition, int yMatrixPosition) {
+            evType = EventType.TRIGGER;
+
             scriptNumber = 0;
             variableWatched = 0;
             expectedVarValue = 0;
@@ -429,6 +443,8 @@ namespace DSPRE.ROMFiles {
             this.yMatrixPosition = (ushort)yMatrixPosition;
         }
         public Trigger(Trigger toCopy) {
+            evType = EventType.TRIGGER;
+
             scriptNumber = toCopy.scriptNumber;
             variableWatched = toCopy.variableWatched;
             expectedVarValue = toCopy.expectedVarValue;
@@ -443,10 +459,8 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Methods (1)
-        public override byte[] ToByteArray()
-        {
-            using (BinaryWriter writer = new BinaryWriter(new MemoryStream()))
-            {
+        public override byte[] ToByteArray() {
+            using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
                 writer.Write(scriptNumber);
                 ushort xCoordinate = (ushort)(xMapPosition + 32 * xMatrixPosition);
                 writer.Write(xCoordinate);

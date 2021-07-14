@@ -389,8 +389,7 @@ namespace DSPRE {
 
             if (RomInfo.gameFamily == "HGSS") {
                 if (DSUtils.CheckOverlayHasCompressionFlag(data.overlayNumber)) {
-                    DialogResult d1;
-                    d1 = MessageBox.Show("It is STRONGLY recommended to configure Overlay1 as uncompressed before proceeding.\n\n" +
+                    DialogResult d1 = MessageBox.Show("It is STRONGLY recommended to configure Overlay1 as uncompressed before proceeding.\n\n" +
                         "More details in the following dialog.\n\n" + "Do you want to know more?",
                         "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -448,25 +447,41 @@ namespace DSPRE {
             }
         }
         private void overlay1uncomprButton_Click(object sender, EventArgs e) {
+            if (ConfigureOverlay1Uncompressed()) {
+                DisableOverlay1patch("Already applied");
+                overlay1CB.Visible = true;
+            }
+        }
+
+        public static bool ConfigureOverlay1Uncompressed() {
+            bool isCompressed = false;
+            string stringDecompressOverlay = "";
+
+            if (DSUtils.OverlayIsCompressed(1)) {
+                isCompressed = true;
+                stringDecompressOverlay = "- Overlay 1 will be decompressed.\n\n";
+            }
+
             DialogResult d = MessageBox.Show("This process will apply the following changes:\n\n" +
-                "- Overlay 1 will be decompressed.\n\n" +
-                "- Overlay 1 will be configured as \"uncompressed\" in the overlay table.\n\n" +
-                "Do you wish to continue?",
-                "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            stringDecompressOverlay +
+            "- Overlay 1 will be configured as \"uncompressed\" in the overlay table.\n\n" +
+            "Do you wish to continue?",
+            "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
                 DSUtils.SetOverlayCompressionInTable(1, 0);
-                if (DSUtils.OverlayIsCompressed(1)) {
+                if (isCompressed) {
                     DSUtils.DecompressOverlay(1);
                 }
 
-                DisableOverlay1patch("Already applied");
-                overlay1CB.Visible = true;
                 MessageBox.Show("Overlay1 is now configured as uncompressed.", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
             } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
             }
         }
+
         private void ApplyItemStandardizeButton_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("This process will apply the following changes:\n\n" +
                 "- Item scripts will be rearranged to follow the natural, ascending index order.\n\n" +

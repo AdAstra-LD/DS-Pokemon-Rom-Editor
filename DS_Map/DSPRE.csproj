@@ -95,6 +95,11 @@
   <ItemGroup>
     <Compile Include="AB.cs" />
     <Compile Include="GameCamera.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ROMToolboxDB\ToolboxDB.cs" />
     <Compile Include="ROMFiles\AreaData.cs" />
     <Compile Include="DSUtils.cs" />
@@ -105,11 +110,6 @@
       <DependentUpon>CommandsDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources\PokeDatabase.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Resources\ROMToolboxDB\BDHCAMPatchDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -372,6 +372,39 @@
     <None Include="Resources\Graphics\Program Icons\RightClick.png" />
     <None Include="Resources\Graphics\Program Icons\unpackAllIcon.png" />
     <None Include="Resources\Graphics\Program Icons\SurfIcon.png" />
+    <Content Include="Resources\Graphics\Area Icons\hgsslake.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera0.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera1.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera10.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera11.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera12.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera13.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera14.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera15.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera2.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera3.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera4.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera5.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera6.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera7.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera8.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera9.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera0.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera1.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera10.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera11.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera12.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera13.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera14.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera15.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera2.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera3.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera4.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera5.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera6.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera7.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera8.png" />
+    <Content Include="Resources\Graphics\Camera Angles\DPPt\ptcamera9.png" />
     <Content Include="Resources\Graphics\Camera Angles\HGSS\hgsscamera00.png" />
     <Content Include="Resources\Graphics\Camera Angles\HGSS\hgsscamera01.png" />
     <Content Include="Resources\Graphics\Camera Angles\HGSS\hgsscamera02.png" />
@@ -401,6 +434,7 @@
     <None Include="Resources\Graphics\Program Icons\unpackBuildingNarcsIcon.png" />
     <None Include="Resources\Graphics\Program Icons\deleteIcon.png" />
     <None Include="Resources\Graphics\Event Icons\overworldUnreadable.png" />
+    <Content Include="Resources\Graphics\Camera Angles\HGSS\hgsscamera16.png" />
     <Content Include="Resources\Graphics\Program Icons\addIcon.png" />
     <None Include="Resources\Graphics\Program Icons\copyIcon_small.png" />
     <None Include="Resources\Graphics\Program Icons\checkmark.png" />
@@ -426,6 +460,7 @@
     <Content Include="Resources\Graphics\Weather\DPPt\ptredish.png" />
     <None Include="Resources\wrenchIcon.png" />
     <None Include="Resources\selectBldWithMouse.png" />
+    <None Include="Resources\hgsscamera16.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
