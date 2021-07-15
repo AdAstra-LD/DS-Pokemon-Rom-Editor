@@ -42,12 +42,12 @@ namespace LibNDSFormats {
         }
 
         /// <summary>
-        /// Read 2 Bytes as UInt16
+        /// Read 2 Bytes as ushort
         /// </summary>
         /// <param name="bytes">Byte array.</param>
         /// <param name="s">Offset in array.</param>
-        /// <returns>2 Bytes as UInt16.</returns>
-        public static UInt16 Read2BytesAsUInt16(byte[] bytes, int offset) {
+        /// <returns>2 Bytes as ushort.</returns>
+        public static ushort Read2BytesAsushort(byte[] bytes, int offset) {
             int result = 0;
             for (int i = 0; i < 2; ++i)
                 result |= bytes[offset + i] << (8 * (i));

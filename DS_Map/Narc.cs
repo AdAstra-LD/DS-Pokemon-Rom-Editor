@@ -59,8 +59,8 @@ namespace NarcAPI {
             bw.Write(0x0100FFFE);      // Constant
             fileSizeOffset = (uint)bw.BaseStream.Position;
             bw.Write((UInt32)0x0);
-            bw.Write((UInt16)16);
-            bw.Write((UInt16)3);
+            bw.Write((ushort)16);
+            bw.Write((ushort)3);
             // Write FATB Section
             bw.Write(0x46415442);      // "BTAF"
             bw.Write((UInt32)(0xC + Elements.Length * 8));  // FATB Size

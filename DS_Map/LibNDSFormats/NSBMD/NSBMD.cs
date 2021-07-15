@@ -904,7 +904,7 @@ namespace LibNDSFormats.NSBMD
         /// </summary>
         private static void ParseNsbmdObject(EndianBinaryReader reader, NSBMDObject nsbmdObject, float modelscale)
         {
-            UInt16 v = reader.ReadUInt16();
+            ushort v = reader.ReadUInt16();
             Int16 divide = reader.ReadInt16();
             divide = (short)NSBMDGlRenderer.Sign(divide, 16);
             int unknown = v >> 12 & 0xf;

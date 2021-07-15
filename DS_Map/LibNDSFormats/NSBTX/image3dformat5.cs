@@ -54,7 +54,7 @@ namespace NSMBe4
             for (uint y = 0; y < h / 4; y++)
                 for (uint x = 0; x < w / 4; x++)
                 {
-                    ushort palDat = f5data.readUShort();
+                    ushort palDat = f5data.ReadUInt16();
                     ushort palOffs = (ushort)((palDat & 0x3FFF) * 2);
                     ushort mode = (ushort)((palDat >> 14) & 3);
 

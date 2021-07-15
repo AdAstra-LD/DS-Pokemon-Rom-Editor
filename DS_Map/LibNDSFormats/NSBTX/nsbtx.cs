@@ -117,8 +117,8 @@ namespace NSMBe4.NSBMD
             bool hasFormat5 = false;
             for (int i = 0; i < textures.Length; i++)
             {
-                int offset = 8 * str.readUShort();
-                ushort param = str.readUShort();
+                int offset = 8 * str.ReadUInt16();
+                ushort param = str.ReadUInt16();
                 int format = (param >> 10) & 7;
 
                 if (format == 5)
@@ -171,8 +171,8 @@ namespace NSMBe4.NSBMD
 
             for (int i = 0; i < palettes.Length; i++)
             {
-                int offset = 8 * str.readUShort() + palDataOffset + blockStart;
-                str.readUShort();
+                int offset = 8 * str.ReadUInt16() + palDataOffset + blockStart;
+                str.ReadUInt16();
                 palettes[i] = new PaletteDef();
                 palettes[i].offs = offset;
             }
@@ -531,7 +531,7 @@ namespace NSMBe4.NSBMD
             }
             er.Close();
         }
-        public bool convert_4x4texel(uint[] tex, int width, int height, UInt16[] data, Color[] pal, ImageTexeler.LockBitmap rgbaOut)
+        public bool convert_4x4texel(uint[] tex, int width, int height, ushort[] data, Color[] pal, ImageTexeler.LockBitmap rgbaOut)
         {
             int w = width / 4;
             int h = height / 4;
@@ -542,9 +542,9 @@ namespace NSMBe4.NSBMD
                 {
                     int index = y * w + x;
                     UInt32 t = tex[index];
-                    UInt16 d = data[index];
-                    UInt16 addr = (ushort)(d & 0x3fff);
-                    UInt16 mode = (ushort)((d >> 14) & 3);
+                    ushort d = data[index];
+                    ushort addr = (ushort)(d & 0x3fff);
+                    ushort mode = (ushort)((d >> 14) & 3);
 
                     // traverse every texel in the 4x4 texels
                     for (int r = 0; r < 4; r++)
@@ -621,9 +621,9 @@ namespace NSMBe4.NSBMD
             for (int i = 0; i < (tex.Length + 1) / 4; ++i)
                 list1.Add(LibNDSFormats.Utils.Read4BytesAsUInt32(tex, i * 4));
 
-            var list2 = new List<UInt16>();
+            var list2 = new List<ushort>();
             for (int i = 0; i < (data.Length + 1) / 2; ++i)
-                list2.Add(LibNDSFormats.Utils.Read2BytesAsUInt16(data, i * 2));
+                list2.Add(LibNDSFormats.Utils.Read2BytesAsushort(data, i * 2));
             var b = convert_4x4texel(list1.ToArray(), width, height, list2.ToArray(), pal, rgbaOut);
         }
     }

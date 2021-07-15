@@ -229,17 +229,17 @@ namespace System.IO {
             return temp;
         }
 
-        public UInt16 ReadUInt16() {
-            const int size = sizeof(UInt16);
+        public ushort ReadUInt16() {
+            const int size = sizeof(ushort);
             FillBuffer(size, size);
             return BitConverter.ToUInt16(buffer, 0);
         }
 
-        public UInt16[] ReadUInt16s(int count) {
-            const int size = sizeof(UInt16);
-            UInt16[] temp;
+        public ushort[] ReadUInt16s(int count) {
+            const int size = sizeof(ushort);
+            ushort[] temp;
 
-            temp = new UInt16[count];
+            temp = new ushort[count];
             FillBuffer(size * count, size);
 
             for (int i = 0; i < count; i++) {

@@ -329,7 +329,7 @@ namespace LibNDSFormats.NSBTX
                     stream.Seek(mat.paloffset, SeekOrigin.Begin);
                     for (j = 0; j < palentry; j++)
                     {
-                        UInt16 p = reader.ReadUInt16();
+                        ushort p = reader.ReadUInt16();
                         rgbq[j].R = (byte)(((p >> 0) & 0x1f) << 3); // red
                         rgbq[j].G = (byte)(((p >> 5) & 0x1f) << 3); // green
                         rgbq[j].B = (byte)(((p >> 10) & 0x1f) << 3); // blue

@@ -798,7 +798,7 @@ namespace NSMBe4
             while (eObjIndexFile.available(4) && obj < Objects.Length)
             {
                 Objects[obj] = new ObjectDef(this);
-                int offset = eObjIndexFile.readUShort();
+                int offset = eObjIndexFile.ReadUInt16();
                 Objects[obj].width = eObjIndexFile.readByte();
                 Objects[obj].height = eObjIndexFile.readByte();
 

@@ -35,7 +35,7 @@ namespace NSMBe4
             Color[] pal = new Color[data.Length / 2];
             for (int i = 0; i < pal.Length; i++)
             {
-                pal[i] = NSMBTileset.fromRGB15(ii.readUShort());
+                pal[i] = NSMBTileset.fromRGB15(ii.ReadUInt16());
             }
             return pal;
         }

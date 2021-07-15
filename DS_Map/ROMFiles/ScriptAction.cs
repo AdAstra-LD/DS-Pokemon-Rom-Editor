@@ -45,7 +45,7 @@ namespace DSPRE.ROMFiles {
                 id = PokeDatabase.ScriptEditor.movementsDictIDName.First(x => x.Value.Equals(nameParts[0], StringComparison.InvariantCultureIgnoreCase)).Key;
             } catch (InvalidOperationException) {
                 try {
-                    id = UInt16.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+                    id = ushort.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
                 } catch (FormatException) {
                     string details;
                     if (wholeLine.Contains('@') && wholeLine.Contains('#')) {

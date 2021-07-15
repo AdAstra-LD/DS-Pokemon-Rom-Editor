@@ -116,7 +116,7 @@ namespace NSMBe4
             return pos;
         }
 
-        public ushort readUShort()
+        public ushort ReadUInt16()
         {
             pos += 2;
             return (ushort)(array[pos - 2 + origin] | array[pos - 1 + origin] << 8);

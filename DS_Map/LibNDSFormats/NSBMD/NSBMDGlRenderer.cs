@@ -1046,7 +1046,7 @@ namespace LibNDSFormats.NSBMD {
 		/// <summary>
 		/// Convert texel.
 		/// </summary>
-		private bool convert_4x4texel(uint[] tex, int width, int height, UInt16[] data, RGBA[] pal, RGBA[] rgbaOut) {
+		private bool convert_4x4texel(uint[] tex, int width, int height, ushort[] data, RGBA[] pal, RGBA[] rgbaOut) {
 			int w = width / 4;
 			int h = height / 4;
 
@@ -1055,9 +1055,9 @@ namespace LibNDSFormats.NSBMD {
 				for (int x = 0; x < w; x++) {
 					int index = y * w + x;
 					UInt32 t = tex[index];
-					UInt16 d = data[index];
-					UInt16 addr = (ushort)(d & 0x3fff);
-					UInt16 mode = (ushort)((d >> 14) & 3);
+					ushort d = data[index];
+					ushort addr = (ushort)(d & 0x3fff);
+					ushort mode = (ushort)((d >> 14) & 3);
 
 					// traverse every texel in the 4x4 texels
 					for (int r = 0; r < 4; r++)
@@ -1125,9 +1125,9 @@ namespace LibNDSFormats.NSBMD {
 			for (int i = 0; i < (tex.Length + 1) / 4; ++i)
 				list1.Add(Utils.Read4BytesAsUInt32(tex, i * 4));
 
-			var list2 = new List<UInt16>();
+			var list2 = new List<ushort>();
 			for (int i = 0; i < (data.Length + 1) / 2; ++i)
-				list2.Add(Utils.Read2BytesAsUInt16(data, i * 2));
+				list2.Add(Utils.Read2BytesAsushort(data, i * 2));
 			var b = convert_4x4texel(list1.ToArray(), width, height, list2.ToArray(), pal, rgbaOut);
 		}
 
@@ -1229,13 +1229,13 @@ namespace LibNDSFormats.NSBMD {
 						// Direct Color Texture
 						case 7:
 							for (int j = 0; j < pixelnum; j++) {
-								//UInt16 p = (ushort)(mat.texdata[j * 2] + (mat.texdata[j * 2 + 1] << 8));
+								//ushort p = (ushort)(mat.texdata[j * 2] + (mat.texdata[j * 2 + 1] << 8));
 								//image[j].R = (byte)(((p >> 0) & 0x1f) << 3);
 								//image[j].G = (byte)(((p >> 5) & 0x1f) << 3);
 								//image[j].B = (byte)(((p >> 10) & 0x1f) << 3);
 								//image[j].A = (byte)(((p & 0x8000) != 0) ? 0xff : 0);
 								image[j] = RGBA.fromColor(Tinke.Convertir.BGR555(mat.texdata[j * 2], mat.texdata[j * 2 + 1]));
-								UInt16 p = (ushort)(mat.texdata[j * 2] + (mat.texdata[j * 2 + 1] << 8));
+								ushort p = (ushort)(mat.texdata[j * 2] + (mat.texdata[j * 2 + 1] << 8));
 								image[j].A = (byte)(((p & 0x8000) != 0) ? 0xff : 0);
 							}
 							break;
@@ -1425,13 +1425,13 @@ namespace LibNDSFormats.NSBMD {
 					// Direct Color Texture
 					case 7:
 						for (int j = 0; j < pixelnum; j++) {
-							//UInt16 p = (ushort)(mat.texdata[j * 2] + (mat.texdata[j * 2 + 1] << 8));
+							//ushort p = (ushort)(mat.texdata[j * 2] + (mat.texdata[j * 2 + 1] << 8));
 							//image[j].R = (byte)(((p >> 0) & 0x1f) << 3);
 							//image[j].G = (byte)(((p >> 5) & 0x1f) << 3);
 							//image[j].B = (byte)(((p >> 10) & 0x1f) << 3);
 							//image[j].A = (byte)(((p & 0x8000) != 0) ? 0xff : 0);
 							image[j] = RGBA.fromColor(Tinke.Convertir.BGR555(mat.texdata[j * 2], mat.texdata[j * 2 + 1]));
-							UInt16 p = (ushort)(mat.texdata[j * 2] + (mat.texdata[j * 2 + 1] << 8));
+							ushort p = (ushort)(mat.texdata[j * 2] + (mat.texdata[j * 2 + 1] << 8));
 							image[j].A = (byte)(((p & 0x8000) != 0) ? 0xff : 0);
 						}
 						break;

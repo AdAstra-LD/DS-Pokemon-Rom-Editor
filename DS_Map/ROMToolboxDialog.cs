@@ -814,7 +814,7 @@ namespace DSPRE {
                         System.Xml.Linq.XDocument xmldoc = System.Xml.Linq.XDocument.Load(new FileStream(of.FileName, FileMode.Open));
 
                         foreach (var node in xmldoc.Root.Elements("scriptcommand")) {
-                            ushort commandID = UInt16.Parse(node.Attribute("ID").Value, System.Globalization.NumberStyles.HexNumber);
+                            ushort commandID = ushort.Parse(node.Attribute("ID").Value, System.Globalization.NumberStyles.HexNumber);
                             string targetROM = node.Element("ROM").Value;
                             string targetLang = node.Element("lang").Value;
                             string commandName = node.Element("name").Value;

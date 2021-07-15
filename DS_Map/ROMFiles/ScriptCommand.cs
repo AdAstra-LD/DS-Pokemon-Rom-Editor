@@ -102,7 +102,7 @@ namespace DSPRE.ROMFiles {
             } catch (InvalidOperationException) {
 
                 try {
-                    id = UInt16.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+                    id = ushort.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
                 } catch {
                     string details;
                     if (wholeLine.Contains('@') && wholeLine.Contains('#')) {
@@ -161,7 +161,7 @@ namespace DSPRE.ROMFiles {
                                     } else if (nameParts[i + 1].Equals("Camera", StringComparison.InvariantCultureIgnoreCase)) {
                                         cmdParams.Add(BitConverter.GetBytes((ushort)241));
                                     } else {
-                                        cmdParams.Add(BitConverter.GetBytes(UInt16.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style)));
+                                        cmdParams.Add(BitConverter.GetBytes(ushort.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style)));
                                     }
                                     break;
                                 case 4:

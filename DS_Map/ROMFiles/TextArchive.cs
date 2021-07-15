@@ -279,8 +279,8 @@ namespace DSPRE.ROMFiles {
         private byte[] ToByteArray(List<string> msgSource) {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
-                writer.Write((UInt16)msgSource.Count);
-                writer.Write((UInt16)initialKey);
+                writer.Write((ushort)msgSource.Count);
+                writer.Write((ushort)initialKey);
 
                 int key = (initialKey * 0x2FD) & 0xFFFF;
                 int key2 = 0;
@@ -303,11 +303,11 @@ namespace DSPRE.ROMFiles {
                     int[] currentString = EncodeString(msgSource[i], i, stringSize[i]);
 
                     for (int j = 0; j < stringSize[i] - 1; j++) {
-                        writer.Write((UInt16)(currentString[j] ^ key));
+                        writer.Write((ushort)(currentString[j] ^ key));
                         key += 0x493D;
                         key &= 0xFFFF;
                     }
-                    writer.Write((UInt16)(0xFFFF ^ key));
+                    writer.Write((ushort)(0xFFFF ^ key));
                 }
             }
             return newData.ToArray();
