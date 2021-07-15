@@ -854,6 +854,9 @@ namespace DSPRE {
                     areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.DPShowNameValues);
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.DPWeatherDict.Values.ToArray());
                     wildPokeUpDown.Maximum = 65535;
+
+                    battleBackgroundLabel.Location = new Point(battleBackgroundLabel.Location.X - 25, battleBackgroundLabel.Location.Y - 8);
+                    battleBackgroundUpDown.Location = new Point(battleBackgroundUpDown.Location.X - 25, battleBackgroundUpDown.Location.Y - 8);
                     break;
                 case "Plat":
                     areaIconComboBox.Items.AddRange(PokeDatabase.Area.PtAreaIconValues);
@@ -864,6 +867,9 @@ namespace DSPRE {
                     areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.PtShowNameValues);
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.PtWeatherDict.Values.ToArray());
                     wildPokeUpDown.Maximum = 65535;
+
+                    battleBackgroundLabel.Location = new Point(battleBackgroundLabel.Location.X - 25, battleBackgroundLabel.Location.Y - 8);
+                    battleBackgroundUpDown.Location = new Point(battleBackgroundUpDown.Location.X - 25, battleBackgroundUpDown.Location.Y - 8);
                     break;
                 default:
                     areaIconComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaIconsDict.Values.ToArray());
@@ -875,23 +881,19 @@ namespace DSPRE {
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.HGSSWeatherDict.Values.ToArray());
                     wildPokeUpDown.Maximum = 255;
 
-                    flag7CheckBox.Visible = true;
+                    followModeComboBox.Visible = true;
+                    followModeLabel.Visible = true;
+                    johtoRadioButton.Visible = true;
+                    kantoRadioButton.Visible = true;
+
                     flag6CheckBox.Visible = true;
                     flag5CheckBox.Visible = true;
                     flag4CheckBox.Visible = true;
-                    flag7CheckBox.Text = "Flag 7";
-                    flag6CheckBox.Text = "Flag 6";
-                    flag5CheckBox.Text = "Flag 5";
-                    flag4CheckBox.Text = "Fly";
-
-                    flag3CheckBox.Text = "Esc. Rope";
-                    flag2CheckBox.Text = "Flag 2";
-                    flag1CheckBox.Text = "Bicycle";
-                    flag0CheckBox.Text = "Flag 0";
+                    flag6CheckBox.Text = "Flag ?";
+                    flag5CheckBox.Text = "Flag ?";
+                    flag4CheckBox.Text = "Flag ?";
 
                     worldmapCoordsGroupBox.Enabled = true;
-                    battleBackgroundUpDown.Visible = false;
-                    battleBackgroundLabel.Visible = false;
                     break;
             }
             if (headerListBox.Items.Count > 0)
@@ -978,6 +980,24 @@ namespace DSPRE {
         private void battleBackgroundUpDown_ValueChanged(object sender, EventArgs e) {
             currentHeader.battleBackground = (byte)battleBackgroundUpDown.Value;
         }
+        private void followModeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (disableHandlers)
+                return;
+
+            if (RomInfo.gameFamily.Equals("HGSS")) {
+                HeaderHGSS currentHeaderHGSS = (HeaderHGSS)currentHeader;
+                currentHeaderHGSS.followMode = (byte)followModeComboBox.SelectedIndex;
+            }
+        }
+
+        private void kantoRadioButton_CheckedChanged(object sender, EventArgs e) {
+            if (disableHandlers)
+                return;
+            if (RomInfo.gameFamily.Equals("HGSS")) {
+                HeaderHGSS currentHeaderHGSS = (HeaderHGSS)currentHeader;
+                currentHeaderHGSS.kantoFlag = kantoRadioButton.Checked;
+            }
+        }
         private void headerFlagsCheckBoxes_CheckedChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
@@ -1002,8 +1022,8 @@ namespace DSPRE {
                     flagVal += (byte)Math.Pow(2, 5);
                 if (flag6CheckBox.Checked)
                     flagVal += (byte)Math.Pow(2, 6);
-                if (flag7CheckBox.Checked)
-                    flagVal += (byte)Math.Pow(2, 7);
+                //if (flag7CheckBox.Checked)
+                //    flagVal += (byte)Math.Pow(2, 7);
             }
             currentHeader.flags = flagVal;
         }
@@ -1035,6 +1055,7 @@ namespace DSPRE {
             wildPokeUpDown.Value = currentHeader.wildPokémon;
             weatherUpDown.Value = currentHeader.weatherID;
             cameraUpDown.Value = currentHeader.cameraAngleID;
+            battleBackgroundUpDown.Value = currentHeader.battleBackground;
 
             if (RomInfo.gameFamily == "HGSS") {
                 areaSettingsComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).locationType;
@@ -1045,31 +1066,39 @@ namespace DSPRE {
             /* Setup controls for fields with version-specific differences */
             try {
                 switch (RomInfo.gameFamily) {
-                    case "DP":
-                        locationNameComboBox.SelectedIndex = ((HeaderDP)currentHeader).locationName;
-                        musicDayUpDown.Value = ((HeaderDP)currentHeader).musicDayID;
-                        musicNightUpDown.Value = ((HeaderDP)currentHeader).musicNightID;
-                        areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.locationSpecifier:D3}");
-                        battleBackgroundUpDown.Value = currentHeader.battleBackground;
-                        break;
-                    case "Plat":
-                        areaIconComboBox.SelectedIndex = ((HeaderPt)currentHeader).areaIcon;
-                        locationNameComboBox.SelectedIndex = ((HeaderPt)currentHeader).locationName;
-                        musicDayUpDown.Value = ((HeaderPt)currentHeader).musicDayID;
-                        musicNightUpDown.Value = ((HeaderPt)currentHeader).musicNightID;
-                        areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.locationSpecifier:D3}");
-                        battleBackgroundUpDown.Value = currentHeader.battleBackground;
-                        break;
-                    default:
-                        areaIconComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).areaIcon;
-                        locationNameComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).locationName;
-                        musicDayUpDown.Value = ((HeaderHGSS)currentHeader).musicDayID;
-                        musicNightUpDown.Value = ((HeaderHGSS)currentHeader).musicNightID;
-                        worldmapXCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapX;
-                        worldmapYCoordUpDown.Value = ((HeaderHGSS)currentHeader).worldmapY;
-                        break;
+                    case "DP": {
+                            HeaderDP h = (HeaderDP)currentHeader;
 
+                            locationNameComboBox.SelectedIndex = h.locationName;
+                            musicDayUpDown.Value = h.musicDayID;
+                            musicNightUpDown.Value = h.musicNightID;
+                            areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.locationSpecifier:D3}");
+                            break;
+                        }
+                    case "Plat": {
+                            HeaderPt h = (HeaderPt)currentHeader;
 
+                            areaIconComboBox.SelectedIndex = h.areaIcon;
+                            locationNameComboBox.SelectedIndex = h.locationName;
+                            musicDayUpDown.Value = h.musicDayID;
+                            musicNightUpDown.Value = h.musicNightID;
+                            areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.locationSpecifier:D3}");
+                            break;
+                        }
+                    default: {
+                            HeaderHGSS h = (HeaderHGSS)currentHeader;
+
+                            areaIconComboBox.SelectedIndex = h.areaIcon;
+                            locationNameComboBox.SelectedIndex = h.locationName;
+                            musicDayUpDown.Value = h.musicDayID;
+                            musicNightUpDown.Value = h.musicNightID;
+                            worldmapXCoordUpDown.Value = h.worldmapX;
+                            worldmapYCoordUpDown.Value = h.worldmapY;
+                            followModeComboBox.SelectedIndex = h.followMode;
+                            kantoRadioButton.Checked = h.kantoFlag;
+                            johtoRadioButton.Checked = !h.kantoFlag;
+                            break;
+                        }
                 }
             } catch (ArgumentOutOfRangeException) {
                 MessageBox.Show("This header contains an irregular/unsupported field.", "Error loading header file", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1090,7 +1119,7 @@ namespace DSPRE {
                 flag4CheckBox.Checked = ba[4];
                 flag5CheckBox.Checked = ba[5];
                 flag6CheckBox.Checked = ba[6];
-                flag7CheckBox.Checked = ba[7];
+                //flag6CheckBox.Checked = ba[7];
             }
         }
         private void eventsTabControl_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1415,7 +1444,6 @@ namespace DSPRE {
         }
         private void saveHeaderButton_Click(object sender, EventArgs e) {
             /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) { 
             if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                 DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, true);
             } else {
@@ -1635,6 +1663,8 @@ namespace DSPRE {
         decimal battleBGCopy;
 
         byte flagsCopy;
+        int followingPokeCopy;
+        bool kantoFlagCopy;
 
         #endregion
         private void copyHeaderButton_Click(object sender, EventArgs e) {
@@ -1659,9 +1689,11 @@ namespace DSPRE {
             areadataCopy = areaDataUpDown.Value;
             worldmapXCoordCopy = worldmapXCoordUpDown.Value;
             worldmapYCoordCopy = worldmapYCoordUpDown.Value;
-            battleBGCopy = battleBackgroundUpDown.Value;
 
+            battleBGCopy = battleBackgroundUpDown.Value;
             flagsCopy = currentHeader.flags;
+            followingPokeCopy = followModeComboBox.SelectedIndex;
+            kantoFlagCopy = kantoRadioButton.Checked;
 
             /*Enable paste buttons*/
             pasteHeaderButton.Enabled = true;
@@ -1687,7 +1719,7 @@ namespace DSPRE {
 
             worldmapCoordsCopyButton.Enabled = true;
 
-            pasteFlagsButton.Enabled = true;
+            pasteMapSettingsButton.Enabled = true;
 
             headerListBox.Focus();
         }
@@ -1767,7 +1799,9 @@ namespace DSPRE {
         private void copyMapSettingsButton_Click(object sender, EventArgs e) {
             flagsCopy = currentHeader.flags;
             battleBGCopy = currentHeader.battleBackground;
-            pasteFlagsButton.Enabled = true;
+            followingPokeCopy = followModeComboBox.SelectedIndex;
+            kantoFlagCopy = kantoRadioButton.Checked;
+            pasteMapSettingsButton.Enabled = true;
         }
 
         /* Paste Buttons */
@@ -1859,6 +1893,9 @@ namespace DSPRE {
         private void pasteMapSettingsButton_Click(object sender, EventArgs e) {
             currentHeader.flags = flagsCopy;
             battleBackgroundUpDown.Value = battleBGCopy;
+
+            followModeComboBox.SelectedIndex = followingPokeCopy;
+            kantoRadioButton.Checked = kantoFlagCopy;
             RefreshFlags();
         }
         #endregion
