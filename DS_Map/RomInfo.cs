@@ -71,11 +71,14 @@ namespace DSPRE {
             areaData,
 
             eventFiles,
-            trainerData,
             OWSprites,
 
             scripts,
             encounters,
+
+            trainerData,
+            partyData,
+            trainerGraphics,
 
             interiorBuildingModels
         };
@@ -295,11 +298,15 @@ namespace DSPRE {
                         [DirNames.areaData] = @"data\fielddata\areadata\area_data.narc",
 
                         [DirNames.eventFiles] = @"data\fielddata\eventdata\zone_event" + suffix + ".narc",
-                        [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
                         [DirNames.OWSprites] = @"data\data\mmodel\mmodel.narc",
 
                         [DirNames.scripts] = @"data\fielddata\script\scr_seq" + suffix + ".narc",
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion[0]) + '_' + "enc_data.narc",
+
+                        [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
+                        [DirNames.partyData] = @"data\poketool\trainer\trpoke.narc",
+                        [DirNames.trainerGraphics] = @"data\poketool\trainer\trfgra.narc",
+
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion[0]) + '_' + "enc_data.narc"
                     };
                     break;
                 case "Plat":
@@ -319,10 +326,14 @@ namespace DSPRE {
                         [DirNames.areaData] = @"data\fielddata\areadata\area_data.narc",
 
                         [DirNames.eventFiles] = @"data\fielddata\eventdata\zone_event.narc",
-                        [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
                         [DirNames.OWSprites] = @"data\data\mmodel\mmodel.narc",
 
                         [DirNames.scripts] = @"data\fielddata\script\scr_seq.narc",
+
+                        [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
+                        [DirNames.partyData] = @"data\poketool\trainer\trpoke.narc",
+                        [DirNames.trainerGraphics] = @"data\poketool\trainer\trfgra.narc",
+
                         [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.Substring(0, 2).ToLower() + '_' + "enc_data.narc"
                     };
                     break;
@@ -343,11 +354,13 @@ namespace DSPRE {
                         [DirNames.areaData] = @"data\a\0\4\2",
 
                         [DirNames.eventFiles] = @"data\a\0\3\2",
-                        [DirNames.trainerData] = @"data\a\0\5\5",
                         [DirNames.OWSprites] = @"data\a\0\8\1",
 
                         [DirNames.scripts] = @"data\a\0\1\2",
                         //ENCOUNTERS FOLDER DEPENDS ON VERSION
+                        [DirNames.trainerData] = @"data\a\0\5\5",
+                        [DirNames.partyData] = @"data\a\0\5\6",
+                        [DirNames.trainerGraphics] = @"data\a\0\5\8",
 
                         [DirNames.interiorBuildingModels] = @"data\a\1\4\8"
                     };
@@ -537,21 +550,13 @@ namespace DSPRE {
                     break;
             }
         }
-        public static int GetHeaderCount() {
-            return (int)new FileInfo(internalNamesLocation).Length / internalNameLength;
-        }
-        public string[] GetItemNames() {
-            return new TextArchive(itemNamesTextNumber).messages.ToArray();
-        }
-        public string[] GetItemNames(int startIndex, int count) {
-            return new TextArchive(itemNamesTextNumber).messages.GetRange(startIndex, count).ToArray();
-        }
-        public string[] GetPokémonNames() {
-            return new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
-        }
-        public string[] GetAttackNames() {
-            return new TextArchive(attackNamesTextNumber).messages.ToArray();
-        }
+        public static int GetHeaderCount() => (int)new FileInfo(internalNamesLocation).Length / internalNameLength;
+        public string[] GetSimpleTrainerNames() => new TextArchive(trainerNamesMessageNumber).messages.ToArray();
+        public string[] GetTrainerClassNames() => new TextArchive(trainerClassMessageNumber).messages.ToArray();
+        public string[] GetItemNames() => new TextArchive(itemNamesTextNumber).messages.ToArray();
+        public string[] GetItemNames(int startIndex, int count) => new TextArchive(itemNamesTextNumber).messages.GetRange(startIndex, count).ToArray();
+        public string[] GetPokémonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
+        public string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
         public void SetAttackNamesTextNumber() {
             switch (gameFamily) {
                 case "DP":
@@ -663,9 +668,7 @@ namespace DSPRE {
         public int GetMapCount() => Directory.GetFiles(gameDirs[DirNames.maps].unpackedDir).Length;
         public int GetEventCount() => Directory.GetFiles(gameDirs[DirNames.eventFiles].unpackedDir).Length;
         public int GetScriptCount() => Directory.GetFiles(gameDirs[DirNames.scripts].unpackedDir).Length;
-        public int GetBuildingCount(bool interior) {
-            return Directory.GetFiles(GetBuildingModelsDirPath(interior)).Length;
-        }
+        public int GetBuildingCount(bool interior) => Directory.GetFiles(GetBuildingModelsDirPath(interior)).Length;
         #endregion
 
         #region System Methods
