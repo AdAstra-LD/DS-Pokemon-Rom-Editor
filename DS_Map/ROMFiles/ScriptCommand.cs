@@ -94,7 +94,7 @@ namespace DSPRE.ROMFiles {
             name = wholeLine;
             cmdParams = new List<byte[]>();
 
-            string[] nameParts = wholeLine.Replace("\t", "").Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries); // Separate command code from parameters
+            string[] nameParts = wholeLine.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries); // Separate command code from parameters
             /* Get command id, which is always first in the description */
 
             try {
@@ -137,7 +137,7 @@ namespace DSPRE.ROMFiles {
                         ushort comparisonOperator = PokeDatabase.ScriptEditor.comparisonOperatorsDict.First(x => x.Value.Equals(nameParts[i + 1], StringComparison.InvariantCultureIgnoreCase)).Key;
                         cmdParams.Add(new byte[] { (byte)comparisonOperator });
                     } catch { //Not a comparison
-                        int indexOfSpecialCharacter = nameParts[i + 1].IndexOfAny(new char[] { 'x', '#' });
+                        int indexOfSpecialCharacter = nameParts[i + 1].IndexOfAny(new char[] { 'x', 'X', '#' });
 
                         /* If number is preceded by 0x parse it as hex, otherwise as decimal */
                         NumberStyles style;
@@ -147,11 +147,12 @@ namespace DSPRE.ROMFiles {
                             style = NumberStyles.Integer;
                         }
 
+                        nameParts[i + 1] = nameParts[i + 1].Substring(indexOfSpecialCharacter + 1);
                         /* Convert strings of parameters to the correct datatypes */
                         try {
                             switch (parametersSizeArr[i]) {
                                 case 1:
-                                    cmdParams.Add(new byte[] { Byte.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style) });
+                                    cmdParams.Add(new byte[] { Byte.Parse(nameParts[i + 1], style) });
                                     break;
                                 case 2:
                                     if (nameParts[i + 1].Equals("Player", StringComparison.InvariantCultureIgnoreCase)) {
@@ -161,18 +162,18 @@ namespace DSPRE.ROMFiles {
                                     } else if (nameParts[i + 1].Equals("Camera", StringComparison.InvariantCultureIgnoreCase)) {
                                         cmdParams.Add(BitConverter.GetBytes((ushort)241));
                                     } else {
-                                        cmdParams.Add(BitConverter.GetBytes(ushort.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style)));
+                                        cmdParams.Add(BitConverter.GetBytes(ushort.Parse(nameParts[i + 1], style)));
                                     }
                                     break;
                                 case 4:
-                                    cmdParams.Add(BitConverter.GetBytes(Int32.Parse(nameParts[i + 1].Substring(indexOfSpecialCharacter + 1), style)));
+                                    cmdParams.Add(BitConverter.GetBytes(Int32.Parse(nameParts[i + 1], style)));
                                     break;
                             }
                         } catch (FormatException) {
-                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not a valid number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not a valid " + style , "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             id = null;
                         } catch (OverflowException) {
-                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not in the range [" + byte.MinValue + ", " + byte.MaxValue + "].", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not in the range [" + 0 + ", " + (Math.Pow(2, 8 * parametersSizeArr[i]) - 1) + "].", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             id = null;
                         }
                     }

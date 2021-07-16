@@ -143,13 +143,13 @@ namespace DSPRE.ROMFiles {
             //TODO: give user the possibility to jump to/call a script
             //once it's done, this Predicate below will be the only one needed, since there will be no distinction between
             //a script and a function
-            Func<string[], int, ushort?, bool> functionEndCondition =
+            Func<List<string>, int, ushort?, bool> functionEndCondition =
                 (source, x, id) => source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002], StringComparison.InvariantCultureIgnoreCase)    //End
                             || source[x].IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + " Function", StringComparison.InvariantCultureIgnoreCase) >= 0 //Jump Function_#
                             || source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x001B], StringComparison.InvariantCultureIgnoreCase)
                             || PokeDatabase.ScriptEditor.endCodes.Contains(id);  //Return
 
-            Func<string[], int, ushort?, bool> scriptEndCondition =
+            Func<List<string>, int, ushort?, bool> scriptEndCondition =
                 (source, x, id) => source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002], StringComparison.InvariantCultureIgnoreCase)    //End
                             || source[x].IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + " Function") >= 0 //Jump Function_#
                             || PokeDatabase.ScriptEditor.endCodes.Contains(id);
@@ -451,71 +451,79 @@ namespace DSPRE.ROMFiles {
                 references.Add(new ScriptReference(cont.containerType, cont.manualUserID, containerTypes.FUNCTION, invokedID, pos - 4));
             }
         }
-        private List<CommandContainer> ReadCommandsFromLines(string[] lineSource, containerTypes containerType, Func<string[], int, ushort?, bool> endConditions) {
+        private List<CommandContainer> ReadCommandsFromLines(string[] lineSource, containerTypes containerType, Func<List<string>, int, ushort?, bool> endConditions) {
             List<CommandContainer> ls = new List<CommandContainer>();
 
+            List<string> lineSourceL = RemoveEmptyLines(lineSource);
             try {
-                for (int i = 0; i < lineSource.Length; i++) {
-                    int positionOfScriptNumber = lineSource[i].IndexOfAny("0123456789".ToCharArray());
-                    if (positionOfScriptNumber >= 0) { // Move on until script header is found
-                        uint scriptNumber = uint.Parse(lineSource[i].Substring(positionOfScriptNumber).Split()[0].Replace(":", ""));
+                int i = 0;
+                while (i < lineSourceL.Count) {
+                    int positionOfScriptNumber;
+                    if (lineSourceL[i].IndexOf(':') < 0 || (positionOfScriptNumber = lineSourceL[i].IndexOfAny("0123456789".ToCharArray())) < 0) { //Script #1
+                        continue;
+                    }
+                    uint scriptNumber = uint.Parse(lineSourceL[i++].Substring(positionOfScriptNumber).Split()[0].Replace(":", ""));
 
-                        i++;
-                        while (lineSource[i].Length <= 0) {
-                            i++; //Skip all empty lines 
-                        }
+                    if (lineSourceL[i].IndexOf("UseScript", StringComparison.InvariantCultureIgnoreCase) >= 0) {
+                        int useScriptNumber = Int16.Parse(lineSourceL[i].Substring(1 + lineSourceL[i].IndexOf('#')));
+                        ls.Add(new CommandContainer(scriptNumber, containerType, useScriptNumber));
+                    } else {
 
-                        if (lineSource[i].IndexOf("UseScript", StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                            int useScriptNumber = Int16.Parse(lineSource[i].Substring(1 + lineSource[i].IndexOf('#')));
-                            ls.Add(new CommandContainer(scriptNumber, containerType, useScriptNumber));
-                        } else {
+                        /* Read script commands */
+                        List<ScriptCommand> cmdList = new List<ScriptCommand>();
+                        ScriptCommand lastRead;
+                        do {
+                            lastRead = new ScriptCommand(lineSourceL[i], i + 1);
+                            if (lastRead.id is null)
+                                return null;
 
-                            /* Read script commands */
-                            List<ScriptCommand> cmdList = new List<ScriptCommand>();
-                            ScriptCommand lastRead;
-                            do {
-                                lastRead = new ScriptCommand(lineSource[i], i + 1);
-                                if (lastRead.id is null)
-                                    return null;
+                            cmdList.Add(lastRead);
+                        } while (!endConditions(lineSourceL, i++, lastRead.id));
 
-                                cmdList.Add(lastRead);
-                            } while (!endConditions(lineSource, i++, lastRead.id));
-                            
-                            ls.Add(new CommandContainer(scriptNumber, containerType, commandList: cmdList));
-                        }
+                        ls.Add(new CommandContainer(scriptNumber, containerType, commandList: cmdList));
                     }
                 }
             } catch (IndexOutOfRangeException) { }
             return ls;
         }
+
         private List<ActionContainer> ReadActionsFromLines(string[] lineSource) {
             List<ActionContainer> ls = new List<ActionContainer>();
 
+            List<string> lineSourceL = RemoveEmptyLines(lineSource);
             try {
-                for (int i = 0; i < lineSource.Length; i++) {
-                    int positionOfActionNumber = lineSource[i].IndexOfAny("0123456789".ToCharArray());
-                    if (positionOfActionNumber >= 0) { // Move on until script header is found
-                        uint actionNumber = uint.Parse(lineSource[i].Substring(positionOfActionNumber).Split()[0].Replace(":", ""));
-
-                        i++;
-                        while (lineSource[i].Length <= 0)
-                            i++; //Skip all empty lines 
-
-                        List<ScriptAction> cmdList = new List<ScriptAction>();
-                        /* Read script commands */
-                        do {
-                            ScriptAction toAdd = new ScriptAction(lineSource[i], i + 1);
-                            if (toAdd.id is null)
-                                return null;
-
-                            cmdList.Add(toAdd);
-                        } while (!lineSource[i++].Equals(PokeDatabase.ScriptEditor.movementsDictIDName[0x00FE], StringComparison.InvariantCultureIgnoreCase));
-
-                        ls.Add(new ActionContainer(actionNumber, actionCommandsList: cmdList));
+                int i = 0;
+                while (i < lineSourceL.Count) {
+                    int positionOfActionNumber;
+                    if (lineSourceL[i].IndexOf(':') < 0 || (positionOfActionNumber = lineSourceL[i].IndexOfAny("0123456789".ToCharArray())) < 0) { // Move on until script header is found
+                        continue;
                     }
+                    uint actionNumber = uint.Parse(lineSourceL[i++].Substring(positionOfActionNumber).Split()[0].Replace(":", ""));
+
+                    List<ScriptAction> cmdList = new List<ScriptAction>();
+                    /* Read script actions */
+                    do {
+                        ScriptAction toAdd = new ScriptAction(lineSourceL[i], i + 1);
+                        if (toAdd.id is null)
+                            return null;
+
+                        cmdList.Add(toAdd);
+                    } while (!lineSourceL[i++].Equals(PokeDatabase.ScriptEditor.movementsDictIDName[0x00FE], StringComparison.InvariantCultureIgnoreCase));
+
+                    ls.Add(new ActionContainer(actionNumber, actionCommandsList: cmdList));
                 }
             } catch (IndexOutOfRangeException) { }
             return ls;
+        }
+        private List<string> RemoveEmptyLines(string[] lineSource) {
+            List<string> result = new List<string>();
+            foreach (string x in lineSource) {
+                string tr = x.Trim();
+                if (tr.Length > 0) {
+                    result.Add(tr);
+                }
+            }
+            return result;
         }
         public static string OverworldFlexDecode(ushort flexID) {
             if (flexID > 255) {
