@@ -109,7 +109,7 @@ namespace DSPRE.ROMFiles {
                     id = ushort.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
                 } catch {
                     string details;
-                    if (wholeLine.Contains('@') && wholeLine.Contains('#')) {
+                    if (wholeLine.Contains(':') && wholeLine.ContainsNumber()) {
                         details = "This probably means you forgot to \"End\" the Script or Function above it.";
                         details += Environment.NewLine + "Please, also note that only Functions can be terminated\nwith \"Return\".";
                     } else {

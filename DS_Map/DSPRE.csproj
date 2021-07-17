@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AB.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="GameCamera.cs" />
     <Compile Include="Properties\PokePics.Designer.cs">
       <AutoGen>True</AutoGen>
