@@ -46,11 +46,12 @@ namespace DSPRE.ROMFiles {
             try {
                 id = RomInfo.ScriptActionNamesDict.First(x => x.Value.Equals(nameParts[0], StringComparison.InvariantCultureIgnoreCase)).Key;
             } catch (InvalidOperationException) {
-                try {
-                    id = ushort.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
-                } catch (FormatException) {
+                ushort buf;
+                if (ushort.TryParse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out buf)) {
+                    id = buf;
+                } else {
                     string details;
-                    if (wholeLine.Contains('@') && wholeLine.Contains('#')) {
+                    if (wholeLine.Contains(':') && wholeLine.ContainsNumber()) {
                         details = "This probably means you forgot to \"End\" the Action above it.";
                     } else {
                         details = "Are you sure it's a proper Action Command?";
@@ -63,7 +64,7 @@ namespace DSPRE.ROMFiles {
                 }
             }
 
-            if (id != 0x00FE && nameParts.Length < 2 || nameParts.Length > 2) { //E.g.: End 0x2 0x40    OR     LookUp
+            if (id == 0x00FE && nameParts.Length != 1 || id != 0x00FE && nameParts.Length != 2) { //E.g.: End 0x2 0x40    OR     LookUp
                 MessageBox.Show("Wrong number of parameters for action " + nameParts[0] + " at line " + lineNumber + "." + Environment.NewLine +
                     "Received: " + (nameParts.Length - 1) + Environment.NewLine + "Expected: 1"
                     + Environment.NewLine + "\nThis Script File can not be saved.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
