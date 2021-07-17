@@ -578,6 +578,39 @@ namespace DSPRE.Resources {
             }
         }
         public static class ScriptEditor {
+            public static Dictionary<ushort, string> comparisonOperatorsDict = new Dictionary<ushort, string>() {
+                [0] = "LESS",
+                [1] = "EQUAL",
+                [2] = "GREATER",
+                [3] = "LESS/EQUAL",
+                [4] = "GREATER/EQUAL",
+                [5] = "DIFFERENT",
+
+                /* GEN V ONLY */
+                //[6] = "OR",
+                //[7] = "AND",
+                //[0xFF] = "TRUEUP"
+            };
+
+            public static Dictionary<ushort, int> commandsWithRelativeJump = new Dictionary<ushort, int>() {
+                //commandID, ID of parameter With Jump Address
+
+                [0x0016] = 0,   //Jump
+                [0x0017] = 1,   //Call
+                [0x0018] = 1,   //Call
+                [0x0019] = 1,   //Call
+                [0x001A] = 0,   //Call
+                [0x001C] = 1,   //Jump-If
+                [0x001D] = 1,   //Call-If
+                [0x005E] = 1,   //Movement
+            };
+
+            public static HashSet<ushort?> endCodes = new HashSet<ushort?>() {
+                0x2,
+                0x16,
+                0x1B
+            };
+
             public static Dictionary<ushort, string> movementsDictIDName = new Dictionary<ushort, string>() {
                 [0x0000] = "LookUp",
                 [0x0001] = "LookDown",
@@ -676,38 +709,23 @@ namespace DSPRE.Resources {
                 [0x0068] = "WaitMoveForever",
                 [0x00FE] = "End"
             };
-
-            public static Dictionary<ushort, string> comparisonOperatorsDict = new Dictionary<ushort, string>() {
-                [0] = "LESS",
-                [1] = "EQUAL",
-                [2] = "GREATER",
-                [3] = "LESS/EQUAL",
-                [4] = "GREATER/EQUAL",
-                [5] = "DIFFERENT",
-
-                /* GEN V ONLY */
-                //[6] = "OR",
-                //[7] = "AND",
-                //[0xFF] = "TRUEUP"
-            };
-
-            public static Dictionary<ushort, int> commandsWithRelativeJump = new Dictionary<ushort, int>() {
-                //commandID, ID of parameter With Jump Address
-
-                [0x0016] = 0,   //Jump
-                [0x0017] = 1,   //Call
-                [0x0018] = 1,   //Call
-                [0x0019] = 1,   //Call
-                [0x001A] = 0,   //Call
-                [0x001C] = 1,   //Jump-If
-                [0x001D] = 1,   //Call-If
-                [0x005E] = 1,   //Movement
-            };
-
-            public static HashSet<ushort?> endCodes = new HashSet<ushort?>() {
-                0x2,
-                0x16,
-                0x1B
+            public static Dictionary<ushort, string> customMovementsDictIDName = new Dictionary<ushort, string>() {
+                [0x0071] = "Descend",
+                [0x0072] = "Ascend",
+                [0x0073] = "Heart",
+                [0x0074] = "Smile",
+                [0x0075] = "Anger",
+                [0x0076] = "Sad",
+                [0x0077] = "Grin",
+                [0x0078] = "Suspecting",
+                [0x0079] = "MusicNote",
+                [0x007A] = "Question",
+                [0x007B] = "BigExclamation",
+                [0x007C] = "Water",
+                [0x007D] = "Exhaust",
+                [0x007E] = "Poison",
+                [0x007F] = "Ellipsis",
+                [0x0080] = "Asleep"
             };
 
             public static Dictionary<ushort, string> DPPtScrCmdNames = new Dictionary<ushort, string>() {
@@ -1159,7 +1177,6 @@ namespace DSPRE.Resources {
                 [0x02C2] = "HideSaveBox",
                 [0x02C3] = "ScopeMode"
             };
-
             public static Dictionary<ushort, byte[]> DPPtScrCmdParameters = new Dictionary<ushort, byte[]>() {
                 [0x0000] = new byte[1] { 0 },
                 [0x0001] = new byte[1] { 0 },

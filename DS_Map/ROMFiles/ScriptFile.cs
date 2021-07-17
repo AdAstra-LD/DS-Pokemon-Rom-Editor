@@ -425,7 +425,7 @@ namespace DSPRE.ROMFiles {
         private void addParametersToList(ref List<byte[]> parameterList, ushort id, BinaryReader dataReader) {
             Console.WriteLine("Loaded command id: " + id.ToString("X4"));
             try {
-                foreach (int bytesToRead in RomInfo.CommandParametersDict[id]) {
+                foreach (int bytesToRead in RomInfo.ScriptCommandParametersDict[id]) {
                     parameterList.Add(dataReader.ReadBytes(bytesToRead));
                 }
             } catch (NullReferenceException) {
@@ -510,7 +510,7 @@ namespace DSPRE.ROMFiles {
                             return null;
 
                         cmdList.Add(toAdd);
-                    } while (!lineSourceL[i++].Equals(PokeDatabase.ScriptEditor.movementsDictIDName[0x00FE], StringComparison.InvariantCultureIgnoreCase));
+                    } while (!lineSourceL[i++].Equals(RomInfo.ScriptActionNamesDict[0x00FE], StringComparison.InvariantCultureIgnoreCase));
 
                     ls.Add(new ActionContainer(actionNumber, actionCommandsList: cmdList));
                 }

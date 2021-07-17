@@ -293,7 +293,7 @@ namespace DSPRE {
             }
         }
         private void scriptCommandsDatabaseToolStripButton_Click(object sender, EventArgs e) {
-            OpenCommandsDatabase(RomInfo.ScriptCommandNamesDict, RomInfo.CommandParametersDict);
+            OpenCommandsDatabase(RomInfo.ScriptCommandNamesDict, RomInfo.ScriptCommandParametersDict);
         }
         private void nsbmdExportTexButton_Click(object sender, EventArgs e) {
             OpenFileDialog of = new OpenFileDialog {

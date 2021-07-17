@@ -29,11 +29,13 @@ namespace DSPRE.ROMFiles {
             this.id = id;
             this.repetitionCount = repetitionCount;
 
-            if (!PokeDatabase.ScriptEditor.movementsDictIDName.TryGetValue(id, out name))
+            if (!RomInfo.ScriptActionNamesDict.TryGetValue(id, out name)) {
                 name = id.ToString("X4");
+            }
 
-            if (repetitionCount != null && id != 0x00FE)
+            if (repetitionCount != null && id != 0x00FE) {
                 name += " " + "0x" + ((ushort)repetitionCount).ToString("X");
+            }
         }
         public ScriptAction(string wholeLine, int lineNumber) {
             name = wholeLine;
@@ -42,7 +44,7 @@ namespace DSPRE.ROMFiles {
             /* Get command id, which is always first in the description */
 
             try {
-                id = PokeDatabase.ScriptEditor.movementsDictIDName.First(x => x.Value.Equals(nameParts[0], StringComparison.InvariantCultureIgnoreCase)).Key;
+                id = RomInfo.ScriptActionNamesDict.First(x => x.Value.Equals(nameParts[0], StringComparison.InvariantCultureIgnoreCase)).Key;
             } catch (InvalidOperationException) {
                 try {
                     id = ushort.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);

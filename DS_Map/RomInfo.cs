@@ -51,7 +51,8 @@ namespace DSPRE {
 
         public static Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary { get; private set; }
         public static Dictionary<ushort, string> ScriptCommandNamesDict { get; private set; }
-        public static Dictionary<ushort, byte[]> CommandParametersDict { get; private set; }
+        public static Dictionary<ushort, byte[]> ScriptCommandParametersDict { get; private set; }
+        public static Dictionary<ushort, string> ScriptActionNamesDict { get; private set; }
         public static SortedDictionary<uint, (uint spriteID, ushort properties)> OverworldTable { get; private set; }
         public static uint[] overworldTableKeys { get; private set; }
         public static Dictionary<uint, string> ow3DSpriteDict { get; private set; }
@@ -117,7 +118,8 @@ namespace DSPRE {
 
             /* System */
             ScriptCommandNamesDict = BuildCommandNamesDatabase(gameVersion);
-            CommandParametersDict = BuildCommandParametersDatabase(gameVersion);
+            ScriptCommandParametersDict = BuildCommandParametersDatabase(gameVersion);
+            ScriptActionNamesDict = BuildActionNamesDatabase(gameVersion);
         }
 
         public static string GetRomNameFromWorkdir() {
@@ -429,34 +431,53 @@ namespace DSPRE {
             }
         }
         public static Dictionary<ushort, string> BuildCommandNamesDatabase(string gameVer) {
+            Dictionary<ushort, string> commonDictionaryNames;
+            Dictionary<ushort, string> specificDictionaryNames;
+
             switch (gameFamily) {
                 case "DP":
-                    var commonDictionaryNames = PokeDatabase.ScriptEditor.DPPtScrCmdNames;
-                    var specificDictionaryNames = PokeDatabase.ScriptEditor.DPScrCmdNames;
-                    return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+                    commonDictionaryNames = PokeDatabase.ScriptEditor.DPPtScrCmdNames;
+                    specificDictionaryNames = PokeDatabase.ScriptEditor.DPScrCmdNames;
+                    break;
                 case "Plat":
                     commonDictionaryNames = PokeDatabase.ScriptEditor.DPPtScrCmdNames;
                     specificDictionaryNames = PokeDatabase.ScriptEditor.PlatScrCmdNames;
-                    return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+                    break;
                 default:
                     commonDictionaryNames = PokeDatabase.ScriptEditor.HGSSScrCmdNames;
-                    var customDictionaryNames = PokeDatabase.ScriptEditor.CustomScrCmdNames;
-                    return commonDictionaryNames.Concat(customDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+                    specificDictionaryNames = PokeDatabase.ScriptEditor.CustomScrCmdNames;
+                    break;
             }
+            return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
         }
         public static Dictionary<ushort, byte[]> BuildCommandParametersDatabase(string gameVer) {
+            Dictionary<ushort, byte[]> commonDictionaryParams;
+            Dictionary<ushort, byte[]> specificDictionaryParams;
+
             switch (gameFamily) {
                 case "DP":
-                    var commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
-                    var specificDictionaryParams = PokeDatabase.ScriptEditor.DPScrCmdParameters;
-                    return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+                    commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
+                    specificDictionaryParams = PokeDatabase.ScriptEditor.DPScrCmdParameters;
+                    break;
                 case "Plat":
                     commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
                     specificDictionaryParams = PokeDatabase.ScriptEditor.PlatScrCmdParameters;
-                    return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+                    break;
                 default:
                     commonDictionaryParams = PokeDatabase.ScriptEditor.HGSSScrCmdParameters;
-                    var customDictionaryParams = PokeDatabase.ScriptEditor.CustomScrCmdParameters;
+                    specificDictionaryParams = PokeDatabase.ScriptEditor.CustomScrCmdParameters;
+                    break;
+            }
+            return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+        }
+        public static Dictionary<ushort, string> BuildActionNamesDatabase(string gameVer) {
+            switch (gameFamily) {
+                case "DP":
+                case "Plat":
+                    return PokeDatabase.ScriptEditor.movementsDictIDName;
+                default:
+                    var commonDictionaryParams = PokeDatabase.ScriptEditor.movementsDictIDName;
+                    var customDictionaryParams = PokeDatabase.ScriptEditor.customMovementsDictIDName;
                     return commonDictionaryParams.Concat(customDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
             }
         }

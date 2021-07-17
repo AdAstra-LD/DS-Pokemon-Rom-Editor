@@ -125,7 +125,7 @@ namespace DSPRE.ROMFiles {
             /* Read parameters from remainder of the description */
             //Console.WriteLine("ID = " + ((ushort)id).ToString("X4"));
 
-            byte[] parametersSizeArr = RomInfo.CommandParametersDict[(ushort)id];
+            byte[] parametersSizeArr = RomInfo.ScriptCommandParametersDict[(ushort)id];
 
             int paramLength = 0;
             if (parametersSizeArr.Length == 1 && parametersSizeArr.First() == 0) {
