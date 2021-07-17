@@ -639,6 +639,13 @@ namespace DSPRE.Resources {
                 [0x0039] = "JumpDown2",
                 [0x003A] = "JumpLeft2",
                 [0x003B] = "JumpRight2",
+                [0x003C] = "Freeze1",
+                [0x003D] = "Freeze2",
+                [0x003E] = "Freeze4",
+                [0x003F] = "Freeze8",
+                [0x0040] = "Freeze15",
+                [0x0041] = "Freeze16",
+                [0x0042] = "Freeze32",
                 [0x0045] = "WaitDisappear",
                 [0x0047] = "LockDir",
                 [0x0048] = "ReleaseDir",
@@ -669,6 +676,7 @@ namespace DSPRE.Resources {
                 [0x0068] = "WaitMoveForever",
                 [0x00FE] = "End"
             };
+
             public static Dictionary<ushort, string> comparisonOperatorsDict = new Dictionary<ushort, string>() {
                 [0] = "LESS",
                 [1] = "EQUAL",
@@ -695,6 +703,7 @@ namespace DSPRE.Resources {
                 [0x001D] = 1,   //Call-If
                 [0x005E] = 1,   //Movement
             };
+
             public static HashSet<ushort?> endCodes = new HashSet<ushort?>() {
                 0x2,
                 0x16,
@@ -802,8 +811,8 @@ namespace DSPRE.Resources {
                 [0x0063] = "Release",
                 [0x0064] = "AddOW",
                 [0x0065] = "RemoveOW",
-                [0x0066] = "LockCam",
-                [0x0067] = "ReleaseCam",
+                [0x0066] = "LockCamera",
+                [0x0067] = "ReleaseCamera",
                 [0x0068] = "FacePlayer",
                 [0x0069] = "CheckPlayerPosition",
                 [0x006A] = "CheckOverworldPosition",
@@ -1150,6 +1159,7 @@ namespace DSPRE.Resources {
                 [0x02C2] = "HideSaveBox",
                 [0x02C3] = "ScopeMode"
             };
+
             public static Dictionary<ushort, byte[]> DPPtScrCmdParameters = new Dictionary<ushort, byte[]>() {
                 [0x0000] = new byte[1] { 0 },
                 [0x0001] = new byte[1] { 0 },

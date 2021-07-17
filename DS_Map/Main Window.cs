@@ -5624,10 +5624,14 @@ namespace DSPRE {
         private List<string> SearchInScripts(int fileID, List<CommandContainer> cmdList, string entryType, Func<string, bool> criteria) {
             List<string> results = new List<string>();
 
-            for (int j = 0; j < cmdList.Count; j++) {
+            for (int j = 0; j < cmdList.Count; j++) { 
+                if (cmdList[j].commands is null) {
+                    continue;
+                }
                 foreach (ScriptCommand cur in cmdList[j].commands) {
-                    if (criteria(cur.name))
+                    if (criteria(cur.name)) {
                         results.Add("File " + fileID + " - " + entryType + " " + (j + 1) + ": " + cur.name + Environment.NewLine);
+                    }
                 }
             }
             return results;

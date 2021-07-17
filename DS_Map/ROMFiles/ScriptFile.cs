@@ -341,8 +341,9 @@ namespace DSPRE.ROMFiles {
                             {
                                 byte parameter1 = dataReader.ReadByte();
                                 parameterList.Add(new byte[] { parameter1 });
-                                if (parameter1 == 0x2)
+                                if (parameter1 == 0x2) {
                                     parameterList.Add(dataReader.ReadBytes(2));
+                                }
                             }
                             break;
                         case 0x1D1: // Number of parameters differ depending on the first parameter value
@@ -424,8 +425,9 @@ namespace DSPRE.ROMFiles {
         private void addParametersToList(ref List<byte[]> parameterList, ushort id, BinaryReader dataReader) {
             Console.WriteLine("Loaded command id: " + id.ToString("X4"));
             try {
-                foreach (int bytesToRead in RomInfo.CommandParametersDict[id])
+                foreach (int bytesToRead in RomInfo.CommandParametersDict[id]) {
                     parameterList.Add(dataReader.ReadBytes(bytesToRead));
+                }
             } catch (NullReferenceException) {
                 MessageBox.Show("Script command " + id + "can't be handled for now." +
                     Environment.NewLine + "Reference offset 0x" + dataReader.BaseStream.Position.ToString("X"), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -37,14 +37,14 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (2)
-        public ScriptCommand(ushort id, List<byte[]> commandParameters) {
-            if (commandParameters is null) {
+        public ScriptCommand(ushort id, List<byte[]> parametersList) {
+            if (parametersList is null) {
                 this.id = null;
                 return;
             }
 
             this.id = id;
-            this.cmdParams = commandParameters;
+            this.cmdParams = parametersList;
 
             if (!RomInfo.ScriptCommandNamesDict.TryGetValue(id, out name))
                 name = id.ToString("X4");
@@ -52,39 +52,43 @@ namespace DSPRE.ROMFiles {
             switch (id) {
                 case 0x16:      // Jump
                 case 0x1A:      // Call
-                    name += " " + "Function_#" + (BitConverter.ToInt32(commandParameters[0], 0)).ToString("D");
+                    name += " " + "Function_#" + (BitConverter.ToInt32(parametersList[0], 0)).ToString("D");
                     break;
                 case 0x17:      // JumpIfObjID
                 case 0x18:      // JumpIfBgID
                 case 0x19:      // JumpIfPlayerDir
-                    byte param = commandParameters[0][0];
-                    name += " " + param.ToString("X") + " " + "Function_#" + BitConverter.ToInt32(commandParameters[1], 0).ToString("D");
+                    byte param = parametersList[0][0];
+                    name += " " + param.ToString("X") + " " + "Function_#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
                     break;
                 case 0x1C:      // Jump-If
                 case 0x1D:      // Call-If
-                    byte opcode = commandParameters[0][0];
-                    name += " " + PokeDatabase.ScriptEditor.comparisonOperatorsDict[opcode] + " " + "Function_#" + BitConverter.ToInt32(commandParameters[1], 0).ToString("D");
+                    byte opcode = parametersList[0][0];
+                    name += " " + PokeDatabase.ScriptEditor.comparisonOperatorsDict[opcode] + " " + "Function_#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
                     break;
-                case 0x5E:      // ApplyMovement
-                    ushort flexID = BitConverter.ToUInt16(commandParameters[0], 0);
-                    this.name += ScriptFile.OverworldFlexDecode(flexID);
-                    name += " " + "Action_#" + BitConverter.ToInt32(commandParameters[1], 0).ToString("D");
+                case 0x5E:      // Movement
+                    ushort flexID = BitConverter.ToUInt16(parametersList[0], 0);
+                    name += ScriptFile.OverworldFlexDecode(flexID);
+                    name += " " + "Action_#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                    break;
+                case 0x6A:      // CheckOverworldPosition
+                    flexID = BitConverter.ToUInt16(parametersList[0], 0);
+                    name += ScriptFile.OverworldFlexDecode(flexID) + " " + "0x" + BitConverter.ToInt16(parametersList[1], 0).ToString("X") + " " + "0x" + BitConverter.ToInt16(parametersList[2], 0).ToString("X");
                     break;
                 case 0x62:      // Lock
                 case 0x63:      // Release
-                case 0x64:      // AddPeople
+                case 0x64:      // AddOW
                 case 0x65:      // RemoveOW
-                    flexID = BitConverter.ToUInt16(commandParameters[0], 0);
+                    flexID = BitConverter.ToUInt16(parametersList[0], 0);
                     name += ScriptFile.OverworldFlexDecode(flexID);
                     break;
                 default:
-                    for (int i = 0; i < commandParameters.Count; i++) {
-                        if (commandParameters[i].Length == 1)
-                            this.name += " " + "0x" + (commandParameters[i][0]).ToString("X1");
-                        else if (commandParameters[i].Length == 2)
-                            this.name += " " + "0x" + (BitConverter.ToInt16(commandParameters[i], 0)).ToString("X1");
-                        else if (commandParameters[i].Length == 4)
-                            this.name += " " + "0x" + (BitConverter.ToInt32(commandParameters[i], 0)).ToString("X1");
+                    for (int i = 0; i < parametersList.Count; i++) {
+                        if (parametersList[i].Length == 1)
+                            this.name += " " + "0x" + (parametersList[i][0]).ToString("X1");
+                        else if (parametersList[i].Length == 2)
+                            this.name += " " + "0x" + BitConverter.ToInt16(parametersList[i], 0).ToString("X1");
+                        else if (parametersList[i].Length == 4)
+                            this.name += " " + "0x" + BitConverter.ToInt32(parametersList[i], 0).ToString("X1");
                     }
                     break;
 
