@@ -306,7 +306,7 @@ namespace DSPRE {
 
                         [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
                         [DirNames.partyData] = @"data\poketool\trainer\trpoke.narc",
-                        [DirNames.trainerGraphics] = @"data\poketool\trainer\trfgra.narc",
+                        [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
 
                         [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion[0]) + '_' + "enc_data.narc"
                     };
@@ -334,7 +334,7 @@ namespace DSPRE {
 
                         [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
                         [DirNames.partyData] = @"data\poketool\trainer\trpoke.narc",
-                        [DirNames.trainerGraphics] = @"data\poketool\trainer\trfgra.narc",
+                        [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
 
                         [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.Substring(0, 2).ToLower() + '_' + "enc_data.narc"
                     };

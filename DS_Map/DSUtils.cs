@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static DSPRE.RomInfo;
 
@@ -262,8 +263,7 @@ namespace DSPRE {
         }
 
         public static void TryUnpackNarcs(List<DirNames> IDs, ToolStripProgressBar progress = null) {
-            foreach (DirNames id in IDs) {
-
+            Parallel.ForEach(IDs, id => {
                 if (gameDirs.TryGetValue(id, out (string packedPath, string unpackedPath) paths)) {
                     DirectoryInfo di = new DirectoryInfo(paths.unpackedPath);
 
@@ -276,17 +276,17 @@ namespace DSPRE {
                         opened.ExtractToFolder(paths.unpackedPath);
                     }
 
-                    if (progress != null) {
-                        try {
-                            progress.Value++;
-                        } catch (ArgumentOutOfRangeException) { }
-                    }
+                    //if (progress != null) {
+                    //    try {
+                    //        progress.Value++;
+                    //        
+                    //    } catch (ArgumentOutOfRangeException) { }
+                    //}
                 }
-            }
+            });
         }
         public static void ForceUnpackNarcs(List<DirNames> IDs, ToolStripProgressBar progress = null) {
-            foreach (DirNames id in IDs) {
-
+            Parallel.ForEach(IDs, id => {
                 if (gameDirs.TryGetValue(id, out (string packedPath, string unpackedPath) paths)) {
                     Narc opened = Narc.Open(paths.packedPath);
 
@@ -295,13 +295,13 @@ namespace DSPRE {
 
                     opened.ExtractToFolder(paths.unpackedPath);
 
-                    if (progress != null) {
-                        try {
-                            progress.Value++;
-                        } catch (ArgumentOutOfRangeException) { }
-                    }
+                    //if (progress != null) {
+                    //    try {
+                    //        progress.Value++;
+                    //    } catch (ArgumentOutOfRangeException) { }
+                    //}
                 }
-            }
+            });
         }
 
         public static byte[] GetModelWithoutTextures (byte[] modelFile) {

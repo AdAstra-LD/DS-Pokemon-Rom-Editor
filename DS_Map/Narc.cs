@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NarcAPI {
@@ -23,8 +24,9 @@ namespace NarcAPI {
             BinaryReader br = new BinaryReader(file);
 
             uint magicNumber = br.ReadUInt32();
-            if (magicNumber != 0x4352414E)
+            if (magicNumber != 0x4352414E) {
                 return null;
+            }
 
             narc.ReadOffsets(br);
             narc.ReadElements(br);
@@ -37,7 +39,8 @@ namespace NarcAPI {
             String[] fileNames = Directory.GetFiles(dirPath, "*.*", SearchOption.AllDirectories);
             uint numberOfElements = (uint)fileNames.Length;
             narc.Elements = new MemoryStream[numberOfElements];
-            for (int i = 0; i < numberOfElements; i++) {
+
+            Parallel.For(0, numberOfElements, i => {
                 FileStream fs = File.OpenRead(fileNames[i]);
                 MemoryStream ms = new MemoryStream();
                 byte[] buffer = new byte[fs.Length];
@@ -45,7 +48,7 @@ namespace NarcAPI {
                 ms.Write(buffer, 0, (int)fs.Length);
                 narc.Elements[i] = ms;
                 fs.Close();
-            }
+            });
             return narc;
         }
 
@@ -67,7 +70,10 @@ namespace NarcAPI {
             bw.Write((UInt32)Elements.Length);              // Number of elements
             curOffset = 0;
             for (int i = 0; i < Elements.Length; i++) {
-                while (curOffset % 4 != 0) curOffset++;     // Force offsets to be a multiple of 4
+                while (curOffset % 4 != 0) {
+                    curOffset++;     // Force offsets to be a multiple of 4
+                }
+
                 bw.Write(curOffset);
                 curOffset += (uint)Elements[i].Length;
                 bw.Write(curOffset);
@@ -84,7 +90,9 @@ namespace NarcAPI {
             curOffset = 0;
             byte[] buffer;
             for (int i = 0; i < Elements.Length; i++) {
-                while (curOffset % 4 != 0) { bw.Write((Byte)0xFF); curOffset++; }     // Force offsets to be a multiple of 4
+                while (curOffset % 4 != 0) { // Force offsets to be a multiple of 4
+                    bw.Write((Byte)0xFF); curOffset++; 
+                }     
                 // Data writin'
                 buffer = new byte[Elements[i].Length];
                 Elements[i].Seek(0, SeekOrigin.Begin);
@@ -118,23 +126,21 @@ namespace NarcAPI {
                 return;
             }
 
-            FileStream file;
-            byte[] buffer;
-            for (int i = 0; i < Elements.Length; i++) {
-                file = File.Create(Path.Combine(dirPath, i.ToString("D4")));
-                buffer = new byte[Elements[i].Length];
-                Elements[i].Seek(0, SeekOrigin.Begin);
-                Elements[i].Read(buffer, 0, (int)Elements[i].Length);
-                file.Write(buffer, 0, (int)Elements[i].Length);
-                file.Close();
-            }
+            Parallel.For(0, Elements.Length, i => {
+                string path = Path.Combine(dirPath, i.ToString("D4"));
+                using (BinaryWriter wr = new BinaryWriter(File.Create(path))) {
+                    byte[] buffer = new byte[Elements[i].Length];
+                    Elements[i].Seek(0, SeekOrigin.Begin);
+                    Elements[i].Read(buffer, 0, (int)Elements[i].Length);
+                    wr.Write(buffer);
+                }
+            });
         }
 
-        public void Free()              // Libera todos los recursos de memoria asociados (cierra los streams)
-        {
-            for (int i = 0; i < Elements.Length; i++) {
+        public void Free() { // Libera todos los recursos de memoria asociados (cierra los streams)
+            Parallel.For(0, Elements.Length, i => {
                 Elements[i].Close();
-            }
+            });
         }
 
         public MemoryStream this[int elemIndex] {
@@ -164,19 +170,21 @@ namespace NarcAPI {
             // Create array of elements
             br.BaseStream.Position = 0x18;
             Elements = new MemoryStream[numberOfElements = br.ReadUInt32()];
+
             // Read offsets of each element
-            startOffsets = new uint[numberOfElements]; endOffsets = new uint[numberOfElements];
+            startOffsets = new uint[numberOfElements]; 
+            endOffsets = new uint[numberOfElements];
             br.BaseStream.Position = FatbOffset + 0xC;
-            for (int i = 0; i < numberOfElements; i++) { startOffsets[i] = br.ReadUInt32(); endOffsets[i] = br.ReadUInt32(); }
+            for (int i = 0; i < numberOfElements; i++) { 
+                startOffsets[i] = br.ReadUInt32(); 
+                endOffsets[i] = br.ReadUInt32(); 
+            }
             // Read elements
-            for (int i = 0; i < numberOfElements; i++) {
-                MemoryStream ms;
-                byte[] buffer;
+            for(int i = 0; i < numberOfElements; i++) {
                 br.BaseStream.Position = FimgOffset + startOffsets[i] + 0x8;
-                buffer = new byte[endOffsets[i] - startOffsets[i]];
+                byte[] buffer = new byte[endOffsets[i] - startOffsets[i]];
                 br.Read(buffer, 0, (int)(endOffsets[i] - startOffsets[i]));
-                ms = new MemoryStream(buffer);
-                Elements[i] = ms;
+                Elements[i] = new MemoryStream(buffer);
             }
         }
     }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using DSPRE.Resources.ROMToolboxDB;
 using DSPRE.Resources;
 using static DSPRE.RomInfo;
+using System.Threading.Tasks;
 
 namespace DSPRE {
     public partial class ROMToolboxDialog : Form {
@@ -368,16 +369,16 @@ namespace DSPRE {
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
-                foreach (int ID in RomInfo.pokemonNamesTextNumbers) {
+                Parallel.ForEach(RomInfo.pokemonNamesTextNumbers, ID => {
                     TextArchive pokeName = new TextArchive(ID);
-                    for (ushort i = 1; i < pokeName.messages.Count; i++) {
+                    Parallel.For(1, pokeName.messages.Count, i => {
                         if (pokeName.messages[i].Length <= 1)
                             i++;
 
-                        pokeName.messages[i] = pokeName.messages[i].Replace(PokeDatabase.System.pokeNames[i].ToUpper(), PokeDatabase.System.pokeNames[i]);
-                    }
+                        pokeName.messages[i] = pokeName.messages[i].Replace(PokeDatabase.System.pokeNames[(ushort)i].ToUpper(), PokeDatabase.System.pokeNames[(ushort)i]);
+                    });
                     pokeName.SaveToFileDefaultDir(ID, showSuccessMessage: false);
-                }
+                });
                 //sentenceCaseCB.Visible = true;
                 MessageBox.Show("Pokémon names have been converted to Sentence Case.", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {

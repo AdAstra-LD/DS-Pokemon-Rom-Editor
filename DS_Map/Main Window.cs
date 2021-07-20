@@ -203,8 +203,9 @@ namespace DSPRE {
             DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.scripts }); //12 = scripts Narc Dir
 
             int scriptCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.scripts].unpackedDir).Length;
-            for (int i = 0; i < scriptCount; i++)
+            for (int i = 0; i < scriptCount; i++) {
                 selectScriptFileComboBox.Items.Add("Script File " + i);
+            }
 
             currentScriptBox = scriptTextBox;
             currentLineNumbersBox = LineNumberTextBoxScript;
@@ -217,8 +218,9 @@ namespace DSPRE {
             statusLabel.Text = "Setting up Text Editor...";
             Update();
 
-            for (int i = 0; i < romInfo.GetTextArchivesCount(); i++)
+            for (int i = 0; i < romInfo.GetTextArchivesCount(); i++) {
                 selectTextFileComboBox.Items.Add("Text Archive " + i);
+            }
 
             selectTextFileComboBox.SelectedIndex = 0;
             statusLabel.Text = "Ready";
@@ -458,9 +460,9 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.2.2" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.3" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
-                + Environment.NewLine + "Special thanks go to Trifindo, Mikelan98, JackHack96, Mixone and BagBoy."
+                + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Mixone and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS ROM Hacking made the development of this tool possible.";
 
             MessageBox.Show(message, "About...", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -2506,8 +2508,9 @@ namespace DSPRE {
             if (linesWithErrors.Count > 0) {
                 errorMsg = "\nHowever, the following lines couldn't be parsed correctly:\n";
 
-                foreach (string s in linesWithErrors)
+                foreach (string s in linesWithErrors) {
                     errorMsg += "- Line " + s;
+                }
 
                 iconType = MessageBoxIcon.Warning;
             }
@@ -2685,7 +2688,7 @@ namespace DSPRE {
         private void SetupMapEditor() {
             /* Extract essential NARCs sub-archives*/
             toolStripProgressBar.Visible = true;
-            toolStripProgressBar.Maximum = 14;
+            toolStripProgressBar.Maximum = 9;
             toolStripProgressBar.Value = 0;
             statusLabel.Text = "Attempting to unpack Map Editor NARCs... Please wait.";
             Update();
@@ -2696,7 +2699,7 @@ namespace DSPRE {
                 DirNames.buildingTextures,
                 DirNames.mapTextures,
                 DirNames.areaData,
-            }, toolStripProgressBar);
+            });
 
             if (RomInfo.gameFamily == "HGSS") {
                 DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
@@ -2746,14 +2749,17 @@ namespace DSPRE {
 
             /*  Fill map textures list */
             mapTextureComboBox.Items.Add("Untextured");
-            for (int i = 0; i < romInfo.GetMapTexturesCount(); i++)
+            for (int i = 0; i < romInfo.GetMapTexturesCount(); i++) {
                 mapTextureComboBox.Items.Add("Map Texture Pack [" + i.ToString("D2") + "]");
+            }
             toolStripProgressBar.Value++;
 
             /*  Fill building textures list */
             buildTextureComboBox.Items.Add("Untextured");
-            for (int i = 0; i < romInfo.GetBuildingTexturesCount(); i++)
+            for (int i = 0; i < romInfo.GetBuildingTexturesCount(); i++) {
                 buildTextureComboBox.Items.Add("Building Texture Pack [" + i.ToString("D2") + "]");
+            }
+
             toolStripProgressBar.Value++;
 
             foreach (string s in PokeDatabase.System.MapCollisionPainters.Values) {
@@ -4067,10 +4073,10 @@ namespace DSPRE {
                     Overworld overworld = currentEvFile.overworlds[i];
 
                     if (isEventOnCurrentMatrix(overworld)) { // Draw image only if event is in current map
+                        Bitmap sprite = GetOverworldImage(overworld.overlayTableEntry, overworld.orientation);
+                        sprite.MakeTransparent();
                         using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
                             g.CompositingMode = CompositingMode.SourceOver;
-                            Bitmap sprite = GetOverworldImage(overworld.overlayTableEntry, overworld.orientation);
-                            sprite.MakeTransparent();
                             g.DrawImage(sprite, (overworld.xMapPosition) * 17 - 7 + (32 - sprite.Width) / 2, (overworld.yMapPosition - 1) * 17 + (32 - sprite.Height));
 
                             if (selectedEvent == overworld) {
@@ -4407,9 +4413,12 @@ namespace DSPRE {
             return b_;
         }
         private bool isEventOnCurrentMatrix(Event ev) {
-            if (ev.xMatrixPosition == eventMatrixXUpDown.Value)
-                if (ev.yMatrixPosition == eventMatrixYUpDown.Value)
+            if (ev.xMatrixPosition == eventMatrixXUpDown.Value) {
+                if (ev.yMatrixPosition == eventMatrixYUpDown.Value) {
                     return true;
+                }
+            }
+
             return false;
         }
         private bool isEventUnderMouse(Event ev, Point mouseTilePos, int widthX = 0, int heightY = 0) {
@@ -4417,8 +4426,9 @@ namespace DSPRE {
                 Point evLocalCoords = new Point(ev.xMapPosition, ev.yMapPosition);
                 Func<int, int, int, bool> checkRange = (mouseCoord, evCoord, extension) => mouseCoord >= evCoord && mouseCoord <= evCoord + extension;
 
-                if (checkRange(mouseTilePos.X, evLocalCoords.X, widthX) && checkRange(mouseTilePos.Y, evLocalCoords.Y, heightY))
+                if (checkRange(mouseTilePos.X, evLocalCoords.X, widthX) && checkRange(mouseTilePos.Y, evLocalCoords.Y, heightY)) {
                     return true;
+                }
             }
             return false;
         }
@@ -6125,8 +6135,9 @@ namespace DSPRE {
                 tilesetFileCount = romInfo.GetBuildingTexturesCount();
             }
 
-            for (int i = 0; i < tilesetFileCount; i++)
+            for (int i = 0; i < tilesetFileCount; i++) {
                 texturePacksListBox.Items.Add("Texture Pack " + i);
+            }
         }
         #endregion
         private void SetupNSBTXEditor() {
@@ -6744,9 +6755,13 @@ namespace DSPRE {
         }
         private void trainerComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             disableHandlers = true;
-
+            string suffix = "\\" + trainerComboBox.SelectedIndex.ToString("D4");
             trainerNameTextBox.Text = romInfo.GetSimpleTrainerNames()[trainerComboBox.SelectedIndex];
-            trainerFile = new Trainer((ushort)trainerComboBox.SelectedIndex, new FileStream(RomInfo.gameDirs[DirNames.trainerData].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4"), FileMode.Open), new FileStream(RomInfo.gameDirs[DirNames.partyData].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4"), FileMode.Open));
+            trainerFile = new Trainer(
+                (ushort)trainerComboBox.SelectedIndex, 
+                new FileStream(RomInfo.gameDirs[DirNames.trainerData].unpackedDir + suffix, FileMode.Open), 
+                new FileStream(RomInfo.gameDirs[DirNames.partyData].unpackedDir + suffix, FileMode.Open));
+
             UpdateTrainer();
             
             disableHandlers = false;
@@ -6771,15 +6786,15 @@ namespace DSPRE {
 
             for (int i = 0; i < Trainer.POKE_IN_PARTY; i++) {
                 PartyPokemonComponentList[i].SelectedIndex = trainerFile.party[i].pokemon;
-                PartyItemComponentList[i].SelectedIndex = trainerFile.party[i].heldItem;
+                PartyItemComponentList[i].SelectedIndex = trainerFile.party[i].heldItem ?? 0;
                 PartyLevelComponentList[i].Value = trainerFile.party[i].level;
                 PartyIVComponentList[i].Value = trainerFile.party[i].unknown1_DATASTART;
                 PartyBallComponentList[i].Value = trainerFile.party[i].unknown2_DATAEND;
 
-                PartyFirstMoveComponentList[i].SelectedIndex = trainerFile.party[i].moves[0];
-                PartySecondMoveComponentList[i].SelectedIndex = trainerFile.party[i].moves[1];
-                PartyThirdMoveComponentList[i].SelectedIndex = trainerFile.party[i].moves[2];
-                PartyFourthMoveComponentList[i].SelectedIndex = trainerFile.party[i].moves[3];
+                PartyFirstMoveComponentList[i].SelectedIndex = trainerFile.party[i].moves == null ? 0 : trainerFile.party[i].moves[0];
+                PartySecondMoveComponentList[i].SelectedIndex = trainerFile.party[i].moves == null ? 0 : trainerFile.party[i].moves[1];
+                PartyThirdMoveComponentList[i].SelectedIndex = trainerFile.party[i].moves == null ? 0 : trainerFile.party[i].moves[2];
+                PartyFourthMoveComponentList[i].SelectedIndex = trainerFile.party[i].moves == null ? 0 : trainerFile.party[i].moves[3];
             }
         }
         private string FixPokenameString(string toFix) {
@@ -7104,8 +7119,10 @@ namespace DSPRE {
 
         private void addTrainerButton_Click(object sender, EventArgs e) {
             /* Add new trainer file to 2 folders */
-            string trainerFilePath = gameDirs[DirNames.trainerData].unpackedDir + "\\" + trainerComboBox.Items.Count.ToString("D4");
-            string partyFilePath = gameDirs[DirNames.partyData].unpackedDir + "\\" + trainerComboBox.Items.Count.ToString("D4");
+            string suffix = "\\" + trainerComboBox.Items.Count.ToString("D4");
+
+            string trainerFilePath = gameDirs[DirNames.trainerData].unpackedDir + suffix;
+            string partyFilePath = gameDirs[DirNames.partyData].unpackedDir + suffix;
 
             using (BinaryWriter writer = new BinaryWriter(new FileStream(trainerFilePath, FileMode.Create))) {
                 writer.Write(new Trainer((ushort)trainerComboBox.Items.Count).TrainerDataToByteArray());
