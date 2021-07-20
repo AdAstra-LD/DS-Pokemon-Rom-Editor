@@ -14,8 +14,8 @@ namespace DSPRE.ROMFiles {
         public ushort pokemon = 0;
         public ushort level = 0;
         public ushort heldItem = 0;
-        public ushort unknown1 = 0;
-        public ushort unknown2 = 0;
+        public ushort unknown1_DATASTART = 0;
+        public ushort unknown2_DATAEND = 0;
         public ushort[] moves = new ushort[4] { 0, 0, 0, 0 };
         #endregion
 
@@ -26,8 +26,8 @@ namespace DSPRE.ROMFiles {
             pokemon = Pokemon;
             level = Level;
             heldItem = Item;
-            unknown1 = Unk1;
-            unknown2 = Unk2;
+            unknown1_DATASTART = Unk1;
+            unknown2_DATAEND = Unk2;
 
             if (Moves != null) {
                 moves = Moves;
@@ -43,14 +43,15 @@ namespace DSPRE.ROMFiles {
         #region Fields
         public ushort trainerID;
         public byte trainerClass;
+        public byte trDataUnknown;
         public byte partyCount;
         public bool doubleBattle;
         public bool hasMoves;
         public bool hasItems;
+
         public ushort[] trainerItems = new ushort[4];
         public bool[] AI = new bool[11];
-        public PartyPokemon[] trainerParty = new PartyPokemon[6];
-        public byte trdataunknown;
+        public PartyPokemon[] party = new PartyPokemon[6];
         #endregion
 
         #region Constructor
@@ -63,8 +64,8 @@ namespace DSPRE.ROMFiles {
             hasItems = false;
             trainerItems = new ushort[4] { 0, 0, 0, 0 };
             AI = new bool[11] { true, true, true, false, false, false, false, false, false, false, false };
-            trainerParty = new PartyPokemon[0];
-            trdataunknown = 0;
+            party = new PartyPokemon[0];
+            trDataUnknown = 0;
         }
         public Trainer(ushort ID, Stream trainerData, Stream partyData) {
             trainerID = ID;
@@ -74,7 +75,7 @@ namespace DSPRE.ROMFiles {
                 hasItems = (flags & 2) != 0;
 
                 trainerClass = reader.ReadByte();
-                trdataunknown = reader.ReadByte();
+                trDataUnknown = reader.ReadByte();
                 partyCount = reader.ReadByte();
 
                 for (int i = 0; i < trainerItems.Length; i++) {
@@ -92,7 +93,7 @@ namespace DSPRE.ROMFiles {
                 int nMoves = 4;
 
                 for (int i = 0; i < POKE_IN_PARTY; i++) {
-                    trainerParty[i] = new PartyPokemon();
+                    party[i] = new PartyPokemon();
                 }
 
                 if (hasMoves) {
@@ -120,7 +121,7 @@ namespace DSPRE.ROMFiles {
                         }
                     }
 
-                    trainerParty[i] = new PartyPokemon(unknown1, level, pokemon, reader.ReadUInt16(), item, moves);
+                    party[i] = new PartyPokemon(unknown1, level, pokemon, reader.ReadUInt16(), item, moves);
                 }
             }
         }
@@ -131,25 +132,27 @@ namespace DSPRE.ROMFiles {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 byte flags = 0;
-                if (hasMoves) {
-                    flags |= 1; //bitwise or
-                }
-                if (hasItems) {
-                    flags |= 2;
-                }
+                flags |= (byte)(hasMoves ? 1 : 0);
+                flags |= (byte)(hasItems ? 2 : 0);
+
                 writer.Write(flags);
                 writer.Write(trainerClass);
-                writer.Write(trdataunknown);
+                writer.Write(trDataUnknown);
                 writer.Write(partyCount);
-                writer.Write(trainerItems[0]);
-                writer.Write(trainerItems[1]);
-                writer.Write(trainerItems[2]);
-                writer.Write(trainerItems[3]);
+
+                foreach (ushort trItem in trainerItems) {
+                    writer.Write(trItem);
+                }
+
                 UInt32 AIflags = 0;
-                for (int i = 0; i < 11; i++)
-                    if (AI[i]) AIflags |= ((UInt32)(1) << i);
+                for (int i = 0; i < AI.Length; i++) {
+                    if (AI[i]) {
+                        AIflags |= (uint)1 << i;
+                    }
+                }
+
                 writer.Write(AIflags);
-                if (doubleBattle) writer.Write((UInt32)(2)); else writer.Write((UInt32)(0));
+                writer.Write((uint)(doubleBattle ? 2 : 0));
             }
             return newData.ToArray();
         }
@@ -159,41 +162,39 @@ namespace DSPRE.ROMFiles {
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 if (!hasMoves && !hasItems) {
                     for (int i = 0; i < partyCount; i++) {
-                        writer.Write(trainerParty[i].unknown1);
-                        writer.Write(trainerParty[i].level);
-                        writer.Write(trainerParty[i].pokemon);
-                        writer.Write(trainerParty[i].unknown2);
+                        writer.Write(party[i].unknown1_DATASTART);
+                        writer.Write(party[i].level);
+                        writer.Write(party[i].pokemon);
+                        writer.Write(party[i].unknown2_DATAEND);
                     }
                 } else if (!hasMoves && hasItems) {
                     for (int i = 0; i < partyCount; i++) {
-                        writer.Write(trainerParty[i].unknown1);
-                        writer.Write(trainerParty[i].level);
-                        writer.Write(trainerParty[i].pokemon);
-                        writer.Write(trainerParty[i].heldItem);
-                        writer.Write(trainerParty[i].unknown2);
+                        writer.Write(party[i].unknown1_DATASTART);
+                        writer.Write(party[i].level);
+                        writer.Write(party[i].pokemon);
+                        writer.Write(party[i].heldItem);
+                        writer.Write(party[i].unknown2_DATAEND);
                     }
                 } else if (hasMoves && !hasItems) {
                     for (int i = 0; i < partyCount; i++) {
-                        writer.Write(trainerParty[i].unknown1);
-                        writer.Write(trainerParty[i].level);
-                        writer.Write(trainerParty[i].pokemon);
-                        writer.Write(trainerParty[i].moves[0]);
-                        writer.Write(trainerParty[i].moves[1]);
-                        writer.Write(trainerParty[i].moves[2]);
-                        writer.Write(trainerParty[i].moves[3]);
-                        writer.Write(trainerParty[i].unknown2);
+                        writer.Write(party[i].unknown1_DATASTART);
+                        writer.Write(party[i].level);
+                        writer.Write(party[i].pokemon);
+                        foreach (ushort move in party[i].moves) {
+                            writer.Write(move);
+                        }
+                        writer.Write(party[i].unknown2_DATAEND);
                     }
                 } else if (hasMoves && hasItems) {
                     for (int i = 0; i < partyCount; i++) {
-                        writer.Write(trainerParty[i].unknown1);
-                        writer.Write(trainerParty[i].level);
-                        writer.Write(trainerParty[i].pokemon);
-                        writer.Write(trainerParty[i].heldItem);
-                        writer.Write(trainerParty[i].moves[0]);
-                        writer.Write(trainerParty[i].moves[1]);
-                        writer.Write(trainerParty[i].moves[2]);
-                        writer.Write(trainerParty[i].moves[3]);
-                        writer.Write(trainerParty[i].unknown2);
+                        writer.Write(party[i].unknown1_DATASTART);
+                        writer.Write(party[i].level);
+                        writer.Write(party[i].pokemon);
+                        writer.Write(party[i].heldItem);
+                        foreach (ushort move in party[i].moves) {
+                            writer.Write(move);
+                        }
+                        writer.Write(party[i].unknown2_DATAEND);
                     }
                 }
             }
