@@ -462,6 +462,7 @@ namespace DSPRE.ROMFiles {
                 while (i < lineSourceL.Count) {
                     int positionOfScriptNumber;
                     if (!lineSourceL[i].Contains(':') || (positionOfScriptNumber = lineSourceL[i].IndexOfNumber()) < 0) { //Script #1
+                        i++;
                         continue;
                     }
                     uint scriptNumber = uint.Parse(lineSourceL[i++].Substring(positionOfScriptNumber).Split()[0].Replace(":", ""));
@@ -498,6 +499,7 @@ namespace DSPRE.ROMFiles {
                 while (i < lineSourceL.Count) {
                     int positionOfActionNumber;
                     if (!lineSourceL[i].Contains(':') || (positionOfActionNumber = lineSourceL[i].IndexOfNumber()) < 0) { // Move on until script header is found
+                        i++;
                         continue;
                     }
                     uint actionNumber = uint.Parse(lineSourceL[i++].Substring(positionOfActionNumber).Split()[0].Replace(":", ""));

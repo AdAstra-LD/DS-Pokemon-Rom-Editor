@@ -59,12 +59,13 @@ namespace DSPRE.Resources {
 
         private void startSearchButton_Click(object sender, EventArgs e) {
             try {
-                if (containsCB.Checked)
+                if (containsCB.Checked) {
                     scanAllRows(() => currentrow.Cells[1].Value.ToString().IndexOf(cmdSearchTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0);
-                else if (startsWithCB.Checked)
+                } else if (startsWithCB.Checked) {
                     scanAllRows(() => currentrow.Cells[1].Value.ToString().StartsWith(cmdSearchTextBox.Text, StringComparison.InvariantCultureIgnoreCase));
-                else
+                } else {
                     scanAllRows(() => currentrow.Cells[1].Value.ToString().Equals(cmdSearchTextBox.Text, StringComparison.InvariantCultureIgnoreCase));
+                }
             } catch (OperationCanceledException) {
                 scriptcmdDataGridView.ClearSelection();
                 scriptcmdDataGridView.FirstDisplayedScrollingRowIndex = currentrow.Index;
