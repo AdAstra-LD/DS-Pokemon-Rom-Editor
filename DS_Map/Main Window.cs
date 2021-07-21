@@ -27,7 +27,6 @@ namespace DSPRE {
         public MainProgram() {
             InitializeComponent();
         }
-        ResourceManager rm = new ResourceManager("DSPRE.WinFormStrings", Assembly.GetExecutingAssembly());
 
         #region Program Window
 
@@ -464,8 +463,9 @@ namespace DSPRE {
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
             string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.3" + Environment.NewLine
-                + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
-                + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Mixone and BagBoy."
+                + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
+                "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
+                + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex, Mixone and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS ROM Hacking made the development of this tool possible.";
 
             MessageBox.Show(message, "About...", MessageBoxButtons.OK, MessageBoxIcon.Information);
