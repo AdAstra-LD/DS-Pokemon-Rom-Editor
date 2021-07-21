@@ -6630,6 +6630,9 @@ namespace DSPRE {
         private List<GroupBox> PartyGroupComponentList = new List<GroupBox>();
 
         TrainerFile currentTrainerFile;
+        PaletteBase pal;
+        ImageBase tiles;
+        SpriteBase sprite;
 
         private void SetupTrainerEditor() {
             /* Extract essential NARCs sub-archives*/
@@ -7149,37 +7152,44 @@ namespace DSPRE {
         }
 
         private void trainerClassListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            UpdateTrainerClassPic();
-            if (disableHandlers || trainerClassListBox.SelectedIndex < 0) {
+            if (trainerClassListBox.SelectedIndex < 0) {
                 return;
             }
+            LoadTrainerClassPic();
+            UpdateTrainerClassPic();
             trainerClassNameTextbox.Text = GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
+
+            if (disableHandlers) {
+                return;
+            }
             currentTrainerFile.trp.trainerClass = (byte)trainerClassListBox.SelectedIndex;
         }
 
-        private void UpdateTrainerClassPic() {
-            if (trainerClassListBox.SelectedIndex < 0)
-                return;
-
+        private void LoadTrainerClassPic() {
             int paletteFileID = (trainerClassListBox.SelectedIndex * 5 + 1);
             string paletteFilename = paletteFileID.ToString("D4");
-            PaletteBase pal = new NCLR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + paletteFilename, paletteFileID, paletteFilename);
+            pal = new NCLR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + paletteFilename, paletteFileID, paletteFilename);
 
-            int tilesFileID = (trainerClassListBox.SelectedIndex * 5);
+            int tilesFileID = trainerClassListBox.SelectedIndex * 5;
             string tilesFilename = tilesFileID.ToString("D4");
-            ImageBase tiles = new NCGR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + tilesFilename, tilesFileID, tilesFilename);
+            tiles = new NCGR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + tilesFilename, tilesFileID, tilesFilename);
 
             int spriteFileID = (trainerClassListBox.SelectedIndex * 5 + 2);
             string spriteFilename = spriteFileID.ToString("D4");
-            SpriteBase sprite = new NCER(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
-            
+            sprite = new NCER(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
+
+            trClassFramePreviewUpDown.Maximum = sprite.Banks.Length - 1;
+            trainerClassFrameMaxLabel.Text = "/" + trClassFramePreviewUpDown.Maximum;
+        }
+        private void UpdateTrainerClassPic(int frameNumber = 0) {
             int bank0OAMcount = sprite.Banks[0].oams.Length;
             int[] OAMenabled = new int[bank0OAMcount];
             for (int i = 0; i < OAMenabled.Length; i++) {
                 OAMenabled[i] = i;
             }
 
-            Image trSprite = sprite.Get_Image(tiles, pal, 0, trainerClassPicBox.Width, trainerClassPicBox.Height, false, false, false, true, true, -1, OAMenabled);
+            frameNumber = Math.Min(sprite.Banks.Length, frameNumber);
+            Image trSprite = sprite.Get_Image(tiles, pal, frameNumber, trainerClassPicBox.Width, trainerClassPicBox.Height, false, false, false, true, true, -1, OAMenabled);
             trainerClassPicBox.Image = trSprite;
             trainerClassPicBox.Update();
         }
@@ -7207,20 +7217,6 @@ namespace DSPRE {
             trainerNames.SaveToFileDefaultDir(RomInfo.trainerNamesMessageNumber, showSuccessMessage: false);
 
             trainerComboBox.SelectedIndex = trainerComboBox.Items.Count - 1;
-        }
-
-        #endregion
-        private void ExclusiveCBInvert(CheckBox cb) {
-            if (disableHandlers)
-                return;
-
-            disableHandlers = true;
-
-            if (cb.Checked) {
-                cb.Checked = !cb.Checked;
-            }
-
-            disableHandlers = false;
         }
 
         private void exportTrainerButton_Click(object sender, EventArgs e) {
@@ -7300,6 +7296,23 @@ namespace DSPRE {
             disableHandlers = false;
             trainerClassListBox_SelectedIndexChanged(null, null);
             MessageBox.Show("Trainer Class settings saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void trClassFramePreviewUpDown_ValueChanged(object sender, EventArgs e) {
+            UpdateTrainerClassPic((int)((NumericUpDown)sender).Value);
+        }
+        #endregion
+        private void ExclusiveCBInvert(CheckBox cb) {
+            if (disableHandlers)
+                return;
+
+            disableHandlers = true;
+
+            if (cb.Checked) {
+                cb.Checked = !cb.Checked;
+            }
+
+            disableHandlers = false;
         }
     }
 }
