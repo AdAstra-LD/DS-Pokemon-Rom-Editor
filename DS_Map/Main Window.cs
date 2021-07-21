@@ -7108,7 +7108,7 @@ namespace DSPRE {
                 writer.Write(currentTrainerFile.PartyDataToByteArray());
             }
 
-            UpdateCurrentTrainerName(newName: currentTrainerFile.name);
+            UpdateCurrentTrainerName(newName: trainerNameTextBox.Text);
             UpdateCurrentTrainerShownName();
 
             MessageBox.Show("Trainer saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
