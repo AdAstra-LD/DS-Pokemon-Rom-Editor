@@ -14,12 +14,11 @@ namespace DSPRE.ROMFiles {
                 return;
             }
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create))) {
-                writer.Write(romFileToByteArray);
-            }
+            File.WriteAllBytes(path, romFileToByteArray);
 
-            if (showSuccessMessage)
+            if (showSuccessMessage) {
                 MessageBox.Show(GetType().Name + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         protected internal void SaveToFileDefaultDir(DirNames dir, int IDtoReplace, bool showSuccessMessage = true) {
             string path = RomInfo.gameDirs[dir].unpackedDir + "\\" + IDtoReplace.ToString("D4");
