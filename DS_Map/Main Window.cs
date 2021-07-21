@@ -18,6 +18,9 @@ using DSPRE.Resources;
 using DSPRE.ROMFiles;
 using static DSPRE.RomInfo;
 using System.Globalization;
+using Images;
+using Ekona.Images;
+using System.Xml.Linq;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -6717,7 +6720,11 @@ namespace DSPRE {
 
             int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir).Length;
             trainerComboBox.Items.AddRange(GetTrainerNames());
-            trainerClassListBox.Items.AddRange(romInfo.GetTrainerClassNames());
+
+            string[] classNames = romInfo.GetTrainerClassNames();
+            for (int i = 0; i < classNames.Length; i++) {
+                trainerClassListBox.Items.Add("[" + i.ToString("D3") + "]" + " " + classNames[i]);
+            }
 
             string[] itemNames = romInfo.GetItemNames();
             string[] pokeNames = romInfo.GetPokémonNames();
@@ -7115,11 +7122,18 @@ namespace DSPRE {
         }
 
         private void UpdateCurrentTrainerShownName() {
-            string editedTrainer = ("[" + currentTrainerFile.trp.trainerID.ToString("D2") + "] " + trainerClassListBox.SelectedItem.ToString() + " " + currentTrainerFile.name);
+            string trClass = GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
+
+            string editedTrainer = ("[" + currentTrainerFile.trp.trainerID.ToString("D2") + "] " + trClass + " " + currentTrainerFile.name);
             trainerComboBox.Items[trainerComboBox.SelectedIndex] = editedTrainer;
             if (eventEditorIsReady) {
                 owTrainerComboBox.Items[trainerComboBox.SelectedIndex] = editedTrainer;
             }
+        }
+
+        private string GetTrainerClassNameFromListbox(object selectedItem) {
+            string lbname = selectedItem.ToString();
+            return lbname.Substring(lbname.IndexOf(" ") + 1);
         }
 
         private void UpdateCurrentTrainerName(string newName) {
@@ -7128,11 +7142,46 @@ namespace DSPRE {
             trainerNames.messages[currentTrainerFile.trp.trainerID] = newName;
             trainerNames.SaveToFileDefaultDir(RomInfo.trainerNamesMessageNumber, showSuccessMessage: false);
         }
+        private void UpdateCurrentTrainerClassName(string newName) {             
+            TextArchive trainerClassNames = new TextArchive(RomInfo.trainerClassMessageNumber);
+            trainerClassNames.messages[trainerClassListBox.SelectedIndex] = newName;
+            trainerClassNames.SaveToFileDefaultDir(RomInfo.trainerClassMessageNumber, showSuccessMessage: false);
+        }
 
         private void trainerClassListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.trp.trainerClass = (byte)trainerClassListBox.SelectedIndex;
+            UpdateTrainerClassPic();
+            if (disableHandlers || trainerClassListBox.SelectedIndex < 0) {
+                return;
             }
+            trainerClassNameTextbox.Text = GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
+            currentTrainerFile.trp.trainerClass = (byte)trainerClassListBox.SelectedIndex;
+        }
+
+        private void UpdateTrainerClassPic() {
+            if (trainerClassListBox.SelectedIndex < 0)
+                return;
+
+            int paletteFileID = (trainerClassListBox.SelectedIndex * 5 + 1);
+            string paletteFilename = paletteFileID.ToString("D4");
+            PaletteBase pal = new NCLR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + paletteFilename, paletteFileID, paletteFilename);
+
+            int tilesFileID = (trainerClassListBox.SelectedIndex * 5);
+            string tilesFilename = tilesFileID.ToString("D4");
+            ImageBase tiles = new NCGR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + tilesFilename, tilesFileID, tilesFilename);
+
+            int spriteFileID = (trainerClassListBox.SelectedIndex * 5 + 2);
+            string spriteFilename = spriteFileID.ToString("D4");
+            SpriteBase sprite = new NCER(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
+            
+            int bank0OAMcount = sprite.Banks[0].oams.Length;
+            int[] OAMenabled = new int[bank0OAMcount];
+            for (int i = 0; i < OAMenabled.Length; i++) {
+                OAMenabled[i] = i;
+            }
+
+            Image trSprite = sprite.Get_Image(tiles, pal, 0, trainerClassPicBox.Width, trainerClassPicBox.Height, false, false, false, true, true, -1, OAMenabled);
+            trainerClassPicBox.Image = trSprite;
+            trainerClassPicBox.Update();
         }
 
         private void addTrainerButton_Click(object sender, EventArgs e) {
@@ -7236,6 +7285,21 @@ namespace DSPRE {
 
         private void importReplacePartyButton_Click(object sender, EventArgs e) {
 
+        }
+
+        private void saveTrainerClassButton_Click(object sender, EventArgs e) {
+            disableHandlers = true;
+
+            int currentClassID = trainerClassListBox.SelectedIndex;
+            string newName = trainerClassNameTextbox.Text;
+            UpdateCurrentTrainerClassName(newName);
+
+            string trClass = GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
+            trainerClassListBox.Items[currentClassID] = "[" + currentClassID + "]" + " " + newName;
+            
+            disableHandlers = false;
+            trainerClassListBox_SelectedIndexChanged(null, null);
+            MessageBox.Show("Trainer Class settings saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Language>
+  <Español>
+    <ImageControl>
+      <S01>Haga doble click en la imagen para verla a tamaño real.</S01>
+      <S02>Propiedades</S02>
+      <S03>Posición</S03>
+      <S04>Campo</S04>
+      <S05>Valor</S05>
+      <S06>Desconocido</S06>
+      <S07>Nº secciones</S07>
+      <S08>ID Sección 1</S08>
+      <S09>Tamaño</S09>
+      <S0A>Tiles Y</S0A>
+      <S0B>Tiles X</S0B>
+      <S0C>Formato</S0C>
+      <S0D>Desconocido</S0D>
+      <S0E>Desconocido</S0E>
+      <S0F>Tamaño píxels datos</S0F>
+      <S10>Desconocido</S10>
+      <S11>Inicio:</S11>
+      <S12>Ancho:</S12>
+      <S13>Alto:</S13>
+      <S14>Orden de tiles:</S14>
+      <S15>Guardar</S15>
+      <S16>Sin tiles</S16>
+      <S17>Horizontal</S17>
+      <S18>Vertical</S18>
+      <S19>Imagen a tamaño real</S19>
+      <S1A>Zoom</S1A>
+      <S1B>Color de fondo</S1B>
+      <S1C>Quitar</S1C>
+      <S1D>Transparencia</S1D>
+      <S1E>Zoom</S1E>
+      <S1F>Color de fondo</S1F>
+      <S20>Quitar</S20>
+      <S21>Importar</S21>
+      <S22>Seleccionar color transparente</S22>
+      <S23>¿Seleccionar color haciendo click en la imagen?</S23>
+    </ImageControl>
+    <PaletteControl>
+      <S00>Nº de paleta:</S00>
+      <S01>de </S01>
+      <S02>Mostrar todas las paletas</S02>
+      <S03>Guardar</S03>
+      <S04>Importar</S04>
+      <S05>Byte de inicio:</S05>
+      <S06>Profundidad:</S06>
+      <S07>Visor de paletas</S07>
+      <S08>Paleta </S08>
+    </PaletteControl>
+  </Español>
+  <English>
+    <PaletteControl>
+      <S00>Number of palette:</S00>
+      <S01>of </S01>
+      <S02>Show all palettes</S02>
+      <S03>Save</S03>
+      <S04>Import</S04>
+      <S05>Offset:</S05>
+      <S06>Depth:</S06>
+      <S07>Palettes viewer</S07>
+      <S08>Palette </S08>
+   </PaletteControl>
+    <ImageControl>
+      <S01>Double-click to see the full image.</S01>
+      <S02>Properties</S02>
+      <S03>Offset</S03>
+      <S04>Property</S04>
+      <S05>Content</S05>
+      <S06>Unknown</S06>
+      <S07>Number of sections</S07>
+      <S08>ID Section 1</S08>
+      <S09>Lenght</S09>
+      <S0A>Tiles Y</S0A>
+      <S0B>Tiles X</S0B>
+      <S0C>Tile form</S0C>
+      <S0D>Unknown</S0D>
+      <S0E>Unknown</S0E>
+      <S0F>Length of pixels data</S0F>
+      <S10>Unknown</S10>
+      <S11>Offset:</S11>
+      <S12>Width:</S12>
+      <S13>Height:</S13>
+      <S14>Image pattern:</S14>
+      <S15>Save</S15>
+      <S16>No tiled</S16>
+      <S17>Horizontal</S17>
+      <S18>Vertical</S18>
+      <S19>Full size image</S19>
+      <S1A>Zoom</S1A>
+      <S1B>Background colour</S1B>
+      <S1C>Remove</S1C>
+      <S1D>Transparency</S1D>
+      <S1E>Zoom</S1E>
+      <S1F>Background colour</S1F>
+      <S20>Remove</S20>
+      <S21>Import</S21>
+      <S22>Set transparent color</S22>
+      <S23>Choose color doing click on the image?</S23>
+    </ImageControl>
+  </English>
+  <Français>
+    <PaletteControl>
+      <S00>Numéro de palette :</S00>
+      <S01>de </S01>
+      <S02>Montrer toutes les palettes</S02>
+      <S03>Sauvegarder</S03>
+      <S04>Importer</S04>
+      <S05>Octet de départ :</S05>
+      <S06>Profondeur</S06>
+      <S07>Visionneuse de palettes</S07>
+      <S08>Palette </S08>
+    </PaletteControl>
+    <ImageControl>
+      <S01>
+		Double-cliquez sur l'image pour la voir en taille réelle.
+      </S01>
+      <S02>Propriétés</S02>
+      <S03>Position</S03>
+      <S04>Champ</S04>
+      <S05>Valeur</S05>
+      <S06>Inconnu</S06>
+      <S07>Nombre de sections</S07>
+      <S08>ID Section 1</S08>
+      <S09>Taille</S09>
+      <S0A>Tuiles Y</S0A>
+      <S0B>Tuiles X</S0B>
+      <S0C>Format</S0C>
+      <S0D>Inconnu</S0D>
+      <S0E>Inconnu</S0E>
+      <S0F>Taille données de pixels</S0F>
+      <S10>Inconnu</S10>
+      <S11>Début :</S11>
+      <S12>Longueur :</S12>
+      <S13>Hauteur :</S13>
+      <S14>Ordre des tuiles :</S14>
+      <S15>Sauvegarder</S15>
+      <S16>Aucune tuile</S16>
+      <S17>Horizontal</S17>
+      <S18>Vertical</S18>
+      <S19>Image en taille réelle</S19>
+      <S1A>Zoom</S1A>
+      <S1B>Couleur du fond</S1B>
+      <S1C>Supprimer</S1C>
+      <S1D>Transparence</S1D>
+      <S1E>Zoom</S1E>
+      <S1F>Couleur du fond</S1F>
+      <S20>Supprimer</S20>
+      <S21>Importer</S21>
+      <S22>Fixer la couleur transparente</S22>
+      <S23>Choisir la couleur en fesant un clic sur l'image ?</S23>
+    </ImageControl>
+  </Français>
+</Language>
