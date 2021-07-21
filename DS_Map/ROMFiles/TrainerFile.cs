@@ -49,14 +49,11 @@ namespace DSPRE.ROMFiles {
         #endregion
     }
 
-    public class TrainerFile : RomFile {
-        public const int POKE_IN_PARTY = 6;
+    public class TrainerProperties : RomFile {
         public const int AI_COUNT = 11;
         public const int TRAINER_ITEMS = 4;
 
         #region Fields
-        public string name;
-
         public ushort trainerID;
         public byte trDataUnknown;
 
@@ -69,92 +66,41 @@ namespace DSPRE.ROMFiles {
 
         public ushort[] trainerItems = new ushort[TRAINER_ITEMS];
         public bool[] AI = new bool[AI_COUNT];
-        public PartyPokemon[] party = new PartyPokemon[POKE_IN_PARTY];
         #endregion
 
         #region Constructor
-        public TrainerFile(ushort ID, string name = ""){
+        public TrainerProperties(ushort ID, byte partyCount = 0) {
             trainerID = ID;
-            this.name = name;
             trainerItems = new ushort[TRAINER_ITEMS];
             AI = new bool[AI_COUNT] { true, true, true, false, false, false, false, false, false, false, false };
-            party = new PartyPokemon[1] { new PartyPokemon() };
             trDataUnknown = 0;
         }
-        public TrainerFile(ushort ID, Stream trainerData, Stream partyData, string name = "") {
+        public TrainerProperties(ushort ID, Stream trainerPropertiesStream) {
             trainerID = ID;
-            this.name = name;
-            Thread t1 = new Thread(() => {
-                using (BinaryReader reader = new BinaryReader(trainerData)) {
-                    byte flags = reader.ReadByte();
-                    hasMoves = (flags & 1) != 0;
-                    hasItems = (flags & 2) != 0;
+            using (BinaryReader reader = new BinaryReader(trainerPropertiesStream)) {
+                byte flags = reader.ReadByte();
+                hasMoves = (flags & 1) != 0;
+                hasItems = (flags & 2) != 0;
 
-                    trainerClass = reader.ReadByte();
-                    trDataUnknown = reader.ReadByte();
-                    partyCount = reader.ReadByte();
+                trainerClass = reader.ReadByte();
+                trDataUnknown = reader.ReadByte();
+                partyCount = reader.ReadByte();
 
-                    for (int i = 0; i < trainerItems.Length; i++) {
-                        trainerItems[i] = reader.ReadUInt16();
-                    }
-
-                    uint AIflags = reader.ReadUInt32();
-                    for (int i = 0; i < AI_COUNT; i++) {
-                        AI[i] = (AIflags & (1 << i)) != 0;
-                    }
-                    doubleBattle = reader.ReadUInt32() == 2;
+                for (int i = 0; i < trainerItems.Length; i++) {
+                    trainerItems[i] = reader.ReadUInt16();
                 }
-            });
-            Thread t2 = new Thread(() => {
-                using (BinaryReader reader = new BinaryReader(partyData)) {
-                    int dividend = 8;
-                    int nMoves = 4;
 
-                    if (hasMoves) {
-                        dividend += nMoves * sizeof(ushort);
-                    }
-                    if (hasItems) {
-                        dividend += sizeof(ushort);
-                    }
-
-                    int endval = Math.Min((int)(partyData.Length / dividend), partyCount);
-                    for (int i = 0; i < endval; i++) {
-                        ushort unknown1 = reader.ReadUInt16();
-                        ushort level = reader.ReadUInt16();
-                        ushort pokemon = reader.ReadUInt16();
-
-                        ushort? heldItem = null;
-                        ushort[] moves = null;
-
-                        if (hasItems) {
-                            heldItem = reader.ReadUInt16();
-                        }
-                        if (hasMoves) {
-                            moves = new ushort[4];
-                            for (int m = 0; m < moves.Length; m++) {
-                                ushort val = reader.ReadUInt16();
-                                moves[m] = (ushort)(val == 0xFFFF ? 0 : val);
-                            }
-                        }
-
-                        party[i] = new PartyPokemon(unknown1, level, pokemon, reader.ReadUInt16(), heldItem, moves);
-                    }
-                    for (int i = endval; i < POKE_IN_PARTY; i++) {
-                        party[i] = new PartyPokemon();
-                    }
+                uint AIflags = reader.ReadUInt32();
+                for (int i = 0; i < AI_COUNT; i++) {
+                    AI[i] = (AIflags & (1 << i)) != 0;
                 }
-            });
-
-            t1.Start();
-            t2.Start();
-
-            t1.Join();
-            t2.Join();
+                doubleBattle = reader.ReadUInt32() == 2;
+            }
         }
         #endregion
 
         #region Methods
-        public byte[] TrainerDataToByteArray() {
+        public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 byte flags = 0;
@@ -170,7 +116,7 @@ namespace DSPRE.ROMFiles {
                     writer.Write(trItem);
                 }
 
-                UInt32 AIflags = 0;
+                uint AIflags = 0;
                 for (int i = 0; i < AI.Length; i++) {
                     if (AI[i]) {
                         AIflags |= (uint)1 << i;
@@ -182,6 +128,73 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
+
+        public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
+            SaveToFileExplorePath("Gen IV Trainer Properties", "trp", suggestedFileName, showSuccessMessage);
+        }
+        #endregion
+
+    }
+    public class TrainerFile : RomFile {
+        public const int POKE_IN_PARTY = 6;
+
+        #region Fields
+        public string name;
+        public TrainerProperties trp;
+        public PartyPokemon[] party = new PartyPokemon[POKE_IN_PARTY];
+        #endregion
+
+        #region Constructor
+        public TrainerFile(TrainerProperties trp, string name = ""){
+            this.name = name;
+            this.trp = trp;
+            trp.partyCount = 1;
+            party = new PartyPokemon[1] { new PartyPokemon() };
+        }
+        public TrainerFile(TrainerProperties trp, Stream partyData, string name = "") {
+            this.name = name;
+            this.trp = trp;
+            using (BinaryReader reader = new BinaryReader(partyData)) {
+                int dividend = 8;
+                int nMoves = 4;
+
+                if (trp.hasMoves) {
+                    dividend += nMoves * sizeof(ushort);
+                }
+                if (trp.hasItems) {
+                    dividend += sizeof(ushort);
+                }
+
+                int endval = Math.Min((int)(partyData.Length / dividend), trp.partyCount);
+                for (int i = 0; i < endval; i++) {
+                    ushort unknown1 = reader.ReadUInt16();
+                    ushort level = reader.ReadUInt16();
+                    ushort pokemon = reader.ReadUInt16();
+
+                    ushort? heldItem = null;
+                    ushort[] moves = null;
+
+                    if (trp.hasItems) {
+                        heldItem = reader.ReadUInt16();
+                    }
+                    if (trp.hasMoves) {
+                        moves = new ushort[4];
+                        for (int m = 0; m < moves.Length; m++) {
+                            ushort val = reader.ReadUInt16();
+                            moves[m] = (ushort)(val == 0xFFFF ? 0 : val);
+                        }
+                    }
+
+                    party[i] = new PartyPokemon(unknown1, level, pokemon, reader.ReadUInt16(), heldItem, moves);
+                }
+                for (int i = endval; i < POKE_IN_PARTY; i++) {
+                    party[i] = new PartyPokemon();
+                }
+            }
+        }
+        #endregion
+
+        #region Methods
         public byte[] PartyDataToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
@@ -199,7 +212,7 @@ namespace DSPRE.ROMFiles {
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write(name);
 
-                byte[] trDat = TrainerDataToByteArray();
+                byte[] trDat = trp.ToByteArray();
                 writer.Write((byte)trDat.Length);
                 writer.Write(trDat);
 

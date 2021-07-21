@@ -77,8 +77,8 @@ namespace DSPRE {
             scripts,
             encounters,
 
-            trainerData,
-            partyData,
+            trainerProperties,
+            trainerParty,
             trainerGraphics,
 
             interiorBuildingModels
@@ -304,8 +304,8 @@ namespace DSPRE {
 
                         [DirNames.scripts] = @"data\fielddata\script\scr_seq" + suffix + ".narc",
 
-                        [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
-                        [DirNames.partyData] = @"data\poketool\trainer\trpoke.narc",
+                        [DirNames.trainerProperties] = @"data\poketool\trainer\trdata.narc",
+                        [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
                         [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
 
                         [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion[0]) + '_' + "enc_data.narc"
@@ -332,8 +332,8 @@ namespace DSPRE {
 
                         [DirNames.scripts] = @"data\fielddata\script\scr_seq.narc",
 
-                        [DirNames.trainerData] = @"data\poketool\trainer\trdata.narc",
-                        [DirNames.partyData] = @"data\poketool\trainer\trpoke.narc",
+                        [DirNames.trainerProperties] = @"data\poketool\trainer\trdata.narc",
+                        [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
                         [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
 
                         [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.Substring(0, 2).ToLower() + '_' + "enc_data.narc"
@@ -360,8 +360,8 @@ namespace DSPRE {
 
                         [DirNames.scripts] = @"data\a\0\1\2",
                         //ENCOUNTERS FOLDER DEPENDS ON VERSION
-                        [DirNames.trainerData] = @"data\a\0\5\5",
-                        [DirNames.partyData] = @"data\a\0\5\6",
+                        [DirNames.trainerProperties] = @"data\a\0\5\5",
+                        [DirNames.trainerParty] = @"data\a\0\5\6",
                         [DirNames.trainerGraphics] = @"data\a\0\5\8",
 
                         [DirNames.interiorBuildingModels] = @"data\a\1\4\8"

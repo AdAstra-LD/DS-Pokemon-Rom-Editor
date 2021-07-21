@@ -78,10 +78,10 @@ namespace DSPRE {
             TextArchive trainerClasses = new TextArchive(RomInfo.trainerClassMessageNumber);
             TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
             BinaryReader trainerReader;
-            int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerData].unpackedDir).Length;
+            int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir).Length;
 
             for (int i = 0; i < trainerCount; i++) {
-                trainerReader = new BinaryReader(new FileStream(RomInfo.gameDirs[DirNames.trainerData].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
+                trainerReader = new BinaryReader(new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
                 trainerReader.BaseStream.Position += 0x1;
                 int classMessageID = trainerReader.ReadUInt16();
                 trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[classMessageID] + " " + trainerNames.messages[i]);
@@ -2228,6 +2228,9 @@ namespace DSPRE {
             widthUpDown.Value = currentMatrix.width;
             heightUpDown.Value = currentMatrix.height;
             disableHandlers = false;
+
+            /* Display success message */
+            MessageBox.Show("Matrix imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void mapFilesGridView_CellMouseDoubleClick(object sender, DataGridViewCellEventArgs e) {
             if (!mapEditorIsReady) {
@@ -4451,7 +4454,7 @@ namespace DSPRE {
                 DirNames.areaData,
 
                 DirNames.eventFiles,
-                DirNames.trainerData,
+                DirNames.trainerProperties,
                 DirNames.OWSprites,
 
                 DirNames.scripts, }, toolStripProgressBar);
@@ -6630,7 +6633,7 @@ namespace DSPRE {
             statusLabel.Text = "Setting up Trainer Editor...";
             Update();
 
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.trainerData, DirNames.partyData, DirNames.trainerGraphics, DirNames.textArchives });
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.trainerProperties, DirNames.trainerParty, DirNames.trainerGraphics, DirNames.textArchives });
 
             PartyPokemonComponentList.Clear();
             PartyPokemonComponentList.Add(partyPokemon1ComboBox);
@@ -6712,7 +6715,7 @@ namespace DSPRE {
             PartyGroupComponentList.Add(party5GroupBox);
             PartyGroupComponentList.Add(party6GroupBox);
 
-            int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerData].unpackedDir).Length;
+            int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir).Length;
             trainerComboBox.Items.AddRange(GetTrainerNames());
             trainerClassListBox.Items.AddRange(romInfo.GetTrainerClassNames());
 
@@ -6757,34 +6760,39 @@ namespace DSPRE {
             disableHandlers = true;
             string suffix = "\\" + trainerComboBox.SelectedIndex.ToString("D4");
             currentTrainerFile = new TrainerFile(
-                (ushort)trainerComboBox.SelectedIndex,
-                new FileStream(RomInfo.gameDirs[DirNames.trainerData].unpackedDir + suffix, FileMode.Open),
-                new FileStream(RomInfo.gameDirs[DirNames.partyData].unpackedDir + suffix, FileMode.Open),
-                romInfo.GetSimpleTrainerNames()[trainerComboBox.SelectedIndex]);
-            RefreshTrainerGUI();
-            
+                new TrainerProperties(
+                    (ushort)trainerComboBox.SelectedIndex, 
+                    new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + suffix, FileMode.Open)
+                ),
+                new FileStream(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + suffix, FileMode.Open),
+                romInfo.GetSimpleTrainerNames()[trainerComboBox.SelectedIndex]
+            );
+            RefreshTrainerPartyGUI();
+            RefreshTrainerPropertiesGUI();
+
             disableHandlers = false;
         }
 
-        public void RefreshTrainerGUI() {
+        public void RefreshTrainerPropertiesGUI() {
             trainerNameTextBox.Text = currentTrainerFile.name;
 
-            trainerClassListBox.SelectedIndex = currentTrainerFile.trainerClass;
-            trainerDoubleCheckBox.Checked = currentTrainerFile.doubleBattle;
-            trainerMovesCheckBox.Checked = currentTrainerFile.hasMoves;
-            trainerItemsCheckBox.Checked = currentTrainerFile.hasItems;
-            partyCountUpDown.Value = currentTrainerFile.partyCount;
+            trainerClassListBox.SelectedIndex = currentTrainerFile.trp.trainerClass;
+            trainerDoubleCheckBox.Checked = currentTrainerFile.trp.doubleBattle;
+            trainerMovesCheckBox.Checked = currentTrainerFile.trp.hasMoves;
+            trainerItemsCheckBox.Checked = currentTrainerFile.trp.hasItems;
+            partyCountUpDown.Value = currentTrainerFile.trp.partyCount;
 
-            trainerItem1ComboBox.SelectedIndex = currentTrainerFile.trainerItems[0];
-            trainerItem2ComboBox.SelectedIndex = currentTrainerFile.trainerItems[1];
-            trainerItem3ComboBox.SelectedIndex = currentTrainerFile.trainerItems[2];
-            trainerItem4ComboBox.SelectedIndex = currentTrainerFile.trainerItems[3];
+            trainerItem1ComboBox.SelectedIndex = currentTrainerFile.trp.trainerItems[0];
+            trainerItem2ComboBox.SelectedIndex = currentTrainerFile.trp.trainerItems[1];
+            trainerItem3ComboBox.SelectedIndex = currentTrainerFile.trp.trainerItems[2];
+            trainerItem4ComboBox.SelectedIndex = currentTrainerFile.trp.trainerItems[3];
 
             IList list = TrainerAIGroupBox.Controls;
             for (int i = 0; i < list.Count; i++) {
-                ((CheckBox)list[i]).Checked = currentTrainerFile.AI[i];
+                ((CheckBox)list[i]).Checked = currentTrainerFile.trp.AI[i];
             }
-
+        }
+        public void RefreshTrainerPartyGUI() {
             for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
                 PartyPokemonComponentList[i].SelectedIndex = currentTrainerFile.party[i].pokeID ?? 0;
                 PartyItemComponentList[i].SelectedIndex = currentTrainerFile.party[i].heldItem ?? 0;
@@ -6867,10 +6875,11 @@ namespace DSPRE {
             for (int i = 5; i >= partyCountUpDown.Value; i--) {
                 currentTrainerFile.party[i] = new PartyPokemon();
             }
-            currentTrainerFile.partyCount = (byte)partyCountUpDown.Value;
+            currentTrainerFile.trp.partyCount = (byte)partyCountUpDown.Value;
 
             if (!disableHandlers) {
-                RefreshTrainerGUI();
+                RefreshTrainerPartyGUI();
+                RefreshTrainerPropertiesGUI();
             }
         }
 
@@ -6883,7 +6892,7 @@ namespace DSPRE {
             }
 
             if (!disableHandlers) {
-                currentTrainerFile.hasMoves = trainerMovesCheckBox.Checked;
+                currentTrainerFile.trp.hasMoves = trainerMovesCheckBox.Checked;
             }
         }
 
@@ -6892,37 +6901,37 @@ namespace DSPRE {
                 PartyItemComponentList[i].Enabled = trainerItemsCheckBox.Checked;
             }
             if (!disableHandlers) {
-                currentTrainerFile.hasItems = trainerItemsCheckBox.Checked;
+                currentTrainerFile.trp.hasItems = trainerItemsCheckBox.Checked;
             }
         }
 
         private void trainerDoubleCheckBox_CheckedChanged(object sender, EventArgs e) {
             if (!disableHandlers) {
-                currentTrainerFile.doubleBattle = trainerDoubleCheckBox.Checked;
+                currentTrainerFile.trp.doubleBattle = trainerDoubleCheckBox.Checked;
             }
         }
 
         private void trainerItem1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (!disableHandlers) {
-                currentTrainerFile.trainerItems[0] = (ushort)trainerItem1ComboBox.SelectedIndex;
+                currentTrainerFile.trp.trainerItems[0] = (ushort)trainerItem1ComboBox.SelectedIndex;
             }
         }
 
         private void trainerItem2ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (!disableHandlers) {
-                currentTrainerFile.trainerItems[1] = (ushort)trainerItem2ComboBox.SelectedIndex;
+                currentTrainerFile.trp.trainerItems[1] = (ushort)trainerItem2ComboBox.SelectedIndex;
             }
         }
 
         private void trainerItem3ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (!disableHandlers) {
-                currentTrainerFile.trainerItems[2] = (ushort)trainerItem3ComboBox.SelectedIndex;
+                currentTrainerFile.trp.trainerItems[2] = (ushort)trainerItem3ComboBox.SelectedIndex;
             }
         }
 
         private void trainerItem4ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (!disableHandlers) {
-                currentTrainerFile.trainerItems[3] = (ushort)trainerItem4ComboBox.SelectedIndex;
+                currentTrainerFile.trp.trainerItems[3] = (ushort)trainerItem4ComboBox.SelectedIndex;
             }
         }
 
@@ -6930,7 +6939,7 @@ namespace DSPRE {
             if (!disableHandlers) {
                 IList list = TrainerAIGroupBox.Controls;
                 for (int i = 0; i < list.Count; i++) {
-                    currentTrainerFile.AI[i] = ((CheckBox)list[i]).Checked;
+                    currentTrainerFile.trp.AI[i] = ((CheckBox)list[i]).Checked;
                 }
             }
         }
@@ -7091,11 +7100,11 @@ namespace DSPRE {
         }
 
         private void trainerSaveCurrentButton_Click(object sender, EventArgs e) {
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.gameDirs[DirNames.trainerData].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4"), FileMode.Create))) {
-                writer.Write(currentTrainerFile.TrainerDataToByteArray());
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4"), FileMode.Create))) {
+                writer.Write(currentTrainerFile.trp.ToByteArray());
             }
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.gameDirs[DirNames.partyData].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4"), FileMode.Create))) {
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4"), FileMode.Create))) {
                 writer.Write(currentTrainerFile.PartyDataToByteArray());
             }
 
@@ -7106,7 +7115,7 @@ namespace DSPRE {
         }
 
         private void UpdateCurrentTrainerShownName() {
-            string editedTrainer = ("[" + currentTrainerFile.trainerID.ToString("D2") + "] " + trainerClassListBox.SelectedItem.ToString() + " " + currentTrainerFile.name);
+            string editedTrainer = ("[" + currentTrainerFile.trp.trainerID.ToString("D2") + "] " + trainerClassListBox.SelectedItem.ToString() + " " + currentTrainerFile.name);
             trainerComboBox.Items[trainerComboBox.SelectedIndex] = editedTrainer;
             if (eventEditorIsReady) {
                 owTrainerComboBox.Items[trainerComboBox.SelectedIndex] = editedTrainer;
@@ -7116,13 +7125,13 @@ namespace DSPRE {
         private void UpdateCurrentTrainerName(string newName) {
             currentTrainerFile.name = newName;
             TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
-            trainerNames.messages[currentTrainerFile.trainerID] = newName;
+            trainerNames.messages[currentTrainerFile.trp.trainerID] = newName;
             trainerNames.SaveToFileDefaultDir(RomInfo.trainerNamesMessageNumber, showSuccessMessage: false);
         }
 
         private void trainerClassListBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (!disableHandlers) {
-                currentTrainerFile.trainerClass = (byte)trainerClassListBox.SelectedIndex;
+                currentTrainerFile.trp.trainerClass = (byte)trainerClassListBox.SelectedIndex;
             }
         }
 
@@ -7130,14 +7139,14 @@ namespace DSPRE {
             /* Add new trainer file to 2 folders */
             string suffix = "\\" + trainerComboBox.Items.Count.ToString("D4");
 
-            string trainerFilePath = gameDirs[DirNames.trainerData].unpackedDir + suffix;
-            string partyFilePath = gameDirs[DirNames.partyData].unpackedDir + suffix;
+            string trainerPropertiesPath = gameDirs[DirNames.trainerProperties].unpackedDir + suffix;
+            string partyFilePath = gameDirs[DirNames.trainerParty].unpackedDir + suffix;
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(trainerFilePath, FileMode.Create))) {
-                writer.Write(new TrainerFile((ushort)trainerComboBox.Items.Count).TrainerDataToByteArray());
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(trainerPropertiesPath, FileMode.Create))) {
+                writer.Write(new TrainerProperties((ushort)trainerComboBox.Items.Count).ToByteArray());
             }
             using (BinaryWriter writer = new BinaryWriter(new FileStream(partyFilePath, FileMode.Create))) {
-                writer.Write(new TrainerFile((ushort)trainerComboBox.Items.Count).PartyDataToByteArray());
+                writer.Write(new PartyPokemon().ToByteArray());
             }
 
             TextArchive trainerClasses = new TextArchive(RomInfo.trainerClassMessageNumber);
@@ -7187,9 +7196,9 @@ namespace DSPRE {
                 byte partySize = reader.ReadByte();
                 byte[] pDat = reader.ReadBytes(partySize);
 
-                string pathData = RomInfo.gameDirs[DirNames.trainerData].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
+                string pathData = RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
                 File.WriteAllBytes(pathData, trDat);
-                string pathParty = RomInfo.gameDirs[DirNames.partyData].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
+                string pathParty = RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
                 File.WriteAllBytes(pathParty, pDat);
 
                 UpdateCurrentTrainerName(trName);
@@ -7203,44 +7212,26 @@ namespace DSPRE {
         }
 
         private void exportPropertiesButton_Click(object sender, EventArgs e) {
+            currentTrainerFile.trp.SaveToFileExplorePath("G4 Trainer Properties " + trainerComboBox.SelectedItem);
+        }
+
+        private void importReplacePropertiesButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .evt file */
             OpenFileDialog of = new OpenFileDialog();
             of.Filter = "Gen IV Trainer Properties (*.trp)|*.trp";
             if (of.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            /* Update trainer object in memory */
-            MemoryStream userData = new MemoryStream();
-            using (BinaryReader reader = new BinaryReader(File.OpenRead(of.FileName))) {
-                string trName = reader.ReadString();
-
-                byte datSize = reader.ReadByte();
-                byte[] trDat = reader.ReadBytes(datSize);
-
-                byte partySize = reader.ReadByte();
-                byte[] pDat = reader.ReadBytes(partySize);
-
-                string pathData = RomInfo.gameDirs[DirNames.trainerData].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
-                File.WriteAllBytes(pathData, trDat);
-                string pathParty = RomInfo.gameDirs[DirNames.partyData].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
-                File.WriteAllBytes(pathParty, pDat);
-
-                UpdateCurrentTrainerName(trName);
-            }
-            /* Refresh controls and re-read file */
-            trainerComboBox_SelectedIndexChanged(null, null);
-            UpdateCurrentTrainerShownName();
+            /* Update trp object in memory */
+            currentTrainerFile.trp = new TrainerProperties((ushort)trainerComboBox.SelectedIndex, new FileStream(of.FileName, FileMode.Open));
+            RefreshTrainerPropertiesGUI();
 
             /* Display success message */
-            MessageBox.Show("Trainer File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void importReplacePropertiesButton_Click(object sender, EventArgs e) {
-
+            MessageBox.Show("Events imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void exportPartyButton_Click(object sender, EventArgs e) {
-
+            
         }
 
         private void importReplacePartyButton_Click(object sender, EventArgs e) {
