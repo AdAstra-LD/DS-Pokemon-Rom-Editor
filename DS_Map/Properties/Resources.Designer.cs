@@ -9,8 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace DSPRE.Properties {
-
-
+    using System;
+    
+    
     /// <summary>
     ///   Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
     /// </summary>
@@ -1665,6 +1666,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap save_rom {
             get {
                 object obj = ResourceManager.GetObject("save_rom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap saveButton {
+            get {
+                object obj = ResourceManager.GetObject("saveButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

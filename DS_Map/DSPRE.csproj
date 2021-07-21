@@ -1275,6 +1275,7 @@
     <None Include="Resources\Graphics\Program Icons\saveTextureFromNSBMD.png" />
     <None Include="Resources\Graphics\Program Icons\trainerEditor.png" />
     <None Include="Resources\Graphics\Program Icons\trainer_editor.png" />
+    <None Include="Resources\Graphics\Program Icons\saveButton.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptblueish.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptdarkfog.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptdim.png" />
