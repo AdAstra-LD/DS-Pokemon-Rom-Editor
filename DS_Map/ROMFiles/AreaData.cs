@@ -15,7 +15,7 @@ namespace DSPRE.ROMFiles {
         public ushort dynamicTextureType;
         public ushort unknown1;
         public byte areaType = TYPE_OUTDOOR;
-        public byte lightType;
+        public ushort lightType; //using an overabundant size. HGSS only needs a byte
         #endregion
 
         #region Constructors (1)
@@ -30,7 +30,7 @@ namespace DSPRE.ROMFiles {
                     lightType = reader.ReadByte();
                 } else {
                     unknown1 = reader.ReadUInt16();
-                    lightType = reader.ReadByte();
+                    lightType = reader.ReadUInt16();
                 }
             }
         }
@@ -44,13 +44,13 @@ namespace DSPRE.ROMFiles {
                 writer.Write(buildingsTileset);
                 writer.Write(mapTileset);
 
-                if (RomInfo.gameFamily.Equals("DP") || RomInfo.gameFamily.Equals("Plat")) {
-                    writer.Write(unknown1);
-                    writer.Write(lightType);
-                } else {
+                if (RomInfo.gameFamily.Equals("HGSS")) {
                     writer.Write(dynamicTextureType);
                     writer.Write(areaType);
-                    writer.Write(lightType);
+                    writer.Write((byte)lightType);
+                } else {
+                    writer.Write(unknown1);
+                    writer.Write((ushort)lightType);
                 }
             }
             return newData.ToArray();
