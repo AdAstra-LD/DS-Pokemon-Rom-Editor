@@ -77,6 +77,14 @@ namespace DSPRE {
             internal string REFERENCE_STRING = "19 00 C0 46";
             internal int pointerDiff;
 
+            internal int specialCaseOffset1 = 0x3B522;
+            internal int specialCaseOffset2 = 0x3B526;
+            internal int specialCaseOffset3 = 0x3B53C;
+
+            internal string specialCaseData1 = "19 00";
+            internal string specialCaseData2 = "C0 46";
+            internal string specialCaseData3 = "00 00 00 00";
+
             internal DynamicHeadersPatchData() {
                 initOffset = ToolboxDB.getDynamicHeadersInitOffset(RomInfo.romID);
                 initString = ToolboxDB.getDynamicHeadersInitString(RomInfo.romID);
@@ -622,11 +630,26 @@ namespace DSPRE {
         }
         private void dynamicHeadersButton_Click(object sender, EventArgs e) {
             DynamicHeadersPatchData data = new DynamicHeadersPatchData();
+            var headersDir = RomInfo.gameDirs[DirNames.dynamicHeaders];
+
+            bool specialCase = RomInfo.gameFamily == "HGSS" && RomInfo.gameLanguage != "JAP" && RomInfo.gameLanguage != "ESP";
+            string specialCaseChanges = "";
+
+            if (specialCase) {
+                specialCaseChanges = "- Replace " + (data.specialCaseData1.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + (data.specialCaseOffset1 + data.pointerDiff).ToString("X") + " with " + '\n' + data.specialCaseData1 + "\n\n" +
+                    "- Replace " + (data.specialCaseData2.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + (data.specialCaseOffset2 + data.pointerDiff).ToString("X") + " with " + '\n' + data.specialCaseData2 + "\n\n" +
+                    "- Replace " + (data.specialCaseData3.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + (data.specialCaseOffset3 + data.pointerDiff).ToString("X") + " with " + '\n' + data.specialCaseData3 + "\n\n";
+            }
 
             DialogResult d;
             d = MessageBox.Show("Confirming this process will apply the following changes:\n\n" +
                 "- Backup ARM9 file (arm9.bin" + backupSuffix + " will be created)." + "\n\n" +
-                "- Non ho sbatti di listare i cambiamenti" + "\n\n" +
+                "- NARC file at " + headersDir.packedDir + " will become the new header container." + "\n\n" +
+                "- The default ARM9 header table will be split into multiple files (one per header), each one saved into NARC" + headersDir.packedDir + " upon saving the ROM." + "\n\n" +
+                "- Replace " + (data.initString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.initOffset.ToString("X") + " with " + '\n' + data.initString + "\n\n" +
+                "- Neutralize instances of (HeaderID * 0x18) so the base offset which the data is read from is always 0x0." + "\n\n" + 
+                "- Change pointers to header fields, from(ARM9_HEADER_TABLE_OFFSET + n) to simply(0 + n)" + "\n\n" +
+                specialCaseChanges +
                 "Do you wish to continue?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -673,7 +696,7 @@ namespace DSPRE {
 
                     DSUtils.WriteToArm9(DSUtils.HexStringToByteArray(data.initString), data.initOffset);
 
-                    /* - Neutralize instances of HeaderID * 0x18 so the base offset the data is read from is always 0x0:
+                    /* - Neutralize instances of (HeaderID * 0x18) so the base offset which the data is read from is always 0x0:
                            
                             Replace this:
                             18 21       mov r1, #0x18
@@ -683,7 +706,7 @@ namespace DSPRE {
                             19 00       lsl r1, r3, 0
                             C0 46       nop
         
-                      - Change pointers to header fields from ARM9_HEADER_TABLE_OFFSET + n to simply 0 + n
+                      - Change pointers to header fields, from (ARM9_HEADER_TABLE_OFFSET + n) to simply (0 + n)
                      
                        * for ESP HG (IPKS): subtract 0x8 from every reference offset
                        * for JAP HG (IPKJ) and SS (IPGJ): subtract 0x448 from every reference offset
@@ -692,25 +715,24 @@ namespace DSPRE {
 
                      */
 
-                    foreach (Tuple<uint, uint> reference in ToolboxDB.dynamicHeadersPointersDB[RomInfo.gameFamily]) {
+                    foreach (Tuple<uint, uint> reference in ToolboxDB.dynamicHeadersPointersDB [RomInfo.gameFamily]) {
                         DSUtils.WriteToArm9(DSUtils.HexStringToByteArray(data.REFERENCE_STRING), (uint)(reference.Item1 + data.pointerDiff));
                         uint pointerValue = BitConverter.ToUInt32(DSUtils.ReadFromArm9((uint)(reference.Item2 + data.pointerDiff), 4), 0) - PokeDatabase.System.headerOffsetsDict[RomInfo.romID] - 0x02000000;
                         DSUtils.WriteToArm9(BitConverter.GetBytes(pointerValue), (uint)(reference.Item2 + data.pointerDiff));
                     }
 
-                    if (RomInfo.gameFamily == "HGSS" && RomInfo.gameLanguage != "JAP" && RomInfo.gameLanguage != "ESP") {
+                    if (specialCase) {
                         /*  Special case: at 0x3B522 (non-JAP and non-Spanish HG offset) there is an instruction 
-                            between the mov r1, #0x18 and mul r1, r0 commands, so we must handle this separately */
+                            between the (mov r1, #0x18) and (mul r1, r0) commands, so we must handle this separately */
 
-                        DSUtils.WriteToArm9(DSUtils.HexStringToByteArray("19 00"), (uint)(0x3B522 + data.pointerDiff));
-                        DSUtils.WriteToArm9(DSUtils.HexStringToByteArray("C0 46"), (uint)(0x3B526 + data.pointerDiff));
-                        DSUtils.WriteToArm9(DSUtils.HexStringToByteArray("00 00 00 00"), (uint)(0x3B53C + data.pointerDiff));
+                        DSUtils.WriteToArm9(DSUtils.HexStringToByteArray(data.specialCaseData1), (uint)(data.specialCaseOffset1 + data.pointerDiff));
+                        DSUtils.WriteToArm9(DSUtils.HexStringToByteArray(data.specialCaseData2), (uint)(data.specialCaseOffset2 + data.pointerDiff));
+                        DSUtils.WriteToArm9(DSUtils.HexStringToByteArray(data.specialCaseData3), (uint)(data.specialCaseOffset3 + data.pointerDiff));
                     }
 
                     // Clear the dynamic headers directory in 'unpacked'
-                    string headersDir = RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir;
-                    Directory.Delete(headersDir, true);
-                    Directory.CreateDirectory(headersDir);
+                    Directory.Delete(headersDir.unpackedDir, true);
+                    Directory.CreateDirectory(headersDir.unpackedDir);
 
                     /* Now move the headers data from arm9 to the new directory. Upon saving the ROM,
                        the data will be packed into a NARC and replace a/0/5/0 in HGSS or 

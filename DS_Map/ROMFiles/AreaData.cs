@@ -14,7 +14,7 @@ namespace DSPRE.ROMFiles {
         public ushort mapTileset;
         public ushort dynamicTextureType;
         public ushort unknown1;
-        public byte areaType = TYPE_OUTDOOR;
+        public byte areaType = TYPE_OUTDOOR; //HGSS ONLY
         public ushort lightType; //using an overabundant size. HGSS only needs a byte
         #endregion
 
