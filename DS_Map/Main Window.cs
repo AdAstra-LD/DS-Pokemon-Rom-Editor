@@ -474,32 +474,15 @@ namespace DSPRE {
             OpenFileDialog openRom = new OpenFileDialog {
                 Filter = "NDS File (*.nds)|*.nds"
             }; // Select ROM
-            if (openRom.ShowDialog(this) != DialogResult.OK)
+            if (openRom.ShowDialog(this) != DialogResult.OK) {
                 return;
-
-            using (BinaryReader br = new BinaryReader(File.OpenRead(openRom.FileName))) {
-                br.BaseStream.Position = 0xC; // get ROM ID
-                gameCode = Encoding.UTF8.GetString(br.ReadBytes(4));
-                br.BaseStream.Position = 0x1E;
-                europeByte = br.ReadByte();
             }
+
+            SetupROMLanguage(openRom.FileName);
             /* Set ROM gameVersion and language */
-            romInfo = new RomInfo(gameCode, openRom.FileName);
+            romInfo = new RomInfo(gameCode, openRom.FileName, useSuffix: true);
 
-            if (RomInfo.gameVersion is null) {
-                statusLabel.Text = "Unsupported ROM";
-                Update();
-                return;
-            }
-
-            versionLabel.Text = "Pokémon " + RomInfo.gameName + " [" + RomInfo.romID + "]";
-            languageLabel.Text = "Language: " + RomInfo.gameLanguage;
-
-            if (RomInfo.gameLanguage == "ENG")
-                if (europeByte == 0x0A)
-                    languageLabel.Text += " [Europe]";
-                else
-                    languageLabel.Text += " [America]";
+            CheckROMLanguage();
 
             int userchoice = UnpackRomCheckUserChoice();
             switch (userchoice) {
@@ -546,6 +529,57 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack NARCs from folder...";
             Update();
 
+            ReadROMInitData();
+        }
+
+        private void CheckROMLanguage() {
+            if (RomInfo.gameVersion is null) {
+                statusLabel.Text = "Unsupported ROM";
+                Update();
+                return;
+            }
+
+            versionLabel.Text = "Pokémon " + RomInfo.gameName + " [" + RomInfo.romID + "]";
+            languageLabel.Text = "Language: " + RomInfo.gameLanguage;
+
+            if (RomInfo.gameLanguage == "ENG") {
+                if (europeByte == 0x0A) {
+                    languageLabel.Text += " [Europe]";
+                } else {
+                    languageLabel.Text += " [America]";
+                }
+            }
+        }
+
+        private void readDataFromFolderButton_Click(object sender, EventArgs e) {
+            FolderBrowserDialog romFolder = new FolderBrowserDialog {
+            }; // Select ROM
+            if (romFolder.ShowDialog(this) != DialogResult.OK) {
+                return;
+            }
+
+            SetupROMLanguage(Directory.GetFiles(romFolder.SelectedPath).First(x => x.Contains("header.bin")));
+            /* Set ROM gameVersion and language */
+            romInfo = new RomInfo(gameCode, romFolder.SelectedPath, useSuffix: false);
+
+            CheckROMLanguage();
+            
+            iconON = true;
+            gameIcon.Refresh();  // Paint game icon
+
+            ReadROMInitData();
+        }
+
+        private void SetupROMLanguage(string headerPath) {
+            using (BinaryReader br = new BinaryReader(File.OpenRead(headerPath))) {
+                br.BaseStream.Position = 0xC; // get ROM ID
+                gameCode = Encoding.UTF8.GetString(br.ReadBytes(4));
+                br.BaseStream.Position = 0x1E;
+                europeByte = br.ReadByte();
+            }
+        }
+
+        private void ReadROMInitData() {
             switch (RomInfo.gameFamily) {
                 case "DP":
                 case "Plat":
@@ -566,6 +600,7 @@ namespace DSPRE {
 
             mainTabControl.Show();
             loadRomButton.Enabled = false;
+            readDataFromFolderButton.Enabled = false;
             saveRomButton.Enabled = true;
             saveROMToolStripMenuItem.Enabled = true;
             openROMToolStripMenuItem.Enabled = false;
@@ -587,6 +622,7 @@ namespace DSPRE {
             statusLabel.Text = "Ready";
             this.Text += "  -  " + RomInfo.fileName;
         }
+
         private void saveRom_Click(object sender, EventArgs e) {
             SaveFileDialog saveRom = new SaveFileDialog();
             saveRom.Filter = "NDS File (*.nds)|*.nds";
@@ -1032,7 +1068,7 @@ namespace DSPRE {
             }
             currentHeader.flags = flagVal;
         }
-        private void headerListBox_SelectedIndexChanged(object sender, EventArgs e) {
+        private void headerListBox_SelectedValueChanged(object sender, EventArgs e) {
             if (disableHandlers || headerListBox.SelectedIndex < 0)
                 return;
 

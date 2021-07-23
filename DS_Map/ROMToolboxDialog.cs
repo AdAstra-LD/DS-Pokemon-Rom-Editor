@@ -327,9 +327,10 @@ namespace DSPRE {
             return true;
         }
         public bool CheckDynamicHeadersPatchApplied() {
-            if (!ROMToolboxDialog.flag_DynamicHeadersPatchApplied) {
-                if (!ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied())
+            if (!flag_DynamicHeadersPatchApplied) {
+                if (!ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                     return false;
+                }
             }
 
             ROMToolboxDialog.flag_DynamicHeadersPatchApplied = true;

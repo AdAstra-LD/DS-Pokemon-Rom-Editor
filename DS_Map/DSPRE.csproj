@@ -1265,6 +1265,7 @@
     <None Include="Resources\Graphics\Program Icons\destroyLevelScript.png" />
     <Content Include="Resources\Graphics\Program Icons\loadColorTable.png" />
     <None Include="Resources\Graphics\Program Icons\removeTextureNSBMD.png" />
+    <None Include="Resources\Graphics\Program Icons\open_rom.png" />
     <Content Include="Resources\Graphics\Program Icons\resetColorTable.png" />
     <None Include="Resources\Graphics\Program Icons\wideLensImage.png" />
     <None Include="Resources\Graphics\Program Icons\wideLensImageTransp.png" />

@@ -14,7 +14,7 @@ namespace DSPRE {
     /// </summary>
 
     public class RomInfo {
-        private static readonly string folderSuffix = "_DSPRE_contents";
+        private static string folderSuffix = "_DSPRE_contents";
         public static string romID { get; private set; }
         public static string fileName { get; private set; }
         public static string workDir { get; private set; }
@@ -87,10 +87,16 @@ namespace DSPRE {
 
 
         #region Constructors (1)
-        public RomInfo(string id, string romName) {
+        public RomInfo(string id, string romName, bool useSuffix = true) {
             romID = id;
             fileName = romName;
+
+            if (!useSuffix) {
+                folderSuffix = "";
+            }
+
             workDir = Path.GetDirectoryName(romName) + "\\" + Path.GetFileNameWithoutExtension(romName) + folderSuffix + "\\";
+
             LoadGameVersion();
             if (gameVersion is null)
                 return;
