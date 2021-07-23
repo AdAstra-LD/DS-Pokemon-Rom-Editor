@@ -21,6 +21,7 @@ using System.Globalization;
 using Images;
 using Ekona.Images;
 using System.Xml.Linq;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -552,15 +553,17 @@ namespace DSPRE {
         }
 
         private void readDataFromFolderButton_Click(object sender, EventArgs e) {
-            FolderBrowserDialog romFolder = new FolderBrowserDialog {
-            }; // Select ROM
-            if (romFolder.ShowDialog(this) != DialogResult.OK) {
+            CommonOpenFileDialog romFolder = new CommonOpenFileDialog();
+            romFolder.InitialDirectory = "C:\\Users";
+            romFolder.IsFolderPicker = true;
+            romFolder.Multiselect = false;
+            if (romFolder.ShowDialog() != CommonFileDialogResult.Ok) {
                 return;
             }
 
-            SetupROMLanguage(Directory.GetFiles(romFolder.SelectedPath).First(x => x.Contains("header.bin")));
+            SetupROMLanguage(Directory.GetFiles(romFolder.FileName).First(x => x.Contains("header.bin")));
             /* Set ROM gameVersion and language */
-            romInfo = new RomInfo(gameCode, romFolder.SelectedPath, useSuffix: false);
+            romInfo = new RomInfo(gameCode, romFolder.FileName, useSuffix: false);
 
             CheckROMLanguage();
             
