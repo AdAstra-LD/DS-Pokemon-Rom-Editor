@@ -33,8 +33,11 @@ namespace DSPRE {
         public static int cameraTblOverlayNumber { get; private set; }
         public static uint[] cameraTblOffsetsToRAMaddress { get; private set; }
 
+        public static uint headerTableOffset { get; private set; }
+        public static uint conditionalMusicTableOffset { get; internal set; }
         public static uint OWTableOffset { get; internal set; }
         public static string OWtablePath { get; private set; }
+
         public static int nullEncounterID { get; private set; }
         public static int attackNamesTextNumber { get; private set; }
         public static int[] pokemonNamesTextNumbers { get; private set; }
@@ -96,6 +99,10 @@ namespace DSPRE {
             }
 
             workDir = Path.GetDirectoryName(romName) + "\\" + Path.GetFileNameWithoutExtension(romName) + folderSuffix + "\\";
+            arm9Path = workDir + @"arm9.bin";
+            overlayTablePath = workDir + @"y9.bin";
+            overlayPath = workDir + "overlay";
+            internalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
 
             LoadGameVersion();
             if (gameVersion is null)
@@ -105,13 +112,8 @@ namespace DSPRE {
             LoadGameName();
             LoadGameLanguage();
 
-            arm9Path = workDir + @"arm9.bin";
-            overlayTablePath = workDir + @"y9.bin";
-            overlayPath = workDir + "overlay";
-
-            internalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
             SetNarcDirs();
-
+            SetHeaderTableOffset();
             SetNullEncounterID();
 
             SetAttackNamesTextNumber();
@@ -142,6 +144,80 @@ namespace DSPRE {
                 [101] = "dawn_platinum",
                 //[174] = "dppt_suitcase",
             };
+        }
+        public static void SetHeaderTableOffset() {
+            switch (gameFamily) {
+                case "DP":
+                    switch (gameLanguage) {
+                        case "ENG":
+                            headerTableOffset = 0xEEDBC;
+                            break;
+                        case "ESP":
+                            headerTableOffset = 0xEEE08;
+                            break;
+                        case "ITA":
+                            headerTableOffset = 0xEED70;
+                            break;
+                        case "FRA":
+                            headerTableOffset = 0xEEDFC;
+                            break;
+                        case "GER":
+                            headerTableOffset = 0xEEDCC;
+                            break;
+                        case "JAP":
+                            headerTableOffset = 0xF0D68;
+                            break;
+                    }
+                    break;
+                case "Plat":
+                    switch (gameLanguage) {
+                        case "ENG":
+                            headerTableOffset = 0xE601C;
+                            break;
+                        case "ESP":
+                            headerTableOffset = 0xE60B0;
+                            break;
+                        case "ITA":
+                            headerTableOffset = 0xE6038;
+                            break;
+                        case "FRA":
+                            headerTableOffset = 0xE60A4;
+                            break;
+                        case "GER":
+                            headerTableOffset = 0xE6074;
+                            break;
+                        case "JAP":
+                            headerTableOffset = 0xE56F0;
+                            break;
+                    }
+                    break;
+                case "HGSS":
+                    switch (gameLanguage) {
+                        case "ENG":
+                            headerTableOffset = 0xF6BE0;
+                            break;
+                        case "ESP":
+                            if (gameVersion == "HG") {
+                                headerTableOffset = 0xF6BC8;
+                            } else {
+                                headerTableOffset = 0xF6BD0;
+                            }
+                            break;
+                        case "ITA":
+                            headerTableOffset = 0xF6B58;
+                            break;
+                        case "FRA":
+                            headerTableOffset = 0xF6BC4;
+                            break;
+                        case "GER":
+                            headerTableOffset = 0xF6B94;
+                            break;
+                        case "JAP":
+                            headerTableOffset = 0xF6390;
+                            break;
+                    }
+                    break;
+            }
         }
         public static void SetupSpawnSettings() {
             switch (gameFamily) {

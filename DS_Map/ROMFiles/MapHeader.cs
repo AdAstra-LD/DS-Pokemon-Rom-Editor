@@ -146,7 +146,7 @@ namespace DSPRE.ROMFiles {
             return LoadFromByteArray(headerData, headerNumber);
         }
         public static MapHeader LoadFromARM9(ushort headerNumber) {
-            long headerOffset = Resources.PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * headerNumber;
+            long headerOffset = RomInfo.headerTableOffset + MapHeader.length * headerNumber;
             return LoadFromFile(RomInfo.arm9Path, headerNumber, headerOffset);
         }
 

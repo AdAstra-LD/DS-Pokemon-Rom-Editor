@@ -3402,7 +3402,7 @@ namespace DSPRE.Resources {
                 [0x036E] = "TextPocketWhite",
                 [0x036F] = "SetLayerVisibility",
                 [0x0370] = "StopWeatherAlphaBlend",
-                [0x0371] = "SetRepelSteps",
+                [0x0371] = "SetRepelSteps"
             };
             public static Dictionary<ushort, byte[]> CustomScrCmdParameters = new Dictionary<ushort, byte[]>() {
                 [0x0357] = new byte[] { 2, 2 },
@@ -3425,50 +3425,6 @@ namespace DSPRE.Resources {
             };
         }
         public static class System {
-            public static Dictionary<string, uint> headerOffsetsDict = new Dictionary<string, uint>() {
-                ["ADAE"] = 0xEEDBC,
-                ["APAE"] = 0xEEDBC,
-
-                ["ADAS"] = 0xEEE08,
-                ["APAS"] = 0xEEE08,
-
-                ["ADAI"] = 0xEED70,
-                ["APAI"] = 0xEED70,
-
-                ["ADAF"] = 0xEEDFC,
-                ["APAF"] = 0xEEDFC,
-
-                ["ADAD"] = 0xEEDCC,
-                ["APAD"] = 0xEEDCC,
-
-                ["ADAJ"] = 0xF0D68,
-                ["APAJ"] = 0xF0D6C,
-
-                ["CPUE"] = 0xE601C,
-                ["CPUS"] = 0xE60B0,
-                ["CPUI"] = 0xE6038,
-                ["CPUF"] = 0xE60A4,
-                ["CPUD"] = 0xE6074,
-                ["CPUJ"] = 0xE56F0,
-
-                ["IPKE"] = 0xF6BE0,
-                ["IPGE"] = 0xF6BE0,
-
-                ["IPKS"] = 0xF6BC8,
-                ["IPGS"] = 0xF6BD0,
-
-                ["IPKI"] = 0xF6B58,
-                ["IPGI"] = 0xF6B58,
-
-                ["IPKF"] = 0xF6BC4,
-                ["IPGF"] = 0xF6BC4,
-
-                ["IPKD"] = 0xF6B94,
-                ["IPGD"] = 0xF6B94,
-
-                ["IPKJ"] = 0xF6390,
-                ["IPGJ"] = 0xF6390
-            };
             public static Dictionary<string, string> versionsDict = new Dictionary<string, string>() {
                 ["ADAE"] = "D",
                 ["ADAS"] = "D",

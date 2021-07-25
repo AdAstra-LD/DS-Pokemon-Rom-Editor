@@ -44,6 +44,7 @@ namespace DSPRE {
         public bool textEditorIsReady { get; private set; } = false;
         public bool cameraEditorIsReady { get; private set; } = false;
         public bool trainerEditorIsReady { get; private set; } = false;
+        public bool tableEditorIsReady { get; private set; } = false;
 
         public const ushort MAPMODEL_CRITICALSIZE = 61000;
 
@@ -782,9 +783,15 @@ namespace DSPRE {
                     SetupTrainerEditor();
                     trainerEditorIsReady = true;
                 }
+            } else if (mainTabControl.SelectedTab == tableEditorTabPage) {
+                if(!tableEditorIsReady) {
+                    SetupTableEditor();
+                    tableEditorIsReady = true;
+                }
             }
             statusLabel.Text = "Ready";
         }
+
         private void spawnEditorToolStripButton_Click(object sender, EventArgs e) {
             if (!matrixEditorIsReady) {
                 SetupMatrixEditor();
@@ -1491,7 +1498,7 @@ namespace DSPRE {
             if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                 DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, true);
             } else {
-                uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
+                uint headerOffset = (uint)(RomInfo.headerTableOffset + MapHeader.length * currentHeader.ID);
                 DSUtils.WriteToArm9(currentHeader.ToByteArray(), headerOffset);
             }
             disableHandlers = true;
@@ -1649,7 +1656,7 @@ namespace DSPRE {
             if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                 DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, true);
             } else {
-                uint headerOffset = (uint)(PokeDatabase.System.headerOffsetsDict[RomInfo.romID] + MapHeader.length * currentHeader.ID);
+                uint headerOffset = (uint)(RomInfo.headerTableOffset + MapHeader.length * currentHeader.ID);
                 DSUtils.WriteToArm9(currentHeader.ToByteArray(), headerOffset);
             }
 
@@ -7301,10 +7308,12 @@ namespace DSPRE {
 
         private void importReplacePropertiesButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .evt file */
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Gen IV Trainer Properties (*.trp)|*.trp";
-            if (of.ShowDialog(this) != DialogResult.OK)
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "Gen IV Trainer Properties (*.trp)|*.trp"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             /* Update trp object in memory */
             currentTrainerFile.trp = new TrainerProperties((ushort)trainerComboBox.SelectedIndex, new FileStream(of.FileName, FileMode.Open));
@@ -7339,6 +7348,12 @@ namespace DSPRE {
 
         private void trClassFramePreviewUpDown_ValueChanged(object sender, EventArgs e) {
             UpdateTrainerClassPic((int)((NumericUpDown)sender).Value);
+        }
+        #endregion
+
+        #region Table Editor
+        private void SetupTableEditor() {
+            
         }
         #endregion
         private void ExclusiveCBInvert(CheckBox cb) {

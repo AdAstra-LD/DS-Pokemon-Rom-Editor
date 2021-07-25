@@ -711,6 +711,9 @@
             this.trainerClassListBox = new System.Windows.Forms.ListBox();
             this.label42 = new System.Windows.Forms.Label();
             this.trainerComboBox = new System.Windows.Forms.ComboBox();
+            this.tableEditorTabPage = new System.Windows.Forms.TabPage();
+            this.ConditionalMusicGroupBox = new System.Windows.Forms.GroupBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.mainTabImageList = new System.Windows.Forms.ImageList(this.components);
             this.gameIcon = new System.Windows.Forms.PictureBox();
             this.languageLabel = new System.Windows.Forms.Label();
@@ -752,6 +755,9 @@
             this.spawnEditorToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.LocationCol = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.FlagCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MusicIDcol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -959,6 +965,9 @@
             this.groupBox25.SuspendLayout();
             this.TrainerAIGroupBox.SuspendLayout();
             this.trainerItemsGroupBox.SuspendLayout();
+            this.tableEditorTabPage.SuspendLayout();
+            this.ConditionalMusicGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameIcon)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -977,6 +986,7 @@
             this.mainTabControl.Controls.Add(this.textEditorTabPage);
             this.mainTabControl.Controls.Add(this.cameraEditorTabPage);
             this.mainTabControl.Controls.Add(this.trainerEditorTabPage);
+            this.mainTabControl.Controls.Add(this.tableEditorTabPage);
             this.mainTabControl.ImageList = this.mainTabImageList;
             this.mainTabControl.Location = new System.Drawing.Point(11, 72);
             this.mainTabControl.Name = "mainTabControl";
@@ -9070,6 +9080,42 @@
             this.trainerComboBox.TabIndex = 27;
             this.trainerComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerComboBox_SelectedIndexChanged);
             // 
+            // tableEditorTabPage
+            // 
+            this.tableEditorTabPage.Controls.Add(this.ConditionalMusicGroupBox);
+            this.tableEditorTabPage.Location = new System.Drawing.Point(4, 23);
+            this.tableEditorTabPage.Name = "tableEditorTabPage";
+            this.tableEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.tableEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.tableEditorTabPage.TabIndex = 9;
+            this.tableEditorTabPage.Text = "Table Editor";
+            this.tableEditorTabPage.UseVisualStyleBackColor = true;
+            // 
+            // ConditionalMusicGroupBox
+            // 
+            this.ConditionalMusicGroupBox.Controls.Add(this.dataGridView1);
+            this.ConditionalMusicGroupBox.Location = new System.Drawing.Point(16, 7);
+            this.ConditionalMusicGroupBox.Name = "ConditionalMusicGroupBox";
+            this.ConditionalMusicGroupBox.Size = new System.Drawing.Size(393, 257);
+            this.ConditionalMusicGroupBox.TabIndex = 0;
+            this.ConditionalMusicGroupBox.TabStop = false;
+            this.ConditionalMusicGroupBox.Text = "groupBox26";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.LocationCol,
+            this.FlagCol,
+            this.MusicIDcol});
+            this.dataGridView1.Location = new System.Drawing.Point(7, 20);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.Size = new System.Drawing.Size(380, 231);
+            this.dataGridView1.TabIndex = 0;
+            // 
             // mainTabImageList
             // 
             this.mainTabImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("mainTabImageList.ImageStream")));
@@ -9295,14 +9341,14 @@
             this.mainToolStrip.TabIndex = 16;
             this.mainToolStrip.Text = "mainToolStrip";
             // 
-            // openFolderWithoutRomButton
+            // readDataFromFolderButton
             // 
             this.readDataFromFolderButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.readDataFromFolderButton.Image = global::DSPRE.Properties.Resources.open_file;
             this.readDataFromFolderButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.readDataFromFolderButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.readDataFromFolderButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
-            this.readDataFromFolderButton.Name = "openFolderWithoutRomButton";
+            this.readDataFromFolderButton.Name = "readDataFromFolderButton";
             this.readDataFromFolderButton.Size = new System.Drawing.Size(36, 36);
             this.readDataFromFolderButton.Text = "Open Extracted Data";
             this.readDataFromFolderButton.ToolTipText = "Open Extracted Data";
@@ -9488,6 +9534,33 @@
             this.versionLabel.Size = new System.Drawing.Size(35, 13);
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
+            // 
+            // LocationCol
+            // 
+            this.LocationCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.LocationCol.FillWeight = 60F;
+            this.LocationCol.HeaderText = "Header";
+            this.LocationCol.Name = "LocationCol";
+            this.LocationCol.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.LocationCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // FlagCol
+            // 
+            this.FlagCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.FlagCol.FillWeight = 20F;
+            this.FlagCol.HeaderText = "Flag";
+            this.FlagCol.MinimumWidth = 30;
+            this.FlagCol.Name = "FlagCol";
+            this.FlagCol.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // MusicIDcol
+            // 
+            this.MusicIDcol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.MusicIDcol.FillWeight = 20F;
+            this.MusicIDcol.HeaderText = "Music";
+            this.MusicIDcol.MinimumWidth = 30;
+            this.MusicIDcol.Name = "MusicIDcol";
+            this.MusicIDcol.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // MainProgram
             // 
@@ -9774,6 +9847,9 @@
             this.TrainerAIGroupBox.ResumeLayout(false);
             this.TrainerAIGroupBox.PerformLayout();
             this.trainerItemsGroupBox.ResumeLayout(false);
+            this.tableEditorTabPage.ResumeLayout(false);
+            this.ConditionalMusicGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameIcon)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -10492,6 +10568,12 @@
         private System.Windows.Forms.NumericUpDown trClassFramePreviewUpDown;
         private System.Windows.Forms.Label trainerClassFrameMaxLabel;
         private System.Windows.Forms.ToolStripButton readDataFromFolderButton;
+        private System.Windows.Forms.TabPage tableEditorTabPage;
+        private System.Windows.Forms.GroupBox ConditionalMusicGroupBox;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewComboBoxColumn LocationCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FlagCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MusicIDcol;
     }
 }
 
