@@ -7354,27 +7354,31 @@ namespace DSPRE {
         #region Table Editor
         List<ushort[]> conditionalMusicTable;
         private void SetupTableEditor() {
-            RomInfo.SetConditionalMusicTableOffsetToRAMAddress();
-            conditionalMusicTable = new List<ushort[]>();
+            if (RomInfo.gameFamily == "HGSS") {
+                RomInfo.SetConditionalMusicTableOffsetToRAMAddress();
+                conditionalMusicTable = new List<ushort[]>();
 
-            uint readFrom = BitConverter.ToUInt32(DSUtils.ReadFromArm9(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
-            byte tableEntriesCount = DSUtils.ReadFromArm9(RomInfo.conditionalMusicTableOffsetToRAMAddress - 8, 1)[0];
+                uint readFrom = BitConverter.ToUInt32(DSUtils.ReadFromArm9(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
+                byte tableEntriesCount = DSUtils.ReadFromArm9(RomInfo.conditionalMusicTableOffsetToRAMAddress - 8, 1)[0];
 
-            for (uint i = 0; i < tableEntriesCount; i++) {
-                ushort header = BitConverter.ToUInt16(DSUtils.ReadFromArm9(readFrom + 6 * i, 2), 0);
-                ushort flag = BitConverter.ToUInt16(DSUtils.ReadFromArm9(readFrom + 6 * i + 2, 2), 0);
-                ushort musicID = BitConverter.ToUInt16(DSUtils.ReadFromArm9(readFrom + 6 * i + 4, 2), 0);
+                for (uint i = 0; i < tableEntriesCount; i++) {
+                    ushort header = BitConverter.ToUInt16(DSUtils.ReadFromArm9(readFrom + 6 * i, 2), 0);
+                    ushort flag = BitConverter.ToUInt16(DSUtils.ReadFromArm9(readFrom + 6 * i + 2, 2), 0);
+                    ushort musicID = BitConverter.ToUInt16(DSUtils.ReadFromArm9(readFrom + 6 * i + 4, 2), 0);
 
-                conditionalMusicTable.Add(new ushort[3] { header, flag, musicID });
-                conditionalMusicTableListBox.Items.Add(headerListBox.Items[header]);
-            }
+                    conditionalMusicTable.Add(new ushort[3] { header, flag, musicID });
+                    conditionalMusicTableListBox.Items.Add(headerListBox.Items[header]);
+                }
 
-            foreach (string location in headerListBox.Items) {
-                headerConditionalMusicComboBox.Items.Add(location);
-            }
+                foreach (string location in headerListBox.Items) {
+                    headerConditionalMusicComboBox.Items.Add(location);
+                }
 
-            if (conditionalMusicTableListBox.Items.Count > 0) {
-                conditionalMusicTableListBox.SelectedIndex = 0;
+                if (conditionalMusicTableListBox.Items.Count > 0) {
+                    conditionalMusicTableListBox.SelectedIndex = 0;
+                }
+            } else {
+                ConditionalMusicGroupBox.Enabled = false;
             }
         }
         private void conditionalMusicTableListBox_SelectedIndexChanged(object sender, EventArgs e) {
