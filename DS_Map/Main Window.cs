@@ -864,7 +864,6 @@ namespace DSPRE {
 
             internalNames = new List<string>();
             headerListBoxNames = new List<string>();
-
             int headerCount;
             if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                 addHeaderBTN.Enabled = true;
@@ -947,8 +946,9 @@ namespace DSPRE {
                     worldmapCoordsGroupBox.Enabled = true;
                     break;
             }
-            if (headerListBox.Items.Count > 0)
+            if (headerListBox.Items.Count > 0) {
                 headerListBox.SelectedIndex = 0;
+            }
         }
         private void addHeaderBTN_Click(object sender, EventArgs e) {
             // Add new file in the dynamic headers directory
