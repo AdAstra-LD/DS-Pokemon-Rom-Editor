@@ -1297,6 +1297,7 @@
     <None Include="Resources\wrenchIcon.png" />
     <None Include="Resources\selectBldWithMouse.png" />
     <None Include="Resources\hgsscamera16.png" />
+    <None Include="Resources\questionMark.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

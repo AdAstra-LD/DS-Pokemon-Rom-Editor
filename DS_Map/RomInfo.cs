@@ -34,7 +34,7 @@ namespace DSPRE {
         public static uint[] cameraTblOffsetsToRAMaddress { get; private set; }
 
         public static uint headerTableOffset { get; private set; }
-        public static uint conditionalMusicTableOffset { get; internal set; }
+        public static uint conditionalMusicTableOffsetToRAMAddress { get; internal set; }
         public static uint OWTableOffset { get; internal set; }
         public static string OWtablePath { get; private set; }
 
@@ -46,7 +46,6 @@ namespace DSPRE {
         public static int trainerClassMessageNumber { get; private set; }
         public static int trainerNamesMessageNumber { get; private set; }
         public static int locationNamesTextNumber { get; private set; }
-
 
         public static string internalNamesLocation { get; private set; }
         public static readonly byte internalNameLength = 16;
@@ -105,8 +104,9 @@ namespace DSPRE {
             internalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
 
             LoadGameVersion();
-            if (gameVersion is null)
+            if (gameVersion is null) {
                 return;
+            }
 
             LoadGameFamily();
             LoadGameName();
@@ -247,11 +247,7 @@ namespace DSPRE {
                             headerTableOffset = 0xF6BE0;
                             break;
                         case "ESP":
-                            if (gameVersion == "HG") {
-                                headerTableOffset = 0xF6BC8;
-                            } else {
-                                headerTableOffset = 0xF6BD0;
-                            }
+                            headerTableOffset = gameVersion == "HG" ? 0xF6BC8 : (uint)0xF6BD0;
                             break;
                         case "ITA":
                             headerTableOffset = 0xF6B58;
@@ -327,11 +323,7 @@ namespace DSPRE {
                             arm9spawnOffset = 0xFA17C;
                             break;
                         case "ESP":
-                            if (gameVersion == "HG") {
-                                arm9spawnOffset = 0xFA164;
-                            } else {
-                                arm9spawnOffset = 0xFA16C;
-                            }
+                            arm9spawnOffset = gameVersion == "HG" ? 0xFA164 : (uint)0xFA16C;
                             break;
                         case "ITA":
                             arm9spawnOffset = 0xFA0F4;
@@ -353,11 +345,7 @@ namespace DSPRE {
             switch (gameFamily) {
                 case "DP":
                     cameraTblOverlayNumber = 5;
-                    if (gameLanguage.Equals("JAP")) {
-                        cameraTblOffsetsToRAMaddress = new uint[] { 0x4C50 };
-                    } else {
-                        cameraTblOffsetsToRAMaddress = new uint[] { 0x4908 };
-                    }
+                    cameraTblOffsetsToRAMaddress = gameLanguage.Equals("JAP") ? (new uint[] { 0x4C50 }) : (new uint[] { 0x4908 });
                     cameraSize = 24;
                     break;
                 case "Plat":
@@ -426,6 +414,26 @@ namespace DSPRE {
                     break;
             }
         }
+        public static void SetConditionalMusicTableOffsetToRAMAddress() {
+            switch (gameFamily) {
+                case "HGSS":
+                    switch (gameLanguage) {                            
+                        case "ESP":
+                            conditionalMusicTableOffsetToRAMAddress = gameVersion == "HG" ? (uint)0x667D0 : 0x667D8;
+                            break;
+                        case "ENG":
+                        case "ITA":
+                        case "FRA":
+                        case "GER":
+                            conditionalMusicTableOffsetToRAMAddress = 0x667D8;
+                            break;
+                        case "JAP":
+                            conditionalMusicTableOffsetToRAMAddress = 0x66238;
+                            break;
+                    }
+                break;
+            }
+        }
         private void SetItemScriptFileNumber() {
             switch (gameFamily) {
                 case "DP":
@@ -459,11 +467,7 @@ namespace DSPRE {
                     attackNamesTextNumber = 647;
                     break;
                 default:
-                    if (gameLanguage == "JAP") {
-                        attackNamesTextNumber = 739;
-                    } else {
-                        attackNamesTextNumber = 750;
-                    }
+                    attackNamesTextNumber = gameLanguage == "JAP" ? 739 : 750;
                     break;
             }
         }
@@ -476,11 +480,7 @@ namespace DSPRE {
                     itemNamesTextNumber = 392;
                     break;
                 default:
-                    if (gameLanguage == "JAP") {
-                        itemNamesTextNumber = 219;
-                    } else {
-                        itemNamesTextNumber = 222;
-                    }
+                    itemNamesTextNumber = gameLanguage == "JAP" ? 219 : 222;
                     break;
             }
         }
@@ -493,11 +493,7 @@ namespace DSPRE {
                     locationNamesTextNumber = 433;
                     break;
                 default:
-                    if (gameLanguage == "JAP") {
-                        locationNamesTextNumber = 272;
-                    } else {
-                        locationNamesTextNumber = 279;
-                    }
+                    locationNamesTextNumber = gameLanguage == "JAP" ? 272 : 279;
                     break;
             }
         }
@@ -556,6 +552,7 @@ namespace DSPRE {
         public string GetBuildingModelsDirPath(bool interior) => interior ? gameDirs[DirNames.interiorBuildingModels].unpackedDir : gameDirs[DirNames.exteriorBuildingModels].unpackedDir;
         public string GetRomNameFromWorkdir() => workDir.Substring(0, workDir.Length - folderSuffix.Length - 1);
         public static int GetHeaderCount() => (int)new FileInfo(internalNamesLocation).Length / internalNameLength;
+        public static List<string> GetLocationNames() => new TextArchive(locationNamesTextNumber).messages;
         public string[] GetSimpleTrainerNames() => new TextArchive(trainerNamesMessageNumber).messages.ToArray();
         public string[] GetTrainerClassNames() => new TextArchive(trainerClassMessageNumber).messages.ToArray();
         public string[] GetItemNames() => new TextArchive(itemNamesTextNumber).messages.ToArray();
@@ -753,11 +750,8 @@ namespace DSPRE {
                         [DirNames.interiorBuildingModels] = @"data\a\1\4\8"
                     };
 
-                    if (gameVersion == "HG") {
-                        packedDirsDict[DirNames.encounters] = @"data\a\0\3\7";
-                    } else {
-                        packedDirsDict[DirNames.encounters] = @"data\a\1\3\6"; //Fix SS encounters
-                    }
+                    //Encounter archive is different for SS 
+                    packedDirsDict[DirNames.encounters] = gameVersion == "HG" ? @"data\a\0\3\7" : @"data\a\1\3\6";
                     break;
             }
 

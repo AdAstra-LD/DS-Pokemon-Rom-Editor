@@ -6,7 +6,7 @@ using static DSPRE.RomInfo;
 
 namespace DSPRE {
     public partial class SpawnEditor : Form {
-        private TextArchive locations;
+        private List<string> locations = RomInfo.GetLocationNames();
         private List<string> names;
         public SpawnEditor(List<string> results, List<string> allNames, ushort headerNumber = 0, int matrixX = 0, int matrixY = 0) {
             InitializeComponent();
@@ -33,8 +33,6 @@ namespace DSPRE {
         private void SetupFields(List<string> headersList) {
             SetupDirections();
             SetupHeadersList(headersList);
-
-            locations = new TextArchive(RomInfo.locationNamesTextNumber);
             ReadDefaultMoney();
         }
 
@@ -122,13 +120,13 @@ namespace DSPRE {
 
             switch (RomInfo.gameFamily) {
                 case "DP":
-                    locationNameLBL.Text = locations.messages[((HeaderDP)currentHeader).locationName];
+                    locationNameLBL.Text = locations[((HeaderDP)currentHeader).locationName];
                     break;
                 case "Plat":
-                    locationNameLBL.Text = locations.messages[((HeaderPt)currentHeader).locationName];
+                    locationNameLBL.Text = locations[((HeaderPt)currentHeader).locationName];
                     break;
                 case "HGSS":
-                    locationNameLBL.Text = locations.messages[((HeaderHGSS)currentHeader).locationName];
+                    locationNameLBL.Text = locations[((HeaderHGSS)currentHeader).locationName];
                     break;
             }
         }
