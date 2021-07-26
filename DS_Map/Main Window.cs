@@ -7352,21 +7352,22 @@ namespace DSPRE {
         #endregion
 
         #region Table Editor
-        List<ushort[]> conditionalMusicTable;
+        List<(ushort header, ushort flag, ushort music)> conditionalMusicTable;
+        uint conditionalMusicTableStartAddress;
         private void SetupTableEditor() {
             if (RomInfo.gameFamily == "HGSS") {
                 RomInfo.SetConditionalMusicTableOffsetToRAMAddress();
-                conditionalMusicTable = new List<ushort[]>();
+                conditionalMusicTable = new List<(ushort, ushort, ushort)>();
 
-                uint readFrom = BitConverter.ToUInt32(DSUtils.ReadFromArm9(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
+                conditionalMusicTableStartAddress = BitConverter.ToUInt32(DSUtils.ReadFromArm9(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
                 byte tableEntriesCount = DSUtils.ReadFromArm9(RomInfo.conditionalMusicTableOffsetToRAMAddress - 8, 1)[0];
 
                 for (uint i = 0; i < tableEntriesCount; i++) {
-                    ushort header = BitConverter.ToUInt16(DSUtils.ReadFromArm9(readFrom + 6 * i, 2), 0);
-                    ushort flag = BitConverter.ToUInt16(DSUtils.ReadFromArm9(readFrom + 6 * i + 2, 2), 0);
-                    ushort musicID = BitConverter.ToUInt16(DSUtils.ReadFromArm9(readFrom + 6 * i + 4, 2), 0);
+                    ushort header = BitConverter.ToUInt16(DSUtils.ReadFromArm9(conditionalMusicTableStartAddress + 6 * i, 2), 0);
+                    ushort flag = BitConverter.ToUInt16(DSUtils.ReadFromArm9(conditionalMusicTableStartAddress + 6 * i + 2, 2), 0);
+                    ushort musicID = BitConverter.ToUInt16(DSUtils.ReadFromArm9(conditionalMusicTableStartAddress + 6 * i + 4, 2), 0);
 
-                    conditionalMusicTable.Add(new ushort[3] { header, flag, musicID });
+                    conditionalMusicTable.Add((header, flag, musicID));
                     conditionalMusicTableListBox.Items.Add(headerListBox.Items[header]);
                 }
 
@@ -7382,12 +7383,24 @@ namespace DSPRE {
             }
         }
         private void conditionalMusicTableListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            headerConditionalMusicComboBox.SelectedIndex = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex][0];
-            flagConditionalMusicUpDown.Value = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex][1];
-            musicIDconditionalMusicUpDown.Value = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex][2];
+            disableHandlers = true;
+            
+            headerConditionalMusicComboBox.SelectedIndex = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex].header;
+            flagConditionalMusicUpDown.Value = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex].flag;
+            musicIDconditionalMusicUpDown.Value = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex].music;
+            
+            disableHandlers = false;
         }
         private void headerConditionalMusicComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            MapHeader selected = MapHeader.LoadFromARM9((ushort)headerConditionalMusicComboBox.SelectedIndex);
+            if (disableHandlers) {
+                return;
+            }
+
+            (ushort header, ushort flag, ushort music) oldTuple = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex];
+            (ushort header, ushort flag, ushort music) newTuple = ((ushort)headerConditionalMusicComboBox.SelectedIndex, oldTuple.flag, oldTuple.music);
+            conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex] = newTuple;
+
+            MapHeader selected = MapHeader.LoadFromARM9(newTuple.header);
             switch (RomInfo.gameFamily) {
                 case "DP":
                     locationNameConditionalMusicLBL.Text = RomInfo.GetLocationNames()[(selected as HeaderDP).locationName];
@@ -7398,6 +7411,34 @@ namespace DSPRE {
                 case "HGSS":
                     locationNameConditionalMusicLBL.Text = RomInfo.GetLocationNames()[(selected as HeaderHGSS).locationName];
                     break;
+            }
+
+        }
+        private void flagConditionalMusicUpDown_ValueChanged(object sender, EventArgs e) {
+            if (disableHandlers) {
+                return;
+            }
+            (ushort header, ushort flag, ushort music) oldTuple = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex];
+            conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex] = (oldTuple.header, (ushort)flagConditionalMusicUpDown.Value, oldTuple.music);
+        }
+
+        private void musicIDconditionalMusicUpDown_ValueChanged(object sender, EventArgs e) {
+            if (disableHandlers) {
+                return;
+            }
+
+            (ushort header, ushort flag, ushort music) oldTuple = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex];
+            conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex] = (oldTuple.header, oldTuple.flag, (ushort)musicIDconditionalMusicUpDown.Value);
+        }
+        private void HOWconditionalMusicTableButton_Click(object sender, EventArgs e) {
+            MessageBox.Show("For each Location in the list, override Header's music with chosen Music ID, if Flag is set.", "How this table works", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void saveConditionalMusicTableBTN_Click(object sender, EventArgs e) {
+            for (int i = 0; i < conditionalMusicTable.Count; i++) {
+                DSUtils.WriteToArm9(BitConverter.GetBytes(conditionalMusicTable[i].header), (uint)(conditionalMusicTableStartAddress + 6 * i));
+                DSUtils.WriteToArm9(BitConverter.GetBytes(conditionalMusicTable[i].flag), (uint)(conditionalMusicTableStartAddress + 6 * i + 2));
+                DSUtils.WriteToArm9(BitConverter.GetBytes(conditionalMusicTable[i].music), (uint)(conditionalMusicTableStartAddress + 6 * i + 4));
             }
         }
         #endregion
@@ -7412,10 +7453,6 @@ namespace DSPRE {
             }
 
             disableHandlers = false;
-        }
-
-        private void HOWconditionalMusicTableButton_Click(object sender, EventArgs e) {
-            MessageBox.Show("For each Location in the list, override Header's music with chosen Music ID, if Flag is set.", "How this table works", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
