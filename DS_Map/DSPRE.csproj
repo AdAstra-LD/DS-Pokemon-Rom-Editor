@@ -395,6 +395,7 @@
     <None Include="Resources\Graphics\Program Icons\RightClick.png" />
     <None Include="Resources\Graphics\Program Icons\unpackAllIcon.png" />
     <None Include="Resources\Graphics\Program Icons\SurfIcon.png" />
+    <None Include="Resources\cameraIcon.png" />
     <Content Include="Resources\Graphics\Area Icons\hgsslake.png" />
     <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera0.png" />
     <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera1.png" />
@@ -1273,9 +1274,11 @@
     <None Include="Resources\Graphics\Program Icons\dawnSpawn.png" />
     <None Include="Resources\Graphics\Program Icons\addTextureToNSBMD.png" />
     <None Include="Resources\Graphics\Program Icons\destroyLevelScript.png" />
+    <None Include="Resources\Graphics\Program Icons\cameraIcon.png" />
     <Content Include="Resources\Graphics\Program Icons\loadColorTable.png" />
     <None Include="Resources\Graphics\Program Icons\removeTextureNSBMD.png" />
     <None Include="Resources\Graphics\Program Icons\open_rom.png" />
+    <None Include="Resources\Graphics\Program Icons\questionMark.png" />
     <Content Include="Resources\Graphics\Program Icons\resetColorTable.png" />
     <None Include="Resources\Graphics\Program Icons\wideLensImage.png" />
     <None Include="Resources\Graphics\Program Icons\wideLensImageTransp.png" />
@@ -1287,6 +1290,8 @@
     <None Include="Resources\Graphics\Program Icons\trainerEditor.png" />
     <None Include="Resources\Graphics\Program Icons\trainer_editor.png" />
     <None Include="Resources\Graphics\Program Icons\saveButton.png" />
+    <None Include="Resources\Graphics\Program Icons\selectBldWithMouse.png" />
+    <None Include="Resources\Graphics\Program Icons\wrenchIcon.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptblueish.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptdarkfog.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptdim.png" />

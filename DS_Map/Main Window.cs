@@ -305,8 +305,9 @@ namespace DSPRE {
             OpenFileDialog of = new OpenFileDialog {
                 Filter = "Textured NSBMD File(*.nsbmd)|*.nsbmd"
             };
-            if (of.ShowDialog(this) != DialogResult.OK)
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             byte[] modelFile = DSUtils.ReadFromFile(of.FileName);
             if (DSUtils.CheckNSBMDHeader(modelFile) == DSUtils.NSBMD_DOESNTHAVE_TEXTURE) {
@@ -319,8 +320,9 @@ namespace DSPRE {
                 Filter = "NSBTX File(*.nsbtx)|*.nsbtx",
                 FileName = Path.GetFileNameWithoutExtension(of.FileName)
             };
-            if (texSf.ShowDialog() != DialogResult.OK)
+            if (texSf.ShowDialog() != DialogResult.OK) {
                 return;
+            }
 
             DSUtils.WriteToFile(texSf.FileName, DSUtils.GetTexturesFromTexturedNSBMD(modelFile));
         }
@@ -2589,6 +2591,9 @@ namespace DSPRE {
         #region Variables & Constants 
         public const int mapEditorSquareSize = 19;
 
+        /* Screenshot Interpolation mode */
+        public InterpolationMode intMode;
+
         /*  Camera settings */
         public bool hideBuildings = new bool();
         public bool mapTexturesOn = true;
@@ -3095,6 +3100,30 @@ namespace DSPRE {
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
                 mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+        }
+        private void mapScreenshotButton_Click(object sender, EventArgs e) {
+            MessageBox.Show("Choose where to save the map screenshot.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            SaveFileDialog imageSFD = new SaveFileDialog {
+                Filter = "PNG File(*.png)|*.png",
+            };
+            if (imageSFD.ShowDialog() != DialogResult.OK) {
+                return;
+            }
+
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
+            ang, dist, elev, perspective,
+            mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+
+            int newW = 512, newH = 512;
+            Bitmap newImage = new Bitmap(newW, newH);
+            using (var graphCtr = Graphics.FromImage(newImage)) {
+                graphCtr.SmoothingMode = SmoothingMode.HighQuality;
+                graphCtr.InterpolationMode = InterpolationMode.NearestNeighbor;
+                graphCtr.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                graphCtr.DrawImage(GrabMapScreenshot(mapOpenGlControl.Width, mapOpenGlControl.Height), 0, 0, newW, newH);
+            }
+            newImage.Save(imageSFD.FileName);
+            MessageBox.Show("Screenshot saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void removeLastMapFileButton_Click(object sender, EventArgs e) {
             /* Delete last map file */
@@ -7379,15 +7408,17 @@ namespace DSPRE {
                     conditionalMusicTableListBox.SelectedIndex = 0;
                 }
             } else {
-                ConditionalMusicGroupBox.Enabled = false;
+                conditionalMusicGroupBox.Enabled = false;
             }
         }
         private void conditionalMusicTableListBox_SelectedIndexChanged(object sender, EventArgs e) {
             disableHandlers = true;
-            
-            headerConditionalMusicComboBox.SelectedIndex = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex].header;
-            flagConditionalMusicUpDown.Value = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex].flag;
-            musicIDconditionalMusicUpDown.Value = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex].music;
+
+            int selection = conditionalMusicTableListBox.SelectedIndex;
+
+            headerConditionalMusicComboBox.SelectedIndex = conditionalMusicTable[selection].header;
+            flagConditionalMusicUpDown.Value = conditionalMusicTable[selection].flag;
+            musicIDconditionalMusicUpDown.Value = conditionalMusicTable[selection].music;
             
             disableHandlers = false;
         }
