@@ -2235,7 +2235,7 @@ namespace DSPRE.Resources {
                 [0x008F] = "ChooseRivalName",
 
                 [0x0091] = "UpgradePokegear",
-                [0x0092] = "RecordPokegearNumber",
+                [0x0092] = "RecordPokegearNumber", //to be confirmed
 
                 [0x0096] = "ReturnScreen",
 
@@ -2380,7 +2380,7 @@ namespace DSPRE.Resources {
 
                 [0x016C] = "DeletePartyPokemon",
 
-                [0x0170] = "CheckHiroMoneyNumber",
+                [0x0170] = "CompareMoneyFlex",
                 [0x0171] = "EggHatchScreen", //This command is dangerous when used without an egg in party
 
                 [0x0176] = "UnvanishOverworld",
@@ -2401,7 +2401,7 @@ namespace DSPRE.Resources {
                 [0x0186] = "ComparePokemonPlayerSize",
                 [0x0187] = "SetPokemonSizeRecord",
                 [0x0188] = "TextPartyPokemonSize",
-                [0x0189] = "CheckPokemonHeight",
+                [0x0189] = "TextPokemonRecordSize",
 
                 [0x018C] = "GetMoveCount",
                 [0x018D] = "DeletePokemonMove",
@@ -2453,7 +2453,6 @@ namespace DSPRE.Resources {
                 [0x01E9] = "MysteryGiftGive",
 
                 [0x01EF] = "CheckVersion",
-
                 [0x01F0] = "FirstPokemonInParty",
 
                 [0x01FB] = "CountPCFreeSpace",
@@ -2473,6 +2472,7 @@ namespace DSPRE.Resources {
                 [0x020F] = "MessageUnown",
                 [0x0210] = "CheckGBACartidge",
                 [0x0211] = "GetFirstPokemonAlive",
+                [0x0212] = "SetMatrixAlternativeMap",
 
                 [0x021D] = "TextNumberSp",
 
@@ -2483,7 +2483,7 @@ namespace DSPRE.Resources {
                 [0x0231] = "ShakeCamera",
                 [0x0232] = "Battle2vs2",
 
-                [0x0236] = "ChoosePokemonMenuTrade",
+                [0x0236] = "PartyPokemonTradeScreen",
 
                 [0x024D] = "WildBattleSp",
                 [0x024E] = "CheckTrainerCardLevel",
@@ -2512,6 +2512,8 @@ namespace DSPRE.Resources {
 
                 [0x026E] = "GetOverworldDirection",
 
+                [0x02AC] = "GetCurrentWeather",
+
                 [0x02C4] = "FloorTrapAnimation",
 
                 [0x02C7] = "TalkFollowingPoke",
@@ -2527,7 +2529,16 @@ namespace DSPRE.Resources {
                 [0x02EF] = "CreateMultiTouchBox",
                 [0x02F0] = "CloseMultiTouch",
 
-                [0x0344] = "CheckJadeOrbRequirements"
+                [0x0344] = "CheckJadeOrbRequirements",
+                                                     
+                [0x034B] = "TextItemLowercase",
+                [0x034C] = "TextItemPlural",
+                [0x034D] = "TextPartyPokemonDefault",
+                                                     
+                [0x0351] = "TextTrainerClass",
+                [0x0352] = "TextSealPlural",
+                [0x0353] = "TextCapitalize",
+                [0x0354] = "TextFloor"
             };
             public static Dictionary<ushort, byte[]> HGSSScrCmdParameters = new Dictionary<ushort, byte[]>() {
                 [0x0000] = new byte[1] { 0 },
@@ -3060,7 +3071,7 @@ namespace DSPRE.Resources {
                 [0x020F] = new byte[] { 2 },
                 [0x0210] = new byte[] { 2 },
                 [0x0211] = new byte[] { 2 },
-                [0x0212] = new byte[] { 1, 2 },
+                [0x0212] = new byte[] { 2, 1 },
                 [0x0213] = new byte[] { 1, 2 },
                 [0x0214] = new byte[] { 2, 2, 2 },
                 [0x0215] = new byte[] { 2, 2, 2 },

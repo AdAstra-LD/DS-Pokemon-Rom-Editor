@@ -395,7 +395,6 @@
     <None Include="Resources\Graphics\Program Icons\RightClick.png" />
     <None Include="Resources\Graphics\Program Icons\unpackAllIcon.png" />
     <None Include="Resources\Graphics\Program Icons\SurfIcon.png" />
-    <None Include="Resources\cameraIcon.png" />
     <Content Include="Resources\Graphics\Area Icons\hgsslake.png" />
     <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera0.png" />
     <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera1.png" />
@@ -1299,10 +1298,6 @@
     <Content Include="Resources\Graphics\Weather\DPPt\ptheavyfog.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptlightfog.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptredish.png" />
-    <None Include="Resources\wrenchIcon.png" />
-    <None Include="Resources\selectBldWithMouse.png" />
-    <None Include="Resources\hgsscamera16.png" />
-    <None Include="Resources\questionMark.png" />
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
