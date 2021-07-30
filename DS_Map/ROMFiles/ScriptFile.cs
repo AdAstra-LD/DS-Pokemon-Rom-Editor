@@ -177,8 +177,8 @@ namespace DSPRE.ROMFiles {
 
             /* How to read parameters for different commands for DPPt*/
             switch (RomInfo.gameFamily) {
-                case "DP":
-                case "Plat":
+                case gFamEnum.DP:
+                case gFamEnum.Plat:
                     switch (id)  {
                         case 0x16: //Jump
                         case 0x1A: //Call 
@@ -288,7 +288,7 @@ namespace DSPRE.ROMFiles {
                             break;
                         case 0x2C5: 
                             {
-                                if (RomInfo.gameVersion == "Plat") {
+                                if (RomInfo.gameVersion == gVerEnum.Platinum) {
                                     parameterList.Add(dataReader.ReadBytes(2));
                                     parameterList.Add(dataReader.ReadBytes(2));
                                 } else {
@@ -300,12 +300,12 @@ namespace DSPRE.ROMFiles {
                         case 0x2C9:
                         case 0x2CA:
                         case 0x2CD:
-                            if (RomInfo.gameVersion == "Plat")
+                            if (RomInfo.gameVersion == gVerEnum.Platinum)
                                 break;
                             else
                                 goto default;
                         case 0x2CF:
-                            if (RomInfo.gameVersion == "Plat") {
+                            if (RomInfo.gameVersion == gVerEnum.Platinum) {
                                 parameterList.Add(dataReader.ReadBytes(2));
                                 parameterList.Add(dataReader.ReadBytes(2));
                             } else {
@@ -317,7 +317,7 @@ namespace DSPRE.ROMFiles {
                             break;
                     }
                     break;
-                case "HGSS":
+                case gFamEnum.HGSS:
                     switch (id) {
                         case 0x16: //Jump
                         case 0x1A: //Call 

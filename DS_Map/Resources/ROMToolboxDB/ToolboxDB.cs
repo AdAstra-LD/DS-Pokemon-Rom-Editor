@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using static DSPRE.RomInfo;
 
 namespace DSPRE.Resources.ROMToolboxDB {
     public class ToolboxDB {
-        public static Dictionary<string, uint> syntheticOverlayFileNumbersDB = new Dictionary<string, uint>() {
-            ["DP"] = 9,
-            ["Plat"] = 9,
-            ["HGSS"] = 0,
+        public static Dictionary<gFamEnum, uint> syntheticOverlayFileNumbersDB = new Dictionary<gFamEnum, uint>() {
+            [gFamEnum.DP] = 9,
+            [gFamEnum.Plat] = 9,
+            [gFamEnum.HGSS] = 0,
         };
 
         public static Dictionary<string, string> arm9ExpansionCodeDB = new Dictionary<string, string>() {
@@ -98,10 +99,10 @@ namespace DSPRE.Resources.ROMToolboxDB {
                     return "00 B5 01 1C 32 20 00 22 CC F7 58 F9 03 1C DF F7 49 FC 00 BD";
             }
         }
-        public static Dictionary<string, Tuple<uint, uint>[]> dynamicHeadersPointersDB = new Dictionary<string, Tuple<uint, uint>[]>() {
+        public static Dictionary<gFamEnum, Tuple<uint, uint>[]> dynamicHeadersPointersDB = new Dictionary<gFamEnum, Tuple<uint, uint>[]>() {
             // format: headerID*18 offset, (ARM9_HEADER_TABLE_OFFSET + n) offset
 
-            ["Plat"] = new Tuple<uint, uint>[] {
+            [gFamEnum.Plat] = new Tuple<uint, uint>[] {
             new Tuple<uint, uint>(0x3A03E, 0x3A048),
             new Tuple<uint, uint>(0x3A052, 0x3A05C),
             new Tuple<uint, uint>(0x3A066, 0x3A080),
@@ -124,7 +125,7 @@ namespace DSPRE.Resources.ROMToolboxDB {
             new Tuple<uint, uint>(0x3A212, 0x3A224),
             },
 
-            ["HGSS"] = new Tuple<uint, uint>[] {
+            [gFamEnum.HGSS] = new Tuple<uint, uint>[] {
             new Tuple<uint, uint>(0x3B282, 0x3B28C),
             new Tuple<uint, uint>(0x3B296, 0x3B2A8),
             new Tuple<uint, uint>(0x3B2B2, 0x3B2BC),

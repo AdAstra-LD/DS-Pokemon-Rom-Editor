@@ -21,10 +21,9 @@ namespace DSPRE {
         public static string arm9Path { get; private set; }
         public static string overlayTablePath { get; set; }
         public static string overlayPath { get; set; }
-        public static string gameVersion { get; private set; }
         public static string gameLanguage { get; private set; }
-        public static string gameFamily { get; private set; }
-        public static string gameName { get; private set; }
+        public static gVerEnum gameVersion { get; private set; }
+        public static gFamEnum gameFamily { get; private set; }
 
         public static uint arm9spawnOffset { get; private set; }
         public static int initialMoneyOverlayNumber { get; private set; }
@@ -35,6 +34,7 @@ namespace DSPRE {
 
         public static uint headerTableOffset { get; private set; }
         public static uint conditionalMusicTableOffsetToRAMAddress { get; internal set; }
+        public static uint encounterMusicTableOffsetToRAMAddress { get; internal set; }
         public static uint OWTableOffset { get; internal set; }
         public static string OWtablePath { get; private set; }
 
@@ -59,6 +59,19 @@ namespace DSPRE {
         public static uint[] overworldTableKeys { get; private set; }
         public static Dictionary<uint, string> ow3DSpriteDict { get; private set; }
 
+        public enum gVerEnum : byte {
+            Diamond, Pearl, Platinum,
+            HeartGold, SoulSilver,
+            Black, White,
+            Black2, White2
+        }
+        public enum gFamEnum : byte {
+            DP,
+            Plat,
+            HGSS,
+            BW,
+            BW2
+        }
         public enum DirNames : byte {
             synthOverlay,            
             dynamicHeaders,
@@ -103,13 +116,15 @@ namespace DSPRE {
             overlayPath = workDir + "overlay";
             internalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
 
-            LoadGameVersion();
-            if (gameVersion is null) {
+            try {
+                gameVersion = PokeDatabase.System.versionsDict[romID];
+            } catch (KeyNotFoundException) {
+                MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             LoadGameFamily();
-            LoadGameName();
             LoadGameLanguage();
 
             SetNarcDirs();
@@ -125,23 +140,23 @@ namespace DSPRE {
             SetTrainerClassMessageNumber();
 
             /* System */
-            ScriptCommandNamesDict = BuildCommandNamesDatabase(gameVersion);
-            ScriptCommandParametersDict = BuildCommandParametersDatabase(gameVersion);
-            ScriptActionNamesDict = BuildActionNamesDatabase(gameVersion);
+            ScriptCommandNamesDict = BuildCommandNamesDatabase(gameFamily);
+            ScriptCommandParametersDict = BuildCommandParametersDatabase(gameFamily);
+            ScriptActionNamesDict = BuildActionNamesDatabase(gameFamily);
         }
         #endregion
 
         #region Methods (22)
-        public static Dictionary<ushort, string> BuildCommandNamesDatabase(string gameVer) {
+        public static Dictionary<ushort, string> BuildCommandNamesDatabase(gFamEnum gameFam) {
             Dictionary<ushort, string> commonDictionaryNames;
             Dictionary<ushort, string> specificDictionaryNames;
 
-            switch (gameFamily) {
-                case "DP":
+            switch (gameFam) {
+                case gFamEnum.DP:
                     commonDictionaryNames = PokeDatabase.ScriptEditor.DPPtScrCmdNames;
                     specificDictionaryNames = PokeDatabase.ScriptEditor.DPScrCmdNames;
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     commonDictionaryNames = PokeDatabase.ScriptEditor.DPPtScrCmdNames;
                     specificDictionaryNames = PokeDatabase.ScriptEditor.PlatScrCmdNames;
                     break;
@@ -152,16 +167,16 @@ namespace DSPRE {
             }
             return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
         }
-        public static Dictionary<ushort, byte[]> BuildCommandParametersDatabase(string gameVer) {
+        public static Dictionary<ushort, byte[]> BuildCommandParametersDatabase(gFamEnum gameFam) {
             Dictionary<ushort, byte[]> commonDictionaryParams;
             Dictionary<ushort, byte[]> specificDictionaryParams;
 
-            switch (gameFamily) {
-                case "DP":
+            switch (gameFam) {
+                case gFamEnum.DP:
                     commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
                     specificDictionaryParams = PokeDatabase.ScriptEditor.DPScrCmdParameters;
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
                     specificDictionaryParams = PokeDatabase.ScriptEditor.PlatScrCmdParameters;
                     break;
@@ -172,10 +187,10 @@ namespace DSPRE {
             }
             return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
         }
-        public static Dictionary<ushort, string> BuildActionNamesDatabase(string gameVer) {
-            switch (gameFamily) {
-                case "DP":
-                case "Plat":
+        public static Dictionary<ushort, string> BuildActionNamesDatabase(gFamEnum gameFam) {
+            switch (gameFam) {
+                case gFamEnum.DP:
+                case gFamEnum.Plat:
                     return PokeDatabase.ScriptEditor.movementsDictIDName;
                 default:
                     var commonDictionaryParams = PokeDatabase.ScriptEditor.movementsDictIDName;
@@ -197,7 +212,7 @@ namespace DSPRE {
         }
         public static void SetHeaderTableOffset() {
             switch (gameFamily) {
-                case "DP":
+                case gFamEnum.DP:
                     switch (gameLanguage) {
                         case "ENG":
                             headerTableOffset = 0xEEDBC;
@@ -215,11 +230,11 @@ namespace DSPRE {
                             headerTableOffset = 0xEEDCC;
                             break;
                         case "JAP":
-                            headerTableOffset = 0xF0D68;
+                            headerTableOffset = gameVersion == gVerEnum.Diamond ? (uint)0xF0D68 : 0xF0D6C;
                             break;
                     }
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     switch (gameLanguage) {
                         case "ENG":
                             headerTableOffset = 0xE601C;
@@ -241,13 +256,13 @@ namespace DSPRE {
                             break;
                     }
                     break;
-                case "HGSS":
+                case gFamEnum.HGSS:
                     switch (gameLanguage) {
                         case "ENG":
                             headerTableOffset = 0xF6BE0;
                             break;
                         case "ESP":
-                            headerTableOffset = gameVersion == "HG" ? 0xF6BC8 : (uint)0xF6BD0;
+                            headerTableOffset = gameVersion == gVerEnum.HeartGold ? 0xF6BC8 : (uint)0xF6BD0;
                             break;
                         case "ITA":
                             headerTableOffset = 0xF6B58;
@@ -267,7 +282,7 @@ namespace DSPRE {
         }
         public static void SetupSpawnSettings() {
             switch (gameFamily) {
-                case "DP":
+                case gFamEnum.DP:
                     initialMoneyOverlayNumber = 52;
                     initialMoneyOverlayOffset = 0x1E4;
                     switch (gameLanguage) {
@@ -291,7 +306,7 @@ namespace DSPRE {
                             break;
                     }
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     initialMoneyOverlayNumber = 57;
                     initialMoneyOverlayOffset = 0x1EC;
                     switch (gameLanguage) {
@@ -315,7 +330,7 @@ namespace DSPRE {
                             break;
                     }
                     break;
-                case "HGSS":
+                case gFamEnum.HGSS:
                     initialMoneyOverlayNumber = 36;
                     initialMoneyOverlayOffset = 0x2FC;
                     switch (gameLanguage) {
@@ -323,7 +338,7 @@ namespace DSPRE {
                             arm9spawnOffset = 0xFA17C;
                             break;
                         case "ESP":
-                            arm9spawnOffset = gameVersion == "HG" ? 0xFA164 : (uint)0xFA16C;
+                            arm9spawnOffset = gameVersion == gVerEnum.HeartGold ? 0xFA164 : (uint)0xFA16C;
                             break;
                         case "ITA":
                             arm9spawnOffset = 0xFA0F4;
@@ -343,17 +358,17 @@ namespace DSPRE {
         }
         public static void PrepareCameraData() {
             switch (gameFamily) {
-                case "DP":
+                case gFamEnum.DP:
                     cameraTblOverlayNumber = 5;
                     cameraTblOffsetsToRAMaddress = gameLanguage.Equals("JAP") ? (new uint[] { 0x4C50 }) : (new uint[] { 0x4908 });
                     cameraSize = 24;
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     cameraTblOverlayNumber = 5;
                     cameraTblOffsetsToRAMaddress = new uint[] { 0x4E24 };
                     cameraSize = 24;
                     break;
-                case "HGSS":
+                case gFamEnum.HGSS:
                     cameraTblOverlayNumber = 1;
                     cameraSize = 36;
                     switch (gameLanguage) {
@@ -373,7 +388,7 @@ namespace DSPRE {
         }
         public static void SetOWtable() {
             switch (gameFamily) {
-                case "DP":
+                case gFamEnum.DP:
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
                     switch (gameLanguage) { // Go to the beginning of the overworld table
                         case "ENG":
@@ -387,7 +402,7 @@ namespace DSPRE {
                             break;
                     }
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
                     switch (gameLanguage) { // Go to the beginning of the overworld table
                         case "ITA":
@@ -408,7 +423,7 @@ namespace DSPRE {
                             break;
                     }
                     break;
-                case "HGSS":
+                case gFamEnum.HGSS:
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0001.bin";
                     OWTableOffset = 0x21BA8;
                     break;
@@ -416,10 +431,10 @@ namespace DSPRE {
         }
         public static void SetConditionalMusicTableOffsetToRAMAddress() {
             switch (gameFamily) {
-                case "HGSS":
+                case gFamEnum.HGSS:
                     switch (gameLanguage) {                            
                         case "ESP":
-                            conditionalMusicTableOffsetToRAMAddress = gameVersion == "HG" ? (uint)0x667D0 : 0x667D8;
+                            conditionalMusicTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x667D0 : 0x667D8;
                             break;
                         case "ENG":
                         case "ITA":
@@ -434,12 +449,66 @@ namespace DSPRE {
                 break;
             }
         }
+        public static void SetEncounterMusicTableOffsetToRAMAddress() {
+            switch (gameFamily) {
+                case gFamEnum.HGSS:
+                    switch (gameLanguage) {
+                        case "ESP":
+                            encounterMusicTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x550D8 : 0x550E0;
+                            break;
+                        case "ENG":
+                        case "ITA":
+                        case "FRA":
+                        case "GER":
+                            encounterMusicTableOffsetToRAMAddress = 0x550E0;
+                            break;
+                        case "JAP":
+                            encounterMusicTableOffsetToRAMAddress = 0x54B44;
+                            break;
+                    }
+                break;
+
+                case gFamEnum.Plat:
+                    switch (gameLanguage) {
+                        case "ENG":
+                            encounterMusicTableOffsetToRAMAddress = 0x5563C;
+                            break;
+                        case "ITA":
+                        case "FRA":
+                        case "ESP":
+                        case "GER":
+                            encounterMusicTableOffsetToRAMAddress = 0x556E0;
+                            break;
+                        case "JAP":
+                            encounterMusicTableOffsetToRAMAddress = 0x54F04; 
+                            break;
+                    }
+                    break;
+
+                case gFamEnum.DP:
+                    switch (gameLanguage) {
+                        case "ENG":
+                            encounterMusicTableOffsetToRAMAddress = 0x4AD3C;
+                            break;
+                        case "ITA":
+                        case "FRA":
+                        case "ESP":
+                        case "GER":
+                            encounterMusicTableOffsetToRAMAddress = 0x4ADAC;
+                            break;
+                        case "JAP":
+                            encounterMusicTableOffsetToRAMAddress = 0x4D9AC;
+                            break;
+                    } 
+                break;
+            }
+        }
         private void SetItemScriptFileNumber() {
             switch (gameFamily) {
-                case "DP":
+                case gFamEnum.DP:
                     itemScriptFileNumber = 370;
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     itemScriptFileNumber = 404;
                     break;
                 default:
@@ -449,21 +518,21 @@ namespace DSPRE {
         }
         private void SetNullEncounterID() {
             switch (gameFamily) {
-                case "DP":
-                case "Plat":
+                case gFamEnum.DP:
+                case gFamEnum.Plat:
                     nullEncounterID = ushort.MaxValue;
                     break;
-                case "HGSS":
+                case gFamEnum.HGSS:
                     nullEncounterID = Byte.MaxValue;
                     break;
             }
         }
         private void SetAttackNamesTextNumber() {
             switch (gameFamily) {
-                case "DP":
+                case gFamEnum.DP:
                     attackNamesTextNumber = 588;
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     attackNamesTextNumber = 647;
                     break;
                 default:
@@ -473,10 +542,10 @@ namespace DSPRE {
         }
         private void SetItemNamesTextNumber() {
             switch (gameFamily) {
-                case "DP":
+                case gFamEnum.DP:
                     itemNamesTextNumber = 344;
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     itemNamesTextNumber = 392;
                     break;
                 default:
@@ -486,10 +555,10 @@ namespace DSPRE {
         }
         private void SetLocationNamesTextNumber() {
             switch (gameFamily) {
-                case "DP":
+                case gFamEnum.DP:
                     locationNamesTextNumber = 382;
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     locationNamesTextNumber = 433;
                     break;
                 default:
@@ -499,26 +568,26 @@ namespace DSPRE {
         }
         private void SetPokémonNamesTextNumber() {
             switch (gameFamily) {
-                case "DP":
+                case gFamEnum.DP:
                     pokemonNamesTextNumbers = new int[2] { 362, 363 };
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     pokemonNamesTextNumbers = new int[7] { 412, 413, 712, 713, 714, 715, 716 }; //413?
                     break;
-                case "HGSS":
+                case gFamEnum.HGSS:
                     pokemonNamesTextNumbers = new int[7] { 237, 238, 817, 818, 819, 820, 821 }; //238?
                     break;
             }
         }
         private void SetTrainerNamesMessageNumber() {
             switch (gameFamily) {
-                case "DP":
+                case gFamEnum.DP:
                     trainerNamesMessageNumber = 559;
                     if (gameLanguage.Equals("JAP")) {
                         trainerNamesMessageNumber -= 9;
                     }
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     trainerNamesMessageNumber = 618;
                     break;
                 default:
@@ -531,13 +600,13 @@ namespace DSPRE {
         }
         private void SetTrainerClassMessageNumber() {
             switch (gameFamily) {
-                case "DP":
+                case gFamEnum.DP:
                     trainerClassMessageNumber = 560;
                     if (gameLanguage.Equals("JAP")) {
                         trainerClassMessageNumber -= 9;
                     }
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     trainerClassMessageNumber = 619;
                     break;
                 default:
@@ -571,33 +640,6 @@ namespace DSPRE {
         #endregion
 
         #region System Methods
-        private void LoadGameVersion() {
-            try {
-                gameVersion = PokeDatabase.System.versionsDict[romID];
-            } catch (KeyNotFoundException) {
-                MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        private void LoadGameName() {
-            switch (gameVersion) {
-                case "D":
-                    gameName = "Diamond";
-                    break;
-                case "P":
-                    gameName = "Pearl";
-                    break;
-                case "Plat":
-                    gameName = "Platinum";
-                    break;
-                case "HG":
-                    gameName = "HeartGold";
-                    break;
-                case "SS":
-                    gameName = "SoulSilver";
-                    break;
-            }
-        }
         private void LoadGameLanguage() {
             switch (romID) {
                 case "ADAE":
@@ -648,23 +690,23 @@ namespace DSPRE {
         }
         private void LoadGameFamily() {
             switch (gameVersion) {
-                case "D":
-                case "P":
-                    gameFamily = "DP";
+                case gVerEnum.Diamond:
+                case gVerEnum.Pearl:
+                    gameFamily = gFamEnum.DP;
                     break;
-                case "Plat":
-                    gameFamily = "Plat";
+                case gVerEnum.Platinum:
+                    gameFamily = gFamEnum.Plat;
                     break;
-                case "HG":
-                case "SS":
-                    gameFamily = "HGSS";
+                case gVerEnum.HeartGold:
+                case gVerEnum.SoulSilver:
+                    gameFamily = gFamEnum.HGSS;
                     break;
             }
-        }
+        } 
         private void SetNarcDirs() {
             Dictionary<DirNames, string> packedDirsDict = null;
             switch (gameFamily) {
-                case "DP":
+                case gFamEnum.DP:
                     string suffix = "";
                     if (!gameLanguage.Equals("JAP"))
                         suffix = "_release";
@@ -691,15 +733,15 @@ namespace DSPRE {
                         [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
                         [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
 
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion[0]) + '_' + "enc_data.narc"
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc"
                     };
                     break;
-                case "Plat":
+                case gFamEnum.Plat:
                     packedDirsDict = new Dictionary<DirNames, string>() {
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.dynamicHeaders] = @"data\debug\cb_edit\d_test.narc",
 
-                        [DirNames.textArchives] = @"data\msgdata\" + gameVersion.Substring(0, 2).ToLower() + '_' + "msg.narc",
+                        [DirNames.textArchives] = @"data\msgdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "msg.narc",
 
                         [DirNames.matrices] = @"data\fielddata\mapmatrix\map_matrix.narc",
 
@@ -719,10 +761,10 @@ namespace DSPRE {
                         [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
                         [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
 
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.Substring(0, 2).ToLower() + '_' + "enc_data.narc"
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "enc_data.narc"
                     };
                     break;
-                case "HGSS":
+                case gFamEnum.HGSS:
                     packedDirsDict = new Dictionary<DirNames, string>() {
                         [DirNames.synthOverlay] = @"data\a\0\2\8",
                         [DirNames.dynamicHeaders] = @"data\a\0\5\0",
@@ -751,7 +793,7 @@ namespace DSPRE {
                     };
 
                     //Encounter archive is different for SS 
-                    packedDirsDict[DirNames.encounters] = gameVersion == "HG" ? @"data\a\0\3\7" : @"data\a\1\3\6";
+                    packedDirsDict[DirNames.encounters] = gameVersion == gVerEnum.HeartGold ? @"data\a\0\3\7" : @"data\a\1\3\6";
                     break;
             }
 
@@ -762,11 +804,11 @@ namespace DSPRE {
         }
         public static void LoadMapCellsColorDictionary() {
             switch (gameFamily) {
-                case "DP":
-                case "Plat":
+                case gFamEnum.DP:
+                case gFamEnum.Plat:
                     MapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.DPPtmatrixColorsDict;
                     break;
-                case "HGSS":
+                case gFamEnum.HGSS:
                     MapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.HGSSmatrixColorsDict;
                     break;
             }
@@ -777,8 +819,8 @@ namespace DSPRE {
         public static void ReadOWTable() {
             OverworldTable = new SortedDictionary<uint, (uint spriteID, ushort properties)>();
             switch (gameFamily) {
-                case "DP":
-                case "Plat":
+                case gFamEnum.DP:
+                case gFamEnum.Plat:
                     using (BinaryReader idReader = new BinaryReader(new FileStream(OWtablePath, FileMode.Open))) {
                         idReader.BaseStream.Position = OWTableOffset;
 
@@ -791,7 +833,7 @@ namespace DSPRE {
                         }
                     }
                     break;
-                case "HGSS":
+                case gFamEnum.HGSS:
                     using (BinaryReader idReader = new BinaryReader(new FileStream(OWtablePath, FileMode.Open))) {
                         idReader.BaseStream.Position = OWTableOffset;
 

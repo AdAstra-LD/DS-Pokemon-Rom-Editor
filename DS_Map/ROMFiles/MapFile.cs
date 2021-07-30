@@ -67,7 +67,7 @@ namespace DSPRE.ROMFiles {
                 int bdhcSectionLength = reader.ReadInt32();
 
                 /* Read background sounds section */
-                if (RomInfo.gameFamily == "HGSS") {
+                if (RomInfo.gameFamily == gFamEnum.HGSS) {
                     ushort signature = reader.ReadUInt16();
                     if (signature != 0x1234) {
                         MessageBox.Show("The header section of this map's BackGround Sound data is corrupted.",
@@ -188,7 +188,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(bdhc.Length);
 
                 /* Write soundplate section for HG/SS */
-                if (RomInfo.gameFamily == "HGSS") {
+                if (RomInfo.gameFamily == gFamEnum.HGSS) {
                     writer.Write(bgs);
                 }
 

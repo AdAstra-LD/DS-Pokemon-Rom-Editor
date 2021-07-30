@@ -1,6 +1,7 @@
 ﻿using DSPRE.ROMFiles;
 using System.Collections.Generic;
 using System.Drawing;
+using static DSPRE.RomInfo;
 
 namespace DSPRE.Resources {
     public static class PokeDatabase {
@@ -17,6 +18,7 @@ namespace DSPRE.Resources {
                 "[08] Island",
                 "[09] Wood"
             };
+
             public static Dictionary<byte, string> HGSSAreaIconsDict = new Dictionary<byte, string>() {
                 [00] = "Not displayed",
                 [01] = "Wall",
@@ -3436,42 +3438,42 @@ namespace DSPRE.Resources {
             };
         }
         public static class System {
-            public static Dictionary<string, string> versionsDict = new Dictionary<string, string>() {
-                ["ADAE"] = "D",
-                ["ADAS"] = "D",
-                ["ADAI"] = "D",
-                ["ADAF"] = "D",
-                ["ADAD"] = "D",
-                ["ADAJ"] = "D",
+            public static Dictionary<string, gVerEnum> versionsDict = new Dictionary<string, gVerEnum>() {
+                ["ADAE"] = gVerEnum.Diamond,
+                ["ADAS"] = gVerEnum.Diamond,
+                ["ADAI"] = gVerEnum.Diamond,
+                ["ADAF"] = gVerEnum.Diamond,
+                ["ADAD"] = gVerEnum.Diamond,
+                ["ADAJ"] = gVerEnum.Diamond,
 
-                ["APAE"] = "P",
-                ["APAS"] = "P",
-                ["APAI"] = "P",
-                ["APAF"] = "P",
-                ["APAD"] = "P",
-                ["APAJ"] = "P",
+                ["APAE"] = gVerEnum.Pearl,
+                ["APAS"] = gVerEnum.Pearl,
+                ["APAI"] = gVerEnum.Pearl,
+                ["APAF"] = gVerEnum.Pearl,
+                ["APAD"] = gVerEnum.Pearl,
+                ["APAJ"] = gVerEnum.Pearl,
 
-                ["CPUE"] = "Plat",
-                ["CPUS"] = "Plat",
-                ["CPUI"] = "Plat",
-                ["CPUF"] = "Plat",
-                ["CPUD"] = "Plat",
-                ["CPUJ"] = "Plat",
-                ["CPUP"] = "Plat",
+                ["CPUE"] = gVerEnum.Platinum,
+                ["CPUS"] = gVerEnum.Platinum,
+                ["CPUI"] = gVerEnum.Platinum,
+                ["CPUF"] = gVerEnum.Platinum,
+                ["CPUD"] = gVerEnum.Platinum,
+                ["CPUJ"] = gVerEnum.Platinum,
+                ["CPUP"] = gVerEnum.Platinum,
 
-                ["IPKE"] = "HG",
-                ["IPKS"] = "HG",
-                ["IPKI"] = "HG",
-                ["IPKF"] = "HG",
-                ["IPKD"] = "HG",
-                ["IPKJ"] = "HG",
+                ["IPKE"] = gVerEnum.HeartGold,
+                ["IPKS"] = gVerEnum.HeartGold,
+                ["IPKI"] = gVerEnum.HeartGold,
+                ["IPKF"] = gVerEnum.HeartGold,
+                ["IPKD"] = gVerEnum.HeartGold,
+                ["IPKJ"] = gVerEnum.HeartGold,
 
-                ["IPGE"] = "SS",
-                ["IPGS"] = "SS",
-                ["IPGI"] = "SS",
-                ["IPGF"] = "SS",
-                ["IPGD"] = "SS",
-                ["IPGJ"] = "SS"
+                ["IPGE"] = gVerEnum.SoulSilver,
+                ["IPGS"] = gVerEnum.SoulSilver,
+                ["IPGI"] = gVerEnum.SoulSilver,
+                ["IPGF"] = gVerEnum.SoulSilver,
+                ["IPGD"] = gVerEnum.SoulSilver,
+                ["IPGJ"] = gVerEnum.SoulSilver
             };
 
             public static Dictionary<byte, string> MapCollisionPainters = new Dictionary<byte, string>() {
@@ -4087,7 +4089,6 @@ namespace DSPRE.Resources {
                 [494] = "Egg",
                 [495] = "Bad Egg"
             };
-
             public static class MatrixCellColors {
                 /* Initialize dictionary of colors corresponding to border maps in the matrix editor */
                 public static Dictionary<List<uint>, (Color back, Color fore)> DPPtmatrixColorsDict = new Dictionary<List<uint>, (Color back, Color fore)> {
@@ -4175,9 +4176,8 @@ namespace DSPRE.Resources {
                     [new byte[] { 28 }] = "ptredish",
                     [new byte[] { 29 }] = "ptblueish",
                     [new byte[] { 30 }] = "ptdim",
-
-
                 };
+
                 public static Dictionary<byte[], string> hgssweatherImageDict = new Dictionary<byte[], string>() {
                     [new byte[] { 0}] = "hgssnormal",
                     [new byte[] { 1, 2, 3, 4 }] = "hgssrain",

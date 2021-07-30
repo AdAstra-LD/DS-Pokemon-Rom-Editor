@@ -21,13 +21,14 @@ namespace DSPRE {
 
         public const string backupSuffix = ".backup";
 
-        public static void WriteToFile(string filepath, byte[] bytesToWrite, uint writeAt = 0, int readFrom = 0, bool fromScratch = false) {
-            if (fromScratch)
+        public static void WriteToFile(string filepath, byte[] toOutput, uint writeAt = 0, int indexFirstByteToWrite = 0, int? indexLastByteToWrite = null, bool fromScratch = false) {
+            if (fromScratch) {
                 File.Delete(filepath);
+            }
 
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(filepath))) {
                 writer.BaseStream.Position = writeAt;
-                writer.Write(bytesToWrite, readFrom, bytesToWrite.Length - readFrom);
+                writer.Write(toOutput, indexFirstByteToWrite, indexLastByteToWrite is null ? toOutput.Length - indexFirstByteToWrite : (int)indexLastByteToWrite);
             }
         }
         public static byte[] ReadFromFile(string filepath, long startOffset = 0, long numberOfBytes = 0) {
@@ -226,11 +227,17 @@ namespace DSPRE {
             repack.WaitForExit();
         }
 
-        public static byte[] ReadFromArm9(uint startOffset, long numberOfBytes = 0) {
+        public static byte[] ReadBytesFromArm9(uint startOffset, long numberOfBytes = 0) {
             return ReadFromFile(RomInfo.arm9Path, startOffset, numberOfBytes);
         }
-        public static void WriteToArm9(byte[] bytesToWrite, uint writeAt = 0, int readFrom = 0) {
-            WriteToFile(RomInfo.arm9Path, bytesToWrite, writeAt, readFrom);
+        public static void WriteBytesToArm9(byte[] bytesToWrite, uint destOffset, int indexFirstByteToWrite = 0, int? indexLastByteToWrite = null) {
+            WriteToFile(RomInfo.arm9Path, bytesToWrite, destOffset, indexFirstByteToWrite, indexLastByteToWrite);
+        }
+        public static byte ReadByteFromArm9(uint startOffset) {
+            return ReadFromFile(RomInfo.arm9Path, startOffset, 1)[0];
+        }
+        public static void WriteByteToArm9(byte value, uint destOffset) {
+            WriteToFile(RomInfo.arm9Path, BitConverter.GetBytes(value), destOffset, 0);
         }
 
         public static byte[] StringToByteArray(String hex) {

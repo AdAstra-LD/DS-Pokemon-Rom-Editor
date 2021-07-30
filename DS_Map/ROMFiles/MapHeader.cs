@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using static DSPRE.RomInfo;
 
 namespace DSPRE.ROMFiles {
     /* ---------------------- HEADER DATA STRUCTURE (DPPt):----------------------------
@@ -132,9 +133,9 @@ namespace DSPRE.ROMFiles {
             }
 
             switch (RomInfo.gameFamily) {
-                case "DP":
+                case gFamEnum.DP:
                     return new HeaderDP(headerNumber, new MemoryStream(headerData));
-                case "Plat":
+                case gFamEnum.Plat:
                     return new HeaderPt(headerNumber, new MemoryStream(headerData));
                 default:
                     return new HeaderHGSS(headerNumber, new MemoryStream(headerData));
