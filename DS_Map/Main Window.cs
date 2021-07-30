@@ -553,7 +553,12 @@ namespace DSPRE {
                 return;
             }
 
-            SetupROMLanguage(Directory.GetFiles(romFolder.FileName).First(x => x.Contains("header.bin")));
+            try {
+                SetupROMLanguage(Directory.GetFiles(romFolder.FileName).First(x => x.Contains("header.bin")));
+            } catch (InvalidOperationException) {
+                MessageBox.Show("This folder does not seem to contain any data from a NDS Pokémon ROM.", "No ROM Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, romFolder.FileName, useSuffix: false);
 
@@ -1976,18 +1981,17 @@ namespace DSPRE {
                 headersGridView.Columns.Add("Column" + i, i.ToString("D"));
                 headersGridView.Columns[i].Width = 32; // Set column size
                 headersGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                headersGridView.Columns[i].Frozen = (i == 0);
+                headersGridView.Columns[i].Frozen = false;
 
                 heightsGridView.Columns.Add("Column" + i, i.ToString("D"));
                 heightsGridView.Columns[i].Width = 21; // Set column size
                 heightsGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                headersGridView.Columns[i].Frozen = (i == 0);
+                heightsGridView.Columns[i].Frozen = false;
 
                 mapFilesGridView.Columns.Add("Column" + i, i.ToString("D"));
                 mapFilesGridView.Columns[i].Width = 32; // Set column size
                 mapFilesGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                headersGridView.Columns[i].Frozen = (i == 0);
-
+                mapFilesGridView.Columns[i].Frozen = false;
             }
 
             /* Generate table rows */
@@ -2011,10 +2015,13 @@ namespace DSPRE {
                 }
             }
 
-            if (currentMatrix.hasHeadersSection)
+            if (currentMatrix.hasHeadersSection) {
                 matrixTabControl.TabPages.Add(headersTabPage);
-            if (currentMatrix.hasHeightsSection)
+            }
+
+            if (currentMatrix.hasHeightsSection) {
                 matrixTabControl.TabPages.Add(heightsTabPage);
+            }
         }
         #endregion
         private void SetupMatrixEditor() {
@@ -2187,8 +2194,7 @@ namespace DSPRE {
             /* Add or remove rows in DataGridView control */
             int delta = (int)heightUpDown.Value - currentMatrix.height;
             for (int i = 0; i < Math.Abs(delta); i++) {
-                if (delta < 0) // Remove rows
-                {
+                if (delta < 0) { // Remove rows
                     headersGridView.Rows.RemoveAt(currentMatrix.height - 1 - i);
                     heightsGridView.Rows.RemoveAt(currentMatrix.height - 1 - i);
                     mapFilesGridView.Rows.RemoveAt(currentMatrix.height - 1 - i);
