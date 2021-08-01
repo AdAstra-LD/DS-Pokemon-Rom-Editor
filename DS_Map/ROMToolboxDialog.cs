@@ -382,8 +382,9 @@ namespace DSPRE {
                 Parallel.ForEach(RomInfo.pokemonNamesTextNumbers, ID => {
                     TextArchive pokeName = new TextArchive(ID);
                     Parallel.For(1, pokeName.messages.Count, i => {
-                        if (pokeName.messages[i].Length <= 1)
+                        if (pokeName.messages[i].Length <= 1) {
                             i++;
+                        }
 
                         pokeName.messages[i] = pokeName.messages[i].Replace(PokeDatabase.System.pokeNames[(ushort)i].ToUpper(), PokeDatabase.System.pokeNames[(ushort)i]);
                     });

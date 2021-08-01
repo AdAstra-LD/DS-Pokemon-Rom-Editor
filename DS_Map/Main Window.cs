@@ -6926,7 +6926,10 @@ namespace DSPRE {
             string pokeName = txtInfo.ToTitleCase(toFix.ToLower());
             pokeName = pokeName.Replace(" ", "_");
             pokeName = pokeName.Replace("'", "_");
+            pokeName = pokeName.Replace("’", "_");
             pokeName = pokeName.Replace(":", "_");
+            pokeName = pokeName.Replace("_D", "_d"); //Fix Farfetch'd
+
             pokeName = pokeName.Replace("♀", "F");
             pokeName = pokeName.Replace("♂", "M");
             return pokeName;
@@ -6936,20 +6939,16 @@ namespace DSPRE {
                 currentTrainerFile.party[0].pokeID = (ushort)partyPokemon1ComboBox.SelectedIndex;
             }
             ComboBox cb = (ComboBox)sender;
-            if (cb.SelectedIndex > 0) {
-                Image pokeIcon = (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex]));
-                partyPokemon1PictureBox.Image = pokeIcon;
-            }
+            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
+            partyPokemon1PictureBox.Image = pokeIcon;
         }
         private void partyPokemon2ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (!disableHandlers) {
                 currentTrainerFile.party[1].pokeID = (ushort)partyPokemon2ComboBox.SelectedIndex;
             }
             ComboBox cb = (ComboBox)sender;
-            if (cb.SelectedIndex > 0) {
-                Image pokeIcon = (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex]));
-                partyPokemon2PictureBox.Image = pokeIcon;
-            }
+            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
+            partyPokemon2PictureBox.Image = pokeIcon;
         }
 
         private void partyPokemon3ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -6957,10 +6956,8 @@ namespace DSPRE {
                 currentTrainerFile.party[2].pokeID = (ushort)partyPokemon3ComboBox.SelectedIndex;
             }
             ComboBox cb = (ComboBox)sender;
-            if (cb.SelectedIndex > 0) {
-                Image pokeIcon = (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex]));
-                partyPokemon3PictureBox.Image = pokeIcon;
-            }
+            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
+            partyPokemon3PictureBox.Image = pokeIcon;
         }
 
         private void partyPokemon4ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -6968,10 +6965,8 @@ namespace DSPRE {
                 currentTrainerFile.party[3].pokeID = (ushort)partyPokemon4ComboBox.SelectedIndex;
             }
             ComboBox cb = (ComboBox)sender;
-            if (cb.SelectedIndex > 0) {
-                Image pokeIcon = (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex]));
-                partyPokemon4PictureBox.Image = pokeIcon;
-            }
+            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
+            partyPokemon4PictureBox.Image = pokeIcon;
         }
 
         private void partyPokemon5ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -6979,10 +6974,8 @@ namespace DSPRE {
                 currentTrainerFile.party[4].pokeID = (ushort)partyPokemon5ComboBox.SelectedIndex;
             }
             ComboBox cb = (ComboBox)sender;
-            if (cb.SelectedIndex > 0) {
-                Image pokeIcon = (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex]));
-                partyPokemon5PictureBox.Image = pokeIcon;
-            }
+            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
+            partyPokemon5PictureBox.Image = pokeIcon;
         }
 
         private void partyPokemon6ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -6990,10 +6983,8 @@ namespace DSPRE {
                 currentTrainerFile.party[5].pokeID = (ushort)partyPokemon6ComboBox.SelectedIndex;
             }
             ComboBox cb = (ComboBox)sender;
-            if (cb.SelectedIndex > 0) {
-                Image pokeIcon = (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex]));
-                partyPokemon6PictureBox.Image = pokeIcon;
-            }
+            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
+            partyPokemon6PictureBox.Image = pokeIcon;
         }
 
         private void partyCountUpDown_ValueChanged(object sender, EventArgs e) {
