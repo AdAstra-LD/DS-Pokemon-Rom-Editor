@@ -9142,6 +9142,7 @@
             // tableEditorTabPage
             // 
             this.tableEditorTabPage.Controls.Add(this.conditionalMusicGroupBox);
+            this.tableEditorTabPage.ImageIndex = 9;
             this.tableEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.tableEditorTabPage.Name = "tableEditorTabPage";
             this.tableEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -9316,6 +9317,7 @@
             this.mainTabImageList.Images.SetKeyName(6, "tileset_editor.png");
             this.mainTabImageList.Images.SetKeyName(7, "gamecamera_editor.png");
             this.mainTabImageList.Images.SetKeyName(8, "trainer_editor.png");
+            this.mainTabImageList.Images.SetKeyName(9, "tableEditor.png");
             // 
             // gameIcon
             // 

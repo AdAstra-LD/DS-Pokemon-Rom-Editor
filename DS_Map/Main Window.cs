@@ -7277,12 +7277,6 @@ namespace DSPRE {
 
             trainerClassNameTextbox.Text = GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
 
-            if (disableHandlers) {
-                return;
-            }
-            currentTrainerFile.trp.trainerClass = (byte)trainerClassListBox.SelectedIndex;
-
-
             (uint entryOffset, ushort musicD, ushort? musicN) output;
             if (trainerClassEncounterMusicDict.TryGetValue(currentTrainerFile.trp.trainerClass, out output)) {
                 encounterSSEQDupDown.Value = output.musicD;
@@ -7294,6 +7288,11 @@ namespace DSPRE {
                 encounterSSEQDupDown.Value = 0;
                 encounterSSEQNupDown.Value = 0;
             }
+
+            if (disableHandlers) {
+                return;
+            }
+            currentTrainerFile.trp.trainerClass = (byte)trainerClassListBox.SelectedIndex;
         }
 
         private void LoadTrainerClassPic() {

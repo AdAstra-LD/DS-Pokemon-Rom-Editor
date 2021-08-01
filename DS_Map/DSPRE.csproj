@@ -1286,11 +1286,11 @@
     <None Include="Resources\Graphics\Program Icons\spawnCoordsMatrixeditorIcon.png" />
     <None Include="Resources\Graphics\Program Icons\resetListIcon.png" />
     <None Include="Resources\Graphics\Program Icons\saveTextureFromNSBMD.png" />
-    <None Include="Resources\Graphics\Program Icons\trainerEditor.png" />
     <None Include="Resources\Graphics\Program Icons\trainer_editor.png" />
     <None Include="Resources\Graphics\Program Icons\saveButton.png" />
     <None Include="Resources\Graphics\Program Icons\selectBldWithMouse.png" />
     <None Include="Resources\Graphics\Program Icons\wrenchIcon.png" />
+    <Content Include="Resources\Graphics\Program Icons\tableEditor.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptblueish.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptdarkfog.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptdim.png" />
