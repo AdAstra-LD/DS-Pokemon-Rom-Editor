@@ -24,7 +24,7 @@ namespace DSPRE.ROMFiles {
                 buildingsTileset = reader.ReadUInt16();
                 mapTileset = reader.ReadUInt16();
 
-                if (RomInfo.gameFamily.Equals("HGSS")) {
+                if (RomInfo.gameFamily == gFamEnum.HGSS) {
                     dynamicTextureType = reader.ReadUInt16();
                     areaType = reader.ReadByte();
                     lightType = reader.ReadByte();
@@ -44,7 +44,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(buildingsTileset);
                 writer.Write(mapTileset);
 
-                if (RomInfo.gameFamily.Equals("HGSS")) {
+                if (RomInfo.gameFamily == gFamEnum.HGSS) {
                     writer.Write(dynamicTextureType);
                     writer.Write(areaType);
                     writer.Write((byte)lightType);

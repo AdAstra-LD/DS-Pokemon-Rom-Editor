@@ -1032,7 +1032,7 @@ namespace DSPRE {
             if (disableHandlers)
                 return;
 
-            if (RomInfo.gameFamily.Equals("HGSS")) {
+            if (RomInfo.gameFamily == gFamEnum.HGSS) {
                 HeaderHGSS currentHeaderHGSS = (HeaderHGSS)currentHeader;
                 currentHeaderHGSS.followMode = (byte)followModeComboBox.SelectedIndex;
             }
@@ -1041,7 +1041,7 @@ namespace DSPRE {
         private void kantoRadioButton_CheckedChanged(object sender, EventArgs e) {
             if (disableHandlers)
                 return;
-            if (RomInfo.gameFamily.Equals("HGSS")) {
+            if (RomInfo.gameFamily == gFamEnum.HGSS) {
                 HeaderHGSS currentHeaderHGSS = (HeaderHGSS)currentHeader;
                 currentHeaderHGSS.kantoFlag = kantoRadioButton.Checked;
             }
@@ -6427,7 +6427,7 @@ namespace DSPRE {
             areaDataLightTypeComboBox.SelectedIndex = currentAreaData.lightType;
 
             disableHandlers = true;
-            if (RomInfo.gameFamily.Equals("HGSS")) {
+            if (RomInfo.gameFamily == gFamEnum.HGSS) {
                 areaDataDynamicTexturesNumericUpDown.Value = currentAreaData.dynamicTextureType;
 
                 bool interior = currentAreaData.areaType == 0;
@@ -6579,7 +6579,7 @@ namespace DSPRE {
                 br.BaseStream.Position = overlayCameraTblOffset = RAMaddresses[0] - DSUtils.GetOverlayRAMAddress(RomInfo.cameraTblOverlayNumber);
 
 
-                if (RomInfo.gameFamily.Equals("HGSS")) {
+                if (RomInfo.gameFamily == gFamEnum.HGSS) {
                     currentCameraTable = new GameCamera[17];
                     for (int i = 0; i < currentCameraTable.Length; i++) {
                         currentCameraTable[i] = new GameCamera(br.ReadUInt32(), br.ReadInt16(), br.ReadInt16(), br.ReadInt16(),
