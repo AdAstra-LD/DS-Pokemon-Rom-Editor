@@ -7210,10 +7210,13 @@ namespace DSPRE {
         private void partyMoveComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (!disableHandlers) {
                 for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
-                    currentTrainerFile.party[i].moves[0] = (ushort)partyFirstMoveComponentList[i].SelectedIndex;
-                    currentTrainerFile.party[i].moves[1] = (ushort)partySecondMoveComponentList[i].SelectedIndex;
-                    currentTrainerFile.party[i].moves[2] = (ushort)partyThirdMoveComponentList[i].SelectedIndex;
-                    currentTrainerFile.party[i].moves[3] = (ushort)partyFourthMoveComponentList[i].SelectedIndex;
+                    ushort[] moves = currentTrainerFile.party[i].moves;
+                    if (moves != null) {
+                        moves[0] = (ushort)partyFirstMoveComponentList[i].SelectedIndex;
+                        moves[1] = (ushort)partySecondMoveComponentList[i].SelectedIndex;
+                        moves[2] = (ushort)partyThirdMoveComponentList[i].SelectedIndex;
+                        moves[3] = (ushort)partyFourthMoveComponentList[i].SelectedIndex;
+                    }
                 }
             }
         }
@@ -7404,7 +7407,7 @@ namespace DSPRE {
             RefreshTrainerPropertiesGUI();
 
             /* Display success message */
-            MessageBox.Show("Events imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Trainer Properties imported successfully!\nRemember to save the current Trainer File.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void exportPartyButton_Click(object sender, EventArgs e) {
@@ -7413,7 +7416,21 @@ namespace DSPRE {
         }
 
         private void importReplacePartyButton_Click(object sender, EventArgs e) {
+            /* Prompt user to select .evt file */
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "Gen IV Party File (*.pdat)|*.pdat"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK) {
+                return;
+            }
 
+            /* Update trp object in memory */
+            currentTrainerFile.party = new Party(readFirstByte: true, TrainerFile.POKE_IN_PARTY, new FileStream(of.FileName, FileMode.Open), currentTrainerFile.trp);
+            RefreshTrainerPropertiesGUI();
+            RefreshTrainerPartyGUI();
+
+            /* Display success message */
+            MessageBox.Show("Trainer Party imported successfully!\nRemember to save the current Trainer File.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void saveTrainerClassButton_Click(object sender, EventArgs e) {
