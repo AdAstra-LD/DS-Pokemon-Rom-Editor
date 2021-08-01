@@ -253,8 +253,9 @@ namespace DSPRE {
             foreach (KeyValuePair<uint[], string> kv in ToolboxDB.matrixExpansionDB) {
                 foreach (uint offset in kv.Key) {
                     int languageOffset = 0;
-                    if (RomInfo.romID == "IPKE" || RomInfo.romID == "IPGE" || RomInfo.romID == "IPGS")
+                    if (RomInfo.romID == "IPKE" || RomInfo.romID == "IPGE" || RomInfo.romID == "IPGS") {
                         languageOffset = +8;
+                    }
 
                     byte[] read = DSUtils.ReadBytesFromArm9((uint)(offset - 0x02000000 + languageOffset), kv.Value.Length / 3 + 1);
                     byte[] code = DSUtils.HexStringToByteArray(kv.Value);
@@ -587,8 +588,9 @@ namespace DSPRE {
             string listOfChanges = "";
             int languageOffset = 0;
 
-            if (RomInfo.romID == "IPKE" || RomInfo.romID == "IPGE" || RomInfo.romID == "IPGS")
+            if (RomInfo.romID == "IPKE" || RomInfo.romID == "IPGE" || RomInfo.romID == "IPGS") {
                 languageOffset = +8;
+            }
 
             foreach (KeyValuePair<uint[], string> kv in ToolboxDB.matrixExpansionDB) {
                 listOfChanges += " - Replace " + (kv.Value.Length / 3 + 1) + " bytes of data at arm9 offset";

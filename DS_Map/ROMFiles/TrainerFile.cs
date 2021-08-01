@@ -135,13 +135,56 @@ namespace DSPRE.ROMFiles {
         #endregion
 
     }
+
+    public class Party : RomFile {
+        private PartyPokemon[] content;
+        private TrainerProperties trp;
+        public bool exportCondensedData;
+        public Party(int POKE_IN_PARTY, bool init, TrainerProperties trp) {
+            this.trp = trp;
+            this.content = new PartyPokemon[POKE_IN_PARTY];
+
+            if (init) {
+                for (int i = 0; i < content.Length; i++) {
+                    this.content[i] = new PartyPokemon();
+                }
+            }
+        }
+        public PartyPokemon this[int index] {
+            get {
+                return content[index];
+            }
+            set {
+                content[index] = value;
+            }
+        }
+        public override byte[] ToByteArray() {
+            MemoryStream newData = new MemoryStream();
+            using (BinaryWriter writer = new BinaryWriter(newData)) {
+                if (this.exportCondensedData && trp != null) {
+                    byte condensedTrData = (byte)(((trp.hasMoves ? 1 : 0) & 0b_1) + (((trp.hasItems ? 1 : 0) & 0b_1) << 1) + ((trp.partyCount & 0b_1111_11) << 2));
+                    writer.Write(condensedTrData);
+                }
+
+                foreach (PartyPokemon poke in this.content) {
+                    if (poke.pokeID != null && poke.level > 0) {
+                        writer.Write(poke.ToByteArray());
+                    }
+                }
+            }
+            return newData.ToArray();
+        }
+        public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
+            SaveToFileExplorePath("Gen IV Party Data", "pdat", suggestedFileName, showSuccessMessage);
+        }
+    }
     public class TrainerFile : RomFile {
         public const int POKE_IN_PARTY = 6;
 
         #region Fields
         public string name;
         public TrainerProperties trp;
-        public PartyPokemon[] party = new PartyPokemon[POKE_IN_PARTY];
+        public Party party;
         #endregion
 
         #region Constructor
@@ -149,11 +192,12 @@ namespace DSPRE.ROMFiles {
             this.name = name;
             this.trp = trp;
             trp.partyCount = 1;
-            party = new PartyPokemon[1] { new PartyPokemon() };
+            this.party = new Party(1, init: true, trp);
         }
         public TrainerFile(TrainerProperties trp, Stream partyData, string name = "") {
             this.name = name;
             this.trp = trp;
+            party = new Party(POKE_IN_PARTY, init: false, trp);
             using (BinaryReader reader = new BinaryReader(partyData)) {
                 int dividend = 8;
                 int nMoves = 4;
@@ -195,18 +239,6 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Methods
-        public byte[] PartyDataToByteArray() {
-            MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData)) {
-                foreach (PartyPokemon poke in party) {
-                    if (poke.pokeID != null && poke.level > 0) {
-                        writer.Write(poke.ToByteArray());
-                    }
-                }
-            }
-            return newData.ToArray();
-        }
-
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
@@ -216,7 +248,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write((byte)trDat.Length);
                 writer.Write(trDat);
 
-                byte[] pDat = PartyDataToByteArray();
+                byte[] pDat = party.ToByteArray();
                 writer.Write((byte)pDat.Length);
                 writer.Write(pDat);
             }
