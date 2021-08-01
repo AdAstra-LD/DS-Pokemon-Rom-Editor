@@ -635,36 +635,41 @@ namespace DSPRE.ROMFiles {
                     SortedSet<uint> uninvokedFuncs = new SortedSet<uint>(allFunctions.Select(x => x.manualUserID).ToArray());
                     SortedSet<uint> unreferencedActions = new SortedSet<uint>(allActions.Select(x => x.manualUserID).ToArray());
 
-                    while (refList.Count > 0) {
-                        writer.BaseStream.Position = refList[0].invokedOffset; //place seek head on parameter that is supposed to store the jump address
+                    for (int i = 0; i < refList.Count; i++) {
+                        writer.BaseStream.Position = refList[i].invokedOffset; //place seek head on parameter that is supposed to store the jump address
                         (uint actionID, uint offsetInFile) result;
 
-                        if (refList[0].invokedType == containerTypes.MOVEMENT) { //isApplyMovement 
-                            result = actionOffsets.Find(x => x.actionID == refList[0].invokedID);
+                        if (refList[i].invokedType == containerTypes.MOVEMENT) { //isApplyMovement 
+                            result = actionOffsets.Find(x => x.actionID == refList[i].invokedID);
 
                             if (result.Equals((0, 0)))
-                                undeclaredActions.Add(refList[0].invokedID);
+                                undeclaredActions.Add(refList[i].invokedID);
                             else {
-                                int relativeOffset = (int)(result.offsetInFile - refList[0].invokedOffset - 4);
+                                int relativeOffset = (int)(result.offsetInFile - refList[i].invokedOffset - 4);
                                 writer.Write(relativeOffset);
-                                unreferencedActions.Remove(refList[0].invokedID);
+                                unreferencedActions.Remove(refList[i].invokedID);
                             }
                         } else {
-                            result = functionOffsets.Find(x => x.functionID == refList[0].invokedID);
+                            result = functionOffsets.Find(x => x.functionID == refList[i].invokedID);
 
                             if (result.Equals((0, 0)))
-                                undeclaredFuncs.Add(refList[0].invokedID);
+                                undeclaredFuncs.Add(refList[i].invokedID);
                             else {
-                                int relativeOffset = (int)(result.offsetInFile - refList[0].invokedOffset - 4);
+                                int relativeOffset = (int)(result.offsetInFile - refList[i].invokedOffset - 4);
                                 writer.Write(relativeOffset);
-                                if (refList[0].callerType != containerTypes.FUNCTION || 
-                                    (refList[0].callerType == refList[0].invokedType && refList[0].callerID == refList[0].invokedID) ||
-                                    !uninvokedFuncs.Contains(refList[0].callerID)) { //remove reference if caller is a script, or if caller calls itself, or if caller is a function that's been invoked already
-                                    uninvokedFuncs.Remove(refList[0].invokedID);
+
+                                if (functionIsInvoked(refList, refList[i].invokedID)) {
+                                    uninvokedFuncs.Remove(refList[i].invokedID);
                                 }
+
+
+                                //if (refList[i].callerType != containerTypes.FUNCTION || 
+                                //    (refList[i].callerType == refList[i].invokedType && refList[i].callerID == refList[i].invokedID) ||
+                                //    !uninvokedFuncs.Contains(refList[i].callerID)) { //remove reference if caller is a script, or if caller calls itself, or if caller is a function that's been invoked already
+                                //    uninvokedFuncs.Remove(refList[i].invokedID);
+                                //}
                             }
                         }
-                        refList.RemoveAt(0);
                     }
 
                     string errorMsg = "";
@@ -690,10 +695,14 @@ namespace DSPRE.ROMFiles {
                         errorMsg += Environment.NewLine;
                         errorMsg += "\nIn order for a Function to be saved, it must be invoked by a Script or by another used Function.";
                         errorMsg += Environment.NewLine;
+                        errorMsg += Environment.NewLine;
                     }
                     if (unreferencedActions.Count > 0) {
                         string[] orphanedActions = unreferencedActions.ToArray().Select(x => x.ToString()).ToArray();
                         errorMsg += "Unused Action IDs detected: " + Environment.NewLine + string.Join(",", orphanedActions);
+                        errorMsg += Environment.NewLine;
+                        errorMsg += "\nIn order for an Action to be saved, it must be called by a Script or by an used Function.";
+                        errorMsg += Environment.NewLine;
                         errorMsg += Environment.NewLine;
                     }
                     if (!string.IsNullOrEmpty(errorMsg)) {
@@ -708,6 +717,19 @@ namespace DSPRE.ROMFiles {
 
             return newData.ToArray();
         }
+
+        private bool functionIsInvoked(List<ScriptReference> refList, uint funcID) {
+            ScriptReference sr = refList.Find(x => x.invokedID == funcID);
+            if (sr is null) {
+                return false;
+            }
+            if (sr.callerType == containerTypes.SCRIPT || (sr.callerType == containerTypes.FUNCTION && sr.callerID == sr.invokedID)) {
+                return true;
+            }
+
+            return functionIsInvoked(refList, sr.callerID);
+        }
+
         public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
             SaveToFileDefaultDir(DirNames.scripts, IDtoReplace, showSuccessMessage);
         }
@@ -748,6 +770,10 @@ namespace DSPRE.ROMFiles {
             this.invokedType = invokedType;
             this.invokedID = invokedID;
             this.invokedOffset = invokedOffset;
+        }
+
+        public override string ToString() {
+            return callerType + " " + callerID + " invokes " + invokedType + " " + invokedID;
         }
     }
 }
