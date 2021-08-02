@@ -441,19 +441,20 @@ namespace DSPRE {
                 DirNames.exteriorBuildingModels,
                 DirNames.buildingConfigFiles,
                 DirNames.buildingTextures,
+                DirNames.areaData
             };
 
             if (forceUnpack) {
-                DSUtils.ForceUnpackNarcs(toUnpack, toolStripProgressBar);
+                DSUtils.ForceUnpackNarcs(toUnpack);
 
                 if (RomInfo.gameFamily == gFamEnum.HGSS) {
-                    DSUtils.ForceUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);// Last = interior buildings dir
+                    DSUtils.ForceUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels });// Last = interior buildings dir
                 }
             } else {
-                DSUtils.TryUnpackNarcs(toUnpack, toolStripProgressBar);
+                DSUtils.TryUnpackNarcs(toUnpack);
 
                 if (RomInfo.gameFamily == gFamEnum.HGSS) {
-                    DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
+                    DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels });
                 }
             }
 
@@ -687,7 +688,7 @@ namespace DSPRE {
                 statusLabel.Text = "Attempting to unpack all NARCs... Be patient. This might take a while...";
                 Update();
 
-                DSUtils.ForceUnpackNarcs(Enum.GetValues(typeof(DirNames)).Cast<DirNames>().ToList(), toolStripProgressBar);
+                DSUtils.ForceUnpackNarcs(Enum.GetValues(typeof(DirNames)).Cast<DirNames>().ToList());
 
                 MessageBox.Show("Operation completed.", "Success",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -857,7 +858,7 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to unpack Header Editor NARCs... Please wait.";
             Update();
 
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.synthOverlay, DirNames.textArchives, DirNames.dynamicHeaders }, toolStripProgressBar);
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.synthOverlay, DirNames.textArchives, DirNames.dynamicHeaders });
 
             statusLabel.Text = "Reading internal names... Please wait.";
             Update();
@@ -2758,7 +2759,7 @@ namespace DSPRE {
             });
 
             if (RomInfo.gameFamily == gFamEnum.HGSS) {
-                DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
+                DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels });
             }
 
             disableHandlers = true;
@@ -4535,13 +4536,13 @@ namespace DSPRE {
                 DirNames.trainerProperties,
                 DirNames.OWSprites,
 
-                DirNames.scripts, }, toolStripProgressBar);
+                DirNames.scripts, });
 
             RomInfo.SetOWtable();
             RomInfo.Set3DOverworldsDict();
 
             if (RomInfo.gameFamily == gFamEnum.HGSS) {
-                DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels }, toolStripProgressBar);
+                DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels });
             }
 
             disableHandlers = true;
@@ -6228,9 +6229,9 @@ namespace DSPRE {
             DSUtils.TryUnpackNarcs(new List<DirNames> {
                 DirNames.buildingTextures,
                 DirNames.mapTextures,
-                DirNames.areaData,
-                DirNames.buildingConfigFiles
-            }, toolStripProgressBar);
+                DirNames.buildingConfigFiles,
+                DirNames.areaData
+            });
 
             /* Fill Tileset ListBox */
             FillTilesetBox();

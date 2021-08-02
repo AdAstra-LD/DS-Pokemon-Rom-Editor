@@ -269,7 +269,7 @@ namespace DSPRE {
             return b;
         }
 
-        public static void TryUnpackNarcs(List<DirNames> IDs, ToolStripProgressBar progress = null) {
+        public static void TryUnpackNarcs(List<DirNames> IDs) {
             Parallel.ForEach(IDs, id => {
                 if (gameDirs.TryGetValue(id, out (string packedPath, string unpackedPath) paths)) {
                     DirectoryInfo di = new DirectoryInfo(paths.unpackedPath);
@@ -282,17 +282,10 @@ namespace DSPRE {
 
                         opened.ExtractToFolder(paths.unpackedPath);
                     }
-
-                    //if (progress != null) {
-                    //    try {
-                    //        progress.Value++;
-                    //        
-                    //    } catch (ArgumentOutOfRangeException) { }
-                    //}
                 }
             });
         }
-        public static void ForceUnpackNarcs(List<DirNames> IDs, ToolStripProgressBar progress = null) {
+        public static void ForceUnpackNarcs(List<DirNames> IDs) {
             Parallel.ForEach(IDs, id => {
                 if (gameDirs.TryGetValue(id, out (string packedPath, string unpackedPath) paths)) {
                     Narc opened = Narc.Open(paths.packedPath);
@@ -301,12 +294,6 @@ namespace DSPRE {
                         throw new NullReferenceException();
 
                     opened.ExtractToFolder(paths.unpackedPath);
-
-                    //if (progress != null) {
-                    //    try {
-                    //        progress.Value++;
-                    //    } catch (ArgumentOutOfRangeException) { }
-                    //}
                 }
             });
         }
