@@ -155,8 +155,9 @@ namespace DSPRE {
             RenderModel();
         }
         private void buildingEditorListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || buildingEditorBldListBox.SelectedIndex < 0)
+            if (disableHandlers || buildingEditorBldListBox.SelectedIndex < 0) {
                 return;
+            }
 
             LoadBuildingModel(buildingEditorBldListBox.SelectedIndex, interiorCheckBox.Checked);
             CreateEmbeddedTexturesFile(buildingEditorBldListBox.SelectedIndex, interiorCheckBox.Checked);
@@ -203,9 +204,9 @@ namespace DSPRE {
             buildingEditorBldListBox.SelectedIndex = 0;
         }
         private void textureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers)
+            if (disableHandlers) {
                 return;
-
+            }
             LoadModelTextures(textureComboBox.SelectedIndex - 1);
             RenderModel();
         }
