@@ -63,9 +63,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Abomasnow {
+        public static System.Drawing.Bitmap abomasnow {
             get {
-                object obj = ResourceManager.GetObject("Abomasnow", resourceCulture);
+                object obj = ResourceManager.GetObject("abomasnow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Abra {
+        public static System.Drawing.Bitmap abra {
             get {
-                object obj = ResourceManager.GetObject("Abra", resourceCulture);
+                object obj = ResourceManager.GetObject("abra", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Absol {
+        public static System.Drawing.Bitmap absol {
             get {
-                object obj = ResourceManager.GetObject("Absol", resourceCulture);
+                object obj = ResourceManager.GetObject("absol", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Accelgor {
+        public static System.Drawing.Bitmap accelgor {
             get {
-                object obj = ResourceManager.GetObject("Accelgor", resourceCulture);
+                object obj = ResourceManager.GetObject("accelgor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Aegislash {
+        public static System.Drawing.Bitmap aegislash {
             get {
-                object obj = ResourceManager.GetObject("Aegislash", resourceCulture);
+                object obj = ResourceManager.GetObject("aegislash", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Aerodactyl {
+        public static System.Drawing.Bitmap aerodactyl {
             get {
-                object obj = ResourceManager.GetObject("Aerodactyl", resourceCulture);
+                object obj = ResourceManager.GetObject("aerodactyl", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Aggron {
+        public static System.Drawing.Bitmap aggron {
             get {
-                object obj = ResourceManager.GetObject("Aggron", resourceCulture);
+                object obj = ResourceManager.GetObject("aggron", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Aipom {
+        public static System.Drawing.Bitmap aipom {
             get {
-                object obj = ResourceManager.GetObject("Aipom", resourceCulture);
+                object obj = ResourceManager.GetObject("aipom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +143,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Alakazam {
+        public static System.Drawing.Bitmap alakazam {
             get {
-                object obj = ResourceManager.GetObject("Alakazam", resourceCulture);
+                object obj = ResourceManager.GetObject("alakazam", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +153,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Alomomola {
+        public static System.Drawing.Bitmap alomomola {
             get {
-                object obj = ResourceManager.GetObject("Alomomola", resourceCulture);
+                object obj = ResourceManager.GetObject("alomomola", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +163,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Altaria {
+        public static System.Drawing.Bitmap altaria {
             get {
-                object obj = ResourceManager.GetObject("Altaria", resourceCulture);
+                object obj = ResourceManager.GetObject("altaria", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +173,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Amaura {
+        public static System.Drawing.Bitmap amaura {
             get {
-                object obj = ResourceManager.GetObject("Amaura", resourceCulture);
+                object obj = ResourceManager.GetObject("amaura", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,9 +183,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ambipom {
+        public static System.Drawing.Bitmap ambipom {
             get {
-                object obj = ResourceManager.GetObject("Ambipom", resourceCulture);
+                object obj = ResourceManager.GetObject("ambipom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +193,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Amoonguss {
+        public static System.Drawing.Bitmap amoonguss {
             get {
-                object obj = ResourceManager.GetObject("Amoonguss", resourceCulture);
+                object obj = ResourceManager.GetObject("amoonguss", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,9 +203,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ampharos {
+        public static System.Drawing.Bitmap ampharos {
             get {
-                object obj = ResourceManager.GetObject("Ampharos", resourceCulture);
+                object obj = ResourceManager.GetObject("ampharos", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,9 +213,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Anorith {
+        public static System.Drawing.Bitmap anorith {
             get {
-                object obj = ResourceManager.GetObject("Anorith", resourceCulture);
+                object obj = ResourceManager.GetObject("anorith", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,9 +223,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Araquanid {
+        public static System.Drawing.Bitmap araquanid {
             get {
-                object obj = ResourceManager.GetObject("Araquanid", resourceCulture);
+                object obj = ResourceManager.GetObject("araquanid", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -233,9 +233,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Arbok {
+        public static System.Drawing.Bitmap arbok {
             get {
-                object obj = ResourceManager.GetObject("Arbok", resourceCulture);
+                object obj = ResourceManager.GetObject("arbok", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -243,9 +243,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Arcanine {
+        public static System.Drawing.Bitmap arcanine {
             get {
-                object obj = ResourceManager.GetObject("Arcanine", resourceCulture);
+                object obj = ResourceManager.GetObject("arcanine", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -253,9 +253,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Arceus {
+        public static System.Drawing.Bitmap arceus {
             get {
-                object obj = ResourceManager.GetObject("Arceus", resourceCulture);
+                object obj = ResourceManager.GetObject("arceus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -263,9 +263,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Archen {
+        public static System.Drawing.Bitmap archen {
             get {
-                object obj = ResourceManager.GetObject("Archen", resourceCulture);
+                object obj = ResourceManager.GetObject("archen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -273,9 +273,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Archeops {
+        public static System.Drawing.Bitmap archeops {
             get {
-                object obj = ResourceManager.GetObject("Archeops", resourceCulture);
+                object obj = ResourceManager.GetObject("archeops", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -283,9 +283,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ariados {
+        public static System.Drawing.Bitmap ariados {
             get {
-                object obj = ResourceManager.GetObject("Ariados", resourceCulture);
+                object obj = ResourceManager.GetObject("ariados", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -293,9 +293,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Armaldo {
+        public static System.Drawing.Bitmap armaldo {
             get {
-                object obj = ResourceManager.GetObject("Armaldo", resourceCulture);
+                object obj = ResourceManager.GetObject("armaldo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -303,9 +303,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Aromatisse {
+        public static System.Drawing.Bitmap aromatisse {
             get {
-                object obj = ResourceManager.GetObject("Aromatisse", resourceCulture);
+                object obj = ResourceManager.GetObject("aromatisse", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -313,9 +313,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Aron {
+        public static System.Drawing.Bitmap aron {
             get {
-                object obj = ResourceManager.GetObject("Aron", resourceCulture);
+                object obj = ResourceManager.GetObject("aron", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -323,9 +323,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Articuno {
+        public static System.Drawing.Bitmap articuno {
             get {
-                object obj = ResourceManager.GetObject("Articuno", resourceCulture);
+                object obj = ResourceManager.GetObject("articuno", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -333,9 +333,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Audino {
+        public static System.Drawing.Bitmap audino {
             get {
-                object obj = ResourceManager.GetObject("Audino", resourceCulture);
+                object obj = ResourceManager.GetObject("audino", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -343,9 +343,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Aurorus {
+        public static System.Drawing.Bitmap aurorus {
             get {
-                object obj = ResourceManager.GetObject("Aurorus", resourceCulture);
+                object obj = ResourceManager.GetObject("aurorus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -353,9 +353,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Avalugg {
+        public static System.Drawing.Bitmap avalugg {
             get {
-                object obj = ResourceManager.GetObject("Avalugg", resourceCulture);
+                object obj = ResourceManager.GetObject("avalugg", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -363,9 +363,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Axew {
+        public static System.Drawing.Bitmap axew {
             get {
-                object obj = ResourceManager.GetObject("Axew", resourceCulture);
+                object obj = ResourceManager.GetObject("axew", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -373,9 +373,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Azelf {
+        public static System.Drawing.Bitmap azelf {
             get {
-                object obj = ResourceManager.GetObject("Azelf", resourceCulture);
+                object obj = ResourceManager.GetObject("azelf", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -383,9 +383,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Azumarill {
+        public static System.Drawing.Bitmap azumarill {
             get {
-                object obj = ResourceManager.GetObject("Azumarill", resourceCulture);
+                object obj = ResourceManager.GetObject("azumarill", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -393,9 +393,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Azurill {
+        public static System.Drawing.Bitmap azurill {
             get {
-                object obj = ResourceManager.GetObject("Azurill", resourceCulture);
+                object obj = ResourceManager.GetObject("azurill", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -403,9 +403,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bagon {
+        public static System.Drawing.Bitmap bagon {
             get {
-                object obj = ResourceManager.GetObject("Bagon", resourceCulture);
+                object obj = ResourceManager.GetObject("bagon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -413,9 +413,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Baltoy {
+        public static System.Drawing.Bitmap baltoy {
             get {
-                object obj = ResourceManager.GetObject("Baltoy", resourceCulture);
+                object obj = ResourceManager.GetObject("baltoy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -423,9 +423,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Banette {
+        public static System.Drawing.Bitmap banette {
             get {
-                object obj = ResourceManager.GetObject("Banette", resourceCulture);
+                object obj = ResourceManager.GetObject("banette", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -433,9 +433,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Barbaracle {
+        public static System.Drawing.Bitmap barbaracle {
             get {
-                object obj = ResourceManager.GetObject("Barbaracle", resourceCulture);
+                object obj = ResourceManager.GetObject("barbaracle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -443,9 +443,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Barboach {
+        public static System.Drawing.Bitmap barboach {
             get {
-                object obj = ResourceManager.GetObject("Barboach", resourceCulture);
+                object obj = ResourceManager.GetObject("barboach", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -453,9 +453,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Basculin {
+        public static System.Drawing.Bitmap basculin {
             get {
-                object obj = ResourceManager.GetObject("Basculin", resourceCulture);
+                object obj = ResourceManager.GetObject("basculin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -463,9 +463,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bastiodon {
+        public static System.Drawing.Bitmap bastiodon {
             get {
-                object obj = ResourceManager.GetObject("Bastiodon", resourceCulture);
+                object obj = ResourceManager.GetObject("bastiodon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -473,9 +473,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bayleef {
+        public static System.Drawing.Bitmap bayleef {
             get {
-                object obj = ResourceManager.GetObject("Bayleef", resourceCulture);
+                object obj = ResourceManager.GetObject("bayleef", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -483,9 +483,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Beartic {
+        public static System.Drawing.Bitmap beartic {
             get {
-                object obj = ResourceManager.GetObject("Beartic", resourceCulture);
+                object obj = ResourceManager.GetObject("beartic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -493,9 +493,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Beautifly {
+        public static System.Drawing.Bitmap beautifly {
             get {
-                object obj = ResourceManager.GetObject("Beautifly", resourceCulture);
+                object obj = ResourceManager.GetObject("beautifly", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -503,9 +503,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Beedrill {
+        public static System.Drawing.Bitmap beedrill {
             get {
-                object obj = ResourceManager.GetObject("Beedrill", resourceCulture);
+                object obj = ResourceManager.GetObject("beedrill", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -513,9 +513,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Beheeyem {
+        public static System.Drawing.Bitmap beheeyem {
             get {
-                object obj = ResourceManager.GetObject("Beheeyem", resourceCulture);
+                object obj = ResourceManager.GetObject("beheeyem", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -523,9 +523,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Beldum {
+        public static System.Drawing.Bitmap beldum {
             get {
-                object obj = ResourceManager.GetObject("Beldum", resourceCulture);
+                object obj = ResourceManager.GetObject("beldum", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -533,9 +533,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bellossom {
+        public static System.Drawing.Bitmap bellossom {
             get {
-                object obj = ResourceManager.GetObject("Bellossom", resourceCulture);
+                object obj = ResourceManager.GetObject("bellossom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -543,9 +543,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bellsprout {
+        public static System.Drawing.Bitmap bellsprout {
             get {
-                object obj = ResourceManager.GetObject("Bellsprout", resourceCulture);
+                object obj = ResourceManager.GetObject("bellsprout", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -553,9 +553,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bergmite {
+        public static System.Drawing.Bitmap bergmite {
             get {
-                object obj = ResourceManager.GetObject("Bergmite", resourceCulture);
+                object obj = ResourceManager.GetObject("bergmite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -563,9 +563,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bewear {
+        public static System.Drawing.Bitmap bewear {
             get {
-                object obj = ResourceManager.GetObject("Bewear", resourceCulture);
+                object obj = ResourceManager.GetObject("bewear", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -573,9 +573,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bibarel {
+        public static System.Drawing.Bitmap bibarel {
             get {
-                object obj = ResourceManager.GetObject("Bibarel", resourceCulture);
+                object obj = ResourceManager.GetObject("bibarel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -583,9 +583,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bidoof {
+        public static System.Drawing.Bitmap bidoof {
             get {
-                object obj = ResourceManager.GetObject("Bidoof", resourceCulture);
+                object obj = ResourceManager.GetObject("bidoof", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -593,9 +593,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Binacle {
+        public static System.Drawing.Bitmap binacle {
             get {
-                object obj = ResourceManager.GetObject("Binacle", resourceCulture);
+                object obj = ResourceManager.GetObject("binacle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -603,9 +603,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bisharp {
+        public static System.Drawing.Bitmap bisharp {
             get {
-                object obj = ResourceManager.GetObject("Bisharp", resourceCulture);
+                object obj = ResourceManager.GetObject("bisharp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -613,9 +613,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Blacephalon {
+        public static System.Drawing.Bitmap blacephalon {
             get {
-                object obj = ResourceManager.GetObject("Blacephalon", resourceCulture);
+                object obj = ResourceManager.GetObject("blacephalon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -623,9 +623,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Blastoise {
+        public static System.Drawing.Bitmap blastoise {
             get {
-                object obj = ResourceManager.GetObject("Blastoise", resourceCulture);
+                object obj = ResourceManager.GetObject("blastoise", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -633,9 +633,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Blaziken {
+        public static System.Drawing.Bitmap blaziken {
             get {
-                object obj = ResourceManager.GetObject("Blaziken", resourceCulture);
+                object obj = ResourceManager.GetObject("blaziken", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -643,9 +643,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Blissey {
+        public static System.Drawing.Bitmap blissey {
             get {
-                object obj = ResourceManager.GetObject("Blissey", resourceCulture);
+                object obj = ResourceManager.GetObject("blissey", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -653,9 +653,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Blitzle {
+        public static System.Drawing.Bitmap blitzle {
             get {
-                object obj = ResourceManager.GetObject("Blitzle", resourceCulture);
+                object obj = ResourceManager.GetObject("blitzle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -663,9 +663,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Boldore {
+        public static System.Drawing.Bitmap boldore {
             get {
-                object obj = ResourceManager.GetObject("Boldore", resourceCulture);
+                object obj = ResourceManager.GetObject("boldore", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -673,9 +673,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bonsly {
+        public static System.Drawing.Bitmap bonsly {
             get {
-                object obj = ResourceManager.GetObject("Bonsly", resourceCulture);
+                object obj = ResourceManager.GetObject("bonsly", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -683,9 +683,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bouffalant {
+        public static System.Drawing.Bitmap bouffalant {
             get {
-                object obj = ResourceManager.GetObject("Bouffalant", resourceCulture);
+                object obj = ResourceManager.GetObject("bouffalant", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -693,9 +693,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bounsweet {
+        public static System.Drawing.Bitmap bounsweet {
             get {
-                object obj = ResourceManager.GetObject("Bounsweet", resourceCulture);
+                object obj = ResourceManager.GetObject("bounsweet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -703,9 +703,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Braixen {
+        public static System.Drawing.Bitmap braixen {
             get {
-                object obj = ResourceManager.GetObject("Braixen", resourceCulture);
+                object obj = ResourceManager.GetObject("braixen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -713,9 +713,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Braviary {
+        public static System.Drawing.Bitmap braviary {
             get {
-                object obj = ResourceManager.GetObject("Braviary", resourceCulture);
+                object obj = ResourceManager.GetObject("braviary", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -723,9 +723,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Breloom {
+        public static System.Drawing.Bitmap breloom {
             get {
-                object obj = ResourceManager.GetObject("Breloom", resourceCulture);
+                object obj = ResourceManager.GetObject("breloom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -733,9 +733,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Brionne {
+        public static System.Drawing.Bitmap brionne {
             get {
-                object obj = ResourceManager.GetObject("Brionne", resourceCulture);
+                object obj = ResourceManager.GetObject("brionne", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -743,9 +743,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bronzong {
+        public static System.Drawing.Bitmap bronzong {
             get {
-                object obj = ResourceManager.GetObject("Bronzong", resourceCulture);
+                object obj = ResourceManager.GetObject("bronzong", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -753,9 +753,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bronzor {
+        public static System.Drawing.Bitmap bronzor {
             get {
-                object obj = ResourceManager.GetObject("Bronzor", resourceCulture);
+                object obj = ResourceManager.GetObject("bronzor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -763,9 +763,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bruxish {
+        public static System.Drawing.Bitmap bruxish {
             get {
-                object obj = ResourceManager.GetObject("Bruxish", resourceCulture);
+                object obj = ResourceManager.GetObject("bruxish", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -773,9 +773,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Budew {
+        public static System.Drawing.Bitmap budew {
             get {
-                object obj = ResourceManager.GetObject("Budew", resourceCulture);
+                object obj = ResourceManager.GetObject("budew", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -783,9 +783,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Buizel {
+        public static System.Drawing.Bitmap buizel {
             get {
-                object obj = ResourceManager.GetObject("Buizel", resourceCulture);
+                object obj = ResourceManager.GetObject("buizel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -793,9 +793,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bulbasaur {
+        public static System.Drawing.Bitmap bulbasaur {
             get {
-                object obj = ResourceManager.GetObject("Bulbasaur", resourceCulture);
+                object obj = ResourceManager.GetObject("bulbasaur", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -803,9 +803,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Buneary {
+        public static System.Drawing.Bitmap buneary {
             get {
-                object obj = ResourceManager.GetObject("Buneary", resourceCulture);
+                object obj = ResourceManager.GetObject("buneary", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -813,9 +813,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Bunnelby {
+        public static System.Drawing.Bitmap bunnelby {
             get {
-                object obj = ResourceManager.GetObject("Bunnelby", resourceCulture);
+                object obj = ResourceManager.GetObject("bunnelby", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -823,9 +823,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Burmy {
+        public static System.Drawing.Bitmap burmy {
             get {
-                object obj = ResourceManager.GetObject("Burmy", resourceCulture);
+                object obj = ResourceManager.GetObject("burmy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -833,9 +833,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Butterfree {
+        public static System.Drawing.Bitmap butterfree {
             get {
-                object obj = ResourceManager.GetObject("Butterfree", resourceCulture);
+                object obj = ResourceManager.GetObject("butterfree", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -843,9 +843,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Buzzwole {
+        public static System.Drawing.Bitmap buzzwole {
             get {
-                object obj = ResourceManager.GetObject("Buzzwole", resourceCulture);
+                object obj = ResourceManager.GetObject("buzzwole", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -853,9 +853,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cacnea {
+        public static System.Drawing.Bitmap cacnea {
             get {
-                object obj = ResourceManager.GetObject("Cacnea", resourceCulture);
+                object obj = ResourceManager.GetObject("cacnea", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -863,9 +863,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cacturne {
+        public static System.Drawing.Bitmap cacturne {
             get {
-                object obj = ResourceManager.GetObject("Cacturne", resourceCulture);
+                object obj = ResourceManager.GetObject("cacturne", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -873,9 +873,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Camerupt {
+        public static System.Drawing.Bitmap camerupt {
             get {
-                object obj = ResourceManager.GetObject("Camerupt", resourceCulture);
+                object obj = ResourceManager.GetObject("camerupt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -883,9 +883,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Carbink {
+        public static System.Drawing.Bitmap carbink {
             get {
-                object obj = ResourceManager.GetObject("Carbink", resourceCulture);
+                object obj = ResourceManager.GetObject("carbink", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -893,9 +893,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Carnivine {
+        public static System.Drawing.Bitmap carnivine {
             get {
-                object obj = ResourceManager.GetObject("Carnivine", resourceCulture);
+                object obj = ResourceManager.GetObject("carnivine", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -903,9 +903,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Carracosta {
+        public static System.Drawing.Bitmap carracosta {
             get {
-                object obj = ResourceManager.GetObject("Carracosta", resourceCulture);
+                object obj = ResourceManager.GetObject("carracosta", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -913,9 +913,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Carvanha {
+        public static System.Drawing.Bitmap carvanha {
             get {
-                object obj = ResourceManager.GetObject("Carvanha", resourceCulture);
+                object obj = ResourceManager.GetObject("carvanha", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -923,9 +923,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cascoon {
+        public static System.Drawing.Bitmap cascoon {
             get {
-                object obj = ResourceManager.GetObject("Cascoon", resourceCulture);
+                object obj = ResourceManager.GetObject("cascoon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -933,9 +933,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Castform {
+        public static System.Drawing.Bitmap castform {
             get {
-                object obj = ResourceManager.GetObject("Castform", resourceCulture);
+                object obj = ResourceManager.GetObject("castform", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -943,9 +943,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Caterpie {
+        public static System.Drawing.Bitmap caterpie {
             get {
-                object obj = ResourceManager.GetObject("Caterpie", resourceCulture);
+                object obj = ResourceManager.GetObject("caterpie", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -953,9 +953,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Celebi {
+        public static System.Drawing.Bitmap celebi {
             get {
-                object obj = ResourceManager.GetObject("Celebi", resourceCulture);
+                object obj = ResourceManager.GetObject("celebi", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -963,9 +963,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Celesteela {
+        public static System.Drawing.Bitmap celesteela {
             get {
-                object obj = ResourceManager.GetObject("Celesteela", resourceCulture);
+                object obj = ResourceManager.GetObject("celesteela", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -973,9 +973,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Chandelure {
+        public static System.Drawing.Bitmap chandelure {
             get {
-                object obj = ResourceManager.GetObject("Chandelure", resourceCulture);
+                object obj = ResourceManager.GetObject("chandelure", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -983,9 +983,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Chansey {
+        public static System.Drawing.Bitmap chansey {
             get {
-                object obj = ResourceManager.GetObject("Chansey", resourceCulture);
+                object obj = ResourceManager.GetObject("chansey", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -993,9 +993,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Charizard {
+        public static System.Drawing.Bitmap charizard {
             get {
-                object obj = ResourceManager.GetObject("Charizard", resourceCulture);
+                object obj = ResourceManager.GetObject("charizard", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1003,9 +1003,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Charjabug {
+        public static System.Drawing.Bitmap charjabug {
             get {
-                object obj = ResourceManager.GetObject("Charjabug", resourceCulture);
+                object obj = ResourceManager.GetObject("charjabug", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1013,9 +1013,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Charmander {
+        public static System.Drawing.Bitmap charmander {
             get {
-                object obj = ResourceManager.GetObject("Charmander", resourceCulture);
+                object obj = ResourceManager.GetObject("charmander", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1023,9 +1023,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Charmeleon {
+        public static System.Drawing.Bitmap charmeleon {
             get {
-                object obj = ResourceManager.GetObject("Charmeleon", resourceCulture);
+                object obj = ResourceManager.GetObject("charmeleon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1033,9 +1033,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Chatot {
+        public static System.Drawing.Bitmap chatot {
             get {
-                object obj = ResourceManager.GetObject("Chatot", resourceCulture);
+                object obj = ResourceManager.GetObject("chatot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1043,9 +1043,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cherrim {
+        public static System.Drawing.Bitmap cherrim {
             get {
-                object obj = ResourceManager.GetObject("Cherrim", resourceCulture);
+                object obj = ResourceManager.GetObject("cherrim", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1053,9 +1053,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cherubi {
+        public static System.Drawing.Bitmap cherubi {
             get {
-                object obj = ResourceManager.GetObject("Cherubi", resourceCulture);
+                object obj = ResourceManager.GetObject("cherubi", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1063,9 +1063,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Chesnaught {
+        public static System.Drawing.Bitmap chesnaught {
             get {
-                object obj = ResourceManager.GetObject("Chesnaught", resourceCulture);
+                object obj = ResourceManager.GetObject("chesnaught", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1073,9 +1073,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Chespin {
+        public static System.Drawing.Bitmap chespin {
             get {
-                object obj = ResourceManager.GetObject("Chespin", resourceCulture);
+                object obj = ResourceManager.GetObject("chespin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1083,9 +1083,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Chikorita {
+        public static System.Drawing.Bitmap chikorita {
             get {
-                object obj = ResourceManager.GetObject("Chikorita", resourceCulture);
+                object obj = ResourceManager.GetObject("chikorita", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1093,9 +1093,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Chimchar {
+        public static System.Drawing.Bitmap chimchar {
             get {
-                object obj = ResourceManager.GetObject("Chimchar", resourceCulture);
+                object obj = ResourceManager.GetObject("chimchar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1103,9 +1103,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Chimecho {
+        public static System.Drawing.Bitmap chimecho {
             get {
-                object obj = ResourceManager.GetObject("Chimecho", resourceCulture);
+                object obj = ResourceManager.GetObject("chimecho", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1113,9 +1113,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Chinchou {
+        public static System.Drawing.Bitmap chinchou {
             get {
-                object obj = ResourceManager.GetObject("Chinchou", resourceCulture);
+                object obj = ResourceManager.GetObject("chinchou", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1123,9 +1123,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Chingling {
+        public static System.Drawing.Bitmap chingling {
             get {
-                object obj = ResourceManager.GetObject("Chingling", resourceCulture);
+                object obj = ResourceManager.GetObject("chingling", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1133,9 +1133,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cinccino {
+        public static System.Drawing.Bitmap cinccino {
             get {
-                object obj = ResourceManager.GetObject("Cinccino", resourceCulture);
+                object obj = ResourceManager.GetObject("cinccino", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1143,9 +1143,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Clamperl {
+        public static System.Drawing.Bitmap clamperl {
             get {
-                object obj = ResourceManager.GetObject("Clamperl", resourceCulture);
+                object obj = ResourceManager.GetObject("clamperl", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1153,9 +1153,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Clauncher {
+        public static System.Drawing.Bitmap clauncher {
             get {
-                object obj = ResourceManager.GetObject("Clauncher", resourceCulture);
+                object obj = ResourceManager.GetObject("clauncher", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1163,9 +1163,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Clawitzer {
+        public static System.Drawing.Bitmap clawitzer {
             get {
-                object obj = ResourceManager.GetObject("Clawitzer", resourceCulture);
+                object obj = ResourceManager.GetObject("clawitzer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1173,9 +1173,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Claydol {
+        public static System.Drawing.Bitmap claydol {
             get {
-                object obj = ResourceManager.GetObject("Claydol", resourceCulture);
+                object obj = ResourceManager.GetObject("claydol", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1183,9 +1183,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Clefable {
+        public static System.Drawing.Bitmap clefable {
             get {
-                object obj = ResourceManager.GetObject("Clefable", resourceCulture);
+                object obj = ResourceManager.GetObject("clefable", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1193,9 +1193,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Clefairy {
+        public static System.Drawing.Bitmap clefairy {
             get {
-                object obj = ResourceManager.GetObject("Clefairy", resourceCulture);
+                object obj = ResourceManager.GetObject("clefairy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1203,9 +1203,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cleffa {
+        public static System.Drawing.Bitmap cleffa {
             get {
-                object obj = ResourceManager.GetObject("Cleffa", resourceCulture);
+                object obj = ResourceManager.GetObject("cleffa", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1213,9 +1213,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cloyster {
+        public static System.Drawing.Bitmap cloyster {
             get {
-                object obj = ResourceManager.GetObject("Cloyster", resourceCulture);
+                object obj = ResourceManager.GetObject("cloyster", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1223,9 +1223,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cobalion {
+        public static System.Drawing.Bitmap cobalion {
             get {
-                object obj = ResourceManager.GetObject("Cobalion", resourceCulture);
+                object obj = ResourceManager.GetObject("cobalion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1233,9 +1233,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Código_Cero {
+        public static System.Drawing.Bitmap código_cero {
             get {
-                object obj = ResourceManager.GetObject("Código_Cero", resourceCulture);
+                object obj = ResourceManager.GetObject("código_cero", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1243,9 +1243,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cofagrigus {
+        public static System.Drawing.Bitmap cofagrigus {
             get {
-                object obj = ResourceManager.GetObject("Cofagrigus", resourceCulture);
+                object obj = ResourceManager.GetObject("cofagrigus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1253,9 +1253,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Combee {
+        public static System.Drawing.Bitmap combee {
             get {
-                object obj = ResourceManager.GetObject("Combee", resourceCulture);
+                object obj = ResourceManager.GetObject("combee", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1263,9 +1263,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Combusken {
+        public static System.Drawing.Bitmap combusken {
             get {
-                object obj = ResourceManager.GetObject("Combusken", resourceCulture);
+                object obj = ResourceManager.GetObject("combusken", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1273,9 +1273,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Comfey {
+        public static System.Drawing.Bitmap comfey {
             get {
-                object obj = ResourceManager.GetObject("Comfey", resourceCulture);
+                object obj = ResourceManager.GetObject("comfey", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1283,9 +1283,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Conkeldurr {
+        public static System.Drawing.Bitmap conkeldurr {
             get {
-                object obj = ResourceManager.GetObject("Conkeldurr", resourceCulture);
+                object obj = ResourceManager.GetObject("conkeldurr", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1293,9 +1293,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Corphish {
+        public static System.Drawing.Bitmap corphish {
             get {
-                object obj = ResourceManager.GetObject("Corphish", resourceCulture);
+                object obj = ResourceManager.GetObject("corphish", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1303,9 +1303,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Corsola {
+        public static System.Drawing.Bitmap corsola {
             get {
-                object obj = ResourceManager.GetObject("Corsola", resourceCulture);
+                object obj = ResourceManager.GetObject("corsola", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1313,9 +1313,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cosmoem {
+        public static System.Drawing.Bitmap cosmoem {
             get {
-                object obj = ResourceManager.GetObject("Cosmoem", resourceCulture);
+                object obj = ResourceManager.GetObject("cosmoem", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1323,9 +1323,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cosmog {
+        public static System.Drawing.Bitmap cosmog {
             get {
-                object obj = ResourceManager.GetObject("Cosmog", resourceCulture);
+                object obj = ResourceManager.GetObject("cosmog", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1333,9 +1333,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cottonee {
+        public static System.Drawing.Bitmap cottonee {
             get {
-                object obj = ResourceManager.GetObject("Cottonee", resourceCulture);
+                object obj = ResourceManager.GetObject("cottonee", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1343,9 +1343,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Crabominable {
+        public static System.Drawing.Bitmap crabominable {
             get {
-                object obj = ResourceManager.GetObject("Crabominable", resourceCulture);
+                object obj = ResourceManager.GetObject("crabominable", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1353,9 +1353,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Crabrawler {
+        public static System.Drawing.Bitmap crabrawler {
             get {
-                object obj = ResourceManager.GetObject("Crabrawler", resourceCulture);
+                object obj = ResourceManager.GetObject("crabrawler", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1363,9 +1363,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cradily {
+        public static System.Drawing.Bitmap cradily {
             get {
-                object obj = ResourceManager.GetObject("Cradily", resourceCulture);
+                object obj = ResourceManager.GetObject("cradily", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1373,9 +1373,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cranidos {
+        public static System.Drawing.Bitmap cranidos {
             get {
-                object obj = ResourceManager.GetObject("Cranidos", resourceCulture);
+                object obj = ResourceManager.GetObject("cranidos", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1383,9 +1383,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Crawdaunt {
+        public static System.Drawing.Bitmap crawdaunt {
             get {
-                object obj = ResourceManager.GetObject("Crawdaunt", resourceCulture);
+                object obj = ResourceManager.GetObject("crawdaunt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1393,9 +1393,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cresselia {
+        public static System.Drawing.Bitmap cresselia {
             get {
-                object obj = ResourceManager.GetObject("Cresselia", resourceCulture);
+                object obj = ResourceManager.GetObject("cresselia", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1403,9 +1403,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Croagunk {
+        public static System.Drawing.Bitmap croagunk {
             get {
-                object obj = ResourceManager.GetObject("Croagunk", resourceCulture);
+                object obj = ResourceManager.GetObject("croagunk", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1413,9 +1413,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Crobat {
+        public static System.Drawing.Bitmap crobat {
             get {
-                object obj = ResourceManager.GetObject("Crobat", resourceCulture);
+                object obj = ResourceManager.GetObject("crobat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1423,9 +1423,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Croconaw {
+        public static System.Drawing.Bitmap croconaw {
             get {
-                object obj = ResourceManager.GetObject("Croconaw", resourceCulture);
+                object obj = ResourceManager.GetObject("croconaw", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1433,9 +1433,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Crustle {
+        public static System.Drawing.Bitmap crustle {
             get {
-                object obj = ResourceManager.GetObject("Crustle", resourceCulture);
+                object obj = ResourceManager.GetObject("crustle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1443,9 +1443,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cryogonal {
+        public static System.Drawing.Bitmap cryogonal {
             get {
-                object obj = ResourceManager.GetObject("Cryogonal", resourceCulture);
+                object obj = ResourceManager.GetObject("cryogonal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1453,9 +1453,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cubchoo {
+        public static System.Drawing.Bitmap cubchoo {
             get {
-                object obj = ResourceManager.GetObject("Cubchoo", resourceCulture);
+                object obj = ResourceManager.GetObject("cubchoo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1463,9 +1463,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cubone {
+        public static System.Drawing.Bitmap cubone {
             get {
-                object obj = ResourceManager.GetObject("Cubone", resourceCulture);
+                object obj = ResourceManager.GetObject("cubone", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1473,9 +1473,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cutiefly {
+        public static System.Drawing.Bitmap cutiefly {
             get {
-                object obj = ResourceManager.GetObject("Cutiefly", resourceCulture);
+                object obj = ResourceManager.GetObject("cutiefly", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1483,9 +1483,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Cyndaquil {
+        public static System.Drawing.Bitmap cyndaquil {
             get {
-                object obj = ResourceManager.GetObject("Cyndaquil", resourceCulture);
+                object obj = ResourceManager.GetObject("cyndaquil", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1493,9 +1493,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Darkrai {
+        public static System.Drawing.Bitmap darkrai {
             get {
-                object obj = ResourceManager.GetObject("Darkrai", resourceCulture);
+                object obj = ResourceManager.GetObject("darkrai", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1503,9 +1503,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Darmanitan {
+        public static System.Drawing.Bitmap darmanitan {
             get {
-                object obj = ResourceManager.GetObject("Darmanitan", resourceCulture);
+                object obj = ResourceManager.GetObject("darmanitan", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1513,9 +1513,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dartrix {
+        public static System.Drawing.Bitmap dartrix {
             get {
-                object obj = ResourceManager.GetObject("Dartrix", resourceCulture);
+                object obj = ResourceManager.GetObject("dartrix", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1523,9 +1523,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Darumaka {
+        public static System.Drawing.Bitmap darumaka {
             get {
-                object obj = ResourceManager.GetObject("Darumaka", resourceCulture);
+                object obj = ResourceManager.GetObject("darumaka", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1533,9 +1533,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Decidueye {
+        public static System.Drawing.Bitmap decidueye {
             get {
-                object obj = ResourceManager.GetObject("Decidueye", resourceCulture);
+                object obj = ResourceManager.GetObject("decidueye", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1543,9 +1543,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dedenne {
+        public static System.Drawing.Bitmap dedenne {
             get {
-                object obj = ResourceManager.GetObject("Dedenne", resourceCulture);
+                object obj = ResourceManager.GetObject("dedenne", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1553,9 +1553,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Deerling {
+        public static System.Drawing.Bitmap deerling {
             get {
-                object obj = ResourceManager.GetObject("Deerling", resourceCulture);
+                object obj = ResourceManager.GetObject("deerling", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1563,9 +1563,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Deino {
+        public static System.Drawing.Bitmap deino {
             get {
-                object obj = ResourceManager.GetObject("Deino", resourceCulture);
+                object obj = ResourceManager.GetObject("deino", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1573,9 +1573,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Delcatty {
+        public static System.Drawing.Bitmap delcatty {
             get {
-                object obj = ResourceManager.GetObject("Delcatty", resourceCulture);
+                object obj = ResourceManager.GetObject("delcatty", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1583,9 +1583,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Delibird {
+        public static System.Drawing.Bitmap delibird {
             get {
-                object obj = ResourceManager.GetObject("Delibird", resourceCulture);
+                object obj = ResourceManager.GetObject("delibird", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1593,9 +1593,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Delphox {
+        public static System.Drawing.Bitmap delphox {
             get {
-                object obj = ResourceManager.GetObject("Delphox", resourceCulture);
+                object obj = ResourceManager.GetObject("delphox", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1603,9 +1603,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Deoxys {
+        public static System.Drawing.Bitmap deoxys {
             get {
-                object obj = ResourceManager.GetObject("Deoxys", resourceCulture);
+                object obj = ResourceManager.GetObject("deoxys", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1613,9 +1613,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dewgong {
+        public static System.Drawing.Bitmap dewgong {
             get {
-                object obj = ResourceManager.GetObject("Dewgong", resourceCulture);
+                object obj = ResourceManager.GetObject("dewgong", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1623,9 +1623,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dewott {
+        public static System.Drawing.Bitmap dewott {
             get {
-                object obj = ResourceManager.GetObject("Dewott", resourceCulture);
+                object obj = ResourceManager.GetObject("dewott", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1633,9 +1633,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dewpider {
+        public static System.Drawing.Bitmap dewpider {
             get {
-                object obj = ResourceManager.GetObject("Dewpider", resourceCulture);
+                object obj = ResourceManager.GetObject("dewpider", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1643,9 +1643,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dhelmise {
+        public static System.Drawing.Bitmap dhelmise {
             get {
-                object obj = ResourceManager.GetObject("Dhelmise", resourceCulture);
+                object obj = ResourceManager.GetObject("dhelmise", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1653,9 +1653,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dialga {
+        public static System.Drawing.Bitmap dialga {
             get {
-                object obj = ResourceManager.GetObject("Dialga", resourceCulture);
+                object obj = ResourceManager.GetObject("dialga", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1663,9 +1663,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Diancie {
+        public static System.Drawing.Bitmap diancie {
             get {
-                object obj = ResourceManager.GetObject("Diancie", resourceCulture);
+                object obj = ResourceManager.GetObject("diancie", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1673,9 +1673,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Diggersby {
+        public static System.Drawing.Bitmap diggersby {
             get {
-                object obj = ResourceManager.GetObject("Diggersby", resourceCulture);
+                object obj = ResourceManager.GetObject("diggersby", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1683,9 +1683,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Diglett {
+        public static System.Drawing.Bitmap diglett {
             get {
-                object obj = ResourceManager.GetObject("Diglett", resourceCulture);
+                object obj = ResourceManager.GetObject("diglett", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1693,9 +1693,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ditto {
+        public static System.Drawing.Bitmap ditto {
             get {
-                object obj = ResourceManager.GetObject("Ditto", resourceCulture);
+                object obj = ResourceManager.GetObject("ditto", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1703,9 +1703,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dodrio {
+        public static System.Drawing.Bitmap dodrio {
             get {
-                object obj = ResourceManager.GetObject("Dodrio", resourceCulture);
+                object obj = ResourceManager.GetObject("dodrio", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1713,9 +1713,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Doduo {
+        public static System.Drawing.Bitmap doduo {
             get {
-                object obj = ResourceManager.GetObject("Doduo", resourceCulture);
+                object obj = ResourceManager.GetObject("doduo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1723,9 +1723,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Donphan {
+        public static System.Drawing.Bitmap donphan {
             get {
-                object obj = ResourceManager.GetObject("Donphan", resourceCulture);
+                object obj = ResourceManager.GetObject("donphan", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1733,9 +1733,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Doublade {
+        public static System.Drawing.Bitmap doublade {
             get {
-                object obj = ResourceManager.GetObject("Doublade", resourceCulture);
+                object obj = ResourceManager.GetObject("doublade", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1743,9 +1743,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dragalge {
+        public static System.Drawing.Bitmap dragalge {
             get {
-                object obj = ResourceManager.GetObject("Dragalge", resourceCulture);
+                object obj = ResourceManager.GetObject("dragalge", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1753,9 +1753,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dragonair {
+        public static System.Drawing.Bitmap dragonair {
             get {
-                object obj = ResourceManager.GetObject("Dragonair", resourceCulture);
+                object obj = ResourceManager.GetObject("dragonair", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1763,9 +1763,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dragonite {
+        public static System.Drawing.Bitmap dragonite {
             get {
-                object obj = ResourceManager.GetObject("Dragonite", resourceCulture);
+                object obj = ResourceManager.GetObject("dragonite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1773,9 +1773,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Drampa {
+        public static System.Drawing.Bitmap drampa {
             get {
-                object obj = ResourceManager.GetObject("Drampa", resourceCulture);
+                object obj = ResourceManager.GetObject("drampa", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1783,9 +1783,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Drapion {
+        public static System.Drawing.Bitmap drapion {
             get {
-                object obj = ResourceManager.GetObject("Drapion", resourceCulture);
+                object obj = ResourceManager.GetObject("drapion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1793,9 +1793,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dratini {
+        public static System.Drawing.Bitmap dratini {
             get {
-                object obj = ResourceManager.GetObject("Dratini", resourceCulture);
+                object obj = ResourceManager.GetObject("dratini", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1803,9 +1803,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Drifblim {
+        public static System.Drawing.Bitmap drifblim {
             get {
-                object obj = ResourceManager.GetObject("Drifblim", resourceCulture);
+                object obj = ResourceManager.GetObject("drifblim", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1813,9 +1813,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Drifloon {
+        public static System.Drawing.Bitmap drifloon {
             get {
-                object obj = ResourceManager.GetObject("Drifloon", resourceCulture);
+                object obj = ResourceManager.GetObject("drifloon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1823,9 +1823,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Drilbur {
+        public static System.Drawing.Bitmap drilbur {
             get {
-                object obj = ResourceManager.GetObject("Drilbur", resourceCulture);
+                object obj = ResourceManager.GetObject("drilbur", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1833,9 +1833,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Drowzee {
+        public static System.Drawing.Bitmap drowzee {
             get {
-                object obj = ResourceManager.GetObject("Drowzee", resourceCulture);
+                object obj = ResourceManager.GetObject("drowzee", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1843,9 +1843,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Druddigon {
+        public static System.Drawing.Bitmap druddigon {
             get {
-                object obj = ResourceManager.GetObject("Druddigon", resourceCulture);
+                object obj = ResourceManager.GetObject("druddigon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1853,9 +1853,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ducklett {
+        public static System.Drawing.Bitmap ducklett {
             get {
-                object obj = ResourceManager.GetObject("Ducklett", resourceCulture);
+                object obj = ResourceManager.GetObject("ducklett", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1863,9 +1863,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dugtrio {
+        public static System.Drawing.Bitmap dugtrio {
             get {
-                object obj = ResourceManager.GetObject("Dugtrio", resourceCulture);
+                object obj = ResourceManager.GetObject("dugtrio", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1873,9 +1873,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dunsparce {
+        public static System.Drawing.Bitmap dunsparce {
             get {
-                object obj = ResourceManager.GetObject("Dunsparce", resourceCulture);
+                object obj = ResourceManager.GetObject("dunsparce", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1883,9 +1883,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Duosion {
+        public static System.Drawing.Bitmap duosion {
             get {
-                object obj = ResourceManager.GetObject("Duosion", resourceCulture);
+                object obj = ResourceManager.GetObject("duosion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1893,9 +1893,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Durant {
+        public static System.Drawing.Bitmap durant {
             get {
-                object obj = ResourceManager.GetObject("Durant", resourceCulture);
+                object obj = ResourceManager.GetObject("durant", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1903,9 +1903,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dusclops {
+        public static System.Drawing.Bitmap dusclops {
             get {
-                object obj = ResourceManager.GetObject("Dusclops", resourceCulture);
+                object obj = ResourceManager.GetObject("dusclops", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1913,9 +1913,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dusknoir {
+        public static System.Drawing.Bitmap dusknoir {
             get {
-                object obj = ResourceManager.GetObject("Dusknoir", resourceCulture);
+                object obj = ResourceManager.GetObject("dusknoir", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1923,9 +1923,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Duskull {
+        public static System.Drawing.Bitmap duskull {
             get {
-                object obj = ResourceManager.GetObject("Duskull", resourceCulture);
+                object obj = ResourceManager.GetObject("duskull", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1933,9 +1933,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dustox {
+        public static System.Drawing.Bitmap dustox {
             get {
-                object obj = ResourceManager.GetObject("Dustox", resourceCulture);
+                object obj = ResourceManager.GetObject("dustox", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1943,9 +1943,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Dwebble {
+        public static System.Drawing.Bitmap dwebble {
             get {
-                object obj = ResourceManager.GetObject("Dwebble", resourceCulture);
+                object obj = ResourceManager.GetObject("dwebble", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1953,9 +1953,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Eelektrik {
+        public static System.Drawing.Bitmap eelektrik {
             get {
-                object obj = ResourceManager.GetObject("Eelektrik", resourceCulture);
+                object obj = ResourceManager.GetObject("eelektrik", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1963,9 +1963,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Eelektross {
+        public static System.Drawing.Bitmap eelektross {
             get {
-                object obj = ResourceManager.GetObject("Eelektross", resourceCulture);
+                object obj = ResourceManager.GetObject("eelektross", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1973,9 +1973,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Eevee {
+        public static System.Drawing.Bitmap eevee {
             get {
-                object obj = ResourceManager.GetObject("Eevee", resourceCulture);
+                object obj = ResourceManager.GetObject("eevee", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1983,9 +1983,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ekans {
+        public static System.Drawing.Bitmap ekans {
             get {
-                object obj = ResourceManager.GetObject("Ekans", resourceCulture);
+                object obj = ResourceManager.GetObject("ekans", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1993,9 +1993,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Electabuzz {
+        public static System.Drawing.Bitmap electabuzz {
             get {
-                object obj = ResourceManager.GetObject("Electabuzz", resourceCulture);
+                object obj = ResourceManager.GetObject("electabuzz", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2003,9 +2003,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Electivire {
+        public static System.Drawing.Bitmap electivire {
             get {
-                object obj = ResourceManager.GetObject("Electivire", resourceCulture);
+                object obj = ResourceManager.GetObject("electivire", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2013,9 +2013,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Electrike {
+        public static System.Drawing.Bitmap electrike {
             get {
-                object obj = ResourceManager.GetObject("Electrike", resourceCulture);
+                object obj = ResourceManager.GetObject("electrike", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2023,9 +2023,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Electrode {
+        public static System.Drawing.Bitmap electrode {
             get {
-                object obj = ResourceManager.GetObject("Electrode", resourceCulture);
+                object obj = ResourceManager.GetObject("electrode", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2033,9 +2033,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Elekid {
+        public static System.Drawing.Bitmap elekid {
             get {
-                object obj = ResourceManager.GetObject("Elekid", resourceCulture);
+                object obj = ResourceManager.GetObject("elekid", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2043,9 +2043,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Elgyem {
+        public static System.Drawing.Bitmap elgyem {
             get {
-                object obj = ResourceManager.GetObject("Elgyem", resourceCulture);
+                object obj = ResourceManager.GetObject("elgyem", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2053,9 +2053,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Emboar {
+        public static System.Drawing.Bitmap emboar {
             get {
-                object obj = ResourceManager.GetObject("Emboar", resourceCulture);
+                object obj = ResourceManager.GetObject("emboar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2063,9 +2063,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Emolga {
+        public static System.Drawing.Bitmap emolga {
             get {
-                object obj = ResourceManager.GetObject("Emolga", resourceCulture);
+                object obj = ResourceManager.GetObject("emolga", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2073,9 +2073,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Empoleon {
+        public static System.Drawing.Bitmap empoleon {
             get {
-                object obj = ResourceManager.GetObject("Empoleon", resourceCulture);
+                object obj = ResourceManager.GetObject("empoleon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2083,9 +2083,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Entei {
+        public static System.Drawing.Bitmap entei {
             get {
-                object obj = ResourceManager.GetObject("Entei", resourceCulture);
+                object obj = ResourceManager.GetObject("entei", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2093,9 +2093,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Escavalier {
+        public static System.Drawing.Bitmap escavalier {
             get {
-                object obj = ResourceManager.GetObject("Escavalier", resourceCulture);
+                object obj = ResourceManager.GetObject("escavalier", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2103,9 +2103,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Espeon {
+        public static System.Drawing.Bitmap espeon {
             get {
-                object obj = ResourceManager.GetObject("Espeon", resourceCulture);
+                object obj = ResourceManager.GetObject("espeon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2113,9 +2113,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Espurr {
+        public static System.Drawing.Bitmap espurr {
             get {
-                object obj = ResourceManager.GetObject("Espurr", resourceCulture);
+                object obj = ResourceManager.GetObject("espurr", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2123,9 +2123,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Excadrill {
+        public static System.Drawing.Bitmap excadrill {
             get {
-                object obj = ResourceManager.GetObject("Excadrill", resourceCulture);
+                object obj = ResourceManager.GetObject("excadrill", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2133,9 +2133,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Exeggcute {
+        public static System.Drawing.Bitmap exeggcute {
             get {
-                object obj = ResourceManager.GetObject("Exeggcute", resourceCulture);
+                object obj = ResourceManager.GetObject("exeggcute", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2143,9 +2143,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Exeggutor {
+        public static System.Drawing.Bitmap exeggutor {
             get {
-                object obj = ResourceManager.GetObject("Exeggutor", resourceCulture);
+                object obj = ResourceManager.GetObject("exeggutor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2153,9 +2153,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Exploud {
+        public static System.Drawing.Bitmap exploud {
             get {
-                object obj = ResourceManager.GetObject("Exploud", resourceCulture);
+                object obj = ResourceManager.GetObject("exploud", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2163,9 +2163,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Farfetch_d {
+        public static System.Drawing.Bitmap farfetch_d {
             get {
-                object obj = ResourceManager.GetObject("Farfetch_d", resourceCulture);
+                object obj = ResourceManager.GetObject("farfetch_d", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2173,9 +2173,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Fearow {
+        public static System.Drawing.Bitmap fearow {
             get {
-                object obj = ResourceManager.GetObject("Fearow", resourceCulture);
+                object obj = ResourceManager.GetObject("fearow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2183,9 +2183,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Feebas {
+        public static System.Drawing.Bitmap feebas {
             get {
-                object obj = ResourceManager.GetObject("Feebas", resourceCulture);
+                object obj = ResourceManager.GetObject("feebas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2193,9 +2193,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Fennekin {
+        public static System.Drawing.Bitmap fennekin {
             get {
-                object obj = ResourceManager.GetObject("Fennekin", resourceCulture);
+                object obj = ResourceManager.GetObject("fennekin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2203,9 +2203,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Feraligatr {
+        public static System.Drawing.Bitmap feraligatr {
             get {
-                object obj = ResourceManager.GetObject("Feraligatr", resourceCulture);
+                object obj = ResourceManager.GetObject("feraligatr", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2213,9 +2213,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ferroseed {
+        public static System.Drawing.Bitmap ferroseed {
             get {
-                object obj = ResourceManager.GetObject("Ferroseed", resourceCulture);
+                object obj = ResourceManager.GetObject("ferroseed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2223,9 +2223,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ferrothorn {
+        public static System.Drawing.Bitmap ferrothorn {
             get {
-                object obj = ResourceManager.GetObject("Ferrothorn", resourceCulture);
+                object obj = ResourceManager.GetObject("ferrothorn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2233,9 +2233,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Finneon {
+        public static System.Drawing.Bitmap finneon {
             get {
-                object obj = ResourceManager.GetObject("Finneon", resourceCulture);
+                object obj = ResourceManager.GetObject("finneon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2243,9 +2243,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Flaaffy {
+        public static System.Drawing.Bitmap flaaffy {
             get {
-                object obj = ResourceManager.GetObject("Flaaffy", resourceCulture);
+                object obj = ResourceManager.GetObject("flaaffy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2253,9 +2253,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Flabébé {
+        public static System.Drawing.Bitmap flabébé {
             get {
-                object obj = ResourceManager.GetObject("Flabébé", resourceCulture);
+                object obj = ResourceManager.GetObject("flabébé", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2263,9 +2263,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Flareon {
+        public static System.Drawing.Bitmap flareon {
             get {
-                object obj = ResourceManager.GetObject("Flareon", resourceCulture);
+                object obj = ResourceManager.GetObject("flareon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2273,9 +2273,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Fletchinder {
+        public static System.Drawing.Bitmap fletchinder {
             get {
-                object obj = ResourceManager.GetObject("Fletchinder", resourceCulture);
+                object obj = ResourceManager.GetObject("fletchinder", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2283,9 +2283,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Fletchling {
+        public static System.Drawing.Bitmap fletchling {
             get {
-                object obj = ResourceManager.GetObject("Fletchling", resourceCulture);
+                object obj = ResourceManager.GetObject("fletchling", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2293,9 +2293,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Floatzel {
+        public static System.Drawing.Bitmap floatzel {
             get {
-                object obj = ResourceManager.GetObject("Floatzel", resourceCulture);
+                object obj = ResourceManager.GetObject("floatzel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2303,9 +2303,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Floette {
+        public static System.Drawing.Bitmap floette {
             get {
-                object obj = ResourceManager.GetObject("Floette", resourceCulture);
+                object obj = ResourceManager.GetObject("floette", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2313,9 +2313,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Florges {
+        public static System.Drawing.Bitmap florges {
             get {
-                object obj = ResourceManager.GetObject("Florges", resourceCulture);
+                object obj = ResourceManager.GetObject("florges", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2323,9 +2323,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Flygon {
+        public static System.Drawing.Bitmap flygon {
             get {
-                object obj = ResourceManager.GetObject("Flygon", resourceCulture);
+                object obj = ResourceManager.GetObject("flygon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2333,9 +2333,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Fomantis {
+        public static System.Drawing.Bitmap fomantis {
             get {
-                object obj = ResourceManager.GetObject("Fomantis", resourceCulture);
+                object obj = ResourceManager.GetObject("fomantis", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2343,9 +2343,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Foongus {
+        public static System.Drawing.Bitmap foongus {
             get {
-                object obj = ResourceManager.GetObject("Foongus", resourceCulture);
+                object obj = ResourceManager.GetObject("foongus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2353,9 +2353,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Forretress {
+        public static System.Drawing.Bitmap forretress {
             get {
-                object obj = ResourceManager.GetObject("Forretress", resourceCulture);
+                object obj = ResourceManager.GetObject("forretress", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2363,9 +2363,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Fraxure {
+        public static System.Drawing.Bitmap fraxure {
             get {
-                object obj = ResourceManager.GetObject("Fraxure", resourceCulture);
+                object obj = ResourceManager.GetObject("fraxure", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2373,9 +2373,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Frillish {
+        public static System.Drawing.Bitmap frillish {
             get {
-                object obj = ResourceManager.GetObject("Frillish", resourceCulture);
+                object obj = ResourceManager.GetObject("frillish", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2383,9 +2383,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Froakie {
+        public static System.Drawing.Bitmap froakie {
             get {
-                object obj = ResourceManager.GetObject("Froakie", resourceCulture);
+                object obj = ResourceManager.GetObject("froakie", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2393,9 +2393,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Frogadier {
+        public static System.Drawing.Bitmap frogadier {
             get {
-                object obj = ResourceManager.GetObject("Frogadier", resourceCulture);
+                object obj = ResourceManager.GetObject("frogadier", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2403,9 +2403,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Froslass {
+        public static System.Drawing.Bitmap froslass {
             get {
-                object obj = ResourceManager.GetObject("Froslass", resourceCulture);
+                object obj = ResourceManager.GetObject("froslass", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2413,9 +2413,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Furfrou {
+        public static System.Drawing.Bitmap furfrou {
             get {
-                object obj = ResourceManager.GetObject("Furfrou", resourceCulture);
+                object obj = ResourceManager.GetObject("furfrou", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2423,9 +2423,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Furret {
+        public static System.Drawing.Bitmap furret {
             get {
-                object obj = ResourceManager.GetObject("Furret", resourceCulture);
+                object obj = ResourceManager.GetObject("furret", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2433,9 +2433,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gabite {
+        public static System.Drawing.Bitmap gabite {
             get {
-                object obj = ResourceManager.GetObject("Gabite", resourceCulture);
+                object obj = ResourceManager.GetObject("gabite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2443,9 +2443,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gallade {
+        public static System.Drawing.Bitmap gallade {
             get {
-                object obj = ResourceManager.GetObject("Gallade", resourceCulture);
+                object obj = ResourceManager.GetObject("gallade", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2453,9 +2453,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Galvantula {
+        public static System.Drawing.Bitmap galvantula {
             get {
-                object obj = ResourceManager.GetObject("Galvantula", resourceCulture);
+                object obj = ResourceManager.GetObject("galvantula", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2463,9 +2463,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Garbodor {
+        public static System.Drawing.Bitmap garbodor {
             get {
-                object obj = ResourceManager.GetObject("Garbodor", resourceCulture);
+                object obj = ResourceManager.GetObject("garbodor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2473,9 +2473,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Garchomp {
+        public static System.Drawing.Bitmap garchomp {
             get {
-                object obj = ResourceManager.GetObject("Garchomp", resourceCulture);
+                object obj = ResourceManager.GetObject("garchomp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2483,9 +2483,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gardevoir {
+        public static System.Drawing.Bitmap gardevoir {
             get {
-                object obj = ResourceManager.GetObject("Gardevoir", resourceCulture);
+                object obj = ResourceManager.GetObject("gardevoir", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2493,9 +2493,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gastly {
+        public static System.Drawing.Bitmap gastly {
             get {
-                object obj = ResourceManager.GetObject("Gastly", resourceCulture);
+                object obj = ResourceManager.GetObject("gastly", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2503,9 +2503,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gastrodon {
+        public static System.Drawing.Bitmap gastrodon {
             get {
-                object obj = ResourceManager.GetObject("Gastrodon", resourceCulture);
+                object obj = ResourceManager.GetObject("gastrodon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2513,9 +2513,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Genesect {
+        public static System.Drawing.Bitmap genesect {
             get {
-                object obj = ResourceManager.GetObject("Genesect", resourceCulture);
+                object obj = ResourceManager.GetObject("genesect", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2523,9 +2523,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gengar {
+        public static System.Drawing.Bitmap gengar {
             get {
-                object obj = ResourceManager.GetObject("Gengar", resourceCulture);
+                object obj = ResourceManager.GetObject("gengar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2533,9 +2533,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Geodude {
+        public static System.Drawing.Bitmap geodude {
             get {
-                object obj = ResourceManager.GetObject("Geodude", resourceCulture);
+                object obj = ResourceManager.GetObject("geodude", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2543,9 +2543,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gible {
+        public static System.Drawing.Bitmap gible {
             get {
-                object obj = ResourceManager.GetObject("Gible", resourceCulture);
+                object obj = ResourceManager.GetObject("gible", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2553,9 +2553,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gigalith {
+        public static System.Drawing.Bitmap gigalith {
             get {
-                object obj = ResourceManager.GetObject("Gigalith", resourceCulture);
+                object obj = ResourceManager.GetObject("gigalith", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2563,9 +2563,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Girafarig {
+        public static System.Drawing.Bitmap girafarig {
             get {
-                object obj = ResourceManager.GetObject("Girafarig", resourceCulture);
+                object obj = ResourceManager.GetObject("girafarig", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2573,9 +2573,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Giratina {
+        public static System.Drawing.Bitmap giratina {
             get {
-                object obj = ResourceManager.GetObject("Giratina", resourceCulture);
+                object obj = ResourceManager.GetObject("giratina", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2583,9 +2583,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Glaceon {
+        public static System.Drawing.Bitmap glaceon {
             get {
-                object obj = ResourceManager.GetObject("Glaceon", resourceCulture);
+                object obj = ResourceManager.GetObject("glaceon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2593,9 +2593,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Glalie {
+        public static System.Drawing.Bitmap glalie {
             get {
-                object obj = ResourceManager.GetObject("Glalie", resourceCulture);
+                object obj = ResourceManager.GetObject("glalie", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2603,9 +2603,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Glameow {
+        public static System.Drawing.Bitmap glameow {
             get {
-                object obj = ResourceManager.GetObject("Glameow", resourceCulture);
+                object obj = ResourceManager.GetObject("glameow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2613,9 +2613,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gligar {
+        public static System.Drawing.Bitmap gligar {
             get {
-                object obj = ResourceManager.GetObject("Gligar", resourceCulture);
+                object obj = ResourceManager.GetObject("gligar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2623,9 +2623,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gliscor {
+        public static System.Drawing.Bitmap gliscor {
             get {
-                object obj = ResourceManager.GetObject("Gliscor", resourceCulture);
+                object obj = ResourceManager.GetObject("gliscor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2633,9 +2633,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gloom {
+        public static System.Drawing.Bitmap gloom {
             get {
-                object obj = ResourceManager.GetObject("Gloom", resourceCulture);
+                object obj = ResourceManager.GetObject("gloom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2643,9 +2643,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gogoat {
+        public static System.Drawing.Bitmap gogoat {
             get {
-                object obj = ResourceManager.GetObject("Gogoat", resourceCulture);
+                object obj = ResourceManager.GetObject("gogoat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2653,9 +2653,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Golbat {
+        public static System.Drawing.Bitmap golbat {
             get {
-                object obj = ResourceManager.GetObject("Golbat", resourceCulture);
+                object obj = ResourceManager.GetObject("golbat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2663,9 +2663,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Goldeen {
+        public static System.Drawing.Bitmap goldeen {
             get {
-                object obj = ResourceManager.GetObject("Goldeen", resourceCulture);
+                object obj = ResourceManager.GetObject("goldeen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2673,9 +2673,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Golduck {
+        public static System.Drawing.Bitmap golduck {
             get {
-                object obj = ResourceManager.GetObject("Golduck", resourceCulture);
+                object obj = ResourceManager.GetObject("golduck", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2683,9 +2683,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Golem {
+        public static System.Drawing.Bitmap golem {
             get {
-                object obj = ResourceManager.GetObject("Golem", resourceCulture);
+                object obj = ResourceManager.GetObject("golem", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2693,9 +2693,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Golett {
+        public static System.Drawing.Bitmap golett {
             get {
-                object obj = ResourceManager.GetObject("Golett", resourceCulture);
+                object obj = ResourceManager.GetObject("golett", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2703,9 +2703,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Golisopod {
+        public static System.Drawing.Bitmap golisopod {
             get {
-                object obj = ResourceManager.GetObject("Golisopod", resourceCulture);
+                object obj = ResourceManager.GetObject("golisopod", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2713,9 +2713,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Golurk {
+        public static System.Drawing.Bitmap golurk {
             get {
-                object obj = ResourceManager.GetObject("Golurk", resourceCulture);
+                object obj = ResourceManager.GetObject("golurk", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2723,9 +2723,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Goodra {
+        public static System.Drawing.Bitmap goodra {
             get {
-                object obj = ResourceManager.GetObject("Goodra", resourceCulture);
+                object obj = ResourceManager.GetObject("goodra", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2733,9 +2733,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Goomy {
+        public static System.Drawing.Bitmap goomy {
             get {
-                object obj = ResourceManager.GetObject("Goomy", resourceCulture);
+                object obj = ResourceManager.GetObject("goomy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2743,9 +2743,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gorebyss {
+        public static System.Drawing.Bitmap gorebyss {
             get {
-                object obj = ResourceManager.GetObject("Gorebyss", resourceCulture);
+                object obj = ResourceManager.GetObject("gorebyss", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2753,9 +2753,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gothita {
+        public static System.Drawing.Bitmap gothita {
             get {
-                object obj = ResourceManager.GetObject("Gothita", resourceCulture);
+                object obj = ResourceManager.GetObject("gothita", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2763,9 +2763,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gothitelle {
+        public static System.Drawing.Bitmap gothitelle {
             get {
-                object obj = ResourceManager.GetObject("Gothitelle", resourceCulture);
+                object obj = ResourceManager.GetObject("gothitelle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2773,9 +2773,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gothorita {
+        public static System.Drawing.Bitmap gothorita {
             get {
-                object obj = ResourceManager.GetObject("Gothorita", resourceCulture);
+                object obj = ResourceManager.GetObject("gothorita", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2783,9 +2783,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gourgeist {
+        public static System.Drawing.Bitmap gourgeist {
             get {
-                object obj = ResourceManager.GetObject("Gourgeist", resourceCulture);
+                object obj = ResourceManager.GetObject("gourgeist", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2793,9 +2793,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Granbull {
+        public static System.Drawing.Bitmap granbull {
             get {
-                object obj = ResourceManager.GetObject("Granbull", resourceCulture);
+                object obj = ResourceManager.GetObject("granbull", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2803,9 +2803,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Graveler {
+        public static System.Drawing.Bitmap graveler {
             get {
-                object obj = ResourceManager.GetObject("Graveler", resourceCulture);
+                object obj = ResourceManager.GetObject("graveler", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2813,9 +2813,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Greninja {
+        public static System.Drawing.Bitmap greninja {
             get {
-                object obj = ResourceManager.GetObject("Greninja", resourceCulture);
+                object obj = ResourceManager.GetObject("greninja", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2823,9 +2823,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Grimer {
+        public static System.Drawing.Bitmap grimer {
             get {
-                object obj = ResourceManager.GetObject("Grimer", resourceCulture);
+                object obj = ResourceManager.GetObject("grimer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2833,9 +2833,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Grotle {
+        public static System.Drawing.Bitmap grotle {
             get {
-                object obj = ResourceManager.GetObject("Grotle", resourceCulture);
+                object obj = ResourceManager.GetObject("grotle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2843,9 +2843,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Groudon {
+        public static System.Drawing.Bitmap groudon {
             get {
-                object obj = ResourceManager.GetObject("Groudon", resourceCulture);
+                object obj = ResourceManager.GetObject("groudon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2853,9 +2853,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Grovyle {
+        public static System.Drawing.Bitmap grovyle {
             get {
-                object obj = ResourceManager.GetObject("Grovyle", resourceCulture);
+                object obj = ResourceManager.GetObject("grovyle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2863,9 +2863,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Growlithe {
+        public static System.Drawing.Bitmap growlithe {
             get {
-                object obj = ResourceManager.GetObject("Growlithe", resourceCulture);
+                object obj = ResourceManager.GetObject("growlithe", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2873,9 +2873,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Grubbin {
+        public static System.Drawing.Bitmap grubbin {
             get {
-                object obj = ResourceManager.GetObject("Grubbin", resourceCulture);
+                object obj = ResourceManager.GetObject("grubbin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2883,9 +2883,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Grumpig {
+        public static System.Drawing.Bitmap grumpig {
             get {
-                object obj = ResourceManager.GetObject("Grumpig", resourceCulture);
+                object obj = ResourceManager.GetObject("grumpig", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2893,9 +2893,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gulpin {
+        public static System.Drawing.Bitmap gulpin {
             get {
-                object obj = ResourceManager.GetObject("Gulpin", resourceCulture);
+                object obj = ResourceManager.GetObject("gulpin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2903,9 +2903,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gumshoos {
+        public static System.Drawing.Bitmap gumshoos {
             get {
-                object obj = ResourceManager.GetObject("Gumshoos", resourceCulture);
+                object obj = ResourceManager.GetObject("gumshoos", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2913,9 +2913,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gurdurr {
+        public static System.Drawing.Bitmap gurdurr {
             get {
-                object obj = ResourceManager.GetObject("Gurdurr", resourceCulture);
+                object obj = ResourceManager.GetObject("gurdurr", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2923,9 +2923,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Guzzlord {
+        public static System.Drawing.Bitmap guzzlord {
             get {
-                object obj = ResourceManager.GetObject("Guzzlord", resourceCulture);
+                object obj = ResourceManager.GetObject("guzzlord", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2933,9 +2933,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Gyarados {
+        public static System.Drawing.Bitmap gyarados {
             get {
-                object obj = ResourceManager.GetObject("Gyarados", resourceCulture);
+                object obj = ResourceManager.GetObject("gyarados", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2943,9 +2943,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Hakamo_o {
+        public static System.Drawing.Bitmap hakamo_o {
             get {
-                object obj = ResourceManager.GetObject("Hakamo_o", resourceCulture);
+                object obj = ResourceManager.GetObject("hakamo_o", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2953,9 +2953,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Happiny {
+        public static System.Drawing.Bitmap happiny {
             get {
-                object obj = ResourceManager.GetObject("Happiny", resourceCulture);
+                object obj = ResourceManager.GetObject("happiny", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2963,9 +2963,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Hariyama {
+        public static System.Drawing.Bitmap hariyama {
             get {
-                object obj = ResourceManager.GetObject("Hariyama", resourceCulture);
+                object obj = ResourceManager.GetObject("hariyama", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2973,9 +2973,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Haunter {
+        public static System.Drawing.Bitmap haunter {
             get {
-                object obj = ResourceManager.GetObject("Haunter", resourceCulture);
+                object obj = ResourceManager.GetObject("haunter", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2983,9 +2983,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Hawlucha {
+        public static System.Drawing.Bitmap hawlucha {
             get {
-                object obj = ResourceManager.GetObject("Hawlucha", resourceCulture);
+                object obj = ResourceManager.GetObject("hawlucha", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2993,9 +2993,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Haxorus {
+        public static System.Drawing.Bitmap haxorus {
             get {
-                object obj = ResourceManager.GetObject("Haxorus", resourceCulture);
+                object obj = ResourceManager.GetObject("haxorus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3003,9 +3003,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Heatmor {
+        public static System.Drawing.Bitmap heatmor {
             get {
-                object obj = ResourceManager.GetObject("Heatmor", resourceCulture);
+                object obj = ResourceManager.GetObject("heatmor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3013,9 +3013,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Heatran {
+        public static System.Drawing.Bitmap heatran {
             get {
-                object obj = ResourceManager.GetObject("Heatran", resourceCulture);
+                object obj = ResourceManager.GetObject("heatran", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3023,9 +3023,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Heliolisk {
+        public static System.Drawing.Bitmap heliolisk {
             get {
-                object obj = ResourceManager.GetObject("Heliolisk", resourceCulture);
+                object obj = ResourceManager.GetObject("heliolisk", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3033,9 +3033,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Helioptile {
+        public static System.Drawing.Bitmap helioptile {
             get {
-                object obj = ResourceManager.GetObject("Helioptile", resourceCulture);
+                object obj = ResourceManager.GetObject("helioptile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3043,9 +3043,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Heracross {
+        public static System.Drawing.Bitmap heracross {
             get {
-                object obj = ResourceManager.GetObject("Heracross", resourceCulture);
+                object obj = ResourceManager.GetObject("heracross", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3053,9 +3053,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Herdier {
+        public static System.Drawing.Bitmap herdier {
             get {
-                object obj = ResourceManager.GetObject("Herdier", resourceCulture);
+                object obj = ResourceManager.GetObject("herdier", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3063,9 +3063,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Hippopotas {
+        public static System.Drawing.Bitmap hippopotas {
             get {
-                object obj = ResourceManager.GetObject("Hippopotas", resourceCulture);
+                object obj = ResourceManager.GetObject("hippopotas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3073,9 +3073,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Hippowdon {
+        public static System.Drawing.Bitmap hippowdon {
             get {
-                object obj = ResourceManager.GetObject("Hippowdon", resourceCulture);
+                object obj = ResourceManager.GetObject("hippowdon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3083,9 +3083,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Hitmonchan {
+        public static System.Drawing.Bitmap hitmonchan {
             get {
-                object obj = ResourceManager.GetObject("Hitmonchan", resourceCulture);
+                object obj = ResourceManager.GetObject("hitmonchan", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3093,9 +3093,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Hitmonlee {
+        public static System.Drawing.Bitmap hitmonlee {
             get {
-                object obj = ResourceManager.GetObject("Hitmonlee", resourceCulture);
+                object obj = ResourceManager.GetObject("hitmonlee", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3103,9 +3103,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Hitmontop {
+        public static System.Drawing.Bitmap hitmontop {
             get {
-                object obj = ResourceManager.GetObject("Hitmontop", resourceCulture);
+                object obj = ResourceManager.GetObject("hitmontop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3113,9 +3113,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ho_Oh {
+        public static System.Drawing.Bitmap ho_oh {
             get {
-                object obj = ResourceManager.GetObject("Ho_Oh", resourceCulture);
+                object obj = ResourceManager.GetObject("ho_oh", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3123,9 +3123,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Honchkrow {
+        public static System.Drawing.Bitmap honchkrow {
             get {
-                object obj = ResourceManager.GetObject("Honchkrow", resourceCulture);
+                object obj = ResourceManager.GetObject("honchkrow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3133,9 +3133,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Honedge {
+        public static System.Drawing.Bitmap honedge {
             get {
-                object obj = ResourceManager.GetObject("Honedge", resourceCulture);
+                object obj = ResourceManager.GetObject("honedge", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3143,9 +3143,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Hoopa {
+        public static System.Drawing.Bitmap hoopa {
             get {
-                object obj = ResourceManager.GetObject("Hoopa", resourceCulture);
+                object obj = ResourceManager.GetObject("hoopa", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3153,9 +3153,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Hoothoot {
+        public static System.Drawing.Bitmap hoothoot {
             get {
-                object obj = ResourceManager.GetObject("Hoothoot", resourceCulture);
+                object obj = ResourceManager.GetObject("hoothoot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3163,9 +3163,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Hoppip {
+        public static System.Drawing.Bitmap hoppip {
             get {
-                object obj = ResourceManager.GetObject("Hoppip", resourceCulture);
+                object obj = ResourceManager.GetObject("hoppip", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3173,9 +3173,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Horsea {
+        public static System.Drawing.Bitmap horsea {
             get {
-                object obj = ResourceManager.GetObject("Horsea", resourceCulture);
+                object obj = ResourceManager.GetObject("horsea", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3183,9 +3183,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Houndoom {
+        public static System.Drawing.Bitmap houndoom {
             get {
-                object obj = ResourceManager.GetObject("Houndoom", resourceCulture);
+                object obj = ResourceManager.GetObject("houndoom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3193,9 +3193,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Houndour {
+        public static System.Drawing.Bitmap houndour {
             get {
-                object obj = ResourceManager.GetObject("Houndour", resourceCulture);
+                object obj = ResourceManager.GetObject("houndour", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3203,9 +3203,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Huntail {
+        public static System.Drawing.Bitmap huntail {
             get {
-                object obj = ResourceManager.GetObject("Huntail", resourceCulture);
+                object obj = ResourceManager.GetObject("huntail", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3213,9 +3213,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Hydreigon {
+        public static System.Drawing.Bitmap hydreigon {
             get {
-                object obj = ResourceManager.GetObject("Hydreigon", resourceCulture);
+                object obj = ResourceManager.GetObject("hydreigon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3223,9 +3223,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Hypno {
+        public static System.Drawing.Bitmap hypno {
             get {
-                object obj = ResourceManager.GetObject("Hypno", resourceCulture);
+                object obj = ResourceManager.GetObject("hypno", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3233,9 +3233,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Igglybuff {
+        public static System.Drawing.Bitmap igglybuff {
             get {
-                object obj = ResourceManager.GetObject("Igglybuff", resourceCulture);
+                object obj = ResourceManager.GetObject("igglybuff", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3243,9 +3243,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Illumise {
+        public static System.Drawing.Bitmap illumise {
             get {
-                object obj = ResourceManager.GetObject("Illumise", resourceCulture);
+                object obj = ResourceManager.GetObject("illumise", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3253,9 +3253,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Incineroar {
+        public static System.Drawing.Bitmap incineroar {
             get {
-                object obj = ResourceManager.GetObject("Incineroar", resourceCulture);
+                object obj = ResourceManager.GetObject("incineroar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3263,9 +3263,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Infernape {
+        public static System.Drawing.Bitmap infernape {
             get {
-                object obj = ResourceManager.GetObject("Infernape", resourceCulture);
+                object obj = ResourceManager.GetObject("infernape", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3273,9 +3273,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Inkay {
+        public static System.Drawing.Bitmap inkay {
             get {
-                object obj = ResourceManager.GetObject("Inkay", resourceCulture);
+                object obj = ResourceManager.GetObject("inkay", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3283,9 +3283,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ivysaur {
+        public static System.Drawing.Bitmap ivysaur {
             get {
-                object obj = ResourceManager.GetObject("Ivysaur", resourceCulture);
+                object obj = ResourceManager.GetObject("ivysaur", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3293,9 +3293,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Jangmo_o {
+        public static System.Drawing.Bitmap jangmo_o {
             get {
-                object obj = ResourceManager.GetObject("Jangmo_o", resourceCulture);
+                object obj = ResourceManager.GetObject("jangmo_o", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3303,9 +3303,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Jellicent {
+        public static System.Drawing.Bitmap jellicent {
             get {
-                object obj = ResourceManager.GetObject("Jellicent", resourceCulture);
+                object obj = ResourceManager.GetObject("jellicent", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3313,9 +3313,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Jigglypuff {
+        public static System.Drawing.Bitmap jigglypuff {
             get {
-                object obj = ResourceManager.GetObject("Jigglypuff", resourceCulture);
+                object obj = ResourceManager.GetObject("jigglypuff", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3323,9 +3323,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Jirachi {
+        public static System.Drawing.Bitmap jirachi {
             get {
-                object obj = ResourceManager.GetObject("Jirachi", resourceCulture);
+                object obj = ResourceManager.GetObject("jirachi", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3333,9 +3333,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Jolteon {
+        public static System.Drawing.Bitmap jolteon {
             get {
-                object obj = ResourceManager.GetObject("Jolteon", resourceCulture);
+                object obj = ResourceManager.GetObject("jolteon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3343,9 +3343,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Joltik {
+        public static System.Drawing.Bitmap joltik {
             get {
-                object obj = ResourceManager.GetObject("Joltik", resourceCulture);
+                object obj = ResourceManager.GetObject("joltik", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3353,9 +3353,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Jumpluff {
+        public static System.Drawing.Bitmap jumpluff {
             get {
-                object obj = ResourceManager.GetObject("Jumpluff", resourceCulture);
+                object obj = ResourceManager.GetObject("jumpluff", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3363,9 +3363,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Jynx {
+        public static System.Drawing.Bitmap jynx {
             get {
-                object obj = ResourceManager.GetObject("Jynx", resourceCulture);
+                object obj = ResourceManager.GetObject("jynx", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3373,9 +3373,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kabuto {
+        public static System.Drawing.Bitmap kabuto {
             get {
-                object obj = ResourceManager.GetObject("Kabuto", resourceCulture);
+                object obj = ResourceManager.GetObject("kabuto", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3383,9 +3383,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kabutops {
+        public static System.Drawing.Bitmap kabutops {
             get {
-                object obj = ResourceManager.GetObject("Kabutops", resourceCulture);
+                object obj = ResourceManager.GetObject("kabutops", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3393,9 +3393,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kadabra {
+        public static System.Drawing.Bitmap kadabra {
             get {
-                object obj = ResourceManager.GetObject("Kadabra", resourceCulture);
+                object obj = ResourceManager.GetObject("kadabra", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3403,9 +3403,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kakuna {
+        public static System.Drawing.Bitmap kakuna {
             get {
-                object obj = ResourceManager.GetObject("Kakuna", resourceCulture);
+                object obj = ResourceManager.GetObject("kakuna", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3413,9 +3413,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kangaskhan {
+        public static System.Drawing.Bitmap kangaskhan {
             get {
-                object obj = ResourceManager.GetObject("Kangaskhan", resourceCulture);
+                object obj = ResourceManager.GetObject("kangaskhan", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3423,9 +3423,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Karrablast {
+        public static System.Drawing.Bitmap karrablast {
             get {
-                object obj = ResourceManager.GetObject("Karrablast", resourceCulture);
+                object obj = ResourceManager.GetObject("karrablast", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3433,9 +3433,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kartana {
+        public static System.Drawing.Bitmap kartana {
             get {
-                object obj = ResourceManager.GetObject("Kartana", resourceCulture);
+                object obj = ResourceManager.GetObject("kartana", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3443,9 +3443,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kecleon {
+        public static System.Drawing.Bitmap kecleon {
             get {
-                object obj = ResourceManager.GetObject("Kecleon", resourceCulture);
+                object obj = ResourceManager.GetObject("kecleon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3453,9 +3453,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Keldeo {
+        public static System.Drawing.Bitmap keldeo {
             get {
-                object obj = ResourceManager.GetObject("Keldeo", resourceCulture);
+                object obj = ResourceManager.GetObject("keldeo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3463,9 +3463,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kingdra {
+        public static System.Drawing.Bitmap kingdra {
             get {
-                object obj = ResourceManager.GetObject("Kingdra", resourceCulture);
+                object obj = ResourceManager.GetObject("kingdra", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3473,9 +3473,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kingler {
+        public static System.Drawing.Bitmap kingler {
             get {
-                object obj = ResourceManager.GetObject("Kingler", resourceCulture);
+                object obj = ResourceManager.GetObject("kingler", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3483,9 +3483,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kirlia {
+        public static System.Drawing.Bitmap kirlia {
             get {
-                object obj = ResourceManager.GetObject("Kirlia", resourceCulture);
+                object obj = ResourceManager.GetObject("kirlia", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3493,9 +3493,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Klang {
+        public static System.Drawing.Bitmap klang {
             get {
-                object obj = ResourceManager.GetObject("Klang", resourceCulture);
+                object obj = ResourceManager.GetObject("klang", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3503,9 +3503,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Klefki {
+        public static System.Drawing.Bitmap klefki {
             get {
-                object obj = ResourceManager.GetObject("Klefki", resourceCulture);
+                object obj = ResourceManager.GetObject("klefki", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3513,9 +3513,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Klink {
+        public static System.Drawing.Bitmap klink {
             get {
-                object obj = ResourceManager.GetObject("Klink", resourceCulture);
+                object obj = ResourceManager.GetObject("klink", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3523,9 +3523,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Klinklang {
+        public static System.Drawing.Bitmap klinklang {
             get {
-                object obj = ResourceManager.GetObject("Klinklang", resourceCulture);
+                object obj = ResourceManager.GetObject("klinklang", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3533,9 +3533,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Koffing {
+        public static System.Drawing.Bitmap koffing {
             get {
-                object obj = ResourceManager.GetObject("Koffing", resourceCulture);
+                object obj = ResourceManager.GetObject("koffing", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3543,9 +3543,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Komala {
+        public static System.Drawing.Bitmap komala {
             get {
-                object obj = ResourceManager.GetObject("Komala", resourceCulture);
+                object obj = ResourceManager.GetObject("komala", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3553,9 +3553,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kommo_o {
+        public static System.Drawing.Bitmap kommo_o {
             get {
-                object obj = ResourceManager.GetObject("Kommo_o", resourceCulture);
+                object obj = ResourceManager.GetObject("kommo_o", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3563,9 +3563,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Krabby {
+        public static System.Drawing.Bitmap krabby {
             get {
-                object obj = ResourceManager.GetObject("Krabby", resourceCulture);
+                object obj = ResourceManager.GetObject("krabby", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3573,9 +3573,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kricketot {
+        public static System.Drawing.Bitmap kricketot {
             get {
-                object obj = ResourceManager.GetObject("Kricketot", resourceCulture);
+                object obj = ResourceManager.GetObject("kricketot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3583,9 +3583,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kricketune {
+        public static System.Drawing.Bitmap kricketune {
             get {
-                object obj = ResourceManager.GetObject("Kricketune", resourceCulture);
+                object obj = ResourceManager.GetObject("kricketune", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3593,9 +3593,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Krokorok {
+        public static System.Drawing.Bitmap krokorok {
             get {
-                object obj = ResourceManager.GetObject("Krokorok", resourceCulture);
+                object obj = ResourceManager.GetObject("krokorok", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3603,9 +3603,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Krookodile {
+        public static System.Drawing.Bitmap krookodile {
             get {
-                object obj = ResourceManager.GetObject("Krookodile", resourceCulture);
+                object obj = ResourceManager.GetObject("krookodile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3613,9 +3613,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kyogre {
+        public static System.Drawing.Bitmap kyogre {
             get {
-                object obj = ResourceManager.GetObject("Kyogre", resourceCulture);
+                object obj = ResourceManager.GetObject("kyogre", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3623,9 +3623,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Kyurem {
+        public static System.Drawing.Bitmap kyurem {
             get {
-                object obj = ResourceManager.GetObject("Kyurem", resourceCulture);
+                object obj = ResourceManager.GetObject("kyurem", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3633,9 +3633,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lairon {
+        public static System.Drawing.Bitmap lairon {
             get {
-                object obj = ResourceManager.GetObject("Lairon", resourceCulture);
+                object obj = ResourceManager.GetObject("lairon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3643,9 +3643,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lampent {
+        public static System.Drawing.Bitmap lampent {
             get {
-                object obj = ResourceManager.GetObject("Lampent", resourceCulture);
+                object obj = ResourceManager.GetObject("lampent", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3653,9 +3653,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Landorus {
+        public static System.Drawing.Bitmap landorus {
             get {
-                object obj = ResourceManager.GetObject("Landorus", resourceCulture);
+                object obj = ResourceManager.GetObject("landorus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3663,9 +3663,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lanturn {
+        public static System.Drawing.Bitmap lanturn {
             get {
-                object obj = ResourceManager.GetObject("Lanturn", resourceCulture);
+                object obj = ResourceManager.GetObject("lanturn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3673,9 +3673,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lapras {
+        public static System.Drawing.Bitmap lapras {
             get {
-                object obj = ResourceManager.GetObject("Lapras", resourceCulture);
+                object obj = ResourceManager.GetObject("lapras", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3683,9 +3683,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Larvesta {
+        public static System.Drawing.Bitmap larvesta {
             get {
-                object obj = ResourceManager.GetObject("Larvesta", resourceCulture);
+                object obj = ResourceManager.GetObject("larvesta", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3693,9 +3693,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Larvitar {
+        public static System.Drawing.Bitmap larvitar {
             get {
-                object obj = ResourceManager.GetObject("Larvitar", resourceCulture);
+                object obj = ResourceManager.GetObject("larvitar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3703,9 +3703,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Latias {
+        public static System.Drawing.Bitmap latias {
             get {
-                object obj = ResourceManager.GetObject("Latias", resourceCulture);
+                object obj = ResourceManager.GetObject("latias", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3713,9 +3713,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Latios {
+        public static System.Drawing.Bitmap latios {
             get {
-                object obj = ResourceManager.GetObject("Latios", resourceCulture);
+                object obj = ResourceManager.GetObject("latios", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3723,9 +3723,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Leafeon {
+        public static System.Drawing.Bitmap leafeon {
             get {
-                object obj = ResourceManager.GetObject("Leafeon", resourceCulture);
+                object obj = ResourceManager.GetObject("leafeon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3733,9 +3733,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Leavanny {
+        public static System.Drawing.Bitmap leavanny {
             get {
-                object obj = ResourceManager.GetObject("Leavanny", resourceCulture);
+                object obj = ResourceManager.GetObject("leavanny", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3743,9 +3743,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ledian {
+        public static System.Drawing.Bitmap ledian {
             get {
-                object obj = ResourceManager.GetObject("Ledian", resourceCulture);
+                object obj = ResourceManager.GetObject("ledian", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3753,9 +3753,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ledyba {
+        public static System.Drawing.Bitmap ledyba {
             get {
-                object obj = ResourceManager.GetObject("Ledyba", resourceCulture);
+                object obj = ResourceManager.GetObject("ledyba", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3763,9 +3763,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lickilicky {
+        public static System.Drawing.Bitmap lickilicky {
             get {
-                object obj = ResourceManager.GetObject("Lickilicky", resourceCulture);
+                object obj = ResourceManager.GetObject("lickilicky", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3773,9 +3773,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lickitung {
+        public static System.Drawing.Bitmap lickitung {
             get {
-                object obj = ResourceManager.GetObject("Lickitung", resourceCulture);
+                object obj = ResourceManager.GetObject("lickitung", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3783,9 +3783,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Liepard {
+        public static System.Drawing.Bitmap liepard {
             get {
-                object obj = ResourceManager.GetObject("Liepard", resourceCulture);
+                object obj = ResourceManager.GetObject("liepard", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3793,9 +3793,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lileep {
+        public static System.Drawing.Bitmap lileep {
             get {
-                object obj = ResourceManager.GetObject("Lileep", resourceCulture);
+                object obj = ResourceManager.GetObject("lileep", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3803,9 +3803,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lilligant {
+        public static System.Drawing.Bitmap lilligant {
             get {
-                object obj = ResourceManager.GetObject("Lilligant", resourceCulture);
+                object obj = ResourceManager.GetObject("lilligant", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3813,9 +3813,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lillipup {
+        public static System.Drawing.Bitmap lillipup {
             get {
-                object obj = ResourceManager.GetObject("Lillipup", resourceCulture);
+                object obj = ResourceManager.GetObject("lillipup", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3823,9 +3823,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Linoone {
+        public static System.Drawing.Bitmap linoone {
             get {
-                object obj = ResourceManager.GetObject("Linoone", resourceCulture);
+                object obj = ResourceManager.GetObject("linoone", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3833,9 +3833,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Litleo {
+        public static System.Drawing.Bitmap litleo {
             get {
-                object obj = ResourceManager.GetObject("Litleo", resourceCulture);
+                object obj = ResourceManager.GetObject("litleo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3843,9 +3843,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Litten {
+        public static System.Drawing.Bitmap litten {
             get {
-                object obj = ResourceManager.GetObject("Litten", resourceCulture);
+                object obj = ResourceManager.GetObject("litten", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3853,9 +3853,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Litwick {
+        public static System.Drawing.Bitmap litwick {
             get {
-                object obj = ResourceManager.GetObject("Litwick", resourceCulture);
+                object obj = ResourceManager.GetObject("litwick", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3863,9 +3863,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lombre {
+        public static System.Drawing.Bitmap lombre {
             get {
-                object obj = ResourceManager.GetObject("Lombre", resourceCulture);
+                object obj = ResourceManager.GetObject("lombre", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3873,9 +3873,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lopunny {
+        public static System.Drawing.Bitmap lopunny {
             get {
-                object obj = ResourceManager.GetObject("Lopunny", resourceCulture);
+                object obj = ResourceManager.GetObject("lopunny", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3883,9 +3883,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lotad {
+        public static System.Drawing.Bitmap lotad {
             get {
-                object obj = ResourceManager.GetObject("Lotad", resourceCulture);
+                object obj = ResourceManager.GetObject("lotad", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3893,9 +3893,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Loudred {
+        public static System.Drawing.Bitmap loudred {
             get {
-                object obj = ResourceManager.GetObject("Loudred", resourceCulture);
+                object obj = ResourceManager.GetObject("loudred", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3903,9 +3903,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lucario {
+        public static System.Drawing.Bitmap lucario {
             get {
-                object obj = ResourceManager.GetObject("Lucario", resourceCulture);
+                object obj = ResourceManager.GetObject("lucario", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3913,9 +3913,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ludicolo {
+        public static System.Drawing.Bitmap ludicolo {
             get {
-                object obj = ResourceManager.GetObject("Ludicolo", resourceCulture);
+                object obj = ResourceManager.GetObject("ludicolo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3923,9 +3923,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lugia {
+        public static System.Drawing.Bitmap lugia {
             get {
-                object obj = ResourceManager.GetObject("Lugia", resourceCulture);
+                object obj = ResourceManager.GetObject("lugia", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3933,9 +3933,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lumineon {
+        public static System.Drawing.Bitmap lumineon {
             get {
-                object obj = ResourceManager.GetObject("Lumineon", resourceCulture);
+                object obj = ResourceManager.GetObject("lumineon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3943,9 +3943,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lunala {
+        public static System.Drawing.Bitmap lunala {
             get {
-                object obj = ResourceManager.GetObject("Lunala", resourceCulture);
+                object obj = ResourceManager.GetObject("lunala", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3953,9 +3953,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lunatone {
+        public static System.Drawing.Bitmap lunatone {
             get {
-                object obj = ResourceManager.GetObject("Lunatone", resourceCulture);
+                object obj = ResourceManager.GetObject("lunatone", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3963,9 +3963,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lurantis {
+        public static System.Drawing.Bitmap lurantis {
             get {
-                object obj = ResourceManager.GetObject("Lurantis", resourceCulture);
+                object obj = ResourceManager.GetObject("lurantis", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3973,9 +3973,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Luvdisc {
+        public static System.Drawing.Bitmap luvdisc {
             get {
-                object obj = ResourceManager.GetObject("Luvdisc", resourceCulture);
+                object obj = ResourceManager.GetObject("luvdisc", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3983,9 +3983,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Luxio {
+        public static System.Drawing.Bitmap luxio {
             get {
-                object obj = ResourceManager.GetObject("Luxio", resourceCulture);
+                object obj = ResourceManager.GetObject("luxio", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3993,9 +3993,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Luxray {
+        public static System.Drawing.Bitmap luxray {
             get {
-                object obj = ResourceManager.GetObject("Luxray", resourceCulture);
+                object obj = ResourceManager.GetObject("luxray", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4003,9 +4003,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lycanroc_Luna {
+        public static System.Drawing.Bitmap lycanroc_luna {
             get {
-                object obj = ResourceManager.GetObject("Lycanroc_Luna", resourceCulture);
+                object obj = ResourceManager.GetObject("lycanroc_luna", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4013,9 +4013,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Lycanroc_Sol {
+        public static System.Drawing.Bitmap lycanroc_sol {
             get {
-                object obj = ResourceManager.GetObject("Lycanroc_Sol", resourceCulture);
+                object obj = ResourceManager.GetObject("lycanroc_sol", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4023,9 +4023,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Machamp {
+        public static System.Drawing.Bitmap machamp {
             get {
-                object obj = ResourceManager.GetObject("Machamp", resourceCulture);
+                object obj = ResourceManager.GetObject("machamp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4033,9 +4033,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Machoke {
+        public static System.Drawing.Bitmap machoke {
             get {
-                object obj = ResourceManager.GetObject("Machoke", resourceCulture);
+                object obj = ResourceManager.GetObject("machoke", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4043,9 +4043,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Machop {
+        public static System.Drawing.Bitmap machop {
             get {
-                object obj = ResourceManager.GetObject("Machop", resourceCulture);
+                object obj = ResourceManager.GetObject("machop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4053,9 +4053,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Magby {
+        public static System.Drawing.Bitmap magby {
             get {
-                object obj = ResourceManager.GetObject("Magby", resourceCulture);
+                object obj = ResourceManager.GetObject("magby", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4063,9 +4063,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Magcargo {
+        public static System.Drawing.Bitmap magcargo {
             get {
-                object obj = ResourceManager.GetObject("Magcargo", resourceCulture);
+                object obj = ResourceManager.GetObject("magcargo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4073,9 +4073,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Magearna {
+        public static System.Drawing.Bitmap magearna {
             get {
-                object obj = ResourceManager.GetObject("Magearna", resourceCulture);
+                object obj = ResourceManager.GetObject("magearna", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4083,9 +4083,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Magikarp {
+        public static System.Drawing.Bitmap magikarp {
             get {
-                object obj = ResourceManager.GetObject("Magikarp", resourceCulture);
+                object obj = ResourceManager.GetObject("magikarp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4093,9 +4093,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Magmar {
+        public static System.Drawing.Bitmap magmar {
             get {
-                object obj = ResourceManager.GetObject("Magmar", resourceCulture);
+                object obj = ResourceManager.GetObject("magmar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4103,9 +4103,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Magmortar {
+        public static System.Drawing.Bitmap magmortar {
             get {
-                object obj = ResourceManager.GetObject("Magmortar", resourceCulture);
+                object obj = ResourceManager.GetObject("magmortar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4113,9 +4113,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Magnemite {
+        public static System.Drawing.Bitmap magnemite {
             get {
-                object obj = ResourceManager.GetObject("Magnemite", resourceCulture);
+                object obj = ResourceManager.GetObject("magnemite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4123,9 +4123,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Magneton {
+        public static System.Drawing.Bitmap magneton {
             get {
-                object obj = ResourceManager.GetObject("Magneton", resourceCulture);
+                object obj = ResourceManager.GetObject("magneton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4133,9 +4133,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Magnezone {
+        public static System.Drawing.Bitmap magnezone {
             get {
-                object obj = ResourceManager.GetObject("Magnezone", resourceCulture);
+                object obj = ResourceManager.GetObject("magnezone", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4143,9 +4143,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Makuhita {
+        public static System.Drawing.Bitmap makuhita {
             get {
-                object obj = ResourceManager.GetObject("Makuhita", resourceCulture);
+                object obj = ResourceManager.GetObject("makuhita", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4153,9 +4153,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Malamar {
+        public static System.Drawing.Bitmap malamar {
             get {
-                object obj = ResourceManager.GetObject("Malamar", resourceCulture);
+                object obj = ResourceManager.GetObject("malamar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4163,9 +4163,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mamoswine {
+        public static System.Drawing.Bitmap mamoswine {
             get {
-                object obj = ResourceManager.GetObject("Mamoswine", resourceCulture);
+                object obj = ResourceManager.GetObject("mamoswine", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4173,9 +4173,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Manaphy {
+        public static System.Drawing.Bitmap manaphy {
             get {
-                object obj = ResourceManager.GetObject("Manaphy", resourceCulture);
+                object obj = ResourceManager.GetObject("manaphy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4183,9 +4183,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mandibuzz {
+        public static System.Drawing.Bitmap mandibuzz {
             get {
-                object obj = ResourceManager.GetObject("Mandibuzz", resourceCulture);
+                object obj = ResourceManager.GetObject("mandibuzz", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4193,9 +4193,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Manectric {
+        public static System.Drawing.Bitmap manectric {
             get {
-                object obj = ResourceManager.GetObject("Manectric", resourceCulture);
+                object obj = ResourceManager.GetObject("manectric", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4203,9 +4203,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mankey {
+        public static System.Drawing.Bitmap mankey {
             get {
-                object obj = ResourceManager.GetObject("Mankey", resourceCulture);
+                object obj = ResourceManager.GetObject("mankey", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4213,9 +4213,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mantine {
+        public static System.Drawing.Bitmap mantine {
             get {
-                object obj = ResourceManager.GetObject("Mantine", resourceCulture);
+                object obj = ResourceManager.GetObject("mantine", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4223,9 +4223,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mantyke {
+        public static System.Drawing.Bitmap mantyke {
             get {
-                object obj = ResourceManager.GetObject("Mantyke", resourceCulture);
+                object obj = ResourceManager.GetObject("mantyke", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4233,9 +4233,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Maractus {
+        public static System.Drawing.Bitmap maractus {
             get {
-                object obj = ResourceManager.GetObject("Maractus", resourceCulture);
+                object obj = ResourceManager.GetObject("maractus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4243,9 +4243,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mareanie {
+        public static System.Drawing.Bitmap mareanie {
             get {
-                object obj = ResourceManager.GetObject("Mareanie", resourceCulture);
+                object obj = ResourceManager.GetObject("mareanie", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4253,9 +4253,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mareep {
+        public static System.Drawing.Bitmap mareep {
             get {
-                object obj = ResourceManager.GetObject("Mareep", resourceCulture);
+                object obj = ResourceManager.GetObject("mareep", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4263,9 +4263,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Marill {
+        public static System.Drawing.Bitmap marill {
             get {
-                object obj = ResourceManager.GetObject("Marill", resourceCulture);
+                object obj = ResourceManager.GetObject("marill", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4273,9 +4273,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Marowak {
+        public static System.Drawing.Bitmap marowak {
             get {
-                object obj = ResourceManager.GetObject("Marowak", resourceCulture);
+                object obj = ResourceManager.GetObject("marowak", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4283,9 +4283,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Marshadow {
+        public static System.Drawing.Bitmap marshadow {
             get {
-                object obj = ResourceManager.GetObject("Marshadow", resourceCulture);
+                object obj = ResourceManager.GetObject("marshadow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4293,9 +4293,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Marshtomp {
+        public static System.Drawing.Bitmap marshtomp {
             get {
-                object obj = ResourceManager.GetObject("Marshtomp", resourceCulture);
+                object obj = ResourceManager.GetObject("marshtomp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4303,9 +4303,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Masquerain {
+        public static System.Drawing.Bitmap masquerain {
             get {
-                object obj = ResourceManager.GetObject("Masquerain", resourceCulture);
+                object obj = ResourceManager.GetObject("masquerain", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4313,9 +4313,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mawile {
+        public static System.Drawing.Bitmap mawile {
             get {
-                object obj = ResourceManager.GetObject("Mawile", resourceCulture);
+                object obj = ResourceManager.GetObject("mawile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4323,9 +4323,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Medicham {
+        public static System.Drawing.Bitmap medicham {
             get {
-                object obj = ResourceManager.GetObject("Medicham", resourceCulture);
+                object obj = ResourceManager.GetObject("medicham", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4333,9 +4333,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Meditite {
+        public static System.Drawing.Bitmap meditite {
             get {
-                object obj = ResourceManager.GetObject("Meditite", resourceCulture);
+                object obj = ResourceManager.GetObject("meditite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4343,9 +4343,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Meganium {
+        public static System.Drawing.Bitmap meganium {
             get {
-                object obj = ResourceManager.GetObject("Meganium", resourceCulture);
+                object obj = ResourceManager.GetObject("meganium", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4353,9 +4353,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Meloetta {
+        public static System.Drawing.Bitmap meloetta {
             get {
-                object obj = ResourceManager.GetObject("Meloetta", resourceCulture);
+                object obj = ResourceManager.GetObject("meloetta", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4363,9 +4363,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Meowstic {
+        public static System.Drawing.Bitmap meowstic {
             get {
-                object obj = ResourceManager.GetObject("Meowstic", resourceCulture);
+                object obj = ResourceManager.GetObject("meowstic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4373,9 +4373,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Meowth {
+        public static System.Drawing.Bitmap meowth {
             get {
-                object obj = ResourceManager.GetObject("Meowth", resourceCulture);
+                object obj = ResourceManager.GetObject("meowth", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4383,9 +4383,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mesprit {
+        public static System.Drawing.Bitmap mesprit {
             get {
-                object obj = ResourceManager.GetObject("Mesprit", resourceCulture);
+                object obj = ResourceManager.GetObject("mesprit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4393,9 +4393,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Metagross {
+        public static System.Drawing.Bitmap metagross {
             get {
-                object obj = ResourceManager.GetObject("Metagross", resourceCulture);
+                object obj = ResourceManager.GetObject("metagross", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4403,9 +4403,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Metang {
+        public static System.Drawing.Bitmap metang {
             get {
-                object obj = ResourceManager.GetObject("Metang", resourceCulture);
+                object obj = ResourceManager.GetObject("metang", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4413,9 +4413,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Metapod {
+        public static System.Drawing.Bitmap metapod {
             get {
-                object obj = ResourceManager.GetObject("Metapod", resourceCulture);
+                object obj = ResourceManager.GetObject("metapod", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4423,9 +4423,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mew {
+        public static System.Drawing.Bitmap mew {
             get {
-                object obj = ResourceManager.GetObject("Mew", resourceCulture);
+                object obj = ResourceManager.GetObject("mew", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4433,9 +4433,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mewtwo {
+        public static System.Drawing.Bitmap mewtwo {
             get {
-                object obj = ResourceManager.GetObject("Mewtwo", resourceCulture);
+                object obj = ResourceManager.GetObject("mewtwo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4443,9 +4443,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mienfoo {
+        public static System.Drawing.Bitmap mienfoo {
             get {
-                object obj = ResourceManager.GetObject("Mienfoo", resourceCulture);
+                object obj = ResourceManager.GetObject("mienfoo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4453,9 +4453,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mienshao {
+        public static System.Drawing.Bitmap mienshao {
             get {
-                object obj = ResourceManager.GetObject("Mienshao", resourceCulture);
+                object obj = ResourceManager.GetObject("mienshao", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4463,9 +4463,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mightyena {
+        public static System.Drawing.Bitmap mightyena {
             get {
-                object obj = ResourceManager.GetObject("Mightyena", resourceCulture);
+                object obj = ResourceManager.GetObject("mightyena", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4473,9 +4473,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Milotic {
+        public static System.Drawing.Bitmap milotic {
             get {
-                object obj = ResourceManager.GetObject("Milotic", resourceCulture);
+                object obj = ResourceManager.GetObject("milotic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4483,9 +4483,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Miltank {
+        public static System.Drawing.Bitmap miltank {
             get {
-                object obj = ResourceManager.GetObject("Miltank", resourceCulture);
+                object obj = ResourceManager.GetObject("miltank", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4493,9 +4493,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mime_Jr_ {
+        public static System.Drawing.Bitmap mime_jr_ {
             get {
-                object obj = ResourceManager.GetObject("Mime_Jr_", resourceCulture);
+                object obj = ResourceManager.GetObject("mime_jr_", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4503,9 +4503,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mimikyu {
+        public static System.Drawing.Bitmap mimikyu {
             get {
-                object obj = ResourceManager.GetObject("Mimikyu", resourceCulture);
+                object obj = ResourceManager.GetObject("mimikyu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4513,9 +4513,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Minccino {
+        public static System.Drawing.Bitmap minccino {
             get {
-                object obj = ResourceManager.GetObject("Minccino", resourceCulture);
+                object obj = ResourceManager.GetObject("minccino", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4523,9 +4523,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Minior {
+        public static System.Drawing.Bitmap minior {
             get {
-                object obj = ResourceManager.GetObject("Minior", resourceCulture);
+                object obj = ResourceManager.GetObject("minior", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4533,9 +4533,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Minun {
+        public static System.Drawing.Bitmap minun {
             get {
-                object obj = ResourceManager.GetObject("Minun", resourceCulture);
+                object obj = ResourceManager.GetObject("minun", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4543,9 +4543,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Misdreavus {
+        public static System.Drawing.Bitmap misdreavus {
             get {
-                object obj = ResourceManager.GetObject("Misdreavus", resourceCulture);
+                object obj = ResourceManager.GetObject("misdreavus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4553,9 +4553,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mismagius {
+        public static System.Drawing.Bitmap mismagius {
             get {
-                object obj = ResourceManager.GetObject("Mismagius", resourceCulture);
+                object obj = ResourceManager.GetObject("mismagius", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4563,9 +4563,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Moltres {
+        public static System.Drawing.Bitmap moltres {
             get {
-                object obj = ResourceManager.GetObject("Moltres", resourceCulture);
+                object obj = ResourceManager.GetObject("moltres", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4573,9 +4573,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Monferno {
+        public static System.Drawing.Bitmap monferno {
             get {
-                object obj = ResourceManager.GetObject("Monferno", resourceCulture);
+                object obj = ResourceManager.GetObject("monferno", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4583,9 +4583,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Morelull {
+        public static System.Drawing.Bitmap morelull {
             get {
-                object obj = ResourceManager.GetObject("Morelull", resourceCulture);
+                object obj = ResourceManager.GetObject("morelull", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4593,9 +4593,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mothim {
+        public static System.Drawing.Bitmap mothim {
             get {
-                object obj = ResourceManager.GetObject("Mothim", resourceCulture);
+                object obj = ResourceManager.GetObject("mothim", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4603,9 +4603,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mr__Mime {
+        public static System.Drawing.Bitmap mr__mime {
             get {
-                object obj = ResourceManager.GetObject("Mr__Mime", resourceCulture);
+                object obj = ResourceManager.GetObject("mr__mime", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4613,9 +4613,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mudbray {
+        public static System.Drawing.Bitmap mudbray {
             get {
-                object obj = ResourceManager.GetObject("Mudbray", resourceCulture);
+                object obj = ResourceManager.GetObject("mudbray", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4623,9 +4623,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mudkip {
+        public static System.Drawing.Bitmap mudkip {
             get {
-                object obj = ResourceManager.GetObject("Mudkip", resourceCulture);
+                object obj = ResourceManager.GetObject("mudkip", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4633,9 +4633,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Mudsdale {
+        public static System.Drawing.Bitmap mudsdale {
             get {
-                object obj = ResourceManager.GetObject("Mudsdale", resourceCulture);
+                object obj = ResourceManager.GetObject("mudsdale", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4643,9 +4643,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Muk {
+        public static System.Drawing.Bitmap muk {
             get {
-                object obj = ResourceManager.GetObject("Muk", resourceCulture);
+                object obj = ResourceManager.GetObject("muk", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4653,9 +4653,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Munchlax {
+        public static System.Drawing.Bitmap munchlax {
             get {
-                object obj = ResourceManager.GetObject("Munchlax", resourceCulture);
+                object obj = ResourceManager.GetObject("munchlax", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4663,9 +4663,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Munna {
+        public static System.Drawing.Bitmap munna {
             get {
-                object obj = ResourceManager.GetObject("Munna", resourceCulture);
+                object obj = ResourceManager.GetObject("munna", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4673,9 +4673,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Murkrow {
+        public static System.Drawing.Bitmap murkrow {
             get {
-                object obj = ResourceManager.GetObject("Murkrow", resourceCulture);
+                object obj = ResourceManager.GetObject("murkrow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4683,9 +4683,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Musharna {
+        public static System.Drawing.Bitmap musharna {
             get {
-                object obj = ResourceManager.GetObject("Musharna", resourceCulture);
+                object obj = ResourceManager.GetObject("musharna", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4693,9 +4693,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Naganadel {
+        public static System.Drawing.Bitmap naganadel {
             get {
-                object obj = ResourceManager.GetObject("Naganadel", resourceCulture);
+                object obj = ResourceManager.GetObject("naganadel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4703,9 +4703,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Natu {
+        public static System.Drawing.Bitmap natu {
             get {
-                object obj = ResourceManager.GetObject("Natu", resourceCulture);
+                object obj = ResourceManager.GetObject("natu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4713,9 +4713,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Necrozma {
+        public static System.Drawing.Bitmap necrozma {
             get {
-                object obj = ResourceManager.GetObject("Necrozma", resourceCulture);
+                object obj = ResourceManager.GetObject("necrozma", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4723,9 +4723,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Nidoking {
+        public static System.Drawing.Bitmap nidoking {
             get {
-                object obj = ResourceManager.GetObject("Nidoking", resourceCulture);
+                object obj = ResourceManager.GetObject("nidoking", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4733,9 +4733,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Nidoqueen {
+        public static System.Drawing.Bitmap nidoqueen {
             get {
-                object obj = ResourceManager.GetObject("Nidoqueen", resourceCulture);
+                object obj = ResourceManager.GetObject("nidoqueen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4743,9 +4743,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap NidoranF {
+        public static System.Drawing.Bitmap nidoranf {
             get {
-                object obj = ResourceManager.GetObject("NidoranF", resourceCulture);
+                object obj = ResourceManager.GetObject("nidoranf", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4753,9 +4753,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap NidoranM {
+        public static System.Drawing.Bitmap nidoranm {
             get {
-                object obj = ResourceManager.GetObject("NidoranM", resourceCulture);
+                object obj = ResourceManager.GetObject("nidoranm", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4763,9 +4763,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Nidorina {
+        public static System.Drawing.Bitmap nidorina {
             get {
-                object obj = ResourceManager.GetObject("Nidorina", resourceCulture);
+                object obj = ResourceManager.GetObject("nidorina", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4773,9 +4773,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Nidorino {
+        public static System.Drawing.Bitmap nidorino {
             get {
-                object obj = ResourceManager.GetObject("Nidorino", resourceCulture);
+                object obj = ResourceManager.GetObject("nidorino", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4783,9 +4783,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Nihilego {
+        public static System.Drawing.Bitmap nihilego {
             get {
-                object obj = ResourceManager.GetObject("Nihilego", resourceCulture);
+                object obj = ResourceManager.GetObject("nihilego", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4793,9 +4793,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Nincada {
+        public static System.Drawing.Bitmap nincada {
             get {
-                object obj = ResourceManager.GetObject("Nincada", resourceCulture);
+                object obj = ResourceManager.GetObject("nincada", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4803,9 +4803,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ninetales {
+        public static System.Drawing.Bitmap ninetales {
             get {
-                object obj = ResourceManager.GetObject("Ninetales", resourceCulture);
+                object obj = ResourceManager.GetObject("ninetales", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4813,9 +4813,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ninjask {
+        public static System.Drawing.Bitmap ninjask {
             get {
-                object obj = ResourceManager.GetObject("Ninjask", resourceCulture);
+                object obj = ResourceManager.GetObject("ninjask", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4823,9 +4823,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Noctowl {
+        public static System.Drawing.Bitmap noctowl {
             get {
-                object obj = ResourceManager.GetObject("Noctowl", resourceCulture);
+                object obj = ResourceManager.GetObject("noctowl", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4833,9 +4833,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Noibat {
+        public static System.Drawing.Bitmap noibat {
             get {
-                object obj = ResourceManager.GetObject("Noibat", resourceCulture);
+                object obj = ResourceManager.GetObject("noibat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4843,9 +4843,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Noivern {
+        public static System.Drawing.Bitmap noivern {
             get {
-                object obj = ResourceManager.GetObject("Noivern", resourceCulture);
+                object obj = ResourceManager.GetObject("noivern", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4853,9 +4853,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Nosepass {
+        public static System.Drawing.Bitmap nosepass {
             get {
-                object obj = ResourceManager.GetObject("Nosepass", resourceCulture);
+                object obj = ResourceManager.GetObject("nosepass", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4863,9 +4863,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Numel {
+        public static System.Drawing.Bitmap numel {
             get {
-                object obj = ResourceManager.GetObject("Numel", resourceCulture);
+                object obj = ResourceManager.GetObject("numel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4873,9 +4873,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Nuzleaf {
+        public static System.Drawing.Bitmap nuzleaf {
             get {
-                object obj = ResourceManager.GetObject("Nuzleaf", resourceCulture);
+                object obj = ResourceManager.GetObject("nuzleaf", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4883,9 +4883,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Octillery {
+        public static System.Drawing.Bitmap octillery {
             get {
-                object obj = ResourceManager.GetObject("Octillery", resourceCulture);
+                object obj = ResourceManager.GetObject("octillery", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4893,9 +4893,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Oddish {
+        public static System.Drawing.Bitmap oddish {
             get {
-                object obj = ResourceManager.GetObject("Oddish", resourceCulture);
+                object obj = ResourceManager.GetObject("oddish", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4903,9 +4903,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Omanyte {
+        public static System.Drawing.Bitmap omanyte {
             get {
-                object obj = ResourceManager.GetObject("Omanyte", resourceCulture);
+                object obj = ResourceManager.GetObject("omanyte", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4913,9 +4913,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Omastar {
+        public static System.Drawing.Bitmap omastar {
             get {
-                object obj = ResourceManager.GetObject("Omastar", resourceCulture);
+                object obj = ResourceManager.GetObject("omastar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4923,9 +4923,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Onix {
+        public static System.Drawing.Bitmap onix {
             get {
-                object obj = ResourceManager.GetObject("Onix", resourceCulture);
+                object obj = ResourceManager.GetObject("onix", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4933,9 +4933,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Oranguru {
+        public static System.Drawing.Bitmap oranguru {
             get {
-                object obj = ResourceManager.GetObject("Oranguru", resourceCulture);
+                object obj = ResourceManager.GetObject("oranguru", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4943,9 +4943,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Oricorio {
+        public static System.Drawing.Bitmap oricorio {
             get {
-                object obj = ResourceManager.GetObject("Oricorio", resourceCulture);
+                object obj = ResourceManager.GetObject("oricorio", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4953,9 +4953,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Oshawott {
+        public static System.Drawing.Bitmap oshawott {
             get {
-                object obj = ResourceManager.GetObject("Oshawott", resourceCulture);
+                object obj = ResourceManager.GetObject("oshawott", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4963,9 +4963,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pachirisu {
+        public static System.Drawing.Bitmap pachirisu {
             get {
-                object obj = ResourceManager.GetObject("Pachirisu", resourceCulture);
+                object obj = ResourceManager.GetObject("pachirisu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4973,9 +4973,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Palkia {
+        public static System.Drawing.Bitmap palkia {
             get {
-                object obj = ResourceManager.GetObject("Palkia", resourceCulture);
+                object obj = ResourceManager.GetObject("palkia", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4983,9 +4983,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Palossand {
+        public static System.Drawing.Bitmap palossand {
             get {
-                object obj = ResourceManager.GetObject("Palossand", resourceCulture);
+                object obj = ResourceManager.GetObject("palossand", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -4993,9 +4993,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Palpitoad {
+        public static System.Drawing.Bitmap palpitoad {
             get {
-                object obj = ResourceManager.GetObject("Palpitoad", resourceCulture);
+                object obj = ResourceManager.GetObject("palpitoad", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5003,9 +5003,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pancham {
+        public static System.Drawing.Bitmap pancham {
             get {
-                object obj = ResourceManager.GetObject("Pancham", resourceCulture);
+                object obj = ResourceManager.GetObject("pancham", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5013,9 +5013,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pangoro {
+        public static System.Drawing.Bitmap pangoro {
             get {
-                object obj = ResourceManager.GetObject("Pangoro", resourceCulture);
+                object obj = ResourceManager.GetObject("pangoro", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5023,9 +5023,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Panpour {
+        public static System.Drawing.Bitmap panpour {
             get {
-                object obj = ResourceManager.GetObject("Panpour", resourceCulture);
+                object obj = ResourceManager.GetObject("panpour", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5033,9 +5033,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pansage {
+        public static System.Drawing.Bitmap pansage {
             get {
-                object obj = ResourceManager.GetObject("Pansage", resourceCulture);
+                object obj = ResourceManager.GetObject("pansage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5043,9 +5043,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pansear {
+        public static System.Drawing.Bitmap pansear {
             get {
-                object obj = ResourceManager.GetObject("Pansear", resourceCulture);
+                object obj = ResourceManager.GetObject("pansear", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5053,9 +5053,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Paras {
+        public static System.Drawing.Bitmap paras {
             get {
-                object obj = ResourceManager.GetObject("Paras", resourceCulture);
+                object obj = ResourceManager.GetObject("paras", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5063,9 +5063,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Parasect {
+        public static System.Drawing.Bitmap parasect {
             get {
-                object obj = ResourceManager.GetObject("Parasect", resourceCulture);
+                object obj = ResourceManager.GetObject("parasect", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5073,9 +5073,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Passimian {
+        public static System.Drawing.Bitmap passimian {
             get {
-                object obj = ResourceManager.GetObject("Passimian", resourceCulture);
+                object obj = ResourceManager.GetObject("passimian", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5083,9 +5083,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Patrat {
+        public static System.Drawing.Bitmap patrat {
             get {
-                object obj = ResourceManager.GetObject("Patrat", resourceCulture);
+                object obj = ResourceManager.GetObject("patrat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5093,9 +5093,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pawniard {
+        public static System.Drawing.Bitmap pawniard {
             get {
-                object obj = ResourceManager.GetObject("Pawniard", resourceCulture);
+                object obj = ResourceManager.GetObject("pawniard", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5103,9 +5103,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pelipper {
+        public static System.Drawing.Bitmap pelipper {
             get {
-                object obj = ResourceManager.GetObject("Pelipper", resourceCulture);
+                object obj = ResourceManager.GetObject("pelipper", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5113,9 +5113,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Persian {
+        public static System.Drawing.Bitmap persian {
             get {
-                object obj = ResourceManager.GetObject("Persian", resourceCulture);
+                object obj = ResourceManager.GetObject("persian", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5123,9 +5123,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Petilil {
+        public static System.Drawing.Bitmap petilil {
             get {
-                object obj = ResourceManager.GetObject("Petilil", resourceCulture);
+                object obj = ResourceManager.GetObject("petilil", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5133,9 +5133,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Phanpy {
+        public static System.Drawing.Bitmap phanpy {
             get {
-                object obj = ResourceManager.GetObject("Phanpy", resourceCulture);
+                object obj = ResourceManager.GetObject("phanpy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5143,9 +5143,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Phantump {
+        public static System.Drawing.Bitmap phantump {
             get {
-                object obj = ResourceManager.GetObject("Phantump", resourceCulture);
+                object obj = ResourceManager.GetObject("phantump", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5153,9 +5153,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pheromosa {
+        public static System.Drawing.Bitmap pheromosa {
             get {
-                object obj = ResourceManager.GetObject("Pheromosa", resourceCulture);
+                object obj = ResourceManager.GetObject("pheromosa", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5163,9 +5163,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Phione {
+        public static System.Drawing.Bitmap phione {
             get {
-                object obj = ResourceManager.GetObject("Phione", resourceCulture);
+                object obj = ResourceManager.GetObject("phione", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5173,9 +5173,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pichu {
+        public static System.Drawing.Bitmap pichu {
             get {
-                object obj = ResourceManager.GetObject("Pichu", resourceCulture);
+                object obj = ResourceManager.GetObject("pichu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5183,9 +5183,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pidgeot {
+        public static System.Drawing.Bitmap pidgeot {
             get {
-                object obj = ResourceManager.GetObject("Pidgeot", resourceCulture);
+                object obj = ResourceManager.GetObject("pidgeot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5193,9 +5193,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pidgeotto {
+        public static System.Drawing.Bitmap pidgeotto {
             get {
-                object obj = ResourceManager.GetObject("Pidgeotto", resourceCulture);
+                object obj = ResourceManager.GetObject("pidgeotto", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5203,9 +5203,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pidgey {
+        public static System.Drawing.Bitmap pidgey {
             get {
-                object obj = ResourceManager.GetObject("Pidgey", resourceCulture);
+                object obj = ResourceManager.GetObject("pidgey", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5213,9 +5213,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pidove {
+        public static System.Drawing.Bitmap pidove {
             get {
-                object obj = ResourceManager.GetObject("Pidove", resourceCulture);
+                object obj = ResourceManager.GetObject("pidove", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5223,9 +5223,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pignite {
+        public static System.Drawing.Bitmap pignite {
             get {
-                object obj = ResourceManager.GetObject("Pignite", resourceCulture);
+                object obj = ResourceManager.GetObject("pignite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5233,9 +5233,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pikachu {
+        public static System.Drawing.Bitmap pikachu {
             get {
-                object obj = ResourceManager.GetObject("Pikachu", resourceCulture);
+                object obj = ResourceManager.GetObject("pikachu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5243,9 +5243,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pikipek {
+        public static System.Drawing.Bitmap pikipek {
             get {
-                object obj = ResourceManager.GetObject("Pikipek", resourceCulture);
+                object obj = ResourceManager.GetObject("pikipek", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5253,9 +5253,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Piloswine {
+        public static System.Drawing.Bitmap piloswine {
             get {
-                object obj = ResourceManager.GetObject("Piloswine", resourceCulture);
+                object obj = ResourceManager.GetObject("piloswine", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5263,9 +5263,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pineco {
+        public static System.Drawing.Bitmap pineco {
             get {
-                object obj = ResourceManager.GetObject("Pineco", resourceCulture);
+                object obj = ResourceManager.GetObject("pineco", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5273,9 +5273,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pinsir {
+        public static System.Drawing.Bitmap pinsir {
             get {
-                object obj = ResourceManager.GetObject("Pinsir", resourceCulture);
+                object obj = ResourceManager.GetObject("pinsir", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5283,9 +5283,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Piplup {
+        public static System.Drawing.Bitmap piplup {
             get {
-                object obj = ResourceManager.GetObject("Piplup", resourceCulture);
+                object obj = ResourceManager.GetObject("piplup", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5293,9 +5293,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Plusle {
+        public static System.Drawing.Bitmap plusle {
             get {
-                object obj = ResourceManager.GetObject("Plusle", resourceCulture);
+                object obj = ResourceManager.GetObject("plusle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5303,9 +5303,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Poipole {
+        public static System.Drawing.Bitmap poipole {
             get {
-                object obj = ResourceManager.GetObject("Poipole", resourceCulture);
+                object obj = ResourceManager.GetObject("poipole", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5313,9 +5313,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Politoed {
+        public static System.Drawing.Bitmap politoed {
             get {
-                object obj = ResourceManager.GetObject("Politoed", resourceCulture);
+                object obj = ResourceManager.GetObject("politoed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5323,9 +5323,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Poliwag {
+        public static System.Drawing.Bitmap poliwag {
             get {
-                object obj = ResourceManager.GetObject("Poliwag", resourceCulture);
+                object obj = ResourceManager.GetObject("poliwag", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5333,9 +5333,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Poliwhirl {
+        public static System.Drawing.Bitmap poliwhirl {
             get {
-                object obj = ResourceManager.GetObject("Poliwhirl", resourceCulture);
+                object obj = ResourceManager.GetObject("poliwhirl", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5343,9 +5343,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Poliwrath {
+        public static System.Drawing.Bitmap poliwrath {
             get {
-                object obj = ResourceManager.GetObject("Poliwrath", resourceCulture);
+                object obj = ResourceManager.GetObject("poliwrath", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5353,9 +5353,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ponyta {
+        public static System.Drawing.Bitmap ponyta {
             get {
-                object obj = ResourceManager.GetObject("Ponyta", resourceCulture);
+                object obj = ResourceManager.GetObject("ponyta", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5363,9 +5363,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Poochyena {
+        public static System.Drawing.Bitmap poochyena {
             get {
-                object obj = ResourceManager.GetObject("Poochyena", resourceCulture);
+                object obj = ResourceManager.GetObject("poochyena", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5373,9 +5373,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Popplio {
+        public static System.Drawing.Bitmap popplio {
             get {
-                object obj = ResourceManager.GetObject("Popplio", resourceCulture);
+                object obj = ResourceManager.GetObject("popplio", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5383,9 +5383,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Porygon {
+        public static System.Drawing.Bitmap porygon {
             get {
-                object obj = ResourceManager.GetObject("Porygon", resourceCulture);
+                object obj = ResourceManager.GetObject("porygon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5393,9 +5393,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Porygon_Z {
+        public static System.Drawing.Bitmap porygon_z {
             get {
-                object obj = ResourceManager.GetObject("Porygon_Z", resourceCulture);
+                object obj = ResourceManager.GetObject("porygon_z", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5403,9 +5403,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Porygon2 {
+        public static System.Drawing.Bitmap porygon2 {
             get {
-                object obj = ResourceManager.GetObject("Porygon2", resourceCulture);
+                object obj = ResourceManager.GetObject("porygon2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5413,9 +5413,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Primarina {
+        public static System.Drawing.Bitmap primarina {
             get {
-                object obj = ResourceManager.GetObject("Primarina", resourceCulture);
+                object obj = ResourceManager.GetObject("primarina", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5423,9 +5423,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Primeape {
+        public static System.Drawing.Bitmap primeape {
             get {
-                object obj = ResourceManager.GetObject("Primeape", resourceCulture);
+                object obj = ResourceManager.GetObject("primeape", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5433,9 +5433,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Prinplup {
+        public static System.Drawing.Bitmap prinplup {
             get {
-                object obj = ResourceManager.GetObject("Prinplup", resourceCulture);
+                object obj = ResourceManager.GetObject("prinplup", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5443,9 +5443,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Probopass {
+        public static System.Drawing.Bitmap probopass {
             get {
-                object obj = ResourceManager.GetObject("Probopass", resourceCulture);
+                object obj = ResourceManager.GetObject("probopass", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5453,9 +5453,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Psyduck {
+        public static System.Drawing.Bitmap psyduck {
             get {
-                object obj = ResourceManager.GetObject("Psyduck", resourceCulture);
+                object obj = ResourceManager.GetObject("psyduck", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5463,9 +5463,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pumpkaboo {
+        public static System.Drawing.Bitmap pumpkaboo {
             get {
-                object obj = ResourceManager.GetObject("Pumpkaboo", resourceCulture);
+                object obj = ResourceManager.GetObject("pumpkaboo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5473,9 +5473,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pupitar {
+        public static System.Drawing.Bitmap pupitar {
             get {
-                object obj = ResourceManager.GetObject("Pupitar", resourceCulture);
+                object obj = ResourceManager.GetObject("pupitar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5483,9 +5483,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Purrloin {
+        public static System.Drawing.Bitmap purrloin {
             get {
-                object obj = ResourceManager.GetObject("Purrloin", resourceCulture);
+                object obj = ResourceManager.GetObject("purrloin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5493,9 +5493,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Purugly {
+        public static System.Drawing.Bitmap purugly {
             get {
-                object obj = ResourceManager.GetObject("Purugly", resourceCulture);
+                object obj = ResourceManager.GetObject("purugly", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5503,9 +5503,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pyroar {
+        public static System.Drawing.Bitmap pyroar {
             get {
-                object obj = ResourceManager.GetObject("Pyroar", resourceCulture);
+                object obj = ResourceManager.GetObject("pyroar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5513,9 +5513,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pyukumuku {
+        public static System.Drawing.Bitmap pyukumuku {
             get {
-                object obj = ResourceManager.GetObject("Pyukumuku", resourceCulture);
+                object obj = ResourceManager.GetObject("pyukumuku", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5523,9 +5523,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Quagsire {
+        public static System.Drawing.Bitmap quagsire {
             get {
-                object obj = ResourceManager.GetObject("Quagsire", resourceCulture);
+                object obj = ResourceManager.GetObject("quagsire", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5533,9 +5533,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Quilava {
+        public static System.Drawing.Bitmap quilava {
             get {
-                object obj = ResourceManager.GetObject("Quilava", resourceCulture);
+                object obj = ResourceManager.GetObject("quilava", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5543,9 +5543,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Quilladin {
+        public static System.Drawing.Bitmap quilladin {
             get {
-                object obj = ResourceManager.GetObject("Quilladin", resourceCulture);
+                object obj = ResourceManager.GetObject("quilladin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5553,9 +5553,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Qwilfish {
+        public static System.Drawing.Bitmap qwilfish {
             get {
-                object obj = ResourceManager.GetObject("Qwilfish", resourceCulture);
+                object obj = ResourceManager.GetObject("qwilfish", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5563,9 +5563,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Raichu {
+        public static System.Drawing.Bitmap raichu {
             get {
-                object obj = ResourceManager.GetObject("Raichu", resourceCulture);
+                object obj = ResourceManager.GetObject("raichu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5573,9 +5573,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Raikou {
+        public static System.Drawing.Bitmap raikou {
             get {
-                object obj = ResourceManager.GetObject("Raikou", resourceCulture);
+                object obj = ResourceManager.GetObject("raikou", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5583,9 +5583,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ralts {
+        public static System.Drawing.Bitmap ralts {
             get {
-                object obj = ResourceManager.GetObject("Ralts", resourceCulture);
+                object obj = ResourceManager.GetObject("ralts", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5593,9 +5593,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Rampardos {
+        public static System.Drawing.Bitmap rampardos {
             get {
-                object obj = ResourceManager.GetObject("Rampardos", resourceCulture);
+                object obj = ResourceManager.GetObject("rampardos", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5603,9 +5603,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Rapidash {
+        public static System.Drawing.Bitmap rapidash {
             get {
-                object obj = ResourceManager.GetObject("Rapidash", resourceCulture);
+                object obj = ResourceManager.GetObject("rapidash", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5613,9 +5613,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Raticate {
+        public static System.Drawing.Bitmap raticate {
             get {
-                object obj = ResourceManager.GetObject("Raticate", resourceCulture);
+                object obj = ResourceManager.GetObject("raticate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5623,9 +5623,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Rattata {
+        public static System.Drawing.Bitmap rattata {
             get {
-                object obj = ResourceManager.GetObject("Rattata", resourceCulture);
+                object obj = ResourceManager.GetObject("rattata", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5633,9 +5633,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Rayquaza {
+        public static System.Drawing.Bitmap rayquaza {
             get {
-                object obj = ResourceManager.GetObject("Rayquaza", resourceCulture);
+                object obj = ResourceManager.GetObject("rayquaza", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5643,9 +5643,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Regice {
+        public static System.Drawing.Bitmap regice {
             get {
-                object obj = ResourceManager.GetObject("Regice", resourceCulture);
+                object obj = ResourceManager.GetObject("regice", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5653,9 +5653,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Regigigas {
+        public static System.Drawing.Bitmap regigigas {
             get {
-                object obj = ResourceManager.GetObject("Regigigas", resourceCulture);
+                object obj = ResourceManager.GetObject("regigigas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5663,9 +5663,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Regirock {
+        public static System.Drawing.Bitmap regirock {
             get {
-                object obj = ResourceManager.GetObject("Regirock", resourceCulture);
+                object obj = ResourceManager.GetObject("regirock", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5673,9 +5673,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Registeel {
+        public static System.Drawing.Bitmap registeel {
             get {
-                object obj = ResourceManager.GetObject("Registeel", resourceCulture);
+                object obj = ResourceManager.GetObject("registeel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5683,9 +5683,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Relicanth {
+        public static System.Drawing.Bitmap relicanth {
             get {
-                object obj = ResourceManager.GetObject("Relicanth", resourceCulture);
+                object obj = ResourceManager.GetObject("relicanth", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5693,9 +5693,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Remoraid {
+        public static System.Drawing.Bitmap remoraid {
             get {
-                object obj = ResourceManager.GetObject("Remoraid", resourceCulture);
+                object obj = ResourceManager.GetObject("remoraid", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5703,9 +5703,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Reshiram {
+        public static System.Drawing.Bitmap reshiram {
             get {
-                object obj = ResourceManager.GetObject("Reshiram", resourceCulture);
+                object obj = ResourceManager.GetObject("reshiram", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5713,9 +5713,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Reuniclus {
+        public static System.Drawing.Bitmap reuniclus {
             get {
-                object obj = ResourceManager.GetObject("Reuniclus", resourceCulture);
+                object obj = ResourceManager.GetObject("reuniclus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5723,9 +5723,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Rhydon {
+        public static System.Drawing.Bitmap rhydon {
             get {
-                object obj = ResourceManager.GetObject("Rhydon", resourceCulture);
+                object obj = ResourceManager.GetObject("rhydon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5733,9 +5733,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Rhyhorn {
+        public static System.Drawing.Bitmap rhyhorn {
             get {
-                object obj = ResourceManager.GetObject("Rhyhorn", resourceCulture);
+                object obj = ResourceManager.GetObject("rhyhorn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5743,9 +5743,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Rhyperior {
+        public static System.Drawing.Bitmap rhyperior {
             get {
-                object obj = ResourceManager.GetObject("Rhyperior", resourceCulture);
+                object obj = ResourceManager.GetObject("rhyperior", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5753,9 +5753,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ribombee {
+        public static System.Drawing.Bitmap ribombee {
             get {
-                object obj = ResourceManager.GetObject("Ribombee", resourceCulture);
+                object obj = ResourceManager.GetObject("ribombee", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5763,9 +5763,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Riolu {
+        public static System.Drawing.Bitmap riolu {
             get {
-                object obj = ResourceManager.GetObject("Riolu", resourceCulture);
+                object obj = ResourceManager.GetObject("riolu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5773,9 +5773,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Rockruff {
+        public static System.Drawing.Bitmap rockruff {
             get {
-                object obj = ResourceManager.GetObject("Rockruff", resourceCulture);
+                object obj = ResourceManager.GetObject("rockruff", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5783,9 +5783,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Roggenrola {
+        public static System.Drawing.Bitmap roggenrola {
             get {
-                object obj = ResourceManager.GetObject("Roggenrola", resourceCulture);
+                object obj = ResourceManager.GetObject("roggenrola", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5793,9 +5793,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Roselia {
+        public static System.Drawing.Bitmap roselia {
             get {
-                object obj = ResourceManager.GetObject("Roselia", resourceCulture);
+                object obj = ResourceManager.GetObject("roselia", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5803,9 +5803,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Roserade {
+        public static System.Drawing.Bitmap roserade {
             get {
-                object obj = ResourceManager.GetObject("Roserade", resourceCulture);
+                object obj = ResourceManager.GetObject("roserade", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5813,9 +5813,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Rotom {
+        public static System.Drawing.Bitmap rotom {
             get {
-                object obj = ResourceManager.GetObject("Rotom", resourceCulture);
+                object obj = ResourceManager.GetObject("rotom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5823,9 +5823,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Rowlet {
+        public static System.Drawing.Bitmap rowlet {
             get {
-                object obj = ResourceManager.GetObject("Rowlet", resourceCulture);
+                object obj = ResourceManager.GetObject("rowlet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5833,9 +5833,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Rufflet {
+        public static System.Drawing.Bitmap rufflet {
             get {
-                object obj = ResourceManager.GetObject("Rufflet", resourceCulture);
+                object obj = ResourceManager.GetObject("rufflet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5843,9 +5843,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sableye {
+        public static System.Drawing.Bitmap sableye {
             get {
-                object obj = ResourceManager.GetObject("Sableye", resourceCulture);
+                object obj = ResourceManager.GetObject("sableye", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5853,9 +5853,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Salamence {
+        public static System.Drawing.Bitmap salamence {
             get {
-                object obj = ResourceManager.GetObject("Salamence", resourceCulture);
+                object obj = ResourceManager.GetObject("salamence", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5863,9 +5863,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Salandit {
+        public static System.Drawing.Bitmap salandit {
             get {
-                object obj = ResourceManager.GetObject("Salandit", resourceCulture);
+                object obj = ResourceManager.GetObject("salandit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5873,9 +5873,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Salazzle {
+        public static System.Drawing.Bitmap salazzle {
             get {
-                object obj = ResourceManager.GetObject("Salazzle", resourceCulture);
+                object obj = ResourceManager.GetObject("salazzle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5883,9 +5883,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Samurott {
+        public static System.Drawing.Bitmap samurott {
             get {
-                object obj = ResourceManager.GetObject("Samurott", resourceCulture);
+                object obj = ResourceManager.GetObject("samurott", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5893,9 +5893,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sandile {
+        public static System.Drawing.Bitmap sandile {
             get {
-                object obj = ResourceManager.GetObject("Sandile", resourceCulture);
+                object obj = ResourceManager.GetObject("sandile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5903,9 +5903,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sandshrew {
+        public static System.Drawing.Bitmap sandshrew {
             get {
-                object obj = ResourceManager.GetObject("Sandshrew", resourceCulture);
+                object obj = ResourceManager.GetObject("sandshrew", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5913,9 +5913,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sandslash {
+        public static System.Drawing.Bitmap sandslash {
             get {
-                object obj = ResourceManager.GetObject("Sandslash", resourceCulture);
+                object obj = ResourceManager.GetObject("sandslash", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5923,9 +5923,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sandygast {
+        public static System.Drawing.Bitmap sandygast {
             get {
-                object obj = ResourceManager.GetObject("Sandygast", resourceCulture);
+                object obj = ResourceManager.GetObject("sandygast", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5933,9 +5933,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sawk {
+        public static System.Drawing.Bitmap sawk {
             get {
-                object obj = ResourceManager.GetObject("Sawk", resourceCulture);
+                object obj = ResourceManager.GetObject("sawk", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5943,9 +5943,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sawsbuck {
+        public static System.Drawing.Bitmap sawsbuck {
             get {
-                object obj = ResourceManager.GetObject("Sawsbuck", resourceCulture);
+                object obj = ResourceManager.GetObject("sawsbuck", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5953,9 +5953,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Scatterbug {
+        public static System.Drawing.Bitmap scatterbug {
             get {
-                object obj = ResourceManager.GetObject("Scatterbug", resourceCulture);
+                object obj = ResourceManager.GetObject("scatterbug", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5963,9 +5963,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sceptile {
+        public static System.Drawing.Bitmap sceptile {
             get {
-                object obj = ResourceManager.GetObject("Sceptile", resourceCulture);
+                object obj = ResourceManager.GetObject("sceptile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5973,9 +5973,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Scizor {
+        public static System.Drawing.Bitmap scizor {
             get {
-                object obj = ResourceManager.GetObject("Scizor", resourceCulture);
+                object obj = ResourceManager.GetObject("scizor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5983,9 +5983,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Scolipede {
+        public static System.Drawing.Bitmap scolipede {
             get {
-                object obj = ResourceManager.GetObject("Scolipede", resourceCulture);
+                object obj = ResourceManager.GetObject("scolipede", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -5993,9 +5993,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Scrafty {
+        public static System.Drawing.Bitmap scrafty {
             get {
-                object obj = ResourceManager.GetObject("Scrafty", resourceCulture);
+                object obj = ResourceManager.GetObject("scrafty", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6003,9 +6003,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Scraggy {
+        public static System.Drawing.Bitmap scraggy {
             get {
-                object obj = ResourceManager.GetObject("Scraggy", resourceCulture);
+                object obj = ResourceManager.GetObject("scraggy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6013,9 +6013,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Scyther {
+        public static System.Drawing.Bitmap scyther {
             get {
-                object obj = ResourceManager.GetObject("Scyther", resourceCulture);
+                object obj = ResourceManager.GetObject("scyther", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6023,9 +6023,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Seadra {
+        public static System.Drawing.Bitmap seadra {
             get {
-                object obj = ResourceManager.GetObject("Seadra", resourceCulture);
+                object obj = ResourceManager.GetObject("seadra", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6033,9 +6033,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Seaking {
+        public static System.Drawing.Bitmap seaking {
             get {
-                object obj = ResourceManager.GetObject("Seaking", resourceCulture);
+                object obj = ResourceManager.GetObject("seaking", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6043,9 +6043,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sealeo {
+        public static System.Drawing.Bitmap sealeo {
             get {
-                object obj = ResourceManager.GetObject("Sealeo", resourceCulture);
+                object obj = ResourceManager.GetObject("sealeo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6053,9 +6053,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Seedot {
+        public static System.Drawing.Bitmap seedot {
             get {
-                object obj = ResourceManager.GetObject("Seedot", resourceCulture);
+                object obj = ResourceManager.GetObject("seedot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6063,9 +6063,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Seel {
+        public static System.Drawing.Bitmap seel {
             get {
-                object obj = ResourceManager.GetObject("Seel", resourceCulture);
+                object obj = ResourceManager.GetObject("seel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6073,9 +6073,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Seismitoad {
+        public static System.Drawing.Bitmap seismitoad {
             get {
-                object obj = ResourceManager.GetObject("Seismitoad", resourceCulture);
+                object obj = ResourceManager.GetObject("seismitoad", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6083,9 +6083,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sentret {
+        public static System.Drawing.Bitmap sentret {
             get {
-                object obj = ResourceManager.GetObject("Sentret", resourceCulture);
+                object obj = ResourceManager.GetObject("sentret", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6093,9 +6093,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Serperior {
+        public static System.Drawing.Bitmap serperior {
             get {
-                object obj = ResourceManager.GetObject("Serperior", resourceCulture);
+                object obj = ResourceManager.GetObject("serperior", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6103,9 +6103,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Servine {
+        public static System.Drawing.Bitmap servine {
             get {
-                object obj = ResourceManager.GetObject("Servine", resourceCulture);
+                object obj = ResourceManager.GetObject("servine", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6113,9 +6113,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Seviper {
+        public static System.Drawing.Bitmap seviper {
             get {
-                object obj = ResourceManager.GetObject("Seviper", resourceCulture);
+                object obj = ResourceManager.GetObject("seviper", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6123,9 +6123,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sewaddle {
+        public static System.Drawing.Bitmap sewaddle {
             get {
-                object obj = ResourceManager.GetObject("Sewaddle", resourceCulture);
+                object obj = ResourceManager.GetObject("sewaddle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6133,9 +6133,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sharpedo {
+        public static System.Drawing.Bitmap sharpedo {
             get {
-                object obj = ResourceManager.GetObject("Sharpedo", resourceCulture);
+                object obj = ResourceManager.GetObject("sharpedo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6143,9 +6143,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Shaymin {
+        public static System.Drawing.Bitmap shaymin {
             get {
-                object obj = ResourceManager.GetObject("Shaymin", resourceCulture);
+                object obj = ResourceManager.GetObject("shaymin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6153,9 +6153,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Shedinja {
+        public static System.Drawing.Bitmap shedinja {
             get {
-                object obj = ResourceManager.GetObject("Shedinja", resourceCulture);
+                object obj = ResourceManager.GetObject("shedinja", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6163,9 +6163,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Shelgon {
+        public static System.Drawing.Bitmap shelgon {
             get {
-                object obj = ResourceManager.GetObject("Shelgon", resourceCulture);
+                object obj = ResourceManager.GetObject("shelgon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6173,9 +6173,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Shellder {
+        public static System.Drawing.Bitmap shellder {
             get {
-                object obj = ResourceManager.GetObject("Shellder", resourceCulture);
+                object obj = ResourceManager.GetObject("shellder", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6183,9 +6183,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Shellos {
+        public static System.Drawing.Bitmap shellos {
             get {
-                object obj = ResourceManager.GetObject("Shellos", resourceCulture);
+                object obj = ResourceManager.GetObject("shellos", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6193,9 +6193,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Shelmet {
+        public static System.Drawing.Bitmap shelmet {
             get {
-                object obj = ResourceManager.GetObject("Shelmet", resourceCulture);
+                object obj = ResourceManager.GetObject("shelmet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6203,9 +6203,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Shieldon {
+        public static System.Drawing.Bitmap shieldon {
             get {
-                object obj = ResourceManager.GetObject("Shieldon", resourceCulture);
+                object obj = ResourceManager.GetObject("shieldon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6213,9 +6213,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Shiftry {
+        public static System.Drawing.Bitmap shiftry {
             get {
-                object obj = ResourceManager.GetObject("Shiftry", resourceCulture);
+                object obj = ResourceManager.GetObject("shiftry", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6223,9 +6223,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Shiinotic {
+        public static System.Drawing.Bitmap shiinotic {
             get {
-                object obj = ResourceManager.GetObject("Shiinotic", resourceCulture);
+                object obj = ResourceManager.GetObject("shiinotic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6233,9 +6233,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Shinx {
+        public static System.Drawing.Bitmap shinx {
             get {
-                object obj = ResourceManager.GetObject("Shinx", resourceCulture);
+                object obj = ResourceManager.GetObject("shinx", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6243,9 +6243,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Shroomish {
+        public static System.Drawing.Bitmap shroomish {
             get {
-                object obj = ResourceManager.GetObject("Shroomish", resourceCulture);
+                object obj = ResourceManager.GetObject("shroomish", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6253,9 +6253,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Shuckle {
+        public static System.Drawing.Bitmap shuckle {
             get {
-                object obj = ResourceManager.GetObject("Shuckle", resourceCulture);
+                object obj = ResourceManager.GetObject("shuckle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6263,9 +6263,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Shuppet {
+        public static System.Drawing.Bitmap shuppet {
             get {
-                object obj = ResourceManager.GetObject("Shuppet", resourceCulture);
+                object obj = ResourceManager.GetObject("shuppet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6273,9 +6273,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sigilyph {
+        public static System.Drawing.Bitmap sigilyph {
             get {
-                object obj = ResourceManager.GetObject("Sigilyph", resourceCulture);
+                object obj = ResourceManager.GetObject("sigilyph", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6283,9 +6283,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Silcoon {
+        public static System.Drawing.Bitmap silcoon {
             get {
-                object obj = ResourceManager.GetObject("Silcoon", resourceCulture);
+                object obj = ResourceManager.GetObject("silcoon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6293,9 +6293,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Silvally {
+        public static System.Drawing.Bitmap silvally {
             get {
-                object obj = ResourceManager.GetObject("Silvally", resourceCulture);
+                object obj = ResourceManager.GetObject("silvally", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6303,9 +6303,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Simipour {
+        public static System.Drawing.Bitmap simipour {
             get {
-                object obj = ResourceManager.GetObject("Simipour", resourceCulture);
+                object obj = ResourceManager.GetObject("simipour", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6313,9 +6313,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Simisage {
+        public static System.Drawing.Bitmap simisage {
             get {
-                object obj = ResourceManager.GetObject("Simisage", resourceCulture);
+                object obj = ResourceManager.GetObject("simisage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6323,9 +6323,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Simisear {
+        public static System.Drawing.Bitmap simisear {
             get {
-                object obj = ResourceManager.GetObject("Simisear", resourceCulture);
+                object obj = ResourceManager.GetObject("simisear", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6333,9 +6333,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Skarmory {
+        public static System.Drawing.Bitmap skarmory {
             get {
-                object obj = ResourceManager.GetObject("Skarmory", resourceCulture);
+                object obj = ResourceManager.GetObject("skarmory", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6343,9 +6343,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Skiddo {
+        public static System.Drawing.Bitmap skiddo {
             get {
-                object obj = ResourceManager.GetObject("Skiddo", resourceCulture);
+                object obj = ResourceManager.GetObject("skiddo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6353,9 +6353,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Skiploom {
+        public static System.Drawing.Bitmap skiploom {
             get {
-                object obj = ResourceManager.GetObject("Skiploom", resourceCulture);
+                object obj = ResourceManager.GetObject("skiploom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6363,9 +6363,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Skitty {
+        public static System.Drawing.Bitmap skitty {
             get {
-                object obj = ResourceManager.GetObject("Skitty", resourceCulture);
+                object obj = ResourceManager.GetObject("skitty", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6373,9 +6373,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Skorupi {
+        public static System.Drawing.Bitmap skorupi {
             get {
-                object obj = ResourceManager.GetObject("Skorupi", resourceCulture);
+                object obj = ResourceManager.GetObject("skorupi", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6383,9 +6383,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Skrelp {
+        public static System.Drawing.Bitmap skrelp {
             get {
-                object obj = ResourceManager.GetObject("Skrelp", resourceCulture);
+                object obj = ResourceManager.GetObject("skrelp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6393,9 +6393,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Skuntank {
+        public static System.Drawing.Bitmap skuntank {
             get {
-                object obj = ResourceManager.GetObject("Skuntank", resourceCulture);
+                object obj = ResourceManager.GetObject("skuntank", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6403,9 +6403,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Slaking {
+        public static System.Drawing.Bitmap slaking {
             get {
-                object obj = ResourceManager.GetObject("Slaking", resourceCulture);
+                object obj = ResourceManager.GetObject("slaking", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6413,9 +6413,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Slakoth {
+        public static System.Drawing.Bitmap slakoth {
             get {
-                object obj = ResourceManager.GetObject("Slakoth", resourceCulture);
+                object obj = ResourceManager.GetObject("slakoth", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6423,9 +6423,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sliggoo {
+        public static System.Drawing.Bitmap sliggoo {
             get {
-                object obj = ResourceManager.GetObject("Sliggoo", resourceCulture);
+                object obj = ResourceManager.GetObject("sliggoo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6433,9 +6433,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Slowbro {
+        public static System.Drawing.Bitmap slowbro {
             get {
-                object obj = ResourceManager.GetObject("Slowbro", resourceCulture);
+                object obj = ResourceManager.GetObject("slowbro", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6443,9 +6443,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Slowking {
+        public static System.Drawing.Bitmap slowking {
             get {
-                object obj = ResourceManager.GetObject("Slowking", resourceCulture);
+                object obj = ResourceManager.GetObject("slowking", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6453,9 +6453,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Slowpoke {
+        public static System.Drawing.Bitmap slowpoke {
             get {
-                object obj = ResourceManager.GetObject("Slowpoke", resourceCulture);
+                object obj = ResourceManager.GetObject("slowpoke", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6463,9 +6463,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Slugma {
+        public static System.Drawing.Bitmap slugma {
             get {
-                object obj = ResourceManager.GetObject("Slugma", resourceCulture);
+                object obj = ResourceManager.GetObject("slugma", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6473,9 +6473,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Slurpuff {
+        public static System.Drawing.Bitmap slurpuff {
             get {
-                object obj = ResourceManager.GetObject("Slurpuff", resourceCulture);
+                object obj = ResourceManager.GetObject("slurpuff", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6483,9 +6483,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Smeargle {
+        public static System.Drawing.Bitmap smeargle {
             get {
-                object obj = ResourceManager.GetObject("Smeargle", resourceCulture);
+                object obj = ResourceManager.GetObject("smeargle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6493,9 +6493,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Smoochum {
+        public static System.Drawing.Bitmap smoochum {
             get {
-                object obj = ResourceManager.GetObject("Smoochum", resourceCulture);
+                object obj = ResourceManager.GetObject("smoochum", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6503,9 +6503,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sneasel {
+        public static System.Drawing.Bitmap sneasel {
             get {
-                object obj = ResourceManager.GetObject("Sneasel", resourceCulture);
+                object obj = ResourceManager.GetObject("sneasel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6513,9 +6513,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Snivy {
+        public static System.Drawing.Bitmap snivy {
             get {
-                object obj = ResourceManager.GetObject("Snivy", resourceCulture);
+                object obj = ResourceManager.GetObject("snivy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6523,9 +6523,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Snorlax {
+        public static System.Drawing.Bitmap snorlax {
             get {
-                object obj = ResourceManager.GetObject("Snorlax", resourceCulture);
+                object obj = ResourceManager.GetObject("snorlax", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6533,9 +6533,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Snorunt {
+        public static System.Drawing.Bitmap snorunt {
             get {
-                object obj = ResourceManager.GetObject("Snorunt", resourceCulture);
+                object obj = ResourceManager.GetObject("snorunt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6543,9 +6543,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Snover {
+        public static System.Drawing.Bitmap snover {
             get {
-                object obj = ResourceManager.GetObject("Snover", resourceCulture);
+                object obj = ResourceManager.GetObject("snover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6553,9 +6553,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Snubbull {
+        public static System.Drawing.Bitmap snubbull {
             get {
-                object obj = ResourceManager.GetObject("Snubbull", resourceCulture);
+                object obj = ResourceManager.GetObject("snubbull", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6563,9 +6563,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Solgaleo {
+        public static System.Drawing.Bitmap solgaleo {
             get {
-                object obj = ResourceManager.GetObject("Solgaleo", resourceCulture);
+                object obj = ResourceManager.GetObject("solgaleo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6573,9 +6573,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Solosis {
+        public static System.Drawing.Bitmap solosis {
             get {
-                object obj = ResourceManager.GetObject("Solosis", resourceCulture);
+                object obj = ResourceManager.GetObject("solosis", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6583,9 +6583,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Solrock {
+        public static System.Drawing.Bitmap solrock {
             get {
-                object obj = ResourceManager.GetObject("Solrock", resourceCulture);
+                object obj = ResourceManager.GetObject("solrock", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6593,9 +6593,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Spearow {
+        public static System.Drawing.Bitmap spearow {
             get {
-                object obj = ResourceManager.GetObject("Spearow", resourceCulture);
+                object obj = ResourceManager.GetObject("spearow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6603,9 +6603,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Spewpa {
+        public static System.Drawing.Bitmap spewpa {
             get {
-                object obj = ResourceManager.GetObject("Spewpa", resourceCulture);
+                object obj = ResourceManager.GetObject("spewpa", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6613,9 +6613,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Spheal {
+        public static System.Drawing.Bitmap spheal {
             get {
-                object obj = ResourceManager.GetObject("Spheal", resourceCulture);
+                object obj = ResourceManager.GetObject("spheal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6623,9 +6623,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Spinarak {
+        public static System.Drawing.Bitmap spinarak {
             get {
-                object obj = ResourceManager.GetObject("Spinarak", resourceCulture);
+                object obj = ResourceManager.GetObject("spinarak", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6633,9 +6633,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Spinda {
+        public static System.Drawing.Bitmap spinda {
             get {
-                object obj = ResourceManager.GetObject("Spinda", resourceCulture);
+                object obj = ResourceManager.GetObject("spinda", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6643,9 +6643,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Spiritomb {
+        public static System.Drawing.Bitmap spiritomb {
             get {
-                object obj = ResourceManager.GetObject("Spiritomb", resourceCulture);
+                object obj = ResourceManager.GetObject("spiritomb", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6653,9 +6653,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Spoink {
+        public static System.Drawing.Bitmap spoink {
             get {
-                object obj = ResourceManager.GetObject("Spoink", resourceCulture);
+                object obj = ResourceManager.GetObject("spoink", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6663,9 +6663,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Spritzee {
+        public static System.Drawing.Bitmap spritzee {
             get {
-                object obj = ResourceManager.GetObject("Spritzee", resourceCulture);
+                object obj = ResourceManager.GetObject("spritzee", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6673,9 +6673,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Squirtle {
+        public static System.Drawing.Bitmap squirtle {
             get {
-                object obj = ResourceManager.GetObject("Squirtle", resourceCulture);
+                object obj = ResourceManager.GetObject("squirtle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6683,9 +6683,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Stakataka {
+        public static System.Drawing.Bitmap stakataka {
             get {
-                object obj = ResourceManager.GetObject("Stakataka", resourceCulture);
+                object obj = ResourceManager.GetObject("stakataka", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6693,9 +6693,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Stantler {
+        public static System.Drawing.Bitmap stantler {
             get {
-                object obj = ResourceManager.GetObject("Stantler", resourceCulture);
+                object obj = ResourceManager.GetObject("stantler", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6703,9 +6703,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Staraptor {
+        public static System.Drawing.Bitmap staraptor {
             get {
-                object obj = ResourceManager.GetObject("Staraptor", resourceCulture);
+                object obj = ResourceManager.GetObject("staraptor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6713,9 +6713,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Staravia {
+        public static System.Drawing.Bitmap staravia {
             get {
-                object obj = ResourceManager.GetObject("Staravia", resourceCulture);
+                object obj = ResourceManager.GetObject("staravia", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6723,9 +6723,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Starly {
+        public static System.Drawing.Bitmap starly {
             get {
-                object obj = ResourceManager.GetObject("Starly", resourceCulture);
+                object obj = ResourceManager.GetObject("starly", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6733,9 +6733,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Starmie {
+        public static System.Drawing.Bitmap starmie {
             get {
-                object obj = ResourceManager.GetObject("Starmie", resourceCulture);
+                object obj = ResourceManager.GetObject("starmie", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6743,9 +6743,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Staryu {
+        public static System.Drawing.Bitmap staryu {
             get {
-                object obj = ResourceManager.GetObject("Staryu", resourceCulture);
+                object obj = ResourceManager.GetObject("staryu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6753,9 +6753,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Steelix {
+        public static System.Drawing.Bitmap steelix {
             get {
-                object obj = ResourceManager.GetObject("Steelix", resourceCulture);
+                object obj = ResourceManager.GetObject("steelix", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6763,9 +6763,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Steenee {
+        public static System.Drawing.Bitmap steenee {
             get {
-                object obj = ResourceManager.GetObject("Steenee", resourceCulture);
+                object obj = ResourceManager.GetObject("steenee", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6773,9 +6773,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Stoutland {
+        public static System.Drawing.Bitmap stoutland {
             get {
-                object obj = ResourceManager.GetObject("Stoutland", resourceCulture);
+                object obj = ResourceManager.GetObject("stoutland", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6783,9 +6783,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Stufful {
+        public static System.Drawing.Bitmap stufful {
             get {
-                object obj = ResourceManager.GetObject("Stufful", resourceCulture);
+                object obj = ResourceManager.GetObject("stufful", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6793,9 +6793,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Stunfisk {
+        public static System.Drawing.Bitmap stunfisk {
             get {
-                object obj = ResourceManager.GetObject("Stunfisk", resourceCulture);
+                object obj = ResourceManager.GetObject("stunfisk", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6803,9 +6803,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Stunky {
+        public static System.Drawing.Bitmap stunky {
             get {
-                object obj = ResourceManager.GetObject("Stunky", resourceCulture);
+                object obj = ResourceManager.GetObject("stunky", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6813,9 +6813,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sudowoodo {
+        public static System.Drawing.Bitmap sudowoodo {
             get {
-                object obj = ResourceManager.GetObject("Sudowoodo", resourceCulture);
+                object obj = ResourceManager.GetObject("sudowoodo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6823,9 +6823,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Suicune {
+        public static System.Drawing.Bitmap suicune {
             get {
-                object obj = ResourceManager.GetObject("Suicune", resourceCulture);
+                object obj = ResourceManager.GetObject("suicune", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6833,9 +6833,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sunflora {
+        public static System.Drawing.Bitmap sunflora {
             get {
-                object obj = ResourceManager.GetObject("Sunflora", resourceCulture);
+                object obj = ResourceManager.GetObject("sunflora", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6843,9 +6843,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sunkern {
+        public static System.Drawing.Bitmap sunkern {
             get {
-                object obj = ResourceManager.GetObject("Sunkern", resourceCulture);
+                object obj = ResourceManager.GetObject("sunkern", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6853,9 +6853,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Surskit {
+        public static System.Drawing.Bitmap surskit {
             get {
-                object obj = ResourceManager.GetObject("Surskit", resourceCulture);
+                object obj = ResourceManager.GetObject("surskit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6863,9 +6863,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Swablu {
+        public static System.Drawing.Bitmap swablu {
             get {
-                object obj = ResourceManager.GetObject("Swablu", resourceCulture);
+                object obj = ResourceManager.GetObject("swablu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6873,9 +6873,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Swadloon {
+        public static System.Drawing.Bitmap swadloon {
             get {
-                object obj = ResourceManager.GetObject("Swadloon", resourceCulture);
+                object obj = ResourceManager.GetObject("swadloon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6883,9 +6883,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Swalot {
+        public static System.Drawing.Bitmap swalot {
             get {
-                object obj = ResourceManager.GetObject("Swalot", resourceCulture);
+                object obj = ResourceManager.GetObject("swalot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6893,9 +6893,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Swampert {
+        public static System.Drawing.Bitmap swampert {
             get {
-                object obj = ResourceManager.GetObject("Swampert", resourceCulture);
+                object obj = ResourceManager.GetObject("swampert", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6903,9 +6903,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Swanna {
+        public static System.Drawing.Bitmap swanna {
             get {
-                object obj = ResourceManager.GetObject("Swanna", resourceCulture);
+                object obj = ResourceManager.GetObject("swanna", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6913,9 +6913,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Swellow {
+        public static System.Drawing.Bitmap swellow {
             get {
-                object obj = ResourceManager.GetObject("Swellow", resourceCulture);
+                object obj = ResourceManager.GetObject("swellow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6923,9 +6923,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Swinub {
+        public static System.Drawing.Bitmap swinub {
             get {
-                object obj = ResourceManager.GetObject("Swinub", resourceCulture);
+                object obj = ResourceManager.GetObject("swinub", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6933,9 +6933,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Swirlix {
+        public static System.Drawing.Bitmap swirlix {
             get {
-                object obj = ResourceManager.GetObject("Swirlix", resourceCulture);
+                object obj = ResourceManager.GetObject("swirlix", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6943,9 +6943,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Swoobat {
+        public static System.Drawing.Bitmap swoobat {
             get {
-                object obj = ResourceManager.GetObject("Swoobat", resourceCulture);
+                object obj = ResourceManager.GetObject("swoobat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6953,9 +6953,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Sylveon {
+        public static System.Drawing.Bitmap sylveon {
             get {
-                object obj = ResourceManager.GetObject("Sylveon", resourceCulture);
+                object obj = ResourceManager.GetObject("sylveon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6963,9 +6963,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Taillow {
+        public static System.Drawing.Bitmap taillow {
             get {
-                object obj = ResourceManager.GetObject("Taillow", resourceCulture);
+                object obj = ResourceManager.GetObject("taillow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6973,9 +6973,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Talonflame {
+        public static System.Drawing.Bitmap talonflame {
             get {
-                object obj = ResourceManager.GetObject("Talonflame", resourceCulture);
+                object obj = ResourceManager.GetObject("talonflame", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6983,9 +6983,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tangela {
+        public static System.Drawing.Bitmap tangela {
             get {
-                object obj = ResourceManager.GetObject("Tangela", resourceCulture);
+                object obj = ResourceManager.GetObject("tangela", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -6993,9 +6993,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tangrowth {
+        public static System.Drawing.Bitmap tangrowth {
             get {
-                object obj = ResourceManager.GetObject("Tangrowth", resourceCulture);
+                object obj = ResourceManager.GetObject("tangrowth", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7003,9 +7003,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tapu_Bulu {
+        public static System.Drawing.Bitmap tapu_bulu {
             get {
-                object obj = ResourceManager.GetObject("Tapu_Bulu", resourceCulture);
+                object obj = ResourceManager.GetObject("tapu_bulu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7013,9 +7013,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tapu_Fini {
+        public static System.Drawing.Bitmap tapu_fini {
             get {
-                object obj = ResourceManager.GetObject("Tapu_Fini", resourceCulture);
+                object obj = ResourceManager.GetObject("tapu_fini", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7023,9 +7023,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tapu_Koko {
+        public static System.Drawing.Bitmap tapu_koko {
             get {
-                object obj = ResourceManager.GetObject("Tapu_Koko", resourceCulture);
+                object obj = ResourceManager.GetObject("tapu_koko", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7033,9 +7033,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tapu_Lele {
+        public static System.Drawing.Bitmap tapu_lele {
             get {
-                object obj = ResourceManager.GetObject("Tapu_Lele", resourceCulture);
+                object obj = ResourceManager.GetObject("tapu_lele", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7043,9 +7043,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tauros {
+        public static System.Drawing.Bitmap tauros {
             get {
-                object obj = ResourceManager.GetObject("Tauros", resourceCulture);
+                object obj = ResourceManager.GetObject("tauros", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7053,9 +7053,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Teddiursa {
+        public static System.Drawing.Bitmap teddiursa {
             get {
-                object obj = ResourceManager.GetObject("Teddiursa", resourceCulture);
+                object obj = ResourceManager.GetObject("teddiursa", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7063,9 +7063,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tentacool {
+        public static System.Drawing.Bitmap tentacool {
             get {
-                object obj = ResourceManager.GetObject("Tentacool", resourceCulture);
+                object obj = ResourceManager.GetObject("tentacool", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7073,9 +7073,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tentacruel {
+        public static System.Drawing.Bitmap tentacruel {
             get {
-                object obj = ResourceManager.GetObject("Tentacruel", resourceCulture);
+                object obj = ResourceManager.GetObject("tentacruel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7083,9 +7083,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tepig {
+        public static System.Drawing.Bitmap tepig {
             get {
-                object obj = ResourceManager.GetObject("Tepig", resourceCulture);
+                object obj = ResourceManager.GetObject("tepig", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7093,9 +7093,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Terrakion {
+        public static System.Drawing.Bitmap terrakion {
             get {
-                object obj = ResourceManager.GetObject("Terrakion", resourceCulture);
+                object obj = ResourceManager.GetObject("terrakion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7103,9 +7103,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Throh {
+        public static System.Drawing.Bitmap throh {
             get {
-                object obj = ResourceManager.GetObject("Throh", resourceCulture);
+                object obj = ResourceManager.GetObject("throh", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7113,9 +7113,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Thundurus {
+        public static System.Drawing.Bitmap thundurus {
             get {
-                object obj = ResourceManager.GetObject("Thundurus", resourceCulture);
+                object obj = ResourceManager.GetObject("thundurus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7123,9 +7123,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Timburr {
+        public static System.Drawing.Bitmap timburr {
             get {
-                object obj = ResourceManager.GetObject("Timburr", resourceCulture);
+                object obj = ResourceManager.GetObject("timburr", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7133,9 +7133,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tirtouga {
+        public static System.Drawing.Bitmap tirtouga {
             get {
-                object obj = ResourceManager.GetObject("Tirtouga", resourceCulture);
+                object obj = ResourceManager.GetObject("tirtouga", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7143,9 +7143,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Togedemaru {
+        public static System.Drawing.Bitmap togedemaru {
             get {
-                object obj = ResourceManager.GetObject("Togedemaru", resourceCulture);
+                object obj = ResourceManager.GetObject("togedemaru", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7153,9 +7153,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Togekiss {
+        public static System.Drawing.Bitmap togekiss {
             get {
-                object obj = ResourceManager.GetObject("Togekiss", resourceCulture);
+                object obj = ResourceManager.GetObject("togekiss", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7163,9 +7163,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Togepi {
+        public static System.Drawing.Bitmap togepi {
             get {
-                object obj = ResourceManager.GetObject("Togepi", resourceCulture);
+                object obj = ResourceManager.GetObject("togepi", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7173,9 +7173,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Togetic {
+        public static System.Drawing.Bitmap togetic {
             get {
-                object obj = ResourceManager.GetObject("Togetic", resourceCulture);
+                object obj = ResourceManager.GetObject("togetic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7183,9 +7183,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Torchic {
+        public static System.Drawing.Bitmap torchic {
             get {
-                object obj = ResourceManager.GetObject("Torchic", resourceCulture);
+                object obj = ResourceManager.GetObject("torchic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7193,9 +7193,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Torkoal {
+        public static System.Drawing.Bitmap torkoal {
             get {
-                object obj = ResourceManager.GetObject("Torkoal", resourceCulture);
+                object obj = ResourceManager.GetObject("torkoal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7203,9 +7203,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tornadus {
+        public static System.Drawing.Bitmap tornadus {
             get {
-                object obj = ResourceManager.GetObject("Tornadus", resourceCulture);
+                object obj = ResourceManager.GetObject("tornadus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7213,9 +7213,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Torracat {
+        public static System.Drawing.Bitmap torracat {
             get {
-                object obj = ResourceManager.GetObject("Torracat", resourceCulture);
+                object obj = ResourceManager.GetObject("torracat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7223,9 +7223,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Torterra {
+        public static System.Drawing.Bitmap torterra {
             get {
-                object obj = ResourceManager.GetObject("Torterra", resourceCulture);
+                object obj = ResourceManager.GetObject("torterra", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7233,9 +7233,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Totodile {
+        public static System.Drawing.Bitmap totodile {
             get {
-                object obj = ResourceManager.GetObject("Totodile", resourceCulture);
+                object obj = ResourceManager.GetObject("totodile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7243,9 +7243,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Toucannon {
+        public static System.Drawing.Bitmap toucannon {
             get {
-                object obj = ResourceManager.GetObject("Toucannon", resourceCulture);
+                object obj = ResourceManager.GetObject("toucannon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7253,9 +7253,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Toxapex {
+        public static System.Drawing.Bitmap toxapex {
             get {
-                object obj = ResourceManager.GetObject("Toxapex", resourceCulture);
+                object obj = ResourceManager.GetObject("toxapex", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7263,9 +7263,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Toxicroak {
+        public static System.Drawing.Bitmap toxicroak {
             get {
-                object obj = ResourceManager.GetObject("Toxicroak", resourceCulture);
+                object obj = ResourceManager.GetObject("toxicroak", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7273,9 +7273,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tranquill {
+        public static System.Drawing.Bitmap tranquill {
             get {
-                object obj = ResourceManager.GetObject("Tranquill", resourceCulture);
+                object obj = ResourceManager.GetObject("tranquill", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7283,9 +7283,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Trapinch {
+        public static System.Drawing.Bitmap trapinch {
             get {
-                object obj = ResourceManager.GetObject("Trapinch", resourceCulture);
+                object obj = ResourceManager.GetObject("trapinch", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7293,9 +7293,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Treecko {
+        public static System.Drawing.Bitmap treecko {
             get {
-                object obj = ResourceManager.GetObject("Treecko", resourceCulture);
+                object obj = ResourceManager.GetObject("treecko", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7303,9 +7303,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Trevenant {
+        public static System.Drawing.Bitmap trevenant {
             get {
-                object obj = ResourceManager.GetObject("Trevenant", resourceCulture);
+                object obj = ResourceManager.GetObject("trevenant", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7313,9 +7313,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tropius {
+        public static System.Drawing.Bitmap tropius {
             get {
-                object obj = ResourceManager.GetObject("Tropius", resourceCulture);
+                object obj = ResourceManager.GetObject("tropius", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7323,9 +7323,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Trubbish {
+        public static System.Drawing.Bitmap trubbish {
             get {
-                object obj = ResourceManager.GetObject("Trubbish", resourceCulture);
+                object obj = ResourceManager.GetObject("trubbish", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7333,9 +7333,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Trumbeak {
+        public static System.Drawing.Bitmap trumbeak {
             get {
-                object obj = ResourceManager.GetObject("Trumbeak", resourceCulture);
+                object obj = ResourceManager.GetObject("trumbeak", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7343,9 +7343,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tsareena {
+        public static System.Drawing.Bitmap tsareena {
             get {
-                object obj = ResourceManager.GetObject("Tsareena", resourceCulture);
+                object obj = ResourceManager.GetObject("tsareena", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7353,9 +7353,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Turtonator {
+        public static System.Drawing.Bitmap turtonator {
             get {
-                object obj = ResourceManager.GetObject("Turtonator", resourceCulture);
+                object obj = ResourceManager.GetObject("turtonator", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7363,9 +7363,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Turtwig {
+        public static System.Drawing.Bitmap turtwig {
             get {
-                object obj = ResourceManager.GetObject("Turtwig", resourceCulture);
+                object obj = ResourceManager.GetObject("turtwig", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7373,9 +7373,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tympole {
+        public static System.Drawing.Bitmap tympole {
             get {
-                object obj = ResourceManager.GetObject("Tympole", resourceCulture);
+                object obj = ResourceManager.GetObject("tympole", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7383,9 +7383,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tynamo {
+        public static System.Drawing.Bitmap tynamo {
             get {
-                object obj = ResourceManager.GetObject("Tynamo", resourceCulture);
+                object obj = ResourceManager.GetObject("tynamo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7393,9 +7393,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Type_Null {
+        public static System.Drawing.Bitmap type_null {
             get {
-                object obj = ResourceManager.GetObject("Type_Null", resourceCulture);
+                object obj = ResourceManager.GetObject("type_null", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7403,9 +7403,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Typhlosion {
+        public static System.Drawing.Bitmap typhlosion {
             get {
-                object obj = ResourceManager.GetObject("Typhlosion", resourceCulture);
+                object obj = ResourceManager.GetObject("typhlosion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7413,9 +7413,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tyranitar {
+        public static System.Drawing.Bitmap tyranitar {
             get {
-                object obj = ResourceManager.GetObject("Tyranitar", resourceCulture);
+                object obj = ResourceManager.GetObject("tyranitar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7423,9 +7423,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tyrantrum {
+        public static System.Drawing.Bitmap tyrantrum {
             get {
-                object obj = ResourceManager.GetObject("Tyrantrum", resourceCulture);
+                object obj = ResourceManager.GetObject("tyrantrum", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7433,9 +7433,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tyrogue {
+        public static System.Drawing.Bitmap tyrogue {
             get {
-                object obj = ResourceManager.GetObject("Tyrogue", resourceCulture);
+                object obj = ResourceManager.GetObject("tyrogue", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7443,9 +7443,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Tyrunt {
+        public static System.Drawing.Bitmap tyrunt {
             get {
-                object obj = ResourceManager.GetObject("Tyrunt", resourceCulture);
+                object obj = ResourceManager.GetObject("tyrunt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7453,9 +7453,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Umbreon {
+        public static System.Drawing.Bitmap umbreon {
             get {
-                object obj = ResourceManager.GetObject("Umbreon", resourceCulture);
+                object obj = ResourceManager.GetObject("umbreon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7463,9 +7463,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Unfezant {
+        public static System.Drawing.Bitmap unfezant {
             get {
-                object obj = ResourceManager.GetObject("Unfezant", resourceCulture);
+                object obj = ResourceManager.GetObject("unfezant", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7473,9 +7473,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Unown {
+        public static System.Drawing.Bitmap unown {
             get {
-                object obj = ResourceManager.GetObject("Unown", resourceCulture);
+                object obj = ResourceManager.GetObject("unown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7483,9 +7483,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Ursaring {
+        public static System.Drawing.Bitmap ursaring {
             get {
-                object obj = ResourceManager.GetObject("Ursaring", resourceCulture);
+                object obj = ResourceManager.GetObject("ursaring", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7493,9 +7493,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Uxie {
+        public static System.Drawing.Bitmap uxie {
             get {
-                object obj = ResourceManager.GetObject("Uxie", resourceCulture);
+                object obj = ResourceManager.GetObject("uxie", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7503,9 +7503,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Vanillish {
+        public static System.Drawing.Bitmap vanillish {
             get {
-                object obj = ResourceManager.GetObject("Vanillish", resourceCulture);
+                object obj = ResourceManager.GetObject("vanillish", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7513,9 +7513,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Vanillite {
+        public static System.Drawing.Bitmap vanillite {
             get {
-                object obj = ResourceManager.GetObject("Vanillite", resourceCulture);
+                object obj = ResourceManager.GetObject("vanillite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7523,9 +7523,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Vanilluxe {
+        public static System.Drawing.Bitmap vanilluxe {
             get {
-                object obj = ResourceManager.GetObject("Vanilluxe", resourceCulture);
+                object obj = ResourceManager.GetObject("vanilluxe", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7533,9 +7533,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Vaporeon {
+        public static System.Drawing.Bitmap vaporeon {
             get {
-                object obj = ResourceManager.GetObject("Vaporeon", resourceCulture);
+                object obj = ResourceManager.GetObject("vaporeon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7543,9 +7543,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Venipede {
+        public static System.Drawing.Bitmap venipede {
             get {
-                object obj = ResourceManager.GetObject("Venipede", resourceCulture);
+                object obj = ResourceManager.GetObject("venipede", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7553,9 +7553,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Venomoth {
+        public static System.Drawing.Bitmap venomoth {
             get {
-                object obj = ResourceManager.GetObject("Venomoth", resourceCulture);
+                object obj = ResourceManager.GetObject("venomoth", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7563,9 +7563,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Venonat {
+        public static System.Drawing.Bitmap venonat {
             get {
-                object obj = ResourceManager.GetObject("Venonat", resourceCulture);
+                object obj = ResourceManager.GetObject("venonat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7573,9 +7573,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Venusaur {
+        public static System.Drawing.Bitmap venusaur {
             get {
-                object obj = ResourceManager.GetObject("Venusaur", resourceCulture);
+                object obj = ResourceManager.GetObject("venusaur", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7583,9 +7583,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Vespiquen {
+        public static System.Drawing.Bitmap vespiquen {
             get {
-                object obj = ResourceManager.GetObject("Vespiquen", resourceCulture);
+                object obj = ResourceManager.GetObject("vespiquen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7593,9 +7593,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Vibrava {
+        public static System.Drawing.Bitmap vibrava {
             get {
-                object obj = ResourceManager.GetObject("Vibrava", resourceCulture);
+                object obj = ResourceManager.GetObject("vibrava", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7603,9 +7603,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Victini {
+        public static System.Drawing.Bitmap victini {
             get {
-                object obj = ResourceManager.GetObject("Victini", resourceCulture);
+                object obj = ResourceManager.GetObject("victini", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7613,9 +7613,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Victreebel {
+        public static System.Drawing.Bitmap victreebel {
             get {
-                object obj = ResourceManager.GetObject("Victreebel", resourceCulture);
+                object obj = ResourceManager.GetObject("victreebel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7623,9 +7623,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Vigoroth {
+        public static System.Drawing.Bitmap vigoroth {
             get {
-                object obj = ResourceManager.GetObject("Vigoroth", resourceCulture);
+                object obj = ResourceManager.GetObject("vigoroth", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7633,9 +7633,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Vikavolt {
+        public static System.Drawing.Bitmap vikavolt {
             get {
-                object obj = ResourceManager.GetObject("Vikavolt", resourceCulture);
+                object obj = ResourceManager.GetObject("vikavolt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7643,9 +7643,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Vileplume {
+        public static System.Drawing.Bitmap vileplume {
             get {
-                object obj = ResourceManager.GetObject("Vileplume", resourceCulture);
+                object obj = ResourceManager.GetObject("vileplume", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7653,9 +7653,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Virizion {
+        public static System.Drawing.Bitmap virizion {
             get {
-                object obj = ResourceManager.GetObject("Virizion", resourceCulture);
+                object obj = ResourceManager.GetObject("virizion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7663,9 +7663,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Vivillon {
+        public static System.Drawing.Bitmap vivillon {
             get {
-                object obj = ResourceManager.GetObject("Vivillon", resourceCulture);
+                object obj = ResourceManager.GetObject("vivillon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7673,9 +7673,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Volbeat {
+        public static System.Drawing.Bitmap volbeat {
             get {
-                object obj = ResourceManager.GetObject("Volbeat", resourceCulture);
+                object obj = ResourceManager.GetObject("volbeat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7683,9 +7683,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Volcanion {
+        public static System.Drawing.Bitmap volcanion {
             get {
-                object obj = ResourceManager.GetObject("Volcanion", resourceCulture);
+                object obj = ResourceManager.GetObject("volcanion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7693,9 +7693,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Volcarona {
+        public static System.Drawing.Bitmap volcarona {
             get {
-                object obj = ResourceManager.GetObject("Volcarona", resourceCulture);
+                object obj = ResourceManager.GetObject("volcarona", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7703,9 +7703,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Voltorb {
+        public static System.Drawing.Bitmap voltorb {
             get {
-                object obj = ResourceManager.GetObject("Voltorb", resourceCulture);
+                object obj = ResourceManager.GetObject("voltorb", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7713,9 +7713,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Vullaby {
+        public static System.Drawing.Bitmap vullaby {
             get {
-                object obj = ResourceManager.GetObject("Vullaby", resourceCulture);
+                object obj = ResourceManager.GetObject("vullaby", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7723,9 +7723,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Vulpix {
+        public static System.Drawing.Bitmap vulpix {
             get {
-                object obj = ResourceManager.GetObject("Vulpix", resourceCulture);
+                object obj = ResourceManager.GetObject("vulpix", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7733,9 +7733,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Wailmer {
+        public static System.Drawing.Bitmap wailmer {
             get {
-                object obj = ResourceManager.GetObject("Wailmer", resourceCulture);
+                object obj = ResourceManager.GetObject("wailmer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7743,9 +7743,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Wailord {
+        public static System.Drawing.Bitmap wailord {
             get {
-                object obj = ResourceManager.GetObject("Wailord", resourceCulture);
+                object obj = ResourceManager.GetObject("wailord", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7753,9 +7753,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Walrein {
+        public static System.Drawing.Bitmap walrein {
             get {
-                object obj = ResourceManager.GetObject("Walrein", resourceCulture);
+                object obj = ResourceManager.GetObject("walrein", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7763,9 +7763,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Wartortle {
+        public static System.Drawing.Bitmap wartortle {
             get {
-                object obj = ResourceManager.GetObject("Wartortle", resourceCulture);
+                object obj = ResourceManager.GetObject("wartortle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7773,9 +7773,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Watchog {
+        public static System.Drawing.Bitmap watchog {
             get {
-                object obj = ResourceManager.GetObject("Watchog", resourceCulture);
+                object obj = ResourceManager.GetObject("watchog", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7783,9 +7783,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Weavile {
+        public static System.Drawing.Bitmap weavile {
             get {
-                object obj = ResourceManager.GetObject("Weavile", resourceCulture);
+                object obj = ResourceManager.GetObject("weavile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7793,9 +7793,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Weedle {
+        public static System.Drawing.Bitmap weedle {
             get {
-                object obj = ResourceManager.GetObject("Weedle", resourceCulture);
+                object obj = ResourceManager.GetObject("weedle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7803,9 +7803,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Weepinbell {
+        public static System.Drawing.Bitmap weepinbell {
             get {
-                object obj = ResourceManager.GetObject("Weepinbell", resourceCulture);
+                object obj = ResourceManager.GetObject("weepinbell", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7813,9 +7813,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Weezing {
+        public static System.Drawing.Bitmap weezing {
             get {
-                object obj = ResourceManager.GetObject("Weezing", resourceCulture);
+                object obj = ResourceManager.GetObject("weezing", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7823,9 +7823,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Whimsicott {
+        public static System.Drawing.Bitmap whimsicott {
             get {
-                object obj = ResourceManager.GetObject("Whimsicott", resourceCulture);
+                object obj = ResourceManager.GetObject("whimsicott", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7833,9 +7833,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Whirlipede {
+        public static System.Drawing.Bitmap whirlipede {
             get {
-                object obj = ResourceManager.GetObject("Whirlipede", resourceCulture);
+                object obj = ResourceManager.GetObject("whirlipede", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7843,9 +7843,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Whiscash {
+        public static System.Drawing.Bitmap whiscash {
             get {
-                object obj = ResourceManager.GetObject("Whiscash", resourceCulture);
+                object obj = ResourceManager.GetObject("whiscash", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7853,9 +7853,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Whismur {
+        public static System.Drawing.Bitmap whismur {
             get {
-                object obj = ResourceManager.GetObject("Whismur", resourceCulture);
+                object obj = ResourceManager.GetObject("whismur", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7863,9 +7863,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Wigglytuff {
+        public static System.Drawing.Bitmap wigglytuff {
             get {
-                object obj = ResourceManager.GetObject("Wigglytuff", resourceCulture);
+                object obj = ResourceManager.GetObject("wigglytuff", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7873,9 +7873,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Wimpod {
+        public static System.Drawing.Bitmap wimpod {
             get {
-                object obj = ResourceManager.GetObject("Wimpod", resourceCulture);
+                object obj = ResourceManager.GetObject("wimpod", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7883,9 +7883,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Wingull {
+        public static System.Drawing.Bitmap wingull {
             get {
-                object obj = ResourceManager.GetObject("Wingull", resourceCulture);
+                object obj = ResourceManager.GetObject("wingull", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7893,9 +7893,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Wishiwashi {
+        public static System.Drawing.Bitmap wishiwashi {
             get {
-                object obj = ResourceManager.GetObject("Wishiwashi", resourceCulture);
+                object obj = ResourceManager.GetObject("wishiwashi", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7903,9 +7903,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Wobbuffet {
+        public static System.Drawing.Bitmap wobbuffet {
             get {
-                object obj = ResourceManager.GetObject("Wobbuffet", resourceCulture);
+                object obj = ResourceManager.GetObject("wobbuffet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7913,9 +7913,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Woobat {
+        public static System.Drawing.Bitmap woobat {
             get {
-                object obj = ResourceManager.GetObject("Woobat", resourceCulture);
+                object obj = ResourceManager.GetObject("woobat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7923,9 +7923,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Wooper {
+        public static System.Drawing.Bitmap wooper {
             get {
-                object obj = ResourceManager.GetObject("Wooper", resourceCulture);
+                object obj = ResourceManager.GetObject("wooper", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7933,9 +7933,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Wormadam {
+        public static System.Drawing.Bitmap wormadam {
             get {
-                object obj = ResourceManager.GetObject("Wormadam", resourceCulture);
+                object obj = ResourceManager.GetObject("wormadam", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7943,9 +7943,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Wurmple {
+        public static System.Drawing.Bitmap wurmple {
             get {
-                object obj = ResourceManager.GetObject("Wurmple", resourceCulture);
+                object obj = ResourceManager.GetObject("wurmple", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7953,9 +7953,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Wynaut {
+        public static System.Drawing.Bitmap wynaut {
             get {
-                object obj = ResourceManager.GetObject("Wynaut", resourceCulture);
+                object obj = ResourceManager.GetObject("wynaut", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7963,9 +7963,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Xatu {
+        public static System.Drawing.Bitmap xatu {
             get {
-                object obj = ResourceManager.GetObject("Xatu", resourceCulture);
+                object obj = ResourceManager.GetObject("xatu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7973,9 +7973,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Xerneas {
+        public static System.Drawing.Bitmap xerneas {
             get {
-                object obj = ResourceManager.GetObject("Xerneas", resourceCulture);
+                object obj = ResourceManager.GetObject("xerneas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7983,9 +7983,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Xurkitree {
+        public static System.Drawing.Bitmap xurkitree {
             get {
-                object obj = ResourceManager.GetObject("Xurkitree", resourceCulture);
+                object obj = ResourceManager.GetObject("xurkitree", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -7993,9 +7993,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Yamask {
+        public static System.Drawing.Bitmap yamask {
             get {
-                object obj = ResourceManager.GetObject("Yamask", resourceCulture);
+                object obj = ResourceManager.GetObject("yamask", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8003,9 +8003,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Yanma {
+        public static System.Drawing.Bitmap yanma {
             get {
-                object obj = ResourceManager.GetObject("Yanma", resourceCulture);
+                object obj = ResourceManager.GetObject("yanma", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8013,9 +8013,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Yanmega {
+        public static System.Drawing.Bitmap yanmega {
             get {
-                object obj = ResourceManager.GetObject("Yanmega", resourceCulture);
+                object obj = ResourceManager.GetObject("yanmega", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8023,9 +8023,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Yungoos {
+        public static System.Drawing.Bitmap yungoos {
             get {
-                object obj = ResourceManager.GetObject("Yungoos", resourceCulture);
+                object obj = ResourceManager.GetObject("yungoos", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8033,9 +8033,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Yveltal {
+        public static System.Drawing.Bitmap yveltal {
             get {
-                object obj = ResourceManager.GetObject("Yveltal", resourceCulture);
+                object obj = ResourceManager.GetObject("yveltal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8043,9 +8043,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Zangoose {
+        public static System.Drawing.Bitmap zangoose {
             get {
-                object obj = ResourceManager.GetObject("Zangoose", resourceCulture);
+                object obj = ResourceManager.GetObject("zangoose", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8053,9 +8053,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Zapdos {
+        public static System.Drawing.Bitmap zapdos {
             get {
-                object obj = ResourceManager.GetObject("Zapdos", resourceCulture);
+                object obj = ResourceManager.GetObject("zapdos", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8063,9 +8063,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Zebstrika {
+        public static System.Drawing.Bitmap zebstrika {
             get {
-                object obj = ResourceManager.GetObject("Zebstrika", resourceCulture);
+                object obj = ResourceManager.GetObject("zebstrika", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8073,9 +8073,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Zekrom {
+        public static System.Drawing.Bitmap zekrom {
             get {
-                object obj = ResourceManager.GetObject("Zekrom", resourceCulture);
+                object obj = ResourceManager.GetObject("zekrom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8083,9 +8083,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Zeraora {
+        public static System.Drawing.Bitmap zeraora {
             get {
-                object obj = ResourceManager.GetObject("Zeraora", resourceCulture);
+                object obj = ResourceManager.GetObject("zeraora", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8093,9 +8093,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Zigzagoon {
+        public static System.Drawing.Bitmap zigzagoon {
             get {
-                object obj = ResourceManager.GetObject("Zigzagoon", resourceCulture);
+                object obj = ResourceManager.GetObject("zigzagoon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8103,9 +8103,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Zoroark {
+        public static System.Drawing.Bitmap zoroark {
             get {
-                object obj = ResourceManager.GetObject("Zoroark", resourceCulture);
+                object obj = ResourceManager.GetObject("zoroark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8113,9 +8113,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Zorua {
+        public static System.Drawing.Bitmap zorua {
             get {
-                object obj = ResourceManager.GetObject("Zorua", resourceCulture);
+                object obj = ResourceManager.GetObject("zorua", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8123,9 +8123,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Zubat {
+        public static System.Drawing.Bitmap zubat {
             get {
-                object obj = ResourceManager.GetObject("Zubat", resourceCulture);
+                object obj = ResourceManager.GetObject("zubat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8133,9 +8133,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Zweilous {
+        public static System.Drawing.Bitmap zweilous {
             get {
-                object obj = ResourceManager.GetObject("Zweilous", resourceCulture);
+                object obj = ResourceManager.GetObject("zweilous", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -8143,9 +8143,9 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Zygarde {
+        public static System.Drawing.Bitmap zygarde {
             get {
-                object obj = ResourceManager.GetObject("Zygarde", resourceCulture);
+                object obj = ResourceManager.GetObject("zygarde", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

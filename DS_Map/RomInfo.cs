@@ -33,8 +33,19 @@ namespace DSPRE {
         public static uint[] cameraTblOffsetsToRAMaddress { get; private set; }
 
         public static uint headerTableOffset { get; private set; }
+
         public static uint conditionalMusicTableOffsetToRAMAddress { get; internal set; }
         public static uint encounterMusicTableOffsetToRAMAddress { get; internal set; }
+
+        public static uint vsTrainerEntryTableOffsetToRAMAddress { get; internal set; }
+        public static uint vsPokemonEntryTableOffsetToRAMAddress { get; internal set; }
+        public static uint effectsComboTableOffsetToRAMAddress { get; internal set; }
+
+        public static uint vsTrainerEntryTableOffsetToSizeLimiter { get; internal set; }
+        public static uint vsPokemonEntryTableOffsetToSizeLimiter { get; internal set; }
+        public static uint effectsComboTableOffsetToSizeLimiter { get; internal set; }
+
+
         public static uint OWTableOffset { get; internal set; }
         public static string OWtablePath { get; private set; }
 
@@ -449,6 +460,44 @@ namespace DSPRE {
                 break;
             }
         }
+        public static void SetBattleEffectsData() {
+            switch (gameFamily) {
+                case gFamEnum.HGSS:
+                    switch (gameLanguage) {
+                        case "ESP":
+                            vsPokemonEntryTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x518CC : 0x0;
+                            vsTrainerEntryTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x51888 : 0x0;
+                            effectsComboTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x517C0 : 0x0;
+
+                            vsPokemonEntryTableOffsetToSizeLimiter = gameVersion == gVerEnum.HeartGold ? (uint)0x518C2 : 0x0;
+                            vsTrainerEntryTableOffsetToSizeLimiter = gameVersion == gVerEnum.HeartGold ? (uint)0x5187E : 0x0;
+                            effectsComboTableOffsetToSizeLimiter = gameVersion == gVerEnum.HeartGold ? (uint)0x517A2 : 0x0;
+                            break;
+                        case "ENG":
+                        case "ITA":
+                        case "FRA":
+                        case "GER":
+                            vsPokemonEntryTableOffsetToRAMAddress = 0x0;
+                            vsTrainerEntryTableOffsetToRAMAddress = 0x0;
+                            effectsComboTableOffsetToRAMAddress = 0x0;
+
+                            vsPokemonEntryTableOffsetToSizeLimiter = 0x0;
+                            vsTrainerEntryTableOffsetToSizeLimiter = 0x0;
+                            effectsComboTableOffsetToSizeLimiter = 0x0;
+                            break;
+                        case "JAP":
+                            vsPokemonEntryTableOffsetToRAMAddress = 0x0;
+                            vsTrainerEntryTableOffsetToRAMAddress = 0x0;
+                            effectsComboTableOffsetToRAMAddress = 0x0;
+
+                            vsPokemonEntryTableOffsetToSizeLimiter = 0x0;
+                            vsTrainerEntryTableOffsetToSizeLimiter = 0x0;
+                            effectsComboTableOffsetToSizeLimiter = 0x0;
+                            break;
+                    }
+                    break;
+            }
+        }
         public static void SetEncounterMusicTableOffsetToRAMAddress() {
             switch (gameFamily) {
                 case gFamEnum.HGSS:
@@ -622,12 +671,12 @@ namespace DSPRE {
         public string GetRomNameFromWorkdir() => workDir.Substring(0, workDir.Length - folderSuffix.Length - 1);
         public static int GetHeaderCount() => (int)new FileInfo(internalNamesLocation).Length / internalNameLength;
         public static List<string> GetLocationNames() => new TextArchive(locationNamesTextNumber).messages;
-        public string[] GetSimpleTrainerNames() => new TextArchive(trainerNamesMessageNumber).messages.ToArray();
-        public string[] GetTrainerClassNames() => new TextArchive(trainerClassMessageNumber).messages.ToArray();
-        public string[] GetItemNames() => new TextArchive(itemNamesTextNumber).messages.ToArray();
-        public string[] GetItemNames(int startIndex, int count) => new TextArchive(itemNamesTextNumber).messages.GetRange(startIndex, count).ToArray();
-        public string[] GetPokémonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
-        public string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
+        public static string[] GetSimpleTrainerNames() => new TextArchive(trainerNamesMessageNumber).messages.ToArray();
+        public static string[] GetTrainerClassNames() => new TextArchive(trainerClassMessageNumber).messages.ToArray();
+        public static string[] GetItemNames() => new TextArchive(itemNamesTextNumber).messages.ToArray();
+        public static string[] GetItemNames(int startIndex, int count) => new TextArchive(itemNamesTextNumber).messages.GetRange(startIndex, count).ToArray();
+        public static string[] GetPokémonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
+        public static string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
         public int GetAreaDataCount() => Directory.GetFiles(gameDirs[DirNames.areaData].unpackedDir).Length;
         public int GetMapTexturesCount() => Directory.GetFiles(gameDirs[DirNames.mapTextures].unpackedDir).Length;
         public int GetBuildingTexturesCount() => Directory.GetFiles(gameDirs[DirNames.buildingTextures].unpackedDir).Length;

@@ -3842,7 +3842,7 @@ namespace DSPRE.Resources {
                 [247] = "Pupitar",
                 [248] = "Tyranitar",
                 [249] = "Lugia",
-                [250] = "Ho-oh",
+                [250] = "Ho-Oh",
                 [251] = "Celebi",
                 [252] = "Treecko",
                 [253] = "Grovyle",
