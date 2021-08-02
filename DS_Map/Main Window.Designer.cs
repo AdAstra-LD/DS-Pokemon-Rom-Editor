@@ -760,6 +760,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.romToolboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -795,7 +796,6 @@
             this.spawnEditorToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -9164,7 +9164,7 @@
             this.pbEffectsGroupBox.Controls.Add(this.pbEffectsBattleSSEQUpDown);
             this.pbEffectsGroupBox.Location = new System.Drawing.Point(423, 9);
             this.pbEffectsGroupBox.Name = "pbEffectsGroupBox";
-            this.pbEffectsGroupBox.Size = new System.Drawing.Size(747, 440);
+            this.pbEffectsGroupBox.Size = new System.Drawing.Size(747, 444);
             this.pbEffectsGroupBox.TabIndex = 11;
             this.pbEffectsGroupBox.TabStop = false;
             this.pbEffectsGroupBox.Text = "Pre-Battle Effects";
@@ -9172,7 +9172,7 @@
             // HOWpbEffectsTableButton
             // 
             this.HOWpbEffectsTableButton.Image = global::DSPRE.Properties.Resources.questionMark;
-            this.HOWpbEffectsTableButton.Location = new System.Drawing.Point(151, 396);
+            this.HOWpbEffectsTableButton.Location = new System.Drawing.Point(146, 396);
             this.HOWpbEffectsTableButton.Name = "HOWpbEffectsTableButton";
             this.HOWpbEffectsTableButton.Size = new System.Drawing.Size(28, 29);
             this.HOWpbEffectsTableButton.TabIndex = 44;
@@ -9192,7 +9192,7 @@
             // 
             this.saveEffectCombosTableBTN.Image = global::DSPRE.Properties.Resources.saveButton;
             this.saveEffectCombosTableBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.saveEffectCombosTableBTN.Location = new System.Drawing.Point(182, 392);
+            this.saveEffectCombosTableBTN.Location = new System.Drawing.Point(175, 392);
             this.saveEffectCombosTableBTN.Name = "saveEffectCombosTableBTN";
             this.saveEffectCombosTableBTN.Size = new System.Drawing.Size(78, 37);
             this.saveEffectCombosTableBTN.TabIndex = 43;
@@ -9206,7 +9206,7 @@
             this.pbEffectsCombosListbox.FormattingEnabled = true;
             this.pbEffectsCombosListbox.Location = new System.Drawing.Point(9, 40);
             this.pbEffectsCombosListbox.Name = "pbEffectsCombosListbox";
-            this.pbEffectsCombosListbox.Size = new System.Drawing.Size(251, 342);
+            this.pbEffectsCombosListbox.Size = new System.Drawing.Size(244, 342);
             this.pbEffectsCombosListbox.TabIndex = 43;
             this.pbEffectsCombosListbox.SelectedIndexChanged += new System.EventHandler(this.pbEffectsCombosListbox_SelectedIndexChanged);
             // 
@@ -9222,9 +9222,9 @@
             this.groupBox30.Controls.Add(this.label70);
             this.groupBox30.Controls.Add(this.pbEffectsTrainerCombobox);
             this.groupBox30.Controls.Add(this.pbEffectsVsTrainerListbox);
-            this.groupBox30.Location = new System.Drawing.Point(265, 14);
+            this.groupBox30.Location = new System.Drawing.Point(257, 14);
             this.groupBox30.Name = "groupBox30";
-            this.groupBox30.Size = new System.Drawing.Size(472, 250);
+            this.groupBox30.Size = new System.Drawing.Size(481, 250);
             this.groupBox30.TabIndex = 34;
             this.groupBox30.TabStop = false;
             this.groupBox30.Text = "VS. Trainer";
@@ -9240,16 +9240,16 @@
             // 
             // tbEditorTrClassFramePreviewUpDown
             // 
-            this.tbEditorTrClassFramePreviewUpDown.Location = new System.Drawing.Point(402, 98);
+            this.tbEditorTrClassFramePreviewUpDown.Location = new System.Drawing.Point(398, 98);
             this.tbEditorTrClassFramePreviewUpDown.Name = "tbEditorTrClassFramePreviewUpDown";
-            this.tbEditorTrClassFramePreviewUpDown.Size = new System.Drawing.Size(34, 20);
+            this.tbEditorTrClassFramePreviewUpDown.Size = new System.Drawing.Size(38, 20);
             this.tbEditorTrClassFramePreviewUpDown.TabIndex = 44;
             this.tbEditorTrClassFramePreviewUpDown.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // tbEditorTrClassPictureBox
             // 
             this.tbEditorTrClassPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbEditorTrClassPictureBox.Location = new System.Drawing.Point(256, 59);
+            this.tbEditorTrClassPictureBox.Location = new System.Drawing.Point(253, 59);
             this.tbEditorTrClassPictureBox.Name = "tbEditorTrClassPictureBox";
             this.tbEditorTrClassPictureBox.Size = new System.Drawing.Size(128, 96);
             this.tbEditorTrClassPictureBox.TabIndex = 43;
@@ -9258,7 +9258,7 @@
             // label68
             // 
             this.label68.AutoSize = true;
-            this.label68.Location = new System.Drawing.Point(252, 164);
+            this.label68.Location = new System.Drawing.Point(249, 164);
             this.label68.Name = "label68";
             this.label68.Size = new System.Drawing.Size(124, 13);
             this.label68.TabIndex = 42;
@@ -9268,15 +9268,15 @@
             // 
             this.pbEffectsTrainerChooseMainCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.pbEffectsTrainerChooseMainCombobox.FormattingEnabled = true;
-            this.pbEffectsTrainerChooseMainCombobox.Location = new System.Drawing.Point(255, 178);
+            this.pbEffectsTrainerChooseMainCombobox.Location = new System.Drawing.Point(252, 178);
             this.pbEffectsTrainerChooseMainCombobox.Name = "pbEffectsTrainerChooseMainCombobox";
-            this.pbEffectsTrainerChooseMainCombobox.Size = new System.Drawing.Size(205, 21);
+            this.pbEffectsTrainerChooseMainCombobox.Size = new System.Drawing.Size(218, 21);
             this.pbEffectsTrainerChooseMainCombobox.TabIndex = 41;
             // 
             // HOWVsTrainerButton
             // 
             this.HOWVsTrainerButton.Image = global::DSPRE.Properties.Resources.questionMark;
-            this.HOWVsTrainerButton.Location = new System.Drawing.Point(307, 209);
+            this.HOWVsTrainerButton.Location = new System.Drawing.Point(304, 209);
             this.HOWVsTrainerButton.Name = "HOWVsTrainerButton";
             this.HOWVsTrainerButton.Size = new System.Drawing.Size(28, 29);
             this.HOWVsTrainerButton.TabIndex = 39;
@@ -9287,7 +9287,7 @@
             // 
             this.saveVSTrainerTableBTN.Image = global::DSPRE.Properties.Resources.saveButton;
             this.saveVSTrainerTableBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.saveVSTrainerTableBTN.Location = new System.Drawing.Point(340, 205);
+            this.saveVSTrainerTableBTN.Location = new System.Drawing.Point(337, 205);
             this.saveVSTrainerTableBTN.Name = "saveVSTrainerTableBTN";
             this.saveVSTrainerTableBTN.Size = new System.Drawing.Size(80, 37);
             this.saveVSTrainerTableBTN.TabIndex = 38;
@@ -9299,7 +9299,7 @@
             // label70
             // 
             this.label70.AutoSize = true;
-            this.label70.Location = new System.Drawing.Point(251, 14);
+            this.label70.Location = new System.Drawing.Point(248, 14);
             this.label70.Name = "label70";
             this.label70.Size = new System.Drawing.Size(68, 13);
             this.label70.TabIndex = 37;
@@ -9309,16 +9309,16 @@
             // 
             this.pbEffectsTrainerCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.pbEffectsTrainerCombobox.FormattingEnabled = true;
-            this.pbEffectsTrainerCombobox.Location = new System.Drawing.Point(255, 29);
+            this.pbEffectsTrainerCombobox.Location = new System.Drawing.Point(252, 29);
             this.pbEffectsTrainerCombobox.Name = "pbEffectsTrainerCombobox";
-            this.pbEffectsTrainerCombobox.Size = new System.Drawing.Size(205, 21);
+            this.pbEffectsTrainerCombobox.Size = new System.Drawing.Size(218, 21);
             this.pbEffectsTrainerCombobox.TabIndex = 36;
             this.pbEffectsTrainerCombobox.SelectedIndexChanged += new System.EventHandler(this.pbEffectsTrainerCombobox_SelectedIndexChanged);
             // 
             // pbEffectsVsTrainerListbox
             // 
             this.pbEffectsVsTrainerListbox.FormattingEnabled = true;
-            this.pbEffectsVsTrainerListbox.Location = new System.Drawing.Point(11, 18);
+            this.pbEffectsVsTrainerListbox.Location = new System.Drawing.Point(9, 18);
             this.pbEffectsVsTrainerListbox.Name = "pbEffectsVsTrainerListbox";
             this.pbEffectsVsTrainerListbox.Size = new System.Drawing.Size(234, 225);
             this.pbEffectsVsTrainerListbox.TabIndex = 35;
@@ -9334,16 +9334,16 @@
             this.groupBox29.Controls.Add(this.label71);
             this.groupBox29.Controls.Add(this.pbEffectsPokemonCombobox);
             this.groupBox29.Controls.Add(this.pbEffectsVsPokemonListbox);
-            this.groupBox29.Location = new System.Drawing.Point(265, 270);
+            this.groupBox29.Location = new System.Drawing.Point(257, 265);
             this.groupBox29.Name = "groupBox29";
-            this.groupBox29.Size = new System.Drawing.Size(472, 164);
+            this.groupBox29.Size = new System.Drawing.Size(481, 174);
             this.groupBox29.TabIndex = 33;
             this.groupBox29.TabStop = false;
             this.groupBox29.Text = "VS. Pokémon";
             // 
             // tbEditorPokeminiPictureBox
             // 
-            this.tbEditorPokeminiPictureBox.Location = new System.Drawing.Point(303, 12);
+            this.tbEditorPokeminiPictureBox.Location = new System.Drawing.Point(297, 12);
             this.tbEditorPokeminiPictureBox.Name = "tbEditorPokeminiPictureBox";
             this.tbEditorPokeminiPictureBox.Size = new System.Drawing.Size(40, 30);
             this.tbEditorPokeminiPictureBox.TabIndex = 43;
@@ -9352,7 +9352,7 @@
             // label69
             // 
             this.label69.AutoSize = true;
-            this.label69.Location = new System.Drawing.Point(252, 80);
+            this.label69.Location = new System.Drawing.Point(249, 80);
             this.label69.Name = "label69";
             this.label69.Size = new System.Drawing.Size(124, 13);
             this.label69.TabIndex = 42;
@@ -9362,15 +9362,15 @@
             // 
             this.pbEffectsPokemonChooseMainCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.pbEffectsPokemonChooseMainCombobox.FormattingEnabled = true;
-            this.pbEffectsPokemonChooseMainCombobox.Location = new System.Drawing.Point(255, 96);
+            this.pbEffectsPokemonChooseMainCombobox.Location = new System.Drawing.Point(252, 96);
             this.pbEffectsPokemonChooseMainCombobox.Name = "pbEffectsPokemonChooseMainCombobox";
-            this.pbEffectsPokemonChooseMainCombobox.Size = new System.Drawing.Size(205, 21);
+            this.pbEffectsPokemonChooseMainCombobox.Size = new System.Drawing.Size(218, 21);
             this.pbEffectsPokemonChooseMainCombobox.TabIndex = 41;
             // 
             // HOWvsPokemonButton
             // 
             this.HOWvsPokemonButton.Image = global::DSPRE.Properties.Resources.questionMark;
-            this.HOWvsPokemonButton.Location = new System.Drawing.Point(307, 127);
+            this.HOWvsPokemonButton.Location = new System.Drawing.Point(304, 127);
             this.HOWvsPokemonButton.Name = "HOWvsPokemonButton";
             this.HOWvsPokemonButton.Size = new System.Drawing.Size(28, 29);
             this.HOWvsPokemonButton.TabIndex = 39;
@@ -9381,7 +9381,7 @@
             // 
             this.saveVSPokemonTableBTN.Image = global::DSPRE.Properties.Resources.saveButton;
             this.saveVSPokemonTableBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.saveVSPokemonTableBTN.Location = new System.Drawing.Point(340, 123);
+            this.saveVSPokemonTableBTN.Location = new System.Drawing.Point(337, 123);
             this.saveVSPokemonTableBTN.Name = "saveVSPokemonTableBTN";
             this.saveVSPokemonTableBTN.Size = new System.Drawing.Size(80, 37);
             this.saveVSPokemonTableBTN.TabIndex = 38;
@@ -9393,7 +9393,7 @@
             // label71
             // 
             this.label71.AutoSize = true;
-            this.label71.Location = new System.Drawing.Point(252, 29);
+            this.label71.Location = new System.Drawing.Point(249, 29);
             this.label71.Name = "label71";
             this.label71.Size = new System.Drawing.Size(52, 13);
             this.label71.TabIndex = 37;
@@ -9403,25 +9403,25 @@
             // 
             this.pbEffectsPokemonCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.pbEffectsPokemonCombobox.FormattingEnabled = true;
-            this.pbEffectsPokemonCombobox.Location = new System.Drawing.Point(255, 45);
+            this.pbEffectsPokemonCombobox.Location = new System.Drawing.Point(252, 45);
             this.pbEffectsPokemonCombobox.Name = "pbEffectsPokemonCombobox";
-            this.pbEffectsPokemonCombobox.Size = new System.Drawing.Size(205, 21);
+            this.pbEffectsPokemonCombobox.Size = new System.Drawing.Size(218, 21);
             this.pbEffectsPokemonCombobox.TabIndex = 36;
             this.pbEffectsPokemonCombobox.SelectedIndexChanged += new System.EventHandler(this.pbEffectsPokemonCombobox_SelectedIndexChanged);
             // 
             // pbEffectsVsPokemonListbox
             // 
             this.pbEffectsVsPokemonListbox.FormattingEnabled = true;
-            this.pbEffectsVsPokemonListbox.Location = new System.Drawing.Point(11, 21);
+            this.pbEffectsVsPokemonListbox.Location = new System.Drawing.Point(9, 17);
             this.pbEffectsVsPokemonListbox.Name = "pbEffectsVsPokemonListbox";
-            this.pbEffectsVsPokemonListbox.Size = new System.Drawing.Size(234, 134);
+            this.pbEffectsVsPokemonListbox.Size = new System.Drawing.Size(234, 147);
             this.pbEffectsVsPokemonListbox.TabIndex = 35;
             this.pbEffectsVsPokemonListbox.SelectedIndexChanged += new System.EventHandler(this.pbEffectsVsPokemonListbox_SelectedIndexChanged);
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(76, 389);
+            this.label22.Location = new System.Drawing.Point(72, 389);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(70, 13);
             this.label22.TabIndex = 32;
@@ -9429,7 +9429,7 @@
             // 
             // pbEffectsVSAnimationUpDown
             // 
-            this.pbEffectsVSAnimationUpDown.Location = new System.Drawing.Point(81, 405);
+            this.pbEffectsVSAnimationUpDown.Location = new System.Drawing.Point(77, 405);
             this.pbEffectsVSAnimationUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -9442,7 +9442,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(6, 390);
+            this.label21.Location = new System.Drawing.Point(5, 390);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(66, 13);
             this.label21.TabIndex = 30;
@@ -9676,15 +9676,22 @@
             // openROMToolStripMenuItem
             // 
             this.openROMToolStripMenuItem.Name = "openROMToolStripMenuItem";
-            this.openROMToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openROMToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.openROMToolStripMenuItem.Text = "Open ROM";
             this.openROMToolStripMenuItem.Click += new System.EventHandler(this.loadRom_Click);
+            // 
+            // openFolderToolStripMenuItem
+            // 
+            this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.openFolderToolStripMenuItem.Text = "Open Folder";
+            this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.readDataFromFolderButton_Click);
             // 
             // saveROMToolStripMenuItem
             // 
             this.saveROMToolStripMenuItem.Enabled = false;
             this.saveROMToolStripMenuItem.Name = "saveROMToolStripMenuItem";
-            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.saveROMToolStripMenuItem.Text = "Save ROM";
             this.saveROMToolStripMenuItem.Click += new System.EventHandler(this.saveRom_Click);
             // 
@@ -10033,13 +10040,6 @@
             this.versionLabel.Size = new System.Drawing.Size(35, 13);
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
-            // 
-            // openFolderToolStripMenuItem
-            // 
-            this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openFolderToolStripMenuItem.Text = "Open Folder";
-            this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.readDataFromFolderButton_Click);
             // 
             // MainProgram
             // 
