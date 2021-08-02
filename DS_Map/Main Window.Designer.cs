@@ -2359,6 +2359,7 @@
             this.flag0CheckBox.TabIndex = 31;
             this.flag0CheckBox.Text = "Bicycle";
             this.flag0CheckBox.UseVisualStyleBackColor = true;
+            this.flag0CheckBox.CheckedChanged += new System.EventHandler(this.headerFlagsCheckBoxes_CheckedChanged);
             // 
             // flag6CheckBox
             // 
