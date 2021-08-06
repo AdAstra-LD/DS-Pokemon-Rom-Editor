@@ -199,7 +199,7 @@ namespace DSPRE {
 
         public void SetupScriptEditor() {
             cmdKeyWords = String.Join(" ", ScriptCommandNamesDict.Values);
-            cmdKeyWords += String.Join(" ", PokeDatabase.ScriptEditor.movementsDictIDName.Values);
+            cmdKeyWords += " " + String.Join(" ", PokeDatabase.ScriptEditor.movementsDictIDName.Values);
             comparisonOperatorsKeyWords = String.Join(" ", PokeDatabase.ScriptEditor.comparisonOperatorsDict.Values);
             SetupScriptEditorTabs();
             /* Extract essential NARCs sub-archives*/
