@@ -60,8 +60,8 @@ namespace DSPRE.ROMFiles {
                     byte param = parametersList[0][0];
                     name += " " + param.ToString("X") + " " + "Function_#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
                     break;
-                case 0x1C:      // Jump-If
-                case 0x1D:      // Call-If
+                case 0x1C:      // CondJump
+                case 0x1D:      // CondCall
                     byte opcode = parametersList[0][0];
                     name += " " + PokeDatabase.ScriptEditor.comparisonOperatorsDict[opcode] + " " + "Function_#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
                     break;

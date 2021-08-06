@@ -283,6 +283,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap compressArrow {
+            get {
+                object obj = ResourceManager.GetObject("compressArrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap copyIcon {
             get {
                 object obj = ResourceManager.GetObject("copyIcon", resourceCulture);
@@ -686,6 +696,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap dpthunderstorm1 {
             get {
                 object obj = ResourceManager.GetObject("dpthunderstorm1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap expandArrow {
+            get {
+                object obj = ResourceManager.GetObject("expandArrow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1116,6 +1136,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap LeftClick {
             get {
                 object obj = ResourceManager.GetObject("LeftClick", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap lens {
+            get {
+                object obj = ResourceManager.GetObject("lens", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

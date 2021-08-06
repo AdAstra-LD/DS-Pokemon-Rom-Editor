@@ -32,21 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
             this.removeLastHeaderBTN = new System.Windows.Forms.Button();
@@ -179,22 +164,19 @@
             this.removeHeadersButton = new System.Windows.Forms.Button();
             this.addHeightsButton = new System.Windows.Forms.Button();
             this.addHeadersButton = new System.Windows.Forms.Button();
-            this.saveMatrixButton = new System.Windows.Forms.Button();
             this.labelMatrices = new System.Windows.Forms.Label();
             this.matrixNameLabel = new System.Windows.Forms.Label();
             this.matrixTabControl = new System.Windows.Forms.TabControl();
             this.headersTabPage = new System.Windows.Forms.TabPage();
-            this.headersGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.heightsTabPage = new System.Windows.Forms.TabPage();
-            this.heightsGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.mapFilesTabPage = new System.Windows.Forms.TabPage();
-            this.mapFilesGridView = new DSPRE.DataGridViewDoubleBuffered();
             this.matrixNameTextBox = new System.Windows.Forms.TextBox();
             this.heightUpDown = new System.Windows.Forms.NumericUpDown();
             this.widthUpDown = new System.Windows.Forms.NumericUpDown();
             this.heightLabel = new System.Windows.Forms.Label();
             this.widthLabel = new System.Windows.Forms.Label();
             this.selectMatrixComboBox = new System.Windows.Forms.ComboBox();
+            this.saveMatrixButton = new System.Windows.Forms.Button();
             this.mapEditorTabPage = new System.Windows.Forms.TabPage();
             this.mapScreenshotButton = new System.Windows.Forms.Button();
             this.exportCurrentMapBinButton = new System.Windows.Forms.Button();
@@ -204,7 +186,6 @@
             this.mapRenderPanel = new System.Windows.Forms.Panel();
             this.mapOpenGlControl = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.movPictureBox = new System.Windows.Forms.PictureBox();
-            this.saveMapButton = new System.Windows.Forms.Button();
             this.label26 = new System.Windows.Forms.Label();
             this.buildTextureComboBox = new System.Windows.Forms.ComboBox();
             this.mapFileLabel = new System.Windows.Forms.Label();
@@ -261,12 +242,12 @@
             this.collisionGroupBox = new System.Windows.Forms.GroupBox();
             this.collisionPainterComboBox = new System.Windows.Forms.ComboBox();
             this.collisionPainterPictureBox = new System.Windows.Forms.PictureBox();
-            this.ImportMovButton = new System.Windows.Forms.Button();
-            this.exportMovButton = new System.Windows.Forms.Button();
             this.selectCollisionPanel = new System.Windows.Forms.Panel();
             this.collisionPictureBox = new System.Windows.Forms.PictureBox();
             this.selectTypePanel = new System.Windows.Forms.Panel();
             this.typePictureBox = new System.Windows.Forms.PictureBox();
+            this.ImportMovButton = new System.Windows.Forms.Button();
+            this.exportMovButton = new System.Windows.Forms.Button();
             this.modelTabPage = new System.Windows.Forms.TabPage();
             this.embedTexturesInMapModelCheckBox = new System.Windows.Forms.CheckBox();
             this.ModelSizeTXT = new System.Windows.Forms.TextBox();
@@ -290,6 +271,7 @@
             this.radio3D = new System.Windows.Forms.RadioButton();
             this.radio2D = new System.Windows.Forms.RadioButton();
             this.wireframeCheckBox = new System.Windows.Forms.CheckBox();
+            this.saveMapButton = new System.Windows.Forms.Button();
             this.nsbtxEditorTabPage = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.removeNSBTXButton = new System.Windows.Forms.Button();
@@ -331,13 +313,8 @@
             this.eventAreaDataUpDown = new System.Windows.Forms.NumericUpDown();
             this.eventMapTextureLabel = new System.Windows.Forms.Label();
             this.RightClickLabel = new System.Windows.Forms.Label();
-            this.rightClickPicture = new System.Windows.Forms.PictureBox();
             this.WheelClickLabel = new System.Windows.Forms.Label();
             this.LeftClickLabel = new System.Windows.Forms.Label();
-            this.wheelClickPicture = new System.Windows.Forms.PictureBox();
-            this.LeftClickPicture = new System.Windows.Forms.PictureBox();
-            this.removeEventFileButton = new System.Windows.Forms.Button();
-            this.addEventFileButton = new System.Windows.Forms.Button();
             this.eventMatrixYUpDown = new System.Windows.Forms.NumericUpDown();
             this.eventMatrixXUpDown = new System.Windows.Forms.NumericUpDown();
             this.eventMatrixYLabel = new System.Windows.Forms.Label();
@@ -345,14 +322,7 @@
             this.matrixNavigatorLabel = new System.Windows.Forms.Label();
             this.eventMatrixPanel = new System.Windows.Forms.Panel();
             this.eventMatrixPictureBox = new System.Windows.Forms.PictureBox();
-            this.eventShiftRightButton = new System.Windows.Forms.Button();
-            this.eventShiftLeftButton = new System.Windows.Forms.Button();
-            this.eventShiftUpButton = new System.Windows.Forms.Button();
-            this.eventShiftDownButton = new System.Windows.Forms.Button();
             this.selectEventComboBox = new System.Windows.Forms.ComboBox();
-            this.exportEventFileButton = new System.Windows.Forms.Button();
-            this.importEventFileButton = new System.Windows.Forms.Button();
-            this.saveEventsButton = new System.Windows.Forms.Button();
             this.backgroundMapLabel = new System.Windows.Forms.Label();
             this.eventMatrixUpDown = new System.Windows.Forms.NumericUpDown();
             this.eventsTabControl = new System.Windows.Forms.TabControl();
@@ -385,14 +355,12 @@
             this.isTrainerRadioButton = new System.Windows.Forms.RadioButton();
             this.isItemRadioButton = new System.Windows.Forms.RadioButton();
             this.spriteIDlabel = new System.Windows.Forms.Label();
-            this.duplicateOverworldsButton = new System.Windows.Forms.Button();
             this.groupBox17 = new System.Windows.Forms.GroupBox();
             this.button14 = new System.Windows.Forms.Button();
             this.owYMatrixUpDown = new System.Windows.Forms.NumericUpDown();
             this.label12 = new System.Windows.Forms.Label();
             this.owXMatrixUpDown = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
-            this.owSpritePictureBox = new System.Windows.Forms.PictureBox();
             this.owMovementGroupBox = new System.Windows.Forms.GroupBox();
             this.groupBox23 = new System.Windows.Forms.GroupBox();
             this.label39 = new System.Windows.Forms.Label();
@@ -425,6 +393,8 @@
             this.owSpriteComboBox = new System.Windows.Forms.ComboBox();
             this.owIDLabel = new System.Windows.Forms.Label();
             this.owIDNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.duplicateOverworldsButton = new System.Windows.Forms.Button();
+            this.owSpritePictureBox = new System.Windows.Forms.PictureBox();
             this.removeOverworldButton = new System.Windows.Forms.Button();
             this.addOverworldButton = new System.Windows.Forms.Button();
             this.overworldsListBox = new System.Windows.Forms.ListBox();
@@ -461,7 +431,6 @@
             this.label28 = new System.Windows.Forms.Label();
             this.triggerScriptUpDown = new System.Windows.Forms.NumericUpDown();
             this.label27 = new System.Windows.Forms.Label();
-            this.duplicateTriggersButton = new System.Windows.Forms.Button();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
             this.triggerLengthLabel = new System.Windows.Forms.Label();
             this.triggerLengthUpDown = new System.Windows.Forms.NumericUpDown();
@@ -480,13 +449,31 @@
             this.triggerXMatrixUpDown = new System.Windows.Forms.NumericUpDown();
             this.triggerXMatrixLabel = new System.Windows.Forms.Label();
             this.triggerYMatrixUpDown = new System.Windows.Forms.NumericUpDown();
+            this.duplicateTriggersButton = new System.Windows.Forms.Button();
             this.removeTriggerButton = new System.Windows.Forms.Button();
             this.addTriggerButton = new System.Windows.Forms.Button();
             this.triggersListBox = new System.Windows.Forms.ListBox();
             this.eventPanel = new System.Windows.Forms.Panel();
             this.eventPictureBox = new System.Windows.Forms.PictureBox();
             this.eventOpenGlControl = new Tao.Platform.Windows.SimpleOpenGlControl();
-            this.scriptEditorTabPage = new System.Windows.Forms.TabPage();
+            this.rightClickPicture = new System.Windows.Forms.PictureBox();
+            this.wheelClickPicture = new System.Windows.Forms.PictureBox();
+            this.LeftClickPicture = new System.Windows.Forms.PictureBox();
+            this.removeEventFileButton = new System.Windows.Forms.Button();
+            this.addEventFileButton = new System.Windows.Forms.Button();
+            this.eventShiftRightButton = new System.Windows.Forms.Button();
+            this.eventShiftLeftButton = new System.Windows.Forms.Button();
+            this.eventShiftUpButton = new System.Windows.Forms.Button();
+            this.eventShiftDownButton = new System.Windows.Forms.Button();
+            this.exportEventFileButton = new System.Windows.Forms.Button();
+            this.importEventFileButton = new System.Windows.Forms.Button();
+            this.saveEventsButton = new System.Windows.Forms.Button();
+            this.scriptTabPage = new System.Windows.Forms.TabPage();
+            this.compressScriptTextButton = new System.Windows.Forms.Button();
+            this.expandScriptTextButton = new System.Windows.Forms.Button();
+            this.findScriptTextButton = new System.Windows.Forms.Button();
+            this.scriptEditorWhitespacesCheckbox = new System.Windows.Forms.CheckBox();
+            this.scriptEditorWordWrapCheckbox = new System.Windows.Forms.CheckBox();
             this.groupBox24 = new System.Windows.Forms.GroupBox();
             this.SyncNavigatorCB = new System.Windows.Forms.CheckBox();
             this.ScriptNavigatorTabControl = new System.Windows.Forms.TabControl();
@@ -514,14 +501,26 @@
             this.addScriptFileButton = new System.Windows.Forms.Button();
             this.scriptEditorTabControl = new System.Windows.Forms.TabControl();
             this.scriptsTabPage = new System.Windows.Forms.TabPage();
-            this.scriptTextBox = new System.Windows.Forms.RichTextBox();
-            this.LineNumberTextBoxScript = new System.Windows.Forms.RichTextBox();
+            this.PanelSearchScripts = new System.Windows.Forms.Panel();
+            this.BtnNextSearchScript = new System.Windows.Forms.Button();
+            this.BtnPrevSearchScript = new System.Windows.Forms.Button();
+            this.BtnCloseSearchScript = new System.Windows.Forms.Button();
+            this.panelSearchScriptTextBox = new System.Windows.Forms.TextBox();
+            this.scintillaScriptsPanel = new System.Windows.Forms.Panel();
             this.functionTabPage = new System.Windows.Forms.TabPage();
-            this.functionTextBox = new System.Windows.Forms.RichTextBox();
-            this.LineNumberTextBoxFunc = new System.Windows.Forms.RichTextBox();
+            this.PanelSearchFunctions = new System.Windows.Forms.Panel();
+            this.BtnNextSearchFunc = new System.Windows.Forms.Button();
+            this.BtnPrevSearchFunc = new System.Windows.Forms.Button();
+            this.BtnCloseSearchFunc = new System.Windows.Forms.Button();
+            this.panelSearchFunctionTextBox = new System.Windows.Forms.TextBox();
+            this.scintillaFunctionsPanel = new System.Windows.Forms.Panel();
             this.movementTabPage = new System.Windows.Forms.TabPage();
-            this.actionsTextBox = new System.Windows.Forms.RichTextBox();
-            this.LineNumberTextBoxMov = new System.Windows.Forms.RichTextBox();
+            this.PanelSearchActions = new System.Windows.Forms.Panel();
+            this.BtnNextSearchActions = new System.Windows.Forms.Button();
+            this.BtnPrevSearchActions = new System.Windows.Forms.Button();
+            this.BtnCloseSearchActions = new System.Windows.Forms.Button();
+            this.panelSearchActionTextBox = new System.Windows.Forms.TextBox();
+            this.scintillaActionsPanel = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.selectScriptFileComboBox = new System.Windows.Forms.ComboBox();
             this.textEditorTabPage = new System.Windows.Forms.TabPage();
@@ -542,17 +541,17 @@
             this.searchMessageTextBox = new System.Windows.Forms.TextBox();
             this.searchMessageButton = new System.Windows.Forms.Button();
             this.replaceMessageButton = new System.Windows.Forms.Button();
-            this.removeStringButton = new System.Windows.Forms.Button();
-            this.addStringButton = new System.Windows.Forms.Button();
             this.textEditorDataGridView = new System.Windows.Forms.DataGridView();
             this.messageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label6 = new System.Windows.Forms.Label();
+            this.selectTextFileComboBox = new System.Windows.Forms.ComboBox();
+            this.removeStringButton = new System.Windows.Forms.Button();
+            this.addStringButton = new System.Windows.Forms.Button();
             this.exportTextFileButton = new System.Windows.Forms.Button();
             this.importTextFileButton = new System.Windows.Forms.Button();
             this.saveTextArchiveButton = new System.Windows.Forms.Button();
             this.removeMessageFileButton = new System.Windows.Forms.Button();
             this.addTextArchiveButton = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.selectTextFileComboBox = new System.Windows.Forms.ComboBox();
             this.cameraEditorTabPage = new System.Windows.Forms.TabPage();
             this.exportCameraTableButton = new System.Windows.Forms.Button();
             this.importCameraTableButton = new System.Windows.Forms.Button();
@@ -670,7 +669,6 @@
             this.partyItem1ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemon1PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon1ComboBox = new System.Windows.Forms.ComboBox();
-            this.trainerSaveCurrentButton = new System.Windows.Forms.Button();
             this.groupBox27 = new System.Windows.Forms.GroupBox();
             this.label73 = new System.Windows.Forms.Label();
             this.encounterSSEQAltUpDown = new System.Windows.Forms.NumericUpDown();
@@ -712,6 +710,7 @@
             this.trainerClassListBox = new System.Windows.Forms.ListBox();
             this.label42 = new System.Windows.Forms.Label();
             this.trainerComboBox = new System.Windows.Forms.ComboBox();
+            this.trainerSaveCurrentButton = new System.Windows.Forms.Button();
             this.tableEditorTabPage = new System.Windows.Forms.TabPage();
             this.pbEffectsGroupBox = new System.Windows.Forms.GroupBox();
             this.HOWpbEffectsTableButton = new System.Windows.Forms.Button();
@@ -774,10 +773,10 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.loadRomButton = new System.Windows.Forms.ToolStripButton();
-            this.saveRomButton = new System.Windows.Forms.ToolStripButton();
             this.mainToolStrip = new System.Windows.Forms.ToolStrip();
+            this.loadRomButton = new System.Windows.Forms.ToolStripButton();
             this.readDataFromFolderButton = new System.Windows.Forms.ToolStripButton();
+            this.saveRomButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.unpackAllButton = new System.Windows.Forms.ToolStripButton();
             this.updateMapNarcsButton = new System.Windows.Forms.ToolStripButton();
@@ -826,12 +825,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.weatherPictureBox)).BeginInit();
             this.matrixEditorTabPage.SuspendLayout();
             this.matrixTabControl.SuspendLayout();
-            this.headersTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).BeginInit();
-            this.heightsTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).BeginInit();
-            this.mapFilesTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthUpDown)).BeginInit();
             this.mapEditorTabPage.SuspendLayout();
@@ -874,9 +867,6 @@
             this.eventEditorTabPage.SuspendLayout();
             this.groupBox21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventAreaDataUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rightClickPicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.wheelClickPicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LeftClickPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventMatrixYUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventMatrixXUpDown)).BeginInit();
             this.eventMatrixPanel.SuspendLayout();
@@ -896,7 +886,6 @@
             this.groupBox17.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.owYMatrixUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.owXMatrixUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.owSpritePictureBox)).BeginInit();
             this.owMovementGroupBox.SuspendLayout();
             this.groupBox23.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.owXRangeUpDown)).BeginInit();
@@ -910,6 +899,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.owScriptNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.owFlagNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.owIDNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.owSpritePictureBox)).BeginInit();
             this.warpsTabPage.SuspendLayout();
             this.groupBox11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.warpAnchorUpDown)).BeginInit();
@@ -939,7 +929,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.triggerYMatrixUpDown)).BeginInit();
             this.eventPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventPictureBox)).BeginInit();
-            this.scriptEditorTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightClickPicture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wheelClickPicture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LeftClickPicture)).BeginInit();
+            this.scriptTabPage.SuspendLayout();
             this.groupBox24.SuspendLayout();
             this.ScriptNavigatorTabControl.SuspendLayout();
             this.ScriptsNavTab.SuspendLayout();
@@ -948,8 +941,11 @@
             this.groupBox8.SuspendLayout();
             this.scriptEditorTabControl.SuspendLayout();
             this.scriptsTabPage.SuspendLayout();
+            this.PanelSearchScripts.SuspendLayout();
             this.functionTabPage.SuspendLayout();
+            this.PanelSearchFunctions.SuspendLayout();
             this.movementTabPage.SuspendLayout();
+            this.PanelSearchActions.SuspendLayout();
             this.textEditorTabPage.SuspendLayout();
             this.LineNumbersFormatgroupBox.SuspendLayout();
             this.groupBox13.SuspendLayout();
@@ -1029,7 +1025,7 @@
             this.mainTabControl.Controls.Add(this.mapEditorTabPage);
             this.mainTabControl.Controls.Add(this.nsbtxEditorTabPage);
             this.mainTabControl.Controls.Add(this.eventEditorTabPage);
-            this.mainTabControl.Controls.Add(this.scriptEditorTabPage);
+            this.mainTabControl.Controls.Add(this.scriptTabPage);
             this.mainTabControl.Controls.Add(this.textEditorTabPage);
             this.mainTabControl.Controls.Add(this.cameraEditorTabPage);
             this.mainTabControl.Controls.Add(this.trainerEditorTabPage);
@@ -1240,7 +1236,7 @@
             // 
             // importHeaderFromFileButton
             // 
-            this.importHeaderFromFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importHeaderFromFileButton.Image = ((System.Drawing.Image)(resources.GetObject("importHeaderFromFileButton.Image")));
             this.importHeaderFromFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importHeaderFromFileButton.Location = new System.Drawing.Point(912, 518);
             this.importHeaderFromFileButton.Name = "importHeaderFromFileButton";
@@ -1254,7 +1250,7 @@
             // 
             // exportHeaderToFileButton
             // 
-            this.exportHeaderToFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportHeaderToFileButton.Image = ((System.Drawing.Image)(resources.GetObject("exportHeaderToFileButton.Image")));
             this.exportHeaderToFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportHeaderToFileButton.Location = new System.Drawing.Point(992, 518);
             this.exportHeaderToFileButton.Name = "exportHeaderToFileButton";
@@ -2277,7 +2273,7 @@
             // pasteMapSettingsButton
             // 
             this.pasteMapSettingsButton.Enabled = false;
-            this.pasteMapSettingsButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.pasteMapSettingsButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteMapSettingsButton.Image")));
             this.pasteMapSettingsButton.Location = new System.Drawing.Point(239, 74);
             this.pasteMapSettingsButton.Name = "pasteMapSettingsButton";
             this.pasteMapSettingsButton.Size = new System.Drawing.Size(35, 37);
@@ -2444,7 +2440,6 @@
             this.matrixEditorTabPage.Controls.Add(this.removeHeadersButton);
             this.matrixEditorTabPage.Controls.Add(this.addHeightsButton);
             this.matrixEditorTabPage.Controls.Add(this.addHeadersButton);
-            this.matrixEditorTabPage.Controls.Add(this.saveMatrixButton);
             this.matrixEditorTabPage.Controls.Add(this.labelMatrices);
             this.matrixEditorTabPage.Controls.Add(this.matrixNameLabel);
             this.matrixEditorTabPage.Controls.Add(this.matrixTabControl);
@@ -2454,6 +2449,7 @@
             this.matrixEditorTabPage.Controls.Add(this.heightLabel);
             this.matrixEditorTabPage.Controls.Add(this.widthLabel);
             this.matrixEditorTabPage.Controls.Add(this.selectMatrixComboBox);
+            this.matrixEditorTabPage.Controls.Add(this.saveMatrixButton);
             this.matrixEditorTabPage.ImageIndex = 1;
             this.matrixEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.matrixEditorTabPage.Name = "matrixEditorTabPage";
@@ -2465,7 +2461,7 @@
             // setSpawnPointButton
             // 
             this.setSpawnPointButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
+            this.setSpawnPointButton.Image = ((System.Drawing.Image)(resources.GetObject("setSpawnPointButton.Image")));
             this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.setSpawnPointButton.Location = new System.Drawing.Point(11, 521);
@@ -2480,7 +2476,7 @@
             // 
             // resetColorTableButton
             // 
-            this.resetColorTableButton.Image = global::DSPRE.Properties.Resources.resetColorTable;
+            this.resetColorTableButton.Image = ((System.Drawing.Image)(resources.GetObject("resetColorTableButton.Image")));
             this.resetColorTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.resetColorTableButton.Location = new System.Drawing.Point(11, 446);
             this.resetColorTableButton.Name = "resetColorTableButton";
@@ -2493,7 +2489,7 @@
             // 
             // importColorTableButton
             // 
-            this.importColorTableButton.Image = global::DSPRE.Properties.Resources.loadColorTable;
+            this.importColorTableButton.Image = ((System.Drawing.Image)(resources.GetObject("importColorTableButton.Image")));
             this.importColorTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importColorTableButton.Location = new System.Drawing.Point(11, 479);
             this.importColorTableButton.Name = "importColorTableButton";
@@ -2506,7 +2502,7 @@
             // 
             // importMatrixButton
             // 
-            this.importMatrixButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("importMatrixButton.Image")));
             this.importMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importMatrixButton.Location = new System.Drawing.Point(11, 228);
             this.importMatrixButton.Name = "importMatrixButton";
@@ -2519,7 +2515,7 @@
             // 
             // exportMatrixButton
             // 
-            this.exportMatrixButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("exportMatrixButton.Image")));
             this.exportMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportMatrixButton.Location = new System.Drawing.Point(11, 197);
             this.exportMatrixButton.Name = "exportMatrixButton";
@@ -2532,7 +2528,7 @@
             // 
             // removeMatrixButton
             // 
-            this.removeMatrixButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("removeMatrixButton.Image")));
             this.removeMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeMatrixButton.Location = new System.Drawing.Point(64, 152);
             this.removeMatrixButton.Name = "removeMatrixButton";
@@ -2545,7 +2541,7 @@
             // 
             // addMatrixButton
             // 
-            this.addMatrixButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("addMatrixButton.Image")));
             this.addMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addMatrixButton.Location = new System.Drawing.Point(11, 152);
             this.addMatrixButton.Name = "addMatrixButton";
@@ -2596,21 +2592,6 @@
             this.addHeadersButton.UseVisualStyleBackColor = true;
             this.addHeadersButton.Click += new System.EventHandler(this.addHeaderSectionButton_Click);
             // 
-            // saveMatrixButton
-            // 
-            this.saveMatrixButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
-            this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.saveMatrixButton.Location = new System.Drawing.Point(11, 566);
-            this.saveMatrixButton.Name = "saveMatrixButton";
-            this.saveMatrixButton.Size = new System.Drawing.Size(117, 43);
-            this.saveMatrixButton.TabIndex = 22;
-            this.saveMatrixButton.Text = "Save Matrix";
-            this.saveMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.saveMatrixButton.UseVisualStyleBackColor = true;
-            this.saveMatrixButton.Click += new System.EventHandler(this.saveMatrixButton_Click);
-            // 
             // labelMatrices
             // 
             this.labelMatrices.AutoSize = true;
@@ -2648,7 +2629,6 @@
             // 
             // headersTabPage
             // 
-            this.headersTabPage.Controls.Add(this.headersGridView);
             this.headersTabPage.Location = new System.Drawing.Point(4, 22);
             this.headersTabPage.Name = "headersTabPage";
             this.headersTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -2657,64 +2637,8 @@
             this.headersTabPage.Text = "Map Headers";
             this.headersTabPage.UseVisualStyleBackColor = true;
             // 
-            // headersGridView
-            // 
-            this.headersGridView.AllowUserToAddRows = false;
-            this.headersGridView.AllowUserToDeleteRows = false;
-            this.headersGridView.AllowUserToResizeColumns = false;
-            this.headersGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.headersGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.Format = "D4";
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle3;
-            this.headersGridView.Location = new System.Drawing.Point(0, 0);
-            this.headersGridView.MultiSelect = false;
-            this.headersGridView.Name = "headersGridView";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.headersGridView.RowHeadersWidth = 50;
-            this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
-            this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.headersGridView.RowTemplate.Height = 18;
-            this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.headersGridView.ShowCellErrors = false;
-            this.headersGridView.Size = new System.Drawing.Size(1032, 576);
-            this.headersGridView.TabIndex = 1;
-            this.headersGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.headersGridView_CellFormatting);
-            this.headersGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.headersGridView_CellMouseDoubleClick);
-            this.headersGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.headersGridView_CellValueChanged);
-            this.headersGridView.SelectionChanged += new System.EventHandler(this.headersGridView_SelectionChanged);
-            // 
             // heightsTabPage
             // 
-            this.heightsTabPage.Controls.Add(this.heightsGridView);
             this.heightsTabPage.Location = new System.Drawing.Point(4, 22);
             this.heightsTabPage.Name = "heightsTabPage";
             this.heightsTabPage.Size = new System.Drawing.Size(1032, 576);
@@ -2722,122 +2646,14 @@
             this.heightsTabPage.Text = "Map Heights";
             this.heightsTabPage.UseVisualStyleBackColor = true;
             // 
-            // heightsGridView
-            // 
-            this.heightsGridView.AllowUserToAddRows = false;
-            this.heightsGridView.AllowUserToDeleteRows = false;
-            this.heightsGridView.AllowUserToResizeColumns = false;
-            this.heightsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
-            this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.Format = "D2";
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle8;
-            this.heightsGridView.Location = new System.Drawing.Point(0, 0);
-            this.heightsGridView.MultiSelect = false;
-            this.heightsGridView.Name = "heightsGridView";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
-            this.heightsGridView.RowHeadersWidth = 50;
-            this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
-            this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.RowTemplate.Height = 18;
-            this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.heightsGridView.Size = new System.Drawing.Size(1032, 576);
-            this.heightsGridView.TabIndex = 2;
-            this.heightsGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.heightsGridView_CellFormatting);
-            this.heightsGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.heightsGridView_CellValueChanged);
-            this.heightsGridView.SelectionChanged += new System.EventHandler(this.heightsGridView_SelectionChanged);
-            // 
             // mapFilesTabPage
             // 
-            this.mapFilesTabPage.Controls.Add(this.mapFilesGridView);
             this.mapFilesTabPage.Location = new System.Drawing.Point(4, 22);
             this.mapFilesTabPage.Name = "mapFilesTabPage";
             this.mapFilesTabPage.Size = new System.Drawing.Size(1032, 576);
             this.mapFilesTabPage.TabIndex = 3;
             this.mapFilesTabPage.Text = "Map Files";
             this.mapFilesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // mapFilesGridView
-            // 
-            this.mapFilesGridView.AllowUserToAddRows = false;
-            this.mapFilesGridView.AllowUserToDeleteRows = false;
-            this.mapFilesGridView.AllowUserToResizeColumns = false;
-            this.mapFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
-            this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
-            this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle13.Format = "D4";
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle13;
-            this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
-            this.mapFilesGridView.MultiSelect = false;
-            this.mapFilesGridView.Name = "mapFilesGridView";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
-            this.mapFilesGridView.RowHeadersWidth = 50;
-            this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
-            this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.RowTemplate.Height = 18;
-            this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.mapFilesGridView.Size = new System.Drawing.Size(1032, 576);
-            this.mapFilesGridView.TabIndex = 2;
-            this.mapFilesGridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellMouseDoubleClick);
-            this.mapFilesGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.mapFilesGridView_CellFormatting);
-            this.mapFilesGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellValueChanged);
-            this.mapFilesGridView.SelectionChanged += new System.EventHandler(this.mapFilesGridView_SelectionChanged);
             // 
             // matrixNameTextBox
             // 
@@ -2924,6 +2740,21 @@
             this.selectMatrixComboBox.TabIndex = 12;
             this.selectMatrixComboBox.SelectedIndexChanged += new System.EventHandler(this.selectMatrixComboBox_SelectedIndexChanged);
             // 
+            // saveMatrixButton
+            // 
+            this.saveMatrixButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.saveMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("saveMatrixButton.Image")));
+            this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.saveMatrixButton.Location = new System.Drawing.Point(11, 566);
+            this.saveMatrixButton.Name = "saveMatrixButton";
+            this.saveMatrixButton.Size = new System.Drawing.Size(117, 43);
+            this.saveMatrixButton.TabIndex = 22;
+            this.saveMatrixButton.Text = "Save Matrix";
+            this.saveMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.saveMatrixButton.UseVisualStyleBackColor = true;
+            this.saveMatrixButton.Click += new System.EventHandler(this.saveMatrixButton_Click);
+            // 
             // mapEditorTabPage
             // 
             this.mapEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
@@ -2933,7 +2764,6 @@
             this.mapEditorTabPage.Controls.Add(this.addMapFileButton);
             this.mapEditorTabPage.Controls.Add(this.removeMapFileButton);
             this.mapEditorTabPage.Controls.Add(this.mapRenderPanel);
-            this.mapEditorTabPage.Controls.Add(this.saveMapButton);
             this.mapEditorTabPage.Controls.Add(this.label26);
             this.mapEditorTabPage.Controls.Add(this.buildTextureComboBox);
             this.mapEditorTabPage.Controls.Add(this.mapFileLabel);
@@ -2944,6 +2774,7 @@
             this.mapEditorTabPage.Controls.Add(this.radio3D);
             this.mapEditorTabPage.Controls.Add(this.radio2D);
             this.mapEditorTabPage.Controls.Add(this.wireframeCheckBox);
+            this.mapEditorTabPage.Controls.Add(this.saveMapButton);
             this.mapEditorTabPage.ImageIndex = 2;
             this.mapEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.mapEditorTabPage.Name = "mapEditorTabPage";
@@ -2955,7 +2786,7 @@
             // 
             // mapScreenshotButton
             // 
-            this.mapScreenshotButton.Image = global::DSPRE.Properties.Resources.cameraIcon;
+            this.mapScreenshotButton.Image = ((System.Drawing.Image)(resources.GetObject("mapScreenshotButton.Image")));
             this.mapScreenshotButton.Location = new System.Drawing.Point(1135, 499);
             this.mapScreenshotButton.Name = "mapScreenshotButton";
             this.mapScreenshotButton.Size = new System.Drawing.Size(41, 40);
@@ -2966,7 +2797,7 @@
             // 
             // exportCurrentMapBinButton
             // 
-            this.exportCurrentMapBinButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportCurrentMapBinButton.Image = ((System.Drawing.Image)(resources.GetObject("exportCurrentMapBinButton.Image")));
             this.exportCurrentMapBinButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportCurrentMapBinButton.Location = new System.Drawing.Point(337, 530);
             this.exportCurrentMapBinButton.Name = "exportCurrentMapBinButton";
@@ -2979,7 +2810,7 @@
             // 
             // replaceMapBinButton
             // 
-            this.replaceMapBinButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.replaceMapBinButton.Image = ((System.Drawing.Image)(resources.GetObject("replaceMapBinButton.Image")));
             this.replaceMapBinButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.replaceMapBinButton.Location = new System.Drawing.Point(250, 530);
             this.replaceMapBinButton.Name = "replaceMapBinButton";
@@ -2992,7 +2823,7 @@
             // 
             // addMapFileButton
             // 
-            this.addMapFileButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addMapFileButton.Image = ((System.Drawing.Image)(resources.GetObject("addMapFileButton.Image")));
             this.addMapFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addMapFileButton.Location = new System.Drawing.Point(250, 487);
             this.addMapFileButton.Name = "addMapFileButton";
@@ -3005,7 +2836,7 @@
             // 
             // removeMapFileButton
             // 
-            this.removeMapFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeMapFileButton.Image = ((System.Drawing.Image)(resources.GetObject("removeMapFileButton.Image")));
             this.removeMapFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeMapFileButton.Location = new System.Drawing.Point(337, 487);
             this.removeMapFileButton.Name = "removeMapFileButton";
@@ -3056,19 +2887,6 @@
             this.movPictureBox.TabStop = false;
             this.movPictureBox.Click += new System.EventHandler(this.movPictureBox_Click);
             this.movPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.movPictureBox_MouseMove);
-            // 
-            // saveMapButton
-            // 
-            this.saveMapButton.Image = global::DSPRE.Properties.Resources.save_rom;
-            this.saveMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveMapButton.Location = new System.Drawing.Point(250, 573);
-            this.saveMapButton.Name = "saveMapButton";
-            this.saveMapButton.Size = new System.Drawing.Size(171, 40);
-            this.saveMapButton.TabIndex = 34;
-            this.saveMapButton.Text = "Save This Map";
-            this.saveMapButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.saveMapButton.UseVisualStyleBackColor = true;
-            this.saveMapButton.Click += new System.EventHandler(this.saveMapButton_Click);
             // 
             // label26
             // 
@@ -3298,7 +3116,7 @@
             // 
             this.bldPlaceWithMouseCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
             this.bldPlaceWithMouseCheckbox.Enabled = false;
-            this.bldPlaceWithMouseCheckbox.Image = global::DSPRE.Properties.Resources.selectBldWithMouse;
+            this.bldPlaceWithMouseCheckbox.Image = ((System.Drawing.Image)(resources.GetObject("bldPlaceWithMouseCheckbox.Image")));
             this.bldPlaceWithMouseCheckbox.Location = new System.Drawing.Point(200, 270);
             this.bldPlaceWithMouseCheckbox.Name = "bldPlaceWithMouseCheckbox";
             this.bldPlaceWithMouseCheckbox.Size = new System.Drawing.Size(38, 40);
@@ -3429,7 +3247,7 @@
             // 
             // duplicateBuildingButton
             // 
-            this.duplicateBuildingButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
+            this.duplicateBuildingButton.Image = ((System.Drawing.Image)(resources.GetObject("duplicateBuildingButton.Image")));
             this.duplicateBuildingButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.duplicateBuildingButton.Location = new System.Drawing.Point(251, 407);
             this.duplicateBuildingButton.Name = "duplicateBuildingButton";
@@ -3442,7 +3260,7 @@
             // 
             // importBuildingsButton
             // 
-            this.importBuildingsButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importBuildingsButton.Image = ((System.Drawing.Image)(resources.GetObject("importBuildingsButton.Image")));
             this.importBuildingsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importBuildingsButton.Location = new System.Drawing.Point(300, 13);
             this.importBuildingsButton.Name = "importBuildingsButton";
@@ -3455,7 +3273,7 @@
             // 
             // exportBuildingsButton
             // 
-            this.exportBuildingsButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportBuildingsButton.Image = ((System.Drawing.Image)(resources.GetObject("exportBuildingsButton.Image")));
             this.exportBuildingsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportBuildingsButton.Location = new System.Drawing.Point(194, 13);
             this.exportBuildingsButton.Name = "exportBuildingsButton";
@@ -3468,7 +3286,7 @@
             // 
             // removeBuildingButton
             // 
-            this.removeBuildingButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeBuildingButton.Image = ((System.Drawing.Image)(resources.GetObject("removeBuildingButton.Image")));
             this.removeBuildingButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeBuildingButton.Location = new System.Drawing.Point(332, 407);
             this.removeBuildingButton.Name = "removeBuildingButton";
@@ -3481,7 +3299,7 @@
             // 
             // addBuildingButton
             // 
-            this.addBuildingButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addBuildingButton.Image = ((System.Drawing.Image)(resources.GetObject("addBuildingButton.Image")));
             this.addBuildingButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addBuildingButton.Location = new System.Drawing.Point(194, 407);
             this.addBuildingButton.Name = "addBuildingButton";
@@ -3613,10 +3431,10 @@
             this.permissionsTabPage.Controls.Add(this.collisionLabel);
             this.permissionsTabPage.Controls.Add(this.typeGroupBox);
             this.permissionsTabPage.Controls.Add(this.collisionGroupBox);
-            this.permissionsTabPage.Controls.Add(this.ImportMovButton);
-            this.permissionsTabPage.Controls.Add(this.exportMovButton);
             this.permissionsTabPage.Controls.Add(this.selectCollisionPanel);
             this.permissionsTabPage.Controls.Add(this.selectTypePanel);
+            this.permissionsTabPage.Controls.Add(this.ImportMovButton);
+            this.permissionsTabPage.Controls.Add(this.exportMovButton);
             this.permissionsTabPage.Location = new System.Drawing.Point(4, 22);
             this.permissionsTabPage.Name = "permissionsTabPage";
             this.permissionsTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -3762,32 +3580,6 @@
             this.collisionPainterPictureBox.TabIndex = 0;
             this.collisionPainterPictureBox.TabStop = false;
             // 
-            // ImportMovButton
-            // 
-            this.ImportMovButton.Image = global::DSPRE.Properties.Resources.importArrow;
-            this.ImportMovButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ImportMovButton.Location = new System.Drawing.Point(250, 36);
-            this.ImportMovButton.Name = "ImportMovButton";
-            this.ImportMovButton.Size = new System.Drawing.Size(138, 38);
-            this.ImportMovButton.TabIndex = 23;
-            this.ImportMovButton.Text = "Import Permissions";
-            this.ImportMovButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ImportMovButton.UseVisualStyleBackColor = true;
-            this.ImportMovButton.Click += new System.EventHandler(this.importMovButton_Click);
-            // 
-            // exportMovButton
-            // 
-            this.exportMovButton.Image = global::DSPRE.Properties.Resources.exportArrow;
-            this.exportMovButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportMovButton.Location = new System.Drawing.Point(250, 80);
-            this.exportMovButton.Name = "exportMovButton";
-            this.exportMovButton.Size = new System.Drawing.Size(138, 38);
-            this.exportMovButton.TabIndex = 22;
-            this.exportMovButton.Text = "Export Permissions";
-            this.exportMovButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportMovButton.UseVisualStyleBackColor = true;
-            this.exportMovButton.Click += new System.EventHandler(this.exportMovButton_Click);
-            // 
             // selectCollisionPanel
             // 
             this.selectCollisionPanel.Controls.Add(this.collisionPictureBox);
@@ -3825,6 +3617,32 @@
             this.typePictureBox.TabIndex = 27;
             this.typePictureBox.TabStop = false;
             this.typePictureBox.Click += new System.EventHandler(this.typePictureBox_Click);
+            // 
+            // ImportMovButton
+            // 
+            this.ImportMovButton.Image = ((System.Drawing.Image)(resources.GetObject("ImportMovButton.Image")));
+            this.ImportMovButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ImportMovButton.Location = new System.Drawing.Point(250, 36);
+            this.ImportMovButton.Name = "ImportMovButton";
+            this.ImportMovButton.Size = new System.Drawing.Size(138, 38);
+            this.ImportMovButton.TabIndex = 23;
+            this.ImportMovButton.Text = "Import Permissions";
+            this.ImportMovButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ImportMovButton.UseVisualStyleBackColor = true;
+            this.ImportMovButton.Click += new System.EventHandler(this.importMovButton_Click);
+            // 
+            // exportMovButton
+            // 
+            this.exportMovButton.Image = ((System.Drawing.Image)(resources.GetObject("exportMovButton.Image")));
+            this.exportMovButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.exportMovButton.Location = new System.Drawing.Point(250, 80);
+            this.exportMovButton.Name = "exportMovButton";
+            this.exportMovButton.Size = new System.Drawing.Size(138, 38);
+            this.exportMovButton.TabIndex = 22;
+            this.exportMovButton.Text = "Export Permissions";
+            this.exportMovButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.exportMovButton.UseVisualStyleBackColor = true;
+            this.exportMovButton.Click += new System.EventHandler(this.exportMovButton_Click);
             // 
             // modelTabPage
             // 
@@ -3906,7 +3724,7 @@
             // 
             // importMapButton
             // 
-            this.importMapButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importMapButton.Image = ((System.Drawing.Image)(resources.GetObject("importMapButton.Image")));
             this.importMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importMapButton.Location = new System.Drawing.Point(277, 9);
             this.importMapButton.Name = "importMapButton";
@@ -3919,7 +3737,7 @@
             // 
             // exportMapButton
             // 
-            this.exportMapButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportMapButton.Image = ((System.Drawing.Image)(resources.GetObject("exportMapButton.Image")));
             this.exportMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportMapButton.Location = new System.Drawing.Point(277, 54);
             this.exportMapButton.Name = "exportMapButton";
@@ -3997,7 +3815,7 @@
             // 
             // bdhcImportButton
             // 
-            this.bdhcImportButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.bdhcImportButton.Image = ((System.Drawing.Image)(resources.GetObject("bdhcImportButton.Image")));
             this.bdhcImportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bdhcImportButton.Location = new System.Drawing.Point(277, 9);
             this.bdhcImportButton.Name = "bdhcImportButton";
@@ -4010,7 +3828,7 @@
             // 
             // bdhcExportButton
             // 
-            this.bdhcExportButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.bdhcExportButton.Image = ((System.Drawing.Image)(resources.GetObject("bdhcExportButton.Image")));
             this.bdhcExportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bdhcExportButton.Location = new System.Drawing.Point(277, 54);
             this.bdhcExportButton.Name = "bdhcExportButton";
@@ -4038,7 +3856,7 @@
             // 
             // blankBGSButton
             // 
-            this.blankBGSButton.Image = global::DSPRE.Properties.Resources.destroyLevelScript;
+            this.blankBGSButton.Image = ((System.Drawing.Image)(resources.GetObject("blankBGSButton.Image")));
             this.blankBGSButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.blankBGSButton.Location = new System.Drawing.Point(277, 109);
             this.blankBGSButton.Name = "blankBGSButton";
@@ -4101,7 +3919,7 @@
             // 
             // soundPlatesImportButton
             // 
-            this.soundPlatesImportButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.soundPlatesImportButton.Image = ((System.Drawing.Image)(resources.GetObject("soundPlatesImportButton.Image")));
             this.soundPlatesImportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.soundPlatesImportButton.Location = new System.Drawing.Point(277, 9);
             this.soundPlatesImportButton.Name = "soundPlatesImportButton";
@@ -4114,7 +3932,7 @@
             // 
             // soundPlatesExportButton
             // 
-            this.soundPlatesExportButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.soundPlatesExportButton.Image = ((System.Drawing.Image)(resources.GetObject("soundPlatesExportButton.Image")));
             this.soundPlatesExportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.soundPlatesExportButton.Location = new System.Drawing.Point(277, 54);
             this.soundPlatesExportButton.Name = "soundPlatesExportButton";
@@ -4170,6 +3988,19 @@
             this.wireframeCheckBox.UseVisualStyleBackColor = true;
             this.wireframeCheckBox.CheckedChanged += new System.EventHandler(this.wireframeCheckBox_CheckedChanged);
             // 
+            // saveMapButton
+            // 
+            this.saveMapButton.Image = ((System.Drawing.Image)(resources.GetObject("saveMapButton.Image")));
+            this.saveMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.saveMapButton.Location = new System.Drawing.Point(250, 573);
+            this.saveMapButton.Name = "saveMapButton";
+            this.saveMapButton.Size = new System.Drawing.Size(171, 40);
+            this.saveMapButton.TabIndex = 34;
+            this.saveMapButton.Text = "Save This Map";
+            this.saveMapButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.saveMapButton.UseVisualStyleBackColor = true;
+            this.saveMapButton.Click += new System.EventHandler(this.saveMapButton_Click);
+            // 
             // nsbtxEditorTabPage
             // 
             this.nsbtxEditorTabPage.Controls.Add(this.groupBox7);
@@ -4206,7 +4037,7 @@
             // 
             // removeNSBTXButton
             // 
-            this.removeNSBTXButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeNSBTXButton.Image = ((System.Drawing.Image)(resources.GetObject("removeNSBTXButton.Image")));
             this.removeNSBTXButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeNSBTXButton.Location = new System.Drawing.Point(331, 18);
             this.removeNSBTXButton.Name = "removeNSBTXButton";
@@ -4243,7 +4074,7 @@
             // 
             // exportAreaDataButton
             // 
-            this.exportAreaDataButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("exportAreaDataButton.Image")));
             this.exportAreaDataButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportAreaDataButton.Location = new System.Drawing.Point(177, 72);
             this.exportAreaDataButton.Name = "exportAreaDataButton";
@@ -4293,7 +4124,7 @@
             // 
             // importAreaDataButton
             // 
-            this.importAreaDataButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("importAreaDataButton.Image")));
             this.importAreaDataButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importAreaDataButton.Location = new System.Drawing.Point(286, 72);
             this.importAreaDataButton.Name = "importAreaDataButton";
@@ -4306,7 +4137,7 @@
             // 
             // removeAreaDataButton
             // 
-            this.removeAreaDataButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("removeAreaDataButton.Image")));
             this.removeAreaDataButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeAreaDataButton.Location = new System.Drawing.Point(395, 23);
             this.removeAreaDataButton.Name = "removeAreaDataButton";
@@ -4319,7 +4150,7 @@
             // 
             // addAreaDataButton
             // 
-            this.addAreaDataButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("addAreaDataButton.Image")));
             this.addAreaDataButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addAreaDataButton.Location = new System.Drawing.Point(286, 23);
             this.addAreaDataButton.Name = "addAreaDataButton";
@@ -4332,7 +4163,7 @@
             // 
             // saveAreaDataButton
             // 
-            this.saveAreaDataButton.Image = global::DSPRE.Properties.Resources.save_rom;
+            this.saveAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("saveAreaDataButton.Image")));
             this.saveAreaDataButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveAreaDataButton.Location = new System.Drawing.Point(177, 23);
             this.saveAreaDataButton.Name = "saveAreaDataButton";
@@ -4444,7 +4275,7 @@
             // 
             // addNSBTXButton
             // 
-            this.addNSBTXButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addNSBTXButton.Image = ((System.Drawing.Image)(resources.GetObject("addNSBTXButton.Image")));
             this.addNSBTXButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addNSBTXButton.Location = new System.Drawing.Point(240, 18);
             this.addNSBTXButton.Name = "addNSBTXButton";
@@ -4457,7 +4288,7 @@
             // 
             // exportNSBTXButton
             // 
-            this.exportNSBTXButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportNSBTXButton.Image = ((System.Drawing.Image)(resources.GetObject("exportNSBTXButton.Image")));
             this.exportNSBTXButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportNSBTXButton.Location = new System.Drawing.Point(125, 18);
             this.exportNSBTXButton.Name = "exportNSBTXButton";
@@ -4470,7 +4301,7 @@
             // 
             // importNSBTXButton
             // 
-            this.importNSBTXButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importNSBTXButton.Image = ((System.Drawing.Image)(resources.GetObject("importNSBTXButton.Image")));
             this.importNSBTXButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importNSBTXButton.Location = new System.Drawing.Point(21, 18);
             this.importNSBTXButton.Name = "importNSBTXButton";
@@ -4567,31 +4398,31 @@
             this.eventEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
             this.eventEditorTabPage.Controls.Add(this.groupBox21);
             this.eventEditorTabPage.Controls.Add(this.RightClickLabel);
-            this.eventEditorTabPage.Controls.Add(this.rightClickPicture);
             this.eventEditorTabPage.Controls.Add(this.WheelClickLabel);
             this.eventEditorTabPage.Controls.Add(this.LeftClickLabel);
-            this.eventEditorTabPage.Controls.Add(this.wheelClickPicture);
-            this.eventEditorTabPage.Controls.Add(this.LeftClickPicture);
-            this.eventEditorTabPage.Controls.Add(this.removeEventFileButton);
-            this.eventEditorTabPage.Controls.Add(this.addEventFileButton);
             this.eventEditorTabPage.Controls.Add(this.eventMatrixYUpDown);
             this.eventEditorTabPage.Controls.Add(this.eventMatrixXUpDown);
             this.eventEditorTabPage.Controls.Add(this.eventMatrixYLabel);
             this.eventEditorTabPage.Controls.Add(this.eventMatrixXLabel);
             this.eventEditorTabPage.Controls.Add(this.matrixNavigatorLabel);
             this.eventEditorTabPage.Controls.Add(this.eventMatrixPanel);
-            this.eventEditorTabPage.Controls.Add(this.eventShiftRightButton);
-            this.eventEditorTabPage.Controls.Add(this.eventShiftLeftButton);
-            this.eventEditorTabPage.Controls.Add(this.eventShiftUpButton);
-            this.eventEditorTabPage.Controls.Add(this.eventShiftDownButton);
             this.eventEditorTabPage.Controls.Add(this.selectEventComboBox);
-            this.eventEditorTabPage.Controls.Add(this.exportEventFileButton);
-            this.eventEditorTabPage.Controls.Add(this.importEventFileButton);
-            this.eventEditorTabPage.Controls.Add(this.saveEventsButton);
             this.eventEditorTabPage.Controls.Add(this.backgroundMapLabel);
             this.eventEditorTabPage.Controls.Add(this.eventMatrixUpDown);
             this.eventEditorTabPage.Controls.Add(this.eventsTabControl);
             this.eventEditorTabPage.Controls.Add(this.eventPanel);
+            this.eventEditorTabPage.Controls.Add(this.rightClickPicture);
+            this.eventEditorTabPage.Controls.Add(this.wheelClickPicture);
+            this.eventEditorTabPage.Controls.Add(this.LeftClickPicture);
+            this.eventEditorTabPage.Controls.Add(this.removeEventFileButton);
+            this.eventEditorTabPage.Controls.Add(this.addEventFileButton);
+            this.eventEditorTabPage.Controls.Add(this.eventShiftRightButton);
+            this.eventEditorTabPage.Controls.Add(this.eventShiftLeftButton);
+            this.eventEditorTabPage.Controls.Add(this.eventShiftUpButton);
+            this.eventEditorTabPage.Controls.Add(this.eventShiftDownButton);
+            this.eventEditorTabPage.Controls.Add(this.exportEventFileButton);
+            this.eventEditorTabPage.Controls.Add(this.importEventFileButton);
+            this.eventEditorTabPage.Controls.Add(this.saveEventsButton);
             this.eventEditorTabPage.ImageIndex = 3;
             this.eventEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.eventEditorTabPage.Name = "eventEditorTabPage";
@@ -4699,19 +4530,6 @@
             this.RightClickLabel.TabIndex = 60;
             this.RightClickLabel.Text = "Select";
             // 
-            // rightClickPicture
-            // 
-            this.rightClickPicture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rightClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("rightClickPicture.Image")));
-            this.rightClickPicture.ImageLocation = "";
-            this.rightClickPicture.Location = new System.Drawing.Point(468, 420);
-            this.rightClickPicture.Name = "rightClickPicture";
-            this.rightClickPicture.Size = new System.Drawing.Size(38, 38);
-            this.rightClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.rightClickPicture.TabIndex = 59;
-            this.rightClickPicture.TabStop = false;
-            // 
             // WheelClickLabel
             // 
             this.WheelClickLabel.AutoSize = true;
@@ -4729,58 +4547,6 @@
             this.LeftClickLabel.Size = new System.Drawing.Size(34, 13);
             this.LeftClickLabel.TabIndex = 57;
             this.LeftClickLabel.Text = "Move";
-            // 
-            // wheelClickPicture
-            // 
-            this.wheelClickPicture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.wheelClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("wheelClickPicture.Image")));
-            this.wheelClickPicture.ImageLocation = "";
-            this.wheelClickPicture.Location = new System.Drawing.Point(552, 420);
-            this.wheelClickPicture.Name = "wheelClickPicture";
-            this.wheelClickPicture.Size = new System.Drawing.Size(38, 38);
-            this.wheelClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.wheelClickPicture.TabIndex = 56;
-            this.wheelClickPicture.TabStop = false;
-            // 
-            // LeftClickPicture
-            // 
-            this.LeftClickPicture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.LeftClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("LeftClickPicture.Image")));
-            this.LeftClickPicture.ImageLocation = "";
-            this.LeftClickPicture.Location = new System.Drawing.Point(510, 420);
-            this.LeftClickPicture.Name = "LeftClickPicture";
-            this.LeftClickPicture.Size = new System.Drawing.Size(38, 38);
-            this.LeftClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.LeftClickPicture.TabIndex = 55;
-            this.LeftClickPicture.TabStop = false;
-            // 
-            // removeEventFileButton
-            // 
-            this.removeEventFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
-            this.removeEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeEventFileButton.Location = new System.Drawing.Point(354, 36);
-            this.removeEventFileButton.Name = "removeEventFileButton";
-            this.removeEventFileButton.Size = new System.Drawing.Size(98, 25);
-            this.removeEventFileButton.TabIndex = 54;
-            this.removeEventFileButton.Text = "Remove Last";
-            this.removeEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeEventFileButton.UseVisualStyleBackColor = true;
-            this.removeEventFileButton.Click += new System.EventHandler(this.removeEventFileButton_Click);
-            // 
-            // addEventFileButton
-            // 
-            this.addEventFileButton.Image = global::DSPRE.Properties.Resources.addIcon;
-            this.addEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addEventFileButton.Location = new System.Drawing.Point(354, 9);
-            this.addEventFileButton.Name = "addEventFileButton";
-            this.addEventFileButton.Size = new System.Drawing.Size(98, 25);
-            this.addEventFileButton.TabIndex = 53;
-            this.addEventFileButton.Text = "Add Event";
-            this.addEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addEventFileButton.UseVisualStyleBackColor = true;
-            this.addEventFileButton.Click += new System.EventHandler(this.addEventFileButton_Click);
             // 
             // eventMatrixYUpDown
             // 
@@ -4850,52 +4616,6 @@
             this.eventMatrixPictureBox.TabStop = false;
             this.eventMatrixPictureBox.Click += new System.EventHandler(this.eventMatrixPictureBox_Click);
             // 
-            // eventShiftRightButton
-            // 
-            this.eventShiftRightButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftRightButton.BackgroundImage")));
-            this.eventShiftRightButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.eventShiftRightButton.Location = new System.Drawing.Point(1152, 233);
-            this.eventShiftRightButton.Name = "eventShiftRightButton";
-            this.eventShiftRightButton.Size = new System.Drawing.Size(25, 156);
-            this.eventShiftRightButton.TabIndex = 45;
-            this.eventShiftRightButton.UseVisualStyleBackColor = true;
-            this.eventShiftRightButton.Click += new System.EventHandler(this.eventShiftRightButton_Click);
-            // 
-            // eventShiftLeftButton
-            // 
-            this.eventShiftLeftButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftLeftButton.BackgroundImage")));
-            this.eventShiftLeftButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.eventShiftLeftButton.Location = new System.Drawing.Point(570, 233);
-            this.eventShiftLeftButton.Name = "eventShiftLeftButton";
-            this.eventShiftLeftButton.Size = new System.Drawing.Size(25, 156);
-            this.eventShiftLeftButton.TabIndex = 44;
-            this.eventShiftLeftButton.UseVisualStyleBackColor = true;
-            this.eventShiftLeftButton.Click += new System.EventHandler(this.eventShiftLeftButton_Click);
-            // 
-            // eventShiftUpButton
-            // 
-            this.eventShiftUpButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftUpButton.BackgroundImage")));
-            this.eventShiftUpButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.eventShiftUpButton.Location = new System.Drawing.Point(795, 8);
-            this.eventShiftUpButton.Name = "eventShiftUpButton";
-            this.eventShiftUpButton.Size = new System.Drawing.Size(156, 25);
-            this.eventShiftUpButton.TabIndex = 43;
-            this.eventShiftUpButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.eventShiftUpButton.UseVisualStyleBackColor = true;
-            this.eventShiftUpButton.Click += new System.EventHandler(this.eventShiftUpButton_Click);
-            // 
-            // eventShiftDownButton
-            // 
-            this.eventShiftDownButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftDownButton.BackgroundImage")));
-            this.eventShiftDownButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.eventShiftDownButton.Location = new System.Drawing.Point(795, 589);
-            this.eventShiftDownButton.Name = "eventShiftDownButton";
-            this.eventShiftDownButton.Size = new System.Drawing.Size(156, 25);
-            this.eventShiftDownButton.TabIndex = 42;
-            this.eventShiftDownButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.eventShiftDownButton.UseVisualStyleBackColor = true;
-            this.eventShiftDownButton.Click += new System.EventHandler(this.eventShiftDownButton_Click);
-            // 
             // selectEventComboBox
             // 
             this.selectEventComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -4905,44 +4625,6 @@
             this.selectEventComboBox.Size = new System.Drawing.Size(164, 21);
             this.selectEventComboBox.TabIndex = 41;
             this.selectEventComboBox.SelectedIndexChanged += new System.EventHandler(this.selectEventComboBox_SelectedIndexChanged);
-            // 
-            // exportEventFileButton
-            // 
-            this.exportEventFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
-            this.exportEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportEventFileButton.Location = new System.Drawing.Point(266, 9);
-            this.exportEventFileButton.Name = "exportEventFileButton";
-            this.exportEventFileButton.Size = new System.Drawing.Size(84, 52);
-            this.exportEventFileButton.TabIndex = 36;
-            this.exportEventFileButton.Text = "Export";
-            this.exportEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportEventFileButton.UseVisualStyleBackColor = true;
-            this.exportEventFileButton.Click += new System.EventHandler(this.exportEventFileButton_Click);
-            // 
-            // importEventFileButton
-            // 
-            this.importEventFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
-            this.importEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importEventFileButton.Location = new System.Drawing.Point(178, 9);
-            this.importEventFileButton.Name = "importEventFileButton";
-            this.importEventFileButton.Size = new System.Drawing.Size(84, 52);
-            this.importEventFileButton.TabIndex = 35;
-            this.importEventFileButton.Text = "Replace\r\nCurrent";
-            this.importEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importEventFileButton.UseVisualStyleBackColor = true;
-            this.importEventFileButton.Click += new System.EventHandler(this.importEventFileButton_Click);
-            // 
-            // saveEventsButton
-            // 
-            this.saveEventsButton.Image = global::DSPRE.Properties.Resources.saveButton;
-            this.saveEventsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveEventsButton.Location = new System.Drawing.Point(9, 36);
-            this.saveEventsButton.Name = "saveEventsButton";
-            this.saveEventsButton.Size = new System.Drawing.Size(166, 25);
-            this.saveEventsButton.TabIndex = 34;
-            this.saveEventsButton.Text = "Save Events";
-            this.saveEventsButton.UseVisualStyleBackColor = true;
-            this.saveEventsButton.Click += new System.EventHandler(this.saveEventsButton_Click);
             // 
             // backgroundMapLabel
             // 
@@ -5021,7 +4703,7 @@
             // 
             // duplicateSpawnableButton
             // 
-            this.duplicateSpawnableButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
+            this.duplicateSpawnableButton.Image = ((System.Drawing.Image)(resources.GetObject("duplicateSpawnableButton.Image")));
             this.duplicateSpawnableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.duplicateSpawnableButton.Location = new System.Drawing.Point(131, 308);
             this.duplicateSpawnableButton.Name = "duplicateSpawnableButton";
@@ -5187,7 +4869,7 @@
             // 
             // removeSpawnableButton
             // 
-            this.removeSpawnableButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeSpawnableButton.Image = ((System.Drawing.Image)(resources.GetObject("removeSpawnableButton.Image")));
             this.removeSpawnableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeSpawnableButton.Location = new System.Drawing.Point(67, 308);
             this.removeSpawnableButton.Name = "removeSpawnableButton";
@@ -5200,7 +4882,7 @@
             // 
             // addSpawnableButton
             // 
-            this.addSpawnableButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addSpawnableButton.Image = ((System.Drawing.Image)(resources.GetObject("addSpawnableButton.Image")));
             this.addSpawnableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addSpawnableButton.Location = new System.Drawing.Point(16, 308);
             this.addSpawnableButton.Name = "addSpawnableButton";
@@ -5265,9 +4947,7 @@
             // 
             this.overworldsTabPage.Controls.Add(this.groupBox22);
             this.overworldsTabPage.Controls.Add(this.spriteIDlabel);
-            this.overworldsTabPage.Controls.Add(this.duplicateOverworldsButton);
             this.overworldsTabPage.Controls.Add(this.groupBox17);
-            this.overworldsTabPage.Controls.Add(this.owSpritePictureBox);
             this.overworldsTabPage.Controls.Add(this.owMovementGroupBox);
             this.overworldsTabPage.Controls.Add(this.positionGroupBox);
             this.overworldsTabPage.Controls.Add(this.owSpecialGroupBox);
@@ -5279,6 +4959,8 @@
             this.overworldsTabPage.Controls.Add(this.owSpriteComboBox);
             this.overworldsTabPage.Controls.Add(this.owIDLabel);
             this.overworldsTabPage.Controls.Add(this.owIDNumericUpDown);
+            this.overworldsTabPage.Controls.Add(this.duplicateOverworldsButton);
+            this.overworldsTabPage.Controls.Add(this.owSpritePictureBox);
             this.overworldsTabPage.Controls.Add(this.removeOverworldButton);
             this.overworldsTabPage.Controls.Add(this.addOverworldButton);
             this.overworldsTabPage.Controls.Add(this.overworldsListBox);
@@ -5346,19 +5028,6 @@
             this.spriteIDlabel.Name = "spriteIDlabel";
             this.spriteIDlabel.Size = new System.Drawing.Size(0, 13);
             this.spriteIDlabel.TabIndex = 27;
-            // 
-            // duplicateOverworldsButton
-            // 
-            this.duplicateOverworldsButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
-            this.duplicateOverworldsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.duplicateOverworldsButton.Location = new System.Drawing.Point(116, 155);
-            this.duplicateOverworldsButton.Name = "duplicateOverworldsButton";
-            this.duplicateOverworldsButton.Size = new System.Drawing.Size(72, 31);
-            this.duplicateOverworldsButton.TabIndex = 26;
-            this.duplicateOverworldsButton.Text = "Duplicate";
-            this.duplicateOverworldsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.duplicateOverworldsButton.UseVisualStyleBackColor = true;
-            this.duplicateOverworldsButton.Click += new System.EventHandler(this.duplicateOverworldsButton_Click);
             // 
             // groupBox17
             // 
@@ -5430,16 +5099,6 @@
             this.label11.Size = new System.Drawing.Size(14, 13);
             this.label11.TabIndex = 7;
             this.label11.Text = "Y";
-            // 
-            // owSpritePictureBox
-            // 
-            this.owSpritePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.owSpritePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.owSpritePictureBox.Location = new System.Drawing.Point(367, 53);
-            this.owSpritePictureBox.Name = "owSpritePictureBox";
-            this.owSpritePictureBox.Size = new System.Drawing.Size(66, 66);
-            this.owSpritePictureBox.TabIndex = 20;
-            this.owSpritePictureBox.TabStop = false;
             // 
             // owMovementGroupBox
             // 
@@ -5820,9 +5479,32 @@
             this.owIDNumericUpDown.TabIndex = 6;
             this.owIDNumericUpDown.ValueChanged += new System.EventHandler(this.owIDNumericUpDown_ValueChanged);
             // 
+            // duplicateOverworldsButton
+            // 
+            this.duplicateOverworldsButton.Image = ((System.Drawing.Image)(resources.GetObject("duplicateOverworldsButton.Image")));
+            this.duplicateOverworldsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.duplicateOverworldsButton.Location = new System.Drawing.Point(116, 155);
+            this.duplicateOverworldsButton.Name = "duplicateOverworldsButton";
+            this.duplicateOverworldsButton.Size = new System.Drawing.Size(72, 31);
+            this.duplicateOverworldsButton.TabIndex = 26;
+            this.duplicateOverworldsButton.Text = "Duplicate";
+            this.duplicateOverworldsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.duplicateOverworldsButton.UseVisualStyleBackColor = true;
+            this.duplicateOverworldsButton.Click += new System.EventHandler(this.duplicateOverworldsButton_Click);
+            // 
+            // owSpritePictureBox
+            // 
+            this.owSpritePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.owSpritePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.owSpritePictureBox.Location = new System.Drawing.Point(367, 53);
+            this.owSpritePictureBox.Name = "owSpritePictureBox";
+            this.owSpritePictureBox.Size = new System.Drawing.Size(66, 66);
+            this.owSpritePictureBox.TabIndex = 20;
+            this.owSpritePictureBox.TabStop = false;
+            // 
             // removeOverworldButton
             // 
-            this.removeOverworldButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeOverworldButton.Image = ((System.Drawing.Image)(resources.GetObject("removeOverworldButton.Image")));
             this.removeOverworldButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeOverworldButton.Location = new System.Drawing.Point(56, 155);
             this.removeOverworldButton.Name = "removeOverworldButton";
@@ -5835,7 +5517,7 @@
             // 
             // addOverworldButton
             // 
-            this.addOverworldButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addOverworldButton.Image = ((System.Drawing.Image)(resources.GetObject("addOverworldButton.Image")));
             this.addOverworldButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addOverworldButton.Location = new System.Drawing.Point(8, 155);
             this.addOverworldButton.Name = "addOverworldButton";
@@ -5873,7 +5555,7 @@
             // 
             // duplicateWarpsButton
             // 
-            this.duplicateWarpsButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
+            this.duplicateWarpsButton.Image = ((System.Drawing.Image)(resources.GetObject("duplicateWarpsButton.Image")));
             this.duplicateWarpsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.duplicateWarpsButton.Location = new System.Drawing.Point(130, 308);
             this.duplicateWarpsButton.Name = "duplicateWarpsButton";
@@ -6135,7 +5817,7 @@
             // 
             // removeWarpButton
             // 
-            this.removeWarpButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeWarpButton.Image = ((System.Drawing.Image)(resources.GetObject("removeWarpButton.Image")));
             this.removeWarpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeWarpButton.Location = new System.Drawing.Point(66, 308);
             this.removeWarpButton.Name = "removeWarpButton";
@@ -6148,7 +5830,7 @@
             // 
             // addWarpButton
             // 
-            this.addWarpButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addWarpButton.Image = ((System.Drawing.Image)(resources.GetObject("addWarpButton.Image")));
             this.addWarpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addWarpButton.Location = new System.Drawing.Point(14, 308);
             this.addWarpButton.Name = "addWarpButton";
@@ -6171,10 +5853,10 @@
             // triggersTabPage
             // 
             this.triggersTabPage.Controls.Add(this.triggerLogicGroupBox);
-            this.triggersTabPage.Controls.Add(this.duplicateTriggersButton);
             this.triggersTabPage.Controls.Add(this.groupBox16);
             this.triggersTabPage.Controls.Add(this.groupBox15);
             this.triggersTabPage.Controls.Add(this.groupBox6);
+            this.triggersTabPage.Controls.Add(this.duplicateTriggersButton);
             this.triggersTabPage.Controls.Add(this.removeTriggerButton);
             this.triggersTabPage.Controls.Add(this.addTriggerButton);
             this.triggersTabPage.Controls.Add(this.triggersListBox);
@@ -6266,19 +5948,6 @@
             this.label27.Size = new System.Drawing.Size(78, 13);
             this.label27.TabIndex = 24;
             this.label27.Text = "Script to trigger";
-            // 
-            // duplicateTriggersButton
-            // 
-            this.duplicateTriggersButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
-            this.duplicateTriggersButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.duplicateTriggersButton.Location = new System.Drawing.Point(131, 309);
-            this.duplicateTriggersButton.Name = "duplicateTriggersButton";
-            this.duplicateTriggersButton.Size = new System.Drawing.Size(74, 32);
-            this.duplicateTriggersButton.TabIndex = 36;
-            this.duplicateTriggersButton.Text = "Duplicate";
-            this.duplicateTriggersButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.duplicateTriggersButton.UseVisualStyleBackColor = true;
-            this.duplicateTriggersButton.Click += new System.EventHandler(this.duplicateTriggersButton_Click);
             // 
             // groupBox16
             // 
@@ -6499,9 +6168,22 @@
             this.triggerYMatrixUpDown.TabIndex = 18;
             this.triggerYMatrixUpDown.ValueChanged += new System.EventHandler(this.triggerYMatrixUpDown_ValueChanged);
             // 
+            // duplicateTriggersButton
+            // 
+            this.duplicateTriggersButton.Image = ((System.Drawing.Image)(resources.GetObject("duplicateTriggersButton.Image")));
+            this.duplicateTriggersButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.duplicateTriggersButton.Location = new System.Drawing.Point(131, 309);
+            this.duplicateTriggersButton.Name = "duplicateTriggersButton";
+            this.duplicateTriggersButton.Size = new System.Drawing.Size(74, 32);
+            this.duplicateTriggersButton.TabIndex = 36;
+            this.duplicateTriggersButton.Text = "Duplicate";
+            this.duplicateTriggersButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.duplicateTriggersButton.UseVisualStyleBackColor = true;
+            this.duplicateTriggersButton.Click += new System.EventHandler(this.duplicateTriggersButton_Click);
+            // 
             // removeTriggerButton
             // 
-            this.removeTriggerButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeTriggerButton.Image = ((System.Drawing.Image)(resources.GetObject("removeTriggerButton.Image")));
             this.removeTriggerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeTriggerButton.Location = new System.Drawing.Point(68, 309);
             this.removeTriggerButton.Name = "removeTriggerButton";
@@ -6514,7 +6196,7 @@
             // 
             // addTriggerButton
             // 
-            this.addTriggerButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addTriggerButton.Image = ((System.Drawing.Image)(resources.GetObject("addTriggerButton.Image")));
             this.addTriggerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addTriggerButton.Location = new System.Drawing.Point(16, 309);
             this.addTriggerButton.Name = "addTriggerButton";
@@ -6572,27 +6254,241 @@
             this.eventOpenGlControl.StencilBits = ((byte)(0));
             this.eventOpenGlControl.TabIndex = 2;
             // 
-            // scriptEditorTabPage
+            // rightClickPicture
             // 
-            this.scriptEditorTabPage.Controls.Add(this.groupBox24);
-            this.scriptEditorTabPage.Controls.Add(this.clearCurrentLevelScriptButton);
-            this.scriptEditorTabPage.Controls.Add(this.groupBox8);
-            this.scriptEditorTabPage.Controls.Add(this.importScriptFileButton);
-            this.scriptEditorTabPage.Controls.Add(this.exportScriptFileButton);
-            this.scriptEditorTabPage.Controls.Add(this.saveScriptFileButton);
-            this.scriptEditorTabPage.Controls.Add(this.removeScriptFileButton);
-            this.scriptEditorTabPage.Controls.Add(this.addScriptFileButton);
-            this.scriptEditorTabPage.Controls.Add(this.scriptEditorTabControl);
-            this.scriptEditorTabPage.Controls.Add(this.label5);
-            this.scriptEditorTabPage.Controls.Add(this.selectScriptFileComboBox);
-            this.scriptEditorTabPage.ImageIndex = 5;
-            this.scriptEditorTabPage.Location = new System.Drawing.Point(4, 23);
-            this.scriptEditorTabPage.Name = "scriptEditorTabPage";
-            this.scriptEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptEditorTabPage.Size = new System.Drawing.Size(1185, 619);
-            this.scriptEditorTabPage.TabIndex = 4;
-            this.scriptEditorTabPage.Text = "Script Editor";
-            this.scriptEditorTabPage.UseVisualStyleBackColor = true;
+            this.rightClickPicture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rightClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("rightClickPicture.Image")));
+            this.rightClickPicture.ImageLocation = "";
+            this.rightClickPicture.Location = new System.Drawing.Point(468, 420);
+            this.rightClickPicture.Name = "rightClickPicture";
+            this.rightClickPicture.Size = new System.Drawing.Size(38, 38);
+            this.rightClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.rightClickPicture.TabIndex = 59;
+            this.rightClickPicture.TabStop = false;
+            // 
+            // wheelClickPicture
+            // 
+            this.wheelClickPicture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.wheelClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("wheelClickPicture.Image")));
+            this.wheelClickPicture.ImageLocation = "";
+            this.wheelClickPicture.Location = new System.Drawing.Point(552, 420);
+            this.wheelClickPicture.Name = "wheelClickPicture";
+            this.wheelClickPicture.Size = new System.Drawing.Size(38, 38);
+            this.wheelClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.wheelClickPicture.TabIndex = 56;
+            this.wheelClickPicture.TabStop = false;
+            // 
+            // LeftClickPicture
+            // 
+            this.LeftClickPicture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LeftClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("LeftClickPicture.Image")));
+            this.LeftClickPicture.ImageLocation = "";
+            this.LeftClickPicture.Location = new System.Drawing.Point(510, 420);
+            this.LeftClickPicture.Name = "LeftClickPicture";
+            this.LeftClickPicture.Size = new System.Drawing.Size(38, 38);
+            this.LeftClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.LeftClickPicture.TabIndex = 55;
+            this.LeftClickPicture.TabStop = false;
+            // 
+            // removeEventFileButton
+            // 
+            this.removeEventFileButton.Image = ((System.Drawing.Image)(resources.GetObject("removeEventFileButton.Image")));
+            this.removeEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.removeEventFileButton.Location = new System.Drawing.Point(354, 36);
+            this.removeEventFileButton.Name = "removeEventFileButton";
+            this.removeEventFileButton.Size = new System.Drawing.Size(98, 25);
+            this.removeEventFileButton.TabIndex = 54;
+            this.removeEventFileButton.Text = "Remove Last";
+            this.removeEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.removeEventFileButton.UseVisualStyleBackColor = true;
+            this.removeEventFileButton.Click += new System.EventHandler(this.removeEventFileButton_Click);
+            // 
+            // addEventFileButton
+            // 
+            this.addEventFileButton.Image = ((System.Drawing.Image)(resources.GetObject("addEventFileButton.Image")));
+            this.addEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.addEventFileButton.Location = new System.Drawing.Point(354, 9);
+            this.addEventFileButton.Name = "addEventFileButton";
+            this.addEventFileButton.Size = new System.Drawing.Size(98, 25);
+            this.addEventFileButton.TabIndex = 53;
+            this.addEventFileButton.Text = "Add Event";
+            this.addEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.addEventFileButton.UseVisualStyleBackColor = true;
+            this.addEventFileButton.Click += new System.EventHandler(this.addEventFileButton_Click);
+            // 
+            // eventShiftRightButton
+            // 
+            this.eventShiftRightButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftRightButton.BackgroundImage")));
+            this.eventShiftRightButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.eventShiftRightButton.Location = new System.Drawing.Point(1152, 233);
+            this.eventShiftRightButton.Name = "eventShiftRightButton";
+            this.eventShiftRightButton.Size = new System.Drawing.Size(25, 156);
+            this.eventShiftRightButton.TabIndex = 45;
+            this.eventShiftRightButton.UseVisualStyleBackColor = true;
+            this.eventShiftRightButton.Click += new System.EventHandler(this.eventShiftRightButton_Click);
+            // 
+            // eventShiftLeftButton
+            // 
+            this.eventShiftLeftButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftLeftButton.BackgroundImage")));
+            this.eventShiftLeftButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.eventShiftLeftButton.Location = new System.Drawing.Point(570, 233);
+            this.eventShiftLeftButton.Name = "eventShiftLeftButton";
+            this.eventShiftLeftButton.Size = new System.Drawing.Size(25, 156);
+            this.eventShiftLeftButton.TabIndex = 44;
+            this.eventShiftLeftButton.UseVisualStyleBackColor = true;
+            this.eventShiftLeftButton.Click += new System.EventHandler(this.eventShiftLeftButton_Click);
+            // 
+            // eventShiftUpButton
+            // 
+            this.eventShiftUpButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftUpButton.BackgroundImage")));
+            this.eventShiftUpButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.eventShiftUpButton.Location = new System.Drawing.Point(795, 8);
+            this.eventShiftUpButton.Name = "eventShiftUpButton";
+            this.eventShiftUpButton.Size = new System.Drawing.Size(156, 25);
+            this.eventShiftUpButton.TabIndex = 43;
+            this.eventShiftUpButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.eventShiftUpButton.UseVisualStyleBackColor = true;
+            this.eventShiftUpButton.Click += new System.EventHandler(this.eventShiftUpButton_Click);
+            // 
+            // eventShiftDownButton
+            // 
+            this.eventShiftDownButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftDownButton.BackgroundImage")));
+            this.eventShiftDownButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.eventShiftDownButton.Location = new System.Drawing.Point(795, 589);
+            this.eventShiftDownButton.Name = "eventShiftDownButton";
+            this.eventShiftDownButton.Size = new System.Drawing.Size(156, 25);
+            this.eventShiftDownButton.TabIndex = 42;
+            this.eventShiftDownButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.eventShiftDownButton.UseVisualStyleBackColor = true;
+            this.eventShiftDownButton.Click += new System.EventHandler(this.eventShiftDownButton_Click);
+            // 
+            // exportEventFileButton
+            // 
+            this.exportEventFileButton.Image = ((System.Drawing.Image)(resources.GetObject("exportEventFileButton.Image")));
+            this.exportEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.exportEventFileButton.Location = new System.Drawing.Point(266, 9);
+            this.exportEventFileButton.Name = "exportEventFileButton";
+            this.exportEventFileButton.Size = new System.Drawing.Size(84, 52);
+            this.exportEventFileButton.TabIndex = 36;
+            this.exportEventFileButton.Text = "Export";
+            this.exportEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.exportEventFileButton.UseVisualStyleBackColor = true;
+            this.exportEventFileButton.Click += new System.EventHandler(this.exportEventFileButton_Click);
+            // 
+            // importEventFileButton
+            // 
+            this.importEventFileButton.Image = ((System.Drawing.Image)(resources.GetObject("importEventFileButton.Image")));
+            this.importEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.importEventFileButton.Location = new System.Drawing.Point(178, 9);
+            this.importEventFileButton.Name = "importEventFileButton";
+            this.importEventFileButton.Size = new System.Drawing.Size(84, 52);
+            this.importEventFileButton.TabIndex = 35;
+            this.importEventFileButton.Text = "Replace\r\nCurrent";
+            this.importEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.importEventFileButton.UseVisualStyleBackColor = true;
+            this.importEventFileButton.Click += new System.EventHandler(this.importEventFileButton_Click);
+            // 
+            // saveEventsButton
+            // 
+            this.saveEventsButton.Image = ((System.Drawing.Image)(resources.GetObject("saveEventsButton.Image")));
+            this.saveEventsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.saveEventsButton.Location = new System.Drawing.Point(9, 36);
+            this.saveEventsButton.Name = "saveEventsButton";
+            this.saveEventsButton.Size = new System.Drawing.Size(166, 25);
+            this.saveEventsButton.TabIndex = 34;
+            this.saveEventsButton.Text = "Save Events";
+            this.saveEventsButton.UseVisualStyleBackColor = true;
+            this.saveEventsButton.Click += new System.EventHandler(this.saveEventsButton_Click);
+            // 
+            // scriptTabPage
+            // 
+            this.scriptTabPage.Controls.Add(this.compressScriptTextButton);
+            this.scriptTabPage.Controls.Add(this.expandScriptTextButton);
+            this.scriptTabPage.Controls.Add(this.findScriptTextButton);
+            this.scriptTabPage.Controls.Add(this.scriptEditorWhitespacesCheckbox);
+            this.scriptTabPage.Controls.Add(this.scriptEditorWordWrapCheckbox);
+            this.scriptTabPage.Controls.Add(this.groupBox24);
+            this.scriptTabPage.Controls.Add(this.clearCurrentLevelScriptButton);
+            this.scriptTabPage.Controls.Add(this.groupBox8);
+            this.scriptTabPage.Controls.Add(this.importScriptFileButton);
+            this.scriptTabPage.Controls.Add(this.exportScriptFileButton);
+            this.scriptTabPage.Controls.Add(this.saveScriptFileButton);
+            this.scriptTabPage.Controls.Add(this.removeScriptFileButton);
+            this.scriptTabPage.Controls.Add(this.addScriptFileButton);
+            this.scriptTabPage.Controls.Add(this.scriptEditorTabControl);
+            this.scriptTabPage.Controls.Add(this.label5);
+            this.scriptTabPage.Controls.Add(this.selectScriptFileComboBox);
+            this.scriptTabPage.ImageIndex = 5;
+            this.scriptTabPage.Location = new System.Drawing.Point(4, 23);
+            this.scriptTabPage.Name = "scriptTabPage";
+            this.scriptTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.scriptTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.scriptTabPage.TabIndex = 4;
+            this.scriptTabPage.Text = "Script Editor";
+            this.scriptTabPage.UseVisualStyleBackColor = true;
+            // 
+            // compressScriptTextButton
+            // 
+            this.compressScriptTextButton.Image = global::DSPRE.Properties.Resources.compressArrow;
+            this.compressScriptTextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.compressScriptTextButton.Location = new System.Drawing.Point(1139, 9);
+            this.compressScriptTextButton.Name = "compressScriptTextButton";
+            this.compressScriptTextButton.Size = new System.Drawing.Size(24, 24);
+            this.compressScriptTextButton.TabIndex = 49;
+            this.compressScriptTextButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.compressScriptTextButton.UseVisualStyleBackColor = true;
+            this.compressScriptTextButton.Click += new System.EventHandler(this.ScriptEditorCollapseButton_Click);
+            // 
+            // expandScriptTextButton
+            // 
+            this.expandScriptTextButton.Image = global::DSPRE.Properties.Resources.expandArrow;
+            this.expandScriptTextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.expandScriptTextButton.Location = new System.Drawing.Point(1111, 9);
+            this.expandScriptTextButton.Name = "expandScriptTextButton";
+            this.expandScriptTextButton.Size = new System.Drawing.Size(24, 24);
+            this.expandScriptTextButton.TabIndex = 48;
+            this.expandScriptTextButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.expandScriptTextButton.UseVisualStyleBackColor = true;
+            this.expandScriptTextButton.Click += new System.EventHandler(this.ScriptEditorExpandButton_Click);
+            // 
+            // findScriptTextButton
+            // 
+            this.findScriptTextButton.Image = ((System.Drawing.Image)(resources.GetObject("findScriptTextButton.Image")));
+            this.findScriptTextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.findScriptTextButton.Location = new System.Drawing.Point(1083, 9);
+            this.findScriptTextButton.Name = "findScriptTextButton";
+            this.findScriptTextButton.Size = new System.Drawing.Size(24, 24);
+            this.findScriptTextButton.TabIndex = 47;
+            this.findScriptTextButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.findScriptTextButton.UseVisualStyleBackColor = true;
+            // 
+            // scriptEditorWhitespacesCheckbox
+            // 
+            this.scriptEditorWhitespacesCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.scriptEditorWhitespacesCheckbox.AutoSize = true;
+            this.scriptEditorWhitespacesCheckbox.Location = new System.Drawing.Point(746, 11);
+            this.scriptEditorWhitespacesCheckbox.Name = "scriptEditorWhitespacesCheckbox";
+            this.scriptEditorWhitespacesCheckbox.Size = new System.Drawing.Size(79, 23);
+            this.scriptEditorWhitespacesCheckbox.TabIndex = 46;
+            this.scriptEditorWhitespacesCheckbox.Text = "Whitespaces";
+            this.scriptEditorWhitespacesCheckbox.UseVisualStyleBackColor = true;
+            this.scriptEditorWhitespacesCheckbox.CheckedChanged += new System.EventHandler(this.viewWhiteSpacesButton_Click);
+            // 
+            // scriptEditorWordWrapCheckbox
+            // 
+            this.scriptEditorWordWrapCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.scriptEditorWordWrapCheckbox.AutoSize = true;
+            this.scriptEditorWordWrapCheckbox.Checked = true;
+            this.scriptEditorWordWrapCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.scriptEditorWordWrapCheckbox.Location = new System.Drawing.Point(672, 11);
+            this.scriptEditorWordWrapCheckbox.Name = "scriptEditorWordWrapCheckbox";
+            this.scriptEditorWordWrapCheckbox.Size = new System.Drawing.Size(72, 23);
+            this.scriptEditorWordWrapCheckbox.TabIndex = 43;
+            this.scriptEditorWordWrapCheckbox.Text = "Word Wrap";
+            this.scriptEditorWordWrapCheckbox.UseVisualStyleBackColor = true;
             // 
             // groupBox24
             // 
@@ -6697,7 +6593,7 @@
             // 
             // clearCurrentLevelScriptButton
             // 
-            this.clearCurrentLevelScriptButton.Image = global::DSPRE.Properties.Resources.destroyLevelScript;
+            this.clearCurrentLevelScriptButton.Image = ((System.Drawing.Image)(resources.GetObject("clearCurrentLevelScriptButton.Image")));
             this.clearCurrentLevelScriptButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.clearCurrentLevelScriptButton.Location = new System.Drawing.Point(364, 18);
             this.clearCurrentLevelScriptButton.Name = "clearCurrentLevelScriptButton";
@@ -6811,7 +6707,7 @@
             // 
             // importScriptFileButton
             // 
-            this.importScriptFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("importScriptFileButton.Image")));
             this.importScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importScriptFileButton.Location = new System.Drawing.Point(215, 18);
             this.importScriptFileButton.Name = "importScriptFileButton";
@@ -6824,7 +6720,7 @@
             // 
             // exportScriptFileButton
             // 
-            this.exportScriptFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("exportScriptFileButton.Image")));
             this.exportScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportScriptFileButton.Location = new System.Drawing.Point(289, 18);
             this.exportScriptFileButton.Name = "exportScriptFileButton";
@@ -6837,7 +6733,7 @@
             // 
             // saveScriptFileButton
             // 
-            this.saveScriptFileButton.Image = global::DSPRE.Properties.Resources.saveButton;
+            this.saveScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("saveScriptFileButton.Image")));
             this.saveScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveScriptFileButton.Location = new System.Drawing.Point(7, 46);
             this.saveScriptFileButton.Name = "saveScriptFileButton";
@@ -6849,7 +6745,7 @@
             // 
             // removeScriptFileButton
             // 
-            this.removeScriptFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("removeScriptFileButton.Image")));
             this.removeScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeScriptFileButton.Location = new System.Drawing.Point(365, 46);
             this.removeScriptFileButton.Name = "removeScriptFileButton";
@@ -6862,7 +6758,7 @@
             // 
             // addScriptFileButton
             // 
-            this.addScriptFileButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("addScriptFileButton.Image")));
             this.addScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addScriptFileButton.Location = new System.Drawing.Point(365, 18);
             this.addScriptFileButton.Name = "addScriptFileButton";
@@ -6878,159 +6774,297 @@
             this.scriptEditorTabControl.Controls.Add(this.scriptsTabPage);
             this.scriptEditorTabControl.Controls.Add(this.functionTabPage);
             this.scriptEditorTabControl.Controls.Add(this.movementTabPage);
-            this.scriptEditorTabControl.Location = new System.Drawing.Point(488, 17);
+            this.scriptEditorTabControl.Location = new System.Drawing.Point(487, 18);
             this.scriptEditorTabControl.Name = "scriptEditorTabControl";
             this.scriptEditorTabControl.SelectedIndex = 0;
-            this.scriptEditorTabControl.Size = new System.Drawing.Size(672, 594);
+            this.scriptEditorTabControl.Size = new System.Drawing.Size(692, 595);
             this.scriptEditorTabControl.TabIndex = 5;
-            this.scriptEditorTabControl.SelectedIndexChanged += new System.EventHandler(this.SetCurrentRTBfromSelectedScriptTab);
+            this.scriptEditorTabControl.TabIndexChanged += new System.EventHandler(this.scriptEditorTabControl_TabIndexChanged);
             // 
             // scriptsTabPage
             // 
-            this.scriptsTabPage.Controls.Add(this.scriptTextBox);
-            this.scriptsTabPage.Controls.Add(this.LineNumberTextBoxScript);
+            this.scriptsTabPage.Controls.Add(this.PanelSearchScripts);
+            this.scriptsTabPage.Controls.Add(this.scintillaScriptsPanel);
             this.scriptsTabPage.Location = new System.Drawing.Point(4, 22);
             this.scriptsTabPage.Name = "scriptsTabPage";
             this.scriptsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptsTabPage.Size = new System.Drawing.Size(664, 568);
+            this.scriptsTabPage.Size = new System.Drawing.Size(684, 569);
             this.scriptsTabPage.TabIndex = 0;
             this.scriptsTabPage.Text = "Scripts";
             this.scriptsTabPage.UseVisualStyleBackColor = true;
             // 
-            // scriptTextBox
+            // PanelSearchScripts
             // 
-            this.scriptTextBox.AcceptsTab = true;
-            this.scriptTextBox.BackColor = System.Drawing.SystemColors.Menu;
-            this.scriptTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.scriptTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scriptTextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.scriptTextBox.Location = new System.Drawing.Point(13, 3);
-            this.scriptTextBox.MaxLength = 1000000;
-            this.scriptTextBox.Name = "scriptTextBox";
-            this.scriptTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.scriptTextBox.Size = new System.Drawing.Size(648, 562);
-            this.scriptTextBox.TabIndex = 7;
-            this.scriptTextBox.TabStop = false;
-            this.scriptTextBox.Text = "";
-            this.scriptTextBox.SelectionChanged += new System.EventHandler(this.updateCurrentBoxLineNumbers);
-            this.scriptTextBox.VScroll += new System.EventHandler(this.updateCurrentBoxLineNumbers);
+            this.PanelSearchScripts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PanelSearchScripts.BackColor = System.Drawing.Color.White;
+            this.PanelSearchScripts.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PanelSearchScripts.Controls.Add(this.BtnNextSearchScript);
+            this.PanelSearchScripts.Controls.Add(this.BtnPrevSearchScript);
+            this.PanelSearchScripts.Controls.Add(this.BtnCloseSearchScript);
+            this.PanelSearchScripts.Controls.Add(this.panelSearchScriptTextBox);
+            this.PanelSearchScripts.Location = new System.Drawing.Point(386, 3);
+            this.PanelSearchScripts.Name = "PanelSearchScripts";
+            this.PanelSearchScripts.Size = new System.Drawing.Size(292, 40);
+            this.PanelSearchScripts.TabIndex = 14;
+            this.PanelSearchScripts.Visible = false;
             // 
-            // LineNumberTextBoxScript
+            // BtnNextSearchScript
             // 
-            this.LineNumberTextBoxScript.BackColor = System.Drawing.SystemColors.Window;
-            this.LineNumberTextBoxScript.CausesValidation = false;
-            this.LineNumberTextBoxScript.Cursor = System.Windows.Forms.Cursors.PanNE;
-            this.LineNumberTextBoxScript.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LineNumberTextBoxScript.Enabled = false;
-            this.LineNumberTextBoxScript.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LineNumberTextBoxScript.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.LineNumberTextBoxScript.Location = new System.Drawing.Point(3, 3);
-            this.LineNumberTextBoxScript.MaxLength = 65535;
-            this.LineNumberTextBoxScript.Name = "LineNumberTextBoxScript";
-            this.LineNumberTextBoxScript.ReadOnly = true;
-            this.LineNumberTextBoxScript.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.LineNumberTextBoxScript.ShortcutsEnabled = false;
-            this.LineNumberTextBoxScript.Size = new System.Drawing.Size(10, 562);
-            this.LineNumberTextBoxScript.TabIndex = 9;
-            this.LineNumberTextBoxScript.TabStop = false;
-            this.LineNumberTextBoxScript.Text = "";
-            this.LineNumberTextBoxScript.WordWrap = false;
+            this.BtnNextSearchScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnNextSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnNextSearchScript.ForeColor = System.Drawing.Color.White;
+            this.BtnNextSearchScript.Image = ((System.Drawing.Image)(resources.GetObject("BtnNextSearchScript.Image")));
+            this.BtnNextSearchScript.Location = new System.Drawing.Point(233, 4);
+            this.BtnNextSearchScript.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnNextSearchScript.Name = "BtnNextSearchScript";
+            this.BtnNextSearchScript.Size = new System.Drawing.Size(25, 30);
+            this.BtnNextSearchScript.TabIndex = 9;
+            this.BtnNextSearchScript.Tag = "Find next (Enter)";
+            this.BtnNextSearchScript.UseVisualStyleBackColor = true;
+            this.BtnNextSearchScript.Click += new System.EventHandler(this.BtnNextSearchScript_Click);
+            // 
+            // BtnPrevSearchScript
+            // 
+            this.BtnPrevSearchScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnPrevSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnPrevSearchScript.ForeColor = System.Drawing.Color.White;
+            this.BtnPrevSearchScript.Image = ((System.Drawing.Image)(resources.GetObject("BtnPrevSearchScript.Image")));
+            this.BtnPrevSearchScript.Location = new System.Drawing.Point(205, 4);
+            this.BtnPrevSearchScript.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnPrevSearchScript.Name = "BtnPrevSearchScript";
+            this.BtnPrevSearchScript.Size = new System.Drawing.Size(25, 30);
+            this.BtnPrevSearchScript.TabIndex = 8;
+            this.BtnPrevSearchScript.Tag = "Find previous (Shift+Enter)";
+            this.BtnPrevSearchScript.UseVisualStyleBackColor = true;
+            this.BtnPrevSearchScript.Click += new System.EventHandler(this.BtnPrevSearchScript_Click);
+            // 
+            // BtnCloseSearchScript
+            // 
+            this.BtnCloseSearchScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnCloseSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnCloseSearchScript.ForeColor = System.Drawing.Color.White;
+            this.BtnCloseSearchScript.Image = ((System.Drawing.Image)(resources.GetObject("BtnCloseSearchScript.Image")));
+            this.BtnCloseSearchScript.Location = new System.Drawing.Point(261, 4);
+            this.BtnCloseSearchScript.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnCloseSearchScript.Name = "BtnCloseSearchScript";
+            this.BtnCloseSearchScript.Size = new System.Drawing.Size(25, 30);
+            this.BtnCloseSearchScript.TabIndex = 7;
+            this.BtnCloseSearchScript.Tag = "Close (Esc)";
+            this.BtnCloseSearchScript.UseVisualStyleBackColor = true;
+            this.BtnCloseSearchScript.Click += new System.EventHandler(this.BtnCloseSearchScript_Click);
+            // 
+            // panelSearchScriptTextBox
+            // 
+            this.panelSearchScriptTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelSearchScriptTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.panelSearchScriptTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panelSearchScriptTextBox.Location = new System.Drawing.Point(10, 6);
+            this.panelSearchScriptTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panelSearchScriptTextBox.Name = "panelSearchScriptTextBox";
+            this.panelSearchScriptTextBox.Size = new System.Drawing.Size(189, 25);
+            this.panelSearchScriptTextBox.TabIndex = 6;
+            this.panelSearchScriptTextBox.TextChanged += new System.EventHandler(this.panelSearchScriptTextBox_TextChanged);
+            this.panelSearchScriptTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.scriptTxtSearch_KeyDown);
+            // 
+            // scintillaScriptsPanel
+            // 
+            this.scintillaScriptsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scintillaScriptsPanel.Location = new System.Drawing.Point(3, 3);
+            this.scintillaScriptsPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.scintillaScriptsPanel.Name = "scintillaScriptsPanel";
+            this.scintillaScriptsPanel.Size = new System.Drawing.Size(678, 563);
+            this.scintillaScriptsPanel.TabIndex = 13;
             // 
             // functionTabPage
             // 
-            this.functionTabPage.Controls.Add(this.functionTextBox);
-            this.functionTabPage.Controls.Add(this.LineNumberTextBoxFunc);
+            this.functionTabPage.Controls.Add(this.PanelSearchFunctions);
+            this.functionTabPage.Controls.Add(this.scintillaFunctionsPanel);
             this.functionTabPage.Location = new System.Drawing.Point(4, 22);
             this.functionTabPage.Name = "functionTabPage";
             this.functionTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.functionTabPage.Size = new System.Drawing.Size(664, 568);
+            this.functionTabPage.Size = new System.Drawing.Size(684, 569);
             this.functionTabPage.TabIndex = 1;
             this.functionTabPage.Text = "Functions";
             this.functionTabPage.UseVisualStyleBackColor = true;
             // 
-            // functionTextBox
+            // PanelSearchFunctions
             // 
-            this.functionTextBox.AcceptsTab = true;
-            this.functionTextBox.BackColor = System.Drawing.SystemColors.Menu;
-            this.functionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.functionTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.functionTextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.functionTextBox.Location = new System.Drawing.Point(13, 3);
-            this.functionTextBox.MaxLength = 1000000;
-            this.functionTextBox.Name = "functionTextBox";
-            this.functionTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.functionTextBox.Size = new System.Drawing.Size(648, 562);
-            this.functionTextBox.TabIndex = 14;
-            this.functionTextBox.TabStop = false;
-            this.functionTextBox.Text = "";
-            this.functionTextBox.VScroll += new System.EventHandler(this.updateCurrentBoxLineNumbers);
-            this.functionTextBox.TextChanged += new System.EventHandler(this.updateCurrentBoxLineNumbers);
+            this.PanelSearchFunctions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PanelSearchFunctions.BackColor = System.Drawing.Color.White;
+            this.PanelSearchFunctions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PanelSearchFunctions.Controls.Add(this.BtnNextSearchFunc);
+            this.PanelSearchFunctions.Controls.Add(this.BtnPrevSearchFunc);
+            this.PanelSearchFunctions.Controls.Add(this.BtnCloseSearchFunc);
+            this.PanelSearchFunctions.Controls.Add(this.panelSearchFunctionTextBox);
+            this.PanelSearchFunctions.Location = new System.Drawing.Point(386, 3);
+            this.PanelSearchFunctions.Name = "PanelSearchFunctions";
+            this.PanelSearchFunctions.Size = new System.Drawing.Size(292, 40);
+            this.PanelSearchFunctions.TabIndex = 16;
+            this.PanelSearchFunctions.Visible = false;
             // 
-            // LineNumberTextBoxFunc
+            // BtnNextSearchFunc
             // 
-            this.LineNumberTextBoxFunc.BackColor = System.Drawing.SystemColors.Window;
-            this.LineNumberTextBoxFunc.CausesValidation = false;
-            this.LineNumberTextBoxFunc.Cursor = System.Windows.Forms.Cursors.PanNE;
-            this.LineNumberTextBoxFunc.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LineNumberTextBoxFunc.Enabled = false;
-            this.LineNumberTextBoxFunc.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LineNumberTextBoxFunc.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.LineNumberTextBoxFunc.Location = new System.Drawing.Point(3, 3);
-            this.LineNumberTextBoxFunc.Name = "LineNumberTextBoxFunc";
-            this.LineNumberTextBoxFunc.ReadOnly = true;
-            this.LineNumberTextBoxFunc.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.LineNumberTextBoxFunc.Size = new System.Drawing.Size(10, 562);
-            this.LineNumberTextBoxFunc.TabIndex = 15;
-            this.LineNumberTextBoxFunc.Text = "";
-            this.LineNumberTextBoxFunc.WordWrap = false;
+            this.BtnNextSearchFunc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnNextSearchFunc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnNextSearchFunc.ForeColor = System.Drawing.Color.White;
+            this.BtnNextSearchFunc.Image = ((System.Drawing.Image)(resources.GetObject("BtnNextSearchFunc.Image")));
+            this.BtnNextSearchFunc.Location = new System.Drawing.Point(233, 4);
+            this.BtnNextSearchFunc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnNextSearchFunc.Name = "BtnNextSearchFunc";
+            this.BtnNextSearchFunc.Size = new System.Drawing.Size(25, 30);
+            this.BtnNextSearchFunc.TabIndex = 9;
+            this.BtnNextSearchFunc.Tag = "Find next (Enter)";
+            this.BtnNextSearchFunc.UseVisualStyleBackColor = true;
+            this.BtnNextSearchFunc.Click += new System.EventHandler(this.BtnNextSearchFunc_Click);
+            // 
+            // BtnPrevSearchFunc
+            // 
+            this.BtnPrevSearchFunc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnPrevSearchFunc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnPrevSearchFunc.ForeColor = System.Drawing.Color.White;
+            this.BtnPrevSearchFunc.Image = ((System.Drawing.Image)(resources.GetObject("BtnPrevSearchFunc.Image")));
+            this.BtnPrevSearchFunc.Location = new System.Drawing.Point(205, 4);
+            this.BtnPrevSearchFunc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnPrevSearchFunc.Name = "BtnPrevSearchFunc";
+            this.BtnPrevSearchFunc.Size = new System.Drawing.Size(25, 30);
+            this.BtnPrevSearchFunc.TabIndex = 8;
+            this.BtnPrevSearchFunc.Tag = "Find previous (Shift+Enter)";
+            this.BtnPrevSearchFunc.UseVisualStyleBackColor = true;
+            this.BtnPrevSearchFunc.Click += new System.EventHandler(this.BtnPrevSearchFunc_Click);
+            // 
+            // BtnCloseSearchFunc
+            // 
+            this.BtnCloseSearchFunc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnCloseSearchFunc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnCloseSearchFunc.ForeColor = System.Drawing.Color.White;
+            this.BtnCloseSearchFunc.Image = ((System.Drawing.Image)(resources.GetObject("BtnCloseSearchFunc.Image")));
+            this.BtnCloseSearchFunc.Location = new System.Drawing.Point(261, 4);
+            this.BtnCloseSearchFunc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnCloseSearchFunc.Name = "BtnCloseSearchFunc";
+            this.BtnCloseSearchFunc.Size = new System.Drawing.Size(25, 30);
+            this.BtnCloseSearchFunc.TabIndex = 7;
+            this.BtnCloseSearchFunc.Tag = "Close (Esc)";
+            this.BtnCloseSearchFunc.UseVisualStyleBackColor = true;
+            this.BtnCloseSearchFunc.Click += new System.EventHandler(this.BtnCloseSearchFunc_Click);
+            // 
+            // panelSearchFunctionTextBox
+            // 
+            this.panelSearchFunctionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelSearchFunctionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.panelSearchFunctionTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panelSearchFunctionTextBox.Location = new System.Drawing.Point(10, 6);
+            this.panelSearchFunctionTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panelSearchFunctionTextBox.Name = "panelSearchFunctionTextBox";
+            this.panelSearchFunctionTextBox.Size = new System.Drawing.Size(189, 25);
+            this.panelSearchFunctionTextBox.TabIndex = 6;
+            this.panelSearchFunctionTextBox.TextChanged += new System.EventHandler(this.panelSearchFunctionTextBox_TextChanged);
+            this.panelSearchFunctionTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.functionTxtSearch_KeyDown);
+            // 
+            // scintillaFunctionsPanel
+            // 
+            this.scintillaFunctionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scintillaFunctionsPanel.Location = new System.Drawing.Point(3, 3);
+            this.scintillaFunctionsPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.scintillaFunctionsPanel.Name = "scintillaFunctionsPanel";
+            this.scintillaFunctionsPanel.Size = new System.Drawing.Size(678, 563);
+            this.scintillaFunctionsPanel.TabIndex = 15;
             // 
             // movementTabPage
             // 
-            this.movementTabPage.Controls.Add(this.actionsTextBox);
-            this.movementTabPage.Controls.Add(this.LineNumberTextBoxMov);
+            this.movementTabPage.Controls.Add(this.PanelSearchActions);
+            this.movementTabPage.Controls.Add(this.scintillaActionsPanel);
             this.movementTabPage.Location = new System.Drawing.Point(4, 22);
             this.movementTabPage.Name = "movementTabPage";
             this.movementTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.movementTabPage.Size = new System.Drawing.Size(664, 568);
+            this.movementTabPage.Size = new System.Drawing.Size(684, 569);
             this.movementTabPage.TabIndex = 2;
             this.movementTabPage.Text = "Actions";
             this.movementTabPage.UseVisualStyleBackColor = true;
             // 
-            // actionsTextBox
+            // PanelSearchActions
             // 
-            this.actionsTextBox.AcceptsTab = true;
-            this.actionsTextBox.BackColor = System.Drawing.SystemColors.Menu;
-            this.actionsTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.actionsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.actionsTextBox.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.actionsTextBox.Location = new System.Drawing.Point(13, 3);
-            this.actionsTextBox.MaxLength = 1000000;
-            this.actionsTextBox.Name = "actionsTextBox";
-            this.actionsTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.actionsTextBox.Size = new System.Drawing.Size(648, 562);
-            this.actionsTextBox.TabIndex = 17;
-            this.actionsTextBox.TabStop = false;
-            this.actionsTextBox.Text = "";
-            this.actionsTextBox.SelectionChanged += new System.EventHandler(this.updateCurrentBoxLineNumbers);
-            this.actionsTextBox.VScroll += new System.EventHandler(this.updateCurrentBoxLineNumbers);
+            this.PanelSearchActions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PanelSearchActions.BackColor = System.Drawing.Color.White;
+            this.PanelSearchActions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PanelSearchActions.Controls.Add(this.BtnNextSearchActions);
+            this.PanelSearchActions.Controls.Add(this.BtnPrevSearchActions);
+            this.PanelSearchActions.Controls.Add(this.BtnCloseSearchActions);
+            this.PanelSearchActions.Controls.Add(this.panelSearchActionTextBox);
+            this.PanelSearchActions.Location = new System.Drawing.Point(386, 3);
+            this.PanelSearchActions.Name = "PanelSearchActions";
+            this.PanelSearchActions.Size = new System.Drawing.Size(292, 40);
+            this.PanelSearchActions.TabIndex = 16;
+            this.PanelSearchActions.Visible = false;
             // 
-            // LineNumberTextBoxMov
+            // BtnNextSearchActions
             // 
-            this.LineNumberTextBoxMov.BackColor = System.Drawing.SystemColors.Window;
-            this.LineNumberTextBoxMov.CausesValidation = false;
-            this.LineNumberTextBoxMov.Cursor = System.Windows.Forms.Cursors.PanNE;
-            this.LineNumberTextBoxMov.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LineNumberTextBoxMov.Enabled = false;
-            this.LineNumberTextBoxMov.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LineNumberTextBoxMov.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.LineNumberTextBoxMov.Location = new System.Drawing.Point(3, 3);
-            this.LineNumberTextBoxMov.Name = "LineNumberTextBoxMov";
-            this.LineNumberTextBoxMov.ReadOnly = true;
-            this.LineNumberTextBoxMov.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.LineNumberTextBoxMov.Size = new System.Drawing.Size(10, 562);
-            this.LineNumberTextBoxMov.TabIndex = 18;
-            this.LineNumberTextBoxMov.Text = "";
-            this.LineNumberTextBoxMov.WordWrap = false;
+            this.BtnNextSearchActions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnNextSearchActions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnNextSearchActions.ForeColor = System.Drawing.Color.White;
+            this.BtnNextSearchActions.Image = ((System.Drawing.Image)(resources.GetObject("BtnNextSearchActions.Image")));
+            this.BtnNextSearchActions.Location = new System.Drawing.Point(233, 4);
+            this.BtnNextSearchActions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnNextSearchActions.Name = "BtnNextSearchActions";
+            this.BtnNextSearchActions.Size = new System.Drawing.Size(25, 30);
+            this.BtnNextSearchActions.TabIndex = 9;
+            this.BtnNextSearchActions.Tag = "Find next (Enter)";
+            this.BtnNextSearchActions.UseVisualStyleBackColor = true;
+            this.BtnNextSearchActions.Click += new System.EventHandler(this.BtnNextSearchActions_Click);
+            // 
+            // BtnPrevSearchActions
+            // 
+            this.BtnPrevSearchActions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnPrevSearchActions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnPrevSearchActions.ForeColor = System.Drawing.Color.White;
+            this.BtnPrevSearchActions.Image = ((System.Drawing.Image)(resources.GetObject("BtnPrevSearchActions.Image")));
+            this.BtnPrevSearchActions.Location = new System.Drawing.Point(205, 4);
+            this.BtnPrevSearchActions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnPrevSearchActions.Name = "BtnPrevSearchActions";
+            this.BtnPrevSearchActions.Size = new System.Drawing.Size(25, 30);
+            this.BtnPrevSearchActions.TabIndex = 8;
+            this.BtnPrevSearchActions.Tag = "Find previous (Shift+Enter)";
+            this.BtnPrevSearchActions.UseVisualStyleBackColor = true;
+            this.BtnPrevSearchActions.Click += new System.EventHandler(this.BtnPrevSearchActions_Click);
+            // 
+            // BtnCloseSearchActions
+            // 
+            this.BtnCloseSearchActions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnCloseSearchActions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnCloseSearchActions.ForeColor = System.Drawing.Color.White;
+            this.BtnCloseSearchActions.Image = ((System.Drawing.Image)(resources.GetObject("BtnCloseSearchActions.Image")));
+            this.BtnCloseSearchActions.Location = new System.Drawing.Point(261, 4);
+            this.BtnCloseSearchActions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnCloseSearchActions.Name = "BtnCloseSearchActions";
+            this.BtnCloseSearchActions.Size = new System.Drawing.Size(25, 30);
+            this.BtnCloseSearchActions.TabIndex = 7;
+            this.BtnCloseSearchActions.Tag = "Close (Esc)";
+            this.BtnCloseSearchActions.UseVisualStyleBackColor = true;
+            this.BtnCloseSearchActions.Click += new System.EventHandler(this.BtnCloseSearchActions_Click);
+            // 
+            // panelSearchActionTextBox
+            // 
+            this.panelSearchActionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelSearchActionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.panelSearchActionTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panelSearchActionTextBox.Location = new System.Drawing.Point(10, 6);
+            this.panelSearchActionTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panelSearchActionTextBox.Name = "panelSearchActionTextBox";
+            this.panelSearchActionTextBox.Size = new System.Drawing.Size(189, 25);
+            this.panelSearchActionTextBox.TabIndex = 6;
+            this.panelSearchActionTextBox.TextChanged += new System.EventHandler(this.panelSearchActionTextBox_TextChanged);
+            this.panelSearchActionTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.actiontTxtSearch_KeyDown);
+            // 
+            // scintillaActionsPanel
+            // 
+            this.scintillaActionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scintillaActionsPanel.Location = new System.Drawing.Point(3, 3);
+            this.scintillaActionsPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.scintillaActionsPanel.Name = "scintillaActionsPanel";
+            this.scintillaActionsPanel.Size = new System.Drawing.Size(678, 563);
+            this.scintillaActionsPanel.TabIndex = 15;
             // 
             // label5
             // 
@@ -7055,16 +7089,16 @@
             // 
             this.textEditorTabPage.Controls.Add(this.LineNumbersFormatgroupBox);
             this.textEditorTabPage.Controls.Add(this.groupBox13);
+            this.textEditorTabPage.Controls.Add(this.textEditorDataGridView);
+            this.textEditorTabPage.Controls.Add(this.label6);
+            this.textEditorTabPage.Controls.Add(this.selectTextFileComboBox);
             this.textEditorTabPage.Controls.Add(this.removeStringButton);
             this.textEditorTabPage.Controls.Add(this.addStringButton);
-            this.textEditorTabPage.Controls.Add(this.textEditorDataGridView);
             this.textEditorTabPage.Controls.Add(this.exportTextFileButton);
             this.textEditorTabPage.Controls.Add(this.importTextFileButton);
             this.textEditorTabPage.Controls.Add(this.saveTextArchiveButton);
             this.textEditorTabPage.Controls.Add(this.removeMessageFileButton);
             this.textEditorTabPage.Controls.Add(this.addTextArchiveButton);
-            this.textEditorTabPage.Controls.Add(this.label6);
-            this.textEditorTabPage.Controls.Add(this.selectTextFileComboBox);
             this.textEditorTabPage.ImageIndex = 4;
             this.textEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.textEditorTabPage.Name = "textEditorTabPage";
@@ -7254,32 +7288,6 @@
             this.replaceMessageButton.UseVisualStyleBackColor = true;
             this.replaceMessageButton.Click += new System.EventHandler(this.replaceMessageButton_Click);
             // 
-            // removeStringButton
-            // 
-            this.removeStringButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
-            this.removeStringButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeStringButton.Location = new System.Drawing.Point(113, 579);
-            this.removeStringButton.Name = "removeStringButton";
-            this.removeStringButton.Size = new System.Drawing.Size(124, 34);
-            this.removeStringButton.TabIndex = 26;
-            this.removeStringButton.Text = "Remove Last Line";
-            this.removeStringButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeStringButton.UseVisualStyleBackColor = true;
-            this.removeStringButton.Click += new System.EventHandler(this.removeStringButton_Click);
-            // 
-            // addStringButton
-            // 
-            this.addStringButton.Image = global::DSPRE.Properties.Resources.addIcon;
-            this.addStringButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addStringButton.Location = new System.Drawing.Point(12, 579);
-            this.addStringButton.Name = "addStringButton";
-            this.addStringButton.Size = new System.Drawing.Size(95, 34);
-            this.addStringButton.TabIndex = 25;
-            this.addStringButton.Text = "&Append Line";
-            this.addStringButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addStringButton.UseVisualStyleBackColor = true;
-            this.addStringButton.Click += new System.EventHandler(this.addStringButton_Click);
-            // 
             // textEditorDataGridView
             // 
             this.textEditorDataGridView.AllowDrop = true;
@@ -7297,8 +7305,8 @@
             this.textEditorDataGridView.Location = new System.Drawing.Point(12, 77);
             this.textEditorDataGridView.Name = "textEditorDataGridView";
             this.textEditorDataGridView.RowHeadersWidth = 68;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.textEditorDataGridView.Size = new System.Drawing.Size(873, 496);
             this.textEditorDataGridView.TabIndex = 24;
             this.textEditorDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellValueChanged);
@@ -7310,70 +7318,6 @@
             this.messageColumn.Name = "messageColumn";
             this.messageColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.messageColumn.Width = 56;
-            // 
-            // exportTextFileButton
-            // 
-            this.exportTextFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
-            this.exportTextFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportTextFileButton.Location = new System.Drawing.Point(297, 21);
-            this.exportTextFileButton.Name = "exportTextFileButton";
-            this.exportTextFileButton.Size = new System.Drawing.Size(94, 50);
-            this.exportTextFileButton.TabIndex = 23;
-            this.exportTextFileButton.Text = "&Export File";
-            this.exportTextFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportTextFileButton.UseVisualStyleBackColor = true;
-            this.exportTextFileButton.Click += new System.EventHandler(this.exportTextFileButton_Click);
-            // 
-            // importTextFileButton
-            // 
-            this.importTextFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
-            this.importTextFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importTextFileButton.Location = new System.Drawing.Point(200, 21);
-            this.importTextFileButton.Name = "importTextFileButton";
-            this.importTextFileButton.Size = new System.Drawing.Size(94, 50);
-            this.importTextFileButton.TabIndex = 22;
-            this.importTextFileButton.Text = "&Import File";
-            this.importTextFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importTextFileButton.UseVisualStyleBackColor = true;
-            this.importTextFileButton.Click += new System.EventHandler(this.importTextFileButton_Click);
-            // 
-            // saveTextArchiveButton
-            // 
-            this.saveTextArchiveButton.Image = global::DSPRE.Properties.Resources.saveButton;
-            this.saveTextArchiveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveTextArchiveButton.Location = new System.Drawing.Point(12, 48);
-            this.saveTextArchiveButton.Name = "saveTextArchiveButton";
-            this.saveTextArchiveButton.Size = new System.Drawing.Size(184, 23);
-            this.saveTextArchiveButton.TabIndex = 21;
-            this.saveTextArchiveButton.Text = "&Save Current Archive";
-            this.saveTextArchiveButton.UseVisualStyleBackColor = true;
-            this.saveTextArchiveButton.Click += new System.EventHandler(this.saveTextArchiveButton_Click);
-            // 
-            // removeMessageFileButton
-            // 
-            this.removeMessageFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
-            this.removeMessageFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeMessageFileButton.Location = new System.Drawing.Point(491, 21);
-            this.removeMessageFileButton.Name = "removeMessageFileButton";
-            this.removeMessageFileButton.Size = new System.Drawing.Size(97, 50);
-            this.removeMessageFileButton.TabIndex = 20;
-            this.removeMessageFileButton.Text = "Remove \r\nLast Archive";
-            this.removeMessageFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeMessageFileButton.UseVisualStyleBackColor = true;
-            this.removeMessageFileButton.Click += new System.EventHandler(this.removeMessageFileButton_Click);
-            // 
-            // addTextArchiveButton
-            // 
-            this.addTextArchiveButton.Image = global::DSPRE.Properties.Resources.addIcon;
-            this.addTextArchiveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addTextArchiveButton.Location = new System.Drawing.Point(397, 21);
-            this.addTextArchiveButton.Name = "addTextArchiveButton";
-            this.addTextArchiveButton.Size = new System.Drawing.Size(91, 50);
-            this.addTextArchiveButton.TabIndex = 19;
-            this.addTextArchiveButton.Text = "Add Text \r\nArchive";
-            this.addTextArchiveButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addTextArchiveButton.UseVisualStyleBackColor = true;
-            this.addTextArchiveButton.Click += new System.EventHandler(this.addTextArchiveButton_Click);
             // 
             // label6
             // 
@@ -7394,6 +7338,96 @@
             this.selectTextFileComboBox.TabIndex = 17;
             this.selectTextFileComboBox.SelectedIndexChanged += new System.EventHandler(this.selectTextFileComboBox_SelectedIndexChanged);
             // 
+            // removeStringButton
+            // 
+            this.removeStringButton.Image = ((System.Drawing.Image)(resources.GetObject("removeStringButton.Image")));
+            this.removeStringButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.removeStringButton.Location = new System.Drawing.Point(113, 579);
+            this.removeStringButton.Name = "removeStringButton";
+            this.removeStringButton.Size = new System.Drawing.Size(124, 34);
+            this.removeStringButton.TabIndex = 26;
+            this.removeStringButton.Text = "Remove Last Line";
+            this.removeStringButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.removeStringButton.UseVisualStyleBackColor = true;
+            this.removeStringButton.Click += new System.EventHandler(this.removeStringButton_Click);
+            // 
+            // addStringButton
+            // 
+            this.addStringButton.Image = ((System.Drawing.Image)(resources.GetObject("addStringButton.Image")));
+            this.addStringButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.addStringButton.Location = new System.Drawing.Point(12, 579);
+            this.addStringButton.Name = "addStringButton";
+            this.addStringButton.Size = new System.Drawing.Size(95, 34);
+            this.addStringButton.TabIndex = 25;
+            this.addStringButton.Text = "&Append Line";
+            this.addStringButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.addStringButton.UseVisualStyleBackColor = true;
+            this.addStringButton.Click += new System.EventHandler(this.addStringButton_Click);
+            // 
+            // exportTextFileButton
+            // 
+            this.exportTextFileButton.Image = ((System.Drawing.Image)(resources.GetObject("exportTextFileButton.Image")));
+            this.exportTextFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.exportTextFileButton.Location = new System.Drawing.Point(297, 21);
+            this.exportTextFileButton.Name = "exportTextFileButton";
+            this.exportTextFileButton.Size = new System.Drawing.Size(94, 50);
+            this.exportTextFileButton.TabIndex = 23;
+            this.exportTextFileButton.Text = "&Export File";
+            this.exportTextFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.exportTextFileButton.UseVisualStyleBackColor = true;
+            this.exportTextFileButton.Click += new System.EventHandler(this.exportTextFileButton_Click);
+            // 
+            // importTextFileButton
+            // 
+            this.importTextFileButton.Image = ((System.Drawing.Image)(resources.GetObject("importTextFileButton.Image")));
+            this.importTextFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.importTextFileButton.Location = new System.Drawing.Point(200, 21);
+            this.importTextFileButton.Name = "importTextFileButton";
+            this.importTextFileButton.Size = new System.Drawing.Size(94, 50);
+            this.importTextFileButton.TabIndex = 22;
+            this.importTextFileButton.Text = "&Import File";
+            this.importTextFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.importTextFileButton.UseVisualStyleBackColor = true;
+            this.importTextFileButton.Click += new System.EventHandler(this.importTextFileButton_Click);
+            // 
+            // saveTextArchiveButton
+            // 
+            this.saveTextArchiveButton.Image = ((System.Drawing.Image)(resources.GetObject("saveTextArchiveButton.Image")));
+            this.saveTextArchiveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.saveTextArchiveButton.Location = new System.Drawing.Point(12, 48);
+            this.saveTextArchiveButton.Name = "saveTextArchiveButton";
+            this.saveTextArchiveButton.Size = new System.Drawing.Size(184, 23);
+            this.saveTextArchiveButton.TabIndex = 21;
+            this.saveTextArchiveButton.Text = "&Save Current Archive";
+            this.saveTextArchiveButton.UseVisualStyleBackColor = true;
+            this.saveTextArchiveButton.Click += new System.EventHandler(this.saveTextArchiveButton_Click);
+            // 
+            // removeMessageFileButton
+            // 
+            this.removeMessageFileButton.Image = ((System.Drawing.Image)(resources.GetObject("removeMessageFileButton.Image")));
+            this.removeMessageFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.removeMessageFileButton.Location = new System.Drawing.Point(491, 21);
+            this.removeMessageFileButton.Name = "removeMessageFileButton";
+            this.removeMessageFileButton.Size = new System.Drawing.Size(97, 50);
+            this.removeMessageFileButton.TabIndex = 20;
+            this.removeMessageFileButton.Text = "Remove \r\nLast Archive";
+            this.removeMessageFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.removeMessageFileButton.UseVisualStyleBackColor = true;
+            this.removeMessageFileButton.Click += new System.EventHandler(this.removeMessageFileButton_Click);
+            // 
+            // addTextArchiveButton
+            // 
+            this.addTextArchiveButton.Image = ((System.Drawing.Image)(resources.GetObject("addTextArchiveButton.Image")));
+            this.addTextArchiveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.addTextArchiveButton.Location = new System.Drawing.Point(397, 21);
+            this.addTextArchiveButton.Name = "addTextArchiveButton";
+            this.addTextArchiveButton.Size = new System.Drawing.Size(91, 50);
+            this.addTextArchiveButton.TabIndex = 19;
+            this.addTextArchiveButton.Text = "Add Text \r\nArchive";
+            this.addTextArchiveButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.addTextArchiveButton.UseVisualStyleBackColor = true;
+            this.addTextArchiveButton.Click += new System.EventHandler(this.addTextArchiveButton_Click);
+            // 
             // cameraEditorTabPage
             // 
             this.cameraEditorTabPage.Controls.Add(this.exportCameraTableButton);
@@ -7410,7 +7444,7 @@
             // 
             // exportCameraTableButton
             // 
-            this.exportCameraTableButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportCameraTableButton.Image = ((System.Drawing.Image)(resources.GetObject("exportCameraTableButton.Image")));
             this.exportCameraTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportCameraTableButton.Location = new System.Drawing.Point(3, 563);
             this.exportCameraTableButton.Name = "exportCameraTableButton";
@@ -7423,7 +7457,7 @@
             // 
             // importCameraTableButton
             // 
-            this.importCameraTableButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importCameraTableButton.Image = ((System.Drawing.Image)(resources.GetObject("importCameraTableButton.Image")));
             this.importCameraTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importCameraTableButton.Location = new System.Drawing.Point(123, 563);
             this.importCameraTableButton.Name = "importCameraTableButton";
@@ -7436,7 +7470,7 @@
             // 
             // saveCameraTableButton
             // 
-            this.saveCameraTableButton.Image = global::DSPRE.Properties.Resources.save_rom;
+            this.saveCameraTableButton.Image = ((System.Drawing.Image)(resources.GetObject("saveCameraTableButton.Image")));
             this.saveCameraTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveCameraTableButton.Location = new System.Drawing.Point(1060, 563);
             this.saveCameraTableButton.Name = "saveCameraTableButton";
@@ -7457,14 +7491,14 @@
             this.cameraEditorDataGridView.CausesValidation = false;
             this.cameraEditorDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.cameraEditorDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.Info;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.cameraEditorDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.cameraEditorDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DistanceGVCol,
@@ -7596,11 +7630,11 @@
             this.trainerEditorTabPage.Controls.Add(this.exportPartyButton);
             this.trainerEditorTabPage.Controls.Add(this.addTrainerButton);
             this.trainerEditorTabPage.Controls.Add(this.groupBox28);
-            this.trainerEditorTabPage.Controls.Add(this.trainerSaveCurrentButton);
             this.trainerEditorTabPage.Controls.Add(this.groupBox27);
             this.trainerEditorTabPage.Controls.Add(this.groupBox25);
             this.trainerEditorTabPage.Controls.Add(this.label42);
             this.trainerEditorTabPage.Controls.Add(this.trainerComboBox);
+            this.trainerEditorTabPage.Controls.Add(this.trainerSaveCurrentButton);
             this.trainerEditorTabPage.ImageIndex = 8;
             this.trainerEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.trainerEditorTabPage.Name = "trainerEditorTabPage";
@@ -7611,7 +7645,7 @@
             // 
             // importTrainerButton
             // 
-            this.importTrainerButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importTrainerButton.Image = ((System.Drawing.Image)(resources.GetObject("importTrainerButton.Image")));
             this.importTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importTrainerButton.Location = new System.Drawing.Point(340, 20);
             this.importTrainerButton.Name = "importTrainerButton";
@@ -7624,7 +7658,7 @@
             // 
             // exportTrainerButton
             // 
-            this.exportTrainerButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportTrainerButton.Image = ((System.Drawing.Image)(resources.GetObject("exportTrainerButton.Image")));
             this.exportTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportTrainerButton.Location = new System.Drawing.Point(265, 20);
             this.exportTrainerButton.Name = "exportTrainerButton";
@@ -7637,7 +7671,7 @@
             // 
             // importReplacePartyButton
             // 
-            this.importReplacePartyButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importReplacePartyButton.Image = ((System.Drawing.Image)(resources.GetObject("importReplacePartyButton.Image")));
             this.importReplacePartyButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importReplacePartyButton.Location = new System.Drawing.Point(890, 20);
             this.importReplacePartyButton.Name = "importReplacePartyButton";
@@ -7650,7 +7684,7 @@
             // 
             // importReplacePropertiesButton
             // 
-            this.importReplacePropertiesButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importReplacePropertiesButton.Image = ((System.Drawing.Image)(resources.GetObject("importReplacePropertiesButton.Image")));
             this.importReplacePropertiesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importReplacePropertiesButton.Location = new System.Drawing.Point(522, 20);
             this.importReplacePropertiesButton.Name = "importReplacePropertiesButton";
@@ -7663,7 +7697,7 @@
             // 
             // exportPropertiesButton
             // 
-            this.exportPropertiesButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportPropertiesButton.Image = ((System.Drawing.Image)(resources.GetObject("exportPropertiesButton.Image")));
             this.exportPropertiesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportPropertiesButton.Location = new System.Drawing.Point(433, 20);
             this.exportPropertiesButton.Name = "exportPropertiesButton";
@@ -7676,7 +7710,7 @@
             // 
             // exportPartyButton
             // 
-            this.exportPartyButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportPartyButton.Image = ((System.Drawing.Image)(resources.GetObject("exportPartyButton.Image")));
             this.exportPartyButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportPartyButton.Location = new System.Drawing.Point(804, 20);
             this.exportPartyButton.Name = "exportPartyButton";
@@ -7689,7 +7723,7 @@
             // 
             // addTrainerButton
             // 
-            this.addTrainerButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addTrainerButton.Image = ((System.Drawing.Image)(resources.GetObject("addTrainerButton.Image")));
             this.addTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addTrainerButton.Location = new System.Drawing.Point(190, 20);
             this.addTrainerButton.Name = "addTrainerButton";
@@ -8681,18 +8715,6 @@
             this.partyPokemon1ComboBox.TabIndex = 0;
             this.partyPokemon1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyPokemon1ComboBox_SelectedIndexChanged);
             // 
-            // trainerSaveCurrentButton
-            // 
-            this.trainerSaveCurrentButton.Image = global::DSPRE.Properties.Resources.saveButton;
-            this.trainerSaveCurrentButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.trainerSaveCurrentButton.Location = new System.Drawing.Point(26, 48);
-            this.trainerSaveCurrentButton.Name = "trainerSaveCurrentButton";
-            this.trainerSaveCurrentButton.Size = new System.Drawing.Size(162, 23);
-            this.trainerSaveCurrentButton.TabIndex = 31;
-            this.trainerSaveCurrentButton.Text = "&Save Current Trainer";
-            this.trainerSaveCurrentButton.UseVisualStyleBackColor = true;
-            this.trainerSaveCurrentButton.Click += new System.EventHandler(this.trainerSaveCurrentButton_Click);
-            // 
             // groupBox27
             // 
             this.groupBox27.Controls.Add(this.label73);
@@ -8784,7 +8806,7 @@
             // 
             // saveTrainerClassButton
             // 
-            this.saveTrainerClassButton.Image = global::DSPRE.Properties.Resources.save_rom;
+            this.saveTrainerClassButton.Image = ((System.Drawing.Image)(resources.GetObject("saveTrainerClassButton.Image")));
             this.saveTrainerClassButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveTrainerClassButton.Location = new System.Drawing.Point(319, 15);
             this.saveTrainerClassButton.Name = "saveTrainerClassButton";
@@ -9138,6 +9160,18 @@
             this.trainerComboBox.TabIndex = 27;
             this.trainerComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerComboBox_SelectedIndexChanged);
             // 
+            // trainerSaveCurrentButton
+            // 
+            this.trainerSaveCurrentButton.Image = ((System.Drawing.Image)(resources.GetObject("trainerSaveCurrentButton.Image")));
+            this.trainerSaveCurrentButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.trainerSaveCurrentButton.Location = new System.Drawing.Point(26, 48);
+            this.trainerSaveCurrentButton.Name = "trainerSaveCurrentButton";
+            this.trainerSaveCurrentButton.Size = new System.Drawing.Size(162, 23);
+            this.trainerSaveCurrentButton.TabIndex = 31;
+            this.trainerSaveCurrentButton.Text = "&Save Current Trainer";
+            this.trainerSaveCurrentButton.UseVisualStyleBackColor = true;
+            this.trainerSaveCurrentButton.Click += new System.EventHandler(this.trainerSaveCurrentButton_Click);
+            // 
             // tableEditorTabPage
             // 
             this.tableEditorTabPage.Controls.Add(this.pbEffectsGroupBox);
@@ -9172,7 +9206,7 @@
             // 
             // HOWpbEffectsTableButton
             // 
-            this.HOWpbEffectsTableButton.Image = global::DSPRE.Properties.Resources.questionMark;
+            this.HOWpbEffectsTableButton.Image = ((System.Drawing.Image)(resources.GetObject("HOWpbEffectsTableButton.Image")));
             this.HOWpbEffectsTableButton.Location = new System.Drawing.Point(146, 396);
             this.HOWpbEffectsTableButton.Name = "HOWpbEffectsTableButton";
             this.HOWpbEffectsTableButton.Size = new System.Drawing.Size(28, 29);
@@ -9191,7 +9225,7 @@
             // 
             // saveEffectCombosTableBTN
             // 
-            this.saveEffectCombosTableBTN.Image = global::DSPRE.Properties.Resources.saveButton;
+            this.saveEffectCombosTableBTN.Image = ((System.Drawing.Image)(resources.GetObject("saveEffectCombosTableBTN.Image")));
             this.saveEffectCombosTableBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.saveEffectCombosTableBTN.Location = new System.Drawing.Point(175, 392);
             this.saveEffectCombosTableBTN.Name = "saveEffectCombosTableBTN";
@@ -9245,7 +9279,7 @@
             this.tbEditorTrClassFramePreviewUpDown.Name = "tbEditorTrClassFramePreviewUpDown";
             this.tbEditorTrClassFramePreviewUpDown.Size = new System.Drawing.Size(38, 20);
             this.tbEditorTrClassFramePreviewUpDown.TabIndex = 44;
-            this.tbEditorTrClassFramePreviewUpDown.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.tbEditorTrClassFramePreviewUpDown.ValueChanged += new System.EventHandler(this.TBLEditortrainerClassPreviewPic_ValueChanged);
             // 
             // tbEditorTrClassPictureBox
             // 
@@ -9276,7 +9310,7 @@
             // 
             // HOWVsTrainerButton
             // 
-            this.HOWVsTrainerButton.Image = global::DSPRE.Properties.Resources.questionMark;
+            this.HOWVsTrainerButton.Image = ((System.Drawing.Image)(resources.GetObject("HOWVsTrainerButton.Image")));
             this.HOWVsTrainerButton.Location = new System.Drawing.Point(304, 209);
             this.HOWVsTrainerButton.Name = "HOWVsTrainerButton";
             this.HOWVsTrainerButton.Size = new System.Drawing.Size(28, 29);
@@ -9286,7 +9320,7 @@
             // 
             // saveVSTrainerTableBTN
             // 
-            this.saveVSTrainerTableBTN.Image = global::DSPRE.Properties.Resources.saveButton;
+            this.saveVSTrainerTableBTN.Image = ((System.Drawing.Image)(resources.GetObject("saveVSTrainerTableBTN.Image")));
             this.saveVSTrainerTableBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.saveVSTrainerTableBTN.Location = new System.Drawing.Point(337, 205);
             this.saveVSTrainerTableBTN.Name = "saveVSTrainerTableBTN";
@@ -9370,7 +9404,7 @@
             // 
             // HOWvsPokemonButton
             // 
-            this.HOWvsPokemonButton.Image = global::DSPRE.Properties.Resources.questionMark;
+            this.HOWvsPokemonButton.Image = ((System.Drawing.Image)(resources.GetObject("HOWvsPokemonButton.Image")));
             this.HOWvsPokemonButton.Location = new System.Drawing.Point(304, 127);
             this.HOWvsPokemonButton.Name = "HOWvsPokemonButton";
             this.HOWvsPokemonButton.Size = new System.Drawing.Size(28, 29);
@@ -9380,7 +9414,7 @@
             // 
             // saveVSPokemonTableBTN
             // 
-            this.saveVSPokemonTableBTN.Image = global::DSPRE.Properties.Resources.saveButton;
+            this.saveVSPokemonTableBTN.Image = ((System.Drawing.Image)(resources.GetObject("saveVSPokemonTableBTN.Image")));
             this.saveVSPokemonTableBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.saveVSPokemonTableBTN.Location = new System.Drawing.Point(337, 123);
             this.saveVSPokemonTableBTN.Name = "saveVSPokemonTableBTN";
@@ -9492,7 +9526,7 @@
             // 
             // HOWconditionalMusicTableButton
             // 
-            this.HOWconditionalMusicTableButton.Image = global::DSPRE.Properties.Resources.questionMark;
+            this.HOWconditionalMusicTableButton.Image = ((System.Drawing.Image)(resources.GetObject("HOWconditionalMusicTableButton.Image")));
             this.HOWconditionalMusicTableButton.Location = new System.Drawing.Point(353, 93);
             this.HOWconditionalMusicTableButton.Name = "HOWconditionalMusicTableButton";
             this.HOWconditionalMusicTableButton.Size = new System.Drawing.Size(28, 29);
@@ -9502,7 +9536,7 @@
             // 
             // saveConditionalMusicTableBTN
             // 
-            this.saveConditionalMusicTableBTN.Image = global::DSPRE.Properties.Resources.saveButton;
+            this.saveConditionalMusicTableBTN.Image = ((System.Drawing.Image)(resources.GetObject("saveConditionalMusicTableBTN.Image")));
             this.saveConditionalMusicTableBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.saveConditionalMusicTableBTN.Location = new System.Drawing.Point(297, 142);
             this.saveConditionalMusicTableBTN.Name = "saveConditionalMusicTableBTN";
@@ -9793,31 +9827,6 @@
             this.toolStripProgressBar.Size = new System.Drawing.Size(180, 18);
             this.toolStripProgressBar.Visible = false;
             // 
-            // loadRomButton
-            // 
-            this.loadRomButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.loadRomButton.Image = global::DSPRE.Properties.Resources.open_rom;
-            this.loadRomButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.loadRomButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.loadRomButton.Margin = new System.Windows.Forms.Padding(13, 6, 0, 2);
-            this.loadRomButton.Name = "loadRomButton";
-            this.loadRomButton.Size = new System.Drawing.Size(36, 36);
-            this.loadRomButton.Text = "Open ROM";
-            this.loadRomButton.Click += new System.EventHandler(this.loadRom_Click);
-            // 
-            // saveRomButton
-            // 
-            this.saveRomButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.saveRomButton.Enabled = false;
-            this.saveRomButton.Image = ((System.Drawing.Image)(resources.GetObject("saveRomButton.Image")));
-            this.saveRomButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.saveRomButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveRomButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
-            this.saveRomButton.Name = "saveRomButton";
-            this.saveRomButton.Size = new System.Drawing.Size(36, 36);
-            this.saveRomButton.Text = "Save ROM";
-            this.saveRomButton.Click += new System.EventHandler(this.saveRom_Click);
-            // 
             // mainToolStrip
             // 
             this.mainToolStrip.BackColor = System.Drawing.SystemColors.Menu;
@@ -9848,10 +9857,22 @@
             this.mainToolStrip.TabIndex = 16;
             this.mainToolStrip.Text = "mainToolStrip";
             // 
+            // loadRomButton
+            // 
+            this.loadRomButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.loadRomButton.Image = ((System.Drawing.Image)(resources.GetObject("loadRomButton.Image")));
+            this.loadRomButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.loadRomButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.loadRomButton.Margin = new System.Windows.Forms.Padding(13, 6, 0, 2);
+            this.loadRomButton.Name = "loadRomButton";
+            this.loadRomButton.Size = new System.Drawing.Size(36, 36);
+            this.loadRomButton.Text = "Open ROM";
+            this.loadRomButton.Click += new System.EventHandler(this.loadRom_Click);
+            // 
             // readDataFromFolderButton
             // 
             this.readDataFromFolderButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.readDataFromFolderButton.Image = global::DSPRE.Properties.Resources.open_file;
+            this.readDataFromFolderButton.Image = ((System.Drawing.Image)(resources.GetObject("readDataFromFolderButton.Image")));
             this.readDataFromFolderButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.readDataFromFolderButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.readDataFromFolderButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
@@ -9860,6 +9881,19 @@
             this.readDataFromFolderButton.Text = "Open Extracted Data";
             this.readDataFromFolderButton.ToolTipText = "Open Extracted Data";
             this.readDataFromFolderButton.Click += new System.EventHandler(this.readDataFromFolderButton_Click);
+            // 
+            // saveRomButton
+            // 
+            this.saveRomButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveRomButton.Enabled = false;
+            this.saveRomButton.Image = ((System.Drawing.Image)(resources.GetObject("saveRomButton.Image")));
+            this.saveRomButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.saveRomButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveRomButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
+            this.saveRomButton.Name = "saveRomButton";
+            this.saveRomButton.Size = new System.Drawing.Size(36, 36);
+            this.saveRomButton.Text = "Save ROM";
+            this.saveRomButton.Click += new System.EventHandler(this.saveRom_Click);
             // 
             // toolStripSeparator3
             // 
@@ -9870,7 +9904,7 @@
             // 
             this.unpackAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.unpackAllButton.Enabled = false;
-            this.unpackAllButton.Image = global::DSPRE.Properties.Resources.unpackAllIcon;
+            this.unpackAllButton.Image = ((System.Drawing.Image)(resources.GetObject("unpackAllButton.Image")));
             this.unpackAllButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.unpackAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.unpackAllButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
@@ -9883,7 +9917,7 @@
             // 
             this.updateMapNarcsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.updateMapNarcsButton.Enabled = false;
-            this.updateMapNarcsButton.Image = global::DSPRE.Properties.Resources.unpackBuildingNarcsIcon;
+            this.updateMapNarcsButton.Image = ((System.Drawing.Image)(resources.GetObject("updateMapNarcsButton.Image")));
             this.updateMapNarcsButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.updateMapNarcsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.updateMapNarcsButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
@@ -9933,7 +9967,7 @@
             // nsbmdExportTexButton
             // 
             this.nsbmdExportTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.nsbmdExportTexButton.Image = global::DSPRE.Properties.Resources.saveTextureFromNSBMD;
+            this.nsbmdExportTexButton.Image = ((System.Drawing.Image)(resources.GetObject("nsbmdExportTexButton.Image")));
             this.nsbmdExportTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.nsbmdExportTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.nsbmdExportTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -9946,7 +9980,7 @@
             // nsbmdRemoveTexButton
             // 
             this.nsbmdRemoveTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.nsbmdRemoveTexButton.Image = global::DSPRE.Properties.Resources.removeTextureNSBMD;
+            this.nsbmdRemoveTexButton.Image = ((System.Drawing.Image)(resources.GetObject("nsbmdRemoveTexButton.Image")));
             this.nsbmdRemoveTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.nsbmdRemoveTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.nsbmdRemoveTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -9959,7 +9993,7 @@
             // nsbmdAddTexButton
             // 
             this.nsbmdAddTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.nsbmdAddTexButton.Image = global::DSPRE.Properties.Resources.addTextureToNSBMD;
+            this.nsbmdAddTexButton.Image = ((System.Drawing.Image)(resources.GetObject("nsbmdAddTexButton.Image")));
             this.nsbmdAddTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.nsbmdAddTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.nsbmdAddTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -9978,7 +10012,7 @@
             // 
             this.scriptCommandsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.scriptCommandsButton.Enabled = false;
-            this.scriptCommandsButton.Image = global::DSPRE.Properties.Resources.scriptDBIcon;
+            this.scriptCommandsButton.Image = ((System.Drawing.Image)(resources.GetObject("scriptCommandsButton.Image")));
             this.scriptCommandsButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.scriptCommandsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.scriptCommandsButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -10005,7 +10039,7 @@
             // 
             this.headerSearchToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.headerSearchToolStripButton.Enabled = false;
-            this.headerSearchToolStripButton.Image = global::DSPRE.Properties.Resources.wideLensImage;
+            this.headerSearchToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("headerSearchToolStripButton.Image")));
             this.headerSearchToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.headerSearchToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.headerSearchToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -10024,7 +10058,7 @@
             // 
             this.spawnEditorToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.spawnEditorToolStripButton.Enabled = false;
-            this.spawnEditorToolStripButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
+            this.spawnEditorToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("spawnEditorToolStripButton.Image")));
             this.spawnEditorToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.spawnEditorToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.spawnEditorToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -10103,12 +10137,6 @@
             this.matrixEditorTabPage.ResumeLayout(false);
             this.matrixEditorTabPage.PerformLayout();
             this.matrixTabControl.ResumeLayout(false);
-            this.headersTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.headersGridView)).EndInit();
-            this.heightsTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.heightsGridView)).EndInit();
-            this.mapFilesTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.mapFilesGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthUpDown)).EndInit();
             this.mapEditorTabPage.ResumeLayout(false);
@@ -10165,9 +10193,6 @@
             this.groupBox21.ResumeLayout(false);
             this.groupBox21.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventAreaDataUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rightClickPicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.wheelClickPicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LeftClickPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventMatrixYUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventMatrixXUpDown)).EndInit();
             this.eventMatrixPanel.ResumeLayout(false);
@@ -10193,7 +10218,6 @@
             this.groupBox17.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.owYMatrixUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.owXMatrixUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.owSpritePictureBox)).EndInit();
             this.owMovementGroupBox.ResumeLayout(false);
             this.owMovementGroupBox.PerformLayout();
             this.groupBox23.ResumeLayout(false);
@@ -10211,6 +10235,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.owScriptNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.owFlagNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.owIDNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.owSpritePictureBox)).EndInit();
             this.warpsTabPage.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
@@ -10247,8 +10272,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.triggerYMatrixUpDown)).EndInit();
             this.eventPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.eventPictureBox)).EndInit();
-            this.scriptEditorTabPage.ResumeLayout(false);
-            this.scriptEditorTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightClickPicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wheelClickPicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LeftClickPicture)).EndInit();
+            this.scriptTabPage.ResumeLayout(false);
+            this.scriptTabPage.PerformLayout();
             this.groupBox24.ResumeLayout(false);
             this.groupBox24.PerformLayout();
             this.ScriptNavigatorTabControl.ResumeLayout(false);
@@ -10259,8 +10287,14 @@
             this.groupBox8.PerformLayout();
             this.scriptEditorTabControl.ResumeLayout(false);
             this.scriptsTabPage.ResumeLayout(false);
+            this.PanelSearchScripts.ResumeLayout(false);
+            this.PanelSearchScripts.PerformLayout();
             this.functionTabPage.ResumeLayout(false);
+            this.PanelSearchFunctions.ResumeLayout(false);
+            this.PanelSearchFunctions.PerformLayout();
             this.movementTabPage.ResumeLayout(false);
+            this.PanelSearchActions.ResumeLayout(false);
+            this.PanelSearchActions.PerformLayout();
             this.textEditorTabPage.ResumeLayout(false);
             this.textEditorTabPage.PerformLayout();
             this.LineNumbersFormatgroupBox.ResumeLayout(false);
@@ -10472,7 +10506,7 @@
         private System.Windows.Forms.ComboBox selectEventComboBox;
         private System.Windows.Forms.Label signScriptNumberLabel;
         private System.Windows.Forms.NumericUpDown spawnableScriptUpDown;
-        private System.Windows.Forms.TabPage scriptEditorTabPage;
+        private System.Windows.Forms.TabPage scriptTabPage;
         private System.Windows.Forms.TabPage textEditorTabPage;
         private System.Windows.Forms.ListBox warpsListBox;
         private System.Windows.Forms.ListBox triggersListBox;
@@ -10523,7 +10557,6 @@
         private System.Windows.Forms.TabPage scriptsTabPage;
         private System.Windows.Forms.TabPage functionTabPage;
         private System.Windows.Forms.TabPage movementTabPage;
-        private System.Windows.Forms.RichTextBox scriptTextBox;
         private System.Windows.Forms.Button addScriptFileButton;
         private System.Windows.Forms.Button saveScriptFileButton;
         private System.Windows.Forms.Button removeScriptFileButton;
@@ -10535,8 +10568,6 @@
         private System.Windows.Forms.Button addMatrixButton;
         private System.Windows.Forms.Button importMatrixButton;
         private System.Windows.Forms.Button exportMatrixButton;
-        private System.Windows.Forms.RichTextBox functionTextBox;
-        private System.Windows.Forms.RichTextBox actionsTextBox;
         private System.Windows.Forms.Button exportTextFileButton;
         private System.Windows.Forms.Button saveTextArchiveButton;
         private System.Windows.Forms.Button removeMessageFileButton;
@@ -10598,9 +10629,6 @@
         private System.Windows.Forms.Button addMapFileButton;
         private System.Windows.Forms.Label replaceTextLabel;
         private System.Windows.Forms.TextBox replaceMessageTextBox;
-        private System.Windows.Forms.RichTextBox LineNumberTextBoxScript;
-        private System.Windows.Forms.RichTextBox LineNumberTextBoxFunc;
-        private System.Windows.Forms.RichTextBox LineNumberTextBoxMov;
         private System.Windows.Forms.TextBox searchInScriptsTextBox;
         private System.Windows.Forms.TabPage headerEditorTabPage;
         private System.Windows.Forms.GroupBox groupBox10;
@@ -11105,6 +11133,29 @@
         private System.Windows.Forms.NumericUpDown tbEditorTrClassFramePreviewUpDown;
         private System.Windows.Forms.PictureBox tbEditorPokeminiPictureBox;
         private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
+        private System.Windows.Forms.Panel PanelSearchScripts;
+        private System.Windows.Forms.Button BtnNextSearchScript;
+        private System.Windows.Forms.Button BtnPrevSearchScript;
+        private System.Windows.Forms.Button BtnCloseSearchScript;
+        private System.Windows.Forms.TextBox panelSearchScriptTextBox;
+        private System.Windows.Forms.Panel scintillaScriptsPanel;
+        private System.Windows.Forms.Panel PanelSearchFunctions;
+        private System.Windows.Forms.Button BtnNextSearchFunc;
+        private System.Windows.Forms.Button BtnPrevSearchFunc;
+        private System.Windows.Forms.Button BtnCloseSearchFunc;
+        private System.Windows.Forms.TextBox panelSearchFunctionTextBox;
+        private System.Windows.Forms.Panel scintillaFunctionsPanel;
+        private System.Windows.Forms.Panel PanelSearchActions;
+        private System.Windows.Forms.Button BtnNextSearchActions;
+        private System.Windows.Forms.Button BtnPrevSearchActions;
+        private System.Windows.Forms.Button BtnCloseSearchActions;
+        private System.Windows.Forms.TextBox panelSearchActionTextBox;
+        private System.Windows.Forms.Panel scintillaActionsPanel;
+        private System.Windows.Forms.CheckBox scriptEditorWhitespacesCheckbox;
+        private System.Windows.Forms.CheckBox scriptEditorWordWrapCheckbox;
+        private System.Windows.Forms.Button findScriptTextButton;
+        private System.Windows.Forms.Button compressScriptTextButton;
+        private System.Windows.Forms.Button expandScriptTextButton;
     }
 }
 

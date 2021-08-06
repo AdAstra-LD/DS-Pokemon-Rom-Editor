@@ -1,4 +1,5 @@
 using DSPRE.Resources;
+using ScintillaNET;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +18,10 @@ namespace DSPRE.ROMFiles {
         public enum containerTypes { FUNCTION, MOVEMENT, SCRIPT };
         #endregion
         #region Fields (3)
+        public static string ScriptKW = "Script";
+        public static string FunctionKW = "Function";
+        public static string ActionKW = "Action";
+
         public List<CommandContainer> allScripts = new List<CommandContainer>();
         public List<CommandContainer> allFunctions = new List<CommandContainer>();
         public List<ActionContainer> allActions = new List<ActionContainer>();
@@ -139,7 +144,7 @@ namespace DSPRE.ROMFiles {
             allActions = movements;
             isLevelScript = false;
         }
-        public ScriptFile(string[] scriptLines, string[] functionLines, string[] actionLines, int fileID = -1) {
+        public ScriptFile(ScintillaNET.LineCollection scriptLines, ScintillaNET.LineCollection functionLines, ScintillaNET.LineCollection actionLines, int fileID = -1) {
             //TODO: give user the possibility to jump to/call a script
             //once it's done, this Predicate below will be the only one needed, since there will be no distinction between
             //a script and a function
@@ -187,11 +192,11 @@ namespace DSPRE.ROMFiles {
                         case 0x17: //JumpIfObjID
                         case 0x18: //JumpIfBgID
                         case 0x19: //JumpIfPlayerDir
-                        case 0x1C: //Jump-If
-                        case 0x1D: //Call-If
-                            //in the case of Jump-If and Call-If, the first param is a comparisonOperator
-                            //for JumpIfPlayerDir it's a directionID
-                            //for JumpIfObjID, it's an EventID
+                        case 0x1C: //CondJump
+                        case 0x1D: //CondCall
+                            //in the case of CondJump and CondCall, the first param is a comparisonOperator
+                            //for CondJumpPlayerDir it's a directionID
+                            //for CondJumpObjID, it's an EventID
                             parameterList.Add(new byte[] { dataReader.ReadByte() }); 
                             ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
                             break;
@@ -323,12 +328,12 @@ namespace DSPRE.ROMFiles {
                         case 0x1A: //Call 
                             ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
                             break;
-                        case 0x17: //JumpIfObjID
-                        case 0x18: //JumpIfBgID
-                        case 0x19: //JumpIfPlayerDir
-                        case 0x1C: //Jump-If
-                        case 0x1D: //Call-If
-                            parameterList.Add(new byte[] { dataReader.ReadByte() }); //in the case of Jump-If and Call-If, the first param is a comparisonOperator
+                        case 0x17: //CondJumpObjID
+                        case 0x18: //CondJumpBgID
+                        case 0x19: //CondJumpPlayerDir
+                        case 0x1C: //CondJump
+                        case 0x1D: //CondCall
+                            parameterList.Add(new byte[] { dataReader.ReadByte() }); //in the case of CondJump and CondCall, the first param is a comparisonOperator
                             ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
                             break;
                         case 0x5E: // Movement
@@ -453,7 +458,7 @@ namespace DSPRE.ROMFiles {
                 references.Add(new ScriptReference(cont.containerType, cont.manualUserID, containerTypes.FUNCTION, invokedID, pos - 4));
             }
         }
-        private List<CommandContainer> ReadCommandsFromLines(string[] lineSource, containerTypes containerType, Func<List<string>, int, ushort?, bool> endConditions) {
+        private List<CommandContainer> ReadCommandsFromLines(ScintillaNET.LineCollection lineSource, containerTypes containerType, Func<List<string>, int, ushort?, bool> endConditions) {
             List<CommandContainer> ls = new List<CommandContainer>();
 
             List<string> lineSourceL = RemoveEmptyLines(lineSource);
@@ -490,7 +495,7 @@ namespace DSPRE.ROMFiles {
             return ls;
         }
 
-        private List<ActionContainer> ReadActionsFromLines(string[] lineSource) {
+        private List<ActionContainer> ReadActionsFromLines(ScintillaNET.LineCollection lineSource) {
             List<ActionContainer> ls = new List<ActionContainer>();
 
             List<string> lineSourceL = RemoveEmptyLines(lineSource);
@@ -519,10 +524,10 @@ namespace DSPRE.ROMFiles {
             } catch (IndexOutOfRangeException) { }
             return ls;
         }
-        private List<string> RemoveEmptyLines(string[] lineSource) {
+        private List<string> RemoveEmptyLines(ScintillaNET.LineCollection lineSource) {
             List<string> result = new List<string>();
-            foreach (string x in lineSource) {
-                string tr = x.Trim();
+            foreach (Line x in lineSource) {
+                string tr = x.Text.Trim();
                 if (tr.Length > 0) {
                     result.Add(tr);
                 }

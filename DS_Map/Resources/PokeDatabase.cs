@@ -602,8 +602,8 @@ namespace DSPRE.Resources {
                 [0x0018] = 1,   //Call
                 [0x0019] = 1,   //Call
                 [0x001A] = 0,   //Call
-                [0x001C] = 1,   //Jump-If
-                [0x001D] = 1,   //Call-If
+                [0x001C] = 1,   //CondJump
+                [0x001D] = 1,   //CondCall
                 [0x005E] = 1,   //Movement
             };
 
@@ -759,8 +759,8 @@ namespace DSPRE.Resources {
                 [0x0019] = "JumpIfPlayerDir",
                 [0x001A] = "Call",
                 [0x001B] = "Return",
-                [0x001C] = "Jump-If",
-                [0x001D] = "Call-If",
+                [0x001C] = "CondJump",
+                [0x001D] = "CondCall",
                 [0x001E] = "SetFlag",
                 [0x001F] = "ClearFlag",
                 [0x0020] = "CheckFlag",
@@ -2130,8 +2130,8 @@ namespace DSPRE.Resources {
                 [0x0019] = "JumpIfPlayerDir",
                 [0x001A] = "Call",
                 [0x001B] = "Return",
-                [0x001C] = "Jump-If",
-                [0x001D] = "Call-If",
+                [0x001C] = "CondJump",
+                [0x001D] = "CondCall",
                 [0x001E] = "SetFlag",
                 [0x001F] = "ClearFlag",
                 [0x0020] = "CheckFlag",

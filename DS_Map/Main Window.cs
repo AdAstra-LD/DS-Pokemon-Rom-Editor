@@ -19,6 +19,8 @@ using Images;
 using Ekona.Images;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Collections.Specialized;
+using ScintillaNET;
+using ScintillaNET.Utils;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -194,7 +196,12 @@ namespace DSPRE {
             toolStripProgressBar.Value++;
         }
 
+
         public void SetupScriptEditor() {
+            cmdKeyWords = String.Join(" ", ScriptCommandNamesDict.Values);
+            cmdKeyWords += String.Join(" ", PokeDatabase.ScriptEditor.movementsDictIDName.Values);
+            comparisonOperatorsKeyWords = String.Join(" ", PokeDatabase.ScriptEditor.comparisonOperatorsDict.Values);
+            SetupScriptEditorTabs();
             /* Extract essential NARCs sub-archives*/
             statusLabel.Text = "Setting up Script Editor...";
             Update();
@@ -206,8 +213,6 @@ namespace DSPRE {
                 selectScriptFileComboBox.Items.Add("Script File " + i);
             }
 
-            currentScriptBox = scriptTextBox;
-            currentLineNumbersBox = LineNumberTextBoxScript;
             selectScriptFileComboBox.SelectedIndex = 0;
             statusLabel.Text = "Ready";
         }
@@ -760,7 +765,7 @@ namespace DSPRE {
                     SetupEventEditor();
                     eventEditorIsReady = true;
                 }
-            } else if (mainTabControl.SelectedTab == scriptEditorTabPage) {
+            } else if (mainTabControl.SelectedTab == scriptTabPage) {
                 if (!scriptEditorIsReady) {
                     SetupScriptEditor();
                     scriptEditorIsReady = true;
@@ -5565,73 +5570,459 @@ namespace DSPRE {
 
         #region Script Editor
         #region Variables
-        public ScriptFile currentScriptFile;
-        public RichTextBox currentScriptBox;
-        public RichTextBox currentLineNumbersBox;
+        private string cmdKeyWords = "";
+        private string comparisonOperatorsKeyWords = "";
+        private ScriptFile currentScriptFile;
         #endregion
         #region Helper Methods
-        private void SetCurrentRTBfromSelectedScriptTab(object sender, EventArgs e) {
-            if (scriptEditorTabControl.SelectedIndex == 0) {
-                currentScriptBox = scriptTextBox;
-                currentLineNumbersBox = LineNumberTextBoxScript;
-            } else if (scriptEditorTabControl.SelectedIndex == 1) {
-                currentScriptBox = functionTextBox;
-                currentLineNumbersBox = LineNumberTextBoxFunc;
-            } else if (scriptEditorTabControl.SelectedIndex == 2) {
-                currentScriptBox = actionsTextBox;
-                currentLineNumbersBox = LineNumberTextBoxMov;
-            } else {
-                currentScriptBox = null;
-                currentLineNumbersBox = null;
+        private ScintillaNET.Scintilla ScriptTextArea;
+        private ScintillaNET.Scintilla FunctionTextArea;
+        private ScintillaNET.Scintilla ActionTextArea;
+
+        private SearchManager scriptSearchManager;
+        private SearchManager functionSearchManager;
+        private SearchManager actionSearchManager;
+
+        public Scintilla currentScintillaEditor;
+        public TextBox currentSearchBox;
+        private void scriptEditorTabControl_TabIndexChanged(object sender, EventArgs e) {
+            if (scriptEditorTabControl.SelectedTab == scriptTabPage) {
+                currentSearchBox = panelSearchScriptTextBox;
+                currentScintillaEditor = ScriptTextArea;
+            } else if (scriptEditorTabControl.SelectedTab == functionTabPage) {
+                currentSearchBox = panelSearchFunctionTextBox;
+                currentScintillaEditor = FunctionTextArea;
+            } else { //Actions
+                currentSearchBox = panelSearchActionTextBox;
+                currentScintillaEditor = ActionTextArea;
+            }
+        }
+        private void SetupScriptEditorTabs() {
+            // CREATE CONTROLS
+            ScriptTextArea = new ScintillaNET.Scintilla();
+            scriptSearchManager = new SearchManager(this, ScriptTextArea, panelSearchScriptTextBox, PanelSearchScripts);
+            scintillaScriptsPanel.Controls.Add(ScriptTextArea);
+
+            FunctionTextArea = new ScintillaNET.Scintilla();
+            functionSearchManager = new SearchManager(this, FunctionTextArea, panelSearchFunctionTextBox, PanelSearchFunctions);
+            scintillaFunctionsPanel.Controls.Add(FunctionTextArea);
+
+            ActionTextArea = new ScintillaNET.Scintilla();
+            actionSearchManager = new SearchManager(this, ActionTextArea, panelSearchActionTextBox, PanelSearchActions);
+            scintillaActionsPanel.Controls.Add(ActionTextArea);
+
+            currentScintillaEditor = ScriptTextArea;
+            currentSearchBox = panelSearchScriptTextBox;
+
+            // BASIC CONFIG
+            ScriptTextArea.Dock = DockStyle.Fill;
+            ScriptTextArea.TextChanged += (this.OnTextChangedScript);
+
+            FunctionTextArea.Dock = DockStyle.Fill;
+            FunctionTextArea.TextChanged += (this.OnTextChangedFunction);
+
+            ActionTextArea.Dock = DockStyle.Fill;
+            ActionTextArea.TextChanged += (this.OnTextChangedAction);
+
+
+            // INITIAL VIEW CONFIG
+            ScriptTextArea.WrapMode = ScintillaNET.WrapMode.None;
+            ScriptTextArea.IndentationGuides = IndentView.LookBoth;
+            ScriptTextArea.CaretPeriod = 500;
+            ScriptTextArea.CaretForeColor = Color.White;
+
+            FunctionTextArea.WrapMode = ScintillaNET.WrapMode.None;
+            FunctionTextArea.IndentationGuides = IndentView.LookBoth;
+            FunctionTextArea.CaretPeriod = 500;
+            //FunctionTextArea.CaretForeColor = Color.White;
+
+            ActionTextArea.WrapMode = ScintillaNET.WrapMode.None;
+            ActionTextArea.IndentationGuides = IndentView.LookBoth;
+            ActionTextArea.CaretPeriod = 500;
+            ActionTextArea.CaretForeColor = Color.White;
+
+            // STYLING
+            ScriptTextArea.SetSelectionBackColor(true, Color.FromArgb(0x114D9C));
+            FunctionTextArea.SetSelectionBackColor(true, Color.FromArgb(0x114D9C));
+            ActionTextArea.SetSelectionBackColor(true, Color.FromArgb(0x114D9C));
+
+            InitSyntaxColoring(ScriptTextArea);
+            InitSyntaxColoring(FunctionTextArea);
+            InitSyntaxColoring(ActionTextArea);
+
+            // NUMBER MARGIN
+            InitNumberMargin(ScriptTextArea, ScriptTextArea_MarginClick);
+            InitNumberMargin(FunctionTextArea, FunctionTextArea_MarginClick);
+            InitNumberMargin(ActionTextArea, ActionTextArea_MarginClick);
+
+            // BOOKMARK MARGIN
+            InitBookmarkMargin(ScriptTextArea);
+            InitBookmarkMargin(FunctionTextArea);
+            InitBookmarkMargin(ActionTextArea);
+
+            // CODE FOLDING MARGIN
+            InitCodeFolding(ScriptTextArea);
+            InitCodeFolding(FunctionTextArea);
+            InitCodeFolding(ActionTextArea);
+
+            // INIT HOTKEYS
+            InitHotkeys(ScriptTextArea, scriptSearchManager);
+            InitHotkeys(FunctionTextArea, functionSearchManager);
+            InitHotkeys(ActionTextArea, actionSearchManager);
+        }
+
+        private void InitNumberMargin(Scintilla textArea, EventHandler<MarginClickEventArgs> textArea_MarginClick) {
+            textArea.Styles[Style.LineNumber].BackColor = BACK_COLOR;
+            textArea.Styles[Style.LineNumber].ForeColor = FORE_COLOR;
+            textArea.Styles[Style.IndentGuide].ForeColor = FORE_COLOR;
+            textArea.Styles[Style.IndentGuide].BackColor = BACK_COLOR;
+
+            var nums = textArea.Margins[NUMBER_MARGIN];
+            nums.Type = MarginType.Number;
+            nums.Sensitive = true;
+            nums.Mask = 0;
+
+            textArea.MarginClick += textArea_MarginClick;
+        }
+
+        private void InitHotkeys(Scintilla scintillaTb, SearchManager sm) {
+            // register the hotkeys with the form
+            HotKeyManager.AddHotKey(scintillaTb, sm.OpenSearch, Keys.F, true);
+            HotKeyManager.AddHotKey(scintillaTb, () => Uppercase(scintillaTb), Keys.U, true);
+            HotKeyManager.AddHotKey(scintillaTb, () => Lowercase(scintillaTb), Keys.L, true);
+            HotKeyManager.AddHotKey(scintillaTb, () => ZoomIn(scintillaTb), Keys.Oemplus, true);
+            HotKeyManager.AddHotKey(scintillaTb, () => ZoomOut(scintillaTb), Keys.OemMinus, true);
+            HotKeyManager.AddHotKey(scintillaTb, () => ZoomDefault(scintillaTb), Keys.D0, true);
+            HotKeyManager.AddHotKey(scintillaTb, sm.CloseSearch, Keys.Escape);
+
+            // remove conflicting hotkeys from scintilla
+            scintillaTb.ClearCmdKey(Keys.Control | Keys.F);
+            scintillaTb.ClearCmdKey(Keys.Control | Keys.R);
+            scintillaTb.ClearCmdKey(Keys.Control | Keys.H);
+            scintillaTb.ClearCmdKey(Keys.Control | Keys.L);
+            scintillaTb.ClearCmdKey(Keys.Control | Keys.U);
+        }
+
+        private void InitSyntaxColoring(Scintilla textArea) {
+
+            // Configure the default style
+            textArea.StyleResetDefault();
+            textArea.Styles[Style.Default].Font = "Consolas";
+            textArea.Styles[Style.Default].Size = 12;
+            textArea.Styles[Style.Default].BackColor = Color.FromArgb(0x212121);
+            textArea.Styles[Style.Default].ForeColor = Color.FromArgb(0xFFFFFF);
+            textArea.StyleClearAll();
+
+            // Configure the lexer styles
+            textArea.Styles[Style.Python.Identifier].ForeColor = Color.FromArgb(0xD0DAE2);
+            textArea.Styles[Style.Python.CommentLine].ForeColor = Color.FromArgb(0x40BF57);
+            textArea.Styles[Style.Python.Number].ForeColor = Color.FromArgb(0xFFFF00);
+            textArea.Styles[Style.Python.String].ForeColor = Color.FromArgb(0xFFFF00);
+            textArea.Styles[Style.Python.Character].ForeColor = Color.FromArgb(0xE95454);
+            textArea.Styles[Style.Python.Operator].ForeColor = Color.FromArgb(0xE0E0E0);
+            textArea.Styles[Style.Python.Word].ForeColor = Color.FromArgb(0x48A8EE);
+            textArea.Styles[Style.Python.Word2].ForeColor = Color.FromArgb(0xF98906);
+
+            textArea.Lexer = Lexer.Python;
+
+            textArea.SetKeywords(0, cmdKeyWords);
+            textArea.SetKeywords(1, comparisonOperatorsKeyWords + " Function" + " Script" + " Action");
+        }
+
+        private void OnTextChangedScript(object sender, EventArgs e) {
+            ScriptTextArea.Margins[NUMBER_MARGIN].Width = ScriptTextArea.Lines.Count.ToString().Length * 13;
+        }
+        private void OnTextChangedFunction(object sender, EventArgs e) {
+            FunctionTextArea.Margins[NUMBER_MARGIN].Width = FunctionTextArea.Lines.Count.ToString().Length * 13;
+        }
+        private void OnTextChangedAction(object sender, EventArgs e) {
+            ActionTextArea.Margins[NUMBER_MARGIN].Width = ActionTextArea.Lines.Count.ToString().Length * 13;
+        }
+
+
+        #region Numbers, Bookmarks, Code Folding
+
+        /// <summary>
+        /// the background color of the text area
+        /// </summary>
+        private readonly Color BACK_COLOR = Color.FromArgb(0x2A211C);
+
+        /// <summary>
+        /// default text color of the text area
+        /// </summary>
+        private readonly Color FORE_COLOR = Color.FromArgb(0xB7B7B7);
+
+        /// <summary>
+        /// change this to whatever margin you want the line numbers to show in
+        /// </summary>
+        private const int NUMBER_MARGIN = 1;
+
+        /// <summary>
+        /// change this to whatever margin you want the bookmarks/breakpoints to show in
+        /// </summary>
+        private const int BOOKMARK_MARGIN = 2;
+        private const int BOOKMARK_MARKER = 2;
+
+        /// <summary>
+        /// change this to whatever margin you want the code folding tree (+/-) to show in
+        /// </summary>
+        private const int FOLDING_MARGIN = 3;
+
+        /// <summary>
+        /// set this true to show circular buttons for code folding (the [+] and [-] buttons on the margin)
+        /// </summary>
+        private const bool CODEFOLDING_CIRCULAR = true;
+
+
+        private void InitBookmarkMargin(Scintilla textArea) {
+            //TextArea.SetFoldMarginColor(true, IntToColor(BACK_COLOR));
+
+            var margin = textArea.Margins[BOOKMARK_MARGIN];
+            margin.Width = 20;
+            margin.Sensitive = true;
+            margin.Type = MarginType.Symbol;
+            margin.Mask = (1 << BOOKMARK_MARKER);
+            //margin.Cursor = MarginCursor.Arrow;
+
+            var marker = textArea.Markers[BOOKMARK_MARKER];
+            marker.Symbol = MarkerSymbol.Circle;
+            marker.SetBackColor(Color.FromArgb(0xFF003B));
+            marker.SetForeColor(Color.FromArgb(0x000000));
+            marker.SetAlpha(100);
+        }
+
+        private void InitCodeFolding(Scintilla textArea) {
+            textArea.SetFoldMarginColor(true, BACK_COLOR);
+            textArea.SetFoldMarginHighlightColor(true, BACK_COLOR);
+
+            // Enable code folding
+            textArea.SetProperty("fold", "1");
+            textArea.SetProperty("fold.compact", "1");
+
+            // Configure a margin to display folding symbols
+            textArea.Margins[FOLDING_MARGIN].Type = MarginType.Symbol;
+            textArea.Margins[FOLDING_MARGIN].Mask = Marker.MaskFolders;
+            textArea.Margins[FOLDING_MARGIN].Sensitive = true;
+            textArea.Margins[FOLDING_MARGIN].Width = 20;
+
+            // Set colors for all folding markers
+            for (int i = 25; i <= 31; i++) {
+                textArea.Markers[i].SetForeColor(BACK_COLOR); // styles for [+] and [-]
+                textArea.Markers[i].SetBackColor(FORE_COLOR); // styles for [+] and [-]
             }
 
-            if (SyncNavigatorCB.Checked)
-                ScriptNavigatorTabControl.SelectedIndex = scriptEditorTabControl.SelectedIndex;
+            // Configure folding markers with respective symbols
+            textArea.Markers[Marker.Folder].Symbol = CODEFOLDING_CIRCULAR ? MarkerSymbol.CirclePlus : MarkerSymbol.BoxPlus;
+            textArea.Markers[Marker.FolderOpen].Symbol = CODEFOLDING_CIRCULAR ? MarkerSymbol.CircleMinus : MarkerSymbol.BoxMinus;
+            textArea.Markers[Marker.FolderEnd].Symbol = CODEFOLDING_CIRCULAR ? MarkerSymbol.CirclePlusConnected : MarkerSymbol.BoxPlusConnected;
+            textArea.Markers[Marker.FolderMidTail].Symbol = MarkerSymbol.TCorner;
+            textArea.Markers[Marker.FolderOpenMid].Symbol = CODEFOLDING_CIRCULAR ? MarkerSymbol.CircleMinusConnected : MarkerSymbol.BoxMinusConnected;
+            textArea.Markers[Marker.FolderSub].Symbol = MarkerSymbol.VLine;
+            textArea.Markers[Marker.FolderTail].Symbol = MarkerSymbol.LCorner;
+
+            // Enable automatic folding
+            textArea.AutomaticFold = (AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change);
+        }
+
+        private void ScriptTextArea_MarginClick(object sender, MarginClickEventArgs e) {
+            MarginClick(ScriptTextArea, e);
+        }
+
+        private void FunctionTextArea_MarginClick(object sender, MarginClickEventArgs e) {
+            MarginClick(FunctionTextArea, e);
+        }
+
+        private void ActionTextArea_MarginClick(object sender, MarginClickEventArgs e) {
+            MarginClick(ActionTextArea, e);
+        }
+
+        private void MarginClick(Scintilla textArea, MarginClickEventArgs e) {
+            if (e.Margin == BOOKMARK_MARGIN) {
+                // Do we have a marker for this line?
+                const uint mask = (1 << BOOKMARK_MARKER);
+                var line = textArea.Lines[textArea.LineFromPosition(e.Position)];
+                if ((line.MarkerGet() & mask) > 0) {
+                    // Remove existing bookmark
+                    line.MarkerDelete(BOOKMARK_MARKER);
+                } else {
+                    // Add bookmark
+                    line.MarkerAdd(BOOKMARK_MARKER);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Main Menu Commands
+
+        //private void selectLineToolStripMenuItem_Click(object sender, EventArgs e) {
+        //    Line line = TextArea.Lines[TextArea.CurrentLine];
+        //    TextArea.SetSelection(line.Position + line.Length, line.Position);
+        //}
+        private void wordWrapButton_Click(object sender, EventArgs e) {
+            ScriptTextArea.WrapMode = scriptEditorWordWrapCheckbox.Checked ? ScintillaNET.WrapMode.Word : ScintillaNET.WrapMode.None;
+            FunctionTextArea.WrapMode = scriptEditorWordWrapCheckbox.Checked ? ScintillaNET.WrapMode.Word : ScintillaNET.WrapMode.None;
+            ActionTextArea.WrapMode = scriptEditorWordWrapCheckbox.Checked ? ScintillaNET.WrapMode.Word : ScintillaNET.WrapMode.None;
+        }
+
+        //private void indentGuidesCheckbox_CheckedChanged(object sender, EventArgs e) {
+        //    ScriptTextArea.IndentationGuides = scriptEditorIndentGuidesCheckbox.Checked ? IndentView.LookBoth : IndentView.None;
+        //    FunctionTextArea.IndentationGuides = scriptEditorIndentGuidesCheckbox.Checked ? IndentView.LookBoth : IndentView.None;
+        //    ActionTextArea.IndentationGuides = scriptEditorIndentGuidesCheckbox.Checked ? IndentView.LookBoth : IndentView.None;
+        //}
+
+        private void viewWhiteSpacesButton_Click(object sender, EventArgs e) {
+            ScriptTextArea.ViewWhitespace = scriptEditorWhitespacesCheckbox.Checked ? WhitespaceMode.VisibleAlways : WhitespaceMode.Invisible;
+            FunctionTextArea.ViewWhitespace = scriptEditorWhitespacesCheckbox.Checked ? WhitespaceMode.VisibleAlways : WhitespaceMode.Invisible;
+            ActionTextArea.ViewWhitespace = scriptEditorWhitespacesCheckbox.Checked ? WhitespaceMode.VisibleAlways : WhitespaceMode.Invisible;
+        }
+
+        private void scriptEditorZoomInButton_Click(object sender, EventArgs e) {
+            ZoomIn(currentScintillaEditor);
+        }
+        
+        private void scriptEditorZoomOutButton_Click(object sender, EventArgs e) {
+            ZoomOut(currentScintillaEditor);
+        }
+        
+        private void scriptEditorZoomResetButton_Click(object sender, EventArgs e) {
+            ZoomDefault(currentScintillaEditor);
+        }
+
+        private void ScriptEditorCollapseButton_Click(object sender, EventArgs e) {
+            currentScintillaEditor.FoldAll(FoldAction.Contract);
+        }
+
+        private void ScriptEditorExpandButton_Click(object sender, EventArgs e) {
+            currentScintillaEditor.FoldAll(FoldAction.Expand);
+        }
+
+
+        #endregion
+
+        #region Uppercase / Lowercase
+
+        private void Lowercase(Scintilla textArea) {
+
+            // save the selection
+            int start = textArea.SelectionStart;
+            int end = textArea.SelectionEnd;
+
+            // modify the selected text
+            textArea.ReplaceSelection(textArea.GetTextRange(start, end - start).ToLower());
+
+            // preserve the original selection
+            textArea.SetSelection(start, end);
+        }
+
+        private void Uppercase(Scintilla textArea) {
+            // save the selection
+            int start = textArea.SelectionStart;
+            int end = textArea.SelectionEnd;
+
+            // modify the selected text
+            textArea.ReplaceSelection(textArea.GetTextRange(start, end - start).ToUpper());
+
+            // preserve the original selection
+            textArea.SetSelection(start, end);
+        }
+
+        #endregion
+
+        #region Indent / Outdent
+
+        private void GenerateKeystrokes(string keys, Scintilla textArea) {
+            //Example
+            //GenerateKeystrokes("+{TAB}");
+            HotKeyManager.Enable = false;
+            textArea.Focus();
+            SendKeys.Send(keys);
+            HotKeyManager.Enable = true;
+        }
+
+        #endregion
+
+        #region Zoom
+
+        private void ZoomIn(Scintilla textArea) {
+            textArea.ZoomIn();
+        }
+
+        private void ZoomOut(Scintilla textArea) {
+            textArea.ZoomOut();
+        }
+
+        private void ZoomDefault(Scintilla textArea) {
+            textArea.Zoom = 0;
         }
         #endregion
-        #region LineNumbers
-        public void UpdateLineNumbers(RichTextBox mainbox, RichTextBox numberBox) {
-            if (disableHandlers) {
-                return;
-            }
-            // get line indices
-            int indexFirstCharDisplayed = mainbox.GetCharIndexFromPosition(new Point(0, mainbox.Font.Height / 2));
-            int firstLine = mainbox.GetLineFromCharIndex(indexFirstCharDisplayed);
 
-            int indexLastCharDisplayed = mainbox.GetCharIndexFromPosition(new Point(0, mainbox.Height + mainbox.Font.Height / 2));
-            int lastLine = mainbox.GetLineFromCharIndex(indexLastCharDisplayed);
-
-            // align line numbers to center
-            numberBox.SelectionAlignment = HorizontalAlignment.Center;
-
-            // set LineNumberTextBox text to null & width to GetWidth() function value    
-            numberBox.Text = "";
-            numberBox.Width = CalculateLineNumbersWidth(mainbox);
-
-            // now add each line number to LineNumberTextBox upto last line    
-            for (int i = firstLine; i <= lastLine + 1; i++) {
-                numberBox.Text += i + 1 + "\n";
-            }
-            numberBox.Invalidate();
+        #region Quick Search Bar
+        private void BtnPrevSearchScript_Click(object sender, EventArgs e) {
+            scriptSearchManager.Find(false, false);
         }
-        public int CalculateLineNumbersWidth(RichTextBox mainbox) {
-            int w = 25;
-            // get total lines of functionTextBox    
-            int line = mainbox.Lines.Length;
 
-            if (line <= 99) {
-                w = 20 + (int)mainbox.Font.Size;
-            } else if (line <= 999) {
-                w = 30 + (int)mainbox.Font.Size;
-            } else {
-                w = 50 + (int)mainbox.Font.Size;
+        private void BtnNextSearchScript_Click(object sender, EventArgs e) {
+            scriptSearchManager.Find(true, false);
+        }
+
+        private void BtnPrevSearchFunc_Click(object sender, EventArgs e) {
+            functionSearchManager.Find(false, false);
+        }
+
+        private void BtnNextSearchFunc_Click(object sender, EventArgs e) {
+            functionSearchManager.Find(true, false);
+        }
+
+        private void BtnPrevSearchActions_Click(object sender, EventArgs e) {
+            actionSearchManager.Find(false, false);
+        }
+
+        private void BtnNextSearchActions_Click(object sender, EventArgs e) {
+            actionSearchManager.Find(true, false);
+        }
+
+        private void BtnCloseSearchScript_Click(object sender, EventArgs e) {
+            scriptSearchManager.CloseSearch();
+        }
+
+        private void BtnCloseSearchFunc_Click(object sender, EventArgs e) {
+            functionSearchManager.CloseSearch();
+        }
+
+        private void BtnCloseSearchActions_Click(object sender, EventArgs e) {
+            actionSearchManager.CloseSearch();
+        }
+
+        private void scriptTxtSearch_KeyDown(object sender, KeyEventArgs e) {
+            TxtSearchKeyDown(scriptSearchManager, e);
+        }
+        private void functionTxtSearch_KeyDown(object sender, KeyEventArgs e) {
+            TxtSearchKeyDown(functionSearchManager, e);
+        }
+        private void actiontTxtSearch_KeyDown(object sender, KeyEventArgs e) {
+            TxtSearchKeyDown(actionSearchManager, e);
+        }
+
+        private void TxtSearchKeyDown(SearchManager sm, KeyEventArgs e) {
+            if (HotKeyManager.IsHotkey(e, Keys.Enter)) {
+                sm.Find(true, false);
             }
+            if (HotKeyManager.IsHotkey(e, Keys.Enter, true) || HotKeyManager.IsHotkey(e, Keys.Enter, false, true)) {
+                sm.Find(false, false);
+            }
+        }
 
-            return w;
+        private void panelSearchScriptTextBox_TextChanged(object sender, EventArgs e) {
+            scriptSearchManager.Find(true, true);
         }
-        private void updateCurrentBoxLineNumbers(object sender, EventArgs e) {
-            UpdateLineNumbers(currentScriptBox, currentLineNumbersBox);
+        private void panelSearchFunctionTextBox_TextChanged(object sender, EventArgs e) {
+            functionSearchManager.Find(true, true);
         }
+        private void panelSearchActionTextBox_TextChanged(object sender, EventArgs e) {
+            actionSearchManager.Find(true, true);
+        }
+
         #endregion
         private void addScriptFileButton_Click(object sender, EventArgs e) {
             /* Add new event file to event folder */
@@ -5655,7 +6046,7 @@ namespace DSPRE {
         private void saveScriptFileButton_Click(object sender, EventArgs e) {
             /* Create new ScriptFile object */
             int idToAssign = selectScriptFileComboBox.SelectedIndex;
-            ScriptFile userEdited = new ScriptFile(scriptTextBox.Lines, functionTextBox.Lines, actionsTextBox.Lines, selectScriptFileComboBox.SelectedIndex);
+            ScriptFile userEdited = new ScriptFile(scriptLines: ScriptTextArea.Lines, FunctionTextArea.Lines, ActionTextArea.Lines, selectScriptFileComboBox.SelectedIndex);  ;
 
             /* Write new scripts to file */
             if (userEdited.fileID != null) { //check if ScriptFile instance was created succesfully
@@ -5697,7 +6088,7 @@ namespace DSPRE {
 
             scriptEditorTabControl.SelectedIndex = 0;
             selectScriptFileComboBox.SelectedIndex = (int)scriptFileUpDown.Value;
-            mainTabControl.SelectedTab = scriptEditorTabPage;
+            mainTabControl.SelectedTab = scriptTabPage;
         }
         private void openLevelScriptButton_Click(object sender, EventArgs e) {
             if (!scriptEditorIsReady) {
@@ -5706,7 +6097,7 @@ namespace DSPRE {
             }
 
             selectScriptFileComboBox.SelectedIndex = (int)levelScriptUpDown.Value;
-            mainTabControl.SelectedTab = scriptEditorTabPage;
+            mainTabControl.SelectedTab = scriptTabPage;
         }
         private void removeScriptFileButton_Click(object sender, EventArgs e) {
             /* Delete script file */
@@ -5746,11 +6137,11 @@ namespace DSPRE {
                     ScriptFile file = new ScriptFile(i);
 
                     if (scriptSearchCaseSensitiveCheckBox.Checked) {
-                        results.AddRange(SearchInScripts(i, file.allScripts, "Script", (string s) => s.Contains(searchString)));
-                        results.AddRange(SearchInScripts(i, file.allFunctions, "Function", (string s) => s.Contains(searchString)));
+                        results.AddRange(SearchInScripts(i, file.allScripts, ScriptFile.ScriptKW, (string s) => s.Contains(searchString)));
+                        results.AddRange(SearchInScripts(i, file.allFunctions, ScriptFile.FunctionKW, (string s) => s.Contains(searchString)));
                     } else {
-                        results.AddRange(SearchInScripts(i, file.allScripts, "Script", (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0));
-                        results.AddRange(SearchInScripts(i, file.allFunctions, "Function", (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0));
+                        results.AddRange(SearchInScripts(i, file.allScripts, ScriptFile.ScriptKW, (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0));
+                        results.AddRange(SearchInScripts(i, file.allFunctions, ScriptFile.FunctionKW, (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0));
                     }
                 } catch { }
                 searchProgressBar.Value = i;
@@ -5774,8 +6165,9 @@ namespace DSPRE {
             return results;
         }
         private void searchInScripts_GoToEntryResult(object sender, MouseEventArgs e) {
-            if (searchInScriptsResultListBox.SelectedIndex < 0)
+            if (searchInScriptsResultListBox.SelectedIndex < 0) {
                 return;
+            }
 
             string[] split = searchInScriptsResultListBox.SelectedItem.ToString().Split();
             selectScriptFileComboBox.SelectedIndex = int.Parse(split[1]);
@@ -5786,34 +6178,22 @@ namespace DSPRE {
             }
             cmdSearched = cmdSearched.TrimEnd();
 
-            if (split[3].StartsWith("Script")) {
-                if (scriptEditorTabControl.SelectedIndex != 0)
-                    scriptEditorTabControl.SelectedIndex = 0;
-                int keywordPos = scriptTextBox.Find("Script " + split[4].Replace(":", ""), RichTextBoxFinds.MatchCase);
-                TXTBoxScrollToResult(scriptTextBox, cmdSearched, keywordPos);
-            } else if (split[3].StartsWith("Function")) {
-                if (scriptEditorTabControl.SelectedIndex != 1)
-                    scriptEditorTabControl.SelectedIndex = 1;
-                int keywordPos = functionTextBox.Find("Function " + split[4].Replace(":", ""), RichTextBoxFinds.MatchCase);
-                TXTBoxScrollToResult(functionTextBox, cmdSearched, keywordPos);
+            if (split[3].StartsWith(ScriptFile.ScriptKW)) {
+                if (scriptEditorTabControl.SelectedTab != scriptsTabPage) {
+                    scriptEditorTabControl.SelectedTab = scriptsTabPage;
+                }
+                scriptSearchManager.Find(true, false, ScriptFile.ScriptKW + split[4].Replace(":", ""));
+            } else if (split[3].StartsWith(ScriptFile.FunctionKW)) {
+                if (scriptEditorTabControl.SelectedTab != functionTabPage) {
+                    scriptEditorTabControl.SelectedTab = functionTabPage;
+                }
+                functionSearchManager.Find(true, false, ScriptFile.FunctionKW + split[4].Replace(":", ""));
+            } else {
+                if (scriptEditorTabControl.SelectedTab != movementTabPage) {
+                    scriptEditorTabControl.SelectedTab = movementTabPage;
+                }
+                actionSearchManager.Find(true, false, ScriptFile.ActionKW + split[4].Replace(":", ""));
             }
-        }
-        private void TXTBoxScrollToResult(RichTextBox tb, string cmdSearched, int searchFrom) {
-            int cmdPos = tb.Find(cmdSearched, searchFrom, RichTextBoxFinds.MatchCase);
-
-            if (cmdPos < 0)
-                return; //not found
-
-            try {
-                tb.SelectionStart = cmdPos - 120;
-            } catch (ArgumentOutOfRangeException) {
-                tb.SelectionStart = 0;
-            }
-            tb.ScrollToCaret();
-
-            tb.SelectionStart = cmdPos;
-            tb.SelectionLength = cmdSearched.Length;
-            tb.Focus();
         }
         private void searchInScriptsResultListBox_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
@@ -5829,16 +6209,16 @@ namespace DSPRE {
             /* clear controls */
             currentScriptFile = new ScriptFile(selectScriptFileComboBox.SelectedIndex); // Load script file
 
-            scriptTextBox.Clear();
-            functionTextBox.Clear();
-            actionsTextBox.Clear();
+            ScriptTextArea.ClearAll();
+            FunctionTextArea.ClearAll();
+            ActionTextArea.ClearAll();
 
             scriptsNavListbox.Items.Clear();
             functionsNavListbox.Items.Clear();
             actionsNavListbox.Items.Clear();
 
             if (currentScriptFile.isLevelScript) {
-                scriptTextBox.Text += "Level script files are currently not supported.\nYou can use AdAstra's Level Scripts Editor.";
+                ScriptTextArea.Text += "Level script files are currently not supported.\nYou can use AdAstra's Level Scripts Editor.";
                 addScriptFileButton.Visible = false;
                 removeScriptFileButton.Visible = false;
 
@@ -5862,9 +6242,9 @@ namespace DSPRE {
                     CommandContainer currentScript = currentScriptFile.allScripts[i];
 
                     /* Write header */
-                    string header = "Script " + (i + 1);
+                    string header = ScriptFile.ScriptKW + " " + (i + 1);
                     scriptsNavListbox.Items.Add(header);
-                    scriptTextBox.AppendText(header + ':' + Environment.NewLine, headerTextColor);
+                    ScriptTextArea.AppendText(header + ':' + Environment.NewLine);
 
                     /* If current script is identical to another, print UseScript instead of commands */
                     if (currentScript.useScript < 0) {
@@ -5878,7 +6258,7 @@ namespace DSPRE {
                         buffer += '\t' + "UseScript_#" + currentScript.useScript + Environment.NewLine;
                     }
 
-                    scriptTextBox.AppendText(buffer + Environment.NewLine, scriptTextColor);
+                    ScriptTextArea.AppendText(buffer + Environment.NewLine);
                     buffer = "";
                 }
 
@@ -5888,9 +6268,9 @@ namespace DSPRE {
                     CommandContainer currentFunction = currentScriptFile.allFunctions[i];
 
                     /* Write Heaader */
-                    string header = "Function " + (i + 1);
+                    string header = ScriptFile.FunctionKW + " " + (i + 1);
                     functionsNavListbox.Items.Add(header);
-                    functionTextBox.AppendText(header + ':' + Environment.NewLine, headerTextColor);
+                    FunctionTextArea.AppendText(header + ':' + Environment.NewLine);
 
                     /* If current function is identical to a script, print UseScript instead of commands */
                     if (currentFunction.useScript < 0) {
@@ -5904,7 +6284,7 @@ namespace DSPRE {
                         buffer += '\t' + "UseScript_#" + currentFunction.useScript + Environment.NewLine;
                     }
 
-                    functionTextBox.AppendText(buffer + Environment.NewLine, funcTextColor);
+                    FunctionTextArea.AppendText(buffer + Environment.NewLine);
                     buffer = "";
                 }
 
@@ -5912,9 +6292,9 @@ namespace DSPRE {
                 for (int i = 0; i < currentScriptFile.allActions.Count; i++) {
                     ActionContainer currentAction = currentScriptFile.allActions[i];
 
-                    string header = "Action " + (i + 1);
+                    string header = ScriptFile.ActionKW + " " + (i + 1);
                     actionsNavListbox.Items.Add(header);
-                    actionsTextBox.AppendText(header + ':' + Environment.NewLine, headerTextColor);
+                    ActionTextArea.AppendText(header + ':' + Environment.NewLine);
 
                     for (int j = 0; j < currentAction.actionCommandsList.Count; j++) {
                         if (currentAction.actionCommandsList[j].id != 0x00FE) {
@@ -5923,42 +6303,39 @@ namespace DSPRE {
                         buffer += currentAction.actionCommandsList[j].name + Environment.NewLine;
                     }
 
-                    actionsTextBox.AppendText(buffer + Environment.NewLine, actionTextColor);
+                    ActionTextArea.AppendText(buffer + Environment.NewLine);
                     buffer = "";
                 }
             }
 
             statusLabel.Text = "Ready";
             disableHandlers = false;
-            UpdateLineNumbers(scriptTextBox, LineNumberTextBoxScript);
-            UpdateLineNumbers(functionTextBox, LineNumberTextBoxFunc);
-            UpdateLineNumbers(actionsTextBox, LineNumberTextBoxMov);
         }
         private void scriptsNavListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            NavigatorGoTo((ListBox)sender, 0, scriptTextBox, "Script");
+            NavigatorGoTo((ListBox)sender, 0, scriptSearchManager, ScriptFile.ScriptKW);
         }
 
         private void functionsNavListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            NavigatorGoTo((ListBox)sender, 1, functionTextBox, "Function");
+            NavigatorGoTo((ListBox)sender, 1, functionSearchManager, ScriptFile.FunctionKW);
         }
 
         private void actionsNavListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            NavigatorGoTo((ListBox)sender, 2, actionsTextBox, "Action");
+            NavigatorGoTo((ListBox)sender, 2, actionSearchManager, ScriptFile.ActionKW);
         }
 
-        private void NavigatorGoTo(ListBox currentLB, int indexToSwitchTo, RichTextBox findHere, string keyword) {
-            int ind = currentLB.SelectedIndex;
-            if (ind < 0)
+        private void NavigatorGoTo(ListBox currentLB, int indexToSwitchTo, SearchManager entrusted, string keyword) {
+            if (currentLB.SelectedIndex < 0) {
                 return;
-
+            }
+            
             if (scriptEditorTabControl.SelectedIndex != indexToSwitchTo) {
                 scriptEditorTabControl.SelectedIndex = indexToSwitchTo;
             }
 
-            TXTBoxScrollToResult(findHere, keyword + ' ' + (ind + 1) + ':', 0);
+            entrusted.Find(true, false, keyword + ' ' + (currentLB.SelectedIndex + 1) + ':');
         }
         #endregion
-
+        #endregion
         #region Text Editor
 
         #region Variables
@@ -6087,8 +6464,9 @@ namespace DSPRE {
         }
 
         private void searchMessageTextBox_KeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter) {
                 searchMessageButton_Click(null, null);
+            }
         }
         private void replaceMessageButton_Click(object sender, EventArgs e) {
             if (searchMessageTextBox.Text == "")
@@ -7709,7 +8087,7 @@ namespace DSPRE {
             }
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e) {
+        private void TBLEditortrainerClassPreviewPic_ValueChanged(object sender, EventArgs e) {
             UpdateTrainerClassPic(tbEditorTrClassPictureBox, (int)((NumericUpDown)sender).Value);
         }
 
@@ -7766,6 +8144,12 @@ namespace DSPRE {
 
             tbEditorTrClassFramePreviewUpDown.Maximum = maxFrames;
             tbEditortrainerClassFrameMaxLabel.Text = "/" + maxFrames;
+        }        
+        private void pbEffectsPokemonCombobox_SelectedIndexChanged(object sender, EventArgs e) {
+            ComboBox cb = sender as ComboBox;
+            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
+            tbEditorPokeminiPictureBox.Image = pokeIcon;
+            tbEditorPokeminiPictureBox.Update();
         }
 
         #endregion
@@ -7781,13 +8165,6 @@ namespace DSPRE {
             }
 
             disableHandlers = false;
-        }
-
-        private void pbEffectsPokemonCombobox_SelectedIndexChanged(object sender, EventArgs e) {
-            ComboBox cb = sender as ComboBox;
-            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
-            tbEditorPokeminiPictureBox.Image = pokeIcon;
-            tbEditorPokeminiPictureBox.Update();
         }
     }
 }
