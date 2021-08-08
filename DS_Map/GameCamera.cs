@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSPRE;
+using System;
 using System.IO;
 using System.Windows.Forms;
 using static DSPRE.RomInfo;
@@ -145,7 +146,7 @@ public class GameCamera {
                 nearClip = b.ReadUInt32();
                 farClip = b.ReadUInt32();
 
-                if (DSPRE.RomInfo.gameFamily == gFamEnum.HGSS) {
+                if (RomInfo.gameFamily == gFamEnum.HGSS) {
                     xOffset = b.ReadInt32();
                     yOffset = b.ReadInt32();
                     zOffset = b.ReadInt32();
@@ -171,12 +172,17 @@ public class GameCamera {
             writer.Write(nearClip);
             writer.Write(farClip);
 
-            if (xOffset != null)
+            if (xOffset != null) {
                 writer.Write((int)xOffset);
-            if (yOffset != null)
+            }
+
+            if (yOffset != null) {
                 writer.Write((int)yOffset);
-            if (zOffset != null)
+            }
+
+            if (zOffset != null) {
                 writer.Write((int)zOffset);
+            }
         }
 
         return newData.ToArray();
@@ -203,12 +209,17 @@ public class GameCamera {
         dgv.Rows[rowIndex].Cells[colIndex++].Value = farClip;
 
         if (colIndex < dgv.Columns.Count-3) {
-            if (xOffset != null)
+            if (xOffset != null) {
                 dgv.Rows[rowIndex].Cells[colIndex++].Value = xOffset;
-            if (yOffset != null)
+            }
+
+            if (yOffset != null) {
                 dgv.Rows[rowIndex].Cells[colIndex++].Value = yOffset;
-            if (zOffset != null)
+            }
+
+            if (zOffset != null) {
                 dgv.Rows[rowIndex].Cells[colIndex++].Value = zOffset;
+            }
         }
     }
 }

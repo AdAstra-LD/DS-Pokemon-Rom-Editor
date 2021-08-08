@@ -12,6 +12,70 @@ using static DSPRE.RomInfo;
 
 namespace DSPRE {
     public static class DSUtils {
+        public static class ARM9 {
+            public static bool Decompress(string path) {
+                Process decompress = new Process();
+                decompress.StartInfo.FileName = @"Tools\blz.exe";
+                decompress.StartInfo.Arguments = @" -d " + '"' + path + '"';
+                decompress.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                decompress.StartInfo.CreateNoWindow = true;
+                decompress.Start();
+                decompress.WaitForExit();
+
+                return new FileInfo(RomInfo.arm9Path).Length > 0xBC000;
+            }
+            public static bool Decompress() {
+                return Decompress(RomInfo.arm9Path);
+            } 
+            public static bool Compress(string path) {
+                Process compress = new Process();
+                compress.StartInfo.FileName = @"Tools\blz.exe";
+                compress.StartInfo.Arguments = @" -en9 " + '"' + path + '"';
+                compress.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                compress.StartInfo.CreateNoWindow = true;
+                compress.Start();
+                compress.WaitForExit();
+
+                return new FileInfo(RomInfo.arm9Path).Length <= 0xBC000;
+            }
+            public static bool Compress () {
+                return Compress(RomInfo.arm9Path);
+            }
+            public static void EditSize(int increment) {
+                FileStream arm = File.OpenWrite(RomInfo.arm9Path);
+                BinaryWriter arm9Truncate = new BinaryWriter(arm);
+                arm9Truncate.BaseStream.SetLength(arm.Length + increment);
+                arm9Truncate.Close();
+            }
+            public static byte[] ReadBytes(uint startOffset, long numberOfBytes = 0) {
+                return ReadFromFile(RomInfo.arm9Path, startOffset, numberOfBytes);
+            }
+            public static void WriteBytes(byte[] bytesToWrite, uint destOffset, int indexFirstByteToWrite = 0, int? indexLastByteToWrite = null) {
+                WriteToFile(RomInfo.arm9Path, bytesToWrite, destOffset, indexFirstByteToWrite, indexLastByteToWrite);
+            }
+            public static byte ReadByte(uint startOffset) {
+                return ReadFromFile(RomInfo.arm9Path, startOffset, 1)[0];
+            }
+            public static void WriteByte(byte value, uint destOffset) {
+                WriteToFile(RomInfo.arm9Path, BitConverter.GetBytes(value), destOffset, 0);
+            }
+
+            public class ARM9Reader : BinaryReader {
+                public ARM9Reader(string path, long pos = 0) : base(File.OpenRead(path)) {
+                    this.BaseStream.Position = pos;
+                }
+                public ARM9Reader(long pos = 0) : this(arm9Path, pos) {
+                }
+            }
+            public class Writer : BinaryWriter { 
+                public Writer(string path, long pos = 0) : base(File.OpenWrite(path)) {
+                    this.BaseStream.Position = pos;
+                }
+                public Writer(long pos = 0) : this(arm9Path, pos) {
+                }
+            }
+
+        }
 
         public const int NSBMD_DOESNTHAVE_TEXTURE = 0;
         public const int NSBMD_HAS_TEXTURE = 1;
@@ -177,36 +241,6 @@ namespace DSPRE {
                 f.Write(compressStatus);
             }
         }
-
-
-        public static bool DecompressArm9() {
-            Process decompress = new Process();
-            decompress.StartInfo.FileName = @"Tools\blz.exe";
-            decompress.StartInfo.Arguments = @" -d " + '"' + RomInfo.arm9Path + '"';
-            decompress.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            decompress.StartInfo.CreateNoWindow = true;
-            decompress.Start();
-            decompress.WaitForExit();
-
-            return new FileInfo(RomInfo.arm9Path).Length> 0xBC000;
-        }
-        public static bool CompressArm9() {
-            Process compress = new Process();
-            compress.StartInfo.FileName = @"Tools\blz.exe";
-            compress.StartInfo.Arguments = @" -en9 " + '"' + RomInfo.arm9Path + '"';
-            compress.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            compress.StartInfo.CreateNoWindow = true;
-            compress.Start();
-            compress.WaitForExit();
-
-            return new FileInfo(RomInfo.arm9Path).Length <= 0xBC000;
-        }
-        public static void EditARM9size (int increment) {
-            FileStream arm = File.OpenWrite(RomInfo.arm9Path);
-            BinaryWriter arm9Truncate = new BinaryWriter(arm);
-            arm9Truncate.BaseStream.SetLength(arm.Length + increment);
-            arm9Truncate.Close();
-        }
         public static void RepackROM(string ndsFileName) {
             Process repack = new Process();
             repack.StartInfo.FileName = @"Tools\ndstool.exe";
@@ -225,19 +259,6 @@ namespace DSPRE {
             repack.StartInfo.CreateNoWindow = true;
             repack.Start();
             repack.WaitForExit();
-        }
-
-        public static byte[] ReadBytesFromArm9(uint startOffset, long numberOfBytes = 0) {
-            return ReadFromFile(RomInfo.arm9Path, startOffset, numberOfBytes);
-        }
-        public static void WriteBytesToArm9(byte[] bytesToWrite, uint destOffset, int indexFirstByteToWrite = 0, int? indexLastByteToWrite = null) {
-            WriteToFile(RomInfo.arm9Path, bytesToWrite, destOffset, indexFirstByteToWrite, indexLastByteToWrite);
-        }
-        public static byte ReadByteFromArm9(uint startOffset) {
-            return ReadFromFile(RomInfo.arm9Path, startOffset, 1)[0];
-        }
-        public static void WriteByteToArm9(byte value, uint destOffset) {
-            WriteToFile(RomInfo.arm9Path, BitConverter.GetBytes(value), destOffset, 0);
         }
 
         public static byte[] StringToByteArray(String hex) {

@@ -469,7 +469,7 @@ namespace DSPRE {
             string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.3" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
-                + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex, Mixone and BagBoy."
+                + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS ROM Hacking made the development of this tool possible.";
 
             MessageBox.Show(message, "About...", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -518,7 +518,7 @@ namespace DSPRE {
                             versionLabel.Text = "Error";
                             return;
                         }
-                        DSUtils.EditARM9size(-12);
+                        DSUtils.ARM9.EditSize(-12);
                     } catch (IOException) {
                         MessageBox.Show("Can't access temp directory: \n" + RomInfo.workDir + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         statusLabel.Text = "Error: concurrent access to " + RomInfo.workDir;
@@ -590,7 +590,7 @@ namespace DSPRE {
                 case gFamEnum.Plat:
                     break;
                 default:
-                    if (!DSUtils.DecompressArm9()) {
+                    if (!DSUtils.ARM9.Compress()) {
                         MessageBox.Show("ARM9 decompression failed. The program can't proceed.\nAborting.",
                                     "Errror with ARM9 decompression", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
@@ -663,7 +663,7 @@ namespace DSPRE {
 
             statusLabel.Text = "Repacking ROM...";
             Update();
-            //DeleteTempFolders();
+
             DSUtils.RepackROM(saveRom.FileName);
 
             if (RomInfo.gameFamily != gFamEnum.DP && RomInfo.gameFamily != gFamEnum.Plat) {
@@ -1540,7 +1540,7 @@ namespace DSPRE {
                 DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, fromScratch: true);
             } else {
                 uint headerOffset = (uint)(RomInfo.headerTableOffset + MapHeader.length * currentHeader.ID);
-                DSUtils.WriteBytesToArm9(currentHeader.ToByteArray(), headerOffset);
+                DSUtils.ARM9.WriteBytes(currentHeader.ToByteArray(), headerOffset);
             }
             disableHandlers = true;
 
@@ -1702,7 +1702,7 @@ namespace DSPRE {
                 DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, fromScratch: true);
             } else {
                 uint headerOffset = (uint)(RomInfo.headerTableOffset + MapHeader.length * currentHeader.ID);
-                DSUtils.WriteBytesToArm9(currentHeader.ToByteArray(), headerOffset);
+                DSUtils.ARM9.WriteBytes(currentHeader.ToByteArray(), headerOffset);
             }
 
             try {
@@ -2143,8 +2143,10 @@ namespace DSPRE {
                 statusLabel.Text = "Selection:   " + selectedCells[0].ColumnIndex + ", " + selectedCells[0].RowIndex;
         }
         private void headersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
-            if (headerListBox.Items.Count < internalNames.Count)
+            if (headerListBox.Items.Count < internalNames.Count) {
                 HeaderSearch.ResetResults(headerListBox, headerListBoxNames, prependNumbers: false);
+            }
+
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0) {
                 int headerNumber = Convert.ToInt32(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
                 headerListBox.SelectedIndex = headerNumber;
@@ -7209,7 +7211,7 @@ namespace DSPRE {
             RomInfo.SetEncounterMusicTableOffsetToRAMAddress();
             trainerClassEncounterMusicDict = new Dictionary<byte, (uint entryOffset, ushort musicD, ushort? musicN)>();
 
-            uint encounterMusicTableTableStartAddress = BitConverter.ToUInt32(DSUtils.ReadBytesFromArm9(RomInfo.encounterMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
+            uint encounterMusicTableTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.encounterMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
             
             uint entrySize = 4;
             uint tableSizeOffset = 10;
@@ -7219,7 +7221,7 @@ namespace DSPRE {
                 encounterSSEQAltUpDown.Enabled = true;
             }
 
-            byte tableEntriesCount = DSUtils.ReadByteFromArm9(RomInfo.encounterMusicTableOffsetToRAMAddress - tableSizeOffset);
+            byte tableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.encounterMusicTableOffsetToRAMAddress - tableSizeOffset);
             using (BinaryReader br = new BinaryReader(File.OpenRead(arm9Path))) {
                 br.BaseStream.Position = encounterMusicTableTableStartAddress;
                 for (int i = 0; i < tableEntriesCount; i++) {
@@ -7961,7 +7963,7 @@ namespace DSPRE {
 
             string trClass = GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
             trainerClassListBox.Items[currentClassID] = "[" + currentClassID + "]" + " " + newName;
-            DSUtils.WriteBytesToArm9(BitConverter.GetBytes((ushort)encounterSSEQMainUpDown.Value), trainerClassEncounterMusicDict[(byte)currentClassID].entryOffset, 0); 
+            DSUtils.ARM9.WriteBytes(BitConverter.GetBytes((ushort)encounterSSEQMainUpDown.Value), trainerClassEncounterMusicDict[(byte)currentClassID].entryOffset, 0); 
             
             disableHandlers = false;
             trainerClassListBox_SelectedIndexChanged(null, null);
@@ -7990,8 +7992,8 @@ namespace DSPRE {
                 RomInfo.SetConditionalMusicTableOffsetToRAMAddress();
                 conditionalMusicTable = new List<(ushort, ushort, ushort)>();
 
-                conditionalMusicTableStartAddress = BitConverter.ToUInt32(DSUtils.ReadBytesFromArm9(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
-                byte tableEntriesCount = DSUtils.ReadByteFromArm9(RomInfo.conditionalMusicTableOffsetToRAMAddress - 8);
+                conditionalMusicTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
+                byte tableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.conditionalMusicTableOffsetToRAMAddress - 8);
 
                 conditionalMusicTableListBox.Items.Clear();
                 using (BinaryReader br = new BinaryReader(File.OpenRead(arm9Path))) {
@@ -8026,13 +8028,13 @@ namespace DSPRE {
                 vsPokemonEffectsDict = new OrderedDictionary();
                 effectsComboTable = new List<(ushort vsGraph, ushort battleSSEQ)>();
 
-                vsTrainerTableStartAddress = BitConverter.ToUInt32(DSUtils.ReadBytesFromArm9(RomInfo.vsTrainerEntryTableOffsetToRAMAddress, 4), 0) - 0x02000000;
-                vsPokemonTableStartAddress = BitConverter.ToUInt32(DSUtils.ReadBytesFromArm9(RomInfo.vsPokemonEntryTableOffsetToRAMAddress, 4), 0) - 0x02000000;
-                effectsComboMainTableStartAddress = BitConverter.ToUInt32(DSUtils.ReadBytesFromArm9(RomInfo.effectsComboTableOffsetToRAMAddress, 4), 0) - 0x02000000;
+                vsTrainerTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsTrainerEntryTableOffsetToRAMAddress, 4), 0) - 0x02000000;
+                vsPokemonTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsPokemonEntryTableOffsetToRAMAddress, 4), 0) - 0x02000000;
+                effectsComboMainTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.effectsComboTableOffsetToRAMAddress, 4), 0) - 0x02000000;
                 
-                byte trainerTableEntriesCount = DSUtils.ReadByteFromArm9(RomInfo.vsTrainerEntryTableOffsetToSizeLimiter);
-                byte pokemonTableEntriesCount = DSUtils.ReadByteFromArm9(RomInfo.vsPokemonEntryTableOffsetToSizeLimiter);
-                byte comboTableEntriesCount = DSUtils.ReadByteFromArm9(RomInfo.effectsComboTableOffsetToSizeLimiter);
+                byte trainerTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.vsTrainerEntryTableOffsetToSizeLimiter);
+                byte pokemonTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.vsPokemonEntryTableOffsetToSizeLimiter);
+                byte comboTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.effectsComboTableOffsetToSizeLimiter);
 
                 pbEffectsPokemonCombobox.Items.Clear();
                 string[] pokeNames = RomInfo.GetPokémonNames();
@@ -8153,9 +8155,9 @@ namespace DSPRE {
 
         private void saveConditionalMusicTableBTN_Click(object sender, EventArgs e) {
             for (int i = 0; i < conditionalMusicTable.Count; i++) {
-                DSUtils.WriteBytesToArm9(BitConverter.GetBytes(conditionalMusicTable[i].header), (uint)(conditionalMusicTableStartAddress + 6 * i));
-                DSUtils.WriteBytesToArm9(BitConverter.GetBytes(conditionalMusicTable[i].flag), (uint)(conditionalMusicTableStartAddress + 6 * i + 2));
-                DSUtils.WriteBytesToArm9(BitConverter.GetBytes(conditionalMusicTable[i].music), (uint)(conditionalMusicTableStartAddress + 6 * i + 4));
+                DSUtils.ARM9.WriteBytes(BitConverter.GetBytes(conditionalMusicTable[i].header), (uint)(conditionalMusicTableStartAddress + 6 * i));
+                DSUtils.ARM9.WriteBytes(BitConverter.GetBytes(conditionalMusicTable[i].flag), (uint)(conditionalMusicTableStartAddress + 6 * i + 2));
+                DSUtils.ARM9.WriteBytes(BitConverter.GetBytes(conditionalMusicTable[i].music), (uint)(conditionalMusicTableStartAddress + 6 * i + 4));
             }
         }
 
@@ -8164,7 +8166,11 @@ namespace DSPRE {
         }
 
         private void saveEffectComboBTN_Click(object sender, EventArgs e) {
-
+            int index = pbEffectsCombosListbox.SelectedIndex;
+            using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer(effectsComboMainTableStartAddress + 4 * index)) {
+                wr.Write(effectsComboTable[index].vsGraph);
+                wr.Write(effectsComboTable[index].battleSSEQ);
+            };
         }
 
         private void saveVSPokemonEntryBTN_Click(object sender, EventArgs e) {
