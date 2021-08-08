@@ -2358,7 +2358,6 @@ namespace DSPRE {
                     headerID = currentHeader.ID;
                 }
 
-                AreaData areaData;
                 if (headerID > internalNames.Count) {
                     MessageBox.Show("This map is associated to a non-existent header.\nThis will lead to unpredictable behaviour and, possibily, problems, if you attempt to load it in game.",
                         "Invalid header", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -2373,17 +2372,14 @@ namespace DSPRE {
                     h = MapHeader.LoadFromARM9(headerID);
                 }
 
-                areaData = new AreaData(h.areaDataID);
                 /* Load Map File and switch to Map Editor tab */
                 disableHandlers = true;
 
+                AreaData areaData = new AreaData(h.areaDataID);
                 selectMapComboBox.SelectedIndex = currentMatrix.maps[e.RowIndex, e.ColumnIndex];
                 mapTextureComboBox.SelectedIndex = areaData.mapTileset + 1;
                 buildTextureComboBox.SelectedIndex = areaData.buildingsTileset + 1;
                 mainTabControl.SelectedTab = mapEditorTabPage;
-
-                //what's this IF for??
-                //if (mapPartsTabControl.SelectedTab == permissionsTabPage) 
 
                 if (areaData.areaType == AreaData.TYPE_INDOOR) {
                     interiorbldRadioButton.Checked = true;
@@ -6714,16 +6710,22 @@ namespace DSPRE {
             }
 
             /* Enable gameVersion-specific controls */
+            string[] lightTypes;
 
             switch (RomInfo.gameFamily) {
                 case gFamEnum.DP:
                 case gFamEnum.Plat:
+                    lightTypes = new string[3] { "Day/Night Light", "Model's light", "Unknown Light" };
                     break;
                 default:
+                    lightTypes = new string[3] { "Model's light", "Day/Night Light", "Unknown Light" };
                     areaDataDynamicTexturesNumericUpDown.Enabled = true;
                     areaTypeGroupbox.Enabled = true;
                     break;
             };
+
+            areaDataLightTypeComboBox.Items.Clear();
+            areaDataLightTypeComboBox.Items.AddRange(lightTypes);
 
             if (selectAreaDataListBox.Items.Count > 0) {
                 selectAreaDataListBox.SelectedIndex = 0;

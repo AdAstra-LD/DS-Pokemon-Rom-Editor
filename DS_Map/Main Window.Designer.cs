@@ -4395,10 +4395,6 @@
             // 
             this.areaDataLightTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.areaDataLightTypeComboBox.FormattingEnabled = true;
-            this.areaDataLightTypeComboBox.Items.AddRange(new object[] {
-            "Model\'s light",
-            "Day/Night Light",
-            "Unknown Light"});
             this.areaDataLightTypeComboBox.Location = new System.Drawing.Point(355, 211);
             this.areaDataLightTypeComboBox.Name = "areaDataLightTypeComboBox";
             this.areaDataLightTypeComboBox.Size = new System.Drawing.Size(137, 21);
