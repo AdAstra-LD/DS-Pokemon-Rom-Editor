@@ -30,6 +30,8 @@ namespace DSPRE.ROMFiles {
         public string name { get; set; }
         public byte width { get; set; }
         public byte height { get; set; }
+        public int? id { get; } = null;
+
         public ushort[,] headers;
         public byte[,] altitudes;
         public ushort[,] maps;
@@ -74,7 +76,23 @@ namespace DSPRE.ROMFiles {
                         maps[i, j] = reader.ReadUInt16();
             }
         }
-        public GameMatrix(int ID) : this (new FileStream(RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
+        public GameMatrix(int ID) : this (new FileStream(RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) {
+            this.id = ID;
+        }
+
+        public GameMatrix(GameMatrix copy, int newID) { 
+            this.id = newID;
+            this.name = copy.name;
+            this.width = copy.width;
+            this.height = copy.height;
+
+            this.maps = (ushort[,])copy.maps.Clone();
+            this.altitudes = (byte[,])copy.altitudes.Clone();
+            this.headers = (ushort[,])copy.headers.Clone();
+
+            this.hasHeadersSection = copy.hasHeadersSection;
+            this.hasHeightsSection = copy.hasHeightsSection;
+        }
         #endregion
 
         #region Methods (6)
@@ -86,29 +104,44 @@ namespace DSPRE.ROMFiles {
             ushort[,] newMaps = new ushort[newHeight, newWidth];
 
             /* Copy existing headers and altitudes rows into new arrays. If new matrix is greater in any dimension, new entries will be zero */
-            if (hasHeadersSection) 
-                for (int i = 0; i < Math.Min(height, newHeight); i++) 
-                    for (int j = 0; j < Math.Min(width, newWidth); j++) 
+            if (hasHeadersSection) {
+                for (int i = 0; i < Math.Min(height, newHeight); i++) {
+                    for (int j = 0; j < Math.Min(width, newWidth); j++) {
                         newHeaders[i, j] = headers[i, j];
-            if (hasHeightsSection) 
-                for (int i = 0; i < Math.Min(height, newHeight); i++) 
-                    for (int j = 0; j < Math.Min(width, newWidth); j++) 
+                    }
+                }
+            }
+
+            if (hasHeightsSection) {
+                for (int i = 0; i < Math.Min(height, newHeight); i++) {
+                    for (int j = 0; j < Math.Min(width, newWidth); j++) {
                         newAltitudes[i, j] = altitudes[i, j];
+                    }
+                }
+            }
 
             /* Copy existing map rows into new array, and fill eventual new ones with Matrix.EMPTY (FF FF) */
-            for (int i = 0; i < Math.Min(height, newHeight); i++) 
-                for (int j = 0; j < Math.Min(width, newWidth); j++) 
+            for (int i = 0; i < Math.Min(height, newHeight); i++) {
+                for (int j = 0; j < Math.Min(width, newWidth); j++) {
                     newMaps[i, j] = maps[i, j];
+                }
+            }
 
-            if (newHeight > height) 
-                for (int i = height; i < newHeight; i++) 
-                    for (int j = 0; j < newWidth; j++) 
+            if (newHeight > height) {
+                for (int i = height; i < newHeight; i++) {
+                    for (int j = 0; j < newWidth; j++) {
                         newMaps[i, j] = GameMatrix.EMPTY;
+                    }
+                }
+            }
 
-            if (newWidth > width)   
-                for (int j = width; j < newWidth; j++) 
-                    for (int i = 0; i < newHeight; i++) 
+            if (newWidth > width) {
+                for (int j = width; j < newWidth; j++) {
+                    for (int i = 0; i < newHeight; i++) {
                         newMaps[i, j] = GameMatrix.EMPTY;
+                    }
+                }
+            }
 
             /* Substitute old arrays with new arrays */
             headers = newHeaders;
@@ -118,6 +151,10 @@ namespace DSPRE.ROMFiles {
             /* Set new width and height */
             height = (byte)newHeight;
             width = (byte)newWidth;
+        }
+
+        public override string ToString() {
+            return (this.id == null ? "" : id.ToString()) + ": " + this.name;
         }
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
@@ -129,20 +166,25 @@ namespace DSPRE.ROMFiles {
                 writer.Write(name);
 
                 if (hasHeadersSection) {
-                    for (int i = 0; i < height; i++)
-                        for (int j = 0; j < width; j++)
+                    for (int i = 0; i < height; i++) {
+                        for (int j = 0; j < width; j++) {
                             writer.Write(headers[i, j]);
+                        }
+                    }
                 }
 
                 if (hasHeightsSection) {
-                    for (int i = 0; i < height; i++)
-                        for (int j = 0; j < width; j++)
+                    for (int i = 0; i < height; i++) {
+                        for (int j = 0; j < width; j++) {
                             writer.Write(altitudes[i, j]);
+                        }
+                    }
                 }
 
-                for (int i = 0; i < height; i++) {
-                    for (int j = 0; j < width; j++)
+                for (int i = height - 1; i >= 0; i--) {
+                    for (int j = 0; j < width; j++) {
                         writer.Write(maps[i, j]);
+                    }
                 }
 
             }
