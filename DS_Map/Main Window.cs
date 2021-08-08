@@ -5704,6 +5704,8 @@ namespace DSPRE {
             InitHotkeys(ScriptTextArea, scriptSearchManager);
             InitHotkeys(FunctionTextArea, functionSearchManager);
             InitHotkeys(ActionTextArea, actionSearchManager);
+
+            scriptEditorWordWrapCheckbox_CheckedChanged(null, null);
         }
 
         private void InitNumberMargin(Scintilla textArea, EventHandler<MarginClickEventArgs> textArea_MarginClick) {
@@ -5894,12 +5896,11 @@ namespace DSPRE {
         //    Line line = TextArea.Lines[TextArea.CurrentLine];
         //    TextArea.SetSelection(line.Position + line.Length, line.Position);
         //}
-        private void wordWrapButton_Click(object sender, EventArgs e) {
+        private void scriptEditorWordWrapCheckbox_CheckedChanged(object sender, EventArgs e) {
             ScriptTextArea.WrapMode = scriptEditorWordWrapCheckbox.Checked ? ScintillaNET.WrapMode.Word : ScintillaNET.WrapMode.None;
             FunctionTextArea.WrapMode = scriptEditorWordWrapCheckbox.Checked ? ScintillaNET.WrapMode.Word : ScintillaNET.WrapMode.None;
             ActionTextArea.WrapMode = scriptEditorWordWrapCheckbox.Checked ? ScintillaNET.WrapMode.Word : ScintillaNET.WrapMode.None;
         }
-
         //private void indentGuidesCheckbox_CheckedChanged(object sender, EventArgs e) {
         //    ScriptTextArea.IndentationGuides = scriptEditorIndentGuidesCheckbox.Checked ? IndentView.LookBoth : IndentView.None;
         //    FunctionTextArea.IndentationGuides = scriptEditorIndentGuidesCheckbox.Checked ? IndentView.LookBoth : IndentView.None;
@@ -6206,8 +6207,9 @@ namespace DSPRE {
                 return;
             }
 
-            string[] split = searchInScriptsResultListBox.SelectedItem.ToString().Split();
+            string[] split = searchInScriptsResultListBox.SelectedItem.ToString().Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             selectScriptFileComboBox.SelectedIndex = int.Parse(split[1]);
+            string cmdNameAndParams = String.Join(" ", split.Skip(5).Take(split.Length - 5));
 
             string cmdSearched = null;
             for (int i = 5; i < split.Length; i++) {
@@ -6219,17 +6221,20 @@ namespace DSPRE {
                 if (scriptEditorTabControl.SelectedTab != scriptsTabPage) {
                     scriptEditorTabControl.SelectedTab = scriptsTabPage;
                 }
-                scriptSearchManager.Find(true, false, ScriptFile.ScriptKW + split[4].Replace(":", ""));
+                scriptSearchManager.Find(true, false, ScriptFile.ScriptKW + " " + split[4].Replace(":", ""));
+                scriptSearchManager.Find(true, false, cmdNameAndParams);
             } else if (split[3].StartsWith(ScriptFile.FunctionKW)) {
                 if (scriptEditorTabControl.SelectedTab != functionTabPage) {
                     scriptEditorTabControl.SelectedTab = functionTabPage;
                 }
-                functionSearchManager.Find(true, false, ScriptFile.FunctionKW + split[4].Replace(":", ""));
-            } else {
+                functionSearchManager.Find(true, false, ScriptFile.FunctionKW + " " + split[4].Replace(":", ""));
+                functionSearchManager.Find(true, false, cmdNameAndParams);
+            } else if (split[3].StartsWith(ScriptFile.ActionKW)) {
                 if (scriptEditorTabControl.SelectedTab != movementTabPage) {
                     scriptEditorTabControl.SelectedTab = movementTabPage;
                 }
-                actionSearchManager.Find(true, false, ScriptFile.ActionKW + split[4].Replace(":", ""));
+                actionSearchManager.Find(true, false, ScriptFile.ActionKW + " " + split[4].Replace(":", ""));
+                actionSearchManager.Find(true, false, cmdNameAndParams);
             }
         }
         private void searchInScriptsResultListBox_KeyDown(object sender, KeyEventArgs e) {
@@ -7013,7 +7018,7 @@ namespace DSPRE {
 
         private void SetupCameraEditor() {
             RomInfo.PrepareCameraData();
-            cameraEditorDataGridView.Columns.Clear();
+            cameraEditorDataGridView.Rows.Clear();
 
             if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.cameraTblOverlayNumber)) {
                 DialogResult d1 = MessageBox.Show("It is STRONGLY recommended to configure Overlay1 as uncompressed before proceeding.\n\n" +
@@ -7979,9 +7984,8 @@ namespace DSPRE {
 
                 conditionalMusicTableListBox.Items.Clear();
                 using (BinaryReader br = new BinaryReader(File.OpenRead(arm9Path))) {
+                    br.BaseStream.Position = conditionalMusicTableStartAddress;
                     for (int i = 0; i < tableEntriesCount; i++) {
-                        br.BaseStream.Position = conditionalMusicTableStartAddress;
-
                         ushort header = br.ReadUInt16();
                         ushort flag = br.ReadUInt16();
                         ushort musicID = br.ReadUInt16();
