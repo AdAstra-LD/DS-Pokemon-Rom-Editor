@@ -2086,7 +2086,7 @@ namespace DSPRE {
             selectMatrixComboBox.Items.Clear();
             selectMatrixComboBox.Items.Add("Matrix 0 - Main");
             for (int i = 1; i < romInfo.GetMatrixCount(); i++) {
-                selectMatrixComboBox.Items.Add("Matrix " + i);
+                selectMatrixComboBox.Items.Add(new GameMatrix(i));
             }
 
             RomInfo.LoadMapCellsColorDictionary();
@@ -2113,18 +2113,19 @@ namespace DSPRE {
             GameMatrix newMatrix = new GameMatrix(0);
 
             /* Add new matrix file to matrix folder */
-            string matrixPath = RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + romInfo.GetMatrixCount().ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(matrixPath, FileMode.Create))) writer.Write(newMatrix.ToByteArray());
+            newMatrix.SaveToFile(RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + romInfo.GetMatrixCount().ToString("D4"), false);
 
             /* Update ComboBox*/
-            selectMatrixComboBox.Items.Add("Matrix " + (romInfo.GetMatrixCount() - 1).ToString());
+            selectMatrixComboBox.Items.Add(new GameMatrix(newMatrix, romInfo.GetMatrixCount() - 1));
         }
         private void exportMatrixButton_Click(object sender, EventArgs e) {
             currentMatrix.SaveToFileExplorePath("Matrix " + selectMatrixComboBox.SelectedIndex);
         }
         private void saveMatrixButton_Click(object sender, EventArgs e) {
             currentMatrix.SaveToFileDefaultDir(selectMatrixComboBox.SelectedIndex);
-            eventMatrix = new GameMatrix(selectMatrixComboBox.SelectedIndex);
+            GameMatrix saved = new GameMatrix(selectMatrixComboBox.SelectedIndex);
+            selectMatrixComboBox.Items[selectMatrixComboBox.SelectedIndex] = saved.ToString();
+            eventMatrix = saved;
         }
         private void headersGridView_SelectionChanged(object sender, EventArgs e) {
             DisplaySelection(headersGridView.SelectedCells);
@@ -4179,7 +4180,10 @@ namespace DSPRE {
                     eventMatrixXUpDown.Value = 0;
                     eventMatrixYUpDown.Value = 0;
                 }
-            } catch (ArgumentOutOfRangeException) { }
+            } catch (ArgumentOutOfRangeException) {
+                MessageBox.Show("One of the events tried to reference a bigger Matrix.\nMake sure the Header File associated to this Event File is using the correct Matrix.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             disableHandlers = false;
         }
         private void centerEventViewOnSelectedEvent_Click(object sender, EventArgs e) {
@@ -4187,8 +4191,13 @@ namespace DSPRE {
                 MessageBox.Show("You haven't selected any event.", "Nothing to do here",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
-                eventMatrixXUpDown.Value = selectedEvent.xMatrixPosition;
-                eventMatrixYUpDown.Value = selectedEvent.yMatrixPosition;
+                try {
+                    eventMatrixXUpDown.Value = selectedEvent.xMatrixPosition;
+                    eventMatrixYUpDown.Value = selectedEvent.yMatrixPosition;
+                } catch (ArgumentOutOfRangeException) {
+                    MessageBox.Show("Event is out of range.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 Update();
             }
         }
