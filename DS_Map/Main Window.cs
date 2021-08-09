@@ -7979,16 +7979,22 @@ namespace DSPRE {
         #endregion
 
         #region Table Editor
+        #region Variables
+
+        string[] pokeNames;
+        string[] trcNames;
+
         List<(ushort header, ushort flag, ushort music)> conditionalMusicTable;
         uint conditionalMusicTableStartAddress;
 
-        OrderedDictionary vsTrainerEffectsDict;
-        OrderedDictionary vsPokemonEffectsDict;
+        List<(int trainerClass, int comboID)> vsTrainerEffectsList;
+        List<(int pokemonID, int comboID)> vsPokemonEffectsList;
         List<(ushort vsGraph, ushort battleSSEQ)> effectsComboTable;
 
         uint vsTrainerTableStartAddress;
         uint vsPokemonTableStartAddress;
         uint effectsComboMainTableStartAddress;
+        #endregion
 
         private void SetupConditionalMusicTable() {
             if (RomInfo.gameFamily == gFamEnum.HGSS) {
@@ -8027,8 +8033,8 @@ namespace DSPRE {
             if (RomInfo.gameFamily == gFamEnum.HGSS) {
                 DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.trainerGraphics, DirNames.textArchives });
                 RomInfo.SetBattleEffectsData();
-                vsTrainerEffectsDict = new OrderedDictionary();
-                vsPokemonEffectsDict = new OrderedDictionary();
+                vsTrainerEffectsList = new List<(int trainerClass, int comboID)>();
+                vsPokemonEffectsList = new List<(int pokemonID, int comboID)>();
                 effectsComboTable = new List<(ushort vsGraph, ushort battleSSEQ)>();
 
                 vsTrainerTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsTrainerEntryTableOffsetToRAMAddress, 4), 0) - 0x02000000;
@@ -8040,15 +8046,15 @@ namespace DSPRE {
                 byte comboTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.effectsComboTableOffsetToSizeLimiter);
 
                 pbEffectsPokemonCombobox.Items.Clear();
-                string[] pokeNames = RomInfo.GetPokémonNames();
+                pokeNames = RomInfo.GetPokémonNames();
                 for (int i = 0; i < pokeNames.Length; i++) {
                     pbEffectsPokemonCombobox.Items.Add("[" + i + "]" + " " + pokeNames[i]);
                 }
 
                 pbEffectsTrainerCombobox.Items.Clear();
-                string[] trCnames = RomInfo.GetTrainerClassNames();
-                for (int i = 0; i < trCnames.Length; i++) {
-                    pbEffectsTrainerCombobox.Items.Add("[" + i + "]" + " " + trCnames[i]);
+                trcNames = RomInfo.GetTrainerClassNames();
+                for (int i = 0; i < trcNames.Length; i++) {
+                    pbEffectsTrainerCombobox.Items.Add("[" + i + "]" + " " + trcNames[i]);
                 }
 
                 pbEffectsVsTrainerListbox.Items.Clear();
@@ -8060,8 +8066,8 @@ namespace DSPRE {
                         ushort entry = ar.ReadUInt16();
                         int classID = entry & 1023;
                         int comboID = entry >> 10;
-                        vsTrainerEffectsDict.Insert(i, classID, comboID);
-                        pbEffectsVsTrainerListbox.Items.Add("[" + classID.ToString("D3") + "]" + " " + trCnames[classID] + " uses Combo #" + comboID);
+                        vsTrainerEffectsList.Add((classID, comboID));
+                        pbEffectsVsTrainerListbox.Items.Add("[" + classID.ToString("D3") + "]" + " " + trcNames[classID] + " uses Combo #" + comboID);
                     }
 
                     ar.BaseStream.Position = vsPokemonTableStartAddress;
@@ -8069,7 +8075,7 @@ namespace DSPRE {
                         ushort entry = ar.ReadUInt16();
                         int pokeID = entry & 1023;
                         int comboID = entry >> 10;
-                        vsPokemonEffectsDict.Insert(i, pokeID, comboID);
+                        vsPokemonEffectsList.Add((pokeID, comboID));
                         pbEffectsVsPokemonListbox.Items.Add("[" + pokeID.ToString("D3") + "]" + " " + pokeNames[pokeID] + " uses Combo #" + comboID);
                     }
 
@@ -8139,6 +8145,7 @@ namespace DSPRE {
             if (disableHandlers) {
                 return;
             }
+
             (ushort header, ushort flag, ushort music) oldTuple = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex];
             conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex] = (oldTuple.header, (ushort)flagConditionalMusicUpDown.Value, oldTuple.music);
         }
@@ -8169,32 +8176,49 @@ namespace DSPRE {
 
         private void saveEffectComboBTN_Click(object sender, EventArgs e) {
             int index = pbEffectsCombosListbox.SelectedIndex;
+            ushort battleIntroEffect = (ushort)pbEffectsVSAnimationUpDown.Value;
+            ushort battleMusic = (ushort)pbEffectsBattleSSEQUpDown.Value;
+
+            effectsComboTable[index] = (battleIntroEffect, battleMusic);
+
             using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer(effectsComboMainTableStartAddress + 4 * index)) {
-                wr.Write(effectsComboTable[index].vsGraph);
-                wr.Write(effectsComboTable[index].battleSSEQ);
+                wr.Write(battleIntroEffect);
+                wr.Write(battleMusic);
             };
+
+            disableHandlers = true;
+            pbEffectsCombosListbox.Items[index] = "Combo " + index.ToString("D2") + " - " + "Effect #" + battleIntroEffect + ", " + "Music #" + battleMusic;
+            disableHandlers = false;
         }
 
         private void saveVSPokemonEntryBTN_Click(object sender, EventArgs e) {
             int index = pbEffectsVsPokemonListbox.SelectedIndex;
-            DictionaryEntry ent = vsPokemonEffectsDict.Cast<DictionaryEntry>().ElementAt(index);
-            //key = MainTable comboID,  value = pokemonID
-            ushort toWrite = (ushort)(((ushort)ent.Key & 1023) + ((ushort)ent.Value << 10));
+            ushort pokemonID = (ushort)pbEffectsPokemonCombobox.SelectedIndex;
+            ushort comboID = (ushort)pbEffectsPokemonChooseMainCombobox.SelectedIndex;
 
+            vsPokemonEffectsList[index] = (pokemonID, comboID);
             using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer(vsPokemonTableStartAddress + 2 * index)) {
-                wr.Write(toWrite); //PokemonID
+                wr.Write((ushort)((pokemonID & 1023) + (comboID << 10))); //PokemonID
             };
+
+            disableHandlers = true;
+            pbEffectsVsPokemonListbox.Items[index] = "[" + pokemonID.ToString("D3") + "]" + " " + pokeNames[pokemonID] + " uses Combo #" + comboID;
+            disableHandlers = false;
         }
 
         private void saveVSTrainerEntryBTN_Click(object sender, EventArgs e) {
             int index = pbEffectsVsTrainerListbox.SelectedIndex;
-            DictionaryEntry ent = vsTrainerEffectsDict.Cast<DictionaryEntry>().ElementAt(index);
-            //key = MainTable comboID,  value = trainerClass
-            ushort toWrite = (ushort)(((ushort)ent.Key & 1023) + ((ushort)ent.Value << 10));
+            ushort trainerClass = (ushort)pbEffectsTrainerCombobox.SelectedIndex;
+            ushort comboID = (ushort)pbEffectsTrainerChooseMainCombobox.SelectedIndex;
 
+            vsTrainerEffectsList[index] = (trainerClass, comboID);
             using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer(vsTrainerTableStartAddress + 2 * index)) {
-                wr.Write(toWrite); 
+                wr.Write((ushort)((trainerClass & 1023) + (comboID << 10))); 
             };
+
+            disableHandlers = true;
+            pbEffectsVsTrainerListbox.Items[index] = "[" + trainerClass.ToString("D3") + "]" + " " + trcNames[trainerClass] + " uses Combo #" + comboID;
+            disableHandlers = false;
         }
 
         private void HOWpbEffectsTableButton_Click(object sender, EventArgs e) {
@@ -8214,20 +8238,29 @@ namespace DSPRE {
         }
 
         private void pbEffectsVsTrainerListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            DictionaryEntry ent = vsTrainerEffectsDict.Cast<DictionaryEntry>().ElementAt(pbEffectsVsTrainerListbox.SelectedIndex);
-            pbEffectsTrainerCombobox.SelectedIndex = (int)ent.Key;
-            pbEffectsCombosListbox.SelectedIndex = pbEffectsTrainerChooseMainCombobox.SelectedIndex = (int)ent.Value;
+            if (disableHandlers) {
+                return;
+            }
+            (int trainerClass, int comboID) entry = vsTrainerEffectsList[pbEffectsVsTrainerListbox.SelectedIndex];
+            pbEffectsTrainerCombobox.SelectedIndex = entry.trainerClass;
+            pbEffectsCombosListbox.SelectedIndex = pbEffectsTrainerChooseMainCombobox.SelectedIndex = entry.comboID;
             tbEditorTrClassFramePreviewUpDown.Value = 0;
         }
 
         private void pbEffectsVsPokemonListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            DictionaryEntry ent = vsPokemonEffectsDict.Cast<DictionaryEntry>().ElementAt(pbEffectsVsPokemonListbox.SelectedIndex);
-            pbEffectsPokemonCombobox.SelectedIndex = (int)ent.Key;
-            pbEffectsCombosListbox.SelectedIndex = pbEffectsPokemonChooseMainCombobox.SelectedIndex = (int)ent.Value;
+            if (disableHandlers) {
+                return;
+            }
+            (int pokemonID, int comboID) entry = vsPokemonEffectsList[pbEffectsVsPokemonListbox.SelectedIndex];
+            pbEffectsPokemonCombobox.SelectedIndex = entry.pokemonID;
+            pbEffectsCombosListbox.SelectedIndex = pbEffectsPokemonChooseMainCombobox.SelectedIndex = entry.comboID;
         }
 
         private void pbEffectsCombosListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            var entry = effectsComboTable.ElementAt(pbEffectsCombosListbox.SelectedIndex);
+            if (disableHandlers) {
+                return;
+            }
+            (ushort vsGraph, ushort battleSSEQ) entry = effectsComboTable[pbEffectsCombosListbox.SelectedIndex];
             pbEffectsBattleSSEQUpDown.Value = entry.battleSSEQ;
             pbEffectsVSAnimationUpDown.Value = entry.vsGraph;
         }
@@ -8238,7 +8271,7 @@ namespace DSPRE {
 
             tbEditorTrClassFramePreviewUpDown.Maximum = maxFrames;
             tbEditortrainerClassFrameMaxLabel.Text = "/" + maxFrames;
-        }        
+        }
         private void pbEffectsPokemonCombobox_SelectedIndexChanged(object sender, EventArgs e) {
             ComboBox cb = sender as ComboBox;
             Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
