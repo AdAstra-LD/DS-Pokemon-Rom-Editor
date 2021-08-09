@@ -486,11 +486,11 @@
             this.importEventFileButton = new System.Windows.Forms.Button();
             this.saveEventsButton = new System.Windows.Forms.Button();
             this.scriptTabPage = new System.Windows.Forms.TabPage();
+            this.scriptEditorWhitespacesCheckbox = new System.Windows.Forms.CheckBox();
+            this.scriptEditorWordWrapCheckbox = new System.Windows.Forms.CheckBox();
             this.compressScriptTextButton = new System.Windows.Forms.Button();
             this.expandScriptTextButton = new System.Windows.Forms.Button();
             this.findScriptTextButton = new System.Windows.Forms.Button();
-            this.scriptEditorWhitespacesCheckbox = new System.Windows.Forms.CheckBox();
-            this.scriptEditorWordWrapCheckbox = new System.Windows.Forms.CheckBox();
             this.groupBox24 = new System.Windows.Forms.GroupBox();
             this.SyncNavigatorCB = new System.Windows.Forms.CheckBox();
             this.ScriptNavigatorTabControl = new System.Windows.Forms.TabControl();
@@ -5189,7 +5189,7 @@
             this.isTrainerRadioButton.TabIndex = 16;
             this.isTrainerRadioButton.Text = "Trainer";
             this.isTrainerRadioButton.UseVisualStyleBackColor = true;
-            this.isTrainerRadioButton.Click += new System.EventHandler(this.OWTypeChanged);
+            this.isTrainerRadioButton.CheckedChanged += new System.EventHandler(this.OWTypeChanged);
             // 
             // isItemRadioButton
             // 
@@ -5200,7 +5200,7 @@
             this.isItemRadioButton.TabIndex = 21;
             this.isItemRadioButton.Text = "Item";
             this.isItemRadioButton.UseVisualStyleBackColor = true;
-            this.isItemRadioButton.Click += new System.EventHandler(this.OWTypeChanged);
+            this.isItemRadioButton.CheckedChanged += new System.EventHandler(this.OWTypeChanged);
             // 
             // spriteIDlabel
             // 
@@ -6621,6 +6621,34 @@
             this.scriptTabPage.Text = "Script Editor";
             this.scriptTabPage.UseVisualStyleBackColor = true;
             // 
+            // scriptEditorWhitespacesCheckbox
+            // 
+            this.scriptEditorWhitespacesCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.scriptEditorWhitespacesCheckbox.AutoSize = true;
+            this.scriptEditorWhitespacesCheckbox.Location = new System.Drawing.Point(978, 10);
+            this.scriptEditorWhitespacesCheckbox.Name = "scriptEditorWhitespacesCheckbox";
+            this.scriptEditorWhitespacesCheckbox.Size = new System.Drawing.Size(79, 23);
+            this.scriptEditorWhitespacesCheckbox.TabIndex = 46;
+            this.scriptEditorWhitespacesCheckbox.Text = "Whitespaces";
+            this.scriptEditorWhitespacesCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.scriptEditorWhitespacesCheckbox.UseVisualStyleBackColor = true;
+            this.scriptEditorWhitespacesCheckbox.CheckedChanged += new System.EventHandler(this.viewWhiteSpacesButton_Click);
+            // 
+            // scriptEditorWordWrapCheckbox
+            // 
+            this.scriptEditorWordWrapCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.scriptEditorWordWrapCheckbox.AutoSize = true;
+            this.scriptEditorWordWrapCheckbox.Checked = true;
+            this.scriptEditorWordWrapCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.scriptEditorWordWrapCheckbox.Location = new System.Drawing.Point(904, 10);
+            this.scriptEditorWordWrapCheckbox.Name = "scriptEditorWordWrapCheckbox";
+            this.scriptEditorWordWrapCheckbox.Size = new System.Drawing.Size(72, 23);
+            this.scriptEditorWordWrapCheckbox.TabIndex = 43;
+            this.scriptEditorWordWrapCheckbox.Text = "Word Wrap";
+            this.scriptEditorWordWrapCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.scriptEditorWordWrapCheckbox.UseVisualStyleBackColor = true;
+            this.scriptEditorWordWrapCheckbox.CheckedChanged += new System.EventHandler(this.scriptEditorWordWrapCheckbox_CheckedChanged);
+            // 
             // compressScriptTextButton
             // 
             this.compressScriptTextButton.Image = global::DSPRE.Properties.Resources.compressArrow;
@@ -6655,34 +6683,6 @@
             this.findScriptTextButton.TabIndex = 47;
             this.findScriptTextButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.findScriptTextButton.UseVisualStyleBackColor = true;
-            // 
-            // scriptEditorWhitespacesCheckbox
-            // 
-            this.scriptEditorWhitespacesCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.scriptEditorWhitespacesCheckbox.AutoSize = true;
-            this.scriptEditorWhitespacesCheckbox.Location = new System.Drawing.Point(978, 10);
-            this.scriptEditorWhitespacesCheckbox.Name = "scriptEditorWhitespacesCheckbox";
-            this.scriptEditorWhitespacesCheckbox.Size = new System.Drawing.Size(79, 23);
-            this.scriptEditorWhitespacesCheckbox.TabIndex = 46;
-            this.scriptEditorWhitespacesCheckbox.Text = "Whitespaces";
-            this.scriptEditorWhitespacesCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.scriptEditorWhitespacesCheckbox.UseVisualStyleBackColor = true;
-            this.scriptEditorWhitespacesCheckbox.CheckedChanged += new System.EventHandler(this.viewWhiteSpacesButton_Click);
-            // 
-            // scriptEditorWordWrapCheckbox
-            // 
-            this.scriptEditorWordWrapCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.scriptEditorWordWrapCheckbox.AutoSize = true;
-            this.scriptEditorWordWrapCheckbox.Checked = true;
-            this.scriptEditorWordWrapCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.scriptEditorWordWrapCheckbox.Location = new System.Drawing.Point(904, 10);
-            this.scriptEditorWordWrapCheckbox.Name = "scriptEditorWordWrapCheckbox";
-            this.scriptEditorWordWrapCheckbox.Size = new System.Drawing.Size(72, 23);
-            this.scriptEditorWordWrapCheckbox.TabIndex = 43;
-            this.scriptEditorWordWrapCheckbox.Text = "Word Wrap";
-            this.scriptEditorWordWrapCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.scriptEditorWordWrapCheckbox.UseVisualStyleBackColor = true;
-            this.scriptEditorWordWrapCheckbox.CheckedChanged += new System.EventHandler(this.scriptEditorWordWrapCheckbox_CheckedChanged);
             // 
             // groupBox24
             // 

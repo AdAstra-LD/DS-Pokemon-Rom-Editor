@@ -503,7 +503,7 @@ namespace DSPRE.ROMFiles {
                 int i = 0;
                 while (i < lineSourceL.Count) {
                     int positionOfActionNumber;
-                    if (!lineSourceL[i].Contains(':') || (positionOfActionNumber = lineSourceL[i].IndexOfNumber()) < 0) { // Move on until script header is found
+                    if (!lineSourceL[i].Contains(':') || (positionOfActionNumber = lineSourceL[i].IndexOfNumber()) < 0) { // Move on until action header is found
                         i++;
                         continue;
                     }

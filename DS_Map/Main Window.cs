@@ -307,7 +307,7 @@ namespace DSPRE {
             itemComboboxIsUpToDate = true;
         }
         private void scriptCommandsDatabaseToolStripButton_Click(object sender, EventArgs e) {
-            OpenCommandsDatabase(RomInfo.ScriptCommandNamesDict, RomInfo.ScriptCommandParametersDict);
+            OpenCommandsDatabase(RomInfo.ScriptCommandNamesDict, RomInfo.ScriptCommandParametersDict, RomInfo.ScriptActionNamesDict, RomInfo.ScriptComparisonOperatorsDict);
         }
         private void nsbmdExportTexButton_Click(object sender, EventArgs e) {
             OpenFileDialog of = new OpenFileDialog {
@@ -417,10 +417,11 @@ namespace DSPRE {
             DSUtils.WriteToFile(sf.FileName, DSUtils.BuildNSBMDwithTextures(modelFile, textureFile), fromScratch: true);
             MessageBox.Show("Textures correctly written to NSBMD file.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        private void OpenCommandsDatabase(Dictionary<ushort, string> namesDict, Dictionary<ushort, byte[]> paramsDict) {
+        private void OpenCommandsDatabase(Dictionary<ushort, string> namesDict, Dictionary<ushort, byte[]> paramsDict, Dictionary<ushort, string> actionsDict,
+            Dictionary<ushort, string> comparisonOPsDict) {
             statusLabel.Text = "Setting up Commands Database. Please wait...";
             Update();
-            CommandsDatabase form = new CommandsDatabase(namesDict, paramsDict);
+            CommandsDatabase form = new CommandsDatabase(namesDict, paramsDict, actionsDict, comparisonOPsDict);
             form.Show();
             statusLabel.Text = "Ready";
         }
@@ -741,13 +742,16 @@ namespace DSPRE {
             }
         }
         private void diamondAndPearlToolStripMenuItem_Click(object sender, EventArgs e) {
-            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(gFamEnum.DP), RomInfo.BuildCommandParametersDatabase(gFamEnum.DP));
+            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(gFamEnum.DP), RomInfo.BuildCommandParametersDatabase(gFamEnum.DP),
+                RomInfo.BuildActionNamesDatabase(gFamEnum.DP), RomInfo.BuildComparisonOperatorsDatabase(gFamEnum.DP));
         }
         private void platinumToolStripMenuItem_Click(object sender, EventArgs e) {
-            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(gFamEnum.Plat), RomInfo.BuildCommandParametersDatabase(gFamEnum.Plat));
+            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(gFamEnum.Plat), RomInfo.BuildCommandParametersDatabase(gFamEnum.Plat),
+                RomInfo.BuildActionNamesDatabase(gFamEnum.Plat), RomInfo.BuildComparisonOperatorsDatabase(gFamEnum.Plat));
         }
         private void heartGoldAndSoulSilverToolStripMenuItem_Click(object sender, EventArgs e) {
-            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(gFamEnum.HGSS), RomInfo.BuildCommandParametersDatabase(gFamEnum.HGSS));
+            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(gFamEnum.HGSS), RomInfo.BuildCommandParametersDatabase(gFamEnum.HGSS),
+                RomInfo.BuildActionNamesDatabase(gFamEnum.HGSS), RomInfo.BuildComparisonOperatorsDatabase(gFamEnum.HGSS));
         }
         private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (mainTabControl.SelectedTab == headerEditorTabPage) {
@@ -5143,6 +5147,7 @@ namespace DSPRE {
                 }
                 if (isItemRadioButton.Enabled) {
                     owItemComboBox.Enabled = true;
+                    itemsSelectorHelpBtn.Enabled = true;
                     owItemLabel.Enabled = true;
 
                     currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x3;
@@ -5160,6 +5165,7 @@ namespace DSPRE {
                 owPartnerTrainerCheckBox.Enabled = true;
 
                 owItemComboBox.Enabled = false;
+                itemsSelectorHelpBtn.Enabled = false;
 
                 if (disableHandlers) {
                     return;
