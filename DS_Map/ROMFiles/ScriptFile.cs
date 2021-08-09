@@ -82,9 +82,9 @@ namespace DSPRE.ROMFiles {
                             
                             cmdList.Add(cmd);
 
-                            if (PokeDatabase.ScriptEditor.endCodes.Contains((ushort)cmd.id))
+                            if (ScriptDatabase.endCodes.Contains((ushort)cmd.id)) {
                                 endScript = true;
-                            
+                            }
                         }
                         allScripts.Add(new CommandContainer(current+1, containerTypes.SCRIPT, commandList: cmdList));
                     } else {
@@ -106,8 +106,9 @@ namespace DSPRE.ROMFiles {
                                 return;
 
                             cmdList.Add(command);
-                            if (PokeDatabase.ScriptEditor.endCodes.Contains((ushort)command.id))
+                            if (ScriptDatabase.endCodes.Contains((ushort)command.id)) {
                                 endFunction = true;
+                            }
                         }
                         allFunctions.Add(new CommandContainer(current+1, containerTypes.FUNCTION, commandList: cmdList));
                     } else {
@@ -152,12 +153,12 @@ namespace DSPRE.ROMFiles {
                 (source, x, id) => source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002], StringComparison.InvariantCultureIgnoreCase)    //End
                             || source[x].IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + " Function", StringComparison.InvariantCultureIgnoreCase) >= 0 //Jump Function_#
                             || source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x001B], StringComparison.InvariantCultureIgnoreCase)
-                            || PokeDatabase.ScriptEditor.endCodes.Contains(id);  //Return
+                            || ScriptDatabase.endCodes.Contains(id);  //Return
 
             Func<List<string>, int, ushort?, bool> scriptEndCondition =
                 (source, x, id) => source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002], StringComparison.InvariantCultureIgnoreCase)    //End
                             || source[x].IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + " Function") >= 0 //Jump Function_#
-                            || PokeDatabase.ScriptEditor.endCodes.Contains(id);
+                            || ScriptDatabase.endCodes.Contains(id);
 
             allScripts = ReadCommandsFromLines(scriptLines, containerTypes.SCRIPT, scriptEndCondition);  //Jump + whitespace
             if (allScripts is null || allScripts.Count <= 0)
@@ -447,15 +448,14 @@ namespace DSPRE.ROMFiles {
         }
         private void AddReference(ref List<ScriptReference> references, ushort commandID, List<byte[]> parameterList, int pos, CommandContainer cont) {
             int parameterWithRelativeJump;
-            if (!PokeDatabase.ScriptEditor.commandsWithRelativeJump.TryGetValue(commandID, out parameterWithRelativeJump))
-                return;
+            if (ScriptDatabase.commandsWithRelativeJump.TryGetValue(commandID, out parameterWithRelativeJump)) {
+                uint invokedID = BitConverter.ToUInt32(parameterList[parameterWithRelativeJump], 0);  // Jump, Call
 
-            uint invokedID = BitConverter.ToUInt32(parameterList[parameterWithRelativeJump], 0);  // Jump, Call
-
-            if (commandID == 0x005E)
-                references.Add(new ScriptReference(cont.containerType, cont.manualUserID, containerTypes.MOVEMENT, invokedID, pos - 4));
-            else {
-                references.Add(new ScriptReference(cont.containerType, cont.manualUserID, containerTypes.FUNCTION, invokedID, pos - 4));
+                if (commandID == 0x005E)
+                    references.Add(new ScriptReference(cont.containerType, cont.manualUserID, containerTypes.MOVEMENT, invokedID, pos - 4));
+                else {
+                    references.Add(new ScriptReference(cont.containerType, cont.manualUserID, containerTypes.FUNCTION, invokedID, pos - 4));
+                }
             }
         }
         private List<CommandContainer> ReadCommandsFromLines(ScintillaNET.LineCollection lineSource, containerTypes containerType, Func<List<string>, int, ushort?, bool> endConditions) {

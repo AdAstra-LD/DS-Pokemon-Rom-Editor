@@ -43,9 +43,10 @@ namespace DSPRE.ROMFiles {
             string[] nameParts = wholeLine.Replace("\t", "").Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries); // Separate command code from parameters
             /* Get command id, which is always first in the description */
 
-            try {
-                id = RomInfo.ScriptActionNamesDict.First(x => x.Value.Equals(nameParts[0], StringComparison.InvariantCultureIgnoreCase)).Key;
-            } catch (InvalidOperationException) {
+            ushort cmdID;
+            if (RomInfo.ScriptActionNamesReverseDict.TryGetValue(nameParts[0].ToLower(), out cmdID)) {
+                this.id = cmdID;
+            } else {
                 ushort buf;
                 if (ushort.TryParse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture, out buf)) {
                     id = buf;

@@ -63,7 +63,7 @@ namespace DSPRE.ROMFiles {
                 case 0x1C:      // CondJump
                 case 0x1D:      // CondCall
                     byte opcode = parametersList[0][0];
-                    name += " " + PokeDatabase.ScriptEditor.comparisonOperatorsDict[opcode] + " " + "Function_#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                    name += " " + RomInfo.ScriptComparisonOperatorsDict[opcode] + " " + "Function_#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
                     break;
                 case 0x5E:      // Movement
                     ushort flexID = BitConverter.ToUInt16(parametersList[0], 0);
@@ -101,10 +101,11 @@ namespace DSPRE.ROMFiles {
             string[] nameParts = wholeLine.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries); // Separate command code from parameters
             /* Get command id, which is always first in the description */
 
-            try {
-                id = RomInfo.ScriptCommandNamesDict.First(x => x.Value.Equals(nameParts[0], StringComparison.InvariantCultureIgnoreCase)).Key;
-            } catch (InvalidOperationException) {
 
+            ushort cmdID;
+            if (RomInfo.ScriptCommandNamesReverseDict.TryGetValue(nameParts[0].ToLower(), out cmdID)) {
+                id = cmdID;
+            } else {
                 try {
                     id = ushort.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
                 } catch {
@@ -121,7 +122,6 @@ namespace DSPRE.ROMFiles {
                     return;
                 }
             }
-
             /* Read parameters from remainder of the description */
             //Console.WriteLine("ID = " + ((ushort)id).ToString("X4"));
 
@@ -137,10 +137,9 @@ namespace DSPRE.ROMFiles {
             if (nameParts.Length - 1 == paramLength) {
                 for (int i = 0; i < paramLength; i++) {
                     Console.WriteLine("Parameter #" + i.ToString() + ": " + nameParts[i + 1]);
-                    try {
-                        ushort comparisonOperator = PokeDatabase.ScriptEditor.comparisonOperatorsDict.First(x => x.Value.Equals(nameParts[i + 1], StringComparison.InvariantCultureIgnoreCase)).Key;
-                        cmdParams.Add(new byte[] { (byte)comparisonOperator });
-                    } catch { //Not a comparison
+                    if (RomInfo.ScriptComparisonOperatorsReverseDict.TryGetValue(nameParts[i + 1].ToLower(), out cmdID)) {
+                        cmdParams.Add(new byte[] { (byte)cmdID });
+                    } else { //Not a comparison
                         int indexOfSpecialCharacter = nameParts[i + 1].IndexOfAny(new char[] { 'x', 'X', '#' });
 
                         /* If number is preceded by 0x parse it as hex, otherwise as decimal */

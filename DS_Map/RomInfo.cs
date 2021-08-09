@@ -63,12 +63,21 @@ namespace DSPRE {
         public static int cameraSize { get; private set; }
 
         public static Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary { get; private set; }
-        public static Dictionary<ushort, string> ScriptCommandNamesDict { get; private set; }
-        public static Dictionary<ushort, byte[]> ScriptCommandParametersDict { get; private set; }
-        public static Dictionary<ushort, string> ScriptActionNamesDict { get; private set; }
         public static SortedDictionary<uint, (uint spriteID, ushort properties)> OverworldTable { get; private set; }
         public static uint[] overworldTableKeys { get; private set; }
         public static Dictionary<uint, string> ow3DSpriteDict { get; private set; }
+
+
+        public static Dictionary<ushort, string> ScriptCommandNamesDict { get; private set; }
+        public static Dictionary<string, ushort> ScriptCommandNamesReverseDict { get; private set; }
+
+        public static Dictionary<ushort, string> ScriptActionNamesDict { get; private set; }
+        public static Dictionary<string, ushort> ScriptActionNamesReverseDict { get; private set; }
+
+        public static Dictionary<ushort, byte[]> ScriptCommandParametersDict { get; private set; }
+
+        public static Dictionary<ushort, string> ScriptComparisonOperatorsDict { get; private set; }
+        public static Dictionary<string, ushort> ScriptComparisonOperatorsReverseDict { get; private set; }
 
         public enum gVerEnum : byte {
             Diamond, Pearl, Platinum,
@@ -160,9 +169,15 @@ namespace DSPRE {
             SetTrainerClassMessageNumber();
 
             /* System */
-            ScriptCommandNamesDict = BuildCommandNamesDatabase(gameFamily);
             ScriptCommandParametersDict = BuildCommandParametersDatabase(gameFamily);
+
+            ScriptCommandNamesDict = BuildCommandNamesDatabase(gameFamily);
             ScriptActionNamesDict = BuildActionNamesDatabase(gameFamily);
+            ScriptComparisonOperatorsDict = BuildComparisonOperatorsDatabase(gameFamily);
+
+            ScriptCommandNamesReverseDict = ScriptCommandNamesDict.Reverse();
+            ScriptActionNamesReverseDict = ScriptActionNamesDict.Reverse();
+            ScriptComparisonOperatorsReverseDict = ScriptComparisonOperatorsDict.Reverse();
         }
         #endregion
 
@@ -173,16 +188,16 @@ namespace DSPRE {
 
             switch (gameFam) {
                 case gFamEnum.DP:
-                    commonDictionaryNames = PokeDatabase.ScriptEditor.DPPtScrCmdNames;
-                    specificDictionaryNames = PokeDatabase.ScriptEditor.DPScrCmdNames;
+                    commonDictionaryNames = ScriptDatabase.DPPtScrCmdNames;
+                    specificDictionaryNames = ScriptDatabase.DPScrCmdNames;
                     break;
                 case gFamEnum.Plat:
-                    commonDictionaryNames = PokeDatabase.ScriptEditor.DPPtScrCmdNames;
-                    specificDictionaryNames = PokeDatabase.ScriptEditor.PlatScrCmdNames;
+                    commonDictionaryNames = ScriptDatabase.DPPtScrCmdNames;
+                    specificDictionaryNames = ScriptDatabase.PlatScrCmdNames;
                     break;
                 default:
-                    commonDictionaryNames = PokeDatabase.ScriptEditor.HGSSScrCmdNames;
-                    specificDictionaryNames = PokeDatabase.ScriptEditor.CustomScrCmdNames;
+                    commonDictionaryNames = ScriptDatabase.HGSSScrCmdNames;
+                    specificDictionaryNames = ScriptDatabase.CustomScrCmdNames;
                     break;
             }
             return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
@@ -193,16 +208,16 @@ namespace DSPRE {
 
             switch (gameFam) {
                 case gFamEnum.DP:
-                    commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
-                    specificDictionaryParams = PokeDatabase.ScriptEditor.DPScrCmdParameters;
+                    commonDictionaryParams = ScriptDatabase.DPPtScrCmdParameters;
+                    specificDictionaryParams = ScriptDatabase.DPScrCmdParameters;
                     break;
                 case gFamEnum.Plat:
-                    commonDictionaryParams = PokeDatabase.ScriptEditor.DPPtScrCmdParameters;
-                    specificDictionaryParams = PokeDatabase.ScriptEditor.PlatScrCmdParameters;
+                    commonDictionaryParams = ScriptDatabase.DPPtScrCmdParameters;
+                    specificDictionaryParams = ScriptDatabase.PlatScrCmdParameters;
                     break;
                 default:
-                    commonDictionaryParams = PokeDatabase.ScriptEditor.HGSSScrCmdParameters;
-                    specificDictionaryParams = PokeDatabase.ScriptEditor.CustomScrCmdParameters;
+                    commonDictionaryParams = ScriptDatabase.HGSSScrCmdParameters;
+                    specificDictionaryParams = ScriptDatabase.CustomScrCmdParameters;
                     break;
             }
             return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
@@ -211,11 +226,23 @@ namespace DSPRE {
             switch (gameFam) {
                 case gFamEnum.DP:
                 case gFamEnum.Plat:
-                    return PokeDatabase.ScriptEditor.movementsDictIDName;
+                    return ScriptDatabase.movementsDictIDName;
                 default:
-                    var commonDictionaryParams = PokeDatabase.ScriptEditor.movementsDictIDName;
-                    var customDictionaryParams = PokeDatabase.ScriptEditor.customMovementsDictIDName;
+                    var commonDictionaryParams = ScriptDatabase.movementsDictIDName;
+                    var customDictionaryParams = ScriptDatabase.customMovementsDictIDName;
                     return commonDictionaryParams.Concat(customDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+            }
+        }
+        public static Dictionary<ushort, string> BuildComparisonOperatorsDatabase(gFamEnum gameFam) {
+            switch (gameFam) {
+                case gFamEnum.DP:
+                case gFamEnum.Plat:
+                case gFamEnum.HGSS:
+                    return ScriptDatabase.comparisonOperatorsDict;
+                default:
+                    var commonDict = ScriptDatabase.comparisonOperatorsDict;
+                    var appendixDict = ScriptDatabase.comparisonOperatorsGenVappendix;
+                    return commonDict.Concat(appendixDict).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
             }
         }
         public static void Set3DOverworldsDict() {
@@ -674,7 +701,10 @@ namespace DSPRE {
         public static string[] GetSimpleTrainerNames() => new TextArchive(trainerNamesMessageNumber).messages.ToArray();
         public static string[] GetTrainerClassNames() => new TextArchive(trainerClassMessageNumber).messages.ToArray();
         public static string[] GetItemNames() => new TextArchive(itemNamesTextNumber).messages.ToArray();
-        public static string[] GetItemNames(int startIndex, int count) => new TextArchive(itemNamesTextNumber).messages.GetRange(startIndex, count).ToArray();
+        public static string[] GetItemNames(int startIndex = 0, int? count = null) {
+            TextArchive itemNames = new TextArchive(itemNamesTextNumber);
+            return itemNames.messages.GetRange(startIndex, count == null ? itemNames.messages.Count-1 : (int)count).ToArray();
+        }
         public static string[] GetPokémonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
         public static string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
         public int GetAreaDataCount() => Directory.GetFiles(gameDirs[DirNames.areaData].unpackedDir).Length;
