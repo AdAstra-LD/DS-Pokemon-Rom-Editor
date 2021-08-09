@@ -5646,6 +5646,8 @@ namespace DSPRE {
 
         #region Script Editor
         #region Variables
+        private bool scriptEditorDirty = false;
+
         private string cmdKeyWords = "";
         private string comparisonOperatorsKeyWords = "";
         private ScriptFile currentScriptFile;
@@ -5681,7 +5683,8 @@ namespace DSPRE {
             string actionCmds = String.Join(" ", ScriptDatabase.movementsDictIDName.Values);
             cmdKeyWords += " " + actionCmds + " " + actionCmds.ToLower() + " " + actionCmds.ToUpper();
             
-            comparisonOperatorsKeyWords = String.Join(" ", RomInfo.ScriptComparisonOperatorsDict.Values);
+            string cmdOps = String.Join(" ", RomInfo.ScriptComparisonOperatorsDict.Values);
+            comparisonOperatorsKeyWords = cmdOps + " " + cmdOps.ToLower() + " " + cmdOps.ToUpper();
 
             // CREATE CONTROLS
             ScriptTextArea = new ScintillaNET.Scintilla();
@@ -5754,7 +5757,16 @@ namespace DSPRE {
             InitHotkeys(FunctionTextArea, functionSearchManager);
             InitHotkeys(ActionTextArea, actionSearchManager);
 
+            // INIT DIRTYBIT LOGIC
+            ScriptTextArea.TextChanged += ScriptEditorDirtySet;
+            FunctionTextArea.TextChanged += ScriptEditorDirtySet;
+            ActionTextArea.TextChanged += ScriptEditorDirtySet;
+
             scriptEditorWordWrapCheckbox_CheckedChanged(null, null);
+        }
+
+        private void ScriptEditorDirtySet(object sender, EventArgs e) {
+            scriptEditorDirty = true;
         }
 
         private void InitNumberMargin(Scintilla textArea, EventHandler<MarginClickEventArgs> textArea_MarginClick) {
@@ -6137,6 +6149,7 @@ namespace DSPRE {
             if (userEdited.fileID != null) { //check if ScriptFile instance was created succesfully
                 userEdited.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex);
                 currentScriptFile = userEdited;
+                scriptEditorDirty = false;
             } else {
                 MessageBox.Show("This " + typeof(ScriptFile).Name + " couldn't be saved.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -6298,6 +6311,18 @@ namespace DSPRE {
         }
         private void selectScriptFileComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             /* clear controls */
+            if (disableHandlers) {
+                return;
+            }
+            if (scriptEditorDirty) {
+                DialogResult d = MessageBox.Show("There are unsaved changes in this Script File.\nDo you wish to discard them?", "Unsaved work", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (!d.Equals(DialogResult.Yes)) {
+                    disableHandlers = true;
+                    selectScriptFileComboBox.SelectedIndex = (int)currentScriptFile.fileID;
+                    disableHandlers = false;
+                    return;
+                }
+            }
             currentScriptFile = new ScriptFile(selectScriptFileComboBox.SelectedIndex); // Load script file
 
             ScriptTextArea.ClearAll();
@@ -6394,6 +6419,7 @@ namespace DSPRE {
                 }
             }
 
+            scriptEditorDirty = false;
             statusLabel.Text = "Ready";
             disableHandlers = false;
         }
