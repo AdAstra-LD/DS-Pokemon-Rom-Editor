@@ -125,6 +125,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\ROMToolboxDB\ToolboxDB.cs" />
+    <Compile Include="Resources\ScriptDatabase.cs" />
     <Compile Include="ROMFiles\AreaData.cs" />
     <Compile Include="DSUtils.cs" />
     <Compile Include="Resources\CommandsDatabase.cs">
