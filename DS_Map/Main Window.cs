@@ -196,7 +196,6 @@ namespace DSPRE {
             toolStripProgressBar.Value++;
         }
 
-
         public void SetupScriptEditor() {
             /* Extract essential NARCs sub-archives*/
             statusLabel.Text = "Setting up Script Editor...";
@@ -287,15 +286,25 @@ namespace DSPRE {
         private void romToolBoxToolStripMenuItem_Click(object sender, EventArgs e) {
             using (ROMToolboxDialog window = new ROMToolboxDialog()) {
                 window.ShowDialog();
-                if (ROMToolboxDialog.flag_standardizedItems) {
-                    isItemRadioButton.Enabled = true;
-                    OWTypeChanged(null, null);
+                if (ROMToolboxDialog.flag_standardizedItems && eventEditorIsReady) {
+                    UpdateItemComboBox(RomInfo.GetItemNames());
                 }
                 if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied) {
                     addHeaderBTN.Enabled = true;
                     removeLastHeaderBTN.Enabled = true;
                 }
             }
+        }
+        private void UpdateItemComboBox(string[] itemNames) {
+            if (itemComboboxIsUpToDate) {
+                return;
+            }
+            itemsSelectorHelpBtn.Visible = false;
+            owItemComboBox.Size = new Size(new Point(owItemComboBox.Size.Width + 30, owItemComboBox.Size.Height));
+            owItemComboBox.Items.Clear();
+            owItemComboBox.Items.AddRange(itemNames);
+            OWTypeChanged(null, null);
+            itemComboboxIsUpToDate = true;
         }
         private void scriptCommandsDatabaseToolStripButton_Click(object sender, EventArgs e) {
             OpenCommandsDatabase(RomInfo.ScriptCommandNamesDict, RomInfo.ScriptCommandParametersDict);
@@ -704,7 +713,7 @@ namespace DSPRE {
                 SetupMapEditor();
                 SetupNSBTXEditor();
                 SetupTextEditor();
-                SetupScriptEditorTabs();
+                SetupScriptEditorTextAreas();
                 SetupScriptEditor();
                 SetupTrainerEditor();
 
@@ -766,7 +775,7 @@ namespace DSPRE {
                 }
             } else if (mainTabControl.SelectedTab == scriptTabPage) {
                 if (!scriptEditorIsReady) {
-                    SetupScriptEditorTabs();
+                    SetupScriptEditorTextAreas();
                     SetupScriptEditor();
                     scriptEditorIsReady = true;
                 }
@@ -4147,6 +4156,7 @@ namespace DSPRE {
         #region Event Editor
 
         #region Variables      
+        private bool itemComboboxIsUpToDate = false;
         public static NSBMDGlRenderer eventMapRenderer = new NSBMDGlRenderer();
         public static NSBMDGlRenderer eventBuildingsRenderer = new NSBMDGlRenderer();
         public static MapFile eventMapFile;
@@ -4163,6 +4173,12 @@ namespace DSPRE {
         #endregion
 
         #region Subroutines
+        private void itemsSelectorHelpBtn_Click(object sender, EventArgs e) {
+            MessageBox.Show("This selector allows you to pick a preset Ground Item script from the game data.\n" +
+                "Unlike in previous DSPRE versions, you can now change the Ground Item to be obtained even if you decided not to apply the Standardize Items patch from the Rom ToolBox.\n\n" +
+                "However, some items are unavailable by default. The aforementioned patch can neutralize this limitation.\n\n" +
+                "(Please note that it will scramble every existing Ground Item!)", "About Ground Items", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
         private void CenterEventViewOnEntities() {
             disableHandlers = true;
             try {
@@ -4611,7 +4627,8 @@ namespace DSPRE {
                 DirNames.trainerProperties,
                 DirNames.OWSprites,
 
-                DirNames.scripts, });
+                DirNames.scripts, 
+            });
 
             RomInfo.SetOWtable();
             RomInfo.Set3DOverworldsDict();
@@ -4671,8 +4688,21 @@ namespace DSPRE {
             owTrainerComboBox.Items.AddRange(trainerNames);
 
             /* Add item list to ow item box */
-            owItemComboBox.Items.Clear();
-            owItemComboBox.Items.AddRange(RomInfo.GetItemNames(0, new TextArchive(RomInfo.itemNamesTextNumber).messages.Count - 1));
+            
+
+            string[] itemNames = RomInfo.GetItemNames();
+            if (ROMToolboxDialog.CheckScriptsStandardizedItemNumbers()) {
+                UpdateItemComboBox(itemNames);
+            } else {
+                ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
+                owItemComboBox.Items.Clear();
+                foreach (CommandContainer cont in itemScript.allScripts) {
+                    if (cont.commands.Count > 4) {
+                        continue;
+                    }
+                    owItemComboBox.Items.Add(BitConverter.ToUInt16(cont.commands[1].cmdParams[1], 0) + "x " + itemNames[BitConverter.ToUInt16(cont.commands[0].cmdParams[1], 0)]);
+                }
+            }
 
             /* Add ow movement list to box */
             owMovementComboBox.Items.Clear();
@@ -4681,10 +4711,6 @@ namespace DSPRE {
             owMovementComboBox.Items.AddRange(PokeDatabase.EventEditor.Overworlds.movementsArray);
             spawnableDirComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.orientationsArray);
             spawnableTypeComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.typesArray);
-
-            if (ROMToolboxDialog.CheckScriptsStandardizedItemNumbers()) {
-                isItemRadioButton.Enabled = true;
-            }
 
             disableHandlers = false;
 
@@ -5089,8 +5115,9 @@ namespace DSPRE {
             overworldsListBox.SelectedIndex = currentEvFile.overworlds.Count - 1;
         }
         private void OWTypeChanged(object sender, EventArgs e) {
-            if (overworldsListBox.SelectedIndex < 0)
+            if (overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             if (normalRadioButton.Checked == true) {
                 owScriptNumericUpDown.Enabled = true;
@@ -5138,8 +5165,9 @@ namespace DSPRE {
                     return;
                 }
                 currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x1;
-                if (owTrainerComboBox.SelectedIndex >= 0)
+                if (owTrainerComboBox.SelectedIndex >= 0) {
                     owTrainerComboBox_SelectedIndexChanged(null, null);
+                }
             }
         }
         private void owItemComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -5639,11 +5667,15 @@ namespace DSPRE {
                 currentScintillaEditor = ActionTextArea;
             }
         }
-        private void SetupScriptEditorTabs() {
+        private void SetupScriptEditorTextAreas() {
             //PREPARE SCRIPT EDITOR KEYWORDS
-            cmdKeyWords = String.Join(" ", ScriptCommandNamesDict.Values);
-            cmdKeyWords += " " + String.Join(" ", PokeDatabase.ScriptEditor.movementsDictIDName.Values);
-            comparisonOperatorsKeyWords = String.Join(" ", PokeDatabase.ScriptEditor.comparisonOperatorsDict.Values);
+            string scriptCmds = String.Join(" ", ScriptCommandNamesDict.Values);
+            cmdKeyWords = scriptCmds + " " + scriptCmds.ToLower() + " " + scriptCmds.ToUpper();
+
+            string actionCmds = String.Join(" ", ScriptDatabase.movementsDictIDName.Values);
+            cmdKeyWords += " " + actionCmds + " " + actionCmds.ToLower() + " " + actionCmds.ToUpper();
+            
+            comparisonOperatorsKeyWords = String.Join(" ", RomInfo.ScriptComparisonOperatorsDict.Values);
 
             // CREATE CONTROLS
             ScriptTextArea = new ScintillaNET.Scintilla();
@@ -6129,7 +6161,7 @@ namespace DSPRE {
         }
         private void openScriptButton_Click(object sender, EventArgs e) {
             if (!scriptEditorIsReady) {
-                SetupScriptEditorTabs();
+                SetupScriptEditorTextAreas();
                 SetupScriptEditor();
                 scriptEditorIsReady = true;
             }
@@ -6140,7 +6172,7 @@ namespace DSPRE {
         }
         private void openLevelScriptButton_Click(object sender, EventArgs e) {
             if (!scriptEditorIsReady) {
-                SetupScriptEditorTabs();
+                SetupScriptEditorTextAreas();
                 SetupScriptEditor();
                 scriptEditorIsReady = true;
             }
@@ -6297,7 +6329,7 @@ namespace DSPRE {
                     /* If current script is identical to another, print UseScript instead of commands */
                     if (currentScript.useScript < 0) {
                         for (int j = 0; j < currentScript.commands.Count; j++) {
-                            if (!PokeDatabase.ScriptEditor.endCodes.Contains(currentScript.commands[j].id)) {
+                            if (!ScriptDatabase.endCodes.Contains(currentScript.commands[j].id)) {
                                 buffer += '\t';
                             }
                             buffer += currentScript.commands[j].name + Environment.NewLine;
@@ -6323,7 +6355,7 @@ namespace DSPRE {
                     /* If current function is identical to a script, print UseScript instead of commands */
                     if (currentFunction.useScript < 0) {
                         for (int j = 0; j < currentFunction.commands.Count; j++) {
-                            if (!PokeDatabase.ScriptEditor.endCodes.Contains(currentFunction.commands[j].id)) {
+                            if (!ScriptDatabase.endCodes.Contains(currentFunction.commands[j].id)) {
                                 buffer += '\t';
                             }
                             buffer += currentFunction.commands[j].name + Environment.NewLine;

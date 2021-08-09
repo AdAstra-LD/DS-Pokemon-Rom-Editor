@@ -130,7 +130,9 @@ namespace DSPRE {
                     DisableOverlay1patch("Unsupported");
                     DisableMatrixExpansionPatch("Unsupported");
                     DisableScrcmdRepointPatch("Unsupported");
-                    CheckBDHCamPatchApplied();
+                    if (RomInfo.gameLanguage != gLangEnum.English && RomInfo.gameLanguage != gLangEnum.Spanish) {
+                        CheckBDHCamPatchApplied();
+                    }
                     CheckDynamicHeadersPatchApplied();
                     break;
                 case gFamEnum.HGSS:
@@ -139,9 +141,8 @@ namespace DSPRE {
                         overlay1CB.Visible = true;
                     }
 
-                    CheckBDHCamPatchApplied();
-
                     if (RomInfo.gameLanguage == gLangEnum.English || RomInfo.gameLanguage == gLangEnum.Spanish) {
+                        CheckBDHCamPatchApplied();
                         CheckMatrixExpansionApplied();
                         CheckScrcmdRepointPatchApplied();
                     } else {
@@ -307,8 +308,9 @@ namespace DSPRE {
         public string backupSuffix = ".backup";
         private bool CheckARM9ExpansionApplied() {
             if (!ROMToolboxDialog.flag_arm9Expanded) {
-                if (!ROMToolboxDialog.CheckFilesArm9ExpansionApplied())
+                if (!ROMToolboxDialog.CheckFilesArm9ExpansionApplied()) {
                     return false;
+                }
             }
 
             ROMToolboxDialog.flag_arm9Expanded = true;
@@ -514,10 +516,11 @@ namespace DSPRE {
                     itemScript.allScripts.Clear();
 
                     for (ushort i = 0; i < itemCount; i++) {
-                        List<ScriptCommand> cmdList = new List<ScriptCommand>();
-                        cmdList.Add(new ScriptCommand("SetVar 0x8008 " + i));
-                        cmdList.Add(new ScriptCommand("SetVar 0x8009 0x1"));
-                        cmdList.Add(new ScriptCommand("Jump Function_#1"));
+                        List<ScriptCommand> cmdList = new List<ScriptCommand> {
+                            new ScriptCommand("SetVar 0x8008 " + i),
+                            new ScriptCommand("SetVar 0x8009 0x1"),
+                            new ScriptCommand("Jump Function_#1")
+                        };
 
                         itemScript.allScripts.Add(new CommandContainer((ushort)(i + 1), ScriptFile.containerTypes.SCRIPT, commandList: cmdList));
                     }
@@ -742,9 +745,10 @@ namespace DSPRE {
                        the data will be packed into a NARC and replace a/0/5/0 in HGSS or 
                        debug/cb_edit/d_test.narc in Platinum */
 
-                    for (int i = 0; i < RomInfo.GetHeaderCount(); i++) {
+                    int headerCount = RomInfo.GetHeaderCount();
+                    for (int i = 0; i < headerCount; i++) {
                         byte[] headerData = MapHeader.LoadFromARM9((ushort)i).ToByteArray();
-                        DSUtils.WriteToFile(headersDir + "\\" + i.ToString("D4"), headerData);
+                        DSUtils.WriteToFile(headersDir.unpackedDir + "\\" + i.ToString("D4"), headerData);
                     }
 
                     DisableDynamicHeadersPatch("Already applied");

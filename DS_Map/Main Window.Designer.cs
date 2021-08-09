@@ -394,6 +394,7 @@
             this.owYMapUpDown = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
             this.owSpecialGroupBox = new System.Windows.Forms.GroupBox();
+            this.itemsSelectorHelpBtn = new System.Windows.Forms.Button();
             this.owPartnerTrainerCheckBox = new System.Windows.Forms.CheckBox();
             this.owItemComboBox = new System.Windows.Forms.ComboBox();
             this.owItemLabel = new System.Windows.Forms.Label();
@@ -5193,7 +5194,6 @@
             // isItemRadioButton
             // 
             this.isItemRadioButton.AutoSize = true;
-            this.isItemRadioButton.Enabled = false;
             this.isItemRadioButton.Location = new System.Drawing.Point(115, 19);
             this.isItemRadioButton.Name = "isItemRadioButton";
             this.isItemRadioButton.Size = new System.Drawing.Size(45, 17);
@@ -5483,6 +5483,7 @@
             // 
             // owSpecialGroupBox
             // 
+            this.owSpecialGroupBox.Controls.Add(this.itemsSelectorHelpBtn);
             this.owSpecialGroupBox.Controls.Add(this.owPartnerTrainerCheckBox);
             this.owSpecialGroupBox.Controls.Add(this.owItemComboBox);
             this.owSpecialGroupBox.Controls.Add(this.owItemLabel);
@@ -5498,6 +5499,16 @@
             this.owSpecialGroupBox.TabStop = false;
             this.owSpecialGroupBox.Text = "Special Settings";
             // 
+            // itemsSelectorHelpBtn
+            // 
+            this.itemsSelectorHelpBtn.Image = ((System.Drawing.Image)(resources.GetObject("itemsSelectorHelpBtn.Image")));
+            this.itemsSelectorHelpBtn.Location = new System.Drawing.Point(194, 67);
+            this.itemsSelectorHelpBtn.Name = "itemsSelectorHelpBtn";
+            this.itemsSelectorHelpBtn.Size = new System.Drawing.Size(28, 29);
+            this.itemsSelectorHelpBtn.TabIndex = 45;
+            this.itemsSelectorHelpBtn.UseVisualStyleBackColor = true;
+            this.itemsSelectorHelpBtn.Click += new System.EventHandler(this.itemsSelectorHelpBtn_Click);
+            // 
             // owPartnerTrainerCheckBox
             // 
             this.owPartnerTrainerCheckBox.AutoSize = true;
@@ -5512,11 +5523,10 @@
             // owItemComboBox
             // 
             this.owItemComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.owItemComboBox.Enabled = false;
             this.owItemComboBox.FormattingEnabled = true;
-            this.owItemComboBox.Location = new System.Drawing.Point(57, 72);
+            this.owItemComboBox.Location = new System.Drawing.Point(49, 72);
             this.owItemComboBox.Name = "owItemComboBox";
-            this.owItemComboBox.Size = new System.Drawing.Size(165, 21);
+            this.owItemComboBox.Size = new System.Drawing.Size(142, 21);
             this.owItemComboBox.TabIndex = 6;
             this.owItemComboBox.SelectedIndexChanged += new System.EventHandler(this.owItemComboBox_SelectedIndexChanged);
             // 
@@ -5535,9 +5545,9 @@
             this.owTrainerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.owTrainerComboBox.Enabled = false;
             this.owTrainerComboBox.FormattingEnabled = true;
-            this.owTrainerComboBox.Location = new System.Drawing.Point(57, 19);
+            this.owTrainerComboBox.Location = new System.Drawing.Point(49, 19);
             this.owTrainerComboBox.Name = "owTrainerComboBox";
-            this.owTrainerComboBox.Size = new System.Drawing.Size(165, 21);
+            this.owTrainerComboBox.Size = new System.Drawing.Size(173, 21);
             this.owTrainerComboBox.TabIndex = 4;
             this.owTrainerComboBox.SelectedIndexChanged += new System.EventHandler(this.owTrainerComboBox_SelectedIndexChanged);
             // 
@@ -6586,11 +6596,11 @@
             // 
             // scriptTabPage
             // 
+            this.scriptTabPage.Controls.Add(this.scriptEditorWhitespacesCheckbox);
+            this.scriptTabPage.Controls.Add(this.scriptEditorWordWrapCheckbox);
             this.scriptTabPage.Controls.Add(this.compressScriptTextButton);
             this.scriptTabPage.Controls.Add(this.expandScriptTextButton);
             this.scriptTabPage.Controls.Add(this.findScriptTextButton);
-            this.scriptTabPage.Controls.Add(this.scriptEditorWhitespacesCheckbox);
-            this.scriptTabPage.Controls.Add(this.scriptEditorWordWrapCheckbox);
             this.scriptTabPage.Controls.Add(this.groupBox24);
             this.scriptTabPage.Controls.Add(this.clearCurrentLevelScriptButton);
             this.scriptTabPage.Controls.Add(this.groupBox8);
@@ -6650,7 +6660,7 @@
             // 
             this.scriptEditorWhitespacesCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
             this.scriptEditorWhitespacesCheckbox.AutoSize = true;
-            this.scriptEditorWhitespacesCheckbox.Location = new System.Drawing.Point(746, 11);
+            this.scriptEditorWhitespacesCheckbox.Location = new System.Drawing.Point(978, 10);
             this.scriptEditorWhitespacesCheckbox.Name = "scriptEditorWhitespacesCheckbox";
             this.scriptEditorWhitespacesCheckbox.Size = new System.Drawing.Size(79, 23);
             this.scriptEditorWhitespacesCheckbox.TabIndex = 46;
@@ -6665,7 +6675,7 @@
             this.scriptEditorWordWrapCheckbox.AutoSize = true;
             this.scriptEditorWordWrapCheckbox.Checked = true;
             this.scriptEditorWordWrapCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.scriptEditorWordWrapCheckbox.Location = new System.Drawing.Point(672, 11);
+            this.scriptEditorWordWrapCheckbox.Location = new System.Drawing.Point(904, 10);
             this.scriptEditorWordWrapCheckbox.Name = "scriptEditorWordWrapCheckbox";
             this.scriptEditorWordWrapCheckbox.Size = new System.Drawing.Size(72, 23);
             this.scriptEditorWordWrapCheckbox.TabIndex = 43;
@@ -6969,6 +6979,7 @@
             // 
             this.scriptsTabPage.Controls.Add(this.PanelSearchScripts);
             this.scriptsTabPage.Controls.Add(this.scintillaScriptsPanel);
+            this.scriptsTabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.scriptsTabPage.Location = new System.Drawing.Point(4, 22);
             this.scriptsTabPage.Name = "scriptsTabPage";
             this.scriptsTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -7064,6 +7075,7 @@
             // 
             this.functionTabPage.Controls.Add(this.PanelSearchFunctions);
             this.functionTabPage.Controls.Add(this.scintillaFunctionsPanel);
+            this.functionTabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.functionTabPage.Location = new System.Drawing.Point(4, 22);
             this.functionTabPage.Name = "functionTabPage";
             this.functionTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -7159,6 +7171,7 @@
             // 
             this.movementTabPage.Controls.Add(this.PanelSearchActions);
             this.movementTabPage.Controls.Add(this.scintillaActionsPanel);
+            this.movementTabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.movementTabPage.Location = new System.Drawing.Point(4, 22);
             this.movementTabPage.Name = "movementTabPage";
             this.movementTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -9384,7 +9397,7 @@
             // HOWpbEffectsTableButton
             // 
             this.HOWpbEffectsTableButton.Image = ((System.Drawing.Image)(resources.GetObject("HOWpbEffectsTableButton.Image")));
-            this.HOWpbEffectsTableButton.Location = new System.Drawing.Point(146, 396);
+            this.HOWpbEffectsTableButton.Location = new System.Drawing.Point(146, 399);
             this.HOWpbEffectsTableButton.Name = "HOWpbEffectsTableButton";
             this.HOWpbEffectsTableButton.Size = new System.Drawing.Size(28, 29);
             this.HOWpbEffectsTableButton.TabIndex = 44;
@@ -9404,7 +9417,7 @@
             // 
             this.saveEffectCombosTableBTN.Image = ((System.Drawing.Image)(resources.GetObject("saveEffectCombosTableBTN.Image")));
             this.saveEffectCombosTableBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.saveEffectCombosTableBTN.Location = new System.Drawing.Point(175, 392);
+            this.saveEffectCombosTableBTN.Location = new System.Drawing.Point(175, 395);
             this.saveEffectCombosTableBTN.Name = "saveEffectCombosTableBTN";
             this.saveEffectCombosTableBTN.Size = new System.Drawing.Size(78, 37);
             this.saveEffectCombosTableBTN.TabIndex = 43;
@@ -9434,7 +9447,7 @@
             this.groupBox30.Controls.Add(this.label70);
             this.groupBox30.Controls.Add(this.pbEffectsTrainerCombobox);
             this.groupBox30.Controls.Add(this.pbEffectsVsTrainerListbox);
-            this.groupBox30.Location = new System.Drawing.Point(257, 14);
+            this.groupBox30.Location = new System.Drawing.Point(259, 14);
             this.groupBox30.Name = "groupBox30";
             this.groupBox30.Size = new System.Drawing.Size(481, 250);
             this.groupBox30.TabIndex = 34;
@@ -9546,7 +9559,7 @@
             this.groupBox29.Controls.Add(this.label71);
             this.groupBox29.Controls.Add(this.pbEffectsPokemonCombobox);
             this.groupBox29.Controls.Add(this.pbEffectsVsPokemonListbox);
-            this.groupBox29.Location = new System.Drawing.Point(257, 265);
+            this.groupBox29.Location = new System.Drawing.Point(259, 265);
             this.groupBox29.Name = "groupBox29";
             this.groupBox29.Size = new System.Drawing.Size(481, 174);
             this.groupBox29.TabIndex = 33;
@@ -9704,7 +9717,7 @@
             // HOWconditionalMusicTableButton
             // 
             this.HOWconditionalMusicTableButton.Image = ((System.Drawing.Image)(resources.GetObject("HOWconditionalMusicTableButton.Image")));
-            this.HOWconditionalMusicTableButton.Location = new System.Drawing.Point(353, 93);
+            this.HOWconditionalMusicTableButton.Location = new System.Drawing.Point(263, 146);
             this.HOWconditionalMusicTableButton.Name = "HOWconditionalMusicTableButton";
             this.HOWconditionalMusicTableButton.Size = new System.Drawing.Size(28, 29);
             this.HOWconditionalMusicTableButton.TabIndex = 9;
@@ -9727,7 +9740,7 @@
             // label65
             // 
             this.label65.AutoSize = true;
-            this.label65.Location = new System.Drawing.Point(264, 83);
+            this.label65.Location = new System.Drawing.Point(297, 83);
             this.label65.Name = "label65";
             this.label65.Size = new System.Drawing.Size(49, 13);
             this.label65.TabIndex = 7;
@@ -9735,7 +9748,7 @@
             // 
             // musicIDconditionalMusicUpDown
             // 
-            this.musicIDconditionalMusicUpDown.Location = new System.Drawing.Point(267, 99);
+            this.musicIDconditionalMusicUpDown.Location = new System.Drawing.Point(300, 99);
             this.musicIDconditionalMusicUpDown.Maximum = new decimal(new int[] {
             32767,
             0,
@@ -9759,7 +9772,7 @@
             // label64
             // 
             this.label64.AutoSize = true;
-            this.label64.Location = new System.Drawing.Point(175, 83);
+            this.label64.Location = new System.Drawing.Point(188, 83);
             this.label64.Name = "label64";
             this.label64.Size = new System.Drawing.Size(27, 13);
             this.label64.TabIndex = 5;
@@ -9767,7 +9780,7 @@
             // 
             // flagConditionalMusicUpDown
             // 
-            this.flagConditionalMusicUpDown.Location = new System.Drawing.Point(178, 99);
+            this.flagConditionalMusicUpDown.Location = new System.Drawing.Point(191, 99);
             this.flagConditionalMusicUpDown.Maximum = new decimal(new int[] {
             32767,
             0,
@@ -11339,6 +11352,7 @@
         private System.Windows.Forms.Button findScriptTextButton;
         private System.Windows.Forms.Button compressScriptTextButton;
         private System.Windows.Forms.Button expandScriptTextButton;
+        private System.Windows.Forms.Button itemsSelectorHelpBtn;
     }
 }
 

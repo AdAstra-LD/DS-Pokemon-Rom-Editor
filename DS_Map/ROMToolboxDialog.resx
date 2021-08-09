@@ -165,11 +165,9 @@ This patch is necessary to accomplish most ASM edits.
 </value>
   </data>
   <data name="standardizePatchTextLBL.Text" xml:space="preserve">
-    <value>Makes all PokéBall item scripts follow the order of items as indexed in the ROM. 
-Inevitably, every Item already on the ground will change.
-This patch is necessary in order to 
-edit 'Items' in Event Editor.
-</value>
+    <value>Rearranges the GiveItem scripts to follow the default index order.
+Allows to configure any item as a Ground Item in the Event Editor. 
+Inevitably, every Item that is already on the ground will change.</value>
   </data>
   <data name="expandedMatrixCB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
