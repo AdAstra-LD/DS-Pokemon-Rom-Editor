@@ -777,7 +777,7 @@ namespace DSPRE {
                     SetupEventEditor();
                     eventEditorIsReady = true;
                 }
-            } else if (mainTabControl.SelectedTab == scriptTabPage) {
+            } else if (mainTabControl.SelectedTab == scriptEditorTabPage) {
                 if (!scriptEditorIsReady) {
                     SetupScriptEditorTextAreas();
                     SetupScriptEditor();
@@ -5646,7 +5646,9 @@ namespace DSPRE {
 
         #region Script Editor
         #region Variables
-        private bool scriptEditorDirty = false;
+        private bool scriptsDirty = false;
+        private bool functionsDirty = false;
+        private bool actionsDirty = false;
 
         private string cmdKeyWords = "";
         private string comparisonOperatorsKeyWords = "";
@@ -5663,11 +5665,17 @@ namespace DSPRE {
 
         public Scintilla currentScintillaEditor;
         public TextBox currentSearchBox;
+        private void ScriptEditorSetClean() {
+            scriptsTabPage.Text = ScriptFile.ScriptKW + "s";
+            functionsTabPage.Text = ScriptFile.FunctionKW + "s";
+            actionsTabPage.Text = ScriptFile.ActionKW + "s";
+            scriptsDirty = functionsDirty = actionsDirty = false;
+        }
         private void scriptEditorTabControl_TabIndexChanged(object sender, EventArgs e) {
-            if (scriptEditorTabControl.SelectedTab == scriptTabPage) {
+            if (scriptEditorTabControl.SelectedTab == scriptsTabPage) {
                 currentSearchBox = panelSearchScriptTextBox;
                 currentScintillaEditor = ScriptTextArea;
-            } else if (scriptEditorTabControl.SelectedTab == functionTabPage) {
+            } else if (scriptEditorTabControl.SelectedTab == functionsTabPage) {
                 currentSearchBox = panelSearchFunctionTextBox;
                 currentScintillaEditor = FunctionTextArea;
             } else { //Actions
@@ -5721,7 +5729,7 @@ namespace DSPRE {
             FunctionTextArea.WrapMode = ScintillaNET.WrapMode.None;
             FunctionTextArea.IndentationGuides = IndentView.LookBoth;
             FunctionTextArea.CaretPeriod = 500;
-            //FunctionTextArea.CaretForeColor = Color.White;
+            FunctionTextArea.CaretForeColor = Color.White;
 
             ActionTextArea.WrapMode = ScintillaNET.WrapMode.None;
             ActionTextArea.IndentationGuides = IndentView.LookBoth;
@@ -5758,15 +5766,20 @@ namespace DSPRE {
             InitHotkeys(ActionTextArea, actionSearchManager);
 
             // INIT DIRTYBIT LOGIC
-            ScriptTextArea.TextChanged += ScriptEditorDirtySet;
-            FunctionTextArea.TextChanged += ScriptEditorDirtySet;
-            ActionTextArea.TextChanged += ScriptEditorDirtySet;
+            ScriptTextArea.TextChanged += (sender, e) => {
+                scriptsDirty = true;
+                scriptsTabPage.Text = ScriptFile.ScriptKW + "s" + "*";
+            };
+            FunctionTextArea.TextChanged += (sender, e) => {
+                functionsDirty = true;
+                functionsTabPage.Text = ScriptFile.FunctionKW + "s" + "*";
+            };
+            ActionTextArea.TextChanged += (sender, e) => {
+                actionsDirty = true;
+                actionsTabPage.Text = ScriptFile.ActionKW + "s" + "*";
+            };
 
             scriptEditorWordWrapCheckbox_CheckedChanged(null, null);
-        }
-
-        private void ScriptEditorDirtySet(object sender, EventArgs e) {
-            scriptEditorDirty = true;
         }
 
         private void InitNumberMargin(Scintilla textArea, EventHandler<MarginClickEventArgs> textArea_MarginClick) {
@@ -6149,7 +6162,7 @@ namespace DSPRE {
             if (userEdited.fileID != null) { //check if ScriptFile instance was created succesfully
                 userEdited.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex);
                 currentScriptFile = userEdited;
-                scriptEditorDirty = false;
+                ScriptEditorSetClean();
             } else {
                 MessageBox.Show("This " + typeof(ScriptFile).Name + " couldn't be saved.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -6187,7 +6200,7 @@ namespace DSPRE {
 
             scriptEditorTabControl.SelectedIndex = 0;
             selectScriptFileComboBox.SelectedIndex = (int)scriptFileUpDown.Value;
-            mainTabControl.SelectedTab = scriptTabPage;
+            mainTabControl.SelectedTab = scriptEditorTabPage;
         }
         private void openLevelScriptButton_Click(object sender, EventArgs e) {
             if (!scriptEditorIsReady) {
@@ -6197,7 +6210,7 @@ namespace DSPRE {
             }
 
             selectScriptFileComboBox.SelectedIndex = (int)levelScriptUpDown.Value;
-            mainTabControl.SelectedTab = scriptTabPage;
+            mainTabControl.SelectedTab = scriptEditorTabPage;
         }
         private void removeScriptFileButton_Click(object sender, EventArgs e) {
             /* Delete script file */
@@ -6286,14 +6299,14 @@ namespace DSPRE {
                 scriptSearchManager.Find(true, false, ScriptFile.ScriptKW + " " + split[4].Replace(":", ""));
                 scriptSearchManager.Find(true, false, cmdNameAndParams);
             } else if (split[3].StartsWith(ScriptFile.FunctionKW)) {
-                if (scriptEditorTabControl.SelectedTab != functionTabPage) {
-                    scriptEditorTabControl.SelectedTab = functionTabPage;
+                if (scriptEditorTabControl.SelectedTab != functionsTabPage) {
+                    scriptEditorTabControl.SelectedTab = functionsTabPage;
                 }
                 functionSearchManager.Find(true, false, ScriptFile.FunctionKW + " " + split[4].Replace(":", ""));
                 functionSearchManager.Find(true, false, cmdNameAndParams);
             } else if (split[3].StartsWith(ScriptFile.ActionKW)) {
-                if (scriptEditorTabControl.SelectedTab != movementTabPage) {
-                    scriptEditorTabControl.SelectedTab = movementTabPage;
+                if (scriptEditorTabControl.SelectedTab != actionsTabPage) {
+                    scriptEditorTabControl.SelectedTab = actionsTabPage;
                 }
                 actionSearchManager.Find(true, false, ScriptFile.ActionKW + " " + split[4].Replace(":", ""));
                 actionSearchManager.Find(true, false, cmdNameAndParams);
@@ -6314,7 +6327,7 @@ namespace DSPRE {
             if (disableHandlers) {
                 return;
             }
-            if (scriptEditorDirty) {
+            if (scriptsDirty || functionsDirty || actionsDirty) {
                 DialogResult d = MessageBox.Show("There are unsaved changes in this Script File.\nDo you wish to discard them?", "Unsaved work", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (!d.Equals(DialogResult.Yes)) {
                     disableHandlers = true;
@@ -6419,7 +6432,7 @@ namespace DSPRE {
                 }
             }
 
-            scriptEditorDirty = false;
+            ScriptEditorSetClean();
             statusLabel.Text = "Ready";
             disableHandlers = false;
         }

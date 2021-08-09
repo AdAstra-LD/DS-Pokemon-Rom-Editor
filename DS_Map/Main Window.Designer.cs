@@ -482,7 +482,7 @@
             this.exportEventFileButton = new System.Windows.Forms.Button();
             this.importEventFileButton = new System.Windows.Forms.Button();
             this.saveEventsButton = new System.Windows.Forms.Button();
-            this.scriptTabPage = new System.Windows.Forms.TabPage();
+            this.scriptEditorTabPage = new System.Windows.Forms.TabPage();
             this.scriptEditorWhitespacesCheckbox = new System.Windows.Forms.CheckBox();
             this.scriptEditorWordWrapCheckbox = new System.Windows.Forms.CheckBox();
             this.compressScriptTextButton = new System.Windows.Forms.Button();
@@ -521,14 +521,14 @@
             this.BtnCloseSearchScript = new System.Windows.Forms.Button();
             this.panelSearchScriptTextBox = new System.Windows.Forms.TextBox();
             this.scintillaScriptsPanel = new System.Windows.Forms.Panel();
-            this.functionTabPage = new System.Windows.Forms.TabPage();
+            this.functionsTabPage = new System.Windows.Forms.TabPage();
             this.PanelSearchFunctions = new System.Windows.Forms.Panel();
             this.BtnNextSearchFunc = new System.Windows.Forms.Button();
             this.BtnPrevSearchFunc = new System.Windows.Forms.Button();
             this.BtnCloseSearchFunc = new System.Windows.Forms.Button();
             this.panelSearchFunctionTextBox = new System.Windows.Forms.TextBox();
             this.scintillaFunctionsPanel = new System.Windows.Forms.Panel();
-            this.movementTabPage = new System.Windows.Forms.TabPage();
+            this.actionsTabPage = new System.Windows.Forms.TabPage();
             this.PanelSearchActions = new System.Windows.Forms.Panel();
             this.BtnNextSearchActions = new System.Windows.Forms.Button();
             this.BtnPrevSearchActions = new System.Windows.Forms.Button();
@@ -952,7 +952,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.rightClickPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wheelClickPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LeftClickPicture)).BeginInit();
-            this.scriptTabPage.SuspendLayout();
+            this.scriptEditorTabPage.SuspendLayout();
             this.groupBox24.SuspendLayout();
             this.ScriptNavigatorTabControl.SuspendLayout();
             this.ScriptsNavTab.SuspendLayout();
@@ -962,9 +962,9 @@
             this.scriptEditorTabControl.SuspendLayout();
             this.scriptsTabPage.SuspendLayout();
             this.PanelSearchScripts.SuspendLayout();
-            this.functionTabPage.SuspendLayout();
+            this.functionsTabPage.SuspendLayout();
             this.PanelSearchFunctions.SuspendLayout();
-            this.movementTabPage.SuspendLayout();
+            this.actionsTabPage.SuspendLayout();
             this.PanelSearchActions.SuspendLayout();
             this.textEditorTabPage.SuspendLayout();
             this.LineNumbersFormatgroupBox.SuspendLayout();
@@ -1048,7 +1048,7 @@
             this.mainTabControl.Controls.Add(this.mapEditorTabPage);
             this.mainTabControl.Controls.Add(this.nsbtxEditorTabPage);
             this.mainTabControl.Controls.Add(this.eventEditorTabPage);
-            this.mainTabControl.Controls.Add(this.scriptTabPage);
+            this.mainTabControl.Controls.Add(this.scriptEditorTabPage);
             this.mainTabControl.Controls.Add(this.textEditorTabPage);
             this.mainTabControl.Controls.Add(this.cameraEditorTabPage);
             this.mainTabControl.Controls.Add(this.trainerEditorTabPage);
@@ -6436,30 +6436,30 @@
             // 
             // scriptTabPage
             // 
-            this.scriptTabPage.Controls.Add(this.scriptEditorWhitespacesCheckbox);
-            this.scriptTabPage.Controls.Add(this.scriptEditorWordWrapCheckbox);
-            this.scriptTabPage.Controls.Add(this.compressScriptTextButton);
-            this.scriptTabPage.Controls.Add(this.expandScriptTextButton);
-            this.scriptTabPage.Controls.Add(this.findScriptTextButton);
-            this.scriptTabPage.Controls.Add(this.groupBox24);
-            this.scriptTabPage.Controls.Add(this.clearCurrentLevelScriptButton);
-            this.scriptTabPage.Controls.Add(this.groupBox8);
-            this.scriptTabPage.Controls.Add(this.importScriptFileButton);
-            this.scriptTabPage.Controls.Add(this.exportScriptFileButton);
-            this.scriptTabPage.Controls.Add(this.saveScriptFileButton);
-            this.scriptTabPage.Controls.Add(this.removeScriptFileButton);
-            this.scriptTabPage.Controls.Add(this.addScriptFileButton);
-            this.scriptTabPage.Controls.Add(this.scriptEditorTabControl);
-            this.scriptTabPage.Controls.Add(this.label5);
-            this.scriptTabPage.Controls.Add(this.selectScriptFileComboBox);
-            this.scriptTabPage.ImageIndex = 5;
-            this.scriptTabPage.Location = new System.Drawing.Point(4, 23);
-            this.scriptTabPage.Name = "scriptTabPage";
-            this.scriptTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptTabPage.Size = new System.Drawing.Size(1185, 619);
-            this.scriptTabPage.TabIndex = 4;
-            this.scriptTabPage.Text = "Script Editor";
-            this.scriptTabPage.UseVisualStyleBackColor = true;
+            this.scriptEditorTabPage.Controls.Add(this.scriptEditorWhitespacesCheckbox);
+            this.scriptEditorTabPage.Controls.Add(this.scriptEditorWordWrapCheckbox);
+            this.scriptEditorTabPage.Controls.Add(this.compressScriptTextButton);
+            this.scriptEditorTabPage.Controls.Add(this.expandScriptTextButton);
+            this.scriptEditorTabPage.Controls.Add(this.findScriptTextButton);
+            this.scriptEditorTabPage.Controls.Add(this.groupBox24);
+            this.scriptEditorTabPage.Controls.Add(this.clearCurrentLevelScriptButton);
+            this.scriptEditorTabPage.Controls.Add(this.groupBox8);
+            this.scriptEditorTabPage.Controls.Add(this.importScriptFileButton);
+            this.scriptEditorTabPage.Controls.Add(this.exportScriptFileButton);
+            this.scriptEditorTabPage.Controls.Add(this.saveScriptFileButton);
+            this.scriptEditorTabPage.Controls.Add(this.removeScriptFileButton);
+            this.scriptEditorTabPage.Controls.Add(this.addScriptFileButton);
+            this.scriptEditorTabPage.Controls.Add(this.scriptEditorTabControl);
+            this.scriptEditorTabPage.Controls.Add(this.label5);
+            this.scriptEditorTabPage.Controls.Add(this.selectScriptFileComboBox);
+            this.scriptEditorTabPage.ImageIndex = 5;
+            this.scriptEditorTabPage.Location = new System.Drawing.Point(4, 23);
+            this.scriptEditorTabPage.Name = "scriptTabPage";
+            this.scriptEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.scriptEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.scriptEditorTabPage.TabIndex = 4;
+            this.scriptEditorTabPage.Text = "Script Editor";
+            this.scriptEditorTabPage.UseVisualStyleBackColor = true;
             // 
             // scriptEditorWhitespacesCheckbox
             // 
@@ -6806,8 +6806,8 @@
             // scriptEditorTabControl
             // 
             this.scriptEditorTabControl.Controls.Add(this.scriptsTabPage);
-            this.scriptEditorTabControl.Controls.Add(this.functionTabPage);
-            this.scriptEditorTabControl.Controls.Add(this.movementTabPage);
+            this.scriptEditorTabControl.Controls.Add(this.functionsTabPage);
+            this.scriptEditorTabControl.Controls.Add(this.actionsTabPage);
             this.scriptEditorTabControl.Location = new System.Drawing.Point(487, 18);
             this.scriptEditorTabControl.Name = "scriptEditorTabControl";
             this.scriptEditorTabControl.SelectedIndex = 0;
@@ -6913,16 +6913,16 @@
             // 
             // functionTabPage
             // 
-            this.functionTabPage.Controls.Add(this.PanelSearchFunctions);
-            this.functionTabPage.Controls.Add(this.scintillaFunctionsPanel);
-            this.functionTabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.functionTabPage.Location = new System.Drawing.Point(4, 22);
-            this.functionTabPage.Name = "functionTabPage";
-            this.functionTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.functionTabPage.Size = new System.Drawing.Size(684, 569);
-            this.functionTabPage.TabIndex = 1;
-            this.functionTabPage.Text = "Functions";
-            this.functionTabPage.UseVisualStyleBackColor = true;
+            this.functionsTabPage.Controls.Add(this.PanelSearchFunctions);
+            this.functionsTabPage.Controls.Add(this.scintillaFunctionsPanel);
+            this.functionsTabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.functionsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.functionsTabPage.Name = "functionTabPage";
+            this.functionsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.functionsTabPage.Size = new System.Drawing.Size(684, 569);
+            this.functionsTabPage.TabIndex = 1;
+            this.functionsTabPage.Text = "Functions";
+            this.functionsTabPage.UseVisualStyleBackColor = true;
             // 
             // PanelSearchFunctions
             // 
@@ -7009,16 +7009,16 @@
             // 
             // movementTabPage
             // 
-            this.movementTabPage.Controls.Add(this.PanelSearchActions);
-            this.movementTabPage.Controls.Add(this.scintillaActionsPanel);
-            this.movementTabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.movementTabPage.Location = new System.Drawing.Point(4, 22);
-            this.movementTabPage.Name = "movementTabPage";
-            this.movementTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.movementTabPage.Size = new System.Drawing.Size(684, 569);
-            this.movementTabPage.TabIndex = 2;
-            this.movementTabPage.Text = "Actions";
-            this.movementTabPage.UseVisualStyleBackColor = true;
+            this.actionsTabPage.Controls.Add(this.PanelSearchActions);
+            this.actionsTabPage.Controls.Add(this.scintillaActionsPanel);
+            this.actionsTabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.actionsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.actionsTabPage.Name = "movementTabPage";
+            this.actionsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.actionsTabPage.Size = new System.Drawing.Size(684, 569);
+            this.actionsTabPage.TabIndex = 2;
+            this.actionsTabPage.Text = "Actions";
+            this.actionsTabPage.UseVisualStyleBackColor = true;
             // 
             // PanelSearchActions
             // 
@@ -10468,8 +10468,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.rightClickPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.wheelClickPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LeftClickPicture)).EndInit();
-            this.scriptTabPage.ResumeLayout(false);
-            this.scriptTabPage.PerformLayout();
+            this.scriptEditorTabPage.ResumeLayout(false);
+            this.scriptEditorTabPage.PerformLayout();
             this.groupBox24.ResumeLayout(false);
             this.groupBox24.PerformLayout();
             this.ScriptNavigatorTabControl.ResumeLayout(false);
@@ -10482,10 +10482,10 @@
             this.scriptsTabPage.ResumeLayout(false);
             this.PanelSearchScripts.ResumeLayout(false);
             this.PanelSearchScripts.PerformLayout();
-            this.functionTabPage.ResumeLayout(false);
+            this.functionsTabPage.ResumeLayout(false);
             this.PanelSearchFunctions.ResumeLayout(false);
             this.PanelSearchFunctions.PerformLayout();
-            this.movementTabPage.ResumeLayout(false);
+            this.actionsTabPage.ResumeLayout(false);
             this.PanelSearchActions.ResumeLayout(false);
             this.PanelSearchActions.PerformLayout();
             this.textEditorTabPage.ResumeLayout(false);
@@ -10702,7 +10702,7 @@
         private System.Windows.Forms.ComboBox selectEventComboBox;
         private System.Windows.Forms.Label signScriptNumberLabel;
         private System.Windows.Forms.NumericUpDown spawnableScriptUpDown;
-        private System.Windows.Forms.TabPage scriptTabPage;
+        private System.Windows.Forms.TabPage scriptEditorTabPage;
         private System.Windows.Forms.TabPage textEditorTabPage;
         private System.Windows.Forms.ListBox warpsListBox;
         private System.Windows.Forms.ListBox triggersListBox;
@@ -10751,8 +10751,8 @@
         private System.Windows.Forms.ComboBox selectScriptFileComboBox;
         private System.Windows.Forms.TabControl scriptEditorTabControl;
         private System.Windows.Forms.TabPage scriptsTabPage;
-        private System.Windows.Forms.TabPage functionTabPage;
-        private System.Windows.Forms.TabPage movementTabPage;
+        private System.Windows.Forms.TabPage functionsTabPage;
+        private System.Windows.Forms.TabPage actionsTabPage;
         private System.Windows.Forms.Button addScriptFileButton;
         private System.Windows.Forms.Button saveScriptFileButton;
         private System.Windows.Forms.Button removeScriptFileButton;
