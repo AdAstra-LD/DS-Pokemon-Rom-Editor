@@ -540,7 +540,7 @@ namespace DSPRE {
             versionLabel.Text = "Pokémon " + RomInfo.gameVersion.ToString() + " [" + RomInfo.romID + "]";
             languageLabel.Text = "Language: " + RomInfo.gameLanguage;
 
-            if (RomInfo.gameLanguage == "ENG") {
+            if (RomInfo.gameLanguage == gLangEnum.English) {
                 if (europeByte == 0x0A) {
                     languageLabel.Text += " [Europe]";
                 } else {

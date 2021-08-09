@@ -111,7 +111,7 @@ namespace DSPRE {
 
             CheckStandardizedItems();
 
-            if (RomInfo.gameLanguage == "ENG" || RomInfo.gameLanguage == "ESP") {
+            if (RomInfo.gameLanguage == gLangEnum.English || RomInfo.gameLanguage == gLangEnum.Spanish) {
                 CheckARM9ExpansionApplied();
             } else {
                 DisableARM9patch("Unsupported\nlanguage");
@@ -141,7 +141,7 @@ namespace DSPRE {
 
                     CheckBDHCamPatchApplied();
 
-                    if (RomInfo.gameLanguage == "ENG" || RomInfo.gameLanguage == "ESP") {
+                    if (RomInfo.gameLanguage == gLangEnum.English || RomInfo.gameLanguage == gLangEnum.Spanish) {
                         CheckMatrixExpansionApplied();
                         CheckScrcmdRepointPatchApplied();
                     } else {
@@ -636,7 +636,7 @@ namespace DSPRE {
             DynamicHeadersPatchData data = new DynamicHeadersPatchData();
             var headersDir = RomInfo.gameDirs[DirNames.dynamicHeaders];
 
-            bool specialCase = RomInfo.gameFamily == gFamEnum.HGSS && RomInfo.gameLanguage != "JAP" && RomInfo.gameLanguage != "ESP";
+            bool specialCase = RomInfo.gameFamily == gFamEnum.HGSS && RomInfo.gameLanguage != gLangEnum.Japanese && RomInfo.gameLanguage != gLangEnum.Spanish;
             string specialCaseChanges = "";
 
             if (specialCase) {

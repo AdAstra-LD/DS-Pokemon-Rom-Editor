@@ -21,7 +21,7 @@ namespace DSPRE {
         public static string arm9Path { get; private set; }
         public static string overlayTablePath { get; set; }
         public static string overlayPath { get; set; }
-        public static string gameLanguage { get; private set; }
+        public static gLangEnum gameLanguage { get; private set; }
         public static gVerEnum gameVersion { get; private set; }
         public static gFamEnum gameFamily { get; private set; }
 
@@ -82,6 +82,15 @@ namespace DSPRE {
             HGSS,
             BW,
             BW2
+        }
+        public enum gLangEnum : byte {
+            English,
+            Japanese,
+
+            Italian,
+            Spanish,
+            French,
+            German
         }
         public enum DirNames : byte {
             synthOverlay,            
@@ -225,66 +234,66 @@ namespace DSPRE {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     switch (gameLanguage) {
-                        case "ENG":
+                        case gLangEnum.English:
                             headerTableOffset = 0xEEDBC;
                             break;
-                        case "ESP":
+                        case gLangEnum.Spanish:
                             headerTableOffset = 0xEEE08;
                             break;
-                        case "ITA":
+                        case gLangEnum.Italian:
                             headerTableOffset = 0xEED70;
                             break;
-                        case "FRA":
+                        case gLangEnum.French:
                             headerTableOffset = 0xEEDFC;
                             break;
-                        case "GER":
+                        case gLangEnum.German:
                             headerTableOffset = 0xEEDCC;
                             break;
-                        case "JAP":
+                        case gLangEnum.Japanese:
                             headerTableOffset = gameVersion == gVerEnum.Diamond ? (uint)0xF0D68 : 0xF0D6C;
                             break;
                     }
                     break;
                 case gFamEnum.Plat:
                     switch (gameLanguage) {
-                        case "ENG":
+                        case gLangEnum.English:
                             headerTableOffset = 0xE601C;
                             break;
-                        case "ESP":
+                        case gLangEnum.Spanish:
                             headerTableOffset = 0xE60B0;
                             break;
-                        case "ITA":
+                        case gLangEnum.Italian:
                             headerTableOffset = 0xE6038;
                             break;
-                        case "FRA":
+                        case gLangEnum.French:
                             headerTableOffset = 0xE60A4;
                             break;
-                        case "GER":
+                        case gLangEnum.German:
                             headerTableOffset = 0xE6074;
                             break;
-                        case "JAP":
+                        case gLangEnum.Japanese:
                             headerTableOffset = 0xE56F0;
                             break;
                     }
                     break;
                 case gFamEnum.HGSS:
                     switch (gameLanguage) {
-                        case "ENG":
+                        case gLangEnum.English:
                             headerTableOffset = 0xF6BE0;
                             break;
-                        case "ESP":
+                        case gLangEnum.Spanish:
                             headerTableOffset = gameVersion == gVerEnum.HeartGold ? 0xF6BC8 : (uint)0xF6BD0;
                             break;
-                        case "ITA":
+                        case gLangEnum.Italian:
                             headerTableOffset = 0xF6B58;
                             break;
-                        case "FRA":
+                        case gLangEnum.French:
                             headerTableOffset = 0xF6BC4;
                             break;
-                        case "GER":
+                        case gLangEnum.German:
                             headerTableOffset = 0xF6B94;
                             break;
-                        case "JAP":
+                        case gLangEnum.Japanese:
                             headerTableOffset = 0xF6390;
                             break;
                     }
@@ -297,22 +306,22 @@ namespace DSPRE {
                     initialMoneyOverlayNumber = 52;
                     initialMoneyOverlayOffset = 0x1E4;
                     switch (gameLanguage) {
-                        case "ENG":
+                        case gLangEnum.English:
                             arm9spawnOffset = 0xF2B9C;
                             break;
-                        case "ESP":
+                        case gLangEnum.Spanish:
                             arm9spawnOffset = 0xF2BE8;
                             break;
-                        case "ITA":
+                        case gLangEnum.Italian:
                             arm9spawnOffset = 0xF2B50;
                             break;
-                        case "FRA":
+                        case gLangEnum.French:
                             arm9spawnOffset = 0xF2BDC;
                             break;
-                        case "GER":
+                        case gLangEnum.German:
                             arm9spawnOffset = 0xF2BAC;
                             break;
-                        case "JAP":
+                        case gLangEnum.Japanese:
                             arm9spawnOffset = 0xF4B48;
                             break;
                     }
@@ -321,22 +330,22 @@ namespace DSPRE {
                     initialMoneyOverlayNumber = 57;
                     initialMoneyOverlayOffset = 0x1EC;
                     switch (gameLanguage) {
-                        case "ENG":
+                        case gLangEnum.English:
                             arm9spawnOffset = 0xEA12C;
                             break;
-                        case "ESP":
+                        case gLangEnum.Spanish:
                             arm9spawnOffset = 0xEA1C0;
                             break;
-                        case "ITA":
+                        case gLangEnum.Italian:
                             arm9spawnOffset = 0xEA148;
                             break;
-                        case "FRA":
+                        case gLangEnum.French:
                             arm9spawnOffset = 0xEA1B4;
                             break;
-                        case "GER":
+                        case gLangEnum.German:
                             arm9spawnOffset = 0xEA184;
                             break;
-                        case "JAP":
+                        case gLangEnum.Japanese:
                             arm9spawnOffset = 0xE9800;
                             break;
                     }
@@ -345,22 +354,22 @@ namespace DSPRE {
                     initialMoneyOverlayNumber = 36;
                     initialMoneyOverlayOffset = 0x2FC;
                     switch (gameLanguage) {
-                        case "ENG":
+                        case gLangEnum.English:
                             arm9spawnOffset = 0xFA17C;
                             break;
-                        case "ESP":
+                        case gLangEnum.Spanish:
                             arm9spawnOffset = gameVersion == gVerEnum.HeartGold ? 0xFA164 : (uint)0xFA16C;
                             break;
-                        case "ITA":
+                        case gLangEnum.Italian:
                             arm9spawnOffset = 0xFA0F4;
                             break;
-                        case "FRA":
+                        case gLangEnum.French:
                             arm9spawnOffset = 0xFA160;
                             break;
-                        case "GER":
+                        case gLangEnum.German:
                             arm9spawnOffset = 0xFA130;
                             break;
-                        case "JAP":
+                        case gLangEnum.Japanese:
                             arm9spawnOffset = 0xF992C;
                             break;
                     }
@@ -371,7 +380,7 @@ namespace DSPRE {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     cameraTblOverlayNumber = 5;
-                    cameraTblOffsetsToRAMaddress = gameLanguage.Equals("JAP") ? (new uint[] { 0x4C50 }) : (new uint[] { 0x4908 });
+                    cameraTblOffsetsToRAMaddress = gameLanguage.Equals(gLangEnum.Japanese) ? (new uint[] { 0x4C50 }) : (new uint[] { 0x4908 });
                     cameraSize = 24;
                     break;
                 case gFamEnum.Plat:
@@ -383,14 +392,14 @@ namespace DSPRE {
                     cameraTblOverlayNumber = 1;
                     cameraSize = 36;
                     switch (gameLanguage) {
-                        case "ENG":
-                        case "ESP":
-                        case "FRA":
-                        case "GER":
-                        case "ITA":
+                        case gLangEnum.English:
+                        case gLangEnum.Spanish:
+                        case gLangEnum.French:
+                        case gLangEnum.German:
+                        case gLangEnum.Italian:
                             cameraTblOffsetsToRAMaddress = new uint[] { 0x532C, 0x547C };
                             break;
-                        case "JAP":
+                        case gLangEnum.Japanese:
                             cameraTblOffsetsToRAMaddress = new uint[] { 0x5324, 0x5474 };
                             break;
                     }
@@ -402,10 +411,10 @@ namespace DSPRE {
                 case gFamEnum.DP:
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
                     switch (gameLanguage) { // Go to the beginning of the overworld table
-                        case "ENG":
+                        case gLangEnum.English:
                             OWTableOffset = 0x22BCC;
                             break;
-                        case "JAP":
+                        case gLangEnum.Japanese:
                             OWTableOffset = 0x23BB8;
                             break;
                         default:
@@ -416,17 +425,17 @@ namespace DSPRE {
                 case gFamEnum.Plat:
                     OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
                     switch (gameLanguage) { // Go to the beginning of the overworld table
-                        case "ITA":
+                        case gLangEnum.Italian:
                             OWTableOffset = 0x2BC44;
                             break;
-                        case "FRA":
-                        case "ESP":
+                        case gLangEnum.French:
+                        case gLangEnum.Spanish:
                             OWTableOffset = 0x2BC3C;
                             break;
-                        case "GER":
+                        case gLangEnum.German:
                             OWTableOffset = 0x2BC50;
                             break;
-                        case "JAP":
+                        case gLangEnum.Japanese:
                             OWTableOffset = 0x2BA24;
                             break;
                         default:
@@ -444,16 +453,16 @@ namespace DSPRE {
             switch (gameFamily) {
                 case gFamEnum.HGSS:
                     switch (gameLanguage) {                            
-                        case "ESP":
+                        case gLangEnum.Spanish:
                             conditionalMusicTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x667D0 : 0x667D8;
                             break;
-                        case "ENG":
-                        case "ITA":
-                        case "FRA":
-                        case "GER":
+                        case gLangEnum.English:
+                        case gLangEnum.Italian:
+                        case gLangEnum.French:
+                        case gLangEnum.German:
                             conditionalMusicTableOffsetToRAMAddress = 0x667D8;
                             break;
-                        case "JAP":
+                        case gLangEnum.Japanese:
                             conditionalMusicTableOffsetToRAMAddress = 0x66238;
                             break;
                     }
@@ -464,37 +473,28 @@ namespace DSPRE {
             switch (gameFamily) {
                 case gFamEnum.HGSS:
                     switch (gameLanguage) {
-                        case "ESP":
-                            vsPokemonEntryTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x518CC : 0x0;
-                            vsTrainerEntryTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x51888 : 0x0;
-                            effectsComboTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x517C0 : 0x0;
-
-                            vsPokemonEntryTableOffsetToSizeLimiter = gameVersion == gVerEnum.HeartGold ? (uint)0x518C2 : 0x0;
-                            vsTrainerEntryTableOffsetToSizeLimiter = gameVersion == gVerEnum.HeartGold ? (uint)0x5187E : 0x0;
-                            effectsComboTableOffsetToSizeLimiter = gameVersion == gVerEnum.HeartGold ? (uint)0x517A2 : 0x0;
+                        case gLangEnum.Spanish:
+                            vsPokemonEntryTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x518CC : 0x518D4;
+                            vsTrainerEntryTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x51888 : 0x51890;
+                            effectsComboTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x517C0 : 0x517C8;
                             break;
-                        case "ENG":
-                        case "ITA":
-                        case "FRA":
-                        case "GER":
-                            vsPokemonEntryTableOffsetToRAMAddress = 0x0;
-                            vsTrainerEntryTableOffsetToRAMAddress = 0x0;
-                            effectsComboTableOffsetToRAMAddress = 0x0;
-
-                            vsPokemonEntryTableOffsetToSizeLimiter = 0x0;
-                            vsTrainerEntryTableOffsetToSizeLimiter = 0x0;
-                            effectsComboTableOffsetToSizeLimiter = 0x0;
+                        case gLangEnum.English:
+                        case gLangEnum.Italian:
+                        case gLangEnum.French:
+                        case gLangEnum.German:
+                            vsPokemonEntryTableOffsetToRAMAddress = 0x518D4;
+                            vsTrainerEntryTableOffsetToRAMAddress = 0x51890;
+                            effectsComboTableOffsetToRAMAddress = 0x517C8;
                             break;
-                        case "JAP":
-                            vsPokemonEntryTableOffsetToRAMAddress = 0x0;
-                            vsTrainerEntryTableOffsetToRAMAddress = 0x0;
-                            effectsComboTableOffsetToRAMAddress = 0x0;
-
-                            vsPokemonEntryTableOffsetToSizeLimiter = 0x0;
-                            vsTrainerEntryTableOffsetToSizeLimiter = 0x0;
-                            effectsComboTableOffsetToSizeLimiter = 0x0;
+                        case gLangEnum.Japanese:
+                            vsPokemonEntryTableOffsetToRAMAddress = 0x5136C;
+                            vsTrainerEntryTableOffsetToRAMAddress = 0x51328;
+                            effectsComboTableOffsetToRAMAddress = 0x51260;
                             break;
                     }
+                    vsPokemonEntryTableOffsetToSizeLimiter = vsPokemonEntryTableOffsetToRAMAddress - 0xA;
+                    vsTrainerEntryTableOffsetToSizeLimiter = vsTrainerEntryTableOffsetToRAMAddress - 0xA;
+                    effectsComboTableOffsetToSizeLimiter = effectsComboTableOffsetToRAMAddress - 0x1E;
                     break;
             }
         }
@@ -502,16 +502,16 @@ namespace DSPRE {
             switch (gameFamily) {
                 case gFamEnum.HGSS:
                     switch (gameLanguage) {
-                        case "ESP":
+                        case gLangEnum.Spanish:
                             encounterMusicTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x550D8 : 0x550E0;
                             break;
-                        case "ENG":
-                        case "ITA":
-                        case "FRA":
-                        case "GER":
+                        case gLangEnum.English:
+                        case gLangEnum.Italian:
+                        case gLangEnum.French:
+                        case gLangEnum.German:
                             encounterMusicTableOffsetToRAMAddress = 0x550E0;
                             break;
-                        case "JAP":
+                        case gLangEnum.Japanese:
                             encounterMusicTableOffsetToRAMAddress = 0x54B44;
                             break;
                     }
@@ -519,16 +519,16 @@ namespace DSPRE {
 
                 case gFamEnum.Plat:
                     switch (gameLanguage) {
-                        case "ENG":
+                        case gLangEnum.English:
                             encounterMusicTableOffsetToRAMAddress = 0x5563C;
                             break;
-                        case "ITA":
-                        case "FRA":
-                        case "ESP":
-                        case "GER":
+                        case gLangEnum.Italian:
+                        case gLangEnum.French:
+                        case gLangEnum.Spanish:
+                        case gLangEnum.German:
                             encounterMusicTableOffsetToRAMAddress = 0x556E0;
                             break;
-                        case "JAP":
+                        case gLangEnum.Japanese:
                             encounterMusicTableOffsetToRAMAddress = 0x54F04; 
                             break;
                     }
@@ -536,16 +536,16 @@ namespace DSPRE {
 
                 case gFamEnum.DP:
                     switch (gameLanguage) {
-                        case "ENG":
+                        case gLangEnum.English:
                             encounterMusicTableOffsetToRAMAddress = 0x4AD3C;
                             break;
-                        case "ITA":
-                        case "FRA":
-                        case "ESP":
-                        case "GER":
+                        case gLangEnum.Italian:
+                        case gLangEnum.French:
+                        case gLangEnum.Spanish:
+                        case gLangEnum.German:
                             encounterMusicTableOffsetToRAMAddress = 0x4ADAC;
                             break;
-                        case "JAP":
+                        case gLangEnum.Japanese:
                             encounterMusicTableOffsetToRAMAddress = 0x4D9AC;
                             break;
                     } 
@@ -585,7 +585,7 @@ namespace DSPRE {
                     attackNamesTextNumber = 647;
                     break;
                 default:
-                    attackNamesTextNumber = gameLanguage == "JAP" ? 739 : 750;
+                    attackNamesTextNumber = gameLanguage == gLangEnum.Japanese ? 739 : 750;
                     break;
             }
         }
@@ -598,7 +598,7 @@ namespace DSPRE {
                     itemNamesTextNumber = 392;
                     break;
                 default:
-                    itemNamesTextNumber = gameLanguage == "JAP" ? 219 : 222;
+                    itemNamesTextNumber = gameLanguage == gLangEnum.Japanese ? 219 : 222;
                     break;
             }
         }
@@ -611,7 +611,7 @@ namespace DSPRE {
                     locationNamesTextNumber = 433;
                     break;
                 default:
-                    locationNamesTextNumber = gameLanguage == "JAP" ? 272 : 279;
+                    locationNamesTextNumber = gameLanguage == gLangEnum.Japanese ? 272 : 279;
                     break;
             }
         }
@@ -624,7 +624,7 @@ namespace DSPRE {
                     pokemonNamesTextNumbers = new int[7] { 412, 413, 712, 713, 714, 715, 716 }; //413?
                     break;
                 case gFamEnum.HGSS:
-                    pokemonNamesTextNumbers = new int[7] { 237, 238, 817, 818, 819, 820, 821 }; //238?
+                    pokemonNamesTextNumbers = gameLanguage.Equals(gLangEnum.Japanese) ? new int[1] { 232 } : new int[7] { 237, 238, 817, 818, 819, 820, 821 }; //238?
                     break;
             }
         }
@@ -632,7 +632,7 @@ namespace DSPRE {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     trainerNamesMessageNumber = 559;
-                    if (gameLanguage.Equals("JAP")) {
+                    if (gameLanguage.Equals(gLangEnum.Japanese)) {
                         trainerNamesMessageNumber -= 9;
                     }
                     break;
@@ -641,7 +641,7 @@ namespace DSPRE {
                     break;
                 default:
                     trainerNamesMessageNumber = 729;
-                    if (gameLanguage == "JAP") {
+                    if (gameLanguage == gLangEnum.Japanese) {
                         trainerNamesMessageNumber -= 10;
                     }
                     break;
@@ -651,7 +651,7 @@ namespace DSPRE {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     trainerClassMessageNumber = 560;
-                    if (gameLanguage.Equals("JAP")) {
+                    if (gameLanguage.Equals(gLangEnum.Japanese)) {
                         trainerClassMessageNumber -= 9;
                     }
                     break;
@@ -660,7 +660,7 @@ namespace DSPRE {
                     break;
                 default:
                     trainerClassMessageNumber = 730;
-                    if (gameLanguage.Equals("JAP")) {
+                    if (gameLanguage.Equals(gLangEnum.Japanese)) {
                         trainerClassMessageNumber -= 10;
                     }
                     break;
@@ -696,7 +696,7 @@ namespace DSPRE {
                 case "CPUE":
                 case "IPKE":
                 case "IPGE":
-                    gameLanguage = "ENG";
+                    gameLanguage = gLangEnum.English;
                     break;
 
                 case "ADAS":
@@ -705,7 +705,7 @@ namespace DSPRE {
                 case "IPKS":
                 case "IPGS":
                 case "LATA":
-                    gameLanguage = "ESP";
+                    gameLanguage = gLangEnum.Spanish;
                     break;
 
                 case "ADAI":
@@ -713,7 +713,7 @@ namespace DSPRE {
                 case "CPUI":
                 case "IPKI":
                 case "IPGI":
-                    gameLanguage = "ITA";
+                    gameLanguage = gLangEnum.Italian;
                     break;
 
                 case "ADAF":
@@ -721,7 +721,7 @@ namespace DSPRE {
                 case "CPUF":
                 case "IPKF":
                 case "IPGF":
-                    gameLanguage = "FRA";
+                    gameLanguage = gLangEnum.French;
                     break;
 
                 case "ADAD":
@@ -729,11 +729,11 @@ namespace DSPRE {
                 case "CPUD":
                 case "IPKD":
                 case "IPGD":
-                    gameLanguage = "GER";
+                    gameLanguage = gLangEnum.German;
                     break;
 
                 default:
-                    gameLanguage = "JAP";
+                    gameLanguage = gLangEnum.Japanese;
                     break;
             }
         }
@@ -757,7 +757,7 @@ namespace DSPRE {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     string suffix = "";
-                    if (!gameLanguage.Equals("JAP"))
+                    if (!gameLanguage.Equals(gLangEnum.Japanese))
                         suffix = "_release";
 
                     packedDirsDict = new Dictionary<DirNames, string>() {
