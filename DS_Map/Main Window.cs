@@ -590,7 +590,7 @@ namespace DSPRE {
                 case gFamEnum.Plat:
                     break;
                 default:
-                    if (!DSUtils.ARM9.Compress()) {
+                    if (!DSUtils.ARM9.Decompress()) {
                         MessageBox.Show("ARM9 decompression failed. The program can't proceed.\nAborting.",
                                     "Errror with ARM9 decompression", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
@@ -1125,6 +1125,10 @@ namespace DSPRE {
 
         private void RefreshHeaderEditorFields() {
             /* Setup controls for common fields across headers */
+            if (currentHeader == null) {
+                return;
+            }
+
             internalNameBox.Text = internalNames[currentHeader.ID];
             matrixUpDown.Value = currentHeader.matrixID;
             areaDataUpDown.Value = currentHeader.areaDataID;
@@ -7222,16 +7226,15 @@ namespace DSPRE {
             }
 
             byte tableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.encounterMusicTableOffsetToRAMAddress - tableSizeOffset);
-            using (BinaryReader br = new BinaryReader(File.OpenRead(arm9Path))) {
-                br.BaseStream.Position = encounterMusicTableTableStartAddress;
+            using (DSUtils.ARM9.Reader ar = new DSUtils.ARM9.Reader(encounterMusicTableTableStartAddress) ) {
                 for (int i = 0; i < tableEntriesCount; i++) {
-                    uint entryOffset = (uint)br.BaseStream.Position;
-                    byte tclass = (byte)br.ReadUInt16();
-                    ushort musicD = br.ReadUInt16();
+                    uint entryOffset = (uint)ar.BaseStream.Position;
+                    byte tclass = (byte)ar.ReadUInt16();
+                    ushort musicD = ar.ReadUInt16();
                     ushort? musicN;
 
                     if (gameFamily == gFamEnum.HGSS) {
-                        musicN = br.ReadUInt16();
+                        musicN = ar.ReadUInt16();
                     } else {
                         musicN = null;
                     }
@@ -7996,12 +7999,11 @@ namespace DSPRE {
                 byte tableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.conditionalMusicTableOffsetToRAMAddress - 8);
 
                 conditionalMusicTableListBox.Items.Clear();
-                using (BinaryReader br = new BinaryReader(File.OpenRead(arm9Path))) {
-                    br.BaseStream.Position = conditionalMusicTableStartAddress;
+                using (DSUtils.ARM9.Reader ar = new DSUtils.ARM9.Reader(conditionalMusicTableStartAddress) ) {
                     for (int i = 0; i < tableEntriesCount; i++) {
-                        ushort header = br.ReadUInt16();
-                        ushort flag = br.ReadUInt16();
-                        ushort musicID = br.ReadUInt16();
+                        ushort header = ar.ReadUInt16();
+                        ushort flag = ar.ReadUInt16();
+                        ushort musicID = ar.ReadUInt16();
 
                         conditionalMusicTable.Add((header, flag, musicID));
                         conditionalMusicTableListBox.Items.Add(headerListBox.Items[header]);
@@ -8023,6 +8025,7 @@ namespace DSPRE {
         }
         private void SetupBattleEffectsTables() {
             if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.trainerGraphics, DirNames.textArchives });
                 RomInfo.SetBattleEffectsData();
                 vsTrainerEffectsDict = new OrderedDictionary();
                 vsPokemonEffectsDict = new OrderedDictionary();
@@ -8051,30 +8054,29 @@ namespace DSPRE {
                 pbEffectsVsTrainerListbox.Items.Clear();
                 pbEffectsVsPokemonListbox.Items.Clear();
                 pbEffectsCombosListbox.Items.Clear();
-                using (BinaryReader br = new BinaryReader(File.OpenRead(arm9Path))) {
-                    br.BaseStream.Position = vsTrainerTableStartAddress;
+                using (DSUtils.ARM9.Reader ar = new DSUtils.ARM9.Reader(vsTrainerTableStartAddress) ) {
                     for (int i = 0; i < trainerTableEntriesCount; i++) {
 
-                        ushort entry = br.ReadUInt16();
-                        int comboID = entry >> 10;
+                        ushort entry = ar.ReadUInt16();
                         int classID = entry & 1023;
+                        int comboID = entry >> 10;
                         vsTrainerEffectsDict.Insert(i, classID, comboID);
                         pbEffectsVsTrainerListbox.Items.Add("[" + classID.ToString("D3") + "]" + " " + trCnames[classID] + " uses Combo #" + comboID);
                     }
 
-                    br.BaseStream.Position = vsPokemonTableStartAddress;
+                    ar.BaseStream.Position = vsPokemonTableStartAddress;
                     for (int i = 0; i < pokemonTableEntriesCount; i++) {
-                        ushort entry = br.ReadUInt16();
-                        int comboID = entry >> 10;
+                        ushort entry = ar.ReadUInt16();
                         int pokeID = entry & 1023;
+                        int comboID = entry >> 10;
                         vsPokemonEffectsDict.Insert(i, pokeID, comboID);
                         pbEffectsVsPokemonListbox.Items.Add("[" + pokeID.ToString("D3") + "]" + " " + pokeNames[pokeID] + " uses Combo #" + comboID);
                     }
 
-                    br.BaseStream.Position = effectsComboMainTableStartAddress;
+                    ar.BaseStream.Position = effectsComboMainTableStartAddress;
                     for (int i = 0; i < comboTableEntriesCount; i++) {
-                        ushort battleIntroEffect = br.ReadUInt16();
-                        ushort battleMusic = br.ReadUInt16();
+                        ushort battleIntroEffect = ar.ReadUInt16();
+                        ushort battleMusic = ar.ReadUInt16();
                         effectsComboTable.Add((battleIntroEffect, battleMusic));
                         pbEffectsCombosListbox.Items.Add("Combo " + i.ToString("D2") + " - " + "Effect #" + battleIntroEffect + ", " + "Music #" + battleMusic);
                     }
@@ -8174,11 +8176,25 @@ namespace DSPRE {
         }
 
         private void saveVSPokemonEntryBTN_Click(object sender, EventArgs e) {
+            int index = pbEffectsVsPokemonListbox.SelectedIndex;
+            DictionaryEntry ent = vsPokemonEffectsDict.Cast<DictionaryEntry>().ElementAt(index);
+            //key = MainTable comboID,  value = pokemonID
+            ushort toWrite = (ushort)(((ushort)ent.Key & 1023) + ((ushort)ent.Value << 10));
 
+            using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer(vsPokemonTableStartAddress + 2 * index)) {
+                wr.Write(toWrite); //PokemonID
+            };
         }
 
         private void saveVSTrainerEntryBTN_Click(object sender, EventArgs e) {
+            int index = pbEffectsVsTrainerListbox.SelectedIndex;
+            DictionaryEntry ent = vsTrainerEffectsDict.Cast<DictionaryEntry>().ElementAt(index);
+            //key = MainTable comboID,  value = trainerClass
+            ushort toWrite = (ushort)(((ushort)ent.Key & 1023) + ((ushort)ent.Value << 10));
 
+            using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer(vsTrainerTableStartAddress + 2 * index)) {
+                wr.Write(toWrite); 
+            };
         }
 
         private void HOWpbEffectsTableButton_Click(object sender, EventArgs e) {

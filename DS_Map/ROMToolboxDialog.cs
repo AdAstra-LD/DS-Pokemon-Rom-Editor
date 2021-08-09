@@ -787,9 +787,8 @@ namespace DSPRE {
         private int GetCommandTableOffset() { // Checks if command table is repointed IN THE EXPANDED ARM9 FILE, returns pointer inside this file
             ResourceManager customcmdDB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.CustomScrCmdDB", Assembly.GetExecutingAssembly());
             int pointerOffset = int.Parse(customcmdDB.GetString("pointerOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage));
-            using (BinaryReader arm9Reader = new BinaryReader(new FileStream(RomInfo.arm9Path, FileMode.Open))) {
-                arm9Reader.BaseStream.Position = pointerOffset;
-                int cmdTable = arm9Reader.ReadInt32();
+            using (DSUtils.ARM9.Reader r = new DSUtils.ARM9.Reader(pointerOffset)) {  
+                int cmdTable = r.ReadInt32();
                 if (((cmdTable - 0x023C8000) >= 0) && ((cmdTable - 0x023C8000) <= 0x12B00)) {
                     return (cmdTable - 0x023C8000); // Table position inside the expanded arm9 file
                 }
@@ -812,13 +811,12 @@ namespace DSPRE {
 
             arm9FileStream.Close();
 
-            using (BinaryWriter arm9Writer = new BinaryWriter(new FileStream(RomInfo.arm9Path, FileMode.Open))) // Change both the pointer and the limit
-            {
-                arm9Writer.BaseStream.Position = int.Parse(customcmdDB.GetString("pointerOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage));
-                arm9Writer.Write((uint)0x023C8200);
+            using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer()) { // Change both the pointer and the limit
+                wr.BaseStream.Position = int.Parse(customcmdDB.GetString("pointerOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage));
+                wr.Write((uint)0x023C8200);
 
-                arm9Writer.BaseStream.Position = int.Parse(customcmdDB.GetString("limitOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage));
-                arm9Writer.Write((uint)0x053C);
+                wr.BaseStream.Position = int.Parse(customcmdDB.GetString("limitOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage));
+                wr.Write((uint)0x053C);
             }
         }
         private bool ImportCustomCommand() {

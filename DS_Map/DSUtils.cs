@@ -60,11 +60,12 @@ namespace DSPRE {
                 WriteToFile(RomInfo.arm9Path, BitConverter.GetBytes(value), destOffset, 0);
             }
 
-            public class ARM9Reader : BinaryReader {
-                public ARM9Reader(string path, long pos = 0) : base(File.OpenRead(path)) {
+
+            public class Reader : BinaryReader {
+                public Reader(string path, long pos = 0) : base(File.OpenRead(path)) {
                     this.BaseStream.Position = pos;
                 }
-                public ARM9Reader(long pos = 0) : this(arm9Path, pos) {
+                public Reader(long pos = 0) : this(arm9Path, pos) {
                 }
             }
             public class Writer : BinaryWriter { 
