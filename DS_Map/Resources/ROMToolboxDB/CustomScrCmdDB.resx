@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="limitOffset_HG_ENG" xml:space="preserve">
+  <data name="limitOffset_HG_English" xml:space="preserve">
     <value>262368</value>
     <comment>0x400E0</comment>
   </data>
@@ -125,7 +125,7 @@
     <value>262360</value>
     <comment>0x400D8</comment>
   </data>
-  <data name="limitOffset_SS_ENG" xml:space="preserve">
+  <data name="limitOffset_SS_English" xml:space="preserve">
     <value>262368</value>
     <comment>0x400E0</comment>
   </data>
@@ -133,7 +133,7 @@
     <value>262368</value>
     <comment>0x400E0</comment>
   </data>
-  <data name="originalTableOffset_HG_ENG" xml:space="preserve">
+  <data name="originalTableOffset_HG_English" xml:space="preserve">
     <value>1027328</value>
     <comment>0xFAD00</comment>
   </data>
@@ -141,7 +141,7 @@
     <value>1027304</value>
     <comment>0xFACE8</comment>
   </data>
-  <data name="originalTableOffset_SS_ENG" xml:space="preserve">
+  <data name="originalTableOffset_SS_English" xml:space="preserve">
     <value>1027328</value>
     <comment>0xFAD00</comment>
   </data>
@@ -149,7 +149,7 @@
     <value>1027312</value>
     <comment>0xFACF0</comment>
   </data>
-  <data name="pointerOffset_HG_ENG" xml:space="preserve">
+  <data name="pointerOffset_HG_English" xml:space="preserve">
     <value>262372</value>
     <comment>0x400E4</comment>
   </data>
@@ -157,7 +157,7 @@
     <value>262364</value>
     <comment>0x400DC</comment>
   </data>
-  <data name="pointerOffset_SS_ENG" xml:space="preserve">
+  <data name="pointerOffset_SS_English" xml:space="preserve">
     <value>262372</value>
     <comment>0x400E4</comment>
   </data>
