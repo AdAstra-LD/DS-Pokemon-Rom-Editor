@@ -2,25 +2,27 @@
 
 Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features and bugfixes.
 
-![Screenshot](aDSPRE_121.png)
-![Screenshot](bDSPRE_121.png)
-![Screenshot](cDSPRE_121.png)
+![Screenshot](aDSPRE_123.png)
+![Screenshot](bDSPRE_123.png)
+![Screenshot](cDSPRE_123.png)
+![Screenshot](dDSPRE_123.png)
 
 ## Misc changes to the official DSPRE
 - Significantly shorter load and save times.
-- Fixed script editor (it's also much faster now).
+- New, faster script editor with syntax highlighting and built-in search features.
 - Fixed lots of problems with Japanese DP roms [either not loading or only partially functioning].
 
 - Added Advanced Header Search feature.
 - New NSBMD and NSBTX utilities.
-- Fixed Overworld sprite search algorithm for most (if not all) supported ROMs.
 - Lots of new buttons and icons.
-- Fixed app name.
-- Fixed many Exceptions, which now show user-friendly messages.
 - Some fields will now show a colored text depending on their value.
-- New ROM Toolbox.
+- DSPRE can now read extracted data from a directory, without loading a ROM.
 - Added new ALT key shortcuts (Hold alt to see which shortcuts are available).
 - Fixed Encounter Editor unpacking HG encounters for SS ROMs.
+- Fixed Overworld sprite search algorithm for most (if not all) supported ROMs.
+- Fixed app name.
+- Fixed many Exceptions, which now show user-friendly messages.
+- New ROM Toolbox.
 
 ### ROM Toolbox:
 Supported patches:
@@ -28,15 +30,16 @@ Supported patches:
 - BDHCAM.
 - Set Overlay1 as uncompressed.
 - Standardize item numbers (fixed).
-- Pokémon names to Sentence Case.
+- Convert Pokémon names to Sentence Case.
 - Expand matrix 0.
+- Dynamic Headers.
 
 ### Script Command Database:
 A handy window that shows all the available script commands and the parameters they require.
-- Many commands have been identified and added.
+- Many new commands have been identified and added.
 
 ### Spawn Settings Editor:
-Allows you to change the first map where the adventure begins and the initial money.
+Allows you to change the map where the adventure begins and the initial money.
 
 ### Wild Encounters Editor:
 - Added wrench button to fix broken encounter files [whenever possible].
@@ -53,6 +56,7 @@ Allows you to change the first map where the adventure begins and the initial mo
 - Redone HGSS weather preview pics.
 - Fixed HGSS Camera settings. 
 - Fixed header flag names.
+- Battle BG and Following Pokemon properties are now fully editable.
 - Editable Internal names.
 - Added text length label to Internal Names box (Header Editor).
 - Fixed a bug that prevented Internal Names from displaying correctly (String termination).
@@ -64,6 +68,7 @@ Allows you to change the first map where the adventure begins and the initial mo
 - Fixed wrong row/col indices when resizing matrices.
 - Fixed junk input detector.
 - The coordinates of the selected map appear in the status bar.
+- Matrix names now appear in the selector.
 
 ### Map Editor:
 - Partial GUI redesign (now with fewer building controls and a more straightforward GUI).
@@ -84,6 +89,7 @@ Allows you to change the first map where the adventure begins and the initial mo
 - Fixed type painters resetting after changing map.
 - Fixed type painters font size and value [updown] limit.
 - Added more type painter colors and collisions.
+- New 512x map screenshot button (for PDSMS' background image feature).
 
 ### NSBTX Editor:
 - GUI Redesign.
@@ -91,6 +97,7 @@ Allows you to change the first map where the adventure begins and the initial mo
 - Created a palette match algorithm.
 
 ### Event Editor:
+- The Standardize Items patch is no longer necessary to edit/add Ground Items.
 - Added mouse support and warps navigation feature.
 - Events can now be duplicated.
 - New fields (for Spawnables and Triggers).
@@ -117,3 +124,10 @@ Allows you to change the first map where the adventure begins and the initial mo
 
 ### Camera Editor:
 You can easily change the default camera position in game.
+
+### Trainer Editor:
+Change the Trainer Class, Party, Movesets, AIs and Items of any Trainer in the game.
+
+### Table Editor [HGSS only]:
+- Conditional Music Table: allows you to pick a different Header music to play when a specific flag is set.
+- Pre-Battle Effects: you can now associate many different VS. Sequences and Battle tracks to any Trainer Classes or Pokémon.
