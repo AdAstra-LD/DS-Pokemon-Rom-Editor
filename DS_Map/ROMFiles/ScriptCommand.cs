@@ -52,34 +52,38 @@ namespace DSPRE.ROMFiles {
             switch (id) {
                 case 0x16:      // Jump
                 case 0x1A:      // Call
-                    name += " " + "Function_#" + (BitConverter.ToInt32(parametersList[0], 0)).ToString("D");
+                    name += " " + FunctionKW + "#" + BitConverter.ToInt32(parametersList[0], 0).ToString("D");
                     break;
                 case 0x17:      // JumpIfObjID
-                case 0x18:      // JumpIfBgID
+                case 0x18:      // JumpIfEventID
+                    byte owid = parametersList[0][0];
+                    name += " " + ScriptFile.OverworldFlexDecode(owid);
+                    name += " " + FunctionKW + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                    break;
                 case 0x19:      // JumpIfPlayerDir
                     byte param = parametersList[0][0];
-                    name += " " + param.ToString("X") + " " + "Function_#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                    name += " " + param.ToString("X") + " " + FunctionKW + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
                     break;
-                case 0x1C:      // CondJump
-                case 0x1D:      // CondCall
+                case 0x1C:      // JumpIf
+                case 0x1D:      // CallIf
                     byte opcode = parametersList[0][0];
-                    name += " " + RomInfo.ScriptComparisonOperatorsDict[opcode] + " " + "Function_#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                    name += " " + RomInfo.ScriptComparisonOperatorsDict[opcode] + " " + FunctionKW + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
                     break;
                 case 0x5E:      // Movement
                     ushort flexID = BitConverter.ToUInt16(parametersList[0], 0);
-                    name += ScriptFile.OverworldFlexDecode(flexID);
-                    name += " " + "Action_#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                    name += " " + ScriptFile.OverworldFlexDecode(flexID);
+                    name += " " + ActionKW + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
                     break;
                 case 0x6A:      // CheckOverworldPosition
                     flexID = BitConverter.ToUInt16(parametersList[0], 0);
-                    name += ScriptFile.OverworldFlexDecode(flexID) + " " + "0x" + BitConverter.ToInt16(parametersList[1], 0).ToString("X") + " " + "0x" + BitConverter.ToInt16(parametersList[2], 0).ToString("X");
+                    name += " " + ScriptFile.OverworldFlexDecode(flexID) + " " + "0x" + BitConverter.ToInt16(parametersList[1], 0).ToString("X") + " " + "0x" + BitConverter.ToInt16(parametersList[2], 0).ToString("X");
                     break;
                 case 0x62:      // Lock
                 case 0x63:      // Release
                 case 0x64:      // AddOW
                 case 0x65:      // RemoveOW
                     flexID = BitConverter.ToUInt16(parametersList[0], 0);
-                    name += ScriptFile.OverworldFlexDecode(flexID);
+                    name += " " + ScriptFile.OverworldFlexDecode(flexID);
                     break;
                 default:
                     for (int i = 0; i < parametersList.Count; i++) {
@@ -140,7 +144,7 @@ namespace DSPRE.ROMFiles {
                     if (RomInfo.ScriptComparisonOperatorsReverseDict.TryGetValue(nameParts[i + 1].ToLower(), out cmdID)) {
                         cmdParams.Add(new byte[] { (byte)cmdID });
                     } else { //Not a comparison
-                        int indexOfSpecialCharacter = nameParts[i + 1].IndexOfAny(new char[] { 'x', 'X', '#' });
+                        int indexOfSpecialCharacter = nameParts[i + 1].IndexOfAny(new char[] { 'x', 'X', '#', '.' });
 
                         /* If number is preceded by 0x parse it as hex, otherwise as decimal */
                         NumberStyles style;
@@ -158,25 +162,24 @@ namespace DSPRE.ROMFiles {
                                     cmdParams.Add(new byte[] { Byte.Parse(nameParts[i + 1], style) });
                                     break;
                                 case 2:
-                                    if (nameParts[i + 1].Equals("Player", StringComparison.InvariantCultureIgnoreCase)) {
-                                        cmdParams.Add(BitConverter.GetBytes((ushort)255));
-                                    } else if (nameParts[i + 1].Equals("Following", StringComparison.InvariantCultureIgnoreCase)) {
-                                        cmdParams.Add(BitConverter.GetBytes((ushort)253));
-                                    } else if (nameParts[i + 1].Equals("Camera", StringComparison.InvariantCultureIgnoreCase)) {
-                                        cmdParams.Add(BitConverter.GetBytes((ushort)241));
-                                    } else {
-                                        cmdParams.Add(BitConverter.GetBytes(ushort.Parse(nameParts[i + 1], style)));
+                                    ushort result;
+                                    if (!ushort.TryParse(nameParts[i + 1], style, new CultureInfo("en-US"), result: out result)) {
+                                        result = ScriptDatabase.specialOverworlds.First(x => x.Value.Equals(nameParts[i + 1])).Key;
                                     }
+                                    cmdParams.Add(BitConverter.GetBytes(result));
                                     break;
                                 case 4:
                                     cmdParams.Add(BitConverter.GetBytes(Int32.Parse(nameParts[i + 1], style)));
                                     break;
                             }
+                        } catch (InvalidOperationException) {
+                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not " + "a valid " + "Overworld number or identifier.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            id = null;
                         } catch (FormatException) {
-                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not a valid " + style , "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not " + "a valid " + style, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             id = null;
                         } catch (OverflowException) {
-                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not in the range [" + 0 + ", " + (Math.Pow(2, 8 * parametersSizeArr[i]) - 1) + "].", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not " + "in the range [" + 0 + ", " + (Math.Pow(2, 8 * parametersSizeArr[i]) - 1) + "].", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             id = null;
                         }
                     }

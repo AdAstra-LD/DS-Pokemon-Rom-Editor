@@ -171,6 +171,12 @@
     <Compile Include="RomInfo.cs" />
     <Compile Include="ROMFiles\ScriptCommand.cs" />
     <Compile Include="ScintillaUtils\HotKeyManager.cs" />
+    <Compile Include="ScintillaUtils\ScriptTooltip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScintillaUtils\ScriptTooltip.Designer.cs">
+      <DependentUpon>ScriptTooltip.cs</DependentUpon>
+    </Compile>
     <Compile Include="ScintillaUtils\SearchManager.cs" />
     <Compile Include="SpawnEditor.cs">
       <SubType>Form</SubType>
@@ -289,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CameraView.resx">
       <DependentUpon>CameraView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScintillaUtils\ScriptTooltip.resx">
+      <DependentUpon>ScriptTooltip.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SpawnEditor.resx">
       <DependentUpon>SpawnEditor.cs</DependentUpon>

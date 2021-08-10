@@ -193,11 +193,11 @@ namespace DSPRE.ROMFiles {
                         case 0x17: //JumpIfObjID
                         case 0x18: //JumpIfBgID
                         case 0x19: //JumpIfPlayerDir
-                        case 0x1C: //CondJump
-                        case 0x1D: //CondCall
-                            //in the case of CondJump and CondCall, the first param is a comparisonOperator
-                            //for CondJumpPlayerDir it's a directionID
-                            //for CondJumpObjID, it's an EventID
+                        case 0x1C: //JumpIf
+                        case 0x1D: //CallIf
+                            //in the case of JumpIf and CallIf, the first param is a comparisonOperator
+                            //for JumpIfPlayerDir it's a directionID
+                            //for JumpIfObjID, it's an EventID
                             parameterList.Add(new byte[] { dataReader.ReadByte() }); 
                             ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
                             break;
@@ -329,12 +329,12 @@ namespace DSPRE.ROMFiles {
                         case 0x1A: //Call 
                             ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
                             break;
-                        case 0x17: //CondJumpObjID
-                        case 0x18: //CondJumpBgID
-                        case 0x19: //CondJumpPlayerDir
-                        case 0x1C: //CondJump
-                        case 0x1D: //CondCall
-                            parameterList.Add(new byte[] { dataReader.ReadByte() }); //in the case of CondJump and CondCall, the first param is a comparisonOperator
+                        case 0x17: //JumpIfObjID
+                        case 0x18: //JumpIfBgID
+                        case 0x19: //JumpIfPlayerDir
+                        case 0x1C: //JumpIf
+                        case 0x1D: //CallIf
+                            parameterList.Add(new byte[] { dataReader.ReadByte() }); //in the case of JumpIf and CallIf, the first param is a comparisonOperator
                             ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
                             break;
                         case 0x5E: // Movement
@@ -536,17 +536,13 @@ namespace DSPRE.ROMFiles {
         }
         public static string OverworldFlexDecode(ushort flexID) {
             if (flexID > 255) {
-                return " " + "0x" + flexID.ToString("X4");
+                return "0x" + flexID.ToString("X4");
             } else {
-                switch (flexID) {
-                    case 255:
-                        return " " + "Player";
-                    case 253:
-                        return " " + "Following";
-                    case 241:
-                        return " " + "Camera";
-                    default:
-                        return " " + "Overworld_#" + flexID.ToString("D");
+                string output;
+                if (ScriptDatabase.specialOverworlds.TryGetValue(flexID, out output)) {
+                    return output;
+                } else {
+                    return "Overworld." + flexID.ToString("D");
                 }
             }
         }

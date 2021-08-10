@@ -1,12 +1,12 @@
-﻿using System;
+﻿using DSPRE.ROMFiles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DSPRE.Resources {
-    public static class ScriptDatabase {
-         
+    public static class ScriptDatabase {  
         public static Dictionary<ushort, string> comparisonOperatorsDict = new Dictionary<ushort, string>() {
             [0] = "LESS",
             [1] = "EQUAL",
@@ -21,6 +21,12 @@ namespace DSPRE.Resources {
             [7] = "AND",
             [0xFF] = "TRUEUP"
         };
+        public static Dictionary<ushort, string> specialOverworlds = new Dictionary<ushort, string>() {
+            [241] = "Camera",
+            [242] = "Partner",
+            [253] = "Following",
+            [255] = "Player"
+        };
 
         public static Dictionary<ushort, int> commandsWithRelativeJump = new Dictionary<ushort, int>() {
             //commandID, ID of parameter With Jump Address
@@ -30,8 +36,8 @@ namespace DSPRE.Resources {
             [0x0018] = 1,   //Call
             [0x0019] = 1,   //Call
             [0x001A] = 0,   //Call
-            [0x001C] = 1,   //CondJump
-            [0x001D] = 1,   //CondCall
+            [0x001C] = 1,   //JumpIf
+            [0x001D] = 1,   //CallIf
             [0x005E] = 1,   //Movement
         };
 
@@ -40,7 +46,6 @@ namespace DSPRE.Resources {
             0x16,
             0x1B
         };
-
         public static Dictionary<ushort, string> movementsDictIDName = new Dictionary<ushort, string>() {
             [0x0000] = "LookUp",
             [0x0001] = "LookDown",
@@ -162,7 +167,6 @@ namespace DSPRE.Resources {
             [0x007F] = "Ellipsis",
             [0x0080] = "Asleep"
         };
-
         public static Dictionary<ushort, string> DPPtScrCmdNames = new Dictionary<ushort, string>() {
             [0x0000] = "Nop",
             [0x0001] = "Dummy",
@@ -183,17 +187,17 @@ namespace DSPRE.Resources {
             [0x0010] = "IfAdrsAdrs",
             [0x0011] = "CompareVarValue",
             [0x0012] = "CompareVars",
-
+            [0x0013] = "ParallelCommonScript",
             [0x0014] = "CommonScript",
             [0x0015] = "LocalScript",
             [0x0016] = "Jump",
             [0x0017] = "JumpIfObjID",
-            [0x0018] = "JumpIfBgID",
+            [0x0018] = "JumpIfEventID",
             [0x0019] = "JumpIfPlayerDir",
             [0x001A] = "Call",
             [0x001B] = "Return",
-            [0x001C] = "CondJump",
-            [0x001D] = "CondCall",
+            [0x001C] = "JumpIf",
+            [0x001D] = "CallIf",
             [0x001E] = "SetFlag",
             [0x001F] = "ClearFlag",
             [0x0020] = "CheckFlag",
@@ -1554,7 +1558,7 @@ namespace DSPRE.Resources {
             [0x0010] = "IfAdrsAdrs",
             [0x0011] = "CompareVarValue",
             [0x0012] = "CompareVars",
-
+            [0x0013] = "ParallelCommonScript",
             [0x0014] = "CommonScript",
             [0x0015] = "LocalScript",
             [0x0016] = "Jump",
@@ -1563,8 +1567,8 @@ namespace DSPRE.Resources {
             [0x0019] = "JumpIfPlayerDir",
             [0x001A] = "Call",
             [0x001B] = "Return",
-            [0x001C] = "CondJump",
-            [0x001D] = "CondCall",
+            [0x001C] = "JumpIf",
+            [0x001D] = "CallIf",
             [0x001E] = "SetFlag",
             [0x001F] = "ClearFlag",
             [0x0020] = "CheckFlag",

@@ -21,6 +21,9 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Collections.Specialized;
 using ScintillaNET;
 using ScintillaNET.Utils;
+using DSPRE.ScintillaUtils;
+using System.Threading;
+using System.Globalization;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -5646,12 +5649,15 @@ namespace DSPRE {
 
         #region Script Editor
         #region Variables
+        private static Mutex tooltipMutex = new Mutex();
+        private ScriptTooltip customTooltip;
+
         private bool scriptsDirty = false;
         private bool functionsDirty = false;
         private bool actionsDirty = false;
 
         private string cmdKeyWords = "";
-        private string comparisonOperatorsKeyWords = "";
+        private string secondaryKeyWords = "";
         private ScriptFile currentScriptFile;
         #endregion
         #region Helper Methods
@@ -5685,14 +5691,15 @@ namespace DSPRE {
         }
         private void SetupScriptEditorTextAreas() {
             //PREPARE SCRIPT EDITOR KEYWORDS
-            string scriptCmds = String.Join(" ", ScriptCommandNamesDict.Values);
-            cmdKeyWords = scriptCmds + " " + scriptCmds.ToLower() + " " + scriptCmds.ToUpper();
+            cmdKeyWords = String.Join(" ", ScriptCommandNamesDict.Values) + 
+                " " + String.Join(" ", ScriptDatabase.movementsDictIDName.Values);
+            cmdKeyWords += " " + cmdKeyWords.ToUpper() + " " + cmdKeyWords.ToLower();
 
-            string actionCmds = String.Join(" ", ScriptDatabase.movementsDictIDName.Values);
-            cmdKeyWords += " " + actionCmds + " " + actionCmds.ToLower() + " " + actionCmds.ToUpper();
-            
-            string cmdOps = String.Join(" ", RomInfo.ScriptComparisonOperatorsDict.Values);
-            comparisonOperatorsKeyWords = cmdOps + " " + cmdOps.ToLower() + " " + cmdOps.ToUpper();
+            secondaryKeyWords = String.Join(" ", RomInfo.ScriptComparisonOperatorsDict.Values) + 
+                " " + String.Join(" ", ScriptDatabase.specialOverworlds.Values) + 
+                " " + ScriptFile.ScriptKW + " " + ScriptFile.FunctionKW + " " + ScriptFile.ActionKW + " " + "Overworld";
+            secondaryKeyWords += " " + secondaryKeyWords.ToUpper() + " " + secondaryKeyWords.ToLower();
+
 
             // CREATE CONTROLS
             ScriptTextArea = new ScintillaNET.Scintilla();
@@ -5711,35 +5718,14 @@ namespace DSPRE {
             currentSearchBox = panelSearchScriptTextBox;
 
             // BASIC CONFIG
-            ScriptTextArea.Dock = DockStyle.Fill;
             ScriptTextArea.TextChanged += (this.OnTextChangedScript);
-
-            FunctionTextArea.Dock = DockStyle.Fill;
             FunctionTextArea.TextChanged += (this.OnTextChangedFunction);
-
-            ActionTextArea.Dock = DockStyle.Fill;
             ActionTextArea.TextChanged += (this.OnTextChangedAction);
 
             // INITIAL VIEW CONFIG
-            ScriptTextArea.WrapMode = ScintillaNET.WrapMode.None;
-            ScriptTextArea.IndentationGuides = IndentView.LookBoth;
-            ScriptTextArea.CaretPeriod = 500;
-            ScriptTextArea.CaretForeColor = Color.White;
-
-            FunctionTextArea.WrapMode = ScintillaNET.WrapMode.None;
-            FunctionTextArea.IndentationGuides = IndentView.LookBoth;
-            FunctionTextArea.CaretPeriod = 500;
-            FunctionTextArea.CaretForeColor = Color.White;
-
-            ActionTextArea.WrapMode = ScintillaNET.WrapMode.None;
-            ActionTextArea.IndentationGuides = IndentView.LookBoth;
-            ActionTextArea.CaretPeriod = 500;
-            ActionTextArea.CaretForeColor = Color.White;
-
-            // STYLING
-            ScriptTextArea.SetSelectionBackColor(true, Color.FromArgb(0x114D9C));
-            FunctionTextArea.SetSelectionBackColor(true, Color.FromArgb(0x114D9C));
-            ActionTextArea.SetSelectionBackColor(true, Color.FromArgb(0x114D9C));
+            InitialViewConfig(ScriptTextArea);
+            InitialViewConfig(FunctionTextArea);
+            InitialViewConfig(ActionTextArea);
 
             InitSyntaxColoring(ScriptTextArea);
             InitSyntaxColoring(FunctionTextArea);
@@ -5765,21 +5751,85 @@ namespace DSPRE {
             InitHotkeys(FunctionTextArea, functionSearchManager);
             InitHotkeys(ActionTextArea, actionSearchManager);
 
-            // INIT DIRTYBIT LOGIC
-            ScriptTextArea.TextChanged += (sender, e) => {
-                scriptsDirty = true;
-                scriptsTabPage.Text = ScriptFile.ScriptKW + "s" + "*";
-            };
-            FunctionTextArea.TextChanged += (sender, e) => {
-                functionsDirty = true;
-                functionsTabPage.Text = ScriptFile.FunctionKW + "s" + "*";
-            };
-            ActionTextArea.TextChanged += (sender, e) => {
-                actionsDirty = true;
-                actionsTabPage.Text = ScriptFile.ActionKW + "s" + "*";
-            };
+            // INIT TOOLTIPS DWELLING
+            ScriptTextArea.MouseDwellTime = 300;
+            ScriptTextArea.DwellEnd += TextArea_DwellEnd;
+            ScriptTextArea.DwellStart += TextArea_DwellStart;
 
-            scriptEditorWordWrapCheckbox_CheckedChanged(null, null);
+            FunctionTextArea.MouseDwellTime = 300;
+            FunctionTextArea.DwellEnd += TextArea_DwellEnd;
+            FunctionTextArea.DwellStart += TextArea_DwellStart;
+        }
+
+        private void TextArea_DwellStart(object sender, DwellEventArgs e) {
+            TextArea_DwellEnd(sender, e);
+            Scintilla ctr = sender as Scintilla;
+            string hoveredWord = ctr.GetWordFromPosition(e.Position);
+            ushort cmdID;
+
+            string commandName = "";
+            if (RomInfo.ScriptCommandNamesReverseDict.TryGetValue(hoveredWord, out cmdID)) {
+                commandName = hoveredWord;
+            } else {
+                if (!ushort.TryParse(hoveredWord, NumberStyles.HexNumber, new CultureInfo("en-US"), out cmdID)) {
+                    return;
+                }
+            }
+            string tip = "";
+
+            tooltipMutex.WaitOne();
+            tip += cmdID.ToString("X4") + ": " + commandName + "(";
+            byte[] parameters = ScriptCommandParametersDict[cmdID];
+            for (int i = 0; i < parameters.Length; i++) {
+                if (parameters[i] == 0) {
+                    break;
+                } else if (parameters[i] == 1) {
+                    tip += "byte";
+                } else {
+                    tip += "uint" + 8 * parameters[i];
+                }
+                if (i != parameters.Length - 1) {
+                    tip += ", ";
+                }
+            }
+            tip += ")";
+            tip += Environment.NewLine + "Command descriptions aren't available yet.";
+
+            Point globalCtrCoords = ctr.PointToScreen(ctr.Location);
+            Point incrementedCoords = new Point(globalCtrCoords.X + e.X, globalCtrCoords.Y + e.Y);
+
+            customTooltip = new ScriptTooltip(cmdKeyWords, tip);
+            customTooltip.Visible = false;
+            customTooltip.Show();
+
+            int newy = incrementedCoords.Y - customTooltip.Size.Height - 5;
+            customTooltip.Location = new Point(incrementedCoords.X, newy);
+            customTooltip.BringToFront();
+            customTooltip.Visible = true;
+            Thread t = new Thread(() => {
+                customTooltip.Invoke((MethodInvoker)delegate {
+                    customTooltip.ctrl.Visible = true;
+                    customTooltip.FadeIn();
+                    customTooltip.WriteText(5);
+                });
+            });
+            t.Start();
+            tooltipMutex.ReleaseMutex();
+        }
+        private void TextArea_DwellEnd(object sender, DwellEventArgs e) {
+            if (customTooltip != null && !customTooltip.IsDisposed) {
+                tooltipMutex.WaitOne();
+                Thread t = new Thread(() => {
+                    customTooltip.Invoke((MethodInvoker)delegate {
+                        customTooltip.FadeOut();
+                        customTooltip.Close();
+                        customTooltip.Dispose();
+                    });
+
+                });
+                t.Start();
+                tooltipMutex.ReleaseMutex();
+            }
         }
 
         private void InitNumberMargin(Scintilla textArea, EventHandler<MarginClickEventArgs> textArea_MarginClick) {
@@ -5828,26 +5878,32 @@ namespace DSPRE {
             textArea.Styles[Style.Python.Identifier].ForeColor = Color.FromArgb(0xD0DAE2);
             textArea.Styles[Style.Python.CommentLine].ForeColor = Color.FromArgb(0x40BF57);
             textArea.Styles[Style.Python.Number].ForeColor = Color.FromArgb(0xFFFF00);
-            textArea.Styles[Style.Python.String].ForeColor = Color.FromArgb(0xFFFF00);
+            textArea.Styles[Style.Python.String].ForeColor = Color.FromArgb(0xFF00FF);
             textArea.Styles[Style.Python.Character].ForeColor = Color.FromArgb(0xE95454);
-            textArea.Styles[Style.Python.Operator].ForeColor = Color.FromArgb(0xE0E0E0);
+            textArea.Styles[Style.Python.Operator].ForeColor = Color.FromArgb(0xFFFF00);
             textArea.Styles[Style.Python.Word].ForeColor = Color.FromArgb(0x48A8EE);
             textArea.Styles[Style.Python.Word2].ForeColor = Color.FromArgb(0xF98906);
 
             textArea.Lexer = Lexer.Python;
 
             textArea.SetKeywords(0, cmdKeyWords);
-            textArea.SetKeywords(1, comparisonOperatorsKeyWords + " Function" + " Script" + " Action");
+            textArea.SetKeywords(1, secondaryKeyWords);
         }
 
         private void OnTextChangedScript(object sender, EventArgs e) {
             ScriptTextArea.Margins[NUMBER_MARGIN].Width = ScriptTextArea.Lines.Count.ToString().Length * 13;
+            scriptsDirty = true;
+            scriptsTabPage.Text = ScriptFile.ScriptKW + "s" + "*";
         }
         private void OnTextChangedFunction(object sender, EventArgs e) {
             FunctionTextArea.Margins[NUMBER_MARGIN].Width = FunctionTextArea.Lines.Count.ToString().Length * 13;
+            functionsDirty = true;
+            functionsTabPage.Text = ScriptFile.FunctionKW + "s" + "*";
         }
         private void OnTextChangedAction(object sender, EventArgs e) {
             ActionTextArea.Margins[NUMBER_MARGIN].Width = ActionTextArea.Lines.Count.ToString().Length * 13;
+            actionsDirty = true;
+            actionsTabPage.Text = ScriptFile.ActionKW + "s" + "*";
         }
 
 
@@ -5884,6 +5940,16 @@ namespace DSPRE {
         /// </summary>
         private const bool CODEFOLDING_CIRCULAR = true;
 
+
+        private void InitialViewConfig(Scintilla textArea) {
+            textArea.Dock = DockStyle.Fill;
+            textArea.WrapMode = ScintillaNET.WrapMode.None;
+            textArea.IndentationGuides = IndentView.LookBoth;
+            textArea.CaretPeriod = 500;
+            textArea.CaretForeColor = Color.White;
+            textArea.SetSelectionBackColor(true, Color.FromArgb(0x114D9C));
+            textArea.WrapIndentMode = WrapIndentMode.Same;
+        }
 
         private void InitBookmarkMargin(Scintilla textArea) {
             //TextArea.SetFoldMarginColor(true, IntToColor(BACK_COLOR));
