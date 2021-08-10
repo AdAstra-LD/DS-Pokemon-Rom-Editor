@@ -5669,8 +5669,8 @@ namespace DSPRE {
         private SearchManager functionSearchManager;
         private SearchManager actionSearchManager;
 
-        public Scintilla currentScintillaEditor;
-        public TextBox currentSearchBox;
+        private Scintilla currentScintillaEditor;
+        private SearchManager currentSearchManager;
         private void ScriptEditorSetClean() {
             scriptsTabPage.Text = ScriptFile.ScriptKW + "s";
             functionsTabPage.Text = ScriptFile.FunctionKW + "s";
@@ -5679,13 +5679,13 @@ namespace DSPRE {
         }
         private void scriptEditorTabControl_TabIndexChanged(object sender, EventArgs e) {
             if (scriptEditorTabControl.SelectedTab == scriptsTabPage) {
-                currentSearchBox = panelSearchScriptTextBox;
+                currentSearchManager = scriptSearchManager;
                 currentScintillaEditor = ScriptTextArea;
             } else if (scriptEditorTabControl.SelectedTab == functionsTabPage) {
-                currentSearchBox = panelSearchFunctionTextBox;
+                currentSearchManager = functionSearchManager;
                 currentScintillaEditor = FunctionTextArea;
             } else { //Actions
-                currentSearchBox = panelSearchActionTextBox;
+                currentSearchManager = actionSearchManager;
                 currentScintillaEditor = ActionTextArea;
             }
         }
@@ -5715,7 +5715,7 @@ namespace DSPRE {
             scintillaActionsPanel.Controls.Add(ActionTextArea);
 
             currentScintillaEditor = ScriptTextArea;
-            currentSearchBox = panelSearchScriptTextBox;
+            currentSearchManager = scriptSearchManager;
 
             // BASIC CONFIG
             ScriptTextArea.TextChanged += (this.OnTextChangedScript);
@@ -5888,6 +5888,9 @@ namespace DSPRE {
 
             textArea.SetKeywords(0, cmdKeyWords);
             textArea.SetKeywords(1, secondaryKeyWords);
+        }
+        private void openSearchScriptEditorButton_Click(object sender, EventArgs e) {
+            currentSearchManager.OpenSearch();
         }
 
         private void OnTextChangedScript(object sender, EventArgs e) {
@@ -7973,7 +7976,7 @@ namespace DSPRE {
             string tilesFilename = tilesFileID.ToString("D4");
             tiles = new NCGR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + tilesFilename, tilesFileID, tilesFilename);
 
-            if (gameFamily == gFamEnum.HGSS) {
+            if (gameFamily != gFamEnum.DP) {
                 int spriteFileID = (trClassID* 5 + 2);
                 string spriteFilename = spriteFileID.ToString("D4");
                 sprite = new NCER(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
