@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Threading;
+using System.Windows.Forms;
 
 namespace DSPRE.ROMFiles {
     public class PartyPokemon : RomFile {
@@ -16,8 +15,10 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructor
-        public PartyPokemon() {
+        public PartyPokemon(bool hasItems = false, bool hasMoves = false) {
+            UpdateItemsAndMoves(hasItems, hasMoves);
         }
+
         public PartyPokemon(ushort Unk1, ushort Level, ushort Pokemon, ushort Unk2, ushort? heldItem = null, ushort[] moves = null) {
             pokeID = Pokemon;
             level = Level;
@@ -45,6 +46,21 @@ namespace DSPRE.ROMFiles {
                 writer.Write(unknown2_DATAEND);
             }
             return newData.ToArray();
+        }
+        public void UpdateItemsAndMoves(bool hasItems = false, bool hasMoves = false) {
+            if (hasItems) {
+                this.heldItem = 0;
+            }
+            if (hasMoves) {
+                this.moves = new ushort[4];
+            }
+        }
+
+        public override string ToString() {
+            return CheckEmpty() ? "Empty" : this.pokeID + " Lv. " + this.level;
+        }
+        public bool CheckEmpty () {
+            return this is null || pokeID is null || level <= 0;
         }
         #endregion
     }
@@ -153,51 +169,55 @@ namespace DSPRE.ROMFiles {
 
         public Party(bool readFirstByte, int maxPoke, Stream partyData, TrainerProperties traipr) {
             using (BinaryReader reader = new BinaryReader(partyData)) {
-                this.trp = traipr;
-                if (readFirstByte) { 
-                    byte flags = reader.ReadByte();
-                
-                    trp.hasMoves = (flags & 1) != 0;
-                    trp.hasItems = (flags & 2) != 0;
-                    trp.partyCount = (byte)((flags & 28) >> 2);
-                }
-                
-                int dividend = 8;
-                int nMoves = 4;
+                try {
+                    this.trp = traipr;
+                    if (readFirstByte) {
+                        byte flags = reader.ReadByte();
 
-                if (trp.hasMoves) {
-                    dividend += nMoves * sizeof(ushort);
-                }
-                if (trp.hasItems) {
-                    dividend += sizeof(ushort);
-                }
-
-                int endval = Math.Min((int)(partyData.Length-1 / dividend), trp.partyCount);
-                this.content = new PartyPokemon[maxPoke];
-                for (int i = 0; i < endval; i++) {
-                    ushort unknown1 = reader.ReadUInt16();
-                    ushort level = reader.ReadUInt16();
-                    ushort pokemon = reader.ReadUInt16();
-
-                    ushort? heldItem = null;
-                    ushort[] moves = null;
-
-                    if (trp.hasItems) {
-                        heldItem = reader.ReadUInt16();
+                        trp.hasMoves = (flags & 1) != 0;
+                        trp.hasItems = (flags & 2) != 0;
+                        trp.partyCount = (byte)((flags & 28) >> 2);
                     }
+
+                    int dividend = 8;
+                    int nMoves = 4;
+
                     if (trp.hasMoves) {
-                        moves = new ushort[4];
-                        for (int m = 0; m < moves.Length; m++) {
-                            ushort val = reader.ReadUInt16();
-                            moves[m] = (ushort)(val == 0xFFFF ? 0 : val);
-                        }
+                        dividend += nMoves * sizeof(ushort);
+                    }
+                    if (trp.hasItems) {
+                        dividend += sizeof(ushort);
                     }
 
-                    content[i] = new PartyPokemon(unknown1, level, pokemon, reader.ReadUInt16(), heldItem, moves);
+                    int endval = Math.Min((int)(partyData.Length - 1 / dividend), trp.partyCount);
+                    this.content = new PartyPokemon[maxPoke];
+                    for (int i = 0; i < endval; i++) {
+                        ushort unknown1 = reader.ReadUInt16();
+                        ushort level = reader.ReadUInt16();
+                        ushort pokemon = reader.ReadUInt16();
+
+                        ushort? heldItem = null;
+                        ushort[] moves = null;
+
+                        if (trp.hasItems) {
+                            heldItem = reader.ReadUInt16();
+                        }
+                        if (trp.hasMoves) {
+                            moves = new ushort[4];
+                            for (int m = 0; m < moves.Length; m++) {
+                                ushort val = reader.ReadUInt16();
+                                moves[m] = (ushort)(val == 0xFFFF ? 0 : val);
+                            }
+                        }
+
+                        content[i] = new PartyPokemon(unknown1, level, pokemon, reader.ReadUInt16(), heldItem, moves);
+                    }
+                    for (int i = endval; i < maxPoke; i++) {
+                        content[i] = new PartyPokemon();
+                    };
+                } catch (EndOfStreamException) {
+                    MessageBox.Show("There was a problem reading the party data of this " + this.GetType().Name + ".", "Read Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                for (int i = endval; i < maxPoke; i++) {
-                    content[i] = new PartyPokemon();
-                };
             }
         }
 
@@ -209,6 +229,27 @@ namespace DSPRE.ROMFiles {
                 content[index] = value;
             }
         }
+        public override string ToString() {
+            if (this.content == null) {
+                return "Empty";
+            } else {
+                string buffer = "";
+                byte nonEmptyCtr = 0;
+                foreach(PartyPokemon p in this.content) {
+                    if (!p.CheckEmpty()) {
+                        nonEmptyCtr++;
+                    }
+                }
+                buffer += nonEmptyCtr + " Poke ";
+                if (this.trp.hasMoves) {
+                    buffer += ", moves ";
+                }
+                if (this.trp.hasItems) {
+                    buffer += ", items ";
+                }
+                return buffer;
+            }
+        }
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
@@ -218,7 +259,7 @@ namespace DSPRE.ROMFiles {
                 }
 
                 foreach (PartyPokemon poke in this.content) {
-                    if (poke.pokeID != null && poke.level > 0) {
+                    if (!poke.CheckEmpty()) {
                         writer.Write(poke.ToByteArray());
                     }
                 }

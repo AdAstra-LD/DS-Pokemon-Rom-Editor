@@ -7654,8 +7654,8 @@ namespace DSPRE {
             for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
                 partyGroupComponentList[i].Enabled = (partyCountUpDown.Value > i);
             }
-            for (int i = 5; i >= partyCountUpDown.Value; i--) {
-                currentTrainerFile.party[i] = new PartyPokemon();
+            for (int i = Math.Min(currentTrainerFile.trp.partyCount, (int)partyCountUpDown.Value); i < TrainerFile.POKE_IN_PARTY; i++) {
+                currentTrainerFile.party[i] = new PartyPokemon(currentTrainerFile.trp.hasItems, currentTrainerFile.trp.hasMoves);
             }
             currentTrainerFile.trp.partyCount = (byte)partyCountUpDown.Value;
 
