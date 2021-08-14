@@ -46,11 +46,14 @@ namespace DSPRE.ROMFiles {
                 width = reader.ReadByte();
                 height = reader.ReadByte();
 
-                if (reader.ReadBoolean()) 
+                if (reader.ReadBoolean()) {
                     hasHeadersSection = true;
-                if (reader.ReadBoolean()) 
+                }
+
+                if (reader.ReadBoolean()) {
                     hasHeightsSection = true;
-                
+                }
+
                 /* Read matrix's name */
                 byte nameLength = reader.ReadByte();
                 name = Encoding.UTF8.GetString(reader.ReadBytes(nameLength));
@@ -61,19 +64,27 @@ namespace DSPRE.ROMFiles {
                 maps = new ushort[height, width];
 
                 /* Read sections */
-                if (hasHeadersSection) 
-                    for (int i = 0; i < height; i++) 
-                        for (int j = 0; j < width; j++) 
+                if (hasHeadersSection) {
+                    for (int i = 0; i < height; i++) {
+                        for (int j = 0; j < width; j++) {
                             headers[i, j] = reader.ReadUInt16();
+                        }
+                    }
+                }
 
-                if (hasHeightsSection) 
-                    for (int i = 0; i < height; i++) 
-                        for (int j = 0; j < width; j++) 
-                            altitudes[i, j] = reader.ReadByte();     
-                
-                for (int i = 0; i < height; i++) 
-                    for (int j = 0; j < width; j++) 
+                if (hasHeightsSection) {
+                    for (int i = 0; i < height; i++) {
+                        for (int j = 0; j < width; j++) {
+                            altitudes[i, j] = reader.ReadByte();
+                        }
+                    }
+                }
+
+                for (int i = 0; i < height; i++) {
+                    for (int j = 0; j < width; j++) {
                         maps[i, j] = reader.ReadUInt16();
+                    }
+                }
             }
         }
         public GameMatrix(int ID) : this (new FileStream(RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) {
@@ -181,7 +192,7 @@ namespace DSPRE.ROMFiles {
                     }
                 }
 
-                for (int i = height - 1; i >= 0; i--) {
+                for (int i = 0; i < height; i++) {
                     for (int j = 0; j < width; j++) {
                         writer.Write(maps[i, j]);
                     }
