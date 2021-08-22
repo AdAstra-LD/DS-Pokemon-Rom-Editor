@@ -194,7 +194,11 @@ namespace DSPRE.ROMFiles {
                     for (int i = 0; i < endval; i++) {
                         ushort unknown1 = reader.ReadUInt16();
                         ushort level = reader.ReadUInt16();
-                        ushort pokemon = reader.ReadUInt16();
+
+                        //NOTE: This bitwise AND fixes TUBER JARED [PLAT] and all trainers
+                        //who use pokemon with a special form --> ALL PARTY POKEMON WITH A SPECIAL FORM WILL LOSE IT
+                        ushort pokemon = (ushort)(reader.ReadUInt16() & (ushort.MaxValue>>7)); 
+                        
 
                         ushort? heldItem = null;
                         ushort[] moves = null;
