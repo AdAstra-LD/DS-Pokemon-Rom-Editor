@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace DSPRE.ScintillaUtils {
     public partial class ScriptTooltip : Form {
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn
+        private static extern IntPtr CreateRoundRectangleRegion
             (
                 int nLeftRect,     // x-coordinate of upper-left corner
                 int nTopRect,      // y-coordinate of upper-left corner
@@ -47,7 +47,7 @@ namespace DSPRE.ScintillaUtils {
             ctrl.SetKeywords(0, mainKeywords);
             Size newSize = TextRenderer.MeasureText(textBuffer, new Font(ctrl.Styles[Style.Default].Font, ctrl.Styles[Style.Default].Size), ctrl.ClientSize, TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl);
             this.ClientSize = new Size(this.ClientSize.Width, newSize.Height + this.panel1.Padding.All);
-            Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 10, 10));
+            Region = Region.FromHrgn(CreateRoundRectangleRegion(0, 0, Width, Height, 10, 10));
         }
         public void WriteText(int delay = 15) {
             ctrl.Text = "";
@@ -59,6 +59,10 @@ namespace DSPRE.ScintillaUtils {
                 ctrl.Update();
             }
             ctrl.ReadOnly = true;
+        }
+
+        public override string ToString() {
+            return this.textBuffer;
         }
     }
 }

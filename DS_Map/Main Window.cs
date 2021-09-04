@@ -5809,8 +5809,8 @@ namespace DSPRE {
             Thread t = new Thread(() => {
                 customTooltip.Invoke((MethodInvoker)delegate {
                     customTooltip.ctrl.Visible = true;
-                    customTooltip.FadeIn();
-                    customTooltip.WriteText(5);
+                    customTooltip.FadeIn(16, 9);
+                    customTooltip.WriteText(4);
                 });
             });
             t.Start();
@@ -5821,7 +5821,7 @@ namespace DSPRE {
                 tooltipMutex.WaitOne();
                 Thread t = new Thread(() => {
                     customTooltip.Invoke((MethodInvoker)delegate {
-                        customTooltip.FadeOut();
+                        customTooltip.FadeOut(16, 9);
                         customTooltip.Close();
                         customTooltip.Dispose();
                     });
