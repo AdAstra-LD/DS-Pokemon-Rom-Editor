@@ -197,7 +197,7 @@ namespace DSPRE {
                     break;
                 default:
                     commonDictionaryNames = ScriptDatabase.HGSSScrCmdNames;
-                    specificDictionaryNames = ScriptDatabase.CustomScrCmdNames;
+                    specificDictionaryNames = new Dictionary<ushort, string>();//ScriptDatabase.CustomScrCmdNames;
                     break;
             }
             return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
@@ -217,7 +217,7 @@ namespace DSPRE {
                     break;
                 default:
                     commonDictionaryParams = ScriptDatabase.HGSSScrCmdParameters;
-                    specificDictionaryParams = ScriptDatabase.CustomScrCmdParameters;
+                    specificDictionaryParams = new Dictionary<ushort, byte[]>();//ScriptDatabase.CustomScrCmdParameters;
                     break;
             }
             return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
