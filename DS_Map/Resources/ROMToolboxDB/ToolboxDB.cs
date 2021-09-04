@@ -49,13 +49,13 @@ namespace DSPRE.Resources.ROMToolboxDB {
             ["branchOffset" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.Spanish] = 0x0202047C,
             ["branchOffset" + "_" + RomInfo.gFamEnum.HGSS] = 0x02023174, //Also valid for SS, both ESP and ENG
 
-            ["overlayOffset1" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.English] = 0x0001E1B4,
-            ["overlayOffset1" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.Spanish] = 0x0001E1BC,
-            ["overlayOffset1" + RomInfo.gFamEnum.HGSS] = 0x0001574C,
+            ["overlayOffset1" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.English] = 0x0001E1B4,
+            ["overlayOffset1" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.Spanish] = 0x0001E1BC,
+            ["overlayOffset1" + "_" + RomInfo.gFamEnum.HGSS] = 0x0001574C,
 
-            ["overlayOffset2" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.English] = 0x0001E2CC,
-            ["overlayOffset2" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.Spanish] = 0x0001E2D4,
-            ["overlayOffset2" + RomInfo.gFamEnum.HGSS] = 0x00015864,
+            ["overlayOffset2" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.English] = 0x0001E2CC,
+            ["overlayOffset2" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.Spanish] = 0x0001E2D4,
+            ["overlayOffset2" + "_" + RomInfo.gFamEnum.HGSS] = 0x00015864,
         };
         public static uint BDHCamSubroutineOffset = 0x000115B0;
 
