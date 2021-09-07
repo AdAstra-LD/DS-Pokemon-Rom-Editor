@@ -6691,8 +6691,7 @@ namespace DSPRE {
                 string replaceString = replaceMessageTextBox.Text;
                 textSearchResultsListBox.Items.Clear();
 
-                if (lastArchive > 828)
-                    lastArchive = 828;
+                lastArchive = Math.Min(lastArchive, 828);
                 textSearchProgressBar.Maximum = lastArchive;
 
                 for (int k = firstArchive; k < lastArchive; k++) {
@@ -6720,16 +6719,19 @@ namespace DSPRE {
                     if (found) {
                         disableHandlers = true;
 
-                        textEditorDataGridView.Rows.Clear();
                         textSearchResultsListBox.Items.Add("Text archive (" + k + ") - Succesfully edited");
-                        UpdateTextEditorFileView(false);
+                        currentTextArchive.SaveToFileDefaultDir(k, showSuccessMessage: false);
+
+                        if (k == lastArchive) {
+                            UpdateTextEditorFileView(false);
+                        }
 
                         disableHandlers = false;
-                        currentTextArchive.SaveToFileDefaultDir(k);
                     }
                     //else searchMessageResultTextBox.AppendText(searchString + " not found in this file");
                     //this.saveMessageFileButton_Click(sender, e);
                 }
+                MessageBox.Show("Operation completed.", "Replace All Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 UpdateTextEditorFileView(true);
                 textSearchProgressBar.Value = 0;
             }
@@ -6752,7 +6754,7 @@ namespace DSPRE {
             if (hexRadiobutton.Checked) {
                 PrintTextEditorLinesHex();
             } else {
-                printTextEditorLinesDecimal();
+                PrintTextEditorLinesDecimal();
             }
 
             disableHandlers = false;
@@ -6763,7 +6765,7 @@ namespace DSPRE {
                 textEditorDataGridView.Rows[i].HeaderCell.Value = "0x" + i.ToString("X");
             }
         }
-        private void printTextEditorLinesDecimal() {
+        private void PrintTextEditorLinesDecimal() {
             for (int i = 0; i < currentTextArchive.messages.Count; i++) {
                 textEditorDataGridView.Rows[i].HeaderCell.Value = i.ToString();
             }
@@ -6772,12 +6774,13 @@ namespace DSPRE {
             if (disableHandlers) {
                 return;
             }
-            if (e.RowIndex > -1)
+            if (e.RowIndex > -1) {
                 try {
                     currentTextArchive.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 } catch (NullReferenceException) {
                     currentTextArchive.messages[e.RowIndex] = "";
                 }
+            }
         }
         private void textSearchResultsListBox_GoToEntryResult(object sender, MouseEventArgs e) {
             if (textSearchResultsListBox.SelectedIndex < 0)
@@ -6813,7 +6816,7 @@ namespace DSPRE {
             if (hexRadiobutton.Checked) {
                 PrintTextEditorLinesHex();
             } else {
-                printTextEditorLinesDecimal();
+                PrintTextEditorLinesDecimal();
             }
             disableHandlers = false;
         }
