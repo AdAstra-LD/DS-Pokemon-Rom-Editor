@@ -431,7 +431,10 @@ namespace DSPRE.Resources {
             [0x0132] = "PoketchFlag",
             [0x0133] = "GivePoketchApp",
             [0x0134] = "CheckPoketchApp",
-
+            
+            [0x0147] = "MartCashierOne",
+            [0x0148] = "MartCashierTwo",
+                
             [0x014B] = "DummyLostBattle",
             [0x014C] = "SetLastWarp",
             [0x014D] = "CheckPlayerGender",
