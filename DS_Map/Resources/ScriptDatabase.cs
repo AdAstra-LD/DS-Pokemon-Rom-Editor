@@ -2534,7 +2534,7 @@ namespace DSPRE.Resources {
             [0x01E6] = new byte[1] { 0 },
             [0x01E7] = new byte[] { 2 },
             [0x01E8] = new byte[] { 2, 2 },
-            [0x023E] = new byte[] { 0xFF, 2,   //0xFF = Variable number of parameters,  2 = size of first parameter
+            [0x01E9] = new byte[] { 0xFF, 2,   //0xFF = Variable number of parameters,  2 = size of first parameter
                 0, 0,               //if value is 0, don't read anything
                 1, 1,   2,          //if value is 1, read 1 parameter... which takes up 2 bytes
                 2, 1,   2,          //if value is 2, read 1 parameter... which takes up 2 bytes
