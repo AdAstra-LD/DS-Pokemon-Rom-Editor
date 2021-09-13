@@ -12,6 +12,11 @@ namespace DSPRE {
         public static bool ContainsNumber(this string str) {
             return str.IndexOfNumber() > 0;
         }
+        public static T[] SubArray<T>(this T[] array, int offset, int length) {
+            T[] result = new T[length];
+            Array.Copy(array, offset, result, 0, length);
+            return result;
+        }
         public static Dictionary<string, ushort> Reverse (this Dictionary<ushort, string> source) {
             var dictionary = new Dictionary<string, ushort>(StringComparer.InvariantCultureIgnoreCase);
             foreach (var entry in source) {
@@ -39,6 +44,18 @@ namespace DSPRE {
             }
             o.Opacity = 0; //make fully invisible
             Console.WriteLine("Fadeout done");
+        }
+
+        public static byte[] ToByteArrayChooseSize(this int num, byte size) {
+            switch (size) {
+                case 1:
+                    return new byte[] { checked((byte)num) };
+                case 2:
+                    return BitConverter.GetBytes(checked((ushort)num));
+                case 4:
+                    return BitConverter.GetBytes(num);
+            }
+            throw new InvalidOperationException();
         }
 
         //public static Dictionary<TValue, TKey> Reverse<TKey, TValue>(this IDictionary<TKey, TValue> source) {

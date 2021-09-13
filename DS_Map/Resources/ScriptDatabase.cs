@@ -1097,9 +1097,25 @@ namespace DSPRE.Resources {
             [0x01CC] = new byte[1] { 0 },
             [0x01CD] = new byte[] { 2, 2, 2, 2, 2 },
             [0x01CE] = new byte[1] { 0 },
-            [0x01CF] = new byte[] { }, /////////////////
-            [0x01D0] = new byte[] { }, /////////////////
-            [0x01D1] = new byte[] { }, /////////////////
+
+            [0x01CF] = new byte[] { 0xFF, 1,  //0xFF signals that this scrcmd takes a variable num of parameters, 1 is the size of the 1st par  
+                0, 0,           //if 1st par is 0, read 0 parameters
+                1, 0,           //if 1st par is 1, read 0 parameters
+                2, 1,   2       //if 1st par is 2, read 1 parameter of size = 2 bytes
+            },      
+
+            [0x01D0] = new byte[] { 0xFF, 1,  //0xFF signals that this scrcmd takes a variable num of parameters, 1 is the size of the 1st par  
+                0, 0,           //if 1st par is 0, read 0 parameters
+                1, 0,           //if 1st par is 1, read 0 parameters
+                2, 1,   2       //if 1st par is 2, read 1 parameter of size = 2 bytes
+            },      
+
+            [0x01D1] = new byte[] { 0xFF, 1,  //0xFF signals that this scrcmd takes a variable num of parameters, 1 is the size of the 1st par  
+                0, 0,           //if 1st par is 0, read 0 parameters
+                1, 0,           //if 1st par is 1, read 0 parameters
+                2, 1,   2       //if 1st par is 2, read 1 parameter of size = 2 bytes
+            },      
+
             [0x01D2] = new byte[] { 2, 2 },
             [0x01D3] = new byte[] { 2, 2, 2 },
             [0x01D4] = new byte[1] { 0 },
@@ -1175,7 +1191,14 @@ namespace DSPRE.Resources {
             [0x021A] = new byte[] { 2 },
             [0x021B] = new byte[1] { 0 },
             [0x021C] = new byte[] { 1 },
-            [0x021D] = new byte[] { }, ///////////////////
+            [0x021D] = new byte[] { 0xFF, 2,   //0xFF = Variable number of parameters,  2 = size of first parameter
+                0, 2,  2, 2,    //if value is 0, read 2 parameters... first one takes up 2 bytes, second par takes up 2 bytes
+                1, 2,  2, 2,    //if value is 1, read 2 parameters... first one takes up 2 bytes, second par takes up 2 bytes
+                2, 2,  2, 2,    //if value is 2, read 2 parameters... first one takes up 2 bytes, second par takes up 2 bytes
+                3, 2,  2, 2,    //if value is 3, read 2 parameters... first one takes up 2 bytes, second par takes up 2 bytes
+                4, 1,  2,       //if value is 4, read 1 parameter... which takes up 2 bytes
+                5, 1,  2,       //if value is 5, read 1 parameter... which takes up 2 bytes
+                6, 0},          //if value is 6, don't read anything
             [0x021E] = new byte[1] { 0 },
             [0x021F] = new byte[] { 2, 2 },
             [0x0220] = new byte[1] { 0 },
@@ -1199,16 +1222,33 @@ namespace DSPRE.Resources {
             [0x0232] = new byte[] { 1, 2 },
             [0x0233] = new byte[] { 2, 2 },
             [0x0234] = new byte[] { 2 },
-            [0x0235] = new byte[] { }, ///////////////////
+            [0x0235] = new byte[] { 0xFF, 2,   //0xFF = Variable number of parameters,  2 = size of first parameter
+                0, 1,   2,          //if value is 0, read 1 parameter... which takes up 2 bytes
+                1, 3,   2, 2, 2,    //if value is 1, read 3 parameters... each one takes up 2 bytes 
+                2, 0,               //if value is 2, don't read anything
+                3, 3,   2, 2, 2,    //if value is 3, read 3 parameters... each one takes up 2 bytes 
+                4, 2,   2, 2,       //if value is 4, read 2 parameters... each one takes up 2 bytes 
+                5, 3,   2, 2, 2,    //if value is 5, read 3 parameters... each one takes up 2 bytes 
+                6, 1,   2},         //if value is 6, read 1 parameter... which takes up 2 bytes
             [0x0236] = new byte[] { 2 },
-            [0x0237] = new byte[] { 2, 2, 2, 2 },
+            [0x0237] = new byte[] { 2, 2, 2, 2 }, //u16: 0; Flex: ???; Var: Variable; Var:    //u16: 1; Flex: ???; Flex: ???; Flex: ???
             [0x0238] = new byte[] { 2, 2 },
             [0x0239] = new byte[] { 2 },
             [0x023A] = new byte[] { 2, 2, 2 },
             [0x023B] = new byte[] { 2 },
             [0x023C] = new byte[] { 2, 2 },
             [0x023D] = new byte[] { 1, 1, 2, 2, 2 },
-            [0x023E] = new byte[] { }, /////////////////
+            [0x023E] = new byte[] { 0xFF, 2,   //0xFF = Variable number of parameters,  2 = size of first parameter
+                0, 0,               //if value is 0, don't read anything
+                1, 1,   2,          //if value is 1, read 1 parameter... which takes up 2 bytes
+                2, 1,   2,          //if value is 2, read 1 parameter... which takes up 2 bytes
+                3, 1,   2,          //if value is 3, read 1 parameter... which takes up 2 bytes
+                4, 0,               //if value is 4, don't read anything
+                5, 2,   2, 2,       //if value is 5, read 2 parameters... each one takes up 2 bytes 
+                6, 2,   2, 2,       //if value is 6, read 2 parameters... each one takes up 2 bytes
+                7, 0,               //if value is 7, don't read anything
+                8, 0                //if value is 8, don't read anything
+            },              
             [0x023F] = new byte[1] { 0 },
             [0x0240] = new byte[1] { 0 },
             [0x0241] = new byte[1] { 0 },
@@ -2380,9 +2420,25 @@ namespace DSPRE.Resources {
             [0x018D] = new byte[] { 2, 2 },
             [0x018E] = new byte[] { 2, 2, 2 },
             [0x018F] = new byte[] { 1, 2, 2 },
-            [0x0190] = new byte[] { 1 },
-            [0x0191] = new byte[1] { 0 },
-            [0x0192] = new byte[1] { 0 },
+
+            [0x0190] = new byte[] { 0xFF, 1,  //0xFF signals that this scrcmd takes a variable num of parameters, 1 is the size of the 1st par  
+                0, 0,           //if 1st par is 0, read 0 parameters
+                1, 0,           //if 1st par is 1, read 0 parameters
+                2, 1,   2       //if 1st par is 2, read 1 parameter of size = 2 bytes
+            },
+
+            [0x0191] = new byte[] { 0xFF, 1,  //0xFF signals that this scrcmd takes a variable num of parameters, 1 is the size of the 1st par  
+                0, 0,           //if 1st par is 0, read 0 parameters
+                1, 0,           //if 1st par is 1, read 0 parameters
+                2, 1,   2       //if 1st par is 2, read 1 parameter of size = 2 bytes
+            },
+
+            [0x0192] = new byte[] { 0xFF, 1,  //0xFF signals that this scrcmd takes a variable num of parameters, 1 is the size of the 1st par  
+                0, 0,           //if 1st par is 0, read 0 parameters
+                1, 0,           //if 1st par is 1, read 0 parameters
+                2, 1,   2       //if 1st par is 2, read 1 parameter of size = 2 bytes
+            },
+
             [0x0193] = new byte[] { 2, 2 },
             [0x0194] = new byte[] { 2, 2, 2 },
             [0x0195] = new byte[] { 2, 2 },
@@ -2445,7 +2501,16 @@ namespace DSPRE.Resources {
             [0x01CE] = new byte[] { 2 },
             [0x01CF] = new byte[1] { 0 },
             [0x01D0] = new byte[] { 1 },
-            [0x01D1] = new byte[] { 2, 2, 2 },
+            [0x01D1] = new byte[] { 0xFF, 2,   //0xFF = Variable number of parameters,  2 = size of first parameter
+                0, 2,  2, 2,    //if value is 0, read 2 parameters... first one takes up 2 bytes, second par takes up 2 bytes
+                1, 2,  2, 2,    //if value is 1, read 2 parameters... first one takes up 2 bytes, second par takes up 2 bytes
+                2, 2,  2, 2,    //if value is 2, read 2 parameters... first one takes up 2 bytes, second par takes up 2 bytes
+                3, 2,  2, 2,    //if value is 3, read 2 parameters... first one takes up 2 bytes, second par takes up 2 bytes
+                4, 1,  2,       //if value is 4, read 1 parameter... which takes up 2 bytes
+                5, 1,  2,       //if value is 5, read 1 parameter... which takes up 2 bytes
+                6, 0,           //if value is 6, don't read anything
+                7, 1,  2,       //if value is 7, read 1 parameter... which takes up 2 bytes
+            },          
             [0x01D2] = new byte[] { 2, 2 },
             [0x01D3] = new byte[] { 2 },
             [0x01D4] = new byte[] { 2, 2 },
@@ -2469,7 +2534,17 @@ namespace DSPRE.Resources {
             [0x01E6] = new byte[1] { 0 },
             [0x01E7] = new byte[] { 2 },
             [0x01E8] = new byte[] { 2, 2 },
-            [0x01E9] = new byte[] { 2 },
+            [0x023E] = new byte[] { 0xFF, 2,   //0xFF = Variable number of parameters,  2 = size of first parameter
+                0, 0,               //if value is 0, don't read anything
+                1, 1,   2,          //if value is 1, read 1 parameter... which takes up 2 bytes
+                2, 1,   2,          //if value is 2, read 1 parameter... which takes up 2 bytes
+                3, 1,   2,          //if value is 3, read 1 parameter... which takes up 2 bytes
+                4, 0,               //if value is 4, don't read anything
+                5, 2,   2, 2,       //if value is 5, read 2 parameters... each one takes up 2 bytes 
+                6, 2,   2, 2,       //if value is 6, read 2 parameters... each one takes up 2 bytes
+                7, 0,               //if value is 7, don't read anything
+                8, 0                //if value is 8, don't read anything
+            },              
             [0x01EA] = new byte[] { 2 },
             [0x01EB] = new byte[] { 2 },
             [0x01EC] = new byte[] { 2, 2, 2 },

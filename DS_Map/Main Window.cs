@@ -6233,7 +6233,7 @@ namespace DSPRE {
                 currentScriptFile = userEdited;
                 ScriptEditorSetClean();
             } else {
-                MessageBox.Show("This " + typeof(ScriptFile).Name + " couldn't be saved.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("This " + typeof(ScriptFile).Name + " couldn't be saved, due to a processing error.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         private void clearCurrentLevelScriptButton_Click(object sender, EventArgs e) {
@@ -6246,7 +6246,7 @@ namespace DSPRE {
         private void importScriptFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .scr file */
             OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Script File (*.scr)|*.scr";
+            of.Filter = "Script File (*.scr, *.bin)|*.scr, *.bin";
             if (of.ShowDialog(this) != DialogResult.OK)
                 return;
 

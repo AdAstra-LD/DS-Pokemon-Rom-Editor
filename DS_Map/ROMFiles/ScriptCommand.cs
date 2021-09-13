@@ -46,8 +46,9 @@ namespace DSPRE.ROMFiles {
             this.id = id;
             this.cmdParams = parametersList;
 
-            if (!RomInfo.ScriptCommandNamesDict.TryGetValue(id, out name))
+            if (!RomInfo.ScriptCommandNamesDict.TryGetValue(id, out name)) {
                 name = id.ToString("X4");
+            }
 
             switch (id) {
                 case 0x16:      // Jump
@@ -105,7 +106,6 @@ namespace DSPRE.ROMFiles {
             string[] nameParts = wholeLine.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries); // Separate command code from parameters
             /* Get command id, which is always first in the description */
 
-
             ushort cmdID;
             if (RomInfo.ScriptCommandNamesReverseDict.TryGetValue(nameParts[0].ToLower(), out cmdID)) {
                 id = cmdID;
@@ -132,52 +132,94 @@ namespace DSPRE.ROMFiles {
             byte[] parametersSizeArr = RomInfo.ScriptCommandParametersDict[(ushort)id];
 
             int paramLength = 0;
-            if (parametersSizeArr.Length == 1 && parametersSizeArr.First() == 0) {
+            int paramsProcessed = 0;
+
+            if (parametersSizeArr.First() == 0xFF) { 
+                int firstParamValue = int.Parse(GetStringWithoutSpecialCharacters(nameParts[1]), GetNumberStyleFromString(nameParts[1]));
+                byte firstParamSize = parametersSizeArr[1];
+
+                cmdParams.Add(firstParamValue.ToByteArrayChooseSize(firstParamSize));
+                paramsProcessed++;
+
+                int i = 2;
+                int optionsCount = 0;
+
+                bool found = false;
+                while (i < parametersSizeArr.Length) {
+                    paramLength = parametersSizeArr[i + 1];
+
+                    if (parametersSizeArr[i] == firstParamValue) {
+                        //Firstly, build subarray of parameter sizes, starting from the chosen option [firstParamValue]
+                        //FOR EXAMPLE: CMD 0x235 and firstParamValue = 5
+
+                        // { 0xFF, 2,  
+                        // 0, 1,   2,       
+                        // 1, 3,   2, 2, 2, 
+                        // 2, 0,            
+                        // 3, 3,   2, 2, 2, 
+                        // 4, 2,   2, 2,    
+                        // 5, 3,   (2, 2, 2) => this will be the parameters subarray 
+                        // 6, 1,   2
+                        // },      
+                        byte[] subParametersSize = parametersSizeArr.SubArray(i + 2, paramLength++); 
+
+                        //Create a slightly bigger temp array 
+                        byte[] temp = new byte[1 + subParametersSize.Length];
+
+                        //Store the size of the firstParamValue there
+                        temp[0] = firstParamSize;
+
+                        //Then copy the whole subarray of parameter sizes
+                        Array.Copy(subParametersSize, 0, temp, 1, temp.Length-1);
+
+                        //Replace the original parametersSizeArr with the new array
+                        parametersSizeArr = temp;
+                        found = true;
+                        break;
+                    }
+                    i += 2 + paramLength;
+                    optionsCount++;
+                }
+                if (!found) {
+                    MessageBox.Show("Command " + '"' + nameParts[0] + '"' + " at line " + lineNumber + " is a special Script command." + Environment.NewLine +
+                    "The value of the first parameter must be a number in the range [0 - " + optionsCount + "].", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    id = null;
+                    return;
+                }
+            } else if (parametersSizeArr.Length == 1 && parametersSizeArr.First() == 0) {
                 paramLength = 0;
-            } else {
+            } else { 
                 paramLength = parametersSizeArr.Length;
             }
 
             if (nameParts.Length - 1 == paramLength) {
-                for (int i = 0; i < paramLength; i++) {
+                for (int i = paramsProcessed; i < paramLength; i++) {
                     Console.WriteLine("Parameter #" + i.ToString() + ": " + nameParts[i + 1]);
+
                     if (RomInfo.ScriptComparisonOperatorsReverseDict.TryGetValue(nameParts[i + 1].ToLower(), out cmdID)) {
                         cmdParams.Add(new byte[] { (byte)cmdID });
                     } else { //Not a comparison
-                        int indexOfSpecialCharacter = nameParts[i + 1].IndexOfAny(new char[] { 'x', 'X', '#', '.' });
-
-                        /* If number is preceded by 0x parse it as hex, otherwise as decimal */
-                        NumberStyles style;
-                        if (nameParts[i + 1].StartsWith("0x", StringComparison.InvariantCultureIgnoreCase)) {
-                            style = NumberStyles.HexNumber;
-                        } else {
-                            style = NumberStyles.Integer;
+                        /* Convert strings of parameters to the correct datatypes */
+                        NumberStyles style = GetNumberStyleFromString(nameParts[i + 1]);
+                        nameParts[i + 1] = GetStringWithoutSpecialCharacters(nameParts[i + 1]);
+                        
+                        int result = 0;
+                        try {
+                            result = int.Parse(nameParts[i + 1], style);
+                        } catch {
+                            try {
+                                result = ScriptDatabase.specialOverworlds.First(x => x.Value.Equals(nameParts[i + 1])).Key;
+                            } catch (InvalidOperationException) {
+                                MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not " + "a valid " + "Overworld number or identifier.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                id = null;
+                            } catch (FormatException) {
+                                MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not " + "a valid " + style, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                id = null;
+                            }
                         }
 
-                        nameParts[i + 1] = nameParts[i + 1].Substring(indexOfSpecialCharacter + 1);
-                        /* Convert strings of parameters to the correct datatypes */
                         try {
-                            switch (parametersSizeArr[i]) {
-                                case 1:
-                                    cmdParams.Add(new byte[] { Byte.Parse(nameParts[i + 1], style) });
-                                    break;
-                                case 2:
-                                    ushort result;
-                                    if (!ushort.TryParse(nameParts[i + 1], style, new CultureInfo("en-US"), result: out result)) {
-                                        result = ScriptDatabase.specialOverworlds.First(x => x.Value.Equals(nameParts[i + 1])).Key;
-                                    }
-                                    cmdParams.Add(BitConverter.GetBytes(result));
-                                    break;
-                                case 4:
-                                    cmdParams.Add(BitConverter.GetBytes(Int32.Parse(nameParts[i + 1], style)));
-                                    break;
-                            }
-                        } catch (InvalidOperationException) {
-                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not " + "a valid " + "Overworld number or identifier.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            id = null;
-                        } catch (FormatException) {
-                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not " + "a valid " + style, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            id = null;
+                            cmdParams.Add(result.ToByteArrayChooseSize(parametersSizeArr[i]));
                         } catch (OverflowException) {
                             MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not " + "in the range [" + 0 + ", " + (Math.Pow(2, 8 * parametersSizeArr[i]) - 1) + "].", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             id = null;
@@ -185,7 +227,7 @@ namespace DSPRE.ROMFiles {
                     }
                 }
             } else {
-                MessageBox.Show("Wrong number of parameters for command " + nameParts[0] + " at line " + lineNumber + "." + Environment.NewLine +
+                MessageBox.Show("Wrong number of parameters for command " + '"' + nameParts[0] + '"' + " at line " + lineNumber + "." + Environment.NewLine +
                     "Received: " + (nameParts.Length - 1) + Environment.NewLine + "Expected: " + paramLength, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 id = null;
             }
@@ -193,6 +235,29 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Utilities
+        private string GetStringWithoutSpecialCharacters(string s) {
+            int indexOfSpecialCharacter = s.IndexOfAny(new char[] { 'x', 'X', '#', '.' });
+            return s.Substring(indexOfSpecialCharacter + 1);
+        }
+
+        public NumberStyles GetNumberStyleFromString(string s) {
+            if (s.StartsWith("0x", StringComparison.InvariantCultureIgnoreCase)) {
+                foreach (char c in s.Substring(2)) {
+                    if (!Char.IsDigit(c) && Char.ToUpper(c) > 'F') {
+                        return NumberStyles.None;
+                    }
+                }
+                return NumberStyles.HexNumber;
+            } else {
+                foreach (char c in s) {
+                    if (!Char.IsDigit(c)) {
+                        return NumberStyles.None;
+                    }
+                }
+                return NumberStyles.Integer;
+            }
+        }
+
         public override string ToString() {
             return name + " (" + ((ushort)id).ToString("X") + ")";
         }
