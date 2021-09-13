@@ -130,7 +130,7 @@ namespace DSPRE {
                     DisableOverlay1patch("Unsupported");
                     DisableMatrixExpansionPatch("Unsupported");
                     DisableScrcmdRepointPatch("Unsupported");
-                    if (RomInfo.gameLanguage != gLangEnum.English && RomInfo.gameLanguage != gLangEnum.Spanish) {
+                    if (RomInfo.gameLanguage == gLangEnum.English || RomInfo.gameLanguage == gLangEnum.Spanish) {
                         CheckBDHCamPatchApplied();
                     }
                     CheckDynamicHeadersPatchApplied();
