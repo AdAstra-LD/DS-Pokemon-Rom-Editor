@@ -76,7 +76,7 @@ namespace DSPRE.Resources {
                         }
                     } catch { }
 
-                    table.Rows[i].Cells[3].Value = paramSize;
+                    table.Rows[i].Cells[3].Value = paramSize.TrimEnd();
                 }
             }
         }
