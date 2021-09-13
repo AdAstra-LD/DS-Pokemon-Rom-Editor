@@ -213,8 +213,9 @@ namespace DSPRE.ROMFiles {
                             {
                                 byte parameter1 = dataReader.ReadByte();
                                 parameterList.Add(new byte[] { parameter1 });
-                                if (parameter1 == 0x2)
+                                if (parameter1 == 0x2) {
                                     parameterList.Add(dataReader.ReadBytes(2)); //Read additional u16 if first param read is 2
+                                }
                             }
                             break;
                         case 0x21D: 
@@ -288,8 +289,9 @@ namespace DSPRE.ROMFiles {
                             {
                                 byte parameter1 = dataReader.ReadByte();
                                 parameterList.Add(new byte[] { parameter1 });
-                                if (parameter1 == 0 || parameter1 == 1)
+                                if (parameter1 == 0 || parameter1 == 1) {
                                     parameterList.Add(dataReader.ReadBytes(2));
+                                }
                             }
                             break;
                         case 0x2C5: 
@@ -306,10 +308,11 @@ namespace DSPRE.ROMFiles {
                         case 0x2C9:
                         case 0x2CA:
                         case 0x2CD:
-                            if (RomInfo.gameVersion == gVerEnum.Platinum)
+                            if (RomInfo.gameVersion == gVerEnum.Platinum) {
                                 break;
-                            else
+                            } else {
                                 goto default;
+                            }
                         case 0x2CF:
                             if (RomInfo.gameVersion == gVerEnum.Platinum) {
                                 parameterList.Add(dataReader.ReadBytes(2));
@@ -482,8 +485,9 @@ namespace DSPRE.ROMFiles {
                         ScriptCommand lastRead;
                         do {
                             lastRead = new ScriptCommand(lineSourceL[i], i + 1);
-                            if (lastRead.id is null)
+                            if (lastRead.id is null) {
                                 return null;
+                            }
 
                             cmdList.Add(lastRead);
                         } while (!endConditions(lineSourceL, i++, lastRead.id));
