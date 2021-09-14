@@ -1206,7 +1206,8 @@ namespace DSPRE.Resources {
                 3, 2,  2, 2,    //if value is 3, read 2 parameters... first one takes up 2 bytes, second par takes up 2 bytes
                 4, 1,  2,       //if value is 4, read 1 parameter... which takes up 2 bytes
                 5, 1,  2,       //if value is 5, read 1 parameter... which takes up 2 bytes
-                6, 0},          //if value is 6, don't read anything
+                6, 0			//if value is 6, don't read anything
+			},          
             [0x021E] = new byte[1] { 0 },
             [0x021F] = new byte[] { 2, 2 },
             [0x0220] = new byte[1] { 0 },
@@ -1705,9 +1706,10 @@ namespace DSPRE.Resources {
             [0x0077] = "CheckCoins",
             [0x0078] = "GiveCoins",
             [0x0079] = "TakeCoins",
-
+            
+            [0x007D] = "GiveItem",
             [0x007E] = "TakeItem",
-            [0x007F] = "GiveItem",
+            [0x007F] = "CheckItemSpace",
             [0x0080] = "CheckItem",
             [0x0081] = "CheckItemIsMachine",
             [0x0082] = "GetItemPocket",
