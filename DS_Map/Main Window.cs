@@ -564,7 +564,6 @@ namespace DSPRE {
 
         private void readDataFromFolderButton_Click(object sender, EventArgs e) {
             CommonOpenFileDialog romFolder = new CommonOpenFileDialog();
-            romFolder.InitialDirectory = "C:\\Users";
             romFolder.IsFolderPicker = true;
             romFolder.Multiselect = false;
             if (romFolder.ShowDialog() != CommonFileDialogResult.Ok) {

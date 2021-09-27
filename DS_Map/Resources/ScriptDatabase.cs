@@ -255,6 +255,8 @@ namespace DSPRE.Resources {
             [0x0054] = "FadeOutMusic",
             [0x0055] = "FadeInMusic",
 
+            [0x0057] = "PlayFieldBGM",
+
             [0x0059] = "CheckChatotCry",
             [0x005A] = "StartChatotCry",
             [0x005B] = "StopChatotCry",
@@ -343,7 +345,7 @@ namespace DSPRE.Resources {
             [0x00B5] = "EndChooseStarterScreen",
 
             [0x00BA] = "ChoosePlayerName",
-            [0x00BB] = "ChoosePokémonName",
+            [0x00BB] = "ChoosePokemonName",
             [0x00BC] = "FadeScreen",
             [0x00BD] = "WaitFadeScreen",
             [0x00BE] = "Warp",
@@ -399,7 +401,7 @@ namespace DSPRE.Resources {
             [0x00F0] = "DummyTrainerFlag",
             [0x00F1] = "DummyTrainerFlagJump",
 
-            [0x00F7] = "PokémonContest",
+            [0x00F7] = "PokemonContest",
 
             [0x0111] = "FlashContest",
             [0x0112] = "EndFlash",
@@ -456,7 +458,9 @@ namespace DSPRE.Resources {
             [0x0160] = "CheckPartner",
             [0x0161] = "SetPartner",
             [0x0162] = "ClearPartner",
-
+            [0x0163] = "CheckStepFlag",
+            [0x0164] = "SetStepFlag",
+            [0x0165] = "ClearStepFlag",
             [0x0166] = "CheckGameIsCompleted",
             [0x0167] = "GameCompleted",
             [0x0168] = "DoorAnimation",
@@ -559,6 +563,7 @@ namespace DSPRE.Resources {
             [0x0200] = "GetPreviousHeader",
             [0x0201] = "GetCurrentHeader",
 
+            [0x0204] = "ExitBattleRoom",
             [0x0205] = "GeonetScreen",
 
             [0x0208] = "ShowPokemonPic",
@@ -1917,7 +1922,7 @@ namespace DSPRE.Resources {
             [0x01C4] = "ShowPokemonPic",
             [0x01C5] = "HidePokemonPic",
 
-            [0x01D0] = "AddRoamingPokémon",
+            [0x01D0] = "AddRoamingPokemon",
             [0x01D1] = "Group",
 
             [0x01D6] = "InitTrade",
