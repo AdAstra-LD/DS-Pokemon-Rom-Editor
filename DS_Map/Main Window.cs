@@ -5751,6 +5751,7 @@ namespace DSPRE {
             InitHotkeys(ActionTextArea, actionSearchManager);
 
             // INIT TOOLTIPS DWELLING
+            /*
             ScriptTextArea.MouseDwellTime = 300;
             ScriptTextArea.DwellEnd += TextArea_DwellEnd;
             ScriptTextArea.DwellStart += TextArea_DwellStart;
@@ -5758,8 +5759,10 @@ namespace DSPRE {
             FunctionTextArea.MouseDwellTime = 300;
             FunctionTextArea.DwellEnd += TextArea_DwellEnd;
             FunctionTextArea.DwellStart += TextArea_DwellStart;
+            */
         }
 
+        /*
         private void TextArea_DwellStart(object sender, DwellEventArgs e) {
             TextArea_DwellEnd(sender, e);
             Scintilla ctr = sender as Scintilla;
@@ -5830,6 +5833,7 @@ namespace DSPRE {
                 tooltipMutex.ReleaseMutex();
             }
         }
+        */
 
         private void InitNumberMargin(Scintilla textArea, EventHandler<MarginClickEventArgs> textArea_MarginClick) {
             textArea.Styles[Style.LineNumber].BackColor = BACK_COLOR;
