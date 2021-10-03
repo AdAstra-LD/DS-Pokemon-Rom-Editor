@@ -2655,6 +2655,29 @@ namespace DSPRE {
             ClearMatrixTables();
             GenerateMatrixTables();
         }
+
+        /*
+        private void ExportAllMovePermissionsInMatrix(object sender, EventArgs e) {
+            CommonOpenFileDialog romFolder = new CommonOpenFileDialog();
+            romFolder.IsFolderPicker = true;
+            romFolder.Multiselect = false;
+
+            if (romFolder.ShowDialog() != CommonFileDialogResult.Ok) {
+                return;
+            }
+
+            for (int i = 0; i < currentMatrix.height; i++) {
+                for (int j = 0; j < currentMatrix.width; j++) {
+                    ushort val = currentMatrix.maps[i, j];
+                    if (val < ushort.MaxValue) {
+                        using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(romFolder.FileName + "\\" + currentMatrix.id + j.ToString("D2") + "_" + i.ToString("D2") + ".per"))) {
+                            writer.Write(new MapFile(val).CollisionsToByteArray());
+                        };
+                    }
+                }
+            }
+        }
+        */
         #endregion
 
         #region Map Editor
