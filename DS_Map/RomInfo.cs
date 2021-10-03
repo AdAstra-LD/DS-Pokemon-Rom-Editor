@@ -228,9 +228,13 @@ namespace DSPRE {
                 case gFamEnum.Plat:
                     return ScriptDatabase.movementsDictIDName;
                 default:
-                    var commonDictionaryParams = ScriptDatabase.movementsDictIDName;
-                    var customDictionaryParams = ScriptDatabase.customMovementsDictIDName;
-                    return commonDictionaryParams.Concat(customDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+                    #if false
+                        var commonDictionaryParams = ScriptDatabase.movementsDictIDName;
+                        var customDictionaryParams = ScriptDatabase.customMovementsDictIDName;
+                        return commonDictionaryParams.Concat(customDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+                    #else
+                        return ScriptDatabase.movementsDictIDName;
+                    #endif
             }
         }
         public static Dictionary<ushort, string> BuildComparisonOperatorsDatabase(gFamEnum gameFam) {
