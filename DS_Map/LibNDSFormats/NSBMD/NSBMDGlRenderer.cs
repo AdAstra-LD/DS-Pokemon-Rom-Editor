@@ -17,7 +17,7 @@ namespace LibNDSFormats.NSBMD {
 	/// OpenGL renderer for NSBMD models.
 	/// </summary>
 	public class NSBMDGlRenderer {
-		#region Fields (11)
+		#region Fields (11)
 		private bool writevertex = true;
 		public List<float[]> normals = new List<float[]>();
 		public List<float[]> vertex = new List<float[]>();
@@ -61,9 +61,9 @@ namespace LibNDSFormats.NSBMD {
 		private int matstart;
 		private static readonly String[] TEXTURE_FORMATS = new String[] { "", "A3I5", "4-Color", "16-Color", "256-Color", "4x4-Texel", "A5I3", "Direct Texture" };
 
-		#endregion Fields
+		#endregion Fields
 
-		#region Constructors (1)
+		#region Constructors (1)
 
 		public NSBMDGlRenderer() {
 			this.matstart = 0;
@@ -81,11 +81,11 @@ namespace LibNDSFormats.NSBMD {
 				MatrixStack[i] = new MTX44();
 		}
 
-		#endregion Constructors
+		#endregion Constructors
 
-		#region Methods (8)
+		#region Methods (8)
 
-		// Public Methods (1) 
+		// Public Methods (1) 
 
 		/// <summary>
 		/// Model to render.
@@ -1041,7 +1041,7 @@ namespace LibNDSFormats.NSBMD {
 			return vtxTrans;
 		}
 
-		// Private Methods (7) 
+		// Private Methods (7) 
 
 		/// <summary>
 		/// Convert texel.
@@ -3007,7 +3007,7 @@ namespace LibNDSFormats.NSBMD {
 			return group;
 		}
 
-		#endregion Methods
+		#endregion Methods
 
 		/*------------------------------------------------------------
 	combine texture + palette data obtained from NSBMD / NSBTX files

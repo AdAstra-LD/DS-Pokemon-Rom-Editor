@@ -22,9 +22,9 @@ namespace System.IO {
     /// Extension methods for System.IO.Stream.
     /// </summary>
     static class StreamExt {
-        #region Methods (3) 
+        #region Methods (3) 
 
-        // Public Methods (3) 
+        // Public Methods (3) 
 
         /// <summary>
         /// Get remaining length from stream position.
@@ -49,6 +49,6 @@ namespace System.IO {
             Skip(stream, (long)skipCount);
         }
 
-        #endregion Methods 
+        #endregion Methods 
     }
 }

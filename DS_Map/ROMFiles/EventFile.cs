@@ -8,14 +8,14 @@ namespace DSPRE.ROMFiles {
     /// Classes to store event data in Pokémon NDS games
     /// </summary>
     public class EventFile : RomFile {
-        #region Fields (4)
+        #region Fields
         public List<Spawnable> spawnables = new List<Spawnable>();
         public List<Overworld> overworlds = new List<Overworld>();
         public List<Warp> warps = new List<Warp>();
         public List<Trigger> triggers = new List<Trigger>();
         #endregion
 
-        #region Constructors (1)
+        #region Constructors (1)
         public EventFile(Stream data) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 /* Read spawnables */
@@ -42,7 +42,7 @@ namespace DSPRE.ROMFiles {
         public EventFile(int ID) : this(new FileStream(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
         #endregion
 
-        #region Methods (1)
+        #region Methods (1)
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
@@ -85,7 +85,7 @@ namespace DSPRE.ROMFiles {
             WARP,
             TRIGGER
         }
-        #region Fields (6)
+        #region Fields (6)
         public EventType evType;
 
         public short xMapPosition;
@@ -105,7 +105,7 @@ namespace DSPRE.ROMFiles {
         public const int TYPE_BOARD = 1;
         public const int TYPE_HIDDENITEM = 2;
 
-        #region Fields (7)
+        #region Fields (7)
         public ushort scriptNumber;
         public ushort type;
         public ushort unknown2;
@@ -115,7 +115,7 @@ namespace DSPRE.ROMFiles {
         public ushort unknown5;
         #endregion
 
-        #region Constructors (2)
+        #region Constructors (2)
         public Spawnable(Stream data) {
             evType = EventType.SPAWNABLE;
             using (BinaryReader reader = new BinaryReader(data)) {
@@ -124,15 +124,15 @@ namespace DSPRE.ROMFiles {
 
                 /* Decompose x coordinate in matrix and map positions */
                 int xPosition = reader.ReadInt16();
-                xMapPosition = (short)(xPosition % 32);
-                xMatrixPosition = (ushort)(xPosition / 32);
+                xMapPosition = (short)(xPosition % MapFile.mapSize);
+                xMatrixPosition = (ushort)(xPosition / MapFile.mapSize);
 
                 unknown2 = reader.ReadUInt16();
 
                 /* Decompose y coordinate in matrix and map positions */
                 int yPosition = reader.ReadInt16();
-                yMapPosition = (short)(yPosition % 32);
-                yMatrixPosition = (ushort)(yPosition / 32);
+                yMapPosition = (short)(yPosition % MapFile.mapSize);
+                yMatrixPosition = (ushort)(yPosition / MapFile.mapSize);
 
                 unknown3 = reader.ReadUInt16();
                 zPosition = reader.ReadInt16();
@@ -177,15 +177,15 @@ namespace DSPRE.ROMFiles {
         }
         #endregion
 
-        #region Methods (1)
+        #region Methods (1)
         public override byte[] ToByteArray() {
             using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
                 writer.Write(scriptNumber);
                 writer.Write(type);
-                short xCoordinate = (short)(xMapPosition + 32 * xMatrixPosition);
+                short xCoordinate = (short)(xMapPosition + MapFile.mapSize * xMatrixPosition);
                 writer.Write(xCoordinate);
                 writer.Write(unknown2);
-                short yCoordinate = (short)(yMapPosition + 32 * yMatrixPosition);
+                short yCoordinate = (short)(yMapPosition + MapFile.mapSize * yMatrixPosition);
                 writer.Write(yCoordinate);
                 writer.Write(unknown3);
                 writer.Write(zPosition);
@@ -200,7 +200,7 @@ namespace DSPRE.ROMFiles {
     }
 
     public class Overworld : Event {
-        #region Fields (14)
+        #region Fields (14)
         public enum owType : ushort { NORMAL = 0, TRAINER = 1, ITEM = 3 };
 
         public ushort owID;
@@ -219,7 +219,7 @@ namespace DSPRE.ROMFiles {
         public bool is3D = new bool();
         #endregion
 
-        #region Constructors (2)
+        #region Constructors (2)
         public Overworld(Stream data) {
             evType = EventType.OVERWORLD;
             using (BinaryReader reader = new BinaryReader(data)) {
@@ -239,10 +239,10 @@ namespace DSPRE.ROMFiles {
                 /* Decompose x-y coordinates in matrix and map positions */
                 int xPosition = reader.ReadInt16();
                 int yPosition = reader.ReadInt16();
-                xMapPosition = (short)(xPosition % 32);
-                yMapPosition = (short)(yPosition % 32);
-                xMatrixPosition = (ushort)(xPosition / 32);
-                yMatrixPosition = (ushort)(yPosition / 32);
+                xMapPosition = (short)(xPosition % MapFile.mapSize);
+                yMapPosition = (short)(yPosition % MapFile.mapSize);
+                xMatrixPosition = (ushort)(xPosition / MapFile.mapSize);
+                yMatrixPosition = (ushort)(yPosition / MapFile.mapSize);
 
                 zPosition = reader.ReadInt16();
                 unknown3 = reader.ReadUInt16();
@@ -296,7 +296,7 @@ namespace DSPRE.ROMFiles {
         }
         #endregion
 
-        #region Methods (1)
+        #region Methods (1)
         public override byte[] ToByteArray() {
             using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
                 writer.Write(owID);
@@ -312,10 +312,10 @@ namespace DSPRE.ROMFiles {
                 writer.Write(xRange);
                 writer.Write(yRange);
 
-                short xCoordinate = (short)(xMapPosition + 32 * xMatrixPosition);
+                short xCoordinate = (short)(xMapPosition + MapFile.mapSize * xMatrixPosition);
                 writer.Write(xCoordinate);
 
-                short yCoordinate = (short)(yMapPosition + 32 * yMatrixPosition);
+                short yCoordinate = (short)(yMapPosition + MapFile.mapSize * yMatrixPosition);
                 writer.Write(yCoordinate);
 
                 writer.Write(zPosition);
@@ -329,23 +329,23 @@ namespace DSPRE.ROMFiles {
     }
 
     public class Warp : Event {
-        #region Fields (4)
+        #region Fields (4)
         public ushort header;
         public ushort anchor;
         public uint height;
         #endregion
 
-        #region Constructors (2)
+        #region Constructors (2)
         public Warp(Stream data) {
             evType = EventType.WARP;
             using (BinaryReader reader = new BinaryReader(data)) {
                 /* Decompose x-y coordinates in matrix and map positions */
                 int xPosition = reader.ReadInt16();
                 int yPosition = reader.ReadInt16();
-                xMapPosition = (short)(xPosition % 32);
-                yMapPosition = (short)(yPosition % 32);
-                xMatrixPosition = (ushort)(xPosition / 32);
-                yMatrixPosition = (ushort)(yPosition / 32);
+                xMapPosition = (short)(xPosition % MapFile.mapSize);
+                yMapPosition = (short)(yPosition % MapFile.mapSize);
+                xMatrixPosition = (ushort)(xPosition / MapFile.mapSize);
+                yMatrixPosition = (ushort)(yPosition / MapFile.mapSize);
 
                 header = reader.ReadUInt16();
                 anchor = reader.ReadUInt16();
@@ -376,13 +376,13 @@ namespace DSPRE.ROMFiles {
         }
         #endregion
 
-        #region Methods (1)
+        #region Methods (1)
         public override byte[] ToByteArray() {
             using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
-                ushort xCoordinate = (ushort)(xMapPosition + 32 * xMatrixPosition);
+                ushort xCoordinate = (ushort)(xMapPosition + MapFile.mapSize * xMatrixPosition);
                 writer.Write(xCoordinate);
 
-                ushort yCoordinate = (ushort)(yMapPosition + 32 * yMatrixPosition);
+                ushort yCoordinate = (ushort)(yMapPosition + MapFile.mapSize * yMatrixPosition);
                 writer.Write(yCoordinate);
 
                 writer.Write(header);
@@ -397,16 +397,16 @@ namespace DSPRE.ROMFiles {
     }
 
     public class Trigger : Event {
-        #region Fields (7)
+        #region Fields (7)
         public ushort scriptNumber;
         public ushort widthX;
         public ushort heightY;
         new public ushort zPosition;
         public ushort expectedVarValue;
         public ushort variableWatched;
-        #endregion Fields
+        #endregion Fields
 
-        #region Constructors (2)
+        #region Constructors (2)
         public Trigger(Stream data) {
             evType = EventType.TRIGGER;
             using (BinaryReader reader = new BinaryReader(data)) {
@@ -415,10 +415,10 @@ namespace DSPRE.ROMFiles {
                 /* Decompose x-y coordinates in matrix and map positions */
                 int xPosition = reader.ReadInt16();
                 int yPosition = reader.ReadInt16();
-                xMapPosition = (short)(xPosition % 32);
-                yMapPosition = (short)(yPosition % 32);
-                xMatrixPosition = (ushort)(xPosition / 32);
-                yMatrixPosition = (ushort)(yPosition / 32);
+                xMapPosition = (short)(xPosition % MapFile.mapSize);
+                yMapPosition = (short)(yPosition % MapFile.mapSize);
+                xMatrixPosition = (ushort)(xPosition / MapFile.mapSize);
+                yMatrixPosition = (ushort)(yPosition / MapFile.mapSize);
 
                 widthX = reader.ReadUInt16();
                 heightY = reader.ReadUInt16();
@@ -458,13 +458,13 @@ namespace DSPRE.ROMFiles {
         }
         #endregion
 
-        #region Methods (1)
+        #region Methods (1)
         public override byte[] ToByteArray() {
             using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
                 writer.Write(scriptNumber);
-                ushort xCoordinate = (ushort)(xMapPosition + 32 * xMatrixPosition);
+                ushort xCoordinate = (ushort)(xMapPosition + MapFile.mapSize * xMatrixPosition);
                 writer.Write(xCoordinate);
-                ushort yCoordinate = (ushort)(yMapPosition + 32 * yMatrixPosition);
+                ushort yCoordinate = (ushort)(yMapPosition + MapFile.mapSize * yMatrixPosition);
                 writer.Write(yCoordinate);
                 writer.Write(widthX);
                 writer.Write(heightY);

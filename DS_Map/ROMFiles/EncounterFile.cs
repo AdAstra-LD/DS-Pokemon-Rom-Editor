@@ -133,7 +133,7 @@ namespace DSPRE.ROMFiles {
     /// Class to store wild Pokemon data from Pokemon Diamond, Pearl and Platinum
     /// </summary>
     public class EncounterFileDPPt : EncounterFile {
-        #region Fields (9)       
+        #region Fields (9)       
         /* Field encounters */
         public uint[] radarPokemon = new uint[4];
         public uint[] walkingPokemon = new uint[12];
@@ -150,7 +150,7 @@ namespace DSPRE.ROMFiles {
         public uint[] leafGreenPokemon = new uint[2];
         #endregion
 
-        #region Constructors (1)
+        #region Constructors (1)
         public EncounterFileDPPt(Stream data) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 List<string> fieldsWithErrors = new List<string>();
@@ -318,7 +318,7 @@ namespace DSPRE.ROMFiles {
         }
 
         public EncounterFileDPPt(int ID) : this(new FileStream(RomInfo.gameDirs[DirNames.encounters].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
-        #endregion Constructors
+        #endregion Constructors
 
         #region Methods (1)
         public override byte[] ToByteArray() {
@@ -424,7 +424,7 @@ namespace DSPRE.ROMFiles {
     /// Class to store wild Pokemon data from Pokemon HeartGold and SoulSilver
     /// </summary>
     public class EncounterFileHGSS : EncounterFile {
-        #region Fields (9)
+        #region Fields (9)
         public byte rockSmashRate;
         public ushort[] morningPokemon = new ushort[12];
         public ushort[] dayPokemon = new ushort[12];
@@ -436,7 +436,7 @@ namespace DSPRE.ROMFiles {
         public byte[] rockSmashMaxLevels = new byte[2];
         #endregion
 
-        #region Constructors (1)
+        #region Constructors (1)
         public EncounterFileHGSS(Stream data) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 List<string> fieldsWithErrors = new List<string>();

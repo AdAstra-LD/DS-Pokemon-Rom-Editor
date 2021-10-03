@@ -4192,6 +4192,7 @@ namespace DSPRE {
         public NSMBe4.NSBMD.NSBTX_File overworldFrames;
         public GameMatrix eventMatrix;
 
+        public const byte eventScreenSquareSize = 17;
         public EventFile currentEvFile;
         public Event selectedEvent;
 
@@ -4764,7 +4765,7 @@ namespace DSPRE {
             eventOpenGlControl.MakeCurrent();
         }
         private void eventMatrixPictureBox_Click(object sender, EventArgs e) {
-            int squareSize = 16;
+            const int squareSize = 16;
             Point coordinates = eventMatrixPictureBox.PointToClient(Cursor.Position);
             Point mouseTilePos = new Point(coordinates.X / squareSize, coordinates.Y / squareSize);
 
@@ -4886,10 +4887,9 @@ namespace DSPRE {
         private void eventAreaDataUpDown_ValueChanged(object sender, EventArgs e) {
             DisplayEventMap(readGraphicsFromHeader: false);
         }
-        private void eventPictureBox_Click(object sender, EventArgs e) {
-            int squareSize = 17;
+        private void eventPictureBox_Click(object sender, EventArgs e) { 
             Point coordinates = eventPictureBox.PointToClient(Cursor.Position);
-            Point mouseTilePos = new Point(coordinates.X / 17, coordinates.Y / 17);
+            Point mouseTilePos = new Point(coordinates.X / eventScreenSquareSize, coordinates.Y / eventScreenSquareSize);
             MouseEventArgs mea = (MouseEventArgs)e;
 
             if (mea.Button == MouseButtons.Left) {

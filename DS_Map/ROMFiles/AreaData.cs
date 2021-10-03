@@ -9,7 +9,7 @@ namespace DSPRE.ROMFiles {
         internal static readonly byte TYPE_INDOOR = 0;
         internal static readonly byte TYPE_OUTDOOR = 1;
 
-        #region Fields (2)
+        #region Fields (2)
         public ushort buildingsTileset;
         public ushort mapTileset;
         public ushort dynamicTextureType;
@@ -18,7 +18,7 @@ namespace DSPRE.ROMFiles {
         public ushort lightType; //using an overabundant size. HGSS only needs a byte
         #endregion
 
-        #region Constructors (1)
+        #region Constructors (1)
         public AreaData(Stream data) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 buildingsTileset = reader.ReadUInt16();
@@ -37,7 +37,7 @@ namespace DSPRE.ROMFiles {
         public AreaData (byte ID) : this(new FileStream(RomInfo.gameDirs[DirNames.areaData].unpackedDir + "//" + ID.ToString("D4"), FileMode.Open)) {}
         #endregion
 
-        #region Methods (1)
+        #region Methods (1)
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {

@@ -24,7 +24,7 @@ namespace DSPRE.ROMFiles {
     /// </summary>
     public class GameMatrix: RomFile
 	{
-        #region Fields (8)
+        #region Fields (8)
         public bool hasHeadersSection { get; set; }
         public bool hasHeightsSection { get; set; }
         public string name { get; set; }
@@ -37,9 +37,9 @@ namespace DSPRE.ROMFiles {
         public ushort[,] maps;
 
         public static readonly ushort EMPTY = 65535;
-        #endregion Fields
+        #endregion Fields
 
-        #region Constructors(1)
+        #region Constructors(1)
         public GameMatrix(Stream data) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 /* Read matrix size and sections included */
@@ -106,7 +106,7 @@ namespace DSPRE.ROMFiles {
         }
         #endregion
 
-        #region Methods (6)
+        #region Methods (6)
         public void ResizeMatrix(int newHeight, int newWidth)
         {
             /*  Initialize new arrays   */

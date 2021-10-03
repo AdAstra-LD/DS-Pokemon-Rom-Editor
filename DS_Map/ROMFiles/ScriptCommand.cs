@@ -14,7 +14,7 @@ namespace DSPRE.ROMFiles {
         public containerTypes containerType;
         internal static readonly string functionStart;
 
-        #region Constructors (2)
+        #region Constructors (2)
         public CommandContainer(uint scriptNumber, containerTypes containerType, int useScript = -1, List<ScriptCommand> commandList = null) {
             manualUserID = scriptNumber;
             this.useScript = useScript;
@@ -30,13 +30,13 @@ namespace DSPRE.ROMFiles {
         #endregion
     }
     public class ScriptCommand {
-        #region Fields (4)
+        #region Fields (4)
         public ushort? id;
         public List<byte[]> cmdParams;
         public string name;
         #endregion
 
-        #region Constructors (2)
+        #region Constructors (2)
         public ScriptCommand(ushort id, List<byte[]> parametersList) {
             if (parametersList is null) {
                 this.id = null;

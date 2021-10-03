@@ -9,7 +9,7 @@ namespace LibNDSFormats.NSBMD
 {
     public class NSBMDMaterial
     {
-        #region Fields (16) 
+        #region Fields (16) 
 
         public int color0;
         public int format;
@@ -48,11 +48,11 @@ namespace LibNDSFormats.NSBMD
 		public bool shine;
         public float[] mtx = null;
 
-        #endregion Fields 
+        #endregion Fields 
 
-        #region Methods (1) 
+        #region Methods (1) 
 
-        // Public Methods (1) 
+        // Public Methods (1) 
 
         /// <summary>
         /// Copy data to other NSBMD material
@@ -74,6 +74,6 @@ namespace LibNDSFormats.NSBMD
             return other;
         }
 
-        #endregion Methods 
+        #endregion Methods 
     }
 }

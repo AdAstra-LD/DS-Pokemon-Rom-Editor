@@ -10,7 +10,7 @@ namespace DSPRE.ROMFiles {
         public List<ScriptAction> actionCommandsList;
         public uint manualUserID;
 
-        #region Constructors (2)
+        #region Constructors (2)
         public ActionContainer(uint actionNumber, List<ScriptAction> actionCommandsList = null) {
             manualUserID = actionNumber;
             this.actionCommandsList = actionCommandsList;
@@ -19,7 +19,7 @@ namespace DSPRE.ROMFiles {
     }
     public class ScriptAction {
 
-        #region Fields (4)
+        #region Fields (4)
         public ushort? id;
         public ushort? repetitionCount;
         public string name;

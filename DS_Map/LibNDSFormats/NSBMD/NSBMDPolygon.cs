@@ -10,7 +10,7 @@ namespace LibNDSFormats.NSBMD
 	/// </summary>
     public class NSBMDPolygon
     {
-        #region Properties (4) 
+        #region Properties (4) 
 
         /// <summary>
         /// Used material ID.
@@ -36,6 +36,6 @@ namespace LibNDSFormats.NSBMD
 
         public int JointID { get; set; }
 
-        #endregion Properties 
+        #endregion Properties 
     }
 }

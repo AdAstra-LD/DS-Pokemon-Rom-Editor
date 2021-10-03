@@ -13,12 +13,12 @@ namespace DSPRE.ROMFiles {
     /// Class to store message data from DS Pokémon games
     /// </summary>
     public class TextArchive : RomFile {
-        #region Fields (2)
+        #region Fields (2)
         public List<string> messages = new List<string>();
         public int initialKey;
-        #endregion Fields
+        #endregion Fields
 
-        #region Constructors (1)
+        #region Constructors (1)
         public TextArchive(FileStream messageStream) {
             Dictionary<int, string> GetCharDictionary = TextDatabase.readTextDictionary;
             BinaryReader readText = new BinaryReader(messageStream);

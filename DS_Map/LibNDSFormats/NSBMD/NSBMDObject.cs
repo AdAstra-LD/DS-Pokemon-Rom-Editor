@@ -11,7 +11,7 @@ namespace LibNDSFormats.NSBMD
 	/// </summary>
     public class NSBMDObject
     {
-        #region Fields (7) 
+        #region Fields (7) 
 
         private readonly float[] _transVect = new float[3];
         private float _x;
@@ -35,9 +35,9 @@ namespace LibNDSFormats.NSBMD
         public bool isBillboard = false;
         public bool isYBillboard = false;
 
-        #endregion Fields 
+        #endregion Fields 
 
-        #region Properties (12) 
+        #region Properties (12) 
 
         public bool IsRotated { get; set; }
         public bool IsRotated2 { get; set; }
@@ -99,6 +99,6 @@ namespace LibNDSFormats.NSBMD
             }
         }
 
-        #endregion Properties 
+        #endregion Properties 
     }
 }

@@ -17,7 +17,7 @@ namespace DSPRE.ROMFiles {
         //this enum doesn't really make much sense now but it will, once scripts can be called and jumped to
         public enum containerTypes { FUNCTION, MOVEMENT, SCRIPT };
         #endregion
-        #region Fields (3)
+        #region Fields (3)
         public static string ScriptKW = "Script";
         public static string FunctionKW = "Function";
         public static string ActionKW = "Action";
@@ -29,7 +29,7 @@ namespace DSPRE.ROMFiles {
         public bool isLevelScript = new bool();
         #endregion
 
-        #region Constructors (1)
+        #region Constructors (1)
 
         public ScriptFile(Stream fs) {
             List<int> scriptOffsets = new List<int>();

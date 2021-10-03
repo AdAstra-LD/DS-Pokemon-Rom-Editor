@@ -9,16 +9,16 @@ namespace LibNDSFormats.NSBMD {
     /// 4x4 matrix class.
     /// </summary>
     internal class MTX44 {
-        #region Fields (1) 
+        #region Fields (1) 
 
         /// <summary>
         /// Float values of matrix.
         /// </summary>
         private float[] _array = new float[4 * 4];
 
-        #endregion Fields 
+        #endregion Fields 
 
-        #region Properties (2) 
+        #region Properties (2) 
 
         // TODO: Index check!
 
@@ -42,11 +42,11 @@ namespace LibNDSFormats.NSBMD {
             set { _array[index] = value; }
         }
 
-        #endregion Properties 
+        #endregion Properties 
 
-        #region Methods (8) 
+        #region Methods (8) 
 
-        // Public Methods (7) 
+        // Public Methods (7) 
 
         /// <summary>
         /// Get float array.
@@ -325,6 +325,6 @@ namespace LibNDSFormats.NSBMD {
                 m._array[i] = this[i];
         }
 
-        #endregion Methods 
+        #endregion Methods 
     }
 }

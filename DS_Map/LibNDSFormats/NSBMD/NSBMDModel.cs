@@ -10,7 +10,7 @@ namespace LibNDSFormats.NSBMD
 	/// </summary>
     public class NSBMDModel
     {
-        #region Fields (3) 
+        #region Fields (3) 
         /// <summary>
         /// NSBMD materials.
         /// </summary>
@@ -32,9 +32,9 @@ namespace LibNDSFormats.NSBMD
         /// </summary>
         public readonly List<NSBMDPolygon> Polygons = new List<NSBMDPolygon>();
 
-        #endregion Fields 
+        #endregion Fields 
 
-        #region Properties (1) 
+        #region Properties (1) 
 
         /// <summary>
         /// Model name.
@@ -51,6 +51,6 @@ namespace LibNDSFormats.NSBMD
         public float boundScale;
         public float modelScale;
         public int laststackid;
-        #endregion Properties 
+        #endregion Properties 
     }
 }

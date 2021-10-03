@@ -44,9 +44,10 @@ namespace DSPRE.ROMFiles {
     /// Class to store map data in Pokémon NDS games
     /// </summary>
     public class MapFile : RomFile {
-        #region Fields
-        public byte[,] collisions = new byte[32, 32];
-        public byte[,] types = new byte[32, 32];
+        #region Fields
+        public static readonly byte mapSize = 32;
+        public byte[,] collisions = new byte[mapSize, mapSize];
+        public byte[,] types = new byte[mapSize, mapSize];
 
         public List<Building> buildings;
         public NSBMD mapModel;
@@ -56,7 +57,7 @@ namespace DSPRE.ROMFiles {
         public byte[] bgs;
         #endregion
 
-        #region Constructors (1)
+        #region Constructors (1)
         public MapFile(int mapNumber) : this(new FileStream(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + mapNumber.ToString("D4"), FileMode.Open)) { }
         public MapFile(Stream data) {
             using (BinaryReader reader = new BinaryReader(data)) {
@@ -94,7 +95,7 @@ namespace DSPRE.ROMFiles {
         }
         #endregion
 
-        #region Methods
+        #region Methods
         public byte[] BuildingsToByteArray() {
             MemoryStream newData = new MemoryStream(0x30 * buildings.Count);
             using (BinaryWriter writer = new BinaryWriter(newData)) {
@@ -121,8 +122,8 @@ namespace DSPRE.ROMFiles {
         public byte[] CollisionsToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
-                for (int i = 0; i < 32; i++) {
-                    for (int j = 0; j < 32; j++) {
+                for (int i = 0; i < mapSize; i++) {
+                    for (int j = 0; j < mapSize; j++) {
                         writer.Write(types[i, j]);
                         writer.Write(collisions[i, j]);
                     }
@@ -213,7 +214,7 @@ namespace DSPRE.ROMFiles {
     /// Class to store building data from Pokémon NDS games
     /// </summary>
     public class Building {
-        #region Fields (11)
+        #region Fields (11)
         public NSBMD NSBMDFile;
         public uint modelID { get; set; }
         public short xPosition { get; set; }
@@ -225,9 +226,9 @@ namespace DSPRE.ROMFiles {
         public uint width { get; set; }
         public uint height { get; set; }
         public uint length { get; set; }
-        #endregion Fields
+        #endregion Fields
 
-        #region Constructors (2)
+        #region Constructors (2)
         public Building(Stream data) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 modelID = reader.ReadUInt32();
@@ -273,6 +274,6 @@ namespace DSPRE.ROMFiles {
             height = toCopy.height;
             length = toCopy.length;
         }
-        #endregion Constructors
+        #endregion Constructors
     }
 }
