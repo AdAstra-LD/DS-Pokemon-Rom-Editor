@@ -4249,6 +4249,11 @@ namespace DSPRE {
                 Update();
             }
         }
+        private void eventPictureBox_MouseMove(object sender, MouseEventArgs e) {
+            Point coordinates = eventPictureBox.PointToClient(Cursor.Position);
+            Point mouseTilePos = new Point(coordinates.X / eventScreenSquareSize, coordinates.Y / eventScreenSquareSize);
+            statusLabel.Text = "Local: " + mouseTilePos.X + ", " + mouseTilePos.Y + "   |   " + "Global: " + (eventMatrixXUpDown.Value * MapFile.mapSize + mouseTilePos.X).ToString() + ", " + (eventMatrixYUpDown.Value * MapFile.mapSize + mouseTilePos.Y).ToString();
+        }
 
         private void DisplayActiveEvents() {
             eventPictureBox.Image = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);

@@ -6425,6 +6425,7 @@
             this.eventPictureBox.TabIndex = 3;
             this.eventPictureBox.TabStop = false;
             this.eventPictureBox.Click += new System.EventHandler(this.eventPictureBox_Click);
+            this.eventPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.eventPictureBox_MouseMove);
             // 
             // eventOpenGlControl
             // 
