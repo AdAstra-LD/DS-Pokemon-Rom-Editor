@@ -6275,11 +6275,13 @@ namespace DSPRE {
             MessageBox.Show("Level script correctly cleared.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void importScriptFileButton_Click(object sender, EventArgs e) {
-            /* Prompt user to select .scr file */
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Script File (*.scr, *.bin)|*.scr, *.bin";
-            if (of.ShowDialog(this) != DialogResult.OK)
+            /* Prompt user to select .scr or .bin file */
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "Script File (*.scr, *.bin)|*.scr;*.bin"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             /* Update scriptFile object in memory */
             string path = RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + selectScriptFileComboBox.SelectedIndex.ToString("D4");
