@@ -7707,6 +7707,9 @@ namespace DSPRE {
                 partySecondMoveComponentList[i].Enabled = trainerMovesCheckBox.Checked;
                 partyThirdMoveComponentList[i].Enabled = trainerMovesCheckBox.Checked;
                 partyFourthMoveComponentList[i].Enabled = trainerMovesCheckBox.Checked;
+
+
+                currentTrainerFile.party[i].moves = trainerMovesCheckBox.Checked ? new ushort[4] : null;
             }
 
             if (!disableHandlers) {
