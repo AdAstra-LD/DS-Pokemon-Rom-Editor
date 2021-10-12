@@ -45,7 +45,9 @@ namespace DSPRE.ROMFiles {
     /// </summary>
     public class MapFile : RomFile {
         #region Fields
+        public bool correctnessFlag = true;
         public static readonly byte mapSize = 32;
+
         public byte[,] collisions = new byte[mapSize, mapSize];
         public byte[,] types = new byte[mapSize, mapSize];
 
@@ -54,12 +56,15 @@ namespace DSPRE.ROMFiles {
 
         public byte[] mapModelData;
         public byte[] bdhc;
-        public byte[] bgs;
+
+        public static readonly byte[] blankBGS = new byte[] { 0x34, 0x12, 0x00, 0x00 };
+        public byte[] bgs = blankBGS;
         #endregion
 
         #region Constructors (1)
-        public MapFile(int mapNumber) : this(new FileStream(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + mapNumber.ToString("D4"), FileMode.Open)) { }
-        public MapFile(Stream data) {
+        public MapFile(string path, gFamEnum gFamily, bool showMessages = true) : this (new FileStream(path, FileMode.Open), gFamily, showMessages) {}
+        public MapFile(int mapNumber, gFamEnum gFamily, bool showMessages = true) : this(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + mapNumber.ToString("D4"), gFamily, showMessages) { }
+        public MapFile(Stream data, gFamEnum gFamily, bool showMessages = true) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 /* Read sections lengths */
                 int permissionsSectionLength = reader.ReadInt32();
@@ -68,15 +73,18 @@ namespace DSPRE.ROMFiles {
                 int bdhcSectionLength = reader.ReadInt32();
 
                 /* Read background sounds section */
-                if (RomInfo.gameFamily == gFamEnum.HGSS) {
-                    ushort signature = reader.ReadUInt16();
-                    if (signature != 0x1234) {
-                        MessageBox.Show("The header section of this map's BackGround Sound data is corrupted.",
+                if (gFamily == gFamEnum.HGSS) { //Map must be loaded as HGSS
+                    ushort bgsSignature = reader.ReadUInt16();
+                    if (bgsSignature != 0x1234) {
+                        correctnessFlag = false;
+                        if (showMessages) {
+                            MessageBox.Show("The header section of this map's BackGround Sound data is corrupted.",
                             "BGS Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                     ushort bgsDataLength = reader.ReadUInt16();
 
-                    reader.BaseStream.Position -= 4; //go back so that the signature "1234" + size can be read and stored
+                    reader.BaseStream.Position -= 4; //go back so that the signature "0x1234" + size can be read and stored
                     ImportSoundPlates(new MemoryStream(reader.ReadBytes(bgsDataLength + 4)));
                 }
 
@@ -87,7 +95,10 @@ namespace DSPRE.ROMFiles {
                 ImportBuildings(new MemoryStream(reader.ReadBytes(buildingsSectionLength)));
 
                 /* Read nsbmd model */
-                LoadMapModel(reader.ReadBytes(nsbmdSectionLength));
+                if ( !LoadMapModel(reader.ReadBytes(nsbmdSectionLength), showMessages) ) { //Assign result to flag
+                    correctnessFlag = false;
+                    mapModel = null;
+                };
 
                 /* Read bdhc data */
                 ImportTerrain(new MemoryStream(reader.ReadBytes(bdhcSectionLength)));
@@ -139,12 +150,14 @@ namespace DSPRE.ROMFiles {
                 }
             }
         }
-        public void LoadMapModel(byte[] newData) {
+        public bool LoadMapModel(byte[] newData, bool showMessages = true) {
             using (BinaryReader modelReader = new BinaryReader(new MemoryStream(newData))) {
 
                 if (modelReader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0) {
-                    MessageBox.Show("Please select an NSBMD file.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    if (showMessages) {
+                        MessageBox.Show("Please select an NSBMD file.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    return false;
                 }
 
                 modelReader.BaseStream.Position = 0xE;
@@ -157,6 +170,7 @@ namespace DSPRE.ROMFiles {
 
                 mapModel = NSBMDLoader.LoadNSBMD(new MemoryStream(mapModelData));
             }
+            return true;
         }
         
         public void ImportPermissions(Stream newData) {

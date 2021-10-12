@@ -2957,7 +2957,7 @@ namespace DSPRE {
         }
         private void addMapFileButton_Click(object sender, EventArgs e) {
             /* Add new map file to map folder */
-            new MapFile(0).SaveToFileDefaultDir(selectMapComboBox.Items.Count);
+            new MapFile(0, RomInfo.gameFamily).SaveToFileDefaultDir(selectMapComboBox.Items.Count);
 
             /* Update ComboBox and select new file */
             selectMapComboBox.Items.Add(selectMapComboBox.Items.Count.ToString("D3") + MapHeader.nameSeparator + "newmap");
@@ -2965,22 +2965,49 @@ namespace DSPRE {
         }
         private void replaceMapBinButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .bin file */
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Map BIN File (*.bin)|*.bin";
-            if (of.ShowDialog(this) != DialogResult.OK)
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "Map BIN File (*.bin)|*.bin"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
-            /* Update map object in memory */
-            string path = RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + selectMapComboBox.SelectedIndex.ToString("D4");
-            File.Copy(of.FileName, path, true);
+            MapFile temp = new MapFile(of.FileName, RomInfo.gameFamily, false);
+
+            if (temp.correctnessFlag) {
+                UpdateMapBinAndRefresh(temp, "Map BIN imported successfully!");
+                return;
+            } else {
+                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                    //If HGSS didn't work try reading as Platinum Map
+                    temp = new MapFile(of.FileName, gFamEnum.Plat, false); 
+                } else {
+                    //If Plat didn't work try reading as HGSS Map
+                    temp = new MapFile(of.FileName, gFamEnum.HGSS, false);
+                }
+
+                if (temp.correctnessFlag) {
+                    UpdateMapBinAndRefresh(temp, "Map BIN imported and adapted successfully!");
+                    return;
+                }
+            }
+            
+            MessageBox.Show("The BIN file you imported is corrupted!", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void UpdateMapBinAndRefresh(MapFile newerVersion, string message) {
+            currentMapFile = newerVersion;
+
+            /* Update map BIN file */
+            currentMapFile.SaveToFileDefaultDir(selectMapComboBox.SelectedIndex, showSuccessMessage: false);
 
             /* Refresh controls */
             selectMapComboBox_SelectedIndexChanged(null, null);
 
             /* Display success message */
-            MessageBox.Show("Map BIN imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            MessageBox.Show(message, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
         private void buildTextureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || buildTextureComboBox.SelectedIndex < 0) {
                 return;
@@ -3250,7 +3277,7 @@ namespace DSPRE {
             }
 
             /* Load map data into MapFile class instance */
-            currentMapFile = new MapFile(selectMapComboBox.SelectedIndex);
+            currentMapFile = new MapFile(selectMapComboBox.SelectedIndex, RomInfo.gameFamily);
 
             /* Load map textures for renderer */
             if (mapTextureComboBox.SelectedIndex > 0) {
@@ -4174,7 +4201,7 @@ namespace DSPRE {
             MessageBox.Show("BackGround Sound data exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void soundPlatesBlankButton_Click(object sender, EventArgs e) {
-            currentMapFile.bgs = new byte[] { 0x34, 0x12, 0x00, 0x00 };
+            currentMapFile.bgs = MapFile.blankBGS;
             BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
             MessageBox.Show("BackGround Sound data successfull blanked.\nRemember to save the current map file.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -4386,7 +4413,7 @@ namespace DSPRE {
                 AreaData areaData = new AreaData(areaDataID);
 
                 /* Read map and building models, match them with textures and render them*/
-                eventMapFile = new MapFile((int)mapIndex);
+                eventMapFile = new MapFile( (int)mapIndex, RomInfo.gameFamily);
                 eventMapFile.mapModel = LoadModelTextures(eventMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, areaData.mapTileset);
 
                 bool isInteriorMap = false;
