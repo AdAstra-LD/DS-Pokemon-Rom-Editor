@@ -261,7 +261,7 @@ namespace DSPRE.Resources {
             [0x005A] = "StartChatotCry",
             [0x005B] = "StopChatotCry",
             [0x005C] = "SaveChatotCry",
-
+            [0x005D] = "LoadSpearPillarAudio",
             [0x005E] = "Movement",
             [0x005F] = "WaitMovement",
             [0x0060] = "LockAll",
@@ -1441,8 +1441,11 @@ namespace DSPRE.Resources {
             [0x02CA] = "FloralClockAnimation",
             [0x02CD] = "SetDarkFog",
             [0x02CE] = "ClearDarkFog",
-
+            
+            [0x02F9] = "LoadFieldAudio",
+            [0x02FA] = "GetPlayingBGM",
             [0x02FB] = "SpearPillarSequence2",
+
             [0x0328] = "PortalEffect",
 
             //International release exclusive

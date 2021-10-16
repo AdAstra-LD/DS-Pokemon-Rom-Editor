@@ -604,7 +604,7 @@ namespace DSPRE {
                 default:
                     if (!DSUtils.ARM9.Decompress()) {
                         MessageBox.Show("ARM9 decompression failed. The program can't proceed.\nAborting.",
-                                    "Errror with ARM9 decompression", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    "Error with ARM9 decompression", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     break;
