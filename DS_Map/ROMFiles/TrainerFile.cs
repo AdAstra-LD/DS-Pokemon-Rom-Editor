@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using System.Windows.Forms;
 
@@ -81,14 +82,14 @@ namespace DSPRE.ROMFiles {
         public bool hasItems = false;
 
         public ushort[] trainerItems = new ushort[TRAINER_ITEMS];
-        public bool[] AI = new bool[AI_COUNT];
+        public BitArray AI;
         #endregion
 
         #region Constructor
         public TrainerProperties(ushort ID, byte partyCount = 0) {
             trainerID = ID;
             trainerItems = new ushort[TRAINER_ITEMS];
-            AI = new bool[AI_COUNT] { true, true, true, false, false, false, false, false, false, false, false };
+            AI = new BitArray( new bool[AI_COUNT] { true, false, false, false, false, false, false, false, false, false, false } );
             trDataUnknown = 0;
         }
         public TrainerProperties(ushort ID, Stream trainerPropertiesStream) {
@@ -106,10 +107,7 @@ namespace DSPRE.ROMFiles {
                     trainerItems[i] = reader.ReadUInt16();
                 }
 
-                uint AIflags = reader.ReadUInt32();
-                for (int i = 0; i < AI_COUNT; i++) {
-                    AI[i] = (AIflags & (1 << i)) != 0;
-                }
+                AI = new BitArray( BitConverter.GetBytes(reader.ReadUInt32()) );
                 doubleBattle = reader.ReadUInt32() == 2;
             }
         }
