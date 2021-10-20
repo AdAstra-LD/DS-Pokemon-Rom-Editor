@@ -700,17 +700,17 @@
             this.trainerClassPicBox = new System.Windows.Forms.PictureBox();
             this.groupBox25 = new System.Windows.Forms.GroupBox();
             this.TrainerAIGroupBox = new System.Windows.Forms.GroupBox();
-            this.trainerAI11CheckBox = new System.Windows.Forms.CheckBox();
-            this.trainerAI10CheckBox = new System.Windows.Forms.CheckBox();
-            this.trainerAI9CheckBox = new System.Windows.Forms.CheckBox();
-            this.trainerAI8CheckBox = new System.Windows.Forms.CheckBox();
-            this.trainerAI7CheckBox = new System.Windows.Forms.CheckBox();
-            this.trainerAI6CheckBox = new System.Windows.Forms.CheckBox();
-            this.trainerAI5CheckBox = new System.Windows.Forms.CheckBox();
-            this.trainerAI4CheckBox = new System.Windows.Forms.CheckBox();
-            this.trainerAI3CheckBox = new System.Windows.Forms.CheckBox();
-            this.trainerAI2CheckBox = new System.Windows.Forms.CheckBox();
             this.trainerAI1CheckBox = new System.Windows.Forms.CheckBox();
+            this.trainerAI2CheckBox = new System.Windows.Forms.CheckBox();
+            this.trainerAI3CheckBox = new System.Windows.Forms.CheckBox();
+            this.trainerAI4CheckBox = new System.Windows.Forms.CheckBox();
+            this.trainerAI5CheckBox = new System.Windows.Forms.CheckBox();
+            this.trainerAI6CheckBox = new System.Windows.Forms.CheckBox();
+            this.trainerAI7CheckBox = new System.Windows.Forms.CheckBox();
+            this.trainerAI8CheckBox = new System.Windows.Forms.CheckBox();
+            this.trainerAI9CheckBox = new System.Windows.Forms.CheckBox();
+            this.trainerAI10CheckBox = new System.Windows.Forms.CheckBox();
+            this.trainerAI11CheckBox = new System.Windows.Forms.CheckBox();
             this.trainerItemsGroupBox = new System.Windows.Forms.GroupBox();
             this.trainerItem4ComboBox = new System.Windows.Forms.ComboBox();
             this.trainerItem3ComboBox = new System.Windows.Forms.ComboBox();
@@ -9055,17 +9055,17 @@
             // 
             // TrainerAIGroupBox
             // 
-            this.TrainerAIGroupBox.Controls.Add(this.trainerAI11CheckBox);
-            this.TrainerAIGroupBox.Controls.Add(this.trainerAI10CheckBox);
-            this.TrainerAIGroupBox.Controls.Add(this.trainerAI9CheckBox);
-            this.TrainerAIGroupBox.Controls.Add(this.trainerAI8CheckBox);
-            this.TrainerAIGroupBox.Controls.Add(this.trainerAI7CheckBox);
-            this.TrainerAIGroupBox.Controls.Add(this.trainerAI6CheckBox);
-            this.TrainerAIGroupBox.Controls.Add(this.trainerAI5CheckBox);
-            this.TrainerAIGroupBox.Controls.Add(this.trainerAI4CheckBox);
-            this.TrainerAIGroupBox.Controls.Add(this.trainerAI3CheckBox);
-            this.TrainerAIGroupBox.Controls.Add(this.trainerAI2CheckBox);
             this.TrainerAIGroupBox.Controls.Add(this.trainerAI1CheckBox);
+            this.TrainerAIGroupBox.Controls.Add(this.trainerAI2CheckBox);
+            this.TrainerAIGroupBox.Controls.Add(this.trainerAI3CheckBox);
+            this.TrainerAIGroupBox.Controls.Add(this.trainerAI4CheckBox);
+            this.TrainerAIGroupBox.Controls.Add(this.trainerAI5CheckBox);
+            this.TrainerAIGroupBox.Controls.Add(this.trainerAI6CheckBox);
+            this.TrainerAIGroupBox.Controls.Add(this.trainerAI7CheckBox);
+            this.TrainerAIGroupBox.Controls.Add(this.trainerAI8CheckBox);
+            this.TrainerAIGroupBox.Controls.Add(this.trainerAI9CheckBox);
+            this.TrainerAIGroupBox.Controls.Add(this.trainerAI10CheckBox);
+            this.TrainerAIGroupBox.Controls.Add(this.trainerAI11CheckBox);
             this.TrainerAIGroupBox.Location = new System.Drawing.Point(9, 282);
             this.TrainerAIGroupBox.Name = "TrainerAIGroupBox";
             this.TrainerAIGroupBox.Size = new System.Drawing.Size(384, 116);
@@ -9073,104 +9073,16 @@
             this.TrainerAIGroupBox.TabStop = false;
             this.TrainerAIGroupBox.Text = "AI";
             // 
-            // trainerAI11CheckBox
+            // trainerAI1CheckBox
             // 
-            this.trainerAI11CheckBox.AutoSize = true;
-            this.trainerAI11CheckBox.Location = new System.Drawing.Point(271, 67);
-            this.trainerAI11CheckBox.Name = "trainerAI11CheckBox";
-            this.trainerAI11CheckBox.Size = new System.Drawing.Size(44, 17);
-            this.trainerAI11CheckBox.TabIndex = 10;
-            this.trainerAI11CheckBox.Text = "???";
-            this.trainerAI11CheckBox.UseVisualStyleBackColor = true;
-            this.trainerAI11CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
-            // 
-            // trainerAI10CheckBox
-            // 
-            this.trainerAI10CheckBox.AutoSize = true;
-            this.trainerAI10CheckBox.Location = new System.Drawing.Point(271, 44);
-            this.trainerAI10CheckBox.Name = "trainerAI10CheckBox";
-            this.trainerAI10CheckBox.Size = new System.Drawing.Size(67, 17);
-            this.trainerAI10CheckBox.TabIndex = 9;
-            this.trainerAI10CheckBox.Text = "Weather";
-            this.trainerAI10CheckBox.UseVisualStyleBackColor = true;
-            this.trainerAI10CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
-            // 
-            // trainerAI9CheckBox
-            // 
-            this.trainerAI9CheckBox.AutoSize = true;
-            this.trainerAI9CheckBox.Location = new System.Drawing.Point(271, 21);
-            this.trainerAI9CheckBox.Name = "trainerAI9CheckBox";
-            this.trainerAI9CheckBox.Size = new System.Drawing.Size(75, 17);
-            this.trainerAI9CheckBox.TabIndex = 8;
-            this.trainerAI9CheckBox.Text = "Check HP";
-            this.trainerAI9CheckBox.UseVisualStyleBackColor = true;
-            this.trainerAI9CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
-            // 
-            // trainerAI8CheckBox
-            // 
-            this.trainerAI8CheckBox.AutoSize = true;
-            this.trainerAI8CheckBox.Location = new System.Drawing.Point(138, 90);
-            this.trainerAI8CheckBox.Name = "trainerAI8CheckBox";
-            this.trainerAI8CheckBox.Size = new System.Drawing.Size(87, 17);
-            this.trainerAI8CheckBox.TabIndex = 7;
-            this.trainerAI8CheckBox.Text = "Tag Strategy";
-            this.trainerAI8CheckBox.UseVisualStyleBackColor = true;
-            this.trainerAI8CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
-            // 
-            // trainerAI7CheckBox
-            // 
-            this.trainerAI7CheckBox.AutoSize = true;
-            this.trainerAI7CheckBox.Location = new System.Drawing.Point(138, 67);
-            this.trainerAI7CheckBox.Name = "trainerAI7CheckBox";
-            this.trainerAI7CheckBox.Size = new System.Drawing.Size(80, 17);
-            this.trainerAI7CheckBox.TabIndex = 6;
-            this.trainerAI7CheckBox.Text = "Baton Pass";
-            this.trainerAI7CheckBox.UseVisualStyleBackColor = true;
-            this.trainerAI7CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
-            // 
-            // trainerAI6CheckBox
-            // 
-            this.trainerAI6CheckBox.AutoSize = true;
-            this.trainerAI6CheckBox.Location = new System.Drawing.Point(138, 44);
-            this.trainerAI6CheckBox.Name = "trainerAI6CheckBox";
-            this.trainerAI6CheckBox.Size = new System.Drawing.Size(100, 17);
-            this.trainerAI6CheckBox.TabIndex = 5;
-            this.trainerAI6CheckBox.Text = "Damage Priority";
-            this.trainerAI6CheckBox.UseVisualStyleBackColor = true;
-            this.trainerAI6CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
-            // 
-            // trainerAI5CheckBox
-            // 
-            this.trainerAI5CheckBox.AutoSize = true;
-            this.trainerAI5CheckBox.Location = new System.Drawing.Point(138, 21);
-            this.trainerAI5CheckBox.Name = "trainerAI5CheckBox";
-            this.trainerAI5CheckBox.Size = new System.Drawing.Size(47, 17);
-            this.trainerAI5CheckBox.TabIndex = 4;
-            this.trainerAI5CheckBox.Text = "Risk";
-            this.trainerAI5CheckBox.UseVisualStyleBackColor = true;
-            this.trainerAI5CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
-            // 
-            // trainerAI4CheckBox
-            // 
-            this.trainerAI4CheckBox.AutoSize = true;
-            this.trainerAI4CheckBox.Location = new System.Drawing.Point(16, 90);
-            this.trainerAI4CheckBox.Name = "trainerAI4CheckBox";
-            this.trainerAI4CheckBox.Size = new System.Drawing.Size(51, 17);
-            this.trainerAI4CheckBox.TabIndex = 3;
-            this.trainerAI4CheckBox.Text = "State";
-            this.trainerAI4CheckBox.UseVisualStyleBackColor = true;
-            this.trainerAI4CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
-            // 
-            // trainerAI3CheckBox
-            // 
-            this.trainerAI3CheckBox.AutoSize = true;
-            this.trainerAI3CheckBox.Location = new System.Drawing.Point(16, 67);
-            this.trainerAI3CheckBox.Name = "trainerAI3CheckBox";
-            this.trainerAI3CheckBox.Size = new System.Drawing.Size(56, 17);
-            this.trainerAI3CheckBox.TabIndex = 2;
-            this.trainerAI3CheckBox.Text = "Expert";
-            this.trainerAI3CheckBox.UseVisualStyleBackColor = true;
-            this.trainerAI3CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
+            this.trainerAI1CheckBox.AutoSize = true;
+            this.trainerAI1CheckBox.Location = new System.Drawing.Point(16, 21);
+            this.trainerAI1CheckBox.Name = "trainerAI1CheckBox";
+            this.trainerAI1CheckBox.Size = new System.Drawing.Size(52, 17);
+            this.trainerAI1CheckBox.TabIndex = 0;
+            this.trainerAI1CheckBox.Text = "Basic";
+            this.trainerAI1CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI1CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
             // 
             // trainerAI2CheckBox
             // 
@@ -9183,16 +9095,104 @@
             this.trainerAI2CheckBox.UseVisualStyleBackColor = true;
             this.trainerAI2CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
             // 
-            // trainerAI1CheckBox
+            // trainerAI3CheckBox
             // 
-            this.trainerAI1CheckBox.AutoSize = true;
-            this.trainerAI1CheckBox.Location = new System.Drawing.Point(16, 21);
-            this.trainerAI1CheckBox.Name = "trainerAI1CheckBox";
-            this.trainerAI1CheckBox.Size = new System.Drawing.Size(52, 17);
-            this.trainerAI1CheckBox.TabIndex = 0;
-            this.trainerAI1CheckBox.Text = "Basic";
-            this.trainerAI1CheckBox.UseVisualStyleBackColor = true;
-            this.trainerAI1CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
+            this.trainerAI3CheckBox.AutoSize = true;
+            this.trainerAI3CheckBox.Location = new System.Drawing.Point(16, 67);
+            this.trainerAI3CheckBox.Name = "trainerAI3CheckBox";
+            this.trainerAI3CheckBox.Size = new System.Drawing.Size(56, 17);
+            this.trainerAI3CheckBox.TabIndex = 2;
+            this.trainerAI3CheckBox.Text = "Expert";
+            this.trainerAI3CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI3CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
+            // 
+            // trainerAI4CheckBox
+            // 
+            this.trainerAI4CheckBox.AutoSize = true;
+            this.trainerAI4CheckBox.Location = new System.Drawing.Point(16, 90);
+            this.trainerAI4CheckBox.Name = "trainerAI4CheckBox";
+            this.trainerAI4CheckBox.Size = new System.Drawing.Size(51, 17);
+            this.trainerAI4CheckBox.TabIndex = 3;
+            this.trainerAI4CheckBox.Text = "State";
+            this.trainerAI4CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI4CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
+            // 
+            // trainerAI5CheckBox
+            // 
+            this.trainerAI5CheckBox.AutoSize = true;
+            this.trainerAI5CheckBox.Location = new System.Drawing.Point(138, 21);
+            this.trainerAI5CheckBox.Name = "trainerAI5CheckBox";
+            this.trainerAI5CheckBox.Size = new System.Drawing.Size(47, 17);
+            this.trainerAI5CheckBox.TabIndex = 4;
+            this.trainerAI5CheckBox.Text = "Risk";
+            this.trainerAI5CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI5CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
+            // 
+            // trainerAI6CheckBox
+            // 
+            this.trainerAI6CheckBox.AutoSize = true;
+            this.trainerAI6CheckBox.Location = new System.Drawing.Point(138, 44);
+            this.trainerAI6CheckBox.Name = "trainerAI6CheckBox";
+            this.trainerAI6CheckBox.Size = new System.Drawing.Size(100, 17);
+            this.trainerAI6CheckBox.TabIndex = 5;
+            this.trainerAI6CheckBox.Text = "Damage Priority";
+            this.trainerAI6CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI6CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
+            // 
+            // trainerAI7CheckBox
+            // 
+            this.trainerAI7CheckBox.AutoSize = true;
+            this.trainerAI7CheckBox.Location = new System.Drawing.Point(138, 67);
+            this.trainerAI7CheckBox.Name = "trainerAI7CheckBox";
+            this.trainerAI7CheckBox.Size = new System.Drawing.Size(80, 17);
+            this.trainerAI7CheckBox.TabIndex = 6;
+            this.trainerAI7CheckBox.Text = "Baton Pass";
+            this.trainerAI7CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI7CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
+            // 
+            // trainerAI8CheckBox
+            // 
+            this.trainerAI8CheckBox.AutoSize = true;
+            this.trainerAI8CheckBox.Location = new System.Drawing.Point(138, 90);
+            this.trainerAI8CheckBox.Name = "trainerAI8CheckBox";
+            this.trainerAI8CheckBox.Size = new System.Drawing.Size(87, 17);
+            this.trainerAI8CheckBox.TabIndex = 7;
+            this.trainerAI8CheckBox.Text = "Tag Strategy";
+            this.trainerAI8CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI8CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
+            // 
+            // trainerAI9CheckBox
+            // 
+            this.trainerAI9CheckBox.AutoSize = true;
+            this.trainerAI9CheckBox.Location = new System.Drawing.Point(271, 21);
+            this.trainerAI9CheckBox.Name = "trainerAI9CheckBox";
+            this.trainerAI9CheckBox.Size = new System.Drawing.Size(75, 17);
+            this.trainerAI9CheckBox.TabIndex = 8;
+            this.trainerAI9CheckBox.Text = "Check HP";
+            this.trainerAI9CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI9CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
+            // 
+            // trainerAI10CheckBox
+            // 
+            this.trainerAI10CheckBox.AutoSize = true;
+            this.trainerAI10CheckBox.Location = new System.Drawing.Point(271, 44);
+            this.trainerAI10CheckBox.Name = "trainerAI10CheckBox";
+            this.trainerAI10CheckBox.Size = new System.Drawing.Size(67, 17);
+            this.trainerAI10CheckBox.TabIndex = 9;
+            this.trainerAI10CheckBox.Text = "Weather";
+            this.trainerAI10CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI10CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
+            // 
+            // trainerAI11CheckBox
+            // 
+            this.trainerAI11CheckBox.AutoSize = true;
+            this.trainerAI11CheckBox.Location = new System.Drawing.Point(271, 67);
+            this.trainerAI11CheckBox.Name = "trainerAI11CheckBox";
+            this.trainerAI11CheckBox.Size = new System.Drawing.Size(44, 17);
+            this.trainerAI11CheckBox.TabIndex = 10;
+            this.trainerAI11CheckBox.Text = "???";
+            this.trainerAI11CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI11CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
             // 
             // trainerItemsGroupBox
             // 
@@ -9326,7 +9326,7 @@
             // trainerClassListBox
             // 
             this.trainerClassListBox.FormattingEnabled = true;
-            this.trainerClassListBox.Location = new System.Drawing.Point(12, 39);
+            this.trainerClassListBox.Location = new System.Drawing.Point(11, 39);
             this.trainerClassListBox.Name = "trainerClassListBox";
             this.trainerClassListBox.Size = new System.Drawing.Size(181, 238);
             this.trainerClassListBox.TabIndex = 0;

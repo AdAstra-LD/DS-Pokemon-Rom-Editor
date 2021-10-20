@@ -8010,7 +8010,7 @@ namespace DSPRE {
             trainerClassNameTextbox.Text = GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
 
             (uint entryOffset, ushort musicD, ushort? musicN) output;
-            if (trainerClassEncounterMusicDict.TryGetValue(currentTrainerFile.trp.trainerClass, out output)) {
+            if ( trainerClassEncounterMusicDict.TryGetValue((byte)trainerClassListBox.SelectedIndex, out output) ) {
                 encounterSSEQMainUpDown.Enabled = true;
                 encounterSSEQAltUpDown.Enabled = true;
 
@@ -8172,16 +8172,22 @@ namespace DSPRE {
         private void saveTrainerClassButton_Click(object sender, EventArgs e) {
             disableHandlers = true;
 
-            int currentClassID = trainerClassListBox.SelectedIndex;
+            int selectedTrClass = trainerClassListBox.SelectedIndex;
+
+            byte b_selectedTrClass = (byte)selectedTrClass;
+            ushort eyeMusicID = (ushort)encounterSSEQMainUpDown.Value;
+            DSUtils.ARM9.WriteBytes( BitConverter.GetBytes(eyeMusicID), trainerClassEncounterMusicDict[b_selectedTrClass].entryOffset);
+            var dictEntry = trainerClassEncounterMusicDict[b_selectedTrClass];
+            trainerClassEncounterMusicDict[b_selectedTrClass] = (dictEntry.entryOffset, eyeMusicID, dictEntry.musicN);
+
             string newName = trainerClassNameTextbox.Text;
             UpdateCurrentTrainerClassName(newName);
-
-            string trClass = GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
-            trainerClassListBox.Items[currentClassID] = "[" + currentClassID + "]" + " " + newName;
-            DSUtils.ARM9.WriteBytes(BitConverter.GetBytes((ushort)encounterSSEQMainUpDown.Value), trainerClassEncounterMusicDict[(byte)currentClassID].entryOffset, 0); 
-            
+            GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
             disableHandlers = false;
-            trainerClassListBox_SelectedIndexChanged(null, null);
+
+            trainerClassListBox.Items[selectedTrClass] = "[" + selectedTrClass.ToString("D3") + "]" + " " + newName;
+
+            //trainerClassListBox_SelectedIndexChanged(null, null);
             MessageBox.Show("Trainer Class settings saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
