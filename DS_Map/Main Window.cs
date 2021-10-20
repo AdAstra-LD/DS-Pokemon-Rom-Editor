@@ -479,7 +479,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.3.3" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.3.4" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
@@ -6590,6 +6590,7 @@ namespace DSPRE {
         }
         #endregion
         #endregion
+
         #region Text Editor
 
         #region Variables
@@ -7402,7 +7403,7 @@ namespace DSPRE {
         }
         #endregion
 
-        #region TrainerEditor
+        #region Trainer Editor
         private List<ComboBox> partyPokemonComponentList = new List<ComboBox>();
         private List<ComboBox> partyItemComponentList = new List<ComboBox>();
         private List<NumericUpDown> partyLevelComponentList = new List<NumericUpDown>();
@@ -8009,23 +8010,17 @@ namespace DSPRE {
 
             trainerClassNameTextbox.Text = GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
 
-            (uint entryOffset, ushort musicD, ushort? musicN) output;
-            if ( trainerClassEncounterMusicDict.TryGetValue((byte)trainerClassListBox.SelectedIndex, out output) ) {
-                encounterSSEQMainUpDown.Enabled = true;
-                encounterSSEQAltUpDown.Enabled = true;
-
+            if (trainerClassEncounterMusicDict.TryGetValue((byte)trainerClassListBox.SelectedIndex, out (uint entryOffset, ushort musicD, ushort? musicN) output)) {
+                encounterSSEQMainUpDown.Enabled = eyeContactMusicLabel.Enabled = true;
                 encounterSSEQMainUpDown.Value = output.musicD;
-
-                if (gameFamily == gFamEnum.HGSS) {
-                    encounterSSEQAltUpDown.Value = (ushort)output.musicN;
-                }
             } else {
-                encounterSSEQMainUpDown.Enabled = false;
-                encounterSSEQAltUpDown.Enabled = false;
-
+                encounterSSEQMainUpDown.Enabled = eyeContactMusicLabel.Enabled = false;
                 encounterSSEQMainUpDown.Value = 0;
-                encounterSSEQAltUpDown.Value = 0;
             }
+
+            eyeContactMusicAltLabel.Enabled = encounterSSEQAltUpDown.Enabled = (encounterSSEQMainUpDown.Enabled && gameFamily == gFamEnum.HGSS);
+            encounterSSEQAltUpDown.Value = output.musicN != null ? (ushort)output.musicN : 0;
+            
 
             if (disableHandlers) {
                 return;
