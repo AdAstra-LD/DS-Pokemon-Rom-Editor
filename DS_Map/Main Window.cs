@@ -7599,6 +7599,9 @@ namespace DSPRE {
             statusLabel.Text = "Ready";
         }
         private void trainerComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (disableHandlers) {
+                return;
+            }
             disableHandlers = true;
             string suffix = "\\" + trainerComboBox.SelectedIndex.ToString("D4");
             currentTrainerFile = new TrainerFile(
@@ -7969,8 +7972,12 @@ namespace DSPRE {
         private void UpdateCurrentTrainerShownName() {
             string trClass = GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
 
-            string editedTrainer = ("[" + currentTrainerFile.trp.trainerID.ToString("D2") + "] " + trClass + " " + currentTrainerFile.name);
+            string editedTrainer = "[" + currentTrainerFile.trp.trainerID.ToString("D2") + "] " + trClass + " " + currentTrainerFile.name;
+
+            disableHandlers = true;
             trainerComboBox.Items[trainerComboBox.SelectedIndex] = editedTrainer;
+            disableHandlers = false;
+
             if (eventEditorIsReady) {
                 owTrainerComboBox.Items[trainerComboBox.SelectedIndex] = editedTrainer;
             }
@@ -8171,16 +8178,17 @@ namespace DSPRE {
 
             byte b_selectedTrClass = (byte)selectedTrClass;
             ushort eyeMusicID = (ushort)encounterSSEQMainUpDown.Value;
-            DSUtils.ARM9.WriteBytes( BitConverter.GetBytes(eyeMusicID), trainerClassEncounterMusicDict[b_selectedTrClass].entryOffset);
-            var dictEntry = trainerClassEncounterMusicDict[b_selectedTrClass];
-            trainerClassEncounterMusicDict[b_selectedTrClass] = (dictEntry.entryOffset, eyeMusicID, dictEntry.musicN);
+
+            if (trainerClassEncounterMusicDict.TryGetValue(b_selectedTrClass, out var dictEntry)) {
+                DSUtils.ARM9.WriteBytes(BitConverter.GetBytes(eyeMusicID), dictEntry.entryOffset);
+                trainerClassEncounterMusicDict[b_selectedTrClass] = (dictEntry.entryOffset, eyeMusicID, dictEntry.musicN);
+            }
 
             string newName = trainerClassNameTextbox.Text;
             UpdateCurrentTrainerClassName(newName);
-            GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
-            disableHandlers = false;
-
             trainerClassListBox.Items[selectedTrClass] = "[" + selectedTrClass.ToString("D3") + "]" + " " + newName;
+            UpdateCurrentTrainerShownName();
+            disableHandlers = false;
 
             //trainerClassListBox_SelectedIndexChanged(null, null);
             MessageBox.Show("Trainer Class settings saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
