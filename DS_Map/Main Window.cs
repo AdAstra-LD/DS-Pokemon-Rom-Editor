@@ -597,17 +597,15 @@ namespace DSPRE {
         }
 
         private void ReadROMInitData() {
-            switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
-                case gFamEnum.Plat:
-                    break;
-                default:
-                    if (!DSUtils.ARM9.Decompress()) {
-                        MessageBox.Show("ARM9 decompression failed. The program can't proceed.\nAborting.",
-                                    "Error with ARM9 decompression", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    break;
+            if ( DSUtils.ARM9.CheckCompressionMark() ) {
+                if ( !RomInfo.gameFamily.Equals(gFamEnum.HGSS) ) {
+                    MessageBox.Show("Unexpected compressed ARM9. It is advised that you double check the ARM9.");
+                }
+                if (!DSUtils.ARM9.Decompress(RomInfo.arm9Path)) {
+                    MessageBox.Show("ARM9 decompression failed. The program can't proceed.\nAborting.",
+                                "Error with ARM9 decompression", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
 
             /* Setup essential editors */
@@ -641,10 +639,12 @@ namespace DSPRE {
         }
 
         private void saveRom_Click(object sender, EventArgs e) {
-            SaveFileDialog saveRom = new SaveFileDialog();
-            saveRom.Filter = "NDS File (*.nds)|*.nds";
-            if (saveRom.ShowDialog(this) != DialogResult.OK)
+            SaveFileDialog saveRom = new SaveFileDialog {
+                Filter = "NDS File (*.nds)|*.nds"
+            };
+            if (saveRom.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             statusLabel.Text = "Repacking NARCS...";
             Update();
@@ -656,6 +656,21 @@ namespace DSPRE {
                     Narc.FromFolder(kvp.Value.unpackedDir).Save(kvp.Value.packedDir); // Make new NARC from folder
                 }
             }
+
+
+            if ( DSUtils.ARM9.CheckCompressionMark() ) {
+                statusLabel.Text = "Awaiting user response...";
+                DialogResult d = MessageBox.Show("The ARM9 file of this ROM is currently uncompressed, but marked as compressed.\n" +
+                    "This will prevent your ROM from working on native hardware.\n\n" +
+                "Do you want to mark the ARM9 as uncompressed?", "ARM9 compression mismatch detected",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (d == DialogResult.Yes) {
+                    DSUtils.ARM9.WriteBytes(new byte[4] { 0, 0, 0, 0 }, 0xBB4);
+                }
+            }
+
+            statusLabel.Text = "Repacking ROM...";
 
             if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
                 if (ROMToolboxDialog.overlay1MustBeRestoredFromBackup) {
@@ -673,7 +688,7 @@ namespace DSPRE {
                 }
             }
 
-            statusLabel.Text = "Repacking ROM...";
+            
             Update();
 
             DSUtils.RepackROM(saveRom.FileName);
@@ -689,6 +704,7 @@ namespace DSPRE {
             statusLabel.Text = "Ready";
         }
         private void unpackAllButton_Click(object sender, EventArgs e) {
+            statusLabel.Text = "Awaiting user response...";
             DialogResult d = MessageBox.Show("Do you wish to unpack all extracted NARCS?\n" +
                 "This operation might be long and can't be interrupted.\n\n" +
                 "Any unsaved changes made to the ROM in this session will be lost." +
@@ -724,6 +740,7 @@ namespace DSPRE {
             }
         }
         private void updateMapNarcsButton_Click(object sender, EventArgs e) {
+            statusLabel.Text = "Awaiting user response...";
             DialogResult d = MessageBox.Show("Do you wish to unpack all NARC files necessary for the Building Editor ?\n" +
                "This operation might be long and can't be interrupted.\n\n" +
                "Any unsaved changes made to building models and textures in this session will be lost." +
@@ -1695,10 +1712,12 @@ namespace DSPRE {
                 openWildEditorWithIdButton.Enabled = true;
         }
         private void importHeaderFromFileButton_Click(object sender, EventArgs e) {
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Header File (*.dsh; *.bin)|*.dsh;*.bin";
-            if (of.ShowDialog(this) != DialogResult.OK)
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "Header File (*.dsh; *.bin)|*.dsh;*.bin"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             MapHeader h = null;
             try {
@@ -2325,19 +2344,22 @@ namespace DSPRE {
         }
         private void importMatrixButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .mtx file */
-            DialogResult d;
             if (selectMatrixComboBox.SelectedIndex == 0) {
-                d = MessageBox.Show("Replacing a matrix - especially Matrix 0 - with a new file is risky.\nDo not do it unless you are absolutely sure.\nProceed?", "Risky operation",
+                statusLabel.Text = "Awaiting user response...";
+                DialogResult d = MessageBox.Show("Replacing a matrix - especially Matrix 0 - with a new file is risky.\nDo not do it unless you are absolutely sure.\nProceed?", "Risky operation",
                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                if (d == DialogResult.No)
+                if (d == DialogResult.No) {
                     return;
+                }
             }
 
-            OpenFileDialog importMatrix = new OpenFileDialog();
-            importMatrix.Filter = "Matrix File (*.mtx)|*.mtx";
-            if (importMatrix.ShowDialog(this) != DialogResult.OK)
+            OpenFileDialog importMatrix = new OpenFileDialog {
+                Filter = "Matrix File (*.mtx)|*.mtx"
+            };
+            if (importMatrix.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             /* Update matrix object in memory */
             currentMatrix = new GameMatrix(new FileStream(importMatrix.FileName, FileMode.Open));
@@ -2355,6 +2377,7 @@ namespace DSPRE {
 
             /* Display success message */
             MessageBox.Show("Matrix imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            statusLabel.Text = "Ready";
         }
         private void mapFilesGridView_CellMouseDoubleClick(object sender, DataGridViewCellEventArgs e) {
             if (!mapEditorIsReady) {
