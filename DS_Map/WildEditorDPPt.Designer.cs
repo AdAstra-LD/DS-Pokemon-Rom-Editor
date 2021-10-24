@@ -459,11 +459,11 @@
             // label42
             // 
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(535, 32);
+            this.label42.Location = new System.Drawing.Point(543, 32);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(27, 13);
+            this.label42.Size = new System.Drawing.Size(21, 13);
             this.label42.TabIndex = 174;
-            this.label42.Text = "10%";
+            this.label42.Text = "1%";
             // 
             // radarFourthComboBox
             // 
@@ -477,11 +477,11 @@
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(362, 32);
+            this.label41.Location = new System.Drawing.Point(370, 32);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(27, 13);
+            this.label41.Size = new System.Drawing.Size(21, 13);
             this.label41.TabIndex = 172;
-            this.label41.Text = "10%";
+            this.label41.Text = "1%";
             // 
             // radarThirdComboBox
             // 
@@ -495,7 +495,7 @@
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(188, 32);
+            this.label40.Location = new System.Drawing.Point(192, 32);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(27, 13);
             this.label40.TabIndex = 170;
@@ -513,7 +513,7 @@
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(11, 32);
+            this.label34.Location = new System.Drawing.Point(15, 32);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(27, 13);
             this.label34.TabIndex = 168;

@@ -36,7 +36,7 @@ namespace DSPRE {
                 return new FileInfo(RomInfo.arm9Path).Length <= 0xBC000;
             }
             public static bool CheckCompressionMark() {
-                return BitConverter.ToInt32(DSUtils.ARM9.ReadBytes(0xBB4, 4), 0) != 0;
+                return BitConverter.ToInt32( DSUtils.ARM9.ReadBytes((uint)(RomInfo.gameFamily == gFamEnum.DP ? 0xB7C : 0xBB4), 4), 0 ) != 0;
             }
             public static void EditSize(int increment) {
                 FileStream arm = File.OpenWrite(RomInfo.arm9Path);

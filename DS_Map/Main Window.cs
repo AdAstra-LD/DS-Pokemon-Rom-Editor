@@ -666,7 +666,7 @@ namespace DSPRE {
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (d == DialogResult.Yes) {
-                    DSUtils.ARM9.WriteBytes(new byte[4] { 0, 0, 0, 0 }, 0xBB4);
+                    DSUtils.ARM9.WriteBytes( new byte[4] { 0, 0, 0, 0 }, (uint)(RomInfo.gameFamily == gFamEnum.DP ? 0xB7C : 0xBB4) );
                 }
             }
 
@@ -5749,9 +5749,9 @@ namespace DSPRE {
         private Scintilla currentScintillaEditor;
         private SearchManager currentSearchManager;
         private void ScriptEditorSetClean() {
-            scriptsTabPage.Text = ScriptFile.ScriptKW + "s";
-            functionsTabPage.Text = ScriptFile.FunctionKW + "s";
-            actionsTabPage.Text = ScriptFile.ActionKW + "s";
+            scriptsTabPage.Text = ScriptFile.containerTypes.Script.ToString() + "s";
+            functionsTabPage.Text = ScriptFile.containerTypes.Function.ToString() + "s";
+            actionsTabPage.Text = ScriptFile.containerTypes.Action.ToString() + "s";
             scriptsDirty = functionsDirty = actionsDirty = false;
         }
         private void scriptEditorTabControl_TabIndexChanged(object sender, EventArgs e) {
@@ -5774,7 +5774,7 @@ namespace DSPRE {
 
             secondaryKeyWords = String.Join(" ", RomInfo.ScriptComparisonOperatorsDict.Values) + 
                 " " + String.Join(" ", ScriptDatabase.specialOverworlds.Values) + 
-                " " + ScriptFile.ScriptKW + " " + ScriptFile.FunctionKW + " " + ScriptFile.ActionKW + " " + "Overworld";
+                " " + ScriptFile.containerTypes.Script.ToString() + " " + ScriptFile.containerTypes.Function.ToString() + " " + ScriptFile.containerTypes.Action.ToString() + " " + "Overworld";
             secondaryKeyWords += " " + secondaryKeyWords.ToUpper() + " " + secondaryKeyWords.ToLower();
 
 
@@ -5977,17 +5977,17 @@ namespace DSPRE {
         private void OnTextChangedScript(object sender, EventArgs e) {
             ScriptTextArea.Margins[NUMBER_MARGIN].Width = ScriptTextArea.Lines.Count.ToString().Length * 13;
             scriptsDirty = true;
-            scriptsTabPage.Text = ScriptFile.ScriptKW + "s" + "*";
+            scriptsTabPage.Text = ScriptFile.containerTypes.Script.ToString() + "s" + "*";
         }
         private void OnTextChangedFunction(object sender, EventArgs e) {
             FunctionTextArea.Margins[NUMBER_MARGIN].Width = FunctionTextArea.Lines.Count.ToString().Length * 13;
             functionsDirty = true;
-            functionsTabPage.Text = ScriptFile.FunctionKW + "s" + "*";
+            functionsTabPage.Text = ScriptFile.containerTypes.Function.ToString() + "s" + "*";
         }
         private void OnTextChangedAction(object sender, EventArgs e) {
             ActionTextArea.Margins[NUMBER_MARGIN].Width = ActionTextArea.Lines.Count.ToString().Length * 13;
             actionsDirty = true;
-            actionsTabPage.Text = ScriptFile.ActionKW + "s" + "*";
+            actionsTabPage.Text = ScriptFile.containerTypes.Action.ToString() + "s" + "*";
         }
 
 
@@ -6306,15 +6306,17 @@ namespace DSPRE {
         private void saveScriptFileButton_Click(object sender, EventArgs e) {
             /* Create new ScriptFile object */
             int idToAssign = selectScriptFileComboBox.SelectedIndex;
-            ScriptFile userEdited = new ScriptFile(scriptLines: ScriptTextArea.Lines, FunctionTextArea.Lines, ActionTextArea.Lines, selectScriptFileComboBox.SelectedIndex);  ;
+            ScriptFile userEdited = new ScriptFile(scriptLines: ScriptTextArea.Lines, FunctionTextArea.Lines, ActionTextArea.Lines, selectScriptFileComboBox.SelectedIndex);
 
             /* Write new scripts to file */
-            if (userEdited.fileID != null) { //check if ScriptFile instance was created succesfully
+            if (userEdited.fileID == null) {
+                MessageBox.Show("This " + typeof(ScriptFile).Name + " couldn't be saved, due to a processing error.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            } else if (userEdited.fileID == int.MaxValue) {
+                MessageBox.Show("This " + typeof(ScriptFile).Name + " is couldn't be saved since it's empty.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            } else { //check if ScriptFile instance was created succesfully
                 userEdited.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex);
                 currentScriptFile = userEdited;
                 ScriptEditorSetClean();
-            } else {
-                MessageBox.Show("This " + typeof(ScriptFile).Name + " couldn't be saved, due to a processing error.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         private void clearCurrentLevelScriptButton_Click(object sender, EventArgs e) {
@@ -6402,11 +6404,11 @@ namespace DSPRE {
                     ScriptFile file = new ScriptFile(i);
 
                     if (scriptSearchCaseSensitiveCheckBox.Checked) {
-                        results.AddRange(SearchInScripts(i, file.allScripts, ScriptFile.ScriptKW, (string s) => s.Contains(searchString)));
-                        results.AddRange(SearchInScripts(i, file.allFunctions, ScriptFile.FunctionKW, (string s) => s.Contains(searchString)));
+                        results.AddRange(SearchInScripts(i, file.allScripts, ScriptFile.containerTypes.Script.ToString(), (string s) => s.Contains(searchString)));
+                        results.AddRange(SearchInScripts(i, file.allFunctions, ScriptFile.containerTypes.Function.ToString(), (string s) => s.Contains(searchString)));
                     } else {
-                        results.AddRange(SearchInScripts(i, file.allScripts, ScriptFile.ScriptKW, (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0));
-                        results.AddRange(SearchInScripts(i, file.allFunctions, ScriptFile.FunctionKW, (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0));
+                        results.AddRange(SearchInScripts(i, file.allScripts, ScriptFile.containerTypes.Script.ToString(), (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0));
+                        results.AddRange(SearchInScripts(i, file.allFunctions, ScriptFile.containerTypes.Function.ToString(), (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0));
                     }
                 } catch { }
                 searchProgressBar.Value = i;
@@ -6444,23 +6446,23 @@ namespace DSPRE {
             }
             cmdSearched = cmdSearched.TrimEnd();
 
-            if (split[3].StartsWith(ScriptFile.ScriptKW)) {
+            if (split[3].StartsWith(ScriptFile.containerTypes.Script.ToString())) {
                 if (scriptEditorTabControl.SelectedTab != scriptsTabPage) {
                     scriptEditorTabControl.SelectedTab = scriptsTabPage;
                 }
-                scriptSearchManager.Find(true, false, ScriptFile.ScriptKW + " " + split[4].Replace(":", ""));
+                scriptSearchManager.Find(true, false, ScriptFile.containerTypes.Script.ToString() + " " + split[4].Replace(":", ""));
                 scriptSearchManager.Find(true, false, cmdNameAndParams);
-            } else if (split[3].StartsWith(ScriptFile.FunctionKW)) {
+            } else if (split[3].StartsWith(ScriptFile.containerTypes.Function.ToString())) {
                 if (scriptEditorTabControl.SelectedTab != functionsTabPage) {
                     scriptEditorTabControl.SelectedTab = functionsTabPage;
                 }
-                functionSearchManager.Find(true, false, ScriptFile.FunctionKW + " " + split[4].Replace(":", ""));
+                functionSearchManager.Find(true, false, ScriptFile.containerTypes.Function.ToString() + " " + split[4].Replace(":", ""));
                 functionSearchManager.Find(true, false, cmdNameAndParams);
-            } else if (split[3].StartsWith(ScriptFile.ActionKW)) {
+            } else if (split[3].StartsWith(ScriptFile.containerTypes.Action.ToString())) {
                 if (scriptEditorTabControl.SelectedTab != actionsTabPage) {
                     scriptEditorTabControl.SelectedTab = actionsTabPage;
                 }
-                actionSearchManager.Find(true, false, ScriptFile.ActionKW + " " + split[4].Replace(":", ""));
+                actionSearchManager.Find(true, false, ScriptFile.containerTypes.Action.ToString() + " " + split[4].Replace(":", ""));
                 actionSearchManager.Find(true, false, cmdNameAndParams);
             }
         }
@@ -6518,7 +6520,7 @@ namespace DSPRE {
                     CommandContainer currentScript = currentScriptFile.allScripts[i];
 
                     /* Write header */
-                    string header = ScriptFile.ScriptKW + " " + (i + 1);
+                    string header = ScriptFile.containerTypes.Script.ToString() + " " + (i + 1);
                     buffer += header + ':' + Environment.NewLine;
                     scriptsNavListbox.Items.Add(header);
 
@@ -6544,7 +6546,7 @@ namespace DSPRE {
                     CommandContainer currentFunction = currentScriptFile.allFunctions[i];
 
                     /* Write Heaader */
-                    string header = ScriptFile.FunctionKW + " " + (i + 1);
+                    string header = ScriptFile.containerTypes.Function.ToString() + " " + (i + 1);
                     buffer += header + ':' + Environment.NewLine;
                     functionsNavListbox.Items.Add(header);
 
@@ -6568,7 +6570,7 @@ namespace DSPRE {
                 for (int i = 0; i < currentScriptFile.allActions.Count; i++) {
                     ActionContainer currentAction = currentScriptFile.allActions[i];
 
-                    string header = ScriptFile.ActionKW + " " + (i + 1);
+                    string header = ScriptFile.containerTypes.Action.ToString() + " " + (i + 1);
                     buffer += header + ':' + Environment.NewLine;
                     actionsNavListbox.Items.Add(header);
 
@@ -6589,15 +6591,15 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void scriptsNavListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            NavigatorGoTo((ListBox)sender, 0, scriptSearchManager, ScriptFile.ScriptKW);
+            NavigatorGoTo((ListBox)sender, 0, scriptSearchManager, ScriptFile.containerTypes.Script.ToString());
         }
 
         private void functionsNavListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            NavigatorGoTo((ListBox)sender, 1, functionSearchManager, ScriptFile.FunctionKW);
+            NavigatorGoTo((ListBox)sender, 1, functionSearchManager, ScriptFile.containerTypes.Function.ToString());
         }
 
         private void actionsNavListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            NavigatorGoTo((ListBox)sender, 2, actionSearchManager, ScriptFile.ActionKW);
+            NavigatorGoTo((ListBox)sender, 2, actionSearchManager, ScriptFile.containerTypes.Action.ToString());
         }
 
         private void NavigatorGoTo(ListBox currentLB, int indexToSwitchTo, SearchManager entrusted, string keyword) {

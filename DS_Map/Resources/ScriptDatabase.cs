@@ -1449,6 +1449,9 @@ namespace DSPRE.Resources {
             [0x0328] = "PortalEffect",
 
             //International release exclusive
+            [0x033C] = "TextItemLowercase",
+            [0x0346] = "TextCapitalize",
+
             [0x0347] = "DisplayFloor"
         };
         public static Dictionary<ushort, byte[]> PlatScrCmdParameters = new Dictionary<ushort, byte[]>() {

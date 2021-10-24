@@ -522,7 +522,7 @@ namespace DSPRE {
                             new ScriptCommand("Jump Function_#1")
                         };
 
-                        itemScript.allScripts.Add(new CommandContainer((ushort)(i + 1), ScriptFile.containerTypes.SCRIPT, commandList: cmdList));
+                        itemScript.allScripts.Add(new CommandContainer((ushort)(i + 1), ScriptFile.containerTypes.Script, commandList: cmdList));
                     }
                     itemScript.allScripts.Add(executeGive);
                     itemScript.allFunctions[0].useScript = itemCount + 1;

@@ -53,27 +53,27 @@ namespace DSPRE.ROMFiles {
             switch (id) {
                 case 0x16:      // Jump
                 case 0x1A:      // Call
-                    name += " " + FunctionKW + "#" + BitConverter.ToInt32(parametersList[0], 0).ToString("D");
+                    name += " " + containerTypes.Function.ToString() + "#" + BitConverter.ToInt32(parametersList[0], 0).ToString("D");
                     break;
                 case 0x17:      // JumpIfObjID
                 case 0x18:      // JumpIfEventID
                     byte owid = parametersList[0][0];
                     name += " " + ScriptFile.OverworldFlexDecode(owid);
-                    name += " " + FunctionKW + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                    name += " " + containerTypes.Function.ToString() + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
                     break;
                 case 0x19:      // JumpIfPlayerDir
                     byte param = parametersList[0][0];
-                    name += " " + param.ToString("X") + " " + FunctionKW + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                    name += " " + param.ToString("X") + " " + containerTypes.Function.ToString() + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
                     break;
                 case 0x1C:      // JumpIf
                 case 0x1D:      // CallIf
                     byte opcode = parametersList[0][0];
-                    name += " " + RomInfo.ScriptComparisonOperatorsDict[opcode] + " " + FunctionKW + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                    name += " " + RomInfo.ScriptComparisonOperatorsDict[opcode] + " " + containerTypes.Function.ToString() + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
                     break;
                 case 0x5E:      // Movement
                     ushort flexID = BitConverter.ToUInt16(parametersList[0], 0);
                     name += " " + ScriptFile.OverworldFlexDecode(flexID);
-                    name += " " + ActionKW + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                    name += " " + containerTypes.Action.ToString() + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
                     break;
                 case 0x6A:      // CheckOverworldPosition
                     flexID = BitConverter.ToUInt16(parametersList[0], 0);
