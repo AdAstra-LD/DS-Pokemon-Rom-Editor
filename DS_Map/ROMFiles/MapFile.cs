@@ -75,17 +75,18 @@ namespace DSPRE.ROMFiles {
                 /* Read background sounds section */
                 if (gFamily == gFamEnum.HGSS) { //Map must be loaded as HGSS
                     ushort bgsSignature = reader.ReadUInt16();
-                    if (bgsSignature != 0x1234) {
+                    if (bgsSignature == 0x1234) {
+                        ushort bgsDataLength = reader.ReadUInt16();
+
+                        reader.BaseStream.Position -= 4; //go back so that the signature "0x1234" + size can be read and stored
+                        ImportSoundPlates(new MemoryStream(reader.ReadBytes(bgsDataLength + 4)));
+                    } else {
                         correctnessFlag = false;
                         if (showMessages) {
                             MessageBox.Show("The header section of this map's BackGround Sound data is corrupted.",
                             "BGS Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                    ushort bgsDataLength = reader.ReadUInt16();
-
-                    reader.BaseStream.Position -= 4; //go back so that the signature "0x1234" + size can be read and stored
-                    ImportSoundPlates(new MemoryStream(reader.ReadBytes(bgsDataLength + 4)));
                 }
 
                 /* Read permission data */

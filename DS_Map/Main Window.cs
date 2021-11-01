@@ -2749,20 +2749,35 @@ namespace DSPRE {
 
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {
                 id = currentMapFile.buildings[i].modelID;
+                string baseName = (i + 1).ToString("D2") + MapHeader.nameSeparator;
                 try {
-                    buildingsListBox.Items.Add((i + 1).ToString("D2") + MapHeader.nameSeparator + buildIndexComboBox.Items[(int)id]);
+                    buildingsListBox.Items.Add(baseName + buildIndexComboBox.Items[(int)id]);
                 } catch (ArgumentOutOfRangeException) {
-                    MessageBox.Show("Building #" + id + " couldn't be found in the Building List.\nBuilding 0 will be loaded in its place.", "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    buildingsListBox.Items.Add((i + 1).ToString("D2") + MapHeader.nameSeparator + buildIndexComboBox.Items[0]);
+                    DialogResult d = MessageBox.Show("Building #" + id + " couldn't be found in the Building List.\n" +
+                        "Do you want to load Building 0 in its place?\n" +
+                        "(Choosing \"Cancel\" will discard this building altogether.)", "Building not found", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Error);
+                    if (d == DialogResult.Yes) {
+                        buildingsListBox.Items.Add(baseName + buildIndexComboBox.Items[0]);
+                    } else if (d == DialogResult.No) {
+                        buildingsListBox.Items.Add(baseName + "MISSING " + (int)id + '!');
+                    } // else do nothing
                 }
             }
 
         }
         private Building LoadBuildingModel(Building building, bool interior) {
-            string modelPath = romInfo.GetBuildingModelsDirPath(interior) + "\\" + building.modelID.ToString("D4");
+            string bmDirPath = romInfo.GetBuildingModelsDirPath(interior);
+            string modelPath = bmDirPath + "\\" + building.modelID.ToString("D4");
 
-            using (Stream fs = new FileStream(modelPath, FileMode.Open))
-                building.NSBMDFile = NSBMDLoader.LoadNSBMD(fs);
+            try {
+                using (Stream fs = new FileStream(modelPath, FileMode.Open)) {
+                    building.NSBMDFile = NSBMDLoader.LoadNSBMD(fs);
+                }
+            } catch(FileNotFoundException) {
+                string bld = interior ? "Interior building file " : "Exterior building file ";
+                MessageBox.Show(bld + building.modelID + " could not be found in\n" + '"' + bmDirPath + '"', "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             return building;
         }
         private NSBMD LoadModelTextures(NSBMD model, string textureFolder, int fileID) {
@@ -2804,9 +2819,14 @@ namespace DSPRE {
                 else Gl.glDisable(Gl.GL_TEXTURE_2D);
 
                 for (int i = 0; i < mapFile.buildings.Count; i++) {
-                    buildingsRenderer.Model = mapFile.buildings[i].NSBMDFile.models[0];
-                    ScaleTranslateBuilding(mapFile.buildings[i]);
-                    buildingsRenderer.RenderModel("", ani, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, ca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, tp, mapFile.buildings[i].NSBMDFile);
+                    NSBMD file = mapFile.buildings[i].NSBMDFile;
+                    if (file is null) {
+                        Console.WriteLine("Null building can't be rendered");
+                    } else {
+                        buildingsRenderer.Model = file.models[0];
+                        ScaleTranslateBuilding(mapFile.buildings[i]);
+                        buildingsRenderer.RenderModel("", ani, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, ca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, tp, file);
+                    }
                 }
             }
         }
@@ -3045,18 +3065,22 @@ namespace DSPRE {
                 Stream str = new MemoryStream(textureFile);
                 foreach (Building building in currentMapFile.buildings) {
                     str.Position = 0;
-                    building.NSBMDFile.materials = NSBTXLoader.LoadNsbtx(str, out building.NSBMDFile.Textures, out building.NSBMDFile.Palettes);
+                    NSBMD file = building.NSBMDFile;
 
-                    try {
-                        building.NSBMDFile.MatchTextures();
-                        showBuildingTextures = true;
-                    } catch {
-                        if (!buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex].ToString().StartsWith("Error!")) {
-                            disableHandlers = true;
-                            buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex].ToString().Insert(0, "Error! - ");
-                            disableHandlers = false;
+                    if (file != null) {
+                        file.materials = NSBTXLoader.LoadNsbtx(str, out file.Textures, out file.Palettes);
+
+                        try {
+                            file.MatchTextures();
+                            showBuildingTextures = true;
+                        } catch {
+                            if (!buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex].ToString().StartsWith("Error!")) {
+                                disableHandlers = true;
+                                buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex].ToString().Insert(0, "Error! - ");
+                                disableHandlers = false;
+                            }
+                            showBuildingTextures = false;
                         }
-                        showBuildingTextures = false;
                     }
                 }
                 //buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = "Error - Building Texture Pack too small [" + (buildTextureComboBox.SelectedIndex - 1).ToString("D2") + "]";
@@ -3395,21 +3419,24 @@ namespace DSPRE {
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void buildingsListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || buildingsListBox.SelectedIndex < 0) {
+            int buildingNumber = buildingsListBox.SelectedIndex;
+            if (disableHandlers || buildingNumber < 0) {
                 return;
             }
             disableHandlers = true;
 
-            int buildingNumber = buildingsListBox.SelectedIndex;
+            Building selected = currentMapFile.buildings[buildingNumber];
+            if (selected.NSBMDFile != null) {
+                buildIndexComboBox.SelectedIndex = (int)selected.modelID;
 
-            buildIndexComboBox.SelectedIndex = (int)currentMapFile.buildings[buildingNumber].modelID;
-            xBuildUpDown.Value = currentMapFile.buildings[buildingNumber].xPosition + (decimal)currentMapFile.buildings[buildingNumber].xFraction / 65535;
-            yBuildUpDown.Value = currentMapFile.buildings[buildingNumber].yPosition + (decimal)currentMapFile.buildings[buildingNumber].yFraction / 65535;
-            zBuildUpDown.Value = currentMapFile.buildings[buildingNumber].zPosition + (decimal)currentMapFile.buildings[buildingNumber].zFraction / 65535;
+                xBuildUpDown.Value = selected.xPosition + (decimal)selected.xFraction / 65535;
+                yBuildUpDown.Value = selected.yPosition + (decimal)selected.yFraction / 65535;
+                zBuildUpDown.Value = selected.zPosition + (decimal)selected.zFraction / 65535;
 
-            buildingWidthUpDown.Value = currentMapFile.buildings[buildingNumber].width;
-            buildingHeightUpDown.Value = currentMapFile.buildings[buildingNumber].height;
-            buildingLengthUpDown.Value = currentMapFile.buildings[buildingNumber].length;
+                buildingWidthUpDown.Value = selected.width;
+                buildingHeightUpDown.Value = selected.height;
+                buildingLengthUpDown.Value = selected.length;
+            }
 
             disableHandlers = false;
         }
@@ -3436,8 +3463,9 @@ namespace DSPRE {
                 Filter = "Buildings File (*.bld)|*.bld",
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
-            if (eb.ShowDialog(this) != DialogResult.OK)
+            if (eb.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) {
                 writer.Write(currentMapFile.BuildingsToByteArray());
@@ -3449,8 +3477,9 @@ namespace DSPRE {
             OpenFileDialog ib = new OpenFileDialog {
                 Filter = "Buildings File (*.bld)|*.bld"
             };
-            if (ib.ShowDialog(this) != DialogResult.OK)
+            if (ib.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             currentMapFile.ImportBuildings(new FileStream(ib.FileName, FileMode.Open));
             FillBuildingsBox();
@@ -3968,8 +3997,9 @@ namespace DSPRE {
                 Filter = "Permissions File (*.per)|*.per",
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
-            if (em.ShowDialog(this) != DialogResult.OK)
+            if (em.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(em.FileName)))
                 writer.Write(currentMapFile.CollisionsToByteArray());
@@ -7277,12 +7307,8 @@ namespace DSPRE {
                         "More details in the following dialog.\n\n" + "Do you want to know more?",
                         "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                bool userConfirmed;
-                if (d1 == DialogResult.Yes) {
-                    userConfirmed = ROMToolboxDialog.ConfigureOverlay1Uncompressed();
-                } else {
-                    userConfirmed = false;
-                }
+                bool userConfirmed = (d1 == DialogResult.Yes ? ROMToolboxDialog.ConfigureOverlay1Uncompressed() : false);
+                
 
                 if (!userConfirmed) {
                     MessageBox.Show("You chose not to apply the patch. Use this editor responsibly.\n\n" +
