@@ -2,10 +2,10 @@
 
 Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features and bugfixes.
 
-![Screenshot](aDSPRE_133.png)
-![Screenshot](bDSPRE_133.png)
-![Screenshot](cDSPRE_133.png)
-![Screenshot](dDSPRE_133.png)
+![Screenshot](aDSPRE_134.png)
+![Screenshot](bDSPRE_134.png)
+![Screenshot](cDSPRE_134.png)
+![Screenshot](dDSPRE_134.png)
 
 ## Misc changes to the official DSPRE
 - Significantly shorter load and save times.
@@ -17,6 +17,7 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features a
 - Lots of new buttons and icons.
 - Some fields will now show a colored text depending on their value.
 - DSPRE can now read extracted data from a directory, without loading a ROM.
+- DSPRE now warns you about ARM9 status mismatches.
 - Added new ALT key shortcuts (Hold alt to see which shortcuts are available).
 - Fixed Encounter Editor unpacking HG encounters for SS ROMs.
 - Fixed Overworld sprite search algorithm for most (if not all) supported ROMs.
