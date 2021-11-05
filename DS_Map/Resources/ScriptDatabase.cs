@@ -574,7 +574,8 @@ namespace DSPRE.Resources {
             [0x020F] = "SafariTrainAnimation",
             [0x0210] = "CheckSafariTrainMovement",
             [0x0211] = "IgnoreHeights",
-
+            [0x0212] = "GetPokemonNature",
+            [0x0213] = "CheckPartyNature",
             [0x0214] = "CheckSpiritombCounter",
             [0x0215] = "ClearAmitySquareSteps",
             [0x0216] = "CheckAmitySquareSteps",
@@ -1446,7 +1447,7 @@ namespace DSPRE.Resources {
             [0x02FA] = "GetPlayingBGM",
             [0x02FB] = "SpearPillarSequence2",
 
-            [0x0328] = "PortalEffect",
+            [0x0320] = "PortalAnimation",
 
             //International release exclusive
             [0x033C] = "TextItemLowercase",
@@ -1454,6 +1455,7 @@ namespace DSPRE.Resources {
 
             [0x0347] = "DisplayFloor"
         };
+
         public static Dictionary<ushort, byte[]> PlatScrCmdParameters = new Dictionary<ushort, byte[]>() {
             [0x011D] = new byte[] { 1, 1, 2, 2 },
 
