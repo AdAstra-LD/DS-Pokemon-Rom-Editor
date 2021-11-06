@@ -221,6 +221,7 @@
             this.bldRoundDec = new System.Windows.Forms.RadioButton();
             this.bldRoundWhole = new System.Windows.Forms.RadioButton();
             this.bldPlaceWithMouseCheckbox = new System.Windows.Forms.CheckBox();
+            this.importBuildingsButton = new System.Windows.Forms.Button();
             this.groupBox20 = new System.Windows.Forms.GroupBox();
             this.interiorbldRadioButton = new System.Windows.Forms.RadioButton();
             this.exteriorbldRadioButton = new System.Windows.Forms.RadioButton();
@@ -233,7 +234,6 @@
             this.buildingWidthUpDown = new System.Windows.Forms.NumericUpDown();
             this.buildingLengthUpDown = new System.Windows.Forms.NumericUpDown();
             this.duplicateBuildingButton = new System.Windows.Forms.Button();
-            this.importBuildingsButton = new System.Windows.Forms.Button();
             this.exportBuildingsButton = new System.Windows.Forms.Button();
             this.removeBuildingButton = new System.Windows.Forms.Button();
             this.addBuildingButton = new System.Windows.Forms.Button();
@@ -486,6 +486,11 @@
             this.importEventFileButton = new System.Windows.Forms.Button();
             this.saveEventsButton = new System.Windows.Forms.Button();
             this.scriptEditorTabPage = new System.Windows.Forms.TabPage();
+            this.clearCurrentLevelScriptButton = new System.Windows.Forms.Button();
+            this.groupBox26 = new System.Windows.Forms.GroupBox();
+            this.scriptEditorNumberFormatNoPreference = new System.Windows.Forms.RadioButton();
+            this.scriptEditorNumberFormatDecimal = new System.Windows.Forms.RadioButton();
+            this.scriptEditorNumberFormatHex = new System.Windows.Forms.RadioButton();
             this.scriptEditorWhitespacesCheckbox = new System.Windows.Forms.CheckBox();
             this.scriptEditorWordWrapCheckbox = new System.Windows.Forms.CheckBox();
             this.compressScriptTextButton = new System.Windows.Forms.Button();
@@ -500,7 +505,6 @@
             this.functionsNavListbox = new System.Windows.Forms.ListBox();
             this.ActionsNavTab = new System.Windows.Forms.TabPage();
             this.actionsNavListbox = new System.Windows.Forms.ListBox();
-            this.clearCurrentLevelScriptButton = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.searchOnlyCurrentScriptCheckBox = new System.Windows.Forms.CheckBox();
             this.scriptSearchCaseSensitiveCheckBox = new System.Windows.Forms.CheckBox();
@@ -956,6 +960,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.wheelClickPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LeftClickPicture)).BeginInit();
             this.scriptEditorTabPage.SuspendLayout();
+            this.groupBox26.SuspendLayout();
             this.groupBox24.SuspendLayout();
             this.ScriptNavigatorTabControl.SuspendLayout();
             this.ScriptsNavTab.SuspendLayout();
@@ -1099,6 +1104,8 @@
             // removeLastHeaderBTN
             // 
             this.removeLastHeaderBTN.Enabled = false;
+            this.removeLastHeaderBTN.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeLastHeaderBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeLastHeaderBTN.Location = new System.Drawing.Point(13, 578);
             this.removeLastHeaderBTN.Name = "removeLastHeaderBTN";
             this.removeLastHeaderBTN.Size = new System.Drawing.Size(214, 26);
@@ -1110,6 +1117,8 @@
             // addHeaderBTN
             // 
             this.addHeaderBTN.Enabled = false;
+            this.addHeaderBTN.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addHeaderBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addHeaderBTN.Location = new System.Drawing.Point(13, 552);
             this.addHeaderBTN.Name = "addHeaderBTN";
             this.addHeaderBTN.Size = new System.Drawing.Size(214, 26);
@@ -1137,7 +1146,7 @@
             // worldmapCoordsPasteButton
             // 
             this.worldmapCoordsPasteButton.Enabled = false;
-            this.worldmapCoordsPasteButton.Image = ((System.Drawing.Image)(resources.GetObject("worldmapCoordsPasteButton.Image")));
+            this.worldmapCoordsPasteButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
             this.worldmapCoordsPasteButton.Location = new System.Drawing.Point(43, 93);
             this.worldmapCoordsPasteButton.Name = "worldmapCoordsPasteButton";
             this.worldmapCoordsPasteButton.Size = new System.Drawing.Size(35, 37);
@@ -1156,7 +1165,7 @@
             // 
             // worldmapCoordsCopyButton
             // 
-            this.worldmapCoordsCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("worldmapCoordsCopyButton.Image")));
+            this.worldmapCoordsCopyButton.Image = global::DSPRE.Properties.Resources.copyIcon;
             this.worldmapCoordsCopyButton.Location = new System.Drawing.Point(6, 93);
             this.worldmapCoordsCopyButton.Name = "worldmapCoordsCopyButton";
             this.worldmapCoordsCopyButton.Size = new System.Drawing.Size(35, 37);
@@ -1258,7 +1267,7 @@
             // 
             // importHeaderFromFileButton
             // 
-            this.importHeaderFromFileButton.Image = ((System.Drawing.Image)(resources.GetObject("importHeaderFromFileButton.Image")));
+            this.importHeaderFromFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importHeaderFromFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importHeaderFromFileButton.Location = new System.Drawing.Point(912, 518);
             this.importHeaderFromFileButton.Name = "importHeaderFromFileButton";
@@ -1272,7 +1281,7 @@
             // 
             // exportHeaderToFileButton
             // 
-            this.exportHeaderToFileButton.Image = ((System.Drawing.Image)(resources.GetObject("exportHeaderToFileButton.Image")));
+            this.exportHeaderToFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportHeaderToFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportHeaderToFileButton.Location = new System.Drawing.Point(992, 518);
             this.exportHeaderToFileButton.Name = "exportHeaderToFileButton";
@@ -2205,7 +2214,7 @@
             // 
             // saveHeaderButton
             // 
-            this.saveHeaderButton.Image = ((System.Drawing.Image)(resources.GetObject("saveHeaderButton.Image")));
+            this.saveHeaderButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveHeaderButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveHeaderButton.Location = new System.Drawing.Point(1072, 517);
             this.saveHeaderButton.Name = "saveHeaderButton";
@@ -2483,7 +2492,7 @@
             // setSpawnPointButton
             // 
             this.setSpawnPointButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.setSpawnPointButton.Image = ((System.Drawing.Image)(resources.GetObject("setSpawnPointButton.Image")));
+            this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
             this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.setSpawnPointButton.Location = new System.Drawing.Point(11, 521);
@@ -2498,7 +2507,7 @@
             // 
             // resetColorTableButton
             // 
-            this.resetColorTableButton.Image = ((System.Drawing.Image)(resources.GetObject("resetColorTableButton.Image")));
+            this.resetColorTableButton.Image = global::DSPRE.Properties.Resources.resetColorTable;
             this.resetColorTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.resetColorTableButton.Location = new System.Drawing.Point(11, 446);
             this.resetColorTableButton.Name = "resetColorTableButton";
@@ -2511,7 +2520,7 @@
             // 
             // importColorTableButton
             // 
-            this.importColorTableButton.Image = ((System.Drawing.Image)(resources.GetObject("importColorTableButton.Image")));
+            this.importColorTableButton.Image = global::DSPRE.Properties.Resources.loadColorTable;
             this.importColorTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importColorTableButton.Location = new System.Drawing.Point(11, 479);
             this.importColorTableButton.Name = "importColorTableButton";
@@ -2524,7 +2533,7 @@
             // 
             // importMatrixButton
             // 
-            this.importMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("importMatrixButton.Image")));
+            this.importMatrixButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importMatrixButton.Location = new System.Drawing.Point(11, 228);
             this.importMatrixButton.Name = "importMatrixButton";
@@ -2537,7 +2546,7 @@
             // 
             // exportMatrixButton
             // 
-            this.exportMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("exportMatrixButton.Image")));
+            this.exportMatrixButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportMatrixButton.Location = new System.Drawing.Point(11, 197);
             this.exportMatrixButton.Name = "exportMatrixButton";
@@ -2576,6 +2585,8 @@
             // 
             // removeHeightsButton
             // 
+            this.removeHeightsButton.Image = ((System.Drawing.Image)(resources.GetObject("removeHeightsButton.Image")));
+            this.removeHeightsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeHeightsButton.Location = new System.Drawing.Point(11, 398);
             this.removeHeightsButton.Name = "removeHeightsButton";
             this.removeHeightsButton.Size = new System.Drawing.Size(117, 38);
@@ -2586,6 +2597,8 @@
             // 
             // removeHeadersButton
             // 
+            this.removeHeadersButton.Image = ((System.Drawing.Image)(resources.GetObject("removeHeadersButton.Image")));
+            this.removeHeadersButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeHeadersButton.Location = new System.Drawing.Point(11, 310);
             this.removeHeadersButton.Name = "removeHeadersButton";
             this.removeHeadersButton.Size = new System.Drawing.Size(117, 38);
@@ -2596,6 +2609,8 @@
             // 
             // addHeightsButton
             // 
+            this.addHeightsButton.Image = ((System.Drawing.Image)(resources.GetObject("addHeightsButton.Image")));
+            this.addHeightsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addHeightsButton.Location = new System.Drawing.Point(11, 359);
             this.addHeightsButton.Name = "addHeightsButton";
             this.addHeightsButton.Size = new System.Drawing.Size(117, 38);
@@ -2606,6 +2621,8 @@
             // 
             // addHeadersButton
             // 
+            this.addHeadersButton.Image = ((System.Drawing.Image)(resources.GetObject("addHeadersButton.Image")));
+            this.addHeadersButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addHeadersButton.Location = new System.Drawing.Point(11, 271);
             this.addHeadersButton.Name = "addHeadersButton";
             this.addHeadersButton.Size = new System.Drawing.Size(117, 38);
@@ -2928,7 +2945,7 @@
             // saveMatrixButton
             // 
             this.saveMatrixButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.saveMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("saveMatrixButton.Image")));
+            this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.saveMatrixButton.Location = new System.Drawing.Point(11, 566);
@@ -2971,7 +2988,6 @@
             // 
             // mapScreenshotButton
             // 
-            this.mapScreenshotButton.Image = ((System.Drawing.Image)(resources.GetObject("mapScreenshotButton.Image")));
             this.mapScreenshotButton.Location = new System.Drawing.Point(1135, 499);
             this.mapScreenshotButton.Name = "mapScreenshotButton";
             this.mapScreenshotButton.Size = new System.Drawing.Size(41, 40);
@@ -3021,7 +3037,7 @@
             // 
             // removeMapFileButton
             // 
-            this.removeMapFileButton.Image = ((System.Drawing.Image)(resources.GetObject("removeMapFileButton.Image")));
+            this.removeMapFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeMapFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeMapFileButton.Location = new System.Drawing.Point(337, 487);
             this.removeMapFileButton.Name = "removeMapFileButton";
@@ -3149,10 +3165,10 @@
             this.buildingsTabPage.Controls.Add(this.lockXZgroupbox);
             this.buildingsTabPage.Controls.Add(this.bldRoundGroupbox);
             this.buildingsTabPage.Controls.Add(this.bldPlaceWithMouseCheckbox);
+            this.buildingsTabPage.Controls.Add(this.importBuildingsButton);
             this.buildingsTabPage.Controls.Add(this.groupBox20);
             this.buildingsTabPage.Controls.Add(this.groupBox19);
             this.buildingsTabPage.Controls.Add(this.duplicateBuildingButton);
-            this.buildingsTabPage.Controls.Add(this.importBuildingsButton);
             this.buildingsTabPage.Controls.Add(this.exportBuildingsButton);
             this.buildingsTabPage.Controls.Add(this.removeBuildingButton);
             this.buildingsTabPage.Controls.Add(this.addBuildingButton);
@@ -3171,7 +3187,7 @@
             this.lockXZgroupbox.Controls.Add(this.bldPlaceLockXcheckbox);
             this.lockXZgroupbox.Controls.Add(this.bldPlaceLockZcheckbox);
             this.lockXZgroupbox.Enabled = false;
-            this.lockXZgroupbox.Location = new System.Drawing.Point(246, 272);
+            this.lockXZgroupbox.Location = new System.Drawing.Point(244, 270);
             this.lockXZgroupbox.Name = "lockXZgroupbox";
             this.lockXZgroupbox.Size = new System.Drawing.Size(154, 36);
             this.lockXZgroupbox.TabIndex = 43;
@@ -3216,7 +3232,7 @@
             this.bldRoundGroupbox.Controls.Add(this.bldRoundDec);
             this.bldRoundGroupbox.Controls.Add(this.bldRoundWhole);
             this.bldRoundGroupbox.Enabled = false;
-            this.bldRoundGroupbox.Location = new System.Drawing.Point(194, 317);
+            this.bldRoundGroupbox.Location = new System.Drawing.Point(194, 315);
             this.bldRoundGroupbox.Name = "bldRoundGroupbox";
             this.bldRoundGroupbox.Size = new System.Drawing.Size(208, 83);
             this.bldRoundGroupbox.TabIndex = 40;
@@ -3301,13 +3317,26 @@
             // 
             this.bldPlaceWithMouseCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
             this.bldPlaceWithMouseCheckbox.Enabled = false;
-            this.bldPlaceWithMouseCheckbox.Image = ((System.Drawing.Image)(resources.GetObject("bldPlaceWithMouseCheckbox.Image")));
-            this.bldPlaceWithMouseCheckbox.Location = new System.Drawing.Point(200, 270);
+            this.bldPlaceWithMouseCheckbox.Image = global::DSPRE.Properties.Resources.selectBldWithMouse;
+            this.bldPlaceWithMouseCheckbox.Location = new System.Drawing.Point(199, 270);
             this.bldPlaceWithMouseCheckbox.Name = "bldPlaceWithMouseCheckbox";
-            this.bldPlaceWithMouseCheckbox.Size = new System.Drawing.Size(38, 40);
+            this.bldPlaceWithMouseCheckbox.Size = new System.Drawing.Size(39, 40);
             this.bldPlaceWithMouseCheckbox.TabIndex = 40;
             this.bldPlaceWithMouseCheckbox.UseVisualStyleBackColor = true;
             this.bldPlaceWithMouseCheckbox.CheckedChanged += new System.EventHandler(this.bldPlaceWithMouseCheckbox_CheckedChanged);
+            // 
+            // importBuildingsButton
+            // 
+            this.importBuildingsButton.Image = ((System.Drawing.Image)(resources.GetObject("importBuildingsButton.Image")));
+            this.importBuildingsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.importBuildingsButton.Location = new System.Drawing.Point(193, 11);
+            this.importBuildingsButton.Name = "importBuildingsButton";
+            this.importBuildingsButton.Size = new System.Drawing.Size(102, 40);
+            this.importBuildingsButton.TabIndex = 21;
+            this.importBuildingsButton.Text = "Import\r\nBuildings";
+            this.importBuildingsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.importBuildingsButton.UseVisualStyleBackColor = true;
+            this.importBuildingsButton.Click += new System.EventHandler(this.importBuildingsButton_Click);
             // 
             // groupBox20
             // 
@@ -3432,9 +3461,9 @@
             // 
             // duplicateBuildingButton
             // 
-            this.duplicateBuildingButton.Image = ((System.Drawing.Image)(resources.GetObject("duplicateBuildingButton.Image")));
+            this.duplicateBuildingButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
             this.duplicateBuildingButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.duplicateBuildingButton.Location = new System.Drawing.Point(251, 407);
+            this.duplicateBuildingButton.Location = new System.Drawing.Point(322, 405);
             this.duplicateBuildingButton.Name = "duplicateBuildingButton";
             this.duplicateBuildingButton.Size = new System.Drawing.Size(80, 32);
             this.duplicateBuildingButton.TabIndex = 25;
@@ -3443,24 +3472,11 @@
             this.duplicateBuildingButton.UseVisualStyleBackColor = true;
             this.duplicateBuildingButton.Click += new System.EventHandler(this.duplicateBuildingButton_Click);
             // 
-            // importBuildingsButton
-            // 
-            this.importBuildingsButton.Image = ((System.Drawing.Image)(resources.GetObject("importBuildingsButton.Image")));
-            this.importBuildingsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importBuildingsButton.Location = new System.Drawing.Point(300, 13);
-            this.importBuildingsButton.Name = "importBuildingsButton";
-            this.importBuildingsButton.Size = new System.Drawing.Size(102, 40);
-            this.importBuildingsButton.TabIndex = 21;
-            this.importBuildingsButton.Text = "Import\r\nBuildings";
-            this.importBuildingsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importBuildingsButton.UseVisualStyleBackColor = true;
-            this.importBuildingsButton.Click += new System.EventHandler(this.importBuildingsButton_Click);
-            // 
             // exportBuildingsButton
             // 
             this.exportBuildingsButton.Image = ((System.Drawing.Image)(resources.GetObject("exportBuildingsButton.Image")));
             this.exportBuildingsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportBuildingsButton.Location = new System.Drawing.Point(194, 13);
+            this.exportBuildingsButton.Location = new System.Drawing.Point(298, 11);
             this.exportBuildingsButton.Name = "exportBuildingsButton";
             this.exportBuildingsButton.Size = new System.Drawing.Size(102, 40);
             this.exportBuildingsButton.TabIndex = 20;
@@ -3471,13 +3487,13 @@
             // 
             // removeBuildingButton
             // 
-            this.removeBuildingButton.Image = ((System.Drawing.Image)(resources.GetObject("removeBuildingButton.Image")));
+            this.removeBuildingButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeBuildingButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeBuildingButton.Location = new System.Drawing.Point(332, 407);
+            this.removeBuildingButton.Location = new System.Drawing.Point(251, 405);
             this.removeBuildingButton.Name = "removeBuildingButton";
             this.removeBuildingButton.Size = new System.Drawing.Size(70, 32);
             this.removeBuildingButton.TabIndex = 13;
-            this.removeBuildingButton.Text = "Remove";
+            this.removeBuildingButton.Text = "Delete";
             this.removeBuildingButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.removeBuildingButton.UseVisualStyleBackColor = true;
             this.removeBuildingButton.Click += new System.EventHandler(this.removeBuildingButton_Click);
@@ -3486,7 +3502,7 @@
             // 
             this.addBuildingButton.Image = ((System.Drawing.Image)(resources.GetObject("addBuildingButton.Image")));
             this.addBuildingButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addBuildingButton.Location = new System.Drawing.Point(194, 407);
+            this.addBuildingButton.Location = new System.Drawing.Point(194, 405);
             this.addBuildingButton.Name = "addBuildingButton";
             this.addBuildingButton.Size = new System.Drawing.Size(56, 32);
             this.addBuildingButton.TabIndex = 12;
@@ -3805,7 +3821,7 @@
             // 
             // ImportMovButton
             // 
-            this.ImportMovButton.Image = ((System.Drawing.Image)(resources.GetObject("ImportMovButton.Image")));
+            this.ImportMovButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.ImportMovButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.ImportMovButton.Location = new System.Drawing.Point(250, 36);
             this.ImportMovButton.Name = "ImportMovButton";
@@ -3818,7 +3834,7 @@
             // 
             // exportMovButton
             // 
-            this.exportMovButton.Image = ((System.Drawing.Image)(resources.GetObject("exportMovButton.Image")));
+            this.exportMovButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportMovButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportMovButton.Location = new System.Drawing.Point(250, 80);
             this.exportMovButton.Name = "exportMovButton";
@@ -3909,7 +3925,7 @@
             // 
             // importMapButton
             // 
-            this.importMapButton.Image = ((System.Drawing.Image)(resources.GetObject("importMapButton.Image")));
+            this.importMapButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importMapButton.Location = new System.Drawing.Point(277, 9);
             this.importMapButton.Name = "importMapButton";
@@ -3922,7 +3938,7 @@
             // 
             // exportMapButton
             // 
-            this.exportMapButton.Image = ((System.Drawing.Image)(resources.GetObject("exportMapButton.Image")));
+            this.exportMapButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportMapButton.Location = new System.Drawing.Point(277, 54);
             this.exportMapButton.Name = "exportMapButton";
@@ -4000,7 +4016,7 @@
             // 
             // bdhcImportButton
             // 
-            this.bdhcImportButton.Image = ((System.Drawing.Image)(resources.GetObject("bdhcImportButton.Image")));
+            this.bdhcImportButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.bdhcImportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bdhcImportButton.Location = new System.Drawing.Point(277, 9);
             this.bdhcImportButton.Name = "bdhcImportButton";
@@ -4013,7 +4029,7 @@
             // 
             // bdhcExportButton
             // 
-            this.bdhcExportButton.Image = ((System.Drawing.Image)(resources.GetObject("bdhcExportButton.Image")));
+            this.bdhcExportButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.bdhcExportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bdhcExportButton.Location = new System.Drawing.Point(277, 54);
             this.bdhcExportButton.Name = "bdhcExportButton";
@@ -4041,7 +4057,7 @@
             // 
             // blankBGSButton
             // 
-            this.blankBGSButton.Image = ((System.Drawing.Image)(resources.GetObject("blankBGSButton.Image")));
+            this.blankBGSButton.Image = global::DSPRE.Properties.Resources.muteIcon;
             this.blankBGSButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.blankBGSButton.Location = new System.Drawing.Point(277, 109);
             this.blankBGSButton.Name = "blankBGSButton";
@@ -4104,7 +4120,7 @@
             // 
             // soundPlatesImportButton
             // 
-            this.soundPlatesImportButton.Image = ((System.Drawing.Image)(resources.GetObject("soundPlatesImportButton.Image")));
+            this.soundPlatesImportButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.soundPlatesImportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.soundPlatesImportButton.Location = new System.Drawing.Point(277, 9);
             this.soundPlatesImportButton.Name = "soundPlatesImportButton";
@@ -4117,7 +4133,7 @@
             // 
             // soundPlatesExportButton
             // 
-            this.soundPlatesExportButton.Image = ((System.Drawing.Image)(resources.GetObject("soundPlatesExportButton.Image")));
+            this.soundPlatesExportButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.soundPlatesExportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.soundPlatesExportButton.Location = new System.Drawing.Point(277, 54);
             this.soundPlatesExportButton.Name = "soundPlatesExportButton";
@@ -4175,7 +4191,7 @@
             // 
             // saveMapButton
             // 
-            this.saveMapButton.Image = ((System.Drawing.Image)(resources.GetObject("saveMapButton.Image")));
+            this.saveMapButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveMapButton.Location = new System.Drawing.Point(250, 573);
             this.saveMapButton.Name = "saveMapButton";
@@ -4275,7 +4291,7 @@
             this.areaTypeGroupbox.Controls.Add(this.outdoorAreaRadioButton);
             this.areaTypeGroupbox.Controls.Add(this.indoorAreaRadioButton);
             this.areaTypeGroupbox.Enabled = false;
-            this.areaTypeGroupbox.Location = new System.Drawing.Point(188, 184);
+            this.areaTypeGroupbox.Location = new System.Drawing.Point(188, 185);
             this.areaTypeGroupbox.Name = "areaTypeGroupbox";
             this.areaTypeGroupbox.Size = new System.Drawing.Size(154, 52);
             this.areaTypeGroupbox.TabIndex = 15;
@@ -4348,7 +4364,7 @@
             // 
             // saveAreaDataButton
             // 
-            this.saveAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("saveAreaDataButton.Image")));
+            this.saveAreaDataButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveAreaDataButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveAreaDataButton.Location = new System.Drawing.Point(177, 23);
             this.saveAreaDataButton.Name = "saveAreaDataButton";
@@ -4385,7 +4401,7 @@
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(352, 195);
+            this.label34.Location = new System.Drawing.Point(352, 191);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(53, 13);
             this.label34.TabIndex = 6;
@@ -4395,7 +4411,7 @@
             // 
             this.areaDataLightTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.areaDataLightTypeComboBox.FormattingEnabled = true;
-            this.areaDataLightTypeComboBox.Location = new System.Drawing.Point(355, 211);
+            this.areaDataLightTypeComboBox.Location = new System.Drawing.Point(355, 207);
             this.areaDataLightTypeComboBox.Name = "areaDataLightTypeComboBox";
             this.areaDataLightTypeComboBox.Size = new System.Drawing.Size(137, 21);
             this.areaDataLightTypeComboBox.TabIndex = 5;
@@ -4404,7 +4420,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(187, 140);
+            this.label33.Location = new System.Drawing.Point(187, 141);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(72, 13);
             this.label33.TabIndex = 4;
@@ -4412,7 +4428,7 @@
             // 
             // areaDataMapTilesetUpDown
             // 
-            this.areaDataMapTilesetUpDown.Location = new System.Drawing.Point(191, 156);
+            this.areaDataMapTilesetUpDown.Location = new System.Drawing.Point(191, 157);
             this.areaDataMapTilesetUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -4496,9 +4512,9 @@
             // texturePictureBox
             // 
             this.texturePictureBox.BackColor = System.Drawing.Color.White;
-            this.texturePictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("texturePictureBox.BackgroundImage")));
             this.texturePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.texturePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.texturePictureBox.Image = global::DSPRE.Properties.Resources.alphabgCheckerboard;
             this.texturePictureBox.Location = new System.Drawing.Point(766, 71);
             this.texturePictureBox.Name = "texturePictureBox";
             this.texturePictureBox.Size = new System.Drawing.Size(256, 256);
@@ -4884,7 +4900,7 @@
             // 
             // duplicateSpawnableButton
             // 
-            this.duplicateSpawnableButton.Image = ((System.Drawing.Image)(resources.GetObject("duplicateSpawnableButton.Image")));
+            this.duplicateSpawnableButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
             this.duplicateSpawnableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.duplicateSpawnableButton.Location = new System.Drawing.Point(131, 308);
             this.duplicateSpawnableButton.Name = "duplicateSpawnableButton";
@@ -4917,7 +4933,7 @@
             // 
             // goToSignButton
             // 
-            this.goToSignButton.Image = ((System.Drawing.Image)(resources.GetObject("goToSignButton.Image")));
+            this.goToSignButton.Image = global::DSPRE.Properties.Resources.goToSpawnable;
             this.goToSignButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.goToSignButton.Location = new System.Drawing.Point(30, 137);
             this.goToSignButton.Name = "goToSignButton";
@@ -5225,7 +5241,7 @@
             // 
             // button14
             // 
-            this.button14.Image = ((System.Drawing.Image)(resources.GetObject("button14.Image")));
+            this.button14.Image = global::DSPRE.Properties.Resources.goToOW;
             this.button14.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button14.Location = new System.Drawing.Point(20, 44);
             this.button14.Name = "button14";
@@ -5500,7 +5516,7 @@
             // 
             // itemsSelectorHelpBtn
             // 
-            this.itemsSelectorHelpBtn.Image = ((System.Drawing.Image)(resources.GetObject("itemsSelectorHelpBtn.Image")));
+            this.itemsSelectorHelpBtn.Image = global::DSPRE.Properties.Resources.questionMark;
             this.itemsSelectorHelpBtn.Location = new System.Drawing.Point(194, 67);
             this.itemsSelectorHelpBtn.Name = "itemsSelectorHelpBtn";
             this.itemsSelectorHelpBtn.Size = new System.Drawing.Size(28, 29);
@@ -5671,7 +5687,7 @@
             // 
             // duplicateOverworldsButton
             // 
-            this.duplicateOverworldsButton.Image = ((System.Drawing.Image)(resources.GetObject("duplicateOverworldsButton.Image")));
+            this.duplicateOverworldsButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
             this.duplicateOverworldsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.duplicateOverworldsButton.Location = new System.Drawing.Point(116, 155);
             this.duplicateOverworldsButton.Name = "duplicateOverworldsButton";
@@ -5694,7 +5710,7 @@
             // 
             // removeOverworldButton
             // 
-            this.removeOverworldButton.Image = ((System.Drawing.Image)(resources.GetObject("removeOverworldButton.Image")));
+            this.removeOverworldButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeOverworldButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeOverworldButton.Location = new System.Drawing.Point(56, 155);
             this.removeOverworldButton.Name = "removeOverworldButton";
@@ -5707,7 +5723,7 @@
             // 
             // addOverworldButton
             // 
-            this.addOverworldButton.Image = ((System.Drawing.Image)(resources.GetObject("addOverworldButton.Image")));
+            this.addOverworldButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addOverworldButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addOverworldButton.Location = new System.Drawing.Point(8, 155);
             this.addOverworldButton.Name = "addOverworldButton";
@@ -5745,7 +5761,7 @@
             // 
             // duplicateWarpsButton
             // 
-            this.duplicateWarpsButton.Image = ((System.Drawing.Image)(resources.GetObject("duplicateWarpsButton.Image")));
+            this.duplicateWarpsButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
             this.duplicateWarpsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.duplicateWarpsButton.Location = new System.Drawing.Point(130, 308);
             this.duplicateWarpsButton.Name = "duplicateWarpsButton";
@@ -5772,7 +5788,7 @@
             // 
             // destinationWarpGoToButton
             // 
-            this.destinationWarpGoToButton.Image = ((System.Drawing.Image)(resources.GetObject("destinationWarpGoToButton.Image")));
+            this.destinationWarpGoToButton.Image = global::DSPRE.Properties.Resources.warpGo;
             this.destinationWarpGoToButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.destinationWarpGoToButton.Location = new System.Drawing.Point(57, 77);
             this.destinationWarpGoToButton.Name = "destinationWarpGoToButton";
@@ -5854,7 +5870,7 @@
             // 
             // goToWarpButton
             // 
-            this.goToWarpButton.Image = ((System.Drawing.Image)(resources.GetObject("goToWarpButton.Image")));
+            this.goToWarpButton.Image = global::DSPRE.Properties.Resources.goToWarp;
             this.goToWarpButton.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.goToWarpButton.Location = new System.Drawing.Point(53, 80);
             this.goToWarpButton.Name = "goToWarpButton";
@@ -6007,7 +6023,7 @@
             // 
             // removeWarpButton
             // 
-            this.removeWarpButton.Image = ((System.Drawing.Image)(resources.GetObject("removeWarpButton.Image")));
+            this.removeWarpButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeWarpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeWarpButton.Location = new System.Drawing.Point(66, 308);
             this.removeWarpButton.Name = "removeWarpButton";
@@ -6020,7 +6036,7 @@
             // 
             // addWarpButton
             // 
-            this.addWarpButton.Image = ((System.Drawing.Image)(resources.GetObject("addWarpButton.Image")));
+            this.addWarpButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addWarpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addWarpButton.Location = new System.Drawing.Point(14, 308);
             this.addWarpButton.Name = "addWarpButton";
@@ -6303,7 +6319,7 @@
             // 
             // goToTriggerButton
             // 
-            this.goToTriggerButton.Image = ((System.Drawing.Image)(resources.GetObject("goToTriggerButton.Image")));
+            this.goToTriggerButton.Image = global::DSPRE.Properties.Resources.goToTrigger;
             this.goToTriggerButton.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.goToTriggerButton.Location = new System.Drawing.Point(44, 47);
             this.goToTriggerButton.Name = "goToTriggerButton";
@@ -6360,9 +6376,9 @@
             // 
             // duplicateTriggersButton
             // 
-            this.duplicateTriggersButton.Image = ((System.Drawing.Image)(resources.GetObject("duplicateTriggersButton.Image")));
+            this.duplicateTriggersButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
             this.duplicateTriggersButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.duplicateTriggersButton.Location = new System.Drawing.Point(131, 309);
+            this.duplicateTriggersButton.Location = new System.Drawing.Point(130, 308);
             this.duplicateTriggersButton.Name = "duplicateTriggersButton";
             this.duplicateTriggersButton.Size = new System.Drawing.Size(74, 32);
             this.duplicateTriggersButton.TabIndex = 36;
@@ -6373,11 +6389,11 @@
             // 
             // removeTriggerButton
             // 
-            this.removeTriggerButton.Image = ((System.Drawing.Image)(resources.GetObject("removeTriggerButton.Image")));
+            this.removeTriggerButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeTriggerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeTriggerButton.Location = new System.Drawing.Point(68, 309);
+            this.removeTriggerButton.Location = new System.Drawing.Point(66, 308);
             this.removeTriggerButton.Name = "removeTriggerButton";
-            this.removeTriggerButton.Size = new System.Drawing.Size(62, 32);
+            this.removeTriggerButton.Size = new System.Drawing.Size(63, 32);
             this.removeTriggerButton.TabIndex = 10;
             this.removeTriggerButton.Text = "Delete";
             this.removeTriggerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -6386,9 +6402,9 @@
             // 
             // addTriggerButton
             // 
-            this.addTriggerButton.Image = ((System.Drawing.Image)(resources.GetObject("addTriggerButton.Image")));
+            this.addTriggerButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addTriggerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addTriggerButton.Location = new System.Drawing.Point(16, 309);
+            this.addTriggerButton.Location = new System.Drawing.Point(14, 308);
             this.addTriggerButton.Name = "addTriggerButton";
             this.addTriggerButton.Size = new System.Drawing.Size(51, 32);
             this.addTriggerButton.TabIndex = 9;
@@ -6400,9 +6416,9 @@
             // triggersListBox
             // 
             this.triggersListBox.FormattingEnabled = true;
-            this.triggersListBox.Location = new System.Drawing.Point(16, 13);
+            this.triggersListBox.Location = new System.Drawing.Point(14, 12);
             this.triggersListBox.Name = "triggersListBox";
-            this.triggersListBox.Size = new System.Drawing.Size(189, 290);
+            this.triggersListBox.Size = new System.Drawing.Size(190, 290);
             this.triggersListBox.TabIndex = 4;
             this.triggersListBox.SelectedIndexChanged += new System.EventHandler(this.triggersListBox_SelectedIndexChanged);
             // 
@@ -6449,7 +6465,7 @@
             // 
             this.rightClickPicture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rightClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("rightClickPicture.Image")));
+            this.rightClickPicture.Image = global::DSPRE.Properties.Resources.RightClick;
             this.rightClickPicture.ImageLocation = "";
             this.rightClickPicture.Location = new System.Drawing.Point(468, 420);
             this.rightClickPicture.Name = "rightClickPicture";
@@ -6462,7 +6478,7 @@
             // 
             this.wheelClickPicture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.wheelClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("wheelClickPicture.Image")));
+            this.wheelClickPicture.Image = global::DSPRE.Properties.Resources.WheelClick;
             this.wheelClickPicture.ImageLocation = "";
             this.wheelClickPicture.Location = new System.Drawing.Point(552, 420);
             this.wheelClickPicture.Name = "wheelClickPicture";
@@ -6475,7 +6491,7 @@
             // 
             this.LeftClickPicture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.LeftClickPicture.Image = ((System.Drawing.Image)(resources.GetObject("LeftClickPicture.Image")));
+            this.LeftClickPicture.Image = global::DSPRE.Properties.Resources.LeftClick;
             this.LeftClickPicture.ImageLocation = "";
             this.LeftClickPicture.Location = new System.Drawing.Point(510, 420);
             this.LeftClickPicture.Name = "LeftClickPicture";
@@ -6512,8 +6528,8 @@
             // 
             // eventShiftRightButton
             // 
-            this.eventShiftRightButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftRightButton.BackgroundImage")));
             this.eventShiftRightButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.eventShiftRightButton.Image = global::DSPRE.Properties.Resources.arrowright;
             this.eventShiftRightButton.Location = new System.Drawing.Point(1152, 233);
             this.eventShiftRightButton.Name = "eventShiftRightButton";
             this.eventShiftRightButton.Size = new System.Drawing.Size(25, 156);
@@ -6523,8 +6539,8 @@
             // 
             // eventShiftLeftButton
             // 
-            this.eventShiftLeftButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftLeftButton.BackgroundImage")));
             this.eventShiftLeftButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.eventShiftLeftButton.Image = global::DSPRE.Properties.Resources.arrowleft;
             this.eventShiftLeftButton.Location = new System.Drawing.Point(570, 233);
             this.eventShiftLeftButton.Name = "eventShiftLeftButton";
             this.eventShiftLeftButton.Size = new System.Drawing.Size(25, 156);
@@ -6534,8 +6550,8 @@
             // 
             // eventShiftUpButton
             // 
-            this.eventShiftUpButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftUpButton.BackgroundImage")));
             this.eventShiftUpButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.eventShiftUpButton.Image = global::DSPRE.Properties.Resources.arrowup;
             this.eventShiftUpButton.Location = new System.Drawing.Point(795, 8);
             this.eventShiftUpButton.Name = "eventShiftUpButton";
             this.eventShiftUpButton.Size = new System.Drawing.Size(156, 25);
@@ -6546,8 +6562,8 @@
             // 
             // eventShiftDownButton
             // 
-            this.eventShiftDownButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("eventShiftDownButton.BackgroundImage")));
             this.eventShiftDownButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.eventShiftDownButton.Image = global::DSPRE.Properties.Resources.arrowdown;
             this.eventShiftDownButton.Location = new System.Drawing.Point(795, 589);
             this.eventShiftDownButton.Name = "eventShiftDownButton";
             this.eventShiftDownButton.Size = new System.Drawing.Size(156, 25);
@@ -6558,7 +6574,7 @@
             // 
             // exportEventFileButton
             // 
-            this.exportEventFileButton.Image = ((System.Drawing.Image)(resources.GetObject("exportEventFileButton.Image")));
+            this.exportEventFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportEventFileButton.Location = new System.Drawing.Point(266, 9);
             this.exportEventFileButton.Name = "exportEventFileButton";
@@ -6571,7 +6587,7 @@
             // 
             // importEventFileButton
             // 
-            this.importEventFileButton.Image = ((System.Drawing.Image)(resources.GetObject("importEventFileButton.Image")));
+            this.importEventFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importEventFileButton.Location = new System.Drawing.Point(178, 9);
             this.importEventFileButton.Name = "importEventFileButton";
@@ -6584,7 +6600,7 @@
             // 
             // saveEventsButton
             // 
-            this.saveEventsButton.Image = ((System.Drawing.Image)(resources.GetObject("saveEventsButton.Image")));
+            this.saveEventsButton.Image = global::DSPRE.Properties.Resources.saveButton;
             this.saveEventsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveEventsButton.Location = new System.Drawing.Point(9, 36);
             this.saveEventsButton.Name = "saveEventsButton";
@@ -6596,13 +6612,14 @@
             // 
             // scriptEditorTabPage
             // 
+            this.scriptEditorTabPage.Controls.Add(this.clearCurrentLevelScriptButton);
+            this.scriptEditorTabPage.Controls.Add(this.groupBox26);
             this.scriptEditorTabPage.Controls.Add(this.scriptEditorWhitespacesCheckbox);
             this.scriptEditorTabPage.Controls.Add(this.scriptEditorWordWrapCheckbox);
             this.scriptEditorTabPage.Controls.Add(this.compressScriptTextButton);
             this.scriptEditorTabPage.Controls.Add(this.expandScriptTextButton);
             this.scriptEditorTabPage.Controls.Add(this.openSearchScriptEditorButton);
             this.scriptEditorTabPage.Controls.Add(this.groupBox24);
-            this.scriptEditorTabPage.Controls.Add(this.clearCurrentLevelScriptButton);
             this.scriptEditorTabPage.Controls.Add(this.groupBox8);
             this.scriptEditorTabPage.Controls.Add(this.importScriptFileButton);
             this.scriptEditorTabPage.Controls.Add(this.exportScriptFileButton);
@@ -6621,11 +6638,72 @@
             this.scriptEditorTabPage.Text = "Script Editor";
             this.scriptEditorTabPage.UseVisualStyleBackColor = true;
             // 
+            // clearCurrentLevelScriptButton
+            // 
+            this.clearCurrentLevelScriptButton.Image = global::DSPRE.Properties.Resources.destroyLevelScript;
+            this.clearCurrentLevelScriptButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.clearCurrentLevelScriptButton.Location = new System.Drawing.Point(370, 22);
+            this.clearCurrentLevelScriptButton.Name = "clearCurrentLevelScriptButton";
+            this.clearCurrentLevelScriptButton.Size = new System.Drawing.Size(106, 52);
+            this.clearCurrentLevelScriptButton.TabIndex = 19;
+            this.clearCurrentLevelScriptButton.Text = "&Clear This\r\nLevel Script";
+            this.clearCurrentLevelScriptButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.clearCurrentLevelScriptButton.UseVisualStyleBackColor = true;
+            this.clearCurrentLevelScriptButton.Visible = false;
+            this.clearCurrentLevelScriptButton.Click += new System.EventHandler(this.clearCurrentLevelScriptButton_Click);
+            // 
+            // groupBox26
+            // 
+            this.groupBox26.Controls.Add(this.scriptEditorNumberFormatNoPreference);
+            this.groupBox26.Controls.Add(this.scriptEditorNumberFormatDecimal);
+            this.groupBox26.Controls.Add(this.scriptEditorNumberFormatHex);
+            this.groupBox26.Location = new System.Drawing.Point(706, 4);
+            this.groupBox26.Name = "groupBox26";
+            this.groupBox26.Size = new System.Drawing.Size(190, 36);
+            this.groupBox26.TabIndex = 50;
+            this.groupBox26.TabStop = false;
+            this.groupBox26.Text = "Number Format Preference";
+            // 
+            // scriptEditorNumberFormatNoPreference
+            // 
+            this.scriptEditorNumberFormatNoPreference.AutoSize = true;
+            this.scriptEditorNumberFormatNoPreference.Checked = true;
+            this.scriptEditorNumberFormatNoPreference.Location = new System.Drawing.Point(11, 14);
+            this.scriptEditorNumberFormatNoPreference.Name = "scriptEditorNumberFormatNoPreference";
+            this.scriptEditorNumberFormatNoPreference.Size = new System.Drawing.Size(47, 17);
+            this.scriptEditorNumberFormatNoPreference.TabIndex = 36;
+            this.scriptEditorNumberFormatNoPreference.TabStop = true;
+            this.scriptEditorNumberFormatNoPreference.Text = "Auto";
+            this.scriptEditorNumberFormatNoPreference.UseVisualStyleBackColor = true;
+            this.scriptEditorNumberFormatNoPreference.CheckedChanged += new System.EventHandler(this.UpdateScriptNumberFormatNoPref);
+            // 
+            // scriptEditorNumberFormatDecimal
+            // 
+            this.scriptEditorNumberFormatDecimal.AutoSize = true;
+            this.scriptEditorNumberFormatDecimal.Location = new System.Drawing.Point(121, 14);
+            this.scriptEditorNumberFormatDecimal.Name = "scriptEditorNumberFormatDecimal";
+            this.scriptEditorNumberFormatDecimal.Size = new System.Drawing.Size(63, 17);
+            this.scriptEditorNumberFormatDecimal.TabIndex = 35;
+            this.scriptEditorNumberFormatDecimal.Text = "Decimal";
+            this.scriptEditorNumberFormatDecimal.UseVisualStyleBackColor = true;
+            this.scriptEditorNumberFormatDecimal.CheckedChanged += new System.EventHandler(this.UpdateScriptNumberFormatDec);
+            // 
+            // scriptEditorNumberFormatHex
+            // 
+            this.scriptEditorNumberFormatHex.AutoSize = true;
+            this.scriptEditorNumberFormatHex.Location = new System.Drawing.Point(68, 14);
+            this.scriptEditorNumberFormatHex.Name = "scriptEditorNumberFormatHex";
+            this.scriptEditorNumberFormatHex.Size = new System.Drawing.Size(44, 17);
+            this.scriptEditorNumberFormatHex.TabIndex = 34;
+            this.scriptEditorNumberFormatHex.Text = "Hex";
+            this.scriptEditorNumberFormatHex.UseVisualStyleBackColor = true;
+            this.scriptEditorNumberFormatHex.CheckedChanged += new System.EventHandler(this.UpdateScriptNumberFormatHex);
+            // 
             // scriptEditorWhitespacesCheckbox
             // 
             this.scriptEditorWhitespacesCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
             this.scriptEditorWhitespacesCheckbox.AutoSize = true;
-            this.scriptEditorWhitespacesCheckbox.Location = new System.Drawing.Point(978, 10);
+            this.scriptEditorWhitespacesCheckbox.Location = new System.Drawing.Point(987, 12);
             this.scriptEditorWhitespacesCheckbox.Name = "scriptEditorWhitespacesCheckbox";
             this.scriptEditorWhitespacesCheckbox.Size = new System.Drawing.Size(79, 23);
             this.scriptEditorWhitespacesCheckbox.TabIndex = 46;
@@ -6640,7 +6718,7 @@
             this.scriptEditorWordWrapCheckbox.AutoSize = true;
             this.scriptEditorWordWrapCheckbox.Checked = true;
             this.scriptEditorWordWrapCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.scriptEditorWordWrapCheckbox.Location = new System.Drawing.Point(904, 10);
+            this.scriptEditorWordWrapCheckbox.Location = new System.Drawing.Point(913, 12);
             this.scriptEditorWordWrapCheckbox.Name = "scriptEditorWordWrapCheckbox";
             this.scriptEditorWordWrapCheckbox.Size = new System.Drawing.Size(72, 23);
             this.scriptEditorWordWrapCheckbox.TabIndex = 43;
@@ -6653,7 +6731,7 @@
             // 
             this.compressScriptTextButton.Image = global::DSPRE.Properties.Resources.compressArrow;
             this.compressScriptTextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.compressScriptTextButton.Location = new System.Drawing.Point(1139, 9);
+            this.compressScriptTextButton.Location = new System.Drawing.Point(1141, 11);
             this.compressScriptTextButton.Name = "compressScriptTextButton";
             this.compressScriptTextButton.Size = new System.Drawing.Size(24, 24);
             this.compressScriptTextButton.TabIndex = 49;
@@ -6665,7 +6743,7 @@
             // 
             this.expandScriptTextButton.Image = global::DSPRE.Properties.Resources.expandArrow;
             this.expandScriptTextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.expandScriptTextButton.Location = new System.Drawing.Point(1111, 9);
+            this.expandScriptTextButton.Location = new System.Drawing.Point(1113, 11);
             this.expandScriptTextButton.Name = "expandScriptTextButton";
             this.expandScriptTextButton.Size = new System.Drawing.Size(24, 24);
             this.expandScriptTextButton.TabIndex = 48;
@@ -6675,9 +6753,9 @@
             // 
             // openSearchScriptEditorButton
             // 
-            this.openSearchScriptEditorButton.Image = ((System.Drawing.Image)(resources.GetObject("openSearchScriptEditorButton.Image")));
+            this.openSearchScriptEditorButton.Image = global::DSPRE.Properties.Resources.SearchMiniIcon;
             this.openSearchScriptEditorButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.openSearchScriptEditorButton.Location = new System.Drawing.Point(1083, 9);
+            this.openSearchScriptEditorButton.Location = new System.Drawing.Point(1085, 11);
             this.openSearchScriptEditorButton.Name = "openSearchScriptEditorButton";
             this.openSearchScriptEditorButton.Size = new System.Drawing.Size(24, 24);
             this.openSearchScriptEditorButton.TabIndex = 47;
@@ -6691,7 +6769,7 @@
             this.groupBox24.Controls.Add(this.ScriptNavigatorTabControl);
             this.groupBox24.Location = new System.Drawing.Point(9, 75);
             this.groupBox24.Name = "groupBox24";
-            this.groupBox24.Size = new System.Drawing.Size(472, 230);
+            this.groupBox24.Size = new System.Drawing.Size(472, 234);
             this.groupBox24.TabIndex = 42;
             this.groupBox24.TabStop = false;
             this.groupBox24.Text = "Navigator";
@@ -6714,7 +6792,7 @@
             this.ScriptNavigatorTabControl.Controls.Add(this.ScriptsNavTab);
             this.ScriptNavigatorTabControl.Controls.Add(this.FunctionsNavTab);
             this.ScriptNavigatorTabControl.Controls.Add(this.ActionsNavTab);
-            this.ScriptNavigatorTabControl.Location = new System.Drawing.Point(6, 15);
+            this.ScriptNavigatorTabControl.Location = new System.Drawing.Point(6, 16);
             this.ScriptNavigatorTabControl.Name = "ScriptNavigatorTabControl";
             this.ScriptNavigatorTabControl.SelectedIndex = 0;
             this.ScriptNavigatorTabControl.Size = new System.Drawing.Size(456, 209);
@@ -6786,20 +6864,6 @@
             this.actionsNavListbox.TabIndex = 19;
             this.actionsNavListbox.SelectedIndexChanged += new System.EventHandler(this.actionsNavListbox_SelectedIndexChanged);
             // 
-            // clearCurrentLevelScriptButton
-            // 
-            this.clearCurrentLevelScriptButton.Image = ((System.Drawing.Image)(resources.GetObject("clearCurrentLevelScriptButton.Image")));
-            this.clearCurrentLevelScriptButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.clearCurrentLevelScriptButton.Location = new System.Drawing.Point(364, 18);
-            this.clearCurrentLevelScriptButton.Name = "clearCurrentLevelScriptButton";
-            this.clearCurrentLevelScriptButton.Size = new System.Drawing.Size(106, 52);
-            this.clearCurrentLevelScriptButton.TabIndex = 19;
-            this.clearCurrentLevelScriptButton.Text = "&Clear This\r\nLevel Script";
-            this.clearCurrentLevelScriptButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.clearCurrentLevelScriptButton.UseVisualStyleBackColor = true;
-            this.clearCurrentLevelScriptButton.Visible = false;
-            this.clearCurrentLevelScriptButton.Click += new System.EventHandler(this.clearCurrentLevelScriptButton_Click);
-            // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.searchOnlyCurrentScriptCheckBox);
@@ -6811,7 +6875,7 @@
             this.groupBox8.Controls.Add(this.label29);
             this.groupBox8.Controls.Add(this.searchInScriptsButton);
             this.groupBox8.Controls.Add(this.searchInScriptsResultListBox);
-            this.groupBox8.Location = new System.Drawing.Point(8, 311);
+            this.groupBox8.Location = new System.Drawing.Point(8, 315);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(472, 298);
             this.groupBox8.TabIndex = 18;
@@ -6821,7 +6885,7 @@
             // searchOnlyCurrentScriptCheckBox
             // 
             this.searchOnlyCurrentScriptCheckBox.AutoSize = true;
-            this.searchOnlyCurrentScriptCheckBox.Location = new System.Drawing.Point(281, 49);
+            this.searchOnlyCurrentScriptCheckBox.Location = new System.Drawing.Point(281, 48);
             this.searchOnlyCurrentScriptCheckBox.Name = "searchOnlyCurrentScriptCheckBox";
             this.searchOnlyCurrentScriptCheckBox.Size = new System.Drawing.Size(84, 17);
             this.searchOnlyCurrentScriptCheckBox.TabIndex = 41;
@@ -6883,11 +6947,14 @@
             // 
             // searchInScriptsButton
             // 
+            this.searchInScriptsButton.Image = global::DSPRE.Properties.Resources.SearchMiniIcon;
+            this.searchInScriptsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.searchInScriptsButton.Location = new System.Drawing.Point(371, 26);
             this.searchInScriptsButton.Name = "searchInScriptsButton";
             this.searchInScriptsButton.Size = new System.Drawing.Size(91, 36);
             this.searchInScriptsButton.TabIndex = 32;
             this.searchInScriptsButton.Text = "Search";
+            this.searchInScriptsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.searchInScriptsButton.UseVisualStyleBackColor = true;
             this.searchInScriptsButton.Click += new System.EventHandler(this.searchInScriptsButton_Click);
             // 
@@ -6902,9 +6969,9 @@
             // 
             // importScriptFileButton
             // 
-            this.importScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("importScriptFileButton.Image")));
+            this.importScriptFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importScriptFileButton.Location = new System.Drawing.Point(215, 18);
+            this.importScriptFileButton.Location = new System.Drawing.Point(220, 22);
             this.importScriptFileButton.Name = "importScriptFileButton";
             this.importScriptFileButton.Size = new System.Drawing.Size(70, 52);
             this.importScriptFileButton.TabIndex = 16;
@@ -6915,9 +6982,9 @@
             // 
             // exportScriptFileButton
             // 
-            this.exportScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("exportScriptFileButton.Image")));
+            this.exportScriptFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportScriptFileButton.Location = new System.Drawing.Point(289, 18);
+            this.exportScriptFileButton.Location = new System.Drawing.Point(295, 22);
             this.exportScriptFileButton.Name = "exportScriptFileButton";
             this.exportScriptFileButton.Size = new System.Drawing.Size(70, 52);
             this.exportScriptFileButton.TabIndex = 15;
@@ -6928,9 +6995,9 @@
             // 
             // saveScriptFileButton
             // 
-            this.saveScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("saveScriptFileButton.Image")));
+            this.saveScriptFileButton.Image = global::DSPRE.Properties.Resources.saveButton;
             this.saveScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveScriptFileButton.Location = new System.Drawing.Point(7, 46);
+            this.saveScriptFileButton.Location = new System.Drawing.Point(12, 50);
             this.saveScriptFileButton.Name = "saveScriptFileButton";
             this.saveScriptFileButton.Size = new System.Drawing.Size(203, 23);
             this.saveScriptFileButton.TabIndex = 14;
@@ -6940,9 +7007,9 @@
             // 
             // removeScriptFileButton
             // 
-            this.removeScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("removeScriptFileButton.Image")));
+            this.removeScriptFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeScriptFileButton.Location = new System.Drawing.Point(365, 46);
+            this.removeScriptFileButton.Location = new System.Drawing.Point(370, 49);
             this.removeScriptFileButton.Name = "removeScriptFileButton";
             this.removeScriptFileButton.Size = new System.Drawing.Size(106, 25);
             this.removeScriptFileButton.TabIndex = 13;
@@ -6953,9 +7020,9 @@
             // 
             // addScriptFileButton
             // 
-            this.addScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("addScriptFileButton.Image")));
+            this.addScriptFileButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addScriptFileButton.Location = new System.Drawing.Point(365, 18);
+            this.addScriptFileButton.Location = new System.Drawing.Point(370, 22);
             this.addScriptFileButton.Name = "addScriptFileButton";
             this.addScriptFileButton.Size = new System.Drawing.Size(106, 25);
             this.addScriptFileButton.TabIndex = 10;
@@ -6969,10 +7036,10 @@
             this.scriptEditorTabControl.Controls.Add(this.scriptsTabPage);
             this.scriptEditorTabControl.Controls.Add(this.functionsTabPage);
             this.scriptEditorTabControl.Controls.Add(this.actionsTabPage);
-            this.scriptEditorTabControl.Location = new System.Drawing.Point(487, 18);
+            this.scriptEditorTabControl.Location = new System.Drawing.Point(487, 22);
             this.scriptEditorTabControl.Name = "scriptEditorTabControl";
             this.scriptEditorTabControl.SelectedIndex = 0;
-            this.scriptEditorTabControl.Size = new System.Drawing.Size(692, 595);
+            this.scriptEditorTabControl.Size = new System.Drawing.Size(692, 591);
             this.scriptEditorTabControl.TabIndex = 5;
             this.scriptEditorTabControl.SelectedIndexChanged += new System.EventHandler(this.scriptEditorTabControl_TabIndexChanged);
             // 
@@ -6984,7 +7051,7 @@
             this.scriptsTabPage.Location = new System.Drawing.Point(4, 22);
             this.scriptsTabPage.Name = "scriptsTabPage";
             this.scriptsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptsTabPage.Size = new System.Drawing.Size(684, 569);
+            this.scriptsTabPage.Size = new System.Drawing.Size(684, 565);
             this.scriptsTabPage.TabIndex = 0;
             this.scriptsTabPage.Text = "Scripts";
             this.scriptsTabPage.UseVisualStyleBackColor = true;
@@ -6998,7 +7065,7 @@
             this.PanelSearchScripts.Controls.Add(this.BtnPrevSearchScript);
             this.PanelSearchScripts.Controls.Add(this.BtnCloseSearchScript);
             this.PanelSearchScripts.Controls.Add(this.panelSearchScriptTextBox);
-            this.PanelSearchScripts.Location = new System.Drawing.Point(386, 3);
+            this.PanelSearchScripts.Location = new System.Drawing.Point(385, 3);
             this.PanelSearchScripts.Name = "PanelSearchScripts";
             this.PanelSearchScripts.Size = new System.Drawing.Size(292, 40);
             this.PanelSearchScripts.TabIndex = 14;
@@ -7009,7 +7076,6 @@
             this.BtnNextSearchScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnNextSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnNextSearchScript.ForeColor = System.Drawing.Color.White;
-            this.BtnNextSearchScript.Image = ((System.Drawing.Image)(resources.GetObject("BtnNextSearchScript.Image")));
             this.BtnNextSearchScript.Location = new System.Drawing.Point(233, 4);
             this.BtnNextSearchScript.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BtnNextSearchScript.Name = "BtnNextSearchScript";
@@ -7024,7 +7090,6 @@
             this.BtnPrevSearchScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnPrevSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnPrevSearchScript.ForeColor = System.Drawing.Color.White;
-            this.BtnPrevSearchScript.Image = ((System.Drawing.Image)(resources.GetObject("BtnPrevSearchScript.Image")));
             this.BtnPrevSearchScript.Location = new System.Drawing.Point(205, 4);
             this.BtnPrevSearchScript.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BtnPrevSearchScript.Name = "BtnPrevSearchScript";
@@ -7039,7 +7104,6 @@
             this.BtnCloseSearchScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnCloseSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnCloseSearchScript.ForeColor = System.Drawing.Color.White;
-            this.BtnCloseSearchScript.Image = ((System.Drawing.Image)(resources.GetObject("BtnCloseSearchScript.Image")));
             this.BtnCloseSearchScript.Location = new System.Drawing.Point(261, 4);
             this.BtnCloseSearchScript.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BtnCloseSearchScript.Name = "BtnCloseSearchScript";
@@ -7069,7 +7133,7 @@
             this.scintillaScriptsPanel.Location = new System.Drawing.Point(3, 3);
             this.scintillaScriptsPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.scintillaScriptsPanel.Name = "scintillaScriptsPanel";
-            this.scintillaScriptsPanel.Size = new System.Drawing.Size(678, 563);
+            this.scintillaScriptsPanel.Size = new System.Drawing.Size(678, 559);
             this.scintillaScriptsPanel.TabIndex = 13;
             // 
             // functionsTabPage
@@ -7080,7 +7144,7 @@
             this.functionsTabPage.Location = new System.Drawing.Point(4, 22);
             this.functionsTabPage.Name = "functionsTabPage";
             this.functionsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.functionsTabPage.Size = new System.Drawing.Size(684, 569);
+            this.functionsTabPage.Size = new System.Drawing.Size(684, 565);
             this.functionsTabPage.TabIndex = 1;
             this.functionsTabPage.Text = "Functions";
             this.functionsTabPage.UseVisualStyleBackColor = true;
@@ -7105,7 +7169,6 @@
             this.BtnNextSearchFunc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnNextSearchFunc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnNextSearchFunc.ForeColor = System.Drawing.Color.White;
-            this.BtnNextSearchFunc.Image = ((System.Drawing.Image)(resources.GetObject("BtnNextSearchFunc.Image")));
             this.BtnNextSearchFunc.Location = new System.Drawing.Point(233, 4);
             this.BtnNextSearchFunc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BtnNextSearchFunc.Name = "BtnNextSearchFunc";
@@ -7120,7 +7183,6 @@
             this.BtnPrevSearchFunc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnPrevSearchFunc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnPrevSearchFunc.ForeColor = System.Drawing.Color.White;
-            this.BtnPrevSearchFunc.Image = ((System.Drawing.Image)(resources.GetObject("BtnPrevSearchFunc.Image")));
             this.BtnPrevSearchFunc.Location = new System.Drawing.Point(205, 4);
             this.BtnPrevSearchFunc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BtnPrevSearchFunc.Name = "BtnPrevSearchFunc";
@@ -7135,7 +7197,6 @@
             this.BtnCloseSearchFunc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnCloseSearchFunc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnCloseSearchFunc.ForeColor = System.Drawing.Color.White;
-            this.BtnCloseSearchFunc.Image = ((System.Drawing.Image)(resources.GetObject("BtnCloseSearchFunc.Image")));
             this.BtnCloseSearchFunc.Location = new System.Drawing.Point(261, 4);
             this.BtnCloseSearchFunc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BtnCloseSearchFunc.Name = "BtnCloseSearchFunc";
@@ -7165,7 +7226,7 @@
             this.scintillaFunctionsPanel.Location = new System.Drawing.Point(3, 3);
             this.scintillaFunctionsPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.scintillaFunctionsPanel.Name = "scintillaFunctionsPanel";
-            this.scintillaFunctionsPanel.Size = new System.Drawing.Size(678, 563);
+            this.scintillaFunctionsPanel.Size = new System.Drawing.Size(678, 559);
             this.scintillaFunctionsPanel.TabIndex = 15;
             // 
             // actionsTabPage
@@ -7176,7 +7237,7 @@
             this.actionsTabPage.Location = new System.Drawing.Point(4, 22);
             this.actionsTabPage.Name = "actionsTabPage";
             this.actionsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.actionsTabPage.Size = new System.Drawing.Size(684, 569);
+            this.actionsTabPage.Size = new System.Drawing.Size(684, 565);
             this.actionsTabPage.TabIndex = 2;
             this.actionsTabPage.Text = "Actions";
             this.actionsTabPage.UseVisualStyleBackColor = true;
@@ -7201,7 +7262,6 @@
             this.BtnNextSearchActions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnNextSearchActions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnNextSearchActions.ForeColor = System.Drawing.Color.White;
-            this.BtnNextSearchActions.Image = ((System.Drawing.Image)(resources.GetObject("BtnNextSearchActions.Image")));
             this.BtnNextSearchActions.Location = new System.Drawing.Point(233, 4);
             this.BtnNextSearchActions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BtnNextSearchActions.Name = "BtnNextSearchActions";
@@ -7216,7 +7276,6 @@
             this.BtnPrevSearchActions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnPrevSearchActions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnPrevSearchActions.ForeColor = System.Drawing.Color.White;
-            this.BtnPrevSearchActions.Image = ((System.Drawing.Image)(resources.GetObject("BtnPrevSearchActions.Image")));
             this.BtnPrevSearchActions.Location = new System.Drawing.Point(205, 4);
             this.BtnPrevSearchActions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BtnPrevSearchActions.Name = "BtnPrevSearchActions";
@@ -7231,7 +7290,6 @@
             this.BtnCloseSearchActions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnCloseSearchActions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnCloseSearchActions.ForeColor = System.Drawing.Color.White;
-            this.BtnCloseSearchActions.Image = ((System.Drawing.Image)(resources.GetObject("BtnCloseSearchActions.Image")));
             this.BtnCloseSearchActions.Location = new System.Drawing.Point(261, 4);
             this.BtnCloseSearchActions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BtnCloseSearchActions.Name = "BtnCloseSearchActions";
@@ -7261,13 +7319,13 @@
             this.scintillaActionsPanel.Location = new System.Drawing.Point(3, 3);
             this.scintillaActionsPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.scintillaActionsPanel.Name = "scintillaActionsPanel";
-            this.scintillaActionsPanel.Size = new System.Drawing.Size(678, 563);
+            this.scintillaActionsPanel.Size = new System.Drawing.Size(678, 559);
             this.scintillaActionsPanel.TabIndex = 15;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 4);
+            this.label5.Location = new System.Drawing.Point(11, 8);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 13);
             this.label5.TabIndex = 1;
@@ -7277,7 +7335,7 @@
             // 
             this.selectScriptFileComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.selectScriptFileComboBox.FormattingEnabled = true;
-            this.selectScriptFileComboBox.Location = new System.Drawing.Point(8, 20);
+            this.selectScriptFileComboBox.Location = new System.Drawing.Point(13, 24);
             this.selectScriptFileComboBox.Name = "selectScriptFileComboBox";
             this.selectScriptFileComboBox.Size = new System.Drawing.Size(201, 21);
             this.selectScriptFileComboBox.TabIndex = 0;
@@ -7386,7 +7444,7 @@
             // caseSensitiveTextReplaceCheckbox
             // 
             this.caseSensitiveTextReplaceCheckbox.AutoSize = true;
-            this.caseSensitiveTextReplaceCheckbox.Location = new System.Drawing.Point(190, 133);
+            this.caseSensitiveTextReplaceCheckbox.Location = new System.Drawing.Point(190, 134);
             this.caseSensitiveTextReplaceCheckbox.Name = "caseSensitiveTextReplaceCheckbox";
             this.caseSensitiveTextReplaceCheckbox.Size = new System.Drawing.Size(83, 17);
             this.caseSensitiveTextReplaceCheckbox.TabIndex = 39;
@@ -7441,7 +7499,7 @@
             // caseSensitiveTextSearchCheckbox
             // 
             this.caseSensitiveTextSearchCheckbox.AutoSize = true;
-            this.caseSensitiveTextSearchCheckbox.Location = new System.Drawing.Point(190, 49);
+            this.caseSensitiveTextSearchCheckbox.Location = new System.Drawing.Point(190, 50);
             this.caseSensitiveTextSearchCheckbox.Name = "caseSensitiveTextSearchCheckbox";
             this.caseSensitiveTextSearchCheckbox.Size = new System.Drawing.Size(83, 17);
             this.caseSensitiveTextSearchCheckbox.TabIndex = 33;
@@ -7468,9 +7526,11 @@
             // 
             // searchMessageButton
             // 
+            this.searchMessageButton.Image = global::DSPRE.Properties.Resources.SearchMiniIcon;
+            this.searchMessageButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.searchMessageButton.Location = new System.Drawing.Point(6, 44);
             this.searchMessageButton.Name = "searchMessageButton";
-            this.searchMessageButton.Size = new System.Drawing.Size(175, 22);
+            this.searchMessageButton.Size = new System.Drawing.Size(175, 27);
             this.searchMessageButton.TabIndex = 30;
             this.searchMessageButton.Text = "Search";
             this.searchMessageButton.UseVisualStyleBackColor = true;
@@ -7480,7 +7540,7 @@
             // 
             this.replaceMessageButton.Location = new System.Drawing.Point(8, 127);
             this.replaceMessageButton.Name = "replaceMessageButton";
-            this.replaceMessageButton.Size = new System.Drawing.Size(173, 22);
+            this.replaceMessageButton.Size = new System.Drawing.Size(173, 27);
             this.replaceMessageButton.TabIndex = 30;
             this.replaceMessageButton.Text = "Replace every occurrence";
             this.replaceMessageButton.UseVisualStyleBackColor = true;
@@ -7538,7 +7598,7 @@
             // 
             // removeStringButton
             // 
-            this.removeStringButton.Image = ((System.Drawing.Image)(resources.GetObject("removeStringButton.Image")));
+            this.removeStringButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeStringButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeStringButton.Location = new System.Drawing.Point(113, 579);
             this.removeStringButton.Name = "removeStringButton";
@@ -7551,7 +7611,7 @@
             // 
             // addStringButton
             // 
-            this.addStringButton.Image = ((System.Drawing.Image)(resources.GetObject("addStringButton.Image")));
+            this.addStringButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addStringButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addStringButton.Location = new System.Drawing.Point(12, 579);
             this.addStringButton.Name = "addStringButton";
@@ -7564,7 +7624,7 @@
             // 
             // exportTextFileButton
             // 
-            this.exportTextFileButton.Image = ((System.Drawing.Image)(resources.GetObject("exportTextFileButton.Image")));
+            this.exportTextFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportTextFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportTextFileButton.Location = new System.Drawing.Point(297, 21);
             this.exportTextFileButton.Name = "exportTextFileButton";
@@ -7577,7 +7637,7 @@
             // 
             // importTextFileButton
             // 
-            this.importTextFileButton.Image = ((System.Drawing.Image)(resources.GetObject("importTextFileButton.Image")));
+            this.importTextFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importTextFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importTextFileButton.Location = new System.Drawing.Point(200, 21);
             this.importTextFileButton.Name = "importTextFileButton";
@@ -7590,7 +7650,7 @@
             // 
             // saveTextArchiveButton
             // 
-            this.saveTextArchiveButton.Image = ((System.Drawing.Image)(resources.GetObject("saveTextArchiveButton.Image")));
+            this.saveTextArchiveButton.Image = global::DSPRE.Properties.Resources.saveButton;
             this.saveTextArchiveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveTextArchiveButton.Location = new System.Drawing.Point(12, 48);
             this.saveTextArchiveButton.Name = "saveTextArchiveButton";
@@ -7602,7 +7662,7 @@
             // 
             // removeMessageFileButton
             // 
-            this.removeMessageFileButton.Image = ((System.Drawing.Image)(resources.GetObject("removeMessageFileButton.Image")));
+            this.removeMessageFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeMessageFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeMessageFileButton.Location = new System.Drawing.Point(491, 21);
             this.removeMessageFileButton.Name = "removeMessageFileButton";
@@ -7615,7 +7675,7 @@
             // 
             // addTextArchiveButton
             // 
-            this.addTextArchiveButton.Image = ((System.Drawing.Image)(resources.GetObject("addTextArchiveButton.Image")));
+            this.addTextArchiveButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addTextArchiveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addTextArchiveButton.Location = new System.Drawing.Point(397, 21);
             this.addTextArchiveButton.Name = "addTextArchiveButton";
@@ -7642,7 +7702,7 @@
             // 
             // exportCameraTableButton
             // 
-            this.exportCameraTableButton.Image = ((System.Drawing.Image)(resources.GetObject("exportCameraTableButton.Image")));
+            this.exportCameraTableButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportCameraTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportCameraTableButton.Location = new System.Drawing.Point(3, 563);
             this.exportCameraTableButton.Name = "exportCameraTableButton";
@@ -7655,7 +7715,7 @@
             // 
             // importCameraTableButton
             // 
-            this.importCameraTableButton.Image = ((System.Drawing.Image)(resources.GetObject("importCameraTableButton.Image")));
+            this.importCameraTableButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importCameraTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importCameraTableButton.Location = new System.Drawing.Point(123, 563);
             this.importCameraTableButton.Name = "importCameraTableButton";
@@ -7668,7 +7728,7 @@
             // 
             // saveCameraTableButton
             // 
-            this.saveCameraTableButton.Image = ((System.Drawing.Image)(resources.GetObject("saveCameraTableButton.Image")));
+            this.saveCameraTableButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveCameraTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveCameraTableButton.Location = new System.Drawing.Point(1060, 563);
             this.saveCameraTableButton.Name = "saveCameraTableButton";
@@ -7836,7 +7896,7 @@
             // 
             // importTrainerButton
             // 
-            this.importTrainerButton.Image = ((System.Drawing.Image)(resources.GetObject("importTrainerButton.Image")));
+            this.importTrainerButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importTrainerButton.Location = new System.Drawing.Point(340, 20);
             this.importTrainerButton.Name = "importTrainerButton";
@@ -7849,7 +7909,7 @@
             // 
             // exportTrainerButton
             // 
-            this.exportTrainerButton.Image = ((System.Drawing.Image)(resources.GetObject("exportTrainerButton.Image")));
+            this.exportTrainerButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportTrainerButton.Location = new System.Drawing.Point(265, 20);
             this.exportTrainerButton.Name = "exportTrainerButton";
@@ -7914,7 +7974,7 @@
             // 
             // addTrainerButton
             // 
-            this.addTrainerButton.Image = ((System.Drawing.Image)(resources.GetObject("addTrainerButton.Image")));
+            this.addTrainerButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addTrainerButton.Location = new System.Drawing.Point(190, 20);
             this.addTrainerButton.Name = "addTrainerButton";
@@ -8997,7 +9057,7 @@
             // 
             // saveTrainerClassButton
             // 
-            this.saveTrainerClassButton.Image = ((System.Drawing.Image)(resources.GetObject("saveTrainerClassButton.Image")));
+            this.saveTrainerClassButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveTrainerClassButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveTrainerClassButton.Location = new System.Drawing.Point(319, 15);
             this.saveTrainerClassButton.Name = "saveTrainerClassButton";
@@ -9353,7 +9413,7 @@
             // 
             // trainerSaveCurrentButton
             // 
-            this.trainerSaveCurrentButton.Image = ((System.Drawing.Image)(resources.GetObject("trainerSaveCurrentButton.Image")));
+            this.trainerSaveCurrentButton.Image = global::DSPRE.Properties.Resources.saveButton;
             this.trainerSaveCurrentButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.trainerSaveCurrentButton.Location = new System.Drawing.Point(26, 48);
             this.trainerSaveCurrentButton.Name = "trainerSaveCurrentButton";
@@ -9398,7 +9458,7 @@
             // HOWpbEffectsTableButton
             // 
             this.HOWpbEffectsTableButton.Image = ((System.Drawing.Image)(resources.GetObject("HOWpbEffectsTableButton.Image")));
-            this.HOWpbEffectsTableButton.Location = new System.Drawing.Point(146, 399);
+            this.HOWpbEffectsTableButton.Location = new System.Drawing.Point(145, 399);
             this.HOWpbEffectsTableButton.Name = "HOWpbEffectsTableButton";
             this.HOWpbEffectsTableButton.Size = new System.Drawing.Size(28, 29);
             this.HOWpbEffectsTableButton.TabIndex = 44;
@@ -9502,7 +9562,7 @@
             // HOWVsTrainerButton
             // 
             this.HOWVsTrainerButton.Image = ((System.Drawing.Image)(resources.GetObject("HOWVsTrainerButton.Image")));
-            this.HOWVsTrainerButton.Location = new System.Drawing.Point(304, 209);
+            this.HOWVsTrainerButton.Location = new System.Drawing.Point(307, 209);
             this.HOWVsTrainerButton.Name = "HOWVsTrainerButton";
             this.HOWVsTrainerButton.Size = new System.Drawing.Size(28, 29);
             this.HOWVsTrainerButton.TabIndex = 39;
@@ -9596,7 +9656,7 @@
             // HOWvsPokemonButton
             // 
             this.HOWvsPokemonButton.Image = ((System.Drawing.Image)(resources.GetObject("HOWvsPokemonButton.Image")));
-            this.HOWvsPokemonButton.Location = new System.Drawing.Point(304, 127);
+            this.HOWvsPokemonButton.Location = new System.Drawing.Point(307, 127);
             this.HOWvsPokemonButton.Name = "HOWvsPokemonButton";
             this.HOWvsPokemonButton.Size = new System.Drawing.Size(28, 29);
             this.HOWvsPokemonButton.TabIndex = 39;
@@ -9718,7 +9778,7 @@
             // HOWconditionalMusicTableButton
             // 
             this.HOWconditionalMusicTableButton.Image = ((System.Drawing.Image)(resources.GetObject("HOWconditionalMusicTableButton.Image")));
-            this.HOWconditionalMusicTableButton.Location = new System.Drawing.Point(263, 146);
+            this.HOWconditionalMusicTableButton.Location = new System.Drawing.Point(267, 146);
             this.HOWconditionalMusicTableButton.Name = "HOWconditionalMusicTableButton";
             this.HOWconditionalMusicTableButton.Size = new System.Drawing.Size(28, 29);
             this.HOWconditionalMusicTableButton.TabIndex = 9;
@@ -10051,7 +10111,7 @@
             // loadRomButton
             // 
             this.loadRomButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.loadRomButton.Image = ((System.Drawing.Image)(resources.GetObject("loadRomButton.Image")));
+            this.loadRomButton.Image = global::DSPRE.Properties.Resources.open_rom;
             this.loadRomButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.loadRomButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.loadRomButton.Margin = new System.Windows.Forms.Padding(13, 6, 0, 2);
@@ -10063,7 +10123,7 @@
             // readDataFromFolderButton
             // 
             this.readDataFromFolderButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.readDataFromFolderButton.Image = ((System.Drawing.Image)(resources.GetObject("readDataFromFolderButton.Image")));
+            this.readDataFromFolderButton.Image = global::DSPRE.Properties.Resources.open_file;
             this.readDataFromFolderButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.readDataFromFolderButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.readDataFromFolderButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
@@ -10077,7 +10137,7 @@
             // 
             this.saveRomButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.saveRomButton.Enabled = false;
-            this.saveRomButton.Image = ((System.Drawing.Image)(resources.GetObject("saveRomButton.Image")));
+            this.saveRomButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveRomButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.saveRomButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveRomButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
@@ -10095,7 +10155,7 @@
             // 
             this.unpackAllButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.unpackAllButton.Enabled = false;
-            this.unpackAllButton.Image = ((System.Drawing.Image)(resources.GetObject("unpackAllButton.Image")));
+            this.unpackAllButton.Image = global::DSPRE.Properties.Resources.unpackAllIcon;
             this.unpackAllButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.unpackAllButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.unpackAllButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
@@ -10108,7 +10168,7 @@
             // 
             this.updateMapNarcsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.updateMapNarcsButton.Enabled = false;
-            this.updateMapNarcsButton.Image = ((System.Drawing.Image)(resources.GetObject("updateMapNarcsButton.Image")));
+            this.updateMapNarcsButton.Image = global::DSPRE.Properties.Resources.unpackBuildingNarcsIcon;
             this.updateMapNarcsButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.updateMapNarcsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.updateMapNarcsButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 2);
@@ -10126,7 +10186,7 @@
             // 
             this.wildEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.wildEditorButton.Enabled = false;
-            this.wildEditorButton.Image = ((System.Drawing.Image)(resources.GetObject("wildEditorButton.Image")));
+            this.wildEditorButton.Image = global::DSPRE.Properties.Resources.wildEditorButton;
             this.wildEditorButton.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.wildEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.wildEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -10140,7 +10200,7 @@
             // 
             this.buildingEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.buildingEditorButton.Enabled = false;
-            this.buildingEditorButton.Image = ((System.Drawing.Image)(resources.GetObject("buildingEditorButton.Image")));
+            this.buildingEditorButton.Image = global::DSPRE.Properties.Resources.buildingEditorButton;
             this.buildingEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.buildingEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buildingEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -10158,7 +10218,7 @@
             // nsbmdExportTexButton
             // 
             this.nsbmdExportTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.nsbmdExportTexButton.Image = ((System.Drawing.Image)(resources.GetObject("nsbmdExportTexButton.Image")));
+            this.nsbmdExportTexButton.Image = global::DSPRE.Properties.Resources.saveTextureFromNSBMD;
             this.nsbmdExportTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.nsbmdExportTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.nsbmdExportTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -10171,7 +10231,7 @@
             // nsbmdRemoveTexButton
             // 
             this.nsbmdRemoveTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.nsbmdRemoveTexButton.Image = ((System.Drawing.Image)(resources.GetObject("nsbmdRemoveTexButton.Image")));
+            this.nsbmdRemoveTexButton.Image = global::DSPRE.Properties.Resources.removeTextureNSBMD;
             this.nsbmdRemoveTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.nsbmdRemoveTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.nsbmdRemoveTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -10184,7 +10244,7 @@
             // nsbmdAddTexButton
             // 
             this.nsbmdAddTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.nsbmdAddTexButton.Image = ((System.Drawing.Image)(resources.GetObject("nsbmdAddTexButton.Image")));
+            this.nsbmdAddTexButton.Image = global::DSPRE.Properties.Resources.addTextureToNSBMD;
             this.nsbmdAddTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.nsbmdAddTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.nsbmdAddTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -10203,7 +10263,7 @@
             // 
             this.scriptCommandsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.scriptCommandsButton.Enabled = false;
-            this.scriptCommandsButton.Image = ((System.Drawing.Image)(resources.GetObject("scriptCommandsButton.Image")));
+            this.scriptCommandsButton.Image = global::DSPRE.Properties.Resources.scriptDBIcon;
             this.scriptCommandsButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.scriptCommandsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.scriptCommandsButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -10216,7 +10276,7 @@
             // 
             this.romToolboxToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.romToolboxToolStripButton.Enabled = false;
-            this.romToolboxToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("romToolboxToolStripButton.Image")));
+            this.romToolboxToolStripButton.Image = global::DSPRE.Properties.Resources.exploreKit;
             this.romToolboxToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.romToolboxToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.romToolboxToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -10230,7 +10290,7 @@
             // 
             this.headerSearchToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.headerSearchToolStripButton.Enabled = false;
-            this.headerSearchToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("headerSearchToolStripButton.Image")));
+            this.headerSearchToolStripButton.Image = global::DSPRE.Properties.Resources.wideLensImage;
             this.headerSearchToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.headerSearchToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.headerSearchToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -10249,7 +10309,7 @@
             // 
             this.spawnEditorToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.spawnEditorToolStripButton.Enabled = false;
-            this.spawnEditorToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("spawnEditorToolStripButton.Image")));
+            this.spawnEditorToolStripButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
             this.spawnEditorToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.spawnEditorToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.spawnEditorToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
@@ -10286,7 +10346,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
-            this.Text = "DS Pokémon Rom Editor 1.3.4 (Nømura, AdAstra/LD3005)";
+            this.Text = "DS Pokémon Rom Editor 1.4 (Nømura, AdAstra/LD3005)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainProgram_FormClosing);
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);
@@ -10474,6 +10534,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.LeftClickPicture)).EndInit();
             this.scriptEditorTabPage.ResumeLayout(false);
             this.scriptEditorTabPage.PerformLayout();
+            this.groupBox26.ResumeLayout(false);
+            this.groupBox26.PerformLayout();
             this.groupBox24.ResumeLayout(false);
             this.groupBox24.PerformLayout();
             this.ScriptNavigatorTabControl.ResumeLayout(false);
@@ -11354,6 +11416,10 @@
         private System.Windows.Forms.Button compressScriptTextButton;
         private System.Windows.Forms.Button expandScriptTextButton;
         private System.Windows.Forms.Button itemsSelectorHelpBtn;
+        private System.Windows.Forms.GroupBox groupBox26;
+        private System.Windows.Forms.RadioButton scriptEditorNumberFormatNoPreference;
+        private System.Windows.Forms.RadioButton scriptEditorNumberFormatDecimal;
+        private System.Windows.Forms.RadioButton scriptEditorNumberFormatHex;
     }
 }
 

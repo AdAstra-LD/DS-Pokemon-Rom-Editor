@@ -81,6 +81,16 @@ namespace DSPRE.Properties {
         }
         
         /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap alphabgCheckerboard {
+            get {
+                object obj = ResourceManager.GetObject("alphabgCheckerboard", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
         /// </summary>
         internal static System.Drawing.Icon appIcon {
@@ -256,6 +266,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap brown_sign {
             get {
                 object obj = ResourceManager.GetObject("brown_sign", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap buildingEditorButton {
+            get {
+                object obj = ResourceManager.GetObject("buildingEditorButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -706,6 +726,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap expandArrow {
             get {
                 object obj = ResourceManager.GetObject("expandArrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap exploreKit {
+            get {
+                object obj = ResourceManager.GetObject("exploreKit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1166,6 +1196,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap map_editor {
             get {
                 object obj = ResourceManager.GetObject("map_editor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap muteIcon {
+            get {
+                object obj = ResourceManager.GetObject("muteIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1763,6 +1803,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SearchMiniIcon {
+            get {
+                object obj = ResourceManager.GetObject("SearchMiniIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap selectBldWithMouse {
             get {
                 object obj = ResourceManager.GetObject("selectBldWithMouse", resourceCulture);
@@ -1886,6 +1936,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap wideLensImageTransp {
             get {
                 object obj = ResourceManager.GetObject("wideLensImageTransp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wildEditorButton {
+            get {
+                object obj = ResourceManager.GetObject("wildEditorButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

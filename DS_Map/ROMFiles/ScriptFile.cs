@@ -2,6 +2,7 @@ using DSPRE.Resources;
 using ScintillaNET;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -17,12 +18,16 @@ namespace DSPRE.ROMFiles {
         //this enum doesn't really make much sense now but it will, once scripts can be called and jumped to
         public enum containerTypes { Function, Action, Script };
         #endregion
+
         #region Fields (3)
         public List<CommandContainer> allScripts = new List<CommandContainer>();
         public List<CommandContainer> allFunctions = new List<CommandContainer>();
         public List<ActionContainer> allActions = new List<ActionContainer>();
         public int? fileID = null;
         public bool isLevelScript = new bool();
+
+        public static readonly char[] specialChars = { 'x', 'X', '#', '.', '_' };
+        public static NumberStyles numFormatSpecifier = NumberStyles.None; //None means Automatic style, by default
         #endregion
 
         #region Constructors (1)
@@ -74,9 +79,10 @@ namespace DSPRE.ROMFiles {
                         bool endScript = new bool();
                         while (!endScript) {
                             ScriptCommand cmd = ReadCommand(scrReader, ref functionOffsets, ref movementOffsets);
-                            if (cmd.cmdParams is null) 
+                            if (cmd.cmdParams is null) {
                                 return;
-                            
+                            }
+
                             cmdList.Add(cmd);
 
                             if (ScriptDatabase.endCodes.Contains((ushort)cmd.id)) {
@@ -99,8 +105,9 @@ namespace DSPRE.ROMFiles {
                         bool endFunction = new bool();
                         while (!endFunction) {
                             ScriptCommand command = ReadCommand(scrReader, ref functionOffsets, ref movementOffsets);
-                            if (command.cmdParams is null)
+                            if (command.cmdParams is null) {
                                 return;
+                            }
 
                             cmdList.Add(command);
                             if (ScriptDatabase.endCodes.Contains((ushort)command.id)) {
@@ -135,7 +142,7 @@ namespace DSPRE.ROMFiles {
         public ScriptFile(int fileID) : this(new FileStream(RomInfo.gameDirs[DirNames.scripts].unpackedDir +
         "\\" + fileID.ToString("D4"), FileMode.Open)) {
             this.fileID = fileID;
-        }
+        } 
         public ScriptFile(List<CommandContainer> scripts, List<CommandContainer> functions, List<ActionContainer> movements, int fileID = -1) {
             allScripts = scripts;
             allFunctions = functions;
@@ -425,12 +432,14 @@ namespace DSPRE.ROMFiles {
             int relativeOffset = dataReader.ReadInt32();
             int offsetFromScriptFileStart = (int)(relativeOffset + dataReader.BaseStream.Position);
 
-            if (!offsetsList.Contains(offsetFromScriptFileStart))
+            if (!offsetsList.Contains(offsetFromScriptFileStart)) {
                 offsetsList.Add(offsetFromScriptFileStart);
+            }
 
             int functionNumber = offsetsList.IndexOf(offsetFromScriptFileStart);
-            if (functionNumber < 0)
+            if (functionNumber < 0) {
                 throw new InvalidOperationException();
+            }
 
             parameterList.Add(BitConverter.GetBytes(functionNumber + 1));
         }
@@ -454,8 +463,7 @@ namespace DSPRE.ROMFiles {
             }
         }
         private void AddReference(ref List<ScriptReference> references, ushort commandID, List<byte[]> parameterList, int pos, CommandContainer cont) {
-            int parameterWithRelativeJump;
-            if (ScriptDatabase.commandsWithRelativeJump.TryGetValue(commandID, out parameterWithRelativeJump)) {
+            if (ScriptDatabase.commandsWithRelativeJump.TryGetValue(commandID, out int parameterWithRelativeJump)) {
                 uint invokedID = BitConverter.ToUInt32(parameterList[parameterWithRelativeJump], 0);  // Jump, Call
 
                 if (commandID == 0x005E)
@@ -573,19 +581,7 @@ namespace DSPRE.ROMFiles {
             }
             return result;
         }
-        public static string OverworldFlexDecode(ushort flexID) {
-            if (flexID > 255) {
-                return "0x" + flexID.ToString("X4");
-            } else {
-                string output;
-                if (ScriptDatabase.specialOverworlds.TryGetValue(flexID, out output)) {
-                    return output;
-                } else {
-                    return "Overworld." + flexID.ToString("D");
-                }
-            }
-        }
-
+      
         #region Output
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
@@ -627,9 +623,9 @@ namespace DSPRE.ROMFiles {
                         if (currentScript.useScript != -1) {
                             for (int i = 0; i < scriptsCount; i++) {
                                 if (scriptOffsets[i].scriptID == currentScript.useScript) {
-                                      scriptOffsets.Add( (currentScript.manualUserID, scriptOffsets[i].offsetInFile) );  // If script has UseScript, copy offset
+                                    scriptOffsets.Add((currentScript.manualUserID, scriptOffsets[i].offsetInFile));  // If script has UseScript, copy offset
                                 }
-                             }
+                            }
                         }
                     }
 

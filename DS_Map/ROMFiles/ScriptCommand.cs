@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using static DSPRE.ROMFiles.ScriptFile;
 
 namespace DSPRE.ROMFiles {
+    public enum ParamTypeEnum { INTEGER, VARIABLE, FLEX, OW_ID, FUNCTION_ID, ACTION_ID, CMD_NUMBER };
     public class CommandContainer {
         public List<ScriptCommand> commands;
         public uint manualUserID;
@@ -43,62 +44,49 @@ namespace DSPRE.ROMFiles {
                 return;
             }
 
-            this.id = id;
-            this.cmdParams = parametersList;
-
             if (!RomInfo.ScriptCommandNamesDict.TryGetValue(id, out name)) {
-                name = id.ToString("X4");
-            }
+                name = FormatNumber(id, ParamTypeEnum.CMD_NUMBER);
+            }            
 
             switch (id) {
-                case 0x16:      // Jump
-                case 0x1A:      // Call
-                    name += " " + containerTypes.Function.ToString() + "#" + BitConverter.ToInt32(parametersList[0], 0).ToString("D");
+                case 0x0016:      // Jump
+                case 0x001A:      // Call
+                    name += " " + FormatNumber(parametersList[0], ParamTypeEnum.FUNCTION_ID);
                     break;
-                case 0x17:      // JumpIfObjID
-                case 0x18:      // JumpIfEventID
-                    byte owid = parametersList[0][0];
-                    name += " " + ScriptFile.OverworldFlexDecode(owid);
-                    name += " " + containerTypes.Function.ToString() + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                case 0x0017:      // JumpIfObjID
+                case 0x0018:      // JumpIfEventID
+                    name += " " + FormatNumber(parametersList[0], ParamTypeEnum.OW_ID) + " " + FormatNumber(parametersList[1]);
                     break;
-                case 0x19:      // JumpIfPlayerDir
-                    byte param = parametersList[0][0];
-                    name += " " + param.ToString("X") + " " + containerTypes.Function.ToString() + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                case 0x0019:      // JumpIfPlayerDir
+                    name += " " + FormatNumber(parametersList[0]) + " " + FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID);
                     break;
-                case 0x1C:      // JumpIf
-                case 0x1D:      // CallIf
-                    byte opcode = parametersList[0][0];
-                    name += " " + RomInfo.ScriptComparisonOperatorsDict[opcode] + " " + containerTypes.Function.ToString() + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                case 0x001C:      // JumpIf
+                case 0x001D:      // CallIf
+                    name += " " + RomInfo.ScriptComparisonOperatorsDict[ parametersList[0][0] ] + " " + FormatNumber(parametersList[1], ParamTypeEnum.FUNCTION_ID);
                     break;
-                case 0x5E:      // Movement
-                    ushort flexID = BitConverter.ToUInt16(parametersList[0], 0);
-                    name += " " + ScriptFile.OverworldFlexDecode(flexID);
-                    name += " " + containerTypes.Action.ToString() + "#" + BitConverter.ToInt32(parametersList[1], 0).ToString("D");
+                case 0x005E:      // Movement
+                    name += " " + FormatNumber(parametersList[0], ParamTypeEnum.OW_ID) + " " + FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID);
                     break;
-                case 0x6A:      // CheckOverworldPosition
-                    flexID = BitConverter.ToUInt16(parametersList[0], 0);
-                    name += " " + ScriptFile.OverworldFlexDecode(flexID) + " " + "0x" + BitConverter.ToInt16(parametersList[1], 0).ToString("X") + " " + "0x" + BitConverter.ToInt16(parametersList[2], 0).ToString("X");
+                case 0x006A:      // CheckOverworldPosition
+                    name += " " + FormatNumber(parametersList[0], ParamTypeEnum.OW_ID) + " " + FormatNumber(parametersList[1]) + " " + FormatNumber(parametersList[2]);
                     break;
-                case 0x62:      // Lock
-                case 0x63:      // Release
-                case 0x64:      // AddOW
-                case 0x65:      // RemoveOW
-                    flexID = BitConverter.ToUInt16(parametersList[0], 0);
-                    name += " " + ScriptFile.OverworldFlexDecode(flexID);
+                case 0x0062:      // Lock
+                case 0x0063:      // Release
+                case 0x0064:      // AddOW
+                case 0x0065:      // RemoveOW
+                    name += " " + FormatNumber(parametersList[0], ParamTypeEnum.OW_ID);
                     break;
                 default:
                     for (int i = 0; i < parametersList.Count; i++) {
-                        if (parametersList[i].Length == 1)
-                            this.name += " " + "0x" + (parametersList[i][0]).ToString("X1");
-                        else if (parametersList[i].Length == 2)
-                            this.name += " " + "0x" + BitConverter.ToInt16(parametersList[i], 0).ToString("X1");
-                        else if (parametersList[i].Length == 4)
-                            this.name += " " + "0x" + BitConverter.ToInt32(parametersList[i], 0).ToString("X1");
+                        this.name += " " + FormatNumber(parametersList[i]);
                     }
                     break;
 
             }
+            this.id = id;
+            this.cmdParams = parametersList;
         }
+
         public ScriptCommand(string wholeLine, int lineNumber = 0) {
             name = wholeLine;
             cmdParams = new List<byte[]>();
@@ -111,7 +99,8 @@ namespace DSPRE.ROMFiles {
                 id = cmdID;
             } else {
                 try {
-                    id = ushort.Parse(nameParts[0], NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+                    id = ushort.Parse(GetStringWithoutSpecialCharacters(nameParts[0]), GetNumberStyleFromString(nameParts[0]));
+                    //id = ushort.Parse(nameParts[0].Substring(nameParts[0].("_")+1), ScriptFile.numFormatSpecifier, CultureInfo.InvariantCulture);
                 } catch {
                     string details;
                     if (wholeLine.Contains(':') && wholeLine.ContainsNumber()) {
@@ -235,14 +224,71 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Utilities
+        private string FormatNumber(byte[] par, ParamTypeEnum paramType = ParamTypeEnum.INTEGER) {
+            //number acquisition
+            uint num;
+            if (par.Length == 0) {
+                return "";
+            } else if (par.Length == 1) {
+                num = par[0];
+            } else if (par.Length == 2) {
+                num = BitConverter.ToUInt16(par, 0);
+            } else if (par.Length == 4) {
+                num = BitConverter.ToUInt32(par, 0);
+            } else {
+                throw new InvalidOperationException();
+            }
+            return FormatNumber(num, paramType);
+        }
+        private string FormatNumber(uint num, ParamTypeEnum paramType = ParamTypeEnum.INTEGER) {
+            //differentiate depending on param type
+            string formatOverride;
+            string prefix;
+            if (ScriptFile.numFormatSpecifier == NumberStyles.HexNumber) {
+                formatOverride = "X";
+                prefix = "0x";
+            } else { //(ScriptFile.numFormatSpecifier == NumberStyles.Integer)
+                formatOverride = "D";
+                prefix = "";
+            }
+
+            switch (paramType) {
+                case ParamTypeEnum.CMD_NUMBER:
+                    return "CMD_" + prefix + num.ToString(formatOverride + '3');
+                case ParamTypeEnum.OW_ID:
+                    if (ScriptDatabase.specialOverworlds.TryGetValue((ushort)num, out string output)) {
+                        return output;
+                    } else {
+                        return "Overworld." + prefix + num.ToString(formatOverride);
+                    }
+                case ParamTypeEnum.FUNCTION_ID:
+                    return containerTypes.Function.ToString() + "#" + num;
+                case ParamTypeEnum.ACTION_ID:
+                    return containerTypes.Action.ToString() + "#" + num;
+                default:
+                    if (ScriptFile.numFormatSpecifier == NumberStyles.None) {
+                        if (num >= 4000) {
+                            return "0x" + num.ToString("X");
+                        }
+                    }
+                    return prefix + num.ToString(formatOverride);
+            }
+        }
+
         private string GetStringWithoutSpecialCharacters(string s) {
-            int indexOfSpecialCharacter = s.IndexOfAny(new char[] { 'x', 'X', '#', '.' });
-            return s.Substring(indexOfSpecialCharacter + 1);
+            foreach (char c in ScriptFile.specialChars) {
+                int pos = s.IndexOf(c);
+                if (pos >= 0) {
+                    return s.Substring(pos + 1);
+                }
+            }
+            return s;
         }
 
         public NumberStyles GetNumberStyleFromString(string s) {
-            if (s.StartsWith("0x", StringComparison.InvariantCultureIgnoreCase)) {
-                foreach (char c in s.Substring(2)) {
+            int posOfPrefix = s.IndexOf("0x", StringComparison.InvariantCultureIgnoreCase);
+            if (posOfPrefix >= 0) {
+                foreach (char c in s.Substring(posOfPrefix+2)) {
                     if (!Char.IsDigit(c) && Char.ToUpper(c) > 'F') {
                         return NumberStyles.None;
                     }

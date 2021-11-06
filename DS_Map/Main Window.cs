@@ -479,7 +479,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.3.4" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.4" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
@@ -619,6 +619,7 @@ namespace DSPRE {
             saveRomButton.Enabled = true;
             saveROMToolStripMenuItem.Enabled = true;
             openROMToolStripMenuItem.Enabled = false;
+            openFolderToolStripMenuItem.Enabled = false;
 
             unpackAllButton.Enabled = true;
             updateMapNarcsButton.Enabled = true;
@@ -3379,6 +3380,7 @@ namespace DSPRE {
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
+
         #region Building Editor
         private void addBuildingButton_Click(object sender, EventArgs e) {
             AddBuildingToMap(new Building());
@@ -3396,8 +3398,7 @@ namespace DSPRE {
             currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile = LoadModelTextures(b.NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1);
 
             /* Add new entry to buildings ListBox */
-            buildingsListBox.Items.Add((buildingsListBox.Items.Count + 1).ToString("D2") + MapHeader.nameSeparator +
-                buildIndexComboBox.Items[(int)b.modelID]);
+            buildingsListBox.Items.Add((buildingsListBox.Items.Count + 1).ToString("D2") + MapHeader.nameSeparator + buildIndexComboBox.Items[(int)b.modelID]);
             buildingsListBox.SelectedIndex = buildingsListBox.Items.Count - 1;
 
             /* Redraw scene with new building */
@@ -5756,8 +5757,8 @@ namespace DSPRE {
 
         #region Script Editor
         #region Variables
-        private static Mutex tooltipMutex = new Mutex();
-        private ScriptTooltip customTooltip;
+        //private static Mutex tooltipMutex = new Mutex();
+        //private ScriptTooltip customTooltip;
 
         private bool scriptsDirty = false;
         private bool functionsDirty = false;
@@ -5779,10 +5780,14 @@ namespace DSPRE {
         private Scintilla currentScintillaEditor;
         private SearchManager currentSearchManager;
         private void ScriptEditorSetClean() {
+            disableHandlers = true;
+            
             scriptsTabPage.Text = ScriptFile.containerTypes.Script.ToString() + "s";
             functionsTabPage.Text = ScriptFile.containerTypes.Function.ToString() + "s";
             actionsTabPage.Text = ScriptFile.containerTypes.Action.ToString() + "s";
             scriptsDirty = functionsDirty = actionsDirty = false;
+
+            disableHandlers = false;
         }
         private void scriptEditorTabControl_TabIndexChanged(object sender, EventArgs e) {
             if (scriptEditorTabControl.SelectedTab == scriptsTabPage) {
@@ -6057,7 +6062,7 @@ namespace DSPRE {
 
         private void InitialViewConfig(Scintilla textArea) {
             textArea.Dock = DockStyle.Fill;
-            textArea.WrapMode = ScintillaNET.WrapMode.None;
+            textArea.WrapMode = ScintillaNET.WrapMode.Word;
             textArea.IndentationGuides = IndentView.LookBoth;
             textArea.CaretPeriod = 500;
             textArea.CaretForeColor = Color.White;
@@ -6507,9 +6512,13 @@ namespace DSPRE {
             }
         }
         private void selectScriptFileComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            ReloadScript();
+        }
+
+        private bool ReloadScript() {
             /* clear controls */
             if (disableHandlers) {
-                return;
+                return false;
             }
             if (scriptsDirty || functionsDirty || actionsDirty) {
                 DialogResult d = MessageBox.Show("There are unsaved changes in this Script File.\nDo you wish to discard them?", "Unsaved work", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -6517,7 +6526,7 @@ namespace DSPRE {
                     disableHandlers = true;
                     selectScriptFileComboBox.SelectedIndex = (int)currentScriptFile.fileID;
                     disableHandlers = false;
-                    return;
+                    return false;
                 }
             }
             currentScriptFile = new ScriptFile(selectScriptFileComboBox.SelectedIndex); // Load script file
@@ -6619,7 +6628,56 @@ namespace DSPRE {
             ScriptEditorSetClean();
             statusLabel.Text = "Ready";
             disableHandlers = false;
+            return true;
         }
+
+        private void UpdateScriptNumberFormatDec(object sender, EventArgs e) {
+            if (!disableHandlers && scriptEditorNumberFormatDecimal.Checked) {
+                NumberStyles old = ScriptFile.numFormatSpecifier;
+                ScriptFile.numFormatSpecifier = NumberStyles.Integer;
+
+                UpdateScriptNumberCheckBox(old);
+            }
+        }
+        private void UpdateScriptNumberFormatHex(object sender, EventArgs e) {
+            if (!disableHandlers && scriptEditorNumberFormatHex.Checked) {
+                NumberStyles old = ScriptFile.numFormatSpecifier;
+                ScriptFile.numFormatSpecifier = NumberStyles.HexNumber;
+
+                UpdateScriptNumberCheckBox(old);
+            }
+        }
+        private void UpdateScriptNumberFormatNoPref(object sender, EventArgs e) {
+            if (!disableHandlers && scriptEditorNumberFormatNoPreference.Checked) {
+                NumberStyles old = ScriptFile.numFormatSpecifier;
+                ScriptFile.numFormatSpecifier = NumberStyles.None;
+                UpdateScriptNumberCheckBox(old);
+            }
+        }
+
+        private void UpdateScriptNumberCheckBox(NumberStyles old) {
+            Console.WriteLine("calling reloadscr");
+            if (!ReloadScript()) {
+                disableHandlers = true;
+                ScriptFile.numFormatSpecifier = old;
+
+                switch (ScriptFile.numFormatSpecifier) {
+                    case NumberStyles.None:
+                        scriptEditorNumberFormatNoPreference.Checked = true;
+                        break;
+                    case NumberStyles.HexNumber:
+                        scriptEditorNumberFormatHex.Checked = true;
+                        break;
+                    case NumberStyles.Integer:
+                        scriptEditorNumberFormatDecimal.Checked = true;
+                        break;
+                }
+                Console.WriteLine("changed style to " + ScriptFile.numFormatSpecifier);
+                disableHandlers = false;
+            }
+        }
+    
+
         private void scriptsNavListbox_SelectedIndexChanged(object sender, EventArgs e) {
             NavigatorGoTo((ListBox)sender, 0, scriptSearchManager, ScriptFile.containerTypes.Script.ToString());
         }
@@ -6779,8 +6837,9 @@ namespace DSPRE {
             }
         }
         private void replaceMessageButton_Click(object sender, EventArgs e) {
-            if (searchMessageTextBox.Text == "")
+            if (searchMessageTextBox.Text == "") {
                 return;
+            }
 
             int firstArchive;
             int lastArchive;
