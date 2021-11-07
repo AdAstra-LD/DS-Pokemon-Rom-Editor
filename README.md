@@ -2,10 +2,10 @@
 
 Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features and bugfixes.
 
-![Screenshot](aDSPRE_134.png)
-![Screenshot](bDSPRE_134.png)
-![Screenshot](cDSPRE_134.png)
-![Screenshot](dDSPRE_134.png)
+![Screenshot](aDSPRE_140.png)
+![Screenshot](bDSPRE_140.png)
+![Screenshot](cDSPRE_140.png)
+![Screenshot](dDSPRE_140.png)
 
 ## Misc changes to the official DSPRE
 - Significantly shorter load and save times.
@@ -107,6 +107,7 @@ Allows you to change the map where the adventure begins and the initial money.
 ### Script Editor:
 - Replaced "Search Flag" with "Search any command".
 - Removed script cmd buttons.
+- You can now choose the preferred number format.
 - Added script navigator.
 - Level scripts can be cleared with a button click.
 - The Script Editor can identify and report some errors.
