@@ -888,9 +888,9 @@
             this.label21.AutoSize = true;
             this.label21.Location = new System.Drawing.Point(41, 24);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(67, 13);
+            this.label21.Size = new System.Drawing.Size(48, 13);
             this.label21.TabIndex = 185;
-            this.label21.Text = "Morning only";
+            this.label21.Text = "Day only";
             // 
             // nightSecondComboBox
             // 

@@ -1146,7 +1146,7 @@
             // worldmapCoordsPasteButton
             // 
             this.worldmapCoordsPasteButton.Enabled = false;
-            this.worldmapCoordsPasteButton.Image = global::DSPRE.Properties.Resources.pasteIcon;
+            this.worldmapCoordsPasteButton.Image = ((System.Drawing.Image)(resources.GetObject("worldmapCoordsPasteButton.Image")));
             this.worldmapCoordsPasteButton.Location = new System.Drawing.Point(43, 93);
             this.worldmapCoordsPasteButton.Name = "worldmapCoordsPasteButton";
             this.worldmapCoordsPasteButton.Size = new System.Drawing.Size(35, 37);
@@ -1165,7 +1165,7 @@
             // 
             // worldmapCoordsCopyButton
             // 
-            this.worldmapCoordsCopyButton.Image = global::DSPRE.Properties.Resources.copyIcon;
+            this.worldmapCoordsCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("worldmapCoordsCopyButton.Image")));
             this.worldmapCoordsCopyButton.Location = new System.Drawing.Point(6, 93);
             this.worldmapCoordsCopyButton.Name = "worldmapCoordsCopyButton";
             this.worldmapCoordsCopyButton.Size = new System.Drawing.Size(35, 37);
@@ -1679,7 +1679,7 @@
             // 
             // copyLocationNameButton
             // 
-            this.copyLocationNameButton.Image = ((System.Drawing.Image)(resources.GetObject("copyLocationNameButton.Image")));
+            this.copyLocationNameButton.Image = global::DSPRE.Properties.Resources.copyIcon;
             this.copyLocationNameButton.Location = new System.Drawing.Point(178, 32);
             this.copyLocationNameButton.Name = "copyLocationNameButton";
             this.copyLocationNameButton.Size = new System.Drawing.Size(35, 37);

@@ -18,11 +18,8 @@ using static DSPRE.RomInfo;
 using Images;
 using Ekona.Images;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Collections.Specialized;
 using ScintillaNET;
 using ScintillaNET.Utils;
-using DSPRE.ScintillaUtils;
-using System.Threading;
 using System.Globalization;
 
 namespace DSPRE {
