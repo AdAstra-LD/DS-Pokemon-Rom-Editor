@@ -187,9 +187,10 @@ namespace DSPRE {
         private void importEncounterFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .wld file */
             OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Wild Encounters File (*.wld)|*.wld";
-            if (of.ShowDialog(this) != DialogResult.OK)
+            of.Filter = "Wild Encounters File (" + "*." + EncounterFile.extension + ")" + "|" + "*." + EncounterFile.extension;
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             /* Update encounter file object in memory */
             currentFile = new EncounterFileDPPt(new FileStream(of.FileName, FileMode.Open));
@@ -870,14 +871,13 @@ namespace DSPRE {
         }
                 
         private void addEncounterFileButton_Click(object sender, EventArgs e) {
-            /* Load new encounter, a copy of encounter 0 */
             int encounterCount = selectEncounterComboBox.Items.Count;
-            EncounterFile newEncounter = new EncounterFileDPPt(0);
 
             /* Add new encounter file to encounter folder */
             string encounterFilePath = encounterFileFolder + "\\" + encounterCount.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(encounterFilePath, FileMode.Create)))
-                writer.Write(newEncounter.ToByteArray());
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(encounterFilePath, FileMode.Create))) {
+                writer.Write(new EncounterFileDPPt().ToByteArray());
+            }
 
             /* Update ComboBox*/
             selectEncounterComboBox.Items.Add("[New] Encounters File " + encounterCount.ToString());

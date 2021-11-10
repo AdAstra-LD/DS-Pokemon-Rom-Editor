@@ -325,21 +325,27 @@
             // 
             // removeEncounterFileButton
             // 
-            this.removeEncounterFileButton.Location = new System.Drawing.Point(489, 12);
+            this.removeEncounterFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeEncounterFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.removeEncounterFileButton.Location = new System.Drawing.Point(479, 12);
             this.removeEncounterFileButton.Name = "removeEncounterFileButton";
-            this.removeEncounterFileButton.Size = new System.Drawing.Size(80, 35);
+            this.removeEncounterFileButton.Size = new System.Drawing.Size(97, 35);
             this.removeEncounterFileButton.TabIndex = 67;
             this.removeEncounterFileButton.Text = "Remove Last";
+            this.removeEncounterFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.removeEncounterFileButton.UseVisualStyleBackColor = true;
             this.removeEncounterFileButton.Click += new System.EventHandler(this.removeLastEncounterFileButton_Click);
             // 
             // addEncounterFileButton
             // 
-            this.addEncounterFileButton.Location = new System.Drawing.Point(403, 12);
+            this.addEncounterFileButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addEncounterFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.addEncounterFileButton.Location = new System.Drawing.Point(406, 12);
             this.addEncounterFileButton.Name = "addEncounterFileButton";
-            this.addEncounterFileButton.Size = new System.Drawing.Size(80, 35);
+            this.addEncounterFileButton.Size = new System.Drawing.Size(71, 35);
             this.addEncounterFileButton.TabIndex = 66;
             this.addEncounterFileButton.Text = "Add File";
+            this.addEncounterFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addEncounterFileButton.UseVisualStyleBackColor = true;
             this.addEncounterFileButton.Click += new System.EventHandler(this.addEncounterFileButton_Click);
             // 
@@ -355,31 +361,40 @@
             // 
             // exportEncounterFileButton
             // 
-            this.exportEncounterFileButton.Location = new System.Drawing.Point(256, 12);
+            this.exportEncounterFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportEncounterFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.exportEncounterFileButton.Location = new System.Drawing.Point(263, 12);
             this.exportEncounterFileButton.Name = "exportEncounterFileButton";
-            this.exportEncounterFileButton.Size = new System.Drawing.Size(80, 35);
+            this.exportEncounterFileButton.Size = new System.Drawing.Size(91, 35);
             this.exportEncounterFileButton.TabIndex = 64;
             this.exportEncounterFileButton.Text = "Export File";
+            this.exportEncounterFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.exportEncounterFileButton.UseVisualStyleBackColor = true;
             this.exportEncounterFileButton.Click += new System.EventHandler(this.exportEncounterFileButton_Click);
             // 
             // importEncounterFileButton
             // 
+            this.importEncounterFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importEncounterFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importEncounterFileButton.Location = new System.Drawing.Point(170, 12);
             this.importEncounterFileButton.Name = "importEncounterFileButton";
-            this.importEncounterFileButton.Size = new System.Drawing.Size(80, 35);
+            this.importEncounterFileButton.Size = new System.Drawing.Size(91, 35);
             this.importEncounterFileButton.TabIndex = 63;
             this.importEncounterFileButton.Text = "Import File";
+            this.importEncounterFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.importEncounterFileButton.UseVisualStyleBackColor = true;
             this.importEncounterFileButton.Click += new System.EventHandler(this.importEncounterFileButton_Click);
             // 
             // saveEncountersButton
             // 
+            this.saveEncountersButton.Image = global::DSPRE.Properties.Resources.saveButton;
+            this.saveEncountersButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveEncountersButton.Location = new System.Drawing.Point(630, 12);
             this.saveEncountersButton.Name = "saveEncountersButton";
             this.saveEncountersButton.Size = new System.Drawing.Size(117, 35);
             this.saveEncountersButton.TabIndex = 62;
             this.saveEncountersButton.Text = "Save Encounters";
+            this.saveEncountersButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.saveEncountersButton.UseVisualStyleBackColor = true;
             this.saveEncountersButton.Click += new System.EventHandler(this.saveEncountersButton_Click);
             // 
@@ -1515,7 +1530,7 @@
             this.superRodGroupBox.Controls.Add(this.superRodSixtyMinUpDown);
             this.superRodGroupBox.Controls.Add(this.label74);
             this.superRodGroupBox.Controls.Add(this.superRodSixtyComboBox);
-            this.superRodGroupBox.Location = new System.Drawing.Point(367, 234);
+            this.superRodGroupBox.Location = new System.Drawing.Point(384, 234);
             this.superRodGroupBox.Name = "superRodGroupBox";
             this.superRodGroupBox.Size = new System.Drawing.Size(325, 220);
             this.superRodGroupBox.TabIndex = 44;
@@ -2023,7 +2038,7 @@
             this.oldRodGroupBox.Controls.Add(this.oldRodSixtyMinUpDown);
             this.oldRodGroupBox.Controls.Add(this.label50);
             this.oldRodGroupBox.Controls.Add(this.oldRodSixtyComboBox);
-            this.oldRodGroupBox.Location = new System.Drawing.Point(367, 6);
+            this.oldRodGroupBox.Location = new System.Drawing.Point(384, 6);
             this.oldRodGroupBox.Name = "oldRodGroupBox";
             this.oldRodGroupBox.Size = new System.Drawing.Size(325, 220);
             this.oldRodGroupBox.TabIndex = 42;

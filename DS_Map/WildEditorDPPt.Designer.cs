@@ -325,21 +325,27 @@
             // 
             // removeEventFileButton
             // 
+            this.removeEventFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeEventFileButton.Location = new System.Drawing.Point(500, 13);
             this.removeEventFileButton.Name = "removeEventFileButton";
-            this.removeEventFileButton.Size = new System.Drawing.Size(80, 35);
+            this.removeEventFileButton.Size = new System.Drawing.Size(95, 35);
             this.removeEventFileButton.TabIndex = 60;
             this.removeEventFileButton.Text = "Remove Last";
+            this.removeEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.removeEventFileButton.UseVisualStyleBackColor = true;
             this.removeEventFileButton.Click += new System.EventHandler(this.removeLastEncounterFileButton_Click);
             // 
             // addEventFileButton
             // 
-            this.addEventFileButton.Location = new System.Drawing.Point(414, 13);
+            this.addEventFileButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.addEventFileButton.Location = new System.Drawing.Point(422, 13);
             this.addEventFileButton.Name = "addEventFileButton";
-            this.addEventFileButton.Size = new System.Drawing.Size(80, 35);
+            this.addEventFileButton.Size = new System.Drawing.Size(72, 35);
             this.addEventFileButton.TabIndex = 59;
             this.addEventFileButton.Text = "Add File";
+            this.addEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addEventFileButton.UseVisualStyleBackColor = true;
             this.addEventFileButton.Click += new System.EventHandler(this.addEncounterFileButton_Click);
             // 
@@ -355,31 +361,40 @@
             // 
             // exportEncounterFileButton
             // 
-            this.exportEncounterFileButton.Location = new System.Drawing.Point(281, 13);
+            this.exportEncounterFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportEncounterFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.exportEncounterFileButton.Location = new System.Drawing.Point(288, 13);
             this.exportEncounterFileButton.Name = "exportEncounterFileButton";
-            this.exportEncounterFileButton.Size = new System.Drawing.Size(80, 35);
+            this.exportEncounterFileButton.Size = new System.Drawing.Size(90, 35);
             this.exportEncounterFileButton.TabIndex = 57;
             this.exportEncounterFileButton.Text = "Export File";
+            this.exportEncounterFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.exportEncounterFileButton.UseVisualStyleBackColor = true;
             this.exportEncounterFileButton.Click += new System.EventHandler(this.exportEncounterFileButton_Click);
             // 
             // importEncounterFileButton
             // 
+            this.importEncounterFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
+            this.importEncounterFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importEncounterFileButton.Location = new System.Drawing.Point(195, 13);
             this.importEncounterFileButton.Name = "importEncounterFileButton";
-            this.importEncounterFileButton.Size = new System.Drawing.Size(80, 35);
+            this.importEncounterFileButton.Size = new System.Drawing.Size(90, 35);
             this.importEncounterFileButton.TabIndex = 56;
             this.importEncounterFileButton.Text = "Import File";
+            this.importEncounterFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.importEncounterFileButton.UseVisualStyleBackColor = true;
             this.importEncounterFileButton.Click += new System.EventHandler(this.importEncounterFileButton_Click);
             // 
             // saveEventsButton
             // 
-            this.saveEventsButton.Location = new System.Drawing.Point(655, 15);
+            this.saveEventsButton.Image = global::DSPRE.Properties.Resources.saveButton;
+            this.saveEventsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.saveEventsButton.Location = new System.Drawing.Point(655, 13);
             this.saveEventsButton.Name = "saveEventsButton";
             this.saveEventsButton.Size = new System.Drawing.Size(117, 35);
             this.saveEventsButton.TabIndex = 55;
             this.saveEventsButton.Text = "&Save Encounters";
+            this.saveEventsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.saveEventsButton.UseVisualStyleBackColor = true;
             this.saveEventsButton.Click += new System.EventHandler(this.saveEncountersButton_Click);
             // 
@@ -1401,7 +1416,7 @@
             this.superRodGroupBox.Controls.Add(this.superRodSixtyMinUpDown);
             this.superRodGroupBox.Controls.Add(this.label74);
             this.superRodGroupBox.Controls.Add(this.superRodSixtyComboBox);
-            this.superRodGroupBox.Location = new System.Drawing.Point(412, 312);
+            this.superRodGroupBox.Location = new System.Drawing.Point(408, 312);
             this.superRodGroupBox.Name = "superRodGroupBox";
             this.superRodGroupBox.Size = new System.Drawing.Size(325, 220);
             this.superRodGroupBox.TabIndex = 44;
@@ -1477,7 +1492,6 @@
             // 
             // superRodOneComboBox
             // 
-            this.superRodOneComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.superRodOneComboBox.FormattingEnabled = true;
             this.superRodOneComboBox.Location = new System.Drawing.Point(45, 185);
             this.superRodOneComboBox.Name = "superRodOneComboBox";
@@ -1513,7 +1527,6 @@
             // 
             // superRodFourComboBox
             // 
-            this.superRodFourComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.superRodFourComboBox.FormattingEnabled = true;
             this.superRodFourComboBox.Location = new System.Drawing.Point(45, 158);
             this.superRodFourComboBox.Name = "superRodFourComboBox";
@@ -1549,7 +1562,6 @@
             // 
             // superRodFiveComboBox
             // 
-            this.superRodFiveComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.superRodFiveComboBox.FormattingEnabled = true;
             this.superRodFiveComboBox.Location = new System.Drawing.Point(45, 131);
             this.superRodFiveComboBox.Name = "superRodFiveComboBox";
@@ -1585,7 +1597,6 @@
             // 
             // superRodThirtyComboBox
             // 
-            this.superRodThirtyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.superRodThirtyComboBox.FormattingEnabled = true;
             this.superRodThirtyComboBox.Location = new System.Drawing.Point(45, 104);
             this.superRodThirtyComboBox.Name = "superRodThirtyComboBox";
@@ -1621,7 +1632,6 @@
             // 
             // superRodSixtyComboBox
             // 
-            this.superRodSixtyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.superRodSixtyComboBox.FormattingEnabled = true;
             this.superRodSixtyComboBox.Location = new System.Drawing.Point(45, 77);
             this.superRodSixtyComboBox.Name = "superRodSixtyComboBox";
@@ -1731,7 +1741,6 @@
             // 
             // goodRodOneComboBox
             // 
-            this.goodRodOneComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.goodRodOneComboBox.FormattingEnabled = true;
             this.goodRodOneComboBox.Location = new System.Drawing.Point(45, 185);
             this.goodRodOneComboBox.Name = "goodRodOneComboBox";
@@ -1767,7 +1776,6 @@
             // 
             // goodRodFourComboBox
             // 
-            this.goodRodFourComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.goodRodFourComboBox.FormattingEnabled = true;
             this.goodRodFourComboBox.Location = new System.Drawing.Point(45, 158);
             this.goodRodFourComboBox.Name = "goodRodFourComboBox";
@@ -1803,7 +1811,6 @@
             // 
             // goodRodFiveComboBox
             // 
-            this.goodRodFiveComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.goodRodFiveComboBox.FormattingEnabled = true;
             this.goodRodFiveComboBox.Location = new System.Drawing.Point(45, 131);
             this.goodRodFiveComboBox.Name = "goodRodFiveComboBox";
@@ -1839,7 +1846,6 @@
             // 
             // goodRodThirtyComboBox
             // 
-            this.goodRodThirtyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.goodRodThirtyComboBox.FormattingEnabled = true;
             this.goodRodThirtyComboBox.Location = new System.Drawing.Point(45, 104);
             this.goodRodThirtyComboBox.Name = "goodRodThirtyComboBox";
@@ -1875,7 +1881,6 @@
             // 
             // goodRodSixtyComboBox
             // 
-            this.goodRodSixtyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.goodRodSixtyComboBox.FormattingEnabled = true;
             this.goodRodSixtyComboBox.Location = new System.Drawing.Point(45, 77);
             this.goodRodSixtyComboBox.Name = "goodRodSixtyComboBox";
@@ -1909,7 +1914,7 @@
             this.oldRodGroupBox.Controls.Add(this.oldRodSixtyMinUpDown);
             this.oldRodGroupBox.Controls.Add(this.label50);
             this.oldRodGroupBox.Controls.Add(this.oldRodSixtyComboBox);
-            this.oldRodGroupBox.Location = new System.Drawing.Point(412, 18);
+            this.oldRodGroupBox.Location = new System.Drawing.Point(408, 18);
             this.oldRodGroupBox.Name = "oldRodGroupBox";
             this.oldRodGroupBox.Size = new System.Drawing.Size(325, 220);
             this.oldRodGroupBox.TabIndex = 42;
@@ -1985,7 +1990,6 @@
             // 
             // oldRodOneComboBox
             // 
-            this.oldRodOneComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.oldRodOneComboBox.FormattingEnabled = true;
             this.oldRodOneComboBox.Location = new System.Drawing.Point(45, 185);
             this.oldRodOneComboBox.Name = "oldRodOneComboBox";
@@ -2021,7 +2025,6 @@
             // 
             // oldRodFourComboBox
             // 
-            this.oldRodFourComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.oldRodFourComboBox.FormattingEnabled = true;
             this.oldRodFourComboBox.Location = new System.Drawing.Point(45, 158);
             this.oldRodFourComboBox.Name = "oldRodFourComboBox";
@@ -2057,7 +2060,6 @@
             // 
             // oldRodFiveComboBox
             // 
-            this.oldRodFiveComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.oldRodFiveComboBox.FormattingEnabled = true;
             this.oldRodFiveComboBox.Location = new System.Drawing.Point(45, 131);
             this.oldRodFiveComboBox.Name = "oldRodFiveComboBox";
@@ -2093,7 +2095,6 @@
             // 
             // oldRodThirtyComboBox
             // 
-            this.oldRodThirtyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.oldRodThirtyComboBox.FormattingEnabled = true;
             this.oldRodThirtyComboBox.Location = new System.Drawing.Point(45, 104);
             this.oldRodThirtyComboBox.Name = "oldRodThirtyComboBox";
@@ -2129,7 +2130,6 @@
             // 
             // oldRodSixtyComboBox
             // 
-            this.oldRodSixtyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.oldRodSixtyComboBox.FormattingEnabled = true;
             this.oldRodSixtyComboBox.Location = new System.Drawing.Point(45, 77);
             this.oldRodSixtyComboBox.Name = "oldRodSixtyComboBox";
@@ -2239,7 +2239,6 @@
             // 
             // surfOneComboBox
             // 
-            this.surfOneComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.surfOneComboBox.FormattingEnabled = true;
             this.surfOneComboBox.Location = new System.Drawing.Point(45, 185);
             this.surfOneComboBox.Name = "surfOneComboBox";
@@ -2275,7 +2274,6 @@
             // 
             // surfFourComboBox
             // 
-            this.surfFourComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.surfFourComboBox.FormattingEnabled = true;
             this.surfFourComboBox.Location = new System.Drawing.Point(45, 158);
             this.surfFourComboBox.Name = "surfFourComboBox";
@@ -2311,7 +2309,6 @@
             // 
             // surfFiveComboBox
             // 
-            this.surfFiveComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.surfFiveComboBox.FormattingEnabled = true;
             this.surfFiveComboBox.Location = new System.Drawing.Point(45, 131);
             this.surfFiveComboBox.Name = "surfFiveComboBox";
@@ -2347,7 +2344,6 @@
             // 
             // surfThirtyComboBox
             // 
-            this.surfThirtyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.surfThirtyComboBox.FormattingEnabled = true;
             this.surfThirtyComboBox.Location = new System.Drawing.Point(45, 104);
             this.surfThirtyComboBox.Name = "surfThirtyComboBox";
@@ -2383,7 +2379,6 @@
             // 
             // surfSixtyComboBox
             // 
-            this.surfSixtyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.surfSixtyComboBox.FormattingEnabled = true;
             this.surfSixtyComboBox.Location = new System.Drawing.Point(45, 77);
             this.surfSixtyComboBox.Name = "surfSixtyComboBox";
@@ -2394,7 +2389,7 @@
             // repairAllButton
             // 
             this.repairAllButton.Image = global::DSPRE.Properties.Resources.wrenchIcon;
-            this.repairAllButton.Location = new System.Drawing.Point(614, 12);
+            this.repairAllButton.Location = new System.Drawing.Point(614, 11);
             this.repairAllButton.Name = "repairAllButton";
             this.repairAllButton.Size = new System.Drawing.Size(38, 40);
             this.repairAllButton.TabIndex = 61;
