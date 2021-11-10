@@ -9815,19 +9815,9 @@
             0,
             0,
             0});
-            this.musicIDconditionalMusicUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.musicIDconditionalMusicUpDown.Name = "musicIDconditionalMusicUpDown";
             this.musicIDconditionalMusicUpDown.Size = new System.Drawing.Size(67, 20);
             this.musicIDconditionalMusicUpDown.TabIndex = 6;
-            this.musicIDconditionalMusicUpDown.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             this.musicIDconditionalMusicUpDown.ValueChanged += new System.EventHandler(this.musicIDconditionalMusicUpDown_ValueChanged);
             // 
             // label64
@@ -9847,19 +9837,9 @@
             0,
             0,
             0});
-            this.flagConditionalMusicUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.flagConditionalMusicUpDown.Name = "flagConditionalMusicUpDown";
             this.flagConditionalMusicUpDown.Size = new System.Drawing.Size(67, 20);
             this.flagConditionalMusicUpDown.TabIndex = 4;
-            this.flagConditionalMusicUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.flagConditionalMusicUpDown.ValueChanged += new System.EventHandler(this.flagConditionalMusicUpDown_ValueChanged);
             // 
             // label41
@@ -10346,7 +10326,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
-            this.Text = "DS Pokémon Rom Editor 1.4 (Nømura, AdAstra/LD3005)";
+            this.Text = "DS Pokémon Rom Editor 1.4.1 (Nømura, AdAstra/LD3005)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainProgram_FormClosing);
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);

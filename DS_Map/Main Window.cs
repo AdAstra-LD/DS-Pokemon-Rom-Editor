@@ -476,7 +476,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.4" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.4.1" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
@@ -7710,6 +7710,7 @@ namespace DSPRE {
                 return;
             }
             disableHandlers = true;
+
             string suffix = "\\" + trainerComboBox.SelectedIndex.ToString("D4");
             currentTrainerFile = new TrainerFile(
                 new TrainerProperties(
@@ -7751,11 +7752,18 @@ namespace DSPRE {
                 partyLevelComponentList[i].Value = currentTrainerFile.party[i].level;
                 partyIVComponentList[i].Value = currentTrainerFile.party[i].unknown1_DATASTART;
                 partyBallComponentList[i].Value = currentTrainerFile.party[i].unknown2_DATAEND;
-
-                partyFirstMoveComponentList[i].SelectedIndex = currentTrainerFile.party[i].moves == null ? 0 : currentTrainerFile.party[i].moves[0];
-                partySecondMoveComponentList[i].SelectedIndex = currentTrainerFile.party[i].moves == null ? 0 : currentTrainerFile.party[i].moves[1];
-                partyThirdMoveComponentList[i].SelectedIndex = currentTrainerFile.party[i].moves == null ? 0 : currentTrainerFile.party[i].moves[2];
-                partyFourthMoveComponentList[i].SelectedIndex = currentTrainerFile.party[i].moves == null ? 0 : currentTrainerFile.party[i].moves[3];
+                
+                if (currentTrainerFile.party[i].moves == null) {
+                    partyFirstMoveComponentList[i].SelectedIndex = 0;
+                    partySecondMoveComponentList[i].SelectedIndex = 0;
+                    partyThirdMoveComponentList[i].SelectedIndex = 0;
+                    partyFourthMoveComponentList[i].SelectedIndex = 0;
+                } else {
+                    partyFirstMoveComponentList[i].SelectedIndex = currentTrainerFile.party[i].moves[0];
+                    partySecondMoveComponentList[i].SelectedIndex = currentTrainerFile.party[i].moves[1];
+                    partyThirdMoveComponentList[i].SelectedIndex = currentTrainerFile.party[i].moves[2];
+                    partyFourthMoveComponentList[i].SelectedIndex = currentTrainerFile.party[i].moves[3];
+                }
             }
         }
         private string FixPokenameString(string toFix) {
