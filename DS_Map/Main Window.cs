@@ -718,9 +718,7 @@ namespace DSPRE {
 
                 DSUtils.ForceUnpackNarcs(Enum.GetValues(typeof(DirNames)).Cast<DirNames>().ToList());
 
-                MessageBox.Show("Operation completed.", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                statusLabel.Text = "Ready";
+                MessageBox.Show("Operation completed.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 toolStripProgressBar.Value = 0;
                 toolStripProgressBar.Visible = false;
@@ -729,11 +727,13 @@ namespace DSPRE {
                 SetupMatrixEditor();
                 SetupMapEditor();
                 SetupNSBTXEditor();
-                SetupTextEditor();
+                SetupEventEditor();
                 SetupScriptEditorTextAreas();
                 SetupScriptEditor();
+                SetupTextEditor();
                 SetupTrainerEditor();
 
+                statusLabel.Text = "Ready";
                 Update();
             }
         }
@@ -822,7 +822,6 @@ namespace DSPRE {
                     tableEditorIsReady = true;
                 }
             }
-            statusLabel.Text = "Ready";
         }
 
         private void spawnEditorToolStripButton_Click(object sender, EventArgs e) {
@@ -1000,6 +999,7 @@ namespace DSPRE {
             if (headerListBox.Items.Count > 0) {
                 headerListBox.SelectedIndex = 0;
             }
+            statusLabel.Text = "Ready";
         }
         private void addHeaderBTN_Click(object sender, EventArgs e) {
             // Add new file in the dynamic headers directory
@@ -2145,14 +2145,14 @@ namespace DSPRE {
             }
         }
         private void addMatrixButton_Click(object sender, EventArgs e) {
-            /* Load new matrix, a copy of Matrix 0 */
-            GameMatrix newMatrix = new GameMatrix(0);
+            GameMatrix blankMatrix = new GameMatrix();
 
             /* Add new matrix file to matrix folder */
-            newMatrix.SaveToFile(RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + romInfo.GetMatrixCount().ToString("D4"), false);
+            blankMatrix.SaveToFile(RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + romInfo.GetMatrixCount().ToString("D4"), false);
 
             /* Update ComboBox*/
-            selectMatrixComboBox.Items.Add(new GameMatrix(newMatrix, romInfo.GetMatrixCount() - 1));
+            selectMatrixComboBox.Items.Add( selectMatrixComboBox.Items.Count.ToString() + blankMatrix );
+            selectMatrixComboBox.SelectedIndex = selectMatrixComboBox.Items.Count - 1;
         }
         private void exportMatrixButton_Click(object sender, EventArgs e) {
             currentMatrix.SaveToFileExplorePath("Matrix " + selectMatrixComboBox.SelectedIndex);
@@ -2393,12 +2393,42 @@ namespace DSPRE {
                 }
 
                 /* Determine area data */
-                ushort headerID;
+                ushort headerID = 0;
                 if (currentMatrix.hasHeadersSection) {
                     headerID = currentMatrix.headers[e.RowIndex, e.ColumnIndex];
                 } else {
-                    headerID = currentHeader.ID;
+                    List<string> result = HeaderSearch.AdvancedSearch(0, (ushort)internalNames.Count, internalNames, (int)MapHeader.SearchableFields.MatrixID, (int)HeaderSearch.NumOperators.Equal, selectMatrixComboBox.SelectedIndex.ToString());
+                    if (result.Count < 1) {
+                        headerID = currentHeader.ID;
+                        statusLabel.Text = "The current Matrix is unused. Displaying the last selected Header (" + headerID + ")'s textures.";
+                    } else {
+                        if (result.Count > 1) {
+                            if (gameFamily.Equals(gFamEnum.DP)) {
+                                foreach (string r in result) {
+                                    HeaderDP hdp = (HeaderDP)MapHeader.LoadFromARM9(ushort.Parse(r.Split()[0]));
+                                    if (hdp.locationName != 0) {
+                                        headerID = hdp.ID;
+                                        break;
+                                    }
+                                }
+                            } else {
+                                foreach (string r in result) {
+                                    HeaderPt hpt = (HeaderPt)MapHeader.LoadFromARM9(ushort.Parse(r.Split()[0]));
+                                    if (hpt.locationName != 0) {
+                                        headerID = hpt.ID;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            statusLabel.Text = "Multiple Headers are associated to this Matrix. Header " + headerID + "'s textures are currently being used.";
+                        } else {
+                            headerID = ushort.Parse(result.First().Split()[0]);
+                            statusLabel.Text = "Loading Header " + headerID + "'s textures.";
+                        }
+                    }
                 }
+                Update();
 
                 if (headerID > internalNames.Count) {
                     MessageBox.Show("This map is associated to a non-existent header.\nThis will lead to unpredictable behaviour and, possibily, problems, if you attempt to load it in game.",
@@ -2495,8 +2525,7 @@ namespace DSPRE {
                 /* Remove entry from ComboBox, and decrease matrix count */
                 selectMatrixComboBox.Items.RemoveAt(matrixToDelete);
             } else {
-                MessageBox.Show("At least one matrix must be kept.", "Can't delete matrix", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                MessageBox.Show("At least one matrix must be kept.", "Can't delete Matrix", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         private void setSpawnPointButton_Click(object sender, EventArgs e) {
@@ -2521,8 +2550,8 @@ namespace DSPRE {
                 headerNumber = Convert.ToUInt16(selectedCell.Value);
             } else {
                 DialogResult d;
-                d = MessageBox.Show("The current matrix doesn't have a Header Tab. " +
-                    Environment.NewLine + "Do you want to check if any Header is using it and choose that one as your Spawn Point? " +
+                d = MessageBox.Show("This Matrix doesn't have a Header Tab. " +
+                    Environment.NewLine + "Do you want to check if any Header uses this Matrix and choose that one as your Spawn Header? " +
                     Environment.NewLine + "\nChoosing 'No' will pick the last selected Header.", "Couldn't find Header Tab", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (d == DialogResult.Yes) {
                     result = HeaderSearch.AdvancedSearch(0, (ushort)internalNames.Count, internalNames, (int)MapHeader.SearchableFields.MatrixID, (int)HeaderSearch.NumOperators.Equal, selectMatrixComboBox.SelectedIndex.ToString());
@@ -2706,6 +2735,12 @@ namespace DSPRE {
         #region Variables & Constants 
         public const int mapEditorSquareSize = 19;
 
+        /* Map Rotation vars */
+        public bool lRot;
+        public bool rRot;
+        public bool uRot;
+        public bool dRot;
+
         /* Screenshot Interpolation mode */
         public InterpolationMode intMode;
 
@@ -2806,15 +2841,20 @@ namespace DSPRE {
             Gl.glScalef(mapFile.mapModel.models[0].modelScale / 64, mapFile.mapModel.models[0].modelScale / 64, mapFile.mapModel.models[0].modelScale / 64);
 
             /* Determine if map textures must be rendered */
-            if (!mapTexturesON) Gl.glDisable(Gl.GL_TEXTURE_2D);
-            else Gl.glEnable(Gl.GL_TEXTURE_2D);
+            if (!mapTexturesON) {
+                Gl.glDisable(Gl.GL_TEXTURE_2D);
+            } else {
+                Gl.glEnable(Gl.GL_TEXTURE_2D);
+            }
 
             mapRenderer.RenderModel("", ani, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, ca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, tp, mapFile.mapModel); // Render map model
 
             if (!hideBuildings) {
-                if (buildingTexturesON)
+                if (buildingTexturesON) {
                     Gl.glEnable(Gl.GL_TEXTURE_2D);
-                else Gl.glDisable(Gl.GL_TEXTURE_2D);
+                } else {
+                    Gl.glDisable(Gl.GL_TEXTURE_2D);
+                }
 
                 for (int i = 0; i < mapFile.buildings.Count; i++) {
                     NSBMD file = mapFile.buildings[i].NSBMDFile;
@@ -2840,6 +2880,7 @@ namespace DSPRE {
             Gl.glTranslatef(fullXcoord * translateFactor / building.width, fullYcoord * translateFactor / building.height, fullZcoord * translateFactor / building.length);
         }
         private void SetupRenderer(float ang, float dist, float elev, float perspective, int width, int height) {
+            //TODO: improve this
             Gl.glEnable(Gl.GL_RESCALE_NORMAL);
             Gl.glEnable(Gl.GL_COLOR_MATERIAL);
             Gl.glEnable(Gl.GL_DEPTH_TEST);
@@ -2995,6 +3036,8 @@ namespace DSPRE {
                     buildTextureComboBox.SelectedIndex = 1;
                     break;
             };
+
+            statusLabel.Text = "Ready";
         }
         private void addMapFileButton_Click(object sender, EventArgs e) {
             /* Add new map file to map folder */
@@ -3117,22 +3160,66 @@ namespace DSPRE {
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
         private void mapOpenGlControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
+            byte multiplier = 2;
+            if (e.Modifiers == Keys.Shift) {
+                multiplier = 1;
+            } else if (e.Modifiers == Keys.Control) {
+                multiplier = 4;
+            }
+
             switch (e.KeyCode) {
                 case Keys.Right:
-                    ang += 1;
+                    rRot = true;
+                    lRot = false;
                     break;
                 case Keys.Left:
-                    ang -= 1;
-                    break;
-                case Keys.Down:
-                    elev += 1;
+                    rRot = false;
+                    lRot = true;
                     break;
                 case Keys.Up:
-                    elev -= 1;
+                    dRot = false;
+                    uRot = true;
+                    break;
+                case Keys.Down:
+                    dRot = true;
+                    uRot = false;
                     break;
             }
+
+            if (rRot ^ lRot) {
+                if (rRot) {
+                    ang += 1 * multiplier;
+                } else if (lRot) {
+                    ang -= 1 * multiplier;
+                }
+            }
+
+            if (uRot ^ dRot) {
+                if (uRot) {
+                    elev -= 1 * multiplier;
+                } else if (dRot) {
+                    elev += 1 * multiplier;
+                }
+            }
+            
             mapOpenGlControl.Invalidate();
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+        }
+        private void mapOpenGlControl_KeyUp(object sender, KeyEventArgs e) {
+            switch (e.KeyCode) {
+                case Keys.Right:
+                    rRot = false;
+                    break;
+                case Keys.Left:
+                    lRot = false;
+                    break;
+                case Keys.Up:
+                    uRot = false;
+                    break;
+                case Keys.Down:
+                    dRot = false;
+                    break;
+            }
         }
         private void mapOpenGlControl_Click(object sender, EventArgs e) {
             if (radio2D.Checked && bldPlaceWithMouseCheckbox.Checked) {
@@ -4835,10 +4922,12 @@ namespace DSPRE {
 
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
+
+            statusLabel.Text = "Ready";
         }
         private void addEventFileButton_Click(object sender, EventArgs e) {
             /* Add copy of event 0 to event folder */
-            new EventFile(0).SaveToFileDefaultDir(selectEventComboBox.Items.Count);
+            new EventFile().SaveToFileDefaultDir(selectEventComboBox.Items.Count);
 
             /* Update ComboBox and select new file */
             selectEventComboBox.Items.Add("Event File " + selectEventComboBox.Items.Count);
@@ -7069,6 +7158,7 @@ namespace DSPRE {
             if (palettesListBox.Items.Count > 0) {
                 palettesListBox.SelectedIndex = 0;
             }
+            statusLabel.Text = "Ready";
         }
         private void buildingsTilesetRadioButton_CheckedChanged(object sender, EventArgs e) {
             FillTilesetBox();

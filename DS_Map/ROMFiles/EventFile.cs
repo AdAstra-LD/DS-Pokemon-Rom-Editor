@@ -20,29 +20,37 @@ namespace DSPRE.ROMFiles {
             using (BinaryReader reader = new BinaryReader(data)) {
                 /* Read spawnables */
                 uint spawnablesCount = reader.ReadUInt32();
-                for (int i = 0; i < spawnablesCount; i++)
+                for (int i = 0; i < spawnablesCount; i++) {
                     spawnables.Add(new Spawnable(new MemoryStream(reader.ReadBytes(0x14))));
+                }
 
                 /* Read overworlds */
                 uint overworldsCount = reader.ReadUInt32();
-                for (int i = 0; i < overworldsCount; i++)
+                for (int i = 0; i < overworldsCount; i++) {
                     overworlds.Add(new Overworld(new MemoryStream(reader.ReadBytes(0x20))));
+                }
 
                 /* Read warps */
                 uint warpsCount = reader.ReadUInt32();
-                for (int i = 0; i < warpsCount; i++)
+                for (int i = 0; i < warpsCount; i++) {
                     warps.Add(new Warp(new MemoryStream(reader.ReadBytes(0xC))));
+                }
 
                 /* Read triggers */
                 uint triggersCount = reader.ReadUInt32();
-                for (int i = 0; i < triggersCount; i++)
+                for (int i = 0; i < triggersCount; i++) {
                     triggers.Add(new Trigger(new MemoryStream(reader.ReadBytes(0x10))));
+                }
             }
         }
         public EventFile(int ID) : this(new FileStream(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
+        public EventFile() { }
         #endregion
 
         #region Methods (1)
+        public override string ToString() {
+            return base.ToString();
+        }
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {

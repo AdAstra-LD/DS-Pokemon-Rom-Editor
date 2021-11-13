@@ -189,7 +189,6 @@
             this.matrixNameTextBox = new System.Windows.Forms.TextBox();
             this.heightUpDown = new System.Windows.Forms.NumericUpDown();
             this.widthUpDown = new System.Windows.Forms.NumericUpDown();
-            this.heightLabel = new System.Windows.Forms.Label();
             this.widthLabel = new System.Windows.Forms.Label();
             this.selectMatrixComboBox = new System.Windows.Forms.ComboBox();
             this.saveMatrixButton = new System.Windows.Forms.Button();
@@ -2477,7 +2476,6 @@
             this.matrixEditorTabPage.Controls.Add(this.matrixNameTextBox);
             this.matrixEditorTabPage.Controls.Add(this.heightUpDown);
             this.matrixEditorTabPage.Controls.Add(this.widthUpDown);
-            this.matrixEditorTabPage.Controls.Add(this.heightLabel);
             this.matrixEditorTabPage.Controls.Add(this.widthLabel);
             this.matrixEditorTabPage.Controls.Add(this.selectMatrixComboBox);
             this.matrixEditorTabPage.Controls.Add(this.saveMatrixButton);
@@ -2535,7 +2533,7 @@
             // 
             this.importMatrixButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importMatrixButton.Location = new System.Drawing.Point(11, 228);
+            this.importMatrixButton.Location = new System.Drawing.Point(11, 152);
             this.importMatrixButton.Name = "importMatrixButton";
             this.importMatrixButton.Size = new System.Drawing.Size(117, 29);
             this.importMatrixButton.TabIndex = 29;
@@ -2548,7 +2546,7 @@
             // 
             this.exportMatrixButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportMatrixButton.Location = new System.Drawing.Point(11, 197);
+            this.exportMatrixButton.Location = new System.Drawing.Point(11, 122);
             this.exportMatrixButton.Name = "exportMatrixButton";
             this.exportMatrixButton.Size = new System.Drawing.Size(117, 29);
             this.exportMatrixButton.TabIndex = 28;
@@ -2561,7 +2559,7 @@
             // 
             this.removeMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("removeMatrixButton.Image")));
             this.removeMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeMatrixButton.Location = new System.Drawing.Point(64, 152);
+            this.removeMatrixButton.Location = new System.Drawing.Point(64, 183);
             this.removeMatrixButton.Name = "removeMatrixButton";
             this.removeMatrixButton.Size = new System.Drawing.Size(64, 35);
             this.removeMatrixButton.TabIndex = 27;
@@ -2574,7 +2572,7 @@
             // 
             this.addMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("addMatrixButton.Image")));
             this.addMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addMatrixButton.Location = new System.Drawing.Point(11, 152);
+            this.addMatrixButton.Location = new System.Drawing.Point(11, 183);
             this.addMatrixButton.Name = "addMatrixButton";
             this.addMatrixButton.Size = new System.Drawing.Size(51, 35);
             this.addMatrixButton.TabIndex = 2;
@@ -2645,7 +2643,7 @@
             // 
             this.matrixNameLabel.AutoSize = true;
             this.matrixNameLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.matrixNameLabel.Location = new System.Drawing.Point(10, 59);
+            this.matrixNameLabel.Location = new System.Drawing.Point(10, 55);
             this.matrixNameLabel.Name = "matrixNameLabel";
             this.matrixNameLabel.Size = new System.Drawing.Size(64, 13);
             this.matrixNameLabel.TabIndex = 20;
@@ -2859,7 +2857,7 @@
             // 
             // matrixNameTextBox
             // 
-            this.matrixNameTextBox.Location = new System.Drawing.Point(13, 73);
+            this.matrixNameTextBox.Location = new System.Drawing.Point(13, 69);
             this.matrixNameTextBox.MaxLength = 16;
             this.matrixNameTextBox.Name = "matrixNameTextBox";
             this.matrixNameTextBox.Size = new System.Drawing.Size(112, 20);
@@ -2868,7 +2866,7 @@
             // 
             // heightUpDown
             // 
-            this.heightUpDown.Location = new System.Drawing.Point(64, 124);
+            this.heightUpDown.Location = new System.Drawing.Point(84, 98);
             this.heightUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -2880,7 +2878,7 @@
             0,
             0});
             this.heightUpDown.Name = "heightUpDown";
-            this.heightUpDown.Size = new System.Drawing.Size(61, 20);
+            this.heightUpDown.Size = new System.Drawing.Size(37, 20);
             this.heightUpDown.TabIndex = 16;
             this.heightUpDown.Value = new decimal(new int[] {
             1,
@@ -2891,7 +2889,7 @@
             // 
             // widthUpDown
             // 
-            this.widthUpDown.Location = new System.Drawing.Point(64, 98);
+            this.widthUpDown.Location = new System.Drawing.Point(41, 98);
             this.widthUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -2903,7 +2901,7 @@
             0,
             0});
             this.widthUpDown.Name = "widthUpDown";
-            this.widthUpDown.Size = new System.Drawing.Size(61, 20);
+            this.widthUpDown.Size = new System.Drawing.Size(37, 20);
             this.widthUpDown.TabIndex = 15;
             this.widthUpDown.Value = new decimal(new int[] {
             1,
@@ -2912,25 +2910,15 @@
             0});
             this.widthUpDown.ValueChanged += new System.EventHandler(this.widthUpDown_ValueChanged);
             // 
-            // heightLabel
-            // 
-            this.heightLabel.AutoSize = true;
-            this.heightLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.heightLabel.Location = new System.Drawing.Point(10, 127);
-            this.heightLabel.Name = "heightLabel";
-            this.heightLabel.Size = new System.Drawing.Size(38, 13);
-            this.heightLabel.TabIndex = 14;
-            this.heightLabel.Text = "Height";
-            // 
             // widthLabel
             // 
             this.widthLabel.AutoSize = true;
             this.widthLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.widthLabel.Location = new System.Drawing.Point(10, 101);
             this.widthLabel.Name = "widthLabel";
-            this.widthLabel.Size = new System.Drawing.Size(35, 13);
+            this.widthLabel.Size = new System.Drawing.Size(27, 13);
             this.widthLabel.TabIndex = 13;
-            this.widthLabel.Text = "Width";
+            this.widthLabel.Text = "Size";
             // 
             // selectMatrixComboBox
             // 
@@ -2988,6 +2976,7 @@
             // 
             // mapScreenshotButton
             // 
+            this.mapScreenshotButton.Image = global::DSPRE.Properties.Resources.cameraIcon;
             this.mapScreenshotButton.Location = new System.Drawing.Point(1135, 499);
             this.mapScreenshotButton.Name = "mapScreenshotButton";
             this.mapScreenshotButton.Size = new System.Drawing.Size(41, 40);
@@ -3076,6 +3065,7 @@
             this.mapOpenGlControl.StencilBits = ((byte)(0));
             this.mapOpenGlControl.TabIndex = 2;
             this.mapOpenGlControl.Click += new System.EventHandler(this.mapOpenGlControl_Click);
+            this.mapOpenGlControl.KeyUp += new System.Windows.Forms.KeyEventHandler(this.mapOpenGlControl_KeyUp);
             this.mapOpenGlControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.mapOpenGlControl_PreviewKeyDown);
             // 
             // movPictureBox
@@ -4151,7 +4141,7 @@
             this.radio3D.AutoSize = true;
             this.radio3D.Checked = true;
             this.radio3D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio3D.Location = new System.Drawing.Point(1141, 542);
+            this.radio3D.Location = new System.Drawing.Point(1140, 542);
             this.radio3D.Name = "radio3D";
             this.radio3D.Size = new System.Drawing.Size(31, 23);
             this.radio3D.TabIndex = 26;
@@ -4166,7 +4156,7 @@
             this.radio2D.Appearance = System.Windows.Forms.Appearance.Button;
             this.radio2D.AutoSize = true;
             this.radio2D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio2D.Location = new System.Drawing.Point(1141, 566);
+            this.radio2D.Location = new System.Drawing.Point(1140, 566);
             this.radio2D.Name = "radio2D";
             this.radio2D.Size = new System.Drawing.Size(31, 23);
             this.radio2D.TabIndex = 25;
@@ -4181,7 +4171,7 @@
             this.wireframeCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.wireframeCheckBox.AutoSize = true;
             this.wireframeCheckBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.wireframeCheckBox.Location = new System.Drawing.Point(1141, 590);
+            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, 590);
             this.wireframeCheckBox.Name = "wireframeCheckBox";
             this.wireframeCheckBox.Size = new System.Drawing.Size(31, 23);
             this.wireframeCheckBox.TabIndex = 27;
@@ -6506,7 +6496,7 @@
             this.removeEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeEventFileButton.Location = new System.Drawing.Point(354, 36);
             this.removeEventFileButton.Name = "removeEventFileButton";
-            this.removeEventFileButton.Size = new System.Drawing.Size(98, 25);
+            this.removeEventFileButton.Size = new System.Drawing.Size(101, 25);
             this.removeEventFileButton.TabIndex = 54;
             this.removeEventFileButton.Text = "Remove Last";
             this.removeEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -6519,9 +6509,9 @@
             this.addEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addEventFileButton.Location = new System.Drawing.Point(354, 9);
             this.addEventFileButton.Name = "addEventFileButton";
-            this.addEventFileButton.Size = new System.Drawing.Size(98, 25);
+            this.addEventFileButton.Size = new System.Drawing.Size(101, 25);
             this.addEventFileButton.TabIndex = 53;
-            this.addEventFileButton.Text = "Add Event";
+            this.addEventFileButton.Text = "Add Event File";
             this.addEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addEventFileButton.UseVisualStyleBackColor = true;
             this.addEventFileButton.Click += new System.EventHandler(this.addEventFileButton_Click);
@@ -6606,7 +6596,7 @@
             this.saveEventsButton.Name = "saveEventsButton";
             this.saveEventsButton.Size = new System.Drawing.Size(166, 25);
             this.saveEventsButton.TabIndex = 34;
-            this.saveEventsButton.Text = "Save Events";
+            this.saveEventsButton.Text = "Save Event File";
             this.saveEventsButton.UseVisualStyleBackColor = true;
             this.saveEventsButton.Click += new System.EventHandler(this.saveEventsButton_Click);
             // 
@@ -10644,7 +10634,6 @@
         private System.Windows.Forms.TextBox matrixNameTextBox;
         private System.Windows.Forms.NumericUpDown heightUpDown;
         private System.Windows.Forms.NumericUpDown widthUpDown;
-        private System.Windows.Forms.Label heightLabel;
         private System.Windows.Forms.Label widthLabel;
         private System.Windows.Forms.ComboBox selectMatrixComboBox;
         private System.Windows.Forms.Button saveMatrixButton;

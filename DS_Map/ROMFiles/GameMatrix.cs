@@ -97,12 +97,22 @@ namespace DSPRE.ROMFiles {
             this.width = copy.width;
             this.height = copy.height;
 
+            this.hasHeadersSection = copy.hasHeadersSection;
+            this.hasHeightsSection = copy.hasHeightsSection;
+
             this.maps = (ushort[,])copy.maps.Clone();
             this.altitudes = (byte[,])copy.altitudes.Clone();
             this.headers = (ushort[,])copy.headers.Clone();
+        }
 
-            this.hasHeadersSection = copy.hasHeadersSection;
-            this.hasHeightsSection = copy.hasHeightsSection;
+        public GameMatrix() {
+            this.name = "newMatrix";
+            this.hasHeadersSection = false;
+            this.hasHeightsSection = false;
+
+            this.width = 1;
+            this.height = 1;
+            this.maps = new ushort[1, 1] { { 0 } };
         }
         #endregion
 
