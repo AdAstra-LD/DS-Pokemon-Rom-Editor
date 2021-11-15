@@ -5507,29 +5507,32 @@ namespace DSPRE {
             if (disableHandlers || overworldsListBox.SelectedIndex < 0)
                 return;
 
-            if (owPartnerTrainerCheckBox.Checked)
+            if (owPartnerTrainerCheckBox.Checked) {
                 currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber += 2000;
-            else
+            } else
                 currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber -= 2000;
         }
         private void owTrainerComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || overworldsListBox.SelectedIndex < 0)
                 return;
 
-            if (owPartnerTrainerCheckBox.Checked)
-                owScriptNumericUpDown.Value = currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(4999 + owTrainerComboBox.SelectedIndex);
-            else
-                owScriptNumericUpDown.Value = currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(2999 + owTrainerComboBox.SelectedIndex);
+            owScriptNumericUpDown.Value = owPartnerTrainerCheckBox.Checked
+                ? (currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(4999 + owTrainerComboBox.SelectedIndex))
+                : (currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(2999 + owTrainerComboBox.SelectedIndex));
         }
         private void owXMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
+
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].xMapPosition = (short)owXMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void owXRangeUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
+
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].xRange = (ushort)owXRangeUpDown.Value;
         }
         private void owYRangeUpDown_ValueChanged(object sender, EventArgs e) {
@@ -7651,6 +7654,7 @@ namespace DSPRE {
             }
         }
         private void SetupTrainerEditor() {
+            disableHandlers = true;
             SetupTrainerClassEncounterMusicTable();
             /* Extract essential NARCs sub-archives*/
             statusLabel.Text = "Setting up Trainer Editor...";
@@ -7792,6 +7796,8 @@ namespace DSPRE {
             }
 
             trainerComboBox.SelectedIndex = 0;
+
+            disableHandlers = false;
             trainerComboBox_SelectedIndexChanged(null, null);
             statusLabel.Text = "Ready";
         }
