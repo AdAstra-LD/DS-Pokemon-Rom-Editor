@@ -10,93 +10,10 @@ using DSPRE.Resources.ROMToolboxDB;
 using DSPRE.Resources;
 using static DSPRE.RomInfo;
 using System.Threading.Tasks;
+using static DSPRE.Resources.ROMToolboxDB.ToolboxDB;
 
 namespace DSPRE {
     public partial class ROMToolboxDialog : Form {
-        internal class ARM9PatchData {
-            internal string initString;
-            internal string branchString;
-
-            internal uint branchOffset;
-            internal uint initOffset;
-
-            internal ARM9PatchData() {
-                branchOffset = ToolboxDB.arm9ExpansionOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameFamily] - 0x02000000;
-                initOffset = ToolboxDB.arm9ExpansionOffsetsDB[nameof(initOffset) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage] - 0x02000000;
-                branchString = ToolboxDB.arm9ExpansionCodeDB[nameof(branchString) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
-
-                if (RomInfo.gameFamily == gFamEnum.Plat) {
-                    initString = ToolboxDB.arm9ExpansionCodeDB[nameof(initString) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
-                } else {
-                    initString = ToolboxDB.arm9ExpansionCodeDB[nameof(initString) + "_" + RomInfo.gameFamily];
-                }
-            }
-        }
-        internal class BDHCAMPatchData {
-            internal byte overlayNumber;
-
-            internal uint branchOffset;
-            internal string branchString;
-
-            internal uint overlayOffset1;
-            internal uint overlayOffset2;
-
-            internal string overlayString1;
-            internal string overlayString2;
-
-            internal byte[] subroutine;
-
-            internal BDHCAMPatchData() {
-                switch (RomInfo.gameFamily) {
-                    case gFamEnum.Plat:
-                        overlayNumber = 5;
-                        branchString = ToolboxDB.BDHCamCodeDB[nameof(branchString) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
-
-                        branchOffset = ToolboxDB.BDHCamOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
-                        overlayOffset1 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset1) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
-                        overlayOffset2 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset2) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
-                        break;
-                    case gFamEnum.HGSS:
-                        overlayNumber = 1;
-                        branchString = ToolboxDB.BDHCamCodeDB[nameof(branchString) + "_" + RomInfo.gameFamily];
-
-                        branchOffset = ToolboxDB.BDHCamOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameFamily];
-                        overlayOffset1 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset1) + "_" + RomInfo.gameFamily];
-                        overlayOffset2 = ToolboxDB.BDHCamOffsetsDB[nameof(overlayOffset2) + "_" + RomInfo.gameFamily];
-                        break;
-                }
-                branchOffset -= 0x02000000;
-                overlayString1 = ToolboxDB.BDHCamCodeDB[nameof(overlayString1)];
-                overlayString2 = ToolboxDB.BDHCamCodeDB[nameof(overlayString2)];
-                subroutine = (byte[])new ResourceManager("DSPRE.Resources.ROMToolboxDB.BDHCAMPatchDB", Assembly.GetExecutingAssembly()).GetObject(RomInfo.romID + "_cam");
-            }
-        }
-        internal class DynamicHeadersPatchData {
-            internal uint initOffset;
-            internal string initString;
-            internal string REFERENCE_STRING = "19 00 C0 46";
-            internal int pointerDiff;
-
-            internal int specialCaseOffset1 = 0x3B522;
-            internal int specialCaseOffset2 = 0x3B526;
-            internal int specialCaseOffset3 = 0x3B53C;
-
-            internal string specialCaseData1 = "19 00";
-            internal string specialCaseData2 = "C0 46";
-            internal string specialCaseData3 = "00 00 00 00";
-
-            internal DynamicHeadersPatchData() {
-                initOffset = ToolboxDB.getDynamicHeadersInitOffset(RomInfo.romID);
-                initString = ToolboxDB.getDynamicHeadersInitString(RomInfo.romID);
-
-                if (RomInfo.gameFamily == gFamEnum.HGSS) {
-                    pointerDiff = (int)(initOffset - ToolboxDB.getDynamicHeadersInitOffset("IPKE"));
-                } else {
-                    pointerDiff = (int)(initOffset - ToolboxDB.getDynamicHeadersInitOffset("CPUE"));
-                }
-            }
-        }
-
         public static uint expandedARMfileID = ToolboxDB.syntheticOverlayFileNumbersDB[RomInfo.gameFamily];
         public static bool flag_standardizedItems { get; private set; } = false;
         public static bool flag_arm9Expanded { get; private set; } = false;
@@ -244,7 +161,7 @@ namespace DSPRE {
                 return false; //0 means BDHCAM patch has not been applied
 
             String fullFilePath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + ROMToolboxDialog.expandedARMfileID.ToString("D4");
-            byte[] subroutineRead = DSUtils.ReadFromFile(fullFilePath, ToolboxDB.BDHCamSubroutineOffset, data.subroutine.Length); //Write new overlayCode1
+            byte[] subroutineRead = DSUtils.ReadFromFile(fullFilePath, BDHCAMPatchData.BDHCamSubroutineOffset, data.subroutine.Length); //Write new overlayCode1
             if (data.subroutine.Length != subroutineRead.Length || !data.subroutine.SequenceEqual(subroutineRead))
                 return false; //0 means BDHCAM patch has not been applied
 
@@ -420,7 +337,7 @@ namespace DSPRE {
                 "- Replace " + (data.branchString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.branchOffset.ToString("X") + " with " + '\n' + data.branchString + "\n\n" +
                 "- Replace " + (data.overlayString1.Length / 3 + 1) + " bytes of data at overlay" + data.overlayNumber + " offset 0x" + data.overlayOffset1.ToString("X") + " with " + '\n' + data.overlayString1 + "\n\n" +
                 "- Replace " + (data.overlayString2.Length / 3 + 1) + " bytes of data at overlay" + data.overlayNumber + " offset 0x" + data.overlayOffset2.ToString("X") + " with " + '\n' + data.overlayString2 + "\n\n" +
-                "- Modify file #" + expandedARMfileID + " inside " + '\n' + RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\n' + "to insert the BDHCAM routine (any data between 0x" + ToolboxDB.BDHCamSubroutineOffset.ToString("X") + " and 0x" + (ToolboxDB.BDHCamSubroutineOffset + data.subroutine.Length).ToString("X") + " will be overwritten)." + "\n\n" +
+                "- Modify file #" + expandedARMfileID + " inside " + '\n' + RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\n' + "to insert the BDHCAM routine (any data between 0x" + BDHCAMPatchData.BDHCamSubroutineOffset.ToString("X") + " and 0x" + (BDHCAMPatchData.BDHCamSubroutineOffset + data.subroutine.Length).ToString("X") + " will be overwritten)." + "\n\n" +
                 "Do you wish to continue?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -443,7 +360,7 @@ namespace DSPRE {
                     String fullFilePath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + expandedARMfileID.ToString("D4");
 
                     /*Write Expanded ARM9 File*/
-                    DSUtils.WriteToFile(fullFilePath, data.subroutine, ToolboxDB.BDHCamSubroutineOffset);
+                    DSUtils.WriteToFile(fullFilePath, data.subroutine, BDHCAMPatchData.BDHCamSubroutineOffset);
                 } catch {
                     MessageBox.Show("Operation failed. It is strongly advised that you restore the arm9 and overlay from their respective backups.", "Something went wrong",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -722,7 +639,7 @@ namespace DSPRE {
 
                      */
 
-                    foreach (Tuple<uint, uint> reference in ToolboxDB.dynamicHeadersPointersDB [RomInfo.gameFamily]) {
+                    foreach (Tuple<uint, uint> reference in DynamicHeadersPatchData.dynamicHeadersPointersDB [RomInfo.gameFamily]) {
                         DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.REFERENCE_STRING), (uint)(reference.Item1 + data.pointerDiff));
                         uint pointerValue = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes((uint)(reference.Item2 + data.pointerDiff), 4), 0) - RomInfo.headerTableOffset - 0x02000000;
                         DSUtils.ARM9.WriteBytes(BitConverter.GetBytes(pointerValue), (uint)(reference.Item2 + data.pointerDiff));
