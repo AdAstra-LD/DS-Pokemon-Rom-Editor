@@ -548,8 +548,7 @@
             this.decimalRadioButton = new System.Windows.Forms.RadioButton();
             this.hexRadiobutton = new System.Windows.Forms.RadioButton();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
-            this.replaceOnlyCurrentCheckBox = new System.Windows.Forms.CheckBox();
-            this.searchOnlyCurrentCheckBox = new System.Windows.Forms.CheckBox();
+            this.searchAllArchivesCheckBox = new System.Windows.Forms.CheckBox();
             this.caseSensitiveTextReplaceCheckbox = new System.Windows.Forms.CheckBox();
             this.textSearchResultsListBox = new System.Windows.Forms.ListBox();
             this.replaceTextLabel = new System.Windows.Forms.Label();
@@ -591,6 +590,7 @@
             this.ExportBTN = new System.Windows.Forms.DataGridViewButtonColumn();
             this.ImportBTN = new System.Windows.Forms.DataGridViewButtonColumn();
             this.trainerEditorTabPage = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.importTrainerButton = new System.Windows.Forms.Button();
             this.exportTrainerButton = new System.Windows.Forms.Button();
             this.importReplacePartyButton = new System.Windows.Forms.Button();
@@ -815,6 +815,7 @@
             this.spawnEditorToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label67 = new System.Windows.Forms.Label();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -7390,8 +7391,8 @@
             // 
             // groupBox13
             // 
-            this.groupBox13.Controls.Add(this.replaceOnlyCurrentCheckBox);
-            this.groupBox13.Controls.Add(this.searchOnlyCurrentCheckBox);
+            this.groupBox13.Controls.Add(this.label67);
+            this.groupBox13.Controls.Add(this.searchAllArchivesCheckBox);
             this.groupBox13.Controls.Add(this.caseSensitiveTextReplaceCheckbox);
             this.groupBox13.Controls.Add(this.textSearchResultsListBox);
             this.groupBox13.Controls.Add(this.replaceTextLabel);
@@ -7408,37 +7409,30 @@
             this.groupBox13.Size = new System.Drawing.Size(282, 502);
             this.groupBox13.TabIndex = 31;
             this.groupBox13.TabStop = false;
-            this.groupBox13.Text = "Search for lines containing text";
+            this.groupBox13.Text = "Search / Replace";
             // 
-            // replaceOnlyCurrentCheckBox
+            // searchAllArchivesCheckBox
             // 
-            this.replaceOnlyCurrentCheckBox.AutoSize = true;
-            this.replaceOnlyCurrentCheckBox.Location = new System.Drawing.Point(190, 105);
-            this.replaceOnlyCurrentCheckBox.Name = "replaceOnlyCurrentCheckBox";
-            this.replaceOnlyCurrentCheckBox.Size = new System.Drawing.Size(84, 17);
-            this.replaceOnlyCurrentCheckBox.TabIndex = 41;
-            this.replaceOnlyCurrentCheckBox.Text = "Only Current";
-            this.replaceOnlyCurrentCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // searchOnlyCurrentCheckBox
-            // 
-            this.searchOnlyCurrentCheckBox.AutoSize = true;
-            this.searchOnlyCurrentCheckBox.Location = new System.Drawing.Point(190, 22);
-            this.searchOnlyCurrentCheckBox.Name = "searchOnlyCurrentCheckBox";
-            this.searchOnlyCurrentCheckBox.Size = new System.Drawing.Size(84, 17);
-            this.searchOnlyCurrentCheckBox.TabIndex = 40;
-            this.searchOnlyCurrentCheckBox.Text = "Only Current";
-            this.searchOnlyCurrentCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.searchOnlyCurrentCheckBox.UseVisualStyleBackColor = true;
+            this.searchAllArchivesCheckBox.AutoSize = true;
+            this.searchAllArchivesCheckBox.Checked = true;
+            this.searchAllArchivesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.searchAllArchivesCheckBox.Location = new System.Drawing.Point(190, 22);
+            this.searchAllArchivesCheckBox.Name = "searchAllArchivesCheckBox";
+            this.searchAllArchivesCheckBox.Size = new System.Drawing.Size(81, 17);
+            this.searchAllArchivesCheckBox.TabIndex = 40;
+            this.searchAllArchivesCheckBox.Text = "All Archives";
+            this.searchAllArchivesCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.searchAllArchivesCheckBox.UseVisualStyleBackColor = true;
             // 
             // caseSensitiveTextReplaceCheckbox
             // 
             this.caseSensitiveTextReplaceCheckbox.AutoSize = true;
-            this.caseSensitiveTextReplaceCheckbox.Location = new System.Drawing.Point(190, 134);
+            this.caseSensitiveTextReplaceCheckbox.Enabled = false;
+            this.caseSensitiveTextReplaceCheckbox.Location = new System.Drawing.Point(190, 115);
             this.caseSensitiveTextReplaceCheckbox.Name = "caseSensitiveTextReplaceCheckbox";
-            this.caseSensitiveTextReplaceCheckbox.Size = new System.Drawing.Size(83, 17);
+            this.caseSensitiveTextReplaceCheckbox.Size = new System.Drawing.Size(77, 17);
             this.caseSensitiveTextReplaceCheckbox.TabIndex = 39;
-            this.caseSensitiveTextReplaceCheckbox.Text = "Match Case";
+            this.caseSensitiveTextReplaceCheckbox.Text = "Copy Case";
             this.caseSensitiveTextReplaceCheckbox.UseVisualStyleBackColor = true;
             // 
             // textSearchResultsListBox
@@ -7532,7 +7526,7 @@
             this.replaceMessageButton.Name = "replaceMessageButton";
             this.replaceMessageButton.Size = new System.Drawing.Size(173, 27);
             this.replaceMessageButton.TabIndex = 30;
-            this.replaceMessageButton.Text = "Replace every occurrence";
+            this.replaceMessageButton.Text = "Search and Replace All";
             this.replaceMessageButton.UseVisualStyleBackColor = true;
             this.replaceMessageButton.Click += new System.EventHandler(this.replaceMessageButton_Click);
             // 
@@ -7739,7 +7733,7 @@
             this.cameraEditorDataGridView.CausesValidation = false;
             this.cameraEditorDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.cameraEditorDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.cameraEditorDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.cameraEditorDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DistanceGVCol,
@@ -7863,6 +7857,7 @@
             // 
             // trainerEditorTabPage
             // 
+            this.trainerEditorTabPage.Controls.Add(this.button1);
             this.trainerEditorTabPage.Controls.Add(this.importTrainerButton);
             this.trainerEditorTabPage.Controls.Add(this.exportTrainerButton);
             this.trainerEditorTabPage.Controls.Add(this.importReplacePartyButton);
@@ -7884,13 +7879,26 @@
             this.trainerEditorTabPage.Text = "Trainer Editor";
             this.trainerEditorTabPage.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Enabled = false;
+            this.button1.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button1.Location = new System.Drawing.Point(322, 20);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(102, 51);
+            this.button1.TabIndex = 44;
+            this.button1.Text = "Delete Trainer";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // importTrainerButton
             // 
             this.importTrainerButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importTrainerButton.Location = new System.Drawing.Point(340, 20);
+            this.importTrainerButton.Location = new System.Drawing.Point(525, 20);
             this.importTrainerButton.Name = "importTrainerButton";
-            this.importTrainerButton.Size = new System.Drawing.Size(74, 52);
+            this.importTrainerButton.Size = new System.Drawing.Size(85, 51);
             this.importTrainerButton.TabIndex = 43;
             this.importTrainerButton.Text = "Import\r\nTrainer";
             this.importTrainerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -7901,9 +7909,9 @@
             // 
             this.exportTrainerButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportTrainerButton.Location = new System.Drawing.Point(265, 20);
+            this.exportTrainerButton.Location = new System.Drawing.Point(439, 20);
             this.exportTrainerButton.Name = "exportTrainerButton";
-            this.exportTrainerButton.Size = new System.Drawing.Size(74, 52);
+            this.exportTrainerButton.Size = new System.Drawing.Size(85, 51);
             this.exportTrainerButton.TabIndex = 42;
             this.exportTrainerButton.Text = "Export\r\nTrainer";
             this.exportTrainerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -7914,9 +7922,9 @@
             // 
             this.importReplacePartyButton.Image = ((System.Drawing.Image)(resources.GetObject("importReplacePartyButton.Image")));
             this.importReplacePartyButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importReplacePartyButton.Location = new System.Drawing.Point(890, 20);
+            this.importReplacePartyButton.Location = new System.Drawing.Point(1076, 20);
             this.importReplacePartyButton.Name = "importReplacePartyButton";
-            this.importReplacePartyButton.Size = new System.Drawing.Size(87, 52);
+            this.importReplacePartyButton.Size = new System.Drawing.Size(85, 51);
             this.importReplacePartyButton.TabIndex = 41;
             this.importReplacePartyButton.Text = "Replace\r\nParty";
             this.importReplacePartyButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -7927,9 +7935,9 @@
             // 
             this.importReplacePropertiesButton.Image = ((System.Drawing.Image)(resources.GetObject("importReplacePropertiesButton.Image")));
             this.importReplacePropertiesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importReplacePropertiesButton.Location = new System.Drawing.Point(522, 20);
+            this.importReplacePropertiesButton.Location = new System.Drawing.Point(782, 20);
             this.importReplacePropertiesButton.Name = "importReplacePropertiesButton";
-            this.importReplacePropertiesButton.Size = new System.Drawing.Size(87, 52);
+            this.importReplacePropertiesButton.Size = new System.Drawing.Size(85, 51);
             this.importReplacePropertiesButton.TabIndex = 40;
             this.importReplacePropertiesButton.Text = "Replace\r\nProperties";
             this.importReplacePropertiesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -7940,9 +7948,9 @@
             // 
             this.exportPropertiesButton.Image = ((System.Drawing.Image)(resources.GetObject("exportPropertiesButton.Image")));
             this.exportPropertiesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportPropertiesButton.Location = new System.Drawing.Point(433, 20);
+            this.exportPropertiesButton.Location = new System.Drawing.Point(696, 20);
             this.exportPropertiesButton.Name = "exportPropertiesButton";
-            this.exportPropertiesButton.Size = new System.Drawing.Size(87, 52);
+            this.exportPropertiesButton.Size = new System.Drawing.Size(85, 51);
             this.exportPropertiesButton.TabIndex = 39;
             this.exportPropertiesButton.Text = "Export\r\nProperties";
             this.exportPropertiesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -7953,9 +7961,9 @@
             // 
             this.exportPartyButton.Image = ((System.Drawing.Image)(resources.GetObject("exportPartyButton.Image")));
             this.exportPartyButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportPartyButton.Location = new System.Drawing.Point(804, 20);
+            this.exportPartyButton.Location = new System.Drawing.Point(990, 20);
             this.exportPartyButton.Name = "exportPartyButton";
-            this.exportPartyButton.Size = new System.Drawing.Size(84, 52);
+            this.exportPartyButton.Size = new System.Drawing.Size(85, 51);
             this.exportPartyButton.TabIndex = 38;
             this.exportPartyButton.Text = "Export\r\nParty";
             this.exportPartyButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -7964,13 +7972,14 @@
             // 
             // addTrainerButton
             // 
+            this.addTrainerButton.Enabled = false;
             this.addTrainerButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addTrainerButton.Location = new System.Drawing.Point(190, 20);
+            this.addTrainerButton.Location = new System.Drawing.Point(218, 20);
             this.addTrainerButton.Name = "addTrainerButton";
-            this.addTrainerButton.Size = new System.Drawing.Size(74, 52);
+            this.addTrainerButton.Size = new System.Drawing.Size(102, 51);
             this.addTrainerButton.TabIndex = 35;
-            this.addTrainerButton.Text = "Add\r\nTrainer";
+            this.addTrainerButton.Text = "Add Trainer";
             this.addTrainerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addTrainerButton.UseVisualStyleBackColor = true;
             this.addTrainerButton.Click += new System.EventHandler(this.addTrainerButton_Click);
@@ -7983,9 +7992,9 @@
             this.groupBox28.Controls.Add(this.party3GroupBox);
             this.groupBox28.Controls.Add(this.party2GroupBox);
             this.groupBox28.Controls.Add(this.party1GroupBox);
-            this.groupBox28.Location = new System.Drawing.Point(433, 75);
+            this.groupBox28.Location = new System.Drawing.Point(439, 75);
             this.groupBox28.Name = "groupBox28";
-            this.groupBox28.Size = new System.Drawing.Size(727, 534);
+            this.groupBox28.Size = new System.Drawing.Size(731, 534);
             this.groupBox28.TabIndex = 32;
             this.groupBox28.TabStop = false;
             this.groupBox28.Text = "Party";
@@ -8969,9 +8978,9 @@
             this.groupBox27.Controls.Add(this.trainerClassNameTextbox);
             this.groupBox27.Controls.Add(this.label17);
             this.groupBox27.Controls.Add(this.trainerClassPicBox);
-            this.groupBox27.Location = new System.Drawing.Point(26, 486);
+            this.groupBox27.Location = new System.Drawing.Point(15, 486);
             this.groupBox27.Name = "groupBox27";
-            this.groupBox27.Size = new System.Drawing.Size(401, 123);
+            this.groupBox27.Size = new System.Drawing.Size(414, 123);
             this.groupBox27.TabIndex = 30;
             this.groupBox27.TabStop = false;
             this.groupBox27.Text = "Trainer Class";
@@ -8979,7 +8988,7 @@
             // eyeContactMusicAltLabel
             // 
             this.eyeContactMusicAltLabel.AutoSize = true;
-            this.eyeContactMusicAltLabel.Location = new System.Drawing.Point(278, 69);
+            this.eyeContactMusicAltLabel.Location = new System.Drawing.Point(286, 69);
             this.eyeContactMusicAltLabel.Name = "eyeContactMusicAltLabel";
             this.eyeContactMusicAltLabel.Size = new System.Drawing.Size(117, 13);
             this.eyeContactMusicAltLabel.TabIndex = 36;
@@ -8988,7 +8997,7 @@
             // encounterSSEQAltUpDown
             // 
             this.encounterSSEQAltUpDown.Enabled = false;
-            this.encounterSSEQAltUpDown.Location = new System.Drawing.Point(282, 85);
+            this.encounterSSEQAltUpDown.Location = new System.Drawing.Point(290, 85);
             this.encounterSSEQAltUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -9049,7 +9058,7 @@
             // 
             this.saveTrainerClassButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveTrainerClassButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveTrainerClassButton.Location = new System.Drawing.Point(319, 15);
+            this.saveTrainerClassButton.Location = new System.Drawing.Point(327, 15);
             this.saveTrainerClassButton.Name = "saveTrainerClassButton";
             this.saveTrainerClassButton.Size = new System.Drawing.Size(75, 45);
             this.saveTrainerClassButton.TabIndex = 29;
@@ -9060,7 +9069,7 @@
             // 
             // trainerClassNameTextbox
             // 
-            this.trainerClassNameTextbox.Location = new System.Drawing.Point(213, 29);
+            this.trainerClassNameTextbox.Location = new System.Drawing.Point(221, 29);
             this.trainerClassNameTextbox.Name = "trainerClassNameTextbox";
             this.trainerClassNameTextbox.Size = new System.Drawing.Size(95, 20);
             this.trainerClassNameTextbox.TabIndex = 24;
@@ -9068,7 +9077,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(210, 13);
+            this.label17.Location = new System.Drawing.Point(218, 13);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(63, 13);
             this.label17.TabIndex = 23;
@@ -9096,9 +9105,9 @@
             this.groupBox25.Controls.Add(this.label63);
             this.groupBox25.Controls.Add(this.label43);
             this.groupBox25.Controls.Add(this.trainerClassListBox);
-            this.groupBox25.Location = new System.Drawing.Point(26, 75);
+            this.groupBox25.Location = new System.Drawing.Point(15, 75);
             this.groupBox25.Name = "groupBox25";
-            this.groupBox25.Size = new System.Drawing.Size(401, 405);
+            this.groupBox25.Size = new System.Drawing.Size(414, 405);
             this.groupBox25.TabIndex = 29;
             this.groupBox25.TabStop = false;
             this.groupBox25.Text = "Trainer Properties";
@@ -9118,7 +9127,7 @@
             this.TrainerAIGroupBox.Controls.Add(this.trainerAI11CheckBox);
             this.TrainerAIGroupBox.Location = new System.Drawing.Point(9, 282);
             this.TrainerAIGroupBox.Name = "TrainerAIGroupBox";
-            this.TrainerAIGroupBox.Size = new System.Drawing.Size(384, 116);
+            this.TrainerAIGroupBox.Size = new System.Drawing.Size(393, 116);
             this.TrainerAIGroupBox.TabIndex = 27;
             this.TrainerAIGroupBox.TabStop = false;
             this.TrainerAIGroupBox.Text = "AI";
@@ -9161,9 +9170,9 @@
             this.trainerAI4CheckBox.AutoSize = true;
             this.trainerAI4CheckBox.Location = new System.Drawing.Point(16, 90);
             this.trainerAI4CheckBox.Name = "trainerAI4CheckBox";
-            this.trainerAI4CheckBox.Size = new System.Drawing.Size(51, 17);
+            this.trainerAI4CheckBox.Size = new System.Drawing.Size(56, 17);
             this.trainerAI4CheckBox.TabIndex = 3;
-            this.trainerAI4CheckBox.Text = "State";
+            this.trainerAI4CheckBox.Text = "Status";
             this.trainerAI4CheckBox.UseVisualStyleBackColor = true;
             this.trainerAI4CheckBox.CheckedChanged += new System.EventHandler(this.trainerAICheckBox_CheckedChanged);
             // 
@@ -9250,9 +9259,9 @@
             this.trainerItemsGroupBox.Controls.Add(this.trainerItem3ComboBox);
             this.trainerItemsGroupBox.Controls.Add(this.trainerItem2ComboBox);
             this.trainerItemsGroupBox.Controls.Add(this.trainerItem1ComboBox);
-            this.trainerItemsGroupBox.Location = new System.Drawing.Point(202, 146);
+            this.trainerItemsGroupBox.Location = new System.Drawing.Point(211, 146);
             this.trainerItemsGroupBox.Name = "trainerItemsGroupBox";
-            this.trainerItemsGroupBox.Size = new System.Drawing.Size(190, 130);
+            this.trainerItemsGroupBox.Size = new System.Drawing.Size(191, 130);
             this.trainerItemsGroupBox.TabIndex = 26;
             this.trainerItemsGroupBox.TabStop = false;
             this.trainerItemsGroupBox.Text = "Trainer Items";
@@ -9260,43 +9269,43 @@
             // trainerItem4ComboBox
             // 
             this.trainerItem4ComboBox.FormattingEnabled = true;
-            this.trainerItem4ComboBox.Location = new System.Drawing.Point(15, 101);
+            this.trainerItem4ComboBox.Location = new System.Drawing.Point(9, 101);
             this.trainerItem4ComboBox.Name = "trainerItem4ComboBox";
-            this.trainerItem4ComboBox.Size = new System.Drawing.Size(159, 21);
+            this.trainerItem4ComboBox.Size = new System.Drawing.Size(171, 21);
             this.trainerItem4ComboBox.TabIndex = 3;
             this.trainerItem4ComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerItem4ComboBox_SelectedIndexChanged);
             // 
             // trainerItem3ComboBox
             // 
             this.trainerItem3ComboBox.FormattingEnabled = true;
-            this.trainerItem3ComboBox.Location = new System.Drawing.Point(15, 47);
+            this.trainerItem3ComboBox.Location = new System.Drawing.Point(9, 74);
             this.trainerItem3ComboBox.Name = "trainerItem3ComboBox";
-            this.trainerItem3ComboBox.Size = new System.Drawing.Size(159, 21);
+            this.trainerItem3ComboBox.Size = new System.Drawing.Size(171, 21);
             this.trainerItem3ComboBox.TabIndex = 2;
             this.trainerItem3ComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerItem3ComboBox_SelectedIndexChanged);
             // 
             // trainerItem2ComboBox
             // 
             this.trainerItem2ComboBox.FormattingEnabled = true;
-            this.trainerItem2ComboBox.Location = new System.Drawing.Point(15, 74);
+            this.trainerItem2ComboBox.Location = new System.Drawing.Point(9, 47);
             this.trainerItem2ComboBox.Name = "trainerItem2ComboBox";
-            this.trainerItem2ComboBox.Size = new System.Drawing.Size(159, 21);
+            this.trainerItem2ComboBox.Size = new System.Drawing.Size(171, 21);
             this.trainerItem2ComboBox.TabIndex = 1;
             this.trainerItem2ComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerItem2ComboBox_SelectedIndexChanged);
             // 
             // trainerItem1ComboBox
             // 
             this.trainerItem1ComboBox.FormattingEnabled = true;
-            this.trainerItem1ComboBox.Location = new System.Drawing.Point(15, 20);
+            this.trainerItem1ComboBox.Location = new System.Drawing.Point(9, 20);
             this.trainerItem1ComboBox.Name = "trainerItem1ComboBox";
-            this.trainerItem1ComboBox.Size = new System.Drawing.Size(159, 21);
+            this.trainerItem1ComboBox.Size = new System.Drawing.Size(171, 21);
             this.trainerItem1ComboBox.TabIndex = 0;
             this.trainerItem1ComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerItem1ComboBox_SelectedIndexChanged);
             // 
             // trainerItemsCheckBox
             // 
             this.trainerItemsCheckBox.AutoSize = true;
-            this.trainerItemsCheckBox.Location = new System.Drawing.Point(205, 119);
+            this.trainerItemsCheckBox.Location = new System.Drawing.Point(215, 119);
             this.trainerItemsCheckBox.Name = "trainerItemsCheckBox";
             this.trainerItemsCheckBox.Size = new System.Drawing.Size(117, 17);
             this.trainerItemsCheckBox.TabIndex = 25;
@@ -9307,7 +9316,7 @@
             // trainerMovesCheckBox
             // 
             this.trainerMovesCheckBox.AutoSize = true;
-            this.trainerMovesCheckBox.Location = new System.Drawing.Point(205, 98);
+            this.trainerMovesCheckBox.Location = new System.Drawing.Point(215, 98);
             this.trainerMovesCheckBox.Name = "trainerMovesCheckBox";
             this.trainerMovesCheckBox.Size = new System.Drawing.Size(97, 17);
             this.trainerMovesCheckBox.TabIndex = 24;
@@ -9318,7 +9327,7 @@
             // trainerDoubleCheckBox
             // 
             this.trainerDoubleCheckBox.AutoSize = true;
-            this.trainerDoubleCheckBox.Location = new System.Drawing.Point(205, 76);
+            this.trainerDoubleCheckBox.Location = new System.Drawing.Point(215, 76);
             this.trainerDoubleCheckBox.Name = "trainerDoubleCheckBox";
             this.trainerDoubleCheckBox.Size = new System.Drawing.Size(90, 17);
             this.trainerDoubleCheckBox.TabIndex = 23;
@@ -9328,14 +9337,14 @@
             // 
             // trainerNameTextBox
             // 
-            this.trainerNameTextBox.Location = new System.Drawing.Point(205, 39);
+            this.trainerNameTextBox.Location = new System.Drawing.Point(215, 39);
             this.trainerNameTextBox.Name = "trainerNameTextBox";
-            this.trainerNameTextBox.Size = new System.Drawing.Size(152, 20);
+            this.trainerNameTextBox.Size = new System.Drawing.Size(148, 20);
             this.trainerNameTextBox.TabIndex = 22;
             // 
             // partyCountUpDown
             // 
-            this.partyCountUpDown.Location = new System.Drawing.Point(340, 99);
+            this.partyCountUpDown.Location = new System.Drawing.Point(346, 99);
             this.partyCountUpDown.Maximum = new decimal(new int[] {
             6,
             0,
@@ -9349,7 +9358,7 @@
             // label44
             // 
             this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(202, 23);
+            this.label44.Location = new System.Drawing.Point(212, 23);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(71, 13);
             this.label44.TabIndex = 21;
@@ -9358,7 +9367,7 @@
             // label63
             // 
             this.label63.AutoSize = true;
-            this.label63.Location = new System.Drawing.Point(333, 83);
+            this.label63.Location = new System.Drawing.Point(339, 83);
             this.label63.Name = "label63";
             this.label63.Size = new System.Drawing.Size(57, 13);
             this.label63.TabIndex = 34;
@@ -9378,14 +9387,14 @@
             this.trainerClassListBox.FormattingEnabled = true;
             this.trainerClassListBox.Location = new System.Drawing.Point(11, 39);
             this.trainerClassListBox.Name = "trainerClassListBox";
-            this.trainerClassListBox.Size = new System.Drawing.Size(181, 238);
+            this.trainerClassListBox.Size = new System.Drawing.Size(193, 238);
             this.trainerClassListBox.TabIndex = 0;
             this.trainerClassListBox.SelectedIndexChanged += new System.EventHandler(this.trainerClassListBox_SelectedIndexChanged);
             // 
             // label42
             // 
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(24, 7);
+            this.label42.Location = new System.Drawing.Point(12, 7);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(59, 13);
             this.label42.TabIndex = 28;
@@ -9395,9 +9404,9 @@
             // 
             this.trainerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.trainerComboBox.FormattingEnabled = true;
-            this.trainerComboBox.Location = new System.Drawing.Point(27, 22);
+            this.trainerComboBox.Location = new System.Drawing.Point(15, 22);
             this.trainerComboBox.Name = "trainerComboBox";
-            this.trainerComboBox.Size = new System.Drawing.Size(161, 21);
+            this.trainerComboBox.Size = new System.Drawing.Size(199, 21);
             this.trainerComboBox.TabIndex = 27;
             this.trainerComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerComboBox_SelectedIndexChanged);
             // 
@@ -9405,9 +9414,9 @@
             // 
             this.trainerSaveCurrentButton.Image = global::DSPRE.Properties.Resources.saveButton;
             this.trainerSaveCurrentButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.trainerSaveCurrentButton.Location = new System.Drawing.Point(26, 48);
+            this.trainerSaveCurrentButton.Location = new System.Drawing.Point(14, 48);
             this.trainerSaveCurrentButton.Name = "trainerSaveCurrentButton";
-            this.trainerSaveCurrentButton.Size = new System.Drawing.Size(162, 23);
+            this.trainerSaveCurrentButton.Size = new System.Drawing.Size(200, 23);
             this.trainerSaveCurrentButton.TabIndex = 31;
             this.trainerSaveCurrentButton.Text = "&Save Current Trainer";
             this.trainerSaveCurrentButton.UseVisualStyleBackColor = true;
@@ -10297,6 +10306,16 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             // 
+            // label67
+            // 
+            this.label67.AutoSize = true;
+            this.label67.Enabled = false;
+            this.label67.Location = new System.Drawing.Point(192, 131);
+            this.label67.Name = "label67";
+            this.label67.Size = new System.Drawing.Size(68, 13);
+            this.label67.TabIndex = 41;
+            this.label67.Text = "Coming soon";
+            // 
             // MainProgram
             // 
             this.AllowDrop = true;
@@ -11039,8 +11058,7 @@
         private System.Windows.Forms.Button copyCameraAngleButton;
         private System.Windows.Forms.ListBox textSearchResultsListBox;
         private System.Windows.Forms.CheckBox caseSensitiveTextReplaceCheckbox;
-        private System.Windows.Forms.CheckBox replaceOnlyCurrentCheckBox;
-        private System.Windows.Forms.CheckBox searchOnlyCurrentCheckBox;
+        private System.Windows.Forms.CheckBox searchAllArchivesCheckBox;
         private System.Windows.Forms.NumericUpDown musicDayUpDown;
         private System.Windows.Forms.NumericUpDown musicNightUpDown;
         private System.Windows.Forms.NumericUpDown weatherUpDown;
@@ -11389,6 +11407,8 @@
         private System.Windows.Forms.RadioButton scriptEditorNumberFormatNoPreference;
         private System.Windows.Forms.RadioButton scriptEditorNumberFormatDecimal;
         private System.Windows.Forms.RadioButton scriptEditorNumberFormatHex;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label67;
     }
 }
 

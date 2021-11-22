@@ -4888,8 +4888,6 @@ namespace DSPRE {
             owTrainerComboBox.Items.AddRange(trainerNames);
 
             /* Add item list to ow item box */
-            
-
             string[] itemNames = RomInfo.GetItemNames();
             if (ROMToolboxDialog.CheckScriptsStandardizedItemNumbers()) {
                 UpdateItemComboBox(itemNames);
@@ -6872,31 +6870,32 @@ namespace DSPRE {
             }
         }
         private void searchMessageButton_Click(object sender, EventArgs e) {
-            if (searchMessageTextBox.Text == "")
+            if (searchMessageTextBox.Text == "") {
                 return;
+            }
 
-            int firstArchive;
-            int lastArchive;
+            int firstArchiveNumber;
+            int lastArchiveNumber;
 
-            if (searchOnlyCurrentCheckBox.Checked) {
-                firstArchive = selectTextFileComboBox.SelectedIndex;
-                lastArchive = firstArchive + 1;
+            if (searchAllArchivesCheckBox.Checked) {
+                firstArchiveNumber = 0;
+                lastArchiveNumber = romInfo.GetTextArchivesCount();
             } else {
-                firstArchive = 0;
-                lastArchive = romInfo.GetTextArchivesCount();
+                firstArchiveNumber = selectTextFileComboBox.SelectedIndex;
+                lastArchiveNumber = firstArchiveNumber + 1;
             }
 
             textSearchResultsListBox.Items.Clear();
 
-            if (lastArchive > 828)
-                lastArchive = 828;
-            textSearchProgressBar.Maximum = lastArchive;
+            lastArchiveNumber = Math.Min(lastArchiveNumber, 828);
+
+            textSearchProgressBar.Maximum = lastArchiveNumber;
 
             List<string> results = null;
             if (caseSensitiveTextSearchCheckbox.Checked) {
-                results = searchTexts(firstArchive, lastArchive, (string x) => x.Contains(searchMessageTextBox.Text));
+                results = searchTexts(firstArchiveNumber, lastArchiveNumber, (string x) => x.Contains(searchMessageTextBox.Text));
             } else {
-                results = searchTexts(firstArchive, lastArchive, (string x) => x.IndexOf(searchMessageTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0);
+                results = searchTexts(firstArchiveNumber, lastArchiveNumber, (string x) => x.IndexOf(searchMessageTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0);
             }
 
             textSearchResultsListBox.Items.AddRange(results.ToArray());
@@ -6930,18 +6929,18 @@ namespace DSPRE {
                 return;
             }
 
-            int firstArchive;
-            int lastArchive;
+            int firstArchiveNumber;
+            int lastArchiveNumber;
 
             string specify;
-            if (replaceOnlyCurrentCheckBox.Checked) {
-                specify = " in the current text bank only";
-                firstArchive = selectTextFileComboBox.SelectedIndex;
-                lastArchive = firstArchive + 1;
+            if (searchAllArchivesCheckBox.Checked) {
+                firstArchiveNumber = 0;
+                lastArchiveNumber = romInfo.GetTextArchivesCount();
+                specify = " in every Text Bank of the game (" + firstArchiveNumber + " to " + lastArchiveNumber + ")";
             } else {
-                specify = " in every Text Bank of the game";
-                firstArchive = 0;
-                lastArchive = romInfo.GetTextArchivesCount();
+                firstArchiveNumber = selectTextFileComboBox.SelectedIndex;
+                lastArchiveNumber = firstArchiveNumber + 1;
+                specify = " in the current text bank only (" + firstArchiveNumber + ")";
             }
 
             string message = "You are about to replace every occurrence of " + '"' + searchMessageTextBox.Text + '"'
@@ -6950,43 +6949,42 @@ namespace DSPRE {
             DialogResult d = MessageBox.Show(message, "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (d == DialogResult.Yes) {
-
                 string searchString = searchMessageTextBox.Text;
                 string replaceString = replaceMessageTextBox.Text;
                 textSearchResultsListBox.Items.Clear();
 
-                lastArchive = Math.Min(lastArchive, 828);
-                textSearchProgressBar.Maximum = lastArchive;
+                lastArchiveNumber = Math.Min(lastArchiveNumber, 828);
+                textSearchProgressBar.Maximum = lastArchiveNumber;
 
-                for (int k = firstArchive; k < lastArchive; k++) {
-                    TextArchive file = new TextArchive(k);
-                    currentTextArchive = file;
+                for (int cur = firstArchiveNumber; cur < lastArchiveNumber; cur++) { 
+                    currentTextArchive = new TextArchive(cur);
                     bool found = false;
 
                     if (caseSensitiveTextReplaceCheckbox.Checked) {
-                        for (int j = 0; j < file.messages.Count; j++) {
-                            if (file.messages[j].Contains(searchString)) {
-                                file.messages[j] = file.messages[j].Replace(searchString, replaceString);
+                        for (int j = 0; j < currentTextArchive.messages.Count; j++) {
+                            while (currentTextArchive.messages[j].IndexOf(searchString) >= 0) {
+                                currentTextArchive.messages[j] = currentTextArchive.messages[j].Replace(searchString, replaceString);
                                 found = true;
                             }
                         }
                     } else {
-                        for (int j = 0; j < file.messages.Count; j++) {
-                            if (file.messages[j].IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                file.messages[j] = file.messages[j].Replace(searchString, replaceString);
+                        for (int j = 0; j < currentTextArchive.messages.Count; j++) {
+                            int posFound;
+                            while ( (posFound = currentTextArchive.messages[j].IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase)) >= 0) { 
+                                currentTextArchive.messages[j] = currentTextArchive.messages[j].Substring(0, posFound) + replaceString + currentTextArchive.messages[j].Substring(posFound + searchString.Length);
                                 found = true;
                             }
                         }
                     }
 
-                    textSearchProgressBar.Value = k;
+                    textSearchProgressBar.Value = cur;
                     if (found) {
                         disableHandlers = true;
 
-                        textSearchResultsListBox.Items.Add("Text archive (" + k + ") - Succesfully edited");
-                        currentTextArchive.SaveToFileDefaultDir(k, showSuccessMessage: false);
+                        textSearchResultsListBox.Items.Add("Text archive (" + cur + ") - Succesfully edited");
+                        currentTextArchive.SaveToFileDefaultDir(cur, showSuccessMessage: false);
 
-                        if (k == lastArchive) {
+                        if (cur == lastArchiveNumber) {
                             UpdateTextEditorFileView(false);
                         }
 
@@ -6996,7 +6994,7 @@ namespace DSPRE {
                     //this.saveMessageFileButton_Click(sender, e);
                 }
                 MessageBox.Show("Operation completed.", "Replace All Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                UpdateTextEditorFileView(true);
+                UpdateTextEditorFileView(readAgain: true);
                 textSearchProgressBar.Value = 0;
             }
         }
@@ -7641,14 +7639,7 @@ namespace DSPRE {
                     uint entryOffset = (uint)ar.BaseStream.Position;
                     byte tclass = (byte)ar.ReadUInt16();
                     ushort musicD = ar.ReadUInt16();
-                    ushort? musicN;
-
-                    if (gameFamily == gFamEnum.HGSS) {
-                        musicN = ar.ReadUInt16();
-                    } else {
-                        musicN = null;
-                    }
-
+                    ushort? musicN = gameFamily == gFamEnum.HGSS ? ar.ReadUInt16() : (ushort?)null;
                     trainerClassEncounterMusicDict[tclass] = (entryOffset, musicD, musicN);
                 }
             }
@@ -8299,6 +8290,7 @@ namespace DSPRE {
             trainerNames.SaveToFileDefaultDir(RomInfo.trainerNamesMessageNumber, showSuccessMessage: false);
 
             trainerComboBox.SelectedIndex = trainerComboBox.Items.Count - 1;
+            UpdateCurrentTrainerShownName();
         }
 
         private void exportTrainerButton_Click(object sender, EventArgs e) {
@@ -8307,10 +8299,12 @@ namespace DSPRE {
 
         private void importTrainerButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .evt file */
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Gen IV Trainer File (*.trf)|*.trf";
-            if (of.ShowDialog(this) != DialogResult.OK)
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "Gen IV Trainer File (*.trf)|*.trf"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             /* Update trainer on disk */
             MemoryStream userData = new MemoryStream();
