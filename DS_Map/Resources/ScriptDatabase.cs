@@ -1449,6 +1449,8 @@ namespace DSPRE.Resources {
 
             [0x0320] = "PortalAnimation",
 
+            [0x032B] = "CheckEventRegigigas",
+
             //International release exclusive
             [0x033C] = "TextItemLowercase",
             [0x0346] = "TextCapitalize",

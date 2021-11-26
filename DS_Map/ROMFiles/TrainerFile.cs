@@ -154,6 +154,8 @@ namespace DSPRE.ROMFiles {
         private PartyPokemon[] content;
         private TrainerProperties trp;
         public bool exportCondensedData;
+
+        public const int MOVES_PER_POKE = 4;
         public Party(int POKE_IN_PARTY, bool init, TrainerProperties trp) {
             this.trp = trp;
             this.content = new PartyPokemon[POKE_IN_PARTY];
@@ -178,10 +180,9 @@ namespace DSPRE.ROMFiles {
                     }
 
                     int dividend = 8;
-                    int nMoves = 4;
 
                     if (trp.hasMoves) {
-                        dividend += nMoves * sizeof(ushort);
+                        dividend += Party.MOVES_PER_POKE * sizeof(ushort);
                     }
                     if (trp.hasItems) {
                         dividend += sizeof(ushort);
@@ -204,7 +205,6 @@ namespace DSPRE.ROMFiles {
                         //BITS 0 - 6 --> form ID ??? Even numbers only??? 
                         ushort pokemon = (ushort)(reader.ReadUInt16() & (ushort.MaxValue>>7)); 
                         
-
                         ushort? heldItem = null;
                         ushort[] moves = null;
 
@@ -212,10 +212,10 @@ namespace DSPRE.ROMFiles {
                             heldItem = reader.ReadUInt16();
                         }
                         if (trp.hasMoves) {
-                            moves = new ushort[4];
+                            moves = new ushort[MOVES_PER_POKE];
                             for (int m = 0; m < moves.Length; m++) {
                                 ushort val = reader.ReadUInt16();
-                                moves[m] = (ushort)(val == 0xFFFF ? 0 : val);
+                                moves[m] = (ushort)(val == ushort.MaxValue ? 0 : val);
                             }
                         }
 

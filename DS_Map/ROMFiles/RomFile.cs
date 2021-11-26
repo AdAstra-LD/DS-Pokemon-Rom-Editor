@@ -29,10 +29,13 @@ namespace DSPRE.ROMFiles {
                 Filter = fileType + ' ' + "(*." + fileExtension + '|' + "(*." + fileExtension
             };
 
-            if (!string.IsNullOrEmpty(suggestedFileName))
+            if (!string.IsNullOrEmpty(suggestedFileName)) {
                 sf.FileName = suggestedFileName;
-            if (sf.ShowDialog() != DialogResult.OK)
+            }
+
+            if (sf.ShowDialog() != DialogResult.OK) {
                 return;
+            }
 
             this.SaveToFile(sf.FileName, showSuccessMessage);
         }

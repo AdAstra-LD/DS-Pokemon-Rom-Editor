@@ -7602,16 +7602,14 @@ namespace DSPRE {
         #endregion
 
         #region Trainer Editor
-        private List<ComboBox> partyPokemonComponentList = new List<ComboBox>();
-        private List<ComboBox> partyItemComponentList = new List<ComboBox>();
-        private List<NumericUpDown> partyLevelComponentList = new List<NumericUpDown>();
-        private List<NumericUpDown> partyIVComponentList = new List<NumericUpDown>();
-        private List<NumericUpDown> partyBallComponentList = new List<NumericUpDown>();
-        private List<ComboBox> partyFirstMoveComponentList = new List<ComboBox>();
-        private List<ComboBox> partySecondMoveComponentList = new List<ComboBox>();
-        private List<ComboBox> partyThirdMoveComponentList = new List<ComboBox>();
-        private List<ComboBox> partyFourthMoveComponentList = new List<ComboBox>();
-        private List<GroupBox> partyGroupComponentList = new List<GroupBox>();
+        private List<ComboBox> partyPokemonComboboxList = new List<ComboBox>();
+        private List<ComboBox> partyItemsComboboxList = new List<ComboBox>();
+        private List<GroupBox> partyMovesGroupboxList = new List<GroupBox>();
+        private List<NumericUpDown> partyLevelUpdownList = new List<NumericUpDown>();
+        private List<NumericUpDown> partyIVUpdownList = new List<NumericUpDown>();
+        private List<NumericUpDown> partyBallUpdownList = new List<NumericUpDown>();
+        private List<GroupBox> partyGroupboxList = new List<GroupBox>();
+        private List<PictureBox> partyPokemonPictureBoxList = new List<PictureBox>();
 
         TrainerFile currentTrainerFile;
         PaletteBase pal;
@@ -7653,85 +7651,69 @@ namespace DSPRE {
 
             DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.trainerProperties, DirNames.trainerParty, DirNames.trainerGraphics, DirNames.textArchives });
 
-            partyPokemonComponentList.Clear();
-            partyPokemonComponentList.Add(partyPokemon1ComboBox);
-            partyPokemonComponentList.Add(partyPokemon2ComboBox);
-            partyPokemonComponentList.Add(partyPokemon3ComboBox);
-            partyPokemonComponentList.Add(partyPokemon4ComboBox);
-            partyPokemonComponentList.Add(partyPokemon5ComboBox);
-            partyPokemonComponentList.Add(partyPokemon6ComboBox);
+            partyPokemonComboboxList.Clear();
+            partyPokemonComboboxList.Add(partyPokemon1ComboBox);
+            partyPokemonComboboxList.Add(partyPokemon2ComboBox);
+            partyPokemonComboboxList.Add(partyPokemon3ComboBox);
+            partyPokemonComboboxList.Add(partyPokemon4ComboBox);
+            partyPokemonComboboxList.Add(partyPokemon5ComboBox);
+            partyPokemonComboboxList.Add(partyPokemon6ComboBox);
 
-            partyItemComponentList.Clear();
-            partyItemComponentList.Add(partyItem1ComboBox);
-            partyItemComponentList.Add(partyItem2ComboBox);
-            partyItemComponentList.Add(partyItem3ComboBox);
-            partyItemComponentList.Add(partyItem4ComboBox);
-            partyItemComponentList.Add(partyItem5ComboBox);
-            partyItemComponentList.Add(partyItem6ComboBox);
+            partyItemsComboboxList.Clear();
+            partyItemsComboboxList.Add(partyItem1ComboBox);
+            partyItemsComboboxList.Add(partyItem2ComboBox);
+            partyItemsComboboxList.Add(partyItem3ComboBox);
+            partyItemsComboboxList.Add(partyItem4ComboBox);
+            partyItemsComboboxList.Add(partyItem5ComboBox);
+            partyItemsComboboxList.Add(partyItem6ComboBox);
 
-            partyLevelComponentList.Clear();
-            partyLevelComponentList.Add(partyLevel1UpDown);
-            partyLevelComponentList.Add(partyLevel2UpDown);
-            partyLevelComponentList.Add(partyLevel3UpDown);
-            partyLevelComponentList.Add(partyLevel4UpDown);
-            partyLevelComponentList.Add(partyLevel5UpDown);
-            partyLevelComponentList.Add(partyLevel6UpDown);
+            partyLevelUpdownList.Clear();
+            partyLevelUpdownList.Add(partyLevel1UpDown);
+            partyLevelUpdownList.Add(partyLevel2UpDown);
+            partyLevelUpdownList.Add(partyLevel3UpDown);
+            partyLevelUpdownList.Add(partyLevel4UpDown);
+            partyLevelUpdownList.Add(partyLevel5UpDown);
+            partyLevelUpdownList.Add(partyLevel6UpDown);
 
-            partyIVComponentList.Clear();
-            partyIVComponentList.Add(partyIV1UpDown);
-            partyIVComponentList.Add(partyIV2UpDown);
-            partyIVComponentList.Add(partyIV3UpDown);
-            partyIVComponentList.Add(partyIV4UpDown);
-            partyIVComponentList.Add(partyIV5UpDown);
-            partyIVComponentList.Add(partyIV6UpDown);
+            partyIVUpdownList.Clear();
+            partyIVUpdownList.Add(partyIV1UpDown);
+            partyIVUpdownList.Add(partyIV2UpDown);
+            partyIVUpdownList.Add(partyIV3UpDown);
+            partyIVUpdownList.Add(partyIV4UpDown);
+            partyIVUpdownList.Add(partyIV5UpDown);
+            partyIVUpdownList.Add(partyIV6UpDown);
 
-            partyBallComponentList.Clear();
-            partyBallComponentList.Add(partyBall1UpDown);
-            partyBallComponentList.Add(partyBall2UpDown);
-            partyBallComponentList.Add(partyBall3UpDown);
-            partyBallComponentList.Add(partyBall4UpDown);
-            partyBallComponentList.Add(partyBall5UpDown);
-            partyBallComponentList.Add(partyBall6UpDown);
+            partyBallUpdownList.Clear();
+            partyBallUpdownList.Add(partyBall1UpDown);
+            partyBallUpdownList.Add(partyBall2UpDown);
+            partyBallUpdownList.Add(partyBall3UpDown);
+            partyBallUpdownList.Add(partyBall4UpDown);
+            partyBallUpdownList.Add(partyBall5UpDown);
+            partyBallUpdownList.Add(partyBall6UpDown);
 
-            partyFirstMoveComponentList.Clear();
-            partyFirstMoveComponentList.Add(partyMove1_1ComboBox);
-            partyFirstMoveComponentList.Add(partyMove2_1ComboBox);
-            partyFirstMoveComponentList.Add(partyMove3_1ComboBox);
-            partyFirstMoveComponentList.Add(partyMove4_1ComboBox);
-            partyFirstMoveComponentList.Add(partyMove5_1ComboBox);
-            partyFirstMoveComponentList.Add(partyMove6_1ComboBox);
+            partyMovesGroupboxList.Clear();
+            partyMovesGroupboxList.Add(poke1MovesGroupBox);
+            partyMovesGroupboxList.Add(poke2MovesGroupBox);
+            partyMovesGroupboxList.Add(poke3MovesGroupBox);
+            partyMovesGroupboxList.Add(poke4MovesGroupBox);
+            partyMovesGroupboxList.Add(poke5MovesGroupBox);
+            partyMovesGroupboxList.Add(poke6MovesGroupBox);
 
-            partySecondMoveComponentList.Clear();
-            partySecondMoveComponentList.Add(partyMove1_2ComboBox);
-            partySecondMoveComponentList.Add(partyMove2_2ComboBox);
-            partySecondMoveComponentList.Add(partyMove3_2ComboBox);
-            partySecondMoveComponentList.Add(partyMove4_2ComboBox);
-            partySecondMoveComponentList.Add(partyMove5_2ComboBox);
-            partySecondMoveComponentList.Add(partyMove6_2ComboBox);
+            partyGroupboxList.Clear();
+            partyGroupboxList.Add(party1GroupBox);
+            partyGroupboxList.Add(party2GroupBox);
+            partyGroupboxList.Add(party3GroupBox);
+            partyGroupboxList.Add(party4GroupBox);
+            partyGroupboxList.Add(party5GroupBox);
+            partyGroupboxList.Add(party6GroupBox);
 
-            partyThirdMoveComponentList.Clear();
-            partyThirdMoveComponentList.Add(partyMove1_3ComboBox);
-            partyThirdMoveComponentList.Add(partyMove2_3ComboBox);
-            partyThirdMoveComponentList.Add(partyMove3_3ComboBox);
-            partyThirdMoveComponentList.Add(partyMove4_3ComboBox);
-            partyThirdMoveComponentList.Add(partyMove5_3ComboBox);
-            partyThirdMoveComponentList.Add(partyMove6_3ComboBox);
-
-            partyFourthMoveComponentList.Clear();
-            partyFourthMoveComponentList.Add(partyMove1_4ComboBox);
-            partyFourthMoveComponentList.Add(partyMove2_4ComboBox);
-            partyFourthMoveComponentList.Add(partyMove3_4ComboBox);
-            partyFourthMoveComponentList.Add(partyMove4_4ComboBox);
-            partyFourthMoveComponentList.Add(partyMove5_4ComboBox);
-            partyFourthMoveComponentList.Add(partyMove6_4ComboBox);
-
-            partyGroupComponentList.Clear();
-            partyGroupComponentList.Add(party1GroupBox);
-            partyGroupComponentList.Add(party2GroupBox);
-            partyGroupComponentList.Add(party3GroupBox);
-            partyGroupComponentList.Add(party4GroupBox);
-            partyGroupComponentList.Add(party5GroupBox);
-            partyGroupComponentList.Add(party6GroupBox);
+            partyPokemonPictureBoxList.Clear();
+            partyPokemonPictureBoxList.Add(partyPokemon1PictureBox);
+            partyPokemonPictureBoxList.Add(partyPokemon2PictureBox);
+            partyPokemonPictureBoxList.Add(partyPokemon3PictureBox);
+            partyPokemonPictureBoxList.Add(partyPokemon4PictureBox);
+            partyPokemonPictureBoxList.Add(partyPokemon5PictureBox);
+            partyPokemonPictureBoxList.Add(partyPokemon6PictureBox);
 
             int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir).Length;
             trainerComboBox.Items.Clear();
@@ -7747,43 +7729,27 @@ namespace DSPRE {
             string[] pokeNames = RomInfo.GetPokémonNames();
             string[] moveNames = RomInfo.GetAttackNames();
 
-            trainerItem1ComboBox.Items.Clear();
-            trainerItem2ComboBox.Items.Clear();
-            trainerItem3ComboBox.Items.Clear();
-            trainerItem4ComboBox.Items.Clear();
-            trainerItem1ComboBox.Items.AddRange(itemNames);
-            trainerItem2ComboBox.Items.AddRange(itemNames);
-            trainerItem3ComboBox.Items.AddRange(itemNames);
-            trainerItem4ComboBox.Items.AddRange(itemNames);
+            foreach(Control c in trainerItemsGroupBox.Controls) {
+                ComboBox cbox = c as ComboBox;
+                cbox.Items.Clear();
+                cbox.Items.AddRange(itemNames);
+            }
 
-            foreach (ComboBox CB in partyPokemonComponentList) {
+            foreach (ComboBox CB in partyPokemonComboboxList) {
                 CB.Items.Clear();
                 CB.Items.AddRange(pokeNames);
             }
 
-            foreach (ComboBox CB in partyItemComponentList) {
+            foreach (ComboBox CB in partyItemsComboboxList) {
                 CB.Items.Clear();
                 CB.Items.AddRange(itemNames);
             }
 
-            foreach (ComboBox CB in partyFirstMoveComponentList) {
-                CB.Items.Clear();
-                CB.Items.AddRange(moveNames);
-            }
-
-            foreach (ComboBox CB in partySecondMoveComponentList) {
-                CB.Items.Clear();
-                CB.Items.AddRange(moveNames);
-            }
-
-            foreach (ComboBox CB in partyThirdMoveComponentList) {
-                CB.Items.Clear();
-                CB.Items.AddRange(moveNames);
-            }
-
-            foreach (ComboBox CB in partyFourthMoveComponentList) {
-                CB.Items.Clear();
-                CB.Items.AddRange(moveNames);
+            foreach (GroupBox movesGroup in partyMovesGroupboxList) {
+                foreach (ComboBox CB in movesGroup.Controls) {
+                    CB.Items.Clear();
+                    CB.Items.AddRange(moveNames);
+                }
             }
 
             trainerComboBox.SelectedIndex = 0;
@@ -7822,39 +7788,38 @@ namespace DSPRE {
             trainerItemsCheckBox.Checked = currentTrainerFile.trp.hasItems;
             partyCountUpDown.Value = currentTrainerFile.trp.partyCount;
 
-            trainerItem1ComboBox.SelectedIndex = currentTrainerFile.trp.trainerItems[0];
-            trainerItem2ComboBox.SelectedIndex = currentTrainerFile.trp.trainerItems[1];
-            trainerItem3ComboBox.SelectedIndex = currentTrainerFile.trp.trainerItems[2];
-            trainerItem4ComboBox.SelectedIndex = currentTrainerFile.trp.trainerItems[3];
+            IList trainerItems = trainerItemsGroupBox.Controls;
+            for (int i = 0; i < trainerItems.Count; i++) {
+                (trainerItems[i] as ComboBox).SelectedIndex = currentTrainerFile.trp.trainerItems[i];
+            }
 
-            IList list = TrainerAIGroupBox.Controls;
-            for (int i = 0; i < list.Count; i++) {
-                ((CheckBox)list[i]).Checked = currentTrainerFile.trp.AI[i];
+            IList trainerAI = TrainerAIGroupBox.Controls;
+            for (int i = 0; i < trainerAI.Count; i++) {
+                (trainerAI[i] as CheckBox).Checked = currentTrainerFile.trp.AI[i];
             }
         }
         public void RefreshTrainerPartyGUI() {
             for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
-                partyPokemonComponentList[i].SelectedIndex = currentTrainerFile.party[i].pokeID ?? 0;
-                partyItemComponentList[i].SelectedIndex = currentTrainerFile.party[i].heldItem ?? 0;
-                partyLevelComponentList[i].Value = currentTrainerFile.party[i].level;
-                partyIVComponentList[i].Value = currentTrainerFile.party[i].unknown1_DATASTART;
-                partyBallComponentList[i].Value = currentTrainerFile.party[i].unknown2_DATAEND;
-                
+                partyPokemonComboboxList[i].SelectedIndex = currentTrainerFile.party[i].pokeID ?? 0;
+                partyItemsComboboxList[i].SelectedIndex = currentTrainerFile.party[i].heldItem ?? 0;
+                partyLevelUpdownList[i].Value = Math.Max((ushort)1, currentTrainerFile.party[i].level);
+                partyIVUpdownList[i].Value = currentTrainerFile.party[i].unknown1_DATASTART;
+                partyBallUpdownList[i].Value = currentTrainerFile.party[i].unknown2_DATAEND;
+
                 if (currentTrainerFile.party[i].moves == null) {
-                    partyFirstMoveComponentList[i].SelectedIndex = 0;
-                    partySecondMoveComponentList[i].SelectedIndex = 0;
-                    partyThirdMoveComponentList[i].SelectedIndex = 0;
-                    partyFourthMoveComponentList[i].SelectedIndex = 0;
+                    for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
+                        (partyMovesGroupboxList[i].Controls[j] as ComboBox).SelectedIndex = 0;
+                    }
                 } else {
-                    partyFirstMoveComponentList[i].SelectedIndex = currentTrainerFile.party[i].moves[0];
-                    partySecondMoveComponentList[i].SelectedIndex = currentTrainerFile.party[i].moves[1];
-                    partyThirdMoveComponentList[i].SelectedIndex = currentTrainerFile.party[i].moves[2];
-                    partyFourthMoveComponentList[i].SelectedIndex = currentTrainerFile.party[i].moves[3];
+                    for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
+                        (partyMovesGroupboxList[i].Controls[j] as ComboBox).SelectedIndex = currentTrainerFile.party[i].moves[j];
+                    }
                 }
             }
         }
         private string FixPokenameString(string toFix) {
             toFix = toFix.ToLower();
+            toFix = toFix.Replace(".", "_"); //Fix Mime Jr. and Mr. Mime
             toFix = toFix.Replace(" ", "_");
             toFix = toFix.Replace("'", "_");
             toFix = toFix.Replace("’", "_");
@@ -7866,302 +7831,120 @@ namespace DSPRE {
             toFix = toFix.Replace("♂", "M");
             return toFix;
         }
+        private void showTrainerEditorPokePic(byte partyPos) {
+            ComboBox cb = partyPokemonComboboxList[partyPos];
+            partyPokemonPictureBoxList[partyPos].Image = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
+        }
         private void partyPokemon1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[0].pokeID = (ushort)partyPokemon1ComboBox.SelectedIndex;
-            }
-            ComboBox cb = (ComboBox)sender;
-            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
-            partyPokemon1PictureBox.Image = pokeIcon;
+            showTrainerEditorPokePic(0);
         }
         private void partyPokemon2ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[1].pokeID = (ushort)partyPokemon2ComboBox.SelectedIndex;
-            }
-            ComboBox cb = (ComboBox)sender;
-            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
-            partyPokemon2PictureBox.Image = pokeIcon;
+            showTrainerEditorPokePic(1);
         }
 
         private void partyPokemon3ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[2].pokeID = (ushort)partyPokemon3ComboBox.SelectedIndex;
-            }
-            ComboBox cb = (ComboBox)sender;
-            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
-            partyPokemon3PictureBox.Image = pokeIcon;
+            showTrainerEditorPokePic(2);
         }
 
         private void partyPokemon4ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[3].pokeID = (ushort)partyPokemon4ComboBox.SelectedIndex;
-            }
-            ComboBox cb = (ComboBox)sender;
-            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
-            partyPokemon4PictureBox.Image = pokeIcon;
+            showTrainerEditorPokePic(3);
         }
 
         private void partyPokemon5ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[4].pokeID = (ushort)partyPokemon5ComboBox.SelectedIndex;
-            }
-            ComboBox cb = (ComboBox)sender;
-            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
-            partyPokemon5PictureBox.Image = pokeIcon;
+            showTrainerEditorPokePic(4);
         }
 
         private void partyPokemon6ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[5].pokeID = (ushort)partyPokemon6ComboBox.SelectedIndex;
-            }
-            ComboBox cb = (ComboBox)sender;
-            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
-            partyPokemon6PictureBox.Image = pokeIcon;
+            showTrainerEditorPokePic(5);
         }
 
         private void partyCountUpDown_ValueChanged(object sender, EventArgs e) {
             for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
-                partyGroupComponentList[i].Enabled = (partyCountUpDown.Value > i);
+                partyGroupboxList[i].Enabled = (partyCountUpDown.Value > i);
             }
             for (int i = Math.Min(currentTrainerFile.trp.partyCount, (int)partyCountUpDown.Value); i < TrainerFile.POKE_IN_PARTY; i++) {
                 currentTrainerFile.party[i] = new PartyPokemon(currentTrainerFile.trp.hasItems, currentTrainerFile.trp.hasMoves);
             }
-            currentTrainerFile.trp.partyCount = (byte)partyCountUpDown.Value;
 
-            if (!disableHandlers) {
-                RefreshTrainerPartyGUI();
-                RefreshTrainerPropertiesGUI();
-            }
+            //if (!disableHandlers) {
+            //    RefreshTrainerPartyGUI();
+            //    RefreshTrainerPropertiesGUI();
+            //}
         }
 
         private void trainerMovesCheckBox_CheckedChanged(object sender, EventArgs e) {
             for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
-                partyFirstMoveComponentList[i].Enabled = trainerMovesCheckBox.Checked;
-                partySecondMoveComponentList[i].Enabled = trainerMovesCheckBox.Checked;
-                partyThirdMoveComponentList[i].Enabled = trainerMovesCheckBox.Checked;
-                partyFourthMoveComponentList[i].Enabled = trainerMovesCheckBox.Checked;
-
-
-                currentTrainerFile.party[i].moves = trainerMovesCheckBox.Checked ? new ushort[4] : null;
-            }
-
-            if (!disableHandlers) {
-                currentTrainerFile.trp.hasMoves = trainerMovesCheckBox.Checked;
+                for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
+                    (partyMovesGroupboxList[i].Controls[j] as ComboBox).Enabled = trainerMovesCheckBox.Checked;
+                }
+                currentTrainerFile.party[i].moves = trainerMovesCheckBox.Checked ? new ushort[Party.MOVES_PER_POKE] : null;
             }
         }
-
         private void trainerItemsCheckBox_CheckedChanged(object sender, EventArgs e) {
             for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
-                partyItemComponentList[i].Enabled = trainerItemsCheckBox.Checked;
-            }
-            if (!disableHandlers) {
-                currentTrainerFile.trp.hasItems = trainerItemsCheckBox.Checked;
+                partyItemsComboboxList[i].Enabled = trainerItemsCheckBox.Checked;
             }
         }
-
-        private void trainerDoubleCheckBox_CheckedChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.trp.doubleBattle = trainerDoubleCheckBox.Checked;
-            }
-        }
-
-        private void trainerItem1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.trp.trainerItems[0] = (ushort)trainerItem1ComboBox.SelectedIndex;
-            }
-        }
-
-        private void trainerItem2ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.trp.trainerItems[1] = (ushort)trainerItem2ComboBox.SelectedIndex;
-            }
-        }
-
-        private void trainerItem3ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.trp.trainerItems[2] = (ushort)trainerItem3ComboBox.SelectedIndex;
-            }
-        }
-
-        private void trainerItem4ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.trp.trainerItems[3] = (ushort)trainerItem4ComboBox.SelectedIndex;
-            }
-        }
-
-        private void trainerAICheckBox_CheckedChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                IList list = TrainerAIGroupBox.Controls;
-                for (int i = 0; i < list.Count; i++) {
-                    currentTrainerFile.trp.AI[i] = ((CheckBox)list[i]).Checked;
-                }
-            }
-        }
-
-        private void partyItem1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[0].heldItem = (ushort)partyItem1ComboBox.SelectedIndex;
-            }
-        }
-
-        private void partyItem2ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[1].heldItem = (ushort)partyItem2ComboBox.SelectedIndex;
-            }
-        }
-
-        private void partyItem3ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[2].heldItem = (ushort)partyItem3ComboBox.SelectedIndex;
-            }
-        }
-
-        private void partyItem4ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[3].heldItem = (ushort)partyItem4ComboBox.SelectedIndex;
-            }
-        }
-
-        private void partyItem5ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[4].heldItem = (ushort)partyItem5ComboBox.SelectedIndex;
-            }
-        }
-
-        private void partyItem6ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[5].heldItem = (ushort)partyItem6ComboBox.SelectedIndex;
-            }
-        }
-
-        private void partyLevel1UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[0].level = (ushort)partyLevel1UpDown.Value;
-            }
-        }
-
-        private void partyLevel2UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[1].level = (ushort)partyLevel2UpDown.Value;
-            }
-        }
-
-        private void partyLevel3UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[2].level = (ushort)partyLevel3UpDown.Value;
-            }
-        }
-
-        private void partyLevel4UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[3].level = (ushort)partyLevel4UpDown.Value;
-            }
-        }
-
-        private void partyLevel5UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[4].level = (ushort)partyLevel5UpDown.Value;
-            }
-        }
-
-        private void partyLevel6UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[5].level = (ushort)partyLevel6UpDown.Value;
-            }
-        }
-
-        private void partyIV1UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[0].unknown1_DATASTART = (ushort)partyIV1UpDown.Value;
-            }
-        }
-
-        private void partyIV2UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[1].unknown1_DATASTART = (ushort)partyIV2UpDown.Value;
-            }
-        }
-
-        private void partyIV3UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[2].unknown1_DATASTART = (ushort)partyIV3UpDown.Value;
-            }
-        }
-
-        private void partyIV4UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[3].unknown1_DATASTART = (ushort)partyIV4UpDown.Value;
-            }
-        }
-
-        private void partyIV5UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[4].unknown1_DATASTART = (ushort)partyIV5UpDown.Value;
-            }
-        }
-
-        private void partyIV6UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[5].unknown1_DATASTART = (ushort)partyIV6UpDown.Value;
-            }
-        }
-
-        private void partyBall1UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[0].unknown2_DATAEND = (ushort)partyBall1UpDown.Value;
-            }
-        }
-
-        private void partyBall2UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[1].unknown2_DATAEND = (ushort)partyBall2UpDown.Value;
-            }
-        }
-
-        private void partyBall3UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[2].unknown2_DATAEND = (ushort)partyBall3UpDown.Value;
-            }
-        }
-
-        private void partyBall4UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[3].unknown2_DATAEND = (ushort)partyBall4UpDown.Value;
-            }
-        }
-
-        private void partyBall5UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[4].unknown2_DATAEND = (ushort)partyBall5UpDown.Value;
-            }
-        }
-
-        private void partyBall6UpDown_ValueChanged(object sender, EventArgs e) {
-            if (!disableHandlers) {
-                currentTrainerFile.party[5].unknown2_DATAEND = (ushort)partyBall6UpDown.Value;
-            }
-        }
-
         private void partyMoveComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (!disableHandlers) {
                 for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
                     ushort[] moves = currentTrainerFile.party[i].moves;
+
                     if (moves != null) {
-                        moves[0] = (ushort)partyFirstMoveComponentList[i].SelectedIndex;
-                        moves[1] = (ushort)partySecondMoveComponentList[i].SelectedIndex;
-                        moves[2] = (ushort)partyThirdMoveComponentList[i].SelectedIndex;
-                        moves[3] = (ushort)partyFourthMoveComponentList[i].SelectedIndex;
+                        for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
+                            moves[j] = (ushort)(partyMovesGroupboxList[i].Controls[j] as ComboBox).SelectedIndex;
+                        }
                     }
                 }
             }
         }
 
         private void trainerSaveCurrentButton_Click(object sender, EventArgs e) {
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4"), FileMode.Create))) {
+            currentTrainerFile.trp.partyCount = (byte)partyCountUpDown.Value;
+            currentTrainerFile.trp.hasMoves = trainerMovesCheckBox.Checked;
+            currentTrainerFile.trp.hasItems = trainerItemsCheckBox.Checked;
+            currentTrainerFile.trp.doubleBattle = trainerDoubleCheckBox.Checked;
+
+            IList trainerItems = trainerItemsGroupBox.Controls;
+            for (int i = 0; i < trainerItems.Count; i++) {
+                currentTrainerFile.trp.trainerItems[i] = (ushort)(trainerItems[i] as ComboBox).SelectedIndex;
+            }
+
+            IList trainerAI = TrainerAIGroupBox.Controls;
+            for (int i = 0; i < trainerAI.Count; i++) {
+                currentTrainerFile.trp.AI[i] = (trainerAI[i] as CheckBox).Checked;
+            }
+
+            for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
+                currentTrainerFile.party[i].moves = trainerMovesCheckBox.Checked ? new ushort[4] : null;
+            }
+
+            for (int i = 0; i < partyCountUpDown.Value; i++) {
+                currentTrainerFile.party[i].pokeID = (ushort)partyPokemonComboboxList[i].SelectedIndex;
+                currentTrainerFile.party[i].level = (ushort)partyLevelUpdownList[i].Value;
+
+                if (trainerMovesCheckBox.Checked) {
+                    IList movesList = partyMovesGroupboxList[i].Controls;
+                    for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
+                        currentTrainerFile.party[i].moves[j] = (ushort)(movesList[j] as ComboBox).SelectedIndex;
+                    }
+                }
+
+                if (trainerItemsCheckBox.Checked) {
+                    currentTrainerFile.party[i].heldItem = (ushort)partyItemsComboboxList[i].SelectedIndex;
+                }
+
+                currentTrainerFile.party[i].unknown1_DATASTART = (ushort)partyIVUpdownList[i].Value;
+                currentTrainerFile.party[i].unknown2_DATAEND = (ushort)partyBallUpdownList[i].Value;
+            }
+
+            /*Write to File*/
+            string indexStr = "\\" + trainerComboBox.SelectedIndex.ToString("D4");
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + indexStr, FileMode.Create))) {
                 writer.Write(currentTrainerFile.trp.ToByteArray());
             }
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4"), FileMode.Create))) {
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + indexStr, FileMode.Create))) {
                 writer.Write(currentTrainerFile.party.ToByteArray());
             }
 
@@ -8211,7 +7994,7 @@ namespace DSPRE {
                 int maxFrames = LoadTrainerClassPic(trainerClassListBox.SelectedIndex);
                 UpdateTrainerClassPic(trainerClassPicBox);
 
-                trClassFramePreviewUpDown.Maximum = maxFrames - 1;
+                trClassFramePreviewUpDown.Maximum = maxFrames;
                 trainerClassFrameMaxLabel.Text = "/" + maxFrames;
             } catch {
                 trClassFramePreviewUpDown.Maximum = 0;
@@ -8234,7 +8017,6 @@ namespace DSPRE {
             if (disableHandlers) {
                 return;
             }
-            currentTrainerFile.trp.trainerClass = (byte)trainerClassListBox.SelectedIndex;
         }
 
         private int LoadTrainerClassPic(int trClassID) {
@@ -8356,6 +8138,7 @@ namespace DSPRE {
         private void exportPartyButton_Click(object sender, EventArgs e) {
             currentTrainerFile.party.exportCondensedData = true;
             currentTrainerFile.party.SaveToFileExplorePath("G4 Party Data " + trainerComboBox.SelectedItem);
+            currentTrainerFile.party.exportCondensedData = false;
         }
 
         private void importReplacePartyButton_Click(object sender, EventArgs e) {
@@ -8392,7 +8175,10 @@ namespace DSPRE {
             string newName = trainerClassNameTextbox.Text;
             UpdateCurrentTrainerClassName(newName);
             trainerClassListBox.Items[selectedTrClass] = "[" + selectedTrClass.ToString("D3") + "]" + " " + newName;
-            UpdateCurrentTrainerShownName();
+
+            if (currentTrainerFile.trp.trainerClass == trainerClassListBox.SelectedIndex) { 
+                UpdateCurrentTrainerShownName();
+            }
             disableHandlers = false;
 
             //trainerClassListBox_SelectedIndexChanged(null, null);
