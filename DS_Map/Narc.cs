@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSPRE;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -110,28 +111,49 @@ namespace NarcAPI {
         }
 
         public void ExtractToFolder(String dirPath) {
-            Console.WriteLine(dirPath);
+            if ( string.IsNullOrEmpty(dirPath) ) {
+                MessageBox.Show("Dir path + \"" + dirPath + "\" is invalid.", "Can't create directory", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (Directory.Exists(dirPath)) {
-                try {
-                    Directory.Delete(dirPath, true);
-                } catch (IOException) {
-                    MessageBox.Show("Can't access temp directory: \n" + dirPath + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                if (Directory.GetFiles(dirPath).Length > 0) {
+                    try {
+                        if (dirPath.IndexOf(RomInfo.folderSuffix, StringComparison.CurrentCultureIgnoreCase) >= 0) {
+                            Directory.Delete(dirPath, true);
+                            Console.WriteLine("Deleted DSPRE-related folder \"" + dirPath + "\" without user confirmation.");
+                        } else {
+                            DialogResult d = MessageBox.Show("Directory \"" + dirPath + "\"already exists and is not empty.\n" +
+                                "Do you want to delete its contents?", "Directory not empty", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                            if (d.Equals(DialogResult.Yes)) {
+                                Directory.Delete(dirPath, true);
+                                Console.WriteLine("Deleted non-DSPRE-related folder \"" + dirPath + "\" after user confirmation.");
+                            }
+                        }
+                    } catch (IOException) {
+                        MessageBox.Show("NARC has not been extracted.\nCan't delete directory: \n" + dirPath + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
             }
-            try {
-                Directory.CreateDirectory(dirPath);
-            } catch (ArgumentNullException) {
-                MessageBox.Show("Dir path is null.", "Can't create directory", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+
+            if (!Directory.Exists(dirPath)) {
+                try {
+                    Directory.CreateDirectory(dirPath);
+                    Console.WriteLine("Created NARC folder \"" + dirPath + "\".");
+                } catch (IOException) {
+                    MessageBox.Show("NARC has not been extracted.\nCan't create directory: \n" + dirPath + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Creation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
 
             Parallel.For(0, Elements.Length, i => {
                 string path = Path.Combine(dirPath, i.ToString("D4"));
                 using (BinaryWriter wr = new BinaryWriter(File.Create(path))) {
-                    byte[] buffer = new byte[Elements[i].Length];
+                    long len = Elements[i].Length;
+                    byte[] buffer = new byte[len];
                     Elements[i].Seek(0, SeekOrigin.Begin);
-                    Elements[i].Read(buffer, 0, (int)Elements[i].Length);
+                    Elements[i].Read(buffer, 0, (int)len);
                     wr.Write(buffer);
                 }
             });

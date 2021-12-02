@@ -14,7 +14,7 @@ namespace DSPRE {
     /// </summary>
 
     public class RomInfo {
-        private static string folderSuffix = "_DSPRE_contents";
+        public static string folderSuffix = "_DSPRE_contents";
         public static string romID { get; private set; }
         public static string fileName { get; private set; }
         public static string workDir { get; private set; }

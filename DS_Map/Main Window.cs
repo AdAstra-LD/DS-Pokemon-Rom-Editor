@@ -333,6 +333,7 @@ namespace DSPRE {
             }
 
             DSUtils.WriteToFile(texSf.FileName, DSUtils.GetTexturesFromTexturedNSBMD(modelFile));
+            MessageBox.Show("The textures of " + of.FileName + " have been extracted and saved.", "Textures saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void nsbmdRemoveTexButton_Click(object sender, EventArgs e) {
@@ -1754,11 +1755,14 @@ namespace DSPRE {
         }
 
         private void exportHeaderToFileButton_Click(object sender, EventArgs e) {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "DSPRE Header File (*.dsh)|*.dsh";
-            sf.FileName = "Header " + currentHeader.ID + " - " + internalNames[currentHeader.ID] + " (" + locationNameComboBox.SelectedItem.ToString() + ")";
-            if (sf.ShowDialog(this) != DialogResult.OK)
+            SaveFileDialog sf = new SaveFileDialog {
+                Filter = "DSPRE Header File (*.dsh)|*.dsh",
+                FileName = "Header " + currentHeader.ID + " - " + internalNames[currentHeader.ID] + " (" + locationNameComboBox.SelectedItem.ToString() + ")"
+            };
+
+            if (sf.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) {
                 writer.Write(currentHeader.ToByteArray()); //Write full header
@@ -2591,10 +2595,12 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void importColorTableButton_Click(object sender, EventArgs e) {
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "DSPRE Color Table File (*.ctb)|*.ctb";
-            if (of.ShowDialog(this) != DialogResult.OK)
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "DSPRE Color Table File (*.ctb)|*.ctb"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             string[] fileTableContent = File.ReadAllLines(of.FileName);
 
@@ -8504,6 +8510,64 @@ namespace DSPRE {
             }
 
             disableHandlers = false;
+        }
+
+        private void unpackToFolderToolStripMenuItem_Click(object sender, EventArgs e) {
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "NARC File (*.narc)|*.narc"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK) {
+                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            Narc userfile = Narc.Open(of.FileName);
+            if (userfile is null) {
+                MessageBox.Show("The file you selected is not a valid NARC.", "Cannot proceed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            MessageBox.Show("Choose where to save the NARC content.\nDSPRE will automatically make a subdirectory.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            CommonOpenFileDialog narcDir = new CommonOpenFileDialog {
+                IsFolderPicker = true,
+                Multiselect = false
+            };
+
+            if (narcDir.ShowDialog() != CommonFileDialogResult.Ok) {
+                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string finalExtractedPath = narcDir.FileName + "\\" + Path.GetFileNameWithoutExtension(of.FileName);
+            userfile.ExtractToFolder(finalExtractedPath);
+            MessageBox.Show("The contents of " + of.FileName + " have been extracted and saved.", "NARC Extracted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void buildFromFolderToolStripMenuItem_Click(object sender, EventArgs e) {
+            CommonOpenFileDialog narcDir = new CommonOpenFileDialog {
+                IsFolderPicker = true,
+                Multiselect = false
+            };
+
+            if (narcDir.ShowDialog() != CommonFileDialogResult.Ok) {
+                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            MessageBox.Show("Choose the name for the output NARC file.", "Name your NARC file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            SaveFileDialog sf = new SaveFileDialog {
+                Filter = "NARC File (*.narc)|*.narc",
+                FileName = Path.GetFileName(narcDir.FileName)
+            };
+            if (sf.ShowDialog(this) != DialogResult.OK) {
+                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            Narc.FromFolder(narcDir.FileName).Save(sf.FileName);
+            MessageBox.Show("The contents of folder \"" + narcDir.FileName + "\" have been packed.", "NARC Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
