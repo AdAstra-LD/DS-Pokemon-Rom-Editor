@@ -4865,7 +4865,7 @@ namespace DSPRE {
             }
 
             /* Add event file numbers to box */
-            int eventCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir).Length;
+            int eventCount = RomInfo.GetEventFileCount();
             int owSpriteCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.OWSprites].unpackedDir).Length;
             string[] trainerNames = GetTrainerNames();
             RomInfo.ReadOWTable();
