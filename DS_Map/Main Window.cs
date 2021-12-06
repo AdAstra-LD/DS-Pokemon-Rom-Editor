@@ -4377,8 +4377,8 @@ namespace DSPRE {
         private void itemsSelectorHelpBtn_Click(object sender, EventArgs e) {
             MessageBox.Show("This selector allows you to pick a preset Ground Item script from the game data.\n" +
                 "Unlike in previous DSPRE versions, you can now change the Ground Item to be obtained even if you decided not to apply the Standardize Items patch from the Rom ToolBox.\n\n" +
-                "However, some items are unavailable by default. The aforementioned patch can neutralize this limitation.\n\n" +
-                "(Please note that it will scramble every existing Ground Item!)", "About Ground Items", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                "However, some items are unavailable by default. The aforementioned patch can neutralize this limitation.\n\n", 
+                "About Ground Items", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void CenterEventViewOnEntities() {
             disableHandlers = true;
