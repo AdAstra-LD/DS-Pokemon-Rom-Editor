@@ -8255,10 +8255,18 @@ namespace DSPRE {
                 vsPokemonEffectsList = new List<(int pokemonID, int comboID)>();
                 effectsComboTable = new List<(ushort vsGraph, ushort battleSSEQ)>();
 
-                vsTrainerTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsTrainerEntryTableOffsetToRAMAddress, 4), 0) - 0x02000000;
-                vsPokemonTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsPokemonEntryTableOffsetToRAMAddress, 4), 0) - 0x02000000;
-                effectsComboMainTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.effectsComboTableOffsetToRAMAddress, 4), 0) - 0x02000000;
-                
+                vsTrainerTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsTrainerEntryTableOffsetToRAMAddress, 4), 0);
+                ROMToolboxDialog.flag_TrainerClassBattleTableRepointed = (vsTrainerTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
+                vsTrainerTableStartAddress -= ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
+
+                vsPokemonTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsPokemonEntryTableOffsetToRAMAddress, 4), 0);
+                ROMToolboxDialog.flag_PokemonBattleTableRepointed = (vsPokemonTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
+                vsPokemonTableStartAddress -= ROMToolboxDialog.flag_PokemonBattleTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
+
+                effectsComboMainTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.effectsComboTableOffsetToRAMAddress, 4), 0);
+                ROMToolboxDialog.flag_MainComboTableRepointed = (effectsComboMainTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
+                effectsComboMainTableStartAddress -= ROMToolboxDialog.flag_MainComboTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
+
                 byte trainerTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.vsTrainerEntryTableOffsetToSizeLimiter);
                 byte pokemonTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.vsPokemonEntryTableOffsetToSizeLimiter);
                 byte comboTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.effectsComboTableOffsetToSizeLimiter);
@@ -8278,26 +8286,37 @@ namespace DSPRE {
                 pbEffectsVsTrainerListbox.Items.Clear();
                 pbEffectsVsPokemonListbox.Items.Clear();
                 pbEffectsCombosListbox.Items.Clear();
-                using (DSUtils.ARM9.Reader ar = new DSUtils.ARM9.Reader(vsTrainerTableStartAddress) ) {
-                    for (int i = 0; i < trainerTableEntriesCount; i++) {
 
+                String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+                
+                using(DSUtils.EasyReader ar = new DSUtils.EasyReader(ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsTrainerTableStartAddress)) { 
+                    for (int i = 0; i < trainerTableEntriesCount; i++) {
                         ushort entry = ar.ReadUInt16();
                         int classID = entry & 1023;
                         int comboID = entry >> 10;
                         vsTrainerEffectsList.Add((classID, comboID));
                         pbEffectsVsTrainerListbox.Items.Add("[" + classID.ToString("D3") + "]" + " " + trcNames[classID] + " uses Combo #" + comboID);
                     }
+                }
 
-                    ar.BaseStream.Position = vsPokemonTableStartAddress;
+                using (DSUtils.EasyReader ar = new DSUtils.EasyReader(ROMToolboxDialog.flag_PokemonBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsPokemonTableStartAddress)) {
                     for (int i = 0; i < pokemonTableEntriesCount; i++) {
                         ushort entry = ar.ReadUInt16();
                         int pokeID = entry & 1023;
                         int comboID = entry >> 10;
                         vsPokemonEffectsList.Add((pokeID, comboID));
-                        pbEffectsVsPokemonListbox.Items.Add("[" + pokeID.ToString("D3") + "]" + " " + pokeNames[pokeID] + " uses Combo #" + comboID);
-                    }
 
-                    ar.BaseStream.Position = effectsComboMainTableStartAddress;
+                        string pokeName;
+                        try {
+                            pokeName = pokeNames[pokeID];
+                        } catch (IndexOutOfRangeException) {
+                            pokeName = "UNKNOWN_" + pokeID.ToString("D3");
+                        }
+                        pbEffectsVsPokemonListbox.Items.Add("[" + pokeID.ToString("D3") + "]" + " " + pokeName + " uses Combo #" + comboID);
+                    }
+                }
+
+                using (DSUtils.EasyReader ar = new DSUtils.EasyReader(ROMToolboxDialog.flag_MainComboTableRepointed ? expArmPath : RomInfo.arm9Path, effectsComboMainTableStartAddress)) {
                     for (int i = 0; i < comboTableEntriesCount; i++) {
                         ushort battleIntroEffect = ar.ReadUInt16();
                         ushort battleMusic = ar.ReadUInt16();
@@ -8399,7 +8418,8 @@ namespace DSPRE {
 
             effectsComboTable[index] = (battleIntroEffect, battleMusic);
 
-            using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer(effectsComboMainTableStartAddress + 4 * index)) {
+            String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+            using (DSUtils.EasyWriter wr = new DSUtils.EasyWriter(ROMToolboxDialog.flag_MainComboTableRepointed ? expArmPath : RomInfo.arm9Path, effectsComboMainTableStartAddress + 4 * index)) {
                 wr.Write(battleIntroEffect);
                 wr.Write(battleMusic);
             };
@@ -8415,7 +8435,9 @@ namespace DSPRE {
             ushort comboID = (ushort)pbEffectsPokemonChooseMainCombobox.SelectedIndex;
 
             vsPokemonEffectsList[index] = (pokemonID, comboID);
-            using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer(vsPokemonTableStartAddress + 2 * index)) {
+
+            String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+            using (DSUtils.EasyWriter wr = new DSUtils.EasyWriter(ROMToolboxDialog.flag_PokemonBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsPokemonTableStartAddress + 2 * index)) {
                 wr.Write((ushort)((pokemonID & 1023) + (comboID << 10))); //PokemonID
             };
 
@@ -8430,7 +8452,8 @@ namespace DSPRE {
             ushort comboID = (ushort)pbEffectsTrainerChooseMainCombobox.SelectedIndex;
 
             vsTrainerEffectsList[index] = (trainerClass, comboID);
-            using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer(vsTrainerTableStartAddress + 2 * index)) {
+            String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+            using (DSUtils.EasyWriter wr = new DSUtils.EasyWriter(ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsTrainerTableStartAddress + 2 * index)) { 
                 wr.Write((ushort)((trainerClass & 1023) + (comboID << 10))); 
             };
 
@@ -8470,7 +8493,12 @@ namespace DSPRE {
                 return;
             }
             (int pokemonID, int comboID) entry = vsPokemonEffectsList[pbEffectsVsPokemonListbox.SelectedIndex];
-            pbEffectsPokemonCombobox.SelectedIndex = entry.pokemonID;
+
+            try {
+                pbEffectsPokemonCombobox.SelectedIndex = entry.pokemonID;
+            } catch (ArgumentOutOfRangeException) {
+                pbEffectsPokemonCombobox.SelectedIndex = 0;
+            }
             pbEffectsCombosListbox.SelectedIndex = pbEffectsPokemonChooseMainCombobox.SelectedIndex = entry.comboID;
         }
 

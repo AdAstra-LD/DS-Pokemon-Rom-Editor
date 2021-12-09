@@ -21,6 +21,7 @@ namespace DSPRE {
         public static string arm9Path { get; private set; }
         public static string overlayTablePath { get; set; }
         public static string overlayPath { get; set; }
+
         public static gLangEnum gameLanguage { get; private set; }
         public static gVerEnum gameVersion { get; private set; }
         public static gFamEnum gameFamily { get; private set; }
