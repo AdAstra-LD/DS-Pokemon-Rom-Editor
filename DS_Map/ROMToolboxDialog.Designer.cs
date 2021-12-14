@@ -284,7 +284,8 @@
             this.standardizePatchTextLBL.Name = "standardizePatchTextLBL";
             this.standardizePatchTextLBL.Size = new System.Drawing.Size(239, 78);
             this.standardizePatchTextLBL.TabIndex = 2;
-            this.standardizePatchTextLBL.Text = resources.GetString("standardizePatchTextLBL.Text");
+            this.standardizePatchTextLBL.Text = "Rearranges the GiveItem scripts to follow the default index order.\r\nAllows to con" +
+    "figure any item as a Ground Item in the Event Editor. ";
             this.standardizePatchTextLBL.UseMnemonic = false;
             // 
             // expandedMatrixCB

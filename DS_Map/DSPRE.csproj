@@ -62,7 +62,7 @@
       <HintPath>.\HelixToolkit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Core.1.1.0.0\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Core.1.1.0.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAPICodePack-Shell.1.1.0.0\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
@@ -203,9 +203,6 @@
     <Compile Include="ROMFiles\ScriptFile.cs" />
     <Compile Include="ROMFiles\GameMatrix.cs" />
     <Compile Include="ROMFiles\EventFile.cs" />
-    <Compile Include="DataGridViewDoubleBuffered.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="LibNDSFormats\bytearrayoutputstream.cs" />
     <Compile Include="LibNDSFormats\convertir.cs" />
     <Compile Include="LibNDSFormats\EndianBinaryReader.cs" />

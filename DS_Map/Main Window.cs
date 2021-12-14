@@ -4385,8 +4385,8 @@ namespace DSPRE {
         private void itemsSelectorHelpBtn_Click(object sender, EventArgs e) {
             MessageBox.Show("This selector allows you to pick a preset Ground Item script from the game data.\n" +
                 "Unlike in previous DSPRE versions, you can now change the Ground Item to be obtained even if you decided not to apply the Standardize Items patch from the Rom ToolBox.\n\n" +
-                "However, some items are unavailable by default. The aforementioned patch can neutralize this limitation.\n\n" +
-                "(Please note that it will scramble every existing Ground Item!)", "About Ground Items", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                "However, some items are unavailable by default. The aforementioned patch can neutralize this limitation.\n\n", 
+                "About Ground Items", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void CenterEventViewOnEntities() {
             disableHandlers = true;
@@ -4873,7 +4873,7 @@ namespace DSPRE {
             }
 
             /* Add event file numbers to box */
-            int eventCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir).Length;
+            int eventCount = RomInfo.GetEventFileCount();
             int owSpriteCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.OWSprites].unpackedDir).Length;
             string[] trainerNames = GetTrainerNames();
             RomInfo.ReadOWTable();
