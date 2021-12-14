@@ -341,7 +341,7 @@
             // 
             // repointScrcmdTextLBL
             // 
-            this.repointScrcmdTextLBL.Location = new System.Drawing.Point(509, 48);
+            this.repointScrcmdTextLBL.Location = new System.Drawing.Point(481, 48);
             this.repointScrcmdTextLBL.Name = "repointScrcmdTextLBL";
             this.repointScrcmdTextLBL.Size = new System.Drawing.Size(288, 37);
             this.repointScrcmdTextLBL.TabIndex = 27;
@@ -353,7 +353,7 @@
             // 
             this.repointScrcmdLBL.AutoSize = true;
             this.repointScrcmdLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.repointScrcmdLBL.Location = new System.Drawing.Point(509, 31);
+            this.repointScrcmdLBL.Location = new System.Drawing.Point(481, 31);
             this.repointScrcmdLBL.Name = "repointScrcmdLBL";
             this.repointScrcmdLBL.Size = new System.Drawing.Size(157, 13);
             this.repointScrcmdLBL.TabIndex = 26;
@@ -365,16 +365,15 @@
             this.repointScrcmdButton.Name = "repointScrcmdButton";
             this.repointScrcmdButton.Size = new System.Drawing.Size(100, 50);
             this.repointScrcmdButton.TabIndex = 25;
-            this.repointScrcmdButton.Text = "Expand ARM9";
+            this.repointScrcmdButton.Text = "Repoint Table";
             this.repointScrcmdButton.UseVisualStyleBackColor = true;
-            this.repointScrcmdButton.Click += new System.EventHandler(this.repointScrcmdButton_Click);
             // 
             // scrcmdARM9requiredLBL
             // 
             this.scrcmdARM9requiredLBL.AutoSize = true;
             this.scrcmdARM9requiredLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.scrcmdARM9requiredLBL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.scrcmdARM9requiredLBL.Location = new System.Drawing.Point(663, 30);
+            this.scrcmdARM9requiredLBL.Location = new System.Drawing.Point(635, 30);
             this.scrcmdARM9requiredLBL.Name = "scrcmdARM9requiredLBL";
             this.scrcmdARM9requiredLBL.Size = new System.Drawing.Size(165, 13);
             this.scrcmdARM9requiredLBL.TabIndex = 29;
@@ -382,7 +381,7 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(509, 81);
+            this.label1.Location = new System.Drawing.Point(481, 81);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(288, 37);
             this.label1.TabIndex = 30;
@@ -391,7 +390,7 @@
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(509, 188);
+            this.label2.Location = new System.Drawing.Point(481, 188);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(288, 37);
             this.label2.TabIndex = 34;
@@ -411,7 +410,7 @@
             // 
             // dynamicHeadersTextLBL
             // 
-            this.dynamicHeadersTextLBL.Location = new System.Drawing.Point(509, 139);
+            this.dynamicHeadersTextLBL.Location = new System.Drawing.Point(481, 139);
             this.dynamicHeadersTextLBL.Name = "dynamicHeadersTextLBL";
             this.dynamicHeadersTextLBL.Size = new System.Drawing.Size(288, 59);
             this.dynamicHeadersTextLBL.TabIndex = 32;
@@ -423,7 +422,7 @@
             // 
             this.dynamicHeadersLBL.AutoSize = true;
             this.dynamicHeadersLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dynamicHeadersLBL.Location = new System.Drawing.Point(509, 122);
+            this.dynamicHeadersLBL.Location = new System.Drawing.Point(481, 122);
             this.dynamicHeadersLBL.Name = "dynamicHeadersLBL";
             this.dynamicHeadersLBL.Size = new System.Drawing.Size(160, 13);
             this.dynamicHeadersLBL.TabIndex = 31;

@@ -15,11 +15,18 @@ using static DSPRE.Resources.ROMToolboxDB.ToolboxDB;
 namespace DSPRE {
     public partial class ROMToolboxDialog : Form {
         public static uint expandedARMfileID = ToolboxDB.syntheticOverlayFileNumbersDB[RomInfo.gameFamily];
+        public static uint synthOverlayLoadAddress = 0x023C8000;
+
         public static bool flag_standardizedItems { get; private set; } = false;
         public static bool flag_arm9Expanded { get; private set; } = false;
         public static bool flag_BDHCamPatchApplied { get; private set; } = false;
         public static bool flag_DynamicHeadersPatchApplied { get; private set; } = false;
         public static bool flag_MatrixExpansionApplied { get; private set; } = false;
+
+        public static bool flag_MainComboTableRepointed { get; set; } = false;
+        public static bool flag_TrainerClassBattleTableRepointed { get; set; } = false;
+        public static bool flag_PokemonBattleTableRepointed { get; set; } = false;
+        
         public static bool overlay1MustBeRestoredFromBackup { get; private set; } = true;
 
         #region Constructor
@@ -862,9 +869,5 @@ namespace DSPRE {
             MessageBox.Show("This patch has already been applied.", "Can't reapply patch", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
-
-        private void repointScrcmdButton_Click(object sender, EventArgs e) {
-
-        }
     }
 }

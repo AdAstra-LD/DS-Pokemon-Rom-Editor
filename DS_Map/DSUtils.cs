@@ -13,6 +13,17 @@ using static DSPRE.RomInfo;
 namespace DSPRE {
     public static class DSUtils {
         public static class ARM9 {
+            public static uint address = 0x02000000;
+            public class Reader : BinaryReader {
+                public Reader(long pos = 0) : base(File.OpenRead(arm9Path)) {
+                    this.BaseStream.Position = pos;
+                }
+            }
+            public class Writer : BinaryWriter { 
+                public Writer(long pos = 0) : base(File.OpenWrite(arm9Path)) {
+                    this.BaseStream.Position = pos;
+                }
+            }
             public static bool Decompress(string path) {
                 Process decompress = new Process();
                 decompress.StartInfo.FileName = @"Tools\blz.exe";
@@ -56,23 +67,17 @@ namespace DSPRE {
             public static void WriteByte(byte value, uint destOffset) {
                 WriteToFile(RomInfo.arm9Path, BitConverter.GetBytes(value), destOffset, 0);
             }
+        }
 
-
-            public class Reader : BinaryReader {
-                public Reader(string path, long pos = 0) : base(File.OpenRead(path)) {
-                    this.BaseStream.Position = pos;
-                }
-                public Reader(long pos = 0) : this(arm9Path, pos) {
-                }
+        public class EasyReader : BinaryReader {
+            public EasyReader(string path, long pos = 0) : base(File.OpenRead(path)) {
+                this.BaseStream.Position = pos;
             }
-            public class Writer : BinaryWriter { 
-                public Writer(string path, long pos = 0) : base(File.OpenWrite(path)) {
-                    this.BaseStream.Position = pos;
-                }
-                public Writer(long pos = 0) : this(arm9Path, pos) {
-                }
+        }
+        public class EasyWriter : BinaryWriter {
+            public EasyWriter(string path, long pos = 0) : base(File.OpenWrite(path)) {
+                this.BaseStream.Position = pos;
             }
-
         }
 
         public const int NSBMD_DOESNTHAVE_TEXTURE = 0;
