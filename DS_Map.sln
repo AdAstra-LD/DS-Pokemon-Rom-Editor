@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekona", "Ekona\Ekona.csproj", "{736010D3-F72F-4C56-B8D2-2EDD1B8F3A87}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Images", "Images\Images\Images.csproj", "{8BB5DA4B-5B71-4993-8941-4F38D4E6C81B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{736010D3-F72F-4C56-B8D2-2EDD1B8F3A87} = {736010D3-F72F-4C56-B8D2-2EDD1B8F3A87}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
