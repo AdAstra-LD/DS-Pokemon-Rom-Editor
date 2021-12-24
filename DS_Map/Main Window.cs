@@ -104,6 +104,7 @@ namespace DSPRE {
                 int palR, palG, palB;
                 int palCounter = 0;
                 int[] paletteArray = new int[48];
+                
                 for (int i = 0; i < 16; i++) {
                     palR = 0;
                     palG = 0;
@@ -112,60 +113,54 @@ namespace DSPRE {
                     firstByte = readIcon.ReadByte();
 
                     if ((firstByte & (1 << 6)) != 0)
-                        palB = palB | (1 << 4);
+                        palB |= (1 << 4);
                     if ((firstByte & (1 << 5)) != 0)
-                        palB = palB | (1 << 3);
+                        palB |= (1 << 3);
                     if ((firstByte & (1 << 4)) != 0)
-                        palB = palB | (1 << 2);
+                        palB |= (1 << 2);
                     if ((firstByte & (1 << 3)) != 0)
-                        palB = palB | (1 << 1);
+                        palB |= (1 << 1);
                     if ((firstByte & (1 << 2)) != 0)
-                        palB = palB | (1 << 0);
+                        palB |= (1 << 0);
                     if ((firstByte & (1 << 1)) != 0)
-                        palG = palG | (1 << 4);
+                        palG |= (1 << 4);
                     if ((firstByte & (1 << 0)) != 0)
-                        palG = palG | (1 << 3);
+                        palG |= (1 << 3);
                     if ((secondByte & (1 << 7)) != 0)
-                        palG = palG | (1 << 2);
+                        palG |= (1 << 2);
                     if ((secondByte & (1 << 6)) != 0)
-                        palG = palG | (1 << 1);
+                        palG |= (1 << 1);
                     if ((secondByte & (1 << 5)) != 0)
-                        palG = palG | (1 << 0);
+                        palG |= (1 << 0);
                     if ((secondByte & (1 << 4)) != 0)
-                        palR = palR | (1 << 4);
+                        palR |= (1 << 4);
                     if ((secondByte & (1 << 3)) != 0)
-                        palR = palR | (1 << 3);
+                        palR |= (1 << 3);
                     if ((secondByte & (1 << 2)) != 0)
-                        palR = palR | (1 << 2);
+                        palR |= (1 << 2);
                     if ((secondByte & (1 << 1)) != 0)
-                        palR = palR | (1 << 1);
+                        palR |= (1 << 1);
                     if ((secondByte & (1 << 0)) != 0)
-                        palR = palR | (1 << 0);
+                        palR |= (1 << 0);
 
-                    paletteArray[palCounter] = palR * 8;
-                    palCounter++;
-                    paletteArray[palCounter] = palG * 8;
-                    palCounter++;
-                    paletteArray[palCounter] = palB * 8;
-                    palCounter++;
+                    paletteArray[palCounter++] = palR * 8;
+                    paletteArray[palCounter++] = palG * 8;
+                    paletteArray[palCounter++] = palB * 8;
                 }
                 #endregion
                 #region Read Icon Image
                 readIcon.BaseStream.Position = 0x20;
-                byte pixelByte;
-                int pixelPalId;
-                int iconX;
                 int iconY = 0;
                 int xTile = 0;
                 int yTile = 0;
                 for (int o = 0; o < 4; o++) {
                     for (int a = 0; a < 4; a++) {
                         for (int i = 0; i < 8; i++) {
-                            iconX = xTile;
+                            int iconX = xTile;
 
                             for (int counter = 0; counter < 4; counter++) {
-                                pixelByte = readIcon.ReadByte();
-                                pixelPalId = pixelByte & 0x0F;
+                                byte pixelByte = readIcon.ReadByte();
+                                int pixelPalId = pixelByte & 0x0F;
                                 Brush icon = new SolidBrush(Color.FromArgb(255, paletteArray[pixelPalId * 3], paletteArray[pixelPalId * 3 + 1], paletteArray[pixelPalId * 3 + 2]));
                                 e.Graphics.FillRectangle(icon, iconX, i + yTile, 1, 1);
                                 iconX++;
@@ -184,7 +179,7 @@ namespace DSPRE {
                 }
                 #endregion
                 readIcon.Close();
-            } else return;
+            }
         }
         private void updateBuildingListComboBox(bool interior) {
             string[] bldList = GetBuildingsList(interior);
@@ -548,7 +543,7 @@ namespace DSPRE {
         }
 
         private void CheckROMLanguage() {
-            versionLabel.Text = "Pokémon " + RomInfo.gameVersion.ToString() + " [" + RomInfo.romID + "]";
+            versionLabel.Text = "Pokémon " + RomInfo.gameVersion.ToString() + " " + "[" + RomInfo.romID + "]";
             languageLabel.Text = "Language: " + RomInfo.gameLanguage;
 
             if (RomInfo.gameLanguage == gLangEnum.English) {
@@ -561,9 +556,10 @@ namespace DSPRE {
         }
 
         private void readDataFromFolderButton_Click(object sender, EventArgs e) {
-            CommonOpenFileDialog romFolder = new CommonOpenFileDialog();
-            romFolder.IsFolderPicker = true;
-            romFolder.Multiselect = false;
+            CommonOpenFileDialog romFolder = new CommonOpenFileDialog {
+                IsFolderPicker = true,
+                Multiselect = false
+            };
             if (romFolder.ShowDialog() != CommonFileDialogResult.Ok) {
                 return;
             }
@@ -718,7 +714,6 @@ namespace DSPRE {
                 Update();
 
                 DSUtils.ForceUnpackNarcs(Enum.GetValues(typeof(DirNames)).Cast<DirNames>().ToList());
-
                 MessageBox.Show("Operation completed.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 toolStripProgressBar.Value = 0;
@@ -855,12 +850,7 @@ namespace DSPRE {
             statusLabel.Text = "Passing control to Wild Pokémon Editor...";
             Update();
 
-            int encToOpen;
-            if (loadCurrent) {
-                encToOpen = (int)wildPokeUpDown.Value;
-            } else {
-                encToOpen = 0;
-            }
+            int encToOpen = loadCurrent ? (int)wildPokeUpDown.Value : 0;
 
             switch (RomInfo.gameFamily) {
                 case gFamEnum.DP:

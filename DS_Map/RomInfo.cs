@@ -198,7 +198,11 @@ namespace DSPRE {
                     break;
                 default:
                     commonDictionaryNames = ScriptDatabase.HGSSScrCmdNames;
-                    specificDictionaryNames = new Dictionary<ushort, string>();//ScriptDatabase.CustomScrCmdNames;
+                    #if false
+                        specificDictionaryNames = new Dictionary<ushort, string>();
+                    #else
+                        specificDictionaryNames = ScriptDatabase.CustomScrCmdNames;
+                    #endif
                     break;
             }
             return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
@@ -218,7 +222,11 @@ namespace DSPRE {
                     break;
                 default:
                     commonDictionaryParams = ScriptDatabase.HGSSScrCmdParameters;
-                    specificDictionaryParams = new Dictionary<ushort, byte[]>();//ScriptDatabase.CustomScrCmdParameters;
+                    #if false
+                        specificDictionaryParams = new Dictionary<ushort, byte[]>();
+                    #else
+                        specificDictionaryParams = ScriptDatabase.CustomScrCmdParameters;
+                    #endif
                     break;
             }
             return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
@@ -229,13 +237,13 @@ namespace DSPRE {
                 case gFamEnum.Plat:
                     return ScriptDatabase.movementsDictIDName;
                 default:
-                    #if false
+#if false
                         var commonDictionaryParams = ScriptDatabase.movementsDictIDName;
                         var customDictionaryParams = ScriptDatabase.customMovementsDictIDName;
                         return commonDictionaryParams.Concat(customDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
-                    #else
+#else
                         return ScriptDatabase.movementsDictIDName;
-                    #endif
+#endif
             }
         }
         public static Dictionary<ushort, string> BuildComparisonOperatorsDatabase(gFamEnum gameFam) {
@@ -722,9 +730,9 @@ namespace DSPRE {
         public int GetScriptCount() => Directory.GetFiles(gameDirs[DirNames.scripts].unpackedDir).Length;
         public int GetBuildingCount(bool interior) => Directory.GetFiles(GetBuildingModelsDirPath(interior)).Length;
         public static int GetEventFileCount() => Directory.GetFiles(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir).Length;
-        #endregion
+#endregion
 
-        #region System Methods
+#region System Methods
         private void LoadGameLanguage() {
             switch (romID) {
                 case "ADAE":
@@ -938,6 +946,6 @@ namespace DSPRE {
             }
             overworldTableKeys = OverworldTable.Keys.ToArray();
         }
-        #endregion
+#endregion
     }
 }

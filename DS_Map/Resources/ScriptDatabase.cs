@@ -563,6 +563,7 @@ namespace DSPRE.Resources {
             [0x0200] = "GetPreviousHeader",
             [0x0201] = "GetCurrentHeader",
 
+            [0x0203] = "BattleRoomWarp",
             [0x0204] = "ExitBattleRoom",
             [0x0205] = "GeonetScreen",
 
