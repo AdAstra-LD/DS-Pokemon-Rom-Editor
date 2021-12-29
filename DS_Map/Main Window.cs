@@ -91,13 +91,16 @@ namespace DSPRE {
         }
         private void PaintGameIcon(object sender, PaintEventArgs e) {
             if (iconON) {
-                BinaryReader readIcon;
+                FileStream banner;
+
                 try {
-                    readIcon = new BinaryReader(File.OpenRead(RomInfo.workDir + @"banner.bin"));
+                    banner = File.OpenRead(RomInfo.workDir + @"banner.bin");
                 } catch (FileNotFoundException) {
                     MessageBox.Show("Couldn't load " + '"' + "banner.bin" + '"' + '.', "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+                BinaryReader readIcon = new BinaryReader(banner);
                 #region Read Icon Palette
                 readIcon.BaseStream.Position = 0x220;
                 byte firstByte, secondByte;
@@ -335,8 +338,10 @@ namespace DSPRE {
             OpenFileDialog of = new OpenFileDialog {
                 Filter = "Textured NSBMD File(*.nsbmd)|*.nsbmd"
             };
-            if (of.ShowDialog(this) != DialogResult.OK)
+            
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             byte[] modelFile = DSUtils.ReadFromFile(of.FileName);
             if (DSUtils.CheckNSBMDHeader(modelFile) == DSUtils.NSBMD_DOESNTHAVE_TEXTURE) {
@@ -365,8 +370,9 @@ namespace DSPRE {
                 Filter = "Untextured NSBMD File(*.nsbmd)|*.nsbmd",
                 FileName = Path.GetFileNameWithoutExtension(of.FileName) + "_untextured"
             };
-            if (sf.ShowDialog(this) != DialogResult.OK)
+            if (sf.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             DSUtils.WriteToFile(sf.FileName, DSUtils.GetModelWithoutTextures(modelFile));
             MessageBox.Show("Textures correctly" + extramsg + " removed!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -4964,20 +4970,23 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void eventShiftLeftButton_Click(object sender, EventArgs e) {
-            if (eventMatrixXUpDown.Value > 0)
+            if (eventMatrixXUpDown.Value > 0) {
                 eventMatrixXUpDown.Value -= 1;
+            }
         }
         private void eventShiftUpButton_Click(object sender, EventArgs e) {
-            if (eventMatrixYUpDown.Value > 0)
+            if (eventMatrixYUpDown.Value > 0) {
                 eventMatrixYUpDown.Value -= 1;
+            }
         }
         private void eventShiftRightButton_Click(object sender, EventArgs e) {
             if (eventMatrixXUpDown.Value < eventMatrix.width - 1)
                 eventMatrixXUpDown.Value += 1;
         }
         private void eventShiftDownButton_Click(object sender, EventArgs e) {
-            if (eventMatrixYUpDown.Value < eventMatrix.height - 1)
+            if (eventMatrixYUpDown.Value < eventMatrix.height - 1) {
                 eventMatrixYUpDown.Value += 1;
+            }
         }
         private void eventMatrixXUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
@@ -8636,6 +8645,109 @@ namespace DSPRE {
 
             Narc.FromFolder(narcDir.FileName).Save(sf.FileName);
             MessageBox.Show("The contents of folder \"" + narcDir.FileName + "\" have been packed.", "NARC Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void listBasedBatchRenameToolStripMenuItem_Click(object sender, EventArgs e) {
+            const string COMMENT_CHAR = "#";
+            const string ISOLATED_FOLDERNAME = "DSPRE_IsolatedFiles";
+
+            MessageBox.Show("Choose the source folder.", "Waiting for user", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            CommonOpenFileDialog sourceDirDialog = new CommonOpenFileDialog {
+                IsFolderPicker = true,
+                Multiselect = false
+            };
+
+            if (sourceDirDialog.ShowDialog() != CommonFileDialogResult.Ok) {
+                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DirectoryInfo d = new DirectoryInfo(sourceDirDialog.FileName);
+            FileInfo[] files = d.GetFiles().OrderBy(x => x.Name).ToArray();
+            if (files.Length <= 0) {
+                MessageBox.Show("This folder is empty.\nCan't proceed.", "Invalid folder", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            MessageBox.Show("Choose your enumeration text file.", "Input list file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "List File (*.txt; *.list)|*.txt;*.list"
+            };
+
+            if (of.ShowDialog(this) != DialogResult.OK) {
+                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string[] listLines = File.ReadAllLines(of.FileName);
+            listLines = listLines.Where(line => !string.IsNullOrWhiteSpace(line) && !line.StartsWith(COMMENT_CHAR)).ToArray();
+
+            if (listLines.Length <= 0) {
+                MessageBox.Show("The enumeration text file you selected is empty or only contains comment lines.\nCan't proceed.", "Invalid list file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            string msg = "About to process ";
+            int tot;
+            string extra = "";
+
+            int diff = files.Length - listLines.Length;
+            if ( diff < 0 ) { //listLines.Length > files.Length 
+                tot = files.Length;
+                extra = "(Please note that the length of the chosen list [" + listLines.Length + " entries] " +
+                    "exceeds the number of files in the folder.) + \n\n";
+            } else if ( diff == 0 ) { //listLines.Length == files.Length
+                tot = files.Length;
+            } else { // diff > 0 --> listLines.Length < files.Length
+                tot = listLines.Length;
+                extra = "(Please note that there aren't enough entries in the list to rename all files in the chosen folder.\n" +
+                    diff + " file" + (diff > 1 ? "s" : "") + " won't be renamed.) + \n\n";
+            }
+
+            msg += (tot + " file");
+            if (tot > 1) {
+                msg += "s";
+            }
+
+            DialogResult dr = MessageBox.Show(msg + " from the input folder (taken in ascending order), " +
+                "according to the list file you provided.\n" + 
+                "If a destination file already exists, DSPRE will skip to the next file in the list.\n\n" + extra +
+                "Do you want to proceed?", "Confirm operation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            
+            if (dr.Equals(DialogResult.Yes)) {
+                int i;
+                for (i = 0; i < tot; i++) {
+                    FileInfo f = files[i];
+                    Console.WriteLine(f.Name);
+                    string destName = Path.GetDirectoryName(f.FullName) + "\\" + listLines[i];
+                    
+                    if (!File.Exists(destName)) {
+                        File.Move(f.FullName, destName);
+                    }
+                }
+
+                MessageBox.Show("The contents of folder \"" + sourceDirDialog.FileName + "\" have been renamed according to " + "\"" + of.FileName + "\".", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (listLines.Length < files.Length ) {
+                    dr = MessageBox.Show("Do you want to isolate the unnamed files by moving them to a dedicated folder?", "Waiting for user", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    
+                    if (dr.Equals(DialogResult.Yes)) {
+                        string isolatedDir = d.FullName + "\\" + ISOLATED_FOLDERNAME;
+                        if (Directory.Exists(isolatedDir)) {
+                            Directory.Delete(isolatedDir);
+                        }
+                        Directory.CreateDirectory(d.FullName + "\\" + ISOLATED_FOLDERNAME);
+
+                        while ( i < files.Length ) {
+                            FileInfo f = files[i];
+                            Console.WriteLine(f.Name);
+                            string destName = d.FullName + "\\" + ISOLATED_FOLDERNAME + "\\" + f.Name;
+                            File.Move(f.FullName, destName);
+                            i++;
+                        }
+                        MessageBox.Show("Isolated files have been moved to " + "\"" + ISOLATED_FOLDERNAME + "\"", "Files moved", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    }
+                }
+            } else {
+                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

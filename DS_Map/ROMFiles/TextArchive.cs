@@ -23,6 +23,7 @@ namespace DSPRE.ROMFiles {
             Dictionary<int, string> GetCharDictionary = TextDatabase.readTextDictionary;
             BinaryReader readText = new BinaryReader(messageStream);
             int stringCount;
+
             try {
                 stringCount = readText.ReadUInt16();
             } catch (EndOfStreamException) {
@@ -32,18 +33,15 @@ namespace DSPRE.ROMFiles {
             }
             initialKey = readText.ReadUInt16();
             int key1 = (initialKey * 0x2FD) & 0xFFFF;
-            int key2 = 0;
-            int realKey = 0;
             bool specialCharON = false;
             int[] currentOffset = new int[stringCount];
             int[] currentSize = new int[stringCount];
             string[] currentPokemon = new string[stringCount];
-            int car = 0;
             bool compressed = new bool();
 
             for (int i = 0; i < stringCount; i++) { // Reads and stores string offsets and sizes 
-                key2 = (key1 * (i + 1) & 0xFFFF);
-                realKey = key2 | (key2 << 16);
+                int key2 = (key1 * (i + 1) & 0xFFFF);
+                int realKey = key2 | (key2 << 16);
                 currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
                 currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
             }
@@ -54,10 +52,9 @@ namespace DSPRE.ROMFiles {
 
                 for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
                 {
-                    car = (readText.ReadUInt16()) ^ key1;
+                    int car = (readText.ReadUInt16()) ^ key1;
 
-                    switch (car) // Special characters
-                    {
+                    switch (car) { // Special characters
                         case 0xE000:
                             pokemonText.Append(@"\n");
                             break;
@@ -133,10 +130,10 @@ namespace DSPRE.ROMFiles {
                                 pokemonText.Append(uncomp);
                             } else {
                                 string character = "";
-                                if (!GetCharDictionary.TryGetValue(car, out character)) {
-                                    pokemonText.Append(@"\x" + car.ToString("X4"));
-                                } else {
+                                if (GetCharDictionary.TryGetValue(car, out character)) {
                                     pokemonText.Append(character);
+                                } else {
+                                    pokemonText.Append(@"\x" + car.ToString("X4"));
                                 }
                             }
                             break;

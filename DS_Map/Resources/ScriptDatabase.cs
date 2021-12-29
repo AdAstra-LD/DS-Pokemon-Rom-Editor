@@ -2955,6 +2955,7 @@ namespace DSPRE.Resources {
             [0x0370] = "StopWeatherAlphaBlend",
             [0x0371] = "SetRepelSteps"
         };
+
         public static Dictionary<ushort, byte[]> CustomScrCmdParameters = new Dictionary<ushort, byte[]>() {
             [0x0357] = new byte[] { 2, 2 },
             [0x0360] = new byte[] { 2, 2, 2, 2 },
