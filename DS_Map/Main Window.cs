@@ -8619,6 +8619,11 @@ namespace DSPRE {
             string finalExtractedPath = narcDir.FileName + "\\" + Path.GetFileNameWithoutExtension(of.FileName);
             userfile.ExtractToFolder(finalExtractedPath);
             MessageBox.Show("The contents of " + of.FileName + " have been extracted and saved.", "NARC Extracted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            DialogResult d = MessageBox.Show("Do you want to rename the files according to their contents?", "Waiting for user", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (d.Equals(DialogResult.Yes)) {
+                ContentBasedBatchRename(new DirectoryInfo(finalExtractedPath));
+            }
         }
 
         private void buildFromFolderToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -8632,7 +8637,7 @@ namespace DSPRE {
                 return;
             }
 
-            MessageBox.Show("Choose the name for the output NARC file.", "Name your NARC file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Choose where to save the output NARC file.", "Name your NARC file", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             SaveFileDialog sf = new SaveFileDialog {
                 Filter = "NARC File (*.narc)|*.narc",
@@ -8647,26 +8652,16 @@ namespace DSPRE {
             MessageBox.Show("The contents of folder \"" + narcDir.FileName + "\" have been packed.", "NARC Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void listBasedBatchRenameToolStripMenuItem_Click(object sender, EventArgs e) {
-            const string COMMENT_CHAR = "#";
-            const string ISOLATED_FOLDERNAME = "DSPRE_IsolatedFiles";
+        private void listBasedToolStripMenuItem_Click(object sender, EventArgs e) {
+            (DirectoryInfo d, FileInfo[] files) dirData = OpenNonEmptyDir();
+            DirectoryInfo d = dirData.d;
+            FileInfo[] files = dirData.files;
 
-            MessageBox.Show("Choose the source folder.", "Waiting for user", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            CommonOpenFileDialog sourceDirDialog = new CommonOpenFileDialog {
-                IsFolderPicker = true,
-                Multiselect = false
-            };
-
-            if (sourceDirDialog.ShowDialog() != CommonFileDialogResult.Ok) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (d == null || files == null) {
                 return;
             }
 
-            DirectoryInfo d = new DirectoryInfo(sourceDirDialog.FileName);
-            FileInfo[] files = d.GetFiles().OrderBy(x => x.Name).ToArray();
-            if (files.Length <= 0) {
-                MessageBox.Show("This folder is empty.\nCan't proceed.", "Invalid folder", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            /*==================================================================*/
 
             MessageBox.Show("Choose your enumeration text file.", "Input list file", MessageBoxButtons.OK, MessageBoxIcon.Information);
             OpenFileDialog of = new OpenFileDialog {
@@ -8678,11 +8673,17 @@ namespace DSPRE {
                 return;
             }
 
+            /*==================================================================*/
+
+            const string COMMENT_CHAR = "#";
+            const string ISOLATED_FOLDERNAME = "DSPRE_IsolatedFiles";
+
             string[] listLines = File.ReadAllLines(of.FileName);
             listLines = listLines.Where(line => !string.IsNullOrWhiteSpace(line) && !line.StartsWith(COMMENT_CHAR)).ToArray();
 
             if (listLines.Length <= 0) {
-                MessageBox.Show("The enumeration text file you selected is empty or only contains comment lines.\nCan't proceed.", "Invalid list file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("The enumeration text file you selected is empty or only contains comment lines.\nCan't proceed.", "Invalid list file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             string msg = "About to process ";
@@ -8693,41 +8694,40 @@ namespace DSPRE {
             if ( diff < 0 ) { //listLines.Length > files.Length 
                 tot = files.Length;
                 extra = "(Please note that the length of the chosen list [" + listLines.Length + " entries] " +
-                    "exceeds the number of files in the folder.) + \n\n";
+                    "exceeds the number of files in the folder.)" + "\n\n";
             } else if ( diff == 0 ) { //listLines.Length == files.Length
                 tot = files.Length;
             } else { // diff > 0 --> listLines.Length < files.Length
                 tot = listLines.Length;
                 extra = "(Please note that there aren't enough entries in the list to rename all files in the chosen folder.\n" +
-                    diff + " file" + (diff > 1 ? "s" : "") + " won't be renamed.) + \n\n";
+                    diff + " file" + (diff > 1 ? "s" : "") + " won't be renamed.)" + "\n\n";
             }
 
-            msg += (tot + " file");
-            if (tot > 1) {
-                msg += "s";
-            }
+            msg += tot + " file" + (tot > 1 ? "s" : "");
 
             DialogResult dr = MessageBox.Show(msg + " from the input folder (taken in ascending order), " +
-                "according to the list file you provided.\n" + 
-                "If a destination file already exists, DSPRE will skip to the next file in the list.\n\n" + extra +
-                "Do you want to proceed?", "Confirm operation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-            
+                "according to the list file you provided.\n" +
+                "If a destination file already exists, DSPRE will append a number to its name.\n\n" + extra +
+                "Do you want to proceed?", "Confirm operation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
             if (dr.Equals(DialogResult.Yes)) {
                 int i;
                 for (i = 0; i < tot; i++) {
                     FileInfo f = files[i];
                     Console.WriteLine(f.Name);
                     string destName = Path.GetDirectoryName(f.FullName) + "\\" + listLines[i];
-                    
-                    if (!File.Exists(destName)) {
-                        File.Move(f.FullName, destName);
+
+                    if (string.IsNullOrWhiteSpace(destName)) {
+                        continue;
                     }
+
+                    File.Move(f.FullName, MakeUniqueName(destName));
                 }
 
-                MessageBox.Show("The contents of folder \"" + sourceDirDialog.FileName + "\" have been renamed according to " + "\"" + of.FileName + "\".", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (listLines.Length < files.Length ) {
-                    dr = MessageBox.Show("Do you want to isolate the unnamed files by moving them to a dedicated folder?", "Waiting for user", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                    
+                MessageBox.Show("The contents of folder \"" + d.FullName + "\" have been renamed according to " + "\"" + of.FileName + "\".", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (listLines.Length < files.Length) {
+                    dr = MessageBox.Show("Do you want to isolate the unnamed files by moving them to a dedicated folder?", "Waiting for user", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
                     if (dr.Equals(DialogResult.Yes)) {
                         string isolatedDir = d.FullName + "\\" + ISOLATED_FOLDERNAME;
                         if (Directory.Exists(isolatedDir)) {
@@ -8748,6 +8748,165 @@ namespace DSPRE {
             } else {
                 MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void contentBasedToolStripMenuItem_Click(object sender, EventArgs e) {
+            ContentBasedBatchRename();
+        }
+
+        private void ContentBasedBatchRename(DirectoryInfo d = null) {
+            (DirectoryInfo d, FileInfo[] files) dirData = OpenNonEmptyDir(d);
+            d = dirData.d;
+            FileInfo[] files = dirData.files;
+            
+            if (d == null || files == null) {
+                return;
+            }
+
+            DialogResult dr = MessageBox.Show("About to rename " + files.Length + " file" + (files.Length > 1 ? "s" : "") +
+                " from the input folder (taken in ascending order), according to their content.\n" +
+                "If a destination file already exists, DSPRE will append a number to its name.\n\n" +
+                "Do you want to proceed?", "Confirm operation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dr.Equals(DialogResult.Yes)) {
+                List<string> enumerationFile = new List<string> {
+                    "#============================================================================",
+                    "# File enumeration definition",
+                    "#============================================================================"
+                };
+                int initialLength = enumerationFile.Count;
+
+                const byte toRead = 16;
+                foreach (FileInfo f in files) {
+                    Console.WriteLine(f.Name);
+
+                    string fileNameOnly = Path.GetFileNameWithoutExtension(f.FullName);
+                    string dirNameOnly = Path.GetDirectoryName(f.FullName);
+
+                    string destName = "";
+                    byte[] b = DSUtils.ReadFromFile(f.FullName, 0, toRead);
+
+                    if (b == null || b.Length < toRead) {
+                        continue;
+                    }
+
+                    string magic = "";
+
+                    if (b[0] == 'B' && b[3] == '0') { //B**0
+                        ushort nameOffset;
+                        if (b[1] == 'T' && b[2] == 'X') { //BTX0
+                            destName = fileNameOnly; //Filename can't be changed, only extension
+                        } else {
+                            destName = dirNameOnly + "\\"; //Full filename can be changed
+                        }
+
+                        nameOffset = (ushort) ( 52 + (4 * (BitConverter.ToUInt16(b, 0xE) - 1)) );
+                        destName += Encoding.UTF8.GetString(DSUtils.ReadFromFile(f.FullName, nameOffset, 16)).TrimEnd(new char[] { (char)0 });
+                        
+                        destName += ".ns";
+                        for (int i = 0; i < 3; i++) {
+                            magic += Char.ToLower((char)b[i]);
+                        }
+                    } else {
+                        destName = fileNameOnly + ".";
+                        byte offset = 0;
+
+                        if (b[5] == 'R' && b[8] == 'N') { 
+                            offset = 5;
+                        }
+
+                        for (int i = 0; i < 4; i++) {
+                            magic += Char.ToLower((char)b[offset + i]);
+                        }
+                    }
+
+                    if (string.IsNullOrWhiteSpace(magic) || !magic.All(char.IsLetterOrDigit)) {
+                        continue;
+                    }
+
+                    destName += magic;
+
+                    if (string.IsNullOrWhiteSpace(destName)) {
+                        continue;
+                    }
+
+                    destName = MakeUniqueName(destName, fileNameOnly = null, dirNameOnly);
+                    File.Move(f.FullName, destName);
+
+                    enumerationFile.Add(Path.GetFileName(destName));
+                }
+
+                if (enumerationFile.Count > initialLength) {
+                    MessageBox.Show("Files inside folder \"" + d.FullName + "\" have been renamed according to their contents.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    DialogResult response = MessageBox.Show("Do you want to save a file enumeration list?", "Waiting for user", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (response.Equals(DialogResult.Yes)) {
+                        MessageBox.Show("Choose where to save the output list file.", "Name your list file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        SaveFileDialog sf = new SaveFileDialog {
+                            Filter = "List File (*.txt; *.list)|*.txt;*.list",
+                            FileName = "enum.list"
+                        };
+                        if (sf.ShowDialog(this) != DialogResult.OK) {
+                            MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+
+                        File.WriteAllLines(sf.FileName, enumerationFile);
+                        MessageBox.Show("List file saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                } else {
+                    MessageBox.Show("No file content could be recognized.", "Operation terminated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            } else {
+                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private string MakeUniqueName(string fileName, string fileNameOnly = null, string dirNameOnly = null, string extension = null) {
+            if (fileNameOnly == null) {
+                fileNameOnly = Path.GetFileNameWithoutExtension(fileName);
+            }
+            if (dirNameOnly == null) {
+                dirNameOnly = Path.GetDirectoryName(fileName);
+            }
+            if (extension == null) {
+                extension = Path.GetExtension(fileName);
+            }
+
+            int append = 1;
+
+            while (File.Exists(fileName)) {
+                string tmp = fileNameOnly + "(" + (append++) + ")";
+                fileName = Path.Combine(dirNameOnly, tmp + extension);
+            }
+            return fileName;
+        }
+
+        private (DirectoryInfo, FileInfo[]) OpenNonEmptyDir(DirectoryInfo d = null) {
+            /*==================================================================*/
+            if (d == null) {
+                MessageBox.Show("Choose the source folder.", "Waiting for user", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CommonOpenFileDialog sourceDirDialog = new CommonOpenFileDialog {
+                    IsFolderPicker = true,
+                    Multiselect = false
+                };
+
+                if (sourceDirDialog.ShowDialog() != CommonFileDialogResult.Ok) {
+                    MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return (null, null);
+                }
+
+                d = new DirectoryInfo(sourceDirDialog.FileName);
+            }
+
+            FileInfo[] files = d.GetFiles().OrderBy(x => x.Name).ToArray();
+            if (files.Length <= 0) {
+                MessageBox.Show("Folder " + "\"" + d.FullName + "\"" + " is empty.\nCan't proceed.", "Invalid folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return (null, null);
+            };
+
+            return (d, files);
         }
     }
 }

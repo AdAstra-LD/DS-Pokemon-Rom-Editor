@@ -123,8 +123,8 @@ namespace NarcAPI {
                             Directory.Delete(dirPath, true);
                             Console.WriteLine("Deleted DSPRE-related folder \"" + dirPath + "\" without user confirmation.");
                         } else {
-                            DialogResult d = MessageBox.Show("Directory \"" + dirPath + "\"already exists and is not empty.\n" +
-                                "Do you want to delete its contents?", "Directory not empty", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                            DialogResult d = MessageBox.Show("Directory \"" + dirPath + "\" already exists and is not empty.\n" +
+                                "Do you want to delete its contents?", "Directory not empty", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                             if (d.Equals(DialogResult.Yes)) {
                                 Directory.Delete(dirPath, true);
                                 Console.WriteLine("Deleted non-DSPRE-related folder \"" + dirPath + "\" after user confirmation.");

@@ -794,6 +794,9 @@
             this.NarcUtilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.unpackToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buildFomFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listBasedBatchRenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listBasedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contentBasedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -820,7 +823,6 @@
             this.spawnEditorToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.listBasedBatchRenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -10067,16 +10069,39 @@
             // unpackToFolderToolStripMenuItem
             // 
             this.unpackToFolderToolStripMenuItem.Name = "unpackToFolderToolStripMenuItem";
-            this.unpackToFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.unpackToFolderToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.unpackToFolderToolStripMenuItem.Text = "Unpack to Folder";
             this.unpackToFolderToolStripMenuItem.Click += new System.EventHandler(this.unpackToFolderToolStripMenuItem_Click);
             // 
             // buildFomFolderToolStripMenuItem
             // 
             this.buildFomFolderToolStripMenuItem.Name = "buildFomFolderToolStripMenuItem";
-            this.buildFomFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.buildFomFolderToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.buildFomFolderToolStripMenuItem.Text = "Build from Folder";
             this.buildFomFolderToolStripMenuItem.Click += new System.EventHandler(this.buildFromFolderToolStripMenuItem_Click);
+            // 
+            // listBasedBatchRenameToolStripMenuItem
+            // 
+            this.listBasedBatchRenameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.listBasedToolStripMenuItem,
+            this.contentBasedToolStripMenuItem});
+            this.listBasedBatchRenameToolStripMenuItem.Name = "listBasedBatchRenameToolStripMenuItem";
+            this.listBasedBatchRenameToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.listBasedBatchRenameToolStripMenuItem.Text = "Batch Rename";
+            // 
+            // listBasedToolStripMenuItem
+            // 
+            this.listBasedToolStripMenuItem.Name = "listBasedToolStripMenuItem";
+            this.listBasedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.listBasedToolStripMenuItem.Text = "List-Based";
+            this.listBasedToolStripMenuItem.Click += new System.EventHandler(this.listBasedToolStripMenuItem_Click);
+            // 
+            // contentBasedToolStripMenuItem
+            // 
+            this.contentBasedToolStripMenuItem.Name = "contentBasedToolStripMenuItem";
+            this.contentBasedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.contentBasedToolStripMenuItem.Text = "Content-Based";
+            this.contentBasedToolStripMenuItem.Click += new System.EventHandler(this.contentBasedToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem1
             // 
@@ -10357,13 +10382,6 @@
             this.versionLabel.Size = new System.Drawing.Size(35, 13);
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
-            // 
-            // listBasedBatchRenameToolStripMenuItem
-            // 
-            this.listBasedBatchRenameToolStripMenuItem.Name = "listBasedBatchRenameToolStripMenuItem";
-            this.listBasedBatchRenameToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.listBasedBatchRenameToolStripMenuItem.Text = "List-Based Batch Rename";
-            this.listBasedBatchRenameToolStripMenuItem.Click += new System.EventHandler(this.listBasedBatchRenameToolStripMenuItem_Click);
             // 
             // MainProgram
             // 
@@ -11462,6 +11480,8 @@
         private System.Windows.Forms.ToolStripMenuItem unpackToFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem buildFomFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listBasedBatchRenameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem listBasedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem contentBasedToolStripMenuItem;
     }
 }
 
