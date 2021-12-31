@@ -8769,15 +8769,15 @@ namespace DSPRE {
                 "Do you want to proceed?", "Confirm operation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (dr.Equals(DialogResult.Yes)) {
-                List<string> enumerationFile = new List<string> {
+                List<string> enumeratedFiles = new List<string> {
                     "#============================================================================",
                     "# File enumeration definition",
                     "#============================================================================"
                 };
-                int initialLength = enumerationFile.Count;
+                int initialLength = enumeratedFiles.Count;
 
                 const byte toRead = 16;
-                foreach (FileInfo f in files) {
+                System.Threading.Tasks.Parallel.ForEach(files, (f) => {
                     Console.WriteLine(f.Name);
 
                     string fileNameOnly = Path.GetFileNameWithoutExtension(f.FullName);
@@ -8787,7 +8787,7 @@ namespace DSPRE {
                     byte[] b = DSUtils.ReadFromFile(f.FullName, 0, toRead);
 
                     if (b == null || b.Length < toRead) {
-                        continue;
+                        return;
                     }
 
                     string magic = "";
@@ -8800,9 +8800,9 @@ namespace DSPRE {
                             destName = dirNameOnly + "\\"; //Full filename can be changed
                         }
 
-                        nameOffset = (ushort) ( 52 + (4 * (BitConverter.ToUInt16(b, 0xE) - 1)) );
+                        nameOffset = (ushort)(52 + (4 * (BitConverter.ToUInt16(b, 0xE) - 1)));
                         destName += Encoding.UTF8.GetString(DSUtils.ReadFromFile(f.FullName, nameOffset, 16)).TrimEnd(new char[] { (char)0 });
-                        
+
                         destName += ".ns";
                         for (int i = 0; i < 3; i++) {
                             magic += Char.ToLower((char)b[i]);
@@ -8811,7 +8811,7 @@ namespace DSPRE {
                         destName = fileNameOnly + ".";
                         byte offset = 0;
 
-                        if (b[5] == 'R' && b[8] == 'N') { 
+                        if (b[5] == 'R' && b[8] == 'N') {
                             offset = 5;
                         }
 
@@ -8821,22 +8821,22 @@ namespace DSPRE {
                     }
 
                     if (string.IsNullOrWhiteSpace(magic) || !magic.All(char.IsLetterOrDigit)) {
-                        continue;
+                        return;
                     }
 
                     destName += magic;
 
                     if (string.IsNullOrWhiteSpace(destName)) {
-                        continue;
+                        return;
                     }
 
                     destName = MakeUniqueName(destName, fileNameOnly = null, dirNameOnly);
                     File.Move(f.FullName, destName);
 
-                    enumerationFile.Add(Path.GetFileName(destName));
-                }
+                    enumeratedFiles.Add(Path.GetFileName(destName));
+                });
 
-                if (enumerationFile.Count > initialLength) {
+                if (enumeratedFiles.Count > initialLength) {
                     MessageBox.Show("Files inside folder \"" + d.FullName + "\" have been renamed according to their contents.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     DialogResult response = MessageBox.Show("Do you want to save a file enumeration list?", "Waiting for user", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -8852,7 +8852,7 @@ namespace DSPRE {
                             return;
                         }
 
-                        File.WriteAllLines(sf.FileName, enumerationFile);
+                        File.WriteAllLines(sf.FileName, enumeratedFiles);
                         MessageBox.Show("List file saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 } else {
