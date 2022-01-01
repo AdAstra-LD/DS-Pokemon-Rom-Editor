@@ -604,6 +604,7 @@
             this.addTrainerButton = new System.Windows.Forms.Button();
             this.groupBox28 = new System.Windows.Forms.GroupBox();
             this.party6GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyPokemonItemPictureBox6 = new System.Windows.Forms.PictureBox();
             this.label60 = new System.Windows.Forms.Label();
             this.label61 = new System.Windows.Forms.Label();
             this.label62 = new System.Windows.Forms.Label();
@@ -619,6 +620,7 @@
             this.partyPokemon6PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon6ComboBox = new System.Windows.Forms.ComboBox();
             this.party5GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyPokemonItemPictureBox5 = new System.Windows.Forms.PictureBox();
             this.label57 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
             this.label59 = new System.Windows.Forms.Label();
@@ -634,6 +636,7 @@
             this.partyPokemon5PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon5ComboBox = new System.Windows.Forms.ComboBox();
             this.party4GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyPokemonItemPictureBox4 = new System.Windows.Forms.PictureBox();
             this.label54 = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
             this.label56 = new System.Windows.Forms.Label();
@@ -649,6 +652,7 @@
             this.partyPokemon4PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon4ComboBox = new System.Windows.Forms.ComboBox();
             this.party3GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyPokemonItemPictureBox3 = new System.Windows.Forms.PictureBox();
             this.label51 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
             this.label53 = new System.Windows.Forms.Label();
@@ -664,6 +668,7 @@
             this.partyPokemon3PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon3ComboBox = new System.Windows.Forms.ComboBox();
             this.party2GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyPokemonItemPictureBox2 = new System.Windows.Forms.PictureBox();
             this.label48 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
             this.label50 = new System.Windows.Forms.Label();
@@ -679,6 +684,7 @@
             this.partyPokemon2PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon2ComboBox = new System.Windows.Forms.ComboBox();
             this.party1GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyPokemonItemPictureBox1 = new System.Windows.Forms.PictureBox();
             this.label47 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
             this.label45 = new System.Windows.Forms.Label();
@@ -993,36 +999,42 @@
             this.trainerEditorTabPage.SuspendLayout();
             this.groupBox28.SuspendLayout();
             this.party6GroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox6)).BeginInit();
             this.poke6MovesGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.partyIV6UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyLevel6UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyBall6UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyPokemon6PictureBox)).BeginInit();
             this.party5GroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox5)).BeginInit();
             this.poke5MovesGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.partyIV5UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyLevel5UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyBall5UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyPokemon5PictureBox)).BeginInit();
             this.party4GroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox4)).BeginInit();
             this.poke4MovesGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.partyIV4UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyLevel4UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyBall4UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyPokemon4PictureBox)).BeginInit();
             this.party3GroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox3)).BeginInit();
             this.poke3MovesGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.partyIV3UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyLevel3UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyBall3UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyPokemon3PictureBox)).BeginInit();
             this.party2GroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox2)).BeginInit();
             this.poke2MovesGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.partyIV2UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyLevel2UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyBall2UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyPokemon2PictureBox)).BeginInit();
             this.party1GroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox1)).BeginInit();
             this.poke1MovesGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.partyIV1UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyLevel1UpDown)).BeginInit();
@@ -8038,6 +8050,7 @@
             // 
             // party6GroupBox
             // 
+            this.party6GroupBox.Controls.Add(this.partyPokemonItemPictureBox6);
             this.party6GroupBox.Controls.Add(this.label60);
             this.party6GroupBox.Controls.Add(this.label61);
             this.party6GroupBox.Controls.Add(this.label62);
@@ -8055,6 +8068,16 @@
             this.party6GroupBox.TabIndex = 13;
             this.party6GroupBox.TabStop = false;
             this.party6GroupBox.Text = "Pokemon 6";
+            // 
+            // partyPokemonItemPictureBox6
+            // 
+            this.partyPokemonItemPictureBox6.Image = global::DSPRE.Properties.Resources.IconItem;
+            this.partyPokemonItemPictureBox6.Location = new System.Drawing.Point(198, 26);
+            this.partyPokemonItemPictureBox6.Name = "partyPokemonItemPictureBox6";
+            this.partyPokemonItemPictureBox6.Size = new System.Drawing.Size(24, 25);
+            this.partyPokemonItemPictureBox6.TabIndex = 13;
+            this.partyPokemonItemPictureBox6.TabStop = false;
+            this.partyPokemonItemPictureBox6.Visible = false;
             // 
             // label60
             // 
@@ -8181,23 +8204,25 @@
             // 
             this.partyItem6ComboBox.Enabled = false;
             this.partyItem6ComboBox.FormattingEnabled = true;
-            this.partyItem6ComboBox.Location = new System.Drawing.Point(187, 26);
+            this.partyItem6ComboBox.Location = new System.Drawing.Point(228, 28);
             this.partyItem6ComboBox.Name = "partyItem6ComboBox";
-            this.partyItem6ComboBox.Size = new System.Drawing.Size(140, 21);
+            this.partyItem6ComboBox.Size = new System.Drawing.Size(103, 21);
             this.partyItem6ComboBox.TabIndex = 2;
+            this.partyItem6ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem6ComboBox_SelectedIndexChanged);
             // 
             // partyPokemon6PictureBox
             // 
-            this.partyPokemon6PictureBox.Location = new System.Drawing.Point(11, 21);
+            this.partyPokemon6PictureBox.Location = new System.Drawing.Point(11, 23);
             this.partyPokemon6PictureBox.Name = "partyPokemon6PictureBox";
             this.partyPokemon6PictureBox.Size = new System.Drawing.Size(40, 30);
+            this.partyPokemon6PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.partyPokemon6PictureBox.TabIndex = 1;
             this.partyPokemon6PictureBox.TabStop = false;
             // 
             // partyPokemon6ComboBox
             // 
             this.partyPokemon6ComboBox.FormattingEnabled = true;
-            this.partyPokemon6ComboBox.Location = new System.Drawing.Point(55, 26);
+            this.partyPokemon6ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon6ComboBox.Name = "partyPokemon6ComboBox";
             this.partyPokemon6ComboBox.Size = new System.Drawing.Size(126, 21);
             this.partyPokemon6ComboBox.TabIndex = 0;
@@ -8205,6 +8230,7 @@
             // 
             // party5GroupBox
             // 
+            this.party5GroupBox.Controls.Add(this.partyPokemonItemPictureBox5);
             this.party5GroupBox.Controls.Add(this.label57);
             this.party5GroupBox.Controls.Add(this.label58);
             this.party5GroupBox.Controls.Add(this.label59);
@@ -8222,6 +8248,16 @@
             this.party5GroupBox.TabIndex = 12;
             this.party5GroupBox.TabStop = false;
             this.party5GroupBox.Text = "Pokemon 5";
+            // 
+            // partyPokemonItemPictureBox5
+            // 
+            this.partyPokemonItemPictureBox5.Image = global::DSPRE.Properties.Resources.IconItem;
+            this.partyPokemonItemPictureBox5.Location = new System.Drawing.Point(198, 26);
+            this.partyPokemonItemPictureBox5.Name = "partyPokemonItemPictureBox5";
+            this.partyPokemonItemPictureBox5.Size = new System.Drawing.Size(24, 25);
+            this.partyPokemonItemPictureBox5.TabIndex = 12;
+            this.partyPokemonItemPictureBox5.TabStop = false;
+            this.partyPokemonItemPictureBox5.Visible = false;
             // 
             // label57
             // 
@@ -8348,23 +8384,25 @@
             // 
             this.partyItem5ComboBox.Enabled = false;
             this.partyItem5ComboBox.FormattingEnabled = true;
-            this.partyItem5ComboBox.Location = new System.Drawing.Point(187, 26);
+            this.partyItem5ComboBox.Location = new System.Drawing.Point(228, 28);
             this.partyItem5ComboBox.Name = "partyItem5ComboBox";
-            this.partyItem5ComboBox.Size = new System.Drawing.Size(140, 21);
+            this.partyItem5ComboBox.Size = new System.Drawing.Size(103, 21);
             this.partyItem5ComboBox.TabIndex = 2;
+            this.partyItem5ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem5ComboBox_SelectedIndexChanged);
             // 
             // partyPokemon5PictureBox
             // 
-            this.partyPokemon5PictureBox.Location = new System.Drawing.Point(11, 21);
+            this.partyPokemon5PictureBox.Location = new System.Drawing.Point(11, 23);
             this.partyPokemon5PictureBox.Name = "partyPokemon5PictureBox";
             this.partyPokemon5PictureBox.Size = new System.Drawing.Size(40, 30);
+            this.partyPokemon5PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.partyPokemon5PictureBox.TabIndex = 1;
             this.partyPokemon5PictureBox.TabStop = false;
             // 
             // partyPokemon5ComboBox
             // 
             this.partyPokemon5ComboBox.FormattingEnabled = true;
-            this.partyPokemon5ComboBox.Location = new System.Drawing.Point(55, 26);
+            this.partyPokemon5ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon5ComboBox.Name = "partyPokemon5ComboBox";
             this.partyPokemon5ComboBox.Size = new System.Drawing.Size(126, 21);
             this.partyPokemon5ComboBox.TabIndex = 0;
@@ -8372,6 +8410,7 @@
             // 
             // party4GroupBox
             // 
+            this.party4GroupBox.Controls.Add(this.partyPokemonItemPictureBox4);
             this.party4GroupBox.Controls.Add(this.label54);
             this.party4GroupBox.Controls.Add(this.label55);
             this.party4GroupBox.Controls.Add(this.label56);
@@ -8389,6 +8428,16 @@
             this.party4GroupBox.TabIndex = 11;
             this.party4GroupBox.TabStop = false;
             this.party4GroupBox.Text = "Pokemon 4";
+            // 
+            // partyPokemonItemPictureBox4
+            // 
+            this.partyPokemonItemPictureBox4.Image = global::DSPRE.Properties.Resources.IconItem;
+            this.partyPokemonItemPictureBox4.Location = new System.Drawing.Point(198, 26);
+            this.partyPokemonItemPictureBox4.Name = "partyPokemonItemPictureBox4";
+            this.partyPokemonItemPictureBox4.Size = new System.Drawing.Size(24, 25);
+            this.partyPokemonItemPictureBox4.TabIndex = 14;
+            this.partyPokemonItemPictureBox4.TabStop = false;
+            this.partyPokemonItemPictureBox4.Visible = false;
             // 
             // label54
             // 
@@ -8515,23 +8564,25 @@
             // 
             this.partyItem4ComboBox.Enabled = false;
             this.partyItem4ComboBox.FormattingEnabled = true;
-            this.partyItem4ComboBox.Location = new System.Drawing.Point(187, 26);
+            this.partyItem4ComboBox.Location = new System.Drawing.Point(228, 28);
             this.partyItem4ComboBox.Name = "partyItem4ComboBox";
-            this.partyItem4ComboBox.Size = new System.Drawing.Size(140, 21);
+            this.partyItem4ComboBox.Size = new System.Drawing.Size(103, 21);
             this.partyItem4ComboBox.TabIndex = 2;
+            this.partyItem4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem4ComboBox_SelectedIndexChanged);
             // 
             // partyPokemon4PictureBox
             // 
-            this.partyPokemon4PictureBox.Location = new System.Drawing.Point(11, 21);
+            this.partyPokemon4PictureBox.Location = new System.Drawing.Point(11, 23);
             this.partyPokemon4PictureBox.Name = "partyPokemon4PictureBox";
             this.partyPokemon4PictureBox.Size = new System.Drawing.Size(40, 30);
+            this.partyPokemon4PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.partyPokemon4PictureBox.TabIndex = 1;
             this.partyPokemon4PictureBox.TabStop = false;
             // 
             // partyPokemon4ComboBox
             // 
             this.partyPokemon4ComboBox.FormattingEnabled = true;
-            this.partyPokemon4ComboBox.Location = new System.Drawing.Point(55, 26);
+            this.partyPokemon4ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon4ComboBox.Name = "partyPokemon4ComboBox";
             this.partyPokemon4ComboBox.Size = new System.Drawing.Size(126, 21);
             this.partyPokemon4ComboBox.TabIndex = 0;
@@ -8539,6 +8590,7 @@
             // 
             // party3GroupBox
             // 
+            this.party3GroupBox.Controls.Add(this.partyPokemonItemPictureBox3);
             this.party3GroupBox.Controls.Add(this.label51);
             this.party3GroupBox.Controls.Add(this.label52);
             this.party3GroupBox.Controls.Add(this.label53);
@@ -8556,6 +8608,16 @@
             this.party3GroupBox.TabIndex = 10;
             this.party3GroupBox.TabStop = false;
             this.party3GroupBox.Text = "Pokemon 3";
+            // 
+            // partyPokemonItemPictureBox3
+            // 
+            this.partyPokemonItemPictureBox3.Image = global::DSPRE.Properties.Resources.IconItem;
+            this.partyPokemonItemPictureBox3.Location = new System.Drawing.Point(198, 26);
+            this.partyPokemonItemPictureBox3.Name = "partyPokemonItemPictureBox3";
+            this.partyPokemonItemPictureBox3.Size = new System.Drawing.Size(24, 25);
+            this.partyPokemonItemPictureBox3.TabIndex = 11;
+            this.partyPokemonItemPictureBox3.TabStop = false;
+            this.partyPokemonItemPictureBox3.Visible = false;
             // 
             // label51
             // 
@@ -8682,23 +8744,25 @@
             // 
             this.partyItem3ComboBox.Enabled = false;
             this.partyItem3ComboBox.FormattingEnabled = true;
-            this.partyItem3ComboBox.Location = new System.Drawing.Point(187, 26);
+            this.partyItem3ComboBox.Location = new System.Drawing.Point(228, 28);
             this.partyItem3ComboBox.Name = "partyItem3ComboBox";
-            this.partyItem3ComboBox.Size = new System.Drawing.Size(140, 21);
+            this.partyItem3ComboBox.Size = new System.Drawing.Size(103, 21);
             this.partyItem3ComboBox.TabIndex = 2;
+            this.partyItem3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem3ComboBox_SelectedIndexChanged);
             // 
             // partyPokemon3PictureBox
             // 
-            this.partyPokemon3PictureBox.Location = new System.Drawing.Point(11, 21);
+            this.partyPokemon3PictureBox.Location = new System.Drawing.Point(11, 23);
             this.partyPokemon3PictureBox.Name = "partyPokemon3PictureBox";
             this.partyPokemon3PictureBox.Size = new System.Drawing.Size(40, 30);
+            this.partyPokemon3PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.partyPokemon3PictureBox.TabIndex = 1;
             this.partyPokemon3PictureBox.TabStop = false;
             // 
             // partyPokemon3ComboBox
             // 
             this.partyPokemon3ComboBox.FormattingEnabled = true;
-            this.partyPokemon3ComboBox.Location = new System.Drawing.Point(55, 26);
+            this.partyPokemon3ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon3ComboBox.Name = "partyPokemon3ComboBox";
             this.partyPokemon3ComboBox.Size = new System.Drawing.Size(126, 21);
             this.partyPokemon3ComboBox.TabIndex = 0;
@@ -8706,6 +8770,7 @@
             // 
             // party2GroupBox
             // 
+            this.party2GroupBox.Controls.Add(this.partyPokemonItemPictureBox2);
             this.party2GroupBox.Controls.Add(this.label48);
             this.party2GroupBox.Controls.Add(this.label49);
             this.party2GroupBox.Controls.Add(this.label50);
@@ -8723,6 +8788,16 @@
             this.party2GroupBox.TabIndex = 10;
             this.party2GroupBox.TabStop = false;
             this.party2GroupBox.Text = "Pokemon 2";
+            // 
+            // partyPokemonItemPictureBox2
+            // 
+            this.partyPokemonItemPictureBox2.Image = global::DSPRE.Properties.Resources.IconItem;
+            this.partyPokemonItemPictureBox2.Location = new System.Drawing.Point(198, 26);
+            this.partyPokemonItemPictureBox2.Name = "partyPokemonItemPictureBox2";
+            this.partyPokemonItemPictureBox2.Size = new System.Drawing.Size(24, 25);
+            this.partyPokemonItemPictureBox2.TabIndex = 15;
+            this.partyPokemonItemPictureBox2.TabStop = false;
+            this.partyPokemonItemPictureBox2.Visible = false;
             // 
             // label48
             // 
@@ -8849,23 +8924,25 @@
             // 
             this.partyItem2ComboBox.Enabled = false;
             this.partyItem2ComboBox.FormattingEnabled = true;
-            this.partyItem2ComboBox.Location = new System.Drawing.Point(187, 26);
+            this.partyItem2ComboBox.Location = new System.Drawing.Point(228, 28);
             this.partyItem2ComboBox.Name = "partyItem2ComboBox";
-            this.partyItem2ComboBox.Size = new System.Drawing.Size(140, 21);
+            this.partyItem2ComboBox.Size = new System.Drawing.Size(103, 21);
             this.partyItem2ComboBox.TabIndex = 2;
+            this.partyItem2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem2ComboBox_SelectedIndexChanged);
             // 
             // partyPokemon2PictureBox
             // 
-            this.partyPokemon2PictureBox.Location = new System.Drawing.Point(11, 21);
+            this.partyPokemon2PictureBox.Location = new System.Drawing.Point(11, 23);
             this.partyPokemon2PictureBox.Name = "partyPokemon2PictureBox";
             this.partyPokemon2PictureBox.Size = new System.Drawing.Size(40, 30);
+            this.partyPokemon2PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.partyPokemon2PictureBox.TabIndex = 1;
             this.partyPokemon2PictureBox.TabStop = false;
             // 
             // partyPokemon2ComboBox
             // 
             this.partyPokemon2ComboBox.FormattingEnabled = true;
-            this.partyPokemon2ComboBox.Location = new System.Drawing.Point(55, 26);
+            this.partyPokemon2ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon2ComboBox.Name = "partyPokemon2ComboBox";
             this.partyPokemon2ComboBox.Size = new System.Drawing.Size(126, 21);
             this.partyPokemon2ComboBox.TabIndex = 0;
@@ -8873,6 +8950,7 @@
             // 
             // party1GroupBox
             // 
+            this.party1GroupBox.Controls.Add(this.partyPokemonItemPictureBox1);
             this.party1GroupBox.Controls.Add(this.label47);
             this.party1GroupBox.Controls.Add(this.label46);
             this.party1GroupBox.Controls.Add(this.label45);
@@ -8890,6 +8968,16 @@
             this.party1GroupBox.TabIndex = 0;
             this.party1GroupBox.TabStop = false;
             this.party1GroupBox.Text = "Pokemon 1";
+            // 
+            // partyPokemonItemPictureBox1
+            // 
+            this.partyPokemonItemPictureBox1.Image = global::DSPRE.Properties.Resources.IconItem;
+            this.partyPokemonItemPictureBox1.Location = new System.Drawing.Point(198, 26);
+            this.partyPokemonItemPictureBox1.Name = "partyPokemonItemPictureBox1";
+            this.partyPokemonItemPictureBox1.Size = new System.Drawing.Size(24, 25);
+            this.partyPokemonItemPictureBox1.TabIndex = 10;
+            this.partyPokemonItemPictureBox1.TabStop = false;
+            this.partyPokemonItemPictureBox1.Visible = false;
             // 
             // label47
             // 
@@ -9016,23 +9104,25 @@
             // 
             this.partyItem1ComboBox.Enabled = false;
             this.partyItem1ComboBox.FormattingEnabled = true;
-            this.partyItem1ComboBox.Location = new System.Drawing.Point(187, 26);
+            this.partyItem1ComboBox.Location = new System.Drawing.Point(228, 28);
             this.partyItem1ComboBox.Name = "partyItem1ComboBox";
-            this.partyItem1ComboBox.Size = new System.Drawing.Size(140, 21);
+            this.partyItem1ComboBox.Size = new System.Drawing.Size(103, 21);
             this.partyItem1ComboBox.TabIndex = 2;
+            this.partyItem1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem1ComboBox_SelectedIndexChanged);
             // 
             // partyPokemon1PictureBox
             // 
-            this.partyPokemon1PictureBox.Location = new System.Drawing.Point(11, 21);
+            this.partyPokemon1PictureBox.Location = new System.Drawing.Point(11, 23);
             this.partyPokemon1PictureBox.Name = "partyPokemon1PictureBox";
             this.partyPokemon1PictureBox.Size = new System.Drawing.Size(40, 30);
+            this.partyPokemon1PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.partyPokemon1PictureBox.TabIndex = 1;
             this.partyPokemon1PictureBox.TabStop = false;
             // 
             // partyPokemon1ComboBox
             // 
             this.partyPokemon1ComboBox.FormattingEnabled = true;
-            this.partyPokemon1ComboBox.Location = new System.Drawing.Point(55, 26);
+            this.partyPokemon1ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon1ComboBox.Name = "partyPokemon1ComboBox";
             this.partyPokemon1ComboBox.Size = new System.Drawing.Size(126, 21);
             this.partyPokemon1ComboBox.TabIndex = 0;
@@ -10665,6 +10755,7 @@
             this.groupBox28.ResumeLayout(false);
             this.party6GroupBox.ResumeLayout(false);
             this.party6GroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox6)).EndInit();
             this.poke6MovesGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.partyIV6UpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyLevel6UpDown)).EndInit();
@@ -10672,6 +10763,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.partyPokemon6PictureBox)).EndInit();
             this.party5GroupBox.ResumeLayout(false);
             this.party5GroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox5)).EndInit();
             this.poke5MovesGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.partyIV5UpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyLevel5UpDown)).EndInit();
@@ -10679,6 +10771,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.partyPokemon5PictureBox)).EndInit();
             this.party4GroupBox.ResumeLayout(false);
             this.party4GroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox4)).EndInit();
             this.poke4MovesGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.partyIV4UpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyLevel4UpDown)).EndInit();
@@ -10686,6 +10779,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.partyPokemon4PictureBox)).EndInit();
             this.party3GroupBox.ResumeLayout(false);
             this.party3GroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox3)).EndInit();
             this.poke3MovesGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.partyIV3UpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyLevel3UpDown)).EndInit();
@@ -10693,6 +10787,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.partyPokemon3PictureBox)).EndInit();
             this.party2GroupBox.ResumeLayout(false);
             this.party2GroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox2)).EndInit();
             this.poke2MovesGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.partyIV2UpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyLevel2UpDown)).EndInit();
@@ -10700,6 +10795,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.partyPokemon2PictureBox)).EndInit();
             this.party1GroupBox.ResumeLayout(false);
             this.party1GroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox1)).EndInit();
             this.poke1MovesGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.partyIV1UpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.partyLevel1UpDown)).EndInit();
@@ -11527,6 +11623,12 @@
         private System.Windows.Forms.Label label73;
         private System.Windows.Forms.Label label74;
         private System.Windows.Forms.Button DVExplainButton;
+        private System.Windows.Forms.PictureBox partyPokemonItemPictureBox6;
+        private System.Windows.Forms.PictureBox partyPokemonItemPictureBox5;
+        private System.Windows.Forms.PictureBox partyPokemonItemPictureBox4;
+        private System.Windows.Forms.PictureBox partyPokemonItemPictureBox3;
+        private System.Windows.Forms.PictureBox partyPokemonItemPictureBox2;
+        private System.Windows.Forms.PictureBox partyPokemonItemPictureBox1;
     }
 }
 

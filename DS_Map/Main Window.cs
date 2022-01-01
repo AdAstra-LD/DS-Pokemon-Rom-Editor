@@ -7674,6 +7674,7 @@ namespace DSPRE {
         private List<NumericUpDown> partyBallUpdownList = new List<NumericUpDown>();
         private List<GroupBox> partyGroupboxList = new List<GroupBox>();
         private List<PictureBox> partyPokemonPictureBoxList = new List<PictureBox>();
+        private List<PictureBox> partyPokemonItemIconList = new List<PictureBox>();
 
         TrainerFile currentTrainerFile;
         PaletteBase pal;
@@ -7778,6 +7779,14 @@ namespace DSPRE {
             partyPokemonPictureBoxList.Add(partyPokemon4PictureBox);
             partyPokemonPictureBoxList.Add(partyPokemon5PictureBox);
             partyPokemonPictureBoxList.Add(partyPokemon6PictureBox);
+
+            partyPokemonItemIconList.Clear();
+            partyPokemonItemIconList.Add(partyPokemonItemPictureBox1);
+            partyPokemonItemIconList.Add(partyPokemonItemPictureBox2);
+            partyPokemonItemIconList.Add(partyPokemonItemPictureBox3);
+            partyPokemonItemIconList.Add(partyPokemonItemPictureBox4);
+            partyPokemonItemIconList.Add(partyPokemonItemPictureBox5);
+            partyPokemonItemIconList.Add(partyPokemonItemPictureBox6);
 
             int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir).Length;
             trainerComboBox.Items.Clear();
@@ -7897,7 +7906,7 @@ namespace DSPRE {
         }
         private void showTrainerEditorPokePic(byte partyPos) {
             ComboBox cb = partyPokemonComboboxList[partyPos];
-            partyPokemonPictureBoxList[partyPos].Image = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
+            partyPokemonPictureBoxList[partyPos].Image = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : global::DSPRE.Properties.Resources.IconPokeball;
         }
         private void partyPokemon1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             showTrainerEditorPokePic(0);
@@ -7922,6 +7931,35 @@ namespace DSPRE {
             showTrainerEditorPokePic(5);
         }
 
+        private void showTrainerEditorItemPic(byte partyPos) {
+            ComboBox cb = partyItemsComboboxList[partyPos];
+            partyPokemonItemIconList[partyPos].Visible = cb.SelectedIndex > 0;
+        }
+
+        private void partyItem1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            showTrainerEditorItemPic(0);
+        }
+
+        private void partyItem2ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            showTrainerEditorItemPic(1);
+        }
+
+        private void partyItem3ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            showTrainerEditorItemPic(2);
+        }
+
+        private void partyItem4ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            showTrainerEditorItemPic(3);
+        }
+
+        private void partyItem5ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            showTrainerEditorItemPic(4);
+        }
+
+        private void partyItem6ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            showTrainerEditorItemPic(5);
+        }
+
         private void DVExplainButton_Click(object sender, EventArgs e) {
             MessageBox.Show("DV, or \"Difficulty Value\", is used by the game engine to calculate how tough an opponent Pokemon should be.\n" +
                 "The DV affects a Pokemon's Nature and IVs - the higher the value, the stronger the Pokemon.\n" +
@@ -7933,6 +7971,7 @@ namespace DSPRE {
         private void partyCountUpDown_ValueChanged(object sender, EventArgs e) {
             for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
                 partyGroupboxList[i].Enabled = (partyCountUpDown.Value > i);
+                partyPokemonPictureBoxList[i].Visible = partyGroupboxList[i].Enabled;
             }
             for (int i = Math.Min(currentTrainerFile.trp.partyCount, (int)partyCountUpDown.Value); i < TrainerFile.POKE_IN_PARTY; i++) {
                 currentTrainerFile.party[i] = new PartyPokemon(currentTrainerFile.trp.hasItems, currentTrainerFile.trp.hasMoves);

@@ -1300,6 +1300,9 @@
     <None Include="Resources\Graphics\Program Icons\lens.png" />
     <None Include="Resources\Graphics\Program Icons\expandArrow.png" />
     <None Include="Resources\Graphics\Program Icons\compressArrow.png" />
+    <Content Include="Resources\Graphics\Program Icons\IconItem.png" />
+    <Content Include="Resources\Graphics\Program Icons\IconPokeball.png" />
+    <Content Include="Resources\Graphics\Program Icons\IconPokeballNot.png" />
     <Content Include="Resources\Graphics\Program Icons\loadColorTable.png" />
     <None Include="Resources\Graphics\Program Icons\removeTextureNSBMD.png" />
     <None Include="Resources\Graphics\Program Icons\open_rom.png" />
