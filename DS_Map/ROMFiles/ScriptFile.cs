@@ -98,7 +98,7 @@ namespace DSPRE.ROMFiles {
                 /* Read functions */
                 for (uint current = 0; current < functionOffsets.Count; current++) {
                     scrReader.BaseStream.Position = functionOffsets[(int)current];
-                    int posInList = scriptOffsets.IndexOf(functionOffsets[(int)current]); // Check for UseScript_#
+                    int posInList = scriptOffsets.IndexOf(functionOffsets[(int)current]); // Check for UseScript
 
                     if (posInList == -1) {
                         List<ScriptCommand> cmdList = new List<ScriptCommand>();
@@ -596,10 +596,11 @@ namespace DSPRE.ROMFiles {
                 try {
                     writer.BaseStream.Position += allScripts.Count * 0x4;
                     writer.Write((ushort)0xFD13); // Signal the end of header section
+                    List<CommandContainer> useScriptCallers = new List<CommandContainer>();
 
                     /* Write scripts */
                     foreach (CommandContainer currentScript in allScripts) {
-                        if (currentScript.useScript == -1) {
+                        if (currentScript.usedScript == -1) {
                             scriptOffsets.Add((currentScript.manualUserID, (uint)writer.BaseStream.Position));
 
                             foreach (ScriptCommand currentCmd in currentScript.commands) {
@@ -615,23 +616,24 @@ namespace DSPRE.ROMFiles {
                                 /* If command calls a function/movement, store reference position */
                                 AddReference(ref refList, (ushort)currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentScript);
                             }
+                        } else {
+                            useScriptCallers.Add(currentScript);
                         }
                     }
 
                     int scriptsCount = scriptOffsets.Count;
-                    foreach (CommandContainer currentScript in allScripts) {
-                        if (currentScript.useScript != -1) {
-                            for (int i = 0; i < scriptsCount; i++) {
-                                if (scriptOffsets[i].scriptID == currentScript.useScript) {
-                                    scriptOffsets.Add((currentScript.manualUserID, scriptOffsets[i].offsetInFile));  // If script has UseScript, copy offset
-                                }
+                    foreach (CommandContainer caller in useScriptCallers) {
+                        for (int i = 0; i < scriptsCount; i++) {
+                            var scrOf = scriptOffsets[i];
+                            if (scrOf.scriptID == caller.usedScript) {
+                                scriptOffsets.Add((caller.manualUserID, scrOf.offsetInFile));  // If script has UseScript, copy offset
                             }
                         }
                     }
 
                     /* Write functions */
                     foreach (CommandContainer currentFunction in allFunctions) {
-                        if (currentFunction.useScript == -1) {
+                        if (currentFunction.usedScript == -1) {
                             functionOffsets.Add((currentFunction.manualUserID, (uint)writer.BaseStream.Position));
 
                             foreach (ScriptCommand currentCmd in currentFunction.commands) {
@@ -649,7 +651,7 @@ namespace DSPRE.ROMFiles {
                                 AddReference(ref refList, (ushort)currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentFunction);
                             }
                         } else {
-                            functionOffsets.Add((currentFunction.manualUserID, scriptOffsets[currentFunction.useScript - 1].offsetInFile));
+                            functionOffsets.Add((currentFunction.manualUserID, scriptOffsets[currentFunction.usedScript - 1].offsetInFile));
                         }
                     }
 
@@ -670,6 +672,8 @@ namespace DSPRE.ROMFiles {
 
                     /* Write script offsets to header */
                     writer.BaseStream.Position = 0x0;
+
+                    scriptOffsets = scriptOffsets.OrderBy( x => x.scriptID ).ToList(); //Write script offsets to header in the correct order
                     for (int i = 0; i < scriptOffsets.Count; i++) {
                         writer.Write(scriptOffsets[i].offsetInFile - (uint)writer.BaseStream.Position - 0x4);
                     }

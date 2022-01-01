@@ -6430,11 +6430,9 @@ namespace DSPRE {
             selectScriptFileComboBox.SelectedIndex = selectScriptFileComboBox.Items.Count - 1;
         }
         private void exportScriptFileButton_Click(object sender, EventArgs e) {
-            string suggestion;
+            string suggestion = "Script File ";
             if (currentScriptFile.isLevelScript) {
-                suggestion = "Level Script File ";
-            } else {
-                suggestion = "Script File ";
+                suggestion = "Level " + suggestion;
             }
             currentScriptFile.SaveToFileExplorePath(suggestion + selectScriptFileComboBox.SelectedIndex, blindmode: true);
         }
@@ -6664,7 +6662,7 @@ namespace DSPRE {
                     scriptsNavListbox.Items.Add(header);
 
                     /* If current script is identical to another, print UseScript instead of commands */
-                    if (currentScript.useScript < 0) {
+                    if (currentScript.usedScript < 0) {
                         for (int j = 0; j < currentScript.commands.Count; j++) {
                             if (!ScriptDatabase.endCodes.Contains(currentScript.commands[j].id)) {
                                 buffer += '\t';
@@ -6672,7 +6670,7 @@ namespace DSPRE {
                             buffer += currentScript.commands[j].name + Environment.NewLine;
                         }
                     } else {
-                        buffer += '\t' + "UseScript_#" + currentScript.useScript + Environment.NewLine;
+                        buffer += '\t' + "UseScript_#" + currentScript.usedScript + Environment.NewLine;
                     }
 
                     ScriptTextArea.AppendText(buffer + Environment.NewLine);
@@ -6690,7 +6688,7 @@ namespace DSPRE {
                     functionsNavListbox.Items.Add(header);
 
                     /* If current function is identical to a script, print UseScript instead of commands */
-                    if (currentFunction.useScript < 0) {
+                    if (currentFunction.usedScript < 0) {
                         for (int j = 0; j < currentFunction.commands.Count; j++) {
                             if (!ScriptDatabase.endCodes.Contains(currentFunction.commands[j].id)) {
                                 buffer += '\t';
@@ -6698,7 +6696,7 @@ namespace DSPRE {
                             buffer += currentFunction.commands[j].name + Environment.NewLine;
                         }
                     } else {
-                        buffer += '\t' + "UseScript_#" + currentFunction.useScript + Environment.NewLine;
+                        buffer += '\t' + "UseScript_#" + currentFunction.usedScript + Environment.NewLine;
                     }
 
                     FunctionTextArea.AppendText(buffer + Environment.NewLine);

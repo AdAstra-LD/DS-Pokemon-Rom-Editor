@@ -490,7 +490,7 @@ namespace DSPRE {
                     }
                     
                     itemScriptFile.allScripts.Add(executeGive);
-                    itemScriptFile.allFunctions[0].useScript = itemCount + 1;
+                    itemScriptFile.allFunctions[0].usedScript = itemCount + 1;
 
                     itemScriptFile.SaveToFileDefaultDir(RomInfo.itemScriptFileNumber, showSuccessMessage: false);
                     MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
