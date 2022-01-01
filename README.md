@@ -14,6 +14,8 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features a
 
 - Added Advanced Header Search feature.
 - New NSBMD and NSBTX utilities.
+- NARC Packer/Unpacker utilities.
+- List based and Content based Batch Rename utilities.
 - Lots of new buttons and icons.
 - Some fields will now show a colored text depending on their value.
 - DSPRE can now read extracted data from a directory, without loading a ROM.
