@@ -2520,18 +2520,21 @@ namespace DSPRE {
         }
         private void removeMatrixButton_Click(object sender, EventArgs e) {
             if (selectMatrixComboBox.Items.Count > 1) {
-                /* Delete matrix file */
-                int matrixToDelete = romInfo.GetMatrixCount() - 1;
+                DialogResult d = MessageBox.Show("Are you sure you want to delete the last Map BIN File?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (d.Equals(DialogResult.Yes)) {
+                    /* Delete matrix file */
+                    int matrixToDelete = romInfo.GetMatrixCount() - 1;
 
-                string matrixPath = RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + matrixToDelete.ToString("D4");
-                File.Delete(matrixPath);
+                    string matrixPath = RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + matrixToDelete.ToString("D4");
+                    File.Delete(matrixPath);
 
-                /* Change selected index if the matrix to be deleted is currently selected */
-                if (selectMatrixComboBox.SelectedIndex == matrixToDelete)
-                    selectMatrixComboBox.SelectedIndex--;
+                    /* Change selected index if the matrix to be deleted is currently selected */
+                    if (selectMatrixComboBox.SelectedIndex == matrixToDelete)
+                        selectMatrixComboBox.SelectedIndex--;
 
-                /* Remove entry from ComboBox, and decrease matrix count */
-                selectMatrixComboBox.Items.RemoveAt(matrixToDelete);
+                    /* Remove entry from ComboBox, and decrease matrix count */
+                    selectMatrixComboBox.Items.RemoveAt(matrixToDelete);
+                }
             } else {
                 MessageBox.Show("At least one matrix must be kept.", "Can't delete Matrix", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -3396,16 +3399,19 @@ namespace DSPRE {
             MessageBox.Show("Screenshot saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void removeLastMapFileButton_Click(object sender, EventArgs e) {
-            /* Delete last map file */
-            File.Delete(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + (selectMapComboBox.Items.Count - 1).ToString("D4"));
+            DialogResult d = MessageBox.Show("Are you sure you want to delete the last Map BIN File?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (d.Equals(DialogResult.Yes)) {
+                /* Delete last map file */
+                File.Delete(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + (selectMapComboBox.Items.Count - 1).ToString("D4"));
 
-            /* Check if currently selected file is the last one, and in that case select the one before it */
-            int lastIndex = selectMapComboBox.Items.Count - 1;
-            if (selectMapComboBox.SelectedIndex == lastIndex)
-                selectMapComboBox.SelectedIndex--;
+                /* Check if currently selected file is the last one, and in that case select the one before it */
+                int lastIndex = selectMapComboBox.Items.Count - 1;
+                if (selectMapComboBox.SelectedIndex == lastIndex)
+                    selectMapComboBox.SelectedIndex--;
 
-            /* Remove item from ComboBox */
-            selectMapComboBox.Items.RemoveAt(lastIndex);
+                /* Remove item from ComboBox */
+                selectMapComboBox.Items.RemoveAt(lastIndex);
+            }
         }
         private void saveMapButton_Click(object sender, EventArgs e) {
             currentMapFile.SaveToFileDefaultDir(selectMapComboBox.SelectedIndex);
@@ -5030,15 +5036,20 @@ namespace DSPRE {
             MessageBox.Show("Events imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void removeEventFileButton_Click(object sender, EventArgs e) {
-            /* Delete event file */
-            File.Delete(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir + "\\" + (selectEventComboBox.Items.Count - 1).ToString("D4"));
+            DialogResult d = MessageBox.Show("Are you sure you want to delete the last Event File?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (d.Equals(DialogResult.Yes)) {
+                /* Delete event file */
+                File.Delete(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir + "\\" + (selectEventComboBox.Items.Count - 1).ToString("D4"));
 
-            /* Check if currently selected file is the last one, and in that case select the one before it */
-            int lastIndex = selectEventComboBox.Items.Count - 1;
-            if (selectEventComboBox.SelectedIndex == lastIndex) selectEventComboBox.SelectedIndex--;
+                /* Check if currently selected file is the last one, and in that case select the one before it */
+                int lastIndex = selectEventComboBox.Items.Count - 1;
+                if (selectEventComboBox.SelectedIndex == lastIndex) {
+                    selectEventComboBox.SelectedIndex--;
+                }
 
-            /* Remove item from ComboBox */
-            selectEventComboBox.Items.RemoveAt(lastIndex);
+                /* Remove item from ComboBox */
+                selectEventComboBox.Items.RemoveAt(lastIndex);
+            }
         }
         private void selectEventComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) {
@@ -5109,6 +5120,7 @@ namespace DSPRE {
                 if (showWarpsCheckBox.Checked)
                     for (int i = 0; i < currentEvFile.warps.Count; i++) {
                         Warp ev = currentEvFile.warps[i];
+
                         if (isEventUnderMouse(ev, mouseTilePos)) {
                             if (ev == selectedEvent) {
                                 goToWarpDestination_Click(sender, e);
@@ -5124,6 +5136,7 @@ namespace DSPRE {
                 if (showSignsCheckBox.Checked)
                     for (int i = 0; i < currentEvFile.spawnables.Count; i++) {
                         Spawnable ev = currentEvFile.spawnables[i];
+
                         if (isEventUnderMouse(ev, mouseTilePos)) {
                             selectedEvent = ev;
                             eventsTabControl.SelectedTab = signsTabPage;
@@ -5135,6 +5148,7 @@ namespace DSPRE {
                 if (showOwsCheckBox.Checked)
                     for (int i = 0; i < currentEvFile.overworlds.Count; i++) {
                         Overworld ev = currentEvFile.overworlds[i];
+
                         if (isEventUnderMouse(ev, mouseTilePos)) {
                             selectedEvent = ev;
                             eventsTabControl.SelectedTab = overworldsTabPage;
@@ -5145,6 +5159,7 @@ namespace DSPRE {
                     }
                 for (int i = 0; i < currentEvFile.triggers.Count; i++) {
                     Trigger ev = currentEvFile.triggers[i];
+
                     if (isEventUnderMouse(ev, mouseTilePos, ev.widthX - 1, ev.heightY - 1)) {
                         selectedEvent = ev;
                         eventsTabControl.SelectedTab = triggersTabPage;
@@ -5156,6 +5171,7 @@ namespace DSPRE {
             } else if (mea.Button == MouseButtons.Middle) {
                 for (int i = 0; i < currentEvFile.warps.Count; i++) {
                     Warp ev = currentEvFile.warps[i];
+
                     if (isEventUnderMouse(ev, mouseTilePos)) {
                         if (ev == selectedEvent) {
                             goToWarpDestination_Click(sender, e);
@@ -6500,16 +6516,20 @@ namespace DSPRE {
             mainTabControl.SelectedTab = scriptEditorTabPage;
         }
         private void removeScriptFileButton_Click(object sender, EventArgs e) {
-            /* Delete script file */
-            File.Delete(RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + (selectScriptFileComboBox.Items.Count - 1).ToString("D4"));
+            DialogResult d = MessageBox.Show("Are you sure you want to delete the last Script File?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (d.Equals(DialogResult.Yes)) {
+                /* Delete script file */
+                File.Delete(RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + (selectScriptFileComboBox.Items.Count - 1).ToString("D4"));
 
-            /* Check if currently selected file is the last one, and in that case select the one before it */
-            int lastIndex = selectScriptFileComboBox.Items.Count - 1;
-            if (selectScriptFileComboBox.SelectedIndex == lastIndex)
-                selectScriptFileComboBox.SelectedIndex--;
+                /* Check if currently selected file is the last one, and in that case select the one before it */
+                int lastIndex = selectScriptFileComboBox.Items.Count - 1;
+                if (selectScriptFileComboBox.SelectedIndex == lastIndex) {
+                    selectScriptFileComboBox.SelectedIndex--;
+                }
 
-            /* Remove item from ComboBox */
-            selectScriptFileComboBox.Items.RemoveAt(lastIndex);
+                /* Remove item from ComboBox */
+                selectScriptFileComboBox.Items.RemoveAt(lastIndex);
+            }
         }
         private void searchInScriptsButton_Click(object sender, EventArgs e) {
             if (searchInScriptsTextBox.Text == "")
@@ -6573,12 +6593,6 @@ namespace DSPRE {
             selectScriptFileComboBox.SelectedIndex = int.Parse(split[1]);
             string cmdNameAndParams = String.Join(" ", split.Skip(5).Take(split.Length - 5));
 
-            string cmdSearched = null;
-            for (int i = 5; i < split.Length; i++) {
-                cmdSearched += split[i] + " ";
-            }
-            cmdSearched = cmdSearched.TrimEnd();
-
             if (split[3].StartsWith(ScriptFile.containerTypes.Script.ToString())) {
                 if (scriptEditorTabControl.SelectedTab != scriptsTabPage) {
                     scriptEditorTabControl.SelectedTab = scriptsTabPage;
@@ -6618,6 +6632,7 @@ namespace DSPRE {
             if (disableHandlers) {
                 return false;
             }
+
             if (scriptsDirty || functionsDirty || actionsDirty) {
                 DialogResult d = MessageBox.Show("There are unsaved changes in this Script File.\nDo you wish to discard them?", "Unsaved work", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (!d.Equals(DialogResult.Yes)) {
@@ -6860,10 +6875,12 @@ namespace DSPRE {
         }
         private void importTextFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .msg file */
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Text Archive (*.msg)|*.msg";
-            if (of.ShowDialog(this) != DialogResult.OK)
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "Text Archive (*.msg)|*.msg"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             /* Update Text Archive object in memory */
             string path = RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4");
@@ -6876,16 +6893,20 @@ namespace DSPRE {
             MessageBox.Show("Text Archive imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void removeMessageFileButton_Click(object sender, EventArgs e) {
-            /* Delete Text Archive */
-            File.Delete(RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + (selectTextFileComboBox.Items.Count - 1).ToString("D4"));
+            DialogResult d = MessageBox.Show("Are you sure you want to delete the last Text Archive?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (d.Equals(DialogResult.Yes)) {
+                /* Delete Text Archive */
+                File.Delete(RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + (selectTextFileComboBox.Items.Count - 1).ToString("D4"));
 
-            /* Check if currently selected file is the last one, and in that case select the one before it */
-            int lastIndex = selectTextFileComboBox.Items.Count - 1;
-            if (selectTextFileComboBox.SelectedIndex == lastIndex)
-                selectTextFileComboBox.SelectedIndex--;
+                /* Check if currently selected file is the last one, and in that case select the one before it */
+                int lastIndex = selectTextFileComboBox.Items.Count - 1;
+                if (selectTextFileComboBox.SelectedIndex == lastIndex) {
+                    selectTextFileComboBox.SelectedIndex--;
+                }
 
-            /* Remove item from ComboBox */
-            selectTextFileComboBox.Items.RemoveAt(lastIndex);
+                /* Remove item from ComboBox */
+                selectTextFileComboBox.Items.RemoveAt(lastIndex);
+            }
         }
         private void removeStringButton_Click(object sender, EventArgs e) {
             if (currentTextArchive.messages.Count > 0) {
@@ -7402,29 +7423,32 @@ namespace DSPRE {
         private void removeNSBTXButton_Click(object sender, EventArgs e) {
             if (texturePacksListBox.Items.Count > 1) {
                 /* Delete NSBTX file */
-                if (mapTilesetRadioButton.Checked) {
-                    File.Delete(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
-                    
-                    if (mapEditorIsReady) {
-                        mapTextureComboBox.Items.RemoveAt(mapTextureComboBox.Items.Count - 1);
-                    }
-                } else {
-                    File.Delete(RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
-                    File.Delete(RomInfo.gameDirs[DirNames.buildingConfigFiles].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
-                    
-                    if (mapEditorIsReady) {
-                        buildTextureComboBox.Items.RemoveAt(buildTextureComboBox.Items.Count - 1);
-                    }
-                }
+                DialogResult d = MessageBox.Show("Are you sure you want to delete the last Texture Pack?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (d.Equals(DialogResult.Yes)) {
+                    if (mapTilesetRadioButton.Checked) {
+                        File.Delete(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
 
-                /* Check if currently selected file is the last one, and in that case select the one before it */
-                int lastIndex = texturePacksListBox.Items.Count - 1;
-                if (texturePacksListBox.SelectedIndex == lastIndex) {
-                    texturePacksListBox.SelectedIndex--;
-                }
+                        if (mapEditorIsReady) {
+                            mapTextureComboBox.Items.RemoveAt(mapTextureComboBox.Items.Count - 1);
+                        }
+                    } else {
+                        File.Delete(RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
+                        File.Delete(RomInfo.gameDirs[DirNames.buildingConfigFiles].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
 
-                /* Remove item from ComboBox */
-                texturePacksListBox.Items.RemoveAt(lastIndex);
+                        if (mapEditorIsReady) {
+                            buildTextureComboBox.Items.RemoveAt(buildTextureComboBox.Items.Count - 1);
+                        }
+                    }
+
+                    /* Check if currently selected file is the last one, and in that case select the one before it */
+                    int lastIndex = texturePacksListBox.Items.Count - 1;
+                    if (texturePacksListBox.SelectedIndex == lastIndex) {
+                        texturePacksListBox.SelectedIndex--;
+                    }
+
+                    /* Remove item from ComboBox */
+                    texturePacksListBox.Items.RemoveAt(lastIndex);
+                }
             } else {
                 MessageBox.Show("At least one tileset must be kept.", "Can't delete tileset", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -7896,6 +7920,14 @@ namespace DSPRE {
 
         private void partyPokemon6ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             showTrainerEditorPokePic(5);
+        }
+
+        private void DVExplainButton_Click(object sender, EventArgs e) {
+            MessageBox.Show("DV, or \"Difficulty Value\", is used by the game engine to calculate how tough an opponent Pokemon should be.\n" +
+                "The DV affects a Pokemon's Nature and IVs - the higher the value, the stronger the Pokemon.\n" +
+                "DVs will go from 1 (0 IVs) to 255 (31 IVs). Natures are chosen semi-randomly." +
+                "\nIVs will be the same value for all Stats at any DV, so Hidden Power will only be Fighting or Dark Type." +
+                "\n\nFor the time being, DSPRE Reloaded is unable to calculate the target DV of a Pokémon for a given Nature and set of IVs.", "Difficulty Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void partyCountUpDown_ValueChanged(object sender, EventArgs e) {

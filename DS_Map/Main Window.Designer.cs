@@ -592,7 +592,9 @@
             this.ExportBTN = new System.Windows.Forms.DataGridViewButtonColumn();
             this.ImportBTN = new System.Windows.Forms.DataGridViewButtonColumn();
             this.trainerEditorTabPage = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
+            this.label74 = new System.Windows.Forms.Label();
+            this.DVExplainButton = new System.Windows.Forms.Button();
+            this.deleteTrainerButton = new System.Windows.Forms.Button();
             this.importTrainerButton = new System.Windows.Forms.Button();
             this.exportTrainerButton = new System.Windows.Forms.Button();
             this.importReplacePartyButton = new System.Windows.Forms.Button();
@@ -734,6 +736,7 @@
             this.trainerComboBox = new System.Windows.Forms.ComboBox();
             this.trainerSaveCurrentButton = new System.Windows.Forms.Button();
             this.tableEditorTabPage = new System.Windows.Forms.TabPage();
+            this.label73 = new System.Windows.Forms.Label();
             this.pbEffectsGroupBox = new System.Windows.Forms.GroupBox();
             this.HOWpbEffectsTableButton = new System.Windows.Forms.Button();
             this.label72 = new System.Windows.Forms.Label();
@@ -7064,6 +7067,7 @@
             this.BtnNextSearchScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnNextSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnNextSearchScript.ForeColor = System.Drawing.Color.White;
+            this.BtnNextSearchScript.Image = global::DSPRE.Properties.Resources.arrowdown;
             this.BtnNextSearchScript.Location = new System.Drawing.Point(233, 4);
             this.BtnNextSearchScript.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BtnNextSearchScript.Name = "BtnNextSearchScript";
@@ -7078,6 +7082,7 @@
             this.BtnPrevSearchScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnPrevSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnPrevSearchScript.ForeColor = System.Drawing.Color.White;
+            this.BtnPrevSearchScript.Image = global::DSPRE.Properties.Resources.arrowup;
             this.BtnPrevSearchScript.Location = new System.Drawing.Point(205, 4);
             this.BtnPrevSearchScript.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BtnPrevSearchScript.Name = "BtnPrevSearchScript";
@@ -7092,6 +7097,7 @@
             this.BtnCloseSearchScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnCloseSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnCloseSearchScript.ForeColor = System.Drawing.Color.White;
+            this.BtnCloseSearchScript.Image = global::DSPRE.Properties.Resources.Cross;
             this.BtnCloseSearchScript.Location = new System.Drawing.Point(261, 4);
             this.BtnCloseSearchScript.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BtnCloseSearchScript.Name = "BtnCloseSearchScript";
@@ -7634,7 +7640,7 @@
             this.importTextFileButton.Name = "importTextFileButton";
             this.importTextFileButton.Size = new System.Drawing.Size(94, 50);
             this.importTextFileButton.TabIndex = 22;
-            this.importTextFileButton.Text = "&Import File";
+            this.importTextFileButton.Text = "&Replace\r\nCurrent";
             this.importTextFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.importTextFileButton.UseVisualStyleBackColor = true;
             this.importTextFileButton.Click += new System.EventHandler(this.importTextFileButton_Click);
@@ -7866,7 +7872,9 @@
             // 
             // trainerEditorTabPage
             // 
-            this.trainerEditorTabPage.Controls.Add(this.button1);
+            this.trainerEditorTabPage.Controls.Add(this.label74);
+            this.trainerEditorTabPage.Controls.Add(this.DVExplainButton);
+            this.trainerEditorTabPage.Controls.Add(this.deleteTrainerButton);
             this.trainerEditorTabPage.Controls.Add(this.importTrainerButton);
             this.trainerEditorTabPage.Controls.Add(this.exportTrainerButton);
             this.trainerEditorTabPage.Controls.Add(this.importReplacePartyButton);
@@ -7888,18 +7896,38 @@
             this.trainerEditorTabPage.Text = "Trainer Editor";
             this.trainerEditorTabPage.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // label74
             // 
-            this.button1.Enabled = false;
-            this.button1.Image = global::DSPRE.Properties.Resources.deleteIcon;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.Location = new System.Drawing.Point(322, 20);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(102, 51);
-            this.button1.TabIndex = 44;
-            this.button1.Text = "Delete Trainer";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.UseVisualStyleBackColor = true;
+            this.label74.AutoSize = true;
+            this.label74.Location = new System.Drawing.Point(1086, 26);
+            this.label74.Name = "label74";
+            this.label74.Size = new System.Drawing.Size(78, 13);
+            this.label74.TabIndex = 46;
+            this.label74.Text = "Info about DVs";
+            // 
+            // DVExplainButton
+            // 
+            this.DVExplainButton.Image = ((System.Drawing.Image)(resources.GetObject("DVExplainButton.Image")));
+            this.DVExplainButton.Location = new System.Drawing.Point(1108, 41);
+            this.DVExplainButton.Name = "DVExplainButton";
+            this.DVExplainButton.Size = new System.Drawing.Size(28, 29);
+            this.DVExplainButton.TabIndex = 45;
+            this.DVExplainButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.DVExplainButton.UseVisualStyleBackColor = true;
+            this.DVExplainButton.Click += new System.EventHandler(this.DVExplainButton_Click);
+            // 
+            // deleteTrainerButton
+            // 
+            this.deleteTrainerButton.Enabled = false;
+            this.deleteTrainerButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.deleteTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.deleteTrainerButton.Location = new System.Drawing.Point(322, 20);
+            this.deleteTrainerButton.Name = "deleteTrainerButton";
+            this.deleteTrainerButton.Size = new System.Drawing.Size(102, 51);
+            this.deleteTrainerButton.TabIndex = 44;
+            this.deleteTrainerButton.Text = "Delete Trainer";
+            this.deleteTrainerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.deleteTrainerButton.UseVisualStyleBackColor = true;
             // 
             // importTrainerButton
             // 
@@ -7931,7 +7959,7 @@
             // 
             this.importReplacePartyButton.Image = ((System.Drawing.Image)(resources.GetObject("importReplacePartyButton.Image")));
             this.importReplacePartyButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importReplacePartyButton.Location = new System.Drawing.Point(1076, 20);
+            this.importReplacePartyButton.Location = new System.Drawing.Point(969, 20);
             this.importReplacePartyButton.Name = "importReplacePartyButton";
             this.importReplacePartyButton.Size = new System.Drawing.Size(85, 51);
             this.importReplacePartyButton.TabIndex = 41;
@@ -7944,7 +7972,7 @@
             // 
             this.importReplacePropertiesButton.Image = ((System.Drawing.Image)(resources.GetObject("importReplacePropertiesButton.Image")));
             this.importReplacePropertiesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importReplacePropertiesButton.Location = new System.Drawing.Point(782, 20);
+            this.importReplacePropertiesButton.Location = new System.Drawing.Point(746, 20);
             this.importReplacePropertiesButton.Name = "importReplacePropertiesButton";
             this.importReplacePropertiesButton.Size = new System.Drawing.Size(85, 51);
             this.importReplacePropertiesButton.TabIndex = 40;
@@ -7957,7 +7985,7 @@
             // 
             this.exportPropertiesButton.Image = ((System.Drawing.Image)(resources.GetObject("exportPropertiesButton.Image")));
             this.exportPropertiesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportPropertiesButton.Location = new System.Drawing.Point(696, 20);
+            this.exportPropertiesButton.Location = new System.Drawing.Point(660, 20);
             this.exportPropertiesButton.Name = "exportPropertiesButton";
             this.exportPropertiesButton.Size = new System.Drawing.Size(85, 51);
             this.exportPropertiesButton.TabIndex = 39;
@@ -7970,7 +7998,7 @@
             // 
             this.exportPartyButton.Image = ((System.Drawing.Image)(resources.GetObject("exportPartyButton.Image")));
             this.exportPartyButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportPartyButton.Location = new System.Drawing.Point(990, 20);
+            this.exportPartyButton.Location = new System.Drawing.Point(883, 20);
             this.exportPartyButton.Name = "exportPartyButton";
             this.exportPartyButton.Size = new System.Drawing.Size(85, 51);
             this.exportPartyButton.TabIndex = 38;
@@ -8023,7 +8051,7 @@
             this.party6GroupBox.Enabled = false;
             this.party6GroupBox.Location = new System.Drawing.Point(371, 355);
             this.party6GroupBox.Name = "party6GroupBox";
-            this.party6GroupBox.Size = new System.Drawing.Size(343, 160);
+            this.party6GroupBox.Size = new System.Drawing.Size(343, 162);
             this.party6GroupBox.TabIndex = 13;
             this.party6GroupBox.TabStop = false;
             this.party6GroupBox.Text = "Pokemon 6";
@@ -8033,23 +8061,23 @@
             this.label60.AutoSize = true;
             this.label60.Location = new System.Drawing.Point(12, 124);
             this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(25, 13);
+            this.label60.Size = new System.Drawing.Size(28, 26);
             this.label60.TabIndex = 9;
-            this.label60.Text = "???";
+            this.label60.Text = "Ball\r\nSeal";
             // 
             // label61
             // 
             this.label61.AutoSize = true;
-            this.label61.Location = new System.Drawing.Point(12, 99);
+            this.label61.Location = new System.Drawing.Point(12, 100);
             this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(25, 13);
+            this.label61.Size = new System.Drawing.Size(22, 13);
             this.label61.TabIndex = 8;
-            this.label61.Text = "???";
+            this.label61.Text = "DV";
             // 
             // label62
             // 
             this.label62.AutoSize = true;
-            this.label62.Location = new System.Drawing.Point(12, 75);
+            this.label62.Location = new System.Drawing.Point(12, 73);
             this.label62.Name = "label62";
             this.label62.Size = new System.Drawing.Size(22, 13);
             this.label62.TabIndex = 7;
@@ -8110,7 +8138,7 @@
             // 
             // partyIV6UpDown
             // 
-            this.partyIV6UpDown.Location = new System.Drawing.Point(48, 97);
+            this.partyIV6UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV6UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8122,7 +8150,7 @@
             // 
             // partyLevel6UpDown
             // 
-            this.partyLevel6UpDown.Location = new System.Drawing.Point(48, 73);
+            this.partyLevel6UpDown.Location = new System.Drawing.Point(48, 69);
             this.partyLevel6UpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -8139,7 +8167,7 @@
             // 
             // partyBall6UpDown
             // 
-            this.partyBall6UpDown.Location = new System.Drawing.Point(48, 122);
+            this.partyBall6UpDown.Location = new System.Drawing.Point(48, 127);
             this.partyBall6UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8153,14 +8181,14 @@
             // 
             this.partyItem6ComboBox.Enabled = false;
             this.partyItem6ComboBox.FormattingEnabled = true;
-            this.partyItem6ComboBox.Location = new System.Drawing.Point(187, 33);
+            this.partyItem6ComboBox.Location = new System.Drawing.Point(187, 26);
             this.partyItem6ComboBox.Name = "partyItem6ComboBox";
             this.partyItem6ComboBox.Size = new System.Drawing.Size(140, 21);
             this.partyItem6ComboBox.TabIndex = 2;
             // 
             // partyPokemon6PictureBox
             // 
-            this.partyPokemon6PictureBox.Location = new System.Drawing.Point(11, 28);
+            this.partyPokemon6PictureBox.Location = new System.Drawing.Point(11, 21);
             this.partyPokemon6PictureBox.Name = "partyPokemon6PictureBox";
             this.partyPokemon6PictureBox.Size = new System.Drawing.Size(40, 30);
             this.partyPokemon6PictureBox.TabIndex = 1;
@@ -8169,7 +8197,7 @@
             // partyPokemon6ComboBox
             // 
             this.partyPokemon6ComboBox.FormattingEnabled = true;
-            this.partyPokemon6ComboBox.Location = new System.Drawing.Point(55, 33);
+            this.partyPokemon6ComboBox.Location = new System.Drawing.Point(55, 26);
             this.partyPokemon6ComboBox.Name = "partyPokemon6ComboBox";
             this.partyPokemon6ComboBox.Size = new System.Drawing.Size(126, 21);
             this.partyPokemon6ComboBox.TabIndex = 0;
@@ -8190,7 +8218,7 @@
             this.party5GroupBox.Enabled = false;
             this.party5GroupBox.Location = new System.Drawing.Point(16, 355);
             this.party5GroupBox.Name = "party5GroupBox";
-            this.party5GroupBox.Size = new System.Drawing.Size(343, 160);
+            this.party5GroupBox.Size = new System.Drawing.Size(343, 162);
             this.party5GroupBox.TabIndex = 12;
             this.party5GroupBox.TabStop = false;
             this.party5GroupBox.Text = "Pokemon 5";
@@ -8200,23 +8228,23 @@
             this.label57.AutoSize = true;
             this.label57.Location = new System.Drawing.Point(12, 124);
             this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(25, 13);
+            this.label57.Size = new System.Drawing.Size(28, 26);
             this.label57.TabIndex = 9;
-            this.label57.Text = "???";
+            this.label57.Text = "Ball\r\nSeal";
             // 
             // label58
             // 
             this.label58.AutoSize = true;
-            this.label58.Location = new System.Drawing.Point(12, 99);
+            this.label58.Location = new System.Drawing.Point(12, 100);
             this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(25, 13);
+            this.label58.Size = new System.Drawing.Size(22, 13);
             this.label58.TabIndex = 8;
-            this.label58.Text = "???";
+            this.label58.Text = "DV";
             // 
             // label59
             // 
             this.label59.AutoSize = true;
-            this.label59.Location = new System.Drawing.Point(12, 75);
+            this.label59.Location = new System.Drawing.Point(12, 73);
             this.label59.Name = "label59";
             this.label59.Size = new System.Drawing.Size(22, 13);
             this.label59.TabIndex = 7;
@@ -8277,7 +8305,7 @@
             // 
             // partyIV5UpDown
             // 
-            this.partyIV5UpDown.Location = new System.Drawing.Point(48, 97);
+            this.partyIV5UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV5UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8289,7 +8317,7 @@
             // 
             // partyLevel5UpDown
             // 
-            this.partyLevel5UpDown.Location = new System.Drawing.Point(48, 73);
+            this.partyLevel5UpDown.Location = new System.Drawing.Point(48, 69);
             this.partyLevel5UpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -8306,7 +8334,7 @@
             // 
             // partyBall5UpDown
             // 
-            this.partyBall5UpDown.Location = new System.Drawing.Point(48, 122);
+            this.partyBall5UpDown.Location = new System.Drawing.Point(48, 127);
             this.partyBall5UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8320,14 +8348,14 @@
             // 
             this.partyItem5ComboBox.Enabled = false;
             this.partyItem5ComboBox.FormattingEnabled = true;
-            this.partyItem5ComboBox.Location = new System.Drawing.Point(187, 33);
+            this.partyItem5ComboBox.Location = new System.Drawing.Point(187, 26);
             this.partyItem5ComboBox.Name = "partyItem5ComboBox";
             this.partyItem5ComboBox.Size = new System.Drawing.Size(140, 21);
             this.partyItem5ComboBox.TabIndex = 2;
             // 
             // partyPokemon5PictureBox
             // 
-            this.partyPokemon5PictureBox.Location = new System.Drawing.Point(11, 28);
+            this.partyPokemon5PictureBox.Location = new System.Drawing.Point(11, 21);
             this.partyPokemon5PictureBox.Name = "partyPokemon5PictureBox";
             this.partyPokemon5PictureBox.Size = new System.Drawing.Size(40, 30);
             this.partyPokemon5PictureBox.TabIndex = 1;
@@ -8336,7 +8364,7 @@
             // partyPokemon5ComboBox
             // 
             this.partyPokemon5ComboBox.FormattingEnabled = true;
-            this.partyPokemon5ComboBox.Location = new System.Drawing.Point(55, 33);
+            this.partyPokemon5ComboBox.Location = new System.Drawing.Point(55, 26);
             this.partyPokemon5ComboBox.Name = "partyPokemon5ComboBox";
             this.partyPokemon5ComboBox.Size = new System.Drawing.Size(126, 21);
             this.partyPokemon5ComboBox.TabIndex = 0;
@@ -8357,7 +8385,7 @@
             this.party4GroupBox.Enabled = false;
             this.party4GroupBox.Location = new System.Drawing.Point(371, 189);
             this.party4GroupBox.Name = "party4GroupBox";
-            this.party4GroupBox.Size = new System.Drawing.Size(343, 160);
+            this.party4GroupBox.Size = new System.Drawing.Size(343, 162);
             this.party4GroupBox.TabIndex = 11;
             this.party4GroupBox.TabStop = false;
             this.party4GroupBox.Text = "Pokemon 4";
@@ -8367,23 +8395,23 @@
             this.label54.AutoSize = true;
             this.label54.Location = new System.Drawing.Point(12, 124);
             this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(25, 13);
+            this.label54.Size = new System.Drawing.Size(28, 26);
             this.label54.TabIndex = 9;
-            this.label54.Text = "???";
+            this.label54.Text = "Ball\r\nSeal";
             // 
             // label55
             // 
             this.label55.AutoSize = true;
-            this.label55.Location = new System.Drawing.Point(12, 99);
+            this.label55.Location = new System.Drawing.Point(12, 100);
             this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(25, 13);
+            this.label55.Size = new System.Drawing.Size(22, 13);
             this.label55.TabIndex = 8;
-            this.label55.Text = "???";
+            this.label55.Text = "DV";
             // 
             // label56
             // 
             this.label56.AutoSize = true;
-            this.label56.Location = new System.Drawing.Point(12, 75);
+            this.label56.Location = new System.Drawing.Point(12, 73);
             this.label56.Name = "label56";
             this.label56.Size = new System.Drawing.Size(22, 13);
             this.label56.TabIndex = 7;
@@ -8444,7 +8472,7 @@
             // 
             // partyIV4UpDown
             // 
-            this.partyIV4UpDown.Location = new System.Drawing.Point(48, 97);
+            this.partyIV4UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV4UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8456,7 +8484,7 @@
             // 
             // partyLevel4UpDown
             // 
-            this.partyLevel4UpDown.Location = new System.Drawing.Point(48, 73);
+            this.partyLevel4UpDown.Location = new System.Drawing.Point(48, 69);
             this.partyLevel4UpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -8473,7 +8501,7 @@
             // 
             // partyBall4UpDown
             // 
-            this.partyBall4UpDown.Location = new System.Drawing.Point(48, 122);
+            this.partyBall4UpDown.Location = new System.Drawing.Point(48, 127);
             this.partyBall4UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8487,14 +8515,14 @@
             // 
             this.partyItem4ComboBox.Enabled = false;
             this.partyItem4ComboBox.FormattingEnabled = true;
-            this.partyItem4ComboBox.Location = new System.Drawing.Point(187, 33);
+            this.partyItem4ComboBox.Location = new System.Drawing.Point(187, 26);
             this.partyItem4ComboBox.Name = "partyItem4ComboBox";
             this.partyItem4ComboBox.Size = new System.Drawing.Size(140, 21);
             this.partyItem4ComboBox.TabIndex = 2;
             // 
             // partyPokemon4PictureBox
             // 
-            this.partyPokemon4PictureBox.Location = new System.Drawing.Point(11, 28);
+            this.partyPokemon4PictureBox.Location = new System.Drawing.Point(11, 21);
             this.partyPokemon4PictureBox.Name = "partyPokemon4PictureBox";
             this.partyPokemon4PictureBox.Size = new System.Drawing.Size(40, 30);
             this.partyPokemon4PictureBox.TabIndex = 1;
@@ -8503,7 +8531,7 @@
             // partyPokemon4ComboBox
             // 
             this.partyPokemon4ComboBox.FormattingEnabled = true;
-            this.partyPokemon4ComboBox.Location = new System.Drawing.Point(55, 33);
+            this.partyPokemon4ComboBox.Location = new System.Drawing.Point(55, 26);
             this.partyPokemon4ComboBox.Name = "partyPokemon4ComboBox";
             this.partyPokemon4ComboBox.Size = new System.Drawing.Size(126, 21);
             this.partyPokemon4ComboBox.TabIndex = 0;
@@ -8524,7 +8552,7 @@
             this.party3GroupBox.Enabled = false;
             this.party3GroupBox.Location = new System.Drawing.Point(16, 189);
             this.party3GroupBox.Name = "party3GroupBox";
-            this.party3GroupBox.Size = new System.Drawing.Size(343, 160);
+            this.party3GroupBox.Size = new System.Drawing.Size(343, 162);
             this.party3GroupBox.TabIndex = 10;
             this.party3GroupBox.TabStop = false;
             this.party3GroupBox.Text = "Pokemon 3";
@@ -8534,23 +8562,23 @@
             this.label51.AutoSize = true;
             this.label51.Location = new System.Drawing.Point(12, 124);
             this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(25, 13);
+            this.label51.Size = new System.Drawing.Size(28, 26);
             this.label51.TabIndex = 9;
-            this.label51.Text = "???";
+            this.label51.Text = "Ball\r\nSeal";
             // 
             // label52
             // 
             this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(12, 99);
+            this.label52.Location = new System.Drawing.Point(12, 100);
             this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(25, 13);
+            this.label52.Size = new System.Drawing.Size(22, 13);
             this.label52.TabIndex = 8;
-            this.label52.Text = "???";
+            this.label52.Text = "DV";
             // 
             // label53
             // 
             this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(12, 75);
+            this.label53.Location = new System.Drawing.Point(12, 73);
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(22, 13);
             this.label53.TabIndex = 7;
@@ -8611,7 +8639,7 @@
             // 
             // partyIV3UpDown
             // 
-            this.partyIV3UpDown.Location = new System.Drawing.Point(48, 97);
+            this.partyIV3UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV3UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8623,7 +8651,7 @@
             // 
             // partyLevel3UpDown
             // 
-            this.partyLevel3UpDown.Location = new System.Drawing.Point(48, 73);
+            this.partyLevel3UpDown.Location = new System.Drawing.Point(48, 69);
             this.partyLevel3UpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -8640,7 +8668,7 @@
             // 
             // partyBall3UpDown
             // 
-            this.partyBall3UpDown.Location = new System.Drawing.Point(48, 122);
+            this.partyBall3UpDown.Location = new System.Drawing.Point(48, 127);
             this.partyBall3UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8654,14 +8682,14 @@
             // 
             this.partyItem3ComboBox.Enabled = false;
             this.partyItem3ComboBox.FormattingEnabled = true;
-            this.partyItem3ComboBox.Location = new System.Drawing.Point(187, 33);
+            this.partyItem3ComboBox.Location = new System.Drawing.Point(187, 26);
             this.partyItem3ComboBox.Name = "partyItem3ComboBox";
             this.partyItem3ComboBox.Size = new System.Drawing.Size(140, 21);
             this.partyItem3ComboBox.TabIndex = 2;
             // 
             // partyPokemon3PictureBox
             // 
-            this.partyPokemon3PictureBox.Location = new System.Drawing.Point(11, 28);
+            this.partyPokemon3PictureBox.Location = new System.Drawing.Point(11, 21);
             this.partyPokemon3PictureBox.Name = "partyPokemon3PictureBox";
             this.partyPokemon3PictureBox.Size = new System.Drawing.Size(40, 30);
             this.partyPokemon3PictureBox.TabIndex = 1;
@@ -8670,7 +8698,7 @@
             // partyPokemon3ComboBox
             // 
             this.partyPokemon3ComboBox.FormattingEnabled = true;
-            this.partyPokemon3ComboBox.Location = new System.Drawing.Point(55, 33);
+            this.partyPokemon3ComboBox.Location = new System.Drawing.Point(55, 26);
             this.partyPokemon3ComboBox.Name = "partyPokemon3ComboBox";
             this.partyPokemon3ComboBox.Size = new System.Drawing.Size(126, 21);
             this.partyPokemon3ComboBox.TabIndex = 0;
@@ -8691,7 +8719,7 @@
             this.party2GroupBox.Enabled = false;
             this.party2GroupBox.Location = new System.Drawing.Point(371, 23);
             this.party2GroupBox.Name = "party2GroupBox";
-            this.party2GroupBox.Size = new System.Drawing.Size(343, 160);
+            this.party2GroupBox.Size = new System.Drawing.Size(343, 162);
             this.party2GroupBox.TabIndex = 10;
             this.party2GroupBox.TabStop = false;
             this.party2GroupBox.Text = "Pokemon 2";
@@ -8701,23 +8729,23 @@
             this.label48.AutoSize = true;
             this.label48.Location = new System.Drawing.Point(12, 124);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(25, 13);
+            this.label48.Size = new System.Drawing.Size(28, 26);
             this.label48.TabIndex = 9;
-            this.label48.Text = "???";
+            this.label48.Text = "Ball\r\nSeal";
             // 
             // label49
             // 
             this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(12, 99);
+            this.label49.Location = new System.Drawing.Point(12, 100);
             this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(25, 13);
+            this.label49.Size = new System.Drawing.Size(22, 13);
             this.label49.TabIndex = 8;
-            this.label49.Text = "???";
+            this.label49.Text = "DV";
             // 
             // label50
             // 
             this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(12, 75);
+            this.label50.Location = new System.Drawing.Point(12, 73);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(22, 13);
             this.label50.TabIndex = 7;
@@ -8778,7 +8806,7 @@
             // 
             // partyIV2UpDown
             // 
-            this.partyIV2UpDown.Location = new System.Drawing.Point(48, 97);
+            this.partyIV2UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV2UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8790,7 +8818,7 @@
             // 
             // partyLevel2UpDown
             // 
-            this.partyLevel2UpDown.Location = new System.Drawing.Point(48, 73);
+            this.partyLevel2UpDown.Location = new System.Drawing.Point(48, 69);
             this.partyLevel2UpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -8807,7 +8835,7 @@
             // 
             // partyBall2UpDown
             // 
-            this.partyBall2UpDown.Location = new System.Drawing.Point(48, 122);
+            this.partyBall2UpDown.Location = new System.Drawing.Point(48, 127);
             this.partyBall2UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8821,14 +8849,14 @@
             // 
             this.partyItem2ComboBox.Enabled = false;
             this.partyItem2ComboBox.FormattingEnabled = true;
-            this.partyItem2ComboBox.Location = new System.Drawing.Point(187, 33);
+            this.partyItem2ComboBox.Location = new System.Drawing.Point(187, 26);
             this.partyItem2ComboBox.Name = "partyItem2ComboBox";
             this.partyItem2ComboBox.Size = new System.Drawing.Size(140, 21);
             this.partyItem2ComboBox.TabIndex = 2;
             // 
             // partyPokemon2PictureBox
             // 
-            this.partyPokemon2PictureBox.Location = new System.Drawing.Point(11, 28);
+            this.partyPokemon2PictureBox.Location = new System.Drawing.Point(11, 21);
             this.partyPokemon2PictureBox.Name = "partyPokemon2PictureBox";
             this.partyPokemon2PictureBox.Size = new System.Drawing.Size(40, 30);
             this.partyPokemon2PictureBox.TabIndex = 1;
@@ -8837,7 +8865,7 @@
             // partyPokemon2ComboBox
             // 
             this.partyPokemon2ComboBox.FormattingEnabled = true;
-            this.partyPokemon2ComboBox.Location = new System.Drawing.Point(55, 33);
+            this.partyPokemon2ComboBox.Location = new System.Drawing.Point(55, 26);
             this.partyPokemon2ComboBox.Name = "partyPokemon2ComboBox";
             this.partyPokemon2ComboBox.Size = new System.Drawing.Size(126, 21);
             this.partyPokemon2ComboBox.TabIndex = 0;
@@ -8858,7 +8886,7 @@
             this.party1GroupBox.Enabled = false;
             this.party1GroupBox.Location = new System.Drawing.Point(16, 23);
             this.party1GroupBox.Name = "party1GroupBox";
-            this.party1GroupBox.Size = new System.Drawing.Size(343, 160);
+            this.party1GroupBox.Size = new System.Drawing.Size(343, 162);
             this.party1GroupBox.TabIndex = 0;
             this.party1GroupBox.TabStop = false;
             this.party1GroupBox.Text = "Pokemon 1";
@@ -8868,23 +8896,23 @@
             this.label47.AutoSize = true;
             this.label47.Location = new System.Drawing.Point(12, 124);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(25, 13);
+            this.label47.Size = new System.Drawing.Size(28, 26);
             this.label47.TabIndex = 9;
-            this.label47.Text = "???";
+            this.label47.Text = "Ball\r\nSeal";
             // 
             // label46
             // 
             this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(12, 99);
+            this.label46.Location = new System.Drawing.Point(12, 100);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(25, 13);
+            this.label46.Size = new System.Drawing.Size(22, 13);
             this.label46.TabIndex = 8;
-            this.label46.Text = "???";
+            this.label46.Text = "DV";
             // 
             // label45
             // 
             this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(12, 75);
+            this.label45.Location = new System.Drawing.Point(12, 73);
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(22, 13);
             this.label45.TabIndex = 7;
@@ -8945,7 +8973,7 @@
             // 
             // partyIV1UpDown
             // 
-            this.partyIV1UpDown.Location = new System.Drawing.Point(48, 97);
+            this.partyIV1UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV1UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8957,7 +8985,7 @@
             // 
             // partyLevel1UpDown
             // 
-            this.partyLevel1UpDown.Location = new System.Drawing.Point(48, 73);
+            this.partyLevel1UpDown.Location = new System.Drawing.Point(48, 69);
             this.partyLevel1UpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -8974,7 +9002,7 @@
             // 
             // partyBall1UpDown
             // 
-            this.partyBall1UpDown.Location = new System.Drawing.Point(48, 122);
+            this.partyBall1UpDown.Location = new System.Drawing.Point(48, 127);
             this.partyBall1UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8988,14 +9016,14 @@
             // 
             this.partyItem1ComboBox.Enabled = false;
             this.partyItem1ComboBox.FormattingEnabled = true;
-            this.partyItem1ComboBox.Location = new System.Drawing.Point(187, 33);
+            this.partyItem1ComboBox.Location = new System.Drawing.Point(187, 26);
             this.partyItem1ComboBox.Name = "partyItem1ComboBox";
             this.partyItem1ComboBox.Size = new System.Drawing.Size(140, 21);
             this.partyItem1ComboBox.TabIndex = 2;
             // 
             // partyPokemon1PictureBox
             // 
-            this.partyPokemon1PictureBox.Location = new System.Drawing.Point(11, 28);
+            this.partyPokemon1PictureBox.Location = new System.Drawing.Point(11, 21);
             this.partyPokemon1PictureBox.Name = "partyPokemon1PictureBox";
             this.partyPokemon1PictureBox.Size = new System.Drawing.Size(40, 30);
             this.partyPokemon1PictureBox.TabIndex = 1;
@@ -9004,7 +9032,7 @@
             // partyPokemon1ComboBox
             // 
             this.partyPokemon1ComboBox.FormattingEnabled = true;
-            this.partyPokemon1ComboBox.Location = new System.Drawing.Point(55, 33);
+            this.partyPokemon1ComboBox.Location = new System.Drawing.Point(55, 26);
             this.partyPokemon1ComboBox.Name = "partyPokemon1ComboBox";
             this.partyPokemon1ComboBox.Size = new System.Drawing.Size(126, 21);
             this.partyPokemon1ComboBox.TabIndex = 0;
@@ -9453,6 +9481,7 @@
             // 
             // tableEditorTabPage
             // 
+            this.tableEditorTabPage.Controls.Add(this.label73);
             this.tableEditorTabPage.Controls.Add(this.pbEffectsGroupBox);
             this.tableEditorTabPage.Controls.Add(this.conditionalMusicGroupBox);
             this.tableEditorTabPage.ImageIndex = 9;
@@ -9463,6 +9492,18 @@
             this.tableEditorTabPage.TabIndex = 9;
             this.tableEditorTabPage.Text = "Table Editor";
             this.tableEditorTabPage.UseVisualStyleBackColor = true;
+            // 
+            // label73
+            // 
+            this.label73.AutoSize = true;
+            this.label73.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label73.ForeColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.label73.Location = new System.Drawing.Point(414, 598);
+            this.label73.Name = "label73";
+            this.label73.Size = new System.Drawing.Size(314, 18);
+            this.label73.TabIndex = 12;
+            this.label73.Text = "This Editor Tab is currently under construction.";
+            this.label73.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pbEffectsGroupBox
             // 
@@ -10092,14 +10133,14 @@
             // listBasedToolStripMenuItem
             // 
             this.listBasedToolStripMenuItem.Name = "listBasedToolStripMenuItem";
-            this.listBasedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.listBasedToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.listBasedToolStripMenuItem.Text = "List-Based";
             this.listBasedToolStripMenuItem.Click += new System.EventHandler(this.listBasedToolStripMenuItem_Click);
             // 
             // contentBasedToolStripMenuItem
             // 
             this.contentBasedToolStripMenuItem.Name = "contentBasedToolStripMenuItem";
-            this.contentBasedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.contentBasedToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.contentBasedToolStripMenuItem.Text = "Content-Based";
             this.contentBasedToolStripMenuItem.Click += new System.EventHandler(this.contentBasedToolStripMenuItem_Click);
             // 
@@ -10677,6 +10718,7 @@
             this.trainerItemsGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.partyCountUpDown)).EndInit();
             this.tableEditorTabPage.ResumeLayout(false);
+            this.tableEditorTabPage.PerformLayout();
             this.pbEffectsGroupBox.ResumeLayout(false);
             this.pbEffectsGroupBox.PerformLayout();
             this.groupBox30.ResumeLayout(false);
@@ -11474,7 +11516,7 @@
         private System.Windows.Forms.RadioButton scriptEditorNumberFormatNoPreference;
         private System.Windows.Forms.RadioButton scriptEditorNumberFormatDecimal;
         private System.Windows.Forms.RadioButton scriptEditorNumberFormatHex;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button deleteTrainerButton;
         private System.Windows.Forms.Label label67;
         private System.Windows.Forms.ToolStripMenuItem NarcUtilityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem unpackToFolderToolStripMenuItem;
@@ -11482,6 +11524,9 @@
         private System.Windows.Forms.ToolStripMenuItem listBasedBatchRenameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listBasedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem contentBasedToolStripMenuItem;
+        private System.Windows.Forms.Label label73;
+        private System.Windows.Forms.Label label74;
+        private System.Windows.Forms.Button DVExplainButton;
     }
 }
 
