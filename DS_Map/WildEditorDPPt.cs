@@ -13,15 +13,17 @@ namespace DSPRE {
             InitializeComponent();
             encounterFileFolder = dirPath;
 
-            for (int i = 0; i < Directory.GetFiles(encounterFileFolder).Length; i++)
+            for (int i = 0; i < Directory.GetFiles(encounterFileFolder).Length; i++) {
                 selectEncounterComboBox.Items.Add("Encounters File " + i.ToString());
+            }
 
             foreach (TabPage page in mainTabControl.TabPages) {
-                foreach (Control grp in page.Controls) {
-                    if (grp as GroupBox != null) {
-                        foreach (Control c in grp.Controls) {
-                            if (c as ComboBox != null)
+                foreach (Control g in page.Controls) {
+                    if (g != null && g.GetType() == typeof(GroupBox)) {
+                        foreach (Control c in g.Controls) {
+                            if (c != null && c.GetType() == typeof(ComboBox)) {
                                 (c as ComboBox).Items.AddRange(names);
+                            }
                         }
                     }
                 }

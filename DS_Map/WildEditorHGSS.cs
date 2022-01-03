@@ -11,17 +11,17 @@ namespace DSPRE {
 
         public WildEditorHGSS(string dirPath, string[] names, int encToOpen) {
             InitializeComponent();
-
             encounterFileFolder = dirPath;
+
             for (int i = 0; i < Directory.GetFiles(encounterFileFolder).Length; i++) {
                 selectEncounterComboBox.Items.Add("Encounters File " + i.ToString());
             }
 
             foreach (TabPage page in mainTabControl.TabPages) {
                 foreach (Control g in page.Controls) {
-                    if (g as GroupBox != null) {
+                    if (g != null && g.GetType() == typeof(GroupBox)) {
                         foreach (Control c in g.Controls) {
-                            if (c != null) {
+                            if (c != null && c.GetType() == typeof(ComboBox)) {
                                 (c as ComboBox).Items.AddRange(names);
                             }
                         }

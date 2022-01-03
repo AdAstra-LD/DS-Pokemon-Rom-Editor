@@ -598,10 +598,6 @@ namespace DSPRE.ROMFiles {
 
                 /* Old Rod encounters */
                 for (int i = 0; i < 5; i++) {
-                    oldRodMinLevels[i] = reader.ReadByte();
-                    oldRodMaxLevels[i] = reader.ReadByte();
-                    oldRodPokemon[i] = reader.ReadUInt16();
-
                     try {
                         oldRodMinLevels[i] = reader.ReadByte();
                     } catch {

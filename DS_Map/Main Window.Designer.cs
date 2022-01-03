@@ -689,10 +689,10 @@
             this.label46 = new System.Windows.Forms.Label();
             this.label45 = new System.Windows.Forms.Label();
             this.poke1MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove1_4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove1_1ComboBox = new System.Windows.Forms.ComboBox();
             this.partyMove1_2ComboBox = new System.Windows.Forms.ComboBox();
             this.partyMove1_3ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove1_1ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove1_4ComboBox = new System.Windows.Forms.ComboBox();
             this.partyIV1UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel1UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall1UpDown = new System.Windows.Forms.NumericUpDown();
@@ -725,10 +725,10 @@
             this.trainerAI10CheckBox = new System.Windows.Forms.CheckBox();
             this.trainerAI11CheckBox = new System.Windows.Forms.CheckBox();
             this.trainerItemsGroupBox = new System.Windows.Forms.GroupBox();
-            this.trainerItem4ComboBox = new System.Windows.Forms.ComboBox();
-            this.trainerItem3ComboBox = new System.Windows.Forms.ComboBox();
-            this.trainerItem2ComboBox = new System.Windows.Forms.ComboBox();
             this.trainerItem1ComboBox = new System.Windows.Forms.ComboBox();
+            this.trainerItem2ComboBox = new System.Windows.Forms.ComboBox();
+            this.trainerItem3ComboBox = new System.Windows.Forms.ComboBox();
+            this.trainerItem4ComboBox = new System.Windows.Forms.ComboBox();
             this.trainerItemsCheckBox = new System.Windows.Forms.CheckBox();
             this.trainerMovesCheckBox = new System.Windows.Forms.CheckBox();
             this.trainerDoubleCheckBox = new System.Windows.Forms.CheckBox();
@@ -8107,11 +8107,10 @@
             this.label62.Text = "Lv.";
             // 
             // poke6MovesGroupBox
-            // 
-            this.poke6MovesGroupBox.Controls.Add(this.partyMove6_4ComboBox);
+            this.poke6MovesGroupBox.Controls.Add(this.partyMove6_1ComboBox);
             this.poke6MovesGroupBox.Controls.Add(this.partyMove6_2ComboBox);
             this.poke6MovesGroupBox.Controls.Add(this.partyMove6_3ComboBox);
-            this.poke6MovesGroupBox.Controls.Add(this.partyMove6_1ComboBox);
+            this.poke6MovesGroupBox.Controls.Add(this.partyMove6_4ComboBox);
             this.poke6MovesGroupBox.Location = new System.Drawing.Point(110, 63);
             this.poke6MovesGroupBox.Name = "poke6MovesGroupBox";
             this.poke6MovesGroupBox.Size = new System.Drawing.Size(227, 85);
@@ -8288,10 +8287,10 @@
             // 
             // poke5MovesGroupBox
             // 
-            this.poke5MovesGroupBox.Controls.Add(this.partyMove5_4ComboBox);
+            this.poke5MovesGroupBox.Controls.Add(this.partyMove5_1ComboBox);
             this.poke5MovesGroupBox.Controls.Add(this.partyMove5_2ComboBox);
             this.poke5MovesGroupBox.Controls.Add(this.partyMove5_3ComboBox);
-            this.poke5MovesGroupBox.Controls.Add(this.partyMove5_1ComboBox);
+            this.poke5MovesGroupBox.Controls.Add(this.partyMove5_4ComboBox);
             this.poke5MovesGroupBox.Location = new System.Drawing.Point(110, 63);
             this.poke5MovesGroupBox.Name = "poke5MovesGroupBox";
             this.poke5MovesGroupBox.Size = new System.Drawing.Size(227, 85);
@@ -8468,10 +8467,10 @@
             // 
             // poke4MovesGroupBox
             // 
-            this.poke4MovesGroupBox.Controls.Add(this.partyMove4_4ComboBox);
+            this.poke4MovesGroupBox.Controls.Add(this.partyMove4_1ComboBox);
             this.poke4MovesGroupBox.Controls.Add(this.partyMove4_2ComboBox);
             this.poke4MovesGroupBox.Controls.Add(this.partyMove4_3ComboBox);
-            this.poke4MovesGroupBox.Controls.Add(this.partyMove4_1ComboBox);
+            this.poke4MovesGroupBox.Controls.Add(this.partyMove4_4ComboBox);
             this.poke4MovesGroupBox.Location = new System.Drawing.Point(110, 63);
             this.poke4MovesGroupBox.Name = "poke4MovesGroupBox";
             this.poke4MovesGroupBox.Size = new System.Drawing.Size(227, 85);
@@ -8648,10 +8647,10 @@
             // 
             // poke3MovesGroupBox
             // 
-            this.poke3MovesGroupBox.Controls.Add(this.partyMove3_4ComboBox);
+            this.poke3MovesGroupBox.Controls.Add(this.partyMove3_1ComboBox);
             this.poke3MovesGroupBox.Controls.Add(this.partyMove3_2ComboBox);
             this.poke3MovesGroupBox.Controls.Add(this.partyMove3_3ComboBox);
-            this.poke3MovesGroupBox.Controls.Add(this.partyMove3_1ComboBox);
+            this.poke3MovesGroupBox.Controls.Add(this.partyMove3_4ComboBox);
             this.poke3MovesGroupBox.Location = new System.Drawing.Point(110, 63);
             this.poke3MovesGroupBox.Name = "poke3MovesGroupBox";
             this.poke3MovesGroupBox.Size = new System.Drawing.Size(227, 85);
@@ -8828,10 +8827,10 @@
             // 
             // poke2MovesGroupBox
             // 
-            this.poke2MovesGroupBox.Controls.Add(this.partyMove2_4ComboBox);
+            this.poke2MovesGroupBox.Controls.Add(this.partyMove2_1ComboBox);
             this.poke2MovesGroupBox.Controls.Add(this.partyMove2_2ComboBox);
             this.poke2MovesGroupBox.Controls.Add(this.partyMove2_3ComboBox);
-            this.poke2MovesGroupBox.Controls.Add(this.partyMove2_1ComboBox);
+            this.poke2MovesGroupBox.Controls.Add(this.partyMove2_4ComboBox);
             this.poke2MovesGroupBox.Location = new System.Drawing.Point(110, 63);
             this.poke2MovesGroupBox.Name = "poke2MovesGroupBox";
             this.poke2MovesGroupBox.Size = new System.Drawing.Size(227, 85);
@@ -9007,11 +9006,11 @@
             this.label45.Text = "Lv.";
             // 
             // poke1MovesGroupBox
-            // 
-            this.poke1MovesGroupBox.Controls.Add(this.partyMove1_4ComboBox);
+            
+            this.poke1MovesGroupBox.Controls.Add(this.partyMove1_1ComboBox);
             this.poke1MovesGroupBox.Controls.Add(this.partyMove1_2ComboBox);
             this.poke1MovesGroupBox.Controls.Add(this.partyMove1_3ComboBox);
-            this.poke1MovesGroupBox.Controls.Add(this.partyMove1_1ComboBox);
+            this.poke1MovesGroupBox.Controls.Add(this.partyMove1_4ComboBox);
             this.poke1MovesGroupBox.Location = new System.Drawing.Point(110, 63);
             this.poke1MovesGroupBox.Name = "poke1MovesGroupBox";
             this.poke1MovesGroupBox.Size = new System.Drawing.Size(227, 85);
@@ -9407,10 +9406,10 @@
             // 
             // trainerItemsGroupBox
             // 
-            this.trainerItemsGroupBox.Controls.Add(this.trainerItem4ComboBox);
-            this.trainerItemsGroupBox.Controls.Add(this.trainerItem3ComboBox);
-            this.trainerItemsGroupBox.Controls.Add(this.trainerItem2ComboBox);
             this.trainerItemsGroupBox.Controls.Add(this.trainerItem1ComboBox);
+            this.trainerItemsGroupBox.Controls.Add(this.trainerItem2ComboBox);
+            this.trainerItemsGroupBox.Controls.Add(this.trainerItem3ComboBox);
+            this.trainerItemsGroupBox.Controls.Add(this.trainerItem4ComboBox);
             this.trainerItemsGroupBox.Location = new System.Drawing.Point(211, 146);
             this.trainerItemsGroupBox.Name = "trainerItemsGroupBox";
             this.trainerItemsGroupBox.Size = new System.Drawing.Size(191, 130);
@@ -11404,10 +11403,10 @@
         private System.Windows.Forms.Label label61;
         private System.Windows.Forms.Label label62;
         private System.Windows.Forms.GroupBox poke6MovesGroupBox;
-        private System.Windows.Forms.ComboBox partyMove6_4ComboBox;
+        private System.Windows.Forms.ComboBox partyMove6_1ComboBox;
         private System.Windows.Forms.ComboBox partyMove6_2ComboBox;
         private System.Windows.Forms.ComboBox partyMove6_3ComboBox;
-        private System.Windows.Forms.ComboBox partyMove6_1ComboBox;
+        private System.Windows.Forms.ComboBox partyMove6_4ComboBox;
         private System.Windows.Forms.NumericUpDown partyIV6UpDown;
         private System.Windows.Forms.NumericUpDown partyLevel6UpDown;
         private System.Windows.Forms.NumericUpDown partyBall6UpDown;
@@ -11419,10 +11418,10 @@
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Label label59;
         private System.Windows.Forms.GroupBox poke5MovesGroupBox;
-        private System.Windows.Forms.ComboBox partyMove5_4ComboBox;
+        private System.Windows.Forms.ComboBox partyMove5_1ComboBox;
         private System.Windows.Forms.ComboBox partyMove5_2ComboBox;
         private System.Windows.Forms.ComboBox partyMove5_3ComboBox;
-        private System.Windows.Forms.ComboBox partyMove5_1ComboBox;
+        private System.Windows.Forms.ComboBox partyMove5_4ComboBox;
         private System.Windows.Forms.NumericUpDown partyIV5UpDown;
         private System.Windows.Forms.NumericUpDown partyLevel5UpDown;
         private System.Windows.Forms.NumericUpDown partyBall5UpDown;
@@ -11434,10 +11433,10 @@
         private System.Windows.Forms.Label label55;
         private System.Windows.Forms.Label label56;
         private System.Windows.Forms.GroupBox poke4MovesGroupBox;
-        private System.Windows.Forms.ComboBox partyMove4_4ComboBox;
+        private System.Windows.Forms.ComboBox partyMove4_1ComboBox;
         private System.Windows.Forms.ComboBox partyMove4_2ComboBox;
         private System.Windows.Forms.ComboBox partyMove4_3ComboBox;
-        private System.Windows.Forms.ComboBox partyMove4_1ComboBox;
+        private System.Windows.Forms.ComboBox partyMove4_4ComboBox;
         private System.Windows.Forms.NumericUpDown partyIV4UpDown;
         private System.Windows.Forms.NumericUpDown partyLevel4UpDown;
         private System.Windows.Forms.NumericUpDown partyBall4UpDown;
@@ -11449,10 +11448,10 @@
         private System.Windows.Forms.Label label52;
         private System.Windows.Forms.Label label53;
         private System.Windows.Forms.GroupBox poke3MovesGroupBox;
-        private System.Windows.Forms.ComboBox partyMove3_4ComboBox;
+        private System.Windows.Forms.ComboBox partyMove3_1ComboBox;
         private System.Windows.Forms.ComboBox partyMove3_2ComboBox;
         private System.Windows.Forms.ComboBox partyMove3_3ComboBox;
-        private System.Windows.Forms.ComboBox partyMove3_1ComboBox;
+        private System.Windows.Forms.ComboBox partyMove3_4ComboBox;
         private System.Windows.Forms.NumericUpDown partyIV3UpDown;
         private System.Windows.Forms.NumericUpDown partyLevel3UpDown;
         private System.Windows.Forms.NumericUpDown partyBall3UpDown;
@@ -11464,10 +11463,10 @@
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.GroupBox poke2MovesGroupBox;
-        private System.Windows.Forms.ComboBox partyMove2_4ComboBox;
+        private System.Windows.Forms.ComboBox partyMove2_1ComboBox;
         private System.Windows.Forms.ComboBox partyMove2_2ComboBox;
         private System.Windows.Forms.ComboBox partyMove2_3ComboBox;
-        private System.Windows.Forms.ComboBox partyMove2_1ComboBox;
+        private System.Windows.Forms.ComboBox partyMove2_4ComboBox;
         private System.Windows.Forms.NumericUpDown partyIV2UpDown;
         private System.Windows.Forms.NumericUpDown partyLevel2UpDown;
         private System.Windows.Forms.NumericUpDown partyBall2UpDown;
@@ -11479,10 +11478,10 @@
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.GroupBox poke1MovesGroupBox;
-        private System.Windows.Forms.ComboBox partyMove1_4ComboBox;
+        private System.Windows.Forms.ComboBox partyMove1_1ComboBox;
         private System.Windows.Forms.ComboBox partyMove1_2ComboBox;
         private System.Windows.Forms.ComboBox partyMove1_3ComboBox;
-        private System.Windows.Forms.ComboBox partyMove1_1ComboBox;
+        private System.Windows.Forms.ComboBox partyMove1_4ComboBox;
         private System.Windows.Forms.NumericUpDown partyIV1UpDown;
         private System.Windows.Forms.NumericUpDown partyLevel1UpDown;
         private System.Windows.Forms.NumericUpDown partyBall1UpDown;
