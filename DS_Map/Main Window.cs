@@ -7129,12 +7129,10 @@ namespace DSPRE {
         }
         #endregion
 
-        #region Tileset Editor
+        #region NSBTX Editor
         public NSMBe4.NSBMD.NSBTX_File currentTileset;
         public AreaData currentAreaData;
 
-
-        #region Subroutines
         public void FillTilesetBox() {
             texturePacksListBox.Items.Clear();
 
@@ -7149,7 +7147,6 @@ namespace DSPRE {
                 texturePacksListBox.Items.Add("Texture Pack " + i);
             }
         }
-        #endregion
         private void SetupNSBTXEditor() {
             statusLabel.Text = "Attempting to unpack Tileset Editor NARCs... Please wait.";
             Update();
@@ -7217,11 +7214,13 @@ namespace DSPRE {
             }
         }
         private void exportNSBTXButton_Click(object sender, EventArgs e) {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "NSBTX File (*.nsbtx)|*.nsbtx";
-            sf.FileName = "Texture Pack " + texturePacksListBox.SelectedIndex;
-            if (sf.ShowDialog(this) != DialogResult.OK)
+            SaveFileDialog sf = new SaveFileDialog {
+                Filter = "NSBTX File (*.nsbtx)|*.nsbtx",
+                FileName = "Texture Pack " + texturePacksListBox.SelectedIndex
+            };
+            if (sf.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             string tilesetPath = mapTilesetRadioButton.Checked
                 ? RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4")
@@ -7483,15 +7482,18 @@ namespace DSPRE {
             currentAreaData.SaveToFileExplorePath("Area Data " + selectAreaDataListBox.SelectedIndex);
         }
         private void importAreaDataButton_Click(object sender, EventArgs e) {
-            if (selectAreaDataListBox.SelectedIndex < 0)
+            if (selectAreaDataListBox.SelectedIndex < 0) {
                 return;
+            }
 
             /* Prompt user to select .evt file */
             OpenFileDialog of = new OpenFileDialog {
                 Filter = "AreaData File (*.bin)|*.bin"
             };
-            if (of.ShowDialog(this) != DialogResult.OK)
+            
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             /* Update areadata object in memory */
             string path = RomInfo.gameDirs[DirNames.areaData].unpackedDir + "\\" + selectAreaDataListBox.SelectedIndex.ToString("D4");

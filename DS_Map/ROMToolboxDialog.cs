@@ -49,11 +49,14 @@ namespace DSPRE {
                     DisableDynamicHeadersPatch("Unsupported");
                     DisableMatrixExpansionPatch("Unsupported");
                     DisableScrcmdRepointPatch("Unsupported");
+                    DisableKillTextureAnimationsPatch("Unsupported");
                     break;
                 case gFamEnum.Plat:
                     DisableOverlay1patch("Unsupported");
                     DisableMatrixExpansionPatch("Unsupported");
                     DisableScrcmdRepointPatch("Unsupported");
+                    DisableKillTextureAnimationsPatch("Unsupported");
+
                     if (RomInfo.gameLanguage == gLangEnum.English || RomInfo.gameLanguage == gLangEnum.Spanish) {
                         CheckBDHCamPatchApplied();
                     }
@@ -124,6 +127,12 @@ namespace DSPRE {
             scrcmdARM9requiredLBL.Enabled = false;
             repointScrcmdButton.Text = reason;
         }
+        private void DisableKillTextureAnimationsPatch(string reason) {
+            disableTextureAnimationsButton.Enabled = false;
+            disableTextureAnimationsLBL.Enabled = false;
+            disableTextureAnimationsTextLBL.Enabled = false;
+            disableTextureAnimationsButton.Text = reason;
+        }
         #endregion
         #endregion
 
@@ -192,8 +201,9 @@ namespace DSPRE {
         }
         public static bool CheckScriptsStandardizedItemNumbers() {
             ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
-            if (itemScript.allScripts.Count - 1 < new TextArchive(RomInfo.itemNamesTextNumber).messages.Count)
+            if (itemScript.allScripts.Count - 1 < new TextArchive(RomInfo.itemNamesTextNumber).messages.Count) {
                 return false;
+            }
 
             for (ushort i = 0; i < itemScript.allScripts.Count - 1; i++) {
                 if (BitConverter.ToUInt16(itemScript.allScripts[i].commands[0].cmdParams[1], 0) != i || BitConverter.ToUInt16(itemScript.allScripts[i].commands[1].cmdParams[1], 0) != 1) {
@@ -732,6 +742,30 @@ namespace DSPRE {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+        private void disableDynamicTexturesButton_Click(object sender, EventArgs e) {
+            DialogResult d;
+            d = MessageBox.Show("Applying this patch will set the Dynamic Textures field of all AreaData files to 0xFFFF.\n\n" +
+                "Are you sure you want to proceed?",
+                "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (d == DialogResult.Yes) {
+                DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { DirNames.areaData });
+
+                string[] adFiles = Directory.GetFiles(gameDirs[DirNames.areaData].unpackedDir);
+                foreach (string s in adFiles) {
+                    AreaData a = new AreaData(new FileStream(s, FileMode.Open)) {
+                        dynamicTextureType = 0xFFFF
+                    };
+                    a.SaveToFile(s, showSuccessMessage: false);
+                }
+
+                DisableKillTextureAnimationsPatch("Already applied");
+                disableTextureAnimationsCB.Visible = true;
+                MessageBox.Show("Texture Animations have been disabled in every AreaData.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            } else {
+                MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+}
         #region Mikelan's custom commands
         private void applyCustomCommands(object sender, EventArgs e) {
             int expTableOffset = GetCommandTableOffset();

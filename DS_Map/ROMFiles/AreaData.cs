@@ -54,7 +54,6 @@ namespace DSPRE.ROMFiles {
                 }
             }
             return newData.ToArray();
-
         }
 
         public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {

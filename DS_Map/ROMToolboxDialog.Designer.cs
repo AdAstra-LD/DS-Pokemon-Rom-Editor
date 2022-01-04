@@ -64,6 +64,10 @@
             this.dynamicHeadersTextLBL = new System.Windows.Forms.Label();
             this.dynamicHeadersLBL = new System.Windows.Forms.Label();
             this.applyDynamicHeadersButton = new System.Windows.Forms.Button();
+            this.disableTextureAnimationsCB = new System.Windows.Forms.PictureBox();
+            this.disableTextureAnimationsTextLBL = new System.Windows.Forms.Label();
+            this.disableTextureAnimationsLBL = new System.Windows.Forms.Label();
+            this.disableTextureAnimationsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.arm9patchCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlay1CB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BDHCamCB)).BeginInit();
@@ -72,11 +76,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.expandedMatrixCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repointScrcmdCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dynamicHeadersPatchCB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.disableTextureAnimationsCB)).BeginInit();
             this.SuspendLayout();
             // 
             // applyItemStandardizeButton
             // 
-            this.applyItemStandardizeButton.Location = new System.Drawing.Point(335, 366);
+            this.applyItemStandardizeButton.Location = new System.Drawing.Point(335, 370);
             this.applyItemStandardizeButton.Name = "applyItemStandardizeButton";
             this.applyItemStandardizeButton.Size = new System.Drawing.Size(100, 50);
             this.applyItemStandardizeButton.TabIndex = 0;
@@ -115,7 +120,7 @@
             // 
             // BDHCamPatchTextLBL
             // 
-            this.BDHCamPatchTextLBL.Location = new System.Drawing.Point(15, 184);
+            this.BDHCamPatchTextLBL.Location = new System.Drawing.Point(15, 187);
             this.BDHCamPatchTextLBL.Name = "BDHCamPatchTextLBL";
             this.BDHCamPatchTextLBL.Size = new System.Drawing.Size(293, 67);
             this.BDHCamPatchTextLBL.TabIndex = 8;
@@ -128,7 +133,7 @@
             // 
             this.BDHCamPatchLBL.AutoSize = true;
             this.BDHCamPatchLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BDHCamPatchLBL.Location = new System.Drawing.Point(14, 168);
+            this.BDHCamPatchLBL.Location = new System.Drawing.Point(14, 172);
             this.BDHCamPatchLBL.Name = "BDHCamPatchLBL";
             this.BDHCamPatchLBL.Size = new System.Drawing.Size(107, 13);
             this.BDHCamPatchLBL.TabIndex = 7;
@@ -136,7 +141,7 @@
             // 
             // BDHCamPatchButton
             // 
-            this.BDHCamPatchButton.Location = new System.Drawing.Point(335, 183);
+            this.BDHCamPatchButton.Location = new System.Drawing.Point(335, 186);
             this.BDHCamPatchButton.Name = "BDHCamPatchButton";
             this.BDHCamPatchButton.Size = new System.Drawing.Size(100, 50);
             this.BDHCamPatchButton.TabIndex = 6;
@@ -146,7 +151,7 @@
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(15, 283);
+            this.label7.Location = new System.Drawing.Point(15, 293);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(293, 49);
             this.label7.TabIndex = 11;
@@ -157,7 +162,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(15, 268);
+            this.label8.Location = new System.Drawing.Point(15, 278);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(252, 13);
             this.label8.TabIndex = 10;
@@ -165,7 +170,7 @@
             // 
             // namesToSentenceCaseButton
             // 
-            this.namesToSentenceCaseButton.Location = new System.Drawing.Point(335, 275);
+            this.namesToSentenceCaseButton.Location = new System.Drawing.Point(335, 285);
             this.namesToSentenceCaseButton.Name = "namesToSentenceCaseButton";
             this.namesToSentenceCaseButton.Size = new System.Drawing.Size(100, 50);
             this.namesToSentenceCaseButton.TabIndex = 9;
@@ -177,7 +182,7 @@
             // 
             this.overlay1uncompressedLBL.AutoSize = true;
             this.overlay1uncompressedLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.overlay1uncompressedLBL.Location = new System.Drawing.Point(15, 105);
+            this.overlay1uncompressedLBL.Location = new System.Drawing.Point(15, 107);
             this.overlay1uncompressedLBL.Name = "overlay1uncompressedLBL";
             this.overlay1uncompressedLBL.Size = new System.Drawing.Size(217, 13);
             this.overlay1uncompressedLBL.TabIndex = 12;
@@ -185,7 +190,7 @@
             // 
             // overlay1patchtextLBL
             // 
-            this.overlay1patchtextLBL.Location = new System.Drawing.Point(15, 120);
+            this.overlay1patchtextLBL.Location = new System.Drawing.Point(15, 122);
             this.overlay1patchtextLBL.Name = "overlay1patchtextLBL";
             this.overlay1patchtextLBL.Size = new System.Drawing.Size(293, 29);
             this.overlay1patchtextLBL.TabIndex = 13;
@@ -194,7 +199,7 @@
             // 
             // overlay1uncomprButton
             // 
-            this.overlay1uncomprButton.Location = new System.Drawing.Point(335, 102);
+            this.overlay1uncomprButton.Location = new System.Drawing.Point(335, 104);
             this.overlay1uncomprButton.Name = "overlay1uncomprButton";
             this.overlay1uncomprButton.Size = new System.Drawing.Size(100, 50);
             this.overlay1uncomprButton.TabIndex = 14;
@@ -207,7 +212,7 @@
             this.BDHCamARM9requiredLBL.AutoSize = true;
             this.BDHCamARM9requiredLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BDHCamARM9requiredLBL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.BDHCamARM9requiredLBL.Location = new System.Drawing.Point(118, 168);
+            this.BDHCamARM9requiredLBL.Location = new System.Drawing.Point(118, 171);
             this.BDHCamARM9requiredLBL.Name = "BDHCamARM9requiredLBL";
             this.BDHCamARM9requiredLBL.Size = new System.Drawing.Size(165, 13);
             this.BDHCamARM9requiredLBL.TabIndex = 15;
@@ -227,7 +232,7 @@
             // overlay1CB
             // 
             this.overlay1CB.Image = global::DSPRE.Properties.Resources.checkmark;
-            this.overlay1CB.Location = new System.Drawing.Point(309, 117);
+            this.overlay1CB.Location = new System.Drawing.Point(309, 119);
             this.overlay1CB.Name = "overlay1CB";
             this.overlay1CB.Size = new System.Drawing.Size(20, 20);
             this.overlay1CB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -238,7 +243,7 @@
             // BDHCamCB
             // 
             this.BDHCamCB.Image = ((System.Drawing.Image)(resources.GetObject("BDHCamCB.Image")));
-            this.BDHCamCB.Location = new System.Drawing.Point(309, 199);
+            this.BDHCamCB.Location = new System.Drawing.Point(309, 202);
             this.BDHCamCB.Name = "BDHCamCB";
             this.BDHCamCB.Size = new System.Drawing.Size(20, 20);
             this.BDHCamCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -249,7 +254,7 @@
             // sentenceCaseCB
             // 
             this.sentenceCaseCB.Image = ((System.Drawing.Image)(resources.GetObject("sentenceCaseCB.Image")));
-            this.sentenceCaseCB.Location = new System.Drawing.Point(309, 290);
+            this.sentenceCaseCB.Location = new System.Drawing.Point(309, 300);
             this.sentenceCaseCB.Name = "sentenceCaseCB";
             this.sentenceCaseCB.Size = new System.Drawing.Size(20, 20);
             this.sentenceCaseCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -260,7 +265,7 @@
             // itemNumbersCB
             // 
             this.itemNumbersCB.Image = ((System.Drawing.Image)(resources.GetObject("itemNumbersCB.Image")));
-            this.itemNumbersCB.Location = new System.Drawing.Point(309, 379);
+            this.itemNumbersCB.Location = new System.Drawing.Point(309, 383);
             this.itemNumbersCB.Name = "itemNumbersCB";
             this.itemNumbersCB.Size = new System.Drawing.Size(20, 20);
             this.itemNumbersCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -272,7 +277,7 @@
             // 
             this.standardizePatchLBL.AutoSize = true;
             this.standardizePatchLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.standardizePatchLBL.Location = new System.Drawing.Point(15, 341);
+            this.standardizePatchLBL.Location = new System.Drawing.Point(15, 356);
             this.standardizePatchLBL.Name = "standardizePatchLBL";
             this.standardizePatchLBL.Size = new System.Drawing.Size(155, 13);
             this.standardizePatchLBL.TabIndex = 1;
@@ -280,9 +285,9 @@
             // 
             // standardizePatchTextLBL
             // 
-            this.standardizePatchTextLBL.Location = new System.Drawing.Point(15, 356);
+            this.standardizePatchTextLBL.Location = new System.Drawing.Point(15, 371);
             this.standardizePatchTextLBL.Name = "standardizePatchTextLBL";
-            this.standardizePatchTextLBL.Size = new System.Drawing.Size(239, 78);
+            this.standardizePatchTextLBL.Size = new System.Drawing.Size(239, 60);
             this.standardizePatchTextLBL.TabIndex = 2;
             this.standardizePatchTextLBL.Text = "Rearranges the GiveItem scripts to follow the default index order.\r\nAllows to con" +
     "figure any item as a Ground Item in the Event Editor. ";
@@ -353,7 +358,7 @@
             // 
             this.repointScrcmdLBL.AutoSize = true;
             this.repointScrcmdLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.repointScrcmdLBL.Location = new System.Drawing.Point(481, 31);
+            this.repointScrcmdLBL.Location = new System.Drawing.Point(481, 30);
             this.repointScrcmdLBL.Name = "repointScrcmdLBL";
             this.repointScrcmdLBL.Size = new System.Drawing.Size(157, 13);
             this.repointScrcmdLBL.TabIndex = 26;
@@ -438,12 +443,57 @@
             this.applyDynamicHeadersButton.UseVisualStyleBackColor = true;
             this.applyDynamicHeadersButton.Click += new System.EventHandler(this.dynamicHeadersButton_Click);
             // 
+            // disableDynamicTexturesCB
+            // 
+            this.disableTextureAnimationsCB.Image = ((System.Drawing.Image)(resources.GetObject("disableDynamicTexturesCB.Image")));
+            this.disableTextureAnimationsCB.Location = new System.Drawing.Point(803, 238);
+            this.disableTextureAnimationsCB.Name = "disableDynamicTexturesCB";
+            this.disableTextureAnimationsCB.Size = new System.Drawing.Size(20, 20);
+            this.disableTextureAnimationsCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.disableTextureAnimationsCB.TabIndex = 39;
+            this.disableTextureAnimationsCB.TabStop = false;
+            this.disableTextureAnimationsCB.Visible = false;
+            // 
+            // disableTextureAnimationsTextLBL
+            // 
+            this.disableTextureAnimationsTextLBL.Location = new System.Drawing.Point(481, 241);
+            this.disableTextureAnimationsTextLBL.Name = "disableTextureAnimationsTextLBL";
+            this.disableTextureAnimationsTextLBL.Size = new System.Drawing.Size(288, 58);
+            this.disableTextureAnimationsTextLBL.TabIndex = 38;
+            this.disableTextureAnimationsTextLBL.Text = "Sets the Dynamic Textures (Texture Animation) field to 65535 [0xFFFF] for all Are" +
+    "aData files.";
+            this.disableTextureAnimationsTextLBL.UseMnemonic = false;
+            // 
+            // disableTextureAnimationsLBL
+            // 
+            this.disableTextureAnimationsLBL.AutoSize = true;
+            this.disableTextureAnimationsLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.disableTextureAnimationsLBL.Location = new System.Drawing.Point(481, 226);
+            this.disableTextureAnimationsLBL.Name = "disableTextureAnimationsLBL";
+            this.disableTextureAnimationsLBL.Size = new System.Drawing.Size(161, 13);
+            this.disableTextureAnimationsLBL.TabIndex = 37;
+            this.disableTextureAnimationsLBL.Text = "Disable Texture Animations";
+            // 
+            // disableTextureAnimationsButton
+            // 
+            this.disableTextureAnimationsButton.Location = new System.Drawing.Point(829, 222);
+            this.disableTextureAnimationsButton.Name = "disableTextureAnimationsButton";
+            this.disableTextureAnimationsButton.Size = new System.Drawing.Size(100, 50);
+            this.disableTextureAnimationsButton.TabIndex = 36;
+            this.disableTextureAnimationsButton.Text = "Apply Patch";
+            this.disableTextureAnimationsButton.UseVisualStyleBackColor = true;
+            this.disableTextureAnimationsButton.Click += new System.EventHandler(this.disableDynamicTexturesButton_Click);
+            // 
             // ROMToolboxDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(950, 513);
+            this.Controls.Add(this.disableTextureAnimationsCB);
+            this.Controls.Add(this.disableTextureAnimationsTextLBL);
+            this.Controls.Add(this.disableTextureAnimationsLBL);
+            this.Controls.Add(this.disableTextureAnimationsButton);
             this.Controls.Add(this.applyDynamicHeadersButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dynamicHeadersPatchCB);
@@ -493,6 +543,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.expandedMatrixCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repointScrcmdCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dynamicHeadersPatchCB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.disableTextureAnimationsCB)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -536,5 +587,9 @@
         private System.Windows.Forms.Label dynamicHeadersTextLBL;
         private System.Windows.Forms.Label dynamicHeadersLBL;
         private System.Windows.Forms.Button applyDynamicHeadersButton;
+        private System.Windows.Forms.PictureBox disableTextureAnimationsCB;
+        private System.Windows.Forms.Label disableTextureAnimationsTextLBL;
+        private System.Windows.Forms.Label disableTextureAnimationsLBL;
+        private System.Windows.Forms.Button disableTextureAnimationsButton;
     }
 }
