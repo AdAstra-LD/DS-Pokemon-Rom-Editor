@@ -8842,7 +8842,7 @@ namespace DSPRE {
             if (dr.Equals(DialogResult.Yes)) {
                 List<string> enumerationFile = new List<string> {
                     "#============================================================================",
-                    "# File enumeration definition",
+                    "# File enumeration definition for folder " + "\"" + d.Name + "\"",
                     "#============================================================================"
                 };
                 int initialLength = enumerationFile.Count;
@@ -8865,15 +8865,26 @@ namespace DSPRE {
 
                     if (b[0] == 'B' && b[3] == '0') { //B**0
                         ushort nameOffset;
+
+                        destName = dirNameOnly + "\\"; //Full filename can be changed
+                        nameOffset = (ushort)(52 + (4 * (BitConverter.ToUInt16(b, 0xE) - 1)));
+
                         if (b[1] == 'T' && b[2] == 'X') { //BTX0
-                            destName = fileNameOnly; //Filename can't be changed, only extension
-                        } else {
-                            destName = dirNameOnly + "\\"; //Full filename can be changed
+#if false
+                            nameOffset += 0xEC;
+#else
+                            destName = fileNameOnly;
+#endif
                         }
 
-                        nameOffset = (ushort) ( 52 + (4 * (BitConverter.ToUInt16(b, 0xE) - 1)) );
-                        destName += Encoding.UTF8.GetString(DSUtils.ReadFromFile(f.FullName, nameOffset, 16)).TrimEnd(new char[] { (char)0 });
+                        string nameRead = Encoding.UTF8.GetString(DSUtils.ReadFromFile(f.FullName, nameOffset, 16)).TrimEnd(new char[] { (char)0 });
                         
+                        if (nameRead.Length <= 0 || nameRead.IndexOfAny(Path.GetInvalidPathChars()) >= 0 ) {
+                            destName = fileNameOnly; //Filename can't be changed, only extension
+                        } else {
+                            destName += nameRead;
+                        }
+
                         destName += ".ns";
                         for (int i = 0; i < 3; i++) {
                             magic += Char.ToLower((char)b[i]);
@@ -8902,7 +8913,7 @@ namespace DSPRE {
                     }
 
                     destName = MakeUniqueName(destName, fileNameOnly = null, dirNameOnly);
-                    File.Move(f.FullName, destName);
+                    File.Move(f.FullName, Path.Combine(Path.GetDirectoryName(f.FullName), Path.GetFileName(destName)));
 
                     enumerationFile.Add(Path.GetFileName(destName));
                 }
@@ -8916,7 +8927,7 @@ namespace DSPRE {
 
                         SaveFileDialog sf = new SaveFileDialog {
                             Filter = "List File (*.txt; *.list)|*.txt;*.list",
-                            FileName = "enum.list"
+                            FileName = d.Name + ".list"
                         };
                         if (sf.ShowDialog(this) != DialogResult.OK) {
                             MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -8947,7 +8958,13 @@ namespace DSPRE {
 
             int append = 1;
 
-            while (File.Exists(fileName)) {
+            //string[] files = Directory.GetFiles(Path.GetDirectoryName(fileName));
+            //while (!files.Any(x => x.Equals(fileName, StringComparison.InvariantCultureIgnoreCase))) {
+            //    string tmp = fileNameOnly + "(" + (append++) + ")";
+            //    fileName = Path.Combine(dirNameOnly, tmp + extension);
+            //}
+
+            while (File.Exists(Path.Combine(dirNameOnly, fileName)) ) {
                 string tmp = fileNameOnly + "(" + (append++) + ")";
                 fileName = Path.Combine(dirNameOnly, tmp + extension);
             }

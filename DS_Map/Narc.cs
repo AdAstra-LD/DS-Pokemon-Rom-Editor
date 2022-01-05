@@ -110,8 +110,8 @@ namespace NarcAPI {
             bw.Close();
         }
 
-        public void ExtractToFolder(String dirPath) {
-            if ( string.IsNullOrEmpty(dirPath) ) {
+        public void ExtractToFolder(String dirPath, string extension = null) {
+            if ( string.IsNullOrWhiteSpace(dirPath) ) {
                 MessageBox.Show("Dir path + \"" + dirPath + "\" is invalid.", "Can't create directory", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -148,7 +148,7 @@ namespace NarcAPI {
             }
 
             Parallel.For(0, Elements.Length, i => {
-                string path = Path.Combine(dirPath, i.ToString("D4"));
+                string path = Path.Combine(dirPath, i.ToString("D4") + (string.IsNullOrWhiteSpace(extension) ? "" : extension) );
                 using (BinaryWriter wr = new BinaryWriter(File.Create(path))) {
                     long len = Elements[i].Length;
                     byte[] buffer = new byte[len];

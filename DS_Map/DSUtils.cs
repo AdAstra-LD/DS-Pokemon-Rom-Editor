@@ -301,8 +301,9 @@ namespace DSPRE {
                     if (!di.Exists || di.GetFiles().Length == 0) {
                         Narc opened = Narc.Open(paths.packedPath);
 
-                        if (opened is null)
+                        if (opened is null) {
                             throw new NullReferenceException();
+                        }
 
                         opened.ExtractToFolder(paths.unpackedPath);
                     }
@@ -314,8 +315,9 @@ namespace DSPRE {
                 if (gameDirs.TryGetValue(id, out (string packedPath, string unpackedPath) paths)) {
                     Narc opened = Narc.Open(paths.packedPath);
 
-                    if (opened is null)
+                    if (opened is null) {
                         throw new NullReferenceException();
+                    }
 
                     opened.ExtractToFolder(paths.unpackedPath);
                 }
