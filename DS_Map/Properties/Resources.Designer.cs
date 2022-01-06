@@ -313,6 +313,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap contentbasedRenameIcon {
+            get {
+                object obj = ResourceManager.GetObject("contentbasedRenameIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap copyIcon {
             get {
                 object obj = ResourceManager.GetObject("copyIcon", resourceCulture);
@@ -756,6 +766,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap exportArrow {
             get {
                 object obj = ResourceManager.GetObject("exportArrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folderToNarcIcon {
+            get {
+                object obj = ResourceManager.GetObject("folderToNarcIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1223,6 +1243,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap listbasedRenameIcon {
+            get {
+                object obj = ResourceManager.GetObject("listbasedRenameIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap loadColorTable {
             get {
                 object obj = ResourceManager.GetObject("loadColorTable", resourceCulture);
@@ -1246,6 +1276,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap muteIcon {
             get {
                 object obj = ResourceManager.GetObject("muteIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap narcToFolderIcon {
+            get {
+                object obj = ResourceManager.GetObject("narcToFolderIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1836,6 +1876,36 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap scriptDBIcon {
             get {
                 object obj = ResourceManager.GetObject("scriptDBIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scriptDBIconDP {
+            get {
+                object obj = ResourceManager.GetObject("scriptDBIconDP", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scriptDBIconHGSS {
+            get {
+                object obj = ResourceManager.GetObject("scriptDBIconHGSS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scriptDBIconPt {
+            get {
+                object obj = ResourceManager.GetObject("scriptDBIconPt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

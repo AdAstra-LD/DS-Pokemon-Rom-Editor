@@ -478,7 +478,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.4.1" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.5" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
@@ -549,6 +549,9 @@ namespace DSPRE {
         }
 
         private void CheckROMLanguage() {
+            versionLabel.Visible = true;
+            languageLabel.Visible = true;
+
             versionLabel.Text = "Pokémon " + RomInfo.gameVersion.ToString() + " " + "[" + RomInfo.romID + "]";
             languageLabel.Text = "Language: " + RomInfo.gameLanguage;
 
@@ -8724,7 +8727,7 @@ namespace DSPRE {
         }
 
         private void listBasedToolStripMenuItem_Click(object sender, EventArgs e) {
-            (DirectoryInfo d, FileInfo[] files) dirData = OpenNonEmptyDir();
+            (DirectoryInfo d, FileInfo[] files) dirData = OpenNonEmptyDir(title: "List-Based Batch Rename Tool");
             DirectoryInfo d = dirData.d;
             FileInfo[] files = dirData.files;
 
@@ -8826,7 +8829,7 @@ namespace DSPRE {
         }
 
         private void ContentBasedBatchRename(DirectoryInfo d = null) {
-            (DirectoryInfo d, FileInfo[] files) dirData = OpenNonEmptyDir(d);
+            (DirectoryInfo d, FileInfo[] files) dirData = OpenNonEmptyDir(d, title: "Content-Based Batch Rename Tool");
             d = dirData.d;
             FileInfo[] files = dirData.files;
             
@@ -8971,10 +8974,10 @@ namespace DSPRE {
             return fileName;
         }
 
-        private (DirectoryInfo, FileInfo[]) OpenNonEmptyDir(DirectoryInfo d = null) {
+        private (DirectoryInfo, FileInfo[]) OpenNonEmptyDir(DirectoryInfo d = null, string title = "Waiting for user") {
             /*==================================================================*/
             if (d == null) {
-                MessageBox.Show("Choose the source folder.", "Waiting for user", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Choose the source folder.", title, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CommonOpenFileDialog sourceDirDialog = new CommonOpenFileDialog {
                     IsFolderPicker = true,
                     Multiselect = false

@@ -609,10 +609,10 @@
             this.label61 = new System.Windows.Forms.Label();
             this.label62 = new System.Windows.Forms.Label();
             this.poke6MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove6_4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove6_1ComboBox = new System.Windows.Forms.ComboBox();
             this.partyMove6_2ComboBox = new System.Windows.Forms.ComboBox();
             this.partyMove6_3ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove6_1ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove6_4ComboBox = new System.Windows.Forms.ComboBox();
             this.partyIV6UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel6UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall6UpDown = new System.Windows.Forms.NumericUpDown();
@@ -625,10 +625,10 @@
             this.label58 = new System.Windows.Forms.Label();
             this.label59 = new System.Windows.Forms.Label();
             this.poke5MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove5_4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove5_1ComboBox = new System.Windows.Forms.ComboBox();
             this.partyMove5_2ComboBox = new System.Windows.Forms.ComboBox();
             this.partyMove5_3ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove5_1ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove5_4ComboBox = new System.Windows.Forms.ComboBox();
             this.partyIV5UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel5UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall5UpDown = new System.Windows.Forms.NumericUpDown();
@@ -641,10 +641,10 @@
             this.label55 = new System.Windows.Forms.Label();
             this.label56 = new System.Windows.Forms.Label();
             this.poke4MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove4_4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove4_1ComboBox = new System.Windows.Forms.ComboBox();
             this.partyMove4_2ComboBox = new System.Windows.Forms.ComboBox();
             this.partyMove4_3ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove4_1ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove4_4ComboBox = new System.Windows.Forms.ComboBox();
             this.partyIV4UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel4UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall4UpDown = new System.Windows.Forms.NumericUpDown();
@@ -657,10 +657,10 @@
             this.label52 = new System.Windows.Forms.Label();
             this.label53 = new System.Windows.Forms.Label();
             this.poke3MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove3_4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove3_1ComboBox = new System.Windows.Forms.ComboBox();
             this.partyMove3_2ComboBox = new System.Windows.Forms.ComboBox();
             this.partyMove3_3ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove3_1ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove3_4ComboBox = new System.Windows.Forms.ComboBox();
             this.partyIV3UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel3UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall3UpDown = new System.Windows.Forms.NumericUpDown();
@@ -673,10 +673,10 @@
             this.label49 = new System.Windows.Forms.Label();
             this.label50 = new System.Windows.Forms.Label();
             this.poke2MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove2_4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove2_1ComboBox = new System.Windows.Forms.ComboBox();
             this.partyMove2_2ComboBox = new System.Windows.Forms.ComboBox();
             this.partyMove2_3ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove2_1ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove2_4ComboBox = new System.Windows.Forms.ComboBox();
             this.partyIV2UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel2UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall2UpDown = new System.Windows.Forms.NumericUpDown();
@@ -801,8 +801,8 @@
             this.heartGoldAndSoulSilverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spawnEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NarcUtilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.unpackToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buildFomFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.unpackToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listBasedBatchRenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listBasedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contentBasedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -817,13 +817,19 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.unpackAllButton = new System.Windows.Forms.ToolStripButton();
             this.updateMapNarcsButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.wildEditorButton = new System.Windows.Forms.ToolStripButton();
-            this.buildingEditorButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.buildNarcFromFolderToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.unpackNARCtoFolderToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.listBasedBatchRenameToolStrip = new System.Windows.Forms.ToolStripButton();
+            this.contentBasedBatchRenameToolStrip = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.nsbmdExportTexButton = new System.Windows.Forms.ToolStripButton();
-            this.nsbmdRemoveTexButton = new System.Windows.Forms.ToolStripButton();
             this.nsbmdAddTexButton = new System.Windows.Forms.ToolStripButton();
+            this.nsbmdRemoveTexButton = new System.Windows.Forms.ToolStripButton();
+            this.nsbmdExportTexButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.buildingEditorButton = new System.Windows.Forms.ToolStripButton();
+            this.wildEditorButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.scriptCommandsButton = new System.Windows.Forms.ToolStripButton();
             this.romToolboxToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -4716,9 +4722,10 @@
             // eventMapTextureLabel
             // 
             this.eventMapTextureLabel.AutoSize = true;
-            this.eventMapTextureLabel.Location = new System.Drawing.Point(55, 112);
+            this.eventMapTextureLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.eventMapTextureLabel.Location = new System.Drawing.Point(49, 110);
             this.eventMapTextureLabel.Name = "eventMapTextureLabel";
-            this.eventMapTextureLabel.Size = new System.Drawing.Size(55, 13);
+            this.eventMapTextureLabel.Size = new System.Drawing.Size(70, 15);
             this.eventMapTextureLabel.TabIndex = 31;
             this.eventMapTextureLabel.Text = "Area Data";
             // 
@@ -4830,9 +4837,10 @@
             // backgroundMapLabel
             // 
             this.backgroundMapLabel.AutoSize = true;
-            this.backgroundMapLabel.Location = new System.Drawing.Point(512, 105);
+            this.backgroundMapLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.backgroundMapLabel.Location = new System.Drawing.Point(510, 103);
             this.backgroundMapLabel.Name = "backgroundMapLabel";
-            this.backgroundMapLabel.Size = new System.Drawing.Size(59, 13);
+            this.backgroundMapLabel.Size = new System.Drawing.Size(79, 15);
             this.backgroundMapLabel.TabIndex = 29;
             this.backgroundMapLabel.Text = "Map Matrix";
             // 
@@ -7379,27 +7387,27 @@
             this.LineNumbersFormatgroupBox.Size = new System.Drawing.Size(134, 35);
             this.LineNumbersFormatgroupBox.TabIndex = 34;
             this.LineNumbersFormatgroupBox.TabStop = false;
-            this.LineNumbersFormatgroupBox.Text = "Line indices format";
+            this.LineNumbersFormatgroupBox.Text = "Line Number Format";
             // 
             // decimalRadioButton
             // 
             this.decimalRadioButton.AutoSize = true;
+            this.decimalRadioButton.Checked = true;
             this.decimalRadioButton.Location = new System.Drawing.Point(68, 14);
             this.decimalRadioButton.Name = "decimalRadioButton";
             this.decimalRadioButton.Size = new System.Drawing.Size(63, 17);
             this.decimalRadioButton.TabIndex = 35;
+            this.decimalRadioButton.TabStop = true;
             this.decimalRadioButton.Text = "Decimal";
             this.decimalRadioButton.UseVisualStyleBackColor = true;
             // 
             // hexRadiobutton
             // 
             this.hexRadiobutton.AutoSize = true;
-            this.hexRadiobutton.Checked = true;
             this.hexRadiobutton.Location = new System.Drawing.Point(6, 14);
             this.hexRadiobutton.Name = "hexRadiobutton";
             this.hexRadiobutton.Size = new System.Drawing.Size(44, 17);
             this.hexRadiobutton.TabIndex = 34;
-            this.hexRadiobutton.TabStop = true;
             this.hexRadiobutton.Text = "Hex";
             this.hexRadiobutton.UseVisualStyleBackColor = true;
             this.hexRadiobutton.CheckedChanged += new System.EventHandler(this.hexRadiobutton_CheckedChanged);
@@ -7430,11 +7438,12 @@
             // 
             this.label67.AutoSize = true;
             this.label67.Enabled = false;
-            this.label67.Location = new System.Drawing.Point(192, 131);
+            this.label67.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label67.Location = new System.Drawing.Point(190, 133);
             this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(68, 13);
+            this.label67.Size = new System.Drawing.Size(74, 13);
             this.label67.TabIndex = 41;
-            this.label67.Text = "Coming soon";
+            this.label67.Text = "[Coming soon]";
             // 
             // searchAllArchivesCheckBox
             // 
@@ -8107,6 +8116,7 @@
             this.label62.Text = "Lv.";
             // 
             // poke6MovesGroupBox
+            // 
             this.poke6MovesGroupBox.Controls.Add(this.partyMove6_1ComboBox);
             this.poke6MovesGroupBox.Controls.Add(this.partyMove6_2ComboBox);
             this.poke6MovesGroupBox.Controls.Add(this.partyMove6_3ComboBox);
@@ -8118,15 +8128,15 @@
             this.poke6MovesGroupBox.TabStop = false;
             this.poke6MovesGroupBox.Text = "Moves";
             // 
-            // partyMove6_4ComboBox
+            // partyMove6_1ComboBox
             // 
-            this.partyMove6_4ComboBox.Enabled = false;
-            this.partyMove6_4ComboBox.FormattingEnabled = true;
-            this.partyMove6_4ComboBox.Location = new System.Drawing.Point(116, 48);
-            this.partyMove6_4ComboBox.Name = "partyMove6_4ComboBox";
-            this.partyMove6_4ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove6_4ComboBox.TabIndex = 7;
-            this.partyMove6_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.partyMove6_1ComboBox.Enabled = false;
+            this.partyMove6_1ComboBox.FormattingEnabled = true;
+            this.partyMove6_1ComboBox.Location = new System.Drawing.Point(10, 21);
+            this.partyMove6_1ComboBox.Name = "partyMove6_1ComboBox";
+            this.partyMove6_1ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove6_1ComboBox.TabIndex = 3;
+            this.partyMove6_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove6_2ComboBox
             // 
@@ -8148,15 +8158,15 @@
             this.partyMove6_3ComboBox.TabIndex = 5;
             this.partyMove6_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
-            // partyMove6_1ComboBox
+            // partyMove6_4ComboBox
             // 
-            this.partyMove6_1ComboBox.Enabled = false;
-            this.partyMove6_1ComboBox.FormattingEnabled = true;
-            this.partyMove6_1ComboBox.Location = new System.Drawing.Point(10, 21);
-            this.partyMove6_1ComboBox.Name = "partyMove6_1ComboBox";
-            this.partyMove6_1ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove6_1ComboBox.TabIndex = 3;
-            this.partyMove6_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.partyMove6_4ComboBox.Enabled = false;
+            this.partyMove6_4ComboBox.FormattingEnabled = true;
+            this.partyMove6_4ComboBox.Location = new System.Drawing.Point(116, 48);
+            this.partyMove6_4ComboBox.Name = "partyMove6_4ComboBox";
+            this.partyMove6_4ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove6_4ComboBox.TabIndex = 7;
+            this.partyMove6_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyIV6UpDown
             // 
@@ -8298,15 +8308,15 @@
             this.poke5MovesGroupBox.TabStop = false;
             this.poke5MovesGroupBox.Text = "Moves";
             // 
-            // partyMove5_4ComboBox
+            // partyMove5_1ComboBox
             // 
-            this.partyMove5_4ComboBox.Enabled = false;
-            this.partyMove5_4ComboBox.FormattingEnabled = true;
-            this.partyMove5_4ComboBox.Location = new System.Drawing.Point(116, 48);
-            this.partyMove5_4ComboBox.Name = "partyMove5_4ComboBox";
-            this.partyMove5_4ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove5_4ComboBox.TabIndex = 7;
-            this.partyMove5_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.partyMove5_1ComboBox.Enabled = false;
+            this.partyMove5_1ComboBox.FormattingEnabled = true;
+            this.partyMove5_1ComboBox.Location = new System.Drawing.Point(10, 21);
+            this.partyMove5_1ComboBox.Name = "partyMove5_1ComboBox";
+            this.partyMove5_1ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove5_1ComboBox.TabIndex = 3;
+            this.partyMove5_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove5_2ComboBox
             // 
@@ -8328,15 +8338,15 @@
             this.partyMove5_3ComboBox.TabIndex = 5;
             this.partyMove5_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
-            // partyMove5_1ComboBox
+            // partyMove5_4ComboBox
             // 
-            this.partyMove5_1ComboBox.Enabled = false;
-            this.partyMove5_1ComboBox.FormattingEnabled = true;
-            this.partyMove5_1ComboBox.Location = new System.Drawing.Point(10, 21);
-            this.partyMove5_1ComboBox.Name = "partyMove5_1ComboBox";
-            this.partyMove5_1ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove5_1ComboBox.TabIndex = 3;
-            this.partyMove5_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.partyMove5_4ComboBox.Enabled = false;
+            this.partyMove5_4ComboBox.FormattingEnabled = true;
+            this.partyMove5_4ComboBox.Location = new System.Drawing.Point(116, 48);
+            this.partyMove5_4ComboBox.Name = "partyMove5_4ComboBox";
+            this.partyMove5_4ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove5_4ComboBox.TabIndex = 7;
+            this.partyMove5_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyIV5UpDown
             // 
@@ -8478,15 +8488,15 @@
             this.poke4MovesGroupBox.TabStop = false;
             this.poke4MovesGroupBox.Text = "Moves";
             // 
-            // partyMove4_4ComboBox
+            // partyMove4_1ComboBox
             // 
-            this.partyMove4_4ComboBox.Enabled = false;
-            this.partyMove4_4ComboBox.FormattingEnabled = true;
-            this.partyMove4_4ComboBox.Location = new System.Drawing.Point(116, 48);
-            this.partyMove4_4ComboBox.Name = "partyMove4_4ComboBox";
-            this.partyMove4_4ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove4_4ComboBox.TabIndex = 7;
-            this.partyMove4_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.partyMove4_1ComboBox.Enabled = false;
+            this.partyMove4_1ComboBox.FormattingEnabled = true;
+            this.partyMove4_1ComboBox.Location = new System.Drawing.Point(10, 21);
+            this.partyMove4_1ComboBox.Name = "partyMove4_1ComboBox";
+            this.partyMove4_1ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove4_1ComboBox.TabIndex = 3;
+            this.partyMove4_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove4_2ComboBox
             // 
@@ -8508,15 +8518,15 @@
             this.partyMove4_3ComboBox.TabIndex = 5;
             this.partyMove4_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
-            // partyMove4_1ComboBox
+            // partyMove4_4ComboBox
             // 
-            this.partyMove4_1ComboBox.Enabled = false;
-            this.partyMove4_1ComboBox.FormattingEnabled = true;
-            this.partyMove4_1ComboBox.Location = new System.Drawing.Point(10, 21);
-            this.partyMove4_1ComboBox.Name = "partyMove4_1ComboBox";
-            this.partyMove4_1ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove4_1ComboBox.TabIndex = 3;
-            this.partyMove4_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.partyMove4_4ComboBox.Enabled = false;
+            this.partyMove4_4ComboBox.FormattingEnabled = true;
+            this.partyMove4_4ComboBox.Location = new System.Drawing.Point(116, 48);
+            this.partyMove4_4ComboBox.Name = "partyMove4_4ComboBox";
+            this.partyMove4_4ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove4_4ComboBox.TabIndex = 7;
+            this.partyMove4_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyIV4UpDown
             // 
@@ -8658,15 +8668,15 @@
             this.poke3MovesGroupBox.TabStop = false;
             this.poke3MovesGroupBox.Text = "Moves";
             // 
-            // partyMove3_4ComboBox
+            // partyMove3_1ComboBox
             // 
-            this.partyMove3_4ComboBox.Enabled = false;
-            this.partyMove3_4ComboBox.FormattingEnabled = true;
-            this.partyMove3_4ComboBox.Location = new System.Drawing.Point(116, 48);
-            this.partyMove3_4ComboBox.Name = "partyMove3_4ComboBox";
-            this.partyMove3_4ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove3_4ComboBox.TabIndex = 7;
-            this.partyMove3_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.partyMove3_1ComboBox.Enabled = false;
+            this.partyMove3_1ComboBox.FormattingEnabled = true;
+            this.partyMove3_1ComboBox.Location = new System.Drawing.Point(10, 21);
+            this.partyMove3_1ComboBox.Name = "partyMove3_1ComboBox";
+            this.partyMove3_1ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove3_1ComboBox.TabIndex = 3;
+            this.partyMove3_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove3_2ComboBox
             // 
@@ -8688,15 +8698,15 @@
             this.partyMove3_3ComboBox.TabIndex = 5;
             this.partyMove3_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
-            // partyMove3_1ComboBox
+            // partyMove3_4ComboBox
             // 
-            this.partyMove3_1ComboBox.Enabled = false;
-            this.partyMove3_1ComboBox.FormattingEnabled = true;
-            this.partyMove3_1ComboBox.Location = new System.Drawing.Point(10, 21);
-            this.partyMove3_1ComboBox.Name = "partyMove3_1ComboBox";
-            this.partyMove3_1ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove3_1ComboBox.TabIndex = 3;
-            this.partyMove3_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.partyMove3_4ComboBox.Enabled = false;
+            this.partyMove3_4ComboBox.FormattingEnabled = true;
+            this.partyMove3_4ComboBox.Location = new System.Drawing.Point(116, 48);
+            this.partyMove3_4ComboBox.Name = "partyMove3_4ComboBox";
+            this.partyMove3_4ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove3_4ComboBox.TabIndex = 7;
+            this.partyMove3_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyIV3UpDown
             // 
@@ -8838,15 +8848,15 @@
             this.poke2MovesGroupBox.TabStop = false;
             this.poke2MovesGroupBox.Text = "Moves";
             // 
-            // partyMove2_4ComboBox
+            // partyMove2_1ComboBox
             // 
-            this.partyMove2_4ComboBox.Enabled = false;
-            this.partyMove2_4ComboBox.FormattingEnabled = true;
-            this.partyMove2_4ComboBox.Location = new System.Drawing.Point(116, 48);
-            this.partyMove2_4ComboBox.Name = "partyMove2_4ComboBox";
-            this.partyMove2_4ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove2_4ComboBox.TabIndex = 7;
-            this.partyMove2_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.partyMove2_1ComboBox.Enabled = false;
+            this.partyMove2_1ComboBox.FormattingEnabled = true;
+            this.partyMove2_1ComboBox.Location = new System.Drawing.Point(10, 21);
+            this.partyMove2_1ComboBox.Name = "partyMove2_1ComboBox";
+            this.partyMove2_1ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove2_1ComboBox.TabIndex = 3;
+            this.partyMove2_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove2_2ComboBox
             // 
@@ -8868,15 +8878,15 @@
             this.partyMove2_3ComboBox.TabIndex = 5;
             this.partyMove2_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
-            // partyMove2_1ComboBox
+            // partyMove2_4ComboBox
             // 
-            this.partyMove2_1ComboBox.Enabled = false;
-            this.partyMove2_1ComboBox.FormattingEnabled = true;
-            this.partyMove2_1ComboBox.Location = new System.Drawing.Point(10, 21);
-            this.partyMove2_1ComboBox.Name = "partyMove2_1ComboBox";
-            this.partyMove2_1ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove2_1ComboBox.TabIndex = 3;
-            this.partyMove2_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.partyMove2_4ComboBox.Enabled = false;
+            this.partyMove2_4ComboBox.FormattingEnabled = true;
+            this.partyMove2_4ComboBox.Location = new System.Drawing.Point(116, 48);
+            this.partyMove2_4ComboBox.Name = "partyMove2_4ComboBox";
+            this.partyMove2_4ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove2_4ComboBox.TabIndex = 7;
+            this.partyMove2_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyIV2UpDown
             // 
@@ -9006,7 +9016,7 @@
             this.label45.Text = "Lv.";
             // 
             // poke1MovesGroupBox
-            
+            // 
             this.poke1MovesGroupBox.Controls.Add(this.partyMove1_1ComboBox);
             this.poke1MovesGroupBox.Controls.Add(this.partyMove1_2ComboBox);
             this.poke1MovesGroupBox.Controls.Add(this.partyMove1_3ComboBox);
@@ -9018,15 +9028,15 @@
             this.poke1MovesGroupBox.TabStop = false;
             this.poke1MovesGroupBox.Text = "Moves";
             // 
-            // partyMove1_4ComboBox
+            // partyMove1_1ComboBox
             // 
-            this.partyMove1_4ComboBox.Enabled = false;
-            this.partyMove1_4ComboBox.FormattingEnabled = true;
-            this.partyMove1_4ComboBox.Location = new System.Drawing.Point(116, 48);
-            this.partyMove1_4ComboBox.Name = "partyMove1_4ComboBox";
-            this.partyMove1_4ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove1_4ComboBox.TabIndex = 7;
-            this.partyMove1_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.partyMove1_1ComboBox.Enabled = false;
+            this.partyMove1_1ComboBox.FormattingEnabled = true;
+            this.partyMove1_1ComboBox.Location = new System.Drawing.Point(10, 21);
+            this.partyMove1_1ComboBox.Name = "partyMove1_1ComboBox";
+            this.partyMove1_1ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove1_1ComboBox.TabIndex = 3;
+            this.partyMove1_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove1_2ComboBox
             // 
@@ -9048,15 +9058,15 @@
             this.partyMove1_3ComboBox.TabIndex = 5;
             this.partyMove1_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
-            // partyMove1_1ComboBox
+            // partyMove1_4ComboBox
             // 
-            this.partyMove1_1ComboBox.Enabled = false;
-            this.partyMove1_1ComboBox.FormattingEnabled = true;
-            this.partyMove1_1ComboBox.Location = new System.Drawing.Point(10, 21);
-            this.partyMove1_1ComboBox.Name = "partyMove1_1ComboBox";
-            this.partyMove1_1ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove1_1ComboBox.TabIndex = 3;
-            this.partyMove1_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.partyMove1_4ComboBox.Enabled = false;
+            this.partyMove1_4ComboBox.FormattingEnabled = true;
+            this.partyMove1_4ComboBox.Location = new System.Drawing.Point(116, 48);
+            this.partyMove1_4ComboBox.Name = "partyMove1_4ComboBox";
+            this.partyMove1_4ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove1_4ComboBox.TabIndex = 7;
+            this.partyMove1_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyIV1UpDown
             // 
@@ -9417,21 +9427,13 @@
             this.trainerItemsGroupBox.TabStop = false;
             this.trainerItemsGroupBox.Text = "Trainer Items";
             // 
-            // trainerItem4ComboBox
+            // trainerItem1ComboBox
             // 
-            this.trainerItem4ComboBox.FormattingEnabled = true;
-            this.trainerItem4ComboBox.Location = new System.Drawing.Point(9, 101);
-            this.trainerItem4ComboBox.Name = "trainerItem4ComboBox";
-            this.trainerItem4ComboBox.Size = new System.Drawing.Size(171, 21);
-            this.trainerItem4ComboBox.TabIndex = 3;
-            // 
-            // trainerItem3ComboBox
-            // 
-            this.trainerItem3ComboBox.FormattingEnabled = true;
-            this.trainerItem3ComboBox.Location = new System.Drawing.Point(9, 74);
-            this.trainerItem3ComboBox.Name = "trainerItem3ComboBox";
-            this.trainerItem3ComboBox.Size = new System.Drawing.Size(171, 21);
-            this.trainerItem3ComboBox.TabIndex = 2;
+            this.trainerItem1ComboBox.FormattingEnabled = true;
+            this.trainerItem1ComboBox.Location = new System.Drawing.Point(9, 20);
+            this.trainerItem1ComboBox.Name = "trainerItem1ComboBox";
+            this.trainerItem1ComboBox.Size = new System.Drawing.Size(171, 21);
+            this.trainerItem1ComboBox.TabIndex = 0;
             // 
             // trainerItem2ComboBox
             // 
@@ -9441,13 +9443,21 @@
             this.trainerItem2ComboBox.Size = new System.Drawing.Size(171, 21);
             this.trainerItem2ComboBox.TabIndex = 1;
             // 
-            // trainerItem1ComboBox
+            // trainerItem3ComboBox
             // 
-            this.trainerItem1ComboBox.FormattingEnabled = true;
-            this.trainerItem1ComboBox.Location = new System.Drawing.Point(9, 20);
-            this.trainerItem1ComboBox.Name = "trainerItem1ComboBox";
-            this.trainerItem1ComboBox.Size = new System.Drawing.Size(171, 21);
-            this.trainerItem1ComboBox.TabIndex = 0;
+            this.trainerItem3ComboBox.FormattingEnabled = true;
+            this.trainerItem3ComboBox.Location = new System.Drawing.Point(9, 74);
+            this.trainerItem3ComboBox.Name = "trainerItem3ComboBox";
+            this.trainerItem3ComboBox.Size = new System.Drawing.Size(171, 21);
+            this.trainerItem3ComboBox.TabIndex = 2;
+            // 
+            // trainerItem4ComboBox
+            // 
+            this.trainerItem4ComboBox.FormattingEnabled = true;
+            this.trainerItem4ComboBox.Location = new System.Drawing.Point(9, 101);
+            this.trainerItem4ComboBox.Name = "trainerItem4ComboBox";
+            this.trainerItem4ComboBox.Size = new System.Drawing.Size(171, 21);
+            this.trainerItem4ComboBox.TabIndex = 3;
             // 
             // trainerItemsCheckBox
             // 
@@ -10072,6 +10082,7 @@
             this.languageLabel.Size = new System.Drawing.Size(58, 13);
             this.languageLabel.TabIndex = 10;
             this.languageLabel.Text = "Language:";
+            this.languageLabel.Visible = false;
             // 
             // menuStrip1
             // 
@@ -10099,23 +10110,29 @@
             // 
             // openROMToolStripMenuItem
             // 
+            this.openROMToolStripMenuItem.Image = global::DSPRE.Properties.Resources.open_rom;
+            this.openROMToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.openROMToolStripMenuItem.Name = "openROMToolStripMenuItem";
-            this.openROMToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.openROMToolStripMenuItem.Size = new System.Drawing.Size(196, 38);
             this.openROMToolStripMenuItem.Text = "Open ROM";
             this.openROMToolStripMenuItem.Click += new System.EventHandler(this.loadRom_Click);
             // 
             // openFolderToolStripMenuItem
             // 
+            this.openFolderToolStripMenuItem.Image = global::DSPRE.Properties.Resources.open_file;
+            this.openFolderToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(196, 38);
             this.openFolderToolStripMenuItem.Text = "Open Folder";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.readDataFromFolderButton_Click);
             // 
             // saveROMToolStripMenuItem
             // 
             this.saveROMToolStripMenuItem.Enabled = false;
+            this.saveROMToolStripMenuItem.Image = global::DSPRE.Properties.Resources.save_rom;
+            this.saveROMToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.saveROMToolStripMenuItem.Name = "saveROMToolStripMenuItem";
-            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(196, 38);
             this.saveROMToolStripMenuItem.Text = "Save ROM";
             this.saveROMToolStripMenuItem.Click += new System.EventHandler(this.saveRom_Click);
             // 
@@ -10160,23 +10177,29 @@
             // 
             // diamondAndPearlToolStripMenuItem
             // 
+            this.diamondAndPearlToolStripMenuItem.Image = global::DSPRE.Properties.Resources.scriptDBIconDP;
+            this.diamondAndPearlToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.diamondAndPearlToolStripMenuItem.Name = "diamondAndPearlToolStripMenuItem";
-            this.diamondAndPearlToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.diamondAndPearlToolStripMenuItem.Text = "Diamond and Pearl";
+            this.diamondAndPearlToolStripMenuItem.Size = new System.Drawing.Size(211, 38);
+            this.diamondAndPearlToolStripMenuItem.Text = "Diamond && Pearl";
             this.diamondAndPearlToolStripMenuItem.Click += new System.EventHandler(this.diamondAndPearlToolStripMenuItem_Click);
             // 
             // platinumToolStripMenuItem
             // 
+            this.platinumToolStripMenuItem.Image = global::DSPRE.Properties.Resources.scriptDBIconPt;
+            this.platinumToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.platinumToolStripMenuItem.Name = "platinumToolStripMenuItem";
-            this.platinumToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.platinumToolStripMenuItem.Size = new System.Drawing.Size(211, 38);
             this.platinumToolStripMenuItem.Text = "Platinum";
             this.platinumToolStripMenuItem.Click += new System.EventHandler(this.platinumToolStripMenuItem_Click);
             // 
             // heartGoldAndSoulSilverToolStripMenuItem
             // 
+            this.heartGoldAndSoulSilverToolStripMenuItem.Image = global::DSPRE.Properties.Resources.scriptDBIconHGSS;
+            this.heartGoldAndSoulSilverToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.heartGoldAndSoulSilverToolStripMenuItem.Name = "heartGoldAndSoulSilverToolStripMenuItem";
-            this.heartGoldAndSoulSilverToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.heartGoldAndSoulSilverToolStripMenuItem.Text = "HeartGold and SoulSilver";
+            this.heartGoldAndSoulSilverToolStripMenuItem.Size = new System.Drawing.Size(211, 38);
+            this.heartGoldAndSoulSilverToolStripMenuItem.Text = "HeartGold && SoulSilver";
             this.heartGoldAndSoulSilverToolStripMenuItem.Click += new System.EventHandler(this.heartGoldAndSoulSilverToolStripMenuItem_Click);
             // 
             // spawnEditorToolStripMenuItem
@@ -10190,25 +10213,29 @@
             // NarcUtilityToolStripMenuItem
             // 
             this.NarcUtilityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.unpackToFolderToolStripMenuItem,
-            this.buildFomFolderToolStripMenuItem});
+            this.buildFomFolderToolStripMenuItem,
+            this.unpackToFolderToolStripMenuItem});
             this.NarcUtilityToolStripMenuItem.Name = "NarcUtilityToolStripMenuItem";
             this.NarcUtilityToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.NarcUtilityToolStripMenuItem.Text = "NARC Utility";
             // 
-            // unpackToFolderToolStripMenuItem
-            // 
-            this.unpackToFolderToolStripMenuItem.Name = "unpackToFolderToolStripMenuItem";
-            this.unpackToFolderToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.unpackToFolderToolStripMenuItem.Text = "Unpack to Folder";
-            this.unpackToFolderToolStripMenuItem.Click += new System.EventHandler(this.unpackToFolderToolStripMenuItem_Click);
-            // 
             // buildFomFolderToolStripMenuItem
             // 
+            this.buildFomFolderToolStripMenuItem.Image = global::DSPRE.Properties.Resources.folderToNarcIcon;
+            this.buildFomFolderToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.buildFomFolderToolStripMenuItem.Name = "buildFomFolderToolStripMenuItem";
-            this.buildFomFolderToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.buildFomFolderToolStripMenuItem.Size = new System.Drawing.Size(228, 38);
             this.buildFomFolderToolStripMenuItem.Text = "Build from Folder";
             this.buildFomFolderToolStripMenuItem.Click += new System.EventHandler(this.buildFromFolderToolStripMenuItem_Click);
+            // 
+            // unpackToFolderToolStripMenuItem
+            // 
+            this.unpackToFolderToolStripMenuItem.Image = global::DSPRE.Properties.Resources.narcToFolderIcon;
+            this.unpackToFolderToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.unpackToFolderToolStripMenuItem.Name = "unpackToFolderToolStripMenuItem";
+            this.unpackToFolderToolStripMenuItem.Size = new System.Drawing.Size(228, 38);
+            this.unpackToFolderToolStripMenuItem.Text = "Unpack to Folder";
+            this.unpackToFolderToolStripMenuItem.Click += new System.EventHandler(this.unpackToFolderToolStripMenuItem_Click);
             // 
             // listBasedBatchRenameToolStripMenuItem
             // 
@@ -10221,15 +10248,19 @@
             // 
             // listBasedToolStripMenuItem
             // 
+            this.listBasedToolStripMenuItem.Image = global::DSPRE.Properties.Resources.listbasedRenameIcon;
+            this.listBasedToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.listBasedToolStripMenuItem.Name = "listBasedToolStripMenuItem";
-            this.listBasedToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.listBasedToolStripMenuItem.Size = new System.Drawing.Size(212, 38);
             this.listBasedToolStripMenuItem.Text = "List-Based";
             this.listBasedToolStripMenuItem.Click += new System.EventHandler(this.listBasedToolStripMenuItem_Click);
             // 
             // contentBasedToolStripMenuItem
             // 
+            this.contentBasedToolStripMenuItem.Image = global::DSPRE.Properties.Resources.contentbasedRenameIcon;
+            this.contentBasedToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.contentBasedToolStripMenuItem.Name = "contentBasedToolStripMenuItem";
-            this.contentBasedToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.contentBasedToolStripMenuItem.Size = new System.Drawing.Size(212, 38);
             this.contentBasedToolStripMenuItem.Text = "Content-Based";
             this.contentBasedToolStripMenuItem.Click += new System.EventHandler(this.contentBasedToolStripMenuItem_Click);
             // 
@@ -10275,13 +10306,19 @@
             this.toolStripSeparator3,
             this.unpackAllButton,
             this.updateMapNarcsButton,
-            this.toolStripSeparator1,
-            this.wildEditorButton,
-            this.buildingEditorButton,
+            this.toolStripSeparator6,
+            this.buildNarcFromFolderToolStripButton,
+            this.unpackNARCtoFolderToolStripButton,
+            this.toolStripSeparator7,
+            this.listBasedBatchRenameToolStrip,
+            this.contentBasedBatchRenameToolStrip,
             this.toolStripSeparator2,
-            this.nsbmdExportTexButton,
-            this.nsbmdRemoveTexButton,
             this.nsbmdAddTexButton,
+            this.nsbmdRemoveTexButton,
+            this.nsbmdExportTexButton,
+            this.toolStripSeparator1,
+            this.buildingEditorButton,
+            this.wildEditorButton,
             this.toolStripSeparator5,
             this.scriptCommandsButton,
             this.romToolboxToolStripButton,
@@ -10363,24 +10400,112 @@
             this.updateMapNarcsButton.Text = "Unpack Building NARCs";
             this.updateMapNarcsButton.Click += new System.EventHandler(this.updateMapNarcsButton_Click);
             // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 44);
+            // 
+            // buildNarcFromFolderToolStripButton
+            // 
+            this.buildNarcFromFolderToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buildNarcFromFolderToolStripButton.Image = global::DSPRE.Properties.Resources.folderToNarcIcon;
+            this.buildNarcFromFolderToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.buildNarcFromFolderToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buildNarcFromFolderToolStripButton.Margin = new System.Windows.Forms.Padding(2, 6, 4, 2);
+            this.buildNarcFromFolderToolStripButton.Name = "buildNarcFromFolderToolStripButton";
+            this.buildNarcFromFolderToolStripButton.Size = new System.Drawing.Size(68, 36);
+            this.buildNarcFromFolderToolStripButton.Text = "Build NARC from Folder";
+            this.buildNarcFromFolderToolStripButton.Click += new System.EventHandler(this.buildFromFolderToolStripMenuItem_Click);
+            // 
+            // unpackNARCtoFolderToolStripButton
+            // 
+            this.unpackNARCtoFolderToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.unpackNARCtoFolderToolStripButton.Image = global::DSPRE.Properties.Resources.narcToFolderIcon;
+            this.unpackNARCtoFolderToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.unpackNARCtoFolderToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.unpackNARCtoFolderToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 2, 2);
+            this.unpackNARCtoFolderToolStripButton.Name = "unpackNARCtoFolderToolStripButton";
+            this.unpackNARCtoFolderToolStripButton.Size = new System.Drawing.Size(68, 36);
+            this.unpackNARCtoFolderToolStripButton.Text = "Unpack NARC to Folder";
+            this.unpackNARCtoFolderToolStripButton.Click += new System.EventHandler(this.unpackToFolderToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 44);
+            // 
+            // listBasedBatchRenameToolStrip
+            // 
+            this.listBasedBatchRenameToolStrip.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.listBasedBatchRenameToolStrip.Image = global::DSPRE.Properties.Resources.listbasedRenameIcon;
+            this.listBasedBatchRenameToolStrip.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.listBasedBatchRenameToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.listBasedBatchRenameToolStrip.Margin = new System.Windows.Forms.Padding(2, 6, 3, 2);
+            this.listBasedBatchRenameToolStrip.Name = "listBasedBatchRenameToolStrip";
+            this.listBasedBatchRenameToolStrip.Size = new System.Drawing.Size(52, 36);
+            this.listBasedBatchRenameToolStrip.Text = "List-Based Batch Rename";
+            this.listBasedBatchRenameToolStrip.Click += new System.EventHandler(this.listBasedToolStripMenuItem_Click);
+            // 
+            // contentBasedBatchRenameToolStrip
+            // 
+            this.contentBasedBatchRenameToolStrip.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.contentBasedBatchRenameToolStrip.Image = global::DSPRE.Properties.Resources.contentbasedRenameIcon;
+            this.contentBasedBatchRenameToolStrip.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.contentBasedBatchRenameToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.contentBasedBatchRenameToolStrip.Margin = new System.Windows.Forms.Padding(3, 6, 2, 2);
+            this.contentBasedBatchRenameToolStrip.Name = "contentBasedBatchRenameToolStrip";
+            this.contentBasedBatchRenameToolStrip.Size = new System.Drawing.Size(52, 36);
+            this.contentBasedBatchRenameToolStrip.Text = "Content-Based Batch Rename";
+            this.contentBasedBatchRenameToolStrip.Click += new System.EventHandler(this.contentBasedToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 44);
+            // 
+            // nsbmdAddTexButton
+            // 
+            this.nsbmdAddTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.nsbmdAddTexButton.Image = global::DSPRE.Properties.Resources.addTextureToNSBMD;
+            this.nsbmdAddTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.nsbmdAddTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.nsbmdAddTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.nsbmdAddTexButton.Name = "nsbmdAddTexButton";
+            this.nsbmdAddTexButton.Size = new System.Drawing.Size(36, 36);
+            this.nsbmdAddTexButton.Text = "Add texture to NSBMD";
+            this.nsbmdAddTexButton.ToolTipText = "Add textures to NSBMD";
+            this.nsbmdAddTexButton.Click += new System.EventHandler(this.nsbmdAddTexButton_Click);
+            // 
+            // nsbmdRemoveTexButton
+            // 
+            this.nsbmdRemoveTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.nsbmdRemoveTexButton.Image = global::DSPRE.Properties.Resources.removeTextureNSBMD;
+            this.nsbmdRemoveTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.nsbmdRemoveTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.nsbmdRemoveTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.nsbmdRemoveTexButton.Name = "nsbmdRemoveTexButton";
+            this.nsbmdRemoveTexButton.Size = new System.Drawing.Size(36, 36);
+            this.nsbmdRemoveTexButton.Text = "Remove texture from NSBMD";
+            this.nsbmdRemoveTexButton.ToolTipText = "Remove textures from NSBMD";
+            this.nsbmdRemoveTexButton.Click += new System.EventHandler(this.nsbmdRemoveTexButton_Click);
+            // 
+            // nsbmdExportTexButton
+            // 
+            this.nsbmdExportTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.nsbmdExportTexButton.Image = global::DSPRE.Properties.Resources.saveTextureFromNSBMD;
+            this.nsbmdExportTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.nsbmdExportTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.nsbmdExportTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.nsbmdExportTexButton.Name = "nsbmdExportTexButton";
+            this.nsbmdExportTexButton.Size = new System.Drawing.Size(36, 36);
+            this.nsbmdExportTexButton.Text = "Extract texture from NSBMD";
+            this.nsbmdExportTexButton.ToolTipText = "Extract textures from NSBMD";
+            this.nsbmdExportTexButton.Click += new System.EventHandler(this.nsbmdExportTexButton_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 44);
-            // 
-            // wildEditorButton
-            // 
-            this.wildEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.wildEditorButton.Enabled = false;
-            this.wildEditorButton.Image = global::DSPRE.Properties.Resources.wildEditorButton;
-            this.wildEditorButton.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.wildEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.wildEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.wildEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.wildEditorButton.Name = "wildEditorButton";
-            this.wildEditorButton.Size = new System.Drawing.Size(36, 36);
-            this.wildEditorButton.Text = "Wild Pokémon Editor";
-            this.wildEditorButton.Click += new System.EventHandler(this.wildEditorButton_Click);
             // 
             // buildingEditorButton
             // 
@@ -10396,49 +10521,19 @@
             this.buildingEditorButton.ToolTipText = "Building Editor";
             this.buildingEditorButton.Click += new System.EventHandler(this.buildingEditorButton_Click);
             // 
-            // toolStripSeparator2
+            // wildEditorButton
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 44);
-            // 
-            // nsbmdExportTexButton
-            // 
-            this.nsbmdExportTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.nsbmdExportTexButton.Image = global::DSPRE.Properties.Resources.saveTextureFromNSBMD;
-            this.nsbmdExportTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.nsbmdExportTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.nsbmdExportTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.nsbmdExportTexButton.Name = "nsbmdExportTexButton";
-            this.nsbmdExportTexButton.Size = new System.Drawing.Size(36, 36);
-            this.nsbmdExportTexButton.Text = "Extract texture from NSBMD";
-            this.nsbmdExportTexButton.ToolTipText = "Extract textures from NSBMD";
-            this.nsbmdExportTexButton.Click += new System.EventHandler(this.nsbmdExportTexButton_Click);
-            // 
-            // nsbmdRemoveTexButton
-            // 
-            this.nsbmdRemoveTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.nsbmdRemoveTexButton.Image = global::DSPRE.Properties.Resources.removeTextureNSBMD;
-            this.nsbmdRemoveTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.nsbmdRemoveTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.nsbmdRemoveTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.nsbmdRemoveTexButton.Name = "nsbmdRemoveTexButton";
-            this.nsbmdRemoveTexButton.Size = new System.Drawing.Size(36, 36);
-            this.nsbmdRemoveTexButton.Text = "Remove texture from NSBMD";
-            this.nsbmdRemoveTexButton.ToolTipText = "Remove textures from NSBMD";
-            this.nsbmdRemoveTexButton.Click += new System.EventHandler(this.nsbmdRemoveTexButton_Click);
-            // 
-            // nsbmdAddTexButton
-            // 
-            this.nsbmdAddTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.nsbmdAddTexButton.Image = global::DSPRE.Properties.Resources.addTextureToNSBMD;
-            this.nsbmdAddTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.nsbmdAddTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.nsbmdAddTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.nsbmdAddTexButton.Name = "nsbmdAddTexButton";
-            this.nsbmdAddTexButton.Size = new System.Drawing.Size(36, 36);
-            this.nsbmdAddTexButton.Text = "Add texture to NSBMD";
-            this.nsbmdAddTexButton.ToolTipText = "Add textures to NSBMD";
-            this.nsbmdAddTexButton.Click += new System.EventHandler(this.nsbmdAddTexButton_Click);
+            this.wildEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.wildEditorButton.Enabled = false;
+            this.wildEditorButton.Image = global::DSPRE.Properties.Resources.wildEditorButton;
+            this.wildEditorButton.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.wildEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.wildEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.wildEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.wildEditorButton.Name = "wildEditorButton";
+            this.wildEditorButton.Size = new System.Drawing.Size(36, 36);
+            this.wildEditorButton.Text = "Wild Pokémon Editor";
+            this.wildEditorButton.Click += new System.EventHandler(this.wildEditorButton_Click);
             // 
             // toolStripSeparator5
             // 
@@ -10512,6 +10607,7 @@
             this.versionLabel.Size = new System.Drawing.Size(35, 13);
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
+            this.versionLabel.Visible = false;
             // 
             // MainProgram
             // 
@@ -10532,7 +10628,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
-            this.Text = "DS Pokémon Rom Editor 1.4.1 (Nømura, AdAstra/LD3005)";
+            this.Text = "DS Pokémon Rom Editor 1.5 (Nømura, AdAstra/LD3005)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainProgram_FormClosing);
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);
@@ -11628,6 +11724,12 @@
         private System.Windows.Forms.PictureBox partyPokemonItemPictureBox3;
         private System.Windows.Forms.PictureBox partyPokemonItemPictureBox2;
         private System.Windows.Forms.PictureBox partyPokemonItemPictureBox1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripButton listBasedBatchRenameToolStrip;
+        private System.Windows.Forms.ToolStripButton contentBasedBatchRenameToolStrip;
+        private System.Windows.Forms.ToolStripButton unpackNARCtoFolderToolStripButton;
+        private System.Windows.Forms.ToolStripButton buildNarcFromFolderToolStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     }
 }
 

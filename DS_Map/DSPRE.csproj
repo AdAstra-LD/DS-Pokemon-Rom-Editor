@@ -1300,13 +1300,17 @@
     <None Include="Resources\Graphics\Program Icons\lens.png" />
     <None Include="Resources\Graphics\Program Icons\expandArrow.png" />
     <None Include="Resources\Graphics\Program Icons\compressArrow.png" />
+    <None Include="Resources\Graphics\Program Icons\contentbasedRenameIcon.png" />
+    <None Include="Resources\Graphics\Program Icons\folderToNarcIcon.png" />
     <Content Include="Resources\Graphics\Program Icons\IconItem.png" />
     <Content Include="Resources\Graphics\Program Icons\IconPokeball.png" />
     <Content Include="Resources\Graphics\Program Icons\IconPokeballNot.png" />
+    <None Include="Resources\Graphics\Program Icons\listbasedRenameIcon.png" />
     <Content Include="Resources\Graphics\Program Icons\loadColorTable.png" />
     <None Include="Resources\Graphics\Program Icons\removeTextureNSBMD.png" />
     <None Include="Resources\Graphics\Program Icons\open_rom.png" />
     <None Include="Resources\Graphics\Program Icons\questionMark.png" />
+    <None Include="Resources\Graphics\Program Icons\narcToFolderIcon.png" />
     <Content Include="Resources\Graphics\Program Icons\resetColorTable.png" />
     <None Include="Resources\Graphics\Program Icons\wideLensImage.png" />
     <None Include="Resources\Graphics\Program Icons\wideLensImageTransp.png" />
@@ -1319,6 +1323,9 @@
     <None Include="Resources\Graphics\Program Icons\saveButton.png" />
     <None Include="Resources\Graphics\Program Icons\selectBldWithMouse.png" />
     <None Include="Resources\Graphics\Program Icons\wrenchIcon.png" />
+    <None Include="Resources\Graphics\Program Icons\scriptDBIconPt.png" />
+    <None Include="Resources\Graphics\Program Icons\scriptDBIconDP.png" />
+    <None Include="Resources\Graphics\Program Icons\scriptDBIconHGSS.png" />
     <Content Include="Resources\Graphics\Program Icons\tableEditor.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptblueish.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptdarkfog.png" />
