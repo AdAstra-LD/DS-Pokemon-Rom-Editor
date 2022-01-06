@@ -25,8 +25,10 @@ namespace DSPRE.ROMFiles {
             this.SaveToFile(path, showSuccessMessage);
         }
         protected internal void SaveToFileExplorePath(string fileType, string fileExtension, string suggestedFileName, bool showSuccessMessage = true) {
+            fileExtension = "*." + fileExtension;
+
             SaveFileDialog sf = new SaveFileDialog {
-                Filter = fileType + ' ' + "(*." + fileExtension + '|' + "(*." + fileExtension
+                Filter = fileType + ' ' + "(" + fileExtension + ")" + '|' + fileExtension 
             };
 
             if (!string.IsNullOrEmpty(suggestedFileName)) {
