@@ -552,8 +552,8 @@ namespace DSPRE {
             versionLabel.Visible = true;
             languageLabel.Visible = true;
 
-            versionLabel.Text = "Pokémon " + RomInfo.gameVersion.ToString() + " " + "[" + RomInfo.romID + "]";
-            languageLabel.Text = "Language: " + RomInfo.gameLanguage;
+            versionLabel.Text = RomInfo.gameVersion.ToString() + " " + "[" + RomInfo.romID + "]";
+            languageLabel.Text = "Lang: " + RomInfo.gameLanguage;
 
             if (RomInfo.gameLanguage == gLangEnum.English) {
                 if (europeByte == 0x0A) {
@@ -8945,6 +8945,136 @@ namespace DSPRE {
                 }
             } else {
                 MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        private void fromFolderContentsToolStripMenuItem_Click(object sender, EventArgs e) {
+            (DirectoryInfo d, FileInfo[] files) dirData = OpenNonEmptyDir(title: "Folder-Based List Builder");
+            DirectoryInfo d = dirData.d;
+            FileInfo[] filePaths = dirData.files;
+
+            if (d == null || filePaths == null) {
+                return;
+            }
+
+            MessageBox.Show("Choose where to save the output list file.", "Name your list file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            SaveFileDialog sf = new SaveFileDialog {
+                Filter = "List File (*.txt; *.list)|*.txt;*.list",
+                FileName = d.Name + ".list"
+            };
+            if (sf.ShowDialog(this) != DialogResult.OK) {
+                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            File.WriteAllLines(sf.FileName, new string[] {
+                "#============================================================================",
+                "# File enumeration definition for folder " + "\"" + d.Name + "\"",
+                "#============================================================================"
+            });
+            File.AppendAllLines(sf.FileName, filePaths.Select(f => f.Name).ToArray());
+
+            MessageBox.Show("List file saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        private void enumBasedListBuilderToolStripButton_Click(object sender, EventArgs e) {
+            MessageBox.Show("Pick a C Enum File [with entries on different lines].", "Enum-Based List Builder", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "Any Text File(*.*)|*.*"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK) {
+                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            try {
+                Dictionary<int, string> entries = new Dictionary<int, string>();
+
+                string[] cFileLines = File.ReadAllLines(of.FileName);
+                cFileLines = cFileLines.Select(x => x.Trim()).ToArray();
+
+                int enumStartLine;
+                for (enumStartLine = 0; enumStartLine < cFileLines.Length; enumStartLine++) {
+                    if (cFileLines[enumStartLine].Replace(" ", "").Contains("enum{")) {
+                        break;
+                    }
+                }
+
+                if (cFileLines.Length -1 == enumStartLine) {
+                    MessageBox.Show("Abrupt termination of enum file.\nAborting.", "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                int terminationLine;
+                for (terminationLine = enumStartLine+1; terminationLine < cFileLines.Length; terminationLine++) {
+                    if (cFileLines[terminationLine].Replace(" ", "").Contains("};")) {
+                        break;
+                    }
+                }
+
+                if (terminationLine >= cFileLines.Length - 1) {
+                    MessageBox.Show("Enum file is malformed.\nAborting", "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                };
+
+                if (terminationLine - enumStartLine <= 2) {
+                    MessageBox.Show("This utility needs at least 2 enum entries.\nAborting.", "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                int indexFirstDifferentChar = cFileLines[enumStartLine + 1].Zip(cFileLines[enumStartLine + 2], (char1, char2) => char1 == char2).TakeWhile(b => b).Count();
+                int lastCommonUnderscore = cFileLines[enumStartLine + 1].Substring(0, indexFirstDifferentChar).LastIndexOf('_');
+
+                int lastNumber = 0;
+
+                MessageBox.Show("Choose where to save the output list file.", "Name your list file", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string shortFileName = Path.GetFileNameWithoutExtension(of.FileName);
+
+                SaveFileDialog sf = new SaveFileDialog {
+                    Filter = "List File (*.txt; *.list)|*.txt;*.list",
+                    FileName = shortFileName + ".list"
+                };
+                if (sf.ShowDialog(this) != DialogResult.OK) {
+                    MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                for (int s = enumStartLine + 1; s < terminationLine; s++) {
+                    string differentSubstring = cFileLines[s].Substring(lastCommonUnderscore + 1).Trim().Replace(",", "");
+                    int indexOfEquals = differentSubstring.LastIndexOf('=');
+
+                    string entry = differentSubstring.Substring(0, indexOfEquals).Trim();
+                    if (indexOfEquals > 0) { 
+                        string numstr = differentSubstring.Substring(indexOfEquals+1);
+                        string[] split = numstr.Split(new char[] { ' ' }, options: StringSplitOptions.RemoveEmptyEntries);
+
+                        if (split.Length > 1) {
+                            throw new Exception();
+                        }
+
+                        lastNumber = int.Parse(split[0]);
+                    }
+
+                    int posOfUnderscore = entry.LastIndexOf('_');
+                    if (posOfUnderscore >= 0) {
+                        entry = entry.Remove(posOfUnderscore, 1).Insert(posOfUnderscore, ".");
+                    }
+
+                    entries.Add(lastNumber, entry);
+                    lastNumber++;
+                }
+
+                IEnumerable<KeyValuePair<int, string>> sortedEntries = entries.OrderBy(kvp => kvp.Key);
+
+                File.WriteAllLines(sf.FileName, new string[] {
+                    "#============================================================================",
+                    "# File enumeration definition based on " + "\"" + shortFileName + "\"",
+                    "#============================================================================"
+                });
+                File.AppendAllLines(sf.FileName, sortedEntries.Select(kvp => kvp.Value));
+
+                MessageBox.Show("List file saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            } catch {
+                MessageBox.Show("The input enum file couldn't be read correctly.\nNo output file has been written." +
+                    "\n\nAborting.", "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

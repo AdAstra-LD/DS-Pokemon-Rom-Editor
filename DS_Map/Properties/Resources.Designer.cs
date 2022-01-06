@@ -743,6 +743,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap enumToListIcon {
+            get {
+                object obj = ResourceManager.GetObject("enumToListIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap expandArrow {
             get {
                 object obj = ResourceManager.GetObject("expandArrow", resourceCulture);
@@ -766,6 +776,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap exportArrow {
             get {
                 object obj = ResourceManager.GetObject("exportArrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folderToListIcon {
+            get {
+                object obj = ResourceManager.GetObject("folderToListIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
