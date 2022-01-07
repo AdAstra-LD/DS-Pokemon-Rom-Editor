@@ -100,7 +100,7 @@ namespace DSPRE.ROMFiles {
             } else {
                 try {
                     id = ushort.Parse(GetStringWithoutSpecialCharacters(nameParts[0]), GetNumberStyleFromString(nameParts[0]));
-                    //id = ushort.Parse(nameParts[0].Substring(nameParts[0].("_")+1), ScriptFile.numFormatSpecifier, CultureInfo.InvariantCulture);
+                    //id = ushort.Parse(nameParts[0].Substring(nameParts[0].("_")+1), Properties.Settings.Default.scriptEditorFormatPreference, CultureInfo.InvariantCulture);
                 } catch {
                     string details;
                     if (wholeLine.Contains(':') && wholeLine.ContainsNumber()) {
@@ -244,10 +244,10 @@ namespace DSPRE.ROMFiles {
             //differentiate depending on param type
             string formatOverride;
             string prefix;
-            if (ScriptFile.numFormatSpecifier == NumberStyles.HexNumber) {
+            if (Properties.Settings.Default.scriptEditorFormatPreference == (int)NumberStyles.HexNumber) {
                 formatOverride = "X";
                 prefix = "0x";
-            } else { //(ScriptFile.numFormatSpecifier == NumberStyles.Integer)
+            } else { //(Properties.Settings.Default.scriptEditorFormatPreference == NumberStyles.Integer)
                 formatOverride = "D";
                 prefix = "";
             }
@@ -266,7 +266,7 @@ namespace DSPRE.ROMFiles {
                 case ParamTypeEnum.ACTION_ID:
                     return containerTypes.Action.ToString() + "#" + num;
                 default:
-                    if (ScriptFile.numFormatSpecifier == NumberStyles.None) {
+                    if (Properties.Settings.Default.scriptEditorFormatPreference == (int)NumberStyles.None) {
                         if (num >= 4000) {
                             return "0x" + num.ToString("X");
                         }

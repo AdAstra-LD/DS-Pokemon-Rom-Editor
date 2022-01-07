@@ -27,7 +27,6 @@ namespace DSPRE.ROMFiles {
         public bool isLevelScript = new bool();
 
         public static readonly char[] specialChars = { 'x', 'X', '#', '.', '_' };
-        public static NumberStyles numFormatSpecifier = NumberStyles.None; //None means Automatic style, by default
         #endregion
 
         #region Constructors (1)

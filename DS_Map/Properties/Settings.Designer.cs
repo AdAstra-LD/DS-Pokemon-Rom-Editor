@@ -46,5 +46,29 @@ namespace DSPRE.Properties {
                 this["lastColorTablePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool textEditorPreferHex {
+            get {
+                return ((bool)(this["textEditorPreferHex"]));
+            }
+            set {
+                this["textEditorPreferHex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int scriptEditorFormatPreference {
+            get {
+                return ((int)(this["scriptEditorFormatPreference"]));
+            }
+            set {
+                this["scriptEditorFormatPreference"] = value;
+            }
+        }
     }
 }

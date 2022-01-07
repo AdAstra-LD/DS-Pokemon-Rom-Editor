@@ -208,6 +208,7 @@ namespace DSPRE {
                 selectScriptFileComboBox.Items.Add("Script File " + i);
             }
 
+            UpdateScriptNumberCheckBox((NumberStyles)Properties.Settings.Default.scriptEditorFormatPreference);
             selectScriptFileComboBox.SelectedIndex = 0;
             statusLabel.Text = "Ready";
         }
@@ -222,6 +223,10 @@ namespace DSPRE {
             for (int i = 0; i < textCount; i++) {
                 selectTextFileComboBox.Items.Add("Text Archive " + i);
             }
+
+            disableHandlers = true;
+            hexRadiobutton.Checked = Properties.Settings.Default.textEditorPreferHex;
+            disableHandlers = false;
 
             selectTextFileComboBox.SelectedIndex = 0;
             statusLabel.Text = "Ready";
@@ -6664,8 +6669,9 @@ namespace DSPRE {
         }
 
         private bool ReloadScript() {
+            Console.WriteLine("Script Reload has been requested");
             /* clear controls */
-            if (disableHandlers) {
+            if (disableHandlers || selectScriptFileComboBox.SelectedIndex < 0) {
                 return false;
             }
 
@@ -6782,50 +6788,57 @@ namespace DSPRE {
 
         private void UpdateScriptNumberFormatDec(object sender, EventArgs e) {
             if (!disableHandlers && scriptEditorNumberFormatDecimal.Checked) {
-                NumberStyles old = ScriptFile.numFormatSpecifier;
-                ScriptFile.numFormatSpecifier = NumberStyles.Integer;
+                NumberStyles old = (NumberStyles)Properties.Settings.Default.scriptEditorFormatPreference; //Local Backup
+                Properties.Settings.Default.scriptEditorFormatPreference = (int)NumberStyles.Integer;
+                Properties.Settings.Default.Save();
 
-                UpdateScriptNumberCheckBox(old);
+                if (!ReloadScript()) {
+                    UpdateScriptNumberCheckBox(old); //Restore old checkbox status! Script couldn't be redrawn
+                }
             }
         }
         private void UpdateScriptNumberFormatHex(object sender, EventArgs e) {
             if (!disableHandlers && scriptEditorNumberFormatHex.Checked) {
-                NumberStyles old = ScriptFile.numFormatSpecifier;
-                ScriptFile.numFormatSpecifier = NumberStyles.HexNumber;
+                NumberStyles old = (NumberStyles)Properties.Settings.Default.scriptEditorFormatPreference; //Local Backup
+                Properties.Settings.Default.scriptEditorFormatPreference = (int)NumberStyles.HexNumber;
+                Properties.Settings.Default.Save();
 
-                UpdateScriptNumberCheckBox(old);
+                if (!ReloadScript()) {
+                    UpdateScriptNumberCheckBox(old); //Restore old checkbox status! Script couldn't be redrawn
+                }
             }
         }
         private void UpdateScriptNumberFormatNoPref(object sender, EventArgs e) {
             if (!disableHandlers && scriptEditorNumberFormatNoPreference.Checked) {
-                NumberStyles old = ScriptFile.numFormatSpecifier;
-                ScriptFile.numFormatSpecifier = NumberStyles.None;
-                UpdateScriptNumberCheckBox(old);
-            }
-        }
+                NumberStyles old = (NumberStyles)Properties.Settings.Default.scriptEditorFormatPreference; //Local Backup
+                Properties.Settings.Default.scriptEditorFormatPreference = (int)NumberStyles.None;
+                Properties.Settings.Default.Save();
 
-        private void UpdateScriptNumberCheckBox(NumberStyles old) {
-            Console.WriteLine("calling reloadscr");
-            if (!ReloadScript()) {
-                disableHandlers = true;
-                ScriptFile.numFormatSpecifier = old;
-
-                switch (ScriptFile.numFormatSpecifier) {
-                    case NumberStyles.None:
-                        scriptEditorNumberFormatNoPreference.Checked = true;
-                        break;
-                    case NumberStyles.HexNumber:
-                        scriptEditorNumberFormatHex.Checked = true;
-                        break;
-                    case NumberStyles.Integer:
-                        scriptEditorNumberFormatDecimal.Checked = true;
-                        break;
+                if (!ReloadScript()) {
+                    UpdateScriptNumberCheckBox(old); //Restore old checkbox status! Script couldn't be redrawn
                 }
-                Console.WriteLine("changed style to " + ScriptFile.numFormatSpecifier);
-                disableHandlers = false;
             }
         }
-    
+
+        private void UpdateScriptNumberCheckBox(NumberStyles toSet) {
+                
+            disableHandlers = true;
+            Properties.Settings.Default.scriptEditorFormatPreference = (int)toSet;
+
+            switch ((NumberStyles)Properties.Settings.Default.scriptEditorFormatPreference) {
+                case NumberStyles.None:
+                    scriptEditorNumberFormatNoPreference.Checked = true;
+                    break;
+                case NumberStyles.HexNumber:
+                    scriptEditorNumberFormatHex.Checked = true;
+                    break;
+                case NumberStyles.Integer:
+                    scriptEditorNumberFormatDecimal.Checked = true;
+                    break;
+            }
+            Console.WriteLine("changed style to " + Properties.Settings.Default.scriptEditorFormatPreference);
+            disableHandlers = false;
+        }
 
         private void scriptsNavListbox_SelectedIndexChanged(object sender, EventArgs e) {
             NavigatorGoTo((ListBox)sender, 0, scriptSearchManager, ScriptFile.containerTypes.Script.ToString());
@@ -7103,13 +7116,16 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void PrintTextEditorLinesHex() {
-            disableHandlers = true;
-            for (int i = 0; i < currentTextArchive.messages.Count; i++) {
+            int final = Math.Min(textEditorDataGridView.Rows.Count, currentTextArchive.messages.Count);
+
+            for (int i = 0; i < final; i++) {
                 textEditorDataGridView.Rows[i].HeaderCell.Value = "0x" + i.ToString("X");
             }
         }
         private void PrintTextEditorLinesDecimal() {
-            for (int i = 0; i < currentTextArchive.messages.Count; i++) {
+            int final = Math.Min(textEditorDataGridView.Rows.Count, currentTextArchive.messages.Count);
+
+            for (int i = 0; i < final; i++) {
                 textEditorDataGridView.Rows[i].HeaderCell.Value = i.ToString();
             }
         }
@@ -7153,6 +7169,8 @@ namespace DSPRE {
         }
         private void hexRadiobutton_CheckedChanged(object sender, EventArgs e) {
             updateTextEditorLineNumbers();
+            Properties.Settings.Default.textEditorPreferHex = hexRadiobutton.Checked;
+            Properties.Settings.Default.Save();
         }
         private void updateTextEditorLineNumbers() {
             disableHandlers = true;
@@ -8177,15 +8195,22 @@ namespace DSPRE {
             string tilesFilename = tilesFileID.ToString("D4");
             tiles = new NCGR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + tilesFilename, tilesFileID, tilesFilename);
 
-            if (gameFamily != gFamEnum.DP) {
-                int spriteFileID = (trClassID* 5 + 2);
-                string spriteFilename = spriteFileID.ToString("D4");
-                sprite = new NCER(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
+            if (gameFamily == gFamEnum.DP) {
+                return 0;
             }
+            
+            int spriteFileID = (trClassID * 5 + 2);
+            string spriteFilename = spriteFileID.ToString("D4");
+            sprite = new NCER(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
 
             return sprite.Banks.Length - 1;
         }
         private void UpdateTrainerClassPic(PictureBox pb, int frameNumber = 0) {
+            if (sprite == null) {
+                Console.WriteLine("Sprite is null!");
+                return;
+            }
+
             int bank0OAMcount = sprite.Banks[0].oams.Length;
             int[] OAMenabled = new int[bank0OAMcount];
             for (int i = 0; i < OAMenabled.Length; i++) {
