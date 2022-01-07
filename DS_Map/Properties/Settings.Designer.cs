@@ -70,5 +70,53 @@ namespace DSPRE.Properties {
                 this["scriptEditorFormatPreference"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool renderSpawnables {
+            get {
+                return ((bool)(this["renderSpawnables"]));
+            }
+            set {
+                this["renderSpawnables"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool renderOverworlds {
+            get {
+                return ((bool)(this["renderOverworlds"]));
+            }
+            set {
+                this["renderOverworlds"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool renderWarps {
+            get {
+                return ((bool)(this["renderWarps"]));
+            }
+            set {
+                this["renderWarps"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool renderTriggers {
+            get {
+                return ((bool)(this["renderTriggers"]));
+            }
+            set {
+                this["renderTriggers"] = value;
+            }
+        }
     }
 }

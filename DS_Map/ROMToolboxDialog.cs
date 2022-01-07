@@ -467,7 +467,7 @@ namespace DSPRE {
                         for (int j = 0; j < eventFile.overworlds.Count; j++) {
                             
                             // If ow is marked as an item, or in the rare case it is not but script no. falls within item script range:
-                            bool isItem = eventFile.overworlds[j].type == (ushort)Overworld.owType.ITEM 
+                            bool isItem = eventFile.overworlds[j].type == (ushort)Overworld.OwType.ITEM 
                                           || (eventFile.overworlds[j].scriptNumber >= 7000 
                                           && eventFile.overworlds[j].scriptNumber <= 8000 );
                             

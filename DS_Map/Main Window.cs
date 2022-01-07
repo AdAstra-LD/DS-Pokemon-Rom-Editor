@@ -58,6 +58,7 @@ namespace DSPRE {
             if (MessageBox.Show("Are you sure you want to quit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
                 e.Cancel = true;
             }
+            Properties.Settings.Default.Save();
         }
         private string[] GetBuildingsList(bool interior) {
             List<string> names = new List<string>();
@@ -711,6 +712,7 @@ namespace DSPRE {
                 }
             }
 
+            Properties.Settings.Default.Save();
             statusLabel.Text = "Ready";
         }
         private void unpackAllButton_Click(object sender, EventArgs e) {
@@ -1245,17 +1247,21 @@ namespace DSPRE {
         }
         private void eventsTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (eventsTabControl.SelectedTab == signsTabPage) {
-                if (spawnablesListBox.Items.Count > 0)
+                if (spawnablesListBox.Items.Count > 0) {
                     spawnablesListBox.SelectedIndex = 0;
+                }
             } else if (eventsTabControl.SelectedTab == overworldsTabPage) {
-                if (overworldsListBox.Items.Count > 0)
+                if (overworldsListBox.Items.Count > 0) {
                     overworldsListBox.SelectedIndex = 0;
+                }
             } else if (eventsTabControl.SelectedTab == warpsTabPage) {
-                if (warpsListBox.Items.Count > 0)
+                if (warpsListBox.Items.Count > 0) {
                     warpsListBox.SelectedIndex = 0;
+                }
             } else if (eventsTabControl.SelectedTab == triggersTabPage) {
-                if (triggersListBox.Items.Count > 0)
+                if (triggersListBox.Items.Count > 0) {
                     triggersListBox.SelectedIndex = 0;
+                }
             }
         }
         private void headerListBox_Leave(object sender, EventArgs e) {
@@ -2732,7 +2738,6 @@ namespace DSPRE {
                 GenerateMatrixTables();
 
                 Properties.Settings.Default.lastColorTablePath = fileName;
-                Properties.Settings.Default.Save();
 
                 if (!silent) { 
                     MessageBox.Show("Color file has been read." + errorMsg, "Operation completed", MessageBoxButtons.OK, iconType);
@@ -2757,7 +2762,6 @@ namespace DSPRE {
             GenerateMatrixTables();
 
             Properties.Settings.Default.lastColorTablePath = "";
-            Properties.Settings.Default.Save();
         }
 
         /*
@@ -4481,7 +4485,7 @@ namespace DSPRE {
             eventPictureBox.Image = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
 
             /* Draw spawnables */
-            if (showSignsCheckBox.Checked) {
+            if (showSpawnablesCheckBox.Checked) {
                 for (int i = 0; i < currentEvFile.spawnables.Count; i++) {
                     Spawnable spawnable = currentEvFile.spawnables[i];
 
@@ -4662,15 +4666,13 @@ namespace DSPRE {
             for (int i = 0; i < currentEvFile.triggers.Count; i++)
                 triggersListBox.Items.Add("Trigger " + i);
         }
-        private Bitmap GetOverworldImage(ushort entryIDOfEventFile, ushort orientation) {
+        private Bitmap GetOverworldImage(ushort eventEntryID, ushort orientation) {
             /* Find sprite corresponding to ID and load it*/
-            string imageName;
-            if (RomInfo.ow3DSpriteDict.TryGetValue(entryIDOfEventFile, out imageName)) { // If overworld is 3D, load image from dictionary
+            if (RomInfo.ow3DSpriteDict.TryGetValue(eventEntryID, out string imageName)) { // If overworld is 3D, load image from dictionary
                 return (Bitmap)Properties.Resources.ResourceManager.GetObject(imageName);
             }
 
-            (uint spriteID, ushort properties) result;
-            if (!RomInfo.OverworldTable.TryGetValue(entryIDOfEventFile, out result)) { // try loading image from dictionary
+            if (!RomInfo.OverworldTable.TryGetValue(eventEntryID, out (uint spriteID, ushort properties) result)) { // try loading image from dictionary
                 return (Bitmap)Properties.Resources.ResourceManager.GetObject("overworld"); //if there's no match, load bounding box
             }
 
@@ -4967,10 +4969,24 @@ namespace DSPRE {
             spawnableDirComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.orientationsArray);
             spawnableTypeComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.typesArray);
 
-            disableHandlers = false;
-
             /* Draw matrix 0 in matrix navigator */
             eventMatrix = new GameMatrix(0);
+
+            showSpawnablesCheckBox.Checked = Properties.Settings.Default.renderSpawnables;
+            showOwsCheckBox.Checked = Properties.Settings.Default.renderOverworlds;
+            showWarpsCheckBox.Checked = Properties.Settings.Default.renderWarps;
+            showTriggersCheckBox.Checked = Properties.Settings.Default.renderTriggers;
+
+            if (owOrientationComboBox.SelectedIndex < 0 && overworldsListBox.Items.Count <= 0) {
+                owOrientationComboBox.SelectedIndex = 2;
+            }
+
+            if (owMovementComboBox.SelectedIndex < 0 && overworldsListBox.Items.Count <= 0) {
+                owOrientationComboBox.SelectedIndex = 1;
+            }
+
+            disableHandlers = false;
+
             selectEventComboBox.SelectedIndex = 0;
             owItemComboBox.SelectedIndex = 0;
             owTrainerComboBox.SelectedIndex = 0;
@@ -5061,10 +5077,12 @@ namespace DSPRE {
         }
         private void importEventFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .evt file */
-            OpenFileDialog of = new OpenFileDialog();
-            of.Filter = "Event File (*.evt)|*.evt";
-            if (of.ShowDialog(this) != DialogResult.OK)
+            OpenFileDialog of = new OpenFileDialog {
+                Filter = "Event File (*.evt)|*.evt"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             /* Update event object on disk */
             string path = RomInfo.gameDirs[DirNames.eventFiles].unpackedDir + "\\" + selectEventComboBox.SelectedIndex.ToString("D4");
@@ -5117,7 +5135,15 @@ namespace DSPRE {
             DisplayActiveEvents();
         }
         private void showEventsCheckBoxes_CheckedChanged(object sender, EventArgs e) {
+            if (disableHandlers) {
+                return;
+            }
+
             DisplayActiveEvents();
+            Properties.Settings.Default.renderSpawnables = showSpawnablesCheckBox.Checked;
+            Properties.Settings.Default.renderOverworlds = showOwsCheckBox.Checked;
+            Properties.Settings.Default.renderWarps = showWarpsCheckBox.Checked;
+            Properties.Settings.Default.renderTriggers = showTriggersCheckBox.Checked;
         }
         private void eventAreaDataUpDown_ValueChanged(object sender, EventArgs e) {
             DisplayEventMap(readGraphicsFromHeader: false);
@@ -5131,28 +5157,44 @@ namespace DSPRE {
                 if (selectedEvent != null) {
                     switch (selectedEvent.evType) {
                         case Event.EventType.SPAWNABLE:
+                            if (!showSpawnablesCheckBox.Checked) {
+                                return;
+                            }
                             spawnablexMapUpDown.Value = (short)mouseTilePos.X;
                             spawnableYMapUpDown.Value = (short)mouseTilePos.Y;
                             spawnableXMatrixUpDown.Value = (short)eventMatrixXUpDown.Value;
                             spawnableYMatrixUpDown.Value = (short)eventMatrixYUpDown.Value;
+
                             break;
                         case Event.EventType.OVERWORLD:
+                            if (!showOwsCheckBox.Checked) {
+                                return;
+                            }
                             owXMapUpDown.Value = (short)mouseTilePos.X;
                             owYMapUpDown.Value = (short)mouseTilePos.Y;
                             owXMatrixUpDown.Value = (short)eventMatrixXUpDown.Value;
                             owYMatrixUpDown.Value = (short)eventMatrixYUpDown.Value;
+
                             break;
                         case Event.EventType.WARP:
+                            if (!showWarpsCheckBox.Checked) {
+                                return;
+                            }
                             warpXMapUpDown.Value = (short)mouseTilePos.X;
                             warpYMapUpDown.Value = (short)mouseTilePos.Y;
                             warpXMatrixUpDown.Value = (short)eventMatrixXUpDown.Value;
                             warpYMatrixUpDown.Value = (short)eventMatrixYUpDown.Value;
+
                             break;
                         case Event.EventType.TRIGGER:
+                            if (!showTriggersCheckBox.Checked) {
+                                return;
+                            }
                             triggerXMapUpDown.Value = (short)mouseTilePos.X;
                             triggerYMapUpDown.Value = (short)mouseTilePos.Y;
                             triggerXMatrixUpDown.Value = (short)eventMatrixXUpDown.Value;
                             triggerYMatrixUpDown.Value = (short)eventMatrixYUpDown.Value;
+                            
                             break;
                     }
                     DisplayActiveEvents();
@@ -5174,7 +5216,7 @@ namespace DSPRE {
                             return;
                         }
                     }
-                if (showSignsCheckBox.Checked)
+                if (showSpawnablesCheckBox.Checked)
                     for (int i = 0; i < currentEvFile.spawnables.Count; i++) {
                         Spawnable ev = currentEvFile.spawnables[i];
 
@@ -5442,8 +5484,9 @@ namespace DSPRE {
             }
         }
         private void owItemComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             owScriptNumericUpDown.Value = currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(7000 + owItemComboBox.SelectedIndex);
         }
@@ -5468,7 +5511,7 @@ namespace DSPRE {
 
             try {
                 /* Special settings controls */
-                if (selectedOw.type == (ushort)Overworld.owType.TRAINER) {
+                if (selectedOw.type == (ushort)Overworld.OwType.TRAINER) {
                     isTrainerRadioButton.Checked = true;
                     if (selectedOw.scriptNumber >= 4999) {
                         owTrainerComboBox.SelectedIndex = Math.Max(selectedOw.scriptNumber - 4999, 0); // Partner of double battle trainer
@@ -5477,7 +5520,7 @@ namespace DSPRE {
                         owTrainerComboBox.SelectedIndex = Math.Max(selectedOw.scriptNumber - 2999, 0); // Normal trainer
                         owPartnerTrainerCheckBox.Checked = false;
                     }
-                } else if (selectedOw.type == (ushort)Overworld.owType.ITEM || selectedOw.scriptNumber >= 7000 && selectedOw.scriptNumber <= 8000) {
+                } else if (selectedOw.type == (ushort)Overworld.OwType.ITEM || selectedOw.scriptNumber >= 7000 && selectedOw.scriptNumber <= 8000) {
                     isItemRadioButton.Checked = true;
                     owItemComboBox.SelectedIndex = Math.Max(selectedOw.scriptNumber - 7000, 0);
                 } else {
@@ -5502,6 +5545,7 @@ namespace DSPRE {
                 owSightRangeUpDown.Value = selectedOw.sightRange;
                 owXRangeUpDown.Value = selectedOw.xRange;
                 owYRangeUpDown.Value = selectedOw.yRange;
+
                 try {
                     uint spriteID = RomInfo.OverworldTable[currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry].spriteID;
                     if (spriteID == 0x3D3D) {
@@ -5519,70 +5563,99 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void owFlagNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
+
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].flag = (ushort)owFlagNumericUpDown.Value;
         }
         private void owIDNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
+
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].owID = (ushort)owIDNumericUpDown.Value;
         }
         private void owMovementComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
+
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].movement = (ushort)owMovementComboBox.SelectedIndex;
         }
         private void owOrientationComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            ushort orientation = (ushort)owOrientationComboBox.SelectedIndex;
+            if (owSpriteComboBox.SelectedIndex < 0 || orientation < 0) {
                 return;
+            }
 
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].orientation = (ushort)owOrientationComboBox.SelectedIndex;
-            owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry, currentEvFile.overworlds[overworldsListBox.SelectedIndex].orientation);
-            DisplayActiveEvents();
+            if (overworldsListBox.SelectedIndex >= 0) {
+                owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry, orientation);
+
+                if (!disableHandlers) {
+                    currentEvFile.overworlds[overworldsListBox.SelectedIndex].orientation = orientation;
+                    DisplayActiveEvents();
+                }
+            } else {
+                owSpritePictureBox.BackgroundImage = GetOverworldImage((ushort)owSpriteComboBox.SelectedIndex, orientation);
+            }
+
             owSpritePictureBox.Invalidate();
         }
         private void owScriptNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)owScriptNumericUpDown.Value;
         }
         private void owSightRangeUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].sightRange = (ushort)owSightRangeUpDown.Value;
         }
         private void owSpriteComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (owSpriteComboBox.SelectedIndex < 0) {
                 return;
+            }
+            ushort overlayTableEntryID = (ushort)RomInfo.OverworldTable.Keys.ElementAt(owSpriteComboBox.SelectedIndex);
+            uint spriteID = RomInfo.OverworldTable[overlayTableEntryID].spriteID;
 
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry = (ushort)RomInfo.OverworldTable.Keys.ElementAt(owSpriteComboBox.SelectedIndex);
-
-            uint spriteID = RomInfo.OverworldTable[currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry].spriteID;
             if (spriteID == 0x3D3D) {
                 spriteIDlabel.Text = "3D Overworld";
             } else {
                 spriteIDlabel.Text = "Sprite ID: " + spriteID;
             }
-            owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry, currentEvFile.overworlds[overworldsListBox.SelectedIndex].orientation);
-            DisplayActiveEvents();
-            owSpritePictureBox.Invalidate();
 
+            if (overworldsListBox.SelectedIndex >= 0) {
+                owSpritePictureBox.BackgroundImage = GetOverworldImage(overlayTableEntryID, currentEvFile.overworlds[overworldsListBox.SelectedIndex].orientation);
+
+                if (!disableHandlers) {
+                    currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry = overlayTableEntryID;
+                    DisplayActiveEvents();
+                }
+            } else {
+                owSpritePictureBox.BackgroundImage = GetOverworldImage(overlayTableEntryID, (ushort)owOrientationComboBox.SelectedIndex);
+            }
+            owSpritePictureBox.Invalidate();
         }
         private void owPartnerTrainerCheckBox_CheckedChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             if (owPartnerTrainerCheckBox.Checked) {
                 currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber += 2000;
-            } else
+            } else {
                 currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber -= 2000;
+            }
         }
         private void owTrainerComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             owScriptNumericUpDown.Value = owPartnerTrainerCheckBox.Checked
                 ? (currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(4999 + owTrainerComboBox.SelectedIndex))
@@ -5604,24 +5677,31 @@ namespace DSPRE {
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].xRange = (ushort)owXRangeUpDown.Value;
         }
         private void owYRangeUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
+
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].yRange = (ushort)owYRangeUpDown.Value;
         }
         private void owYMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
+
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].yMapPosition = (short)owYMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void owZPositionUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
+
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].zPosition = (short)owZPositionUpDown.Value;
         }
         private void owXMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].xMatrixPosition = (ushort)owXMatrixUpDown.Value;
             eventMatrixPictureBox.Image = new Bitmap(eventMatrixPictureBox.Width, eventMatrixPictureBox.Height);
@@ -5631,8 +5711,9 @@ namespace DSPRE {
             DisplayActiveEvents();
         }
         private void owYMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0)
+            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].yMatrixPosition = (ushort)owYMatrixUpDown.Value;
             eventMatrixPictureBox.Image = new Bitmap(eventMatrixPictureBox.Width, eventMatrixPictureBox.Height);
@@ -6790,7 +6871,7 @@ namespace DSPRE {
             if (!disableHandlers && scriptEditorNumberFormatDecimal.Checked) {
                 NumberStyles old = (NumberStyles)Properties.Settings.Default.scriptEditorFormatPreference; //Local Backup
                 Properties.Settings.Default.scriptEditorFormatPreference = (int)NumberStyles.Integer;
-                Properties.Settings.Default.Save();
+                
 
                 if (!ReloadScript()) {
                     UpdateScriptNumberCheckBox(old); //Restore old checkbox status! Script couldn't be redrawn
@@ -6801,7 +6882,6 @@ namespace DSPRE {
             if (!disableHandlers && scriptEditorNumberFormatHex.Checked) {
                 NumberStyles old = (NumberStyles)Properties.Settings.Default.scriptEditorFormatPreference; //Local Backup
                 Properties.Settings.Default.scriptEditorFormatPreference = (int)NumberStyles.HexNumber;
-                Properties.Settings.Default.Save();
 
                 if (!ReloadScript()) {
                     UpdateScriptNumberCheckBox(old); //Restore old checkbox status! Script couldn't be redrawn
@@ -6812,7 +6892,6 @@ namespace DSPRE {
             if (!disableHandlers && scriptEditorNumberFormatNoPreference.Checked) {
                 NumberStyles old = (NumberStyles)Properties.Settings.Default.scriptEditorFormatPreference; //Local Backup
                 Properties.Settings.Default.scriptEditorFormatPreference = (int)NumberStyles.None;
-                Properties.Settings.Default.Save();
 
                 if (!ReloadScript()) {
                     UpdateScriptNumberCheckBox(old); //Restore old checkbox status! Script couldn't be redrawn
@@ -7170,7 +7249,6 @@ namespace DSPRE {
         private void hexRadiobutton_CheckedChanged(object sender, EventArgs e) {
             updateTextEditorLineNumbers();
             Properties.Settings.Default.textEditorPreferHex = hexRadiobutton.Checked;
-            Properties.Settings.Default.Save();
         }
         private void updateTextEditorLineNumbers() {
             disableHandlers = true;
@@ -9165,7 +9243,7 @@ namespace DSPRE {
         private (DirectoryInfo, FileInfo[]) OpenNonEmptyDir(DirectoryInfo d = null, string title = "Waiting for user") {
             /*==================================================================*/
             if (d == null) {
-                MessageBox.Show("Choose the source folder.", title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Choose a source folder.", title, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CommonOpenFileDialog sourceDirDialog = new CommonOpenFileDialog {
                     IsFolderPicker = true,
                     Multiselect = false
@@ -9202,7 +9280,6 @@ namespace DSPRE {
             }
 
             Properties.Settings.Default.menuLayout = layoutStyle;
-            Properties.Settings.Default.Save();
 
             switch (layoutStyle) {
                 case 0:

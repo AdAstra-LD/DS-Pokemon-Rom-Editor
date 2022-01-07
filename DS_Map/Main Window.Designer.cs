@@ -325,7 +325,7 @@
             this.showTriggersCheckBox = new System.Windows.Forms.CheckBox();
             this.showWarpsCheckBox = new System.Windows.Forms.CheckBox();
             this.showOwsCheckBox = new System.Windows.Forms.CheckBox();
-            this.showSignsCheckBox = new System.Windows.Forms.CheckBox();
+            this.showSpawnablesCheckBox = new System.Windows.Forms.CheckBox();
             this.eventAreaDataUpDown = new System.Windows.Forms.NumericUpDown();
             this.eventMapTextureLabel = new System.Windows.Forms.Label();
             this.RightClickLabel = new System.Windows.Forms.Label();
@@ -4660,12 +4660,12 @@
             this.groupBox21.Controls.Add(this.showTriggersCheckBox);
             this.groupBox21.Controls.Add(this.showWarpsCheckBox);
             this.groupBox21.Controls.Add(this.showOwsCheckBox);
-            this.groupBox21.Controls.Add(this.showSignsCheckBox);
+            this.groupBox21.Controls.Add(this.showSpawnablesCheckBox);
             this.groupBox21.Controls.Add(this.eventAreaDataUpDown);
             this.groupBox21.Controls.Add(this.eventMapTextureLabel);
-            this.groupBox21.Location = new System.Drawing.Point(469, 477);
+            this.groupBox21.Location = new System.Drawing.Point(463, 477);
             this.groupBox21.Name = "groupBox21";
-            this.groupBox21.Size = new System.Drawing.Size(122, 135);
+            this.groupBox21.Size = new System.Drawing.Size(128, 135);
             this.groupBox21.TabIndex = 61;
             this.groupBox21.TabStop = false;
             this.groupBox21.Text = "Renderer Settings";
@@ -4688,7 +4688,7 @@
             this.showWarpsCheckBox.AutoSize = true;
             this.showWarpsCheckBox.Checked = true;
             this.showWarpsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showWarpsCheckBox.Location = new System.Drawing.Point(9, 42);
+            this.showWarpsCheckBox.Location = new System.Drawing.Point(9, 64);
             this.showWarpsCheckBox.Name = "showWarpsCheckBox";
             this.showWarpsCheckBox.Size = new System.Drawing.Size(87, 17);
             this.showWarpsCheckBox.TabIndex = 43;
@@ -4701,7 +4701,7 @@
             this.showOwsCheckBox.AutoSize = true;
             this.showOwsCheckBox.Checked = true;
             this.showOwsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showOwsCheckBox.Location = new System.Drawing.Point(9, 64);
+            this.showOwsCheckBox.Location = new System.Drawing.Point(9, 42);
             this.showOwsCheckBox.Name = "showOwsCheckBox";
             this.showOwsCheckBox.Size = new System.Drawing.Size(109, 17);
             this.showOwsCheckBox.TabIndex = 42;
@@ -4711,16 +4711,16 @@
             // 
             // showSignsCheckBox
             // 
-            this.showSignsCheckBox.AutoSize = true;
-            this.showSignsCheckBox.Checked = true;
-            this.showSignsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showSignsCheckBox.Location = new System.Drawing.Point(9, 20);
-            this.showSignsCheckBox.Name = "showSignsCheckBox";
-            this.showSignsCheckBox.Size = new System.Drawing.Size(82, 17);
-            this.showSignsCheckBox.TabIndex = 41;
-            this.showSignsCheckBox.Text = "Show Signs";
-            this.showSignsCheckBox.UseVisualStyleBackColor = true;
-            this.showSignsCheckBox.CheckedChanged += new System.EventHandler(this.showEventsCheckBoxes_CheckedChanged);
+            this.showSpawnablesCheckBox.AutoSize = true;
+            this.showSpawnablesCheckBox.Checked = true;
+            this.showSpawnablesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showSpawnablesCheckBox.Location = new System.Drawing.Point(9, 20);
+            this.showSpawnablesCheckBox.Name = "showSignsCheckBox";
+            this.showSpawnablesCheckBox.Size = new System.Drawing.Size(114, 17);
+            this.showSpawnablesCheckBox.TabIndex = 41;
+            this.showSpawnablesCheckBox.Text = "Show Spawnables";
+            this.showSpawnablesCheckBox.UseVisualStyleBackColor = true;
+            this.showSpawnablesCheckBox.CheckedChanged += new System.EventHandler(this.showEventsCheckBoxes_CheckedChanged);
             // 
             // eventAreaDataUpDown
             // 
@@ -4739,7 +4739,7 @@
             // 
             this.eventMapTextureLabel.AutoSize = true;
             this.eventMapTextureLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.eventMapTextureLabel.Location = new System.Drawing.Point(49, 110);
+            this.eventMapTextureLabel.Location = new System.Drawing.Point(51, 110);
             this.eventMapTextureLabel.Name = "eventMapTextureLabel";
             this.eventMapTextureLabel.Size = new System.Drawing.Size(70, 15);
             this.eventMapTextureLabel.TabIndex = 31;
@@ -10360,14 +10360,14 @@
             // essentialToolStripMenuItem
             // 
             this.essentialToolStripMenuItem.Name = "essentialToolStripMenuItem";
-            this.essentialToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.essentialToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.essentialToolStripMenuItem.Text = "Essential";
             this.essentialToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
             // simpleToolStripMenuItem
             // 
             this.simpleToolStripMenuItem.Name = "simpleToolStripMenuItem";
-            this.simpleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.simpleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.simpleToolStripMenuItem.Text = "Simple";
             this.simpleToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
@@ -10376,7 +10376,7 @@
             this.fullViewToolStripMenuItem.Checked = true;
             this.fullViewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.fullViewToolStripMenuItem.Name = "fullViewToolStripMenuItem";
-            this.fullViewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fullViewToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.fullViewToolStripMenuItem.Text = "Complete";
             this.fullViewToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
@@ -11561,7 +11561,7 @@
         private System.Windows.Forms.CheckBox showTriggersCheckBox;
         private System.Windows.Forms.CheckBox showWarpsCheckBox;
         private System.Windows.Forms.CheckBox showOwsCheckBox;
-        private System.Windows.Forms.CheckBox showSignsCheckBox;
+        private System.Windows.Forms.CheckBox showSpawnablesCheckBox;
         private System.Windows.Forms.Button duplicateWarpsButton;
         private System.Windows.Forms.Button duplicateTriggersButton;
         private System.Windows.Forms.ToolStripMenuItem headerSearchToolStripMenuItem;
