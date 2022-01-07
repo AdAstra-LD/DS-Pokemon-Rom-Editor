@@ -26,6 +26,7 @@ namespace DSPRE {
     public partial class MainProgram : Form {
         public MainProgram() {
             InitializeComponent();
+            SetMenuLayout(Properties.Settings.Default.menuLayout); //Read user settings for menu layout
         }
 
         #region Program Window
@@ -2129,7 +2130,9 @@ namespace DSPRE {
                 selectMatrixComboBox.Items.Add(new GameMatrix(i));
             }
 
-            RomInfo.LoadMapCellsColorDictionary();
+            if (!ReadColorTable(Properties.Settings.Default.lastColorTablePath, silent: true)) {
+                RomInfo.LoadMapCellsColorDictionary();
+            }
             RomInfo.SetupSpawnSettings();
 
             disableHandlers = false;
@@ -2612,103 +2615,130 @@ namespace DSPRE {
                 return;
             }
 
-            string[] fileTableContent = File.ReadAllLines(of.FileName);
+            ReadColorTable(of.FileName, silent: false);
+        }
 
-            string mapKeyword = "[Maplist]";
-            string colorKeyword = "[Color]";
-            string textColorKeyword = "[TextColor]";
-            string dashSeparator = "-";
-            string problematicSegment = "incomplete line";
+        private bool ReadColorTable(string fileName, bool silent) {
+            if (string.IsNullOrWhiteSpace(fileName)) {
+                return false;
+            }
 
-            Dictionary<List<uint>, (Color background, Color foreground)> colorsDict = new Dictionary<List<uint>, (Color background, Color foreground)>();
-            List<string> linesWithErrors = new List<string>();
+            string[] fileTableContent = File.ReadAllLines(fileName);
 
-            for (int i = 0; i < fileTableContent.Length; i++) {
-                if (fileTableContent[i].Length > 0) {
-                    string[] lineParts = fileTableContent[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            if (fileTableContent.Length > 0) {
+                const string mapKeyword = "[Maplist]";
+                const string colorKeyword = "[Color]";
+                const string textColorKeyword = "[TextColor]";
+                const string dashSeparator = "-";
+                string problematicSegment = "incomplete line";
 
-                    try {
-                        int j = 0;
-                        if (!lineParts[j].Equals(mapKeyword)) {
-                            problematicSegment = nameof(mapKeyword);
-                            throw new FormatException();
-                        }
-                        j++;
+                Dictionary<List<uint>, (Color background, Color foreground)> colorsDict = new Dictionary<List<uint>, (Color background, Color foreground)>();
+                List<string> linesWithErrors = new List<string>();
 
-                        List<uint> mapList = new List<uint>();
-                        while (!lineParts[j].Equals(dashSeparator)) {
+                for (int i = 0; i < fileTableContent.Length; i++) {
+                    if (fileTableContent[i].Length > 0) {
+                        string[] lineParts = fileTableContent[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-                            if (lineParts[j].Equals("and")) {
-                                j++;
+                        try {
+                            int j = 0;
+                            if (!lineParts[j].Equals(mapKeyword)) {
+                                problematicSegment = nameof(mapKeyword);
+                                throw new FormatException();
                             }
-                            uint firstValue = uint.Parse(lineParts[j++]);
-                            mapList.Add(firstValue);
+                            j++;
 
-                            if (lineParts[j].Equals("to")) {
-                                j++;
-                                uint finalValue = uint.Parse(lineParts[j++]);
-                                //Add all numbers ranging from maplist[0] to finalValue
-                                if (firstValue > finalValue)
-                                    Swap(ref firstValue, ref finalValue);
+                            List<uint> mapList = new List<uint>();
+                            while (!lineParts[j].Equals(dashSeparator)) {
 
-                                for (uint k = firstValue + 1; k <= finalValue; k++) {
-                                    mapList.Add(k);
+                                if (lineParts[j].Equals("and")) {
+                                    j++;
+                                }
+                                uint firstValue = uint.Parse(lineParts[j++]);
+                                mapList.Add(firstValue);
+
+                                if (lineParts[j].Equals("to")) {
+                                    j++;
+                                    uint finalValue = uint.Parse(lineParts[j++]);
+                                    //Add all numbers ranging from maplist[0] to finalValue
+                                    if (firstValue > finalValue)
+                                        Swap(ref firstValue, ref finalValue);
+
+                                    for (uint k = firstValue + 1; k <= finalValue; k++) {
+                                        mapList.Add(k);
+                                    }
                                 }
                             }
+
+                            if (!lineParts[j].Equals(dashSeparator)) {
+                                problematicSegment = nameof(dashSeparator);
+                                throw new FormatException();
+                            }
+                            j++;
+
+                            if (!lineParts[j].Equals(colorKeyword)) {
+                                problematicSegment = nameof(colorKeyword);
+                                throw new FormatException();
+                            }
+                            j++;
+
+                            int r = Int32.Parse(lineParts[j++]);
+                            int g = Int32.Parse(lineParts[j++]);
+                            int b = Int32.Parse(lineParts[j++]);
+
+                            if (!lineParts[j].Equals(dashSeparator)) {
+                                problematicSegment = nameof(dashSeparator);
+                                throw new FormatException();
+                            }
+                            j++;
+
+                            if (!lineParts[j].Equals(textColorKeyword)) {
+                                problematicSegment = nameof(textColorKeyword);
+                                throw new FormatException();
+                            }
+                            j++;
+
+                            colorsDict.Add(mapList, (Color.FromArgb(r, g, b), Color.FromName(lineParts[j++])));
+                        } catch {
+                            if (!silent) {
+                                linesWithErrors.Add(i + 1 + " (err. " + problematicSegment + ")\n");
+                            }
+                            continue;
                         }
-
-                        if (!lineParts[j].Equals(dashSeparator)) {
-                            problematicSegment = nameof(dashSeparator);
-                            throw new FormatException();
-                        }
-                        j++;
-
-                        if (!lineParts[j].Equals(colorKeyword)) {
-                            problematicSegment = nameof(colorKeyword);
-                            throw new FormatException();
-                        }
-                        j++;
-
-                        int r = Int32.Parse(lineParts[j++]);
-                        int g = Int32.Parse(lineParts[j++]);
-                        int b = Int32.Parse(lineParts[j++]);
-
-                        if (!lineParts[j].Equals(dashSeparator)) {
-                            problematicSegment = nameof(dashSeparator);
-                            throw new FormatException();
-                        }
-                        j++;
-
-                        if (!lineParts[j].Equals(textColorKeyword)) {
-                            problematicSegment = nameof(textColorKeyword);
-                            throw new FormatException();
-                        }
-                        j++;
-
-                        colorsDict.Add(mapList, (Color.FromArgb(r, g, b), Color.FromName(lineParts[j++])));
-                    } catch {
-                        linesWithErrors.Add(i + 1 + " (err. " + problematicSegment + ")\n");
-                        continue;
                     }
                 }
-            }
-            colorsDict.Add(new List<uint> { GameMatrix.EMPTY }, (Color.Black, Color.White));
+                colorsDict.Add(new List<uint> { GameMatrix.EMPTY }, (Color.Black, Color.White));
 
-            string errorMsg = "";
-            MessageBoxIcon iconType = MessageBoxIcon.Information;
-            if (linesWithErrors.Count > 0) {
-                errorMsg = "\nHowever, the following lines couldn't be parsed correctly:\n";
+                string errorMsg = "";
+                MessageBoxIcon iconType = MessageBoxIcon.Information;
+                
+                if (!silent) {
+                    if (linesWithErrors.Count > 0) {
+                        errorMsg = "\nHowever, the following lines couldn't be parsed correctly:\n";
 
-                foreach (string s in linesWithErrors) {
-                    errorMsg += "- Line " + s;
+                        foreach (string s in linesWithErrors) {
+                            errorMsg += "- Line " + s;
+                        }
+
+                        iconType = MessageBoxIcon.Warning;
+                    }
                 }
+                romInfo.SetMapCellsColorDictionary(colorsDict);
+                ClearMatrixTables();
+                GenerateMatrixTables();
 
-                iconType = MessageBoxIcon.Warning;
+                Properties.Settings.Default.lastColorTablePath = fileName;
+                Properties.Settings.Default.Save();
+
+                if (!silent) { 
+                    MessageBox.Show("Color file has been read." + errorMsg, "Operation completed", MessageBoxButtons.OK, iconType);
+                }
+                return true;
+            } else {
+                if (!silent) {
+                    MessageBox.Show("No readable content was found in this file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return false;
             }
-            romInfo.SetMapCellsColorDictionary(colorsDict);
-            ClearMatrixTables();
-            GenerateMatrixTables();
-            MessageBox.Show("Color file has been read." + errorMsg, "Operation completed", MessageBoxButtons.OK, iconType);
         }
 
         public void Swap(ref uint a, ref uint b) {
@@ -2720,6 +2750,9 @@ namespace DSPRE {
             RomInfo.LoadMapCellsColorDictionary();
             ClearMatrixTables();
             GenerateMatrixTables();
+
+            Properties.Settings.Default.lastColorTablePath = "";
+            Properties.Settings.Default.Save();
         }
 
         /*
@@ -9128,6 +9161,74 @@ namespace DSPRE {
             };
 
             return (d, files);
+        }
+
+        private void simpleToolStripMenuItem_MouseDown(object sender, MouseEventArgs e) {
+            ToolStripMenuItem tsmi = (sender as ToolStripMenuItem);
+            SetMenuLayout((byte)tsmi.GetCurrentParent().Items.IndexOf(tsmi));
+        }
+
+        private void SetMenuLayout(byte layoutStyle) {
+            Console.WriteLine("Setting menuLayout to" + layoutStyle);
+
+            IList list = menuViewToolStripMenuItem.DropDownItems;
+            for (int i = 0; i < list.Count; i++) {
+                (list[i] as ToolStripMenuItem).Checked = (i == layoutStyle); 
+            }
+
+            Properties.Settings.Default.menuLayout = layoutStyle;
+            Properties.Settings.Default.Save();
+
+            switch (layoutStyle) {
+                case 0:
+                    buildNarcFromFolderToolStripButton.Visible = false;
+                    unpackNARCtoFolderToolStripButton.Visible = false;
+                    separator_afterNarcUtils.Visible = false;
+
+                    listBasedBatchRenameToolStripButton.Visible = false;
+                    contentBasedBatchRenameToolStripButton.Visible = false;
+                    separator_afterRenameUtils.Visible = false;
+
+                    enumBasedListBuilderToolStripButton.Visible = false;
+                    folderBasedListBuilderToolStriButton.Visible = false;
+                    separator_afterListUtils.Visible = false;
+
+                    nsbmdAddTexButton.Visible = false;
+                    nsbmdRemoveTexButton.Visible = false;
+                    nsbmdExportTexButton.Visible = false;
+                    separator_afterNsbmdUtils.Visible = false;
+
+                    wildEditorButton.Visible = false;
+                    romToolboxToolStripButton.Visible = false;
+                    break;
+                case 1:
+                    buildNarcFromFolderToolStripButton.Visible = false;
+                    unpackNARCtoFolderToolStripButton.Visible = false;
+                    separator_afterNarcUtils.Visible = false;
+
+                    listBasedBatchRenameToolStripButton.Visible = false;
+                    contentBasedBatchRenameToolStripButton.Visible = false;
+                    separator_afterRenameUtils.Visible = false;
+
+                    enumBasedListBuilderToolStripButton.Visible = false;
+                    folderBasedListBuilderToolStriButton.Visible = false;
+                    separator_afterListUtils.Visible = false;
+
+                    nsbmdAddTexButton.Visible = true;
+                    nsbmdRemoveTexButton.Visible = true;
+                    nsbmdExportTexButton.Visible = true;
+                    separator_afterNsbmdUtils.Visible = true;
+
+                    wildEditorButton.Visible = true;
+                    romToolboxToolStripButton.Visible = true;
+                    break;
+                case 2:
+                default:
+                    foreach (ToolStripItem c in mainToolStrip.Items) {
+                        c.Visible = true;
+                    }
+                    break;
+            }
         }
     }
 }

@@ -30,22 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle49 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle50 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle51 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle53 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle54 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle55 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle56 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle57 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle58 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle59 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle60 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle61 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle62 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle63 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle64 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
             this.removeLastHeaderBTN = new System.Windows.Forms.Button();
@@ -809,6 +809,14 @@
             this.listBuilderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fromCEnumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fromFolderContentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nSBMDUtilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.texturizeNSBMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.untexturizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extractNSBTXFromNSBMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.essentialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simpleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fullViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -817,33 +825,35 @@
             this.loadRomButton = new System.Windows.Forms.ToolStripButton();
             this.readDataFromFolderButton = new System.Windows.Forms.ToolStripButton();
             this.saveRomButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.separator_AfterOpenSave = new System.Windows.Forms.ToolStripSeparator();
             this.unpackAllButton = new System.Windows.Forms.ToolStripButton();
             this.updateMapNarcsButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.separator_afterFolderUnpackers = new System.Windows.Forms.ToolStripSeparator();
             this.buildNarcFromFolderToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.unpackNARCtoFolderToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.listBasedBatchRenameToolStrip = new System.Windows.Forms.ToolStripButton();
-            this.contentBasedBatchRenameToolStrip = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.separator_afterNarcUtils = new System.Windows.Forms.ToolStripSeparator();
+            this.listBasedBatchRenameToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.contentBasedBatchRenameToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.separator_afterRenameUtils = new System.Windows.Forms.ToolStripSeparator();
             this.enumBasedListBuilderToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.folderBasedListBuilderToolStriButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.separator_afterListUtils = new System.Windows.Forms.ToolStripSeparator();
             this.nsbmdAddTexButton = new System.Windows.Forms.ToolStripButton();
             this.nsbmdRemoveTexButton = new System.Windows.Forms.ToolStripButton();
             this.nsbmdExportTexButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.separator_afterNsbmdUtils = new System.Windows.Forms.ToolStripSeparator();
             this.buildingEditorButton = new System.Windows.Forms.ToolStripButton();
             this.wildEditorButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.scriptCommandsButton = new System.Windows.Forms.ToolStripButton();
             this.romToolboxToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.headerSearchToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.spawnEditorToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.separator_afterMiscButtons = new System.Windows.Forms.ToolStripSeparator();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
+            this.directoryEntry2 = new System.DirectoryServices.DirectoryEntry();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -2717,40 +2727,40 @@
             this.headersGridView.AllowUserToResizeColumns = false;
             this.headersGridView.AllowUserToResizeRows = false;
             this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle49.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle49.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle49.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle49.ForeColor = System.Drawing.SystemColors.Info;
-            dataGridViewCellStyle49.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle49.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle49.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle49;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle50.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle50.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle50.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle50.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle50.Format = "D4";
-            dataGridViewCellStyle50.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle50.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle50.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle50;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.Format = "D4";
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.headersGridView.Location = new System.Drawing.Point(0, 0);
             this.headersGridView.MultiSelect = false;
             this.headersGridView.Name = "headersGridView";
-            dataGridViewCellStyle51.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle51.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle51.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle51.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle51.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle51.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle51.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle51;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.headersGridView.RowHeadersWidth = 50;
             this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle52.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle52.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle52;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.headersGridView.RowTemplate.Height = 18;
             this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -2779,43 +2789,43 @@
             this.heightsGridView.AllowUserToDeleteRows = false;
             this.heightsGridView.AllowUserToResizeColumns = false;
             this.heightsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle53.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle53;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle54.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle54.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle54.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle54.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle54.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle54.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle54.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle54;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle55.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle55.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle55.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            dataGridViewCellStyle55.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle55.Format = "D2";
-            dataGridViewCellStyle55.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle55.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle55.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle55;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.Format = "D2";
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle7;
             this.heightsGridView.Location = new System.Drawing.Point(0, 0);
             this.heightsGridView.MultiSelect = false;
             this.heightsGridView.Name = "heightsGridView";
-            dataGridViewCellStyle56.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle56.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle56.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle56.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle56.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle56.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle56.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle56;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.heightsGridView.RowHeadersWidth = 50;
             this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle57.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle57.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle57;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.heightsGridView.RowTemplate.Height = 18;
             this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -2842,43 +2852,43 @@
             this.mapFilesGridView.AllowUserToDeleteRows = false;
             this.mapFilesGridView.AllowUserToResizeColumns = false;
             this.mapFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle58.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle58;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle59.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle59.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle59.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle59.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle59.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle59.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle59.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle59;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle60.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle60.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle60.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle60.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle60.Format = "D4";
-            dataGridViewCellStyle60.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle60.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle60.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle60;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle12.Format = "D4";
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle12;
             this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
             this.mapFilesGridView.MultiSelect = false;
             this.mapFilesGridView.Name = "mapFilesGridView";
-            dataGridViewCellStyle61.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle61.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle61.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle61.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle61.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle61.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle61.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle61;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.mapFilesGridView.RowHeadersWidth = 50;
             this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle62.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle62.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle62;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle14;
             this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.mapFilesGridView.RowTemplate.Height = 18;
             this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -7587,8 +7597,8 @@
             this.textEditorDataGridView.Location = new System.Drawing.Point(12, 77);
             this.textEditorDataGridView.Name = "textEditorDataGridView";
             this.textEditorDataGridView.RowHeadersWidth = 68;
-            dataGridViewCellStyle63.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle63;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.textEditorDataGridView.Size = new System.Drawing.Size(873, 496);
             this.textEditorDataGridView.TabIndex = 24;
             this.textEditorDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellValueChanged);
@@ -7773,9 +7783,9 @@
             this.cameraEditorDataGridView.CausesValidation = false;
             this.cameraEditorDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.cameraEditorDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle64.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle64.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle64;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.cameraEditorDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.cameraEditorDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DistanceGVCol,
@@ -10097,6 +10107,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.aboutToolStripMenuItem,
+            this.menuViewToolStripMenuItem,
             this.aboutToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -10151,7 +10162,8 @@
             this.spawnEditorToolStripMenuItem,
             this.NarcUtilityToolStripMenuItem,
             this.listBasedBatchRenameToolStripMenuItem,
-            this.listBuilderToolStripMenuItem});
+            this.listBuilderToolStripMenuItem,
+            this.nSBMDUtilityToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.aboutToolStripMenuItem.Text = "Tools";
@@ -10298,6 +10310,76 @@
             this.fromFolderContentsToolStripMenuItem.Text = "From Folder Contents";
             this.fromFolderContentsToolStripMenuItem.Click += new System.EventHandler(this.fromFolderContentsToolStripMenuItem_Click);
             // 
+            // nSBMDUtilityToolStripMenuItem
+            // 
+            this.nSBMDUtilityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.texturizeNSBMDToolStripMenuItem,
+            this.untexturizeToolStripMenuItem,
+            this.extractNSBTXFromNSBMDToolStripMenuItem});
+            this.nSBMDUtilityToolStripMenuItem.Name = "nSBMDUtilityToolStripMenuItem";
+            this.nSBMDUtilityToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.nSBMDUtilityToolStripMenuItem.Text = "NSBMD Utility";
+            // 
+            // texturizeNSBMDToolStripMenuItem
+            // 
+            this.texturizeNSBMDToolStripMenuItem.Image = global::DSPRE.Properties.Resources.addTextureToNSBMD;
+            this.texturizeNSBMDToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.texturizeNSBMDToolStripMenuItem.Name = "texturizeNSBMDToolStripMenuItem";
+            this.texturizeNSBMDToolStripMenuItem.Size = new System.Drawing.Size(251, 38);
+            this.texturizeNSBMDToolStripMenuItem.Text = "Add/Replace NSBMD textures";
+            this.texturizeNSBMDToolStripMenuItem.Click += new System.EventHandler(this.nsbmdAddTexButton_Click);
+            // 
+            // untexturizeToolStripMenuItem
+            // 
+            this.untexturizeToolStripMenuItem.Image = global::DSPRE.Properties.Resources.removeTextureNSBMD;
+            this.untexturizeToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.untexturizeToolStripMenuItem.Name = "untexturizeToolStripMenuItem";
+            this.untexturizeToolStripMenuItem.Size = new System.Drawing.Size(251, 38);
+            this.untexturizeToolStripMenuItem.Text = "Remove textures from NSBMD";
+            this.untexturizeToolStripMenuItem.Click += new System.EventHandler(this.nsbmdRemoveTexButton_Click);
+            // 
+            // extractNSBTXFromNSBMDToolStripMenuItem
+            // 
+            this.extractNSBTXFromNSBMDToolStripMenuItem.Image = global::DSPRE.Properties.Resources.saveTextureFromNSBMD;
+            this.extractNSBTXFromNSBMDToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.extractNSBTXFromNSBMDToolStripMenuItem.Name = "extractNSBTXFromNSBMDToolStripMenuItem";
+            this.extractNSBTXFromNSBMDToolStripMenuItem.Size = new System.Drawing.Size(251, 38);
+            this.extractNSBTXFromNSBMDToolStripMenuItem.Text = "Save textures from NSBMD";
+            this.extractNSBTXFromNSBMDToolStripMenuItem.Click += new System.EventHandler(this.nsbmdExportTexButton_Click);
+            // 
+            // menuViewToolStripMenuItem
+            // 
+            this.menuViewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.essentialToolStripMenuItem,
+            this.simpleToolStripMenuItem,
+            this.fullViewToolStripMenuItem});
+            this.menuViewToolStripMenuItem.Name = "menuViewToolStripMenuItem";
+            this.menuViewToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
+            this.menuViewToolStripMenuItem.Text = "Menu View";
+            // 
+            // essentialToolStripMenuItem
+            // 
+            this.essentialToolStripMenuItem.Name = "essentialToolStripMenuItem";
+            this.essentialToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.essentialToolStripMenuItem.Text = "Essential";
+            this.essentialToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
+            // 
+            // simpleToolStripMenuItem
+            // 
+            this.simpleToolStripMenuItem.Name = "simpleToolStripMenuItem";
+            this.simpleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.simpleToolStripMenuItem.Text = "Simple";
+            this.simpleToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
+            // 
+            // fullViewToolStripMenuItem
+            // 
+            this.fullViewToolStripMenuItem.Checked = true;
+            this.fullViewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.fullViewToolStripMenuItem.Name = "fullViewToolStripMenuItem";
+            this.fullViewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fullViewToolStripMenuItem.Text = "Complete";
+            this.fullViewToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
+            // 
             // aboutToolStripMenuItem1
             // 
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
@@ -10338,31 +10420,30 @@
             this.loadRomButton,
             this.readDataFromFolderButton,
             this.saveRomButton,
-            this.toolStripSeparator3,
+            this.separator_AfterOpenSave,
             this.unpackAllButton,
             this.updateMapNarcsButton,
-            this.toolStripSeparator6,
+            this.separator_afterFolderUnpackers,
             this.buildNarcFromFolderToolStripButton,
             this.unpackNARCtoFolderToolStripButton,
-            this.toolStripSeparator7,
-            this.listBasedBatchRenameToolStrip,
-            this.contentBasedBatchRenameToolStrip,
-            this.toolStripSeparator2,
+            this.separator_afterNarcUtils,
+            this.listBasedBatchRenameToolStripButton,
+            this.contentBasedBatchRenameToolStripButton,
+            this.separator_afterRenameUtils,
             this.enumBasedListBuilderToolStripButton,
             this.folderBasedListBuilderToolStriButton,
-            this.toolStripSeparator8,
+            this.separator_afterListUtils,
             this.nsbmdAddTexButton,
             this.nsbmdRemoveTexButton,
             this.nsbmdExportTexButton,
-            this.toolStripSeparator1,
+            this.separator_afterNsbmdUtils,
             this.buildingEditorButton,
             this.wildEditorButton,
-            this.toolStripSeparator5,
             this.scriptCommandsButton,
             this.romToolboxToolStripButton,
             this.headerSearchToolStripButton,
-            this.toolStripSeparator4,
-            this.spawnEditorToolStripButton});
+            this.spawnEditorToolStripButton,
+            this.separator_afterMiscButtons});
             this.mainToolStrip.Location = new System.Drawing.Point(0, 24);
             this.mainToolStrip.Name = "mainToolStrip";
             this.mainToolStrip.Size = new System.Drawing.Size(1214, 44);
@@ -10407,10 +10488,10 @@
             this.saveRomButton.Text = "Save ROM";
             this.saveRomButton.Click += new System.EventHandler(this.saveRom_Click);
             // 
-            // toolStripSeparator3
+            // separator_AfterOpenSave
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 44);
+            this.separator_AfterOpenSave.Name = "separator_AfterOpenSave";
+            this.separator_AfterOpenSave.Size = new System.Drawing.Size(6, 44);
             // 
             // unpackAllButton
             // 
@@ -10438,10 +10519,10 @@
             this.updateMapNarcsButton.Text = "Unpack Building NARCs";
             this.updateMapNarcsButton.Click += new System.EventHandler(this.updateMapNarcsButton_Click);
             // 
-            // toolStripSeparator6
+            // separator_afterFolderUnpackers
             // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 44);
+            this.separator_afterFolderUnpackers.Name = "separator_afterFolderUnpackers";
+            this.separator_afterFolderUnpackers.Size = new System.Drawing.Size(6, 44);
             // 
             // buildNarcFromFolderToolStripButton
             // 
@@ -10467,39 +10548,39 @@
             this.unpackNARCtoFolderToolStripButton.Text = "Unpack NARC to Folder";
             this.unpackNARCtoFolderToolStripButton.Click += new System.EventHandler(this.unpackToFolderToolStripMenuItem_Click);
             // 
-            // toolStripSeparator7
+            // separator_afterNarcUtils
             // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 44);
+            this.separator_afterNarcUtils.Name = "separator_afterNarcUtils";
+            this.separator_afterNarcUtils.Size = new System.Drawing.Size(6, 44);
             // 
-            // listBasedBatchRenameToolStrip
+            // listBasedBatchRenameToolStripButton
             // 
-            this.listBasedBatchRenameToolStrip.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.listBasedBatchRenameToolStrip.Image = global::DSPRE.Properties.Resources.listbasedRenameIcon;
-            this.listBasedBatchRenameToolStrip.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.listBasedBatchRenameToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.listBasedBatchRenameToolStrip.Margin = new System.Windows.Forms.Padding(2, 6, 3, 2);
-            this.listBasedBatchRenameToolStrip.Name = "listBasedBatchRenameToolStrip";
-            this.listBasedBatchRenameToolStrip.Size = new System.Drawing.Size(52, 36);
-            this.listBasedBatchRenameToolStrip.Text = "List-Based Batch Rename";
-            this.listBasedBatchRenameToolStrip.Click += new System.EventHandler(this.listBasedToolStripMenuItem_Click);
+            this.listBasedBatchRenameToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.listBasedBatchRenameToolStripButton.Image = global::DSPRE.Properties.Resources.listbasedRenameIcon;
+            this.listBasedBatchRenameToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.listBasedBatchRenameToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.listBasedBatchRenameToolStripButton.Margin = new System.Windows.Forms.Padding(2, 6, 3, 2);
+            this.listBasedBatchRenameToolStripButton.Name = "listBasedBatchRenameToolStripButton";
+            this.listBasedBatchRenameToolStripButton.Size = new System.Drawing.Size(52, 36);
+            this.listBasedBatchRenameToolStripButton.Text = "List-Based Batch Rename";
+            this.listBasedBatchRenameToolStripButton.Click += new System.EventHandler(this.listBasedToolStripMenuItem_Click);
             // 
-            // contentBasedBatchRenameToolStrip
+            // contentBasedBatchRenameToolStripButton
             // 
-            this.contentBasedBatchRenameToolStrip.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.contentBasedBatchRenameToolStrip.Image = global::DSPRE.Properties.Resources.contentbasedRenameIcon;
-            this.contentBasedBatchRenameToolStrip.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.contentBasedBatchRenameToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.contentBasedBatchRenameToolStrip.Margin = new System.Windows.Forms.Padding(3, 6, 2, 2);
-            this.contentBasedBatchRenameToolStrip.Name = "contentBasedBatchRenameToolStrip";
-            this.contentBasedBatchRenameToolStrip.Size = new System.Drawing.Size(52, 36);
-            this.contentBasedBatchRenameToolStrip.Text = "Content-Based Batch Rename";
-            this.contentBasedBatchRenameToolStrip.Click += new System.EventHandler(this.contentBasedToolStripMenuItem_Click);
+            this.contentBasedBatchRenameToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.contentBasedBatchRenameToolStripButton.Image = global::DSPRE.Properties.Resources.contentbasedRenameIcon;
+            this.contentBasedBatchRenameToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.contentBasedBatchRenameToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.contentBasedBatchRenameToolStripButton.Margin = new System.Windows.Forms.Padding(3, 6, 2, 2);
+            this.contentBasedBatchRenameToolStripButton.Name = "contentBasedBatchRenameToolStripButton";
+            this.contentBasedBatchRenameToolStripButton.Size = new System.Drawing.Size(52, 36);
+            this.contentBasedBatchRenameToolStripButton.Text = "Content-Based Batch Rename";
+            this.contentBasedBatchRenameToolStripButton.Click += new System.EventHandler(this.contentBasedToolStripMenuItem_Click);
             // 
-            // toolStripSeparator2
+            // separator_afterRenameUtils
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 44);
+            this.separator_afterRenameUtils.Name = "separator_afterRenameUtils";
+            this.separator_afterRenameUtils.Size = new System.Drawing.Size(6, 44);
             // 
             // enumBasedListBuilderToolStripButton
             // 
@@ -10525,10 +10606,10 @@
             this.folderBasedListBuilderToolStriButton.Text = "Folder-Based List Builder";
             this.folderBasedListBuilderToolStriButton.Click += new System.EventHandler(this.fromFolderContentsToolStripMenuItem_Click);
             // 
-            // toolStripSeparator8
+            // separator_afterListUtils
             // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 44);
+            this.separator_afterListUtils.Name = "separator_afterListUtils";
+            this.separator_afterListUtils.Size = new System.Drawing.Size(6, 44);
             // 
             // nsbmdAddTexButton
             // 
@@ -10569,10 +10650,10 @@
             this.nsbmdExportTexButton.ToolTipText = "Extract textures from NSBMD";
             this.nsbmdExportTexButton.Click += new System.EventHandler(this.nsbmdExportTexButton_Click);
             // 
-            // toolStripSeparator1
+            // separator_afterNsbmdUtils
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 44);
+            this.separator_afterNsbmdUtils.Name = "separator_afterNsbmdUtils";
+            this.separator_afterNsbmdUtils.Size = new System.Drawing.Size(6, 44);
             // 
             // buildingEditorButton
             // 
@@ -10601,11 +10682,6 @@
             this.wildEditorButton.Size = new System.Drawing.Size(36, 36);
             this.wildEditorButton.Text = "Wild Pokémon Editor";
             this.wildEditorButton.Click += new System.EventHandler(this.wildEditorButton_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 44);
             // 
             // scriptCommandsButton
             // 
@@ -10648,11 +10724,6 @@
             this.headerSearchToolStripButton.ToolTipText = "Search Header by Property";
             this.headerSearchToolStripButton.Click += new System.EventHandler(this.headerSearchToolStripButton_Click);
             // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 44);
-            // 
             // spawnEditorToolStripButton
             // 
             this.spawnEditorToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -10666,6 +10737,11 @@
             this.spawnEditorToolStripButton.Text = "Spawn Point Editor";
             this.spawnEditorToolStripButton.Click += new System.EventHandler(this.spawnEditorToolStripButton_Click);
             // 
+            // separator_afterMiscButtons
+            // 
+            this.separator_afterMiscButtons.Name = "separator_afterMiscButtons";
+            this.separator_afterMiscButtons.Size = new System.Drawing.Size(6, 44);
+            // 
             // versionLabel
             // 
             this.versionLabel.AutoSize = true;
@@ -10675,6 +10751,10 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             this.versionLabel.Visible = false;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // MainProgram
             // 
@@ -11085,7 +11165,7 @@
         private System.Windows.Forms.ToolStripButton saveRomButton;
         private System.Windows.Forms.ToolStrip mainToolStrip;
         private System.Windows.Forms.Label versionLabel;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator separator_afterNsbmdUtils;
         private System.Windows.Forms.Button clearCurrentButton;
         private System.Windows.Forms.GroupBox typeGroupBox;
         private System.Windows.Forms.GroupBox collisionGroupBox;
@@ -11485,8 +11565,8 @@
         private System.Windows.Forms.Button duplicateWarpsButton;
         private System.Windows.Forms.Button duplicateTriggersButton;
         private System.Windows.Forms.ToolStripMenuItem headerSearchToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator separator_afterRenameUtils;
+        private System.Windows.Forms.ToolStripSeparator separator_AfterOpenSave;
         private System.Windows.Forms.ComboBox spawnableTypeComboBox;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
@@ -11514,9 +11594,8 @@
         private System.Windows.Forms.ToolStripButton nsbmdExportTexButton;
         private System.Windows.Forms.ToolStripButton nsbmdRemoveTexButton;
         private System.Windows.Forms.ToolStripButton nsbmdAddTexButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripSeparator separator_afterMiscButtons;
         private System.Windows.Forms.CheckBox embedTexturesInMapModelCheckBox;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.CheckBox searchOnlyCurrentScriptCheckBox;
         private System.Windows.Forms.Button clearCurrentLevelScriptButton;
         private System.Windows.Forms.GroupBox bldRoundGroupbox;
@@ -11791,18 +11870,29 @@
         private System.Windows.Forms.PictureBox partyPokemonItemPictureBox3;
         private System.Windows.Forms.PictureBox partyPokemonItemPictureBox2;
         private System.Windows.Forms.PictureBox partyPokemonItemPictureBox1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripButton listBasedBatchRenameToolStrip;
-        private System.Windows.Forms.ToolStripButton contentBasedBatchRenameToolStrip;
+        private System.Windows.Forms.ToolStripSeparator separator_afterFolderUnpackers;
+        private System.Windows.Forms.ToolStripButton listBasedBatchRenameToolStripButton;
+        private System.Windows.Forms.ToolStripButton contentBasedBatchRenameToolStripButton;
         private System.Windows.Forms.ToolStripButton unpackNARCtoFolderToolStripButton;
         private System.Windows.Forms.ToolStripButton buildNarcFromFolderToolStripButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripSeparator separator_afterNarcUtils;
         private System.Windows.Forms.ToolStripMenuItem listBuilderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fromCEnumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fromFolderContentsToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton folderBasedListBuilderToolStriButton;
         private System.Windows.Forms.ToolStripButton enumBasedListBuilderToolStripButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripSeparator separator_afterListUtils;
+        private System.Windows.Forms.ToolStripMenuItem menuViewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem essentialToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem simpleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fullViewToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.DirectoryServices.DirectoryEntry directoryEntry1;
+        private System.DirectoryServices.DirectoryEntry directoryEntry2;
+        private System.Windows.Forms.ToolStripMenuItem nSBMDUtilityToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem texturizeNSBMDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem untexturizeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extractNSBTXFromNSBMDToolStripMenuItem;
     }
 }
 
