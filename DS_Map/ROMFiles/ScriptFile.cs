@@ -17,6 +17,7 @@ namespace DSPRE.ROMFiles {
         #region Constants
         //this enum doesn't really make much sense now but it will, once scripts can be called and jumped to
         public enum containerTypes { Function, Action, Script };
+
         #endregion
 
         #region Fields (3)
@@ -687,16 +688,16 @@ namespace DSPRE.ROMFiles {
                     //refList = refList.OrderBy(x => x.invokedID).ToList(); //Sorting is not necessary, after all...
 
                     for (int i = 0; i < refList.Count; i++) {
-                        writer.BaseStream.Position = refList[i].invokedOffset; //place seek head on parameter that is supposed to store the jump address
+                        writer.BaseStream.Position = refList[i].invokedAt; //place seek head on parameter that is supposed to store the jump address
                         (uint containerID, uint offsetInFile) result;
 
-                        if (refList[i].invokedType == containerTypes.Action) { //isApplyMovement 
+                        if (refList[i].typeOfInvoked is containerTypes.Action) { //isApplyMovement 
                             result = actionOffsets.Find(x => x.actionID == refList[i].invokedID);
 
                             if (result.Equals((0, 0)))
                                 undeclaredActions.Add(refList[i].invokedID);
                             else {
-                                int relativeOffset = (int)(result.offsetInFile - refList[i].invokedOffset - 4);
+                                int relativeOffset = (int)(result.offsetInFile - refList[i].invokedAt - 4);
                                 writer.Write(relativeOffset);
                                 unreferencedActions.Remove(refList[i].invokedID);
                             }
@@ -706,7 +707,7 @@ namespace DSPRE.ROMFiles {
                             if (result.Equals((0, 0)))
                                 undeclaredFuncs.Add(refList[i].invokedID);
                             else {
-                                int relativeOffset = (int)(result.offsetInFile - refList[i].invokedOffset - 4);
+                                int relativeOffset = (int)(result.offsetInFile - refList[i].invokedAt - 4);
                                 writer.Write(relativeOffset);
 
                                 
@@ -728,12 +729,12 @@ namespace DSPRE.ROMFiles {
                     string errorMsg = "";
                     if (undeclaredFuncs.Count > 0) {
                         string[] errorFunctionsUndeclared = undeclaredFuncs.ToArray().Select(x => x.ToString()).ToArray();
-                        errorMsg += "These Functions have been invoked but not declared: " + Environment.NewLine + string.Join(",", errorFunctionsUndeclared);
+                        errorMsg += "These Functions have been invoked but not declared: " + Environment.NewLine + string.Join(separator: ",", errorFunctionsUndeclared);
                         errorMsg += Environment.NewLine;
                     }
                     if (undeclaredActions.Count > 0) {
                         string[] errorActionsUndeclared = undeclaredActions.ToArray().Select(x => x.ToString()).ToArray();
-                        errorMsg += "These Actions have been referenced but not declared: " + Environment.NewLine + string.Join(",", errorActionsUndeclared);
+                        errorMsg += "These Actions have been referenced but not declared: " + Environment.NewLine + string.Join(separator: ",", errorActionsUndeclared);
                         errorMsg += Environment.NewLine;
                     }
                     if (!string.IsNullOrEmpty(errorMsg)) {
@@ -799,12 +800,12 @@ namespace DSPRE.ROMFiles {
                 return false;
             }
 
-            if (sr.callerType == containerTypes.Script) {
+            if (sr.typeOfCaller is containerTypes.Script) {
                 Console.WriteLine("Function " + funcID + " is directly called by Script " + sr.callerID);
                 return true;
             }
 
-            if ( sr.callerType == containerTypes.Function ) {
+            if ( sr.typeOfCaller is containerTypes.Function ) {
                 if (FunctionIsInvoked(refList, uninvokedFuncsSet, sr.callerID, ++callCount, excludedCaller: sr.invokedID)) { //check if caller function is invoked as well
                     Console.WriteLine("Function " + funcID + " is called by Function " + sr.callerID);
                     return true;
@@ -849,22 +850,23 @@ namespace DSPRE.ROMFiles {
     }
 
     internal class ScriptReference {
-        public containerTypes callerType { get; private set; }
+        public containerTypes typeOfCaller { get; private set; }
         public uint callerID { get; private set; }
-        public containerTypes invokedType { get; private set; }
+        public containerTypes typeOfInvoked { get; private set; }
         public uint invokedID { get; private set; }
-        public int invokedOffset { get; private set; }
+        public int invokedAt { get; private set; }
 
-        public ScriptReference(containerTypes callerType, uint callerID, containerTypes invokedType, uint invokedID, int invokedOffset) {
-            this.callerType = callerType;
+        public ScriptReference(containerTypes typeOfCaller, uint callerID, containerTypes invokedType, uint invokedID, int invokedAt) {
+            this.typeOfCaller = typeOfCaller;
             this.callerID = callerID;
-            this.invokedType = invokedType;
+            this.typeOfInvoked = invokedType;
             this.invokedID = invokedID;
-            this.invokedOffset = invokedOffset;
+
+            this.invokedAt = invokedAt;
         }
 
         public override string ToString() {
-            return callerType + " " + callerID + " invokes " + invokedType + " " + invokedID;
+            return typeOfCaller + " " + callerID + " invokes " + typeOfInvoked + " " + invokedID + " at " + invokedAt;
         }
     }
 }
