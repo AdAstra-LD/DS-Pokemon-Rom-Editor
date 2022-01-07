@@ -684,9 +684,11 @@ namespace DSPRE.ROMFiles {
                     SortedSet<uint> uninvokedFuncs = new SortedSet<uint>(allFunctions.Select(x => x.manualUserID).ToArray());
                     SortedSet<uint> unreferencedActions = new SortedSet<uint>(allActions.Select(x => x.manualUserID).ToArray());
 
+                    //refList = refList.OrderBy(x => x.invokedID).ToList(); //Sorting is not necessary, after all...
+
                     for (int i = 0; i < refList.Count; i++) {
                         writer.BaseStream.Position = refList[i].invokedOffset; //place seek head on parameter that is supposed to store the jump address
-                        (uint actionID, uint offsetInFile) result;
+                        (uint containerID, uint offsetInFile) result;
 
                         if (refList[i].invokedType == containerTypes.Action) { //isApplyMovement 
                             result = actionOffsets.Find(x => x.actionID == refList[i].invokedID);
@@ -707,9 +709,11 @@ namespace DSPRE.ROMFiles {
                                 int relativeOffset = (int)(result.offsetInFile - refList[i].invokedOffset - 4);
                                 writer.Write(relativeOffset);
 
-                                if (functionIsInvoked(refList, refList[i].invokedID)) {
+                                
+                                if (FunctionIsInvoked(refList, uninvokedFuncs, refList[i].invokedID, 0)) {
                                     uninvokedFuncs.Remove(refList[i].invokedID);
                                 }
+                                
 
 
                                 //if (refList[i].callerType != containerTypes.Function || 
@@ -740,7 +744,7 @@ namespace DSPRE.ROMFiles {
 
                     if (uninvokedFuncs.Count > 0) {
                         string[] orphanedFunctions = uninvokedFuncs.ToArray().Select(x => x.ToString()).ToArray();
-                        errorMsg += "Unused Function IDs detected: " + Environment.NewLine + string.Join(",", orphanedFunctions);
+                        errorMsg += "Unused Function IDs detected: " + Environment.NewLine + string.Join(", ", orphanedFunctions);
                         errorMsg += Environment.NewLine;
                         errorMsg += "\nIn order for a Function to be saved, it must be invoked by a Script or by another used Function.";
                         errorMsg += Environment.NewLine;
@@ -748,7 +752,7 @@ namespace DSPRE.ROMFiles {
                     }
                     if (unreferencedActions.Count > 0) {
                         string[] orphanedActions = unreferencedActions.ToArray().Select(x => x.ToString()).ToArray();
-                        errorMsg += "Unused Action IDs detected: " + Environment.NewLine + string.Join(",", orphanedActions);
+                        errorMsg += "Unused Action IDs detected: " + Environment.NewLine + string.Join(", ", orphanedActions);
                         errorMsg += Environment.NewLine;
                         errorMsg += "\nIn order for an Action to be saved, it must be called by a Script or by an used Function.";
                         errorMsg += Environment.NewLine;
@@ -767,36 +771,74 @@ namespace DSPRE.ROMFiles {
             return newData.ToArray();
         }
 
-        private bool functionIsInvoked(List<ScriptReference> refList, uint funcID) {
-            ScriptReference sr = refList.Find(x => x.invokedID == funcID);
-            if (sr is null) {
+        private bool FunctionIsInvoked(List<ScriptReference> refList, SortedSet<uint> uninvokedFuncsSet, uint funcID, int callCount = 0, uint? excludedCaller = null) {
+            if (callCount >= 30) {
+                MessageBox.Show("Something went very wrong saving this Script File!" +
+                    "\nIt is recommended that you backup its code somewhere, to avoid losing progress.",
+                    "Fatal error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            if (sr.callerType == containerTypes.Script || (sr.callerType == containerTypes.Function && sr.callerID == sr.invokedID)) {
+
+            Console.WriteLine("Checking calls of function " + funcID + (excludedCaller == null ? "" : " excluding Function " + excludedCaller + " as the caller.") );
+
+            if (!uninvokedFuncsSet.Contains(funcID) ){
+                Console.WriteLine("Function " + funcID + " has already been invoked before. Nothing to check.");
+                return true; //Abort 
+            }
+
+            if (refList is null || refList.Count <= 0) {
+                return false;
+            }
+
+            //Find the first instance of funcID being called, excluding calls coming from an excludedCaller
+            //if excludedCaller is null, there's nothing to exclude: a normal search is performed.
+            ScriptReference sr = refList.Find(x => x.invokedID == funcID && (excludedCaller == null || x.callerID != excludedCaller));
+
+            if (sr is null) {
+                Console.WriteLine("No reference found!!!");
+                return false;
+            }
+
+            if (sr.callerType == containerTypes.Script) {
+                Console.WriteLine("Function " + funcID + " is directly called by Script " + sr.callerID);
                 return true;
             }
 
-            return functionIsInvoked(refList, sr.callerID);
+            if ( sr.callerType == containerTypes.Function ) {
+                if (FunctionIsInvoked(refList, uninvokedFuncsSet, sr.callerID, ++callCount, excludedCaller: sr.invokedID)) { //check if caller function is invoked as well
+                    Console.WriteLine("Function " + funcID + " is called by Function " + sr.callerID);
+                    return true;
+                }
+            }
+
+            Console.WriteLine("Function " + funcID + " is unused");
+            return false;
         }
 
         public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
             SaveToFileDefaultDir(DirNames.scripts, IDtoReplace, showSuccessMessage);
         }
         public void SaveToFileExplorePath(string suggestedFileName, bool blindmode) {
-            SaveFileDialog sf = new SaveFileDialog();
-            sf.Filter = "Gen IV Script File (*.scr)|*.scr";
+            SaveFileDialog sf = new SaveFileDialog {
+                Filter = "Gen IV Script File (*.scr)|*.scr"
+            };
 
-            if (!string.IsNullOrEmpty(suggestedFileName))
+            if (!string.IsNullOrEmpty(suggestedFileName)) {
                 sf.FileName = suggestedFileName;
-            if (sf.ShowDialog() != DialogResult.OK)
+            }
+
+            if (sf.ShowDialog() != DialogResult.OK) {
                 return;
+            }
 
             if (blindmode) {
                 File.Copy(RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + ((int)fileID).ToString("D4"), sf.FileName, overwrite: true);
 
                 string msg = "";
-                if (!isLevelScript)
+                if (!isLevelScript) {
                     msg += "The last saved version of this ";
+                }
+
                 MessageBox.Show(msg + GetType().Name + " has been exported successfully.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 this.SaveToFile(sf.FileName, showSuccessMessage: true);
