@@ -9174,7 +9174,8 @@ namespace DSPRE {
                 }
 
                 for (int s = enumStartLine + 1; s < terminationLine; s++) {
-                    string differentSubstring = cFileLines[s].Substring(lastCommonUnderscore + 1).Trim().Replace(",", "");
+                    string withoutComment = cFileLines[s].Substring(0, cFileLines[s].IndexOf("//"));
+                    string differentSubstring = withoutComment.Substring(lastCommonUnderscore + 1).Trim().Replace(",", "");
                     int indexOfEquals = differentSubstring.LastIndexOf('=');
 
                     string entry = differentSubstring.Substring(0, indexOfEquals).Trim();
