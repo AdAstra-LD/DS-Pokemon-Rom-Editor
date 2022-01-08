@@ -1,18 +1,20 @@
 # DS Pokemon Rom Editor
 
-Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features and bugfixes.
+Major overhaul of Nomura's DS Pokemon ROM Editor, with lots of new features and bugfixes.
 
-![Screenshot](aDSPRE_140.png)
-![Screenshot](bDSPRE_140.png)
-![Screenshot](cDSPRE_140.png)
-![Screenshot](dDSPRE_140.png)
+![Screenshot](aDSPRE_150.png)
+![Screenshot](bDSPRE_150.png)
+![Screenshot](cDSPRE_150.png)
+![Screenshot](dDSPRE_150.png)
 
 ## Misc changes to the official DSPRE
 - Significantly shorter load and save times.
 - New, faster script editor with syntax highlighting and built-in search features.
 - Fixed lots of problems with Japanese DP roms [either not loading or only partially functioning].
 
-- Added Advanced Header Search feature.
+- Configurable top bar layouts.
+- User Prefs memorization.
+- New Advanced Header Search feature.
 - New NSBMD and NSBTX utilities.
 - NARC Packer/Unpacker utilities.
 - List based and Content based Batch Rename utilities.
@@ -30,12 +32,13 @@ Nomura's C# and WinForm DS Pokemon ROM Editor forked with lots of new features a
 ### ROM Toolbox:
 Supported patches:
 - Expand ARM9 usable memory.
-- BDHCAM.
+- Dynamic Cameras.
 - Set Overlay1 as uncompressed.
-- Standardize item numbers (fixed).
 - Convert Pokémon names to Sentence Case.
+- Standardize item numbers.
 - Expand matrix 0.
 - Dynamic Headers.
+- Disable Texture Animations [HGSS].
 
 ### Script Command Database:
 A handy window that shows all the available script commands and the parameters they require.
@@ -67,7 +70,7 @@ Allows you to change the map where the adventure begins and the initial money.
 
 ### Matrix Editor:
 - Added support for custom color tables.
-- Fixed "add matrix" and "remove matrix" buttons GUI numbering mismatch.
+- Fixed "Add Matrix" and "Remove Matrix" buttons GUI numbering mismatch.
 - Fixed wrong row/col indices when resizing matrices.
 - Fixed junk input detector.
 - The coordinates of the selected map appear in the status bar.
