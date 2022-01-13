@@ -125,14 +125,18 @@ namespace DSPRE.ROMFiles {
         #endregion Fields
 
         #region Methods (1)
-        public static MapHeader LoadFromByteArray(byte[] headerData, ushort headerNumber) {
+        public static MapHeader LoadFromByteArray(byte[] headerData, ushort headerNumber, gFamEnum gameFamily = gFamEnum.NULL) {
             /* Encapsulate header data into the class appropriate for the gameVersion */
             if (headerData.Length < MapHeader.length) {
                 MessageBox.Show("File of header " + headerNumber + " is too small and can't store header data.", "Header file too small", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
-            switch (RomInfo.gameFamily) {
+            if (gameFamily == gFamEnum.NULL) {
+                gameFamily = RomInfo.gameFamily;
+            }
+
+            switch (gameFamily) {
                 case gFamEnum.DP:
                     return new HeaderDP(headerNumber, new MemoryStream(headerData));
                 case gFamEnum.Plat:
@@ -141,14 +145,14 @@ namespace DSPRE.ROMFiles {
                     return new HeaderHGSS(headerNumber, new MemoryStream(headerData));
             }
         }
-        public static MapHeader LoadFromFile(string filename, ushort headerNumber, long offsetInFile) {
+        public static MapHeader LoadFromFile(string filename, ushort headerNumber, long offsetInFile, gFamEnum gameFamily = gFamEnum.NULL) {
             /* Calculate header offset and load data */
             byte[] headerData = DSUtils.ReadFromFile(filename, offsetInFile, MapHeader.length);
-            return LoadFromByteArray(headerData, headerNumber);
+            return LoadFromByteArray(headerData, headerNumber, gameFamily);
         }
-        public static MapHeader LoadFromARM9(ushort headerNumber) {
+        public static MapHeader LoadFromARM9(ushort headerNumber, gFamEnum gameFamily = gFamEnum.NULL) {
             long headerOffset = RomInfo.headerTableOffset + MapHeader.length * headerNumber;
-            return LoadFromFile(RomInfo.arm9Path, headerNumber, headerOffset);
+            return LoadFromFile(RomInfo.arm9Path, headerNumber, headerOffset, gameFamily);
         }
 
         

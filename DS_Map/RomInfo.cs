@@ -87,6 +87,7 @@ namespace DSPRE {
             Black2, White2
         }
         public enum gFamEnum : byte {
+            NULL,
             DP,
             Plat,
             HGSS,

@@ -485,7 +485,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.5" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.5.1" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
@@ -2425,7 +2425,7 @@ namespace DSPRE {
                     List<string> result = HeaderSearch.AdvancedSearch(0, (ushort)internalNames.Count, internalNames, (int)MapHeader.SearchableFields.MatrixID, (int)HeaderSearch.NumOperators.Equal, selectMatrixComboBox.SelectedIndex.ToString());
                     if (result.Count < 1) {
                         headerID = currentHeader.ID;
-                        statusLabel.Text = "The current Matrix is unused. Displaying the last selected Header (" + headerID + ")'s textures.";
+                        statusLabel.Text = "This Matrix is not linked to any Header. DSPRE can't determine the most appropriate AreaData (and textures) to use.\nDisplaying Textures from the last selected Header (" + headerID + ")'s AreaData...";
                     } else {
                         if (result.Count > 1) {
                             if (gameFamily.Equals(gFamEnum.DP)) {
@@ -2438,7 +2438,7 @@ namespace DSPRE {
                                 }
                             } else {
                                 foreach (string r in result) {
-                                    HeaderPt hpt = (HeaderPt)MapHeader.LoadFromARM9(ushort.Parse(r.Split()[0]));
+                                    HeaderPt hpt = (HeaderPt)MapHeader.LoadFromARM9(ushort.Parse(r.Split()[0]), gFamEnum.Plat);
                                     if (hpt.locationName != 0) {
                                         headerID = hpt.ID;
                                         break;
@@ -2446,7 +2446,7 @@ namespace DSPRE {
                                 }
                             }
 
-                            statusLabel.Text = "Multiple Headers are associated to this Matrix. Header " + headerID + "'s textures are currently being used.";
+                            statusLabel.Text = "Multiple Headers are using this Matrix. Header " + headerID + "'s textures are currently being displayed.";
                         } else {
                             headerID = ushort.Parse(result.First().Split()[0]);
                             statusLabel.Text = "Loading Header " + headerID + "'s textures.";
