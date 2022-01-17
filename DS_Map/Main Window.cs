@@ -9258,7 +9258,9 @@ namespace DSPRE {
                 d = new DirectoryInfo(sourceDirDialog.FileName);
             }
 
-            FileInfo[] files = d.GetFiles().OrderBy(x => x.Name).ToArray();
+            FileInfo[] tempfiles = d.GetFiles();
+            FileInfo[] files = tempfiles.OrderBy(n => System.Text.RegularExpressions.Regex.Replace(n.Name, @"\d+", e => e.Value.PadLeft(tempfiles.Length.ToString().Length, '0'))).ToArray();
+
             if (files.Length <= 0) {
                 MessageBox.Show("Folder " + "\"" + d.FullName + "\"" + " is empty.\nCan't proceed.", "Invalid folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return (null, null);

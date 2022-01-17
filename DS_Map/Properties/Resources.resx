@@ -182,7 +182,7 @@
     <value>..\Resources\Graphics\Camera Angles\DPPt\ptcamera4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="wildEditorButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\wildEditorButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\Graphics\Program Icons\wildEditorButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="goToTrigger" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Graphics\Program Icons\goToTrigger.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -206,7 +206,7 @@
     <value>..\Resources\Graphics\Camera Angles\DPPt\ptcamera12.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="buildingEditorButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\buildingEditorButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\Graphics\Program Icons\buildingEditorButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="resetColorTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Graphics\program icons\resetcolortable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -269,7 +269,7 @@
     <value>..\Resources\Graphics\weather\hgss\hgssnormal.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SearchMiniIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SearchMiniIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\Graphics\Program Icons\SearchMiniIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ptthunderstorm" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Graphics\Weather\DPPt\ptthunderstorm.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -512,7 +512,7 @@
     <value>..\Resources\Graphics\Program Icons\deleteIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="muteIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\muteIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\Graphics\Program Icons\muteIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="overworld" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Graphics\Event Icons\overworld.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -524,7 +524,7 @@
     <value>..\Resources\Graphics\weather\hgss\hgssrain.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="exploreKit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\exploreKit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\Graphics\Program Icons\exploreKit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="map_editor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Graphics\Program Icons\map_editor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
