@@ -2407,6 +2407,7 @@ namespace DSPRE {
 
                 if (!mapEditorIsReady) {
                     SetupMapEditor();
+                    mapOpenGlControl.MouseWheel += new MouseEventHandler(mapOpenGlControl_MouseWheel);
                     mapEditorIsReady = true;
                 }
 
