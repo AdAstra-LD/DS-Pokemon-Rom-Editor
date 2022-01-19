@@ -4157,8 +4157,9 @@ namespace DSPRE {
             OpenFileDialog ip = new OpenFileDialog {
                 Filter = "Permissions File (*.per)|*.per"
             };
-            if (ip.ShowDialog(this) != DialogResult.OK)
+            if (ip.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             currentMapFile.ImportPermissions(new FileStream(ip.FileName, FileMode.Open));
 
@@ -4301,8 +4302,9 @@ namespace DSPRE {
             OpenFileDialog im = new OpenFileDialog {
                 Filter = "NSBMD model (*.nsbmd)|*.nsbmd"
             };
-            if (im.ShowDialog(this) != DialogResult.OK)
+            if (im.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             currentMapFile.LoadMapModel(DSUtils.ReadFromFile(im.FileName));
 
@@ -4326,11 +4328,13 @@ namespace DSPRE {
             MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void exportMapButton_Click(object sender, EventArgs e) {
-            SaveFileDialog em = new SaveFileDialog();
-            em.Filter = "NSBMD model (*.nsbmd)|*.nsbmd";
-            em.FileName = selectMapComboBox.SelectedItem.ToString();
-            if (em.ShowDialog(this) != DialogResult.OK)
+            SaveFileDialog em = new SaveFileDialog {
+                Filter = "NSBMD model (*.nsbmd)|*.nsbmd",
+                FileName = selectMapComboBox.SelectedItem.ToString()
+            };
+            if (em.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             if (embedTexturesInMapModelCheckBox.Checked) {
                 string texturePath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4");
@@ -4353,8 +4357,9 @@ namespace DSPRE {
                 it.Filter = "Terrain File (*.bdhc, *.bdhcam)|*.bdhc;*.bdhcam";
             }
 
-            if (it.ShowDialog(this) != DialogResult.OK)
+            if (it.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             currentMapFile.ImportTerrain(new FileStream(it.FileName, FileMode.Open));
             TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
@@ -4365,11 +4370,13 @@ namespace DSPRE {
                 Filter = "Terrain File (*.bdhc)|*.bdhc",
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
-            if (eb.ShowDialog(this) != DialogResult.OK)
+            if (eb.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName)))
+            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) {
                 writer.Write(currentMapFile.bdhc);
+            }
 
             TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
             MessageBox.Show("Terrain settings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -4379,8 +4386,9 @@ namespace DSPRE {
                 Filter = "BackGround Sound File (*.bgs)|*.bgs"
             };
 
-            if (it.ShowDialog(this) != DialogResult.OK)
+            if (it.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             currentMapFile.ImportSoundPlates(new FileStream(it.FileName, FileMode.Open));
             BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
@@ -4391,11 +4399,13 @@ namespace DSPRE {
                 Filter = "BackGround Sound File (*.bgs)|*.bgs",
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
-            if (eb.ShowDialog(this) != DialogResult.OK)
+            if (eb.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName)))
+            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) {
                 writer.Write(currentMapFile.bgs);
+            }
 
             BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
             MessageBox.Show("BackGround Sound data exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -4649,23 +4659,27 @@ namespace DSPRE {
         }
         private void FillSpawnablesBox() {
             spawnablesListBox.Items.Clear();
-            for (int i = 0; i < currentEvFile.spawnables.Count; i++)
+            for (int i = 0; i < currentEvFile.spawnables.Count; i++) {
                 spawnablesListBox.Items.Add("Spawnable " + i);
+            }
         }
         private void FillOverworldsBox() {
             overworldsListBox.Items.Clear();
-            for (int i = 0; i < currentEvFile.overworlds.Count; i++)
+            for (int i = 0; i < currentEvFile.overworlds.Count; i++) {
                 overworldsListBox.Items.Add("Overworld " + i);
+            }
         }
         private void FillWarpsBox() {
             warpsListBox.Items.Clear();
-            for (int i = 0; i < currentEvFile.warps.Count; i++)
+            for (int i = 0; i < currentEvFile.warps.Count; i++) {
                 warpsListBox.Items.Add("Warp " + i);
+            }
         }
         private void FillTriggersBox() {
             triggersListBox.Items.Clear();
-            for (int i = 0; i < currentEvFile.triggers.Count; i++)
+            for (int i = 0; i < currentEvFile.triggers.Count; i++) {
                 triggersListBox.Items.Add("Trigger " + i);
+            }
         }
         private Bitmap GetOverworldImage(ushort eventEntryID, ushort orientation) {
             /* Find sprite corresponding to ID and load it*/

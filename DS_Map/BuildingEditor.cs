@@ -10,11 +10,12 @@ using static DSPRE.RomInfo;
 namespace DSPRE {
     public partial class BuildingEditor : Form {
         #region Variables
-        string folder;
+        public static string temp_btxname = "BLDtexture.nsbtx";
+        private readonly string folder;
         bool disableHandlers = new bool();
-        RomInfo rom;
+        readonly RomInfo rom;
         NSBMD currentNSBMD;
-        NSBMDGlRenderer renderer = new NSBMDGlRenderer();
+        readonly NSBMDGlRenderer renderer = new NSBMDGlRenderer();
 
         public static float ang = 0.0f;
         public static float dist = 12.8f;
@@ -34,8 +35,9 @@ namespace DSPRE {
             buildingOpenGLControl.MouseWheel += new MouseEventHandler(buildingOpenGLControl_MouseWheel);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
 
-            if (RomInfo.gameFamily == gFamEnum.HGSS)
+            if (RomInfo.gameFamily == gFamEnum.HGSS) {
                 interiorCheckBox.Enabled = true;
+            }
 
             disableHandlers = true;
             FillListBox(false);
@@ -48,7 +50,6 @@ namespace DSPRE {
         #region Subroutines
         private void CreateEmbeddedTexturesFile(int modelID, bool interior) {
             string readingPath = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + modelID.ToString("D4");
-            string writingPath = Path.GetTempPath() + "BLDtexture.nsbtx";
 
             byte[] txFile = File.ReadAllBytes(readingPath);
             byte[] texData = DSUtils.GetTexturesFromTexturedNSBMD(txFile);
@@ -57,7 +58,7 @@ namespace DSPRE {
                 Console.WriteLine("No textures found");
                 return;
             }
-            DSUtils.WriteToFile(writingPath, texData, fromScratch: true);
+            DSUtils.WriteToFile(Path.GetTempPath() + temp_btxname, texData, fromScratch: true);
         }
         private void FillListBox(bool interior) {
             int modelCount = Directory.GetFiles(folder + rom.GetBuildingModelsDirPath(interior)).Length;
@@ -74,8 +75,9 @@ namespace DSPRE {
             int texturesCount = Directory.GetFiles(folder + RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir).Length;
             textureComboBox.Items.Add("Embedded textures");
 
-            for (int i = 0; i < texturesCount; i++)
+            for (int i = 0; i < texturesCount; i++) {
                 textureComboBox.Items.Add("Texture " + i);
+            }
         }
         private void LoadBuildingModel(int modelID, bool interior) {
             string path = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + modelID.ToString("D4");
@@ -84,10 +86,12 @@ namespace DSPRE {
         }
         private void LoadModelTextures(int fileID) {
             string path;
-            if (fileID > -1)
+            if (fileID > -1) {
                 path = folder + RomInfo.gameDirs[RomInfo.DirNames.buildingTextures].unpackedDir + "\\" + fileID.ToString("D4");
-            else
-                path = Path.GetTempPath() + "BLDtexture.nsbtx"; // Load Embedded textures if the argument passed to this function is -1
+            } else {
+                path = Path.GetTempPath() + temp_btxname; // Load Embedded textures if the argument passed to this function is -1
+            }
+
             try {
                 currentNSBMD.materials = NSBTXLoader.LoadNsbtx(new MemoryStream(File.ReadAllBytes(path)), out currentNSBMD.Textures, out currentNSBMD.Palettes);
                 currentNSBMD.MatchTextures();
@@ -146,12 +150,14 @@ namespace DSPRE {
         }
         #endregion
 
-        private void buildingOpenGLControl_MouseWheel(object sender, MouseEventArgs e) // Zoom In/Out
-        {
-            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
-                dist += (float)e.Delta / 200;
-            else
-                dist -= (float)e.Delta / 200;
+        private void buildingOpenGLControl_MouseWheel(object sender, MouseEventArgs e) { // Zoom In/Out
+            float val = (float)e.Delta / 200;
+            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift) {
+                dist += val;
+            } else {
+                dist -= val;
+            }
+
             RenderModel();
         }
         private void buildingEditorListBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -165,19 +171,23 @@ namespace DSPRE {
             RenderModel();
         }
         private void exportButton_Click(object sender, EventArgs e) {
-            SaveFileDialog em = new SaveFileDialog();
-            em.Filter = "NSBMD model (*.nsbmd)|*.nsbmd";
-            em.FileName = buildingEditorBldListBox.SelectedItem.ToString();
-            if (em.ShowDialog(this) != DialogResult.OK)
+            SaveFileDialog em = new SaveFileDialog {
+                Filter = "NSBMD model (*.nsbmd)|*.nsbmd",
+                FileName = buildingEditorBldListBox.SelectedItem.ToString()
+            };
+            if (em.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             File.Copy(folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingEditorBldListBox.SelectedIndex.ToString("D4"), em.FileName, true);
         }
         private void importButton_Click(object sender, EventArgs e) {
-            OpenFileDialog im = new OpenFileDialog();
-            im.Filter = "NSBMD model (*.nsbmd)|*.nsbmd";
-            if (im.ShowDialog(this) != DialogResult.OK)
+            OpenFileDialog im = new OpenFileDialog {
+                Filter = "NSBMD model (*.nsbmd)|*.nsbmd"
+            };
+            if (im.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             using (BinaryReader reader = new BinaryReader(new FileStream(im.FileName, FileMode.Open))) {
                 if (reader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0) {
