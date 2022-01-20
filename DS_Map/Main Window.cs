@@ -2857,28 +2857,15 @@ namespace DSPRE {
             }
 
         }
-        private Building LoadBuildingModel(Building building, bool interior) {
-            string bmDirPath = romInfo.GetBuildingModelsDirPath(interior);
-            string modelPath = bmDirPath + "\\" + building.modelID.ToString("D4");
-
-            try {
-                using (Stream fs = new FileStream(modelPath, FileMode.Open)) {
-                    building.NSBMDFile = NSBMDLoader.LoadNSBMD(fs);
-                }
-            } catch(FileNotFoundException) {
-                string bld = interior ? "Interior building file " : "Exterior building file ";
-                MessageBox.Show(bld + building.modelID + " could not be found in\n" + '"' + bmDirPath + '"', "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        private void MW_LoadModelTextures(NSBMD model, string textureFolder, int fileID) {
+            if (fileID < 0) {
+                return;
             }
-
-            return building;
-        }
-        private NSBMD LoadModelTextures(NSBMD model, string textureFolder, int fileID) {
             string texturePath = textureFolder + "\\" + fileID.ToString("D4");
             model.materials = NSBTXLoader.LoadNsbtx(new MemoryStream(File.ReadAllBytes(texturePath)), out model.Textures, out model.Palettes);
             try {
                 model.MatchTextures();
             } catch { }
-            return model;
         }
         private void RenderMap(ref NSBMDGlRenderer mapRenderer, ref NSBMDGlRenderer buildingsRenderer, ref MapFile mapFile, float ang, float dist, float elev, float perspective, int width, int height, bool mapTexturesON = true, bool buildingTexturesON = true) {
             #region Useless variables that the rendering API still needs
@@ -3475,14 +3462,14 @@ namespace DSPRE {
 
             /* Load map textures for renderer */
             if (mapTextureComboBox.SelectedIndex > 0) {
-                currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, mapTextureComboBox.SelectedIndex - 1);
+                MW_LoadModelTextures(currentMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, mapTextureComboBox.SelectedIndex - 1);
             }
 
             /* Load buildings nsbmd and textures for renderer into MapFile's building objects */
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {
-                currentMapFile.buildings[i] = LoadBuildingModel(currentMapFile.buildings[i], interiorbldRadioButton.Checked); // Load building nsbmd
+                currentMapFile.buildings[i].LoadModelData(romInfo.GetBuildingModelsDirPath(interiorbldRadioButton.Checked)); // Load building nsbmd
                 if (buildTextureComboBox.SelectedIndex > 0) {
-                    currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
+                    MW_LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
                 }
             }
 
@@ -3540,8 +3527,9 @@ namespace DSPRE {
             currentMapFile.buildings.Add(b);
 
             /* Load new building's model and textures for the renderer */
-            currentMapFile.buildings[currentMapFile.buildings.Count - 1] = LoadBuildingModel(b, interiorbldRadioButton.Checked);
-            currentMapFile.buildings[currentMapFile.buildings.Count - 1].NSBMDFile = LoadModelTextures(b.NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1);
+            b.LoadModelData(romInfo.GetBuildingModelsDirPath(interiorbldRadioButton.Checked));
+            MW_LoadModelTextures(b.NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1);
+            currentMapFile.buildings[currentMapFile.buildings.Count - 1] = b;
 
             /* Add new entry to buildings ListBox */
             buildingsListBox.Items.Add((buildingsListBox.Items.Count + 1).ToString("D2") + MapHeader.nameSeparator + buildIndexComboBox.Items[(int)b.modelID]);
@@ -3560,8 +3548,8 @@ namespace DSPRE {
             disableHandlers = false;
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].modelID = (uint)buildIndexComboBox.SelectedIndex;
-            currentMapFile.buildings[buildingsListBox.SelectedIndex] = LoadBuildingModel(currentMapFile.buildings[buildingsListBox.SelectedIndex], interiorbldRadioButton.Checked);
-            currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile = LoadModelTextures(currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1);
+            currentMapFile.buildings[buildingsListBox.SelectedIndex].LoadModelData(romInfo.GetBuildingModelsDirPath(interiorbldRadioButton.Checked));
+            MW_LoadModelTextures(currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1);
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
         }
@@ -3633,8 +3621,8 @@ namespace DSPRE {
             if (buildingsListBox.Items.Count > 0) buildingsListBox.SelectedIndex = 0;
 
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {
-                currentMapFile.buildings[i] = LoadBuildingModel(currentMapFile.buildings[i], interiorbldRadioButton.Checked); // Load building nsbmd
-                currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
+                currentMapFile.buildings[i].LoadModelData(romInfo.GetBuildingModelsDirPath(interiorbldRadioButton.Checked)); // Load building nsbmd
+                MW_LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
             }
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
@@ -3658,8 +3646,8 @@ namespace DSPRE {
 
             /* Load buildings nsbmd and textures for renderer into MapFile's building objects */
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {
-                currentMapFile.buildings[i] = LoadBuildingModel(currentMapFile.buildings[i], interiorbldRadioButton.Checked); // Load building nsbmd
-                currentMapFile.buildings[i].NSBMDFile = LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
+                currentMapFile.buildings[i].LoadModelData(romInfo.GetBuildingModelsDirPath(interiorbldRadioButton.Checked)); // Load building nsbmd
+                MW_LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
             }
 
             /* Render the map */
@@ -4309,7 +4297,7 @@ namespace DSPRE {
             currentMapFile.LoadMapModel(DSUtils.ReadFromFile(im.FileName));
 
             if (mapTextureComboBox.SelectedIndex > 0) {
-                currentMapFile.mapModel = LoadModelTextures(currentMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, mapTextureComboBox.SelectedIndex - 1);
+                MW_LoadModelTextures(currentMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, mapTextureComboBox.SelectedIndex - 1);
             }
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
@@ -4624,15 +4612,15 @@ namespace DSPRE {
 
                 /* Read map and building models, match them with textures and render them*/
                 eventMapFile = new MapFile( (int)mapIndex, RomInfo.gameFamily);
-                eventMapFile.mapModel = LoadModelTextures(eventMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, areaData.mapTileset);
+                MW_LoadModelTextures(eventMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, areaData.mapTileset);
 
                 bool isInteriorMap = false;
                 if ((RomInfo.gameVersion == gVerEnum.HeartGold || RomInfo.gameVersion == gVerEnum.SoulSilver) && areaData.areaType == 0x0)
                     isInteriorMap = true;
 
                 for (int i = 0; i < eventMapFile.buildings.Count; i++) {
-                    eventMapFile.buildings[i] = LoadBuildingModel(eventMapFile.buildings[i], isInteriorMap); // Load building nsbmd
-                    eventMapFile.buildings[i].NSBMDFile = LoadModelTextures(eventMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, areaData.buildingsTileset); // Load building textures                
+                    eventMapFile.buildings[i].LoadModelData(romInfo.GetBuildingModelsDirPath(isInteriorMap)); // Load building nsbmd
+                    MW_LoadModelTextures(eventMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, areaData.buildingsTileset); // Load building textures                
                 }
 
                 RenderMap(ref eventMapRenderer, ref eventBuildingsRenderer, ref eventMapFile, 0f, 115.0f, 90f, 4f, eventOpenGlControl.Width, eventOpenGlControl.Height, true, true);

@@ -79,11 +79,6 @@ namespace DSPRE {
                 textureComboBox.Items.Add("Texture " + i);
             }
         }
-        private void LoadBuildingModel(int modelID, bool interior) {
-            string path = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + modelID.ToString("D4");
-            using (Stream fs = new FileStream(path, FileMode.Open))
-                currentNSBMD = NSBMDLoader.LoadNSBMD(fs);
-        }
         private void LoadModelTextures(int fileID) {
             string path;
             if (fileID > -1) {
@@ -165,7 +160,11 @@ namespace DSPRE {
                 return;
             }
 
-            LoadBuildingModel(buildingEditorBldListBox.SelectedIndex, interiorCheckBox.Checked);
+            string path = folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingEditorBldListBox.SelectedIndex.ToString("D4");
+            using (Stream fs = new FileStream(path, FileMode.Open)) {
+                currentNSBMD = NSBMDLoader.LoadNSBMD(fs);
+            }
+
             CreateEmbeddedTexturesFile(buildingEditorBldListBox.SelectedIndex, interiorCheckBox.Checked);
             LoadModelTextures(textureComboBox.SelectedIndex - 1);
             RenderModel();

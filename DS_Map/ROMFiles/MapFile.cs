@@ -289,6 +289,20 @@ namespace DSPRE.ROMFiles {
             height = toCopy.height;
             length = toCopy.length;
         }
+        public void LoadModelData(string bmDir) {
+            LoadModelDataFromID((int)this.modelID, bmDir);
+        }
+        public void LoadModelDataFromID(int modelID, string bmDir) {
+            string modelPath = bmDir + "\\" + modelID.ToString("D4");
+
+            try {
+                using (Stream fs = new FileStream(modelPath, FileMode.Open)) {
+                    this.NSBMDFile = NSBMDLoader.LoadNSBMD(fs);
+                }
+            } catch (FileNotFoundException) {
+                MessageBox.Show("Building " + modelID + " could not be found in\n" + '"' + bmDir + '"', "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         #endregion Constructors
     }
 }
