@@ -485,6 +485,18 @@ namespace DSPRE {
                     }
                     break;
                 case gFamEnum.HGSS:
+                    if (DSUtils.CheckOverlayHasCompressionFlag(1))
+                    {
+                        if (DSUtils.OverlayIsCompressed(1))
+                        {
+                            if (DSUtils.DecompressOverlay(1) < 0)
+                            {
+                                MessageBox.Show("Overlay 1 couldn't be decompressed.\nOverworld sprites in the Event Editor will be " +
+                            "displayed incorrectly or not displayed at all.", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+
                     using (BinaryReader bReader = new BinaryReader(new FileStream(workDir + "overlay" + "\\" + "overlay_0001.bin", FileMode.Open)))
                     {
                         bReader.BaseStream.Position = (0x021F92FC - 0x021E5900); // read the pointer at 0x021F92FC and adjust accordingly below
