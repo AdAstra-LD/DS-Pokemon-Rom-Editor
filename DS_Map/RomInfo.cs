@@ -485,8 +485,23 @@ namespace DSPRE {
                     }
                     break;
                 case gFamEnum.HGSS:
-                    OWtablePath = workDir + "overlay" + "\\" + "overlay_0001.bin";
-                    OWTableOffset = 0x21BA8;
+                    using (BinaryReader bReader = new BinaryReader(new FileStream(workDir + "overlay" + "\\" + "overlay_0001.bin", FileMode.Open)))
+                    {
+                        bReader.BaseStream.Position = (0x021F92FC - 0x021E5900); // read the pointer at 0x021F92FC and adjust accordingly below
+
+                        uint offset = bReader.ReadUInt32();
+                        bReader.BaseStream.Position -= 4;
+                        if (offset > 0x023C8000) // if the pointer shows the table was moved to the synthetic overlay
+                        {
+                            OWTableOffset = offset - 0x023C8000;
+                            OWtablePath = workDir + "unpacked" + "\\" + "synthOverlay" + "\\" + "0000";
+                        }
+                        else
+                        {
+                            OWTableOffset = offset - 0x021E5900;
+                            OWtablePath = workDir + "overlay" + "\\" + "overlay_0001.bin";
+                        }
+                    }
                     break;
             }
         }
