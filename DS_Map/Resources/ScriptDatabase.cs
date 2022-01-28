@@ -611,7 +611,7 @@ namespace DSPRE.Resources {
             [0x023E] = "MysteryGiftGive",
 
             [0x0246] = "CheckVersion",
-            [0x0247] = "GetFirstPokemon",
+            [0x0247] = "FirstPokemonInParty",
 
             [0x0252] = "CountPCFreeSpace",
 
@@ -2577,7 +2577,7 @@ namespace DSPRE.Resources {
             [0x01ED] = new byte[] { 2, 2, 2 },
             [0x01EE] = new byte[] { 2, 2 },
             [0x01EF] = new byte[] { 2 },
-            [0x01F0] = new byte[1] { 0 },
+            [0x01F0] = new byte[] { 2 },
             [0x01F1] = new byte[] { 2, 2, 2 },
             [0x01F2] = new byte[] { 2, 2, 2, 2, 2 },
             [0x01F3] = new byte[] { 2, 2, 2, 2, 2 },
