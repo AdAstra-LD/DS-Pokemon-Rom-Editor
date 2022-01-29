@@ -80,13 +80,10 @@ namespace DSPRE {
             /* Store all trainer names and classes */
             TextArchive trainerClasses = new TextArchive(RomInfo.trainerClassMessageNumber);
             TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
-            BinaryReader trainerReader;
             int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir).Length;
 
             for (int i = 0; i < trainerCount; i++) {
-                trainerReader = new BinaryReader(new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
-                trainerReader.BaseStream.Position += 0x1;
-                int classMessageID = trainerReader.ReadUInt16();
+                int classMessageID = BitConverter.ToUInt16(DSUtils.ReadFromFile(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + i.ToString("D4"), 1, 2), 0);
                 trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[classMessageID] + " " + trainerNames.messages[i]);
             }
             return trainerList.ToArray();
