@@ -855,17 +855,14 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to extract Wild Encounters NARC...";
             Update();
 
-            string wildPokeUnpackedPath = RomInfo.gameDirs[RomInfo.DirNames.encounters].unpackedDir;
+            DSUtils.TryUnpackNarcs(new List<DirNames>() { DirNames.encounters });
 
-            DirectoryInfo di = new DirectoryInfo(wildPokeUnpackedPath);
-            if (!di.Exists || di.GetFiles().Length == 0) {
-                Narc.Open(RomInfo.gameDirs[DirNames.encounters].packedDir).ExtractToFolder(wildPokeUnpackedPath);
-            }
             statusLabel.Text = "Passing control to Wild Pokémon Editor...";
             Update();
 
             int encToOpen = loadCurrent ? (int)wildPokeUpDown.Value : 0;
 
+            string wildPokeUnpackedPath = gameDirs[DirNames.encounters].unpackedDir;
             switch (RomInfo.gameFamily) {
                 case gFamEnum.DP:
                 case gFamEnum.Plat:
@@ -1015,12 +1012,13 @@ namespace DSPRE {
 
             // Add row to internal names table
             string nameString = "4E 45 57 4D 41 50 00 00 00 00 00 00 00 00 00 00";
-            DSUtils.WriteToFile(RomInfo.internalNamesLocation, DSUtils.HexStringToByteArray(nameString), (uint)RomInfo.GetHeaderCount() * 0x10);
+            DSUtils.WriteToFile(RomInfo.internalNamesLocation, DSUtils.HexStringToByteArray(nameString), (uint)RomInfo.GetHeaderCount() * RomInfo.internalNameLength);
 
             // Update headers ListBox and internal names list
-            headerListBox.Items.Add(headerListBox.Items.Count + " -   NEWMAP");
-            headerListBoxNames.Add(headerListBox.Items.Count + " -   NEWMAP");
-            internalNames.Add("NEWMAP");
+            const string newmap = "NEWMAP";
+            headerListBox.Items.Add(headerListBox.Items.Count + MapHeader.nameSeparator + " " + newmap);
+            headerListBoxNames.Add(headerListBox.Items.Count + MapHeader.nameSeparator + " " + newmap);
+            internalNames.Add(newmap);
 
             // Select new header
             headerListBox.SelectedIndex = headerListBox.Items.Count - 1;
@@ -1559,7 +1557,7 @@ namespace DSPRE {
             mainTabControl.SelectedTab = eventEditorTabPage;
 
             CenterEventViewOnEntities();
-            eventMatrixXUpDown_ValueChanged(null, null);
+            eventMatrixUpDown_ValueChanged(null, null);
         }
         private void openMatrixButton_Click(object sender, EventArgs e) {
             if (!matrixEditorIsReady) {
@@ -2941,7 +2939,7 @@ namespace DSPRE {
             aspect = mapOpenGlControl.Width / mapOpenGlControl.Height;//(vp[2] - vp[0]) / (vp[3] - vp[1]);
             Gl.glMatrixMode(Gl.GL_PROJECTION);
             Gl.glLoadIdentity();
-            Glu.gluPerspective(perspective, aspect, 0.02f, 1000000.0f);//0.02f, 32.0f);
+            Glu.gluPerspective(perspective, aspect, 0.2f, 500.0f);//0.02f, 32.0f);
             Gl.glTranslatef(0, 0, -dist);
             Gl.glRotatef(elev, 1, 0, 0);
             Gl.glRotatef(ang, 0, 1, 0);
