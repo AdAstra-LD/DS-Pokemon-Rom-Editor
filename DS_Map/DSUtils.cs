@@ -58,7 +58,7 @@ namespace DSPRE {
             public static byte[] ReadBytes(uint startOffset, long numberOfBytes = 0) {
                 return ReadFromFile(RomInfo.arm9Path, startOffset, numberOfBytes);
             }
-            public static void WriteBytes(byte[] bytesToWrite, uint destOffset, int indexFirstByteToWrite = 0, int? indexLastByteToWrite = null) {
+            public static void WriteBytes(byte[] bytesToWrite, uint destOffset, int indexFirstByteToWrite = 0, int indexLastByteToWrite = -1) {
                 WriteToFile(RomInfo.arm9Path, bytesToWrite, destOffset, indexFirstByteToWrite, indexLastByteToWrite);
             }
             public static byte ReadByte(uint startOffset) {
@@ -75,7 +75,7 @@ namespace DSPRE {
             }
         }
         public class EasyWriter : BinaryWriter {
-            public EasyWriter(string path, long pos = 0) : base(File.OpenWrite(path)) {
+            public EasyWriter(string path, long pos = 0, FileMode fmode = FileMode.OpenOrCreate) : base(new FileStream(path, fmode, FileAccess.Write, FileShare.None)) {
                 this.BaseStream.Position = pos;
             }
         }
@@ -88,12 +88,8 @@ namespace DSPRE {
 
         public const string backupSuffix = ".backup";
 
-        public static void WriteToFile(string filepath, byte[] toOutput, uint writeAt = 0, int indexFirstByteToWrite = 0, int? indexLastByteToWrite = null, bool fromScratch = false) {
-            if (fromScratch) {
-                File.Delete(filepath);
-            }
-
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(filepath))) {
+        public static void WriteToFile(string filepath, byte[] toOutput, uint writeAt = 0, int indexFirstByteToWrite = 0, int? indexLastByteToWrite = null, FileMode fmode = FileMode.OpenOrCreate) {
+            using (EasyWriter writer = new EasyWriter(filepath)) {
                 writer.BaseStream.Position = writeAt;
                 writer.Write(toOutput, indexFirstByteToWrite, indexLastByteToWrite is null ? toOutput.Length - indexFirstByteToWrite : (int)indexLastByteToWrite);
             }

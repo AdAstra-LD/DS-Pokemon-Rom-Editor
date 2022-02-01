@@ -58,7 +58,7 @@ namespace DSPRE {
                 Console.WriteLine("No textures found");
                 return;
             }
-            DSUtils.WriteToFile(Path.GetTempPath() + temp_btxname, texData, fromScratch: true);
+            DSUtils.WriteToFile(Path.GetTempPath() + temp_btxname, texData, fmode: FileMode.Create);
         }
         private void FillListBox(bool interior) {
             int modelCount = Directory.GetFiles(folder + rom.GetBuildingModelsDirPath(interior)).Length;

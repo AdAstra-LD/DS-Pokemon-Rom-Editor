@@ -66,8 +66,7 @@ namespace DSPRE {
             int buildModelsCount = Directory.GetFiles(path).Length;
 
             for (int i = 0; i < buildModelsCount; i++) {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(path + "\\" + i.ToString("D4")))) {
-                    reader.BaseStream.Position = 0x38;
+                using (DSUtils.EasyReader reader = new DSUtils.EasyReader(path + "\\" + i.ToString("D4"), 0x38)) {
                     string nsbmdName = Encoding.UTF8.GetString(reader.ReadBytes(16)).TrimEnd();
                     names.Add(nsbmdName);
                 }
@@ -420,7 +419,7 @@ namespace DSPRE {
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            DSUtils.WriteToFile(sf.FileName, DSUtils.BuildNSBMDwithTextures(modelFile, textureFile), fromScratch: true);
+            DSUtils.WriteToFile(sf.FileName, DSUtils.BuildNSBMDwithTextures(modelFile, textureFile), fmode: FileMode.Create);
             MessageBox.Show("Textures correctly written to NSBMD file.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void OpenCommandsDatabase(Dictionary<ushort, string> namesDict, Dictionary<ushort, byte[]> paramsDict, Dictionary<ushort, string> actionsDict,
@@ -595,8 +594,7 @@ namespace DSPRE {
         }
 
         private void SetupROMLanguage(string headerPath) {
-            using (BinaryReader br = new BinaryReader(File.OpenRead(headerPath))) {
-                br.BaseStream.Position = 0xC; // get ROM ID
+            using (DSUtils.EasyReader br = new DSUtils.EasyReader(headerPath, 0xC)) {
                 gameCode = Encoding.UTF8.GetString(br.ReadBytes(4));
                 br.BaseStream.Position = 0x1E;
                 europeByte = br.ReadByte();
@@ -909,8 +907,7 @@ namespace DSPRE {
 
             /* Read Header internal names */
             try {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.internalNamesLocation))) {
-
+                using (DSUtils.EasyReader reader = new DSUtils.EasyReader(RomInfo.internalNamesLocation)) {
                     for (int i = 0; i < headerCount; i++) {
                         byte[] row = reader.ReadBytes(RomInfo.internalNameLength);
 
@@ -919,6 +916,7 @@ namespace DSPRE {
                         internalNames.Add(internalName.TrimEnd('\0'));
                     }
                 }
+
                 headerListBox.Items.Clear();
                 headerListBox.Items.AddRange(headerListBoxNames.ToArray());
             } catch (FileNotFoundException) {
@@ -1579,7 +1577,7 @@ namespace DSPRE {
         private void saveHeaderButton_Click(object sender, EventArgs e) {
             /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
             if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
-                DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, fromScratch: true);
+                DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, fmode: FileMode.Create);
             } else {
                 uint headerOffset = (uint)(RomInfo.headerTableOffset + MapHeader.length * currentHeader.ID);
                 DSUtils.ARM9.WriteBytes(currentHeader.ToByteArray(), headerOffset);
@@ -1596,13 +1594,12 @@ namespace DSPRE {
             if (currentHeader.ID != null) {
                 ushort headerID = (ushort)currentHeader.ID;
 
-                using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(RomInfo.internalNamesLocation))) {
-                    writer.BaseStream.Position = headerID * RomInfo.internalNameLength;
-
+                using (DSUtils.EasyWriter writer = new DSUtils.EasyWriter(RomInfo.internalNamesLocation, headerID * RomInfo.internalNameLength)) { 
                     writer.Write(Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0')));
-                    internalNames[headerID] = internalNameBox.Text;
-                    headerListBoxNames[headerID] = headerID.ToString("D3") + MapHeader.nameSeparator + internalNames[headerID];
                 }
+
+                internalNames[headerID] = internalNameBox.Text;
+                headerListBoxNames[headerID] = headerID.ToString("D3") + MapHeader.nameSeparator + internalNames[headerID];
             }
         }
         private void updateHeaderNameShown(int thisIndex) {
@@ -1743,18 +1740,17 @@ namespace DSPRE {
             currentHeader = h;
             /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
             if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
-                DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, fromScratch: true);
+                DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, fmode: FileMode.Create);
             } else {
                 uint headerOffset = (uint)(RomInfo.headerTableOffset + MapHeader.length * currentHeader.ID);
                 DSUtils.ARM9.WriteBytes(currentHeader.ToByteArray(), headerOffset);
             }
 
             try {
-                using (BinaryReader reader = new BinaryReader(new FileStream(of.FileName, FileMode.Open))) {
-                    reader.BaseStream.Position = MapHeader.length + 8;
+                using (DSUtils.EasyReader reader = new DSUtils.EasyReader(of.FileName, MapHeader.length + 8)) {
                     internalNameBox.Text = Encoding.UTF8.GetString(reader.ReadBytes(RomInfo.internalNameLength));
-                    updateCurrentInternalName();
                 }
+                updateCurrentInternalName();
                 updateHeaderNameShown(headerListBox.SelectedIndex);
             } catch (EndOfStreamException) { }
 
@@ -1771,7 +1767,7 @@ namespace DSPRE {
                 return;
             }
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) {
+            using (DSUtils.EasyWriter writer = new DSUtils.EasyWriter(sf.FileName)) {
                 writer.Write(currentHeader.ToByteArray()); //Write full header
                 writer.Write((byte)0x00); //Padding
                 writer.Write(Encoding.UTF8.GetBytes("INTNAME")); //Signature
@@ -2188,8 +2184,9 @@ namespace DSPRE {
             DisplaySelection(mapFilesGridView.SelectedCells);
         }
         private void DisplaySelection(DataGridViewSelectedCellCollection selectedCells) {
-            if (selectedCells.Count > 0)
+            if (selectedCells.Count > 0) {
                 statusLabel.Text = "Selection:   " + selectedCells[0].ColumnIndex + ", " + selectedCells[0].RowIndex;
+            }
         }
         private void headersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
             if (headerListBox.Items.Count < internalNames.Count) {
@@ -2210,8 +2207,9 @@ namespace DSPRE {
                 /* If input is junk, use 0000 as placeholder value */
                 ushort cellValue;
                 try {
-                    if (!ushort.TryParse(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue))
+                    if (!ushort.TryParse(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) {
                         throw new NullReferenceException();
+                    }
                 } catch (NullReferenceException) {
                     cellValue = 0;
                 }
@@ -2220,21 +2218,25 @@ namespace DSPRE {
             }
         }
         private void headersGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
-            if (e.Value is null)
+            if (e.Value is null) {
                 return;
+            }
+
             disableHandlers = true;
 
             /* Format table cells corresponding to border maps or void */
-            ushort colorValue;
-            if (!ushort.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = GameMatrix.EMPTY;
+            if (!ushort.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out ushort colorValue)) {
+                colorValue = GameMatrix.EMPTY;
+            }
 
-            (Color back, Color fore) cellColors = FormatMapCell(colorValue);
-            e.CellStyle.BackColor = cellColors.back;
-            e.CellStyle.ForeColor = cellColors.fore;
+            (Color back, Color fore) = FormatMapCell(colorValue);
+            e.CellStyle.BackColor = back;
+            e.CellStyle.ForeColor = fore;
 
             /* If invalid input is entered, show 00 */
-            ushort cellValue;
-            if (!ushort.TryParse(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) e.Value = 0;
+            if (!ushort.TryParse(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out _)) {
+                e.Value = 0;
+            }
 
             disableHandlers = false;
 
@@ -2247,7 +2249,7 @@ namespace DSPRE {
                 /* If input is junk, use 00 as placeholder value */
                 byte cellValue = 0;
                 try {
-                    cellValue = Byte.Parse(heightsGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                    cellValue = byte.Parse(heightsGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
                 } catch { }
 
                 /* Change value in matrix object */
@@ -2330,8 +2332,10 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void heightsGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
-            if (e.Value is null)
+            if (e.Value is null) {
                 return;
+            }
+
             disableHandlers = true;
 
             /* Format table cells corresponding to border maps or void */
@@ -2357,8 +2361,8 @@ namespace DSPRE {
             /* Prompt user to select .mtx file */
             if (selectMatrixComboBox.SelectedIndex == 0) {
                 statusLabel.Text = "Awaiting user response...";
-                DialogResult d = MessageBox.Show("Replacing a matrix - especially Matrix 0 - with a new file is risky.\nDo not do it unless you are absolutely sure.\nProceed?", "Risky operation",
-                   MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult d = MessageBox.Show("Replacing a matrix - especially Matrix 0 - with a new file is risky.\n" +
+                    "Do not do it unless you are absolutely sure.\nProceed?", "Risky operation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (d == DialogResult.No) {
                     return;
@@ -2774,9 +2778,8 @@ namespace DSPRE {
                 for (int j = 0; j < currentMatrix.width; j++) {
                     ushort val = currentMatrix.maps[i, j];
                     if (val < ushort.MaxValue) {
-                        using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(romFolder.FileName + "\\" + currentMatrix.id + j.ToString("D2") + "_" + i.ToString("D2") + ".per"))) {
-                            writer.Write(new MapFile(val).CollisionsToByteArray());
-                        };
+                        string path = romFolder.FileName + "\\" + currentMatrix.id + j.ToString("D2") + "_" + i.ToString("D2") + ".per";
+                        File.WriteAllBytes(path, new MapFile(val).CollisionsToByteArray());
                     }
                 }
             }
@@ -2998,7 +3001,7 @@ namespace DSPRE {
             selectMapComboBox.Items.Clear();
             int mapCount = romInfo.GetMapCount();
             for (int i = 0; i < mapCount; i++) {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + i.ToString("D4")))) {
+                using (DSUtils.EasyReader reader = new DSUtils.EasyReader(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + i.ToString("D4"))) {
                     switch (RomInfo.gameFamily) {
                         case gFamEnum.DP:
                         case gFamEnum.Plat:
@@ -3589,17 +3592,15 @@ namespace DSPRE {
             }
         }
         private void exportBuildingsButton_Click(object sender, EventArgs e) {
-            SaveFileDialog eb = new SaveFileDialog {
+            SaveFileDialog sf = new SaveFileDialog {
                 Filter = "Buildings File (*.bld)|*.bld",
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
-            if (eb.ShowDialog(this) != DialogResult.OK) {
+            if (sf.ShowDialog(this) != DialogResult.OK) {
                 return;
             }
 
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) {
-                writer.Write(currentMapFile.BuildingsToByteArray());
-            }
+            File.WriteAllBytes(sf.FileName, currentMapFile.BuildingsToByteArray());
 
             MessageBox.Show("Buildings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -4131,8 +4132,7 @@ namespace DSPRE {
                 return;
             }
 
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(em.FileName)))
-                writer.Write(currentMapFile.CollisionsToByteArray());
+            File.WriteAllBytes(em.FileName, currentMapFile.CollisionsToByteArray());
 
             MessageBox.Show("Permissions exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -4349,17 +4349,15 @@ namespace DSPRE {
             MessageBox.Show("Terrain settings imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void bdhcExportButton_Click(object sender, EventArgs e) {
-            SaveFileDialog eb = new SaveFileDialog {
+            SaveFileDialog sf = new SaveFileDialog {
                 Filter = "Terrain File (*.bdhc)|*.bdhc",
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
-            if (eb.ShowDialog(this) != DialogResult.OK) {
+            if (sf.ShowDialog(this) != DialogResult.OK) {
                 return;
             }
 
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) {
-                writer.Write(currentMapFile.bdhc);
-            }
+            File.WriteAllBytes(sf.FileName, currentMapFile.bdhc);
 
             TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
             MessageBox.Show("Terrain settings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -4378,17 +4376,15 @@ namespace DSPRE {
             MessageBox.Show("BackGround Sound data imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void soundPlatesExportButton_Click(object sender, EventArgs e) {
-            SaveFileDialog eb = new SaveFileDialog {
+            SaveFileDialog sf = new SaveFileDialog {
                 Filter = "BackGround Sound File (*.bgs)|*.bgs",
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
-            if (eb.ShowDialog(this) != DialogResult.OK) {
+            if (sf.ShowDialog(this) != DialogResult.OK) {
                 return;
             }
 
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) {
-                writer.Write(currentMapFile.bgs);
-            }
+            File.WriteAllBytes(sf.FileName, currentMapFile.bgs);
 
             BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
             MessageBox.Show("BackGround Sound data exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -6558,8 +6554,7 @@ namespace DSPRE {
         private void addScriptFileButton_Click(object sender, EventArgs e) {
             /* Add new event file to event folder */
             string scriptFilePath = RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + selectScriptFileComboBox.Items.Count.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(scriptFilePath, FileMode.Create)))
-                writer.Write(new ScriptFile(0).ToByteArray());
+            File.WriteAllBytes(scriptFilePath, new ScriptFile(0).ToByteArray());
 
             /* Update ComboBox and select new file */
             selectScriptFileComboBox.Items.Add("Script File " + selectScriptFileComboBox.Items.Count);
@@ -6590,9 +6585,7 @@ namespace DSPRE {
         }
         private void clearCurrentLevelScriptButton_Click(object sender, EventArgs e) {
             string path = RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + selectScriptFileComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create))) {
-                writer.Write(new byte[4]);
-            }
+            File.WriteAllBytes(path, new byte[4]);
             MessageBox.Show("Level script correctly cleared.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void importScriptFileButton_Click(object sender, EventArgs e) {
@@ -7667,7 +7660,7 @@ namespace DSPRE {
 
             uint[] RAMaddresses = new uint[RomInfo.cameraTblOffsetsToRAMaddress.Length];
             string camOverlayPath = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
-            using (BinaryReader br = new BinaryReader(File.OpenRead(camOverlayPath))) {
+            using (DSUtils.EasyReader br = new DSUtils.EasyReader(camOverlayPath)) {
                 for (int i = 0; i < RomInfo.cameraTblOffsetsToRAMaddress.Length; i++) {
                     br.BaseStream.Position = RomInfo.cameraTblOffsetsToRAMaddress[i];
                     RAMaddresses[i] = br.ReadUInt32();
@@ -7683,10 +7676,7 @@ namespace DSPRE {
                 }
             }
 
-            using (BinaryReader br = new BinaryReader(File.OpenRead(camOverlayPath))) {
-                br.BaseStream.Position = overlayCameraTblOffset = RAMaddresses[0] - DSUtils.GetOverlayRAMAddress(RomInfo.cameraTblOverlayNumber);
-
-
+            using (DSUtils.EasyReader br = new DSUtils.EasyReader(camOverlayPath, RAMaddresses[0] - DSUtils.GetOverlayRAMAddress(RomInfo.cameraTblOverlayNumber))) {
                 if (RomInfo.gameFamily == gFamEnum.HGSS) {
                     currentCameraTable = new GameCamera[17];
                     for (int i = 0; i < currentCameraTable.Length; i++) {
@@ -7707,6 +7697,7 @@ namespace DSPRE {
                                                 br.ReadUInt16(), br.ReadUInt32(), br.ReadUInt32());
                     }
                 }
+
                 cameraEditorDataGridView.RowTemplate.Height = 32 * 16 / currentCameraTable.Length;
                 for (int i = 0; i < currentCameraTable.Length; i++) {
                     currentCameraTable[i].ShowInGridView(cameraEditorDataGridView, i);
@@ -7714,8 +7705,7 @@ namespace DSPRE {
             }
         }
         private void saveCameraTableButton_Click(object sender, EventArgs e) {
-            string path = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
-            SaveCameraTable(path, overlayCameraTblOffset);
+            SaveCameraTable(DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber), overlayCameraTblOffset);
         }
         private void cameraEditorDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e) {
             //cameraEditorDataGridView.Columns[0].ValueType = typeof(int);
@@ -7727,8 +7717,9 @@ namespace DSPRE {
                 Filter = "Camera Table File (*.bin)|*.bin",
                 FileName = Path.GetFileNameWithoutExtension(RomInfo.fileName) + " - CameraTable.bin"
             };
-            if (of.ShowDialog(this) != DialogResult.OK)
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             File.Delete(of.FileName);
             SaveCameraTable(of.FileName, 0);
@@ -7754,7 +7745,7 @@ namespace DSPRE {
                         return;
                     }
 
-                    DSUtils.WriteToFile(sf.FileName, currentCameraTable[e.RowIndex].ToByteArray(), fromScratch: true);
+                    DSUtils.WriteToFile(sf.FileName, currentCameraTable[e.RowIndex].ToByteArray(), fmode: FileMode.Create);
                     MessageBox.Show("Camera correctly saved.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 } else if (e.ColumnIndex == cameraEditorDataGridView.Columns.Count - 1) { //Import
                     OpenFileDialog of = new OpenFileDialog {
@@ -7846,7 +7837,12 @@ namespace DSPRE {
             statusLabel.Text = "Setting up Trainer Editor...";
             Update();
 
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.trainerProperties, DirNames.trainerParty, DirNames.trainerGraphics, DirNames.textArchives });
+            DSUtils.TryUnpackNarcs(new List<DirNames> { 
+                DirNames.trainerProperties, 
+                DirNames.trainerParty, 
+                DirNames.trainerGraphics, 
+                DirNames.textArchives 
+            });
 
             partyPokemonComboboxList.Clear();
             partyPokemonComboboxList.Add(partyPokemon1ComboBox);
@@ -8183,13 +8179,8 @@ namespace DSPRE {
 
             /*Write to File*/
             string indexStr = "\\" + trainerComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + indexStr, FileMode.Create))) {
-                writer.Write(currentTrainerFile.trp.ToByteArray());
-            }
-
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + indexStr, FileMode.Create))) {
-                writer.Write(currentTrainerFile.party.ToByteArray());
-            }
+            File.WriteAllBytes(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + indexStr, currentTrainerFile.trp.ToByteArray());
+            File.WriteAllBytes(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + indexStr, currentTrainerFile.party.ToByteArray());
 
             UpdateCurrentTrainerName(newName: trainerNameTextBox.Text);
             UpdateCurrentTrainerShownName();
@@ -8306,12 +8297,8 @@ namespace DSPRE {
             string trainerPropertiesPath = gameDirs[DirNames.trainerProperties].unpackedDir + suffix;
             string partyFilePath = gameDirs[DirNames.trainerParty].unpackedDir + suffix;
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(trainerPropertiesPath, FileMode.Create))) {
-                writer.Write(new TrainerProperties((ushort)trainerComboBox.Items.Count).ToByteArray());
-            }
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(partyFilePath, FileMode.Create))) {
-                writer.Write(new PartyPokemon().ToByteArray());
-            }
+            File.WriteAllBytes(trainerPropertiesPath, new TrainerProperties((ushort)trainerComboBox.Items.Count).ToByteArray());
+            File.WriteAllBytes(partyFilePath, new PartyPokemon().ToByteArray());
 
             TextArchive trainerClasses = new TextArchive(RomInfo.trainerClassMessageNumber);
             TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
@@ -8339,8 +8326,7 @@ namespace DSPRE {
             }
 
             /* Update trainer on disk */
-            MemoryStream userData = new MemoryStream();
-            using (BinaryReader reader = new BinaryReader(File.OpenRead(of.FileName))) {
+            using (DSUtils.EasyReader reader = new DSUtils.EasyReader(of.FileName)) {
                 string trName = reader.ReadString();
 
                 byte datSize = reader.ReadByte();
@@ -8350,8 +8336,8 @@ namespace DSPRE {
                 byte[] pDat = reader.ReadBytes(partySize);
 
                 string pathData = RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
-                File.WriteAllBytes(pathData, trDat);
                 string pathParty = RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
+                File.WriteAllBytes(pathData, trDat);
                 File.WriteAllBytes(pathParty, pDat);
 
                 UpdateCurrentTrainerName(trName);
