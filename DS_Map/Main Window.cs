@@ -8936,7 +8936,7 @@ namespace DSPRE {
                             File.Move(f.FullName, destName);
                             i++;
                         }
-                        MessageBox.Show("Isolated files have been moved to " + "\"" + ISOLATED_FOLDERNAME + "\"", "Files moved", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        MessageBox.Show("Isolated files have been moved to " + "\"" + ISOLATED_FOLDERNAME + "\"", "Files moved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             } else {
