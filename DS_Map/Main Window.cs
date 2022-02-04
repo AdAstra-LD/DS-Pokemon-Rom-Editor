@@ -9120,13 +9120,13 @@ namespace DSPRE {
                     }
                 }
 
-                if (cFileLines.Length -1 == enumStartLine) {
+                if (cFileLines.Length - 1 == enumStartLine) {
                     MessageBox.Show("Abrupt termination of enum file.\nAborting.", "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 int terminationLine;
-                for (terminationLine = enumStartLine+1; terminationLine < cFileLines.Length; terminationLine++) {
+                for (terminationLine = enumStartLine + 1; terminationLine < cFileLines.Length; terminationLine++) {
                     if (cFileLines[terminationLine].Replace(" ", "").Contains("};")) {
                         break;
                     }
@@ -9158,13 +9158,21 @@ namespace DSPRE {
                 }
 
                 for (int s = enumStartLine + 1; s < terminationLine; s++) {
-                    string withoutComment = cFileLines[s].Substring(0, cFileLines[s].IndexOf("//"));
+                    string withoutComment;
+
+                    int indexOfComment = cFileLines[s].IndexOf("//");
+                    if (indexOfComment > 0) {
+                        withoutComment = cFileLines[s].Substring(0, indexOfComment);
+                    } else {
+                        withoutComment = cFileLines[s];
+                    }
+
                     string differentSubstring = withoutComment.Substring(lastCommonUnderscore + 1).Trim().Replace(",", "");
                     int indexOfEquals = differentSubstring.LastIndexOf('=');
 
                     string entry = differentSubstring.Substring(0, indexOfEquals).Trim();
-                    if (indexOfEquals > 0) { 
-                        string numstr = differentSubstring.Substring(indexOfEquals+1);
+                    if (indexOfEquals > 0) {
+                        string numstr = differentSubstring.Substring(indexOfEquals + 1);
                         string[] split = numstr.Split(new char[] { ' ' }, options: StringSplitOptions.RemoveEmptyEntries);
 
                         if (split.Length > 1) {
@@ -9193,9 +9201,10 @@ namespace DSPRE {
                 File.AppendAllLines(sf.FileName, sortedEntries.Select(kvp => kvp.Value));
 
                 MessageBox.Show("List file saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            } catch {
+            } catch (Exception ex) {
                 MessageBox.Show("The input enum file couldn't be read correctly.\nNo output file has been written." +
                     "\n\nAborting.", "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Details: " + ex.Message, "Failure details", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
