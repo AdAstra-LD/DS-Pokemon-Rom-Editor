@@ -1599,7 +1599,12 @@ namespace DSPRE {
                 }
 
                 internalNames[headerID] = internalNameBox.Text;
-                headerListBoxNames[headerID] = headerID.ToString("D3") + MapHeader.nameSeparator + internalNames[headerID];
+                string elem = headerID.ToString("D3") + MapHeader.nameSeparator + internalNames[headerID];
+                headerListBoxNames[headerID] = elem;
+
+                if (eventEditorIsReady) {
+                    eventEditorWarpHeaderListBox.Items[headerID] = elem;
+                }
             }
         }
         private void updateHeaderNameShown(int thisIndex) {
@@ -4650,8 +4655,10 @@ namespace DSPRE {
         }
         private void FillWarpsBox() {
             warpsListBox.Items.Clear();
-            for (int i = 0; i < currentEvFile.warps.Count; i++) {
-                warpsListBox.Items.Add("Warp " + i);
+            int count = currentEvFile.warps.Count;
+
+            for (int i = 0; i < count; i++) {
+                warpsListBox.Items.Add(i.ToString("D3") + ": " + currentEvFile.warps[i].ToString());
             }
         }
         private void FillTriggersBox() {
@@ -4916,6 +4923,11 @@ namespace DSPRE {
             int owSpriteCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.OWSprites].unpackedDir).Length;
             string[] trainerNames = GetTrainerNames();
             RomInfo.ReadOWTable();
+
+            eventEditorWarpHeaderListBox.Items.Clear();
+            eventEditorWarpHeaderListBox.Items.AddRange(headerListBoxNames.ToArray());
+            eventEditorHeaderLocationNameLabel.Text = "";
+
 
             statusLabel.Text = "Loading Events... Please wait.";
             toolStripProgressBar.Maximum = (int)(eventCount + RomInfo.OverworldTable.Keys.Max() + trainerNames.Length);
@@ -5721,9 +5733,14 @@ namespace DSPRE {
 
         #region Warps Tab
         private void addWarpButton_Click(object sender, EventArgs e) {
-            currentEvFile.warps.Add(new Warp((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
-            warpsListBox.Items.Add("Warp " + (currentEvFile.warps.Count - 1).ToString());
-            warpsListBox.SelectedIndex = currentEvFile.warps.Count - 1;
+            Warp n = new Warp((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value);
+            currentEvFile.warps.Add(n);
+
+            int index = currentEvFile.warps.Count - 1;
+            warpsListBox.Items.Add(index.ToString("D3") + ": " + n.ToString());
+
+            eventEditorWarpHeaderListBox.SelectedIndex = n.header;
+            warpsListBox.SelectedIndex = index;
         }
         private void removeWarpButton_Click(object sender, EventArgs e) {
             if (warpsListBox.SelectedIndex < 0) {
@@ -5752,28 +5769,84 @@ namespace DSPRE {
                 return;
             }
 
-            currentEvFile.warps.Add(new Warp((Warp)selectedEvent));
-            warpsListBox.Items.Add("Warp " + (currentEvFile.warps.Count - 1).ToString());
-            warpsListBox.SelectedIndex = currentEvFile.warps.Count - 1;
+            Warp n = new Warp((Warp)selectedEvent);
+            currentEvFile.warps.Add(n);
+
+            int index = currentEvFile.warps.Count - 1;
+            warpsListBox.Items.Add(index.ToString("D3") + ": " + n.ToString());
+
+            eventEditorWarpHeaderListBox.SelectedIndex = n.header;
+            warpsListBox.SelectedIndex = index;
         }
         private void warpAnchorUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
+            }
+
             currentEvFile.warps[warpsListBox.SelectedIndex].anchor = (ushort)warpAnchorUpDown.Value;
+            updateSelectedWarpName();
         }
-        private void warpHeaderUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+        private void eventEditorWarpHeaderListBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (eventEditorWarpHeaderListBox.SelectedIndex < 0) {
+                eventEditorHeaderLocationNameLabel.Text = "";
                 return;
-            currentEvFile.warps[warpsListBox.SelectedIndex].header = (ushort)warpHeaderUpDown.Value;
+            }
+
+
+            ushort destHeaderID = (ushort)eventEditorWarpHeaderListBox.SelectedIndex;
+
+            MapHeader destHeader;
+            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                destHeader = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + destHeaderID.ToString("D4"), destHeaderID, 0);
+            } else {
+                destHeader = MapHeader.LoadFromARM9(destHeaderID);
+            }
+
+            int locNum;
+            switch (RomInfo.gameFamily) {
+                case gFamEnum.DP: {
+                        HeaderDP h = (HeaderDP)destHeader;
+
+                        locNum = h.locationName;
+                        break;
+                    }
+                case gFamEnum.Plat: {
+                        HeaderPt h = (HeaderPt)destHeader;
+
+                        locNum = h.locationName;
+                        break;
+                    }
+                default: {
+                        HeaderHGSS h = (HeaderHGSS)destHeader;
+
+                        locNum = h.locationName;
+                        break;
+                    }
+            }
+
+            eventEditorHeaderLocationNameLabel.Text = (string)locationNameComboBox.Items[locNum];
+
+            if (disableHandlers) {
+                return;
+            }
+            currentEvFile.warps[warpsListBox.SelectedIndex].header = destHeaderID;
+            updateSelectedWarpName();
+        }
+        private void updateSelectedWarpName() {
+            int index = warpsListBox.SelectedIndex;
+            warpsListBox.Items[index] = index.ToString("D3") + ": " + (selectedEvent as Warp).ToString();
         }
         private void warpsListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
-            disableHandlers = true;
+            }
+
 
             selectedEvent = currentEvFile.warps[warpsListBox.SelectedIndex];
+            eventEditorWarpHeaderListBox.SelectedIndex = currentEvFile.warps[warpsListBox.SelectedIndex].header;
 
-            warpHeaderUpDown.Value = currentEvFile.warps[warpsListBox.SelectedIndex].header;
+            disableHandlers = true;
+
             warpAnchorUpDown.Value = currentEvFile.warps[warpsListBox.SelectedIndex].anchor;
             warpXMapUpDown.Value = currentEvFile.warps[warpsListBox.SelectedIndex].xMapPosition;
             warpYMapUpDown.Value = currentEvFile.warps[warpsListBox.SelectedIndex].yMapPosition;
@@ -5788,43 +5861,52 @@ namespace DSPRE {
             #endregion
         }
         private void warpMatrixXUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.warps[warpsListBox.SelectedIndex].xMatrixPosition = (ushort)warpXMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpMatrixYUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.warps[warpsListBox.SelectedIndex].yMatrixPosition = (ushort)warpYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpXMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.warps[warpsListBox.SelectedIndex].xMapPosition = (short)warpXMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpYMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.warps[warpsListBox.SelectedIndex].yMapPosition = (short)warpYMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpZUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.warps[warpsListBox.SelectedIndex].zPosition = (short)warpZUpDown.Value;
             DisplayActiveEvents();
         }
         private void goToWarpDestination_Click(object sender, EventArgs e) {
+            if (warpsListBox.SelectedIndex < 0) {
+                return;
+            }
+
             int destAnchor = (int)warpAnchorUpDown.Value;
-            ushort destHeaderID = (ushort)warpHeaderUpDown.Value;
+            ushort destHeaderID = (ushort)eventEditorWarpHeaderListBox.SelectedIndex;
 
             MapHeader destHeader;
             if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
@@ -5846,6 +5928,7 @@ namespace DSPRE {
                     return;
                 }
             }
+
             eventMatrixUpDown.Value = destHeader.matrixID;
             eventAreaDataUpDown.Value = destHeader.areaDataID;
             selectEventComboBox.SelectedIndex = destHeader.eventFileID;
@@ -9272,7 +9355,7 @@ namespace DSPRE {
 
             IList list = menuViewToolStripMenuItem.DropDownItems;
             for (int i = 0; i < list.Count; i++) {
-                (list[i] as ToolStripMenuItem).Checked = (i == layoutStyle); 
+                (list[i] as ToolStripMenuItem).Checked = (i == layoutStyle);
             }
 
             Properties.Settings.Default.menuLayout = layoutStyle;
