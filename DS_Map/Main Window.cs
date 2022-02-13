@@ -3142,14 +3142,16 @@ namespace DSPRE {
         }
 
         private void buildTextureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || buildTextureComboBox.SelectedIndex < 0) {
+            int btIndex = buildTextureComboBox.SelectedIndex;
+            
+            if (disableHandlers || btIndex < 0) {
                 return;
             }
 
-            if (buildTextureComboBox.SelectedIndex == 0) {
+            if (btIndex == 0) {
                 showBuildingTextures = false;
             } else {
-                string texturePath = RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (buildTextureComboBox.SelectedIndex - 1).ToString("D4");
+                string texturePath = RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (btIndex - 1).ToString("D4");
                 byte[] textureFile = File.ReadAllBytes(texturePath);
 
                 Stream str = new MemoryStream(textureFile);
@@ -3164,9 +3166,10 @@ namespace DSPRE {
                             file.MatchTextures();
                             showBuildingTextures = true;
                         } catch {
-                            if (!buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex].ToString().StartsWith("Error!")) {
+                            string itemAtIndex = buildTextureComboBox.Items[btIndex].ToString();
+                            if (!itemAtIndex.StartsWith("Error!")) {
                                 disableHandlers = true;
-                                buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex].ToString().Insert(0, "Error! - ");
+                                buildTextureComboBox.Items[btIndex] = itemAtIndex.Insert(0, "Error! - ");
                                 disableHandlers = false;
                             }
                             showBuildingTextures = false;
@@ -4599,6 +4602,11 @@ namespace DSPRE {
                     }
 
                     areaDataID = h.areaDataID;
+
+                    bool disableHandlersbackup = disableHandlers;
+                    disableHandlers = true;
+                    eventAreaDataUpDown.Value = h.areaDataID;
+                    disableHandlers = disableHandlersbackup;
                 } else {
                     areaDataID = (byte)eventAreaDataUpDown.Value;
                 }
