@@ -352,7 +352,6 @@
     <None Include="Resources\Graphics\Event Icons\gray_sign.png" />
     <None Include="Resources\Graphics\Event Icons\red_sign.png" />
     <None Include="Resources\Graphics\Event Icons\route_sign.png" />
-    <None Include="Resources\Graphics\Event Icons\dawn_platinum.png" />
     <None Include="Resources\Graphics\Event Icons\dppt_suitcase.png" />
     <None Include="Resources\Graphics\Event Icons\blue_sign.png" />
     <None Include="Resources\Graphics\Area Icons\hgsscave.png" />
@@ -479,6 +478,7 @@
     <None Include="Resources\Graphics\Program Icons\deleteIcon.png" />
     <None Include="Resources\Graphics\Event Icons\overworldUnreadable.png" />
     <Content Include="Resources\Graphics\Camera Angles\HGSS\hgsscamera16.png" />
+    <Content Include="Resources\Graphics\Event Icons\warpCollision.png" />
     <Content Include="Resources\Graphics\Pokemon Icons\abomasnow.png" />
     <Content Include="Resources\Graphics\Pokemon Icons\abra.png" />
     <Content Include="Resources\Graphics\Pokemon Icons\absol.png" />

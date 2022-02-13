@@ -4482,33 +4482,31 @@ namespace DSPRE {
         private void DisplayActiveEvents() {
             eventPictureBox.Image = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
 
-            /* Draw spawnables */
-            if (showSpawnablesCheckBox.Checked) {
-                for (int i = 0; i < currentEvFile.spawnables.Count; i++) {
-                    Spawnable spawnable = currentEvFile.spawnables[i];
+            using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
+                Bitmap icon;
+                /* Draw spawnables */
+                if (showSpawnablesCheckBox.Checked) {
+                    icon = (Bitmap)Properties.Resources.ResourceManager.GetObject("sign");
+                    for (int i = 0; i < currentEvFile.spawnables.Count; i++) {
+                        Spawnable spawnable = currentEvFile.spawnables[i];
 
-                    if (spawnable.xMatrixPosition == eventMatrixXUpDown.Value && spawnable.yMatrixPosition == eventMatrixYUpDown.Value) {
-                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
-                            g.CompositingMode = CompositingMode.SourceOver;
-                            g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("sign"), (spawnable.xMapPosition) * 17, (spawnable.yMapPosition) * 17);
+                        if (isEventOnCurrentMatrix(spawnable)) {
+                            g.DrawImage(icon, spawnable.xMapPosition * 17, spawnable.yMapPosition * 17);
                             if (selectedEvent == spawnable) { // Draw selection rectangle if event is the selected one
                                 DrawSelectionRectangle(g, spawnable);
                             }
                         }
                     }
                 }
-            }
 
-            /* Draw overworlds */
-            if (showOwsCheckBox.Checked) {
-                for (int i = 0; i < currentEvFile.overworlds.Count; i++) {
-                    Overworld overworld = currentEvFile.overworlds[i];
+                /* Draw overworlds */
+                if (showOwsCheckBox.Checked) {
+                    for (int i = 0; i < currentEvFile.overworlds.Count; i++) {
+                        Overworld overworld = currentEvFile.overworlds[i];
 
-                    if (isEventOnCurrentMatrix(overworld)) { // Draw image only if event is in current map
-                        Bitmap sprite = GetOverworldImage(overworld.overlayTableEntry, overworld.orientation);
-                        sprite.MakeTransparent();
-                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
-                            g.CompositingMode = CompositingMode.SourceOver;
+                        if (isEventOnCurrentMatrix(overworld)) { // Draw image only if event is in current map
+                            Bitmap sprite = GetOverworldImage(overworld.overlayTableEntry, overworld.orientation);
+                            sprite.MakeTransparent();
                             g.DrawImage(sprite, (overworld.xMapPosition) * 17 - 7 + (32 - sprite.Width) / 2, (overworld.yMapPosition - 1) * 17 + (32 - sprite.Height));
 
                             if (selectedEvent == overworld) {
@@ -4517,37 +4515,50 @@ namespace DSPRE {
                         }
                     }
                 }
-            }
 
-            /* Draw warps */
-            if (showWarpsCheckBox.Checked) {
-                for (int i = 0; i < currentEvFile.warps.Count; i++) {
-                    Warp warp = currentEvFile.warps[i];
+                /* Draw warps */
+                if (showWarpsCheckBox.Checked) {
+                    icon = (Bitmap)Properties.Resources.ResourceManager.GetObject("warpCollision");
 
-                    if (isEventOnCurrentMatrix(warp)) {
-                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
-                            g.CompositingMode = CompositingMode.SourceOver;
-                            g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("warp"), (warp.xMapPosition) * 17, (warp.yMapPosition) * 17);
+                    if (eventMapFile != null) {
+                        for (int y = 0; y < MapFile.mapSize; y++) {
+                            for (int x = 0; x < MapFile.mapSize; x++) {
+                                byte moveperm = eventMapFile.types[x, y];
+                                if (PokeDatabase.System.MapCollisionTypePainters.TryGetValue(moveperm, out string val)) {
+                                    if (val.IndexOf("Warp", StringComparison.InvariantCultureIgnoreCase) >= 0) {
+                                        //Console.WriteLine("Found warp at " + i + ", " + j);
+                                        g.DrawImage(icon, y * 17, x * 17);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    icon = (Bitmap)Properties.Resources.ResourceManager.GetObject("warp");
+                    for (int i = 0; i < currentEvFile.warps.Count; i++) {
+                        Warp warp = currentEvFile.warps[i];
+
+                        if (isEventOnCurrentMatrix(warp)) {
+                            g.DrawImage(icon, warp.xMapPosition * 17, warp.yMapPosition * 17);
+
                             if (selectedEvent == warp) { // Draw selection rectangle if event is the selected one
-
                                 DrawSelectionRectangle(g, warp);
                             }
                         }
                     }
                 }
-            }
 
-            /* Draw triggers */
-            if (showTriggersCheckBox.Checked) {
-                for (int i = 0; i < currentEvFile.triggers.Count; i++) {
-                    Trigger trigger = currentEvFile.triggers[i];
+                /* Draw triggers */
+                if (showTriggersCheckBox.Checked) {
+                    icon = (Bitmap)Properties.Resources.ResourceManager.GetObject("trigger");
 
-                    if (isEventOnCurrentMatrix(trigger)) {
-                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
-                            g.CompositingMode = CompositingMode.SourceOver;
+                    for (int i = 0; i < currentEvFile.triggers.Count; i++) {
+                        Trigger trigger = currentEvFile.triggers[i];
+
+                        if (isEventOnCurrentMatrix(trigger)) {
                             for (int y = 0; y < currentEvFile.triggers[i].heightY; y++) {
                                 for (int x = 0; x < currentEvFile.triggers[i].widthX; x++) {
-                                    g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("trigger"), (trigger.xMapPosition + x) * 17, (trigger.yMapPosition + y) * 17);
+                                    g.DrawImage(icon, (trigger.xMapPosition + x) * 17, (trigger.yMapPosition + y) * 17);
                                 }
                             }
                             if (selectedEvent == trigger) {// Draw selection rectangle if event is the selected one
@@ -4557,6 +4568,7 @@ namespace DSPRE {
                     }
                 }
             }
+
             eventPictureBox.Invalidate();
         }
         private void DrawSelectionRectangle(Graphics g, Event ev) {

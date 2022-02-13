@@ -353,16 +353,6 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap dawn_platinum {
-            get {
-                object obj = ResourceManager.GetObject("dawn_platinum", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap dawnSpawn {
             get {
                 object obj = ResourceManager.GetObject("dawnSpawn", resourceCulture);
@@ -2026,6 +2016,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap warp {
             get {
                 object obj = ResourceManager.GetObject("warp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap warpCollision {
+            get {
+                object obj = ResourceManager.GetObject("warpCollision", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
