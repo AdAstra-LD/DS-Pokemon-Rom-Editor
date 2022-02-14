@@ -205,7 +205,7 @@ namespace DSPRE.Resources {
             public static Dictionary<ushort, string> DPMusicDict = new Dictionary<ushort, string>() {
                 [1000] = "Mystery Zone",
                 [1001] = "Silence",
-                [1002] = "Pal Park",
+                [1002] = "Silence (Field)",
                 [1004] = "Twinleaf Town (Day)",
                 [1005] = "Sandgem Town (Day)",
                 [1006] = "Floaroma Town (Day)",
