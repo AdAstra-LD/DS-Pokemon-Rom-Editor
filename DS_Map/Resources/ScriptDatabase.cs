@@ -585,8 +585,11 @@ namespace DSPRE.Resources {
             [0x021C] = "AddRoamingPokemon",
             [0x021D] = "Group",
 
-            [0x0221] = "RememberMove",
-
+            [0x0221] = "RememberMoveScreen",
+            [0x0222] = "DummyMoveCommand", //
+            [0x0223] = "ResponseRememberMove",
+            [0x0224] = "TeachMoveScreen",
+            [0x0225] = "ResponseTeachMove",
             [0x0226] = "InitTrade",
             [0x0227] = "GetOfferedPokemon",
             [0x0228] = "GetRequestedPokemon",
@@ -1245,7 +1248,8 @@ namespace DSPRE.Resources {
                 3, 3,   2, 2, 2,    //if value is 3, read 3 parameters... each one takes up 2 bytes 
                 4, 2,   2, 2,       //if value is 4, read 2 parameters... each one takes up 2 bytes 
                 5, 3,   2, 2, 2,    //if value is 5, read 3 parameters... each one takes up 2 bytes 
-                6, 1,   2},         //if value is 6, read 1 parameter... which takes up 2 bytes
+                6, 1,   2           //if value is 6, read 1 parameter... which takes up 2 bytes
+            },
             [0x0236] = new byte[] { 2 },
             [0x0237] = new byte[] { 2, 2, 2, 2 }, //u16: 0; Flex: ???; Var: Variable; Var:    //u16: 1; Flex: ???; Flex: ???; Flex: ???
             [0x0238] = new byte[] { 2, 2 },
