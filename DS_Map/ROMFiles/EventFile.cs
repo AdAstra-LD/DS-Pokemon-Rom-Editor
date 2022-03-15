@@ -385,6 +385,9 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Methods (1)
+        public override string ToString() {
+            return "To Header " + header.ToString("D3") + ", " + "Hook " + anchor.ToString("D2");
+        }
         public override byte[] ToByteArray() {
             using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
                 ushort xCoordinate = (ushort)(xMapPosition + MapFile.mapSize * xMatrixPosition);

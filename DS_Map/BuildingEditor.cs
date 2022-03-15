@@ -58,7 +58,7 @@ namespace DSPRE {
                 Console.WriteLine("No textures found");
                 return;
             }
-            DSUtils.WriteToFile(Path.GetTempPath() + temp_btxname, texData, fromScratch: true);
+            DSUtils.WriteToFile(Path.GetTempPath() + temp_btxname, texData, fmode: FileMode.Create);
         }
         private void FillListBox(bool interior) {
             int modelCount = Directory.GetFiles(folder + rom.GetBuildingModelsDirPath(interior)).Length;
@@ -124,7 +124,7 @@ namespace DSPRE {
             aspect = buildingOpenGLControl.Width / buildingOpenGLControl.Height;//(vp[2] - vp[0]) / (vp[3] - vp[1]);
             Gl.glMatrixMode(Gl.GL_PROJECTION);
             Gl.glLoadIdentity();
-            Glu.gluPerspective(perspective, aspect, 0.02f, 1000000.0f);//0.02f, 32.0f);
+            Glu.gluPerspective(perspective, aspect, 0.2f, 500.0f);//0.02f, 32.0f);
             Gl.glTranslatef(0, 0, -dist);
             Gl.glRotatef(elev, 1, 0, 0);
             Gl.glRotatef(ang, 0, 1, 0);

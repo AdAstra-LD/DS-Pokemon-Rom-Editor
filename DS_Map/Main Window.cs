@@ -66,8 +66,7 @@ namespace DSPRE {
             int buildModelsCount = Directory.GetFiles(path).Length;
 
             for (int i = 0; i < buildModelsCount; i++) {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(path + "\\" + i.ToString("D4")))) {
-                    reader.BaseStream.Position = 0x38;
+                using (DSUtils.EasyReader reader = new DSUtils.EasyReader(path + "\\" + i.ToString("D4"), 0x38)) {
                     string nsbmdName = Encoding.UTF8.GetString(reader.ReadBytes(16)).TrimEnd();
                     names.Add(nsbmdName);
                 }
@@ -80,13 +79,10 @@ namespace DSPRE {
             /* Store all trainer names and classes */
             TextArchive trainerClasses = new TextArchive(RomInfo.trainerClassMessageNumber);
             TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
-            BinaryReader trainerReader;
             int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir).Length;
 
             for (int i = 0; i < trainerCount; i++) {
-                trainerReader = new BinaryReader(new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
-                trainerReader.BaseStream.Position += 0x1;
-                int classMessageID = trainerReader.ReadUInt16();
+                int classMessageID = BitConverter.ToUInt16(DSUtils.ReadFromFile(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + i.ToString("D4"), 1, 2), 0);
                 trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[classMessageID] + " " + trainerNames.messages[i]);
             }
             return trainerList.ToArray();
@@ -423,7 +419,7 @@ namespace DSPRE {
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            DSUtils.WriteToFile(sf.FileName, DSUtils.BuildNSBMDwithTextures(modelFile, textureFile), fromScratch: true);
+            DSUtils.WriteToFile(sf.FileName, DSUtils.BuildNSBMDwithTextures(modelFile, textureFile), fmode: FileMode.Create);
             MessageBox.Show("Textures correctly written to NSBMD file.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void OpenCommandsDatabase(Dictionary<ushort, string> namesDict, Dictionary<ushort, byte[]> paramsDict, Dictionary<ushort, string> actionsDict,
@@ -598,8 +594,7 @@ namespace DSPRE {
         }
 
         private void SetupROMLanguage(string headerPath) {
-            using (BinaryReader br = new BinaryReader(File.OpenRead(headerPath))) {
-                br.BaseStream.Position = 0xC; // get ROM ID
+            using (DSUtils.EasyReader br = new DSUtils.EasyReader(headerPath, 0xC)) {
                 gameCode = Encoding.UTF8.GetString(br.ReadBytes(4));
                 br.BaseStream.Position = 0x1E;
                 europeByte = br.ReadByte();
@@ -858,17 +853,14 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to extract Wild Encounters NARC...";
             Update();
 
-            string wildPokeUnpackedPath = RomInfo.gameDirs[RomInfo.DirNames.encounters].unpackedDir;
+            DSUtils.TryUnpackNarcs(new List<DirNames>() { DirNames.encounters });
 
-            DirectoryInfo di = new DirectoryInfo(wildPokeUnpackedPath);
-            if (!di.Exists || di.GetFiles().Length == 0) {
-                Narc.Open(RomInfo.gameDirs[DirNames.encounters].packedDir).ExtractToFolder(wildPokeUnpackedPath);
-            }
             statusLabel.Text = "Passing control to Wild Pokémon Editor...";
             Update();
 
             int encToOpen = loadCurrent ? (int)wildPokeUpDown.Value : 0;
 
+            string wildPokeUnpackedPath = gameDirs[DirNames.encounters].unpackedDir;
             switch (RomInfo.gameFamily) {
                 case gFamEnum.DP:
                 case gFamEnum.Plat:
@@ -915,8 +907,7 @@ namespace DSPRE {
 
             /* Read Header internal names */
             try {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.internalNamesLocation))) {
-
+                using (DSUtils.EasyReader reader = new DSUtils.EasyReader(RomInfo.internalNamesLocation)) {
                     for (int i = 0; i < headerCount; i++) {
                         byte[] row = reader.ReadBytes(RomInfo.internalNameLength);
 
@@ -925,6 +916,7 @@ namespace DSPRE {
                         internalNames.Add(internalName.TrimEnd('\0'));
                     }
                 }
+
                 headerListBox.Items.Clear();
                 headerListBox.Items.AddRange(headerListBoxNames.ToArray());
             } catch (FileNotFoundException) {
@@ -1018,12 +1010,13 @@ namespace DSPRE {
 
             // Add row to internal names table
             string nameString = "4E 45 57 4D 41 50 00 00 00 00 00 00 00 00 00 00";
-            DSUtils.WriteToFile(RomInfo.internalNamesLocation, DSUtils.HexStringToByteArray(nameString), (uint)RomInfo.GetHeaderCount() * 0x10);
+            DSUtils.WriteToFile(RomInfo.internalNamesLocation, DSUtils.HexStringToByteArray(nameString), (uint)RomInfo.GetHeaderCount() * RomInfo.internalNameLength);
 
             // Update headers ListBox and internal names list
-            headerListBox.Items.Add(headerListBox.Items.Count + " -   NEWMAP");
-            headerListBoxNames.Add(headerListBox.Items.Count + " -   NEWMAP");
-            internalNames.Add("NEWMAP");
+            const string newmap = "NEWMAP";
+            headerListBox.Items.Add(headerListBox.Items.Count + MapHeader.nameSeparator + " " + newmap);
+            headerListBoxNames.Add(headerListBox.Items.Count + MapHeader.nameSeparator + " " + newmap);
+            internalNames.Add(newmap);
 
             // Select new header
             headerListBox.SelectedIndex = headerListBox.Items.Count - 1;
@@ -1562,7 +1555,7 @@ namespace DSPRE {
             mainTabControl.SelectedTab = eventEditorTabPage;
 
             CenterEventViewOnEntities();
-            eventMatrixXUpDown_ValueChanged(null, null);
+            eventMatrixUpDown_ValueChanged(null, null);
         }
         private void openMatrixButton_Click(object sender, EventArgs e) {
             if (!matrixEditorIsReady) {
@@ -1584,7 +1577,7 @@ namespace DSPRE {
         private void saveHeaderButton_Click(object sender, EventArgs e) {
             /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
             if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
-                DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, fromScratch: true);
+                DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, fmode: FileMode.Create);
             } else {
                 uint headerOffset = (uint)(RomInfo.headerTableOffset + MapHeader.length * currentHeader.ID);
                 DSUtils.ARM9.WriteBytes(currentHeader.ToByteArray(), headerOffset);
@@ -1601,12 +1594,16 @@ namespace DSPRE {
             if (currentHeader.ID != null) {
                 ushort headerID = (ushort)currentHeader.ID;
 
-                using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(RomInfo.internalNamesLocation))) {
-                    writer.BaseStream.Position = headerID * RomInfo.internalNameLength;
-
+                using (DSUtils.EasyWriter writer = new DSUtils.EasyWriter(RomInfo.internalNamesLocation, headerID * RomInfo.internalNameLength)) { 
                     writer.Write(Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0')));
-                    internalNames[headerID] = internalNameBox.Text;
-                    headerListBoxNames[headerID] = headerID.ToString("D3") + MapHeader.nameSeparator + internalNames[headerID];
+                }
+
+                internalNames[headerID] = internalNameBox.Text;
+                string elem = headerID.ToString("D3") + MapHeader.nameSeparator + internalNames[headerID];
+                headerListBoxNames[headerID] = elem;
+
+                if (eventEditorIsReady) {
+                    eventEditorWarpHeaderListBox.Items[headerID] = elem;
                 }
             }
         }
@@ -1748,18 +1745,17 @@ namespace DSPRE {
             currentHeader = h;
             /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
             if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
-                DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, fromScratch: true);
+                DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, fmode: FileMode.Create);
             } else {
                 uint headerOffset = (uint)(RomInfo.headerTableOffset + MapHeader.length * currentHeader.ID);
                 DSUtils.ARM9.WriteBytes(currentHeader.ToByteArray(), headerOffset);
             }
 
             try {
-                using (BinaryReader reader = new BinaryReader(new FileStream(of.FileName, FileMode.Open))) {
-                    reader.BaseStream.Position = MapHeader.length + 8;
+                using (DSUtils.EasyReader reader = new DSUtils.EasyReader(of.FileName, MapHeader.length + 8)) {
                     internalNameBox.Text = Encoding.UTF8.GetString(reader.ReadBytes(RomInfo.internalNameLength));
-                    updateCurrentInternalName();
                 }
+                updateCurrentInternalName();
                 updateHeaderNameShown(headerListBox.SelectedIndex);
             } catch (EndOfStreamException) { }
 
@@ -1776,7 +1772,7 @@ namespace DSPRE {
                 return;
             }
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(sf.FileName, FileMode.Create))) {
+            using (DSUtils.EasyWriter writer = new DSUtils.EasyWriter(sf.FileName)) {
                 writer.Write(currentHeader.ToByteArray()); //Write full header
                 writer.Write((byte)0x00); //Padding
                 writer.Write(Encoding.UTF8.GetBytes("INTNAME")); //Signature
@@ -2193,8 +2189,9 @@ namespace DSPRE {
             DisplaySelection(mapFilesGridView.SelectedCells);
         }
         private void DisplaySelection(DataGridViewSelectedCellCollection selectedCells) {
-            if (selectedCells.Count > 0)
+            if (selectedCells.Count > 0) {
                 statusLabel.Text = "Selection:   " + selectedCells[0].ColumnIndex + ", " + selectedCells[0].RowIndex;
+            }
         }
         private void headersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
             if (headerListBox.Items.Count < internalNames.Count) {
@@ -2215,8 +2212,9 @@ namespace DSPRE {
                 /* If input is junk, use 0000 as placeholder value */
                 ushort cellValue;
                 try {
-                    if (!ushort.TryParse(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue))
+                    if (!ushort.TryParse(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) {
                         throw new NullReferenceException();
+                    }
                 } catch (NullReferenceException) {
                     cellValue = 0;
                 }
@@ -2225,21 +2223,25 @@ namespace DSPRE {
             }
         }
         private void headersGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
-            if (e.Value is null)
+            if (e.Value is null) {
                 return;
+            }
+
             disableHandlers = true;
 
             /* Format table cells corresponding to border maps or void */
-            ushort colorValue;
-            if (!ushort.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out colorValue)) colorValue = GameMatrix.EMPTY;
+            if (!ushort.TryParse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out ushort colorValue)) {
+                colorValue = GameMatrix.EMPTY;
+            }
 
-            (Color back, Color fore) cellColors = FormatMapCell(colorValue);
-            e.CellStyle.BackColor = cellColors.back;
-            e.CellStyle.ForeColor = cellColors.fore;
+            (Color back, Color fore) = FormatMapCell(colorValue);
+            e.CellStyle.BackColor = back;
+            e.CellStyle.ForeColor = fore;
 
             /* If invalid input is entered, show 00 */
-            ushort cellValue;
-            if (!ushort.TryParse(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out cellValue)) e.Value = 0;
+            if (!ushort.TryParse(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out _)) {
+                e.Value = 0;
+            }
 
             disableHandlers = false;
 
@@ -2252,7 +2254,7 @@ namespace DSPRE {
                 /* If input is junk, use 00 as placeholder value */
                 byte cellValue = 0;
                 try {
-                    cellValue = Byte.Parse(heightsGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                    cellValue = byte.Parse(heightsGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
                 } catch { }
 
                 /* Change value in matrix object */
@@ -2335,8 +2337,10 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void heightsGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
-            if (e.Value is null)
+            if (e.Value is null) {
                 return;
+            }
+
             disableHandlers = true;
 
             /* Format table cells corresponding to border maps or void */
@@ -2362,8 +2366,8 @@ namespace DSPRE {
             /* Prompt user to select .mtx file */
             if (selectMatrixComboBox.SelectedIndex == 0) {
                 statusLabel.Text = "Awaiting user response...";
-                DialogResult d = MessageBox.Show("Replacing a matrix - especially Matrix 0 - with a new file is risky.\nDo not do it unless you are absolutely sure.\nProceed?", "Risky operation",
-                   MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult d = MessageBox.Show("Replacing a matrix - especially Matrix 0 - with a new file is risky.\n" +
+                    "Do not do it unless you are absolutely sure.\nProceed?", "Risky operation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (d == DialogResult.No) {
                     return;
@@ -2779,9 +2783,8 @@ namespace DSPRE {
                 for (int j = 0; j < currentMatrix.width; j++) {
                     ushort val = currentMatrix.maps[i, j];
                     if (val < ushort.MaxValue) {
-                        using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(romFolder.FileName + "\\" + currentMatrix.id + j.ToString("D2") + "_" + i.ToString("D2") + ".per"))) {
-                            writer.Write(new MapFile(val).CollisionsToByteArray());
-                        };
+                        string path = romFolder.FileName + "\\" + currentMatrix.id + j.ToString("D2") + "_" + i.ToString("D2") + ".per";
+                        File.WriteAllBytes(path, new MapFile(val).CollisionsToByteArray());
                     }
                 }
             }
@@ -2944,7 +2947,7 @@ namespace DSPRE {
             aspect = mapOpenGlControl.Width / mapOpenGlControl.Height;//(vp[2] - vp[0]) / (vp[3] - vp[1]);
             Gl.glMatrixMode(Gl.GL_PROJECTION);
             Gl.glLoadIdentity();
-            Glu.gluPerspective(perspective, aspect, 0.02f, 1000000.0f);//0.02f, 32.0f);
+            Glu.gluPerspective(perspective, aspect, 0.2f, 500.0f);//0.02f, 32.0f);
             Gl.glTranslatef(0, 0, -dist);
             Gl.glRotatef(elev, 1, 0, 0);
             Gl.glRotatef(ang, 0, 1, 0);
@@ -3003,7 +3006,7 @@ namespace DSPRE {
             selectMapComboBox.Items.Clear();
             int mapCount = romInfo.GetMapCount();
             for (int i = 0; i < mapCount; i++) {
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + i.ToString("D4")))) {
+                using (DSUtils.EasyReader reader = new DSUtils.EasyReader(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + i.ToString("D4"))) {
                     switch (RomInfo.gameFamily) {
                         case gFamEnum.DP:
                         case gFamEnum.Plat:
@@ -3139,14 +3142,16 @@ namespace DSPRE {
         }
 
         private void buildTextureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || buildTextureComboBox.SelectedIndex < 0) {
+            int btIndex = buildTextureComboBox.SelectedIndex;
+            
+            if (disableHandlers || btIndex < 0) {
                 return;
             }
 
-            if (buildTextureComboBox.SelectedIndex == 0) {
+            if (btIndex == 0) {
                 showBuildingTextures = false;
             } else {
-                string texturePath = RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (buildTextureComboBox.SelectedIndex - 1).ToString("D4");
+                string texturePath = RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (btIndex - 1).ToString("D4");
                 byte[] textureFile = File.ReadAllBytes(texturePath);
 
                 Stream str = new MemoryStream(textureFile);
@@ -3161,9 +3166,10 @@ namespace DSPRE {
                             file.MatchTextures();
                             showBuildingTextures = true;
                         } catch {
-                            if (!buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex].ToString().StartsWith("Error!")) {
+                            string itemAtIndex = buildTextureComboBox.Items[btIndex].ToString();
+                            if (!itemAtIndex.StartsWith("Error!")) {
                                 disableHandlers = true;
-                                buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex].ToString().Insert(0, "Error! - ");
+                                buildTextureComboBox.Items[btIndex] = itemAtIndex.Insert(0, "Error! - ");
                                 disableHandlers = false;
                             }
                             showBuildingTextures = false;
@@ -3594,17 +3600,15 @@ namespace DSPRE {
             }
         }
         private void exportBuildingsButton_Click(object sender, EventArgs e) {
-            SaveFileDialog eb = new SaveFileDialog {
+            SaveFileDialog sf = new SaveFileDialog {
                 Filter = "Buildings File (*.bld)|*.bld",
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
-            if (eb.ShowDialog(this) != DialogResult.OK) {
+            if (sf.ShowDialog(this) != DialogResult.OK) {
                 return;
             }
 
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) {
-                writer.Write(currentMapFile.BuildingsToByteArray());
-            }
+            File.WriteAllBytes(sf.FileName, currentMapFile.BuildingsToByteArray());
 
             MessageBox.Show("Buildings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -4136,8 +4140,7 @@ namespace DSPRE {
                 return;
             }
 
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(em.FileName)))
-                writer.Write(currentMapFile.CollisionsToByteArray());
+            File.WriteAllBytes(em.FileName, currentMapFile.CollisionsToByteArray());
 
             MessageBox.Show("Permissions exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -4354,17 +4357,15 @@ namespace DSPRE {
             MessageBox.Show("Terrain settings imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void bdhcExportButton_Click(object sender, EventArgs e) {
-            SaveFileDialog eb = new SaveFileDialog {
+            SaveFileDialog sf = new SaveFileDialog {
                 Filter = "Terrain File (*.bdhc)|*.bdhc",
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
-            if (eb.ShowDialog(this) != DialogResult.OK) {
+            if (sf.ShowDialog(this) != DialogResult.OK) {
                 return;
             }
 
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) {
-                writer.Write(currentMapFile.bdhc);
-            }
+            File.WriteAllBytes(sf.FileName, currentMapFile.bdhc);
 
             TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
             MessageBox.Show("Terrain settings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -4383,17 +4384,15 @@ namespace DSPRE {
             MessageBox.Show("BackGround Sound data imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void soundPlatesExportButton_Click(object sender, EventArgs e) {
-            SaveFileDialog eb = new SaveFileDialog {
+            SaveFileDialog sf = new SaveFileDialog {
                 Filter = "BackGround Sound File (*.bgs)|*.bgs",
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
-            if (eb.ShowDialog(this) != DialogResult.OK) {
+            if (sf.ShowDialog(this) != DialogResult.OK) {
                 return;
             }
 
-            using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(eb.FileName))) {
-                writer.Write(currentMapFile.bgs);
-            }
+            File.WriteAllBytes(sf.FileName, currentMapFile.bgs);
 
             BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
             MessageBox.Show("BackGround Sound data exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -4483,33 +4482,31 @@ namespace DSPRE {
         private void DisplayActiveEvents() {
             eventPictureBox.Image = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
 
-            /* Draw spawnables */
-            if (showSpawnablesCheckBox.Checked) {
-                for (int i = 0; i < currentEvFile.spawnables.Count; i++) {
-                    Spawnable spawnable = currentEvFile.spawnables[i];
+            using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
+                Bitmap icon;
+                /* Draw spawnables */
+                if (showSpawnablesCheckBox.Checked) {
+                    icon = (Bitmap)Properties.Resources.ResourceManager.GetObject("sign");
+                    for (int i = 0; i < currentEvFile.spawnables.Count; i++) {
+                        Spawnable spawnable = currentEvFile.spawnables[i];
 
-                    if (spawnable.xMatrixPosition == eventMatrixXUpDown.Value && spawnable.yMatrixPosition == eventMatrixYUpDown.Value) {
-                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
-                            g.CompositingMode = CompositingMode.SourceOver;
-                            g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("sign"), (spawnable.xMapPosition) * 17, (spawnable.yMapPosition) * 17);
+                        if (isEventOnCurrentMatrix(spawnable)) {
+                            g.DrawImage(icon, spawnable.xMapPosition * 17, spawnable.yMapPosition * 17);
                             if (selectedEvent == spawnable) { // Draw selection rectangle if event is the selected one
                                 DrawSelectionRectangle(g, spawnable);
                             }
                         }
                     }
                 }
-            }
 
-            /* Draw overworlds */
-            if (showOwsCheckBox.Checked) {
-                for (int i = 0; i < currentEvFile.overworlds.Count; i++) {
-                    Overworld overworld = currentEvFile.overworlds[i];
+                /* Draw overworlds */
+                if (showOwsCheckBox.Checked) {
+                    for (int i = 0; i < currentEvFile.overworlds.Count; i++) {
+                        Overworld overworld = currentEvFile.overworlds[i];
 
-                    if (isEventOnCurrentMatrix(overworld)) { // Draw image only if event is in current map
-                        Bitmap sprite = GetOverworldImage(overworld.overlayTableEntry, overworld.orientation);
-                        sprite.MakeTransparent();
-                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
-                            g.CompositingMode = CompositingMode.SourceOver;
+                        if (isEventOnCurrentMatrix(overworld)) { // Draw image only if event is in current map
+                            Bitmap sprite = GetOverworldImage(overworld.overlayTableEntry, overworld.orientation);
+                            sprite.MakeTransparent();
                             g.DrawImage(sprite, (overworld.xMapPosition) * 17 - 7 + (32 - sprite.Width) / 2, (overworld.yMapPosition - 1) * 17 + (32 - sprite.Height));
 
                             if (selectedEvent == overworld) {
@@ -4518,37 +4515,50 @@ namespace DSPRE {
                         }
                     }
                 }
-            }
 
-            /* Draw warps */
-            if (showWarpsCheckBox.Checked) {
-                for (int i = 0; i < currentEvFile.warps.Count; i++) {
-                    Warp warp = currentEvFile.warps[i];
+                /* Draw warps */
+                if (showWarpsCheckBox.Checked) {
+                    icon = (Bitmap)Properties.Resources.ResourceManager.GetObject("warpCollision");
 
-                    if (isEventOnCurrentMatrix(warp)) {
-                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
-                            g.CompositingMode = CompositingMode.SourceOver;
-                            g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("warp"), (warp.xMapPosition) * 17, (warp.yMapPosition) * 17);
+                    if (eventMapFile != null) {
+                        for (int y = 0; y < MapFile.mapSize; y++) {
+                            for (int x = 0; x < MapFile.mapSize; x++) {
+                                byte moveperm = eventMapFile.types[x, y];
+                                if (PokeDatabase.System.MapCollisionTypePainters.TryGetValue(moveperm, out string val)) {
+                                    if (val.IndexOf("Warp", StringComparison.InvariantCultureIgnoreCase) >= 0) {
+                                        //Console.WriteLine("Found warp at " + i + ", " + j);
+                                        g.DrawImage(icon, y * 17, x * 17);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    icon = (Bitmap)Properties.Resources.ResourceManager.GetObject("warp");
+                    for (int i = 0; i < currentEvFile.warps.Count; i++) {
+                        Warp warp = currentEvFile.warps[i];
+
+                        if (isEventOnCurrentMatrix(warp)) {
+                            g.DrawImage(icon, warp.xMapPosition * 17, warp.yMapPosition * 17);
+
                             if (selectedEvent == warp) { // Draw selection rectangle if event is the selected one
-
                                 DrawSelectionRectangle(g, warp);
                             }
                         }
                     }
                 }
-            }
 
-            /* Draw triggers */
-            if (showTriggersCheckBox.Checked) {
-                for (int i = 0; i < currentEvFile.triggers.Count; i++) {
-                    Trigger trigger = currentEvFile.triggers[i];
+                /* Draw triggers */
+                if (showTriggersCheckBox.Checked) {
+                    icon = (Bitmap)Properties.Resources.ResourceManager.GetObject("trigger");
 
-                    if (isEventOnCurrentMatrix(trigger)) {
-                        using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
-                            g.CompositingMode = CompositingMode.SourceOver;
+                    for (int i = 0; i < currentEvFile.triggers.Count; i++) {
+                        Trigger trigger = currentEvFile.triggers[i];
+
+                        if (isEventOnCurrentMatrix(trigger)) {
                             for (int y = 0; y < currentEvFile.triggers[i].heightY; y++) {
                                 for (int x = 0; x < currentEvFile.triggers[i].widthX; x++) {
-                                    g.DrawImage((Bitmap)Properties.Resources.ResourceManager.GetObject("trigger"), (trigger.xMapPosition + x) * 17, (trigger.yMapPosition + y) * 17);
+                                    g.DrawImage(icon, (trigger.xMapPosition + x) * 17, (trigger.yMapPosition + y) * 17);
                                 }
                             }
                             if (selectedEvent == trigger) {// Draw selection rectangle if event is the selected one
@@ -4558,6 +4568,7 @@ namespace DSPRE {
                     }
                 }
             }
+
             eventPictureBox.Invalidate();
         }
         private void DrawSelectionRectangle(Graphics g, Event ev) {
@@ -4603,6 +4614,11 @@ namespace DSPRE {
                     }
 
                     areaDataID = h.areaDataID;
+
+                    bool disableHandlersbackup = disableHandlers;
+                    disableHandlers = true;
+                    eventAreaDataUpDown.Value = h.areaDataID;
+                    disableHandlers = disableHandlersbackup;
                 } else {
                     areaDataID = (byte)eventAreaDataUpDown.Value;
                 }
@@ -4659,8 +4675,10 @@ namespace DSPRE {
         }
         private void FillWarpsBox() {
             warpsListBox.Items.Clear();
-            for (int i = 0; i < currentEvFile.warps.Count; i++) {
-                warpsListBox.Items.Add("Warp " + i);
+            int count = currentEvFile.warps.Count;
+
+            for (int i = 0; i < count; i++) {
+                warpsListBox.Items.Add(i.ToString("D3") + ": " + currentEvFile.warps[i].ToString());
             }
         }
         private void FillTriggersBox() {
@@ -4925,6 +4943,11 @@ namespace DSPRE {
             int owSpriteCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.OWSprites].unpackedDir).Length;
             string[] trainerNames = GetTrainerNames();
             RomInfo.ReadOWTable();
+
+            eventEditorWarpHeaderListBox.Items.Clear();
+            eventEditorWarpHeaderListBox.Items.AddRange(headerListBoxNames.ToArray());
+            eventEditorHeaderLocationNameLabel.Text = "";
+
 
             statusLabel.Text = "Loading Events... Please wait.";
             toolStripProgressBar.Maximum = (int)(eventCount + RomInfo.OverworldTable.Keys.Max() + trainerNames.Length);
@@ -5730,9 +5753,14 @@ namespace DSPRE {
 
         #region Warps Tab
         private void addWarpButton_Click(object sender, EventArgs e) {
-            currentEvFile.warps.Add(new Warp((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
-            warpsListBox.Items.Add("Warp " + (currentEvFile.warps.Count - 1).ToString());
-            warpsListBox.SelectedIndex = currentEvFile.warps.Count - 1;
+            Warp n = new Warp((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value);
+            currentEvFile.warps.Add(n);
+
+            int index = currentEvFile.warps.Count - 1;
+            warpsListBox.Items.Add(index.ToString("D3") + ": " + n.ToString());
+
+            eventEditorWarpHeaderListBox.SelectedIndex = n.header;
+            warpsListBox.SelectedIndex = index;
         }
         private void removeWarpButton_Click(object sender, EventArgs e) {
             if (warpsListBox.SelectedIndex < 0) {
@@ -5761,28 +5789,84 @@ namespace DSPRE {
                 return;
             }
 
-            currentEvFile.warps.Add(new Warp((Warp)selectedEvent));
-            warpsListBox.Items.Add("Warp " + (currentEvFile.warps.Count - 1).ToString());
-            warpsListBox.SelectedIndex = currentEvFile.warps.Count - 1;
+            Warp n = new Warp((Warp)selectedEvent);
+            currentEvFile.warps.Add(n);
+
+            int index = currentEvFile.warps.Count - 1;
+            warpsListBox.Items.Add(index.ToString("D3") + ": " + n.ToString());
+
+            eventEditorWarpHeaderListBox.SelectedIndex = n.header;
+            warpsListBox.SelectedIndex = index;
         }
         private void warpAnchorUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
+            }
+
             currentEvFile.warps[warpsListBox.SelectedIndex].anchor = (ushort)warpAnchorUpDown.Value;
+            updateSelectedWarpName();
         }
-        private void warpHeaderUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+        private void eventEditorWarpHeaderListBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (eventEditorWarpHeaderListBox.SelectedIndex < 0) {
+                eventEditorHeaderLocationNameLabel.Text = "";
                 return;
-            currentEvFile.warps[warpsListBox.SelectedIndex].header = (ushort)warpHeaderUpDown.Value;
+            }
+
+
+            ushort destHeaderID = (ushort)eventEditorWarpHeaderListBox.SelectedIndex;
+
+            MapHeader destHeader;
+            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                destHeader = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + destHeaderID.ToString("D4"), destHeaderID, 0);
+            } else {
+                destHeader = MapHeader.LoadFromARM9(destHeaderID);
+            }
+
+            int locNum;
+            switch (RomInfo.gameFamily) {
+                case gFamEnum.DP: {
+                        HeaderDP h = (HeaderDP)destHeader;
+
+                        locNum = h.locationName;
+                        break;
+                    }
+                case gFamEnum.Plat: {
+                        HeaderPt h = (HeaderPt)destHeader;
+
+                        locNum = h.locationName;
+                        break;
+                    }
+                default: {
+                        HeaderHGSS h = (HeaderHGSS)destHeader;
+
+                        locNum = h.locationName;
+                        break;
+                    }
+            }
+
+            eventEditorHeaderLocationNameLabel.Text = (string)locationNameComboBox.Items[locNum];
+
+            if (disableHandlers) {
+                return;
+            }
+            currentEvFile.warps[warpsListBox.SelectedIndex].header = destHeaderID;
+            updateSelectedWarpName();
+        }
+        private void updateSelectedWarpName() {
+            int index = warpsListBox.SelectedIndex;
+            warpsListBox.Items[index] = index.ToString("D3") + ": " + (selectedEvent as Warp).ToString();
         }
         private void warpsListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
-            disableHandlers = true;
+            }
+
 
             selectedEvent = currentEvFile.warps[warpsListBox.SelectedIndex];
+            eventEditorWarpHeaderListBox.SelectedIndex = currentEvFile.warps[warpsListBox.SelectedIndex].header;
 
-            warpHeaderUpDown.Value = currentEvFile.warps[warpsListBox.SelectedIndex].header;
+            disableHandlers = true;
+
             warpAnchorUpDown.Value = currentEvFile.warps[warpsListBox.SelectedIndex].anchor;
             warpXMapUpDown.Value = currentEvFile.warps[warpsListBox.SelectedIndex].xMapPosition;
             warpYMapUpDown.Value = currentEvFile.warps[warpsListBox.SelectedIndex].yMapPosition;
@@ -5797,43 +5881,52 @@ namespace DSPRE {
             #endregion
         }
         private void warpMatrixXUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.warps[warpsListBox.SelectedIndex].xMatrixPosition = (ushort)warpXMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpMatrixYUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.warps[warpsListBox.SelectedIndex].yMatrixPosition = (ushort)warpYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpXMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.warps[warpsListBox.SelectedIndex].xMapPosition = (short)warpXMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpYMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.warps[warpsListBox.SelectedIndex].yMapPosition = (short)warpYMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpZUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0)
+            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
+            }
 
             currentEvFile.warps[warpsListBox.SelectedIndex].zPosition = (short)warpZUpDown.Value;
             DisplayActiveEvents();
         }
         private void goToWarpDestination_Click(object sender, EventArgs e) {
+            if (warpsListBox.SelectedIndex < 0) {
+                return;
+            }
+
             int destAnchor = (int)warpAnchorUpDown.Value;
-            ushort destHeaderID = (ushort)warpHeaderUpDown.Value;
+            ushort destHeaderID = (ushort)eventEditorWarpHeaderListBox.SelectedIndex;
 
             MapHeader destHeader;
             if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
@@ -5855,6 +5948,7 @@ namespace DSPRE {
                     return;
                 }
             }
+
             eventMatrixUpDown.Value = destHeader.matrixID;
             eventAreaDataUpDown.Value = destHeader.areaDataID;
             selectEventComboBox.SelectedIndex = destHeader.eventFileID;
@@ -6563,8 +6657,7 @@ namespace DSPRE {
         private void addScriptFileButton_Click(object sender, EventArgs e) {
             /* Add new event file to event folder */
             string scriptFilePath = RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + selectScriptFileComboBox.Items.Count.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(scriptFilePath, FileMode.Create)))
-                writer.Write(new ScriptFile(0).ToByteArray());
+            File.WriteAllBytes(scriptFilePath, new ScriptFile(0).ToByteArray());
 
             /* Update ComboBox and select new file */
             selectScriptFileComboBox.Items.Add("Script File " + selectScriptFileComboBox.Items.Count);
@@ -6595,9 +6688,7 @@ namespace DSPRE {
         }
         private void clearCurrentLevelScriptButton_Click(object sender, EventArgs e) {
             string path = RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + selectScriptFileComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create))) {
-                writer.Write(new byte[4]);
-            }
+            File.WriteAllBytes(path, new byte[4]);
             MessageBox.Show("Level script correctly cleared.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void importScriptFileButton_Click(object sender, EventArgs e) {
@@ -7672,7 +7763,7 @@ namespace DSPRE {
 
             uint[] RAMaddresses = new uint[RomInfo.cameraTblOffsetsToRAMaddress.Length];
             string camOverlayPath = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
-            using (BinaryReader br = new BinaryReader(File.OpenRead(camOverlayPath))) {
+            using (DSUtils.EasyReader br = new DSUtils.EasyReader(camOverlayPath)) {
                 for (int i = 0; i < RomInfo.cameraTblOffsetsToRAMaddress.Length; i++) {
                     br.BaseStream.Position = RomInfo.cameraTblOffsetsToRAMaddress[i];
                     RAMaddresses[i] = br.ReadUInt32();
@@ -7688,10 +7779,7 @@ namespace DSPRE {
                 }
             }
 
-            using (BinaryReader br = new BinaryReader(File.OpenRead(camOverlayPath))) {
-                br.BaseStream.Position = overlayCameraTblOffset = RAMaddresses[0] - DSUtils.GetOverlayRAMAddress(RomInfo.cameraTblOverlayNumber);
-
-
+            using (DSUtils.EasyReader br = new DSUtils.EasyReader(camOverlayPath, RAMaddresses[0] - DSUtils.GetOverlayRAMAddress(RomInfo.cameraTblOverlayNumber))) {
                 if (RomInfo.gameFamily == gFamEnum.HGSS) {
                     currentCameraTable = new GameCamera[17];
                     for (int i = 0; i < currentCameraTable.Length; i++) {
@@ -7712,6 +7800,7 @@ namespace DSPRE {
                                                 br.ReadUInt16(), br.ReadUInt32(), br.ReadUInt32());
                     }
                 }
+
                 cameraEditorDataGridView.RowTemplate.Height = 32 * 16 / currentCameraTable.Length;
                 for (int i = 0; i < currentCameraTable.Length; i++) {
                     currentCameraTable[i].ShowInGridView(cameraEditorDataGridView, i);
@@ -7719,8 +7808,7 @@ namespace DSPRE {
             }
         }
         private void saveCameraTableButton_Click(object sender, EventArgs e) {
-            string path = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
-            SaveCameraTable(path, overlayCameraTblOffset);
+            SaveCameraTable(DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber), overlayCameraTblOffset);
         }
         private void cameraEditorDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e) {
             //cameraEditorDataGridView.Columns[0].ValueType = typeof(int);
@@ -7732,8 +7820,9 @@ namespace DSPRE {
                 Filter = "Camera Table File (*.bin)|*.bin",
                 FileName = Path.GetFileNameWithoutExtension(RomInfo.fileName) + " - CameraTable.bin"
             };
-            if (of.ShowDialog(this) != DialogResult.OK)
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
 
             File.Delete(of.FileName);
             SaveCameraTable(of.FileName, 0);
@@ -7759,7 +7848,7 @@ namespace DSPRE {
                         return;
                     }
 
-                    DSUtils.WriteToFile(sf.FileName, currentCameraTable[e.RowIndex].ToByteArray(), fromScratch: true);
+                    DSUtils.WriteToFile(sf.FileName, currentCameraTable[e.RowIndex].ToByteArray(), fmode: FileMode.Create);
                     MessageBox.Show("Camera correctly saved.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 } else if (e.ColumnIndex == cameraEditorDataGridView.Columns.Count - 1) { //Import
                     OpenFileDialog of = new OpenFileDialog {
@@ -7851,7 +7940,12 @@ namespace DSPRE {
             statusLabel.Text = "Setting up Trainer Editor...";
             Update();
 
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.trainerProperties, DirNames.trainerParty, DirNames.trainerGraphics, DirNames.textArchives });
+            DSUtils.TryUnpackNarcs(new List<DirNames> { 
+                DirNames.trainerProperties, 
+                DirNames.trainerParty, 
+                DirNames.trainerGraphics, 
+                DirNames.textArchives 
+            });
 
             partyPokemonComboboxList.Clear();
             partyPokemonComboboxList.Add(partyPokemon1ComboBox);
@@ -8188,13 +8282,8 @@ namespace DSPRE {
 
             /*Write to File*/
             string indexStr = "\\" + trainerComboBox.SelectedIndex.ToString("D4");
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + indexStr, FileMode.Create))) {
-                writer.Write(currentTrainerFile.trp.ToByteArray());
-            }
-
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + indexStr, FileMode.Create))) {
-                writer.Write(currentTrainerFile.party.ToByteArray());
-            }
+            File.WriteAllBytes(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + indexStr, currentTrainerFile.trp.ToByteArray());
+            File.WriteAllBytes(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + indexStr, currentTrainerFile.party.ToByteArray());
 
             UpdateCurrentTrainerName(newName: trainerNameTextBox.Text);
             UpdateCurrentTrainerShownName();
@@ -8311,12 +8400,8 @@ namespace DSPRE {
             string trainerPropertiesPath = gameDirs[DirNames.trainerProperties].unpackedDir + suffix;
             string partyFilePath = gameDirs[DirNames.trainerParty].unpackedDir + suffix;
 
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(trainerPropertiesPath, FileMode.Create))) {
-                writer.Write(new TrainerProperties((ushort)trainerComboBox.Items.Count).ToByteArray());
-            }
-            using (BinaryWriter writer = new BinaryWriter(new FileStream(partyFilePath, FileMode.Create))) {
-                writer.Write(new PartyPokemon().ToByteArray());
-            }
+            File.WriteAllBytes(trainerPropertiesPath, new TrainerProperties((ushort)trainerComboBox.Items.Count).ToByteArray());
+            File.WriteAllBytes(partyFilePath, new PartyPokemon().ToByteArray());
 
             TextArchive trainerClasses = new TextArchive(RomInfo.trainerClassMessageNumber);
             TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
@@ -8344,8 +8429,7 @@ namespace DSPRE {
             }
 
             /* Update trainer on disk */
-            MemoryStream userData = new MemoryStream();
-            using (BinaryReader reader = new BinaryReader(File.OpenRead(of.FileName))) {
+            using (DSUtils.EasyReader reader = new DSUtils.EasyReader(of.FileName)) {
                 string trName = reader.ReadString();
 
                 byte datSize = reader.ReadByte();
@@ -8355,8 +8439,8 @@ namespace DSPRE {
                 byte[] pDat = reader.ReadBytes(partySize);
 
                 string pathData = RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
-                File.WriteAllBytes(pathData, trDat);
                 string pathParty = RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
+                File.WriteAllBytes(pathData, trDat);
                 File.WriteAllBytes(pathParty, pDat);
 
                 UpdateCurrentTrainerName(trName);
@@ -8955,7 +9039,7 @@ namespace DSPRE {
                             File.Move(f.FullName, destName);
                             i++;
                         }
-                        MessageBox.Show("Isolated files have been moved to " + "\"" + ISOLATED_FOLDERNAME + "\"", "Files moved", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        MessageBox.Show("Isolated files have been moved to " + "\"" + ISOLATED_FOLDERNAME + "\"", "Files moved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             } else {
@@ -9139,13 +9223,13 @@ namespace DSPRE {
                     }
                 }
 
-                if (cFileLines.Length -1 == enumStartLine) {
+                if (cFileLines.Length - 1 == enumStartLine) {
                     MessageBox.Show("Abrupt termination of enum file.\nAborting.", "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 int terminationLine;
-                for (terminationLine = enumStartLine+1; terminationLine < cFileLines.Length; terminationLine++) {
+                for (terminationLine = enumStartLine + 1; terminationLine < cFileLines.Length; terminationLine++) {
                     if (cFileLines[terminationLine].Replace(" ", "").Contains("};")) {
                         break;
                     }
@@ -9177,13 +9261,21 @@ namespace DSPRE {
                 }
 
                 for (int s = enumStartLine + 1; s < terminationLine; s++) {
-                    string withoutComment = cFileLines[s].Substring(0, cFileLines[s].IndexOf("//"));
+                    string withoutComment;
+
+                    int indexOfComment = cFileLines[s].IndexOf("//");
+                    if (indexOfComment > 0) {
+                        withoutComment = cFileLines[s].Substring(0, indexOfComment);
+                    } else {
+                        withoutComment = cFileLines[s];
+                    }
+
                     string differentSubstring = withoutComment.Substring(lastCommonUnderscore + 1).Trim().Replace(",", "");
                     int indexOfEquals = differentSubstring.LastIndexOf('=');
 
                     string entry = differentSubstring.Substring(0, indexOfEquals).Trim();
-                    if (indexOfEquals > 0) { 
-                        string numstr = differentSubstring.Substring(indexOfEquals+1);
+                    if (indexOfEquals > 0) {
+                        string numstr = differentSubstring.Substring(indexOfEquals + 1);
                         string[] split = numstr.Split(new char[] { ' ' }, options: StringSplitOptions.RemoveEmptyEntries);
 
                         if (split.Length > 1) {
@@ -9212,9 +9304,10 @@ namespace DSPRE {
                 File.AppendAllLines(sf.FileName, sortedEntries.Select(kvp => kvp.Value));
 
                 MessageBox.Show("List file saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            } catch {
+            } catch (Exception ex) {
                 MessageBox.Show("The input enum file couldn't be read correctly.\nNo output file has been written." +
                     "\n\nAborting.", "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Details: " + ex.Message, "Failure details", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -9282,7 +9375,7 @@ namespace DSPRE {
 
             IList list = menuViewToolStripMenuItem.DropDownItems;
             for (int i = 0; i < list.Count; i++) {
-                (list[i] as ToolStripMenuItem).Checked = (i == layoutStyle); 
+                (list[i] as ToolStripMenuItem).Checked = (i == layoutStyle);
             }
 
             Properties.Settings.Default.menuLayout = layoutStyle;

@@ -479,6 +479,7 @@
     <None Include="Resources\Graphics\Program Icons\deleteIcon.png" />
     <None Include="Resources\Graphics\Event Icons\overworldUnreadable.png" />
     <Content Include="Resources\Graphics\Camera Angles\HGSS\hgsscamera16.png" />
+    <Content Include="Resources\Graphics\Event Icons\warpCollision.png" />
     <Content Include="Resources\Graphics\Pokemon Icons\abomasnow.png" />
     <Content Include="Resources\Graphics\Pokemon Icons\abra.png" />
     <Content Include="Resources\Graphics\Pokemon Icons\absol.png" />

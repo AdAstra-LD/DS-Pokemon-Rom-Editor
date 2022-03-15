@@ -2033,6 +2033,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap warpCollision {
+            get {
+                object obj = ResourceManager.GetObject("warpCollision", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap warpGo {
             get {
                 object obj = ResourceManager.GetObject("warpGo", resourceCulture);
