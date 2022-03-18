@@ -58,7 +58,7 @@ namespace DSPRE {
             public static byte[] ReadBytes(uint startOffset, long numberOfBytes = 0) {
                 return ReadFromFile(RomInfo.arm9Path, startOffset, numberOfBytes);
             }
-            public static void WriteBytes(byte[] bytesToWrite, uint destOffset, int indexFirstByteToWrite = 0, int indexLastByteToWrite = -1) {
+            public static void WriteBytes(byte[] bytesToWrite, uint destOffset, int indexFirstByteToWrite = 0, int? indexLastByteToWrite = null) {
                 WriteToFile(RomInfo.arm9Path, bytesToWrite, destOffset, indexFirstByteToWrite, indexLastByteToWrite);
             }
             public static byte ReadByte(uint startOffset) {
@@ -89,24 +89,16 @@ namespace DSPRE {
         public const string backupSuffix = ".backup";
 
         public static void WriteToFile(string filepath, byte[] toOutput, uint writeAt = 0, int indexFirstByteToWrite = 0, int? indexLastByteToWrite = null, FileMode fmode = FileMode.OpenOrCreate) {
-            using (EasyWriter writer = new EasyWriter(filepath)) {
-                writer.BaseStream.Position = writeAt;
+            using (EasyWriter writer = new EasyWriter(filepath, writeAt, fmode)) {
                 writer.Write(toOutput, indexFirstByteToWrite, indexLastByteToWrite is null ? toOutput.Length - indexFirstByteToWrite : (int)indexLastByteToWrite);
             }
         }
         public static byte[] ReadFromFile(string filepath, long startOffset = 0, long numberOfBytes = 0) {
             byte[] buffer = null;
 
-            FileStream f = File.OpenRead(filepath);
-            using (BinaryReader reader = new BinaryReader(f)) {
-                reader.BaseStream.Position = startOffset;
-
+            using (EasyReader reader = new EasyReader(filepath, startOffset)) {
                 try {
-                    if (numberOfBytes == 0) {
-                        buffer = reader.ReadBytes((int)(f.Length - reader.BaseStream.Position));
-                    } else {
-                        buffer = reader.ReadBytes((int)numberOfBytes);
-                    }
+                    buffer = reader.ReadBytes(numberOfBytes == 0 ? (int)(reader.BaseStream.Length - reader.BaseStream.Position) : (int)numberOfBytes);
                 } catch (EndOfStreamException) {
                     Console.WriteLine("Stream ended");
                 }
@@ -196,9 +188,9 @@ namespace DSPRE {
                 string msg = "Overlay File " + '"' + overlayFilePath + backupSuffix + '"' + " couldn't be found and restored.";
                 Console.WriteLine(msg);
 
-                if (eventEditorIsReady)
+                if (eventEditorIsReady) {
                     MessageBox.Show(msg, "Can't restore overlay from backup", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                }
             }
         }
         
