@@ -501,6 +501,10 @@ namespace DSPRE {
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, openRom.FileName, useSuffix: true);
 
+            if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName)) {
+                return;
+            }
+
             CheckROMLanguage();
 
             int userchoice = UnpackRomCheckUserChoice();
@@ -584,6 +588,10 @@ namespace DSPRE {
             }
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, romFolder.FileName, useSuffix: false);
+
+            if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName)) {
+                return;
+            }
 
             CheckROMLanguage();
             
@@ -1554,8 +1562,8 @@ namespace DSPRE {
             selectEventComboBox.SelectedIndex = (int)eventFileUpDown.Value; // Select event file
             mainTabControl.SelectedTab = eventEditorTabPage;
 
-            CenterEventViewOnEntities();
             eventMatrixUpDown_ValueChanged(null, null);
+            CenterEventViewOnEntities();
         }
         private void openMatrixButton_Click(object sender, EventArgs e) {
             if (!matrixEditorIsReady) {

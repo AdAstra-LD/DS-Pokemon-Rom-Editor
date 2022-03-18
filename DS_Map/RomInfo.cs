@@ -134,9 +134,6 @@ namespace DSPRE {
 
         #region Constructors (1)
         public RomInfo(string id, string romName, bool useSuffix = true) {
-            romID = id;
-            fileName = romName;
-
             if (!useSuffix) {
                 folderSuffix = "";
             }
@@ -148,12 +145,15 @@ namespace DSPRE {
             internalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
 
             try {
-                gameVersion = PokeDatabase.System.versionsDict[romID];
+                gameVersion = PokeDatabase.System.versionsDict[id];
             } catch (KeyNotFoundException) {
                 MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            romID = id;
+            fileName = romName;
 
             LoadGameFamily();
             LoadGameLanguage();
