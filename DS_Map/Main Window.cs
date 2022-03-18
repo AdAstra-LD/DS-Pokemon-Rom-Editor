@@ -481,7 +481,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.5.1" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.6" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
@@ -9430,6 +9430,45 @@ namespace DSPRE {
                     }
                     break;
             }
+        }
+
+        //Locate File - buttons
+        public static void ExplorerSelect(string path) {
+            if (File.Exists(path)) {
+                Process.Start("explorer.exe", "/select" + "," + "\"" + path + "\"");
+            }
+        }
+
+        private void locateCurrentMatrixFile_Click(object sender, EventArgs e) {
+            ExplorerSelect(Path.Combine(gameDirs[DirNames.matrices].unpackedDir, selectMatrixComboBox.SelectedIndex.ToString("D4")));
+        }
+
+        private void locateCurrentMapBin_Click(object sender, EventArgs e) {
+            ExplorerSelect(Path.Combine(gameDirs[DirNames.maps].unpackedDir, selectMapComboBox.SelectedIndex.ToString("D4")));
+        }
+
+        private void locateCurrentNsbtx_Click(object sender, EventArgs e) {
+            if (mapTilesetRadioButton.Checked) {
+                ExplorerSelect(Path.Combine(gameDirs[DirNames.mapTextures].unpackedDir, texturePacksListBox.SelectedIndex.ToString("D4")));
+            } else {
+                ExplorerSelect(Path.Combine(gameDirs[DirNames.buildingTextures].unpackedDir, texturePacksListBox.SelectedIndex.ToString("D4")));
+            }
+        }
+
+        private void locateCurrentAreaData_Click(object sender, EventArgs e) {
+            ExplorerSelect(Path.Combine(gameDirs[DirNames.areaData].unpackedDir, selectAreaDataListBox.SelectedIndex.ToString("D4")));
+        }
+
+        private void locateCurrentEvFile_Click(object sender, EventArgs e) {
+            ExplorerSelect(Path.Combine(gameDirs[DirNames.eventFiles].unpackedDir, selectEventComboBox.SelectedIndex.ToString("D4")));
+        }
+
+        private void locateCurrentScriptFile_Click(object sender, EventArgs e) {
+            ExplorerSelect(Path.Combine(gameDirs[DirNames.scripts].unpackedDir, selectScriptFileComboBox.SelectedIndex.ToString("D4")));
+        }
+
+        private void locateCurrentTextArchive_Click(object sender, EventArgs e) {
+            ExplorerSelect(Path.Combine(gameDirs[DirNames.textArchives].unpackedDir, selectTextFileComboBox.SelectedIndex.ToString("D4")));
         }
     }
 }
