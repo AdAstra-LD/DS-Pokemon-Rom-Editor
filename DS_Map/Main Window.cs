@@ -1573,6 +1573,20 @@ namespace DSPRE {
             mainTabControl.SelectedTab = matrixEditorTabPage;
             int matrixNumber = (int)matrixUpDown.Value;
             selectMatrixComboBox.SelectedIndex = matrixNumber;
+
+            if (currentMatrix.hasHeadersSection) {
+                matrixTabControl.SelectedTab = headersTabPage;
+
+                //Autoselect cell containing current header, if such cell exists [and if current matrix has headers sections]
+                for (int i = 0; i < headersGridView.RowCount; i++) {
+                    for (int j = 0; j < headersGridView.ColumnCount; j++) {
+                        if (currentHeader.ID.ToString() == headersGridView.Rows[i].Cells[j].Value.ToString()) {
+                            headersGridView.CurrentCell = headersGridView.Rows[i].Cells[j];
+                            return;
+                        }
+                    }
+                }
+            }
         }
         private void openTextArchiveButton_Click(object sender, EventArgs e) {
             if (!textEditorIsReady) {
