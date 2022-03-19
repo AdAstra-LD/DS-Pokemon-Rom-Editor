@@ -3,13 +3,12 @@
 Major overhaul of Nomura's DS Pokemon ROM Editor, with lots of new features and bugfixes.
 
 ![Screenshot](aDSPRE_150.png)
-![Screenshot](bDSPRE_150.png)
-![Screenshot](cDSPRE_150.png)
-![Screenshot](dDSPRE_150.png)
+![Screenshot](bDSPRE_160.png)
+![Screenshot](cDSPRE_160.png)
 
-## Misc changes to the official DSPRE
+## Misc changes to the original DSPRE
 - Significantly shorter load and save times.
-- New, faster script editor with syntax highlighting and built-in search features.
+- New, faster Script Editor with syntax highlighting and built-in search features.
 - Fixed lots of problems with Japanese DP roms [either not loading or only partially functioning].
 
 - Configurable top bar layouts.
@@ -27,6 +26,7 @@ Major overhaul of Nomura's DS Pokemon ROM Editor, with lots of new features and 
 - Fixed Overworld sprite search algorithm for most (if not all) supported ROMs.
 - Fixed app name.
 - Fixed many Exceptions, which now show user-friendly messages.
+- Files used by each editor are easily locatable.
 - New ROM Toolbox.
 
 ### ROM Toolbox:
@@ -105,6 +105,7 @@ Allows you to change the map where the adventure begins and the initial money.
 ### Event Editor:
 - The Standardize Items patch is no longer necessary to edit/add Ground Items.
 - Added mouse support and warps navigation feature.
+- A blue box now appears under each Warp collision as a visual aid for placing Warp events.
 - Events can now be duplicated.
 - New fields (for Spawnables and Triggers).
 - Complete rewrite of the Sprite finder.
