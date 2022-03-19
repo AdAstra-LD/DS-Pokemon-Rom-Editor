@@ -1631,7 +1631,10 @@ namespace DSPRE {
         }
         private void updateHeaderNameShown(int thisIndex) {
             disableHandlers = true;
-            headerListBox.Items[thisIndex] = headerListBoxNames[(ushort)currentHeader.ID];
+            string val = (string)(headerListBox.Items[thisIndex] = headerListBoxNames[(ushort)currentHeader.ID]);
+            if (eventEditorIsReady) {
+                eventEditorWarpHeaderListBox.Items[thisIndex] = val;
+            }
             disableHandlers = false;
         }
         private void resetButton_Click(object sender, EventArgs e) {
