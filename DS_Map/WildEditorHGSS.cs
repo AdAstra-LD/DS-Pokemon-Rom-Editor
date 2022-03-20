@@ -828,6 +828,7 @@ namespace DSPRE {
 
             /* Update ComboBox*/
             selectEncounterComboBox.Items.Add("[New] Encounters File " + encounterCount.ToString());
+            selectEncounterComboBox.SelectedIndex = encounterCount;
         }
 
         private void removeLastEncounterFileButton_Click(object sender, EventArgs e) {

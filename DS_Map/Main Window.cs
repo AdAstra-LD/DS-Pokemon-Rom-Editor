@@ -481,7 +481,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.6" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.6.1" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
@@ -4459,7 +4459,6 @@ namespace DSPRE {
                 "About Ground Items", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void CenterEventViewOnEntities() {
-            disableHandlers = true;
             try {
                 if (currentEvFile.overworlds.Count > 0) {
                     eventMatrixXUpDown.Value = currentEvFile.overworlds[0].xMatrixPosition;
@@ -4481,7 +4480,6 @@ namespace DSPRE {
                 MessageBox.Show("One of the events tried to reference a bigger Matrix.\nMake sure the Header File associated to this Event File is using the correct Matrix.", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            disableHandlers = false;
         }
         private void centerEventViewOnSelectedEvent_Click(object sender, EventArgs e) {
             if (selectedEvent is null) {
@@ -5783,9 +5781,9 @@ namespace DSPRE {
 
             int index = currentEvFile.warps.Count - 1;
             warpsListBox.Items.Add(index.ToString("D3") + ": " + n.ToString());
+            warpsListBox.SelectedIndex = index;
 
             eventEditorWarpHeaderListBox.SelectedIndex = n.header;
-            warpsListBox.SelectedIndex = index;
         }
         private void removeWarpButton_Click(object sender, EventArgs e) {
             if (warpsListBox.SelectedIndex < 0) {
