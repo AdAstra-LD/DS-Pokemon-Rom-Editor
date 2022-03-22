@@ -167,6 +167,7 @@
             this.weatherPicLabel = new System.Windows.Forms.Label();
             this.weatherPictureBox = new System.Windows.Forms.PictureBox();
             this.matrixEditorTabPage = new System.Windows.Forms.TabPage();
+            this.locateCurrentMatrixFile = new System.Windows.Forms.Button();
             this.setSpawnPointButton = new System.Windows.Forms.Button();
             this.resetColorTableButton = new System.Windows.Forms.Button();
             this.importColorTableButton = new System.Windows.Forms.Button();
@@ -194,6 +195,7 @@
             this.selectMatrixComboBox = new System.Windows.Forms.ComboBox();
             this.saveMatrixButton = new System.Windows.Forms.Button();
             this.mapEditorTabPage = new System.Windows.Forms.TabPage();
+            this.locateCurrentMapBin = new System.Windows.Forms.Button();
             this.mapScreenshotButton = new System.Windows.Forms.Button();
             this.exportCurrentMapBinButton = new System.Windows.Forms.Button();
             this.replaceMapBinButton = new System.Windows.Forms.Button();
@@ -290,8 +292,10 @@
             this.saveMapButton = new System.Windows.Forms.Button();
             this.nsbtxEditorTabPage = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.locateCurrentNsbtx = new System.Windows.Forms.Button();
             this.removeNSBTXButton = new System.Windows.Forms.Button();
             this.areaDataGroupBox = new System.Windows.Forms.GroupBox();
+            this.locateCurrentAreaData = new System.Windows.Forms.Button();
             this.exportAreaDataButton = new System.Windows.Forms.Button();
             this.areaTypeGroupbox = new System.Windows.Forms.GroupBox();
             this.outdoorAreaRadioButton = new System.Windows.Forms.RadioButton();
@@ -321,6 +325,7 @@
             this.mapTilesetRadioButton = new System.Windows.Forms.RadioButton();
             this.texturePacksListBox = new System.Windows.Forms.ListBox();
             this.eventEditorTabPage = new System.Windows.Forms.TabPage();
+            this.locateCurrentEvFile = new System.Windows.Forms.Button();
             this.groupBox21 = new System.Windows.Forms.GroupBox();
             this.showTriggersCheckBox = new System.Windows.Forms.CheckBox();
             this.showWarpsCheckBox = new System.Windows.Forms.CheckBox();
@@ -486,6 +491,7 @@
             this.importEventFileButton = new System.Windows.Forms.Button();
             this.saveEventsButton = new System.Windows.Forms.Button();
             this.scriptEditorTabPage = new System.Windows.Forms.TabPage();
+            this.locateCurrentScriptFile = new System.Windows.Forms.Button();
             this.clearCurrentLevelScriptButton = new System.Windows.Forms.Button();
             this.groupBox26 = new System.Windows.Forms.GroupBox();
             this.scriptEditorNumberFormatNoPreference = new System.Windows.Forms.RadioButton();
@@ -545,6 +551,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.selectScriptFileComboBox = new System.Windows.Forms.ComboBox();
             this.textEditorTabPage = new System.Windows.Forms.TabPage();
+            this.locateCurrentTextArchive = new System.Windows.Forms.Button();
             this.LineNumbersFormatgroupBox = new System.Windows.Forms.GroupBox();
             this.decimalRadioButton = new System.Windows.Forms.RadioButton();
             this.hexRadiobutton = new System.Windows.Forms.RadioButton();
@@ -2503,6 +2510,7 @@
             // matrixEditorTabPage
             // 
             this.matrixEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
+            this.matrixEditorTabPage.Controls.Add(this.locateCurrentMatrixFile);
             this.matrixEditorTabPage.Controls.Add(this.setSpawnPointButton);
             this.matrixEditorTabPage.Controls.Add(this.resetColorTableButton);
             this.matrixEditorTabPage.Controls.Add(this.importColorTableButton);
@@ -2530,6 +2538,17 @@
             this.matrixEditorTabPage.Size = new System.Drawing.Size(1185, 619);
             this.matrixEditorTabPage.TabIndex = 1;
             this.matrixEditorTabPage.Text = "Matrix Editor";
+            // 
+            // locateCurrentMatrixFile
+            // 
+            this.locateCurrentMatrixFile.Image = global::DSPRE.Properties.Resources.open_file;
+            this.locateCurrentMatrixFile.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.locateCurrentMatrixFile.Location = new System.Drawing.Point(50, 232);
+            this.locateCurrentMatrixFile.Name = "locateCurrentMatrixFile";
+            this.locateCurrentMatrixFile.Size = new System.Drawing.Size(41, 38);
+            this.locateCurrentMatrixFile.TabIndex = 33;
+            this.locateCurrentMatrixFile.UseVisualStyleBackColor = true;
+            this.locateCurrentMatrixFile.Click += new System.EventHandler(this.locateCurrentMatrixFile_Click);
             // 
             // setSpawnPointButton
             // 
@@ -2629,11 +2648,12 @@
             // 
             this.removeHeightsButton.Image = ((System.Drawing.Image)(resources.GetObject("removeHeightsButton.Image")));
             this.removeHeightsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeHeightsButton.Location = new System.Drawing.Point(11, 398);
+            this.removeHeightsButton.Location = new System.Drawing.Point(11, 402);
             this.removeHeightsButton.Name = "removeHeightsButton";
-            this.removeHeightsButton.Size = new System.Drawing.Size(117, 38);
+            this.removeHeightsButton.Size = new System.Drawing.Size(117, 35);
             this.removeHeightsButton.TabIndex = 26;
-            this.removeHeightsButton.Text = "Remove \r\nHeights Tab";
+            this.removeHeightsButton.Text = "Remove Heights";
+            this.removeHeightsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.removeHeightsButton.UseVisualStyleBackColor = true;
             this.removeHeightsButton.Click += new System.EventHandler(this.removeHeightsButton_Click);
             // 
@@ -2641,11 +2661,12 @@
             // 
             this.removeHeadersButton.Image = ((System.Drawing.Image)(resources.GetObject("removeHeadersButton.Image")));
             this.removeHeadersButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeHeadersButton.Location = new System.Drawing.Point(11, 310);
+            this.removeHeadersButton.Location = new System.Drawing.Point(11, 319);
             this.removeHeadersButton.Name = "removeHeadersButton";
-            this.removeHeadersButton.Size = new System.Drawing.Size(117, 38);
+            this.removeHeadersButton.Size = new System.Drawing.Size(117, 35);
             this.removeHeadersButton.TabIndex = 25;
-            this.removeHeadersButton.Text = "Remove \r\nHeader Tab";
+            this.removeHeadersButton.Text = "Remove Headers";
+            this.removeHeadersButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.removeHeadersButton.UseVisualStyleBackColor = true;
             this.removeHeadersButton.Click += new System.EventHandler(this.removeHeadersButton_Click);
             // 
@@ -2653,11 +2674,12 @@
             // 
             this.addHeightsButton.Image = ((System.Drawing.Image)(resources.GetObject("addHeightsButton.Image")));
             this.addHeightsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addHeightsButton.Location = new System.Drawing.Point(11, 359);
+            this.addHeightsButton.Location = new System.Drawing.Point(11, 366);
             this.addHeightsButton.Name = "addHeightsButton";
-            this.addHeightsButton.Size = new System.Drawing.Size(117, 38);
+            this.addHeightsButton.Size = new System.Drawing.Size(117, 35);
             this.addHeightsButton.TabIndex = 24;
-            this.addHeightsButton.Text = "Add \r\nHeights Tab";
+            this.addHeightsButton.Text = "Add Heights Tab";
+            this.addHeightsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addHeightsButton.UseVisualStyleBackColor = true;
             this.addHeightsButton.Click += new System.EventHandler(this.addHeightsButton_Click);
             // 
@@ -2665,11 +2687,12 @@
             // 
             this.addHeadersButton.Image = ((System.Drawing.Image)(resources.GetObject("addHeadersButton.Image")));
             this.addHeadersButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addHeadersButton.Location = new System.Drawing.Point(11, 271);
+            this.addHeadersButton.Location = new System.Drawing.Point(11, 283);
             this.addHeadersButton.Name = "addHeadersButton";
-            this.addHeadersButton.Size = new System.Drawing.Size(117, 38);
+            this.addHeadersButton.Size = new System.Drawing.Size(117, 35);
             this.addHeadersButton.TabIndex = 23;
-            this.addHeadersButton.Text = "Add \r\nHeader Tab";
+            this.addHeadersButton.Text = "Add Header Tab";
+            this.addHeadersButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addHeadersButton.UseVisualStyleBackColor = true;
             this.addHeadersButton.Click += new System.EventHandler(this.addHeaderSectionButton_Click);
             // 
@@ -2992,6 +3015,7 @@
             // mapEditorTabPage
             // 
             this.mapEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
+            this.mapEditorTabPage.Controls.Add(this.locateCurrentMapBin);
             this.mapEditorTabPage.Controls.Add(this.mapScreenshotButton);
             this.mapEditorTabPage.Controls.Add(this.exportCurrentMapBinButton);
             this.mapEditorTabPage.Controls.Add(this.replaceMapBinButton);
@@ -3018,6 +3042,17 @@
             this.mapEditorTabPage.Text = "Map Editor";
             this.mapEditorTabPage.Enter += new System.EventHandler(this.mapEditorTabPage_Enter);
             // 
+            // locateCurrentMapBin
+            // 
+            this.locateCurrentMapBin.Image = global::DSPRE.Properties.Resources.open_file;
+            this.locateCurrentMapBin.Location = new System.Drawing.Point(379, 573);
+            this.locateCurrentMapBin.Name = "locateCurrentMapBin";
+            this.locateCurrentMapBin.Size = new System.Drawing.Size(42, 40);
+            this.locateCurrentMapBin.TabIndex = 40;
+            this.locateCurrentMapBin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.locateCurrentMapBin.UseVisualStyleBackColor = true;
+            this.locateCurrentMapBin.Click += new System.EventHandler(this.locateCurrentMapBin_Click);
+            // 
             // mapScreenshotButton
             // 
             this.mapScreenshotButton.Image = global::DSPRE.Properties.Resources.cameraIcon;
@@ -3035,7 +3070,7 @@
             this.exportCurrentMapBinButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportCurrentMapBinButton.Location = new System.Drawing.Point(337, 530);
             this.exportCurrentMapBinButton.Name = "exportCurrentMapBinButton";
-            this.exportCurrentMapBinButton.Size = new System.Drawing.Size(84, 40);
+            this.exportCurrentMapBinButton.Size = new System.Drawing.Size(86, 40);
             this.exportCurrentMapBinButton.TabIndex = 38;
             this.exportCurrentMapBinButton.Text = "Export \r\nMap BIN";
             this.exportCurrentMapBinButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3048,7 +3083,7 @@
             this.replaceMapBinButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.replaceMapBinButton.Location = new System.Drawing.Point(250, 530);
             this.replaceMapBinButton.Name = "replaceMapBinButton";
-            this.replaceMapBinButton.Size = new System.Drawing.Size(84, 40);
+            this.replaceMapBinButton.Size = new System.Drawing.Size(86, 40);
             this.replaceMapBinButton.TabIndex = 37;
             this.replaceMapBinButton.Text = "Replace \r\nMap BIN";
             this.replaceMapBinButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3061,7 +3096,7 @@
             this.addMapFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addMapFileButton.Location = new System.Drawing.Point(250, 487);
             this.addMapFileButton.Name = "addMapFileButton";
-            this.addMapFileButton.Size = new System.Drawing.Size(84, 40);
+            this.addMapFileButton.Size = new System.Drawing.Size(86, 40);
             this.addMapFileButton.TabIndex = 36;
             this.addMapFileButton.Text = "Add \r\nMap File";
             this.addMapFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3074,7 +3109,7 @@
             this.removeMapFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeMapFileButton.Location = new System.Drawing.Point(337, 487);
             this.removeMapFileButton.Name = "removeMapFileButton";
-            this.removeMapFileButton.Size = new System.Drawing.Size(84, 40);
+            this.removeMapFileButton.Size = new System.Drawing.Size(86, 40);
             this.removeMapFileButton.TabIndex = 35;
             this.removeMapFileButton.Text = "Remove \r\nLast Map";
             this.removeMapFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4220,9 +4255,9 @@
             this.saveMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveMapButton.Location = new System.Drawing.Point(250, 573);
             this.saveMapButton.Name = "saveMapButton";
-            this.saveMapButton.Size = new System.Drawing.Size(171, 40);
+            this.saveMapButton.Size = new System.Drawing.Size(127, 40);
             this.saveMapButton.TabIndex = 34;
-            this.saveMapButton.Text = "Save This Map";
+            this.saveMapButton.Text = "Save This\r\nMap BIN\r\n";
             this.saveMapButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.saveMapButton.UseVisualStyleBackColor = true;
             this.saveMapButton.Click += new System.EventHandler(this.saveMapButton_Click);
@@ -4241,6 +4276,7 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.locateCurrentNsbtx);
             this.groupBox7.Controls.Add(this.removeNSBTXButton);
             this.groupBox7.Controls.Add(this.areaDataGroupBox);
             this.groupBox7.Controls.Add(this.addNSBTXButton);
@@ -4261,6 +4297,17 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Texture Packs";
             // 
+            // locateCurrentNsbtx
+            // 
+            this.locateCurrentNsbtx.Image = global::DSPRE.Properties.Resources.open_file;
+            this.locateCurrentNsbtx.Location = new System.Drawing.Point(438, 20);
+            this.locateCurrentNsbtx.Name = "locateCurrentNsbtx";
+            this.locateCurrentNsbtx.Size = new System.Drawing.Size(42, 40);
+            this.locateCurrentNsbtx.TabIndex = 41;
+            this.locateCurrentNsbtx.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.locateCurrentNsbtx.UseVisualStyleBackColor = true;
+            this.locateCurrentNsbtx.Click += new System.EventHandler(this.locateCurrentNsbtx_Click);
+            // 
             // removeNSBTXButton
             // 
             this.removeNSBTXButton.Image = ((System.Drawing.Image)(resources.GetObject("removeNSBTXButton.Image")));
@@ -4276,6 +4323,7 @@
             // 
             // areaDataGroupBox
             // 
+            this.areaDataGroupBox.Controls.Add(this.locateCurrentAreaData);
             this.areaDataGroupBox.Controls.Add(this.exportAreaDataButton);
             this.areaDataGroupBox.Controls.Add(this.areaTypeGroupbox);
             this.areaDataGroupBox.Controls.Add(this.importAreaDataButton);
@@ -4297,6 +4345,17 @@
             this.areaDataGroupBox.TabIndex = 0;
             this.areaDataGroupBox.TabStop = false;
             this.areaDataGroupBox.Text = "Area Data";
+            // 
+            // locateCurrentAreaData
+            // 
+            this.locateCurrentAreaData.Image = global::DSPRE.Properties.Resources.open_file;
+            this.locateCurrentAreaData.Location = new System.Drawing.Point(395, 74);
+            this.locateCurrentAreaData.Name = "locateCurrentAreaData";
+            this.locateCurrentAreaData.Size = new System.Drawing.Size(42, 40);
+            this.locateCurrentAreaData.TabIndex = 42;
+            this.locateCurrentAreaData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.locateCurrentAreaData.UseVisualStyleBackColor = true;
+            this.locateCurrentAreaData.Click += new System.EventHandler(this.locateCurrentAreaData_Click);
             // 
             // exportAreaDataButton
             // 
@@ -4618,6 +4677,7 @@
             // eventEditorTabPage
             // 
             this.eventEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
+            this.eventEditorTabPage.Controls.Add(this.locateCurrentEvFile);
             this.eventEditorTabPage.Controls.Add(this.groupBox21);
             this.eventEditorTabPage.Controls.Add(this.RightClickLabel);
             this.eventEditorTabPage.Controls.Add(this.WheelClickLabel);
@@ -4653,6 +4713,17 @@
             this.eventEditorTabPage.TabIndex = 3;
             this.eventEditorTabPage.Text = "Event Editor";
             this.eventEditorTabPage.Enter += new System.EventHandler(this.eventEditorTabPage_Enter);
+            // 
+            // locateCurrentEvFile
+            // 
+            this.locateCurrentEvFile.Image = global::DSPRE.Properties.Resources.open_file;
+            this.locateCurrentEvFile.Location = new System.Drawing.Point(461, 14);
+            this.locateCurrentEvFile.Name = "locateCurrentEvFile";
+            this.locateCurrentEvFile.Size = new System.Drawing.Size(42, 40);
+            this.locateCurrentEvFile.TabIndex = 62;
+            this.locateCurrentEvFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.locateCurrentEvFile.UseVisualStyleBackColor = true;
+            this.locateCurrentEvFile.Click += new System.EventHandler(this.locateCurrentEvFile_Click);
             // 
             // groupBox21
             // 
@@ -6633,6 +6704,7 @@
             // 
             // scriptEditorTabPage
             // 
+            this.scriptEditorTabPage.Controls.Add(this.locateCurrentScriptFile);
             this.scriptEditorTabPage.Controls.Add(this.clearCurrentLevelScriptButton);
             this.scriptEditorTabPage.Controls.Add(this.groupBox26);
             this.scriptEditorTabPage.Controls.Add(this.scriptEditorWhitespacesCheckbox);
@@ -6659,11 +6731,22 @@
             this.scriptEditorTabPage.Text = "Script Editor";
             this.scriptEditorTabPage.UseVisualStyleBackColor = true;
             // 
+            // locateCurrentScriptFile
+            // 
+            this.locateCurrentScriptFile.Image = global::DSPRE.Properties.Resources.open_file;
+            this.locateCurrentScriptFile.Location = new System.Drawing.Point(429, 29);
+            this.locateCurrentScriptFile.Name = "locateCurrentScriptFile";
+            this.locateCurrentScriptFile.Size = new System.Drawing.Size(42, 40);
+            this.locateCurrentScriptFile.TabIndex = 63;
+            this.locateCurrentScriptFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.locateCurrentScriptFile.UseVisualStyleBackColor = true;
+            this.locateCurrentScriptFile.Click += new System.EventHandler(this.locateCurrentScriptFile_Click);
+            // 
             // clearCurrentLevelScriptButton
             // 
             this.clearCurrentLevelScriptButton.Image = global::DSPRE.Properties.Resources.destroyLevelScript;
             this.clearCurrentLevelScriptButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.clearCurrentLevelScriptButton.Location = new System.Drawing.Point(370, 22);
+            this.clearCurrentLevelScriptButton.Location = new System.Drawing.Point(320, 22);
             this.clearCurrentLevelScriptButton.Name = "clearCurrentLevelScriptButton";
             this.clearCurrentLevelScriptButton.Size = new System.Drawing.Size(106, 52);
             this.clearCurrentLevelScriptButton.TabIndex = 19;
@@ -6992,7 +7075,7 @@
             // 
             this.importScriptFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importScriptFileButton.Location = new System.Drawing.Point(220, 22);
+            this.importScriptFileButton.Location = new System.Drawing.Point(170, 22);
             this.importScriptFileButton.Name = "importScriptFileButton";
             this.importScriptFileButton.Size = new System.Drawing.Size(70, 52);
             this.importScriptFileButton.TabIndex = 16;
@@ -7005,7 +7088,7 @@
             // 
             this.exportScriptFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportScriptFileButton.Location = new System.Drawing.Point(295, 22);
+            this.exportScriptFileButton.Location = new System.Drawing.Point(245, 22);
             this.exportScriptFileButton.Name = "exportScriptFileButton";
             this.exportScriptFileButton.Size = new System.Drawing.Size(70, 52);
             this.exportScriptFileButton.TabIndex = 15;
@@ -7020,7 +7103,7 @@
             this.saveScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveScriptFileButton.Location = new System.Drawing.Point(12, 50);
             this.saveScriptFileButton.Name = "saveScriptFileButton";
-            this.saveScriptFileButton.Size = new System.Drawing.Size(203, 23);
+            this.saveScriptFileButton.Size = new System.Drawing.Size(154, 23);
             this.saveScriptFileButton.TabIndex = 14;
             this.saveScriptFileButton.Text = "&Save Current File";
             this.saveScriptFileButton.UseVisualStyleBackColor = true;
@@ -7030,7 +7113,7 @@
             // 
             this.removeScriptFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeScriptFileButton.Location = new System.Drawing.Point(370, 49);
+            this.removeScriptFileButton.Location = new System.Drawing.Point(320, 49);
             this.removeScriptFileButton.Name = "removeScriptFileButton";
             this.removeScriptFileButton.Size = new System.Drawing.Size(106, 25);
             this.removeScriptFileButton.TabIndex = 13;
@@ -7043,7 +7126,7 @@
             // 
             this.addScriptFileButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addScriptFileButton.Location = new System.Drawing.Point(370, 22);
+            this.addScriptFileButton.Location = new System.Drawing.Point(320, 22);
             this.addScriptFileButton.Name = "addScriptFileButton";
             this.addScriptFileButton.Size = new System.Drawing.Size(106, 25);
             this.addScriptFileButton.TabIndex = 10;
@@ -7367,12 +7450,13 @@
             this.selectScriptFileComboBox.FormattingEnabled = true;
             this.selectScriptFileComboBox.Location = new System.Drawing.Point(13, 24);
             this.selectScriptFileComboBox.Name = "selectScriptFileComboBox";
-            this.selectScriptFileComboBox.Size = new System.Drawing.Size(201, 21);
+            this.selectScriptFileComboBox.Size = new System.Drawing.Size(152, 21);
             this.selectScriptFileComboBox.TabIndex = 0;
             this.selectScriptFileComboBox.SelectedIndexChanged += new System.EventHandler(this.selectScriptFileComboBox_SelectedIndexChanged);
             // 
             // textEditorTabPage
             // 
+            this.textEditorTabPage.Controls.Add(this.locateCurrentTextArchive);
             this.textEditorTabPage.Controls.Add(this.LineNumbersFormatgroupBox);
             this.textEditorTabPage.Controls.Add(this.groupBox13);
             this.textEditorTabPage.Controls.Add(this.textEditorDataGridView);
@@ -7394,11 +7478,22 @@
             this.textEditorTabPage.Text = "Text Editor";
             this.textEditorTabPage.UseVisualStyleBackColor = true;
             // 
+            // locateCurrentTextArchive
+            // 
+            this.locateCurrentTextArchive.Image = global::DSPRE.Properties.Resources.open_file;
+            this.locateCurrentTextArchive.Location = new System.Drawing.Point(606, 26);
+            this.locateCurrentTextArchive.Name = "locateCurrentTextArchive";
+            this.locateCurrentTextArchive.Size = new System.Drawing.Size(42, 40);
+            this.locateCurrentTextArchive.TabIndex = 64;
+            this.locateCurrentTextArchive.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.locateCurrentTextArchive.UseVisualStyleBackColor = true;
+            this.locateCurrentTextArchive.Click += new System.EventHandler(this.locateCurrentTextArchive_Click);
+            // 
             // LineNumbersFormatgroupBox
             // 
             this.LineNumbersFormatgroupBox.Controls.Add(this.decimalRadioButton);
             this.LineNumbersFormatgroupBox.Controls.Add(this.hexRadiobutton);
-            this.LineNumbersFormatgroupBox.Location = new System.Drawing.Point(594, 36);
+            this.LineNumbersFormatgroupBox.Location = new System.Drawing.Point(751, 36);
             this.LineNumbersFormatgroupBox.Name = "LineNumbersFormatgroupBox";
             this.LineNumbersFormatgroupBox.Size = new System.Drawing.Size(134, 35);
             this.LineNumbersFormatgroupBox.TabIndex = 34;
@@ -7698,7 +7793,7 @@
             // 
             this.removeMessageFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeMessageFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeMessageFileButton.Location = new System.Drawing.Point(491, 21);
+            this.removeMessageFileButton.Location = new System.Drawing.Point(497, 21);
             this.removeMessageFileButton.Name = "removeMessageFileButton";
             this.removeMessageFileButton.Size = new System.Drawing.Size(97, 50);
             this.removeMessageFileButton.TabIndex = 20;
@@ -7711,7 +7806,7 @@
             // 
             this.addTextArchiveButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addTextArchiveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addTextArchiveButton.Location = new System.Drawing.Point(397, 21);
+            this.addTextArchiveButton.Location = new System.Drawing.Point(403, 21);
             this.addTextArchiveButton.Name = "addTextArchiveButton";
             this.addTextArchiveButton.Size = new System.Drawing.Size(91, 50);
             this.addTextArchiveButton.TabIndex = 19;
@@ -10775,7 +10870,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
-            this.Text = "DS Pokémon Rom Editor 1.5.1 (Nømura, AdAstra/LD3005)";
+            this.Text = "DS Pokémon Rom Editor 1.6.1 (Nømura, AdAstra/LD3005)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainProgram_FormClosing);
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);
@@ -11892,6 +11987,13 @@
         private System.Windows.Forms.ToolStripMenuItem extractNSBTXFromNSBMDToolStripMenuItem;
         private System.Windows.Forms.ListBox eventEditorWarpHeaderListBox;
         private System.Windows.Forms.Label eventEditorHeaderLocationNameLabel;
+        private System.Windows.Forms.Button locateCurrentMatrixFile;
+        private System.Windows.Forms.Button locateCurrentMapBin;
+        private System.Windows.Forms.Button locateCurrentNsbtx;
+        private System.Windows.Forms.Button locateCurrentAreaData;
+        private System.Windows.Forms.Button locateCurrentEvFile;
+        private System.Windows.Forms.Button locateCurrentScriptFile;
+        private System.Windows.Forms.Button locateCurrentTextArchive;
     }
 }
 

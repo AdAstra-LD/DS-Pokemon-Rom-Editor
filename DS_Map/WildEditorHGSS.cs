@@ -117,7 +117,7 @@ namespace DSPRE {
             rockSmashNinetyMaxUpDown.Value = currentFile.rockSmashMaxLevels[0];
             rockSmashTenMaxUpDown.Value = currentFile.rockSmashMaxLevels[1];
 
-            /* Setup sawrm encounters controls */
+            /* Setup swarm encounters controls */
             grassSwarmComboBox.SelectedIndex = currentFile.swarmPokemon[0];
             surfSwarmComboBox.SelectedIndex = currentFile.swarmPokemon[1];
             goodRodSwarmComboBox.SelectedIndex = currentFile.swarmPokemon[2];
@@ -144,9 +144,10 @@ namespace DSPRE {
             surfOneMinUpDown.Value = currentFile.surfMinLevels[4];
             surfOneMaxUpDown.Value = currentFile.surfMaxLevels[4];
 
+            /* Old rod encounters controls setup */
             oldRodSixtyComboBox.SelectedIndex = currentFile.oldRodPokemon[0];
-            oldRodSixtyMinUpDown.Value = currentFile.oldRodMinLevels[0];
             oldRodSixtyMinUpDown.Value = currentFile.oldRodMaxLevels[0];
+            oldRodSixtyMaxUpDown.Value = currentFile.oldRodMinLevels[0];
 
             oldRodThirtyComboBox.SelectedIndex = currentFile.oldRodPokemon[1];
             oldRodThirtyMinUpDown.Value = currentFile.oldRodMinLevels[1];
@@ -164,9 +165,10 @@ namespace DSPRE {
             oldRodOneMinUpDown.Value = currentFile.oldRodMinLevels[4];
             oldRodOneMaxUpDown.Value = currentFile.oldRodMaxLevels[4];
 
+            /* Good rod encounters controls setup */
             goodRodSixtyComboBox.SelectedIndex = currentFile.goodRodPokemon[0];
-            goodRodSixtyMinUpDown.Value = currentFile.goodRodMinLevels[0];
             goodRodSixtyMinUpDown.Value = currentFile.goodRodMaxLevels[0];
+            goodRodSixtyMaxUpDown.Value = currentFile.goodRodMaxLevels[0];
 
             goodRodThirtyComboBox.SelectedIndex = currentFile.goodRodPokemon[1];
             goodRodThirtyMinUpDown.Value = currentFile.goodRodMinLevels[1];
@@ -184,9 +186,10 @@ namespace DSPRE {
             goodRodOneMinUpDown.Value = currentFile.goodRodMinLevels[4];
             goodRodOneMaxUpDown.Value = currentFile.goodRodMaxLevels[4];
 
+            /* Super rod encounters controls setup */
             superRodSixtyComboBox.SelectedIndex = currentFile.superRodPokemon[0];
             superRodSixtyMinUpDown.Value = currentFile.superRodMinLevels[0];
-            superRodSixtyMinUpDown.Value = currentFile.superRodMaxLevels[0];
+            superRodSixtyMaxUpDown.Value = currentFile.superRodMaxLevels[0];
 
             superRodThirtyComboBox.SelectedIndex = currentFile.superRodPokemon[1];
             superRodThirtyMinUpDown.Value = currentFile.superRodMinLevels[1];
@@ -828,6 +831,7 @@ namespace DSPRE {
 
             /* Update ComboBox*/
             selectEncounterComboBox.Items.Add("[New] Encounters File " + encounterCount.ToString());
+            selectEncounterComboBox.SelectedIndex = encounterCount;
         }
 
         private void removeLastEncounterFileButton_Click(object sender, EventArgs e) {

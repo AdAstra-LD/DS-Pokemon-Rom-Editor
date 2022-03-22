@@ -481,7 +481,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.5.1" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.6.1" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
@@ -500,6 +500,10 @@ namespace DSPRE {
             SetupROMLanguage(openRom.FileName);
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, openRom.FileName, useSuffix: true);
+
+            if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName)) {
+                return;
+            }
 
             CheckROMLanguage();
 
@@ -584,6 +588,10 @@ namespace DSPRE {
             }
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, romFolder.FileName, useSuffix: false);
+
+            if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName)) {
+                return;
+            }
 
             CheckROMLanguage();
             
@@ -1554,8 +1562,8 @@ namespace DSPRE {
             selectEventComboBox.SelectedIndex = (int)eventFileUpDown.Value; // Select event file
             mainTabControl.SelectedTab = eventEditorTabPage;
 
-            CenterEventViewOnEntities();
             eventMatrixUpDown_ValueChanged(null, null);
+            CenterEventViewOnEntities();
         }
         private void openMatrixButton_Click(object sender, EventArgs e) {
             if (!matrixEditorIsReady) {
@@ -1565,6 +1573,20 @@ namespace DSPRE {
             mainTabControl.SelectedTab = matrixEditorTabPage;
             int matrixNumber = (int)matrixUpDown.Value;
             selectMatrixComboBox.SelectedIndex = matrixNumber;
+
+            if (currentMatrix.hasHeadersSection) {
+                matrixTabControl.SelectedTab = headersTabPage;
+
+                //Autoselect cell containing current header, if such cell exists [and if current matrix has headers sections]
+                for (int i = 0; i < headersGridView.RowCount; i++) {
+                    for (int j = 0; j < headersGridView.ColumnCount; j++) {
+                        if (currentHeader.ID.ToString() == headersGridView.Rows[i].Cells[j].Value.ToString()) {
+                            headersGridView.CurrentCell = headersGridView.Rows[i].Cells[j];
+                            return;
+                        }
+                    }
+                }
+            }
         }
         private void openTextArchiveButton_Click(object sender, EventArgs e) {
             if (!textEditorIsReady) {
@@ -1609,7 +1631,10 @@ namespace DSPRE {
         }
         private void updateHeaderNameShown(int thisIndex) {
             disableHandlers = true;
-            headerListBox.Items[thisIndex] = headerListBoxNames[(ushort)currentHeader.ID];
+            string val = (string)(headerListBox.Items[thisIndex] = headerListBoxNames[(ushort)currentHeader.ID]);
+            if (eventEditorIsReady) {
+                eventEditorWarpHeaderListBox.Items[thisIndex] = val;
+            }
             disableHandlers = false;
         }
         private void resetButton_Click(object sender, EventArgs e) {
@@ -4434,7 +4459,6 @@ namespace DSPRE {
                 "About Ground Items", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void CenterEventViewOnEntities() {
-            disableHandlers = true;
             try {
                 if (currentEvFile.overworlds.Count > 0) {
                     eventMatrixXUpDown.Value = currentEvFile.overworlds[0].xMatrixPosition;
@@ -4456,7 +4480,6 @@ namespace DSPRE {
                 MessageBox.Show("One of the events tried to reference a bigger Matrix.\nMake sure the Header File associated to this Event File is using the correct Matrix.", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            disableHandlers = false;
         }
         private void centerEventViewOnSelectedEvent_Click(object sender, EventArgs e) {
             if (selectedEvent is null) {
@@ -5758,9 +5781,9 @@ namespace DSPRE {
 
             int index = currentEvFile.warps.Count - 1;
             warpsListBox.Items.Add(index.ToString("D3") + ": " + n.ToString());
+            warpsListBox.SelectedIndex = index;
 
             eventEditorWarpHeaderListBox.SelectedIndex = n.header;
-            warpsListBox.SelectedIndex = index;
         }
         private void removeWarpButton_Click(object sender, EventArgs e) {
             if (warpsListBox.SelectedIndex < 0) {
@@ -9430,6 +9453,45 @@ namespace DSPRE {
                     }
                     break;
             }
+        }
+
+        //Locate File - buttons
+        public static void ExplorerSelect(string path) {
+            if (File.Exists(path)) {
+                Process.Start("explorer.exe", "/select" + "," + "\"" + path + "\"");
+            }
+        }
+
+        private void locateCurrentMatrixFile_Click(object sender, EventArgs e) {
+            ExplorerSelect(Path.Combine(gameDirs[DirNames.matrices].unpackedDir, selectMatrixComboBox.SelectedIndex.ToString("D4")));
+        }
+
+        private void locateCurrentMapBin_Click(object sender, EventArgs e) {
+            ExplorerSelect(Path.Combine(gameDirs[DirNames.maps].unpackedDir, selectMapComboBox.SelectedIndex.ToString("D4")));
+        }
+
+        private void locateCurrentNsbtx_Click(object sender, EventArgs e) {
+            if (mapTilesetRadioButton.Checked) {
+                ExplorerSelect(Path.Combine(gameDirs[DirNames.mapTextures].unpackedDir, texturePacksListBox.SelectedIndex.ToString("D4")));
+            } else {
+                ExplorerSelect(Path.Combine(gameDirs[DirNames.buildingTextures].unpackedDir, texturePacksListBox.SelectedIndex.ToString("D4")));
+            }
+        }
+
+        private void locateCurrentAreaData_Click(object sender, EventArgs e) {
+            ExplorerSelect(Path.Combine(gameDirs[DirNames.areaData].unpackedDir, selectAreaDataListBox.SelectedIndex.ToString("D4")));
+        }
+
+        private void locateCurrentEvFile_Click(object sender, EventArgs e) {
+            ExplorerSelect(Path.Combine(gameDirs[DirNames.eventFiles].unpackedDir, selectEventComboBox.SelectedIndex.ToString("D4")));
+        }
+
+        private void locateCurrentScriptFile_Click(object sender, EventArgs e) {
+            ExplorerSelect(Path.Combine(gameDirs[DirNames.scripts].unpackedDir, selectScriptFileComboBox.SelectedIndex.ToString("D4")));
+        }
+
+        private void locateCurrentTextArchive_Click(object sender, EventArgs e) {
+            ExplorerSelect(Path.Combine(gameDirs[DirNames.textArchives].unpackedDir, selectTextFileComboBox.SelectedIndex.ToString("D4")));
         }
     }
 }

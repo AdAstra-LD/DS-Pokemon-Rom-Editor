@@ -450,22 +450,17 @@ namespace DSPRE {
                     ScriptFile itemScriptFile = new ScriptFile(RomInfo.itemScriptFileNumber);
 
                     // Create map for: script no. -> vanilla item
-                    Dictionary<int, int> vanillaItemTable = new Dictionary<int, int>(); 
+                    int[] vanillaItemsArray = new int[itemScriptFile.allScripts.Count];
 
                     for (int i = 0; i < itemScriptFile.allScripts.Count - 1; i++) {
-
-                        int itemID = BitConverter.ToInt16(itemScriptFile.allScripts[i].commands[0].cmdParams[1], 0);
-
-                        vanillaItemTable.Add(1 + i, itemID);
+                        vanillaItemsArray[i] = BitConverter.ToInt16(itemScriptFile.allScripts[i].commands[0].cmdParams[1], 0);
                     };
 
                     // Parse all event files and fix instances of ground items according to the new order
                     for (int i = 0; i < RomInfo.GetEventFileCount(); i++) {
-                        
                         EventFile eventFile = new EventFile(i);
 
                         for (int j = 0; j < eventFile.overworlds.Count; j++) {
-                            
                             // If ow is marked as an item, or in the rare case it is not but script no. falls within item script range:
                             bool isItem = eventFile.overworlds[j].type == (ushort)Overworld.OwType.ITEM 
                                           || (eventFile.overworlds[j].scriptNumber >= 7000 
@@ -473,8 +468,7 @@ namespace DSPRE {
                             
                             if (isItem) {
                                 int itemScriptID = eventFile.overworlds[j].scriptNumber - 6999;
-
-                                eventFile.overworlds[j].scriptNumber = (ushort)(7000 + vanillaItemTable[itemScriptID]);
+                                eventFile.overworlds[j].scriptNumber = (ushort)(7000 + vanillaItemsArray[itemScriptID-1]);
                             }
                         }
 
