@@ -197,13 +197,13 @@ namespace DSPRE.ROMFiles {
                         //NOTE: The following bitwise 'AND' operation fixes TUBER JARED [PLAT] and all trainers who
                         //use pokemon with a special form --> ALL PARTY POKEMON WITH A SPECIAL FORM WILL LOSE IT
                         
-                        //the way special forms are stored seems to be something like
+                        //the way special forms are stored is
 
                         //U16 POKEMON
                         // 0 1 2 3   4 5 6 7    8 9 A B   C D E F
-                        //BITS 7 - F --> pokemon ID
-                        //BITS 0 - 6 --> form ID ??? Even numbers only??? 
-                        ushort pokemon = (ushort)(reader.ReadUInt16() & (ushort.MaxValue>>7)); 
+                        //BITS 6 - F --> pokemon ID
+                        //BITS 0 - 5 --> form ID 
+                        ushort pokemon = (ushort)(reader.ReadUInt16() & (ushort.MaxValue>>6)); 
                         
                         ushort? heldItem = null;
                         ushort[] moves = null;
