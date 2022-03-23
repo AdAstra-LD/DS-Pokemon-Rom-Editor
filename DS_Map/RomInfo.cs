@@ -485,6 +485,15 @@ namespace DSPRE {
                     }
                     break;
                 case gFamEnum.HGSS:
+                    if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
+                        if (DSUtils.OverlayIsCompressed(1)) {
+                            if (DSUtils.DecompressOverlay(1) < 0) {
+                                MessageBox.Show("Overlay 1 couldn't be decompressed.\nOverworld sprites in the Event Editor will be " +
+                                "displayed incorrectly or not displayed at all.", "Decompression error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+
                     string ov1Path = DSUtils.GetOverlayPath(1);
                     uint ov1Address = DSUtils.GetOverlayRAMAddress(1);
 
