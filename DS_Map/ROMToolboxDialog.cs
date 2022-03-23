@@ -162,7 +162,7 @@ namespace DSPRE {
                 return false;
 
 
-            string overlayFilePath = RomInfo.workDir + "overlay" + "\\" + "overlay_" + data.overlayNumber.ToString("D4") + ".bin";
+            string overlayFilePath = DSUtils.GetOverlayPath(data.overlayNumber);
             DSUtils.DecompressOverlay(data.overlayNumber);
 
             byte[] overlayCode1 = DSUtils.HexStringToByteArray(data.overlayString1);
@@ -365,7 +365,7 @@ namespace DSPRE {
                     DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.branchString), data.branchOffset); //Write new branchOffset
 
                     /* Write to overlayfile */
-                    string overlayFilePath = RomInfo.workDir + "overlay" + "\\" + "overlay_" + data.overlayNumber.ToString("D4") + ".bin";
+                    string overlayFilePath = DSUtils.GetOverlayPath(data.overlayNumber);
                     if (DSUtils.OverlayIsCompressed(data.overlayNumber)) {
                         DSUtils.DecompressOverlay(data.overlayNumber);
                     }

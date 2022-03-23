@@ -450,7 +450,7 @@ namespace DSPRE {
         public static void SetOWtable() {
             switch (gameFamily) {
                 case gFamEnum.DP:
-                    OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
+                    OWtablePath = DSUtils.GetOverlayPath(5);
                     switch (gameLanguage) { // Go to the beginning of the overworld table
                         case gLangEnum.English:
                             OWTableOffset = 0x22BCC;
@@ -464,7 +464,7 @@ namespace DSPRE {
                     }
                     break;
                 case gFamEnum.Plat:
-                    OWtablePath = workDir + "overlay" + "\\" + "overlay_0005.bin";
+                    OWtablePath = DSUtils.GetOverlayPath(5);
                     switch (gameLanguage) { // Go to the beginning of the overworld table
                         case gLangEnum.Italian:
                             OWTableOffset = 0x2BC44;
