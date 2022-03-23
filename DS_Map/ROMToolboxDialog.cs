@@ -788,9 +788,11 @@ namespace DSPRE {
             ResourceManager customcmdDB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.CustomScrCmdDB", Assembly.GetExecutingAssembly());
             int pointerOffset = int.Parse(customcmdDB.GetString("pointerOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage));
             using (DSUtils.ARM9.Reader r = new DSUtils.ARM9.Reader(pointerOffset)) {  
-                int cmdTable = r.ReadInt32();
-                if (((cmdTable - 0x023C8000) >= 0) && ((cmdTable - 0x023C8000) <= 0x12B00)) {
-                    return (cmdTable - 0x023C8000); // Table position inside the expanded arm9 file
+                uint cmdTable = r.ReadUInt32();
+                uint offset = cmdTable - synthOverlayLoadAddress;
+
+                if ((offset >= 0) && (offset <= 0x12B00)) {
+                    return (int)offset; // Table position inside the expanded arm9 file
                 }
             }
             return -1; // No table in expanded arm9 file
@@ -825,15 +827,16 @@ namespace DSPRE {
 
             OpenFileDialog of = new OpenFileDialog();
             of.Filter = "Custom Script Command File (*.scrcmd)|*.scrcmd";
-            if (of.ShowDialog(this) != DialogResult.OK)
+            if (of.ShowDialog(this) != DialogResult.OK) {
                 return false;
+            }
 
             FileStream expandedFileStream = new FileStream(expandedPath, FileMode.Open);
             MemoryStream expandedStream = new MemoryStream();
             expandedFileStream.CopyTo(expandedStream);
             expandedFileStream.Close();
 
-            using (BinaryWriter expandedWriter = new BinaryWriter(new FileStream(expandedPath, FileMode.Open))) {
+            using (DSUtils.EasyWriter expandedWriter = new DSUtils.EasyWriter(expandedPath, fmode: FileMode.Open)) {
                 using (BinaryReader expandedReader = new BinaryReader(expandedStream)) {
                     try {
                         System.Xml.Linq.XDocument xmldoc = System.Xml.Linq.XDocument.Load(new FileStream(of.FileName, FileMode.Open));
@@ -861,7 +864,7 @@ namespace DSPRE {
                                 }
 
                                 expandedWriter.BaseStream.Position = 0x200 + commandID * 4;
-                                expandedWriter.Write((UInt32)(0x023C8000 + asmOffset + 1));
+                                expandedWriter.Write((int)(synthOverlayLoadAddress + asmOffset + 1));
 
                                 byte[] asmCodeBytes = DSUtils.StringToByteArray(asmCode);
                                 expandedWriter.BaseStream.Position = asmOffset;
