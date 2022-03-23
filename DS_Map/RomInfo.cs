@@ -485,21 +485,18 @@ namespace DSPRE {
                     }
                     break;
                 case gFamEnum.HGSS:
-                    using (BinaryReader bReader = new BinaryReader(new FileStream(workDir + "overlay" + "\\" + "overlay_0001.bin", FileMode.Open)))
-                    {
-                        bReader.BaseStream.Position = (0x021F92FC - 0x021E5900); // read the pointer at 0x021F92FC and adjust accordingly below
+                    string ov1Path = DSUtils.GetOverlayPath(1);
+                    uint ov1Address = DSUtils.GetOverlayRAMAddress(1);
 
-                        uint offset = bReader.ReadUInt32();
-                        bReader.BaseStream.Position -= 4;
-                        if (offset > 0x023C8000) // if the pointer shows the table was moved to the synthetic overlay
-                        {
-                            OWTableOffset = offset - 0x023C8000;
-                            OWtablePath = workDir + "unpacked" + "\\" + "synthOverlay" + "\\" + "0000";
-                        }
-                        else
-                        {
-                            OWTableOffset = offset - 0x021E5900;
-                            OWtablePath = workDir + "overlay" + "\\" + "overlay_0001.bin";
+                    using (DSUtils.EasyReader bReader = new DSUtils.EasyReader(ov1Path, 0x1F92FC - (ov1Address - DSUtils.ARM9.address))) { // read the pointer at 0x021F92FC and adjust accordingly below
+                        uint ramAddress = bReader.ReadUInt32();
+                        
+                        if (ramAddress >= ROMToolboxDialog.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
+                            OWTableOffset = ramAddress - ROMToolboxDialog.synthOverlayLoadAddress;
+                            OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+                        } else {
+                            OWTableOffset = ramAddress - ov1Address;
+                            OWtablePath = ov1Path;
                         }
                     }
                     break;
