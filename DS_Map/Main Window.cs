@@ -5127,7 +5127,7 @@ namespace DSPRE {
         private void importEventFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .evt file */
             OpenFileDialog of = new OpenFileDialog {
-                Filter = "Event File (*.evt)|*.evt"
+                Filter = "Event File (*.evt, *.ev)|*.evt;*.ev"
             };
             if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -7735,7 +7735,6 @@ namespace DSPRE {
                 return;
             }
 
-            /* Prompt user to select .evt file */
             OpenFileDialog of = new OpenFileDialog {
                 Filter = "AreaData File (*.bin)|*.bin"
             };
@@ -8443,7 +8442,6 @@ namespace DSPRE {
         }
 
         private void importTrainerButton_Click(object sender, EventArgs e) {
-            /* Prompt user to select .evt file */
             OpenFileDialog of = new OpenFileDialog {
                 Filter = "Gen IV Trainer File (*.trf)|*.trf"
             };
@@ -8481,7 +8479,6 @@ namespace DSPRE {
         }
 
         private void importReplacePropertiesButton_Click(object sender, EventArgs e) {
-            /* Prompt user to select .evt file */
             OpenFileDialog of = new OpenFileDialog {
                 Filter = "Gen IV Trainer Properties (*.trp)|*.trp"
             };
@@ -8504,7 +8501,6 @@ namespace DSPRE {
         }
 
         private void importReplacePartyButton_Click(object sender, EventArgs e) {
-            /* Prompt user to select .evt file */
             OpenFileDialog of = new OpenFileDialog {
                 Filter = "Gen IV Party File (*.pdat)|*.pdat"
             };
