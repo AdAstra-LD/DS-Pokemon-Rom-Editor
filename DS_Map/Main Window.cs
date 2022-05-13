@@ -324,6 +324,7 @@ namespace DSPRE {
                 return;
             }
 
+            //============================================================
             MessageBox.Show("Choose where to save the textures.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
             SaveFileDialog texSf = new SaveFileDialog {
                 Filter = "NSBTX File(*.nsbtx)|*.nsbtx",
@@ -368,6 +369,7 @@ namespace DSPRE {
                 }
             }
 
+            //============================================================
             MessageBox.Show("Choose where to save the untextured model.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
             SaveFileDialog sf = new SaveFileDialog {
                 Filter = "Untextured NSBMD File(*.nsbmd)|*.nsbmd",
@@ -404,6 +406,8 @@ namespace DSPRE {
                 return;
             byte[] textureFile = File.ReadAllBytes(openNsbtx.FileName);
 
+
+            //============================================================
             MessageBox.Show("Choose where to save the new textured model.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             string texturedPath = Path.GetFileNameWithoutExtension(of.FileName);
@@ -413,7 +417,7 @@ namespace DSPRE {
 
             SaveFileDialog sf = new SaveFileDialog {
                 Filter = "Textured NSBMD File(*.nsbmd)|*.nsbmd",
-                FileName = texturedPath + "_textured"
+                FileName = Path.GetFileNameWithoutExtension(of.FileName) + "_textured"
             };
 
             if (sf.ShowDialog(this) != DialogResult.OK)
@@ -8611,17 +8615,18 @@ namespace DSPRE {
             if (RomInfo.gameFamily == gFamEnum.HGSS) {
                 DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.trainerGraphics, DirNames.textArchives });
                 RomInfo.SetBattleEffectsData();
-                vsTrainerEffectsList = new List<(int trainerClass, int comboID)>();
-                vsPokemonEffectsList = new List<(int pokemonID, int comboID)>();
-                effectsComboTable = new List<(ushort vsGraph, ushort battleSSEQ)>();
 
-                vsTrainerTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsTrainerEntryTableOffsetToRAMAddress, 4), 0);
-                ROMToolboxDialog.flag_TrainerClassBattleTableRepointed = (vsTrainerTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
-                vsTrainerTableStartAddress -= ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
+                vsPokemonEffectsList = new List<(int pokemonID, int comboID)>();
+                vsTrainerEffectsList = new List<(int trainerClass, int comboID)>();
+                effectsComboTable = new List<(ushort vsGraph, ushort battleSSEQ)>();
 
                 vsPokemonTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsPokemonEntryTableOffsetToRAMAddress, 4), 0);
                 ROMToolboxDialog.flag_PokemonBattleTableRepointed = (vsPokemonTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
                 vsPokemonTableStartAddress -= ROMToolboxDialog.flag_PokemonBattleTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
+
+                vsTrainerTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsTrainerEntryTableOffsetToRAMAddress, 4), 0);
+                ROMToolboxDialog.flag_TrainerClassBattleTableRepointed = (vsTrainerTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
+                vsTrainerTableStartAddress -= ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
 
                 effectsComboMainTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.effectsComboTableOffsetToRAMAddress, 4), 0);
                 ROMToolboxDialog.flag_MainComboTableRepointed = (effectsComboMainTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);

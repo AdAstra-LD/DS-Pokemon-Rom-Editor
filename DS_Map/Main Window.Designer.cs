@@ -30,22 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle65 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle66 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle67 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle68 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle69 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle70 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle71 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle72 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle73 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle74 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle75 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle76 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle77 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle78 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle79 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle80 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
             this.removeLastHeaderBTN = new System.Windows.Forms.Button();
@@ -752,7 +752,6 @@
             this.label73 = new System.Windows.Forms.Label();
             this.pbEffectsGroupBox = new System.Windows.Forms.GroupBox();
             this.HOWpbEffectsTableButton = new System.Windows.Forms.Button();
-            this.label72 = new System.Windows.Forms.Label();
             this.saveEffectCombosTableBTN = new System.Windows.Forms.Button();
             this.pbEffectsCombosListbox = new System.Windows.Forms.ListBox();
             this.groupBox30 = new System.Windows.Forms.GroupBox();
@@ -861,6 +860,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.directoryEntry2 = new System.DirectoryServices.DirectoryEntry();
+            this.label75 = new System.Windows.Forms.Label();
+            this.groupBox31 = new System.Windows.Forms.GroupBox();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -1093,6 +1094,7 @@
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainToolStrip.SuspendLayout();
+            this.groupBox31.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainTabControl
@@ -2749,40 +2751,40 @@
             this.headersGridView.AllowUserToResizeColumns = false;
             this.headersGridView.AllowUserToResizeRows = false;
             this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.Info;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle65.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle65.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle65.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle65.ForeColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle65.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle65.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle65.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle65;
             this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle18.Format = "D4";
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle66.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle66.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle66.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle66.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle66.Format = "D4";
+            dataGridViewCellStyle66.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle66.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle66.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle66;
             this.headersGridView.Location = new System.Drawing.Point(0, 0);
             this.headersGridView.MultiSelect = false;
             this.headersGridView.Name = "headersGridView";
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle67.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle67.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle67.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle67.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle67.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle67.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle67.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle67;
             this.headersGridView.RowHeadersWidth = 50;
             this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle68.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle68.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle68;
             this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.headersGridView.RowTemplate.Height = 18;
             this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -2811,43 +2813,43 @@
             this.heightsGridView.AllowUserToDeleteRows = false;
             this.heightsGridView.AllowUserToResizeColumns = false;
             this.heightsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle69.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle69;
             this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle70.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle70.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle70.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle70.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle70.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle70.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle70.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle70;
             this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle23.Format = "D2";
-            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle71.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle71.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle71.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            dataGridViewCellStyle71.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle71.Format = "D2";
+            dataGridViewCellStyle71.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle71.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle71.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle71;
             this.heightsGridView.Location = new System.Drawing.Point(0, 0);
             this.heightsGridView.MultiSelect = false;
             this.heightsGridView.Name = "heightsGridView";
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle72.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle72.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle72.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle72.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle72.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle72.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle72.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle72;
             this.heightsGridView.RowHeadersWidth = 50;
             this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle25.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle73.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle73.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle73;
             this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.heightsGridView.RowTemplate.Height = 18;
             this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -2874,43 +2876,43 @@
             this.mapFilesGridView.AllowUserToDeleteRows = false;
             this.mapFilesGridView.AllowUserToResizeColumns = false;
             this.mapFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle74.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle74;
             this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle75.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle75.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle75.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle75.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle75.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle75.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle75.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle75;
             this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle28.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle28.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle28.Format = "D4";
-            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle28.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle76.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle76.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle76.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle76.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle76.Format = "D4";
+            dataGridViewCellStyle76.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle76.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle76.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle76;
             this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
             this.mapFilesGridView.MultiSelect = false;
             this.mapFilesGridView.Name = "mapFilesGridView";
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle29.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle77.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle77.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle77.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle77.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle77.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle77.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle77.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle77;
             this.mapFilesGridView.RowHeadersWidth = 50;
             this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle30.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle78.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle78.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle78;
             this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.mapFilesGridView.RowTemplate.Height = 18;
             this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -7692,8 +7694,8 @@
             this.textEditorDataGridView.Location = new System.Drawing.Point(12, 77);
             this.textEditorDataGridView.Name = "textEditorDataGridView";
             this.textEditorDataGridView.RowHeadersWidth = 68;
-            dataGridViewCellStyle31.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle31;
+            dataGridViewCellStyle79.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle79;
             this.textEditorDataGridView.Size = new System.Drawing.Size(873, 496);
             this.textEditorDataGridView.TabIndex = 24;
             this.textEditorDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellValueChanged);
@@ -7878,9 +7880,9 @@
             this.cameraEditorDataGridView.CausesValidation = false;
             this.cameraEditorDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.cameraEditorDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle32.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle32;
+            dataGridViewCellStyle80.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle80.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle80;
             this.cameraEditorDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.cameraEditorDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DistanceGVCol,
@@ -9717,19 +9719,12 @@
             // 
             // pbEffectsGroupBox
             // 
-            this.pbEffectsGroupBox.Controls.Add(this.HOWpbEffectsTableButton);
-            this.pbEffectsGroupBox.Controls.Add(this.label72);
-            this.pbEffectsGroupBox.Controls.Add(this.saveEffectCombosTableBTN);
-            this.pbEffectsGroupBox.Controls.Add(this.pbEffectsCombosListbox);
+            this.pbEffectsGroupBox.Controls.Add(this.groupBox31);
             this.pbEffectsGroupBox.Controls.Add(this.groupBox30);
             this.pbEffectsGroupBox.Controls.Add(this.groupBox29);
-            this.pbEffectsGroupBox.Controls.Add(this.label22);
-            this.pbEffectsGroupBox.Controls.Add(this.pbEffectsVSAnimationUpDown);
-            this.pbEffectsGroupBox.Controls.Add(this.label21);
-            this.pbEffectsGroupBox.Controls.Add(this.pbEffectsBattleSSEQUpDown);
-            this.pbEffectsGroupBox.Location = new System.Drawing.Point(423, 9);
+            this.pbEffectsGroupBox.Location = new System.Drawing.Point(382, 9);
             this.pbEffectsGroupBox.Name = "pbEffectsGroupBox";
-            this.pbEffectsGroupBox.Size = new System.Drawing.Size(747, 444);
+            this.pbEffectsGroupBox.Size = new System.Drawing.Size(788, 451);
             this.pbEffectsGroupBox.TabIndex = 11;
             this.pbEffectsGroupBox.TabStop = false;
             this.pbEffectsGroupBox.Text = "Pre-Battle Effects";
@@ -9737,27 +9732,18 @@
             // HOWpbEffectsTableButton
             // 
             this.HOWpbEffectsTableButton.Image = ((System.Drawing.Image)(resources.GetObject("HOWpbEffectsTableButton.Image")));
-            this.HOWpbEffectsTableButton.Location = new System.Drawing.Point(145, 399);
+            this.HOWpbEffectsTableButton.Location = new System.Drawing.Point(145, 377);
             this.HOWpbEffectsTableButton.Name = "HOWpbEffectsTableButton";
             this.HOWpbEffectsTableButton.Size = new System.Drawing.Size(28, 29);
             this.HOWpbEffectsTableButton.TabIndex = 44;
             this.HOWpbEffectsTableButton.UseVisualStyleBackColor = true;
             this.HOWpbEffectsTableButton.Click += new System.EventHandler(this.HOWpbEffectsTableButton_Click);
             // 
-            // label72
-            // 
-            this.label72.AutoSize = true;
-            this.label72.Location = new System.Drawing.Point(6, 20);
-            this.label72.Name = "label72";
-            this.label72.Size = new System.Drawing.Size(76, 13);
-            this.label72.TabIndex = 43;
-            this.label72.Text = "Effect Combos";
-            // 
             // saveEffectCombosTableBTN
             // 
             this.saveEffectCombosTableBTN.Image = ((System.Drawing.Image)(resources.GetObject("saveEffectCombosTableBTN.Image")));
             this.saveEffectCombosTableBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.saveEffectCombosTableBTN.Location = new System.Drawing.Point(175, 395);
+            this.saveEffectCombosTableBTN.Location = new System.Drawing.Point(175, 373);
             this.saveEffectCombosTableBTN.Name = "saveEffectCombosTableBTN";
             this.saveEffectCombosTableBTN.Size = new System.Drawing.Size(78, 37);
             this.saveEffectCombosTableBTN.TabIndex = 43;
@@ -9769,14 +9755,15 @@
             // pbEffectsCombosListbox
             // 
             this.pbEffectsCombosListbox.FormattingEnabled = true;
-            this.pbEffectsCombosListbox.Location = new System.Drawing.Point(9, 40);
+            this.pbEffectsCombosListbox.Location = new System.Drawing.Point(9, 18);
             this.pbEffectsCombosListbox.Name = "pbEffectsCombosListbox";
-            this.pbEffectsCombosListbox.Size = new System.Drawing.Size(244, 342);
+            this.pbEffectsCombosListbox.Size = new System.Drawing.Size(259, 342);
             this.pbEffectsCombosListbox.TabIndex = 43;
             this.pbEffectsCombosListbox.SelectedIndexChanged += new System.EventHandler(this.pbEffectsCombosListbox_SelectedIndexChanged);
             // 
             // groupBox30
             // 
+            this.groupBox30.Controls.Add(this.label75);
             this.groupBox30.Controls.Add(this.tbEditortrainerClassFrameMaxLabel);
             this.groupBox30.Controls.Add(this.tbEditorTrClassFramePreviewUpDown);
             this.groupBox30.Controls.Add(this.tbEditorTrClassPictureBox);
@@ -9787,7 +9774,7 @@
             this.groupBox30.Controls.Add(this.label70);
             this.groupBox30.Controls.Add(this.pbEffectsTrainerCombobox);
             this.groupBox30.Controls.Add(this.pbEffectsVsTrainerListbox);
-            this.groupBox30.Location = new System.Drawing.Point(259, 14);
+            this.groupBox30.Location = new System.Drawing.Point(286, 14);
             this.groupBox30.Name = "groupBox30";
             this.groupBox30.Size = new System.Drawing.Size(481, 250);
             this.groupBox30.TabIndex = 34;
@@ -9797,7 +9784,7 @@
             // tbEditortrainerClassFrameMaxLabel
             // 
             this.tbEditortrainerClassFrameMaxLabel.AutoSize = true;
-            this.tbEditortrainerClassFrameMaxLabel.Location = new System.Drawing.Point(436, 101);
+            this.tbEditortrainerClassFrameMaxLabel.Location = new System.Drawing.Point(440, 103);
             this.tbEditortrainerClassFrameMaxLabel.Name = "tbEditortrainerClassFrameMaxLabel";
             this.tbEditortrainerClassFrameMaxLabel.Size = new System.Drawing.Size(18, 13);
             this.tbEditortrainerClassFrameMaxLabel.TabIndex = 45;
@@ -9805,7 +9792,7 @@
             // 
             // tbEditorTrClassFramePreviewUpDown
             // 
-            this.tbEditorTrClassFramePreviewUpDown.Location = new System.Drawing.Point(398, 98);
+            this.tbEditorTrClassFramePreviewUpDown.Location = new System.Drawing.Point(402, 100);
             this.tbEditorTrClassFramePreviewUpDown.Name = "tbEditorTrClassFramePreviewUpDown";
             this.tbEditorTrClassFramePreviewUpDown.Size = new System.Drawing.Size(38, 20);
             this.tbEditorTrClassFramePreviewUpDown.TabIndex = 44;
@@ -9825,9 +9812,9 @@
             this.label68.AutoSize = true;
             this.label68.Location = new System.Drawing.Point(249, 164);
             this.label68.Name = "label68";
-            this.label68.Size = new System.Drawing.Size(124, 13);
+            this.label68.Size = new System.Drawing.Size(120, 13);
             this.label68.TabIndex = 42;
-            this.label68.Text = "MainTable Effect Combo";
+            this.label68.Text = "Maintable Effect Combo";
             // 
             // pbEffectsTrainerChooseMainCombobox
             // 
@@ -9899,7 +9886,7 @@
             this.groupBox29.Controls.Add(this.label71);
             this.groupBox29.Controls.Add(this.pbEffectsPokemonCombobox);
             this.groupBox29.Controls.Add(this.pbEffectsVsPokemonListbox);
-            this.groupBox29.Location = new System.Drawing.Point(259, 265);
+            this.groupBox29.Location = new System.Drawing.Point(286, 265);
             this.groupBox29.Name = "groupBox29";
             this.groupBox29.Size = new System.Drawing.Size(481, 174);
             this.groupBox29.TabIndex = 33;
@@ -9919,9 +9906,9 @@
             this.label69.AutoSize = true;
             this.label69.Location = new System.Drawing.Point(249, 80);
             this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(124, 13);
+            this.label69.Size = new System.Drawing.Size(120, 13);
             this.label69.TabIndex = 42;
-            this.label69.Text = "MainTable Effect Combo";
+            this.label69.Text = "Maintable Effect Combo";
             // 
             // pbEffectsPokemonChooseMainCombobox
             // 
@@ -9986,7 +9973,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(72, 389);
+            this.label22.Location = new System.Drawing.Point(72, 368);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(70, 13);
             this.label22.TabIndex = 32;
@@ -9994,20 +9981,20 @@
             // 
             // pbEffectsVSAnimationUpDown
             // 
-            this.pbEffectsVSAnimationUpDown.Location = new System.Drawing.Point(77, 405);
+            this.pbEffectsVSAnimationUpDown.Location = new System.Drawing.Point(77, 383);
             this.pbEffectsVSAnimationUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.pbEffectsVSAnimationUpDown.Name = "pbEffectsVSAnimationUpDown";
-            this.pbEffectsVSAnimationUpDown.Size = new System.Drawing.Size(54, 20);
+            this.pbEffectsVSAnimationUpDown.Size = new System.Drawing.Size(58, 20);
             this.pbEffectsVSAnimationUpDown.TabIndex = 31;
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(5, 390);
+            this.label21.Location = new System.Drawing.Point(5, 368);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(66, 13);
             this.label21.TabIndex = 30;
@@ -10015,7 +10002,7 @@
             // 
             // pbEffectsBattleSSEQUpDown
             // 
-            this.pbEffectsBattleSSEQUpDown.Location = new System.Drawing.Point(9, 405);
+            this.pbEffectsBattleSSEQUpDown.Location = new System.Drawing.Point(9, 383);
             this.pbEffectsBattleSSEQUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -10040,7 +10027,7 @@
             this.conditionalMusicGroupBox.Controls.Add(this.conditionalMusicTableListBox);
             this.conditionalMusicGroupBox.Location = new System.Drawing.Point(16, 9);
             this.conditionalMusicGroupBox.Name = "conditionalMusicGroupBox";
-            this.conditionalMusicGroupBox.Size = new System.Drawing.Size(393, 190);
+            this.conditionalMusicGroupBox.Size = new System.Drawing.Size(360, 190);
             this.conditionalMusicGroupBox.TabIndex = 0;
             this.conditionalMusicGroupBox.TabStop = false;
             this.conditionalMusicGroupBox.Text = "Conditional Music Table";
@@ -10057,7 +10044,7 @@
             // HOWconditionalMusicTableButton
             // 
             this.HOWconditionalMusicTableButton.Image = ((System.Drawing.Image)(resources.GetObject("HOWconditionalMusicTableButton.Image")));
-            this.HOWconditionalMusicTableButton.Location = new System.Drawing.Point(267, 146);
+            this.HOWconditionalMusicTableButton.Location = new System.Drawing.Point(232, 146);
             this.HOWconditionalMusicTableButton.Name = "HOWconditionalMusicTableButton";
             this.HOWconditionalMusicTableButton.Size = new System.Drawing.Size(28, 29);
             this.HOWconditionalMusicTableButton.TabIndex = 9;
@@ -10068,7 +10055,7 @@
             // 
             this.saveConditionalMusicTableBTN.Image = ((System.Drawing.Image)(resources.GetObject("saveConditionalMusicTableBTN.Image")));
             this.saveConditionalMusicTableBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.saveConditionalMusicTableBTN.Location = new System.Drawing.Point(297, 142);
+            this.saveConditionalMusicTableBTN.Location = new System.Drawing.Point(262, 142);
             this.saveConditionalMusicTableBTN.Name = "saveConditionalMusicTableBTN";
             this.saveConditionalMusicTableBTN.Size = new System.Drawing.Size(89, 37);
             this.saveConditionalMusicTableBTN.TabIndex = 8;
@@ -10080,7 +10067,7 @@
             // label65
             // 
             this.label65.AutoSize = true;
-            this.label65.Location = new System.Drawing.Point(297, 83);
+            this.label65.Location = new System.Drawing.Point(262, 83);
             this.label65.Name = "label65";
             this.label65.Size = new System.Drawing.Size(49, 13);
             this.label65.TabIndex = 7;
@@ -10088,7 +10075,7 @@
             // 
             // musicIDconditionalMusicUpDown
             // 
-            this.musicIDconditionalMusicUpDown.Location = new System.Drawing.Point(300, 99);
+            this.musicIDconditionalMusicUpDown.Location = new System.Drawing.Point(265, 99);
             this.musicIDconditionalMusicUpDown.Maximum = new decimal(new int[] {
             32767,
             0,
@@ -10102,7 +10089,7 @@
             // label64
             // 
             this.label64.AutoSize = true;
-            this.label64.Location = new System.Drawing.Point(188, 83);
+            this.label64.Location = new System.Drawing.Point(179, 83);
             this.label64.Name = "label64";
             this.label64.Size = new System.Drawing.Size(27, 13);
             this.label64.TabIndex = 5;
@@ -10110,7 +10097,7 @@
             // 
             // flagConditionalMusicUpDown
             // 
-            this.flagConditionalMusicUpDown.Location = new System.Drawing.Point(191, 99);
+            this.flagConditionalMusicUpDown.Location = new System.Drawing.Point(182, 99);
             this.flagConditionalMusicUpDown.Maximum = new decimal(new int[] {
             32767,
             0,
@@ -10145,7 +10132,7 @@
             this.headerConditionalMusicComboBox.FormattingEnabled = true;
             this.headerConditionalMusicComboBox.Location = new System.Drawing.Point(178, 35);
             this.headerConditionalMusicComboBox.Name = "headerConditionalMusicComboBox";
-            this.headerConditionalMusicComboBox.Size = new System.Drawing.Size(208, 21);
+            this.headerConditionalMusicComboBox.Size = new System.Drawing.Size(173, 21);
             this.headerConditionalMusicComboBox.TabIndex = 1;
             this.headerConditionalMusicComboBox.SelectedIndexChanged += new System.EventHandler(this.headerConditionalMusicComboBox_SelectedIndexChanged);
             // 
@@ -10851,6 +10838,31 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // label75
+            // 
+            this.label75.AutoSize = true;
+            this.label75.Location = new System.Drawing.Point(390, 84);
+            this.label75.Name = "label75";
+            this.label75.Size = new System.Drawing.Size(79, 13);
+            this.label75.TabIndex = 46;
+            this.label75.Text = "Preview frames";
+            // 
+            // groupBox31
+            // 
+            this.groupBox31.Controls.Add(this.HOWpbEffectsTableButton);
+            this.groupBox31.Controls.Add(this.pbEffectsBattleSSEQUpDown);
+            this.groupBox31.Controls.Add(this.label21);
+            this.groupBox31.Controls.Add(this.saveEffectCombosTableBTN);
+            this.groupBox31.Controls.Add(this.pbEffectsVSAnimationUpDown);
+            this.groupBox31.Controls.Add(this.pbEffectsCombosListbox);
+            this.groupBox31.Controls.Add(this.label22);
+            this.groupBox31.Location = new System.Drawing.Point(6, 24);
+            this.groupBox31.Name = "groupBox31";
+            this.groupBox31.Size = new System.Drawing.Size(274, 415);
+            this.groupBox31.TabIndex = 45;
+            this.groupBox31.TabStop = false;
+            this.groupBox31.Text = "Maintable Effect Combos";
+            // 
             // MainProgram
             // 
             this.AllowDrop = true;
@@ -11152,7 +11164,6 @@
             this.tableEditorTabPage.ResumeLayout(false);
             this.tableEditorTabPage.PerformLayout();
             this.pbEffectsGroupBox.ResumeLayout(false);
-            this.pbEffectsGroupBox.PerformLayout();
             this.groupBox30.ResumeLayout(false);
             this.groupBox30.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbEditorTrClassFramePreviewUpDown)).EndInit();
@@ -11173,6 +11184,8 @@
             this.statusStrip1.PerformLayout();
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();
+            this.groupBox31.ResumeLayout(false);
+            this.groupBox31.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -11892,7 +11905,6 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.NumericUpDown pbEffectsBattleSSEQUpDown;
         private System.Windows.Forms.Button HOWpbEffectsTableButton;
-        private System.Windows.Forms.Label label72;
         private System.Windows.Forms.Button saveEffectCombosTableBTN;
         private System.Windows.Forms.ListBox pbEffectsCombosListbox;
         private System.Windows.Forms.GroupBox groupBox30;
@@ -11994,6 +12006,8 @@
         private System.Windows.Forms.Button locateCurrentEvFile;
         private System.Windows.Forms.Button locateCurrentScriptFile;
         private System.Windows.Forms.Button locateCurrentTextArchive;
+        private System.Windows.Forms.GroupBox groupBox31;
+        private System.Windows.Forms.Label label75;
     }
 }
 
