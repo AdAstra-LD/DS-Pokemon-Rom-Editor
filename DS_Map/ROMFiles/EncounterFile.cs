@@ -418,7 +418,7 @@ namespace DSPRE.ROMFiles {
             return newData.ToArray();
         }
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
-            SaveToFileExplorePath("DPPt Encounter File", EncounterFile.extension, suggestedFileName, showSuccessMessage);
+            SaveToFileExplorePath("DPPt Encounter File", EncounterFile.extension, "binary", suggestedFileName, showSuccessMessage);
         }
         #endregion
     }
@@ -777,7 +777,7 @@ namespace DSPRE.ROMFiles {
         }
 
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
-            SaveToFileExplorePath("HGSS Encounter File", EncounterFile.extension, suggestedFileName, showSuccessMessage);
+            SaveToFileExplorePath("HGSS Encounter File", EncounterFile.extension, "binary", suggestedFileName, showSuccessMessage);
         }
         #endregion
     }

@@ -2191,7 +2191,7 @@ namespace DSPRE {
             GameMatrix blankMatrix = new GameMatrix();
 
             /* Add new matrix file to matrix folder */
-            blankMatrix.SaveToFile(RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + romInfo.GetMatrixCount().ToString("D4"), false);
+            blankMatrix.SaveBinaryToFile(RomInfo.gameDirs[DirNames.matrices].unpackedDir + "\\" + romInfo.GetMatrixCount().ToString("D4"), false);
 
             /* Update ComboBox*/
             selectMatrixComboBox.Items.Add( selectMatrixComboBox.Items.Count.ToString() + blankMatrix );
@@ -8442,7 +8442,7 @@ namespace DSPRE {
         }
 
         private void exportTrainerButton_Click(object sender, EventArgs e) {
-            currentTrainerFile.SaveToFileExplorePath("G4 Trainer File " + trainerComboBox.SelectedItem);
+            currentTrainerFile.SaveJSONToFileExplorePath("G4 Trainer File " + trainerComboBox.SelectedItem);
         }
 
         private void importTrainerButton_Click(object sender, EventArgs e) {

@@ -750,7 +750,7 @@ namespace DSPRE {
                     AreaData a = new AreaData(new FileStream(s, FileMode.Open)) {
                         dynamicTextureType = 0xFFFF
                     };
-                    a.SaveToFile(s, showSuccessMessage: false);
+                    a.SaveBinaryToFile(s, showSuccessMessage: false);
                 }
 
                 DisableKillTextureAnimationsPatch("Already applied");

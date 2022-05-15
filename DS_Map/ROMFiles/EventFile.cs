@@ -80,7 +80,7 @@ namespace DSPRE.ROMFiles {
             SaveToFileDefaultDir(DirNames.eventFiles, IDtoReplace, showSuccessMessage);
         }
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
-            SaveToFileExplorePath("Gen IV Event File", "ev", suggestedFileName, showSuccessMessage);
+            SaveToFileExplorePath("Gen IV Event File", "ev", "binary", suggestedFileName, showSuccessMessage);
         }
         #endregion
 

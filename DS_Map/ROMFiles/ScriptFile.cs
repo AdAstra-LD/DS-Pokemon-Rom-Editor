@@ -842,7 +842,7 @@ namespace DSPRE.ROMFiles {
 
                 MessageBox.Show(msg + GetType().Name + " has been exported successfully.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
-                this.SaveToFile(sf.FileName, showSuccessMessage: true);
+                this.SaveBinaryToFile(sf.FileName, showSuccessMessage: true);
             }
         }
         #endregion

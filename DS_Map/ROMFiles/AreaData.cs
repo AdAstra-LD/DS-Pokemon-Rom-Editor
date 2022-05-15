@@ -61,7 +61,7 @@ namespace DSPRE.ROMFiles {
         }
 
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
-            SaveToFileExplorePath("Gen IV Area Data File", "bin", suggestedFileName, showSuccessMessage);
+            SaveToFileExplorePath("Gen IV Area Data File", "bin", "binary", suggestedFileName, showSuccessMessage);
         }
         #endregion
     }

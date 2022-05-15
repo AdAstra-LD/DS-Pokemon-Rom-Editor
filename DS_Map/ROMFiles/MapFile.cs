@@ -220,7 +220,7 @@ namespace DSPRE.ROMFiles {
             SaveToFileDefaultDir(DirNames.maps, IDtoReplace, showSuccessMessage);
         }
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
-            SaveToFileExplorePath("Gen IV Map Bin", "bin", suggestedFileName, showSuccessMessage);
+            SaveToFileExplorePath("Gen IV Map Bin", "bin", "binary", suggestedFileName, showSuccessMessage);
         }
         #endregion
     }

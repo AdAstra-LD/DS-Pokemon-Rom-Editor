@@ -215,7 +215,7 @@ namespace DSPRE.ROMFiles {
             SaveToFileDefaultDir(DirNames.matrices, IDtoReplace, showSuccessMessage);
         }
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
-            SaveToFileExplorePath("Gen IV Matrix File", "mtx", suggestedFileName, showSuccessMessage);
+            SaveToFileExplorePath("Gen IV Matrix File", "mtx", "binary", suggestedFileName, showSuccessMessage);
         }
         #endregion
     }

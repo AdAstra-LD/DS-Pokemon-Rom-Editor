@@ -316,7 +316,7 @@ namespace DSPRE.ROMFiles {
             SaveToFileDefaultDir(DirNames.textArchives, IDtoReplace, showSuccessMessage);
         }
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
-            SaveToFileExplorePath("Gen IV Text Archive", "msg", suggestedFileName, showSuccessMessage);
+            SaveToFileExplorePath("Gen IV Text Archive", "msg", "binary", suggestedFileName, showSuccessMessage);
         }
         #endregion
     }

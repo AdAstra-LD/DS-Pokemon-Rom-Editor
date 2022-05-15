@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSPRE.ROMFiles {
     public class PartyPokemon : RomFile {
@@ -48,6 +49,7 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
+
         public void UpdateItemsAndMoves(bool hasItems = false, bool hasMoves = false) {
             if (hasItems) {
                 this.heldItem = 0;
@@ -144,14 +146,16 @@ namespace DSPRE.ROMFiles {
         }
 
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
-            SaveToFileExplorePath("Gen IV Trainer Properties", "trp", suggestedFileName, showSuccessMessage);
+            SaveToFileExplorePath("Gen IV Trainer Properties", "trp", "binary", suggestedFileName, showSuccessMessage);
         }
         #endregion
 
     }
 
     public class Party : RomFile {
+        [JsonProperty]
         private PartyPokemon[] content;
+        [JsonProperty]
         private TrainerProperties trp;
         public bool exportCondensedData;
 
@@ -276,7 +280,7 @@ namespace DSPRE.ROMFiles {
             return newData.ToArray();
         }
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
-            SaveToFileExplorePath("Gen IV Party Data", "pdat", suggestedFileName, showSuccessMessage);
+            SaveToFileExplorePath("Gen IV Party Data", "pdat", "binary", suggestedFileName, showSuccessMessage);
         }
     }
     public class TrainerFile : RomFile {
@@ -320,7 +324,11 @@ namespace DSPRE.ROMFiles {
         }
 
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
-            SaveToFileExplorePath("Gen IV Trainer File", "trf", suggestedFileName, showSuccessMessage);
+            SaveToFileExplorePath("Gen IV Trainer File", "trf", "binary", suggestedFileName, showSuccessMessage);
+        }
+
+        public void SaveJSONToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
+            SaveToFileExplorePath("Gen IV Trainer File", "trf.json", "json", suggestedFileName, showSuccessMessage);
         }
         #endregion
 
