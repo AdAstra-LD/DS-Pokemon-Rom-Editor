@@ -18,6 +18,7 @@ using static DSPRE.RomInfo;
 using Images;
 using Ekona.Images;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Newtonsoft.Json;
 using ScintillaNET;
 using ScintillaNET.Utils;
 using System.Globalization;
@@ -8447,32 +8448,18 @@ namespace DSPRE {
 
         private void importTrainerButton_Click(object sender, EventArgs e) {
             OpenFileDialog of = new OpenFileDialog {
-                Filter = "Gen IV Trainer File (*.trf)|*.trf"
+                Filter = "Gen IV Trainer File JSON (*.trf.json)|*.trf.json"
             };
             if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
             }
 
             /* Update trainer on disk */
-            using (DSUtils.EasyReader reader = new DSUtils.EasyReader(of.FileName)) {
-                string trName = reader.ReadString();
-
-                byte datSize = reader.ReadByte();
-                byte[] trDat = reader.ReadBytes(datSize);
-
-                byte partySize = reader.ReadByte();
-                byte[] pDat = reader.ReadBytes(partySize);
-
-                string pathData = RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
-                string pathParty = RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
-                File.WriteAllBytes(pathData, trDat);
-                File.WriteAllBytes(pathParty, pDat);
-
-                UpdateCurrentTrainerName(trName);
-            }
-            /* Refresh controls and re-read file */
-            trainerComboBox_SelectedIndexChanged(null, null);
-            UpdateCurrentTrainerShownName();
+            TrainerFile tf = JsonConvert.DeserializeObject<TrainerFile>(File.ReadAllText(of.FileName));
+            string pathData = RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + tf.trp.trainerID.ToString("D4");
+            string pathParty = RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + "\\" + tf.trp.trainerID.ToString("D4");
+            File.WriteAllBytes(pathData, tf.trp.ToByteArray());
+            File.WriteAllBytes(pathParty, tf.party.ToByteArray());
 
             /* Display success message */
             MessageBox.Show("Trainer File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);

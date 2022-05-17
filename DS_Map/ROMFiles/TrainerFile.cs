@@ -29,6 +29,18 @@ namespace DSPRE.ROMFiles {
             this.heldItem = heldItem;
             this.moves = moves;
         }
+
+        [JsonConstructor]
+        public PartyPokemon(ushort? pokeID, ushort level, ushort unknown1_DATASTART, ushort unknown2_DATAEND, ushort? heldItem, ushort[] moves)
+        {
+            this.pokeID = pokeID;
+            this.level = level;
+            this.unknown1_DATASTART = unknown1_DATASTART;
+            this.unknown2_DATAEND = unknown2_DATAEND;
+            this.heldItem = heldItem;
+            this.moves = moves;
+        }
+
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
@@ -112,6 +124,20 @@ namespace DSPRE.ROMFiles {
                 AI = new BitArray( BitConverter.GetBytes(reader.ReadUInt32()) );
                 doubleBattle = reader.ReadUInt32() == 2;
             }
+        }
+
+        [JsonConstructor]
+        public TrainerProperties(ushort trainerID, byte trDataUnknown, byte trainerClass, byte partyCount, bool doubleBattle, bool hasMoves, bool hasItems, ushort[] trainerItems, bool[] AI)
+        {
+            this.trainerID = trainerID;
+            this.trDataUnknown = trDataUnknown;
+            this.trainerClass = trainerClass;
+            this.partyCount = partyCount;
+            this.doubleBattle = doubleBattle;
+            this.hasMoves = hasMoves;
+            this.hasItems = hasItems;
+            this.trainerItems = trainerItems;
+            this.AI = new BitArray(AI);
         }
         #endregion
 
@@ -234,6 +260,14 @@ namespace DSPRE.ROMFiles {
             }
         }
 
+        [JsonConstructor]
+        public Party(PartyPokemon[] content, TrainerProperties trp, bool exportCondensedData)
+        {
+            this.content = content;
+            this.trp = trp;
+            this.exportCondensedData = exportCondensedData;
+        }
+
         public PartyPokemon this[int index] {
             get {
                 return content[index];
@@ -299,6 +333,15 @@ namespace DSPRE.ROMFiles {
             trp.partyCount = 1;
             this.party = new Party(1, init: true, trp);
         }
+
+        [JsonConstructor]
+        public TrainerFile(string name, TrainerProperties trp, Party party)
+        {
+            this.name = name;
+            this.trp = trp;
+            this.party = party;
+        }
+
         public TrainerFile(TrainerProperties trp, Stream partyData, string name = "") {
             this.name = name;
             this.trp = trp;
