@@ -8442,6 +8442,62 @@ namespace DSPRE {
             UpdateCurrentTrainerShownName();
         }
 
+        private void exportAllButton_Click(object sender, EventArgs e)
+        {
+            string fileType = "Gen IV All Trainer File";
+            string fileExtension = "*.atf.json";
+            string suggestedFileName = "G4 All Trainer File.atf.json";
+
+            SaveFileDialog sf = new SaveFileDialog
+            {
+                Filter = fileType + ' ' + "(" + fileExtension + ")" + '|' + fileExtension
+            };
+
+            if (!string.IsNullOrEmpty(suggestedFileName))
+            {
+                sf.FileName = suggestedFileName;
+            }
+
+            if (sf.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            using (StreamWriter sw = new StreamWriter(sf.FileName))
+            {
+                int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir).Length;
+                sw.WriteLine("{\"trainers\":[");
+                for (int i = 0; i < trainerCount; i++)
+                {
+                    string suffix = "\\" + i.ToString("D4");
+                    TrainerFile tf = new TrainerFile(
+                        new TrainerProperties(
+                            (ushort)i,
+                            new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + suffix, FileMode.Open)
+                        ),
+                        new FileStream(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + suffix, FileMode.Open),
+                        RomInfo.GetSimpleTrainerNames()[trainerComboBox.SelectedIndex]
+                    );
+
+                    TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
+                    tf.name = trainerNames.messages[i];
+                    
+                    sw.WriteLine(tf.ToJSON());
+                    if (i < trainerCount - 1)
+                    {
+                        sw.WriteLine(",");
+                    }
+                }
+                sw.WriteLine("]}");
+                MessageBox.Show(sf.FileName + " saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void importAllButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void exportTrainerButton_Click(object sender, EventArgs e) {
             currentTrainerFile.SaveJSONToFileExplorePath("G4 Trainer File " + trainerComboBox.SelectedItem);
         }
