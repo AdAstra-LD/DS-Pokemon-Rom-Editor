@@ -19,6 +19,7 @@ using Images;
 using Ekona.Images;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ScintillaNET;
 using ScintillaNET.Utils;
 using System.Globalization;
@@ -8495,6 +8496,42 @@ namespace DSPRE {
 
         private void importAllButton_Click(object sender, EventArgs e)
         {
+            OpenFileDialog of = new OpenFileDialog
+            {
+                Filter = "Gen IV All Trainer File (*.atf.json)|*.atf.json"
+            };
+            if (of.ShowDialog(this) != DialogResult.OK)
+            {
+                return;
+            }
+
+            JObject allTrainers = JObject.Parse(File.ReadAllText(of.FileName));
+ 
+            foreach (JToken trainer in allTrainers["trainers"])
+            {
+
+                /* Update trainer on disk */
+                TrainerFile tf = trainer.ToObject<TrainerFile>();
+                int trainerID = tf.trp.trainerID;
+                string pathData = RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + trainerID.ToString("D4");
+                string pathParty = RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + "\\" + trainerID.ToString("D4");
+                File.WriteAllBytes(pathData, tf.trp.ToByteArray());
+                File.WriteAllBytes(pathParty, tf.party.ToByteArray());
+
+                TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
+                if (trainerNames.messages[trainerID] != tf.name)
+                {
+                    trainerNames.messages[trainerID] = tf.name;
+                    trainerNames.SaveToFileDefaultDir(RomInfo.trainerNamesMessageNumber, showSuccessMessage: false);
+                }
+
+            }
+
+            /* Update trainer editor */
+            SetupTrainerEditor();
+
+            /* Display success message */
+            MessageBox.Show("All Trainers File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
 
@@ -8512,10 +8549,18 @@ namespace DSPRE {
 
             /* Update trainer on disk */
             TrainerFile tf = JsonConvert.DeserializeObject<TrainerFile>(File.ReadAllText(of.FileName));
-            string pathData = RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + tf.trp.trainerID.ToString("D4");
-            string pathParty = RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + "\\" + tf.trp.trainerID.ToString("D4");
+            int trainerID = tf.trp.trainerID;
+            string pathData = RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + trainerID.ToString("D4");
+            string pathParty = RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + "\\" + trainerID.ToString("D4");
             File.WriteAllBytes(pathData, tf.trp.ToByteArray());
             File.WriteAllBytes(pathParty, tf.party.ToByteArray());
+
+            TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
+            if (trainerNames.messages[trainerID] != tf.name)
+            {
+                trainerNames.messages[trainerID] = tf.name;
+                trainerNames.SaveToFileDefaultDir(RomInfo.trainerNamesMessageNumber, showSuccessMessage: false);
+            }
 
             /* Display success message */
             MessageBox.Show("Trainer File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
