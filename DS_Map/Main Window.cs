@@ -79,11 +79,22 @@ namespace DSPRE {
             /* Store all trainer names and classes */
             TextArchive trainerClasses = new TextArchive(RomInfo.trainerClassMessageNumber);
             TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
-            int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir).Length;
+            string trainerPropertiesUnpackedDir = RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir;
+
+            int trainerCount = Directory.GetFiles(trainerPropertiesUnpackedDir).Length;
 
             for (int i = 0; i < trainerCount; i++) {
-                int classMessageID = BitConverter.ToUInt16(DSUtils.ReadFromFile(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + i.ToString("D4"), 1, 2), 0);
-                trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[classMessageID] + " " + trainerNames.messages[i]);
+                int classMessageID = BitConverter.ToUInt16(DSUtils.ReadFromFile(trainerPropertiesUnpackedDir + "\\" + i.ToString("D4"), startOffset: 1, 2), 0);
+                string currentTrainerName;
+
+                if (i < trainerNames.messages.Count) {
+                    currentTrainerName = trainerNames.messages[i];
+                } else {
+                    currentTrainerName = TrainerFile.NAME_NOT_FOUND;
+                }
+                
+                trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[classMessageID] + " " + currentTrainerName);
+
             }
             return trainerList.ToArray();
         }
@@ -4966,17 +4977,18 @@ namespace DSPRE {
             }
 
             /* Add event file numbers to box */
+            statusLabel.Text = "Loading Events... Please wait.";
+            Update();
+
             int eventCount = RomInfo.GetEventFileCount();
             int owSpriteCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.OWSprites].unpackedDir).Length;
-            string[] trainerNames = GetTrainerNames();
             RomInfo.ReadOWTable();
 
             eventEditorWarpHeaderListBox.Items.Clear();
             eventEditorWarpHeaderListBox.Items.AddRange(headerListBoxNames.ToArray());
             eventEditorHeaderLocationNameLabel.Text = "";
 
-
-            statusLabel.Text = "Loading Events... Please wait.";
+            string[] trainerNames = GetTrainerNames();
             toolStripProgressBar.Maximum = (int)(eventCount + RomInfo.OverworldTable.Keys.Max() + trainerNames.Length);
             toolStripProgressBar.Value = 0;
             Update();
@@ -8051,6 +8063,11 @@ namespace DSPRE {
 
             string[] classNames = RomInfo.GetTrainerClassNames();
             trainerClassListBox.Items.Clear();
+            if (classNames.Length > byte.MaxValue + 1) {
+                MessageBox.Show("There can't be more than 256 trainer classes! [Found " + classNames.Length + "].\nAborting.",
+                    "Too many trainer classes", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             for (int i = 0; i < classNames.Length; i++) {
                 trainerClassListBox.Items.Add("[" + i.ToString("D3") + "]" + " " + classNames[i]);
             }
@@ -8094,19 +8111,32 @@ namespace DSPRE {
             }
             disableHandlers = true;
 
-            string suffix = "\\" + trainerComboBox.SelectedIndex.ToString("D4");
+            int currentIndex = trainerComboBox.SelectedIndex;
+            string suffix = "\\" + currentIndex.ToString("D4");
+            string[] trNames = RomInfo.GetSimpleTrainerNames();
+
+            bool error = currentIndex >= trNames.Length;
+
             currentTrainerFile = new TrainerFile(
                 new TrainerProperties(
                     (ushort)trainerComboBox.SelectedIndex, 
                     new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + suffix, FileMode.Open)
                 ),
                 new FileStream(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + suffix, FileMode.Open),
-                RomInfo.GetSimpleTrainerNames()[trainerComboBox.SelectedIndex]
+                error ? TrainerFile.NAME_NOT_FOUND : trNames[currentIndex]
             );
+
             RefreshTrainerPartyGUI();
             RefreshTrainerPropertiesGUI();
 
             disableHandlers = false;
+
+            if (error) {
+                MessageBox.Show("This Trainer File doesn't have a corresponding name.\n\n" +
+                    "If you edited this ROM's Trainers with another tool before, don't worry.\n" +
+                    "DSPRE will attempt to add the missing line to the Trainer Names Text Archive [" + RomInfo.trainerNamesMessageNumber + "] upon resaving.",
+                    "Trainer name not found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         public void RefreshTrainerPropertiesGUI() {
@@ -8339,7 +8369,11 @@ namespace DSPRE {
         private void UpdateCurrentTrainerName(string newName) {
             currentTrainerFile.name = newName;
             TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
-            trainerNames.messages[currentTrainerFile.trp.trainerID] = newName;
+            if (currentTrainerFile.trp.trainerID < trainerNames.messages.Count) {
+                trainerNames.messages[currentTrainerFile.trp.trainerID] = newName;
+            } else {
+                trainerNames.messages.Add(newName);
+            }
             trainerNames.SaveToFileDefaultDir(RomInfo.trainerNamesMessageNumber, showSuccessMessage: false);
         }
         private void UpdateCurrentTrainerClassName(string newName) {             
@@ -8375,11 +8409,7 @@ namespace DSPRE {
 
             eyeContactMusicAltLabel.Enabled = encounterSSEQAltUpDown.Enabled = (encounterSSEQMainUpDown.Enabled && gameFamily == gFamEnum.HGSS);
             encounterSSEQAltUpDown.Value = output.musicN != null ? (ushort)output.musicN : 0;
-            
-
-            if (disableHandlers) {
-                return;
-            }
+            currentTrainerFile.trp.trainerClass = (byte)(sender as ListBox).SelectedIndex;
         }
 
         private int LoadTrainerClassPic(int trClassID) {

@@ -281,6 +281,7 @@ namespace DSPRE.ROMFiles {
     }
     public class TrainerFile : RomFile {
         public const int POKE_IN_PARTY = 6;
+        public static readonly string NAME_NOT_FOUND = "NAME READ ERROR";
 
         #region Fields
         public string name;
