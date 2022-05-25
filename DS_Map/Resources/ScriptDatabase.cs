@@ -429,7 +429,7 @@ namespace DSPRE.Resources {
             [0x012C] = "CheckSaveGame",
             [0x012D] = "SaveGame",
 
-            [0x0131] = "GivePokétch",
+            [0x0131] = "GivePoketch",
             [0x0132] = "PoketchFlag",
             [0x0133] = "GivePoketchApp",
             [0x0134] = "CheckPoketchApp",
@@ -633,16 +633,21 @@ namespace DSPRE.Resources {
             [0x026E] = "CheckGBACartidge",
             [0x026F] = "ResetSpiritombCounter",
 
+            [0x027A] = "SunyshoreBinoculars",
+
             [0x0280] = "TextNumberSp",
 
             [0x0282] = "CheckBirthday",
             [0x0283] = "MusicVolumeSet",
             [0x0284] = "CountSeenUnown",
 
+            [0x028B] = "CheckEventValidity",
+
             [0x029F] = "ShakeCamera",
 
             [0x02A5] = "PartyPokemonTradeScreen",
 
+            [0x02BC] = "LastBattleCheckCaught",
             [0x02BD] = "SpWildBattle",
             [0x02BE] = "CheckTrainerCardLevel",
             [0x02BF] = "DummyRideBike",
@@ -1440,8 +1445,8 @@ namespace DSPRE.Resources {
             [0x0264] = "CombeeCheck",
 
             //0x02C3 is the last command ID that DP and Plat have in common
-            [0x02C6] = "SpinTradeUnion",
-            [0x02C7] = "CheckGameVersion",
+            [0x02C6] = "SpinTradeScreen",
+            //[0x02C7] = "CheckGameVersion", //Needs to be checked
 
             [0x02C9] = "InitEternaGym",
             [0x02CA] = "FloralClockAnimation",
@@ -1654,7 +1659,7 @@ namespace DSPRE.Resources {
             [0x002B] = "SetVarFromFlexible",
             [0x002C] = "MessageAll",
             [0x002D] = "Message",
-            [0x002E] = "MessageSp",
+            [0x002E] = "MessageFlex",
             [0x002F] = "MessageNoSkip",
 
             [0x0031] = "WaitAB",
