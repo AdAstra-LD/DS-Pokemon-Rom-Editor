@@ -163,11 +163,7 @@ namespace LibNDSFormats.NSBMD {
 		public void RenderModel(string file2, MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File ani, int[] aniframeS, int[] aniframeT, int[] aniframeScaleS, int[] aniframeScaleT, int[] aniframeR, MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File ca, RenderMode r, bool anim, bool anim2, int selectedanim, float X, float Y, float dist, float elev, float ang, bool licht, MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File p, NSBMD nsb) {
 			MTX44 tmp = new MTX44();
 			file = file2;
-			for (var j = 0; j < Model.Polygons.Count - 1; j++) {
-				var poly = Model.Polygons[j];
-				int matid = poly.MatId;
-				var mat = Model.Materials[matid];
-			}
+			
 			int light = Gl.glIsEnabled(Gl.GL_LIGHTING);
 			Gl.glDisable(Gl.GL_LIGHTING);
 			Gl.glLineWidth(2.0F);
@@ -463,7 +459,7 @@ namespace LibNDSFormats.NSBMD {
 					Gl.glColor3f(1, 1, 1);
 				}
 				stackID = poly.StackID; // the first matrix used by this polygon
-				Process3DCommand(poly.PolyData, Model.Materials[poly.MatId], poly.JointID, true);
+				Process3DCommand(poly.PolyData, Model.Materials[Math.Max(0, poly.MatId)], poly.JointID, true); //Math.Max(0, poly.MatId) PREVENTS EXCEPTIONS WHEN poly.MatId < 0 BUT MAY CAUSE RENDER ERRORS 
 
 			}
 			writevertex = false;
