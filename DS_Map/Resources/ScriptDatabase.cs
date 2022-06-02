@@ -331,6 +331,10 @@ namespace DSPRE.Resources {
             [0x00A0] = "DummyCountPartyPokemon",
             [0x00A1] = "ReturnScreen",
 
+            [0x00A6] = "DressPokemon",
+            [0x00A7] = "DisplayDressedPokemon",
+            [0x00A8] = "DisplayContestPokemon",
+
             [0x00A9] = "SealCapsuleScreen",
             [0x00AA] = "WorldMapScreen",
             [0x00AB] = "PCBoxScreen",
@@ -428,6 +432,8 @@ namespace DSPRE.Resources {
 
             [0x012C] = "CheckSaveGame",
             [0x012D] = "SaveGame",
+            [0x012E] = "CheckPortrait",
+            [0x012F] = "CheckContestPortrait",
 
             [0x0131] = "GivePoketch",
             [0x0132] = "PoketchFlag",
@@ -566,6 +572,7 @@ namespace DSPRE.Resources {
             [0x0203] = "BattleRoomWarp",
             [0x0204] = "ExitBattleRoom",
             [0x0205] = "GeonetScreen",
+            [0x0206] = "GreatMarshBinoculars",
 
             [0x0208] = "ShowPokemonPic",
             [0x0209] = "HidePokemonPic",
@@ -583,7 +590,7 @@ namespace DSPRE.Resources {
             [0x0217] = "GetAmitySquareAccessory",
 
             [0x021C] = "AddRoamingPokemon",
-            [0x021D] = "Group",
+            [0x021D] = "UnionGroup",
 
             [0x0221] = "RememberMoveScreen",
             [0x0222] = "DummyMoveCommand", //
@@ -644,6 +651,8 @@ namespace DSPRE.Resources {
             [0x028B] = "CheckEventValidity",
 
             [0x029F] = "ShakeCamera",
+
+            [0x02AC] = "ActivateMysteryGift",
 
             [0x02A5] = "PartyPokemonTradeScreen",
 
@@ -1449,7 +1458,7 @@ namespace DSPRE.Resources {
             //[0x02C7] = "CheckGameVersion", //Needs to be checked
 
             [0x02C9] = "InitEternaGym",
-            [0x02CA] = "FloralClockAnimation",
+            [0x02CA] = "EternaGymClockAnim",
             [0x02CD] = "SetDarkFog",
             [0x02CE] = "ClearDarkFog",
             
@@ -1943,7 +1952,7 @@ namespace DSPRE.Resources {
             [0x01C5] = "HidePokemonPic",
 
             [0x01D0] = "AddRoamingPokemon",
-            [0x01D1] = "Group",
+            [0x01D1] = "UnionGroup",
 
             [0x01D6] = "InitTrade",
             [0x01D7] = "GetOfferedPokemon",
@@ -2043,7 +2052,12 @@ namespace DSPRE.Resources {
             [0x02EF] = "CreateMultiTouchBox",
             [0x02F0] = "CloseMultiTouch",
 
+            [0x031B] = "ShowMomMoney",
+            [0x031C] = "HideMomMoney",
+
             [0x0344] = "CheckJadeOrbRequirements",
+
+            [0x0346] = "CheckMoneyFull",
 
             [0x034B] = "TextItemLowercase",
             [0x034C] = "TextItemPlural",
