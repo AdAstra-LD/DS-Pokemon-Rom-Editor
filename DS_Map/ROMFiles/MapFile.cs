@@ -62,9 +62,9 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (1)
-        public MapFile(string path, gFamEnum gFamily, bool showMessages = true) : this (new FileStream(path, FileMode.Open), gFamily, showMessages) {}
-        public MapFile(int mapNumber, gFamEnum gFamily, bool showMessages = true) : this(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + mapNumber.ToString("D4"), gFamily, showMessages) { }
-        public MapFile(Stream data, gFamEnum gFamily, bool showMessages = true) {
+        public MapFile(string path, gFamEnum gFamily, bool discardMoveperms = false, bool showMessages = true) : this (new FileStream(path, FileMode.Open), gFamily, discardMoveperms, showMessages) {}
+        public MapFile(int mapNumber, gFamEnum gFamily, bool discardMoveperms = false, bool showMessages = true) : this(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + mapNumber.ToString("D4"), gFamily, discardMoveperms, showMessages) { }
+        public MapFile(Stream data, gFamEnum gFamily, bool discardMoveperms = false, bool showMessages = true) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 /* Read sections lengths */
                 int permissionsSectionLength = reader.ReadInt32();
@@ -79,7 +79,7 @@ namespace DSPRE.ROMFiles {
                         ushort bgsDataLength = reader.ReadUInt16();
 
                         reader.BaseStream.Position -= 4; //go back so that the signature "0x1234" + size can be read and stored
-                        ImportSoundPlates(new MemoryStream(reader.ReadBytes(bgsDataLength + 4)));
+                        ImportSoundPlates(reader.ReadBytes(bgsDataLength + 4));
                     } else {
                         correctnessFlag = false;
                         if (showMessages) {
@@ -90,10 +90,14 @@ namespace DSPRE.ROMFiles {
                 }
 
                 /* Read permission data */
-                ImportPermissions(new MemoryStream(reader.ReadBytes(permissionsSectionLength)));
+                if (discardMoveperms) {
+                    reader.BaseStream.Position += permissionsSectionLength;
+                } else {
+                    ImportPermissions(reader.ReadBytes(permissionsSectionLength));
+                }
 
                 /* Read buildings data */
-                ImportBuildings(new MemoryStream(reader.ReadBytes(buildingsSectionLength)));
+                ImportBuildings(reader.ReadBytes(buildingsSectionLength));
 
                 /* Read nsbmd model */
                 if ( !LoadMapModel(reader.ReadBytes(nsbmdSectionLength), showMessages) ) { //Assign result to flag
@@ -102,7 +106,7 @@ namespace DSPRE.ROMFiles {
                 };
 
                 /* Read bdhc data */
-                ImportTerrain(new MemoryStream(reader.ReadBytes(bdhcSectionLength)));
+                ImportTerrain(reader.ReadBytes(bdhcSectionLength));
             }
         }
         #endregion
@@ -143,9 +147,9 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
-        public void ImportBuildings(Stream newData) {
+        public void ImportBuildings(byte[] newData) {
             buildings = new List<Building>();
-            using (BinaryReader reader = new BinaryReader(newData)) {
+            using (BinaryReader reader = new BinaryReader(new MemoryStream(newData))) {
                 for (int i = 0; i < newData.Length / 0x30; i++) {
                     buildings.Add(new Building(new MemoryStream(reader.ReadBytes(0x30))));
                 }
@@ -174,8 +178,8 @@ namespace DSPRE.ROMFiles {
             return true;
         }
         
-        public void ImportPermissions(Stream newData) {
-            using (BinaryReader reader = new BinaryReader(newData)) {
+        public void ImportPermissions(byte[] newData) {
+            using (BinaryReader reader = new BinaryReader(new MemoryStream(newData))) {
                 for (int i = 0; i < 32; i++) {
                     for (int j = 0; j < 32; j++) {
                         types[i, j] = reader.ReadByte(); // Read permission type (e.g. surfing water, grass, sand etc.)
@@ -184,14 +188,14 @@ namespace DSPRE.ROMFiles {
                 }
             }
         }
-        public void ImportSoundPlates(Stream newData) {
-            using (BinaryReader reader = new BinaryReader(newData)) {
-                bgs = reader.ReadBytes((int)newData.Length);
+        public void ImportSoundPlates(byte[] newData) {
+            using (BinaryReader reader = new BinaryReader(new MemoryStream(newData))) {
+                bgs = reader.ReadBytes(newData.Length);
             }
         }
-        public void ImportTerrain(Stream newData) {
-            using (BinaryReader reader = new BinaryReader(newData)) {
-                bdhc = reader.ReadBytes((int)newData.Length);
+        public void ImportTerrain(byte[] newData) {
+            using (BinaryReader reader = new BinaryReader(new MemoryStream(newData))) {
+                bdhc = reader.ReadBytes(newData.Length);
             }
         }
         public override byte[] ToByteArray() {

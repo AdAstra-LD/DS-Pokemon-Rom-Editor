@@ -3130,7 +3130,7 @@ namespace DSPRE {
         }
         private void addMapFileButton_Click(object sender, EventArgs e) {
             /* Add new map file to map folder */
-            new MapFile(0, RomInfo.gameFamily).SaveToFileDefaultDir(selectMapComboBox.Items.Count);
+            new MapFile(0, RomInfo.gameFamily, discardMoveperms: true).SaveToFileDefaultDir(selectMapComboBox.Items.Count);
 
             /* Update ComboBox and select new file */
             selectMapComboBox.Items.Add(selectMapComboBox.Items.Count.ToString("D3") + MapHeader.nameSeparator + "newmap");
@@ -4665,7 +4665,7 @@ namespace DSPRE {
                 AreaData areaData = new AreaData(areaDataID);
 
                 /* Read map and building models, match them with textures and render them*/
-                eventMapFile = new MapFile( (int)mapIndex, RomInfo.gameFamily);
+                eventMapFile = new MapFile( (int)mapIndex, RomInfo.gameFamily, discardMoveperms: false);
                 MW_LoadModelTextures(eventMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, areaData.mapTileset);
 
                 bool isInteriorMap = false;
