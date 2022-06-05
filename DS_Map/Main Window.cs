@@ -949,7 +949,7 @@ namespace DSPRE {
 
             /*Add list of options to each control */
             currentTextArchive = new TextArchive(RomInfo.locationNamesTextNumber);
-            ReloadHeaderEditorLocationsList();
+            ReloadHeaderEditorLocationsList(currentTextArchive.messages);
 
             switch (RomInfo.gameFamily) {
                 case gFamEnum.DP:
@@ -7090,7 +7090,7 @@ namespace DSPRE {
 
         private void addTextArchiveButton_Click(object sender, EventArgs e) {
             /* Add copy of message 0 to text archives folder */
-            new TextArchive(0).SaveToFileDefaultDir(selectTextFileComboBox.Items.Count);
+            new TextArchive(0, new List<string>() { "Your text here." }, discardLines: true).SaveToFileDefaultDir(selectTextFileComboBox.Items.Count);
 
             /* Update ComboBox and select new file */
             selectTextFileComboBox.Items.Add("Text Archive " + selectTextFileComboBox.Items.Count);
@@ -7118,20 +7118,45 @@ namespace DSPRE {
         private void exportTextFileButton_Click(object sender, EventArgs e) {
             currentTextArchive.SaveToFileExplorePath("Text Archive " + selectTextFileComboBox.SelectedIndex);
             if (selectTextFileComboBox.SelectedIndex == RomInfo.locationNamesTextNumber) {
-                ReloadHeaderEditorLocationsList();
+                ReloadHeaderEditorLocationsList(currentTextArchive.messages);
             }
         }
 
         private void saveTextArchiveButton_Click(object sender, EventArgs e) {
             currentTextArchive.SaveToFileDefaultDir(selectTextFileComboBox.SelectedIndex);
             if (selectTextFileComboBox.SelectedIndex == RomInfo.locationNamesTextNumber) {
-                ReloadHeaderEditorLocationsList();
+                ReloadHeaderEditorLocationsList(currentTextArchive.messages);
             }
         }
-        private void ReloadHeaderEditorLocationsList() {
+        private void selectedLineMoveUpButton_Click(object sender, EventArgs e) {
+            int cc = textEditorDataGridView.CurrentCell.RowIndex;
+
+            if (cc > 0) {
+                DataGridViewRowCollection rows = textEditorDataGridView.Rows;
+                DataGridViewCell current = rows[cc].Cells[0];
+                DataGridViewCell previous = rows[cc-1].Cells[0];
+
+                (current.Value, previous.Value) = (previous.Value, current.Value);
+                textEditorDataGridView.CurrentCell = previous;
+            }
+        }
+
+        private void selectedLineMoveDownButton_Click(object sender, EventArgs e) {
+            int cc = textEditorDataGridView.CurrentCell.RowIndex;
+
+            if (cc < textEditorDataGridView.RowCount - 1) {
+                DataGridViewRowCollection rows = textEditorDataGridView.Rows;
+                DataGridViewCell current = rows[cc].Cells[0];
+                DataGridViewCell next = rows[cc + 1].Cells[0];
+
+                (current.Value, next.Value) = (next.Value, current.Value);
+                textEditorDataGridView.CurrentCell = next;
+            }
+        }
+        private void ReloadHeaderEditorLocationsList(IEnumerable<string> contents) {
             int selection = locationNameComboBox.SelectedIndex;
             locationNameComboBox.Items.Clear();
-            locationNameComboBox.Items.AddRange(currentTextArchive.messages.ToArray());
+            locationNameComboBox.Items.AddRange(contents.ToArray());
             locationNameComboBox.SelectedIndex = selection;
         }
         private void importTextFileButton_Click(object sender, EventArgs e) {
@@ -7326,6 +7351,8 @@ namespace DSPRE {
             }
 
             disableHandlers = false;
+
+            textEditorDataGridView_CurrentCellChanged(textEditorDataGridView, null);
         }
         private void PrintTextEditorLinesHex() {
             int final = Math.Min(textEditorDataGridView.Rows.Count, currentTextArchive.messages.Count);
@@ -7345,7 +7372,7 @@ namespace DSPRE {
             if (disableHandlers) {
                 return;
             }
-            if (e.RowIndex > -1) {
+            if (e.RowIndex > -1 && e.ColumnIndex > -1) {
                 try {
                     currentTextArchive.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 } catch (NullReferenceException) {
@@ -7353,17 +7380,37 @@ namespace DSPRE {
                 }
             }
         }
-        private void textSearchResultsListBox_GoToEntryResult(object sender, MouseEventArgs e) {
-            if (textSearchResultsListBox.SelectedIndex < 0)
+        private void textEditorDataGridView_CurrentCellChanged(object sender, EventArgs e) {
+            DataGridView dgv = sender as DataGridView;
+            if (disableHandlers || dgv == null || dgv.CurrentCell == null) {
                 return;
+            }
+
+            Console.WriteLine("R: " + dgv.CurrentCell.RowIndex);
+            Console.WriteLine("Last index: " + (dgv.RowCount - 1).ToString());
+
+            if (dgv.CurrentCell.RowIndex > 0) {
+                selectedLineMoveUpButton.Enabled = true;
+            } else {
+                selectedLineMoveUpButton.Enabled = false;
+            }
+
+            if (dgv.CurrentCell.RowIndex < dgv.RowCount - 1) {
+                selectedLineMoveDownButton.Enabled = true;
+            } else {
+                selectedLineMoveDownButton.Enabled = false;
+            }
+        }
+        private void textSearchResultsListBox_GoToEntryResult(object sender, MouseEventArgs e) {
+            if (textSearchResultsListBox.SelectedIndex < 0) {
+                return;
+            }
 
             string[] msgResult = textSearchResultsListBox.Text.Split(new string[] { " --- " }, StringSplitOptions.RemoveEmptyEntries);
             string[] parts = msgResult[0].Substring(1).Split(new string[] { ") - #" }, StringSplitOptions.RemoveEmptyEntries);
-
-            int msg;
-            int line;
-            if (Int32.TryParse((parts[0]), out msg)) {
-                if (Int32.TryParse((parts[1]), out line)) {
+            
+            if (int.TryParse(parts[0], out int msg)) {
+                if (int.TryParse(parts[1], out int line)) {
                     selectTextFileComboBox.SelectedIndex = msg;
                     textEditorDataGridView.ClearSelection();
                     textEditorDataGridView.Rows[line].Selected = true;

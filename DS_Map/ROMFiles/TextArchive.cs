@@ -14,12 +14,12 @@ namespace DSPRE.ROMFiles {
     /// </summary>
     public class TextArchive : RomFile {
         #region Fields (2)
-        public List<string> messages = new List<string>();
+        public List<string> messages;
         public int initialKey;
         #endregion Fields
 
         #region Constructors (1)
-        public TextArchive(FileStream messageStream) {
+        public TextArchive(FileStream messageStream, List<string> msg, bool discardLines = false) {
             Dictionary<int, string> GetCharDictionary = TextDatabase.readTextDictionary;
             BinaryReader readText = new BinaryReader(messageStream);
             int stringCount;
@@ -31,122 +31,131 @@ namespace DSPRE.ROMFiles {
                 readText.Close();
                 return;
             }
-            initialKey = readText.ReadUInt16();
-            int key1 = (initialKey * 0x2FD) & 0xFFFF;
-            bool specialCharON = false;
-            int[] currentOffset = new int[stringCount];
-            int[] currentSize = new int[stringCount];
-            string[] currentPokemon = new string[stringCount];
-            bool compressed = new bool();
 
-            for (int i = 0; i < stringCount; i++) { // Reads and stores string offsets and sizes 
-                int key2 = (key1 * (i + 1) & 0xFFFF);
-                int realKey = key2 | (key2 << 16);
-                currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
-                currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
+            if (msg == null) {
+                messages = new List<string>();
+            } else {
+                messages = msg;
             }
-            for (int i = 0; i < stringCount; i++) { // Adds new string
-                key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
-                readText.BaseStream.Position = currentOffset[i];
-                StringBuilder pokemonText = new StringBuilder("");
 
-                for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
-                {
-                    int car = (readText.ReadUInt16()) ^ key1;
+            initialKey = readText.ReadUInt16();
 
-                    switch (car) { // Special characters
-                        case 0xE000:
-                            pokemonText.Append(@"\n");
-                            break;
-                        case 0x25BC:
-                            pokemonText.Append(@"\r");
-                            break;
-                        case 0x25BD:
-                            pokemonText.Append(@"\f");
-                            break;
-                        case 0xF100:
-                            compressed = true;
-                            break;
-                        case 0xFFFE:
-                            pokemonText.Append(@"\v");
-                            specialCharON = true;
-                            break;
-                        case 0xFFFF:
-                            pokemonText.Append("");
-                            break;
-                        default:
-                            if (specialCharON) {
-                                pokemonText.Append(car.ToString("X4"));
-                                specialCharON = false;
-                            } else if (compressed) {
-                                #region Compressed String
-                                int shift = 0;
-                                int trans = 0;
-                                string uncomp = "";
-                                while (true) {
-                                    int tmp = car >> shift;
-                                    int tmp1 = tmp;
-                                    if (shift >= 0xF) {
-                                        shift -= 0xF;
-                                        if (shift > 0) {
-                                            tmp1 = (trans | ((car << (9 - shift)) & 0x1FF));
+            if (!discardLines) {
+                int key1 = (initialKey * 0x2FD) & 0xFFFF;
+                bool specialCharON = false;
+                int[] currentOffset = new int[stringCount];
+                int[] currentSize = new int[stringCount];
+                bool compressed = new bool();
+
+                for (int i = 0; i < stringCount; i++) { // Reads and stores string offsets and sizes 
+                    int key2 = (key1 * (i + 1) & 0xFFFF);
+                    int realKey = key2 | (key2 << 16);
+                    currentOffset[i] = ((int)readText.ReadUInt32()) ^ realKey;
+                    currentSize[i] = ((int)readText.ReadUInt32()) ^ realKey;
+                }
+
+                for (int i = 0; i < stringCount; i++) { // Adds new string
+                    key1 = (0x91BD3 * (i + 1)) & 0xFFFF;
+                    readText.BaseStream.Position = currentOffset[i];
+                    StringBuilder pokemonText = new StringBuilder("");
+
+                    for (int j = 0; j < currentSize[i]; j++) // Adds new characters to string
+                    {
+                        int car = (readText.ReadUInt16()) ^ key1;
+
+                        switch (car) { // Special characters
+                            case 0xE000:
+                                pokemonText.Append(@"\n");
+                                break;
+                            case 0x25BC:
+                                pokemonText.Append(@"\r");
+                                break;
+                            case 0x25BD:
+                                pokemonText.Append(@"\f");
+                                break;
+                            case 0xF100:
+                                compressed = true;
+                                break;
+                            case 0xFFFE:
+                                pokemonText.Append(@"\v");
+                                specialCharON = true;
+                                break;
+                            case 0xFFFF:
+                                pokemonText.Append("");
+                                break;
+                            default:
+                                if (specialCharON) {
+                                    pokemonText.Append(car.ToString("X4"));
+                                    specialCharON = false;
+                                } else if (compressed) {
+                                    #region Compressed String
+                                    int shift = 0;
+                                    int trans = 0;
+                                    string uncomp = "";
+                                    while (true) {
+                                        int tmp = car >> shift;
+                                        int tmp1 = tmp;
+                                        if (shift >= 0xF) {
+                                            shift -= 0xF;
+                                            if (shift > 0) {
+                                                tmp1 = (trans | ((car << (9 - shift)) & 0x1FF));
+                                                if ((tmp1 & 0xFF) == 0xFF) {
+                                                    break;
+                                                }
+                                                if (tmp1 != 0x0 && tmp1 != 0x1) {
+                                                    string character = "";
+                                                    if (!GetCharDictionary.TryGetValue(tmp1, out character)) {
+                                                        pokemonText.Append(@"\x" + tmp1.ToString("X4"));
+                                                    } else {
+                                                        pokemonText.Append(character);
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            tmp1 = ((car >> shift) & 0x1FF);
                                             if ((tmp1 & 0xFF) == 0xFF) {
                                                 break;
                                             }
                                             if (tmp1 != 0x0 && tmp1 != 0x1) {
                                                 string character = "";
-                                                if (!GetCharDictionary.TryGetValue(tmp1, out character)) {
+                                                if (!GetCharDictionary.TryGetValue(tmp1, out character))
                                                     pokemonText.Append(@"\x" + tmp1.ToString("X4"));
-                                                } else {
+                                                else {
                                                     pokemonText.Append(character);
                                                 }
                                             }
-                                        }
-                                    } else {
-                                        tmp1 = ((car >> shift) & 0x1FF);
-                                        if ((tmp1 & 0xFF) == 0xFF) {
-                                            break;
-                                        }
-                                        if (tmp1 != 0x0 && tmp1 != 0x1) {
-                                            string character = "";
-                                            if (!GetCharDictionary.TryGetValue(tmp1, out character))
-                                                pokemonText.Append(@"\x" + tmp1.ToString("X4"));
-                                            else {
-                                                pokemonText.Append(character);
-                                            }
-                                        }
-                                        shift += 9;
-                                        if (shift < 0xF) {
-                                            trans = ((car >> shift) & 0x1FF);
                                             shift += 9;
+                                            if (shift < 0xF) {
+                                                trans = ((car >> shift) & 0x1FF);
+                                                shift += 9;
+                                            }
+                                            key1 += 0x493D;
+                                            key1 &= 0xFFFF;
+                                            car = Convert.ToUInt16(readText.ReadUInt16() ^ key1);
+                                            j++;
                                         }
-                                        key1 += 0x493D;
-                                        key1 &= 0xFFFF;
-                                        car = Convert.ToUInt16(readText.ReadUInt16() ^ key1);
-                                        j++;
+                                    }
+                                    #endregion
+                                    pokemonText.Append(uncomp);
+                                } else {
+                                    if (GetCharDictionary.TryGetValue(car, out string character)) {
+                                        pokemonText.Append(character);
+                                    } else {
+                                        pokemonText.Append(@"\x" + car.ToString("X4"));
                                     }
                                 }
-                                #endregion
-                                pokemonText.Append(uncomp);
-                            } else {
-                                string character = "";
-                                if (GetCharDictionary.TryGetValue(car, out character)) {
-                                    pokemonText.Append(character);
-                                } else {
-                                    pokemonText.Append(@"\x" + car.ToString("X4"));
-                                }
-                            }
-                            break;
+                                break;
+                        }
+                        key1 += 0x493D;
+                        key1 &= 0xFFFF;
                     }
-                    key1 += 0x493D;
-                    key1 &= 0xFFFF;
+                    messages.Add(pokemonText.ToString());
                 }
-                messages.Add(pokemonText.ToString());
             }
 
             readText.Dispose();
         }
-        public TextArchive(int ID) : this((new FileStream(RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open))) {
+        public TextArchive(int ID, List<string> msg = null, bool discardLines = false) : this(new FileStream(RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open), msg, discardLines) {
         }
         #endregion
 
