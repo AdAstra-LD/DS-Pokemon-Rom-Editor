@@ -3660,7 +3660,7 @@ namespace DSPRE {
                 return;
             }
 
-            currentMapFile.ImportBuildings(new FileStream(ib.FileName, FileMode.Open));
+            currentMapFile.ImportBuildings(File.ReadAllBytes(ib.FileName));
             FillBuildingsBox();
             if (buildingsListBox.Items.Count > 0) buildingsListBox.SelectedIndex = 0;
 
@@ -4192,7 +4192,7 @@ namespace DSPRE {
                 return;
             }
 
-            currentMapFile.ImportPermissions(new FileStream(ip.FileName, FileMode.Open));
+            currentMapFile.ImportPermissions(File.ReadAllBytes(ip.FileName));
 
             DrawSmallCollision();
             DrawSmallTypeCollision();
@@ -4392,7 +4392,7 @@ namespace DSPRE {
                 return;
             }
 
-            currentMapFile.ImportTerrain(new FileStream(it.FileName, FileMode.Open));
+            currentMapFile.ImportTerrain(File.ReadAllBytes(it.FileName));
             TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
             MessageBox.Show("Terrain settings imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -4419,7 +4419,7 @@ namespace DSPRE {
                 return;
             }
 
-            currentMapFile.ImportSoundPlates(new FileStream(it.FileName, FileMode.Open));
+            currentMapFile.ImportSoundPlates(File.ReadAllBytes(it.FileName));
             BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
             MessageBox.Show("BackGround Sound data imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
