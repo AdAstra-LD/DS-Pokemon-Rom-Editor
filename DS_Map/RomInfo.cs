@@ -558,6 +558,23 @@ namespace DSPRE {
                     vsTrainerEntryTableOffsetToSizeLimiter = vsTrainerEntryTableOffsetToRAMAddress - 0xA;
                     effectsComboTableOffsetToSizeLimiter = effectsComboTableOffsetToRAMAddress - 0x1E;
                     break;
+
+                case gFamEnum.Plat:
+                    switch (gameLanguage) {
+                        case gLangEnum.English:
+                            effectsComboTableOffsetToRAMAddress = 0x51BE0;
+                            break;
+                        case gLangEnum.Italian:
+                        case gLangEnum.French:
+                        case gLangEnum.Spanish:
+                        case gLangEnum.German:
+                            effectsComboTableOffsetToRAMAddress = 0x51C84;
+                            break;
+                        case gLangEnum.Japanese:
+                            effectsComboTableOffsetToRAMAddress = 0x514C0;
+                            break;
+                    }
+                    break;
             }
         }
         public static void SetEncounterMusicTableOffsetToRAMAddress() {

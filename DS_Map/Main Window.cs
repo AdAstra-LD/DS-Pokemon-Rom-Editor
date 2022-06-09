@@ -8656,101 +8656,125 @@ namespace DSPRE {
         #endregion
 
         private void SetupConditionalMusicTable() {
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
-                RomInfo.SetConditionalMusicTableOffsetToRAMAddress();
-                conditionalMusicTable = new List<(ushort, ushort, ushort)>();
+            switch (RomInfo.gameFamily) {
+                case gFamEnum.HGSS:
+                    RomInfo.SetConditionalMusicTableOffsetToRAMAddress();
+                    conditionalMusicTable = new List<(ushort, ushort, ushort)>();
 
-                conditionalMusicTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
-                byte tableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.conditionalMusicTableOffsetToRAMAddress - 8);
+                    conditionalMusicTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
+                    byte tableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.conditionalMusicTableOffsetToRAMAddress - 8);
 
-                conditionalMusicTableListBox.Items.Clear();
-                using (DSUtils.ARM9.Reader ar = new DSUtils.ARM9.Reader(conditionalMusicTableStartAddress) ) {
-                    for (int i = 0; i < tableEntriesCount; i++) {
-                        ushort header = ar.ReadUInt16();
-                        ushort flag = ar.ReadUInt16();
-                        ushort musicID = ar.ReadUInt16();
+                    conditionalMusicTableListBox.Items.Clear();
+                    using (DSUtils.ARM9.Reader ar = new DSUtils.ARM9.Reader(conditionalMusicTableStartAddress)) {
+                        for (int i = 0; i < tableEntriesCount; i++) {
+                            ushort header = ar.ReadUInt16();
+                            ushort flag = ar.ReadUInt16();
+                            ushort musicID = ar.ReadUInt16();
 
-                        conditionalMusicTable.Add((header, flag, musicID));
-                        conditionalMusicTableListBox.Items.Add(headerListBox.Items[header]);
+                            conditionalMusicTable.Add((header, flag, musicID));
+                            conditionalMusicTableListBox.Items.Add(headerListBox.Items[header]);
+                        }
                     }
-                }
 
-                headerConditionalMusicComboBox.Items.Clear();
-                foreach (string location in headerListBox.Items) {
-                    headerConditionalMusicComboBox.Items.Add(location);
-                }
+                    headerConditionalMusicComboBox.Items.Clear();
+                    foreach (string location in headerListBox.Items) {
+                        headerConditionalMusicComboBox.Items.Add(location);
+                    }
 
-                if (conditionalMusicTableListBox.Items.Count > 0) {
-                    conditionalMusicTableListBox.SelectedIndex = 0;
-                }
-            } else {
-                pbEffectsGroupBox.Enabled = false;
-                conditionalMusicGroupBox.Enabled = false;
+                    if (conditionalMusicTableListBox.Items.Count > 0) {
+                        conditionalMusicTableListBox.SelectedIndex = 0;
+                    }
+                    break;
+
+                case gFamEnum.Plat:
+                    pbEffectsMonGroupBox.Enabled = false;
+                    pbEffectsTrainerGroupBox.Enabled = false;
+                    break;
+
+                default:
+                    pbEffectsGroupBox.Enabled = false;
+                    pbEffectsMonGroupBox.Enabled = false;
+                    pbEffectsTrainerGroupBox.Enabled = false;
+                    conditionalMusicGroupBox.Enabled = false;
+                    break;
             }
         }
         private void SetupBattleEffectsTables() {
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+            if (RomInfo.gameFamily == gFamEnum.HGSS || RomInfo.gameFamily == gFamEnum.Plat) {
                 DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.trainerGraphics, DirNames.textArchives });
                 RomInfo.SetBattleEffectsData();
 
-                vsPokemonEffectsList = new List<(int pokemonID, int comboID)>();
-                vsTrainerEffectsList = new List<(int trainerClass, int comboID)>();
                 effectsComboTable = new List<(ushort vsGraph, ushort battleSSEQ)>();
-
-                vsPokemonTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsPokemonEntryTableOffsetToRAMAddress, 4), 0);
-                ROMToolboxDialog.flag_PokemonBattleTableRepointed = (vsPokemonTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
-                vsPokemonTableStartAddress -= ROMToolboxDialog.flag_PokemonBattleTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
-
-                vsTrainerTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsTrainerEntryTableOffsetToRAMAddress, 4), 0);
-                ROMToolboxDialog.flag_TrainerClassBattleTableRepointed = (vsTrainerTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
-                vsTrainerTableStartAddress -= ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
-
+                
                 effectsComboMainTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.effectsComboTableOffsetToRAMAddress, 4), 0);
                 ROMToolboxDialog.flag_MainComboTableRepointed = (effectsComboMainTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
                 effectsComboMainTableStartAddress -= ROMToolboxDialog.flag_MainComboTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
 
-                byte trainerTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.vsTrainerEntryTableOffsetToSizeLimiter);
-                byte pokemonTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.vsPokemonEntryTableOffsetToSizeLimiter);
-                byte comboTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.effectsComboTableOffsetToSizeLimiter);
+                byte comboTableEntriesCount;
 
-                pbEffectsPokemonCombobox.Items.Clear();
-                pokeNames = RomInfo.GetPokémonNames();
-                for (int i = 0; i < pokeNames.Length; i++) {
-                    pbEffectsPokemonCombobox.Items.Add("[" + i + "]" + " " + pokeNames[i]);
+                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                    comboTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.effectsComboTableOffsetToSizeLimiter);
+
+                    vsPokemonEffectsList = new List<(int pokemonID, int comboID)>();
+                    vsTrainerEffectsList = new List<(int trainerClass, int comboID)>();
+
+                    vsPokemonTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsPokemonEntryTableOffsetToRAMAddress, 4), 0);
+                    ROMToolboxDialog.flag_PokemonBattleTableRepointed = (vsPokemonTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
+                    vsPokemonTableStartAddress -= ROMToolboxDialog.flag_PokemonBattleTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
+
+                    vsTrainerTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsTrainerEntryTableOffsetToRAMAddress, 4), 0);
+                    ROMToolboxDialog.flag_TrainerClassBattleTableRepointed = (vsTrainerTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
+                    vsTrainerTableStartAddress -= ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
+
+
+                    pbEffectsPokemonCombobox.Items.Clear();
+                    pokeNames = RomInfo.GetPokémonNames();
+                    for (int i = 0; i < pokeNames.Length; i++) {
+                        pbEffectsPokemonCombobox.Items.Add("[" + i + "]" + " " + pokeNames[i]);
+                    }
+
+                    RepopulateTableEditorTrainerClasses();
+
+                    pbEffectsVsTrainerListbox.Items.Clear();
+                    pbEffectsVsPokemonListbox.Items.Clear();
+                } else {
+                    comboTableEntriesCount = 35;
                 }
 
-                RepopulateTableEditorTrainerClasses();
-
-                pbEffectsVsTrainerListbox.Items.Clear();
-                pbEffectsVsPokemonListbox.Items.Clear();
                 pbEffectsCombosListbox.Items.Clear();
 
                 String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + ROMToolboxDialog.expandedARMfileID.ToString("D4");
-                
-                using(DSUtils.EasyReader ar = new DSUtils.EasyReader(ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsTrainerTableStartAddress)) { 
-                    for (int i = 0; i < trainerTableEntriesCount; i++) {
-                        ushort entry = ar.ReadUInt16();
-                        int classID = entry & 1023;
-                        int comboID = entry >> 10;
-                        vsTrainerEffectsList.Add((classID, comboID));
-                        pbEffectsVsTrainerListbox.Items.Add(pbEffectsTrainerCombobox.Items[classID] + " uses Combo #" + comboID);
-                    }
-                }
 
-                using (DSUtils.EasyReader ar = new DSUtils.EasyReader(ROMToolboxDialog.flag_PokemonBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsPokemonTableStartAddress)) {
-                    for (int i = 0; i < pokemonTableEntriesCount; i++) {
-                        ushort entry = ar.ReadUInt16();
-                        int pokeID = entry & 1023;
-                        int comboID = entry >> 10;
-                        vsPokemonEffectsList.Add((pokeID, comboID));
+                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                    using (DSUtils.EasyReader ar = new DSUtils.EasyReader(ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsTrainerTableStartAddress)) {
+                        byte trainerTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.vsTrainerEntryTableOffsetToSizeLimiter);
 
-                        string pokeName;
-                        try {
-                            pokeName = pokeNames[pokeID];
-                        } catch (IndexOutOfRangeException) {
-                            pokeName = "UNKNOWN";
+                        for (int i = 0; i < trainerTableEntriesCount; i++) {
+                            ushort entry = ar.ReadUInt16();
+                            int classID = entry & 1023;
+                            int comboID = entry >> 10;
+                            vsTrainerEffectsList.Add((classID, comboID));
+                            pbEffectsVsTrainerListbox.Items.Add(pbEffectsTrainerCombobox.Items[classID] + " uses Combo #" + comboID);
                         }
-                        pbEffectsVsPokemonListbox.Items.Add("[" + pokeID.ToString("D3") + "]" + " " + pokeName + " uses Combo #" + comboID);
+                    }
+
+                    using (DSUtils.EasyReader ar = new DSUtils.EasyReader(ROMToolboxDialog.flag_PokemonBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsPokemonTableStartAddress)) {
+                        byte pokemonTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.vsPokemonEntryTableOffsetToSizeLimiter);
+
+                        for (int i = 0; i < pokemonTableEntriesCount; i++) {
+                            ushort entry = ar.ReadUInt16();
+                            int pokeID = entry & 1023;
+                            int comboID = entry >> 10;
+                            vsPokemonEffectsList.Add((pokeID, comboID));
+
+                            string pokeName;
+                            try {
+                                pokeName = pokeNames[pokeID];
+                            } catch (IndexOutOfRangeException) {
+                                pokeName = "UNKNOWN";
+                            }
+                            pbEffectsVsPokemonListbox.Items.Add("[" + pokeID.ToString("D3") + "]" + " " + pokeName + " uses Combo #" + comboID);
+                        }
                     }
                 }
 
@@ -8763,22 +8787,26 @@ namespace DSPRE {
                     }
                 }
 
-                var items = pbEffectsCombosListbox.Items.Cast<Object>().ToArray();
+                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                    var items = pbEffectsCombosListbox.Items.Cast<Object>().ToArray();
 
-                pbEffectsPokemonChooseMainCombobox.Items.Clear();
-                pbEffectsPokemonChooseMainCombobox.Items.AddRange(items);
-                pbEffectsTrainerChooseMainCombobox.Items.Clear();
-                pbEffectsTrainerChooseMainCombobox.Items.AddRange(items);
+                    pbEffectsPokemonChooseMainCombobox.Items.Clear();
+                    pbEffectsPokemonChooseMainCombobox.Items.AddRange(items);
+                    pbEffectsTrainerChooseMainCombobox.Items.Clear();
+                    pbEffectsTrainerChooseMainCombobox.Items.AddRange(items);
+
+                    if (pbEffectsVsTrainerListbox.Items.Count > 0) {
+                        pbEffectsVsTrainerListbox.SelectedIndex = 0;
+                    }
+                    if (pbEffectsVsPokemonListbox.Items.Count > 0) {
+                        pbEffectsVsPokemonListbox.SelectedIndex = 0;
+                    }
+                }
 
                 if (pbEffectsCombosListbox.Items.Count > 0) {
                     pbEffectsCombosListbox.SelectedIndex = 0;
                 }
-                if (pbEffectsVsTrainerListbox.Items.Count > 0) {
-                    pbEffectsVsTrainerListbox.SelectedIndex = 0;
-                }
-                if (pbEffectsVsPokemonListbox.Items.Count > 0) {
-                    pbEffectsVsPokemonListbox.SelectedIndex = 0;
-                }
+                
             } else {
                 pbEffectsGroupBox.Enabled = false;
             }
@@ -8911,7 +8939,8 @@ namespace DSPRE {
 
         private void HOWpbEffectsTableButton_Click(object sender, EventArgs e) {
             MessageBox.Show("An entry of this table is a combination of VS. Graphics + Battle Theme.\n\n" +
-                "Each entry can be \"inherited\" by one or more Pokémon or Trainer classes.", "How this table works", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                (RomInfo.gameVersion.Equals(gFamEnum.HGSS) ? "Each entry can be \"inherited\" by one or more Pokémon or Trainer classes." : ""), 
+                "How this table works", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void HOWvsPokemonButton_Click(object sender, EventArgs e) {
@@ -8926,20 +8955,26 @@ namespace DSPRE {
         }
 
         private void pbEffectsVsTrainerListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            int trainerSelection = pbEffectsVsTrainerListbox.SelectedIndex;
+            if (disableHandlers || trainerSelection < 0) {
                 return;
             }
-            (int trainerClass, int comboID) entry = vsTrainerEffectsList[pbEffectsVsTrainerListbox.SelectedIndex];
+
+            (int trainerClass, int comboID) entry = vsTrainerEffectsList[trainerSelection];
             pbEffectsTrainerCombobox.SelectedIndex = entry.trainerClass;
             pbEffectsCombosListbox.SelectedIndex = pbEffectsTrainerChooseMainCombobox.SelectedIndex = entry.comboID;
+
             tbEditorTrClassFramePreviewUpDown.Value = 0;
         }
 
         private void pbEffectsVsPokemonListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            int pokemonSelection = pbEffectsVsPokemonListbox.SelectedIndex;
+
+            if (disableHandlers || pokemonSelection < 0) {
                 return;
             }
-            (int pokemonID, int comboID) entry = vsPokemonEffectsList[pbEffectsVsPokemonListbox.SelectedIndex];
+
+            (int pokemonID, int comboID) entry = vsPokemonEffectsList[pokemonSelection];
 
             try {
                 pbEffectsPokemonCombobox.SelectedIndex = entry.pokemonID;
@@ -8950,10 +8985,13 @@ namespace DSPRE {
         }
 
         private void pbEffectsCombosListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            int comboSelection = pbEffectsCombosListbox.SelectedIndex;
+
+            if (disableHandlers || comboSelection < 0) {
                 return;
             }
-            (ushort vsGraph, ushort battleSSEQ) entry = effectsComboTable[pbEffectsCombosListbox.SelectedIndex];
+
+            (ushort vsGraph, ushort battleSSEQ) entry = effectsComboTable[comboSelection];
             pbEffectsBattleSSEQUpDown.Value = entry.battleSSEQ;
             pbEffectsVSAnimationUpDown.Value = entry.vsGraph;
         }
@@ -9559,15 +9597,12 @@ namespace DSPRE {
         private void locateCurrentAreaData_Click(object sender, EventArgs e) {
             ExplorerSelect(Path.Combine(gameDirs[DirNames.areaData].unpackedDir, selectAreaDataListBox.SelectedIndex.ToString("D4")));
         }
-
         private void locateCurrentEvFile_Click(object sender, EventArgs e) {
             ExplorerSelect(Path.Combine(gameDirs[DirNames.eventFiles].unpackedDir, selectEventComboBox.SelectedIndex.ToString("D4")));
         }
-
         private void locateCurrentScriptFile_Click(object sender, EventArgs e) {
             ExplorerSelect(Path.Combine(gameDirs[DirNames.scripts].unpackedDir, selectScriptFileComboBox.SelectedIndex.ToString("D4")));
         }
-
         private void locateCurrentTextArchive_Click(object sender, EventArgs e) {
             ExplorerSelect(Path.Combine(gameDirs[DirNames.textArchives].unpackedDir, selectTextFileComboBox.SelectedIndex.ToString("D4")));
         }
