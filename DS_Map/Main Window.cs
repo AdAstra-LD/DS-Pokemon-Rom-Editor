@@ -6712,7 +6712,13 @@ namespace DSPRE {
         private void saveScriptFileButton_Click(object sender, EventArgs e) {
             /* Create new ScriptFile object */
             int idToAssign = selectScriptFileComboBox.SelectedIndex;
-            ScriptFile userEdited = new ScriptFile(scriptLines: ScriptTextArea.Lines, FunctionTextArea.Lines, ActionTextArea.Lines, selectScriptFileComboBox.SelectedIndex);
+
+            ScriptFile userEdited = new ScriptFile(
+                scriptLines: ScriptTextArea.Lines.ToStringsList(trim: true), 
+                functionLines: FunctionTextArea.Lines.ToStringsList(trim: true), 
+                actionLines: ActionTextArea.Lines.ToStringsList(trim: true), 
+                selectScriptFileComboBox.SelectedIndex
+            );
 
             /* Write new scripts to file */
             if (userEdited.fileID == null) {
@@ -9462,12 +9468,6 @@ namespace DSPRE {
             }
 
             int append = 1;
-
-            //string[] files = Directory.GetFiles(Path.GetDirectoryName(fileName));
-            //while (!files.Any(x => x.Equals(fileName, StringComparison.InvariantCultureIgnoreCase))) {
-            //    string tmp = fileNameOnly + "(" + (append++) + ")";
-            //    fileName = Path.Combine(dirNameOnly, tmp + extension);
-            //}
 
             while (File.Exists(Path.Combine(dirNameOnly, fileName)) ) {
                 string tmp = fileNameOnly + "(" + (append++) + ")";

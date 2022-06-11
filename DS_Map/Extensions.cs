@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSPRE {
     public static class Extensions {
-        public static int IndexOfNumber(this string str) {
+        public static int IndexOfFirstNumber(this string str) {
             return str.IndexOfAny("0123456789".ToCharArray());
         }
         public static bool ContainsNumber(this string str) {
-            return str.IndexOfNumber() > 0;
+            return str.IndexOfFirstNumber() > 0;
         }
         public static T[] SubArray<T>(this T[] array, int offset, int length) {
             T[] result = new T[length];
@@ -56,6 +57,22 @@ namespace DSPRE {
                     return BitConverter.GetBytes(num);
             }
             throw new InvalidOperationException();
+        }
+        public static bool IgnoreCaseEquals(this string str, string other) {
+            return str.Equals(other, StringComparison.InvariantCultureIgnoreCase);
+        }
+        public static List<string> ToStringsList (this ScintillaNET.LineCollection lc, bool allowEmpty = true, bool trim = false) {
+            IEnumerable<string> temp = lc.Select(x => x.Text);
+            
+            if (trim) {
+                temp = temp.Select(x => x.Trim());
+            }
+            
+            if (!allowEmpty) {
+                temp = temp.Where(x => !string.IsNullOrEmpty(x));
+            }
+            
+            return temp.ToList();
         }
 
         //public static Dictionary<TValue, TKey> Reverse<TKey, TValue>(this IDictionary<TKey, TValue> source) {

@@ -51,34 +51,42 @@ namespace DSPRE.ROMFiles {
             switch (id) {
                 case 0x0016:      // Jump
                 case 0x001A:      // Call
-                    name += " " + FormatNumber(parametersList[0], ParamTypeEnum.FUNCTION_ID);
+                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.FUNCTION_ID)}";
                     break;
                 case 0x0017:      // JumpIfObjID
                 case 0x0018:      // JumpIfEventID
-                    name += " " + FormatNumber(parametersList[0], ParamTypeEnum.OW_ID) + " " + FormatNumber(parametersList[1]);
+                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1])}";
                     break;
                 case 0x0019:      // JumpIfPlayerDir
-                    name += " " + FormatNumber(parametersList[0]) + " " + FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID);
+                    name += $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID)}";
                     break;
                 case 0x001C:      // JumpIf
                 case 0x001D:      // CallIf
-                    name += " " + RomInfo.ScriptComparisonOperatorsDict[ parametersList[0][0] ] + " " + FormatNumber(parametersList[1], ParamTypeEnum.FUNCTION_ID);
-                    break;
+                    {
+                        string number = FormatNumber(parametersList[1], ParamTypeEnum.FUNCTION_ID);
+
+                        if (RomInfo.ScriptComparisonOperatorsDict.TryGetValue(parametersList[0][0], out string v)) {
+                            name += $" {v} {number}";
+                        } else {
+                            name += $" {parametersList[0][0]} {number}";
+                        }
+                        break;
+                    }
                 case 0x005E:      // Movement
-                    name += " " + FormatNumber(parametersList[0], ParamTypeEnum.OW_ID) + " " + FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID);
+                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID)}";
                     break;
                 case 0x006A:      // CheckOverworldPosition
-                    name += " " + FormatNumber(parametersList[0], ParamTypeEnum.OW_ID) + " " + FormatNumber(parametersList[1]) + " " + FormatNumber(parametersList[2]);
+                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1])} {FormatNumber(parametersList[2])}";
                     break;
                 case 0x0062:      // Lock
                 case 0x0063:      // Release
                 case 0x0064:      // AddOW
                 case 0x0065:      // RemoveOW
-                    name += " " + FormatNumber(parametersList[0], ParamTypeEnum.OW_ID);
+                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)}";
                     break;
                 default:
                     for (int i = 0; i < parametersList.Count; i++) {
-                        this.name += " " + FormatNumber(parametersList[i]);
+                        this.name += $" {FormatNumber(parametersList[i])}";
                     }
                     break;
 
@@ -94,8 +102,7 @@ namespace DSPRE.ROMFiles {
             string[] nameParts = wholeLine.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries); // Separate command code from parameters
             /* Get command id, which is always first in the description */
 
-            ushort cmdID;
-            if (RomInfo.ScriptCommandNamesReverseDict.TryGetValue(nameParts[0].ToLower(), out cmdID)) {
+            if (RomInfo.ScriptCommandNamesReverseDict.TryGetValue(nameParts[0].ToLower(), out ushort cmdID)) {
                 id = cmdID;
             } else {
                 try {
@@ -170,8 +177,9 @@ namespace DSPRE.ROMFiles {
                     optionsCount++;
                 }
                 if (!found) {
-                    MessageBox.Show("Command " + '"' + nameParts[0] + '"' + " at line " + lineNumber + " is a special Script command." + Environment.NewLine +
-                    "The value of the first parameter must be a number in the range [0 - " + optionsCount + "].", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Command {nameParts[0]} is a special Script Command.\n" +
+                        $"The value of the first parameter must be a number in the range [0 - {optionsCount}].\n\n" +
+                        $"Line {lineNumber}: {wholeLine}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     id = null;
                     return;
                 }
@@ -189,20 +197,27 @@ namespace DSPRE.ROMFiles {
                         cmdParams.Add(new byte[] { (byte)cmdID });
                     } else { //Not a comparison
                         /* Convert strings of parameters to the correct datatypes */
-                        NumberStyles style = GetNumberStyleFromString(nameParts[i + 1]);
+                        NumberStyles numStyle = GetNumberStyleFromString(nameParts[i + 1]);
                         nameParts[i + 1] = GetStringWithoutSpecialCharacters(nameParts[i + 1]);
                         
                         int result = 0;
                         try {
-                            result = int.Parse(nameParts[i + 1], style);
+                            result = int.Parse(nameParts[i + 1], numStyle);
                         } catch {
                             try {
                                 result = ScriptDatabase.specialOverworlds.First(x => x.Value.Equals(nameParts[i + 1])).Key;
                             } catch (InvalidOperationException) {
-                                MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not " + "a valid " + "Overworld number or identifier.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                if (string.IsNullOrWhiteSpace(nameParts[i + 1])){
+                                    MessageBox.Show($"You must specify an Overworld ID, Script, Function or Action number.\n\n" +
+                                        $"Line {lineNumber}: {wholeLine}", "Unspecified identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                } else {
+                                    MessageBox.Show($"Argument {nameParts[i+1]} couldn't be parsed as a valid Overworld ID, Script, Function or Action number.\n\n" +
+                                        $"Line {lineNumber}: {wholeLine}", "Invalid identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
                                 id = null;
                             } catch (FormatException) {
-                                MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not " + "a valid " + style, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show($"Argument {nameParts[i + 1]} is not a valid {numStyle}.\n\n" +
+                                    $"Line {lineNumber}: {wholeLine}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 id = null;
                             }
                         }
@@ -210,14 +225,15 @@ namespace DSPRE.ROMFiles {
                         try {
                             cmdParams.Add(result.ToByteArrayChooseSize(parametersSizeArr[i]));
                         } catch (OverflowException) {
-                            MessageBox.Show("Argument " + '"' + nameParts[i + 1] + '"' + " at line " + lineNumber + " is not " + "in the range [" + 0 + ", " + (Math.Pow(2, 8 * parametersSizeArr[i]) - 1) + "].", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"Argument {nameParts[i + 1]} at line {lineNumber} is not in the range [0, {Math.Pow(2, 8 * parametersSizeArr[i]) - 1}].", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             id = null;
                         }
                     }
                 }
             } else {
-                MessageBox.Show("Wrong number of parameters for command " + '"' + nameParts[0] + '"' + " at line " + lineNumber + "." + Environment.NewLine +
-                    "Received: " + (nameParts.Length - 1) + Environment.NewLine + "Expected: " + paramLength, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Wrong number of parameters for command {nameParts[0]} at line {lineNumber}.\n" +
+                    $"Received: {nameParts.Length - 1}\n" +
+                    $"Expected: {paramLength}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 id = null;
             }
         }
@@ -244,6 +260,7 @@ namespace DSPRE.ROMFiles {
             //differentiate depending on param type
             string formatOverride;
             string prefix;
+
             if (Properties.Settings.Default.scriptEditorFormatPreference == (int)NumberStyles.HexNumber) {
                 formatOverride = "X";
                 prefix = "0x";

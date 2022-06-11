@@ -149,22 +149,24 @@ namespace DSPRE.ROMFiles {
             allActions = movements;
             isLevelScript = false;
         }
-        public ScriptFile(ScintillaNET.LineCollection scriptLines, ScintillaNET.LineCollection functionLines, ScintillaNET.LineCollection actionLines, int fileID = -1) {
+        public ScriptFile(IEnumerable<string> scriptLines, IEnumerable<string> functionLines, IEnumerable<string> actionLines, int fileID = -1) {
             //TODO: give user the possibility to jump to/call a script
             //once it's done, this Predicate below will be the only one needed, since there will be no distinction between
             //a script and a function
-            Func<List<string>, int, ushort?, bool> functionEndCondition =
-                (source, x, id) => source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002], StringComparison.InvariantCultureIgnoreCase)    //End
-                            || source[x].IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + ' ' + containerTypes.Function.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0 //Jump Function_#
-                            || source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x001B], StringComparison.InvariantCultureIgnoreCase)
-                            || ScriptDatabase.endCodes.Contains(id);  //Return
+            bool functionEndCondition(List<string> source, int x, ushort? id) {
+                return source[x].TrimEnd().IgnoreCaseEquals(RomInfo.ScriptCommandNamesDict[0x0002]) //End
+                                            || source[x].IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + ' ' + containerTypes.Function.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0 //Jump Function_#
+                                            || source[x].TrimEnd().IgnoreCaseEquals(RomInfo.ScriptCommandNamesDict[0x001B])
+                                            || ScriptDatabase.endCodes.Contains(id);
+            }  //Return
 
-            Func<List<string>, int, ushort?, bool> scriptEndCondition =
-                (source, x, id) => source[x].TrimEnd().Equals(RomInfo.ScriptCommandNamesDict[0x0002], StringComparison.InvariantCultureIgnoreCase)    //End
+            bool scriptEndCondition(List<string> source, int x, ushort? id) {
+                return source[x].TrimEnd().IgnoreCaseEquals(RomInfo.ScriptCommandNamesDict[0x0002])    //End
                             || source[x].IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + ' ' + containerTypes.Function.ToString()) >= 0 //Jump Function_#
                             || ScriptDatabase.endCodes.Contains(id);
+            }
 
-            allScripts = ReadCommandsFromLines(scriptLines, containerTypes.Script, scriptEndCondition);  //Jump + whitespace
+            allScripts = ReadCommandsFromLines(scriptLines.ToList(), containerTypes.Script, scriptEndCondition);  //Jump + whitespace
             if (allScripts is null) {
                 return;
             }
@@ -173,12 +175,12 @@ namespace DSPRE.ROMFiles {
                 return;
             }
 
-            allFunctions = ReadCommandsFromLines(functionLines, containerTypes.Function, functionEndCondition);  //Jump + whitespace
+            allFunctions = ReadCommandsFromLines(functionLines.ToList(), containerTypes.Function, functionEndCondition);  //Jump + whitespace
             if (allFunctions is null) {
                 return;
             }
 
-            allActions = ReadActionsFromLines(actionLines);
+            allActions = ReadActionsFromLines(actionLines.ToList());
             if (allActions is null) {
                 return;
             }
@@ -473,35 +475,47 @@ namespace DSPRE.ROMFiles {
                 }
             }
         }
-        private List<CommandContainer> ReadCommandsFromLines(ScintillaNET.LineCollection lineSource, containerTypes containerType, Func<List<string>, int, ushort?, bool> endConditions) {
+        private List<CommandContainer> ReadCommandsFromLines(List<string> lineSource, containerTypes containerType, Func<List<string>, int, ushort?, bool> endConditions) {
             List<CommandContainer> ls = new List<CommandContainer>();
+            int i = 0;
 
-            List<string> lineSourceL = RemoveEmptyLines(lineSource);
             try {
-                int i = 0;
                 uint scriptNumber = 0;
-                while (i < lineSourceL.Count) {
+
+                while (i < lineSource.Count) {
+                    while (string.IsNullOrWhiteSpace(lineSource[i])) {
+                        i++;
+
+                        if (i >= lineSource.Count) {
+                            return ls;
+                        }
+                    }
+
                     if (scriptNumber == 0) {
                         int positionOfScriptNumber;
-                        int positionOfScriptKeyword = lineSourceL[i].IndexOf(containerType.ToString(), StringComparison.InvariantCultureIgnoreCase);
+                        int positionOfScriptKeyword = lineSource[i].IndexOf(containerType.ToString(), StringComparison.InvariantCultureIgnoreCase);
 
                         if (positionOfScriptKeyword > 0) {
-                            MessageBox.Show("Unrecognized container keyword: \"" + lineSourceL[i] + '"', "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Unrecognized container keyword: \"" + lineSource[i] + '"', "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return null;
                         } else if (positionOfScriptKeyword < 0) {
                             i++;
                             continue;
                         } else {
-                            if ((positionOfScriptNumber = lineSourceL[i].IndexOfNumber()) < positionOfScriptKeyword) {
+                            if ((positionOfScriptNumber = lineSource[i].IndexOfFirstNumber()) < positionOfScriptKeyword) {
                                 MessageBox.Show("Unspecified Script/Function label.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return null;
                             }
                         }
-                        scriptNumber = uint.Parse(lineSourceL[i++].Substring(positionOfScriptNumber).Split()[0].Replace(":", ""));
+                        scriptNumber = uint.Parse(lineSource[i++].Substring(positionOfScriptNumber).Split()[0].Replace(":", ""));
                     }
 
-                    if (lineSourceL[i].IndexOf("UseScript", StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                        int useScriptNumber = short.Parse(lineSourceL[i].Substring(1 + lineSourceL[i].IndexOf('#')));
+                    while (string.IsNullOrWhiteSpace(lineSource[i])) {
+                        i++;
+                    }
+
+                    if (lineSource[i].IndexOf("UseScript", StringComparison.InvariantCultureIgnoreCase) >= 0) {
+                        int useScriptNumber = short.Parse(lineSource[i].Substring(1 + lineSource[i].IndexOf('#')));
                         ls.Add(new CommandContainer(scriptNumber, containerType, useScriptNumber));
                         i++;
                     } else {
@@ -510,76 +524,88 @@ namespace DSPRE.ROMFiles {
                         List<ScriptCommand> cmdList = new List<ScriptCommand>();
                         ScriptCommand lastRead;
                         do {
-                            lastRead = new ScriptCommand(lineSourceL[i], i + 1);
+                            lastRead = new ScriptCommand(lineSource[i], i + 1);
                             if (lastRead.id is null) {
                                 return null;
                             }
 
                             cmdList.Add(lastRead);
-                        } while (!endConditions(lineSourceL, i++, lastRead.id));
+                        } while (!endConditions(lineSource, i++, lastRead.id));
 
                         ls.Add(new CommandContainer(scriptNumber, containerType, commandList: cmdList));
                     }
                     scriptNumber = 0;
                 }
-            } catch (IndexOutOfRangeException) { }
+            } catch (IndexOutOfRangeException) {
+            } catch (ArgumentOutOfRangeException) {
+                MessageBox.Show($"Unexpectedly reached end of lines.\n\n" +
+                    $"Last line index: {i}.\n" +
+                    $"Could only parse {ls.Count} Command Containers.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+
             return ls;
         }
 
-        private List<ActionContainer> ReadActionsFromLines(ScintillaNET.LineCollection lineSource) {
+        private List<ActionContainer> ReadActionsFromLines(List<string> lineSource) {
             List<ActionContainer> ls = new List<ActionContainer>();
+            int i = 0;
 
-            List<string> lineSourceL = RemoveEmptyLines(lineSource);
             try {
-                int i = 0;
                 uint actionNumber = 0;
-                while (i < lineSourceL.Count) {
+
+                while (i < lineSource.Count) {
+                    while (string.IsNullOrWhiteSpace(lineSource[i])) {
+                        i++;
+
+                        if (i >= lineSource.Count) {
+                            return ls;
+                        }
+                    }
+
                     if (actionNumber == 0) {
                         int positionOfActionNumber;
-                        int positionOfActionKeyword = lineSourceL[i].IndexOf(containerTypes.Action.ToString(), StringComparison.InvariantCultureIgnoreCase);
+                        int positionOfActionKeyword = lineSource[i].IndexOf(containerTypes.Action.ToString(), StringComparison.InvariantCultureIgnoreCase);
 
                         if (positionOfActionKeyword > 0) {
-                            MessageBox.Show("Unrecognized container keyword: \"" + lineSourceL[i] + '"', "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Unrecognized container keyword: \"" + lineSource[i] + '"', "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return null;
                         } else if (positionOfActionKeyword < 0) {
                             i++;
                             continue;
                         } else {
-                            if ( (positionOfActionNumber = lineSourceL[i].IndexOfNumber()) < positionOfActionKeyword ) {
+                            if ( (positionOfActionNumber = lineSource[i].IndexOfFirstNumber()) < positionOfActionKeyword ) {
                                 MessageBox.Show("Unspecified Action label.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return null;
                             }
                         }
-                        actionNumber = uint.Parse(lineSourceL[i++].Substring(positionOfActionNumber).Split()[0].Replace(":", ""));
+                        actionNumber = uint.Parse(lineSource[i].Substring(positionOfActionNumber).Split()[0].Replace(":", ""));
+                        i++;
                     }
 
                     List<ScriptAction> cmdList = new List<ScriptAction>();
                     /* Read script actions */
                     do {
-                        ScriptAction toAdd = new ScriptAction(lineSourceL[i], i + 1);
-                        if (toAdd.id is null)
+                        ScriptAction toAdd = new ScriptAction(lineSource[i], i + 1);
+                        if (toAdd.id is null) {
                             return null;
+                        }
 
                         cmdList.Add(toAdd);
-                    } while (!lineSourceL[i++].Equals(RomInfo.ScriptActionNamesDict[0x00FE], StringComparison.InvariantCultureIgnoreCase));
+                    } while (!lineSource[i++].IgnoreCaseEquals(RomInfo.ScriptActionNamesDict[0x00FE]));
 
                     ls.Add( new ActionContainer(actionNumber, actionCommandsList: cmdList) );
                     actionNumber = 0;
                 }
-            } catch (IndexOutOfRangeException) { }
-            return ls;
-        }
-        private List<string> RemoveEmptyLines(ScintillaNET.LineCollection lineSource) {
-            List<string> result = new List<string>();
-            foreach (Line x in lineSource) {
-                if (x.Length > 0) {
-                    string tr = x.Text.Trim();
-                    if (tr.Length > 0) {
-                        result.Add(tr);
-                    }
-                }
+            } catch (IndexOutOfRangeException) {
+            } catch (ArgumentOutOfRangeException) {
+                MessageBox.Show($"Unexpectedly reached end of lines.\n\n" +
+                    $"Last line index: {i}.\n" +
+                    $"Could only parse {ls.Count} Command Containers.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
-            return result;
+
+            return ls;
         }
       
         #region Output
@@ -624,9 +650,10 @@ namespace DSPRE.ROMFiles {
                     int scriptsCount = scriptOffsets.Count;
                     foreach (CommandContainer caller in useScriptCallers) {
                         for (int i = 0; i < scriptsCount; i++) {
-                            var scrOf = scriptOffsets[i];
-                            if (scrOf.scriptID == caller.usedScript) {
-                                scriptOffsets.Add((caller.manualUserID, scrOf.offsetInFile));  // If script has UseScript, copy offset
+                            (uint scriptID, uint offsetInFile) = scriptOffsets[i];
+
+                            if (scriptID == caller.usedScript) {
+                                scriptOffsets.Add((caller.manualUserID, offsetInFile));  // If script has UseScript, copy offset
                             }
                         }
                     }
@@ -716,7 +743,6 @@ namespace DSPRE.ROMFiles {
                                 }
                                 
 
-
                                 //if (refList[i].callerType != containerTypes.Function || 
                                 //    (refList[i].callerType == refList[i].invokedType && refList[i].callerID == refList[i].invokedID) ||
                                 //    !uninvokedFuncs.Contains(refList[i].callerID)) { //remove reference if caller is a script, or if caller calls itself, or if caller is a function that's been invoked already
@@ -726,6 +752,7 @@ namespace DSPRE.ROMFiles {
                         }
                     }
 
+                    //Error check
                     string errorMsg = "";
                     if (undeclaredFuncs.Count > 0) {
                         string[] errorFunctionsUndeclared = undeclaredFuncs.ToArray().Select(x => x.ToString()).ToArray();

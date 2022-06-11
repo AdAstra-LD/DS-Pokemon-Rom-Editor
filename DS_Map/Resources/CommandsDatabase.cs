@@ -97,7 +97,7 @@ namespace DSPRE.Resources {
                         (x) => x.Value.ToString().StartsWith(searchBox.Text, StringComparison.InvariantCultureIgnoreCase));
                 } else if (rbl[2].Checked) { //Exact Match
                     scanAllRows(table,
-                        (x) => x.Value.ToString().Equals(searchBox.Text, StringComparison.InvariantCultureIgnoreCase));
+                        (x) => x.Value.ToString().IgnoreCaseEquals(searchBox.Text));
                 }
             } catch (OperationCanceledException) {
                 table.ClearSelection();
