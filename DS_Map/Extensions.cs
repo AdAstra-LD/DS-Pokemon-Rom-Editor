@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -55,8 +56,37 @@ namespace DSPRE {
                     return BitConverter.GetBytes(checked((ushort)num));
                 case 4:
                     return BitConverter.GetBytes(num);
+                default:
+                    MessageBox.Show("Invalid size for number conversion!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    throw new InvalidOperationException();
             }
-            throw new InvalidOperationException();
+        }
+        public static string PurgeSpecial(this string str, char[] special) {
+            foreach (char c in special) {
+                int pos = str.IndexOf(c);
+                if (pos >= 0) {
+                    return str.Substring(pos + 1);
+                }
+            }
+            return str;
+        }
+        public static NumberStyles GetNumberStyle(this string s) {
+            int posOfPrefix = s.IndexOf("0x", StringComparison.InvariantCultureIgnoreCase);
+            if (posOfPrefix >= 0) {
+                foreach (char c in s.Substring(posOfPrefix + 2)) {
+                    if (!char.IsDigit(c) && char.ToUpper(c) > 'F') {
+                        return NumberStyles.None;
+                    }
+                }
+                return NumberStyles.HexNumber;
+            } else {
+                foreach (char c in s) {
+                    if (!char.IsDigit(c)) {
+                        return NumberStyles.None;
+                    }
+                }
+                return NumberStyles.Integer;
+            }
         }
         public static bool IgnoreCaseEquals(this string str, string other) {
             return str.Equals(other, StringComparison.InvariantCultureIgnoreCase);

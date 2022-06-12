@@ -21,6 +21,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using ScintillaNET;
 using ScintillaNET.Utils;
 using System.Globalization;
+using static DSPRE.ROMFiles.Event;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -4522,9 +4523,11 @@ namespace DSPRE {
 
             using (Graphics g = Graphics.FromImage(eventPictureBox.Image)) {
                 Bitmap icon;
+
                 /* Draw spawnables */
                 if (showSpawnablesCheckBox.Checked) {
                     icon = (Bitmap)Properties.Resources.ResourceManager.GetObject("sign");
+
                     for (int i = 0; i < currentEvFile.spawnables.Count; i++) {
                         Spawnable spawnable = currentEvFile.spawnables[i];
 
@@ -4562,6 +4565,7 @@ namespace DSPRE {
                         for (int y = 0; y < MapFile.mapSize; y++) {
                             for (int x = 0; x < MapFile.mapSize; x++) {
                                 byte moveperm = eventMapFile.types[x, y];
+
                                 if (PokeDatabase.System.MapCollisionTypePainters.TryGetValue(moveperm, out string val)) {
                                     if (val.IndexOf("Warp", StringComparison.InvariantCultureIgnoreCase) >= 0) {
                                         //Console.WriteLine("Found warp at " + i + ", " + j);
@@ -4702,13 +4706,13 @@ namespace DSPRE {
         private void FillSpawnablesBox() {
             spawnablesListBox.Items.Clear();
             for (int i = 0; i < currentEvFile.spawnables.Count; i++) {
-                spawnablesListBox.Items.Add("Spawnable " + i);
+                spawnablesListBox.Items.Add($"{Event.EventType.Spawnable} {i}");
             }
         }
         private void FillOverworldsBox() {
             overworldsListBox.Items.Clear();
             for (int i = 0; i < currentEvFile.overworlds.Count; i++) {
-                overworldsListBox.Items.Add("Overworld " + i);
+                overworldsListBox.Items.Add($"{Event.EventType.Overworld} {i}");
             }
         }
         private void FillWarpsBox() {
@@ -4722,7 +4726,7 @@ namespace DSPRE {
         private void FillTriggersBox() {
             triggersListBox.Items.Clear();
             for (int i = 0; i < currentEvFile.triggers.Count; i++) {
-                triggersListBox.Items.Add("Trigger " + i);
+                triggersListBox.Items.Add($"{Event.EventType.Trigger} {i}");
             }
         }
         private Bitmap GetOverworldImage(ushort eventEntryID, ushort orientation) {
@@ -5221,7 +5225,7 @@ namespace DSPRE {
             if (mea.Button == MouseButtons.Left) {
                 if (selectedEvent != null) {
                     switch (selectedEvent.evType) {
-                        case Event.EventType.SPAWNABLE:
+                        case Event.EventType.Spawnable:
                             if (!showSpawnablesCheckBox.Checked) {
                                 return;
                             }
@@ -5231,7 +5235,7 @@ namespace DSPRE {
                             spawnableYMatrixUpDown.Value = (short)eventMatrixYUpDown.Value;
 
                             break;
-                        case Event.EventType.OVERWORLD:
+                        case Event.EventType.Overworld:
                             if (!showOwsCheckBox.Checked) {
                                 return;
                             }
@@ -5241,7 +5245,7 @@ namespace DSPRE {
                             owYMatrixUpDown.Value = (short)eventMatrixYUpDown.Value;
 
                             break;
-                        case Event.EventType.WARP:
+                        case Event.EventType.Warp:
                             if (!showWarpsCheckBox.Checked) {
                                 return;
                             }
@@ -5251,7 +5255,7 @@ namespace DSPRE {
                             warpYMatrixUpDown.Value = (short)eventMatrixYUpDown.Value;
 
                             break;
-                        case Event.EventType.TRIGGER:
+                        case Event.EventType.Trigger:
                             if (!showTriggersCheckBox.Checked) {
                                 return;
                             }
@@ -6181,9 +6185,14 @@ namespace DSPRE {
                 " " + String.Join(" ", ScriptDatabase.movementsDictIDName.Values);
             cmdKeyWords += " " + cmdKeyWords.ToUpper() + " " + cmdKeyWords.ToLower();
 
-            secondaryKeyWords = String.Join(" ", RomInfo.ScriptComparisonOperatorsDict.Values) + 
-                " " + String.Join(" ", ScriptDatabase.specialOverworlds.Values) + 
-                " " + ScriptFile.containerTypes.Script.ToString() + " " + ScriptFile.containerTypes.Function.ToString() + " " + ScriptFile.containerTypes.Action.ToString() + " " + "Overworld";
+            secondaryKeyWords = String.Join(" ", RomInfo.ScriptComparisonOperatorsDict.Values) +
+                " " + String.Join(" ", ScriptDatabase.specialOverworlds.Values) +
+                " " + String.Join(" ", ScriptDatabase.overworldDirections.Values) +
+                " " + ScriptFile.containerTypes.Script.ToString() +
+                " " + ScriptFile.containerTypes.Function.ToString() +
+                " " + ScriptFile.containerTypes.Action.ToString() +
+                " " + EventType.Overworld +
+                " " + Overworld.MovementCodeKW;
             secondaryKeyWords += " " + secondaryKeyWords.ToUpper() + " " + secondaryKeyWords.ToLower();
 
 
@@ -6793,8 +6802,9 @@ namespace DSPRE {
             }
         }
         private void searchInScriptsButton_Click(object sender, EventArgs e) {
-            if (searchInScriptsTextBox.Text == "")
+            if (searchInScriptsTextBox.Text == "") {
                 return;
+            }
 
             int firstArchive;
             int lastArchive;
@@ -6812,21 +6822,26 @@ namespace DSPRE {
             searchProgressBar.Maximum = selectScriptFileComboBox.Items.Count;
 
             List<string> results = new List<string>();
+
+            string scriptKw = ScriptFile.containerTypes.Script.ToString();
+            string functionKw = ScriptFile.containerTypes.Function.ToString();
+
             for (int i = firstArchive; i < lastArchive; i++) {
                 try {
                     Console.WriteLine("Attempting to load script " + i);
-                    ScriptFile file = new ScriptFile(i);
+                    ScriptFile file = new ScriptFile(i, readActions: false);
 
                     if (scriptSearchCaseSensitiveCheckBox.Checked) {
-                        results.AddRange(SearchInScripts(i, file.allScripts, ScriptFile.containerTypes.Script.ToString(), (string s) => s.Contains(searchString)));
-                        results.AddRange(SearchInScripts(i, file.allFunctions, ScriptFile.containerTypes.Function.ToString(), (string s) => s.Contains(searchString)));
+                        results.AddRange(SearchInScripts(i, file.allScripts, scriptKw, (string s) => s.Contains(searchString)));
+                        results.AddRange(SearchInScripts(i, file.allFunctions, functionKw, (string s) => s.Contains(searchString)));
                     } else {
-                        results.AddRange(SearchInScripts(i, file.allScripts, ScriptFile.containerTypes.Script.ToString(), (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0));
-                        results.AddRange(SearchInScripts(i, file.allFunctions, ScriptFile.containerTypes.Function.ToString(), (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0));
+                        results.AddRange(SearchInScripts(i, file.allScripts, scriptKw, (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0));
+                        results.AddRange(SearchInScripts(i, file.allFunctions, functionKw, (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0));
                     }
                 } catch { }
                 searchProgressBar.Value = i;
             }
+
             searchProgressBar.Value = 0;
             searchInScriptsResultListBox.Items.AddRange(results.ToArray());
         }
@@ -6839,7 +6854,7 @@ namespace DSPRE {
                 }
                 foreach (ScriptCommand cur in cmdList[j].commands) {
                     if (criteria(cur.name)) {
-                        results.Add("File " + fileID + " - " + entryType + " " + (j + 1) + ": " + cur.name + Environment.NewLine);
+                        results.Add($"File {fileID} - {entryType} {j + 1}: {cur.name}{Environment.NewLine}");
                     }
                 }
             }
@@ -8945,7 +8960,7 @@ namespace DSPRE {
 
         private void HOWpbEffectsTableButton_Click(object sender, EventArgs e) {
             MessageBox.Show("An entry of this table is a combination of VS. Graphics + Battle Theme.\n\n" +
-                (RomInfo.gameVersion.Equals(gFamEnum.HGSS) ? "Each entry can be \"inherited\" by one or more Pokémon or Trainer classes." : ""), 
+                (RomInfo.gameFamily.Equals(gFamEnum.HGSS) ? "Each entry can be \"inherited\" by one or more Pokémon or Trainer classes." : ""), 
                 "How this table works", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
