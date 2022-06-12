@@ -32,7 +32,7 @@ namespace DSPRE.ROMFiles {
 
         #region Constructors (1)
 
-        public ScriptFile(Stream fs) {
+        public ScriptFile(Stream fs, bool readFunctions = true, bool readActions = true) {
             List<int> scriptOffsets = new List<int>();
             List<int> functionOffsets = new List<int>();
             List<int> movementOffsets = new List<int>();
@@ -96,51 +96,56 @@ namespace DSPRE.ROMFiles {
                 }
 
                 /* Read functions */
-                for (uint current = 0; current < functionOffsets.Count; current++) {
-                    scrReader.BaseStream.Position = functionOffsets[(int)current];
-                    int posInList = scriptOffsets.IndexOf(functionOffsets[(int)current]); // Check for UseScript
+                if (readFunctions) {
+                    for (uint current = 0; current < functionOffsets.Count; current++) {
+                        scrReader.BaseStream.Position = functionOffsets[(int)current];
+                        int posInList = scriptOffsets.IndexOf(functionOffsets[(int)current]); // Check for UseScript
 
-                    if (posInList == -1) {
-                        List<ScriptCommand> cmdList = new List<ScriptCommand>();
-                        bool endFunction = new bool();
-                        while (!endFunction) {
-                            ScriptCommand command = ReadCommand(scrReader, ref functionOffsets, ref movementOffsets);
-                            if (command.cmdParams is null) {
-                                return;
-                            }
+                        if (posInList == -1) {
+                            List<ScriptCommand> cmdList = new List<ScriptCommand>();
+                            bool endFunction = new bool();
+                            while (!endFunction) {
+                                ScriptCommand command = ReadCommand(scrReader, ref functionOffsets, ref movementOffsets);
+                                if (command.cmdParams is null) {
+                                    return;
+                                }
 
-                            cmdList.Add(command);
-                            if (ScriptDatabase.endCodes.Contains((ushort)command.id)) {
-                                endFunction = true;
+                                cmdList.Add(command);
+                                if (ScriptDatabase.endCodes.Contains((ushort)command.id)) {
+                                    endFunction = true;
+                                }
                             }
+                            allFunctions.Add(new CommandContainer(current + 1, containerTypes.Function, commandList: cmdList));
+                        } else {
+                            allFunctions.Add(new CommandContainer(current + 1, containerTypes.Function, useScript: posInList + 1));
                         }
-                        allFunctions.Add(new CommandContainer(current+1, containerTypes.Function, commandList: cmdList));
-                    } else {
-                        allFunctions.Add(new CommandContainer(current+1, containerTypes.Function, useScript: posInList +1));
                     }
                 }
 
-                /* Read movements */
-                for (uint current = 0; current < movementOffsets.Count; current++) {
-                    scrReader.BaseStream.Position = movementOffsets[(int)current];
+                if (readActions) {
+                    /* Read movements */
+                    for (uint current = 0; current < movementOffsets.Count; current++) {
+                        scrReader.BaseStream.Position = movementOffsets[(int)current];
 
-                    List<ScriptAction> cmdList = new List<ScriptAction>();
-                    bool endMovement = new bool();
-                    while (!endMovement) {
-                        ushort id = scrReader.ReadUInt16();
-                        if (id == 0xFE) {
-                            endMovement = true;
-                            cmdList.Add(new ScriptAction(id, 0));
-                        } else {
-                            cmdList.Add(new ScriptAction(id, scrReader.ReadUInt16()));
+                        List<ScriptAction> cmdList = new List<ScriptAction>();
+                        bool endMovement = new bool();
+                        while (!endMovement) {
+                            ushort id = scrReader.ReadUInt16();
+                            if (id == 0xFE) {
+                                endMovement = true;
+                                cmdList.Add(new ScriptAction(id, 0));
+                            } else {
+                                cmdList.Add(new ScriptAction(id, scrReader.ReadUInt16()));
+                            }
                         }
+                        allActions.Add(new ActionContainer(current + 1, actionCommandsList: cmdList));
                     }
-                    allActions.Add(new ActionContainer(current+1, actionCommandsList: cmdList));
                 }
             }
         }
-        public ScriptFile(int fileID) : this(new FileStream(RomInfo.gameDirs[DirNames.scripts].unpackedDir +
-        "\\" + fileID.ToString("D4"), FileMode.Open)) {
+        public ScriptFile(int fileID, bool readFunctions = true, bool readActions = true) : 
+            this(new FileStream(RomInfo.gameDirs[DirNames.scripts].unpackedDir + "\\" + fileID.ToString("D4"), FileMode.Open), readFunctions, readActions) {
+            
             this.fileID = fileID;
         } 
         public ScriptFile(List<CommandContainer> scripts, List<CommandContainer> functions, List<ActionContainer> movements, int fileID = -1) {
@@ -175,14 +180,18 @@ namespace DSPRE.ROMFiles {
                 return;
             }
 
-            allFunctions = ReadCommandsFromLines(functionLines.ToList(), containerTypes.Function, functionEndCondition);  //Jump + whitespace
-            if (allFunctions is null) {
-                return;
+            if (functionLines != null) {
+                allFunctions = ReadCommandsFromLines(functionLines.ToList(), containerTypes.Function, functionEndCondition);  //Jump + whitespace
+                if (allFunctions is null) {
+                    return;
+                }
             }
 
-            allActions = ReadActionsFromLines(actionLines.ToList());
-            if (allActions is null) {
-                return;
+            if (actionLines != null) {
+                allActions = ReadActionsFromLines(actionLines.ToList());
+                if (allActions is null) {
+                    return;
+                }
             }
 
             this.fileID = fileID;

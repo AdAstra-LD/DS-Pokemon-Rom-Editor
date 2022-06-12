@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using static DSPRE.ROMFiles.Event;
 using static DSPRE.ROMFiles.ScriptFile;
 
 namespace DSPRE.ROMFiles {
-    public enum ParamTypeEnum { INTEGER, VARIABLE, FLEX, OW_ID, FUNCTION_ID, ACTION_ID, CMD_NUMBER };
+    public enum ParamTypeEnum { INTEGER, VARIABLE, FLEX, OW_ID, OW_MOVEMENT_TYPE, OW_DIRECTION, FUNCTION_ID, ACTION_ID, CMD_NUMBER };
     public class CommandContainer {
         public List<ScriptCommand> commands;
         public uint manualUserID;
@@ -46,7 +47,7 @@ namespace DSPRE.ROMFiles {
 
             if (!RomInfo.ScriptCommandNamesDict.TryGetValue(id, out name)) {
                 name = FormatNumber(id, ParamTypeEnum.CMD_NUMBER);
-            }            
+            }
 
             switch (id) {
                 case 0x0016:      // Jump
@@ -58,7 +59,7 @@ namespace DSPRE.ROMFiles {
                     name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1])}";
                     break;
                 case 0x0019:      // JumpIfPlayerDir
-                    name += $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID)}";
+                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_DIRECTION)} {FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID)}";
                     break;
                 case 0x001C:      // JumpIf
                 case 0x001D:      // CallIf
@@ -76,7 +77,7 @@ namespace DSPRE.ROMFiles {
                     name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID)}";
                     break;
                 case 0x006A:      // CheckOverworldPosition
-                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1])} {FormatNumber(parametersList[2])}";
+                    name += FormatCmd_Overworld_TwoParams(parametersList);
                     break;
                 case 0x0062:      // Lock
                 case 0x0063:      // Release
@@ -84,15 +85,95 @@ namespace DSPRE.ROMFiles {
                 case 0x0065:      // RemoveOW
                     name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)}";
                     break;
+                case 0x006D:      // SetOverworldMovement
+                    name += FormatCmd_Overworld_Move(parametersList);
+                    break;
+
+                case 0x00B0:      // Warp [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.gFamEnum.HGSS)) {
+                        name += FormatCmd_Warp(parametersList);
+                    }
+                    break;
+                case 0x0152:      // SetOverworldDefaultPosition [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.gFamEnum.HGSS)) {
+                        name += FormatCmd_Overworld_TwoParams(parametersList);
+                    }
+                    break;
+                case 0x0153:      // SetOverworldPosition [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.gFamEnum.HGSS)) {
+                        name += FormatCmd_Overworld_3Coords_Dir(parametersList);
+                    }
+                    break;
+                case 0x0154:      // SetOverworldDefaultMovement [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.gFamEnum.HGSS)) {
+                        name += FormatCmd_Overworld_Move(parametersList);
+                    }
+                    break;
+                case 0x0155:      // SetOverworldDefaultDirection [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.gFamEnum.HGSS)) {
+                        name += FormatCmd_Overworld_Dir(parametersList);
+                    }
+                    break;
+                case 0x0158:      // SetOverworldDirection [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.gFamEnum.HGSS)) {
+                        name += FormatCmd_Overworld_Dir(parametersList);
+                    }
+                    break;
+
+                case 0x00BE:      // Warp [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.gFamEnum.DP) || RomInfo.gameFamily.Equals(RomInfo.gFamEnum.Plat)) {
+                        name += FormatCmd_Warp(parametersList);
+                    }
+                    break;
+                case 0x0186:      // SetOverworldDefaultPosition [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.gFamEnum.DP) || RomInfo.gameFamily.Equals(RomInfo.gFamEnum.Plat)) {
+                        name += FormatCmd_Overworld_TwoParams(parametersList);
+                    }
+                    break;
+                case 0x0187:      // SetOverworldPosition [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.gFamEnum.DP) || RomInfo.gameFamily.Equals(RomInfo.gFamEnum.Plat)) {
+                        name += FormatCmd_Overworld_3Coords_Dir(parametersList);
+                    }
+                    break;
+                case 0x0188:      // SetOverworldDefaultMovement [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.gFamEnum.DP) || RomInfo.gameFamily.Equals(RomInfo.gFamEnum.Plat)) {
+                        name += FormatCmd_Overworld_Move(parametersList);
+                    }
+                    break;
+                case 0x0189:      // SetOverworldDefaultDirection [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.gFamEnum.DP) || RomInfo.gameFamily.Equals(RomInfo.gFamEnum.Plat)) {
+                        name += FormatCmd_Overworld_Dir(parametersList);
+                    }
+                    break;
+                case 0x018C:      // SetOverworldDirection [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.gFamEnum.DP) || RomInfo.gameFamily.Equals(RomInfo.gFamEnum.Plat)) {
+                        name += FormatCmd_Overworld_Dir(parametersList);
+                    }
+                    break;
                 default:
                     for (int i = 0; i < parametersList.Count; i++) {
-                        this.name += $" {FormatNumber(parametersList[i])}";
+                        name += $" {FormatNumber(parametersList[i])}";
                     }
                     break;
 
             }
             this.id = id;
             this.cmdParams = parametersList;
+        }
+        private string FormatCmd_Warp(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1])} {FormatNumber(parametersList[2])} {FormatNumber(parametersList[3])} {FormatNumber(parametersList[4], ParamTypeEnum.OW_DIRECTION)}";
+        }
+        private string FormatCmd_Overworld_TwoParams(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1])} {FormatNumber(parametersList[2])}";
+        }
+        private string FormatCmd_Overworld_Move(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1], ParamTypeEnum.OW_MOVEMENT_TYPE)}";
+        }
+        private string FormatCmd_Overworld_3Coords_Dir(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1])} {FormatNumber(parametersList[2])} {FormatNumber(parametersList[3])} {FormatNumber(parametersList[4], ParamTypeEnum.OW_DIRECTION)}";
+        }
+        private string FormatCmd_Overworld_Dir(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1], ParamTypeEnum.OW_DIRECTION)}";
         }
 
         public ScriptCommand(string wholeLine, int lineNumber = 0) {
@@ -106,7 +187,7 @@ namespace DSPRE.ROMFiles {
                 id = cmdID;
             } else {
                 try {
-                    id = ushort.Parse(GetStringWithoutSpecialCharacters(nameParts[0]), GetNumberStyleFromString(nameParts[0]));
+                    id = ushort.Parse(nameParts[0].PurgeSpecial(ScriptFile.specialChars), nameParts[0].GetNumberStyle());
                     //id = ushort.Parse(nameParts[0].Substring(nameParts[0].("_")+1), Properties.Settings.Default.scriptEditorFormatPreference, CultureInfo.InvariantCulture);
                 } catch {
                     string details;
@@ -116,9 +197,9 @@ namespace DSPRE.ROMFiles {
                     } else {
                         details = "Are you sure it's a proper Script Command?";
                     }
+
                     MessageBox.Show("This Script file could not be saved." +
-                        Environment.NewLine + "Parser failed to interpret line " + lineNumber + ": \"" + wholeLine + "\"." +
-                        Environment.NewLine + "\n" + details, "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    $"\nParser failed to interpret line {lineNumber}: \"{wholeLine}\".\n\n{details}", "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -131,7 +212,7 @@ namespace DSPRE.ROMFiles {
             int paramsProcessed = 0;
 
             if (parametersSizeArr.First() == 0xFF) { 
-                int firstParamValue = int.Parse(GetStringWithoutSpecialCharacters(nameParts[1]), GetNumberStyleFromString(nameParts[1]));
+                int firstParamValue = int.Parse(nameParts[1].PurgeSpecial(ScriptFile.specialChars), nameParts[1].GetNumberStyle());
                 byte firstParamSize = parametersSizeArr[1];
 
                 cmdParams.Add(firstParamValue.ToByteArrayChooseSize(firstParamSize));
@@ -191,34 +272,40 @@ namespace DSPRE.ROMFiles {
 
             if (nameParts.Length - 1 == paramLength) {
                 for (int i = paramsProcessed; i < paramLength; i++) {
-                    Console.WriteLine("Parameter #" + i.ToString() + ": " + nameParts[i + 1]);
+                    Console.WriteLine($"Parameter #{i.ToString()}: {nameParts[i + 1]}");
 
-                    if (RomInfo.ScriptComparisonOperatorsReverseDict.TryGetValue(nameParts[i + 1].ToLower(), out cmdID)) {
+                    if (RomInfo.ScriptComparisonOperatorsReverseDict.TryGetValue(nameParts[i + 1].ToLower(), out cmdID)) { //Check succeeds when command is like "asdfg LESS" or "asdfg DIFFERENT"
                         cmdParams.Add(new byte[] { (byte)cmdID });
                     } else { //Not a comparison
                         /* Convert strings of parameters to the correct datatypes */
-                        NumberStyles numStyle = GetNumberStyleFromString(nameParts[i + 1]);
-                        nameParts[i + 1] = GetStringWithoutSpecialCharacters(nameParts[i + 1]);
+                        NumberStyles numStyle = nameParts[i + 1].GetNumberStyle();
+                        nameParts[i + 1] = nameParts[i + 1].PurgeSpecial(ScriptFile.specialChars);
                         
                         int result = 0;
+
                         try {
                             result = int.Parse(nameParts[i + 1], numStyle);
                         } catch {
-                            try {
-                                result = ScriptDatabase.specialOverworlds.First(x => x.Value.Equals(nameParts[i + 1])).Key;
-                            } catch (InvalidOperationException) {
-                                if (string.IsNullOrWhiteSpace(nameParts[i + 1])){
-                                    MessageBox.Show($"You must specify an Overworld ID, Script, Function or Action number.\n\n" +
-                                        $"Line {lineNumber}: {wholeLine}", "Unspecified identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                } else {
-                                    MessageBox.Show($"Argument {nameParts[i+1]} couldn't be parsed as a valid Overworld ID, Script, Function or Action number.\n\n" +
+                            if (string.IsNullOrWhiteSpace(nameParts[i + 1])) {
+                                MessageBox.Show($"You must specify an Overworld ID, Script, Function or Action number.\n\n" +
+                                    $"Line {lineNumber}: {wholeLine}", "Unspecified identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                id = null;
+                            } else { 
+                                var first = ScriptDatabase.specialOverworlds.FirstOrDefault(x => x.Value.IgnoreCaseEquals(nameParts[i + 1]));
+
+                                if (string.IsNullOrWhiteSpace(first.Value)) {
+                                    var res = ScriptDatabase.overworldDirections.FirstOrDefault(x => x.Value.IgnoreCaseEquals(nameParts[i + 1]));
+
+                                    if (string.IsNullOrWhiteSpace(res.Value)) {
+                                        MessageBox.Show($"Argument {nameParts[i + 1]} couldn't be parsed as a valid Condition, Overworld ID, Direction ID, Script, Function or Action number.\n\n" +
                                         $"Line {lineNumber}: {wholeLine}", "Invalid identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        id = null;
+                                    } else {
+                                        result = res.Key;
+                                    }
+                                } else {
+                                    result = first.Key;
                                 }
-                                id = null;
-                            } catch (FormatException) {
-                                MessageBox.Show($"Argument {nameParts[i + 1]} is not a valid {numStyle}.\n\n" +
-                                    $"Line {lineNumber}: {wholeLine}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                id = null;
                             }
                         }
 
@@ -269,58 +356,63 @@ namespace DSPRE.ROMFiles {
                 prefix = "";
             }
 
+            string outp = "";
+
             switch (paramType) {
                 case ParamTypeEnum.CMD_NUMBER:
                     return "CMD_" + prefix + num.ToString(formatOverride + '3');
-                case ParamTypeEnum.OW_ID:
-                    if (ScriptDatabase.specialOverworlds.TryGetValue((ushort)num, out string output)) {
-                        return output;
-                    } else {
-                        return "Overworld." + prefix + num.ToString(formatOverride);
-                    }
+
                 case ParamTypeEnum.FUNCTION_ID:
                     return containerTypes.Function.ToString() + "#" + num;
+
                 case ParamTypeEnum.ACTION_ID:
                     return containerTypes.Action.ToString() + "#" + num;
+
+                case ParamTypeEnum.OW_MOVEMENT_TYPE:
+                    if (num < 4000) {
+                        outp += "Move.";
+                    }
+                    goto default;
+
+                case ParamTypeEnum.OW_ID: 
+                    {
+                        if (ScriptDatabase.specialOverworlds.TryGetValue((ushort)num, out string output)) {
+                            return output;
+                        } else {
+                            if (num < 4000) {
+                                outp += $"{EventType.Overworld}.";
+                            }
+                            goto default;
+                        }
+                     
+                        break;
+                    }
+                case ParamTypeEnum.OW_DIRECTION: 
+                    {
+                        if (ScriptDatabase.overworldDirections.TryGetValue((byte)num, out string output)) {
+                            return output;
+                        } else {
+                            if (num < 4000) {
+                                outp += $"Direction.";
+                            }
+                            goto default;
+                        }
+                        
+                        break;
+                    }
                 default:
                     if (Properties.Settings.Default.scriptEditorFormatPreference == (int)NumberStyles.None) {
                         if (num >= 4000) {
-                            return "0x" + num.ToString("X");
+                            formatOverride = "X";
+                            prefix = "0x";
                         }
                     }
-                    return prefix + num.ToString(formatOverride);
+                    outp += prefix + num.ToString(formatOverride);
+                    break;
             }
+            
+            return outp;
         }
-
-        private string GetStringWithoutSpecialCharacters(string s) {
-            foreach (char c in ScriptFile.specialChars) {
-                int pos = s.IndexOf(c);
-                if (pos >= 0) {
-                    return s.Substring(pos + 1);
-                }
-            }
-            return s;
-        }
-
-        public NumberStyles GetNumberStyleFromString(string s) {
-            int posOfPrefix = s.IndexOf("0x", StringComparison.InvariantCultureIgnoreCase);
-            if (posOfPrefix >= 0) {
-                foreach (char c in s.Substring(posOfPrefix+2)) {
-                    if (!Char.IsDigit(c) && Char.ToUpper(c) > 'F') {
-                        return NumberStyles.None;
-                    }
-                }
-                return NumberStyles.HexNumber;
-            } else {
-                foreach (char c in s) {
-                    if (!Char.IsDigit(c)) {
-                        return NumberStyles.None;
-                    }
-                }
-                return NumberStyles.Integer;
-            }
-        }
-
         public override string ToString() {
             return name + " (" + ((ushort)id).ToString("X") + ")";
         }

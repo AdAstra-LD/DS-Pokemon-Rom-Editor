@@ -27,6 +27,12 @@ namespace DSPRE.Resources {
             [253] = "Following",
             [255] = "Player"
         };
+        public static Dictionary<byte, string> overworldDirections = new Dictionary<byte, string>() {
+            [0] = "Up",
+            [1] = "Down",
+            [2] = "Left",
+            [3] = "Right"
+        };
 
         public static Dictionary<ushort, int> commandsWithRelativeJump = new Dictionary<ushort, int>() {
             //commandID, ID of parameter With Jump Address
@@ -277,7 +283,7 @@ namespace DSPRE.Resources {
             [0x006A] = "CheckOverworldPosition",
 
             [0x006C] = "KeepOverworld",
-            [0x006D] = "SetObjectDefaultMovement",
+            [0x006D] = "SetOverworldMovement",
             [0x006E] = "SetFollowingOverworld",
             [0x006F] = "GiveMoney",
             [0x0070] = "TakeMoney",
@@ -429,7 +435,7 @@ namespace DSPRE.Resources {
             [0x0128] = "CheckHoneyTree",
             [0x0129] = "HoneyTreeBattle",
             [0x012A] = "StopHoneyTreeAnimation",
-
+            [0x012B] = "SignatureScreen",
             [0x012C] = "CheckSaveGame",
             [0x012D] = "SaveGame",
             [0x012E] = "CheckPortrait",
@@ -499,12 +505,13 @@ namespace DSPRE.Resources {
             [0x0183] = "SetBerrySpecies",
             [0x0184] = "WateringAnimation",
             [0x0185] = "TakeBerries",
-            [0x0186] = "SetOverworldPosition",
-            [0x0187] = "SetOverworldFullPosition",
-            [0x0188] = "SetOverworldMovement",
-            [0x0189] = "SetOverworldDirection",
+            [0x0186] = "SetOverworldDefaultPosition",
+            [0x0187] = "SetOverworldPosition",
+            [0x0188] = "SetOverworldDefaultMovement",
+            [0x0189] = "SetOverworldDefaultDirection",
             [0x018A] = "SetWarpPosition",
             [0x018B] = "SetSpawnablePosition",
+            [0x018C] = "SetOverworldDirection",
 
             [0x0190] = "WaitTimeOrAB",
             [0x0191] = "PokemonSelectionScreen",
@@ -653,6 +660,7 @@ namespace DSPRE.Resources {
             [0x029F] = "ShakeCamera",
 
             [0x02AC] = "ActivateMysteryGift",
+            [0x02AD] = "GetOverworldMovement",
 
             [0x02A5] = "PartyPokemonTradeScreen",
 
@@ -1729,7 +1737,7 @@ namespace DSPRE.Resources {
             [0x006A] = "CheckOverworldPosition",
 
             [0x006C] = "KeepOverworld",
-            [0x006D] = "SetObjectDefaultMovement",
+            [0x006D] = "SetOverworldMovement",
             [0x006E] = "GiveMoney",
             [0x006F] = "TakeMoney",
             [0x0070] = "CompareMoney",
@@ -1882,12 +1890,13 @@ namespace DSPRE.Resources {
 
             [0x014C] = "GetPartyCount",
 
-            [0x0152] = "SetOverworldPosition",
-            [0x0153] = "SetOverworldFullPosition",
-            [0x0154] = "SetOverworldMovement",
-            [0x0155] = "SetOverworldDirection",
+            [0x0152] = "SetOverworldDefaultPosition",
+            [0x0153] = "SetOverworldPosition",
+            [0x0154] = "SetOverworldDefaultMovement",
+            [0x0155] = "SetOverworldDefaultDirection",
             [0x0156] = "SetWarpPosition",
             [0x0157] = "SetSpawnablePosition",
+            [0x0158] = "SetOverworldDirection",
 
             [0x015C] = "WaitTimeOrAB",
 
