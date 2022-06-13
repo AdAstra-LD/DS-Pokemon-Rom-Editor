@@ -87,10 +87,6 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ekona, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Ekona\bin\Debug\Ekona.dll</HintPath>
-    </Reference>
     <Reference Include="Images, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Desktop\NDS\NDS Main Tools\Tinke FS Explorer\Tinke 0.9.2dev\Plugins\Images.dll</HintPath>
@@ -155,6 +151,12 @@
     <Content Include="ImagesLang.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Ekona\Ekona.csproj">
+      <Project>{736010d3-f72f-4c56-b8d2-2edd1b8f3a87}</Project>
+      <Name>Ekona</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
