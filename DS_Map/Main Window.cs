@@ -6912,6 +6912,7 @@ namespace DSPRE {
 
             if (scriptsDirty || functionsDirty || actionsDirty) {
                 DialogResult d = MessageBox.Show("There are unsaved changes in this Script File.\nDo you wish to discard them?", "Unsaved work", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                
                 if (!d.Equals(DialogResult.Yes)) {
                     disableHandlers = true;
                     selectScriptFileComboBox.SelectedIndex = (int)currentScriptFile.fileID;
@@ -6930,7 +6931,7 @@ namespace DSPRE {
             actionsNavListbox.Items.Clear();
 
             if (currentScriptFile.isLevelScript) {
-                ScriptTextArea.Text += "Level script files are currently not supported.\nYou can use AdAstra's Level Scripts Editor.";
+                ScriptTextArea.Text += "LevelScript files are currently not supported.\nYou can use AdAstra's Level Scripts Editor.";
                 addScriptFileButton.Visible = false;
                 removeScriptFileButton.Visible = false;
 
