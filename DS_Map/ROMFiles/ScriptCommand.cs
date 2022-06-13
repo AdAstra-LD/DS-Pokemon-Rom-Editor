@@ -76,7 +76,7 @@ namespace DSPRE.ROMFiles {
                 case 0x005E:      // Movement
                     name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID)}";
                     break;
-                case 0x006A:      // CheckOverworldPosition
+                case 0x006A:      // GetOverworldPosition
                     name += FormatCmd_Overworld_TwoParams(parametersList);
                     break;
                 case 0x0062:      // Lock
