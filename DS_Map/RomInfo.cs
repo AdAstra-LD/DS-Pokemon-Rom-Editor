@@ -199,7 +199,7 @@ namespace DSPRE {
                     break;
                 default:
                     commonDictionaryNames = ScriptDatabase.HGSSScrCmdNames;
-                    #if false
+                    #if true
                         specificDictionaryNames = new Dictionary<ushort, string>();
                     #else
                         specificDictionaryNames = ScriptDatabase.CustomScrCmdNames;
@@ -223,7 +223,7 @@ namespace DSPRE {
                     break;
                 default:
                     commonDictionaryParams = ScriptDatabase.HGSSScrCmdParameters;
-                    #if false
+                    #if true
                         specificDictionaryParams = new Dictionary<ushort, byte[]>();
                     #else
                         specificDictionaryParams = ScriptDatabase.CustomScrCmdParameters;
@@ -239,11 +239,11 @@ namespace DSPRE {
                     return ScriptDatabase.movementsDictIDName;
                 default:
 #if false
-                        var commonDictionaryParams = ScriptDatabase.movementsDictIDName;
-                        var customDictionaryParams = ScriptDatabase.customMovementsDictIDName;
-                        return commonDictionaryParams.Concat(customDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+                    var commonDictionaryParams = ScriptDatabase.movementsDictIDName;
+                    var customDictionaryParams = ScriptDatabase.customMovementsDictIDName;
+                    return commonDictionaryParams.Concat(customDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
 #else
-                        return ScriptDatabase.movementsDictIDName;
+                    return ScriptDatabase.movementsDictIDName;
 #endif
             }
         }
