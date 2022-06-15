@@ -1338,6 +1338,9 @@
     <None Include="Resources\Graphics\Program Icons\wildEditorButton.png" />
     <None Include="Resources\Graphics\Program Icons\muteIcon.png" />
     <None Include="Resources\Graphics\Program Icons\SearchMiniIcon.png" />
+    <Content Include="Tools\apicula.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tools\blz.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

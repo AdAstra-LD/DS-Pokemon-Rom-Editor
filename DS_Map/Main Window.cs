@@ -497,7 +497,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.6.1" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.7" + Environment.NewLine
                 + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
@@ -4369,6 +4369,7 @@ namespace DSPRE {
             }
 
             if (embedTexturesInMapModelCheckBox.Checked) {
+                /* Write textured NSBMD to file */
                 string texturePath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4");
                 byte[] texturesToEmbed = File.ReadAllBytes(texturePath);
                 File.WriteAllBytes(em.FileName, DSUtils.BuildNSBMDwithTextures(currentMapFile.mapModelData, texturesToEmbed));
@@ -4377,6 +4378,47 @@ namespace DSPRE {
             }
 
             MessageBox.Show("Map model exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void daeExportButton_Click(object sender, EventArgs e) {
+            MessageBox.Show("Choose output folder.\nDSPRE will automatically create a sub-folder in it.", "Awaiting user input", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            CommonOpenFileDialog cofd = new CommonOpenFileDialog {
+                IsFolderPicker = true,
+                Multiselect = false
+            };
+            if (cofd.ShowDialog() != CommonFileDialogResult.Ok) {
+                return;
+            }
+
+            string mapname = selectMapComboBox.SelectedItem.ToString().TrimEnd('\0');
+            string tempNSBMD = Path.Combine(cofd.FileName, mapname + "_temp.nsbmd");
+
+            /* Write textured NSBMD to file */
+            string texturePath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4");
+            File.WriteAllBytes(tempNSBMD, DSUtils.BuildNSBMDwithTextures(currentMapFile.mapModelData, nsbtx: File.ReadAllBytes(texturePath)));
+
+            if (!File.Exists(tempNSBMD)) {
+                MessageBox.Show("NSBMD file corresponding to this map could not be found.\nAborting", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if( DSUtils.ModelToDAE(tempNSBMD, Path.Combine(cofd.FileName, mapname)) != 0) {
+                MessageBox.Show("NSBMD to DAE conversion failed.", "Apicula error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (File.Exists(tempNSBMD)) {
+                File.Delete(tempNSBMD);
+                
+                if (File.Exists(tempNSBMD)) {
+                    MessageBox.Show("Temporary NSBMD file deletion failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            } else {
+                MessageBox.Show("Temporary NSBMD file corresponding to this map disappeared.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            
+            MessageBox.Show("Map model exported and converted successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 
