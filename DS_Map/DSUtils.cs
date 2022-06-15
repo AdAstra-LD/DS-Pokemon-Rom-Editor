@@ -88,6 +88,17 @@ namespace DSPRE {
 
         public const string backupSuffix = ".backup";
 
+        public static int ModelToDAE(string inPath, string outPath) {
+            Process apicula = new Process();
+            apicula.StartInfo.FileName = @"Tools\apicula.exe";
+            apicula.StartInfo.Arguments = $" convert \"{inPath}\" --output \"{outPath}\"";
+            apicula.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            apicula.StartInfo.CreateNoWindow = true;
+            apicula.Start();
+            apicula.WaitForExit();
+
+            return apicula.ExitCode;
+        }
         public static void WriteToFile(string filepath, byte[] toOutput, uint writeAt = 0, int indexFirstByteToWrite = 0, int? indexLastByteToWrite = null, FileMode fmode = FileMode.OpenOrCreate) {
             using (EasyWriter writer = new EasyWriter(filepath, writeAt, fmode)) {
                 writer.Write(toOutput, indexFirstByteToWrite, indexLastByteToWrite is null ? toOutput.Length - indexFirstByteToWrite : (int)indexLastByteToWrite);
