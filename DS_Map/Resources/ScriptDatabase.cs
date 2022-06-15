@@ -630,6 +630,10 @@ namespace DSPRE.Resources {
             [0x0246] = "CheckVersion",
             [0x0247] = "FirstPokemonInParty",
 
+            [0x024E] = "GetLottoNumber",
+            [0x024F] = "CheckWinLotto",
+            [0x0250] = "InitLotto",
+
             [0x0252] = "CountPCFreeSpace",
 
             [0x0261] = "TextAccesory",
@@ -1986,6 +1990,10 @@ namespace DSPRE.Resources {
 
             [0x01EF] = "CheckVersion",
             [0x01F0] = "FirstPokemonInParty",
+
+            [0x01F7] = "GetLottoNumber",
+            [0x01F8] = "CheckWinLotto",
+            [0x01F9] = "InitLotto",
 
             [0x01FB] = "CountPCFreeSpace",
 
