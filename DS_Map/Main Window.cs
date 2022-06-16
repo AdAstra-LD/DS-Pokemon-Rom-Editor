@@ -324,7 +324,7 @@ namespace DSPRE {
         }
         private void nsbmdExportTexButton_Click(object sender, EventArgs e) {
             OpenFileDialog of = new OpenFileDialog {
-                Filter = "Textured NSBMD File(*.nsbmd)|*.nsbmd"
+                Filter = MapFile.TexturedNSBMDFilter
             };
             if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -352,7 +352,7 @@ namespace DSPRE {
 
         private void nsbmdRemoveTexButton_Click(object sender, EventArgs e) {
             OpenFileDialog of = new OpenFileDialog {
-                Filter = "Textured NSBMD File(*.nsbmd)|*.nsbmd"
+                Filter = MapFile.TexturedNSBMDFilter
             };
             
             if (of.ShowDialog(this) != DialogResult.OK) {
@@ -396,7 +396,7 @@ namespace DSPRE {
         }
         private void nsbmdAddTexButton_Click(object sender, EventArgs e) {
             OpenFileDialog of = new OpenFileDialog {
-                Filter = "NSBMD File(*.nsbmd)|*.nsbmd"
+                Filter = MapFile.UntexturedNSBMDFilter
             };
             if (of.ShowDialog(this) != DialogResult.OK)
                 return;
@@ -414,8 +414,10 @@ namespace DSPRE {
             OpenFileDialog openNsbtx = new OpenFileDialog {
                 Filter = "NSBTX File(*.nsbtx)|*.nsbtx"
             };
-            if (openNsbtx.ShowDialog(this) != DialogResult.OK)
+            if (openNsbtx.ShowDialog(this) != DialogResult.OK) {
                 return;
+            }
+
             byte[] textureFile = File.ReadAllBytes(openNsbtx.FileName);
 
 
@@ -428,7 +430,7 @@ namespace DSPRE {
             }
 
             SaveFileDialog sf = new SaveFileDialog {
-                Filter = "Textured NSBMD File(*.nsbmd)|*.nsbmd",
+                Filter = MapFile.TexturedNSBMDFilter,
                 FileName = Path.GetFileNameWithoutExtension(of.FileName) + "_textured"
             };
 
@@ -507,7 +509,7 @@ namespace DSPRE {
         }
         private void loadRom_Click(object sender, EventArgs e) {
             OpenFileDialog openRom = new OpenFileDialog {
-                Filter = "NDS File (*.nds)|*.nds"
+                Filter = DSUtils.NDSRomFilter
             }; // Select ROM
             if (openRom.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -670,7 +672,7 @@ namespace DSPRE {
 
         private void saveRom_Click(object sender, EventArgs e) {
             SaveFileDialog saveRom = new SaveFileDialog {
-                Filter = "NDS File (*.nds)|*.nds"
+                Filter = DSUtils.NDSRomFilter
             };
             if (saveRom.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -1762,7 +1764,7 @@ namespace DSPRE {
         }
         private void importHeaderFromFileButton_Click(object sender, EventArgs e) {
             OpenFileDialog of = new OpenFileDialog {
-                Filter = "Header File (*.dsh; *.bin)|*.dsh;*.bin"
+                Filter = MapHeader.DefaultFilter
             };
             if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -1805,7 +1807,7 @@ namespace DSPRE {
 
         private void exportHeaderToFileButton_Click(object sender, EventArgs e) {
             SaveFileDialog sf = new SaveFileDialog {
-                Filter = "DSPRE Header File (*.dsh)|*.dsh",
+                Filter = MapHeader.DefaultFilter,
                 FileName = "Header " + currentHeader.ID + " - " + internalNames[currentHeader.ID] + " (" + locationNameComboBox.SelectedItem.ToString() + ")"
             };
 
@@ -2416,7 +2418,7 @@ namespace DSPRE {
             }
 
             OpenFileDialog importMatrix = new OpenFileDialog {
-                Filter = "Matrix File (*.mtx)|*.mtx"
+                Filter = GameMatrix.DefaultFilter
             };
             if (importMatrix.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -3043,9 +3045,11 @@ namespace DSPRE {
                     break;
             };
 
+
             /* Add map names to box */
             selectMapComboBox.Items.Clear();
             int mapCount = romInfo.GetMapCount();
+
             for (int i = 0; i < mapCount; i++) {
                 using (DSUtils.EasyReader reader = new DSUtils.EasyReader(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + i.ToString("D4"))) {
                     switch (RomInfo.gameFamily) {
@@ -3642,7 +3646,7 @@ namespace DSPRE {
         }
         private void exportBuildingsButton_Click(object sender, EventArgs e) {
             SaveFileDialog sf = new SaveFileDialog {
-                Filter = "Buildings File (*.bld)|*.bld",
+                Filter = MapFile.BuildingsFilter,
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
             if (sf.ShowDialog(this) != DialogResult.OK) {
@@ -3655,7 +3659,7 @@ namespace DSPRE {
         }
         private void importBuildingsButton_Click(object sender, EventArgs e) {
             OpenFileDialog ib = new OpenFileDialog {
-                Filter = "Buildings File (*.bld)|*.bld"
+                Filter = MapFile.BuildingsFilter
             };
             if (ib.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -4174,7 +4178,7 @@ namespace DSPRE {
         }
         private void exportMovButton_Click(object sender, EventArgs e) {
             SaveFileDialog em = new SaveFileDialog {
-                Filter = "Permissions File (*.per)|*.per",
+                Filter = MapFile.MovepermsFilter,
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
             if (em.ShowDialog(this) != DialogResult.OK) {
@@ -4187,7 +4191,7 @@ namespace DSPRE {
         }
         private void importMovButton_Click(object sender, EventArgs e) {
             OpenFileDialog ip = new OpenFileDialog {
-                Filter = "Permissions File (*.per)|*.per"
+                Filter = MapFile.MovepermsFilter
             };
             if (ip.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -4197,6 +4201,7 @@ namespace DSPRE {
 
             DrawSmallCollision();
             DrawSmallTypeCollision();
+
             if (selectCollisionPanel.BackColor == Color.MidnightBlue) {
                 DrawCollisionGrid();
             } else {
@@ -4332,7 +4337,7 @@ namespace DSPRE {
         public const ushort MAPMODEL_CRITICALSIZE = 61000;
         private void importMapButton_Click(object sender, EventArgs e) {
             OpenFileDialog im = new OpenFileDialog {
-                Filter = "NSBMD model (*.nsbmd)|*.nsbmd"
+                Filter = MapFile.NSBMDFilter
             };
             if (im.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -4361,22 +4366,30 @@ namespace DSPRE {
         }
         private void exportMapButton_Click(object sender, EventArgs e) {
             SaveFileDialog em = new SaveFileDialog {
-                Filter = "NSBMD model (*.nsbmd)|*.nsbmd",
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
-            if (em.ShowDialog(this) != DialogResult.OK) {
-                return;
-            }
 
-            if (embedTexturesInMapModelCheckBox.Checked) {
-                /* Write textured NSBMD to file */
+            byte[] modelToWrite;
+
+            if (embedTexturesInMapModelCheckBox.Checked) { /* Textured NSBMD file */
+                em.Filter = MapFile.TexturedNSBMDFilter;
+                if (em.ShowDialog(this) != DialogResult.OK) {
+                    return;
+                }
+                
                 string texturePath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4");
                 byte[] texturesToEmbed = File.ReadAllBytes(texturePath);
-                File.WriteAllBytes(em.FileName, DSUtils.BuildNSBMDwithTextures(currentMapFile.mapModelData, texturesToEmbed));
-            } else {
-                File.WriteAllBytes(em.FileName, currentMapFile.mapModelData);
+                modelToWrite = DSUtils.BuildNSBMDwithTextures(currentMapFile.mapModelData, texturesToEmbed);
+            } else { /* Untextured NSBMD file */
+                em.Filter = MapFile.UntexturedNSBMDFilter;
+                if (em.ShowDialog(this) != DialogResult.OK) {
+                    return;
+                }
+
+                modelToWrite = currentMapFile.mapModelData;
             }
 
+            File.WriteAllBytes(em.FileName, modelToWrite);
             MessageBox.Show("Map model exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -4424,12 +4437,9 @@ namespace DSPRE {
 
         #region BDHC Editor
         private void bdhcImportButton_Click(object sender, EventArgs e) {
-            OpenFileDialog it = new OpenFileDialog();
-            if (RomInfo.gameFamily == gFamEnum.DP) {
-                it.Filter = "Terrain File (*.bdhc)|*.bdhc";
-            } else {
-                it.Filter = "Terrain File (*.bdhc, *.bdhcam)|*.bdhc;*.bdhcam";
-            }
+            OpenFileDialog it = new OpenFileDialog() {
+                Filter = RomInfo.gameFamily == gFamEnum.DP ? MapFile.BDHCFilter : MapFile.BDHCamFilter
+            };
 
             if (it.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -4441,9 +4451,10 @@ namespace DSPRE {
         }
         private void bdhcExportButton_Click(object sender, EventArgs e) {
             SaveFileDialog sf = new SaveFileDialog {
-                Filter = "Terrain File (*.bdhc)|*.bdhc",
-                FileName = selectMapComboBox.SelectedItem.ToString()
+                FileName = selectMapComboBox.SelectedItem.ToString(),
+                Filter = RomInfo.gameFamily == gFamEnum.DP ? MapFile.BDHCFilter : MapFile.BDHCamFilter
             };
+
             if (sf.ShowDialog(this) != DialogResult.OK) {
                 return;
             }
@@ -4455,7 +4466,7 @@ namespace DSPRE {
         }
         private void soundPlatesImportButton_Click(object sender, EventArgs e) {
             OpenFileDialog it = new OpenFileDialog {
-                Filter = "BackGround Sound File (*.bgs)|*.bgs"
+                Filter = MapFile.BGSFilter
             };
 
             if (it.ShowDialog(this) != DialogResult.OK) {
@@ -4468,7 +4479,7 @@ namespace DSPRE {
         }
         private void soundPlatesExportButton_Click(object sender, EventArgs e) {
             SaveFileDialog sf = new SaveFileDialog {
-                Filter = "BackGround Sound File (*.bgs)|*.bgs",
+                Filter = MapFile.BGSFilter,
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
             if (sf.ShowDialog(this) != DialogResult.OK) {
@@ -5189,7 +5200,7 @@ namespace DSPRE {
         private void importEventFileButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .evt file */
             OpenFileDialog of = new OpenFileDialog {
-                Filter = "Event File (*.evt, *.ev)|*.evt;*.ev"
+                Filter = EventFile.DefaultFilter
             };
             if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
