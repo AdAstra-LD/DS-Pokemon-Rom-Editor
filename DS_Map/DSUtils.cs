@@ -116,6 +116,20 @@ namespace DSPRE {
             }
 
             string outDir = Path.Combine(cofd.FileName, modelName);
+
+            if (Directory.Exists(outDir)) {
+                if(Directory.GetFiles(outDir).Length > 0) {
+                    DialogResult d = MessageBox.Show($"Directory \"{outDir}\" already exists and is not empty.\nIts contents will be lost.\n\nDo you want to proceed?", "Directory not empty", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (d.Equals(DialogResult.No)) {
+                        return;
+                    } else {
+                        Directory.Delete(outDir, recursive: true);
+                    }
+                } else {
+                    Directory.Delete(outDir, recursive: true);
+                }
+            }
             string tempNSBMDPath = outDir + "_temp.nsbmd";
 
             if (textureData != null && textureData.Length > 0) {
