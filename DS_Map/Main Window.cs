@@ -4397,53 +4397,11 @@ namespace DSPRE {
         }
 
         private void daeExportButton_Click(object sender, EventArgs e) {
-            MessageBox.Show("Choose output folder.\nDSPRE will automatically create a sub-folder in it.", "Awaiting user input", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            CommonOpenFileDialog cofd = new CommonOpenFileDialog {
-                IsFolderPicker = true,
-                Multiselect = false
-            };
-            if (cofd.ShowDialog() != CommonFileDialogResult.Ok) {
-                return;
-            }
-
-            string mapname = selectMapComboBox.SelectedItem.ToString().TrimEnd('\0');
-            string tempNSBMDPath = Path.Combine(cofd.FileName, mapname + "_temp.nsbmd");
-
-            /* Write textured NSBMD to file */
-            byte[] finalModelData = null;
-
-            if (mapTextureComboBox.SelectedIndex < 0) {
-                string texturePath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4");
-                DSUtils.BuildNSBMDwithTextures(currentMapFile.mapModelData, nsbtx: File.ReadAllBytes(texturePath));
-            } else {
-                finalModelData = currentMapFile.mapModelData;
-            }
-
-            File.WriteAllBytes(tempNSBMDPath, finalModelData);
-
-            /* Check correct creation of temp NSBMD file*/
-            if (!File.Exists(tempNSBMDPath)) {
-                MessageBox.Show("NSBMD file corresponding to this map could not be found.\nAborting", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            if( DSUtils.ModelToDAE(tempNSBMDPath, Path.Combine(cofd.FileName, mapname)) != 0) {
-                MessageBox.Show("NSBMD to DAE conversion failed.", "Apicula error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (File.Exists(tempNSBMDPath)) {
-                File.Delete(tempNSBMDPath);
-                
-                if (File.Exists(tempNSBMDPath)) {
-                    MessageBox.Show("Temporary NSBMD file deletion failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            } else {
-                MessageBox.Show("Temporary NSBMD file corresponding to this map disappeared.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            
-            MessageBox.Show("Map model exported and converted successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DSUtils.ModelToDAE(
+                modelName: selectMapComboBox.SelectedItem.ToString().TrimEnd('\0'),
+                modelData: currentMapFile.mapModelData,
+                textureData: mapTextureComboBox.SelectedIndex < 0 ? null : File.ReadAllBytes(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4"))
+            );
         }
         #endregion
 
