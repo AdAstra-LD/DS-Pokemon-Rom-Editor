@@ -45,6 +45,20 @@ namespace DSPRE.ROMFiles {
     /// </summary>
     public class MapFile : RomFile {
         #region Fields
+
+        public static readonly string NSBMDFilter = "NSBMD File (*.nsbmd)|*.nsbmd";
+        public static readonly string TexturedNSBMDFilter = "Textured" + NSBMDFilter;
+        public static readonly string UntexturedNSBMDFilter = "Untextured" + NSBMDFilter;
+
+        public static readonly string MovepermsFilter = "Permissions File (*.per)|*.per";
+
+        public static readonly string BuildingsFilter = "Buildings File (*.bld)|*.bld";
+
+        public static readonly string BDHCFilter = "Terrain File (*.bdhc)|*.bdhc";
+        public static readonly string BDHCamFilter = "Terrain File (*.bdhc, *.bdhcam)|*.bdhc;*.bdhcam";
+        
+        public static readonly string BGSFilter = "BackGround Sound File (*.bgs)|*.bgs";
+
         public bool correctnessFlag = true;
         public static readonly byte mapSize = 32;
 

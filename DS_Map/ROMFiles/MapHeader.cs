@@ -85,6 +85,7 @@ namespace DSPRE.ROMFiles {
     /// </summary>
     public abstract class MapHeader : RomFile {
         /*System*/
+        public static readonly string DefaultFilter = "DSPRE Header File (*.dsh; *.bin)|*.dsh;*.bin";
         public ushort ID { get; set; }
         public static readonly byte length = 24;
         public static readonly string nameSeparator = " -   ";

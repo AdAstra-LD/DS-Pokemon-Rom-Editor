@@ -9,6 +9,8 @@ namespace DSPRE.ROMFiles {
     /// </summary>
     public class EventFile : RomFile {
         #region Fields
+        public static readonly string DefaultFilter = "Event File (*.evt, *.ev)|*.evt;*.ev";
+
         public List<Spawnable> spawnables = new List<Spawnable>();
         public List<Overworld> overworlds = new List<Overworld>();
         public List<Warp> warps = new List<Warp>();

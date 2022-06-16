@@ -12,6 +12,7 @@ using static DSPRE.RomInfo;
 
 namespace DSPRE {
     public static class DSUtils {
+        public static readonly string NDSRomFilter = "NDS File (*.nds)|*.nds";
         public static class ARM9 {
             public static uint address = 0x02000000;
             public class Reader : BinaryReader {
@@ -420,7 +421,6 @@ namespace DSPRE {
                 msWriter.Write(modelLength); //Copy offset to TEX0
                 msWriter.Write(wholeMDL0);
                 msWriter.Write(wholeTEX0);
-                
             }
             return ms.ToArray();
         }

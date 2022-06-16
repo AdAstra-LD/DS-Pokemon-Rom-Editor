@@ -22,9 +22,11 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Class to store map matrix data from Pokémon NDS games
     /// </summary>
-    public class GameMatrix: RomFile
-	{
+    public class GameMatrix: RomFile {
         #region Fields (8)
+        public static readonly string DefaultFilter = "Game Matrix File (*.mtx)|*.mtx";
+
+
         public bool hasHeadersSection { get; set; }
         public bool hasHeightsSection { get; set; }
         public string name { get; set; }

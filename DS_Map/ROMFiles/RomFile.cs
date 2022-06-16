@@ -28,10 +28,10 @@ namespace DSPRE.ROMFiles {
             fileExtension = "*." + fileExtension;
 
             SaveFileDialog sf = new SaveFileDialog {
-                Filter = fileType + ' ' + "(" + fileExtension + ")" + '|' + fileExtension 
+                Filter = $"{fileType} ({fileExtension})|{fileExtension}"
             };
 
-            if (!string.IsNullOrEmpty(suggestedFileName)) {
+            if (!string.IsNullOrWhiteSpace(suggestedFileName)) {
                 sf.FileName = suggestedFileName;
             }
 
