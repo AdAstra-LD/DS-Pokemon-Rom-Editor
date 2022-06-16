@@ -89,6 +89,20 @@ namespace DSPRE {
 
         public const string backupSuffix = ".backup";
 
+        public static string ReadNSBMDname(BinaryReader reader, long? startPos = null) {
+            if (startPos != null) {
+                reader.BaseStream.Position = (long)startPos;
+            }
+
+            if (reader.ReadUInt32() == NSBMD.NDS_TYPE_MDL0) { //MDL0
+                reader.BaseStream.Position += 0x1c;
+            } else {
+                reader.BaseStream.Position += 0x1c + 4;
+            }
+
+            return Encoding.UTF8.GetString(reader.ReadBytes(16));
+        }
+
         public static int ModelToDAE(string inPath, string outPath) {
             Process apicula = new Process();
             apicula.StartInfo.FileName = @"Tools\apicula.exe";
