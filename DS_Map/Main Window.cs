@@ -3551,11 +3551,11 @@ namespace DSPRE {
                 buildingsListBox.SelectedIndex = 0;
             }
 
-            ModelSizeTXT.Text = currentMapFile.mapModelData.Length.ToString() + " B";
-            TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
+            modelSizeLBL.Text = currentMapFile.mapModelData.Length.ToString() + " B";
+            terrainSizeLBL.Text = currentMapFile.bdhc.Length.ToString() + " B";
 
             if (RomInfo.gameFamily == gFamEnum.HGSS) {
-                BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
+                BGSSizeLBL.Text = currentMapFile.bgs.Length.ToString() + " B";
             }
         }
         private void wireframeCheckBox_CheckedChanged(object sender, EventArgs e) {
@@ -4353,7 +4353,7 @@ namespace DSPRE {
             }
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
-            ModelSizeTXT.Text = currentMapFile.mapModelData.Length.ToString() + " B";
+            modelSizeLBL.Text = currentMapFile.mapModelData.Length.ToString() + " B";
 
             string message;
             string title;
@@ -4416,7 +4416,7 @@ namespace DSPRE {
             }
 
             currentMapFile.ImportTerrain(File.ReadAllBytes(it.FileName));
-            TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
+            terrainSizeLBL.Text = currentMapFile.bdhc.Length.ToString() + " B";
             MessageBox.Show("Terrain settings imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void bdhcExportButton_Click(object sender, EventArgs e) {
@@ -4431,7 +4431,7 @@ namespace DSPRE {
 
             File.WriteAllBytes(sf.FileName, currentMapFile.bdhc);
 
-            TerrainSizeTXT.Text = currentMapFile.bdhc.Length.ToString() + " B";
+            terrainSizeLBL.Text = currentMapFile.bdhc.Length.ToString() + " B";
             MessageBox.Show("Terrain settings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void soundPlatesImportButton_Click(object sender, EventArgs e) {
@@ -4444,7 +4444,7 @@ namespace DSPRE {
             }
 
             currentMapFile.ImportSoundPlates(File.ReadAllBytes(it.FileName));
-            BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
+            BGSSizeLBL.Text = currentMapFile.bgs.Length.ToString() + " B";
             MessageBox.Show("BackGround Sound data imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void soundPlatesExportButton_Click(object sender, EventArgs e) {
@@ -4458,12 +4458,12 @@ namespace DSPRE {
 
             File.WriteAllBytes(sf.FileName, currentMapFile.bgs);
 
-            BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
+            BGSSizeLBL.Text = currentMapFile.bgs.Length.ToString() + " B";
             MessageBox.Show("BackGround Sound data exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void soundPlatesBlankButton_Click(object sender, EventArgs e) {
             currentMapFile.bgs = MapFile.blankBGS;
-            BGSSizeTXT.Text = currentMapFile.bgs.Length.ToString() + " B";
+            BGSSizeLBL.Text = currentMapFile.bgs.Length.ToString() + " B";
             MessageBox.Show("BackGround Sound data successfull blanked.\nRemember to save the current map file.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
