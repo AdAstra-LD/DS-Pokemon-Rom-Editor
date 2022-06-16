@@ -1,4 +1,5 @@
 ﻿using LibNDSFormats.NSBMD;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using NarcAPI;
 using System;
 using System.Collections.Generic;
@@ -103,16 +104,55 @@ namespace DSPRE {
             return Encoding.UTF8.GetString(reader.ReadBytes(16));
         }
 
-        public static int ModelToDAE(string inPath, string outPath) {
+        public static void ModelToDAE(string modelName, byte[] modelData, byte[] textureData) {
+            MessageBox.Show("Choose output folder.\nDSPRE will automatically create a sub-folder in it.", "Awaiting user input", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            CommonOpenFileDialog cofd = new CommonOpenFileDialog {
+                IsFolderPicker = true,
+                Multiselect = false
+            };
+            if (cofd.ShowDialog() != CommonFileDialogResult.Ok) {
+                return;
+            }
+
+            string outDir = Path.Combine(cofd.FileName, modelName);
+            string tempNSBMDPath = outDir + "_temp.nsbmd";
+
+            if (textureData != null && textureData.Length > 0) {
+                modelData = DSUtils.BuildNSBMDwithTextures(modelData, textureData);
+            }
+
+            File.WriteAllBytes(tempNSBMDPath, modelData);
+
+            /* Check correct creation of temp NSBMD file*/
+            if (!File.Exists(tempNSBMDPath)) {
+                MessageBox.Show("NSBMD file corresponding to this map could not be found.\nAborting", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             Process apicula = new Process();
             apicula.StartInfo.FileName = @"Tools\apicula.exe";
-            apicula.StartInfo.Arguments = $" convert \"{inPath}\" --output \"{outPath}\"";
+            apicula.StartInfo.Arguments = $" convert \"{tempNSBMDPath}\" --output \"{outDir}\"";
             apicula.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             apicula.StartInfo.CreateNoWindow = true;
             apicula.Start();
             apicula.WaitForExit();
 
-            return apicula.ExitCode;
+            if (File.Exists(tempNSBMDPath)) {
+                File.Delete(tempNSBMDPath);
+
+                if (File.Exists(tempNSBMDPath)) {
+                    MessageBox.Show("Temporary NSBMD file deletion failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            } else {
+                MessageBox.Show("Temporary NSBMD file corresponding to this map disappeared.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            if (apicula.ExitCode == 0) {
+                MessageBox.Show("NSBMD was exported and converted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            } else {
+                MessageBox.Show("NSBMD to DAE conversion failed.", "Apicula error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         public static void WriteToFile(string filepath, byte[] toOutput, uint writeAt = 0, int indexFirstByteToWrite = 0, int? indexLastByteToWrite = null, FileMode fmode = FileMode.OpenOrCreate) {
             using (EasyWriter writer = new EasyWriter(filepath, writeAt, fmode)) {
