@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using LibNDSFormats.NSBMD;
 using LibNDSFormats.NSBTX;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using Tao.OpenGl;
 using static DSPRE.RomInfo;
 
@@ -14,7 +15,10 @@ namespace DSPRE {
         private readonly string folder;
         bool disableHandlers = new bool();
         readonly RomInfo rom;
+
         NSBMD currentNSBMD;
+        byte[] currentModelData;
+
         readonly NSBMDGlRenderer renderer = new NSBMDGlRenderer();
 
         public static float ang = 0.0f;
@@ -24,6 +28,12 @@ namespace DSPRE {
         public static float tempDist = 0.0f;
         public static float tempElev = 0.0f;
         public float perspective = 45f;
+
+        /* Bld Rotation vars */
+        public bool lRot;
+        public bool rRot;
+        public bool uRot;
+        public bool dRot;
         #endregion
 
         public BuildingEditor(RomInfo romInfo) {
@@ -65,8 +75,8 @@ namespace DSPRE {
             for (int currentIndex = 0; currentIndex < modelCount; currentIndex++) {
                 string filePath = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + currentIndex.ToString("D4");
 
-                using (BinaryReader reader = new BinaryReader(File.OpenRead(filePath))) {
-                    string nsbmdName = ReadNSBMDname(reader);
+                using (DSUtils.EasyReader reader = new DSUtils.EasyReader(filePath, 0x14)) {
+                    string nsbmdName = DSUtils.ReadNSBMDname(reader);
                     buildingEditorBldListBox.Items.Add("[" + currentIndex.ToString("D3") + "] " + nsbmdName);
                 }
             }
@@ -147,6 +157,7 @@ namespace DSPRE {
 
         private void buildingOpenGLControl_MouseWheel(object sender, MouseEventArgs e) { // Zoom In/Out
             float val = (float)e.Delta / 200;
+            
             if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift) {
                 dist += val;
             } else {
@@ -161,9 +172,9 @@ namespace DSPRE {
             }
 
             string path = folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + buildingEditorBldListBox.SelectedIndex.ToString("D4");
-            using (Stream fs = new FileStream(path, FileMode.Open)) {
-                currentNSBMD = NSBMDLoader.LoadNSBMD(fs);
-            }
+
+            currentModelData = File.ReadAllBytes(path);
+            currentNSBMD = NSBMDLoader.LoadNSBMD(new MemoryStream(currentModelData));
 
             CreateEmbeddedTexturesFile(buildingEditorBldListBox.SelectedIndex, interiorCheckBox.Checked);
             LoadModelTextures(textureComboBox.SelectedIndex - 1);
@@ -188,7 +199,7 @@ namespace DSPRE {
                 return;
             }
 
-            using (BinaryReader reader = new BinaryReader(new FileStream(im.FileName, FileMode.Open))) {
+            using (DSUtils.EasyReader reader = new DSUtils.EasyReader(im.FileName)) {
                 if (reader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0) {
                     MessageBox.Show("Please select an NSBMD file.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -196,8 +207,7 @@ namespace DSPRE {
                     int currentIndex = buildingEditorBldListBox.SelectedIndex;
 
                     File.Copy(im.FileName, folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + currentIndex.ToString("D4"), true);
-                    string nsbmdName = ReadNSBMDname(reader);
-                    buildingEditorBldListBox.Items[currentIndex] = "[" + currentIndex.ToString("D3") + "] " + nsbmdName;
+                    buildingEditorBldListBox.Items[currentIndex] = "[" + currentIndex.ToString("D3") + "] " + DSUtils.ReadNSBMDname(reader, 0x14);
                     buildingEditorListBox_SelectedIndexChanged(null, null);
                 }
             }
@@ -220,35 +230,114 @@ namespace DSPRE {
             RenderModel();
         }
         private void buildingOpenGLControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
+            byte multiplier = 2;
+            if (e.Modifiers == Keys.Shift) {
+                multiplier = 1;
+            } else if (e.Modifiers == Keys.Control) {
+                multiplier = 4;
+            }
+
             switch (e.KeyCode) {
                 case Keys.Right:
-                    ang += 1;
+                    rRot = true;
+                    lRot = false;
                     break;
                 case Keys.Left:
-                    ang -= 1;
-                    break;
-                case Keys.Down:
-                    elev += 1;
+                    rRot = false;
+                    lRot = true;
                     break;
                 case Keys.Up:
-                    elev -= 1;
+                    dRot = false;
+                    uRot = true;
                     break;
+                case Keys.Down:
+                    dRot = true;
+                    uRot = false;
+                    break;
+            }
+
+            if (rRot ^ lRot) {
+                if (rRot) {
+                    ang += 1 * multiplier;
+                } else if (lRot) {
+                    ang -= 1 * multiplier;
+                }
+            }
+
+            if (uRot ^ dRot) {
+                if (uRot) {
+                    elev -= 1 * multiplier;
+                } else if (dRot) {
+                    elev += 1 * multiplier;
+                }
             }
             RenderModel();
         }
 
-        #region Utils
-        private string ReadNSBMDname(BinaryReader reader) {
-            reader.BaseStream.Position = 0x14;
+        private void bldExportDAEbutton_Click(object sender, EventArgs e) {
+            MessageBox.Show("Choose output folder.\nDSPRE will automatically create a sub-folder in it.", "Awaiting user input", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            if (reader.ReadUInt32() == NSBMD.NDS_TYPE_MDL0) { //MDL0
-                reader.BaseStream.Position = 0x34;
-            } else {
-                reader.BaseStream.Position = 0x38;
+            CommonOpenFileDialog cofd = new CommonOpenFileDialog {
+                IsFolderPicker = true,
+                Multiselect = false
+            };
+            if (cofd.ShowDialog() != CommonFileDialogResult.Ok) {
+                return;
             }
 
-            return Encoding.UTF8.GetString(reader.ReadBytes(16));
+            string bldname = buildingEditorBldListBox.SelectedItem.ToString().TrimEnd('\0');
+            string tempNSBMD = Path.Combine(cofd.FileName, bldname + "_temp.nsbmd");
+
+            /* Write textured NSBMD to file */
+            byte[] finalModelData = null;
+
+            if (textureComboBox.SelectedIndex < 0) {
+                string texturePath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (textureComboBox.SelectedIndex - 1).ToString("D4");
+                DSUtils.BuildNSBMDwithTextures(currentModelData, nsbtx: File.ReadAllBytes(texturePath));
+            } else {
+                finalModelData = currentModelData;
+            }
+
+            File.WriteAllBytes(tempNSBMD, finalModelData);
+
+            if (!File.Exists(tempNSBMD)) {
+                MessageBox.Show("NSBMD file corresponding to this map could not be found.\nAborting", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (DSUtils.ModelToDAE(tempNSBMD, Path.Combine(cofd.FileName, bldname)) != 0) {
+                MessageBox.Show("NSBMD to DAE conversion failed.", "Apicula error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (File.Exists(tempNSBMD)) {
+                File.Delete(tempNSBMD);
+
+                if (File.Exists(tempNSBMD)) {
+                    MessageBox.Show("Temporary NSBMD file deletion failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            } else {
+                MessageBox.Show("Temporary NSBMD file corresponding to this map disappeared.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            MessageBox.Show("Map model exported and converted successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        #endregion
+
+        private void buildingOpenGLControl_KeyUp(object sender, KeyEventArgs e) {
+            switch (e.KeyCode) {
+                case Keys.Right:
+                    rRot = false;
+                    break;
+                case Keys.Left:
+                    lRot = false;
+                    break;
+                case Keys.Up:
+                    uRot = false;
+                    break;
+                case Keys.Down:
+                    dRot = false;
+                    break;
+            }
+        }
     }
 }

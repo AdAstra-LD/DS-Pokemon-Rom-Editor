@@ -3055,17 +3055,20 @@ namespace DSPRE {
                     switch (RomInfo.gameFamily) {
                         case gFamEnum.DP:
                         case gFamEnum.Plat:
-                            reader.BaseStream.Position = 0x10 + reader.ReadUInt32() + reader.ReadUInt32() + 0x34;
+                            reader.BaseStream.Position = 0x10 + reader.ReadUInt32() + reader.ReadUInt32();
                             break;
                         default:
                             reader.BaseStream.Position = 0x12;
                             short bgsSize = reader.ReadInt16();
-                            reader.BaseStream.Position = 0x0;
-                            reader.BaseStream.Position = 0x14 + bgsSize + reader.ReadUInt32() + reader.ReadUInt32() + 0x34;
+                            long backupPos = reader.BaseStream.Position;
+
+                            reader.BaseStream.Position = 0;
+                            reader.BaseStream.Position = backupPos + bgsSize + reader.ReadUInt32() + reader.ReadUInt32();
                             break;
                     };
-                    string nsbmdName = Encoding.UTF8.GetString(reader.ReadBytes(16));
-                    selectMapComboBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + nsbmdName);
+
+                    reader.BaseStream.Position += 0x14;
+                    selectMapComboBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + DSUtils.ReadNSBMDname(reader));
                 }
 
             }
@@ -4405,26 +4408,35 @@ namespace DSPRE {
             }
 
             string mapname = selectMapComboBox.SelectedItem.ToString().TrimEnd('\0');
-            string tempNSBMD = Path.Combine(cofd.FileName, mapname + "_temp.nsbmd");
+            string tempNSBMDPath = Path.Combine(cofd.FileName, mapname + "_temp.nsbmd");
 
             /* Write textured NSBMD to file */
-            string texturePath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4");
-            File.WriteAllBytes(tempNSBMD, DSUtils.BuildNSBMDwithTextures(currentMapFile.mapModelData, nsbtx: File.ReadAllBytes(texturePath)));
+            byte[] finalModelData = null;
 
-            if (!File.Exists(tempNSBMD)) {
+            if (mapTextureComboBox.SelectedIndex < 0) {
+                string texturePath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4");
+                DSUtils.BuildNSBMDwithTextures(currentMapFile.mapModelData, nsbtx: File.ReadAllBytes(texturePath));
+            } else {
+                finalModelData = currentMapFile.mapModelData;
+            }
+
+            File.WriteAllBytes(tempNSBMDPath, finalModelData);
+
+            /* Check correct creation of temp NSBMD file*/
+            if (!File.Exists(tempNSBMDPath)) {
                 MessageBox.Show("NSBMD file corresponding to this map could not be found.\nAborting", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            if( DSUtils.ModelToDAE(tempNSBMD, Path.Combine(cofd.FileName, mapname)) != 0) {
+            if( DSUtils.ModelToDAE(tempNSBMDPath, Path.Combine(cofd.FileName, mapname)) != 0) {
                 MessageBox.Show("NSBMD to DAE conversion failed.", "Apicula error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (File.Exists(tempNSBMD)) {
-                File.Delete(tempNSBMD);
+            if (File.Exists(tempNSBMDPath)) {
+                File.Delete(tempNSBMDPath);
                 
-                if (File.Exists(tempNSBMD)) {
+                if (File.Exists(tempNSBMDPath)) {
                     MessageBox.Show("Temporary NSBMD file deletion failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             } else {
