@@ -77,7 +77,8 @@ Allows you to change the map where the adventure begins and the initial money.
 - Matrix names now appear in the selector.
 
 ### Map Editor:
-- Partial GUI redesign (now with fewer building controls and a more straightforward GUI).
+- GUI redesign (now with a more straightforward GUI).
+- Support for DAE export [Apicula]
 - New BGS Section.
 - Expanded collisions database.
 - Buildings can now be placed and moved with the mouse.
@@ -103,8 +104,8 @@ Allows you to change the map where the adventure begins and the initial money.
 - Created a palette match algorithm.
 
 ### Event Editor:
-- The Standardize Items patch is no longer necessary to edit/add Ground Items.
 - Added mouse support and warps navigation feature.
+- The Standardize Items patch is no longer necessary to edit/add Ground Items.
 - A blue box now appears under each Warp collision as a visual aid for placing Warp events.
 - Events can now be duplicated.
 - New fields (for Spawnables and Triggers).
@@ -112,30 +113,29 @@ Allows you to change the map where the adventure begins and the initial money.
 
 ### Script Editor:
 - Replaced "Search Flag" with "Search any command".
-- Removed script cmd buttons.
-- You can now choose the preferred number format.
-- Added script navigator.
-- Level scripts can be cleared with a button click.
-- The Script Editor can identify and report some errors.
-- Fixed problem with backward jumps.
 - Fixed Text Search and Replace (Results can be double-clicked).
+- Replaced Script Macro buttons with a Script Navigator.
+- You can now choose the preferred number format.
+- Level scripts can be cleared with a button click.
+- The Script Editor can identify and report syntax errors.
+- Fixed backward address jumps.
 - Improved search speed.
 - Fixed script export button.
 
 ### Text Editor:
-- Added New Movement names and changed some of the old ones.
+- Lines can be moved up and down
 - Fixed export button.
 - Added option to show row numbers as hex.
 - Fixed Text Search and Replace (Results can be double-clicked).
 - Improved search speed.
 - Added support for Chinese text.
 
-### Camera Editor:
+### New Camera Editor:
 You can easily change the default camera position in game.
 
-### Trainer Editor:
+### New Trainer Editor:
 Change the Trainer Class, Party, Movesets, AIs and Items of any Trainer in the game.
 
-### Table Editor [HGSS only]:
-- Conditional Music Table: allows you to pick a different Header music to play when a specific flag is set.
+### New Table Editor:
+- Conditional Music Table: allows you to pick a different Header music to play when a specific flag is set. [HGSS only]
 - Pre-Battle Effects: you can now associate many different VS. Sequences and Battle tracks to any Trainer Classes or Pokémon.
