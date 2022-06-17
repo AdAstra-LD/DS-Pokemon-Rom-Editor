@@ -8475,12 +8475,13 @@ namespace DSPRE {
         }
 
         private void trainerClassListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (trainerClassListBox.SelectedIndex < 0) {
+            int selection = trainerClassListBox.SelectedIndex;
+            if (selection < 0) {
                 return;
             }
 
             try {
-                int maxFrames = LoadTrainerClassPic(trainerClassListBox.SelectedIndex);
+                int maxFrames = LoadTrainerClassPic(selection);
                 UpdateTrainerClassPic(trainerClassPicBox);
 
                 trClassFramePreviewUpDown.Maximum = maxFrames;
@@ -8491,7 +8492,7 @@ namespace DSPRE {
 
             trainerClassNameTextbox.Text = GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
 
-            if (trainerClassEncounterMusicDict.TryGetValue((byte)trainerClassListBox.SelectedIndex, out (uint entryOffset, ushort musicD, ushort? musicN) output)) {
+            if (trainerClassEncounterMusicDict.TryGetValue((byte)selection, out (uint entryOffset, ushort musicD, ushort? musicN) output)) {
                 encounterSSEQMainUpDown.Enabled = eyeContactMusicLabel.Enabled = true;
                 encounterSSEQMainUpDown.Value = output.musicD;
             } else {
@@ -8501,7 +8502,7 @@ namespace DSPRE {
 
             eyeContactMusicAltLabel.Enabled = encounterSSEQAltUpDown.Enabled = (encounterSSEQMainUpDown.Enabled && gameFamily == gFamEnum.HGSS);
             encounterSSEQAltUpDown.Value = output.musicN != null ? (ushort)output.musicN : 0;
-            currentTrainerFile.trp.trainerClass = (byte)(sender as ListBox).SelectedIndex;
+            currentTrainerFile.trp.trainerClass = (byte)selection;
         }
 
         private int LoadTrainerClassPic(int trClassID) {
