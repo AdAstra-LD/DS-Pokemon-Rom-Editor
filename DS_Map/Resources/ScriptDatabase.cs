@@ -661,8 +661,14 @@ namespace DSPRE.Resources {
 
             [0x028B] = "CheckEventValidity",
 
+            [0x0297] = "GetBP",
+            [0x0298] = "AddBP",
+            [0x0299] = "SubBP",
+            [0x029A] = "CompareBP",
+
             [0x029F] = "ShakeCamera",
 
+            [0x02A0] = "Battle2vs2",
             [0x02AC] = "ActivateMysteryGift",
             [0x02AD] = "GetOverworldMovement",
 
@@ -1369,7 +1375,7 @@ namespace DSPRE.Resources {
             [0x0286] = new byte[] { 2 },
             [0x0287] = new byte[] { 2 },
             [0x0288] = new byte[] { 2 },
-            [0x0289] = new byte[] { 2, 1, 2, 2, 2, 1, 2 },
+            [0x0289] = new byte[] { 2, 2, 2, 2, 2, 2, 2 },
             [0x028A] = new byte[] { 2 },
             [0x028B] = new byte[] { 1, 2 },
             [0x028C] = new byte[] { 2 },
@@ -1383,8 +1389,8 @@ namespace DSPRE.Resources {
             [0x0294] = new byte[] { 2 },
             [0x0295] = new byte[1] { 0 },
             [0x0296] = new byte[1] { 0 },
-            [0x0297] = new byte[1] { 0 },
-            [0x0298] = new byte[1] { 0 },
+            [0x0297] = new byte[] { 2 },
+            [0x0298] = new byte[] { 2 },
             [0x0299] = new byte[] { 2 },
             [0x029A] = new byte[] { 2, 2 },
             [0x029B] = new byte[] { 2, 2, 2, 2 },
