@@ -28,14 +28,14 @@ namespace NSMBe4.NSBMD
 {
     public class NSBTX
     {
-        DSFileSystem.File f;
-        byte[] data;
-        int texDataOffset;
-        int palDataOffset;
-        int palDefOffset;
-        int palDataSize;
-        int f5texDataOffset;
-        int f5dataOffset;
+        readonly DSFileSystem.File f;
+        readonly byte[] data;
+        readonly int texDataOffset;
+        readonly int palDataOffset;
+        readonly int palDefOffset;
+        readonly int palDataSize;
+        readonly int f5texDataOffset;
+        readonly int f5dataOffset;
         public List<Palette> pal = new List<Palette>();
         public PalettedImage[] textures;
         public PaletteDef[] palettes;
@@ -49,8 +49,7 @@ namespace NSMBe4.NSBMD
             str = new ByteArrayInputStream(data);
 
             bool LZd = false;
-            if (str.readUInt() == 0x37375A4C) //LZ77
-            {
+            if (str.readUInt() == 0x37375A4C) { //LZ77
                 byte[] ndata = new byte[data.Length - 4];
                 Array.Copy(data, 4, ndata, 0, ndata.Length);
 
@@ -63,11 +62,10 @@ namespace NSMBe4.NSBMD
             //ugly, but i'm lazy to implement it properly.
             bool found = false;
             int blockStart = 0;
-            while (str.lengthAvailable(4))
-            {
+            while (str.lengthAvailable(4)) {
                 uint v = str.readUInt();
-                if (v == 0x30584554) // "TEX0"
-                {
+                if (v == 0x30584554) { // "TEX0"
+
                     str.setOrigin(str.getPos() - 4);
                     blockStart = (int)(str.getPos() - 4);
                     found = true;
@@ -78,8 +76,7 @@ namespace NSMBe4.NSBMD
                 //                    str.skipback(3); //just in case its not word-aligned
             }
             str.seek(0);
-            if (!found)
-            {
+            if (!found) {
                 textures = new PalettedImage[0];
                 palettes = new PaletteDef[0];
                 return;
@@ -115,16 +112,16 @@ namespace NSMBe4.NSBMD
             //mgr.Text = f.name + " - Texture Editor";
 
             bool hasFormat5 = false;
-            for (int i = 0; i < textures.Length; i++)
-            {
+            for (int i = 0; i < textures.Length; i++) {
                 int offset = 8 * str.ReadUInt16();
                 ushort param = str.ReadUInt16();
                 int format = (param >> 10) & 7;
 
-                if (format == 5)
+                if (format == 5) {
                     offset += f5texDataOffset;
-                else
+                } else {
                     offset += texDataOffset;
+                }
 
                 int width = 8 << ((param >> 4) & 7);
                 int height = 8 << ((param >> 7) & 7);
@@ -135,17 +132,14 @@ namespace NSMBe4.NSBMD
                 Console.Out.WriteLine(offset.ToString("X8") + " " + format + " " + width + "x" + height + " " + color0 + " LZ" + LZd);
 
                 InlineFile mainfile = new InlineFile(f, offset, size, Image3D.formatNames[format], null, LZd ? InlineFile.CompressionType.LZWithHeaderComp : InlineFile.CompressionType.NoComp);
-                if (format == 5)
-                {
+                if (format == 5) {
                     hasFormat5 = true;
                     int f5size = (width * height) / 16 * 2;
                     InlineFile f5file = new InlineFile(f, f5dataOffset, f5size, Image3D.formatNames[format], null, LZd ? InlineFile.CompressionType.LZWithHeaderComp : InlineFile.CompressionType.NoComp);
 
                     f5dataOffset += f5size;
                     textures[i] = new Image3Dformat5(mainfile, f5file, width, height);
-                }
-                else
-                {
+                } else {
                     textures[i] = new Image3D(mainfile, color0, width, height, format, offset);
                 }
 
@@ -157,9 +151,11 @@ namespace NSMBe4.NSBMD
                                 }*/
             }
 
-            for (int i = 0; i < textures.Length; i++)
-            {
-                if (textures[i] is null) continue;
+            for (int i = 0; i < textures.Length; i++) {
+                if (textures[i] is null) {
+                    continue;
+                }
+
                 textures[i].name = str.ReadString(16);
                 //mgr.m.addImage(textures[i]);
             }
@@ -169,21 +165,21 @@ namespace NSMBe4.NSBMD
             palettes = new PaletteDef[str.readByte()];
             str.skip((uint)(0xE + palettes.Length * 4));
 
-            for (int i = 0; i < palettes.Length; i++)
-            {
+            for (int i = 0; i < palettes.Length; i++) {
                 int offset = 8 * str.ReadUInt16() + palDataOffset + blockStart;
                 str.ReadUInt16();
-                palettes[i] = new PaletteDef();
-                palettes[i].offs = offset;
+                palettes[i] = new PaletteDef {
+                    offs = offset
+                };
             }
 
             Array.Sort(palettes);
 
             for (int i = 0; i < palettes.Length; i++) {
                 palettes[i].name = str.ReadString(16);
-                if (i != palettes.Length - 1)
+                if (i != palettes.Length - 1) {
                     palettes[i].size = palettes[i + 1].offs - palettes[i].offs;
-
+                }
             }
             palettes[palettes.Length - 1].size = blockStart + palDataOffset + palDataSize - palettes[palettes.Length - 1].offs;
 
@@ -347,7 +343,7 @@ namespace NSMBe4.NSBMD
             }
         }
 
-        int[] bpp = { 0, 8, 2, 4, 8, 2, 8, 16 };
+        readonly int[] bpp = { 0, 8, 2, 4, 8, 2, 8, 16 };
 
         public NSBTX_File(FileStream f) {
             EndianBinaryReader er = new EndianBinaryReader(f, Endianness.LittleEndian);
@@ -626,6 +622,44 @@ namespace NSMBe4.NSBMD
                 list2.Add(LibNDSFormats.Utils.Read2BytesAsushort(data, i * 2));
             var b = convert_4x4texel(list1.ToArray(), width, height, list2.ToArray(), pal, rgbaOut);
         }
+
+        internal HashSet<(byte f1, byte f2)> AnalyzeRepetitions() {
+            HashSet<(byte f1, byte f2)> equality = new HashSet<(byte f1, byte f2)>();
+            HashSet<byte> equalY = new HashSet<byte>();
+
+            int texInfoCount = this.TexInfo.infoBlock.TexInfo.Length;
+            for (byte x = 0; x < texInfoCount; x++) {
+                for (byte y = (byte)(x + 1); y < texInfoCount; y++) {
+                    if (!equalY.Contains(x) && !equalY.Contains(y)) {
+                        if (this.TexInfo.infoBlock.TexInfo[x].Image.SequenceEqual(this.TexInfo.infoBlock.TexInfo[y].Image)) {
+                            equality.Add((x, y));
+                            equalY.Add(y);
+                        }
+                    }
+                }
+            }
+
+            return equality;
+        }
+
+        public class DupFrameHashSetComparer : IEqualityComparer<HashSet<(byte f1, byte f2)>> {
+            #region IEqualityComparer<Customer> Members
+
+            public bool Equals(HashSet<(byte f1, byte f2)> x, HashSet<(byte f1, byte f2)> y) {
+                return x.SetEquals(y);
+            }
+
+            public int GetHashCode(HashSet<(byte f1, byte f2)> obj) {
+                int ret = 0;
+                foreach(var key in obj) {
+                    ret += key.GetHashCode();
+                }
+                return ret;
+            }
+
+            #endregion
+        }
+
     }
 
 }
