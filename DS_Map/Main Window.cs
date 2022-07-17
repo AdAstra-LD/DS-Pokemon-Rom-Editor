@@ -8174,25 +8174,24 @@ namespace DSPRE {
             string[] moveNames = RomInfo.GetAttackNames();
 
             foreach(Control c in trainerItemsGroupBox.Controls) {
-                ComboBox cbox = c as ComboBox;
-                cbox.Items.Clear();
-                cbox.Items.AddRange(itemNames);
+                if (c is ComboBox) {
+                    (c as ComboBox).DataSource = new BindingSource(itemNames, string.Empty);
+                }
             }
 
             foreach (ComboBox CB in partyPokemonComboboxList) {
-                CB.Items.Clear();
-                CB.Items.AddRange(pokeNames);
+                CB.DataSource = new BindingSource(pokeNames, string.Empty);
             }
 
             foreach (ComboBox CB in partyItemsComboboxList) {
-                CB.Items.Clear();
-                CB.Items.AddRange(itemNames);
+                CB.DataSource = new BindingSource(itemNames, string.Empty);
             }
 
             foreach (GroupBox movesGroup in partyMovesGroupboxList) {
-                foreach (ComboBox CB in movesGroup.Controls) {
-                    CB.Items.Clear();
-                    CB.Items.AddRange(moveNames);
+                foreach (Control c in movesGroup.Controls) {
+                    if (c is ComboBox) {
+                        (c as ComboBox).DataSource = new BindingSource(moveNames, string.Empty);
+                    }
                 }
             }
 
