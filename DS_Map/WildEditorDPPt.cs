@@ -29,8 +29,6 @@ namespace DSPRE {
 
             currentFile = new EncounterFileDPPt(selectEncounterComboBox.SelectedIndex);
 
-            disableHandlers = false;
-
             foreach (TabPage page in mainTabControl.TabPages) {
                 foreach (Control g in page.Controls) {
                     if (g != null && g is GroupBox) {
@@ -42,6 +40,8 @@ namespace DSPRE {
                     }
                 }
             }
+
+            disableHandlers = false;
 
             SetupControls();
         }
