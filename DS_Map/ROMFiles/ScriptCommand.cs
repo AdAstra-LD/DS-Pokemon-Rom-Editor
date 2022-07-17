@@ -408,8 +408,6 @@ namespace DSPRE.ROMFiles {
                             }
                             goto default;
                         }
-                     
-                        break;
                     }
                 case ParamTypeEnum.OW_DIRECTION: 
                     {
@@ -421,8 +419,6 @@ namespace DSPRE.ROMFiles {
                             }
                             goto default;
                         }
-                        
-                        break;
                     }
                 default:
                     if (Properties.Settings.Default.scriptEditorFormatPreference == (int)NumberStyles.None) {

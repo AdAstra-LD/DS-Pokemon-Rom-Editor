@@ -8033,13 +8033,13 @@ namespace DSPRE {
         private List<PictureBox> partyPokemonItemIconList = new List<PictureBox>();
 
         TrainerFile currentTrainerFile;
-        PaletteBase pal;
-        ImageBase tiles;
-        SpriteBase sprite;
+        PaletteBase trainerPal;
+        ImageBase trainerTile;
+        SpriteBase trainerSprite;
 
-        private PaletteBase[] monIconPals = new PaletteBase[6];
-        private ImageBase[] monIconTiles = new ImageBase[6];
-        private SpriteBase[] monIconSprites = new SpriteBase[6];
+        private readonly PaletteBase[] monIconPals = new PaletteBase[6];
+        private readonly ImageBase[] monIconTiles = new ImageBase[6];
+        private readonly SpriteBase[] monIconSprites = new SpriteBase[6];
 
         Dictionary<byte, (uint entryOffset, ushort musicD, ushort? musicN)> trainerClassEncounterMusicDict;
         private void SetupTrainerClassEncounterMusicTable() {
@@ -8273,34 +8273,28 @@ namespace DSPRE {
                 }
             }
         }
-        private string FixPokenameString(string toFix) {
-            toFix = toFix.ToLower();
-            toFix = toFix.Replace(".", "_"); //Fix Mime Jr. and Mr. Mime
-            toFix = toFix.Replace(" ", "_");
-            toFix = toFix.Replace("'", "_");
-            toFix = toFix.Replace("’", "_");
-            toFix = toFix.Replace(":", "_");
-            toFix = toFix.Replace("-", "_");
-            toFix = toFix.Replace("_D", "_d"); //Fix Farfetch'd
 
-            toFix = toFix.Replace("♀", "F");
-            toFix = toFix.Replace("♂", "M");
-            return toFix;
-        }
-        private void showTrainerEditorPokePic(byte partyPos) {
+        private void ShowPartyPokemonPic(byte partyPos) {
             ComboBox cb = partyPokemonComboboxList[partyPos];
-
             int species = cb.SelectedIndex > 0 ? cb.SelectedIndex : 0;
 
+            PictureBox pb = partyPokemonPictureBoxList[partyPos];
+
+            partyPokemonPictureBoxList[partyPos].Image = GetPokePic(species, pb.Width, pb.Height, monIconPals[partyPos], monIconTiles[partyPos], monIconSprites[partyPos]);
+        }
+        private Image GetPokePic(int species, int w, int h, PaletteBase paletteBase, ImageBase imageBase, SpriteBase spriteBase) {
             bool fiveDigits = false; // some extreme future proofing
+            string filename = "0000";
+
             try {
-                monIconPals[partyPos] = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + "0000", 0, "0000");
+                paletteBase = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + filename, 0, filename);
             } catch (FileNotFoundException) {
-                monIconPals[partyPos] = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + "00000", 0, "00000");
+                filename += '0';
+                paletteBase = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + filename, 0, filename);
                 fiveDigits = true;
             }
 
-            // read table at pointer at 0x02074408 in the arm9 to grab pal ID
+            // read arm9 table to grab pal ID
             int paletteId = 0;
             byte[] iconPalTableBuf;
 
@@ -8316,6 +8310,7 @@ namespace DSPRE {
                     iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x74408, 4);
                     break;
             }
+
             int iconPalTableAddress = (iconPalTableBuf[3] & 0xFF) << 24 | (iconPalTableBuf[2] & 0xFF) << 16 | (iconPalTableBuf[1] & 0xFF) << 8 | (iconPalTableBuf[0] & 0xFF) /* << 0 */;
             string iconTablePath;
 
@@ -8333,59 +8328,56 @@ namespace DSPRE {
             }
 
             if (paletteId != 0) {
-                monIconPals[partyPos].Palette[0] = monIconPals[partyPos].Palette[paletteId]; // update pal 0 to be the new pal
+                paletteBase.Palette[0] = paletteBase.Palette[paletteId]; // update pal 0 to be the new pal
             }
 
             // grab tiles
             int spriteFileID = species + 7;
             string spriteFilename = spriteFileID.ToString("D" + (fiveDigits ? "5" : "4"));
-            monIconTiles[partyPos] = new NCGR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
+            imageBase = new NCGR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
 
             // grab sprite
             int ncerFileId = 2;
             string ncerFileName = ncerFileId.ToString("D" + (fiveDigits ? "5" : "4"));
-            monIconSprites[partyPos] = new NCER(gameDirs[DirNames.monIcons].unpackedDir + "\\" + ncerFileName, 2, ncerFileName);
+            spriteBase = new NCER(gameDirs[DirNames.monIcons].unpackedDir + "\\" + ncerFileName, 2, ncerFileName);
 
             // copy this from the trainer
-            int bank0OAMcount = monIconSprites[partyPos].Banks[0].oams.Length;
+            int bank0OAMcount = spriteBase.Banks[0].oams.Length;
             int[] OAMenabled = new int[bank0OAMcount];
             for (int i = 0; i < OAMenabled.Length; i++) {
                 OAMenabled[i] = i;
             }
 
             // finally compose image
-            Image iconSprite;
             try {
-                iconSprite = monIconSprites[partyPos].Get_Image(monIconTiles[partyPos], monIconPals[partyPos], 0, partyPokemonPictureBoxList[partyPos].Width, partyPokemonPictureBoxList[partyPos].Height, false, false, false, true, true, -1, OAMenabled);
+                return spriteBase.Get_Image(imageBase, paletteBase, 0, w, h, false, false, false, true, true, -1, OAMenabled);
             } catch (FormatException) {
-                iconSprite = global::DSPRE.Properties.Resources.IconPokeball;
+                return Properties.Resources.IconPokeball;
             }
-            partyPokemonPictureBoxList[partyPos].Image = iconSprite;
-
             // default:
             //partyPokemonPictureBoxList[partyPos].Image = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : global::DSPRE.Properties.Resources.IconPokeball;
         }
         private void partyPokemon1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            showTrainerEditorPokePic(0);
+            ShowPartyPokemonPic(0);
         }
         private void partyPokemon2ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            showTrainerEditorPokePic(1);
+            ShowPartyPokemonPic(1);
         }
 
         private void partyPokemon3ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            showTrainerEditorPokePic(2);
+            ShowPartyPokemonPic(2);
         }
 
         private void partyPokemon4ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            showTrainerEditorPokePic(3);
+            ShowPartyPokemonPic(3);
         }
 
         private void partyPokemon5ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            showTrainerEditorPokePic(4);
+            ShowPartyPokemonPic(4);
         }
 
         private void partyPokemon6ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            showTrainerEditorPokePic(5);
+            ShowPartyPokemonPic(5);
         }
 
         private void showTrainerEditorItemPic(byte partyPos) {
@@ -8586,11 +8578,11 @@ namespace DSPRE {
         private int LoadTrainerClassPic(int trClassID) {
             int paletteFileID = (trClassID * 5 + 1);
             string paletteFilename = paletteFileID.ToString("D4");
-            pal = new NCLR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + paletteFilename, paletteFileID, paletteFilename);
+            trainerPal = new NCLR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + paletteFilename, paletteFileID, paletteFilename);
 
             int tilesFileID = trClassID * 5;
             string tilesFilename = tilesFileID.ToString("D4");
-            tiles = new NCGR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + tilesFilename, tilesFileID, tilesFilename);
+            trainerTile = new NCGR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + tilesFilename, tilesFileID, tilesFilename);
 
             if (gameFamily == gFamEnum.DP) {
                 return 0;
@@ -8598,24 +8590,24 @@ namespace DSPRE {
             
             int spriteFileID = (trClassID * 5 + 2);
             string spriteFilename = spriteFileID.ToString("D4");
-            sprite = new NCER(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
+            trainerSprite = new NCER(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
 
-            return sprite.Banks.Length - 1;
+            return trainerSprite.Banks.Length - 1;
         }
         private void UpdateTrainerClassPic(PictureBox pb, int frameNumber = 0) {
-            if (sprite == null) {
+            if (trainerSprite == null) {
                 Console.WriteLine("Sprite is null!");
                 return;
             }
 
-            int bank0OAMcount = sprite.Banks[0].oams.Length;
+            int bank0OAMcount = trainerSprite.Banks[0].oams.Length;
             int[] OAMenabled = new int[bank0OAMcount];
             for (int i = 0; i < OAMenabled.Length; i++) {
                 OAMenabled[i] = i;
             }
 
-            frameNumber = Math.Min(sprite.Banks.Length, frameNumber);
-            Image trSprite = sprite.Get_Image(tiles, pal, frameNumber, trainerClassPicBox.Width, trainerClassPicBox.Height, false, false, false, true, true, -1, OAMenabled);
+            frameNumber = Math.Min(trainerSprite.Banks.Length, frameNumber);
+            Image trSprite = trainerSprite.Get_Image(trainerTile, trainerPal, frameNumber, trainerClassPicBox.Width, trainerClassPicBox.Height, false, false, false, true, true, -1, OAMenabled);
             pb.Image = trSprite;
             pb.Update();
         }
@@ -8777,6 +8769,11 @@ namespace DSPRE {
         uint vsTrainerTableStartAddress;
         uint vsPokemonTableStartAddress;
         uint effectsComboMainTableStartAddress;
+
+        //Show Pokemon Icons
+        private readonly PaletteBase tableEditorMonIconPal;
+        private readonly ImageBase tableEditorMonIconTile;
+        private readonly SpriteBase tableEditorMonIconSprite;
         #endregion
 
         private void SetupConditionalMusicTable() {
@@ -9129,8 +9126,7 @@ namespace DSPRE {
         }
         private void pbEffectsPokemonCombobox_SelectedIndexChanged(object sender, EventArgs e) {
             ComboBox cb = sender as ComboBox;
-            Image pokeIcon = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : null;
-            tbEditorPokeminiPictureBox.Image = pokeIcon;
+            tbEditorPokeminiPictureBox.Image = GetPokePic(cb.SelectedIndex, tbEditorPokeminiPictureBox.Width, tbEditorPokeminiPictureBox.Height, tableEditorMonIconPal, tableEditorMonIconTile, tableEditorMonIconSprite);
             tbEditorPokeminiPictureBox.Update();
         }
 
