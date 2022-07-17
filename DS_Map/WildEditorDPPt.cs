@@ -7,26 +7,16 @@ namespace DSPRE {
     public partial class WildEditorDPPt : Form {
         public string encounterFileFolder { get; private set; }
         EncounterFileDPPt currentFile;
-        bool disableHandlers = new bool();
+        bool disableHandlers = false;
 
         public WildEditorDPPt(string dirPath, string[] names, int encToOpen) {
             InitializeComponent();
             encounterFileFolder = dirPath;
 
+            disableHandlers = true; //
+
             for (int i = 0; i < Directory.GetFiles(encounterFileFolder).Length; i++) {
                 selectEncounterComboBox.Items.Add("Encounters File " + i.ToString());
-            }
-
-            foreach (TabPage page in mainTabControl.TabPages) {
-                foreach (Control g in page.Controls) {
-                    if (g != null && g.GetType() == typeof(GroupBox)) {
-                        foreach (Control c in g.Controls) {
-                            if (c != null && c.GetType() == typeof(ComboBox)) {
-                                (c as ComboBox).Items.AddRange(names);
-                            }
-                        }
-                    }
-                }
             }
 
             if (encToOpen > selectEncounterComboBox.Items.Count) {
@@ -36,6 +26,24 @@ namespace DSPRE {
             } else {
                 selectEncounterComboBox.SelectedIndex = encToOpen;
             }
+
+            currentFile = new EncounterFileDPPt(selectEncounterComboBox.SelectedIndex);
+
+            disableHandlers = false;
+
+            foreach (TabPage page in mainTabControl.TabPages) {
+                foreach (Control g in page.Controls) {
+                    if (g != null && g is GroupBox) {
+                        foreach (Control c in g.Controls) {
+                            if (c != null && c is ComboBox) {
+                                (c as ComboBox).DataSource = new BindingSource(names, string.Empty);
+                            }
+                        }
+                    }
+                }
+            }
+
+            SetupControls();
         }
         private void SetupControls() {
             disableHandlers = true;
@@ -101,87 +109,87 @@ namespace DSPRE {
 
             /* Water encounters controls setup */
             surfSixtyComboBox.SelectedIndex = currentFile.surfPokemon[0];
-            surfSixtyMinUpDown.Value = currentFile.surfMinLevels[0];
-            surfSixtyMaxUpDown.Value = currentFile.surfMaxLevels[0];
+            surfSixtyMinLevelUpDown.Value = currentFile.surfMinLevels[0];
+            surfSixtyMaxLevelUpDown.Value = currentFile.surfMaxLevels[0];
 
             surfThirtyComboBox.SelectedIndex = currentFile.surfPokemon[1];
-            surfThirtyMinUpDown.Value = currentFile.surfMinLevels[1];
-            surfThirtyMaxUpDown.Value = currentFile.surfMaxLevels[1];
+            surfThirtyMinLevelUpDown.Value = currentFile.surfMinLevels[1];
+            surfThirtyMaxLevelUpDown.Value = currentFile.surfMaxLevels[1];
 
             surfFiveComboBox.SelectedIndex = currentFile.surfPokemon[2];
-            surfFiveMinUpDown.Value = currentFile.surfMinLevels[2];
-            surfFiveMaxUpDown.Value = currentFile.surfMaxLevels[2];
+            surfFiveMinLevelUpDown.Value = currentFile.surfMinLevels[2];
+            surfFiveMaxLevelUpDown.Value = currentFile.surfMaxLevels[2];
 
             surfFourComboBox.SelectedIndex = currentFile.surfPokemon[3];
-            surfFourMinUpDown.Value = currentFile.surfMinLevels[3];
-            surfFourMaxUpDown.Value = currentFile.surfMaxLevels[3];
+            surfFourMinLevelUpDown.Value = currentFile.surfMinLevels[3];
+            surfFourMaxLevelUpDown.Value = currentFile.surfMaxLevels[3];
 
             surfOneComboBox.SelectedIndex = currentFile.surfPokemon[4];
-            surfOneMinUpDown.Value = currentFile.surfMinLevels[4];
-            surfOneMaxUpDown.Value = currentFile.surfMaxLevels[4];
+            surfOneMinLevelUpDown.Value = currentFile.surfMinLevels[4];
+            surfOneMaxLevelUpDown.Value = currentFile.surfMaxLevels[4];
 
             /* Old rod encounters controls setup */
             oldRodSixtyComboBox.SelectedIndex = currentFile.oldRodPokemon[0];
-            oldRodSixtyMinUpDown.Value = currentFile.oldRodMinLevels[0];
-            oldRodSixtyMaxUpDown.Value = currentFile.oldRodMaxLevels[0];
+            oldRodSixtyMinLevelUpDown.Value = currentFile.oldRodMinLevels[0];
+            oldRodSixtyMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[0];
 
             oldRodThirtyComboBox.SelectedIndex = currentFile.oldRodPokemon[1];
-            oldRodThirtyMinUpDown.Value = currentFile.oldRodMinLevels[1];
-            oldRodThirtyMaxUpDown.Value = currentFile.oldRodMaxLevels[1];
+            oldRodThirtyMinLevelUpDown.Value = currentFile.oldRodMinLevels[1];
+            oldRodThirtyMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[1];
 
             oldRodFiveComboBox.SelectedIndex = currentFile.oldRodPokemon[2];
-            oldRodFiveMinUpDown.Value = currentFile.oldRodMinLevels[2];
-            oldRodFiveMaxUpDown.Value = currentFile.oldRodMaxLevels[2];
+            oldRodFiveMinLevelUpDown.Value = currentFile.oldRodMinLevels[2];
+            oldRodFiveMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[2];
 
             oldRodFourComboBox.SelectedIndex = currentFile.oldRodPokemon[3];
-            oldRodFourMinUpDown.Value = currentFile.oldRodMinLevels[3];
-            oldRodFourMaxUpDown.Value = currentFile.oldRodMaxLevels[3];
+            oldRodFourMinLevelUpDown.Value = currentFile.oldRodMinLevels[3];
+            oldRodFourMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[3];
 
             oldRodOneComboBox.SelectedIndex = currentFile.oldRodPokemon[4];
-            oldRodOneMinUpDown.Value = currentFile.oldRodMinLevels[4];
-            oldRodOneMaxUpDown.Value = currentFile.oldRodMaxLevels[4];
+            oldRodOneMinLevelUpDown.Value = currentFile.oldRodMinLevels[4];
+            oldRodOneMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[4];
 
             /* Good rod encounters controls setup */
-            goodRodSixtyComboBox.SelectedIndex = currentFile.goodRodPokemon[0];
-            goodRodSixtyMinUpDown.Value = currentFile.goodRodMinLevels[0];
-            goodRodSixtyMaxUpDown.Value = currentFile.goodRodMaxLevels[0];
+            goodRodFirstFortyComboBox.SelectedIndex = currentFile.goodRodPokemon[0];
+            goodRodFirstFortyMinLevelUpDown.Value = currentFile.goodRodMinLevels[0];
+            goodRodFirstFortyMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[0];
 
-            goodRodThirtyComboBox.SelectedIndex = currentFile.goodRodPokemon[1];
-            goodRodThirtyMinUpDown.Value = currentFile.goodRodMinLevels[1];
-            goodRodThirtyMaxUpDown.Value = currentFile.goodRodMaxLevels[1];
+            goodRodSecondFortyComboBox.SelectedIndex = currentFile.goodRodPokemon[1];
+            goodRodSecondFortyMinLevelUpDown.Value = currentFile.goodRodMinLevels[1];
+            goodRodSecondFortyMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[1];
 
-            goodRodFiveComboBox.SelectedIndex = currentFile.goodRodPokemon[2];
-            goodRodFiveMinUpDown.Value = currentFile.goodRodMinLevels[2];
-            goodRodFiveMaxUpDown.Value = currentFile.goodRodMaxLevels[2];
+            goodRodFifteenComboBox.SelectedIndex = currentFile.goodRodPokemon[2];
+            goodRodFifteenMinLevelUpDown.Value = currentFile.goodRodMinLevels[2];
+            goodRodFifteenMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[2];
 
             goodRodFourComboBox.SelectedIndex = currentFile.goodRodPokemon[3];
-            goodRodFourMinUpDown.Value = currentFile.goodRodMinLevels[3];
-            goodRodFourMaxUpDown.Value = currentFile.goodRodMaxLevels[3];
+            goodRodFourMinLevelUpDown.Value = currentFile.goodRodMinLevels[3];
+            goodRodFourMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[3];
 
             goodRodOneComboBox.SelectedIndex = currentFile.goodRodPokemon[4];
-            goodRodOneMinUpDown.Value = currentFile.goodRodMinLevels[4];
-            goodRodOneMaxUpDown.Value = currentFile.goodRodMaxLevels[4];
+            goodRodOneMinLevelUpDown.Value = currentFile.goodRodMinLevels[4];
+            goodRodOneMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[4];
 
             /* Super rod encounters controls setup */
-            superRodSixtyComboBox.SelectedIndex = currentFile.superRodPokemon[0];
-            superRodSixtyMinUpDown.Value = currentFile.superRodMinLevels[0];
-            superRodSixtyMaxUpDown.Value = currentFile.superRodMaxLevels[0];
+            superRodFirstFortyComboBox.SelectedIndex = currentFile.superRodPokemon[0];
+            superRodFirstFortyMinLevelUpDown.Value = currentFile.superRodMinLevels[0];
+            superRodFirstFortyMaxLevelUpDown.Value = currentFile.superRodMaxLevels[0];
 
-            superRodThirtyComboBox.SelectedIndex = currentFile.superRodPokemon[1];
-            superRodThirtyMinUpDown.Value = currentFile.superRodMinLevels[1];
-            superRodThirtyMaxUpDown.Value = currentFile.superRodMaxLevels[1];
+            superRodSecondFortyComboBox.SelectedIndex = currentFile.superRodPokemon[1];
+            superRodSecondFortyMinLevelUpDown.Value = currentFile.superRodMinLevels[1];
+            superRodSecondFortyMaxLevelUpDown.Value = currentFile.superRodMaxLevels[1];
 
-            superRodFiveComboBox.SelectedIndex = currentFile.superRodPokemon[2];
-            superRodFiveMinUpDown.Value = currentFile.superRodMinLevels[2];
-            superRodFiveMaxUpDown.Value = currentFile.superRodMaxLevels[2];
+            superRodFifteenComboBox.SelectedIndex = currentFile.superRodPokemon[2];
+            superRodFifteenMinLevelUpDown.Value = currentFile.superRodMinLevels[2];
+            superRodFifteenMaxLevelUpDown.Value = currentFile.superRodMaxLevels[2];
 
             superRodFourComboBox.SelectedIndex = currentFile.superRodPokemon[3];
-            superRodFourMinUpDown.Value = currentFile.superRodMinLevels[3];
-            superRodFourMaxUpDown.Value = currentFile.superRodMaxLevels[3];
+            superRodFourMinLevelUpDown.Value = currentFile.superRodMinLevels[3];
+            superRodFourMaxLevelUpDown.Value = currentFile.superRodMaxLevels[3];
 
             superRodOneComboBox.SelectedIndex = currentFile.superRodPokemon[4];
-            superRodOneMinUpDown.Value = currentFile.superRodMinLevels[4];
-            superRodOneMaxUpDown.Value = currentFile.superRodMaxLevels[4];
+            superRodOneMinLevelUpDown.Value = currentFile.superRodMinLevels[4];
+            superRodOneMaxLevelUpDown.Value = currentFile.superRodMaxLevels[4];
 
             disableHandlers = false;
         }
@@ -205,6 +213,10 @@ namespace DSPRE {
             SetupControls();
         }
         private void selectEncounterComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            if (disableHandlers) {
+                return;
+            }
+
             currentFile = new EncounterFileDPPt(selectEncounterComboBox.SelectedIndex);
             SetupControls();
         }
@@ -463,23 +475,23 @@ namespace DSPRE {
             }
             currentFile.oldRodPokemon[4] = (ushort)oldRodOneComboBox.SelectedIndex;
         }
-        private void goodRodSixtyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+        private void goodRodFirstFortyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.goodRodPokemon[0] = (ushort)goodRodSixtyComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[0] = (ushort)goodRodFirstFortyComboBox.SelectedIndex;
         }
-        private void goodRodThirtyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+        private void goodRodSecondFortyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.goodRodPokemon[1] = (ushort)goodRodThirtyComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[1] = (ushort)goodRodSecondFortyComboBox.SelectedIndex;
         }
-        private void goodRodFiveComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+        private void goodRodFifteenComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.goodRodPokemon[2] = (ushort)goodRodFiveComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[2] = (ushort)goodRodFifteenComboBox.SelectedIndex;
         }
         private void goodRodFourComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
@@ -493,23 +505,23 @@ namespace DSPRE {
             }
             currentFile.goodRodPokemon[4] = (ushort)goodRodOneComboBox.SelectedIndex;
         }
-        private void superRodSixtyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+        private void superRodFirstFortyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.superRodPokemon[0] = (ushort)superRodSixtyComboBox.SelectedIndex;
+            currentFile.superRodPokemon[0] = (ushort)superRodFirstFortyComboBox.SelectedIndex;
         }
-        private void superRodThirtyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+        private void superRodSecondFortyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return;
             }
-            currentFile.superRodPokemon[1] = (ushort)superRodThirtyComboBox.SelectedIndex;
+            currentFile.superRodPokemon[1] = (ushort)superRodSecondFortyComboBox.SelectedIndex;
         }
-        private void superRodFiveComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+        private void superRodFifteenComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return;
             }
-            currentFile.superRodPokemon[2] = (ushort)superRodFiveComboBox.SelectedIndex;
+            currentFile.superRodPokemon[2] = (ushort)superRodFifteenComboBox.SelectedIndex;
         }
         private void superRodFourComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) {
@@ -599,248 +611,248 @@ namespace DSPRE {
         }
 
         /* Water levels controls */
-        private void surfSixtyMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void surfSixtyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return; 
             }
-            currentFile.surfMinLevels[0] = (byte)surfSixtyMinUpDown.Value;
+            currentFile.surfMinLevels[0] = (byte)surfSixtyMinLevelUpDown.Value;
         }
-        private void surfThirtyMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void surfThirtyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return;
             }
-            currentFile.surfMinLevels[1] = (byte)surfThirtyMinUpDown.Value;
+            currentFile.surfMinLevels[1] = (byte)surfThirtyMinLevelUpDown.Value;
         }
-        private void surfFiveMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void surfFiveMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.surfMinLevels[2] = (byte)surfFiveMinUpDown.Value;
+            currentFile.surfMinLevels[2] = (byte)surfFiveMinLevelUpDown.Value;
         }
-        private void surfFourMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void surfFourMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return;
             }
-            currentFile.surfMinLevels[3] = (byte)surfFourMinUpDown.Value;
+            currentFile.surfMinLevels[3] = (byte)surfFourMinLevelUpDown.Value;
         }
-        private void surfOneMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void surfOneMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return;
             }
-            currentFile.surfMinLevels[4] = (byte)surfOneMinUpDown.Value;
+            currentFile.surfMinLevels[4] = (byte)surfOneMinLevelUpDown.Value;
         }
-        private void surfSixtyMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void surfSixtyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.surfMaxLevels[0] = (byte)surfSixtyMaxUpDown.Value;
+            currentFile.surfMaxLevels[0] = (byte)surfSixtyMaxLevelUpDown.Value;
         }
-        private void surfThirtyMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void surfThirtyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return;
             }
-            currentFile.surfMaxLevels[1] = (byte)surfThirtyMaxUpDown.Value;
+            currentFile.surfMaxLevels[1] = (byte)surfThirtyMaxLevelUpDown.Value;
         }
-        private void surfFiveMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void surfFiveMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return;
             }
-            currentFile.surfMaxLevels[2] = (byte)surfFiveMaxUpDown.Value;
+            currentFile.surfMaxLevels[2] = (byte)surfFiveMaxLevelUpDown.Value;
         }
-        private void surfFourMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void surfFourMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return;
             }
-            currentFile.surfMaxLevels[3] = (byte)surfFourMaxUpDown.Value;
+            currentFile.surfMaxLevels[3] = (byte)surfFourMaxLevelUpDown.Value;
         }
-        private void surfOneMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void surfOneMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return;
             }
-            currentFile.surfMaxLevels[4] = (byte)surfOneMaxUpDown.Value;
+            currentFile.surfMaxLevels[4] = (byte)surfOneMaxLevelUpDown.Value;
         }
 
-        private void oldRodSixtyMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void oldRodSixtyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return; 
             }
-            currentFile.oldRodMinLevels[0] = (byte)oldRodSixtyMinUpDown.Value;
+            currentFile.oldRodMinLevels[0] = (byte)oldRodSixtyMinLevelUpDown.Value;
         }
-        private void oldRodThirtyMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void oldRodThirtyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.oldRodMinLevels[1] = (byte)oldRodThirtyMinUpDown.Value;
+            currentFile.oldRodMinLevels[1] = (byte)oldRodThirtyMinLevelUpDown.Value;
         }
-        private void oldRodFiveMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void oldRodFiveMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return; 
             }
-            currentFile.oldRodMinLevels[2] = (byte)oldRodFiveMinUpDown.Value;
+            currentFile.oldRodMinLevels[2] = (byte)oldRodFiveMinLevelUpDown.Value;
         }
-        private void oldRodFourMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void oldRodFourMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return;
             }
-            currentFile.oldRodMinLevels[3] = (byte)oldRodFourMinUpDown.Value;
+            currentFile.oldRodMinLevels[3] = (byte)oldRodFourMinLevelUpDown.Value;
         }
-        private void oldRodOneMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void oldRodOneMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.oldRodMinLevels[4] = (byte)oldRodOneMinUpDown.Value;
+            currentFile.oldRodMinLevels[4] = (byte)oldRodOneMinLevelUpDown.Value;
         }
-        private void oldRodSixtyMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void oldRodSixtyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return;
             }
-            currentFile.oldRodMaxLevels[0] = (byte)oldRodSixtyMaxUpDown.Value;
+            currentFile.oldRodMaxLevels[0] = (byte)oldRodSixtyMaxLevelUpDown.Value;
         }
-        private void oldRodThirtyMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void oldRodThirtyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.oldRodMaxLevels[1] = (byte)oldRodThirtyMaxUpDown.Value;
+            currentFile.oldRodMaxLevels[1] = (byte)oldRodThirtyMaxLevelUpDown.Value;
         }
-        private void oldRodFiveMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void oldRodFiveMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return;
             }
-            currentFile.oldRodMaxLevels[2] = (byte)oldRodFiveMaxUpDown.Value;
+            currentFile.oldRodMaxLevels[2] = (byte)oldRodFiveMaxLevelUpDown.Value;
         }
-        private void oldRodFourMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void oldRodFourMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return;
             }
-            currentFile.oldRodMaxLevels[3] = (byte)oldRodFourMaxUpDown.Value;
+            currentFile.oldRodMaxLevels[3] = (byte)oldRodFourMaxLevelUpDown.Value;
         }
-        private void oldRodOneMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void oldRodOneMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return; 
             }
-            currentFile.oldRodMaxLevels[4] = (byte)oldRodOneMaxUpDown.Value;
+            currentFile.oldRodMaxLevels[4] = (byte)oldRodOneMaxLevelUpDown.Value;
         }
 
-        private void goodRodSixtyMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void goodRodFirstFortyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return;
             }
-            currentFile.goodRodMinLevels[0] = (byte)goodRodSixtyMinUpDown.Value;
+            currentFile.goodRodMinLevels[0] = (byte)goodRodFirstFortyMinLevelUpDown.Value;
         }
-        private void goodRodThirtyMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void goodRodSecondFortyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return;
             }
-            currentFile.goodRodMinLevels[1] = (byte)goodRodThirtyMinUpDown.Value;
+            currentFile.goodRodMinLevels[1] = (byte)goodRodSecondFortyMinLevelUpDown.Value;
         }
-        private void goodRodFiveMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void goodRodFifteenMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return;
             }
-            currentFile.goodRodMinLevels[2] = (byte)goodRodFiveMinUpDown.Value;
+            currentFile.goodRodMinLevels[2] = (byte)goodRodFifteenMinLevelUpDown.Value;
         }
-        private void goodRodFourMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void goodRodFourMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return;
             }
-            currentFile.goodRodMinLevels[3] = (byte)goodRodFourMinUpDown.Value;
+            currentFile.goodRodMinLevels[3] = (byte)goodRodFourMinLevelUpDown.Value;
         }
-        private void goodRodOneMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void goodRodOneMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return;
             }
-            currentFile.goodRodMinLevels[4] = (byte)goodRodOneMinUpDown.Value;
+            currentFile.goodRodMinLevels[4] = (byte)goodRodOneMinLevelUpDown.Value;
         }
-        private void goodRodSixtyMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void goodRodFirstFortyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.goodRodMaxLevels[0] = (byte)goodRodSixtyMaxUpDown.Value;
+            currentFile.goodRodMaxLevels[0] = (byte)goodRodFirstFortyMaxLevelUpDown.Value;
         }
-        private void goodRodThirtyMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void goodRodSecondFortyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.goodRodMaxLevels[1] = (byte)goodRodThirtyMaxUpDown.Value;
+            currentFile.goodRodMaxLevels[1] = (byte)goodRodSecondFortyMaxLevelUpDown.Value;
         }
-        private void goodRodFiveMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void goodRodFifteenMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return; 
             }
-            currentFile.goodRodMaxLevels[2] = (byte)goodRodFiveMaxUpDown.Value;
+            currentFile.goodRodMaxLevels[2] = (byte)goodRodFifteenMaxLevelUpDown.Value;
         }
-        private void goodRodFourMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void goodRodFourMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return; 
             }
-            currentFile.goodRodMaxLevels[3] = (byte)goodRodFourMaxUpDown.Value;
+            currentFile.goodRodMaxLevels[3] = (byte)goodRodFourMaxLevelUpDown.Value;
         }
-        private void goodRodOneMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void goodRodOneMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return;
             }
-            currentFile.goodRodMaxLevels[4] = (byte)goodRodOneMaxUpDown.Value;
+            currentFile.goodRodMaxLevels[4] = (byte)goodRodOneMaxLevelUpDown.Value;
         }
 
-        private void superRodSixtyMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void superRodFirstFortyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.superRodMinLevels[0] = (byte)superRodSixtyMinUpDown.Value;
+            currentFile.superRodMinLevels[0] = (byte)superRodFirstFortyMinLevelUpDown.Value;
         }
-        private void superRodThirtyMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void superRodSecondFortyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.superRodMinLevels[1] = (byte)superRodThirtyMinUpDown.Value;
+            currentFile.superRodMinLevels[1] = (byte)superRodSecondFortyMinLevelUpDown.Value;
         }
-        private void superRodFiveMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void superRodFifteenMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return; 
             }
-            currentFile.superRodMinLevels[2] = (byte)superRodFiveMinUpDown.Value;
+            currentFile.superRodMinLevels[2] = (byte)superRodFifteenMinLevelUpDown.Value;
         }
-        private void superRodFourMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void superRodFourMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return;
             }
-            currentFile.superRodMinLevels[3] = (byte)superRodFourMinUpDown.Value;
+            currentFile.superRodMinLevels[3] = (byte)superRodFourMinLevelUpDown.Value;
         }
-        private void superRodOneMinUpDown_ValueChanged(object sender, EventArgs e) {
+        private void superRodOneMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return; 
             }
-            currentFile.superRodMinLevels[4] = (byte)superRodOneMinUpDown.Value;
+            currentFile.superRodMinLevels[4] = (byte)superRodOneMinLevelUpDown.Value;
         }
-        private void superRodSixtyMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void superRodFirstFortyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.superRodMaxLevels[0] = (byte)superRodSixtyMaxUpDown.Value;
+            currentFile.superRodMaxLevels[0] = (byte)superRodFirstFortyMaxLevelUpDown.Value;
         }
-        private void superRodThirtyMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void superRodSecondFortyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.superRodMaxLevels[1] = (byte)superRodThirtyMaxUpDown.Value;
+            currentFile.superRodMaxLevels[1] = (byte)superRodSecondFortyMaxLevelUpDown.Value;
         }
-        private void superRodFiveMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void superRodFifteenMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return;
             }
-            currentFile.superRodMaxLevels[2] = (byte)superRodFiveMaxUpDown.Value;
+            currentFile.superRodMaxLevels[2] = (byte)superRodFifteenMaxLevelUpDown.Value;
         }
-        private void superRodFourMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void superRodFourMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.superRodMaxLevels[3] = (byte)superRodFourMaxUpDown.Value;
+            currentFile.superRodMaxLevels[3] = (byte)superRodFourMaxLevelUpDown.Value;
         }
-        private void superRodOneMaxUpDown_ValueChanged(object sender, EventArgs e) {
+        private void superRodOneMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
                 return; 
             }
-            currentFile.superRodMaxLevels[4] = (byte)superRodOneMaxUpDown.Value;
+            currentFile.superRodMaxLevels[4] = (byte)superRodOneMaxLevelUpDown.Value;
         }
 
         /* Encounter rate controls */

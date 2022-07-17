@@ -141,74 +141,74 @@
             this.label60 = new System.Windows.Forms.Label();
             this.superRodRateUpDown = new System.Windows.Forms.NumericUpDown();
             this.label69 = new System.Windows.Forms.Label();
-            this.superRodOneMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.superRodOneMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.superRodOneMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.superRodOneMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label70 = new System.Windows.Forms.Label();
             this.superRodOneComboBox = new System.Windows.Forms.ComboBox();
-            this.superRodFourMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.superRodFourMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.superRodFourMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.superRodFourMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label71 = new System.Windows.Forms.Label();
             this.superRodFourComboBox = new System.Windows.Forms.ComboBox();
-            this.superRodFiveMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.superRodFiveMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.superRodFifteenMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.superRodFifteenMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label72 = new System.Windows.Forms.Label();
-            this.superRodFiveComboBox = new System.Windows.Forms.ComboBox();
-            this.superRodThirtyMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.superRodThirtyMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.superRodFifteenComboBox = new System.Windows.Forms.ComboBox();
+            this.superRodSecondFortyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.superRodSecondFortyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label73 = new System.Windows.Forms.Label();
-            this.superRodThirtyComboBox = new System.Windows.Forms.ComboBox();
-            this.superRodSixtyMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.superRodSixtyMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.superRodSecondFortyComboBox = new System.Windows.Forms.ComboBox();
+            this.superRodFirstFortyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.superRodFirstFortyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label74 = new System.Windows.Forms.Label();
-            this.superRodSixtyComboBox = new System.Windows.Forms.ComboBox();
+            this.superRodFirstFortyComboBox = new System.Windows.Forms.ComboBox();
             this.goodRodGroupBox = new System.Windows.Forms.GroupBox();
             this.label51 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
             this.goodRodRateUpDown = new System.Windows.Forms.NumericUpDown();
             this.label53 = new System.Windows.Forms.Label();
-            this.goodRodOneMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.goodRodOneMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.goodRodOneMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.goodRodOneMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label54 = new System.Windows.Forms.Label();
             this.goodRodOneComboBox = new System.Windows.Forms.ComboBox();
-            this.goodRodFourMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.goodRodFourMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.goodRodFourMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.goodRodFourMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label55 = new System.Windows.Forms.Label();
             this.goodRodFourComboBox = new System.Windows.Forms.ComboBox();
-            this.goodRodFiveMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.goodRodFiveMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.goodRodFifteenMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.goodRodFifteenMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label56 = new System.Windows.Forms.Label();
-            this.goodRodFiveComboBox = new System.Windows.Forms.ComboBox();
-            this.goodRodThirtyMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.goodRodThirtyMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.goodRodFifteenComboBox = new System.Windows.Forms.ComboBox();
+            this.goodRodSecondFortyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.goodRodSecondFortyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label57 = new System.Windows.Forms.Label();
-            this.goodRodThirtyComboBox = new System.Windows.Forms.ComboBox();
-            this.goodRodSixtyMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.goodRodSixtyMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.goodRodSecondFortyComboBox = new System.Windows.Forms.ComboBox();
+            this.goodRodFirstFortyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.goodRodFirstFortyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label58 = new System.Windows.Forms.Label();
-            this.goodRodSixtyComboBox = new System.Windows.Forms.ComboBox();
+            this.goodRodFirstFortyComboBox = new System.Windows.Forms.ComboBox();
             this.oldRodGroupBox = new System.Windows.Forms.GroupBox();
             this.label43 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
             this.oldRodRateUpDown = new System.Windows.Forms.NumericUpDown();
             this.label45 = new System.Windows.Forms.Label();
-            this.oldRodOneMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.oldRodOneMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.oldRodOneMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.oldRodOneMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label46 = new System.Windows.Forms.Label();
             this.oldRodOneComboBox = new System.Windows.Forms.ComboBox();
-            this.oldRodFourMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.oldRodFourMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.oldRodFourMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.oldRodFourMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label47 = new System.Windows.Forms.Label();
             this.oldRodFourComboBox = new System.Windows.Forms.ComboBox();
-            this.oldRodFiveMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.oldRodFiveMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.oldRodFiveMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.oldRodFiveMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label48 = new System.Windows.Forms.Label();
             this.oldRodFiveComboBox = new System.Windows.Forms.ComboBox();
-            this.oldRodThirtyMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.oldRodThirtyMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.oldRodThirtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.oldRodThirtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label49 = new System.Windows.Forms.Label();
             this.oldRodThirtyComboBox = new System.Windows.Forms.ComboBox();
-            this.oldRodSixtyMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.oldRodSixtyMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.oldRodSixtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.oldRodSixtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label50 = new System.Windows.Forms.Label();
             this.oldRodSixtyComboBox = new System.Windows.Forms.ComboBox();
             this.surfGroupBox = new System.Windows.Forms.GroupBox();
@@ -216,24 +216,24 @@
             this.label67 = new System.Windows.Forms.Label();
             this.surfRateUpDown = new System.Windows.Forms.NumericUpDown();
             this.label61 = new System.Windows.Forms.Label();
-            this.surfOneMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.surfOneMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.surfOneMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.surfOneMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label62 = new System.Windows.Forms.Label();
             this.surfOneComboBox = new System.Windows.Forms.ComboBox();
-            this.surfFourMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.surfFourMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.surfFourMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.surfFourMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label63 = new System.Windows.Forms.Label();
             this.surfFourComboBox = new System.Windows.Forms.ComboBox();
-            this.surfFiveMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.surfFiveMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.surfFiveMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.surfFiveMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label64 = new System.Windows.Forms.Label();
             this.surfFiveComboBox = new System.Windows.Forms.ComboBox();
-            this.surfThirtyMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.surfThirtyMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.surfThirtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.surfThirtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label65 = new System.Windows.Forms.Label();
             this.surfThirtyComboBox = new System.Windows.Forms.ComboBox();
-            this.surfSixtyMaxUpDown = new System.Windows.Forms.NumericUpDown();
-            this.surfSixtyMinUpDown = new System.Windows.Forms.NumericUpDown();
+            this.surfSixtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.surfSixtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label66 = new System.Windows.Forms.Label();
             this.surfSixtyComboBox = new System.Windows.Forms.ComboBox();
             this.repairAllButton = new System.Windows.Forms.Button();
@@ -266,52 +266,52 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.superRodGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.superRodRateUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodOneMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodOneMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodFourMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodFourMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodFiveMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodFiveMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodThirtyMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodThirtyMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodSixtyMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodSixtyMinUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodOneMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodOneMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodFourMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodFourMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodFifteenMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodFifteenMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodSecondFortyMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodSecondFortyMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodFirstFortyMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodFirstFortyMinLevelUpDown)).BeginInit();
             this.goodRodGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.goodRodRateUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodOneMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodOneMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodFourMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodFourMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodFiveMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodFiveMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodThirtyMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodThirtyMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodSixtyMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodSixtyMinUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodOneMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodOneMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodFourMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodFourMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodFifteenMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodFifteenMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodSecondFortyMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodSecondFortyMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodFirstFortyMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodFirstFortyMinLevelUpDown)).BeginInit();
             this.oldRodGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.oldRodRateUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodOneMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodOneMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodFourMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodFourMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodFiveMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodFiveMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodThirtyMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodThirtyMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodSixtyMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodSixtyMinUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodOneMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodOneMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodFourMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodFourMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodFiveMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodFiveMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodThirtyMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodThirtyMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodSixtyMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodSixtyMinLevelUpDown)).BeginInit();
             this.surfGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.surfRateUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfOneMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfOneMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfFourMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfFourMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfFiveMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfFiveMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMinUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMaxUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMinUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfOneMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfOneMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfFourMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfFourMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfFiveMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfFiveMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMinLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMaxLevelUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMinLevelUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // encounterFileLabel
@@ -1396,26 +1396,26 @@
             this.superRodGroupBox.Controls.Add(this.label60);
             this.superRodGroupBox.Controls.Add(this.superRodRateUpDown);
             this.superRodGroupBox.Controls.Add(this.label69);
-            this.superRodGroupBox.Controls.Add(this.superRodOneMaxUpDown);
-            this.superRodGroupBox.Controls.Add(this.superRodOneMinUpDown);
+            this.superRodGroupBox.Controls.Add(this.superRodOneMaxLevelUpDown);
+            this.superRodGroupBox.Controls.Add(this.superRodOneMinLevelUpDown);
             this.superRodGroupBox.Controls.Add(this.label70);
             this.superRodGroupBox.Controls.Add(this.superRodOneComboBox);
-            this.superRodGroupBox.Controls.Add(this.superRodFourMaxUpDown);
-            this.superRodGroupBox.Controls.Add(this.superRodFourMinUpDown);
+            this.superRodGroupBox.Controls.Add(this.superRodFourMaxLevelUpDown);
+            this.superRodGroupBox.Controls.Add(this.superRodFourMinLevelUpDown);
             this.superRodGroupBox.Controls.Add(this.label71);
             this.superRodGroupBox.Controls.Add(this.superRodFourComboBox);
-            this.superRodGroupBox.Controls.Add(this.superRodFiveMaxUpDown);
-            this.superRodGroupBox.Controls.Add(this.superRodFiveMinUpDown);
+            this.superRodGroupBox.Controls.Add(this.superRodFifteenMaxLevelUpDown);
+            this.superRodGroupBox.Controls.Add(this.superRodFifteenMinLevelUpDown);
             this.superRodGroupBox.Controls.Add(this.label72);
-            this.superRodGroupBox.Controls.Add(this.superRodFiveComboBox);
-            this.superRodGroupBox.Controls.Add(this.superRodThirtyMaxUpDown);
-            this.superRodGroupBox.Controls.Add(this.superRodThirtyMinUpDown);
+            this.superRodGroupBox.Controls.Add(this.superRodFifteenComboBox);
+            this.superRodGroupBox.Controls.Add(this.superRodSecondFortyMaxLevelUpDown);
+            this.superRodGroupBox.Controls.Add(this.superRodSecondFortyMinLevelUpDown);
             this.superRodGroupBox.Controls.Add(this.label73);
-            this.superRodGroupBox.Controls.Add(this.superRodThirtyComboBox);
-            this.superRodGroupBox.Controls.Add(this.superRodSixtyMaxUpDown);
-            this.superRodGroupBox.Controls.Add(this.superRodSixtyMinUpDown);
+            this.superRodGroupBox.Controls.Add(this.superRodSecondFortyComboBox);
+            this.superRodGroupBox.Controls.Add(this.superRodFirstFortyMaxLevelUpDown);
+            this.superRodGroupBox.Controls.Add(this.superRodFirstFortyMinLevelUpDown);
             this.superRodGroupBox.Controls.Add(this.label74);
-            this.superRodGroupBox.Controls.Add(this.superRodSixtyComboBox);
+            this.superRodGroupBox.Controls.Add(this.superRodFirstFortyComboBox);
             this.superRodGroupBox.Location = new System.Drawing.Point(408, 312);
             this.superRodGroupBox.Name = "superRodGroupBox";
             this.superRodGroupBox.Size = new System.Drawing.Size(325, 220);
@@ -1464,21 +1464,21 @@
             this.label69.TabIndex = 38;
             this.label69.Text = "Rate";
             // 
-            // superRodOneMaxUpDown
+            // superRodOneMaxLevelUpDown
             // 
-            this.superRodOneMaxUpDown.Location = new System.Drawing.Point(265, 186);
-            this.superRodOneMaxUpDown.Name = "superRodOneMaxUpDown";
-            this.superRodOneMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.superRodOneMaxUpDown.TabIndex = 22;
-            this.superRodOneMaxUpDown.ValueChanged += new System.EventHandler(this.superRodOneMaxUpDown_ValueChanged);
+            this.superRodOneMaxLevelUpDown.Location = new System.Drawing.Point(265, 186);
+            this.superRodOneMaxLevelUpDown.Name = "superRodOneMaxLevelUpDown";
+            this.superRodOneMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.superRodOneMaxLevelUpDown.TabIndex = 22;
+            this.superRodOneMaxLevelUpDown.ValueChanged += new System.EventHandler(this.superRodOneMaxLevelUpDown_ValueChanged);
             // 
-            // superRodOneMinUpDown
+            // superRodOneMinLevelUpDown
             // 
-            this.superRodOneMinUpDown.Location = new System.Drawing.Point(217, 186);
-            this.superRodOneMinUpDown.Name = "superRodOneMinUpDown";
-            this.superRodOneMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.superRodOneMinUpDown.TabIndex = 21;
-            this.superRodOneMinUpDown.ValueChanged += new System.EventHandler(this.superRodOneMinUpDown_ValueChanged);
+            this.superRodOneMinLevelUpDown.Location = new System.Drawing.Point(217, 186);
+            this.superRodOneMinLevelUpDown.Name = "superRodOneMinLevelUpDown";
+            this.superRodOneMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.superRodOneMinLevelUpDown.TabIndex = 21;
+            this.superRodOneMinLevelUpDown.ValueChanged += new System.EventHandler(this.superRodOneMinLevelUpDown_ValueChanged);
             // 
             // label70
             // 
@@ -1499,21 +1499,21 @@
             this.superRodOneComboBox.TabIndex = 19;
             this.superRodOneComboBox.SelectedIndexChanged += new System.EventHandler(this.superRodOneComboBox_SelectedIndexChanged);
             // 
-            // superRodFourMaxUpDown
+            // superRodFourMaxLevelUpDown
             // 
-            this.superRodFourMaxUpDown.Location = new System.Drawing.Point(265, 159);
-            this.superRodFourMaxUpDown.Name = "superRodFourMaxUpDown";
-            this.superRodFourMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.superRodFourMaxUpDown.TabIndex = 18;
-            this.superRodFourMaxUpDown.ValueChanged += new System.EventHandler(this.superRodFourMaxUpDown_ValueChanged);
+            this.superRodFourMaxLevelUpDown.Location = new System.Drawing.Point(265, 159);
+            this.superRodFourMaxLevelUpDown.Name = "superRodFourMaxLevelUpDown";
+            this.superRodFourMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.superRodFourMaxLevelUpDown.TabIndex = 18;
+            this.superRodFourMaxLevelUpDown.ValueChanged += new System.EventHandler(this.superRodFourMaxLevelUpDown_ValueChanged);
             // 
-            // superRodFourMinUpDown
+            // superRodFourMinLevelUpDown
             // 
-            this.superRodFourMinUpDown.Location = new System.Drawing.Point(217, 159);
-            this.superRodFourMinUpDown.Name = "superRodFourMinUpDown";
-            this.superRodFourMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.superRodFourMinUpDown.TabIndex = 17;
-            this.superRodFourMinUpDown.ValueChanged += new System.EventHandler(this.superRodFourMinUpDown_ValueChanged);
+            this.superRodFourMinLevelUpDown.Location = new System.Drawing.Point(217, 159);
+            this.superRodFourMinLevelUpDown.Name = "superRodFourMinLevelUpDown";
+            this.superRodFourMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.superRodFourMinLevelUpDown.TabIndex = 17;
+            this.superRodFourMinLevelUpDown.ValueChanged += new System.EventHandler(this.superRodFourMinLevelUpDown_ValueChanged);
             // 
             // label71
             // 
@@ -1534,56 +1534,56 @@
             this.superRodFourComboBox.TabIndex = 15;
             this.superRodFourComboBox.SelectedIndexChanged += new System.EventHandler(this.superRodFourComboBox_SelectedIndexChanged);
             // 
-            // superRodFiveMaxUpDown
+            // superRodFifteenMaxLevelUpDown
             // 
-            this.superRodFiveMaxUpDown.Location = new System.Drawing.Point(265, 132);
-            this.superRodFiveMaxUpDown.Name = "superRodFiveMaxUpDown";
-            this.superRodFiveMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.superRodFiveMaxUpDown.TabIndex = 14;
-            this.superRodFiveMaxUpDown.ValueChanged += new System.EventHandler(this.superRodFiveMaxUpDown_ValueChanged);
+            this.superRodFifteenMaxLevelUpDown.Location = new System.Drawing.Point(265, 132);
+            this.superRodFifteenMaxLevelUpDown.Name = "superRodFifteenMaxLevelUpDown";
+            this.superRodFifteenMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.superRodFifteenMaxLevelUpDown.TabIndex = 14;
+            this.superRodFifteenMaxLevelUpDown.ValueChanged += new System.EventHandler(this.superRodFifteenMaxLevelUpDown_ValueChanged);
             // 
-            // superRodFiveMinUpDown
+            // superRodFifteenMinLevelUpDown
             // 
-            this.superRodFiveMinUpDown.Location = new System.Drawing.Point(217, 132);
-            this.superRodFiveMinUpDown.Name = "superRodFiveMinUpDown";
-            this.superRodFiveMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.superRodFiveMinUpDown.TabIndex = 13;
-            this.superRodFiveMinUpDown.ValueChanged += new System.EventHandler(this.superRodFiveMinUpDown_ValueChanged);
+            this.superRodFifteenMinLevelUpDown.Location = new System.Drawing.Point(217, 132);
+            this.superRodFifteenMinLevelUpDown.Name = "superRodFifteenMinLevelUpDown";
+            this.superRodFifteenMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.superRodFifteenMinLevelUpDown.TabIndex = 13;
+            this.superRodFifteenMinLevelUpDown.ValueChanged += new System.EventHandler(this.superRodFifteenMinLevelUpDown_ValueChanged);
             // 
             // label72
             // 
             this.label72.AutoSize = true;
             this.label72.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label72.Location = new System.Drawing.Point(18, 134);
+            this.label72.Location = new System.Drawing.Point(11, 134);
             this.label72.Name = "label72";
-            this.label72.Size = new System.Drawing.Size(21, 13);
+            this.label72.Size = new System.Drawing.Size(27, 13);
             this.label72.TabIndex = 12;
-            this.label72.Text = "5%";
+            this.label72.Text = "15%";
             // 
-            // superRodFiveComboBox
+            // superRodFifteenComboBox
             // 
-            this.superRodFiveComboBox.FormattingEnabled = true;
-            this.superRodFiveComboBox.Location = new System.Drawing.Point(45, 131);
-            this.superRodFiveComboBox.Name = "superRodFiveComboBox";
-            this.superRodFiveComboBox.Size = new System.Drawing.Size(154, 21);
-            this.superRodFiveComboBox.TabIndex = 11;
-            this.superRodFiveComboBox.SelectedIndexChanged += new System.EventHandler(this.superRodFiveComboBox_SelectedIndexChanged);
+            this.superRodFifteenComboBox.FormattingEnabled = true;
+            this.superRodFifteenComboBox.Location = new System.Drawing.Point(45, 131);
+            this.superRodFifteenComboBox.Name = "superRodFifteenComboBox";
+            this.superRodFifteenComboBox.Size = new System.Drawing.Size(154, 21);
+            this.superRodFifteenComboBox.TabIndex = 11;
+            this.superRodFifteenComboBox.SelectedIndexChanged += new System.EventHandler(this.superRodFifteenComboBox_SelectedIndexChanged);
             // 
-            // superRodThirtyMaxUpDown
+            // superRodSecondFortyMaxLevelUpDown
             // 
-            this.superRodThirtyMaxUpDown.Location = new System.Drawing.Point(265, 105);
-            this.superRodThirtyMaxUpDown.Name = "superRodThirtyMaxUpDown";
-            this.superRodThirtyMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.superRodThirtyMaxUpDown.TabIndex = 10;
-            this.superRodThirtyMaxUpDown.ValueChanged += new System.EventHandler(this.superRodThirtyMaxUpDown_ValueChanged);
+            this.superRodSecondFortyMaxLevelUpDown.Location = new System.Drawing.Point(265, 105);
+            this.superRodSecondFortyMaxLevelUpDown.Name = "superRodSecondFortyMaxLevelUpDown";
+            this.superRodSecondFortyMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.superRodSecondFortyMaxLevelUpDown.TabIndex = 10;
+            this.superRodSecondFortyMaxLevelUpDown.ValueChanged += new System.EventHandler(this.superRodSecondFortyMaxLevelUpDown_ValueChanged);
             // 
-            // superRodThirtyMinUpDown
+            // superRodSecondFortyMinLevelUpDown
             // 
-            this.superRodThirtyMinUpDown.Location = new System.Drawing.Point(217, 105);
-            this.superRodThirtyMinUpDown.Name = "superRodThirtyMinUpDown";
-            this.superRodThirtyMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.superRodThirtyMinUpDown.TabIndex = 9;
-            this.superRodThirtyMinUpDown.ValueChanged += new System.EventHandler(this.superRodThirtyMinUpDown_ValueChanged);
+            this.superRodSecondFortyMinLevelUpDown.Location = new System.Drawing.Point(217, 105);
+            this.superRodSecondFortyMinLevelUpDown.Name = "superRodSecondFortyMinLevelUpDown";
+            this.superRodSecondFortyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.superRodSecondFortyMinLevelUpDown.TabIndex = 9;
+            this.superRodSecondFortyMinLevelUpDown.ValueChanged += new System.EventHandler(this.superRodSecondFortyMinLevelUpDown_ValueChanged);
             // 
             // label73
             // 
@@ -1593,32 +1593,32 @@
             this.label73.Name = "label73";
             this.label73.Size = new System.Drawing.Size(27, 13);
             this.label73.TabIndex = 8;
-            this.label73.Text = "30%";
+            this.label73.Text = "40%";
             // 
-            // superRodThirtyComboBox
+            // superRodSecondFortyComboBox
             // 
-            this.superRodThirtyComboBox.FormattingEnabled = true;
-            this.superRodThirtyComboBox.Location = new System.Drawing.Point(45, 104);
-            this.superRodThirtyComboBox.Name = "superRodThirtyComboBox";
-            this.superRodThirtyComboBox.Size = new System.Drawing.Size(154, 21);
-            this.superRodThirtyComboBox.TabIndex = 7;
-            this.superRodThirtyComboBox.SelectedIndexChanged += new System.EventHandler(this.superRodThirtyComboBox_SelectedIndexChanged);
+            this.superRodSecondFortyComboBox.FormattingEnabled = true;
+            this.superRodSecondFortyComboBox.Location = new System.Drawing.Point(45, 104);
+            this.superRodSecondFortyComboBox.Name = "superRodSecondFortyComboBox";
+            this.superRodSecondFortyComboBox.Size = new System.Drawing.Size(154, 21);
+            this.superRodSecondFortyComboBox.TabIndex = 7;
+            this.superRodSecondFortyComboBox.SelectedIndexChanged += new System.EventHandler(this.superRodSecondFortyComboBox_SelectedIndexChanged);
             // 
-            // superRodSixtyMaxUpDown
+            // superRodFirstFortyMaxLevelUpDown
             // 
-            this.superRodSixtyMaxUpDown.Location = new System.Drawing.Point(265, 78);
-            this.superRodSixtyMaxUpDown.Name = "superRodSixtyMaxUpDown";
-            this.superRodSixtyMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.superRodSixtyMaxUpDown.TabIndex = 6;
-            this.superRodSixtyMaxUpDown.ValueChanged += new System.EventHandler(this.superRodSixtyMaxUpDown_ValueChanged);
+            this.superRodFirstFortyMaxLevelUpDown.Location = new System.Drawing.Point(265, 78);
+            this.superRodFirstFortyMaxLevelUpDown.Name = "superRodFirstFortyMaxLevelUpDown";
+            this.superRodFirstFortyMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.superRodFirstFortyMaxLevelUpDown.TabIndex = 6;
+            this.superRodFirstFortyMaxLevelUpDown.ValueChanged += new System.EventHandler(this.superRodFirstFortyMaxLevelUpDown_ValueChanged);
             // 
-            // superRodSixtyMinUpDown
+            // superRodFirstFortyMinLevelUpDown
             // 
-            this.superRodSixtyMinUpDown.Location = new System.Drawing.Point(217, 78);
-            this.superRodSixtyMinUpDown.Name = "superRodSixtyMinUpDown";
-            this.superRodSixtyMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.superRodSixtyMinUpDown.TabIndex = 5;
-            this.superRodSixtyMinUpDown.ValueChanged += new System.EventHandler(this.superRodSixtyMinUpDown_ValueChanged);
+            this.superRodFirstFortyMinLevelUpDown.Location = new System.Drawing.Point(217, 78);
+            this.superRodFirstFortyMinLevelUpDown.Name = "superRodFirstFortyMinLevelUpDown";
+            this.superRodFirstFortyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.superRodFirstFortyMinLevelUpDown.TabIndex = 5;
+            this.superRodFirstFortyMinLevelUpDown.ValueChanged += new System.EventHandler(this.superRodFirstFortyMinLevelUpDown_ValueChanged);
             // 
             // label74
             // 
@@ -1628,16 +1628,16 @@
             this.label74.Name = "label74";
             this.label74.Size = new System.Drawing.Size(27, 13);
             this.label74.TabIndex = 4;
-            this.label74.Text = "60%";
+            this.label74.Text = "40%";
             // 
-            // superRodSixtyComboBox
+            // superRodFirstFortyComboBox
             // 
-            this.superRodSixtyComboBox.FormattingEnabled = true;
-            this.superRodSixtyComboBox.Location = new System.Drawing.Point(45, 77);
-            this.superRodSixtyComboBox.Name = "superRodSixtyComboBox";
-            this.superRodSixtyComboBox.Size = new System.Drawing.Size(154, 21);
-            this.superRodSixtyComboBox.TabIndex = 3;
-            this.superRodSixtyComboBox.SelectedIndexChanged += new System.EventHandler(this.superRodSixtyComboBox_SelectedIndexChanged);
+            this.superRodFirstFortyComboBox.FormattingEnabled = true;
+            this.superRodFirstFortyComboBox.Location = new System.Drawing.Point(45, 77);
+            this.superRodFirstFortyComboBox.Name = "superRodFirstFortyComboBox";
+            this.superRodFirstFortyComboBox.Size = new System.Drawing.Size(154, 21);
+            this.superRodFirstFortyComboBox.TabIndex = 3;
+            this.superRodFirstFortyComboBox.SelectedIndexChanged += new System.EventHandler(this.superRodFirstFortyComboBox_SelectedIndexChanged);
             // 
             // goodRodGroupBox
             // 
@@ -1645,26 +1645,26 @@
             this.goodRodGroupBox.Controls.Add(this.label52);
             this.goodRodGroupBox.Controls.Add(this.goodRodRateUpDown);
             this.goodRodGroupBox.Controls.Add(this.label53);
-            this.goodRodGroupBox.Controls.Add(this.goodRodOneMaxUpDown);
-            this.goodRodGroupBox.Controls.Add(this.goodRodOneMinUpDown);
+            this.goodRodGroupBox.Controls.Add(this.goodRodOneMaxLevelUpDown);
+            this.goodRodGroupBox.Controls.Add(this.goodRodOneMinLevelUpDown);
             this.goodRodGroupBox.Controls.Add(this.label54);
             this.goodRodGroupBox.Controls.Add(this.goodRodOneComboBox);
-            this.goodRodGroupBox.Controls.Add(this.goodRodFourMaxUpDown);
-            this.goodRodGroupBox.Controls.Add(this.goodRodFourMinUpDown);
+            this.goodRodGroupBox.Controls.Add(this.goodRodFourMaxLevelUpDown);
+            this.goodRodGroupBox.Controls.Add(this.goodRodFourMinLevelUpDown);
             this.goodRodGroupBox.Controls.Add(this.label55);
             this.goodRodGroupBox.Controls.Add(this.goodRodFourComboBox);
-            this.goodRodGroupBox.Controls.Add(this.goodRodFiveMaxUpDown);
-            this.goodRodGroupBox.Controls.Add(this.goodRodFiveMinUpDown);
+            this.goodRodGroupBox.Controls.Add(this.goodRodFifteenMaxLevelUpDown);
+            this.goodRodGroupBox.Controls.Add(this.goodRodFifteenMinLevelUpDown);
             this.goodRodGroupBox.Controls.Add(this.label56);
-            this.goodRodGroupBox.Controls.Add(this.goodRodFiveComboBox);
-            this.goodRodGroupBox.Controls.Add(this.goodRodThirtyMaxUpDown);
-            this.goodRodGroupBox.Controls.Add(this.goodRodThirtyMinUpDown);
+            this.goodRodGroupBox.Controls.Add(this.goodRodFifteenComboBox);
+            this.goodRodGroupBox.Controls.Add(this.goodRodSecondFortyMaxLevelUpDown);
+            this.goodRodGroupBox.Controls.Add(this.goodRodSecondFortyMinLevelUpDown);
             this.goodRodGroupBox.Controls.Add(this.label57);
-            this.goodRodGroupBox.Controls.Add(this.goodRodThirtyComboBox);
-            this.goodRodGroupBox.Controls.Add(this.goodRodSixtyMaxUpDown);
-            this.goodRodGroupBox.Controls.Add(this.goodRodSixtyMinUpDown);
+            this.goodRodGroupBox.Controls.Add(this.goodRodSecondFortyComboBox);
+            this.goodRodGroupBox.Controls.Add(this.goodRodFirstFortyMaxLevelUpDown);
+            this.goodRodGroupBox.Controls.Add(this.goodRodFirstFortyMinLevelUpDown);
             this.goodRodGroupBox.Controls.Add(this.label58);
-            this.goodRodGroupBox.Controls.Add(this.goodRodSixtyComboBox);
+            this.goodRodGroupBox.Controls.Add(this.goodRodFirstFortyComboBox);
             this.goodRodGroupBox.Location = new System.Drawing.Point(16, 312);
             this.goodRodGroupBox.Name = "goodRodGroupBox";
             this.goodRodGroupBox.Size = new System.Drawing.Size(325, 220);
@@ -1713,21 +1713,21 @@
             this.label53.TabIndex = 38;
             this.label53.Text = "Rate";
             // 
-            // goodRodOneMaxUpDown
+            // goodRodOneMaxLevelUpDown
             // 
-            this.goodRodOneMaxUpDown.Location = new System.Drawing.Point(265, 186);
-            this.goodRodOneMaxUpDown.Name = "goodRodOneMaxUpDown";
-            this.goodRodOneMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.goodRodOneMaxUpDown.TabIndex = 22;
-            this.goodRodOneMaxUpDown.ValueChanged += new System.EventHandler(this.goodRodOneMaxUpDown_ValueChanged);
+            this.goodRodOneMaxLevelUpDown.Location = new System.Drawing.Point(265, 186);
+            this.goodRodOneMaxLevelUpDown.Name = "goodRodOneMaxLevelUpDown";
+            this.goodRodOneMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.goodRodOneMaxLevelUpDown.TabIndex = 22;
+            this.goodRodOneMaxLevelUpDown.ValueChanged += new System.EventHandler(this.goodRodOneMaxLevelUpDown_ValueChanged);
             // 
-            // goodRodOneMinUpDown
+            // goodRodOneMinLevelUpDown
             // 
-            this.goodRodOneMinUpDown.Location = new System.Drawing.Point(217, 186);
-            this.goodRodOneMinUpDown.Name = "goodRodOneMinUpDown";
-            this.goodRodOneMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.goodRodOneMinUpDown.TabIndex = 21;
-            this.goodRodOneMinUpDown.ValueChanged += new System.EventHandler(this.goodRodOneMinUpDown_ValueChanged);
+            this.goodRodOneMinLevelUpDown.Location = new System.Drawing.Point(217, 186);
+            this.goodRodOneMinLevelUpDown.Name = "goodRodOneMinLevelUpDown";
+            this.goodRodOneMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.goodRodOneMinLevelUpDown.TabIndex = 21;
+            this.goodRodOneMinLevelUpDown.ValueChanged += new System.EventHandler(this.goodRodOneMinLevelUpDown_ValueChanged);
             // 
             // label54
             // 
@@ -1748,21 +1748,21 @@
             this.goodRodOneComboBox.TabIndex = 19;
             this.goodRodOneComboBox.SelectedIndexChanged += new System.EventHandler(this.goodRodOneComboBox_SelectedIndexChanged);
             // 
-            // goodRodFourMaxUpDown
+            // goodRodFourMaxLevelUpDown
             // 
-            this.goodRodFourMaxUpDown.Location = new System.Drawing.Point(265, 159);
-            this.goodRodFourMaxUpDown.Name = "goodRodFourMaxUpDown";
-            this.goodRodFourMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.goodRodFourMaxUpDown.TabIndex = 18;
-            this.goodRodFourMaxUpDown.ValueChanged += new System.EventHandler(this.goodRodFourMaxUpDown_ValueChanged);
+            this.goodRodFourMaxLevelUpDown.Location = new System.Drawing.Point(265, 159);
+            this.goodRodFourMaxLevelUpDown.Name = "goodRodFourMaxLevelUpDown";
+            this.goodRodFourMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.goodRodFourMaxLevelUpDown.TabIndex = 18;
+            this.goodRodFourMaxLevelUpDown.ValueChanged += new System.EventHandler(this.goodRodFourMaxLevelUpDown_ValueChanged);
             // 
-            // goodRodFourMinUpDown
+            // goodRodFourMinLevelUpDown
             // 
-            this.goodRodFourMinUpDown.Location = new System.Drawing.Point(217, 159);
-            this.goodRodFourMinUpDown.Name = "goodRodFourMinUpDown";
-            this.goodRodFourMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.goodRodFourMinUpDown.TabIndex = 17;
-            this.goodRodFourMinUpDown.ValueChanged += new System.EventHandler(this.goodRodFourMinUpDown_ValueChanged);
+            this.goodRodFourMinLevelUpDown.Location = new System.Drawing.Point(217, 159);
+            this.goodRodFourMinLevelUpDown.Name = "goodRodFourMinLevelUpDown";
+            this.goodRodFourMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.goodRodFourMinLevelUpDown.TabIndex = 17;
+            this.goodRodFourMinLevelUpDown.ValueChanged += new System.EventHandler(this.goodRodFourMinLevelUpDown_ValueChanged);
             // 
             // label55
             // 
@@ -1783,56 +1783,56 @@
             this.goodRodFourComboBox.TabIndex = 15;
             this.goodRodFourComboBox.SelectedIndexChanged += new System.EventHandler(this.goodRodFourComboBox_SelectedIndexChanged);
             // 
-            // goodRodFiveMaxUpDown
+            // goodRodFifteenMaxLevelUpDown
             // 
-            this.goodRodFiveMaxUpDown.Location = new System.Drawing.Point(265, 132);
-            this.goodRodFiveMaxUpDown.Name = "goodRodFiveMaxUpDown";
-            this.goodRodFiveMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.goodRodFiveMaxUpDown.TabIndex = 14;
-            this.goodRodFiveMaxUpDown.ValueChanged += new System.EventHandler(this.goodRodFiveMaxUpDown_ValueChanged);
+            this.goodRodFifteenMaxLevelUpDown.Location = new System.Drawing.Point(265, 132);
+            this.goodRodFifteenMaxLevelUpDown.Name = "goodRodFifteenMaxLevelUpDown";
+            this.goodRodFifteenMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.goodRodFifteenMaxLevelUpDown.TabIndex = 14;
+            this.goodRodFifteenMaxLevelUpDown.ValueChanged += new System.EventHandler(this.goodRodFifteenMaxLevelUpDown_ValueChanged);
             // 
-            // goodRodFiveMinUpDown
+            // goodRodFifteenMinLevelUpDown
             // 
-            this.goodRodFiveMinUpDown.Location = new System.Drawing.Point(217, 132);
-            this.goodRodFiveMinUpDown.Name = "goodRodFiveMinUpDown";
-            this.goodRodFiveMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.goodRodFiveMinUpDown.TabIndex = 13;
-            this.goodRodFiveMinUpDown.ValueChanged += new System.EventHandler(this.goodRodFiveMinUpDown_ValueChanged);
+            this.goodRodFifteenMinLevelUpDown.Location = new System.Drawing.Point(217, 132);
+            this.goodRodFifteenMinLevelUpDown.Name = "goodRodFifteenMinLevelUpDown";
+            this.goodRodFifteenMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.goodRodFifteenMinLevelUpDown.TabIndex = 13;
+            this.goodRodFifteenMinLevelUpDown.ValueChanged += new System.EventHandler(this.goodRodFifteenMinLevelUpDown_ValueChanged);
             // 
             // label56
             // 
             this.label56.AutoSize = true;
             this.label56.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label56.Location = new System.Drawing.Point(18, 134);
+            this.label56.Location = new System.Drawing.Point(11, 134);
             this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(21, 13);
+            this.label56.Size = new System.Drawing.Size(27, 13);
             this.label56.TabIndex = 12;
-            this.label56.Text = "5%";
+            this.label56.Text = "15%";
             // 
-            // goodRodFiveComboBox
+            // goodRodFifteenComboBox
             // 
-            this.goodRodFiveComboBox.FormattingEnabled = true;
-            this.goodRodFiveComboBox.Location = new System.Drawing.Point(45, 131);
-            this.goodRodFiveComboBox.Name = "goodRodFiveComboBox";
-            this.goodRodFiveComboBox.Size = new System.Drawing.Size(154, 21);
-            this.goodRodFiveComboBox.TabIndex = 11;
-            this.goodRodFiveComboBox.SelectedIndexChanged += new System.EventHandler(this.goodRodFiveComboBox_SelectedIndexChanged);
+            this.goodRodFifteenComboBox.FormattingEnabled = true;
+            this.goodRodFifteenComboBox.Location = new System.Drawing.Point(45, 131);
+            this.goodRodFifteenComboBox.Name = "goodRodFifteenComboBox";
+            this.goodRodFifteenComboBox.Size = new System.Drawing.Size(154, 21);
+            this.goodRodFifteenComboBox.TabIndex = 11;
+            this.goodRodFifteenComboBox.SelectedIndexChanged += new System.EventHandler(this.goodRodFifteenComboBox_SelectedIndexChanged);
             // 
-            // goodRodThirtyMaxUpDown
+            // goodRodSecondFortyMaxLevelUpDown
             // 
-            this.goodRodThirtyMaxUpDown.Location = new System.Drawing.Point(265, 105);
-            this.goodRodThirtyMaxUpDown.Name = "goodRodThirtyMaxUpDown";
-            this.goodRodThirtyMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.goodRodThirtyMaxUpDown.TabIndex = 10;
-            this.goodRodThirtyMaxUpDown.ValueChanged += new System.EventHandler(this.goodRodThirtyMaxUpDown_ValueChanged);
+            this.goodRodSecondFortyMaxLevelUpDown.Location = new System.Drawing.Point(265, 105);
+            this.goodRodSecondFortyMaxLevelUpDown.Name = "goodRodSecondFortyMaxLevelUpDown";
+            this.goodRodSecondFortyMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.goodRodSecondFortyMaxLevelUpDown.TabIndex = 10;
+            this.goodRodSecondFortyMaxLevelUpDown.ValueChanged += new System.EventHandler(this.goodRodSecondFortyMaxLevelUpDown_ValueChanged);
             // 
-            // goodRodThirtyMinUpDown
+            // goodRodSecondFortyMinLevelUpDown
             // 
-            this.goodRodThirtyMinUpDown.Location = new System.Drawing.Point(217, 105);
-            this.goodRodThirtyMinUpDown.Name = "goodRodThirtyMinUpDown";
-            this.goodRodThirtyMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.goodRodThirtyMinUpDown.TabIndex = 9;
-            this.goodRodThirtyMinUpDown.ValueChanged += new System.EventHandler(this.goodRodThirtyMinUpDown_ValueChanged);
+            this.goodRodSecondFortyMinLevelUpDown.Location = new System.Drawing.Point(217, 105);
+            this.goodRodSecondFortyMinLevelUpDown.Name = "goodRodSecondFortyMinLevelUpDown";
+            this.goodRodSecondFortyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.goodRodSecondFortyMinLevelUpDown.TabIndex = 9;
+            this.goodRodSecondFortyMinLevelUpDown.ValueChanged += new System.EventHandler(this.goodRodSecondFortyMinLevelUpDown_ValueChanged);
             // 
             // label57
             // 
@@ -1842,32 +1842,32 @@
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(27, 13);
             this.label57.TabIndex = 8;
-            this.label57.Text = "30%";
+            this.label57.Text = "40%";
             // 
-            // goodRodThirtyComboBox
+            // goodRodSecondFortyComboBox
             // 
-            this.goodRodThirtyComboBox.FormattingEnabled = true;
-            this.goodRodThirtyComboBox.Location = new System.Drawing.Point(45, 104);
-            this.goodRodThirtyComboBox.Name = "goodRodThirtyComboBox";
-            this.goodRodThirtyComboBox.Size = new System.Drawing.Size(154, 21);
-            this.goodRodThirtyComboBox.TabIndex = 7;
-            this.goodRodThirtyComboBox.SelectedIndexChanged += new System.EventHandler(this.goodRodThirtyComboBox_SelectedIndexChanged);
+            this.goodRodSecondFortyComboBox.FormattingEnabled = true;
+            this.goodRodSecondFortyComboBox.Location = new System.Drawing.Point(45, 104);
+            this.goodRodSecondFortyComboBox.Name = "goodRodSecondFortyComboBox";
+            this.goodRodSecondFortyComboBox.Size = new System.Drawing.Size(154, 21);
+            this.goodRodSecondFortyComboBox.TabIndex = 7;
+            this.goodRodSecondFortyComboBox.SelectedIndexChanged += new System.EventHandler(this.goodRodSecondFortyComboBox_SelectedIndexChanged);
             // 
-            // goodRodSixtyMaxUpDown
+            // goodRodFirstFortyMaxLevelUpDown
             // 
-            this.goodRodSixtyMaxUpDown.Location = new System.Drawing.Point(265, 78);
-            this.goodRodSixtyMaxUpDown.Name = "goodRodSixtyMaxUpDown";
-            this.goodRodSixtyMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.goodRodSixtyMaxUpDown.TabIndex = 6;
-            this.goodRodSixtyMaxUpDown.ValueChanged += new System.EventHandler(this.goodRodSixtyMaxUpDown_ValueChanged);
+            this.goodRodFirstFortyMaxLevelUpDown.Location = new System.Drawing.Point(265, 78);
+            this.goodRodFirstFortyMaxLevelUpDown.Name = "goodRodFirstFortyMaxLevelUpDown";
+            this.goodRodFirstFortyMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.goodRodFirstFortyMaxLevelUpDown.TabIndex = 6;
+            this.goodRodFirstFortyMaxLevelUpDown.ValueChanged += new System.EventHandler(this.goodRodFirstFortyMaxLevelUpDown_ValueChanged);
             // 
-            // goodRodSixtyMinUpDown
+            // goodRodFirstFortyMinLevelUpDown
             // 
-            this.goodRodSixtyMinUpDown.Location = new System.Drawing.Point(217, 78);
-            this.goodRodSixtyMinUpDown.Name = "goodRodSixtyMinUpDown";
-            this.goodRodSixtyMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.goodRodSixtyMinUpDown.TabIndex = 5;
-            this.goodRodSixtyMinUpDown.ValueChanged += new System.EventHandler(this.goodRodSixtyMinUpDown_ValueChanged);
+            this.goodRodFirstFortyMinLevelUpDown.Location = new System.Drawing.Point(217, 78);
+            this.goodRodFirstFortyMinLevelUpDown.Name = "goodRodFirstFortyMinLevelUpDown";
+            this.goodRodFirstFortyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.goodRodFirstFortyMinLevelUpDown.TabIndex = 5;
+            this.goodRodFirstFortyMinLevelUpDown.ValueChanged += new System.EventHandler(this.goodRodFirstFortyMinLevelUpDown_ValueChanged);
             // 
             // label58
             // 
@@ -1877,16 +1877,16 @@
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(27, 13);
             this.label58.TabIndex = 4;
-            this.label58.Text = "60%";
+            this.label58.Text = "40%";
             // 
-            // goodRodSixtyComboBox
+            // goodRodFirstFortyComboBox
             // 
-            this.goodRodSixtyComboBox.FormattingEnabled = true;
-            this.goodRodSixtyComboBox.Location = new System.Drawing.Point(45, 77);
-            this.goodRodSixtyComboBox.Name = "goodRodSixtyComboBox";
-            this.goodRodSixtyComboBox.Size = new System.Drawing.Size(154, 21);
-            this.goodRodSixtyComboBox.TabIndex = 3;
-            this.goodRodSixtyComboBox.SelectedIndexChanged += new System.EventHandler(this.goodRodSixtyComboBox_SelectedIndexChanged);
+            this.goodRodFirstFortyComboBox.FormattingEnabled = true;
+            this.goodRodFirstFortyComboBox.Location = new System.Drawing.Point(45, 77);
+            this.goodRodFirstFortyComboBox.Name = "goodRodFirstFortyComboBox";
+            this.goodRodFirstFortyComboBox.Size = new System.Drawing.Size(154, 21);
+            this.goodRodFirstFortyComboBox.TabIndex = 3;
+            this.goodRodFirstFortyComboBox.SelectedIndexChanged += new System.EventHandler(this.goodRodFirstFortyComboBox_SelectedIndexChanged);
             // 
             // oldRodGroupBox
             // 
@@ -1894,24 +1894,24 @@
             this.oldRodGroupBox.Controls.Add(this.label44);
             this.oldRodGroupBox.Controls.Add(this.oldRodRateUpDown);
             this.oldRodGroupBox.Controls.Add(this.label45);
-            this.oldRodGroupBox.Controls.Add(this.oldRodOneMaxUpDown);
-            this.oldRodGroupBox.Controls.Add(this.oldRodOneMinUpDown);
+            this.oldRodGroupBox.Controls.Add(this.oldRodOneMaxLevelUpDown);
+            this.oldRodGroupBox.Controls.Add(this.oldRodOneMinLevelUpDown);
             this.oldRodGroupBox.Controls.Add(this.label46);
             this.oldRodGroupBox.Controls.Add(this.oldRodOneComboBox);
-            this.oldRodGroupBox.Controls.Add(this.oldRodFourMaxUpDown);
-            this.oldRodGroupBox.Controls.Add(this.oldRodFourMinUpDown);
+            this.oldRodGroupBox.Controls.Add(this.oldRodFourMaxLevelUpDown);
+            this.oldRodGroupBox.Controls.Add(this.oldRodFourMinLevelUpDown);
             this.oldRodGroupBox.Controls.Add(this.label47);
             this.oldRodGroupBox.Controls.Add(this.oldRodFourComboBox);
-            this.oldRodGroupBox.Controls.Add(this.oldRodFiveMaxUpDown);
-            this.oldRodGroupBox.Controls.Add(this.oldRodFiveMinUpDown);
+            this.oldRodGroupBox.Controls.Add(this.oldRodFiveMaxLevelUpDown);
+            this.oldRodGroupBox.Controls.Add(this.oldRodFiveMinLevelUpDown);
             this.oldRodGroupBox.Controls.Add(this.label48);
             this.oldRodGroupBox.Controls.Add(this.oldRodFiveComboBox);
-            this.oldRodGroupBox.Controls.Add(this.oldRodThirtyMaxUpDown);
-            this.oldRodGroupBox.Controls.Add(this.oldRodThirtyMinUpDown);
+            this.oldRodGroupBox.Controls.Add(this.oldRodThirtyMaxLevelUpDown);
+            this.oldRodGroupBox.Controls.Add(this.oldRodThirtyMinLevelUpDown);
             this.oldRodGroupBox.Controls.Add(this.label49);
             this.oldRodGroupBox.Controls.Add(this.oldRodThirtyComboBox);
-            this.oldRodGroupBox.Controls.Add(this.oldRodSixtyMaxUpDown);
-            this.oldRodGroupBox.Controls.Add(this.oldRodSixtyMinUpDown);
+            this.oldRodGroupBox.Controls.Add(this.oldRodSixtyMaxLevelUpDown);
+            this.oldRodGroupBox.Controls.Add(this.oldRodSixtyMinLevelUpDown);
             this.oldRodGroupBox.Controls.Add(this.label50);
             this.oldRodGroupBox.Controls.Add(this.oldRodSixtyComboBox);
             this.oldRodGroupBox.Location = new System.Drawing.Point(408, 18);
@@ -1962,21 +1962,21 @@
             this.label45.TabIndex = 38;
             this.label45.Text = "Rate";
             // 
-            // oldRodOneMaxUpDown
+            // oldRodOneMaxLevelUpDown
             // 
-            this.oldRodOneMaxUpDown.Location = new System.Drawing.Point(265, 186);
-            this.oldRodOneMaxUpDown.Name = "oldRodOneMaxUpDown";
-            this.oldRodOneMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.oldRodOneMaxUpDown.TabIndex = 22;
-            this.oldRodOneMaxUpDown.ValueChanged += new System.EventHandler(this.oldRodOneMaxUpDown_ValueChanged);
+            this.oldRodOneMaxLevelUpDown.Location = new System.Drawing.Point(265, 186);
+            this.oldRodOneMaxLevelUpDown.Name = "oldRodOneMaxLevelUpDown";
+            this.oldRodOneMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.oldRodOneMaxLevelUpDown.TabIndex = 22;
+            this.oldRodOneMaxLevelUpDown.ValueChanged += new System.EventHandler(this.oldRodOneMaxLevelUpDown_ValueChanged);
             // 
-            // oldRodOneMinUpDown
+            // oldRodOneMinLevelUpDown
             // 
-            this.oldRodOneMinUpDown.Location = new System.Drawing.Point(217, 186);
-            this.oldRodOneMinUpDown.Name = "oldRodOneMinUpDown";
-            this.oldRodOneMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.oldRodOneMinUpDown.TabIndex = 21;
-            this.oldRodOneMinUpDown.ValueChanged += new System.EventHandler(this.oldRodOneMinUpDown_ValueChanged);
+            this.oldRodOneMinLevelUpDown.Location = new System.Drawing.Point(217, 186);
+            this.oldRodOneMinLevelUpDown.Name = "oldRodOneMinLevelUpDown";
+            this.oldRodOneMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.oldRodOneMinLevelUpDown.TabIndex = 21;
+            this.oldRodOneMinLevelUpDown.ValueChanged += new System.EventHandler(this.oldRodOneMinLevelUpDown_ValueChanged);
             // 
             // label46
             // 
@@ -1997,21 +1997,21 @@
             this.oldRodOneComboBox.TabIndex = 19;
             this.oldRodOneComboBox.SelectedIndexChanged += new System.EventHandler(this.oldRodOneComboBox_SelectedIndexChanged);
             // 
-            // oldRodFourMaxUpDown
+            // oldRodFourMaxLevelUpDown
             // 
-            this.oldRodFourMaxUpDown.Location = new System.Drawing.Point(265, 159);
-            this.oldRodFourMaxUpDown.Name = "oldRodFourMaxUpDown";
-            this.oldRodFourMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.oldRodFourMaxUpDown.TabIndex = 18;
-            this.oldRodFourMaxUpDown.ValueChanged += new System.EventHandler(this.oldRodFourMaxUpDown_ValueChanged);
+            this.oldRodFourMaxLevelUpDown.Location = new System.Drawing.Point(265, 159);
+            this.oldRodFourMaxLevelUpDown.Name = "oldRodFourMaxLevelUpDown";
+            this.oldRodFourMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.oldRodFourMaxLevelUpDown.TabIndex = 18;
+            this.oldRodFourMaxLevelUpDown.ValueChanged += new System.EventHandler(this.oldRodFourMaxLevelUpDown_ValueChanged);
             // 
-            // oldRodFourMinUpDown
+            // oldRodFourMinLevelUpDown
             // 
-            this.oldRodFourMinUpDown.Location = new System.Drawing.Point(217, 159);
-            this.oldRodFourMinUpDown.Name = "oldRodFourMinUpDown";
-            this.oldRodFourMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.oldRodFourMinUpDown.TabIndex = 17;
-            this.oldRodFourMinUpDown.ValueChanged += new System.EventHandler(this.oldRodFourMinUpDown_ValueChanged);
+            this.oldRodFourMinLevelUpDown.Location = new System.Drawing.Point(217, 159);
+            this.oldRodFourMinLevelUpDown.Name = "oldRodFourMinLevelUpDown";
+            this.oldRodFourMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.oldRodFourMinLevelUpDown.TabIndex = 17;
+            this.oldRodFourMinLevelUpDown.ValueChanged += new System.EventHandler(this.oldRodFourMinLevelUpDown_ValueChanged);
             // 
             // label47
             // 
@@ -2032,21 +2032,21 @@
             this.oldRodFourComboBox.TabIndex = 15;
             this.oldRodFourComboBox.SelectedIndexChanged += new System.EventHandler(this.oldRodFourComboBox_SelectedIndexChanged);
             // 
-            // oldRodFiveMaxUpDown
+            // oldRodFiveMaxLevelUpDown
             // 
-            this.oldRodFiveMaxUpDown.Location = new System.Drawing.Point(265, 132);
-            this.oldRodFiveMaxUpDown.Name = "oldRodFiveMaxUpDown";
-            this.oldRodFiveMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.oldRodFiveMaxUpDown.TabIndex = 14;
-            this.oldRodFiveMaxUpDown.ValueChanged += new System.EventHandler(this.oldRodFiveMaxUpDown_ValueChanged);
+            this.oldRodFiveMaxLevelUpDown.Location = new System.Drawing.Point(265, 132);
+            this.oldRodFiveMaxLevelUpDown.Name = "oldRodFiveMaxLevelUpDown";
+            this.oldRodFiveMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.oldRodFiveMaxLevelUpDown.TabIndex = 14;
+            this.oldRodFiveMaxLevelUpDown.ValueChanged += new System.EventHandler(this.oldRodFiveMaxLevelUpDown_ValueChanged);
             // 
-            // oldRodFiveMinUpDown
+            // oldRodFiveMinLevelUpDown
             // 
-            this.oldRodFiveMinUpDown.Location = new System.Drawing.Point(217, 132);
-            this.oldRodFiveMinUpDown.Name = "oldRodFiveMinUpDown";
-            this.oldRodFiveMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.oldRodFiveMinUpDown.TabIndex = 13;
-            this.oldRodFiveMinUpDown.ValueChanged += new System.EventHandler(this.oldRodFiveMinUpDown_ValueChanged);
+            this.oldRodFiveMinLevelUpDown.Location = new System.Drawing.Point(217, 132);
+            this.oldRodFiveMinLevelUpDown.Name = "oldRodFiveMinLevelUpDown";
+            this.oldRodFiveMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.oldRodFiveMinLevelUpDown.TabIndex = 13;
+            this.oldRodFiveMinLevelUpDown.ValueChanged += new System.EventHandler(this.oldRodFiveMinLevelUpDown_ValueChanged);
             // 
             // label48
             // 
@@ -2067,21 +2067,21 @@
             this.oldRodFiveComboBox.TabIndex = 11;
             this.oldRodFiveComboBox.SelectedIndexChanged += new System.EventHandler(this.oldRodFiveComboBox_SelectedIndexChanged);
             // 
-            // oldRodThirtyMaxUpDown
+            // oldRodThirtyMaxLevelUpDown
             // 
-            this.oldRodThirtyMaxUpDown.Location = new System.Drawing.Point(265, 105);
-            this.oldRodThirtyMaxUpDown.Name = "oldRodThirtyMaxUpDown";
-            this.oldRodThirtyMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.oldRodThirtyMaxUpDown.TabIndex = 10;
-            this.oldRodThirtyMaxUpDown.ValueChanged += new System.EventHandler(this.oldRodThirtyMaxUpDown_ValueChanged);
+            this.oldRodThirtyMaxLevelUpDown.Location = new System.Drawing.Point(265, 105);
+            this.oldRodThirtyMaxLevelUpDown.Name = "oldRodThirtyMaxLevelUpDown";
+            this.oldRodThirtyMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.oldRodThirtyMaxLevelUpDown.TabIndex = 10;
+            this.oldRodThirtyMaxLevelUpDown.ValueChanged += new System.EventHandler(this.oldRodThirtyMaxLevelUpDown_ValueChanged);
             // 
-            // oldRodThirtyMinUpDown
+            // oldRodThirtyMinLevelUpDown
             // 
-            this.oldRodThirtyMinUpDown.Location = new System.Drawing.Point(217, 105);
-            this.oldRodThirtyMinUpDown.Name = "oldRodThirtyMinUpDown";
-            this.oldRodThirtyMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.oldRodThirtyMinUpDown.TabIndex = 9;
-            this.oldRodThirtyMinUpDown.ValueChanged += new System.EventHandler(this.oldRodThirtyMinUpDown_ValueChanged);
+            this.oldRodThirtyMinLevelUpDown.Location = new System.Drawing.Point(217, 105);
+            this.oldRodThirtyMinLevelUpDown.Name = "oldRodThirtyMinLevelUpDown";
+            this.oldRodThirtyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.oldRodThirtyMinLevelUpDown.TabIndex = 9;
+            this.oldRodThirtyMinLevelUpDown.ValueChanged += new System.EventHandler(this.oldRodThirtyMinLevelUpDown_ValueChanged);
             // 
             // label49
             // 
@@ -2102,21 +2102,21 @@
             this.oldRodThirtyComboBox.TabIndex = 7;
             this.oldRodThirtyComboBox.SelectedIndexChanged += new System.EventHandler(this.oldRodThirtyComboBox_SelectedIndexChanged);
             // 
-            // oldRodSixtyMaxUpDown
+            // oldRodSixtyMaxLevelUpDown
             // 
-            this.oldRodSixtyMaxUpDown.Location = new System.Drawing.Point(265, 78);
-            this.oldRodSixtyMaxUpDown.Name = "oldRodSixtyMaxUpDown";
-            this.oldRodSixtyMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.oldRodSixtyMaxUpDown.TabIndex = 6;
-            this.oldRodSixtyMaxUpDown.ValueChanged += new System.EventHandler(this.oldRodSixtyMaxUpDown_ValueChanged);
+            this.oldRodSixtyMaxLevelUpDown.Location = new System.Drawing.Point(265, 78);
+            this.oldRodSixtyMaxLevelUpDown.Name = "oldRodSixtyMaxLevelUpDown";
+            this.oldRodSixtyMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.oldRodSixtyMaxLevelUpDown.TabIndex = 6;
+            this.oldRodSixtyMaxLevelUpDown.ValueChanged += new System.EventHandler(this.oldRodSixtyMaxLevelUpDown_ValueChanged);
             // 
-            // oldRodSixtyMinUpDown
+            // oldRodSixtyMinLevelUpDown
             // 
-            this.oldRodSixtyMinUpDown.Location = new System.Drawing.Point(217, 78);
-            this.oldRodSixtyMinUpDown.Name = "oldRodSixtyMinUpDown";
-            this.oldRodSixtyMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.oldRodSixtyMinUpDown.TabIndex = 5;
-            this.oldRodSixtyMinUpDown.ValueChanged += new System.EventHandler(this.oldRodSixtyMinUpDown_ValueChanged);
+            this.oldRodSixtyMinLevelUpDown.Location = new System.Drawing.Point(217, 78);
+            this.oldRodSixtyMinLevelUpDown.Name = "oldRodSixtyMinLevelUpDown";
+            this.oldRodSixtyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.oldRodSixtyMinLevelUpDown.TabIndex = 5;
+            this.oldRodSixtyMinLevelUpDown.ValueChanged += new System.EventHandler(this.oldRodSixtyMinLevelUpDown_ValueChanged);
             // 
             // label50
             // 
@@ -2143,24 +2143,24 @@
             this.surfGroupBox.Controls.Add(this.label67);
             this.surfGroupBox.Controls.Add(this.surfRateUpDown);
             this.surfGroupBox.Controls.Add(this.label61);
-            this.surfGroupBox.Controls.Add(this.surfOneMaxUpDown);
-            this.surfGroupBox.Controls.Add(this.surfOneMinUpDown);
+            this.surfGroupBox.Controls.Add(this.surfOneMaxLevelUpDown);
+            this.surfGroupBox.Controls.Add(this.surfOneMinLevelUpDown);
             this.surfGroupBox.Controls.Add(this.label62);
             this.surfGroupBox.Controls.Add(this.surfOneComboBox);
-            this.surfGroupBox.Controls.Add(this.surfFourMaxUpDown);
-            this.surfGroupBox.Controls.Add(this.surfFourMinUpDown);
+            this.surfGroupBox.Controls.Add(this.surfFourMaxLevelUpDown);
+            this.surfGroupBox.Controls.Add(this.surfFourMinLevelUpDown);
             this.surfGroupBox.Controls.Add(this.label63);
             this.surfGroupBox.Controls.Add(this.surfFourComboBox);
-            this.surfGroupBox.Controls.Add(this.surfFiveMaxUpDown);
-            this.surfGroupBox.Controls.Add(this.surfFiveMinUpDown);
+            this.surfGroupBox.Controls.Add(this.surfFiveMaxLevelUpDown);
+            this.surfGroupBox.Controls.Add(this.surfFiveMinLevelUpDown);
             this.surfGroupBox.Controls.Add(this.label64);
             this.surfGroupBox.Controls.Add(this.surfFiveComboBox);
-            this.surfGroupBox.Controls.Add(this.surfThirtyMaxUpDown);
-            this.surfGroupBox.Controls.Add(this.surfThirtyMinUpDown);
+            this.surfGroupBox.Controls.Add(this.surfThirtyMaxLevelUpDown);
+            this.surfGroupBox.Controls.Add(this.surfThirtyMinLevelUpDown);
             this.surfGroupBox.Controls.Add(this.label65);
             this.surfGroupBox.Controls.Add(this.surfThirtyComboBox);
-            this.surfGroupBox.Controls.Add(this.surfSixtyMaxUpDown);
-            this.surfGroupBox.Controls.Add(this.surfSixtyMinUpDown);
+            this.surfGroupBox.Controls.Add(this.surfSixtyMaxLevelUpDown);
+            this.surfGroupBox.Controls.Add(this.surfSixtyMinLevelUpDown);
             this.surfGroupBox.Controls.Add(this.label66);
             this.surfGroupBox.Controls.Add(this.surfSixtyComboBox);
             this.surfGroupBox.Location = new System.Drawing.Point(16, 18);
@@ -2211,21 +2211,21 @@
             this.label61.TabIndex = 38;
             this.label61.Text = "Rate";
             // 
-            // surfOneMaxUpDown
+            // surfOneMaxLevelUpDown
             // 
-            this.surfOneMaxUpDown.Location = new System.Drawing.Point(265, 186);
-            this.surfOneMaxUpDown.Name = "surfOneMaxUpDown";
-            this.surfOneMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.surfOneMaxUpDown.TabIndex = 22;
-            this.surfOneMaxUpDown.ValueChanged += new System.EventHandler(this.surfOneMaxUpDown_ValueChanged);
+            this.surfOneMaxLevelUpDown.Location = new System.Drawing.Point(265, 186);
+            this.surfOneMaxLevelUpDown.Name = "surfOneMaxLevelUpDown";
+            this.surfOneMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.surfOneMaxLevelUpDown.TabIndex = 22;
+            this.surfOneMaxLevelUpDown.ValueChanged += new System.EventHandler(this.surfOneMaxLevelUpDown_ValueChanged);
             // 
-            // surfOneMinUpDown
+            // surfOneMinLevelUpDown
             // 
-            this.surfOneMinUpDown.Location = new System.Drawing.Point(217, 186);
-            this.surfOneMinUpDown.Name = "surfOneMinUpDown";
-            this.surfOneMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.surfOneMinUpDown.TabIndex = 21;
-            this.surfOneMinUpDown.ValueChanged += new System.EventHandler(this.surfOneMinUpDown_ValueChanged);
+            this.surfOneMinLevelUpDown.Location = new System.Drawing.Point(217, 186);
+            this.surfOneMinLevelUpDown.Name = "surfOneMinLevelUpDown";
+            this.surfOneMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.surfOneMinLevelUpDown.TabIndex = 21;
+            this.surfOneMinLevelUpDown.ValueChanged += new System.EventHandler(this.surfOneMinLevelUpDown_ValueChanged);
             // 
             // label62
             // 
@@ -2246,21 +2246,21 @@
             this.surfOneComboBox.TabIndex = 19;
             this.surfOneComboBox.SelectedIndexChanged += new System.EventHandler(this.surfOneComboBox_SelectedIndexChanged);
             // 
-            // surfFourMaxUpDown
+            // surfFourMaxLevelUpDown
             // 
-            this.surfFourMaxUpDown.Location = new System.Drawing.Point(265, 159);
-            this.surfFourMaxUpDown.Name = "surfFourMaxUpDown";
-            this.surfFourMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.surfFourMaxUpDown.TabIndex = 18;
-            this.surfFourMaxUpDown.ValueChanged += new System.EventHandler(this.surfFourMaxUpDown_ValueChanged);
+            this.surfFourMaxLevelUpDown.Location = new System.Drawing.Point(265, 159);
+            this.surfFourMaxLevelUpDown.Name = "surfFourMaxLevelUpDown";
+            this.surfFourMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.surfFourMaxLevelUpDown.TabIndex = 18;
+            this.surfFourMaxLevelUpDown.ValueChanged += new System.EventHandler(this.surfFourMaxLevelUpDown_ValueChanged);
             // 
-            // surfFourMinUpDown
+            // surfFourMinLevelUpDown
             // 
-            this.surfFourMinUpDown.Location = new System.Drawing.Point(217, 159);
-            this.surfFourMinUpDown.Name = "surfFourMinUpDown";
-            this.surfFourMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.surfFourMinUpDown.TabIndex = 17;
-            this.surfFourMinUpDown.ValueChanged += new System.EventHandler(this.surfFourMinUpDown_ValueChanged);
+            this.surfFourMinLevelUpDown.Location = new System.Drawing.Point(217, 159);
+            this.surfFourMinLevelUpDown.Name = "surfFourMinLevelUpDown";
+            this.surfFourMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.surfFourMinLevelUpDown.TabIndex = 17;
+            this.surfFourMinLevelUpDown.ValueChanged += new System.EventHandler(this.surfFourMinLevelUpDown_ValueChanged);
             // 
             // label63
             // 
@@ -2281,21 +2281,21 @@
             this.surfFourComboBox.TabIndex = 15;
             this.surfFourComboBox.SelectedIndexChanged += new System.EventHandler(this.surfFourComboBox_SelectedIndexChanged);
             // 
-            // surfFiveMaxUpDown
+            // surfFiveMaxLevelUpDown
             // 
-            this.surfFiveMaxUpDown.Location = new System.Drawing.Point(265, 132);
-            this.surfFiveMaxUpDown.Name = "surfFiveMaxUpDown";
-            this.surfFiveMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.surfFiveMaxUpDown.TabIndex = 14;
-            this.surfFiveMaxUpDown.ValueChanged += new System.EventHandler(this.surfFiveMaxUpDown_ValueChanged);
+            this.surfFiveMaxLevelUpDown.Location = new System.Drawing.Point(265, 132);
+            this.surfFiveMaxLevelUpDown.Name = "surfFiveMaxLevelUpDown";
+            this.surfFiveMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.surfFiveMaxLevelUpDown.TabIndex = 14;
+            this.surfFiveMaxLevelUpDown.ValueChanged += new System.EventHandler(this.surfFiveMaxLevelUpDown_ValueChanged);
             // 
-            // surfFiveMinUpDown
+            // surfFiveMinLevelUpDown
             // 
-            this.surfFiveMinUpDown.Location = new System.Drawing.Point(217, 132);
-            this.surfFiveMinUpDown.Name = "surfFiveMinUpDown";
-            this.surfFiveMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.surfFiveMinUpDown.TabIndex = 13;
-            this.surfFiveMinUpDown.ValueChanged += new System.EventHandler(this.surfFiveMinUpDown_ValueChanged);
+            this.surfFiveMinLevelUpDown.Location = new System.Drawing.Point(217, 132);
+            this.surfFiveMinLevelUpDown.Name = "surfFiveMinLevelUpDown";
+            this.surfFiveMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.surfFiveMinLevelUpDown.TabIndex = 13;
+            this.surfFiveMinLevelUpDown.ValueChanged += new System.EventHandler(this.surfFiveMinLevelUpDown_ValueChanged);
             // 
             // label64
             // 
@@ -2316,21 +2316,21 @@
             this.surfFiveComboBox.TabIndex = 11;
             this.surfFiveComboBox.SelectedIndexChanged += new System.EventHandler(this.surfFiveComboBox_SelectedIndexChanged);
             // 
-            // surfThirtyMaxUpDown
+            // surfThirtyMaxLevelUpDown
             // 
-            this.surfThirtyMaxUpDown.Location = new System.Drawing.Point(265, 105);
-            this.surfThirtyMaxUpDown.Name = "surfThirtyMaxUpDown";
-            this.surfThirtyMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.surfThirtyMaxUpDown.TabIndex = 10;
-            this.surfThirtyMaxUpDown.ValueChanged += new System.EventHandler(this.surfThirtyMaxUpDown_ValueChanged);
+            this.surfThirtyMaxLevelUpDown.Location = new System.Drawing.Point(265, 105);
+            this.surfThirtyMaxLevelUpDown.Name = "surfThirtyMaxLevelUpDown";
+            this.surfThirtyMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.surfThirtyMaxLevelUpDown.TabIndex = 10;
+            this.surfThirtyMaxLevelUpDown.ValueChanged += new System.EventHandler(this.surfThirtyMaxLevelUpDown_ValueChanged);
             // 
-            // surfThirtyMinUpDown
+            // surfThirtyMinLevelUpDown
             // 
-            this.surfThirtyMinUpDown.Location = new System.Drawing.Point(217, 105);
-            this.surfThirtyMinUpDown.Name = "surfThirtyMinUpDown";
-            this.surfThirtyMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.surfThirtyMinUpDown.TabIndex = 9;
-            this.surfThirtyMinUpDown.ValueChanged += new System.EventHandler(this.surfThirtyMinUpDown_ValueChanged);
+            this.surfThirtyMinLevelUpDown.Location = new System.Drawing.Point(217, 105);
+            this.surfThirtyMinLevelUpDown.Name = "surfThirtyMinLevelUpDown";
+            this.surfThirtyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.surfThirtyMinLevelUpDown.TabIndex = 9;
+            this.surfThirtyMinLevelUpDown.ValueChanged += new System.EventHandler(this.surfThirtyMinLevelUpDown_ValueChanged);
             // 
             // label65
             // 
@@ -2351,21 +2351,21 @@
             this.surfThirtyComboBox.TabIndex = 7;
             this.surfThirtyComboBox.SelectedIndexChanged += new System.EventHandler(this.surfThirtyComboBox_SelectedIndexChanged);
             // 
-            // surfSixtyMaxUpDown
+            // surfSixtyMaxLevelUpDown
             // 
-            this.surfSixtyMaxUpDown.Location = new System.Drawing.Point(265, 78);
-            this.surfSixtyMaxUpDown.Name = "surfSixtyMaxUpDown";
-            this.surfSixtyMaxUpDown.Size = new System.Drawing.Size(42, 20);
-            this.surfSixtyMaxUpDown.TabIndex = 6;
-            this.surfSixtyMaxUpDown.ValueChanged += new System.EventHandler(this.surfSixtyMaxUpDown_ValueChanged);
+            this.surfSixtyMaxLevelUpDown.Location = new System.Drawing.Point(265, 78);
+            this.surfSixtyMaxLevelUpDown.Name = "surfSixtyMaxLevelUpDown";
+            this.surfSixtyMaxLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.surfSixtyMaxLevelUpDown.TabIndex = 6;
+            this.surfSixtyMaxLevelUpDown.ValueChanged += new System.EventHandler(this.surfSixtyMaxLevelUpDown_ValueChanged);
             // 
-            // surfSixtyMinUpDown
+            // surfSixtyMinLevelUpDown
             // 
-            this.surfSixtyMinUpDown.Location = new System.Drawing.Point(217, 78);
-            this.surfSixtyMinUpDown.Name = "surfSixtyMinUpDown";
-            this.surfSixtyMinUpDown.Size = new System.Drawing.Size(42, 20);
-            this.surfSixtyMinUpDown.TabIndex = 5;
-            this.surfSixtyMinUpDown.ValueChanged += new System.EventHandler(this.surfSixtyMinUpDown_ValueChanged);
+            this.surfSixtyMinLevelUpDown.Location = new System.Drawing.Point(217, 78);
+            this.surfSixtyMinLevelUpDown.Name = "surfSixtyMinLevelUpDown";
+            this.surfSixtyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
+            this.surfSixtyMinLevelUpDown.TabIndex = 5;
+            this.surfSixtyMinLevelUpDown.ValueChanged += new System.EventHandler(this.surfSixtyMinLevelUpDown_ValueChanged);
             // 
             // label66
             // 
@@ -2411,7 +2411,7 @@
             this.Controls.Add(this.saveEventsButton);
             this.Controls.Add(this.encounterFileLabel);
             this.Name = "WildEditorDPPt";
-            this.Text = "Wild Pokémon Editor";
+            this.Text = "DSPRE - DPPt Encounters Editor";
             this.mainTabControl.ResumeLayout(false);
             this.grassGroundTabPage.ResumeLayout(false);
             this.grassGroundTabPage.PerformLayout();
@@ -2447,55 +2447,55 @@
             this.superRodGroupBox.ResumeLayout(false);
             this.superRodGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.superRodRateUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodOneMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodOneMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodFourMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodFourMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodFiveMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodFiveMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodThirtyMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodThirtyMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodSixtyMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.superRodSixtyMinUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodOneMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodOneMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodFourMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodFourMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodFifteenMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodFifteenMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodSecondFortyMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodSecondFortyMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodFirstFortyMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superRodFirstFortyMinLevelUpDown)).EndInit();
             this.goodRodGroupBox.ResumeLayout(false);
             this.goodRodGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.goodRodRateUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodOneMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodOneMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodFourMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodFourMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodFiveMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodFiveMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodThirtyMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodThirtyMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodSixtyMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goodRodSixtyMinUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodOneMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodOneMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodFourMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodFourMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodFifteenMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodFifteenMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodSecondFortyMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodSecondFortyMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodFirstFortyMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goodRodFirstFortyMinLevelUpDown)).EndInit();
             this.oldRodGroupBox.ResumeLayout(false);
             this.oldRodGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.oldRodRateUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodOneMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodOneMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodFourMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodFourMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodFiveMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodFiveMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodThirtyMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodThirtyMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodSixtyMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.oldRodSixtyMinUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodOneMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodOneMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodFourMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodFourMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodFiveMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodFiveMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodThirtyMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodThirtyMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodSixtyMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.oldRodSixtyMinLevelUpDown)).EndInit();
             this.surfGroupBox.ResumeLayout(false);
             this.surfGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.surfRateUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfOneMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfOneMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfFourMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfFourMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfFiveMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfFiveMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMinUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMaxUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMinUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfOneMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfOneMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfFourMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfFourMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfFiveMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfFiveMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMinLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMaxLevelUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMinLevelUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2605,24 +2605,24 @@
         private System.Windows.Forms.GroupBox surfGroupBox;
         private System.Windows.Forms.NumericUpDown surfRateUpDown;
         private System.Windows.Forms.Label label61;
-        private System.Windows.Forms.NumericUpDown surfOneMaxUpDown;
-        private System.Windows.Forms.NumericUpDown surfOneMinUpDown;
+        private System.Windows.Forms.NumericUpDown surfOneMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown surfOneMinLevelUpDown;
         private System.Windows.Forms.Label label62;
         private System.Windows.Forms.ComboBox surfOneComboBox;
-        private System.Windows.Forms.NumericUpDown surfFourMaxUpDown;
-        private System.Windows.Forms.NumericUpDown surfFourMinUpDown;
+        private System.Windows.Forms.NumericUpDown surfFourMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown surfFourMinLevelUpDown;
         private System.Windows.Forms.Label label63;
         private System.Windows.Forms.ComboBox surfFourComboBox;
-        private System.Windows.Forms.NumericUpDown surfFiveMaxUpDown;
-        private System.Windows.Forms.NumericUpDown surfFiveMinUpDown;
+        private System.Windows.Forms.NumericUpDown surfFiveMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown surfFiveMinLevelUpDown;
         private System.Windows.Forms.Label label64;
         private System.Windows.Forms.ComboBox surfFiveComboBox;
-        private System.Windows.Forms.NumericUpDown surfThirtyMaxUpDown;
-        private System.Windows.Forms.NumericUpDown surfThirtyMinUpDown;
+        private System.Windows.Forms.NumericUpDown surfThirtyMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown surfThirtyMinLevelUpDown;
         private System.Windows.Forms.Label label65;
         private System.Windows.Forms.ComboBox surfThirtyComboBox;
-        private System.Windows.Forms.NumericUpDown surfSixtyMaxUpDown;
-        private System.Windows.Forms.NumericUpDown surfSixtyMinUpDown;
+        private System.Windows.Forms.NumericUpDown surfSixtyMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown surfSixtyMinLevelUpDown;
         private System.Windows.Forms.Label label66;
         private System.Windows.Forms.ComboBox surfSixtyComboBox;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -2633,74 +2633,74 @@
         private System.Windows.Forms.Label label60;
         private System.Windows.Forms.NumericUpDown superRodRateUpDown;
         private System.Windows.Forms.Label label69;
-        private System.Windows.Forms.NumericUpDown superRodOneMaxUpDown;
-        private System.Windows.Forms.NumericUpDown superRodOneMinUpDown;
+        private System.Windows.Forms.NumericUpDown superRodOneMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown superRodOneMinLevelUpDown;
         private System.Windows.Forms.Label label70;
         private System.Windows.Forms.ComboBox superRodOneComboBox;
-        private System.Windows.Forms.NumericUpDown superRodFourMaxUpDown;
-        private System.Windows.Forms.NumericUpDown superRodFourMinUpDown;
+        private System.Windows.Forms.NumericUpDown superRodFourMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown superRodFourMinLevelUpDown;
         private System.Windows.Forms.Label label71;
         private System.Windows.Forms.ComboBox superRodFourComboBox;
-        private System.Windows.Forms.NumericUpDown superRodFiveMaxUpDown;
-        private System.Windows.Forms.NumericUpDown superRodFiveMinUpDown;
+        private System.Windows.Forms.NumericUpDown superRodFifteenMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown superRodFifteenMinLevelUpDown;
         private System.Windows.Forms.Label label72;
-        private System.Windows.Forms.ComboBox superRodFiveComboBox;
-        private System.Windows.Forms.NumericUpDown superRodThirtyMaxUpDown;
-        private System.Windows.Forms.NumericUpDown superRodThirtyMinUpDown;
+        private System.Windows.Forms.ComboBox superRodFifteenComboBox;
+        private System.Windows.Forms.NumericUpDown superRodSecondFortyMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown superRodSecondFortyMinLevelUpDown;
         private System.Windows.Forms.Label label73;
-        private System.Windows.Forms.ComboBox superRodThirtyComboBox;
-        private System.Windows.Forms.NumericUpDown superRodSixtyMaxUpDown;
-        private System.Windows.Forms.NumericUpDown superRodSixtyMinUpDown;
+        private System.Windows.Forms.ComboBox superRodSecondFortyComboBox;
+        private System.Windows.Forms.NumericUpDown superRodFirstFortyMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown superRodFirstFortyMinLevelUpDown;
         private System.Windows.Forms.Label label74;
-        private System.Windows.Forms.ComboBox superRodSixtyComboBox;
+        private System.Windows.Forms.ComboBox superRodFirstFortyComboBox;
         private System.Windows.Forms.GroupBox goodRodGroupBox;
         private System.Windows.Forms.Label label51;
         private System.Windows.Forms.Label label52;
         private System.Windows.Forms.NumericUpDown goodRodRateUpDown;
         private System.Windows.Forms.Label label53;
-        private System.Windows.Forms.NumericUpDown goodRodOneMaxUpDown;
-        private System.Windows.Forms.NumericUpDown goodRodOneMinUpDown;
+        private System.Windows.Forms.NumericUpDown goodRodOneMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown goodRodOneMinLevelUpDown;
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.ComboBox goodRodOneComboBox;
-        private System.Windows.Forms.NumericUpDown goodRodFourMaxUpDown;
-        private System.Windows.Forms.NumericUpDown goodRodFourMinUpDown;
+        private System.Windows.Forms.NumericUpDown goodRodFourMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown goodRodFourMinLevelUpDown;
         private System.Windows.Forms.Label label55;
         private System.Windows.Forms.ComboBox goodRodFourComboBox;
-        private System.Windows.Forms.NumericUpDown goodRodFiveMaxUpDown;
-        private System.Windows.Forms.NumericUpDown goodRodFiveMinUpDown;
+        private System.Windows.Forms.NumericUpDown goodRodFifteenMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown goodRodFifteenMinLevelUpDown;
         private System.Windows.Forms.Label label56;
-        private System.Windows.Forms.ComboBox goodRodFiveComboBox;
-        private System.Windows.Forms.NumericUpDown goodRodThirtyMaxUpDown;
-        private System.Windows.Forms.NumericUpDown goodRodThirtyMinUpDown;
+        private System.Windows.Forms.ComboBox goodRodFifteenComboBox;
+        private System.Windows.Forms.NumericUpDown goodRodSecondFortyMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown goodRodSecondFortyMinLevelUpDown;
         private System.Windows.Forms.Label label57;
-        private System.Windows.Forms.ComboBox goodRodThirtyComboBox;
-        private System.Windows.Forms.NumericUpDown goodRodSixtyMaxUpDown;
-        private System.Windows.Forms.NumericUpDown goodRodSixtyMinUpDown;
+        private System.Windows.Forms.ComboBox goodRodSecondFortyComboBox;
+        private System.Windows.Forms.NumericUpDown goodRodFirstFortyMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown goodRodFirstFortyMinLevelUpDown;
         private System.Windows.Forms.Label label58;
-        private System.Windows.Forms.ComboBox goodRodSixtyComboBox;
+        private System.Windows.Forms.ComboBox goodRodFirstFortyComboBox;
         private System.Windows.Forms.GroupBox oldRodGroupBox;
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.NumericUpDown oldRodRateUpDown;
         private System.Windows.Forms.Label label45;
-        private System.Windows.Forms.NumericUpDown oldRodOneMaxUpDown;
-        private System.Windows.Forms.NumericUpDown oldRodOneMinUpDown;
+        private System.Windows.Forms.NumericUpDown oldRodOneMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown oldRodOneMinLevelUpDown;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.ComboBox oldRodOneComboBox;
-        private System.Windows.Forms.NumericUpDown oldRodFourMaxUpDown;
-        private System.Windows.Forms.NumericUpDown oldRodFourMinUpDown;
+        private System.Windows.Forms.NumericUpDown oldRodFourMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown oldRodFourMinLevelUpDown;
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.ComboBox oldRodFourComboBox;
-        private System.Windows.Forms.NumericUpDown oldRodFiveMaxUpDown;
-        private System.Windows.Forms.NumericUpDown oldRodFiveMinUpDown;
+        private System.Windows.Forms.NumericUpDown oldRodFiveMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown oldRodFiveMinLevelUpDown;
         private System.Windows.Forms.Label label48;
         private System.Windows.Forms.ComboBox oldRodFiveComboBox;
-        private System.Windows.Forms.NumericUpDown oldRodThirtyMaxUpDown;
-        private System.Windows.Forms.NumericUpDown oldRodThirtyMinUpDown;
+        private System.Windows.Forms.NumericUpDown oldRodThirtyMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown oldRodThirtyMinLevelUpDown;
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.ComboBox oldRodThirtyComboBox;
-        private System.Windows.Forms.NumericUpDown oldRodSixtyMaxUpDown;
-        private System.Windows.Forms.NumericUpDown oldRodSixtyMinUpDown;
+        private System.Windows.Forms.NumericUpDown oldRodSixtyMaxLevelUpDown;
+        private System.Windows.Forms.NumericUpDown oldRodSixtyMinLevelUpDown;
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.ComboBox oldRodSixtyComboBox;
         private System.Windows.Forms.PictureBox pictureBox2;
