@@ -127,6 +127,8 @@ namespace DSPRE {
             trainerParty,
             trainerGraphics,
 
+            monIcons,
+
             interiorBuildingModels
         };
         public static Dictionary<DirNames, (string packedDir, string unpackedDir)> gameDirs { get; private set; }
@@ -865,6 +867,8 @@ namespace DSPRE {
                         [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
                         [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
 
+                        [DirNames.monIcons] = @"data\poketool\icongra\poke_icon.narc",
+
                         [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc"
                     };
                     break;
@@ -893,6 +897,8 @@ namespace DSPRE {
                         [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
                         [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
 
+                        [DirNames.monIcons] = @"data\poketool\icongra\pl_poke_icon.narc",
+
                         [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "enc_data.narc"
                     };
                     break;
@@ -920,6 +926,8 @@ namespace DSPRE {
                         [DirNames.trainerProperties] = @"data\a\0\5\5",
                         [DirNames.trainerParty] = @"data\a\0\5\6",
                         [DirNames.trainerGraphics] = @"data\a\0\5\8",
+
+                        [DirNames.monIcons] = @"data\a\0\2\0",
 
                         [DirNames.interiorBuildingModels] = @"data\a\1\4\8"
                     };

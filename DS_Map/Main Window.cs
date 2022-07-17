@@ -879,7 +879,7 @@ namespace DSPRE {
             statusLabel.Text = "Attempting to extract Wild Encounters NARC...";
             Update();
 
-            DSUtils.TryUnpackNarcs(new List<DirNames>() { DirNames.encounters });
+            DSUtils.TryUnpackNarcs(new List<DirNames>() { DirNames.encounters, DirNames.monIcons });
 
             statusLabel.Text = "Passing control to Wild Pokémon Editor...";
             Update();
@@ -8037,6 +8037,10 @@ namespace DSPRE {
         ImageBase tiles;
         SpriteBase sprite;
 
+        private PaletteBase[] monIconPals = new PaletteBase[6];
+        private ImageBase[] monIconTiles = new ImageBase[6];
+        private SpriteBase[] monIconSprites = new SpriteBase[6];
+
         Dictionary<byte, (uint entryOffset, ushort musicD, ushort? musicN)> trainerClassEncounterMusicDict;
         private void SetupTrainerClassEncounterMusicTable() {
             RomInfo.SetEncounterMusicTableOffsetToRAMAddress();
@@ -8074,7 +8078,8 @@ namespace DSPRE {
                 DirNames.trainerProperties, 
                 DirNames.trainerParty, 
                 DirNames.trainerGraphics, 
-                DirNames.textArchives 
+                DirNames.textArchives,
+                DirNames.monIcons
             });
 
             partyPokemonComboboxList.Clear();
@@ -8285,7 +8290,83 @@ namespace DSPRE {
         }
         private void showTrainerEditorPokePic(byte partyPos) {
             ComboBox cb = partyPokemonComboboxList[partyPos];
-            partyPokemonPictureBoxList[partyPos].Image = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : global::DSPRE.Properties.Resources.IconPokeball;
+
+            int species = cb.SelectedIndex > 0 ? cb.SelectedIndex : 0;
+
+            bool fiveDigits = false; // some extreme future proofing
+            try {
+                monIconPals[partyPos] = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\0000", 0, "0000");
+            } catch (FileNotFoundException) {
+                monIconPals[partyPos] = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\00000", 0, "00000");
+                fiveDigits = true;
+            }
+
+            // read table at pointer at 0x02074408 in the arm9 to grab pal ID
+            int paletteId = 0;
+            byte[] iconPalTableBuf;
+
+            switch (RomInfo.gameFamily) {
+                case gFamEnum.DP:
+                    iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x6B838, 4);
+                    break;
+                case gFamEnum.Plat:
+                    iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x79F80, 4);
+                    break;
+                case gFamEnum.HGSS:
+                default:
+                    iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x74408, 4);
+                    break;
+            }
+            int iconPalTableAddress = (iconPalTableBuf[3] & 0xFF) << 24 | (iconPalTableBuf[2] & 0xFF) << 16 | (iconPalTableBuf[1] & 0xFF) << 8 | (iconPalTableBuf[0] & 0xFF);
+            int iconPalTableOffsetFromFileStart = 0;
+            string iconTablePath;
+
+            if (iconPalTableAddress >= ROMToolboxDialog.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
+                iconPalTableOffsetFromFileStart = iconPalTableAddress - (int)ROMToolboxDialog.synthOverlayLoadAddress;
+                iconTablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+            } else {
+                iconPalTableOffsetFromFileStart = iconPalTableAddress - 0x02000000;
+                iconTablePath = RomInfo.arm9Path;
+            }
+
+            using (BinaryReader idReader = new BinaryReader(new FileStream(iconTablePath, FileMode.Open))) {
+                idReader.BaseStream.Position = iconPalTableOffsetFromFileStart + species;
+
+                paletteId = idReader.ReadByte();
+            }
+
+            if (paletteId != 0) {
+                monIconPals[partyPos].Palette[0] = monIconPals[partyPos].Palette[paletteId]; // update pal 0 to be the new pal
+            }
+
+            // grab tiles
+            int spriteFileID = species + 7;
+            string spriteFilename = spriteFileID.ToString("D" + (fiveDigits ? "5" : "4"));
+            monIconTiles[partyPos] = new NCGR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
+
+            // grab sprite
+            int ncerFileId = 2;
+            string ncerFileName = ncerFileId.ToString("D" + (fiveDigits ? "5" : "4"));
+            monIconSprites[partyPos] = new NCER(gameDirs[DirNames.monIcons].unpackedDir + "\\" + ncerFileName, 2, ncerFileName);
+
+            // copy this from the trainer
+            int bank0OAMcount = monIconSprites[partyPos].Banks[0].oams.Length;
+            int[] OAMenabled = new int[bank0OAMcount];
+            for (int i = 0; i < OAMenabled.Length; i++) {
+                OAMenabled[i] = i;
+            }
+
+            // finally compose image
+            Image iconSprite;
+            try {
+                iconSprite = monIconSprites[partyPos].Get_Image(monIconTiles[partyPos], monIconPals[partyPos], 0, partyPokemonPictureBoxList[partyPos].Width, partyPokemonPictureBoxList[partyPos].Height, false, false, false, true, true, -1, OAMenabled);
+            } catch (FormatException e) {
+                iconSprite = global::DSPRE.Properties.Resources.IconPokeball;
+            }
+            partyPokemonPictureBoxList[partyPos].Image = iconSprite;
+
+            // default:
+            //partyPokemonPictureBoxList[partyPos].Image = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : global::DSPRE.Properties.Resources.IconPokeball;
         }
         private void partyPokemon1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             showTrainerEditorPokePic(0);
