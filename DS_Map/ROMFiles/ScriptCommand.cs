@@ -336,7 +336,7 @@ namespace DSPRE.ROMFiles {
                         try {
                             cmdParams.Add(result.ToByteArrayChooseSize(parametersSizeArr[i]));
                         } catch (OverflowException) {
-                            MessageBox.Show($"Argument {nameParts[i + 1]} at line {lineNumber} is not in the range [0, {Math.Pow(2, 8 * parametersSizeArr[i]) - 1}].", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"Argument {nameParts[i + 1]} at line {lineNumber} is not in the range [0, {Math.Pow(2, 8 * parametersSizeArr[i]) - 1}].", "Argument error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             id = null;
                         }
                     }
