@@ -8295,9 +8295,9 @@ namespace DSPRE {
 
             bool fiveDigits = false; // some extreme future proofing
             try {
-                monIconPals[partyPos] = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\0000", 0, "0000");
+                monIconPals[partyPos] = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + "0000", 0, "0000");
             } catch (FileNotFoundException) {
-                monIconPals[partyPos] = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\00000", 0, "00000");
+                monIconPals[partyPos] = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + "00000", 0, "00000");
                 fiveDigits = true;
             }
 
@@ -8317,21 +8317,19 @@ namespace DSPRE {
                     iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x74408, 4);
                     break;
             }
-            int iconPalTableAddress = (iconPalTableBuf[3] & 0xFF) << 24 | (iconPalTableBuf[2] & 0xFF) << 16 | (iconPalTableBuf[1] & 0xFF) << 8 | (iconPalTableBuf[0] & 0xFF);
-            int iconPalTableOffsetFromFileStart = 0;
+            int iconPalTableAddress = (iconPalTableBuf[3] & 0xFF) << 24 | (iconPalTableBuf[2] & 0xFF) << 16 | (iconPalTableBuf[1] & 0xFF) << 8 | (iconPalTableBuf[0] & 0xFF) /* << 0 */;
             string iconTablePath;
 
-            if (iconPalTableAddress >= ROMToolboxDialog.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
-                iconPalTableOffsetFromFileStart = iconPalTableAddress - (int)ROMToolboxDialog.synthOverlayLoadAddress;
+            int iconPalTableOffsetFromFileStart;
+            if (iconPalTableAddress >= RomInfo.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
+                iconPalTableOffsetFromFileStart = iconPalTableAddress - (int)RomInfo.synthOverlayLoadAddress;
                 iconTablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
             } else {
                 iconPalTableOffsetFromFileStart = iconPalTableAddress - 0x02000000;
                 iconTablePath = RomInfo.arm9Path;
             }
-
-            using (BinaryReader idReader = new BinaryReader(new FileStream(iconTablePath, FileMode.Open))) {
-                idReader.BaseStream.Position = iconPalTableOffsetFromFileStart + species;
-
+            
+            using (DSUtils.EasyReader idReader = new DSUtils.EasyReader(iconTablePath, iconPalTableOffsetFromFileStart + species)) {
                 paletteId = idReader.ReadByte();
             }
 
@@ -8360,7 +8358,7 @@ namespace DSPRE {
             Image iconSprite;
             try {
                 iconSprite = monIconSprites[partyPos].Get_Image(monIconTiles[partyPos], monIconPals[partyPos], 0, partyPokemonPictureBoxList[partyPos].Width, partyPokemonPictureBoxList[partyPos].Height, false, false, false, true, true, -1, OAMenabled);
-            } catch (FormatException e) {
+            } catch (FormatException) {
                 iconSprite = global::DSPRE.Properties.Resources.IconPokeball;
             }
             partyPokemonPictureBoxList[partyPos].Image = iconSprite;
@@ -8834,8 +8832,8 @@ namespace DSPRE {
                 effectsComboTable = new List<(ushort vsGraph, ushort battleSSEQ)>();
                 
                 effectsComboMainTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.effectsComboTableOffsetToRAMAddress, 4), 0);
-                ROMToolboxDialog.flag_MainComboTableRepointed = (effectsComboMainTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
-                effectsComboMainTableStartAddress -= ROMToolboxDialog.flag_MainComboTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
+                ROMToolboxDialog.flag_MainComboTableRepointed = (effectsComboMainTableStartAddress >= RomInfo.synthOverlayLoadAddress);
+                effectsComboMainTableStartAddress -= ROMToolboxDialog.flag_MainComboTableRepointed ? RomInfo.synthOverlayLoadAddress : DSUtils.ARM9.address;
 
                 byte comboTableEntriesCount;
 
@@ -8846,12 +8844,12 @@ namespace DSPRE {
                     vsTrainerEffectsList = new List<(int trainerClass, int comboID)>();
 
                     vsPokemonTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsPokemonEntryTableOffsetToRAMAddress, 4), 0);
-                    ROMToolboxDialog.flag_PokemonBattleTableRepointed = (vsPokemonTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
-                    vsPokemonTableStartAddress -= ROMToolboxDialog.flag_PokemonBattleTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
+                    ROMToolboxDialog.flag_PokemonBattleTableRepointed = (vsPokemonTableStartAddress >= RomInfo.synthOverlayLoadAddress);
+                    vsPokemonTableStartAddress -= ROMToolboxDialog.flag_PokemonBattleTableRepointed ? RomInfo.synthOverlayLoadAddress : DSUtils.ARM9.address;
 
                     vsTrainerTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsTrainerEntryTableOffsetToRAMAddress, 4), 0);
-                    ROMToolboxDialog.flag_TrainerClassBattleTableRepointed = (vsTrainerTableStartAddress >= ROMToolboxDialog.synthOverlayLoadAddress);
-                    vsTrainerTableStartAddress -= ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? ROMToolboxDialog.synthOverlayLoadAddress : DSUtils.ARM9.address;
+                    ROMToolboxDialog.flag_TrainerClassBattleTableRepointed = (vsTrainerTableStartAddress >= RomInfo.synthOverlayLoadAddress);
+                    vsTrainerTableStartAddress -= ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? RomInfo.synthOverlayLoadAddress : DSUtils.ARM9.address;
 
 
                     pbEffectsPokemonCombobox.Items.Clear();

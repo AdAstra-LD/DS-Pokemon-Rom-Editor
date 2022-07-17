@@ -26,7 +26,10 @@ namespace DSPRE {
         public static gVerEnum gameVersion { get; private set; }
         public static gFamEnum gameFamily { get; private set; }
 
+
+        public static uint synthOverlayLoadAddress = 0x023C8000;
         public static uint arm9spawnOffset { get; private set; }
+        
         public static int initialMoneyOverlayNumber { get; private set; }
         public static uint initialMoneyOverlayOffset { get; private set; }
 
@@ -502,8 +505,8 @@ namespace DSPRE {
                     using (DSUtils.EasyReader bReader = new DSUtils.EasyReader(ov1Path, 0x1F92FC - (ov1Address - DSUtils.ARM9.address))) { // read the pointer at 0x021F92FC and adjust accordingly below
                         uint ramAddress = bReader.ReadUInt32();
                         
-                        if (ramAddress >= ROMToolboxDialog.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
-                            OWTableOffset = ramAddress - ROMToolboxDialog.synthOverlayLoadAddress;
+                        if (ramAddress >= RomInfo.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
+                            OWTableOffset = ramAddress - RomInfo.synthOverlayLoadAddress;
                             OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
                         } else {
                             OWTableOffset = ramAddress - ov1Address;

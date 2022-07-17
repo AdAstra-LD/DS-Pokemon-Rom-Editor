@@ -15,7 +15,6 @@ using static DSPRE.Resources.ROMToolboxDB.ToolboxDB;
 namespace DSPRE {
     public partial class ROMToolboxDialog : Form {
         public static uint expandedARMfileID = ToolboxDB.syntheticOverlayFileNumbersDB[RomInfo.gameFamily];
-        public static uint synthOverlayLoadAddress = 0x023C8000;
 
         public static bool flag_standardizedItems { get; private set; } = false;
         public static bool flag_arm9Expanded { get; private set; } = false;
