@@ -502,14 +502,38 @@ namespace DSPRE {
                     string ov1Path = DSUtils.GetOverlayPath(1);
                     uint ov1Address = DSUtils.GetOverlayRAMAddress(1);
 
-                    using (DSUtils.EasyReader bReader = new DSUtils.EasyReader(ov1Path, 0x1F92FC - (ov1Address - DSUtils.ARM9.address))) { // read the pointer at 0x021F92FC and adjust accordingly below
-                        uint ramAddress = bReader.ReadUInt32();
-                        
-                        if (ramAddress >= RomInfo.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
-                            OWTableOffset = ramAddress - RomInfo.synthOverlayLoadAddress;
+                    int ramAddrOfPointer;
+                    switch (gameLanguage) {
+                        case gLangEnum.Italian:
+                            ramAddrOfPointer = 0x021F929C;
+                            break;
+                        case gLangEnum.French:
+                        case gLangEnum.Spanish:
+                            ramAddrOfPointer = 0x021F931C;
+                            break;
+                        case gLangEnum.German:
+                            ramAddrOfPointer = 0x021F92DC;
+                            break;
+                        case gLangEnum.Japanese:
+                            ramAddrOfPointer = 0x021F86C4;
+                            break;
+                        default:
+                            ramAddrOfPointer = 0x021F92FC;
+                            break;
+                    }
+
+                    using (DSUtils.EasyReader bReader = new DSUtils.EasyReader(ov1Path, ramAddrOfPointer - ov1Address)) { // read the pointer at the specified ram address and adjust accordingly below
+                        uint ramAddressOfTable = bReader.ReadUInt32();
+                        if (ramAddressOfTable >= 0x03000000) {
+                            MessageBox.Show("Something went wrong reading the Overworld configuration table.\nOverworld sprites in the Event Editor will be " +
+                                "displayed incorrectly or not displayed at all.", "Decompression error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
+                            OWTableOffset = ramAddressOfTable - RomInfo.synthOverlayLoadAddress;
                             OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
                         } else {
-                            OWTableOffset = ramAddress - ov1Address;
+                            OWTableOffset = ramAddressOfTable - ov1Address;
                             OWtablePath = ov1Path;
                         }
                     }
