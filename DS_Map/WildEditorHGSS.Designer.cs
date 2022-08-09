@@ -241,6 +241,8 @@
             this.label66 = new System.Windows.Forms.Label();
             this.surfSixtyComboBox = new System.Windows.Forms.ComboBox();
             this.repairAllButton = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.mainTabControl.SuspendLayout();
             this.grassGroundTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -463,6 +465,8 @@
             // 
             // rockSmashGroupBox
             // 
+            this.rockSmashGroupBox.Controls.Add(this.label15);
+            this.rockSmashGroupBox.Controls.Add(this.label16);
             this.rockSmashGroupBox.Controls.Add(this.label11);
             this.rockSmashGroupBox.Controls.Add(this.label12);
             this.rockSmashGroupBox.Controls.Add(this.rockSmashTenMaxLevelUpDown);
@@ -547,7 +551,6 @@
             // 
             // rockSmashNinetyComboBox
             // 
-            this.rockSmashNinetyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.rockSmashNinetyComboBox.FormattingEnabled = true;
             this.rockSmashNinetyComboBox.Location = new System.Drawing.Point(7, 79);
             this.rockSmashNinetyComboBox.Name = "rockSmashNinetyComboBox";
@@ -567,7 +570,6 @@
             // 
             // rockSmashTenComboBox
             // 
-            this.rockSmashTenComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.rockSmashTenComboBox.FormattingEnabled = true;
             this.rockSmashTenComboBox.Location = new System.Drawing.Point(7, 128);
             this.rockSmashTenComboBox.Name = "rockSmashTenComboBox";
@@ -592,7 +594,6 @@
             // 
             // sinnohSecondComboBox
             // 
-            this.sinnohSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sinnohSecondComboBox.FormattingEnabled = true;
             this.sinnohSecondComboBox.Location = new System.Drawing.Point(42, 151);
             this.sinnohSecondComboBox.Name = "sinnohSecondComboBox";
@@ -611,7 +612,6 @@
             // 
             // sinnohFirstComboBox
             // 
-            this.sinnohFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sinnohFirstComboBox.FormattingEnabled = true;
             this.sinnohFirstComboBox.Location = new System.Drawing.Point(42, 124);
             this.sinnohFirstComboBox.Name = "sinnohFirstComboBox";
@@ -621,7 +621,6 @@
             // 
             // hoennSecondComboBox
             // 
-            this.hoennSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.hoennSecondComboBox.FormattingEnabled = true;
             this.hoennSecondComboBox.Location = new System.Drawing.Point(42, 72);
             this.hoennSecondComboBox.Name = "hoennSecondComboBox";
@@ -640,7 +639,6 @@
             // 
             // hoennFirstComboBox
             // 
-            this.hoennFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.hoennFirstComboBox.FormattingEnabled = true;
             this.hoennFirstComboBox.Location = new System.Drawing.Point(42, 45);
             this.hoennFirstComboBox.Name = "hoennFirstComboBox";
@@ -667,7 +665,6 @@
             // 
             // superRodSwarmComboBox
             // 
-            this.superRodSwarmComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.superRodSwarmComboBox.FormattingEnabled = true;
             this.superRodSwarmComboBox.Location = new System.Drawing.Point(575, 19);
             this.superRodSwarmComboBox.Name = "superRodSwarmComboBox";
@@ -677,7 +674,6 @@
             // 
             // goodRodSwarmComboBox
             // 
-            this.goodRodSwarmComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.goodRodSwarmComboBox.FormattingEnabled = true;
             this.goodRodSwarmComboBox.Location = new System.Drawing.Point(395, 19);
             this.goodRodSwarmComboBox.Name = "goodRodSwarmComboBox";
@@ -697,7 +693,6 @@
             // 
             // surfSwarmComboBox
             // 
-            this.surfSwarmComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.surfSwarmComboBox.FormattingEnabled = true;
             this.surfSwarmComboBox.Location = new System.Drawing.Point(213, 19);
             this.surfSwarmComboBox.Name = "surfSwarmComboBox";
@@ -717,7 +712,6 @@
             // 
             // grassSwarmComboBox
             // 
-            this.grassSwarmComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.grassSwarmComboBox.FormattingEnabled = true;
             this.grassSwarmComboBox.Location = new System.Drawing.Point(48, 19);
             this.grassSwarmComboBox.Name = "grassSwarmComboBox";
@@ -875,7 +869,6 @@
             // 
             // nightOneSecondComboBox
             // 
-            this.nightOneSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.nightOneSecondComboBox.FormattingEnabled = true;
             this.nightOneSecondComboBox.Location = new System.Drawing.Point(291, 364);
             this.nightOneSecondComboBox.Name = "nightOneSecondComboBox";
@@ -885,7 +878,6 @@
             // 
             // nightOneFirstComboBox
             // 
-            this.nightOneFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.nightOneFirstComboBox.FormattingEnabled = true;
             this.nightOneFirstComboBox.Location = new System.Drawing.Point(291, 337);
             this.nightOneFirstComboBox.Name = "nightOneFirstComboBox";
@@ -895,7 +887,6 @@
             // 
             // nightFourSecondComboBox
             // 
-            this.nightFourSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.nightFourSecondComboBox.FormattingEnabled = true;
             this.nightFourSecondComboBox.Location = new System.Drawing.Point(291, 310);
             this.nightFourSecondComboBox.Name = "nightFourSecondComboBox";
@@ -905,7 +896,6 @@
             // 
             // nightFourFirstComboBox
             // 
-            this.nightFourFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.nightFourFirstComboBox.FormattingEnabled = true;
             this.nightFourFirstComboBox.Location = new System.Drawing.Point(291, 283);
             this.nightFourFirstComboBox.Name = "nightFourFirstComboBox";
@@ -915,7 +905,6 @@
             // 
             // nightFiveSecondComboBox
             // 
-            this.nightFiveSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.nightFiveSecondComboBox.FormattingEnabled = true;
             this.nightFiveSecondComboBox.Location = new System.Drawing.Point(291, 256);
             this.nightFiveSecondComboBox.Name = "nightFiveSecondComboBox";
@@ -925,7 +914,6 @@
             // 
             // nightFiveFirstComboBox
             // 
-            this.nightFiveFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.nightFiveFirstComboBox.FormattingEnabled = true;
             this.nightFiveFirstComboBox.Location = new System.Drawing.Point(291, 229);
             this.nightFiveFirstComboBox.Name = "nightFiveFirstComboBox";
@@ -935,7 +923,6 @@
             // 
             // nightTenFourthComboBox
             // 
-            this.nightTenFourthComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.nightTenFourthComboBox.FormattingEnabled = true;
             this.nightTenFourthComboBox.Location = new System.Drawing.Point(291, 202);
             this.nightTenFourthComboBox.Name = "nightTenFourthComboBox";
@@ -945,7 +932,6 @@
             // 
             // nightTenThirdComboBox
             // 
-            this.nightTenThirdComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.nightTenThirdComboBox.FormattingEnabled = true;
             this.nightTenThirdComboBox.Location = new System.Drawing.Point(291, 175);
             this.nightTenThirdComboBox.Name = "nightTenThirdComboBox";
@@ -955,7 +941,6 @@
             // 
             // nightTenSecondComboBox
             // 
-            this.nightTenSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.nightTenSecondComboBox.FormattingEnabled = true;
             this.nightTenSecondComboBox.Location = new System.Drawing.Point(291, 148);
             this.nightTenSecondComboBox.Name = "nightTenSecondComboBox";
@@ -965,7 +950,6 @@
             // 
             // nightTenFirstComboBox
             // 
-            this.nightTenFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.nightTenFirstComboBox.FormattingEnabled = true;
             this.nightTenFirstComboBox.Location = new System.Drawing.Point(291, 121);
             this.nightTenFirstComboBox.Name = "nightTenFirstComboBox";
@@ -975,7 +959,6 @@
             // 
             // nightTwentySecondComboBox
             // 
-            this.nightTwentySecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.nightTwentySecondComboBox.FormattingEnabled = true;
             this.nightTwentySecondComboBox.Location = new System.Drawing.Point(291, 94);
             this.nightTwentySecondComboBox.Name = "nightTwentySecondComboBox";
@@ -985,7 +968,6 @@
             // 
             // nightTwentyFirstComboBox
             // 
-            this.nightTwentyFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.nightTwentyFirstComboBox.FormattingEnabled = true;
             this.nightTwentyFirstComboBox.Location = new System.Drawing.Point(291, 67);
             this.nightTwentyFirstComboBox.Name = "nightTwentyFirstComboBox";
@@ -995,7 +977,6 @@
             // 
             // dayOneSecondComboBox
             // 
-            this.dayOneSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dayOneSecondComboBox.FormattingEnabled = true;
             this.dayOneSecondComboBox.Location = new System.Drawing.Point(164, 364);
             this.dayOneSecondComboBox.Name = "dayOneSecondComboBox";
@@ -1005,7 +986,6 @@
             // 
             // dayOneFirstComboBox
             // 
-            this.dayOneFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dayOneFirstComboBox.FormattingEnabled = true;
             this.dayOneFirstComboBox.Location = new System.Drawing.Point(164, 337);
             this.dayOneFirstComboBox.Name = "dayOneFirstComboBox";
@@ -1015,7 +995,6 @@
             // 
             // dayFourSecondComboBox
             // 
-            this.dayFourSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dayFourSecondComboBox.FormattingEnabled = true;
             this.dayFourSecondComboBox.Location = new System.Drawing.Point(164, 310);
             this.dayFourSecondComboBox.Name = "dayFourSecondComboBox";
@@ -1025,7 +1004,6 @@
             // 
             // dayFourFirstComboBox
             // 
-            this.dayFourFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dayFourFirstComboBox.FormattingEnabled = true;
             this.dayFourFirstComboBox.Location = new System.Drawing.Point(164, 283);
             this.dayFourFirstComboBox.Name = "dayFourFirstComboBox";
@@ -1035,7 +1013,6 @@
             // 
             // dayFiveSecondComboBox
             // 
-            this.dayFiveSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dayFiveSecondComboBox.FormattingEnabled = true;
             this.dayFiveSecondComboBox.Location = new System.Drawing.Point(164, 256);
             this.dayFiveSecondComboBox.Name = "dayFiveSecondComboBox";
@@ -1045,7 +1022,6 @@
             // 
             // dayFiveFirstComboBox
             // 
-            this.dayFiveFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dayFiveFirstComboBox.FormattingEnabled = true;
             this.dayFiveFirstComboBox.Location = new System.Drawing.Point(164, 229);
             this.dayFiveFirstComboBox.Name = "dayFiveFirstComboBox";
@@ -1055,7 +1031,6 @@
             // 
             // dayTenFourthComboBox
             // 
-            this.dayTenFourthComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dayTenFourthComboBox.FormattingEnabled = true;
             this.dayTenFourthComboBox.Location = new System.Drawing.Point(164, 202);
             this.dayTenFourthComboBox.Name = "dayTenFourthComboBox";
@@ -1065,7 +1040,6 @@
             // 
             // dayTenThirdComboBox
             // 
-            this.dayTenThirdComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dayTenThirdComboBox.FormattingEnabled = true;
             this.dayTenThirdComboBox.Location = new System.Drawing.Point(164, 175);
             this.dayTenThirdComboBox.Name = "dayTenThirdComboBox";
@@ -1075,7 +1049,6 @@
             // 
             // dayTenSecondComboBox
             // 
-            this.dayTenSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dayTenSecondComboBox.FormattingEnabled = true;
             this.dayTenSecondComboBox.Location = new System.Drawing.Point(164, 148);
             this.dayTenSecondComboBox.Name = "dayTenSecondComboBox";
@@ -1085,7 +1058,6 @@
             // 
             // dayTenFirstComboBox
             // 
-            this.dayTenFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dayTenFirstComboBox.FormattingEnabled = true;
             this.dayTenFirstComboBox.Location = new System.Drawing.Point(164, 121);
             this.dayTenFirstComboBox.Name = "dayTenFirstComboBox";
@@ -1095,7 +1067,6 @@
             // 
             // dayTwentySecondComboBox
             // 
-            this.dayTwentySecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dayTwentySecondComboBox.FormattingEnabled = true;
             this.dayTwentySecondComboBox.Location = new System.Drawing.Point(164, 94);
             this.dayTwentySecondComboBox.Name = "dayTwentySecondComboBox";
@@ -1105,7 +1076,6 @@
             // 
             // dayTwentyFirstComboBox
             // 
-            this.dayTwentyFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dayTwentyFirstComboBox.FormattingEnabled = true;
             this.dayTwentyFirstComboBox.Location = new System.Drawing.Point(164, 67);
             this.dayTwentyFirstComboBox.Name = "dayTwentyFirstComboBox";
@@ -1133,7 +1103,6 @@
             // 
             // morningOneSecondComboBox
             // 
-            this.morningOneSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.morningOneSecondComboBox.FormattingEnabled = true;
             this.morningOneSecondComboBox.Location = new System.Drawing.Point(37, 364);
             this.morningOneSecondComboBox.Name = "morningOneSecondComboBox";
@@ -1161,7 +1130,6 @@
             // 
             // morningOneFirstComboBox
             // 
-            this.morningOneFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.morningOneFirstComboBox.FormattingEnabled = true;
             this.morningOneFirstComboBox.Location = new System.Drawing.Point(37, 337);
             this.morningOneFirstComboBox.Name = "morningOneFirstComboBox";
@@ -1189,7 +1157,6 @@
             // 
             // morningFourSecondComboBox
             // 
-            this.morningFourSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.morningFourSecondComboBox.FormattingEnabled = true;
             this.morningFourSecondComboBox.Location = new System.Drawing.Point(37, 310);
             this.morningFourSecondComboBox.Name = "morningFourSecondComboBox";
@@ -1217,7 +1184,6 @@
             // 
             // morningFourFirstComboBox
             // 
-            this.morningFourFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.morningFourFirstComboBox.FormattingEnabled = true;
             this.morningFourFirstComboBox.Location = new System.Drawing.Point(37, 283);
             this.morningFourFirstComboBox.Name = "morningFourFirstComboBox";
@@ -1245,7 +1211,6 @@
             // 
             // morningFiveSecondComboBox
             // 
-            this.morningFiveSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.morningFiveSecondComboBox.FormattingEnabled = true;
             this.morningFiveSecondComboBox.Location = new System.Drawing.Point(37, 256);
             this.morningFiveSecondComboBox.Name = "morningFiveSecondComboBox";
@@ -1273,7 +1238,6 @@
             // 
             // morningFiveFirstComboBox
             // 
-            this.morningFiveFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.morningFiveFirstComboBox.FormattingEnabled = true;
             this.morningFiveFirstComboBox.Location = new System.Drawing.Point(37, 229);
             this.morningFiveFirstComboBox.Name = "morningFiveFirstComboBox";
@@ -1301,7 +1265,6 @@
             // 
             // morningTenFourthComboBox
             // 
-            this.morningTenFourthComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.morningTenFourthComboBox.FormattingEnabled = true;
             this.morningTenFourthComboBox.Location = new System.Drawing.Point(37, 202);
             this.morningTenFourthComboBox.Name = "morningTenFourthComboBox";
@@ -1329,7 +1292,6 @@
             // 
             // morningTenThirdComboBox
             // 
-            this.morningTenThirdComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.morningTenThirdComboBox.FormattingEnabled = true;
             this.morningTenThirdComboBox.Location = new System.Drawing.Point(37, 175);
             this.morningTenThirdComboBox.Name = "morningTenThirdComboBox";
@@ -1357,7 +1319,6 @@
             // 
             // morningTenSecondComboBox
             // 
-            this.morningTenSecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.morningTenSecondComboBox.FormattingEnabled = true;
             this.morningTenSecondComboBox.Location = new System.Drawing.Point(37, 148);
             this.morningTenSecondComboBox.Name = "morningTenSecondComboBox";
@@ -1385,7 +1346,6 @@
             // 
             // morningTenFirstComboBox
             // 
-            this.morningTenFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.morningTenFirstComboBox.FormattingEnabled = true;
             this.morningTenFirstComboBox.Location = new System.Drawing.Point(37, 121);
             this.morningTenFirstComboBox.Name = "morningTenFirstComboBox";
@@ -1413,7 +1373,6 @@
             // 
             // morningTwentySecondComboBox
             // 
-            this.morningTwentySecondComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.morningTwentySecondComboBox.FormattingEnabled = true;
             this.morningTwentySecondComboBox.Location = new System.Drawing.Point(37, 94);
             this.morningTwentySecondComboBox.Name = "morningTwentySecondComboBox";
@@ -1441,7 +1400,6 @@
             // 
             // morningTwentyFirstComboBox
             // 
-            this.morningTwentyFirstComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.morningTwentyFirstComboBox.FormattingEnabled = true;
             this.morningTwentyFirstComboBox.Location = new System.Drawing.Point(37, 67);
             this.morningTwentyFirstComboBox.Name = "morningTwentyFirstComboBox";
@@ -1606,7 +1564,6 @@
             // 
             // superRodOneComboBox
             // 
-            this.superRodOneComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.superRodOneComboBox.FormattingEnabled = true;
             this.superRodOneComboBox.Location = new System.Drawing.Point(45, 185);
             this.superRodOneComboBox.Name = "superRodOneComboBox";
@@ -1642,7 +1599,6 @@
             // 
             // superRodFourComboBox
             // 
-            this.superRodFourComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.superRodFourComboBox.FormattingEnabled = true;
             this.superRodFourComboBox.Location = new System.Drawing.Point(45, 158);
             this.superRodFourComboBox.Name = "superRodFourComboBox";
@@ -1678,7 +1634,6 @@
             // 
             // superRodFifteenComboBox
             // 
-            this.superRodFifteenComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.superRodFifteenComboBox.FormattingEnabled = true;
             this.superRodFifteenComboBox.Location = new System.Drawing.Point(45, 131);
             this.superRodFifteenComboBox.Name = "superRodFifteenComboBox";
@@ -1714,7 +1669,6 @@
             // 
             // superRodSecondFortyComboBox
             // 
-            this.superRodSecondFortyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.superRodSecondFortyComboBox.FormattingEnabled = true;
             this.superRodSecondFortyComboBox.Location = new System.Drawing.Point(45, 104);
             this.superRodSecondFortyComboBox.Name = "superRodSecondFortyComboBox";
@@ -1750,7 +1704,6 @@
             // 
             // superRodFirstFortyComboBox
             // 
-            this.superRodFirstFortyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.superRodFirstFortyComboBox.FormattingEnabled = true;
             this.superRodFirstFortyComboBox.Location = new System.Drawing.Point(45, 77);
             this.superRodFirstFortyComboBox.Name = "superRodFirstFortyComboBox";
@@ -1860,7 +1813,6 @@
             // 
             // goodRodOneComboBox
             // 
-            this.goodRodOneComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.goodRodOneComboBox.FormattingEnabled = true;
             this.goodRodOneComboBox.Location = new System.Drawing.Point(45, 185);
             this.goodRodOneComboBox.Name = "goodRodOneComboBox";
@@ -1896,7 +1848,6 @@
             // 
             // goodRodFourComboBox
             // 
-            this.goodRodFourComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.goodRodFourComboBox.FormattingEnabled = true;
             this.goodRodFourComboBox.Location = new System.Drawing.Point(45, 158);
             this.goodRodFourComboBox.Name = "goodRodFourComboBox";
@@ -1932,7 +1883,6 @@
             // 
             // goodRodFifteenComboBox
             // 
-            this.goodRodFifteenComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.goodRodFifteenComboBox.FormattingEnabled = true;
             this.goodRodFifteenComboBox.Location = new System.Drawing.Point(45, 131);
             this.goodRodFifteenComboBox.Name = "goodRodFifteenComboBox";
@@ -1968,7 +1918,6 @@
             // 
             // goodRodSecondFortyComboBox
             // 
-            this.goodRodSecondFortyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.goodRodSecondFortyComboBox.FormattingEnabled = true;
             this.goodRodSecondFortyComboBox.Location = new System.Drawing.Point(45, 104);
             this.goodRodSecondFortyComboBox.Name = "goodRodSecondFortyComboBox";
@@ -2004,7 +1953,6 @@
             // 
             // goodRodFirstFortyComboBox
             // 
-            this.goodRodFirstFortyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.goodRodFirstFortyComboBox.FormattingEnabled = true;
             this.goodRodFirstFortyComboBox.Location = new System.Drawing.Point(45, 77);
             this.goodRodFirstFortyComboBox.Name = "goodRodFirstFortyComboBox";
@@ -2114,7 +2062,6 @@
             // 
             // oldRodOneComboBox
             // 
-            this.oldRodOneComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.oldRodOneComboBox.FormattingEnabled = true;
             this.oldRodOneComboBox.Location = new System.Drawing.Point(45, 185);
             this.oldRodOneComboBox.Name = "oldRodOneComboBox";
@@ -2150,7 +2097,6 @@
             // 
             // oldRodFourComboBox
             // 
-            this.oldRodFourComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.oldRodFourComboBox.FormattingEnabled = true;
             this.oldRodFourComboBox.Location = new System.Drawing.Point(45, 158);
             this.oldRodFourComboBox.Name = "oldRodFourComboBox";
@@ -2186,7 +2132,6 @@
             // 
             // oldRodFiveComboBox
             // 
-            this.oldRodFiveComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.oldRodFiveComboBox.FormattingEnabled = true;
             this.oldRodFiveComboBox.Location = new System.Drawing.Point(45, 131);
             this.oldRodFiveComboBox.Name = "oldRodFiveComboBox";
@@ -2222,7 +2167,6 @@
             // 
             // oldRodThirtyComboBox
             // 
-            this.oldRodThirtyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.oldRodThirtyComboBox.FormattingEnabled = true;
             this.oldRodThirtyComboBox.Location = new System.Drawing.Point(45, 104);
             this.oldRodThirtyComboBox.Name = "oldRodThirtyComboBox";
@@ -2258,7 +2202,6 @@
             // 
             // oldRodSixtyComboBox
             // 
-            this.oldRodSixtyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.oldRodSixtyComboBox.FormattingEnabled = true;
             this.oldRodSixtyComboBox.Location = new System.Drawing.Point(45, 77);
             this.oldRodSixtyComboBox.Name = "oldRodSixtyComboBox";
@@ -2368,7 +2311,6 @@
             // 
             // surfOneComboBox
             // 
-            this.surfOneComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.surfOneComboBox.FormattingEnabled = true;
             this.surfOneComboBox.Location = new System.Drawing.Point(45, 185);
             this.surfOneComboBox.Name = "surfOneComboBox";
@@ -2404,7 +2346,6 @@
             // 
             // surfFourComboBox
             // 
-            this.surfFourComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.surfFourComboBox.FormattingEnabled = true;
             this.surfFourComboBox.Location = new System.Drawing.Point(45, 158);
             this.surfFourComboBox.Name = "surfFourComboBox";
@@ -2440,7 +2381,6 @@
             // 
             // surfFiveComboBox
             // 
-            this.surfFiveComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.surfFiveComboBox.FormattingEnabled = true;
             this.surfFiveComboBox.Location = new System.Drawing.Point(45, 131);
             this.surfFiveComboBox.Name = "surfFiveComboBox";
@@ -2476,7 +2416,6 @@
             // 
             // surfThirtyComboBox
             // 
-            this.surfThirtyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.surfThirtyComboBox.FormattingEnabled = true;
             this.surfThirtyComboBox.Location = new System.Drawing.Point(45, 104);
             this.surfThirtyComboBox.Name = "surfThirtyComboBox";
@@ -2512,7 +2451,6 @@
             // 
             // surfSixtyComboBox
             // 
-            this.surfSixtyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.surfSixtyComboBox.FormattingEnabled = true;
             this.surfSixtyComboBox.Location = new System.Drawing.Point(45, 77);
             this.surfSixtyComboBox.Name = "surfSixtyComboBox";
@@ -2529,6 +2467,24 @@
             this.repairAllButton.TabIndex = 69;
             this.repairAllButton.UseVisualStyleBackColor = true;
             this.repairAllButton.Click += new System.EventHandler(this.repairAllButton_Click);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(177, 60);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(47, 13);
+            this.label15.TabIndex = 77;
+            this.label15.Text = "Max Lvl.";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(130, 60);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(44, 13);
+            this.label16.TabIndex = 76;
+            this.label16.Text = "Min Lvl.";
             // 
             // WildEditorHGSS
             // 
@@ -2853,5 +2809,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox surfPicture;
         private System.Windows.Forms.Button repairAllButton;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
     }
 }

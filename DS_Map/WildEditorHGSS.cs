@@ -257,7 +257,7 @@ namespace DSPRE {
         	if (disableHandlers) { 
                 return; 
             }
-            currentFile.rockSmashRate = (byte)rockSmashNinetyMaxLevelUpDown.Value;
+            currentFile.rockSmashRate = (byte)rockSmashRateUpDown.Value;
         }
         private void surfRateUpDown_ValueChanged(object sender, EventArgs e) {
         	if (disableHandlers) { 
