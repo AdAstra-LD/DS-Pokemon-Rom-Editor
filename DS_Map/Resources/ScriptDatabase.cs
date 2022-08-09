@@ -280,10 +280,10 @@ namespace DSPRE.Resources {
             [0x0067] = "ReleaseCamera",
             [0x0068] = "FacePlayer",
             [0x0069] = "GetPlayerPosition",
-            [0x006A] = "GetOverworldPosition",
+            [0x006A] = "GetOWPosition",
 
             [0x006C] = "KeepOverworld",
-            [0x006D] = "SetOverworldMovement",
+            [0x006D] = "SetOWMovement",
             [0x006E] = "SetFollowingOverworld",
             [0x006F] = "GiveMoney",
             [0x0070] = "TakeMoney",
@@ -351,8 +351,8 @@ namespace DSPRE.Resources {
 
             [0x00B0] = "EndGameScreen",
 
-            [0x00B4] = "ChooseStarterScreen",
-            [0x00B5] = "EndChooseStarterScreen",
+            [0x00B4] = "StarterSelectionScreen",
+            [0x00B5] = "EndStarterSelectionScreen",
 
             [0x00BA] = "ChoosePlayerName",
             [0x00BB] = "ChoosePokemonNickname",
@@ -370,16 +370,16 @@ namespace DSPRE.Resources {
             [0x00C7] = "CheckBike",
             [0x00C8] = "RideBike",
             [0x00C9] = "CyclingRoad",
-            [0x00CA] = "CheckPlayerAction",
-            [0x00CB] = "SetPlayerAction",
-            [0x00CC] = "UpdatePlayerAction",
+            [0x00CA] = "CheckPlayerForm",
+            [0x00CB] = "SetPlayerForm",
+            [0x00CC] = "UpdatePlayerForm",
             [0x00CD] = "TextPlayerName",
             [0x00CE] = "TextRivalName",
             [0x00CF] = "TextCounterpart",
             [0x00D0] = "TextPokemon",
             [0x00D1] = "TextItem",
             [0x00D2] = "TextPocket",
-            [0x00D3] = "TextMachineAttack",
+            [0x00D3] = "TextMachineMove",
             [0x00D4] = "TextMove",
             [0x00D5] = "TextNumber",
             [0x00D6] = "TextPokeNickname",
@@ -505,13 +505,13 @@ namespace DSPRE.Resources {
             [0x0183] = "SetBerrySpecies",
             [0x0184] = "WateringAnimation",
             [0x0185] = "TakeBerries",
-            [0x0186] = "SetOverworldDefaultPosition",
-            [0x0187] = "SetOverworldPosition",
-            [0x0188] = "SetOverworldDefaultMovement",
-            [0x0189] = "SetOverworldDefaultDirection",
+            [0x0186] = "SetOWDefaultPosition",
+            [0x0187] = "SetOWPosition",
+            [0x0188] = "SetOWDefaultMovement",
+            [0x0189] = "SetOWDefaultDirection",
             [0x018A] = "SetWarpPosition",
             [0x018B] = "SetSpawnablePosition",
-            [0x018C] = "SetOverworldDirection",
+            [0x018C] = "SetOWDirection",
 
             [0x0190] = "WaitTimeOrAB",
             [0x0191] = "PokemonSelectionScreen",
@@ -553,9 +553,9 @@ namespace DSPRE.Resources {
             [0x01C5] = "InitPokemonSizeRecord",
 
             [0x01C8] = "GetMoveCount",
-            [0x01C9] = "DeletePokemonMove",
-            [0x01CA] = "GetPartyPokemonMoveID",
-            [0x01CB] = "TextPartyPokemonMoveID",
+            [0x01C9] = "DeleteMove",
+            [0x01CA] = "GetPartyPokemonMove",
+            [0x01CB] = "TextPartyPokemonMove",
 
             [0x01CF] = "Strength",
             [0x01D0] = "Flash",
@@ -612,8 +612,8 @@ namespace DSPRE.Resources {
             [0x022B] = "ActivateInternationalDex",
             [0x022C] = "ActivateDimorphismDex",
             [0x022D] = "NationalDex",
-            [0x022E] = "PokemonRibbonCount",
-            [0x022F] = "PartyRibbonCount",
+            [0x022E] = "CountPokemonRibbons",
+            [0x022F] = "CountPartyRibbons",
             [0x0230] = "CheckRibbon",
             [0x0231] = "GiveRibbon",
             [0x0232] = "TextRibbon",
@@ -670,7 +670,7 @@ namespace DSPRE.Resources {
 
             [0x02A0] = "Battle2vs2",
             [0x02AC] = "ActivateMysteryGift",
-            [0x02AD] = "GetOverworldMovement",
+            [0x02AD] = "GetOWMovement",
 
             [0x02A5] = "PartyPokemonTradeScreen",
 
@@ -1700,7 +1700,7 @@ namespace DSPRE.Resources {
             [0x0039] = "ShowBoard",
             [0x003A] = "WaitBoard",
             [0x003B] = "BoardMessage",
-            [0x003C] = "EndBoard",
+            [0x003C] = "CloseBoard",
             [0x003D] = "Menu",
 
             [0x003F] = "YesNoBox",
@@ -1744,10 +1744,10 @@ namespace DSPRE.Resources {
             [0x0067] = "ReleaseCamera",
             [0x0068] = "FacePlayer",
             [0x0069] = "GetPlayerPosition",
-            [0x006A] = "GetOverworldPosition",
+            [0x006A] = "GetOWPosition",
 
             [0x006C] = "KeepOverworld",
-            [0x006D] = "SetOverworldMovement",
+            [0x006D] = "SetOWMovement",
             [0x006E] = "GiveMoney",
             [0x006F] = "TakeMoney",
             [0x0070] = "CompareMoney",
@@ -1801,21 +1801,21 @@ namespace DSPRE.Resources {
             [0x00B8] = "CheckBike",
             [0x00B9] = "RideBike",
             [0x00BA] = "CyclingRoad",
-            [0x00BB] = "CheckPlayerAction",
-            [0x00BC] = "SetPlayerAction",
-            [0x00BD] = "UpdatePlayerAction",
+            [0x00BB] = "CheckPlayerForm",
+            [0x00BC] = "SetPlayerForm",
+            [0x00BD] = "UpdatePlayerForm",
             [0x00BE] = "TextPlayerName",
             [0x00BF] = "TextRivalName",
             [0x00C0] = "TextCounterpart",
-            [0x00C1] = "TextPokemon",
+            [0x00C1] = "TextPartyPokemon",
             [0x00C2] = "TextItem",
             [0x00C4] = "TextAttackItem",
-            [0x00C5] = "TextMoveName",
+            [0x00C5] = "TextMove",
             [0x00C6] = "TextNumber",
             [0x00C7] = "TextPokeNickname",
-            [0x00C8] = "TextObject",
+            
             [0x00C9] = "TextPlayerTrainerType",
-            [0x00CA] = "TextPokemonStored",
+            [0x00CA] = "TextPokemon",
             [0x00CB] = "TextStarterPokemon",
             [0x00CC] = "TextRivalStarter",
             [0x00CD] = "TextCounterpartStarter",
@@ -1900,13 +1900,13 @@ namespace DSPRE.Resources {
 
             [0x014C] = "GetPartyCount",
 
-            [0x0152] = "SetOverworldDefaultPosition",
-            [0x0153] = "SetOverworldPosition",
-            [0x0154] = "SetOverworldDefaultMovement",
-            [0x0155] = "SetOverworldDefaultDirection",
+            [0x0152] = "SetOWDefaultPosition",
+            [0x0153] = "SetOWPosition",
+            [0x0154] = "SetOWDefaultMovement",
+            [0x0155] = "SetOWDefaultDirection",
             [0x0156] = "SetWarpPosition",
             [0x0157] = "SetSpawnablePosition",
-            [0x0158] = "SetOverworldDirection",
+            [0x0158] = "SetOWDirection",
 
             [0x015C] = "WaitTimeOrAB",
 
@@ -1946,9 +1946,9 @@ namespace DSPRE.Resources {
             [0x0189] = "TextPokemonRecordSize",
 
             [0x018C] = "GetMoveCount",
-            [0x018D] = "DeletePokemonMove",
-            [0x018E] = "GetPartyPokemonMoveID",
-            [0x018F] = "TextPartyPokemonMoveID",
+            [0x018D] = "DeleteMove",
+            [0x018E] = "GetPartyPokemonMove",
+            [0x018F] = "TextPartyPokemonMove",
             [0x0190] = "Strength",
 
             [0x01A7] = "CheckCompleteJohtoDex",
@@ -1989,7 +1989,7 @@ namespace DSPRE.Resources {
             [0x01E3] = "CountPokemonEVs",
             [0x01E4] = "GetDayOfWeek",
             [0x01E5] = "ShowRulesList",
-            [0x01E6] = "DummyGetFootprint",
+            [0x01E6] = "DummyGetPokemonFootprint",
             [0x01E7] = "PCHealAnimation",
             [0x01E8] = "ElevatorAnimation",
             [0x01E9] = "MysteryGiftGive",
@@ -2003,8 +2003,6 @@ namespace DSPRE.Resources {
 
             [0x01FB] = "CountPCFreeSpace",
 
-            [0x01FF] = "StoreFriendParkResult",
-
             [0x0204] = "TextAccessory",
             [0x0205] = "CheckPokemonInParty",
             [0x0206] = "SetDeoxysForm",
@@ -2017,14 +2015,14 @@ namespace DSPRE.Resources {
 
             [0x020F] = "MessageUnown",
             [0x0210] = "CheckGBACartidge",
-            [0x0211] = "GetFirstPokemonAlive",
+            [0x0211] = "GetFirstAlivePokemonSlot",
             [0x0212] = "SetMatrixAlternativeMap",
 
             [0x021D] = "TextNumberSp",
 
             [0x021F] = "CheckBirthday",
             [0x0220] = "MusicVolumeSet",
-            [0x0221] = "CountUnownSeen",
+            [0x0221] = "CountSeenUnown",
 
             [0x0231] = "ShakeCamera",
             [0x0232] = "Battle2vs2",
@@ -2056,7 +2054,7 @@ namespace DSPRE.Resources {
 
             [0x026A] = "CheckAlbumPhoto",
 
-            [0x026E] = "GetOverworldDirection",
+            [0x026E] = "GetOWDirection",
 
             [0x02AC] = "GetCurrentWeather",
 
