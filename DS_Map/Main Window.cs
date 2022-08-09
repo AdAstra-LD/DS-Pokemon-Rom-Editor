@@ -2954,22 +2954,25 @@ namespace DSPRE {
                         Console.WriteLine("Null building can't be rendered");
                     } else {
                         buildingsRenderer.Model = file.models[0];
-                        ScaleTranslateBuilding(mapFile.buildings[i]);
+                        ScaleTranslateRotateBuilding(mapFile.buildings[i]);
                         buildingsRenderer.RenderModel("", ani, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, ca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, tp, file);
                     }
                 }
             }
         }
-        private void ScaleTranslateBuilding(Building building) {
+        private void ScaleTranslateRotateBuilding(Building building) {
             float fullXcoord = building.xPosition + building.xFraction / 65536f;
             float fullYcoord = building.yPosition + building.yFraction / 65536f;
             float fullZcoord = building.zPosition + building.zFraction / 65536f;
 
-            float scaleFactor = (building.NSBMDFile.models[0].modelScale / 1024);
+            float scaleFactor = building.NSBMDFile.models[0].modelScale / 1024;
             float translateFactor = 256 / building.NSBMDFile.models[0].modelScale;
 
             Gl.glScalef(scaleFactor * building.width, scaleFactor * building.height, scaleFactor * building.length);
             Gl.glTranslatef(fullXcoord * translateFactor / building.width, fullYcoord * translateFactor / building.height, fullZcoord * translateFactor / building.length);
+            Gl.glRotatef(Building.U16ToDeg(building.xRotation), 1, 0, 0);
+            Gl.glRotatef(Building.U16ToDeg(building.yRotation), 0, 1, 0);
+            Gl.glRotatef(Building.U16ToDeg(building.zRotation), 0, 0, 1);
         }
         private void SetupRenderer(float ang, float dist, float elev, float perspective, int width, int height) {
             //TODO: improve this
@@ -3612,6 +3615,7 @@ namespace DSPRE {
             if (disableHandlers || buildingNumber < 0) {
                 return;
             }
+            bool oldStatus = disableHandlers;
             disableHandlers = true;
 
             Building selected = currentMapFile.buildings[buildingNumber];
@@ -3622,10 +3626,98 @@ namespace DSPRE {
                 yBuildUpDown.Value = selected.yPosition + (decimal)selected.yFraction / 65535;
                 zBuildUpDown.Value = selected.zPosition + (decimal)selected.zFraction / 65535;
 
+                xRotBuildUpDown.Value = selected.xRotation;
+                yRotBuildUpDown.Value = selected.yRotation;
+                zRotBuildUpDown.Value = selected.zRotation;
+
+                xRotDegBldUpDown.Value = (decimal)Building.U16ToDeg((ushort)xRotBuildUpDown.Value);
+                yRotDegBldUpDown.Value = (decimal)Building.U16ToDeg((ushort)yRotBuildUpDown.Value);
+                zRotDegBldUpDown.Value = (decimal)Building.U16ToDeg((ushort)zRotBuildUpDown.Value);
+
                 buildingWidthUpDown.Value = selected.width;
                 buildingHeightUpDown.Value = selected.height;
                 buildingLengthUpDown.Value = selected.length;
             }
+
+            disableHandlers = oldStatus;
+        }
+        private void xRotBuildUpDown_ValueChanged(object sender, EventArgs e) {
+            int selection = buildingsListBox.SelectedIndex;
+
+            if (selection <= -1 || disableHandlers) {
+                return;
+            }
+            disableHandlers = true;
+
+            xRotDegBldUpDown.Value = (decimal)Building.U16ToDeg(currentMapFile.buildings[selection].xRotation = (ushort)((int)xRotBuildUpDown.Value & ushort.MaxValue));
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+
+            disableHandlers = false;
+        }
+
+        private void yRotBuildUpDown_ValueChanged(object sender, EventArgs e) {
+            int selection = buildingsListBox.SelectedIndex;
+
+            if (selection <= -1 || disableHandlers) {
+                return;
+            }
+            disableHandlers = true;
+
+            yRotDegBldUpDown.Value = (decimal)Building.U16ToDeg(currentMapFile.buildings[selection].yRotation = (ushort)((int)yRotBuildUpDown.Value & ushort.MaxValue));
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+
+            disableHandlers = false;
+        }
+
+        private void zRotBuildUpDown_ValueChanged(object sender, EventArgs e) {
+            int selection = buildingsListBox.SelectedIndex;
+
+            if (selection <= -1 || disableHandlers) {
+                return;
+            }
+            disableHandlers = true;
+
+            zRotDegBldUpDown.Value = (decimal)Building.U16ToDeg(currentMapFile.buildings[selection].zRotation = (ushort)((int)zRotBuildUpDown.Value & ushort.MaxValue));
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+
+            disableHandlers = false;
+        }
+
+        private void xRotDegBldUpDown_ValueChanged(object sender, EventArgs e) {
+            if (buildingsListBox.SelectedIndex <= -1 || disableHandlers) {
+                return;
+            }
+            disableHandlers = true;
+
+            currentMapFile.buildings[buildingsListBox.SelectedIndex].xRotation = (ushort)(xRotBuildUpDown.Value =
+                Building.DegToU16((float)xRotDegBldUpDown.Value));
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+
+            disableHandlers = false;
+        }
+
+        private void yRotDegBldUpDown_ValueChanged(object sender, EventArgs e) {
+            if (buildingsListBox.SelectedIndex <= -1 || disableHandlers) {
+                return;
+            }
+            disableHandlers = true;
+
+            currentMapFile.buildings[buildingsListBox.SelectedIndex].yRotation = (ushort)(yRotBuildUpDown.Value =
+                Building.DegToU16((float)yRotDegBldUpDown.Value));
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+
+            disableHandlers = false;
+        }
+
+        private void zRotDegBldUpDown_ValueChanged(object sender, EventArgs e) {
+            if (buildingsListBox.SelectedIndex <= -1 || disableHandlers) {
+                return;
+            }
+            disableHandlers = true;
+
+            currentMapFile.buildings[buildingsListBox.SelectedIndex].zRotation = (ushort)(zRotBuildUpDown.Value =
+                Building.DegToU16((float)zRotDegBldUpDown.Value));
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
 
             disableHandlers = false;
         }

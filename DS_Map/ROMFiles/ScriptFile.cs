@@ -789,7 +789,7 @@ namespace DSPRE.ROMFiles {
                         string[] orphanedActions = unreferencedActions.ToArray().Select(x => x.ToString()).ToArray();
                         errorMsg += "Unused Action IDs detected: " + Environment.NewLine + string.Join(", ", orphanedActions);
                         errorMsg += Environment.NewLine;
-                        errorMsg += "\nIn order for an Action to be saved, it must be called by a Script or by an used Function.";
+                        errorMsg += "\nIn order for an Action to be saved, it must be called by a Script or by a used Function.";
                         errorMsg += Environment.NewLine;
                         errorMsg += Environment.NewLine;
                     }

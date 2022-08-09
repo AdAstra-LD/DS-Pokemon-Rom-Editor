@@ -157,9 +157,9 @@ namespace DSPRE {
             byte[] branchCode = DSUtils.HexStringToByteArray(data.branchString);
             byte[] branchCodeRead = DSUtils.ARM9.ReadBytes(data.branchOffset, branchCode.Length);
 
-            if (branchCode.Length != branchCodeRead.Length || !branchCode.SequenceEqual(branchCodeRead))
+            if (branchCode.Length != branchCodeRead.Length || !branchCode.SequenceEqual(branchCodeRead)) {
                 return false;
-
+            }
 
             string overlayFilePath = DSUtils.GetOverlayPath(data.overlayNumber);
             DSUtils.DecompressOverlay(data.overlayNumber);
@@ -512,8 +512,7 @@ namespace DSPRE {
         private void ApplyARM9ExpansionButton_Click(object sender, EventArgs e) {
             ARM9PatchData data = new ARM9PatchData();
 
-            DialogResult d;
-            d = MessageBox.Show("Confirming this process will apply the following changes:\n\n" +
+            DialogResult d = MessageBox.Show("Confirming this process will apply the following changes:\n\n" +
                 "- Backup ARM9 file (arm9.bin" + backupSuffix + " will be created)." + "\n\n" +
                 "- Replace " + (data.branchString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.branchOffset.ToString("X") + " with " + '\n' + data.branchString + "\n\n" +
                 "- Replace " + (data.initString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.initOffset.ToString("X") + " with " + '\n' + data.initString + "\n\n" +

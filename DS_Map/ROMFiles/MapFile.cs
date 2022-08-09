@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using LibNDSFormats.NSBMD;
 using System.Windows.Forms;
 using static DSPRE.RomInfo;
+using System;
+using System.Drawing;
 
 namespace DSPRE.ROMFiles {
     /* ----------------------- MAP FILE DATA STRUCTURE (DPPtHGSS):--------------------------
@@ -61,17 +63,15 @@ namespace DSPRE.ROMFiles {
 
         public bool correctnessFlag = true;
         public static readonly byte mapSize = 32;
-
-        public byte[,] collisions = new byte[mapSize, mapSize];
-        public byte[,] types = new byte[mapSize, mapSize];
+        public static readonly byte buildingHeaderSize = 48;
+        public static readonly byte[] blankBGS = new byte[] { 0x34, 0x12, 0x00, 0x00 };
 
         public List<Building> buildings;
         public NSBMD mapModel;
-
+        public byte[,] collisions = new byte[mapSize, mapSize];
+        public byte[,] types = new byte[mapSize, mapSize];
         public byte[] mapModelData;
         public byte[] bdhc;
-
-        public static readonly byte[] blankBGS = new byte[] { 0x34, 0x12, 0x00, 0x00 };
         public byte[] bgs = blankBGS;
         #endregion
 
@@ -127,7 +127,7 @@ namespace DSPRE.ROMFiles {
 
         #region Methods
         public byte[] BuildingsToByteArray() {
-            MemoryStream newData = new MemoryStream(0x30 * buildings.Count);
+            MemoryStream newData = new MemoryStream(buildingHeaderSize * buildings.Count);
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 for (int i = 0; i < buildings.Count; i++) {
                     writer.Write(buildings[i].modelID);
@@ -138,7 +138,11 @@ namespace DSPRE.ROMFiles {
                     writer.Write(buildings[i].zFraction);
                     writer.Write(buildings[i].zPosition);
 
-                    writer.BaseStream.Position += 0xD; // First filler section
+                    writer.Write((int)buildings[i].xRotation);
+                    writer.Write((int)buildings[i].yRotation);
+                    writer.Write((int)buildings[i].zRotation);
+
+                    writer.BaseStream.Position += 1;
 
                     writer.Write(buildings[i].width);
                     writer.Write(buildings[i].height);
@@ -164,8 +168,8 @@ namespace DSPRE.ROMFiles {
         public void ImportBuildings(byte[] newData) {
             buildings = new List<Building>();
             using (BinaryReader reader = new BinaryReader(new MemoryStream(newData))) {
-                for (int i = 0; i < newData.Length / 0x30; i++) {
-                    buildings.Add(new Building(new MemoryStream(reader.ReadBytes(0x30))));
+                for (int i = 0; i < newData.Length / buildingHeaderSize; i++) {
+                    buildings.Add(new Building(new MemoryStream(reader.ReadBytes(buildingHeaderSize))));
                 }
             }
         }
@@ -191,7 +195,7 @@ namespace DSPRE.ROMFiles {
             }
             return true;
         }
-        
+
         public void ImportPermissions(byte[] newData) {
             using (BinaryReader reader = new BinaryReader(new MemoryStream(newData))) {
                 for (int i = 0; i < 32; i++) {
@@ -204,20 +208,21 @@ namespace DSPRE.ROMFiles {
         }
         public void ImportSoundPlates(byte[] newData) {
             using (BinaryReader reader = new BinaryReader(new MemoryStream(newData))) {
-                bgs = reader.ReadBytes(newData.Length);
+                bgs = reader.ReadBytes((int)newData.Length);
             }
         }
         public void ImportTerrain(byte[] newData) {
             using (BinaryReader reader = new BinaryReader(new MemoryStream(newData))) {
-                bdhc = reader.ReadBytes(newData.Length);
+                bdhc = reader.ReadBytes((int)newData.Length);
             }
         }
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 /* Write section lengths */
-                writer.Write(0x800);
-                writer.Write(buildings.Count * 0x30);
+                writer.Write(collisions.Length + types.Length);
+
+                writer.Write(buildings.Count * buildingHeaderSize);
                 writer.Write(mapModelData.Length);
                 writer.Write(bdhc.Length);
 
@@ -229,7 +234,7 @@ namespace DSPRE.ROMFiles {
                 /* Write sections */
                 writer.Write(CollisionsToByteArray());
                 writer.Write(BuildingsToByteArray());
-                writer.Write(this.mapModelData);
+                writer.Write(mapModelData);
                 writer.Write(bdhc);
             }
             return newData.ToArray();
@@ -251,11 +256,14 @@ namespace DSPRE.ROMFiles {
         public NSBMD NSBMDFile;
         public uint modelID { get; set; }
         public short xPosition { get; set; }
-        public short zPosition { get; set; }
         public short yPosition { get; set; }
+        public short zPosition { get; set; }
         public ushort xFraction { get; set; }
-        public ushort zFraction { get; set; }
         public ushort yFraction { get; set; }
+        public ushort zFraction { get; set; }
+        public ushort xRotation { get; set; }
+        public ushort yRotation { get; set; }
+        public ushort zRotation { get; set; }
         public uint width { get; set; }
         public uint height { get; set; }
         public uint length { get; set; }
@@ -265,21 +273,30 @@ namespace DSPRE.ROMFiles {
         public Building(Stream data) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 modelID = reader.ReadUInt32();
+
                 xFraction = reader.ReadUInt16();
                 xPosition = reader.ReadInt16();
                 yFraction = reader.ReadUInt16();
                 yPosition = reader.ReadInt16();
                 zFraction = reader.ReadUInt16();
                 zPosition = reader.ReadInt16();
+                
+                xRotation = reader.ReadUInt16();
+                reader.BaseStream.Position += 0x2;
+                yRotation = reader.ReadUInt16();
+                reader.BaseStream.Position += 0x2;
+                zRotation = reader.ReadUInt16();
+                reader.BaseStream.Position += 0x2;
 
-                reader.BaseStream.Position += 0xD; // Skip first filler section
+                reader.BaseStream.Position += 0x1;
 
                 width = reader.ReadUInt16();
                 reader.BaseStream.Position += 0x2;
                 height = reader.ReadUInt16();
                 reader.BaseStream.Position += 0x2;
                 length = reader.ReadUInt16();
-                reader.BaseStream.Position += 0x2;
+                
+                //reader.BaseStream.Position += 0x2;
             }
         }
         public Building() {
@@ -290,6 +307,8 @@ namespace DSPRE.ROMFiles {
             yPosition = 1;
             zFraction = 0;
             zPosition = 0;
+
+            xRotation = yRotation = zRotation = 0;
             width = 16;
             height = 16;
             length = 16;
@@ -303,16 +322,32 @@ namespace DSPRE.ROMFiles {
             yPosition = (short)(toCopy.yPosition + 1);
             zFraction = toCopy.zFraction;
             zPosition = toCopy.zPosition;
+
+            xRotation = toCopy.xRotation;
+            yRotation = toCopy.yRotation;
+            zRotation = toCopy.zRotation;
+
             width = toCopy.width;
             height = toCopy.height;
             length = toCopy.length;
         }
-        public void LoadModelData(string bmDir) {
-            LoadModelDataFromID((int)this.modelID, bmDir);
+        #endregion Constructors
+        public static ushort DegToU16(float deg) {
+            return (ushort)(deg * 65536 / 360);
+        }
+        public static float U16ToDeg(ushort u16) {
+            return (float)u16 * 360 / 65536;
+        }
+        public void LoadModelData(string dir) {
+            LoadModelDataFromID((int)modelID, dir);
         }
         public void LoadModelDataFromID(int modelID, string bmDir) {
             string modelPath = bmDir + "\\" + modelID.ToString("D4");
 
+            if (string.IsNullOrWhiteSpace(modelPath) || !File.Exists(modelPath)) {
+                MessageBox.Show("Building " + modelID + " could not be found in\n" + '"' + bmDir + '"', "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             try {
                 using (Stream fs = new FileStream(modelPath, FileMode.Open)) {
                     this.NSBMDFile = NSBMDLoader.LoadNSBMD(fs);
@@ -321,6 +356,5 @@ namespace DSPRE.ROMFiles {
                 MessageBox.Show("Building " + modelID + " could not be found in\n" + '"' + bmDir + '"', "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        #endregion Constructors
     }
 }
