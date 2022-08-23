@@ -2476,27 +2476,33 @@ namespace DSPRE {
                         statusLabel.Text = "This Matrix is not linked to any Header. DSPRE can't determine the most appropriate AreaData (and textures) to use.\nDisplaying Textures from the last selected Header (" + headerID + ")'s AreaData...";
                     } else {
                         if (result.Count > 1) {
-                            if (gameFamily.Equals(gFamEnum.DP)) {
-                                foreach (string r in result) {
-                                    HeaderDP hdp = (HeaderDP)MapHeader.LoadFromARM9(ushort.Parse(r.Split()[0]));
-                                    if (hdp.locationName != 0) {
-                                        headerID = hdp.ID;
-                                        break;
-                                    }
-                                }
-                            } else {
-                                foreach (string r in result) {
-                                    HeaderPt hpt = (HeaderPt)MapHeader.LoadFromARM9(ushort.Parse(r.Split()[0]), gFamEnum.Plat);
-                                    if (hpt.locationName != 0) {
-                                        headerID = hpt.ID;
-                                        break;
-                                    }
-                                }
-                            }
+                            if (result.Contains(currentHeader.ID)) {
+                                headerID = currentHeader.ID;
 
-                            statusLabel.Text = "Multiple Headers are using this Matrix. Header " + headerID + "'s textures are currently being displayed.";
+                                statusLabel.Text = "Multiple Headers are associated to this Matrix, including the last selected one [Header " + headerID + "]. Now using its textures.";
+                            } else {
+                                if (gameFamily.Equals(gFamEnum.DP)) {
+                                    foreach (ushort r in result) {
+                                        HeaderDP hdp = (HeaderDP)MapHeader.LoadFromARM9(r);
+                                        if (hdp.locationName != 0) {
+                                            headerID = hdp.ID;
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    foreach (ushort r in result) {
+                                        HeaderPt hpt = (HeaderPt)MapHeader.LoadFromARM9(r, gFamEnum.Plat);
+                                        if (hpt.locationName != 0) {
+                                            headerID = hpt.ID;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                statusLabel.Text = "Multiple Headers are using this Matrix. Header " + headerID + "'s textures are currently being displayed.";
+                            }
                         } else {
-                            headerID = ushort.Parse(result.First().Split()[0]);
+                            headerID = result[0];
                             statusLabel.Text = "Loading Header " + headerID + "'s textures.";
                         }
                     }
