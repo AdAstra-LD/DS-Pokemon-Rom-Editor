@@ -499,8 +499,8 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor by Nømura and AdAstra/LD3005" + Environment.NewLine + "version 1.7.1" + Environment.NewLine
-                + Environment.NewLine + "This tool was largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
+            string message = "DS Pokémon ROM Editor Reloaded by AdAstra/LD3005" + Environment.NewLine + "version 1.8.0" + Environment.NewLine
+                + Environment.NewLine + "Based on Nømura's DS Pokémon ROM Editor 1.0.4, largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS ROM Hacking made the development of this tool possible.";
@@ -1035,11 +1035,10 @@ namespace DSPRE {
             File.Copy(sourcePath, destPath);
 
             // Add row to internal names table
-            string nameString = "4E 45 57 4D 41 50 00 00 00 00 00 00 00 00 00 00";
-            DSUtils.WriteToFile(RomInfo.internalNamesLocation, DSUtils.HexStringToByteArray(nameString), (uint)RomInfo.GetHeaderCount() * RomInfo.internalNameLength);
+            const string newmap = "NEWMAP";
+            DSUtils.WriteToFile(RomInfo.internalNamesLocation, StringToInternalName(newmap), (uint)RomInfo.GetHeaderCount() * RomInfo.internalNameLength);
 
             // Update headers ListBox and internal names list
-            const string newmap = "NEWMAP";
             headerListBox.Items.Add(headerListBox.Items.Count + MapHeader.nameSeparator + " " + newmap);
             headerListBoxNames.Add(headerListBox.Items.Count + MapHeader.nameSeparator + " " + newmap);
             internalNames.Add(newmap);
@@ -1058,6 +1057,9 @@ namespace DSPRE {
 
                 /* Physically delete last header file */
                 File.Delete(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + lastIndex.ToString("D4"));
+                using (DSUtils.EasyWriter ew = new DSUtils.EasyWriter(RomInfo.internalNamesLocation)) {
+                    ew.EditSize(-internalNameLength); //Delete internalNameLength amount of bytes from file end
+                }
 
                 /* Remove item from collections */
                 headerListBox.Items.RemoveAt(lastIndex);
@@ -1629,27 +1631,31 @@ namespace DSPRE {
             headerListBox.Focus();
             disableHandlers = false;
         }
+        private byte[] StringToInternalName(string text) {
+            if (text.Length > internalNameLength) {
+                MessageBox.Show("Internal names can't be longer than " + internalNameLength + " characters!", "Length error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return Encoding.ASCII.GetBytes(text.Substring(0, Math.Min(text.Length, internalNameLength)).PadRight(internalNameLength, '\0'));
+        }
         private void updateCurrentInternalName() {
             /* Update internal name according to internalNameBox text*/
-            if (currentHeader.ID != null) {
-                ushort headerID = (ushort)currentHeader.ID;
+            ushort headerID = currentHeader.ID;
 
-                using (DSUtils.EasyWriter writer = new DSUtils.EasyWriter(RomInfo.internalNamesLocation, headerID * RomInfo.internalNameLength)) { 
-                    writer.Write(Encoding.ASCII.GetBytes(internalNameBox.Text.PadRight(16, '\0')));
-                }
+            using (DSUtils.EasyWriter writer = new DSUtils.EasyWriter(RomInfo.internalNamesLocation, headerID * RomInfo.internalNameLength)) { 
+                writer.Write(StringToInternalName(internalNameBox.Text));
+            }
 
-                internalNames[headerID] = internalNameBox.Text;
-                string elem = headerID.ToString("D3") + MapHeader.nameSeparator + internalNames[headerID];
-                headerListBoxNames[headerID] = elem;
+            internalNames[headerID] = internalNameBox.Text;
+            string elem = headerID.ToString("D3") + MapHeader.nameSeparator + internalNames[headerID];
+            headerListBoxNames[headerID] = elem;
 
-                if (eventEditorIsReady) {
-                    eventEditorWarpHeaderListBox.Items[headerID] = elem;
-                }
+            if (eventEditorIsReady) {
+                eventEditorWarpHeaderListBox.Items[headerID] = elem;
             }
         }
         private void updateHeaderNameShown(int thisIndex) {
             disableHandlers = true;
-            string val = (string)(headerListBox.Items[thisIndex] = headerListBoxNames[(ushort)currentHeader.ID]);
+            string val = (string)(headerListBox.Items[thisIndex] = headerListBoxNames[currentHeader.ID]);
             if (eventEditorIsReady) {
                 eventEditorWarpHeaderListBox.Items[thisIndex] = val;
             }
@@ -2210,6 +2216,10 @@ namespace DSPRE {
             /* Update ComboBox*/
             selectMatrixComboBox.Items.Add( selectMatrixComboBox.Items.Count.ToString() + blankMatrix );
             selectMatrixComboBox.SelectedIndex = selectMatrixComboBox.Items.Count - 1;
+
+            if (eventEditorIsReady) {
+                eventMatrixUpDown.Maximum++;
+            }
         }
         private void exportMatrixButton_Click(object sender, EventArgs e) {
             currentMatrix.SaveToFileExplorePath("Matrix " + selectMatrixComboBox.SelectedIndex);
@@ -2470,7 +2480,10 @@ namespace DSPRE {
                 if (currentMatrix.hasHeadersSection) {
                     headerID = currentMatrix.headers[e.RowIndex, e.ColumnIndex];
                 } else {
-                    List<string> result = HeaderSearch.AdvancedSearch(0, (ushort)internalNames.Count, internalNames, (int)MapHeader.SearchableFields.MatrixID, (int)HeaderSearch.NumOperators.Equal, selectMatrixComboBox.SelectedIndex.ToString());
+                    List<ushort> result = HeaderSearch.AdvancedSearch(0, (ushort)internalNames.Count, internalNames, (int)MapHeader.SearchableFields.MatrixID, (int)HeaderSearch.NumOperators.Equal, selectMatrixComboBox.SelectedIndex.ToString())
+                        .Select(x => ushort.Parse(x.Split()[0]))
+                        .ToList();
+
                     if (result.Count < 1) {
                         headerID = currentHeader.ID;
                         statusLabel.Text = "This Matrix is not linked to any Header. DSPRE can't determine the most appropriate AreaData (and textures) to use.\nDisplaying Textures from the last selected Header (" + headerID + ")'s AreaData...";
@@ -2591,7 +2604,7 @@ namespace DSPRE {
         }
         private void removeMatrixButton_Click(object sender, EventArgs e) {
             if (selectMatrixComboBox.Items.Count > 1) {
-                DialogResult d = MessageBox.Show("Are you sure you want to delete the last Map BIN File?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult d = MessageBox.Show("Are you sure you want to delete the last matrix?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (d.Equals(DialogResult.Yes)) {
                     /* Delete matrix file */
                     int matrixToDelete = romInfo.GetMatrixCount() - 1;
@@ -2600,8 +2613,13 @@ namespace DSPRE {
                     File.Delete(matrixPath);
 
                     /* Change selected index if the matrix to be deleted is currently selected */
-                    if (selectMatrixComboBox.SelectedIndex == matrixToDelete)
+                    if (selectMatrixComboBox.SelectedIndex == matrixToDelete) {
                         selectMatrixComboBox.SelectedIndex--;
+                    }
+
+                    if (eventEditorIsReady) {
+                        eventMatrixUpDown.Maximum--;
+                    }
 
                     /* Remove entry from ComboBox, and decrease matrix count */
                     selectMatrixComboBox.Items.RemoveAt(matrixToDelete);
@@ -5106,7 +5124,6 @@ namespace DSPRE {
             Update();
 
             int eventCount = RomInfo.GetEventFileCount();
-            int owSpriteCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.OWSprites].unpackedDir).Length;
             RomInfo.ReadOWTable();
 
             eventEditorWarpHeaderListBox.Items.Clear();
@@ -5174,6 +5191,9 @@ namespace DSPRE {
             if (owMovementComboBox.SelectedIndex < 0 && overworldsListBox.Items.Count <= 0) {
                 owOrientationComboBox.SelectedIndex = 1;
             }
+
+            eventMatrixUpDown.Maximum = romInfo.GetMatrixCount() - 1;
+            eventAreaDataUpDown.Maximum = romInfo.GetAreaDataCount() - 1;
 
             disableHandlers = false;
 
@@ -7915,6 +7935,10 @@ namespace DSPRE {
             /* Update ComboBox and select new file */
             selectAreaDataListBox.Items.Add("AreaData File " + selectAreaDataListBox.Items.Count);
             selectAreaDataListBox.SelectedIndex = selectAreaDataListBox.Items.Count - 1;
+
+            if (eventEditorIsReady) {
+                eventAreaDataUpDown.Maximum++;
+            }
         }
         private void removeAreaDataButton_Click(object sender, EventArgs e) {
             if (selectAreaDataListBox.Items.Count > 1) {
@@ -7923,11 +7947,16 @@ namespace DSPRE {
 
                 /* Check if currently selected file is the last one, and in that case select the one before it */
                 int lastIndex = selectAreaDataListBox.Items.Count - 1;
-                if (selectAreaDataListBox.SelectedIndex == lastIndex)
+                if (selectAreaDataListBox.SelectedIndex == lastIndex) {
                     selectAreaDataListBox.SelectedIndex--;
+                }
 
                 /* Remove item from ComboBox */
                 selectAreaDataListBox.Items.RemoveAt(lastIndex);
+
+                if (eventEditorIsReady) {
+                    eventAreaDataUpDown.Maximum--;
+                }
             } else {
                 MessageBox.Show("At least one AreaData file must be kept.", "Can't delete AreaData", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

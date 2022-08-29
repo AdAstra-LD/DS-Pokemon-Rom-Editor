@@ -14,16 +14,34 @@ using static DSPRE.RomInfo;
 namespace DSPRE {
     public static class DSUtils {
         public static readonly string NDSRomFilter = "NDS File (*.nds)|*.nds";
+        public class EasyReader : BinaryReader {
+            public EasyReader(string path, long pos = 0) : base(File.OpenRead(path)) {
+                this.BaseStream.Position = pos;
+            }
+        }
+        public class EasyWriter : BinaryWriter {
+            public EasyWriter(string path, long pos = 0, FileMode fmode = FileMode.OpenOrCreate) : base(new FileStream(path, fmode, FileAccess.Write, FileShare.None)) {
+                this.BaseStream.Position = pos;
+            }
+            public void EditSize(int increment) {
+                this.BaseStream.SetLength(this.BaseStream.Length + increment);
+            }
+        }
         public static class ARM9 {
             public static uint address = 0x02000000;
-            public class Reader : BinaryReader {
-                public Reader(long pos = 0) : base(File.OpenRead(arm9Path)) {
+            public class Reader : EasyReader {
+                public Reader(long pos = 0) : base(arm9Path, pos) {
                     this.BaseStream.Position = pos;
                 }
             }
-            public class Writer : BinaryWriter { 
-                public Writer(long pos = 0) : base(File.OpenWrite(arm9Path)) {
+            public class Writer : EasyWriter { 
+                public Writer(long pos = 0) : base(arm9Path, pos) {
                     this.BaseStream.Position = pos;
+                }
+            }
+            public static void EditSize(int increment) {
+                using (Writer w = new Writer()) {
+                    w.EditSize(increment);
                 }
             }
             public static bool Decompress(string path) {
@@ -51,12 +69,6 @@ namespace DSPRE {
             public static bool CheckCompressionMark() {
                 return BitConverter.ToInt32( DSUtils.ARM9.ReadBytes((uint)(RomInfo.gameFamily == gFamEnum.DP ? 0xB7C : 0xBB4), 4), 0 ) != 0;
             }
-            public static void EditSize(int increment) {
-                FileStream arm = File.OpenWrite(RomInfo.arm9Path);
-                BinaryWriter arm9Truncate = new BinaryWriter(arm);
-                arm9Truncate.BaseStream.SetLength(arm.Length + increment);
-                arm9Truncate.Close();
-            }
             public static byte[] ReadBytes(uint startOffset, long numberOfBytes = 0) {
                 return ReadFromFile(RomInfo.arm9Path, startOffset, numberOfBytes);
             }
@@ -68,17 +80,6 @@ namespace DSPRE {
             }
             public static void WriteByte(byte value, uint destOffset) {
                 WriteToFile(RomInfo.arm9Path, BitConverter.GetBytes(value), destOffset, 0);
-            }
-        }
-
-        public class EasyReader : BinaryReader {
-            public EasyReader(string path, long pos = 0) : base(File.OpenRead(path)) {
-                this.BaseStream.Position = pos;
-            }
-        }
-        public class EasyWriter : BinaryWriter {
-            public EasyWriter(string path, long pos = 0, FileMode fmode = FileMode.OpenOrCreate) : base(new FileStream(path, fmode, FileAccess.Write, FileShare.None)) {
-                this.BaseStream.Position = pos;
             }
         }
 
