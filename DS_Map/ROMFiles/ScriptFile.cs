@@ -18,6 +18,11 @@ namespace DSPRE.ROMFiles {
         //this enum doesn't really make much sense now but it will, once scripts can be called and jumped to
         public enum containerTypes { Function, Action, Script };
 
+        public struct ContainerReference {
+            public uint ID;
+            public uint offsetInFile;
+        }
+
         #endregion
 
         #region Fields (3)
@@ -54,8 +59,8 @@ namespace DSPRE.ROMFiles {
                             isLevelScript = false;
                             break;
                         } else {
-                            int offsetFromStart = (int)(value + scrReader.BaseStream.Position);
-                            scriptOffsets.Add(offsetFromStart); // Don't change order of addition
+                            int offsetFromStart = (int)(value + scrReader.BaseStream.Position);  // Don't change order of addition
+                            scriptOffsets.Add(offsetFromStart);
                         }
                     }
                 } catch (EndOfStreamException) {
@@ -619,9 +624,9 @@ namespace DSPRE.ROMFiles {
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
-                List<(uint scriptID, uint offsetInFile)> scriptOffsets = new List<(uint, uint)>(); //uint OFFSET, int Function/Script/Action ID
-                List<(uint functionID, uint offsetInFile)> functionOffsets = new List<(uint, uint)>();
-                List<(uint actionID, uint offsetInFile)> actionOffsets = new List<(uint, uint)>();
+                List<ContainerReference> scriptOffsets = new List<ContainerReference>(); //uint OFFSET, int Function/Script/Action ID
+                List<ContainerReference> functionOffsets = new List<ContainerReference>();
+                List<ContainerReference> actionOffsets = new List<ContainerReference>();
 
                 List<ScriptReference> refList = new List<ScriptReference>();
 
@@ -634,7 +639,11 @@ namespace DSPRE.ROMFiles {
                     /* Write scripts */
                     foreach (CommandContainer currentScript in allScripts) {
                         if (currentScript.usedScript == -1) {
-                            scriptOffsets.Add((currentScript.manualUserID, (uint)writer.BaseStream.Position));
+                            scriptOffsets.Add(new ContainerReference() {
+                                ID = currentScript.manualUserID,
+                                offsetInFile = (uint)writer.BaseStream.Position
+                            }
+                            );
 
                             foreach (ScriptCommand currentCmd in currentScript.commands) {
                                 writer.Write((ushort)currentCmd.id);
@@ -657,10 +666,13 @@ namespace DSPRE.ROMFiles {
                     int scriptsCount = scriptOffsets.Count;
                     foreach (CommandContainer caller in useScriptCallers) {
                         for (int i = 0; i < scriptsCount; i++) {
-                            (uint scriptID, uint offsetInFile) = scriptOffsets[i];
+                            ContainerReference scriptReference = scriptOffsets[i];
 
-                            if (scriptID == caller.usedScript) {
-                                scriptOffsets.Add((caller.manualUserID, offsetInFile));  // If script has UseScript, copy offset
+                            if (scriptReference.ID == caller.usedScript) {
+                                scriptOffsets.Add(new ContainerReference() {
+                                    ID = caller.manualUserID,
+                                    offsetInFile = scriptReference.offsetInFile
+                                });// If script has UseScript, copy offset
                             }
                         }
                     }
@@ -668,7 +680,10 @@ namespace DSPRE.ROMFiles {
                     /* Write functions */
                     foreach (CommandContainer currentFunction in allFunctions) {
                         if (currentFunction.usedScript == -1) {
-                            functionOffsets.Add((currentFunction.manualUserID, (uint)writer.BaseStream.Position));
+                            functionOffsets.Add(new ContainerReference() { 
+                                ID = currentFunction.manualUserID, 
+                                offsetInFile = (uint)writer.BaseStream.Position }
+                            );
 
                             foreach (ScriptCommand currentCmd in currentFunction.commands) {
                                 writer.Write((ushort)currentCmd.id);
@@ -685,7 +700,10 @@ namespace DSPRE.ROMFiles {
                                 AddReference(ref refList, (ushort)currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentFunction);
                             }
                         } else {
-                            functionOffsets.Add((currentFunction.manualUserID, scriptOffsets[currentFunction.usedScript - 1].offsetInFile));
+                            functionOffsets.Add(new ContainerReference() {
+                                ID = currentFunction.manualUserID,
+                                offsetInFile = scriptOffsets[currentFunction.usedScript - 1].offsetInFile
+                            });
                         }
                     }
 
@@ -696,7 +714,10 @@ namespace DSPRE.ROMFiles {
 
                     /* Write movements */
                     foreach (ActionContainer currentAction in allActions) {
-                        actionOffsets.Add((currentAction.manualUserID, (uint)writer.BaseStream.Position));
+                        actionOffsets.Add(new ContainerReference() {
+                            ID = currentAction.manualUserID,
+                            offsetInFile = (uint)writer.BaseStream.Position
+                        });
 
                         foreach (ScriptAction currentCmd in currentAction.actionCommandsList) {
                             writer.Write((ushort)currentCmd.id);
@@ -707,7 +728,7 @@ namespace DSPRE.ROMFiles {
                     /* Write script offsets to header */
                     writer.BaseStream.Position = 0x0;
 
-                    scriptOffsets = scriptOffsets.OrderBy( x => x.scriptID ).ToList(); //Write script offsets to header in the correct order
+                    scriptOffsets = scriptOffsets.OrderBy( x => x.ID ).ToList(); //Write script offsets to header in the correct order
                     for (int i = 0; i < scriptOffsets.Count; i++) {
                         writer.Write(scriptOffsets[i].offsetInFile - (uint)writer.BaseStream.Position - 0x4);
                     }
@@ -723,10 +744,10 @@ namespace DSPRE.ROMFiles {
 
                     for (int i = 0; i < refList.Count; i++) {
                         writer.BaseStream.Position = refList[i].invokedAt; //place seek head on parameter that is supposed to store the jump address
-                        (uint containerID, uint offsetInFile) result;
+                        ContainerReference result;
 
                         if (refList[i].typeOfInvoked is containerTypes.Action) { //isApplyMovement 
-                            result = actionOffsets.Find(x => x.actionID == refList[i].invokedID);
+                            result = actionOffsets.Find(entry => entry.ID == refList[i].invokedID);
 
                             if (result.Equals((0, 0)))
                                 undeclaredActions.Add(refList[i].invokedID);
@@ -736,7 +757,7 @@ namespace DSPRE.ROMFiles {
                                 unreferencedActions.Remove(refList[i].invokedID);
                             }
                         } else {
-                            result = functionOffsets.Find(x => x.functionID == refList[i].invokedID);
+                            result = functionOffsets.Find(entry => entry.ID == refList[i].invokedID);
 
                             if (result.Equals((0, 0)))
                                 undeclaredFuncs.Add(refList[i].invokedID);
