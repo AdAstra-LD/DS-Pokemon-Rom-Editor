@@ -8037,7 +8037,8 @@ namespace DSPRE {
                 }
             }
 
-            using (DSUtils.EasyReader br = new DSUtils.EasyReader(camOverlayPath, RAMaddresses[0] - DSUtils.GetOverlayRAMAddress(RomInfo.cameraTblOverlayNumber))) {
+            overlayCameraTblOffset = RAMaddresses[0] - DSUtils.GetOverlayRAMAddress(RomInfo.cameraTblOverlayNumber);
+            using (DSUtils.EasyReader br = new DSUtils.EasyReader(camOverlayPath, overlayCameraTblOffset)) {
                 if (RomInfo.gameFamily == gFamEnum.HGSS) {
                     currentCameraTable = new GameCamera[17];
                     for (int i = 0; i < currentCameraTable.Length; i++) {
