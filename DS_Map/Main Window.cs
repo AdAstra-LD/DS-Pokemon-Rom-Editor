@@ -6876,9 +6876,10 @@ namespace DSPRE {
             } else if (userEdited.fileID == int.MaxValue) {
                 MessageBox.Show("This " + typeof(ScriptFile).Name + " is couldn't be saved since it's empty.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             } else { //check if ScriptFile instance was created succesfully
-                userEdited.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex);
-                currentScriptFile = userEdited;
-                ScriptEditorSetClean();
+                if (userEdited.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex)) {
+                    currentScriptFile = userEdited;
+                    ScriptEditorSetClean();
+                }
             }
         }
         private void clearCurrentLevelScriptButton_Click(object sender, EventArgs e) {

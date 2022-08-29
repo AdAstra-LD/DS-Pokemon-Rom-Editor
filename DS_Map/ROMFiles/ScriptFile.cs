@@ -700,6 +700,12 @@ namespace DSPRE.ROMFiles {
                                 AddReference(ref refList, (ushort)currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentFunction);
                             }
                         } else {
+                            int functionUsescript = currentFunction.usedScript - 1;
+                            if (functionUsescript >= scriptOffsets.Count) {
+                                MessageBox.Show($"Function #{currentFunction.manualUserID} refers to Script {currentFunction.usedScript}, which does not exist.\n" +
+                                    $"This Script File can't be saved.", "Can't resolve UseScript reference", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return null;
+                            }
                             functionOffsets.Add(new ContainerReference() {
                                 ID = currentFunction.manualUserID,
                                 offsetInFile = scriptOffsets[currentFunction.usedScript - 1].offsetInFile
@@ -749,9 +755,9 @@ namespace DSPRE.ROMFiles {
                         if (refList[i].typeOfInvoked is containerTypes.Action) { //isApplyMovement 
                             result = actionOffsets.Find(entry => entry.ID == refList[i].invokedID);
 
-                            if (result.Equals((0, 0)))
+                            if (result.Equals(default(ContainerReference))) {
                                 undeclaredActions.Add(refList[i].invokedID);
-                            else {
+                            } else {
                                 int relativeOffset = (int)(result.offsetInFile - refList[i].invokedAt - 4);
                                 writer.Write(relativeOffset);
                                 unreferencedActions.Remove(refList[i].invokedID);
@@ -759,9 +765,9 @@ namespace DSPRE.ROMFiles {
                         } else {
                             result = functionOffsets.Find(entry => entry.ID == refList[i].invokedID);
 
-                            if (result.Equals((0, 0)))
+                            if (result.Equals(default(ContainerReference))) {
                                 undeclaredFuncs.Add(refList[i].invokedID);
-                            else {
+                            } else {
                                 int relativeOffset = (int)(result.offsetInFile - refList[i].invokedAt - 4);
                                 writer.Write(relativeOffset);
 
@@ -871,8 +877,8 @@ namespace DSPRE.ROMFiles {
             return false;
         }
 
-        public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
-            SaveToFileDefaultDir(DirNames.scripts, IDtoReplace, showSuccessMessage);
+        public bool SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
+            return SaveToFileDefaultDir(DirNames.scripts, IDtoReplace, showSuccessMessage);
         }
         public void SaveToFileExplorePath(string suggestedFileName, bool blindmode) {
             SaveFileDialog sf = new SaveFileDialog {
