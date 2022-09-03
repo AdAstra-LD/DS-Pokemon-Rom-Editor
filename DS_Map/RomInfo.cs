@@ -66,7 +66,7 @@ namespace DSPRE {
         public static readonly byte internalNameLength = 16;
         public static int cameraSize { get; private set; }
 
-        public static Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary { get; private set; }
+        public Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary;
         public static SortedDictionary<uint, (uint spriteID, ushort properties)> OverworldTable { get; private set; }
         public static uint[] overworldTableKeys { get; private set; }
         public static Dictionary<uint, string> ow3DSpriteDict { get; private set; }
@@ -969,7 +969,7 @@ namespace DSPRE {
                 gameDirs.Add(kvp.Key, (workDir + kvp.Value, workDir + @"unpacked" + '\\' + kvp.Key.ToString()));
             }
         }
-        public static void LoadMapCellsColorDictionary() {
+        public void ResetMapCellsColorDictionary() {
             switch (gameFamily) {
                 case gFamEnum.DP:
                 case gFamEnum.Plat:
@@ -979,9 +979,6 @@ namespace DSPRE {
                     MapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.HGSSmatrixColorsDict;
                     break;
             }
-        }
-        public void SetMapCellsColorDictionary(Dictionary<List<uint>, (Color background, Color foreground)> dict) {
-            MapCellsColorDictionary = dict;
         }
         public static void ReadOWTable() {
             OverworldTable = new SortedDictionary<uint, (uint spriteID, ushort properties)>();

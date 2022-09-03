@@ -1,5 +1,8 @@
+using DSPRE.Resources;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using static DSPRE.RomInfo;
 
@@ -8,6 +11,13 @@ namespace DSPRE.ROMFiles {
     /// Classes to store event data in Pokémon NDS games
     /// </summary>
     public class EventFile : RomFile {
+        public enum serializationOrder {
+            Spawnables,
+            Overworlds,
+            Warps,
+            Triggers
+        }
+
         #region Fields
         public static readonly string DefaultFilter = "Event File (*.evt, *.ev)|*.evt;*.ev";
 
@@ -88,6 +98,11 @@ namespace DSPRE.ROMFiles {
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
             SaveToFileExplorePath("Gen IV Event File", "ev", suggestedFileName, showSuccessMessage);
         }
+
+        internal bool isEmpty() => (spawnables is null || spawnables.Count == 0) &&
+                (overworlds is null || overworlds.Count == 0) &&
+                (warps is null || warps.Count == 0) &&
+                (triggers is null || triggers.Count == 0);
         #endregion
 
     }
@@ -209,6 +224,24 @@ namespace DSPRE.ROMFiles {
 
                 return ((MemoryStream)writer.BaseStream).ToArray();
             }
+        }
+        public override string ToString() {
+            string msg = "";
+            switch (this.type) {
+                case TYPE_MISC:
+                    msg += $"Misc, {PokeDatabase.EventEditor.Spawnables.orientationsArray[dir].ToLower()}";
+                    break;
+
+                case TYPE_BOARD:
+                    msg += $"Board, {PokeDatabase.EventEditor.Spawnables.orientationsArray[dir].ToLower()}";
+
+                    break;
+
+                case TYPE_HIDDENITEM:
+                    msg += "Hidden Item";
+                    break;
+            }
+            return msg + $", [Scr {scriptNumber}]";
         }
         #endregion
     }
@@ -339,8 +372,16 @@ namespace DSPRE.ROMFiles {
                 return ((MemoryStream)writer.BaseStream).ToArray();
             }
         }
-        #endregion
 
+        public override string ToString() {
+            string entityName = ", " + "Entry " + overlayTableEntry;
+            return $"{(this.isAlias() ? "AliasOf" : "ID")} {this.owID} {entityName}";
+        }
+
+        private bool isAlias() {
+            return scriptNumber == 0xFFFF;
+        }
+        #endregion
     }
 
     public class Warp : Event {
@@ -392,9 +433,6 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Methods (1)
-        public override string ToString() {
-            return "To Header " + header.ToString("D3") + ", " + "Hook " + anchor.ToString("D2");
-        }
         public override byte[] ToByteArray() {
             using (BinaryWriter writer = new BinaryWriter(new MemoryStream())) {
                 ushort xCoordinate = (ushort)(xMapPosition + MapFile.mapSize * xMatrixPosition);
@@ -409,6 +447,9 @@ namespace DSPRE.ROMFiles {
 
                 return ((MemoryStream)writer.BaseStream).ToArray();
             }
+        }
+        public override string ToString() {
+            return "To Header " + header.ToString("D3") + ", " + "Hook " + anchor.ToString("D2");
         }
         #endregion
 
@@ -492,6 +533,13 @@ namespace DSPRE.ROMFiles {
 
                 return ((MemoryStream)writer.BaseStream).ToArray();
             }
+        }
+        public override string ToString() {
+            string msg = "Run script " + scriptNumber;
+            if (variableWatched != 0) {
+                msg += $" when Var {variableWatched} is {expectedVarValue}";
+            }
+            return msg;
         }
         #endregion
     }

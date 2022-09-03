@@ -8,6 +8,11 @@ using System.Windows.Forms;
 
 namespace DSPRE {
     public static class Extensions {
+        public static void SetAllItemsChecked(this CheckedListBox clb, bool status) {
+            for (int i = 0; i < clb.Items.Count; i++) {
+                clb.SetItemChecked(i, status);
+            }
+        }
         public static int IndexOfFirstNumber(this string str) {
             return str.IndexOfAny("0123456789".ToCharArray());
         }

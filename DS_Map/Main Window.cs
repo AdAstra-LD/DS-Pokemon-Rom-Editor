@@ -2112,7 +2112,7 @@ namespace DSPRE {
             matrixTabControl.TabPages.Remove(heightsTabPage);
         }
         private (Color background, Color foreground) FormatMapCell(uint cellValue) {
-            foreach (KeyValuePair<List<uint>, (Color background, Color foreground)> entry in RomInfo.MapCellsColorDictionary) {
+            foreach (KeyValuePair<List<uint>, (Color background, Color foreground)> entry in romInfo.MapCellsColorDictionary) {
                 if (entry.Key.Contains(cellValue))
                     return entry.Value;
             }
@@ -2187,7 +2187,7 @@ namespace DSPRE {
             }
 
             if (!ReadColorTable(Properties.Settings.Default.lastColorTablePath, silent: true)) {
-                RomInfo.LoadMapCellsColorDictionary();
+                romInfo.ResetMapCellsColorDictionary();
             }
             RomInfo.SetupSpawnSettings();
 
@@ -2805,7 +2805,7 @@ namespace DSPRE {
                         iconType = MessageBoxIcon.Warning;
                     }
                 }
-                romInfo.SetMapCellsColorDictionary(colorsDict);
+                romInfo.MapCellsColorDictionary = colorsDict;
                 ClearMatrixTables();
                 GenerateMatrixTables();
 
@@ -2829,7 +2829,7 @@ namespace DSPRE {
             b = temp;
         }
         private void resetColorTableButton_Click(object sender, EventArgs e) {
-            RomInfo.LoadMapCellsColorDictionary();
+            romInfo.ResetMapCellsColorDictionary();
             ClearMatrixTables();
             GenerateMatrixTables();
 
@@ -4844,14 +4844,18 @@ namespace DSPRE {
         }
         private void FillSpawnablesBox() {
             spawnablesListBox.Items.Clear();
-            for (int i = 0; i < currentEvFile.spawnables.Count; i++) {
-                spawnablesListBox.Items.Add($"{Event.EventType.Spawnable} {i}");
+            int count = currentEvFile.spawnables.Count;
+
+            for (int i = 0; i < count; i++) {
+                spawnablesListBox.Items.Add(i.ToString("D" + Math.Max(0, count - 1).ToString().Length) + ": " + currentEvFile.spawnables[i].ToString());
             }
         }
         private void FillOverworldsBox() {
             overworldsListBox.Items.Clear();
-            for (int i = 0; i < currentEvFile.overworlds.Count; i++) {
-                overworldsListBox.Items.Add($"{Event.EventType.Overworld} {i}");
+            int count = currentEvFile.overworlds.Count;
+
+            for (int i = 0; i < count; i++) {
+                overworldsListBox.Items.Add(i.ToString("D" + Math.Max(0, count - 1).ToString().Length) + ": " + currentEvFile.overworlds[i].ToString());
             }
         }
         private void FillWarpsBox() {
@@ -4859,13 +4863,15 @@ namespace DSPRE {
             int count = currentEvFile.warps.Count;
 
             for (int i = 0; i < count; i++) {
-                warpsListBox.Items.Add(i.ToString("D3") + ": " + currentEvFile.warps[i].ToString());
+                warpsListBox.Items.Add(i.ToString("D" + Math.Max(0, count - 1).ToString().Length) + ": " + currentEvFile.warps[i].ToString());
             }
         }
         private void FillTriggersBox() {
             triggersListBox.Items.Clear();
-            for (int i = 0; i < currentEvFile.triggers.Count; i++) {
-                triggersListBox.Items.Add($"{Event.EventType.Trigger} {i}");
+            int count = currentEvFile.triggers.Count;
+
+            for (int i = 0; i < count; i++) {
+                triggersListBox.Items.Add(i.ToString("D" + Math.Max(0, count - 1).ToString().Length) + ": " + currentEvFile.triggers[i].ToString());
             }
         }
         private Bitmap GetOverworldImage(ushort eventEntryID, ushort orientation) {
@@ -5294,15 +5300,83 @@ namespace DSPRE {
                 return;
             }
 
-            /* Update event object on disk */
-            string path = RomInfo.gameDirs[DirNames.eventFiles].unpackedDir + "\\" + selectEventComboBox.SelectedIndex.ToString("D4");
-            File.Copy(of.FileName, path, true);
+            EventFile toImport = new EventFile(File.OpenRead(of.FileName));
+            if (toImport.isEmpty()) {
+                DialogResult d = MessageBox.Show("Are you sure you want to import an empty event file?", "Empty File loaded", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (!d.Equals(DialogResult.Yes)) {
+                    return;
+                }
 
-            /* Refresh controls */
-            selectEventComboBox_SelectedIndexChanged(null, null);
+                /* Update event object on disk */
+                File.Copy(of.FileName, RomInfo.gameDirs[DirNames.eventFiles].unpackedDir + "\\" + selectEventComboBox.SelectedIndex.ToString("D4"), true);
 
-            /* Display success message */
-            MessageBox.Show("Events imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                /* Refresh controls */
+                selectEventComboBox_SelectedIndexChanged(null, null);
+
+                /* Display success message */
+                MessageBox.Show("Events imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                /* Refresh controls */
+                selectEventComboBox_SelectedIndexChanged(null, null);
+            } else {
+                EventFileImport efi = new EventFileImport(toImport);
+                efi.ShowDialog();
+
+                if (!efi.DialogResult.Equals(DialogResult.OK)) {
+                    MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                int[] currentArray;
+
+                currentArray = efi.userSelected[(int)EventFile.serializationOrder.Spawnables];
+                if (currentArray != null) {
+                    foreach (int index in currentArray) {
+                        currentEvFile.spawnables.Add(toImport.spawnables[index]);
+
+                        spawnablesListBox.Items.Add("");
+                        spawnablesListBox.SelectedIndex = spawnablesListBox.Items.Count - 1;
+                        updateSelectedSpawnableName();
+                    }
+                }
+
+                currentArray = efi.userSelected[(int)EventFile.serializationOrder.Overworlds];
+                if (currentArray != null) {
+                    foreach (int index in currentArray) {
+                        currentEvFile.overworlds.Add(toImport.overworlds[index]);
+
+                        overworldsListBox.Items.Add("");
+                        overworldsListBox.SelectedIndex = overworldsListBox.Items.Count - 1;
+                        updateSelectedOverworldName();
+                    }
+                }
+
+                currentArray = efi.userSelected[(int)EventFile.serializationOrder.Warps];
+                if (currentArray != null) {
+                    foreach (int index in currentArray) {
+                        currentEvFile.warps.Add(toImport.warps[index]);
+
+                        warpsListBox.Items.Add("");
+                        warpsListBox.SelectedIndex = warpsListBox.Items.Count - 1;
+                        updateSelectedWarpName();
+                    }
+                }
+
+                currentArray = efi.userSelected[(int)EventFile.serializationOrder.Triggers];
+                if (currentArray != null) {
+                    foreach (int index in currentArray) {
+                        currentEvFile.triggers.Add(toImport.triggers[index]);
+
+                        triggersListBox.Items.Add("");
+                        triggersListBox.SelectedIndex = triggersListBox.Items.Count - 1;
+                        updateSelectedTriggerName();
+                    }
+                }
+
+                /* Display success message */
+                MessageBox.Show("Events imported successfully!\nRemember to save the current Event File.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         private void removeEventFileButton_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("Are you sure you want to delete the last Event File?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -5476,9 +5550,13 @@ namespace DSPRE {
         }
         #region Spawnables Tab
         private void addSpawnableButton_Click(object sender, EventArgs e) {
+            int spCount = currentEvFile.spawnables.Count;
+
             currentEvFile.spawnables.Add(new Spawnable((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
-            spawnablesListBox.Items.Add("Spawnable " + (currentEvFile.spawnables.Count - 1).ToString());
-            spawnablesListBox.SelectedIndex = currentEvFile.spawnables.Count - 1;
+
+            spawnablesListBox.Items.Add("");
+            spawnablesListBox.SelectedIndex = spCount;
+            updateSelectedSpawnableName();
         }
         private void removeSpawnableButton_Click(object sender, EventArgs e) {
             if (spawnablesListBox.SelectedIndex < 0) {
@@ -5508,8 +5586,10 @@ namespace DSPRE {
             }
 
             currentEvFile.spawnables.Add(new Spawnable((Spawnable)selectedEvent));
-            spawnablesListBox.Items.Add("Spawnable " + (currentEvFile.spawnables.Count - 1).ToString());
-            spawnablesListBox.SelectedIndex = currentEvFile.spawnables.Count - 1;
+
+            spawnablesListBox.Items.Add("");
+            spawnablesListBox.SelectedIndex = spawnablesListBox.Items.Count - 1;
+            updateSelectedSpawnableName();
         }
         private void spawnablesListBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
@@ -5534,74 +5614,89 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void spawnableMatrixXUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
+            int selectedSpawnable = spawnablesListBox.SelectedIndex;
+            if (disableHandlers || selectedSpawnable < 0) {
                 return;
+            }
 
-            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].xMatrixPosition = (ushort)spawnableXMatrixUpDown.Value;
+            currentEvFile.spawnables[selectedSpawnable].xMatrixPosition = (ushort)spawnableXMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void spawnableMatrixYUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
+            int selectedSpawnable = spawnablesListBox.SelectedIndex;
+            if (disableHandlers || selectedSpawnable < 0) {
                 return;
+            }
 
-            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].yMatrixPosition = (ushort)spawnableYMatrixUpDown.Value;
+            currentEvFile.spawnables[selectedSpawnable].yMatrixPosition = (ushort)spawnableYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void spawnableScriptUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
+            int selectedSpawnable = spawnablesListBox.SelectedIndex;
+            if (disableHandlers || selectedSpawnable < 0) {
                 return;
-            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].scriptNumber = (ushort)spawnableScriptUpDown.Value;
+            }
+
+            currentEvFile.spawnables[selectedSpawnable].scriptNumber = (ushort)spawnableScriptUpDown.Value;
+            updateSelectedSpawnableName();
         }
         private void spawnableMapXUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
+            int selectedSpawnable = spawnablesListBox.SelectedIndex;
+            if (disableHandlers || selectedSpawnable < 0) {
                 return;
+            }
 
-            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].xMapPosition = (short)spawnablexMapUpDown.Value;
+            currentEvFile.spawnables[selectedSpawnable].xMapPosition = (short)spawnablexMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void spawnableMapYUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
+            int selectedSpawnable = spawnablesListBox.SelectedIndex;
+            if (disableHandlers || selectedSpawnable < 0) {
                 return;
+            }
 
-            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].yMapPosition = (short)spawnableYMapUpDown.Value;
+            currentEvFile.spawnables[selectedSpawnable].yMapPosition = (short)spawnableYMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void spawnableZUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
+            int selectedSpawnable = spawnablesListBox.SelectedIndex;
+            if (disableHandlers || selectedSpawnable < 0) {
                 return;
+            }
 
-            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].zPosition = (short)spawnableUpDown.Value;
+            currentEvFile.spawnables[selectedSpawnable].zPosition = (short)spawnableUpDown.Value;
             DisplayActiveEvents();
         }
         private void spawnableDirComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || spawnablesListBox.SelectedIndex < 0)
+            int selectedSpawnable = spawnablesListBox.SelectedIndex;
+            if (disableHandlers || selectedSpawnable < 0) {
                 return;
+            }
 
-            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].dir = (ushort)spawnableDirComboBox.SelectedIndex;
+            currentEvFile.spawnables[selectedSpawnable].dir = (ushort)spawnableDirComboBox.SelectedIndex;
+            updateSelectedSpawnableName();
         }
         private void spawnableTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (spawnablesListBox.SelectedIndex < 0)
-                return;
-
-            if (spawnableTypeComboBox.SelectedIndex == Spawnable.TYPE_HIDDENITEM) {
-                spawnableDirComboBox.Enabled = false;
-            } else {
-                spawnableDirComboBox.Enabled = true;
-            }
-
-            if (disableHandlers) {
+            int selectedSpawnable = spawnablesListBox.SelectedIndex;
+            if (disableHandlers || selectedSpawnable < 0) {
                 return;
             }
 
-            currentEvFile.spawnables[spawnablesListBox.SelectedIndex].type = (ushort)spawnableTypeComboBox.SelectedIndex;
+            spawnableDirComboBox.Enabled = spawnableTypeComboBox.SelectedIndex != Spawnable.TYPE_HIDDENITEM;
+
+            currentEvFile.spawnables[selectedSpawnable].type = (ushort)spawnableTypeComboBox.SelectedIndex;
+            updateSelectedSpawnableName();
         }
         #endregion
 
         #region Overworlds Tab
         private void addOverworldButton_Click(object sender, EventArgs e) {
-            currentEvFile.overworlds.Add(new Overworld(currentEvFile.overworlds.Count + 1, (int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
-            overworldsListBox.Items.Add("Overworld " + (currentEvFile.overworlds.Count - 1).ToString());
-            overworldsListBox.SelectedIndex = currentEvFile.overworlds.Count - 1;
+            int owCount = currentEvFile.overworlds.Count;
+            currentEvFile.overworlds.Add(new Overworld(owCount + 1, (int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
+
+            overworldsListBox.Items.Add("");
+            overworldsListBox.SelectedIndex = owCount;
+            updateSelectedOverworldName();
         }
         private void removeOverworldButton_Click(object sender, EventArgs e) {
             if (overworldsListBox.SelectedIndex < 0) {
@@ -5628,12 +5723,11 @@ namespace DSPRE {
             if (overworldsListBox.SelectedIndex < 0) {
                 return;
             }
-            Overworld NPCcopy = new Overworld((Overworld)selectedEvent);
-            currentEvFile.overworlds.Add(NPCcopy);
-            selectedEvent = NPCcopy;
+            currentEvFile.overworlds.Add(new Overworld(selectedEvent as Overworld));
 
-            overworldsListBox.Items.Add("Overworld " + (currentEvFile.overworlds.Count - 1).ToString());
+            overworldsListBox.Items.Add("");
             overworldsListBox.SelectedIndex = currentEvFile.overworlds.Count - 1;
+            updateSelectedOverworldName();
         }
         private void OWTypeChanged(object sender, EventArgs e) {
             if (overworldsListBox.SelectedIndex < 0) {
@@ -5773,37 +5867,45 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void owFlagNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].flag = (ushort)owFlagNumericUpDown.Value;
+            currentEvFile.overworlds[selection].flag = (ushort)owFlagNumericUpDown.Value;
         }
         private void owIDNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].owID = (ushort)owIDNumericUpDown.Value;
+            currentEvFile.overworlds[selection].owID = (ushort)owIDNumericUpDown.Value;
+            updateSelectedOverworldName();
         }
         private void owMovementComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].movement = (ushort)owMovementComboBox.SelectedIndex;
+            currentEvFile.overworlds[selection].movement = (ushort)owMovementComboBox.SelectedIndex;
         }
         private void owOrientationComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ushort orientation = (ushort)owOrientationComboBox.SelectedIndex;
+            int selection = overworldsListBox.SelectedIndex;
             if (owSpriteComboBox.SelectedIndex < 0 || orientation < 0) {
                 return;
             }
 
-            if (overworldsListBox.SelectedIndex >= 0) {
-                owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry, orientation);
+            if (selection >= 0) {
+                owSpritePictureBox.BackgroundImage = GetOverworldImage(currentEvFile.overworlds[selection].overlayTableEntry, orientation);
 
                 if (!disableHandlers) {
-                    currentEvFile.overworlds[overworldsListBox.SelectedIndex].orientation = orientation;
+                    currentEvFile.overworlds[selection].orientation = orientation;
                     DisplayActiveEvents();
                 }
             } else {
@@ -5813,20 +5915,26 @@ namespace DSPRE {
             owSpritePictureBox.Invalidate();
         }
         private void owScriptNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)owScriptNumericUpDown.Value;
+            currentEvFile.overworlds[selection].scriptNumber = (ushort)owScriptNumericUpDown.Value;
+            updateSelectedOverworldName();
         }
         private void owSightRangeUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].sightRange = (ushort)owSightRangeUpDown.Value;
+            currentEvFile.overworlds[selection].sightRange = (ushort)owSightRangeUpDown.Value;
         }
         private void owSpriteComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            int selection = overworldsListBox.SelectedIndex;
             if (owSpriteComboBox.SelectedIndex < 0) {
                 return;
             }
@@ -5839,40 +5947,41 @@ namespace DSPRE {
                 spriteIDlabel.Text = "Sprite ID: " + spriteID;
             }
 
-            if (overworldsListBox.SelectedIndex >= 0) {
-                owSpritePictureBox.BackgroundImage = GetOverworldImage(overlayTableEntryID, currentEvFile.overworlds[overworldsListBox.SelectedIndex].orientation);
+            if (selection >= 0) {
+                owSpritePictureBox.BackgroundImage = GetOverworldImage(overlayTableEntryID, currentEvFile.overworlds[selection].orientation);
 
                 if (!disableHandlers) {
-                    currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry = overlayTableEntryID;
+                    currentEvFile.overworlds[selection].overlayTableEntry = overlayTableEntryID;
                     DisplayActiveEvents();
                 }
             } else {
                 owSpritePictureBox.BackgroundImage = GetOverworldImage(overlayTableEntryID, (ushort)owOrientationComboBox.SelectedIndex);
             }
             owSpritePictureBox.Invalidate();
+            updateSelectedOverworldName();
         }
         private void owPartnerTrainerCheckBox_CheckedChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
-            if (owPartnerTrainerCheckBox.Checked) {
-                currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber += 2000;
-            } else {
-                currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber -= 2000;
-            }
+            currentEvFile.overworlds[selection].scriptNumber = (ushort)(currentEvFile.overworlds[selection].scriptNumber + (owPartnerTrainerCheckBox.Checked ? 2000 : -2000));
         }
         private void owTrainerComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
-            owScriptNumericUpDown.Value = owPartnerTrainerCheckBox.Checked
-                ? (currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(4999 + owTrainerComboBox.SelectedIndex))
-                : (currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(2999 + owTrainerComboBox.SelectedIndex));
+            currentEvFile.overworlds[selection].scriptNumber = (ushort)(owTrainerComboBox.SelectedIndex + (owPartnerTrainerCheckBox.Checked ? 4999 : 2999));
         }
         private void owXMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
@@ -5880,21 +5989,27 @@ namespace DSPRE {
             DisplayActiveEvents();
         }
         private void owXRangeUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].xRange = (ushort)owXRangeUpDown.Value;
         }
         private void owYRangeUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
             currentEvFile.overworlds[overworldsListBox.SelectedIndex].yRange = (ushort)owYRangeUpDown.Value;
         }
         private void owYMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
@@ -5902,18 +6017,22 @@ namespace DSPRE {
             DisplayActiveEvents();
         }
         private void owZPositionUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].zPosition = (short)owZPositionUpDown.Value;
+            currentEvFile.overworlds[selection].zPosition = (short)owZPositionUpDown.Value;
         }
         private void owXMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].xMatrixPosition = (ushort)owXMatrixUpDown.Value;
+            currentEvFile.overworlds[selection].xMatrixPosition = (ushort)owXMatrixUpDown.Value;
             eventMatrixPictureBox.Image = new Bitmap(eventMatrixPictureBox.Width, eventMatrixPictureBox.Height);
             DrawEventMatrix(); // Redraw matrix to eliminate old used cells
             MarkUsedCells(); // Mark new used cells
@@ -5921,11 +6040,12 @@ namespace DSPRE {
             DisplayActiveEvents();
         }
         private void owYMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || overworldsListBox.SelectedIndex < 0) {
+            int selection = overworldsListBox.SelectedIndex;
+            if (disableHandlers || selection < 0) {
                 return;
             }
 
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].yMatrixPosition = (ushort)owYMatrixUpDown.Value;
+            currentEvFile.overworlds[selection].yMatrixPosition = (ushort)owYMatrixUpDown.Value;
             eventMatrixPictureBox.Image = new Bitmap(eventMatrixPictureBox.Width, eventMatrixPictureBox.Height);
             DrawEventMatrix();
             MarkUsedCells();
@@ -5941,8 +6061,10 @@ namespace DSPRE {
             currentEvFile.warps.Add(n);
 
             int index = currentEvFile.warps.Count - 1;
-            warpsListBox.Items.Add(index.ToString("D3") + ": " + n.ToString());
+
+            warpsListBox.Items.Add("");
             warpsListBox.SelectedIndex = index;
+            updateSelectedWarpName();
 
             eventEditorWarpHeaderListBox.SelectedIndex = n.header;
         }
@@ -5973,14 +6095,16 @@ namespace DSPRE {
                 return;
             }
 
-            Warp n = new Warp((Warp)selectedEvent);
+            Warp n = new Warp(selectedEvent as Warp);
             currentEvFile.warps.Add(n);
 
             int index = currentEvFile.warps.Count - 1;
-            warpsListBox.Items.Add(index.ToString("D3") + ": " + n.ToString());
+
+            warpsListBox.Items.Add("");
+            warpsListBox.SelectedIndex = index;
+            updateSelectedWarpName();
 
             eventEditorWarpHeaderListBox.SelectedIndex = n.header;
-            warpsListBox.SelectedIndex = index;
         }
         private void warpAnchorUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || warpsListBox.SelectedIndex < 0) {
@@ -6036,10 +6160,23 @@ namespace DSPRE {
             currentEvFile.warps[warpsListBox.SelectedIndex].header = destHeaderID;
             updateSelectedWarpName();
         }
+        private void updateSelectedSpawnableName() {
+            int index = spawnablesListBox.SelectedIndex;
+            spawnablesListBox.Items[index] = index.ToString("D" + Math.Max(0, spawnablesListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Spawnable).ToString();
+        }
+        private void updateSelectedOverworldName() {
+            int index = overworldsListBox.SelectedIndex;
+            overworldsListBox.Items[index] = index.ToString("D" + Math.Max(0, overworldsListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Overworld).ToString();
+        }
         private void updateSelectedWarpName() {
             int index = warpsListBox.SelectedIndex;
-            warpsListBox.Items[index] = index.ToString("D3") + ": " + (selectedEvent as Warp).ToString();
+            warpsListBox.Items[index] = index.ToString("D" + Math.Max(0, warpsListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Warp).ToString();
         }
+        private void updateSelectedTriggerName() {
+            int index = triggersListBox.SelectedIndex;
+            triggersListBox.Items[index] = index.ToString("D" + Math.Max(0, triggersListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Trigger).ToString();
+        }
+
         private void warpsListBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || warpsListBox.SelectedIndex < 0) {
                 return;
@@ -6145,27 +6282,30 @@ namespace DSPRE {
         #region Triggers Tab
         private void addTriggerButton_Click(object sender, EventArgs e) {
             currentEvFile.triggers.Add(new Trigger((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
-            triggersListBox.Items.Add("Trigger " + (currentEvFile.triggers.Count - 1).ToString());
+            
+            triggersListBox.Items.Add("");
             triggersListBox.SelectedIndex = currentEvFile.triggers.Count - 1;
+            updateSelectedTriggerName();
         }
         private void removeTriggerButton_Click(object sender, EventArgs e) {
-            if (triggersListBox.SelectedIndex < 0) {
+            int selection = triggersListBox.SelectedIndex;
+
+            if (selection < 0) {
                 return;
             }
 
             disableHandlers = true;
 
             /* Remove trigger object from list and the corresponding entry in the ListBox */
-            int triggerNumber = triggersListBox.SelectedIndex;
-            currentEvFile.triggers.RemoveAt(triggerNumber);
-            triggersListBox.Items.RemoveAt(triggerNumber);
+            currentEvFile.triggers.RemoveAt(selection);
+            triggersListBox.Items.RemoveAt(selection);
 
             FillTriggersBox(); // Update ListBox
 
             disableHandlers = false;
 
-            if (triggerNumber > 0) {
-                triggersListBox.SelectedIndex = triggerNumber - 1;
+            if (selection > 0) {
+                triggersListBox.SelectedIndex = selection - 1;
             } else {
                 DisplayActiveEvents();
             }
@@ -6175,100 +6315,127 @@ namespace DSPRE {
                 return;
             }
 
-            currentEvFile.triggers.Add(new Trigger((Trigger)selectedEvent));
-            triggersListBox.Items.Add("Trigger " + (currentEvFile.triggers.Count - 1).ToString());
+            currentEvFile.triggers.Add(new Trigger(selectedEvent as Trigger));
+
+            triggersListBox.Items.Add("");
             triggersListBox.SelectedIndex = currentEvFile.triggers.Count - 1;
+            updateSelectedTriggerName();
         }
         private void triggersListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            int selectedIndex = triggersListBox.SelectedIndex;
+
+            if (disableHandlers || selectedIndex < 0) {
                 return;
             }
             disableHandlers = true;
 
-            selectedEvent = currentEvFile.triggers[triggersListBox.SelectedIndex];
+            Trigger t = (selectedEvent = currentEvFile.triggers[selectedIndex]) as Trigger;
 
-            triggerScriptUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].scriptNumber;
-            triggerVariableWatchedUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].variableWatched;
-            expectedVarValueTriggerUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].expectedVarValue;
+            triggerScriptUpDown.Value = t.scriptNumber;
+            triggerVariableWatchedUpDown.Value = t.variableWatched;
+            expectedVarValueTriggerUpDown.Value = t.expectedVarValue;
 
-            triggerWidthUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].widthX;
-            triggerLengthUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].heightY;
+            triggerWidthUpDown.Value = t.widthX;
+            triggerLengthUpDown.Value = t.heightY;
 
-            triggerXMapUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].xMapPosition;
-            triggerYMapUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].yMapPosition;
-            triggerZUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].zPosition;
-            triggerXMatrixUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].xMatrixPosition;
-            triggerYMatrixUpDown.Value = currentEvFile.triggers[triggersListBox.SelectedIndex].yMatrixPosition;
+            triggerXMapUpDown.Value = t.xMapPosition;
+            triggerYMapUpDown.Value = t.yMapPosition;
+            triggerZUpDown.Value = t.zPosition;
+            triggerXMatrixUpDown.Value = t.xMatrixPosition;
+            triggerYMatrixUpDown.Value = t.yMatrixPosition;
 
             DisplayActiveEvents();
 
-            #region Re-enable events
             disableHandlers = false;
-            #endregion
         }
         private void triggerVariableWatchedUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || triggersListBox.SelectedIndex < 0)
+            int selection = triggersListBox.SelectedIndex;
+            if (disableHandlers || selection < 0) {
                 return;
-            currentEvFile.triggers[triggersListBox.SelectedIndex].variableWatched = (ushort)triggerVariableWatchedUpDown.Value;
+            }
+
+            currentEvFile.triggers[selection].variableWatched = (ushort)triggerVariableWatchedUpDown.Value;
+            updateSelectedTriggerName();
         }
         private void expectedVarValueTriggerUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || triggersListBox.SelectedIndex < 0)
+            int selection = triggersListBox.SelectedIndex;
+            if (disableHandlers || selection < 0) {
                 return;
+            }
 
-            currentEvFile.triggers[triggersListBox.SelectedIndex].expectedVarValue = (ushort)expectedVarValueTriggerUpDown.Value;
+            currentEvFile.triggers[selection].expectedVarValue = (ushort)expectedVarValueTriggerUpDown.Value;
+            updateSelectedTriggerName();
         }
         private void triggerScriptUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || triggersListBox.SelectedIndex < 0)
+            int selection = triggersListBox.SelectedIndex;
+            if (disableHandlers || selection < 0) {
                 return;
-            currentEvFile.triggers[triggersListBox.SelectedIndex].scriptNumber = (ushort)triggerScriptUpDown.Value;
+            }
+
+            currentEvFile.triggers[selection].scriptNumber = (ushort)triggerScriptUpDown.Value;
+            updateSelectedTriggerName();
         }
         private void triggerXMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || triggersListBox.SelectedIndex < 0)
+            int selection = triggersListBox.SelectedIndex;
+            if (disableHandlers || selection < 0) {
                 return;
+            }
 
-            currentEvFile.triggers[triggersListBox.SelectedIndex].xMapPosition = (short)triggerXMapUpDown.Value;
+            currentEvFile.triggers[selection].xMapPosition = (short)triggerXMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerYMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || triggersListBox.SelectedIndex < 0)
+            int selection = triggersListBox.SelectedIndex;
+            if (disableHandlers || selection < 0) {
                 return;
+            }
 
-            currentEvFile.triggers[triggersListBox.SelectedIndex].yMapPosition = (short)triggerYMapUpDown.Value;
+            currentEvFile.triggers[selection].yMapPosition = (short)triggerYMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerZUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || triggersListBox.SelectedIndex < 0)
+            int selection = triggersListBox.SelectedIndex;
+            if (disableHandlers || selection < 0) {
                 return;
+            }
 
-            currentEvFile.triggers[triggersListBox.SelectedIndex].zPosition = (ushort)triggerZUpDown.Value;
+            currentEvFile.triggers[selection].zPosition = (ushort)triggerZUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerXMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || triggersListBox.SelectedIndex < 0)
+            int selection = triggersListBox.SelectedIndex;
+            if (disableHandlers || selection < 0) {
                 return;
+            }
 
-            currentEvFile.triggers[triggersListBox.SelectedIndex].xMatrixPosition = (ushort)triggerXMatrixUpDown.Value;
+            currentEvFile.triggers[selection].xMatrixPosition = (ushort)triggerXMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerYMatrixUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || triggersListBox.SelectedIndex < 0)
+            int selection = triggersListBox.SelectedIndex;
+            if (disableHandlers || selection < 0) {
                 return;
+            }
 
-            currentEvFile.triggers[triggersListBox.SelectedIndex].yMatrixPosition = (ushort)triggerYMatrixUpDown.Value;
+            currentEvFile.triggers[selection].yMatrixPosition = (ushort)triggerYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerWidthUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || triggersListBox.SelectedIndex < 0)
+            int selection = triggersListBox.SelectedIndex;
+            if (disableHandlers || selection < 0) {
                 return;
+            }
 
-            currentEvFile.triggers[triggersListBox.SelectedIndex].widthX = (ushort)triggerWidthUpDown.Value;
+            currentEvFile.triggers[selection].widthX = (ushort)triggerWidthUpDown.Value;
             DisplayActiveEvents();
         }
         private void triggerLengthUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || triggersListBox.SelectedIndex < 0)
+            int selection = triggersListBox.SelectedIndex;
+            if (disableHandlers || selection < 0) {
                 return;
+            }
 
-            currentEvFile.triggers[triggersListBox.SelectedIndex].heightY = (ushort)triggerLengthUpDown.Value;
+            currentEvFile.triggers[selection].heightY = (ushort)triggerLengthUpDown.Value;
             DisplayActiveEvents();
         }
         #endregion
@@ -8004,7 +8171,7 @@ namespace DSPRE {
                         "More details in the following dialog.\n\n" + "Do you want to know more?",
                         "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                bool userConfirmed = (d1 == DialogResult.Yes ? ROMToolboxDialog.ConfigureOverlay1Uncompressed() : false);
+                bool userConfirmed = (d1 == DialogResult.Yes && ROMToolboxDialog.ConfigureOverlay1Uncompressed());
                 
 
                 if (!userConfirmed) {
