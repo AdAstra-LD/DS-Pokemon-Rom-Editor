@@ -5,6 +5,7 @@ using System;
 using System.Windows.Forms;
 using static DSPRE.RomInfo;
 using System.Reflection;
+using System.Linq;
 
 namespace DSPRE {
 
@@ -118,11 +119,12 @@ namespace DSPRE {
                 }
             }
         }
-        public static List<string> AdvancedSearch(ushort startID, ushort finalID, List<string> intNames, int fieldToSearch, int oper, string valToSearch) {
-            if (fieldToSearch < 0 || oper < 0 || valToSearch == "")
+        public static HashSet<string> AdvancedSearch(ushort startID, ushort finalID, List<string> intNames, int fieldToSearch, int oper, string valToSearch) {
+            if (fieldToSearch < 0 || oper < 0 || valToSearch == "") {
                 return null;
+            }
 
-            List<string> result = new List<string>();
+            HashSet<string> result = new HashSet<string>();
 
             switch (fieldToSearch) {
                 case (int)MapHeader.SearchableFields.InternalName:
@@ -239,7 +241,7 @@ namespace DSPRE {
                 return;
             }
 
-            List<string> result;
+            HashSet<string> result;
             headerListBox.Items.Clear();
             
             try {
@@ -261,7 +263,9 @@ namespace DSPRE {
                 headerListBox.Enabled = false;
                 statusLabel.Text = res;
             } else {
-                headerListBox.Items.AddRange(result.ToArray());
+                string[] arr = new string[result.Count];
+                result.CopyTo(arr);
+                headerListBox.Items.AddRange(arr);
                 headerListBox.SelectedIndex = 0;
                 headerListBox.Enabled = true;
 

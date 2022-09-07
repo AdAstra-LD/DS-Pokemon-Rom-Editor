@@ -1,6 +1,7 @@
 ﻿using DSPRE.ROMFiles;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using static DSPRE.RomInfo;
 
@@ -8,7 +9,7 @@ namespace DSPRE {
     public partial class SpawnEditor : Form {
         private List<string> locations = RomInfo.GetLocationNames();
         private List<string> names;
-        public SpawnEditor(List<string> results, List<string> allNames, ushort headerNumber = 0, int matrixX = 0, int matrixY = 0) {
+        public SpawnEditor(HashSet<string> results, List<string> allNames, ushort headerNumber = 0, int matrixX = 0, int matrixY = 0) {
             InitializeComponent();
             this.names = allNames;
 
@@ -30,13 +31,13 @@ namespace DSPRE {
             SetupFields(allNames);
             readDefaultSpawnPosButton_Click(null, null);
         }              
-        private void SetupFields(List<string> headersList) {
+        private void SetupFields(IEnumerable<string> headersList) {
             SetupDirections();
             SetupHeadersList(headersList);
             ReadDefaultMoney();
         }
 
-        private void SetupHeadersList(List<string> headersList) {
+        private void SetupHeadersList(IEnumerable<string> headersList) {
             spawnHeaderComboBox.Items.Clear();
             spawnHeaderComboBox.Items.AddRange(headersList.ToArray());
         }

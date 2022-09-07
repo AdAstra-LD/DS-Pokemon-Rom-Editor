@@ -22,6 +22,8 @@ using ScintillaNET;
 using ScintillaNET.Utils;
 using System.Globalization;
 using static DSPRE.ROMFiles.Event;
+using static ScintillaNET.Style;
+using static OpenTK.Graphics.OpenGL.GL;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -1172,7 +1174,10 @@ namespace DSPRE {
             }
 
             /* Obtain current header ID from listbox*/
-            ushort headerNumber = ushort.Parse(headerListBox.SelectedItem.ToString().Substring(0, internalNames.Count.ToString().Length));
+            if (!ushort.TryParse(headerListBox.SelectedItem.ToString().Substring(0, 3), out ushort headerNumber)) {
+                headerListBox.SelectedIndex = -1;
+                return;
+            }
 
             /* Check if dynamic headers patch has been applied, and load header from arm9 or a/0/5/0 accordingly */
             if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
@@ -1583,7 +1588,6 @@ namespace DSPRE {
             mainTabControl.SelectedTab = eventEditorTabPage;
 
             eventMatrixUpDown_ValueChanged(null, null);
-            CenterEventViewOnEntities();
         }
         private void openMatrixButton_Click(object sender, EventArgs e) {
             if (!matrixEditorIsReady) {
@@ -2480,15 +2484,15 @@ namespace DSPRE {
                 if (currentMatrix.hasHeadersSection) {
                     headerID = currentMatrix.headers[e.RowIndex, e.ColumnIndex];
                 } else {
-                    List<ushort> result = HeaderSearch.AdvancedSearch(0, (ushort)internalNames.Count, internalNames, (int)MapHeader.SearchableFields.MatrixID, (int)HeaderSearch.NumOperators.Equal, selectMatrixComboBox.SelectedIndex.ToString())
+                    ushort[] result = HeaderSearch.AdvancedSearch(0, (ushort)internalNames.Count, internalNames, (int)MapHeader.SearchableFields.MatrixID, (int)HeaderSearch.NumOperators.Equal, selectMatrixComboBox.SelectedIndex.ToString())
                         .Select(x => ushort.Parse(x.Split()[0]))
-                        .ToList();
+                        .ToArray();
 
-                    if (result.Count < 1) {
+                    if (result.Length < 1) {
                         headerID = currentHeader.ID;
                         statusLabel.Text = "This Matrix is not linked to any Header. DSPRE can't determine the most appropriate AreaData (and textures) to use.\nDisplaying Textures from the last selected Header (" + headerID + ")'s AreaData...";
                     } else {
-                        if (result.Count > 1) {
+                        if (result.Length > 1) {
                             if (result.Contains(currentHeader.ID)) {
                                 headerID = currentHeader.ID;
 
@@ -2496,7 +2500,15 @@ namespace DSPRE {
                             } else {
                                 if (gameFamily.Equals(gFamEnum.DP)) {
                                     foreach (ushort r in result) {
-                                        HeaderDP hdp = (HeaderDP)MapHeader.LoadFromARM9(r);
+                                        HeaderDP hdp;
+
+                                        ////Dynamic headers patch unsupported in DP
+                                        //if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                                        //    hdp = (HeaderDP)MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + r.ToString("D4"), r, 0);
+                                        //} else {
+                                            hdp = (HeaderDP)MapHeader.LoadFromARM9(r);
+                                        //}
+
                                         if (hdp.locationName != 0) {
                                             headerID = hdp.ID;
                                             break;
@@ -2504,7 +2516,13 @@ namespace DSPRE {
                                     }
                                 } else {
                                     foreach (ushort r in result) {
-                                        HeaderPt hpt = (HeaderPt)MapHeader.LoadFromARM9(r, gFamEnum.Plat);
+                                        HeaderPt hpt;
+                                        if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                                            hpt = (HeaderPt)MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + r.ToString("D4"), r, 0);
+                                        } else {
+                                            hpt = (HeaderPt)MapHeader.LoadFromARM9(r);
+                                        }
+
                                         if (hpt.locationName != 0) {
                                             headerID = hpt.ID;
                                             break;
@@ -2645,7 +2663,7 @@ namespace DSPRE {
             }
 
             ushort headerNumber = 0;
-            List<string> result = null;
+            HashSet<string> result = null;
             if (currentMatrix.hasHeadersSection) {
                 headerNumber = Convert.ToUInt16(selectedCell.Value);
             } else {
@@ -4596,7 +4614,7 @@ namespace DSPRE {
         public NSMBe4.NSBMD.NSBTX_File overworldFrames;
         public GameMatrix eventMatrix;
 
-        public const byte eventScreenSquareSize = 17;
+        public const byte tileSize = 16;
         public EventFile currentEvFile;
         public Event selectedEvent;
 
@@ -4614,46 +4632,116 @@ namespace DSPRE {
                 "About Ground Items", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void CenterEventViewOnEntities() {
-            try {
-                if (currentEvFile.overworlds.Count > 0) {
-                    eventMatrixXUpDown.Value = currentEvFile.overworlds[0].xMatrixPosition;
-                    eventMatrixYUpDown.Value = currentEvFile.overworlds[0].yMatrixPosition;
-                } else if (currentEvFile.warps.Count > 0) {
-                    eventMatrixXUpDown.Value = currentEvFile.warps[0].xMatrixPosition;
-                    eventMatrixYUpDown.Value = currentEvFile.warps[0].yMatrixPosition;
-                } else if (currentEvFile.spawnables.Count > 0) {
-                    eventMatrixXUpDown.Value = currentEvFile.spawnables[0].xMatrixPosition;
-                    eventMatrixYUpDown.Value = currentEvFile.spawnables[0].yMatrixPosition;
-                } else if (currentEvFile.triggers.Count > 0) {
-                    eventMatrixXUpDown.Value = currentEvFile.triggers[0].xMatrixPosition;
-                    eventMatrixYUpDown.Value = currentEvFile.triggers[0].yMatrixPosition;
-                } else {
-                    eventMatrixXUpDown.Value = 0;
-                    eventMatrixYUpDown.Value = 0;
-                }
-            } catch (ArgumentOutOfRangeException) {
-                MessageBox.Show("One of the events tried to reference a bigger Matrix.\nMake sure the Header File associated to this Event File is using the correct Matrix.", "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            int destX = 0;
+            int destY = 0;
+            if (currentEvFile.overworlds.Count > 0) {
+                destX = currentEvFile.overworlds[0].xMatrixPosition;
+                destY = currentEvFile.overworlds[0].yMatrixPosition;
+            } else if (currentEvFile.warps.Count > 0) {
+                destX = currentEvFile.warps[0].xMatrixPosition;
+                destY = currentEvFile.warps[0].yMatrixPosition;
+            } else if (currentEvFile.spawnables.Count > 0) {
+                destX = currentEvFile.spawnables[0].xMatrixPosition;
+                destY = currentEvFile.spawnables[0].yMatrixPosition;
+            } else if (currentEvFile.triggers.Count > 0) {
+                destX = currentEvFile.triggers[0].xMatrixPosition;
+                destY = currentEvFile.triggers[0].yMatrixPosition;
+            }
+
+            if (destX > eventMatrixXUpDown.Maximum || destY > eventMatrixYUpDown.Maximum) {
+                //MessageBox.Show("One of the events tried to reference a bigger Matrix.\nMake sure the Header File associated to this Event File is using the correct Matrix.", "Error",
+                //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                eventMatrixXUpDown.Value = eventMatrixYUpDown.Value = 0;
+            } else {
+                eventMatrixXUpDown.Value = destX;
+                eventMatrixYUpDown.Value = destY;
             }
         }
         private void centerEventViewOnSelectedEvent_Click(object sender, EventArgs e) {
             if (selectedEvent is null) {
-                MessageBox.Show("You haven't selected any event.", "Nothing to do here",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("You haven't selected any event.", "Nothing to do here", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 try {
                     eventMatrixXUpDown.Value = selectedEvent.xMatrixPosition;
                     eventMatrixYUpDown.Value = selectedEvent.yMatrixPosition;
                 } catch (ArgumentOutOfRangeException) {
-                    MessageBox.Show("Event is out of range.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DialogResult main = MessageBox.Show("The selected event tried to reference a bigger Matrix than the one which is currently being displayed.\nDo you want to check for another potentially compatible matrix?", "Event is out of range", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (main.Equals(DialogResult.Yes)) {
+                        ushort[] result = HeaderSearch.AdvancedSearch(0, (ushort)internalNames.Count, internalNames, (int)MapHeader.SearchableFields.EventFileID, (int)HeaderSearch.NumOperators.Equal, selectEventComboBox.SelectedIndex.ToString())
+                            .Select(x => ushort.Parse(x.Split()[0]))
+                            .ToArray();
+
+                        Dictionary<ushort, ushort> dict = new Dictionary<ushort, ushort>();
+
+                        if (gameFamily.Equals(gFamEnum.DP)) {
+                            foreach (ushort headerID in result) {
+                                HeaderDP hdp = (HeaderDP)MapHeader.LoadFromARM9(headerID);
+
+                                if (hdp.matrixID != eventMatrixUpDown.Value && hdp.locationName != 0) {
+                                    dict.Add(hdp.ID, hdp.matrixID);
+                                }
+                            }
+                        } else {
+                            foreach (ushort headerID in result) {
+                                HeaderPt hpt;
+
+                                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                                    hpt = (HeaderPt)MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + headerID.ToString("D4"), headerID, 0);
+                                } else {
+                                    hpt = (HeaderPt)MapHeader.LoadFromARM9(headerID);
+                                }
+
+                                if (hpt.matrixID != eventMatrixUpDown.Value && hpt.locationName != 0) {
+                                    dict.Add(hpt.ID, hpt.matrixID);
+                                }
+                            }
+                        }
+
+                        if (dict.Count < 1) {
+                            MessageBox.Show("DSPRE could not find another Header referencing the same Event File and a different Matrix.", "Search failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            eventMatrixXUpDown.Value = 0;
+                            eventMatrixYUpDown.Value = 0;
+                        } else {
+                            if (dict.Count > 1) {
+                                if (dict.Keys.Contains(currentHeader.ID)) {
+                                    DialogResult yn = MessageBox.Show("DSPRE found multiple Headers referencing the same Event File and a different Matrix.\n" +
+                                        $"The last selected Header ({currentHeader.ID}) is one of those.\n" +
+                                        $"Do you want to load its matrix (#{currentHeader.matrixID}?)", "Potential solution found", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                                    if (yn.Equals(DialogResult.Yes)) {
+                                        eventMatrixUpDown.Value = currentHeader.matrixID;
+                                    }
+                                } else {
+                                    var kvp = dict.First();
+
+                                    DialogResult yn = MessageBox.Show($"DSPRE found {dict.Count} Headers referencing the same Event File and a different Matrix.\n" +
+                                        $"Do you want to load Header {kvp.Key}'s matrix (#{kvp.Value})?", "Potential solution found", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                                    if (yn.Equals(DialogResult.Yes)) {
+                                        eventMatrixUpDown.Value = kvp.Value;
+                                    }
+                                }
+                            } else {
+                                var kvp = dict.First();
+
+                                DialogResult yn = MessageBox.Show($"Header {kvp.Key}'s matrix (#{kvp.Value}) seems to be the only match for this Event File.\n" +
+                                        $"Do you want to load it?", "Potential solution found", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                                if (yn.Equals(DialogResult.Yes)) {
+                                    eventMatrixUpDown.Value = kvp.Value;
+                                }
+                            }
+                        }
+                    }
+                } finally {
+                    Update();
                 }
-                Update();
             }
         }
         private void eventPictureBox_MouseMove(object sender, MouseEventArgs e) {
             Point coordinates = eventPictureBox.PointToClient(Cursor.Position);
-            Point mouseTilePos = new Point(coordinates.X / eventScreenSquareSize, coordinates.Y / eventScreenSquareSize);
+            Point mouseTilePos = new Point(coordinates.X / (tileSize + 1), coordinates.Y / (tileSize + 1));
             statusLabel.Text = "Local: " + mouseTilePos.X + ", " + mouseTilePos.Y + "   |   " + "Global: " + (eventMatrixXUpDown.Value * MapFile.mapSize + mouseTilePos.X).ToString() + ", " + (eventMatrixYUpDown.Value * MapFile.mapSize + mouseTilePos.Y).ToString();
         }
 
@@ -4671,7 +4759,7 @@ namespace DSPRE {
                         Spawnable spawnable = currentEvFile.spawnables[i];
 
                         if (isEventOnCurrentMatrix(spawnable)) {
-                            g.DrawImage(icon, spawnable.xMapPosition * 17, spawnable.yMapPosition * 17);
+                            g.DrawImage(icon, spawnable.xMapPosition * (tileSize + 1), spawnable.yMapPosition * (tileSize + 1));
                             if (selectedEvent == spawnable) { // Draw selection rectangle if event is the selected one
                                 DrawSelectionRectangle(g, spawnable);
                             }
@@ -4687,7 +4775,7 @@ namespace DSPRE {
                         if (isEventOnCurrentMatrix(overworld)) { // Draw image only if event is in current map
                             Bitmap sprite = GetOverworldImage(overworld.overlayTableEntry, overworld.orientation);
                             sprite.MakeTransparent();
-                            g.DrawImage(sprite, (overworld.xMapPosition) * 17 - 7 + (32 - sprite.Width) / 2, (overworld.yMapPosition - 1) * 17 + (32 - sprite.Height));
+                            g.DrawImage(sprite, (overworld.xMapPosition) * (tileSize + 1) - 7 + (32 - sprite.Width) / 2, (overworld.yMapPosition - 1) * (tileSize + 1) + (32 - sprite.Height));
 
                             if (selectedEvent == overworld) {
                                 DrawSelectionRectangleOverworld(g, overworld);
@@ -4698,29 +4786,14 @@ namespace DSPRE {
 
                 /* Draw warps */
                 if (showWarpsCheckBox.Checked) {
-                    icon = (Bitmap)Properties.Resources.ResourceManager.GetObject("warpCollision");
-
-                    if (eventMapFile != null) {
-                        for (int y = 0; y < MapFile.mapSize; y++) {
-                            for (int x = 0; x < MapFile.mapSize; x++) {
-                                byte moveperm = eventMapFile.types[x, y];
-
-                                if (PokeDatabase.System.MapCollisionTypePainters.TryGetValue(moveperm, out string val)) {
-                                    if (val.IndexOf("Warp", StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                                        //Console.WriteLine("Found warp at " + i + ", " + j);
-                                        g.DrawImage(icon, y * 17, x * 17);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    DrawWarpCollisions(g);
 
                     icon = (Bitmap)Properties.Resources.ResourceManager.GetObject("warp");
                     for (int i = 0; i < currentEvFile.warps.Count; i++) {
                         Warp warp = currentEvFile.warps[i];
 
                         if (isEventOnCurrentMatrix(warp)) {
-                            g.DrawImage(icon, warp.xMapPosition * 17, warp.yMapPosition * 17);
+                            g.DrawImage(icon, warp.xMapPosition * (tileSize + 1), warp.yMapPosition * (tileSize + 1));
 
                             if (selectedEvent == warp) { // Draw selection rectangle if event is the selected one
                                 DrawSelectionRectangle(g, warp);
@@ -4739,7 +4812,7 @@ namespace DSPRE {
                         if (isEventOnCurrentMatrix(trigger)) {
                             for (int y = 0; y < currentEvFile.triggers[i].heightY; y++) {
                                 for (int x = 0; x < currentEvFile.triggers[i].widthX; x++) {
-                                    g.DrawImage(icon, (trigger.xMapPosition + x) * 17, (trigger.yMapPosition + y) * 17);
+                                    g.DrawImage(icon, (trigger.xMapPosition + x) * (tileSize + 1), (trigger.yMapPosition + y) * (tileSize + 1));
                                 }
                             }
                             if (selectedEvent == trigger) {// Draw selection rectangle if event is the selected one
@@ -4752,21 +4825,37 @@ namespace DSPRE {
 
             eventPictureBox.Invalidate();
         }
+        private void DrawWarpCollisions(Graphics g) {
+            if (eventMapFile != null) {
+                Bitmap icon = (Bitmap)Properties.Resources.ResourceManager.GetObject("warpCollision");
+                for (int y = 0; y < MapFile.mapSize; y++) {
+                    for (int x = 0; x < MapFile.mapSize; x++) {
+                        byte moveperm = eventMapFile.types[x, y];
+                        if (PokeDatabase.System.MapCollisionTypePainters.TryGetValue(moveperm, out string val)) {
+                            if (val.IndexOf("Warp", StringComparison.InvariantCultureIgnoreCase) >= 0) {
+                                //Console.WriteLine("Found warp at " + i + ", " + j);
+                                g.DrawImage(icon, y * (tileSize + 1), x * (tileSize + 1));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private void DrawSelectionRectangle(Graphics g, Event ev) {
             eventPen = Pens.Red;
-            g.DrawRectangle(eventPen, (ev.xMapPosition) * 17 - 1, (ev.yMapPosition) * 17 - 1, 18, 18);
-            g.DrawRectangle(eventPen, (ev.xMapPosition) * 17 - 2, (ev.yMapPosition) * 17 - 2, 20, 20);
+            g.DrawRectangle(eventPen, (ev.xMapPosition) * (tileSize + 1) - 1, (ev.yMapPosition) * (tileSize + 1) - 1, 18, 18);
+            g.DrawRectangle(eventPen, (ev.xMapPosition) * (tileSize + 1) - 2, (ev.yMapPosition) * (tileSize + 1) - 2, 20, 20);
         }
         private void DrawSelectionRectangleTrigger(Graphics g, Trigger t) {
             eventPen = Pens.Red;
-            g.DrawRectangle(eventPen, (t.xMapPosition) * 17 - 1, (t.yMapPosition) * 17 - 1, 17 * t.widthX + 1, 17 * t.heightY + 1);
-            g.DrawRectangle(eventPen, (t.xMapPosition) * 17 - 2, (t.yMapPosition) * 17 - 2, 17 * t.widthX + 3, 17 * t.heightY + 3);
-
+            g.DrawRectangle(eventPen, (t.xMapPosition) * (tileSize + 1) - 1, (t.yMapPosition) * (tileSize + 1) - 1, 17 * t.widthX + 1, (tileSize + 1) * t.heightY + 1);
+            g.DrawRectangle(eventPen, (t.xMapPosition) * (tileSize + 1) - 2, (t.yMapPosition) * (tileSize + 1) - 2, 17 * t.widthX + 3, (tileSize + 1) * t.heightY + 3);
         }
         private void DrawSelectionRectangleOverworld(Graphics g, Overworld ow) {
             eventPen = Pens.Red;
-            g.DrawRectangle(eventPen, (ow.xMapPosition) * 17 - 8, (ow.yMapPosition - 1) * 17, 34, 34);
-            g.DrawRectangle(eventPen, (ow.xMapPosition) * 17 - 9, (ow.yMapPosition - 1) * 17 - 1, 36, 36);
+            g.DrawRectangle(eventPen, (ow.xMapPosition) * (tileSize + 1) - 8, (ow.yMapPosition - 1) * (tileSize + 1), 34, 34);
+            g.DrawRectangle(eventPen, (ow.xMapPosition) * (tileSize + 1) - 9, (ow.yMapPosition - 1) * (tileSize + 1) - 1, 36, 36);
         }
         private void DisplayEventMap(bool readGraphicsFromHeader = true) {
             /* Determine map file to open and open it in BinaryReader, unless map is VOID */
@@ -4781,7 +4870,10 @@ namespace DSPRE {
 
             if (mapIndex == GameMatrix.EMPTY) {
                 eventPictureBox.BackgroundImage = new Bitmap(eventPictureBox.Width, eventPictureBox.Height);
-                using (Graphics g = Graphics.FromImage(eventPictureBox.BackgroundImage)) g.Clear(Color.Black);
+                using (Graphics g = Graphics.FromImage(eventPictureBox.BackgroundImage)) {
+                    g.Clear(Color.Black);
+                }
+                eventMapFile = null;
             } else {
                 /* Determine area data */
                 byte areaDataID;
@@ -5239,14 +5331,13 @@ namespace DSPRE {
             disableHandlers = true;
 
             eventMatrix = new GameMatrix((int)eventMatrixUpDown.Value);
-            eventMatrixXUpDown.Value = 0;
-            eventMatrixYUpDown.Value = 0;
             eventMatrixXUpDown.Maximum = eventMatrix.width - 1;
             eventMatrixYUpDown.Maximum = eventMatrix.height - 1;
-            DrawEventMatrix();
-            MarkUsedCells();
+            eventEditorFullMapReload((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value);
 
             disableHandlers = false;
+
+            CenterEventViewOnEntities();
         }
         private void eventShiftLeftButton_Click(object sender, EventArgs e) {
             if (eventMatrixXUpDown.Value > 0) {
@@ -5259,31 +5350,29 @@ namespace DSPRE {
             }
         }
         private void eventShiftRightButton_Click(object sender, EventArgs e) {
-            if (eventMatrixXUpDown.Value < eventMatrix.width - 1)
+            if (eventMatrixXUpDown.Value < eventMatrix.width - 1) {
                 eventMatrixXUpDown.Value += 1;
+            }
         }
         private void eventShiftDownButton_Click(object sender, EventArgs e) {
             if (eventMatrixYUpDown.Value < eventMatrix.height - 1) {
                 eventMatrixYUpDown.Value += 1;
             }
         }
-        private void eventMatrixXUpDown_ValueChanged(object sender, EventArgs e) {
+        private void eventMatrixCoordsUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return;
             }
 
-            MarkActiveCell((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value);
-            DisplayEventMap();
-            DisplayActiveEvents();
+            eventEditorFullMapReload((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value);
         }
-        private void eventMatrixYUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
-                return;
-            }
-
-            MarkActiveCell((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value);
+        private void eventEditorFullMapReload(int coordX, int coordY) {
+            /* Draw matrix image in the navigator */
+            MarkActiveCell(coordX, coordY);
+            /* Render events on map */
             DisplayEventMap();
             DisplayActiveEvents();
+            eventMatrixPictureBox.Invalidate();
         }
         private void exportEventFileButton_Click(object sender, EventArgs e) {
             currentEvFile.SaveToFileExplorePath("Event File " + selectEventComboBox.SelectedIndex);
@@ -5408,15 +5497,7 @@ namespace DSPRE {
             FillTriggersBox();
             FillWarpsBox();
 
-            /* Draw matrix image in the navigator */
-            DrawEventMatrix();
-            MarkUsedCells();
-            MarkActiveCell((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value);
-            eventMatrixPictureBox.Invalidate();
-
-            /* Render events on map */
-            DisplayEventMap();
-            DisplayActiveEvents();
+            eventEditorFullMapReload((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value);
         }
         private void showEventsCheckBoxes_CheckedChanged(object sender, EventArgs e) {
             if (disableHandlers) {
@@ -5434,7 +5515,7 @@ namespace DSPRE {
         }
         private void eventPictureBox_Click(object sender, EventArgs e) { 
             Point coordinates = eventPictureBox.PointToClient(Cursor.Position);
-            Point mouseTilePos = new Point(coordinates.X / eventScreenSquareSize, coordinates.Y / eventScreenSquareSize);
+            Point mouseTilePos = new Point(coordinates.X / (tileSize + 1), coordinates.Y / (tileSize + 1));
             MouseEventArgs mea = (MouseEventArgs)e;
 
             if (mea.Button == MouseButtons.Left) {
@@ -6034,8 +6115,6 @@ namespace DSPRE {
 
             currentEvFile.overworlds[selection].xMatrixPosition = (ushort)owXMatrixUpDown.Value;
             eventMatrixPictureBox.Image = new Bitmap(eventMatrixPictureBox.Width, eventMatrixPictureBox.Height);
-            DrawEventMatrix(); // Redraw matrix to eliminate old used cells
-            MarkUsedCells(); // Mark new used cells
             MarkActiveCell((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value);
             DisplayActiveEvents();
         }
@@ -6047,8 +6126,6 @@ namespace DSPRE {
 
             currentEvFile.overworlds[selection].yMatrixPosition = (ushort)owYMatrixUpDown.Value;
             eventMatrixPictureBox.Image = new Bitmap(eventMatrixPictureBox.Width, eventMatrixPictureBox.Height);
-            DrawEventMatrix();
-            MarkUsedCells();
             MarkActiveCell((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value);
             DisplayActiveEvents();
         }

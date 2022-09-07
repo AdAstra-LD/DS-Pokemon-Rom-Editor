@@ -4959,7 +4959,7 @@
             this.eventMatrixYUpDown.Name = "eventMatrixYUpDown";
             this.eventMatrixYUpDown.Size = new System.Drawing.Size(40, 20);
             this.eventMatrixYUpDown.TabIndex = 52;
-            this.eventMatrixYUpDown.ValueChanged += new System.EventHandler(this.eventMatrixYUpDown_ValueChanged);
+            this.eventMatrixYUpDown.ValueChanged += new System.EventHandler(this.eventMatrixCoordsUpDown_ValueChanged);
             // 
             // eventMatrixXUpDown
             // 
@@ -4967,7 +4967,7 @@
             this.eventMatrixXUpDown.Name = "eventMatrixXUpDown";
             this.eventMatrixXUpDown.Size = new System.Drawing.Size(40, 20);
             this.eventMatrixXUpDown.TabIndex = 51;
-            this.eventMatrixXUpDown.ValueChanged += new System.EventHandler(this.eventMatrixXUpDown_ValueChanged);
+            this.eventMatrixXUpDown.ValueChanged += new System.EventHandler(this.eventMatrixCoordsUpDown_ValueChanged);
             // 
             // eventMatrixYLabel
             // 
