@@ -149,6 +149,9 @@
       <DependentUpon>HeaderSearch.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources\TextDatabase.cs" />
+    <Compile Include="OffsetPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ROMFiles\RomFile.cs" />
     <Compile Include="ROMFiles\ScriptAction.cs" />
     <Compile Include="ROMFiles\TrainerFile.cs" />

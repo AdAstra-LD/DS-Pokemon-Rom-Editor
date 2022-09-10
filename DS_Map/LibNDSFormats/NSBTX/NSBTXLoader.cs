@@ -33,7 +33,7 @@ namespace LibNDSFormats.NSBTX
             var reader = new BinaryReader(stream);
             int id = reader.ReadInt32();
             if (id != NSBMD.NSBMD.NDS_TYPE_BTX0) {
-                Console.WriteLine("The header of this texture file is null!!!");
+                //Console.WriteLine("The header of this texture file is null!!!");
                 return null;
             }
 
@@ -102,7 +102,7 @@ namespace LibNDSFormats.NSBTX
             blockptr = (uint)(blockoffset + 4); // already read the block ID, so skip 4 bytes
             blocksize = reader.ReadUInt32(); // block size
             blocklimit = (uint)(blocksize + blockoffset);
-            Console.WriteLine("DEBUG: blockoffset = {0}, blocksize = {1}", blockoffset, blocksize);
+            //Console.WriteLine("DEBUG: blockoffset = {0}, blocksize = {1}", blockoffset, blocksize);
 
             stream.Skip(4); // skip 4 padding 0s
             texdatasize = reader.ReadUInt16() << 3; // total texture data size div8
@@ -136,7 +136,7 @@ namespace LibNDSFormats.NSBTX
             palnum = reader.ReadByte(); // no of palette
             stream.Seek(blockptr, SeekOrigin.Begin);
 
-            Console.WriteLine("texnum = {0}, palnum = {1}", texnum, palnum);
+            //Console.WriteLine("texnum = {0}, palnum = {1}", texnum, palnum);
 
             // allocate memory for material, great enough to hold all texture and palette
             material = new NSBMDMaterial[(texnum > palnum ? texnum : palnum)];
@@ -198,8 +198,8 @@ namespace LibNDSFormats.NSBTX
 
                 var mat = material[i];
                 mat.texsize = (uint)(mat.width * mat.height * bpp[mat.format] / 8);
-                Console.WriteLine("tex {0} '{1}': offset = {2} size = {3} [W,H] = [{4}, {5}]",
-                                  i, mat.texname, mat.texoffset, mat.texsize, mat.width, mat.height);
+                //Console.WriteLine("tex {0} '{1}': offset = {2} size = {3} [W,H] = [{4}, {5}]",
+                //i, mat.texname, mat.texoffset, mat.texsize, mat.width, mat.height);
                 texs[i].texsize = (uint)(mat.width * mat.height * bpp[mat.format] / 8);
             }
 
@@ -294,7 +294,7 @@ namespace LibNDSFormats.NSBTX
                 mat.texdata = by;
                 texs[i].texdata = by;
 
-                Console.WriteLine("DEBUG: texoffset = {0}, texsize = {1}", mat.texoffset, mat.texsize);
+                //Console.WriteLine("DEBUG: texoffset = {0}, texsize = {1}", mat.texoffset, mat.texsize);
 
                 ////////////////////////////////////////////////
                 // additional data for format 5 4x4 compressed texels
@@ -306,7 +306,7 @@ namespace LibNDSFormats.NSBTX
                     by = reader.ReadBytes((int)r);
                     mat.spdata = by;
                     texs[i].spdata = by;
-                    Console.WriteLine("DEBUG: 4x4-texel spdataoffset = {0}, spdatasize = {1}", spdataoffset, r);
+                    //Console.WriteLine("DEBUG: 4x4-texel spdataoffset = {0}, spdatasize = {1}", spdataoffset, r);
 
                     //spdataoffset += r;
                 }
@@ -324,7 +324,7 @@ namespace LibNDSFormats.NSBTX
 
                     RGBA[] rgbq = new RGBA[palentry];
 
-                    Console.WriteLine("DEBUG: converting pal '{0}', palentry = {1}", mat.palname, palentry);
+                    //Console.WriteLine("DEBUG: converting pal '{0}', palentry = {1}", mat.palname, palentry);
 
                     stream.Seek(mat.paloffset, SeekOrigin.Begin);
                     for (j = 0; j < palentry; j++)

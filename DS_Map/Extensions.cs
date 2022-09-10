@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -119,5 +121,20 @@ namespace DSPRE {
         //    }
         //    return dictionary;
         //}
+
+        public static Bitmap Resize(this Bitmap source, int width, int height) {
+            if (source.Width == width && source.Height == height) {
+                return source;
+            }
+
+            Bitmap result = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(result)) {
+                g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                g.PixelOffsetMode = PixelOffsetMode.Half;
+                g.DrawImage(source, 0, 0, width, height);
+            }
+            return result;
+        }
+        public static Bitmap Resize(this Bitmap source, float factor) => source.Resize((int)(source.Width * factor), (int)(source.Height * factor));
     }
 }

@@ -113,8 +113,10 @@ namespace LibNDSFormats {
         /// <returns>4 Bytes as Int32.</returns>
         public static UInt32 Read4BytesAsUInt32(byte[] bytes, int offset) {
             UInt32 result = 0;
-            for (int i = 0; i < 4; ++i)
-                result |= (UInt32)(bytes[offset + i] << (8 * (i)));
+            for (int i = 0; i < 4; ++i) {
+                result |= (uint)(bytes[offset + i] << (8 * i));
+            }
+
             return result;
         }
 

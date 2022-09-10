@@ -19,6 +19,7 @@
  * Fecha: 18/02/2011
  * 
  */
+using MKDS_Course_Editor;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -33,13 +34,27 @@ namespace Tinke {
         /// </summary>
         /// <param name="bytes">Bytes para convertir</param>
         /// <returns>Colores de la paleta.</returns>
-        public static Color[] BGR555(byte[] bytes) {
+        public static Color[] BGR555ToColorArray(this byte[] bytes) {
             Color[] paleta = new Color[bytes.Length / 2];
 
-            for (int i = 0; i < bytes.Length / 2; i++) {
-                paleta[i] = BGR555(bytes[i * 2], bytes[i * 2 + 1]);
+            for (int i = 0; i < paleta.Length; i++) {
+                paleta[i] = BGR555ToColor(bytes[i * 2], bytes[i * 2 + 1]);
             }
             return paleta;
+        }
+        public static byte[] ColorArrayToBGR555(this Color[] palette) {
+            byte[] ret = new byte[palette.Length * 2];
+
+            for (int i = 0; i < palette.Length; i++) {
+                (byte b1, byte b2) = palette[i].ToBGR555();
+                (ret[(i * 2) + 0], ret[(i * 2) + 1]) = (b1, b2);
+            }
+
+            return ret;
+        }
+        public static (byte b1, byte b2) ToBGR555(this Color c) {
+            byte[] result = BitConverter.GetBytes((short)nclr_e.encodeColor(c.ToArgb(), BGR555_));
+            return (result[0], result[1]);
         }
         /// <summary>
         /// Convierte dos bytes en un color.
@@ -47,7 +62,7 @@ namespace Tinke {
         /// <param name="byte1">Primer byte</param>
         /// <param name="byte2">Segundo byte</param>
         /// <returns>Color convertido</returns>
-        public static Color BGR555(byte byte1, byte byte2) {
+        public static Color BGR555ToColor(byte byte1, byte byte2) {
             /*int r, b; double g;
 
             r = (byte1 % 0x20) * 0x8;
@@ -84,21 +99,34 @@ namespace Tinke {
 
             return tiles.ToArray();
         }
-        public static MKDS_Course_Editor.nclr_e.CColorFormat BGR555_ = new MKDS_Course_Editor.nclr_e.CColorFormat("BGR555", 10, 16, new int[] {
+        public static nclr_e.CColorFormat BGR555_ = new nclr_e.CColorFormat("BGR555", 10, 16, new int[] {
         3, 2, 1, 5, 5, 5
     });
-        public static int[][] shiftList = new int[][] { new int[] { 0, 0 }, new int[] { 1, 255 }, new int[] { 3, 85 }, new int[] { 7, 36 }, new int[] { 15, 17 }, new int[] { 31, 8 }, new int[] { 63, 4 }, new int[] { 127, 2 }, new int[] { 255, 1 } };
-        public static int decodeColor(int value, MKDS_Course_Editor.nclr_e.CColorFormat format) {
+        public static int[][] shiftList = new int[][] { 
+            new int[] { 0, 0 }, 
+            new int[] { 1, 255 }, 
+            new int[] { 3, 85 }, 
+            new int[] { 7, 36 }, 
+            new int[] { 15, 17 }, 
+            new int[] { 31, 8 }, 
+            new int[] { 63, 4 }, 
+            new int[] { 127, 2 }, 
+            new int[] { 255, 1 } 
+        };
+
+        public static int decodeColor(int value, nclr_e.CColorFormat format) {
             int[] res = format.getResolution();
             int rgb = Color.FromArgb(255, 0, 0, 0).ToArgb();
             int shift = 0;
             int length = res.Length / 2;
+
             for (int i = 0; i < length; i++) {
                 int mode = res[length - i - 1];
                 int nshift = res[length * 2 - i - 1];
                 int mult = shiftList[nshift][1];
                 int and = shiftList[nshift][0];
                 int n = (value >> shift & and) * mult;
+
                 switch (mode) {
                     case 0: // '\0'
                         rgb |= n << 24;

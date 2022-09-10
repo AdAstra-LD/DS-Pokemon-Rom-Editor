@@ -163,7 +163,11 @@ namespace LibNDSFormats.NSBMD {
 		public void RenderModel(string file2, MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File ani, int[] aniframeS, int[] aniframeT, int[] aniframeScaleS, int[] aniframeScaleT, int[] aniframeR, MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File ca, RenderMode r, bool anim, bool anim2, int selectedanim, float X, float Y, float dist, float elev, float ang, bool licht, MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File p, NSBMD nsb) {
 			MTX44 tmp = new MTX44();
 			file = file2;
-			
+			for (var j = 0; j < Model.Polygons.Count - 1; j++) {
+				var poly = Model.Polygons[j];
+				int matid = poly.MatId;
+				var mat = Model.Materials[matid];
+			}
 			int light = Gl.glIsEnabled(Gl.GL_LIGHTING);
 			Gl.glDisable(Gl.GL_LIGHTING);
 			Gl.glLineWidth(2.0F);
@@ -459,7 +463,7 @@ namespace LibNDSFormats.NSBMD {
 					Gl.glColor3f(1, 1, 1);
 				}
 				stackID = poly.StackID; // the first matrix used by this polygon
-				Process3DCommand(poly.PolyData, Model.Materials[Math.Max(0, poly.MatId)], poly.JointID, true); //Math.Max(0, poly.MatId) PREVENTS EXCEPTIONS WHEN poly.MatId < 0 BUT MAY CAUSE RENDER ERRORS 
+				Process3DCommand(poly.PolyData, Model.Materials[poly.MatId], poly.JointID, true);
 
 			}
 			writevertex = false;
@@ -1137,7 +1141,7 @@ namespace LibNDSFormats.NSBMD {
 			Gl.glLoadIdentity();
 
 
-			Console.WriteLine("DEBUG: making texture for model '{0}'...", mod.Name);
+			//Console.WriteLine("DEBUG: making texture for model '{0}'...", mod.Name);
 
 			for (int i = 0; i < mod.Materials.Count - 1; i++) {
 				try {
@@ -1230,17 +1234,16 @@ namespace LibNDSFormats.NSBMD {
 								//image[j].G = (byte)(((p >> 5) & 0x1f) << 3);
 								//image[j].B = (byte)(((p >> 10) & 0x1f) << 3);
 								//image[j].A = (byte)(((p & 0x8000) != 0) ? 0xff : 0);
-								image[j] = RGBA.fromColor(Tinke.Convertir.BGR555(mat.texdata[j * 2], mat.texdata[j * 2 + 1]));
+								image[j] = RGBA.fromColor(Tinke.Convertir.BGR555ToColor(mat.texdata[j * 2], mat.texdata[j * 2 + 1]));
 								ushort p = (ushort)(mat.texdata[j * 2] + (mat.texdata[j * 2 + 1] << 8));
 								image[j].A = (byte)(((p & 0x8000) != 0) ? 0xff : 0);
 							}
 							break;
 					}
 
-					Console.WriteLine("convert matid = {0}", i);
-					Console.WriteLine("\ttex '{0}': {1} [{2},{3}] texsize = {4}", mat.texname, TEXTURE_FORMATS[mat.format], mat.width,
-									  mat.height, mat.texsize);
-					Console.WriteLine("\tpal '{0}': pixelnum = {1}, repeat = {2}", mat.palname, pixelnum, mat.repeat);
+					//Console.WriteLine("convert matid = {0}", i);
+					//Console.WriteLine("\ttex '{0}': {1} [{2},{3}] texsize = {4}", mat.texname, TEXTURE_FORMATS[mat.format], mat.width, mat.height, mat.texsize);
+					//Console.WriteLine("\tpal '{0}': pixelnum = {1}, repeat = {2}", mat.palname, pixelnum, mat.repeat);
 
 					var imageBytesList = new List<byte>();
 					System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(mat.width, mat.height);
@@ -1426,17 +1429,16 @@ namespace LibNDSFormats.NSBMD {
 							//image[j].G = (byte)(((p >> 5) & 0x1f) << 3);
 							//image[j].B = (byte)(((p >> 10) & 0x1f) << 3);
 							//image[j].A = (byte)(((p & 0x8000) != 0) ? 0xff : 0);
-							image[j] = RGBA.fromColor(Tinke.Convertir.BGR555(mat.texdata[j * 2], mat.texdata[j * 2 + 1]));
+							image[j] = RGBA.fromColor(Tinke.Convertir.BGR555ToColor(mat.texdata[j * 2], mat.texdata[j * 2 + 1]));
 							ushort p = (ushort)(mat.texdata[j * 2] + (mat.texdata[j * 2 + 1] << 8));
 							image[j].A = (byte)(((p & 0x8000) != 0) ? 0xff : 0);
 						}
 						break;
 				}
 
-				Console.WriteLine("convert matid = {0}", i);
-				Console.WriteLine("\ttex '{0}': {1} [{2},{3}] texsize = {4}", mat.texname, TEXTURE_FORMATS[mat.format], mat.width,
-								  mat.height, mat.texsize);
-				Console.WriteLine("\tpal '{0}': pixelnum = {1}, repeat = {2}", mat.palname, pixelnum, mat.repeat);
+				//Console.WriteLine("convert matid = {0}", i);
+				//Console.WriteLine("\ttex '{0}': {1} [{2},{3}] texsize = {4}", mat.texname, TEXTURE_FORMATS[mat.format], mat.width, mat.height, mat.texsize);
+				//Console.WriteLine("\tpal '{0}': pixelnum = {1}, repeat = {2}", mat.palname, pixelnum, mat.repeat);
 
 				var imageBytesList = new List<byte>();
 				//System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(mat.width, mat.height);
@@ -2345,7 +2347,7 @@ namespace LibNDSFormats.NSBMD {
 				num3++;
 			}
 			File.Create(file).Close();
-			ObjExporter exporter = new ObjExporter(file, "Created with DS Pokémon Rom Editor " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+			ObjExporter exporter = new ObjExporter(file, "Created with Alloy Universal Repo Editor " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
 			int index = 0;
 			foreach (Group group in list) {
 				ImageBrush brush = new ImageBrush();

@@ -24,6 +24,7 @@ using System.Globalization;
 using static DSPRE.ROMFiles.Event;
 using static ScintillaNET.Style;
 using static OpenTK.Graphics.OpenGL.GL;
+using NSMBe4.NSBMD;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -100,6 +101,18 @@ namespace DSPRE {
 
             }
             return trainerList.ToArray();
+        }
+        private void statusLabelMessage(string msg = "Ready") {
+            statusLabel.Text = msg;
+            statusLabel.Font = new Font(statusLabel.Font, FontStyle.Regular);
+            statusLabel.ForeColor = Color.Black;
+            statusLabel.Invalidate();
+        }
+        private void statusLabelError(string errorMsg, bool severe = true) {
+            statusLabel.Text = errorMsg;
+            statusLabel.Font = new Font(statusLabel.Font, FontStyle.Bold);
+            statusLabel.ForeColor = severe ? Color.Red : Color.DarkOrange;
+            statusLabel.Invalidate();
         }
         private void PaintGameIcon(object sender, PaintEventArgs e) {
             if (iconON) {
@@ -208,7 +221,7 @@ namespace DSPRE {
 
         public void SetupScriptEditor() {
             /* Extract essential NARCs sub-archives*/
-            statusLabel.Text = "Setting up Script Editor...";
+            statusLabelMessage("Setting up Script Editor...");
             Update();
 
             DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.scripts }); //12 = scripts Narc Dir
@@ -221,12 +234,12 @@ namespace DSPRE {
 
             UpdateScriptNumberCheckBox((NumberStyles)Properties.Settings.Default.scriptEditorFormatPreference);
             selectScriptFileComboBox.SelectedIndex = 0;
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
         }
         private void SetupTextEditor() {
             DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.textArchives });
 
-            statusLabel.Text = "Setting up Text Editor...";
+            statusLabelMessage("Setting up Text Editor...");
             Update();
 
             selectTextFileComboBox.Items.Clear();
@@ -240,7 +253,7 @@ namespace DSPRE {
             disableHandlers = false;
 
             selectTextFileComboBox.SelectedIndex = 0;
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
         }
 
         private int UnpackRomCheckUserChoice() {
@@ -269,7 +282,7 @@ namespace DSPRE {
             }
         }
         private bool UnpackRom(string ndsFileName) {
-            statusLabel.Text = "Unpacking ROM contents to " + RomInfo.workDir + " ...";
+            statusLabelMessage("Unpacking ROM contents to " + RomInfo.workDir + " ...");
             Update();
 
             Directory.CreateDirectory(RomInfo.workDir);
@@ -444,11 +457,11 @@ namespace DSPRE {
         }
         private void OpenCommandsDatabase(Dictionary<ushort, string> namesDict, Dictionary<ushort, byte[]> paramsDict, Dictionary<ushort, string> actionsDict,
             Dictionary<ushort, string> comparisonOPsDict) {
-            statusLabel.Text = "Setting up Commands Database. Please wait...";
+            statusLabelMessage("Setting up Commands Database. Please wait...");
             Update();
             CommandsDatabase form = new CommandsDatabase(namesDict, paramsDict, actionsDict, comparisonOPsDict);
             form.Show();
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
         }
         private void headerSearchToolStripButton_Click(object sender, EventArgs e) {
             mainTabControl.SelectedIndex = 0; //Select Header Editor
@@ -468,7 +481,7 @@ namespace DSPRE {
         private void unpackBuildingEditorNARCs(bool forceUnpack = false) {
             toolStripProgressBar.Visible = true;
 
-            statusLabel.Text = "Attempting to unpack Building Editor NARCs... Please wait. This might take a while";
+            statusLabelMessage("Attempting to unpack Building Editor NARCs... Please wait. This might take a while");
             toolStripProgressBar.Visible = true;
             toolStripProgressBar.Maximum = 4;
             toolStripProgressBar.Value = 0;
@@ -497,7 +510,7 @@ namespace DSPRE {
 
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -530,7 +543,7 @@ namespace DSPRE {
             int userchoice = UnpackRomCheckUserChoice();
             switch (userchoice) {
                 case -1:
-                    statusLabel.Text = "Loading aborted";
+                    statusLabelMessage("Loading aborted");
                     Update();
                     return;
                 case 0:
@@ -539,7 +552,7 @@ namespace DSPRE {
                 case 2:
                     Application.DoEvents();
                     if (userchoice == 1) {
-                        statusLabel.Text = "Deleting old data...";
+                        statusLabelMessage("Deleting old data...");
                         try {
                             Directory.Delete(RomInfo.workDir, true);
                         } catch (IOException) {
@@ -552,7 +565,7 @@ namespace DSPRE {
 
                     try {
                         if (!UnpackRom(openRom.FileName)) {
-                            statusLabel.Text = "Error";
+                            statusLabelError("ERROR");
                             languageLabel.Text = "";
                             versionLabel.Text = "Error";
                             return;
@@ -560,7 +573,7 @@ namespace DSPRE {
                         DSUtils.ARM9.EditSize(-12);
                     } catch (IOException) {
                         MessageBox.Show("Can't access temp directory: \n" + RomInfo.workDir + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        statusLabel.Text = "Error: concurrent access to " + RomInfo.workDir;
+                        statusLabelError("ERROR: Concurrent access to " + RomInfo.workDir);
                         Update();
                         return;
                     }
@@ -569,7 +582,7 @@ namespace DSPRE {
 
             iconON = true;
             gameIcon.Refresh();  // Paint game icon
-            statusLabel.Text = "Attempting to unpack NARCs from folder...";
+            statusLabelMessage("Attempting to unpack NARCs from folder...");
             Update();
 
             ReadROMInitData();
@@ -668,7 +681,7 @@ namespace DSPRE {
             spawnEditorToolStripMenuItem.Enabled = true;
 
             scriptCommandsButton.Enabled = true;
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
             this.Text += "  -  " + RomInfo.fileName;
         }
 
@@ -680,7 +693,7 @@ namespace DSPRE {
                 return;
             }
 
-            statusLabel.Text = "Repacking NARCS...";
+            statusLabelMessage("Repacking NARCS...");
             Update();
 
             // Repack NARCs
@@ -693,7 +706,7 @@ namespace DSPRE {
 
 
             if ( DSUtils.ARM9.CheckCompressionMark() ) {
-                statusLabel.Text = "Awaiting user response...";
+                statusLabelMessage("Awaiting user response...");
                 DialogResult d = MessageBox.Show("The ARM9 file of this ROM is currently uncompressed, but marked as compressed.\n" +
                     "This will prevent your ROM from working on native hardware.\n\n" +
                 "Do you want to mark the ARM9 as uncompressed?", "ARM9 compression mismatch detected",
@@ -704,7 +717,7 @@ namespace DSPRE {
                 }
             }
 
-            statusLabel.Text = "Repacking ROM...";
+            statusLabelMessage("Repacking ROM...");
 
             if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
                 if (ROMToolboxDialog.overlay1MustBeRestoredFromBackup) {
@@ -736,10 +749,10 @@ namespace DSPRE {
             }
 
             Properties.Settings.Default.Save();
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
         }
         private void unpackAllButton_Click(object sender, EventArgs e) {
-            statusLabel.Text = "Awaiting user response...";
+            statusLabelMessage("Awaiting user response...");
             DialogResult d = MessageBox.Show("Do you wish to unpack all extracted NARCS?\n" +
                 "This operation might be long and can't be interrupted.\n\n" +
                 "Any unsaved changes made to the ROM in this session will be lost." +
@@ -750,7 +763,7 @@ namespace DSPRE {
                 toolStripProgressBar.Maximum = RomInfo.gameDirs.Count;
                 toolStripProgressBar.Visible = true;
                 toolStripProgressBar.Value = 0;
-                statusLabel.Text = "Attempting to unpack all NARCs... Be patient. This might take a while...";
+                statusLabelMessage("Attempting to unpack all NARCs... Be patient. This might take a while...");
                 Update();
 
                 DSUtils.ForceUnpackNarcs(Enum.GetValues(typeof(DirNames)).Cast<DirNames>().ToList());
@@ -769,12 +782,12 @@ namespace DSPRE {
                 SetupTextEditor();
                 SetupTrainerEditor();
 
-                statusLabel.Text = "Ready";
+                statusLabelMessage();
                 Update();
             }
         }
         private void updateMapNarcsButton_Click(object sender, EventArgs e) {
-            statusLabel.Text = "Awaiting user response...";
+            statusLabelMessage("Awaiting user response...");
             DialogResult d = MessageBox.Show("Do you wish to unpack all NARC files necessary for the Building Editor ?\n" +
                "This operation might be long and can't be interrupted.\n\n" +
                "Any unsaved changes made to building models and textures in this session will be lost." +
@@ -786,7 +799,7 @@ namespace DSPRE {
 
                 MessageBox.Show("Operation completed.", "Success",
                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                statusLabel.Text = "Ready";
+                statusLabelMessage();
 
                 if (mapEditorIsReady) {
                     updateBuildingListComboBox(interiorbldRadioButton.Checked);
@@ -878,12 +891,12 @@ namespace DSPRE {
             openWildEditor(loadCurrent: true);
         }
         private void openWildEditor(bool loadCurrent) {
-            statusLabel.Text = "Attempting to extract Wild Encounters NARC...";
+            statusLabelMessage("Attempting to extract Wild Encounters NARC...");
             Update();
 
             DSUtils.TryUnpackNarcs(new List<DirNames>() { DirNames.encounters, DirNames.monIcons });
 
-            statusLabel.Text = "Passing control to Wild Pokémon Editor...";
+            statusLabelMessage("Passing control to Wild Pokémon Editor...");
             Update();
 
             int encToOpen = loadCurrent ? (int)wildPokeUpDown.Value : 0;
@@ -900,7 +913,7 @@ namespace DSPRE {
                         editor.ShowDialog();
                     break;
             }
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
         }
         #endregion
 
@@ -914,12 +927,12 @@ namespace DSPRE {
         private void SetupHeaderEditor() {
             /* Extract essential NARCs sub-archives*/
 
-            statusLabel.Text = "Attempting to unpack Header Editor NARCs... Please wait.";
+            statusLabelMessage("Attempting to unpack Header Editor NARCs... Please wait.");
             Update();
 
             DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.synthOverlay, DirNames.textArchives, DirNames.dynamicHeaders });
 
-            statusLabel.Text = "Reading internal names... Please wait.";
+            statusLabelMessage("Reading internal names... Please wait.");
             Update();
 
             internalNames = new List<string>();
@@ -1028,7 +1041,7 @@ namespace DSPRE {
             if (headerListBox.Items.Count > 0) {
                 headerListBox.SelectedIndex = 0;
             }
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
         }
         private void addHeaderBTN_Click(object sender, EventArgs e) {
             // Add new file in the dynamic headers directory
@@ -1668,7 +1681,7 @@ namespace DSPRE {
         private void resetButton_Click(object sender, EventArgs e) {
             searchLocationTextBox.Clear();
             HeaderSearch.ResetResults(headerListBox, headerListBoxNames, prependNumbers: false);
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
         }
         private void searchHeaderTextBox_KeyPress(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
@@ -2176,7 +2189,7 @@ namespace DSPRE {
         }
         #endregion
         private void SetupMatrixEditor() {
-            statusLabel.Text = "Setting up Matrix Editor...";
+            statusLabelMessage("Setting up Matrix Editor...");
             Update();
 
             DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.matrices });
@@ -2197,7 +2210,7 @@ namespace DSPRE {
 
             disableHandlers = false;
             selectMatrixComboBox.SelectedIndex = 0;
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
         }
         private void addHeaderSectionButton_Click(object sender, EventArgs e) {
             if (!currentMatrix.hasHeadersSection) {
@@ -2247,7 +2260,7 @@ namespace DSPRE {
         }
         private void DisplaySelection(DataGridViewSelectedCellCollection selectedCells) {
             if (selectedCells.Count > 0) {
-                statusLabel.Text = "Selection:   " + selectedCells[0].ColumnIndex + ", " + selectedCells[0].RowIndex;
+                statusLabelMessage("Selection:   " + selectedCells[0].ColumnIndex + ", " + selectedCells[0].RowIndex);
             }
         }
         private void headersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
@@ -2422,7 +2435,7 @@ namespace DSPRE {
         private void importMatrixButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .mtx file */
             if (selectMatrixComboBox.SelectedIndex == 0) {
-                statusLabel.Text = "Awaiting user response...";
+                statusLabelMessage("Awaiting user response...");
                 DialogResult d = MessageBox.Show("Replacing a matrix - especially Matrix 0 - with a new file is risky.\n" +
                     "Do not do it unless you are absolutely sure.\nProceed?", "Risky operation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -2454,7 +2467,7 @@ namespace DSPRE {
 
             /* Display success message */
             MessageBox.Show("Matrix imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
         }
         private void mapFilesGridView_CellMouseDoubleClick(object sender, DataGridViewCellEventArgs e) {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0) {
@@ -2490,13 +2503,13 @@ namespace DSPRE {
 
                     if (result.Length < 1) {
                         headerID = currentHeader.ID;
-                        statusLabel.Text = "This Matrix is not linked to any Header. DSPRE can't determine the most appropriate AreaData (and textures) to use.\nDisplaying Textures from the last selected Header (" + headerID + ")'s AreaData...";
+                        statusLabelMessage("This Matrix is not linked to any Header. DSPRE can't determine the most appropriate AreaData (and textures) to use.\nDisplaying Textures from the last selected Header (" + headerID + ")'s AreaData...");
                     } else {
                         if (result.Length > 1) {
                             if (result.Contains(currentHeader.ID)) {
                                 headerID = currentHeader.ID;
 
-                                statusLabel.Text = "Multiple Headers are associated to this Matrix, including the last selected one [Header " + headerID + "]. Now using its textures.";
+                                statusLabelMessage("Multiple Headers are associated to this Matrix, including the last selected one [Header " + headerID + "]. Now using its textures.");
                             } else {
                                 if (gameFamily.Equals(gFamEnum.DP)) {
                                     foreach (ushort r in result) {
@@ -2530,11 +2543,11 @@ namespace DSPRE {
                                     }
                                 }
 
-                                statusLabel.Text = "Multiple Headers are using this Matrix. Header " + headerID + "'s textures are currently being displayed.";
+                                statusLabelMessage("Multiple Headers are using this Matrix. Header " + headerID + "'s textures are currently being displayed.");
                             }
                         } else {
                             headerID = result[0];
-                            statusLabel.Text = "Loading Header " + headerID + "'s textures.";
+                            statusLabelMessage("Loading Header " + headerID + "'s textures.");
                         }
                     }
                 }
@@ -2894,7 +2907,7 @@ namespace DSPRE {
         /*  Camera settings */
         public bool hideBuildings = new bool();
         public bool mapTexturesOn = true;
-        public bool showBuildingTextures = true;
+        public bool bldTexturesOn = true;
         public static float ang = 0.0f;
         public static float dist = 12.8f;
         public static float elev = 50.0f;
@@ -3060,7 +3073,7 @@ namespace DSPRE {
             toolStripProgressBar.Visible = true;
             toolStripProgressBar.Maximum = 9;
             toolStripProgressBar.Value = 0;
-            statusLabel.Text = "Attempting to unpack Map Editor NARCs... Please wait.";
+            statusLabelMessage("Attempting to unpack Map Editor NARCs... Please wait.");
             Update();
 
             DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.maps,
@@ -3179,7 +3192,7 @@ namespace DSPRE {
                     break;
             };
 
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
         }
         private void addMapFileButton_Click(object sender, EventArgs e) {
             /* Add new map file to map folder */
@@ -3242,7 +3255,7 @@ namespace DSPRE {
             }
 
             if (btIndex == 0) {
-                showBuildingTextures = false;
+                bldTexturesOn = false;
             } else {
                 string texturePath = RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (btIndex - 1).ToString("D4");
                 byte[] textureFile = File.ReadAllBytes(texturePath);
@@ -3257,7 +3270,7 @@ namespace DSPRE {
 
                         try {
                             file.MatchTextures();
-                            showBuildingTextures = true;
+                            bldTexturesOn = true;
                         } catch {
                             string itemAtIndex = buildTextureComboBox.Items[btIndex].ToString();
                             if (!itemAtIndex.StartsWith("Error!")) {
@@ -3265,14 +3278,14 @@ namespace DSPRE {
                                 buildTextureComboBox.Items[btIndex] = itemAtIndex.Insert(0, "Error! - ");
                                 disableHandlers = false;
                             }
-                            showBuildingTextures = false;
+                            bldTexturesOn = false;
                         }
                     }
                 }
                 //buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = "Error - Building Texture Pack too small [" + (buildTextureComboBox.SelectedIndex - 1).ToString("D2") + "]";
             }
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void mapTextureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) { 
@@ -3290,19 +3303,19 @@ namespace DSPRE {
                     currentMapFile.mapModel.MatchTextures();
                 } catch { }
             }
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void mapEditorTabPage_Enter(object sender, EventArgs e) {
             mapOpenGlControl.MakeCurrent();
             if (selectMapComboBox.SelectedIndex > -1)
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void mapOpenGlControl_MouseWheel(object sender, MouseEventArgs e) {
             if (mapPartsTabControl.SelectedTab == buildingsTabPage && bldPlaceWithMouseCheckbox.Checked) {
                 return;
             }
             dist -= (float)e.Delta / 200;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void mapOpenGlControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
             byte multiplier = 2;
@@ -3348,7 +3361,7 @@ namespace DSPRE {
             }
             
             mapOpenGlControl.Invalidate();
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void mapOpenGlControl_KeyUp(object sender, KeyEventArgs e) {
             switch (e.KeyCode) {
@@ -3428,7 +3441,7 @@ namespace DSPRE {
 
                 RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
-                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             } else if (mapPartsTabControl.SelectedTab == permissionsTabPage) {
                 radio2D.Checked = true;
 
@@ -3440,7 +3453,7 @@ namespace DSPRE {
                 SetCam2D();
                 RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
-                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
                 movPictureBox.BackgroundImage = GrabMapScreenshot(movPictureBox.Width, movPictureBox.Height);
                 movPictureBox.BringToFront();
@@ -3456,7 +3469,7 @@ namespace DSPRE {
 
                 RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
-                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             } else { // Terrain and BGS
                 radio2D.Checked = true;
 
@@ -3469,7 +3482,7 @@ namespace DSPRE {
 
                 RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
-                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             }
         }
         private void radio2D_CheckedChanged(object sender, EventArgs e) {
@@ -3494,7 +3507,7 @@ namespace DSPRE {
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
-                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void SetCam3D() {
             perspective = 45f;
@@ -3504,7 +3517,7 @@ namespace DSPRE {
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
-                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+                mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void mapScreenshotButton_Click(object sender, EventArgs e) {
             MessageBox.Show("Choose where to save the map screenshot.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -3517,7 +3530,7 @@ namespace DSPRE {
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
             ang, dist, elev, perspective,
-            mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             int newW = 512, newH = 512;
             Bitmap newImage = new Bitmap(newW, newH);
@@ -3573,7 +3586,7 @@ namespace DSPRE {
             }
 
             /* Render the map */
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             /* Draw permissions in the small selection boxes */
             DrawSmallCollision();
@@ -3610,7 +3623,7 @@ namespace DSPRE {
                 Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_FILL);
             }
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
 
         #region Building Editor
@@ -3635,7 +3648,7 @@ namespace DSPRE {
             buildingsListBox.SelectedIndex = buildingsListBox.Items.Count - 1;
 
             /* Redraw scene with new building */
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void buildIndexComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers || buildingsListBox.SelectedIndex < 0) { 
@@ -3650,7 +3663,7 @@ namespace DSPRE {
             currentMapFile.buildings[buildingsListBox.SelectedIndex].LoadModelData(romInfo.GetBuildingModelsDirPath(interiorbldRadioButton.Checked));
             MW_LoadModelTextures(currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1);
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void buildingsListBox_SelectedIndexChanged(object sender, EventArgs e) {
             int buildingNumber = buildingsListBox.SelectedIndex;
@@ -3692,7 +3705,7 @@ namespace DSPRE {
             disableHandlers = true;
 
             xRotDegBldUpDown.Value = (decimal)Building.U16ToDeg(currentMapFile.buildings[selection].xRotation = (ushort)((int)xRotBuildUpDown.Value & ushort.MaxValue));
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             disableHandlers = false;
         }
@@ -3706,7 +3719,7 @@ namespace DSPRE {
             disableHandlers = true;
 
             yRotDegBldUpDown.Value = (decimal)Building.U16ToDeg(currentMapFile.buildings[selection].yRotation = (ushort)((int)yRotBuildUpDown.Value & ushort.MaxValue));
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             disableHandlers = false;
         }
@@ -3720,7 +3733,7 @@ namespace DSPRE {
             disableHandlers = true;
 
             zRotDegBldUpDown.Value = (decimal)Building.U16ToDeg(currentMapFile.buildings[selection].zRotation = (ushort)((int)zRotBuildUpDown.Value & ushort.MaxValue));
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             disableHandlers = false;
         }
@@ -3733,7 +3746,7 @@ namespace DSPRE {
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xRotation = (ushort)(xRotBuildUpDown.Value =
                 Building.DegToU16((float)xRotDegBldUpDown.Value));
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             disableHandlers = false;
         }
@@ -3746,7 +3759,7 @@ namespace DSPRE {
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yRotation = (ushort)(yRotBuildUpDown.Value =
                 Building.DegToU16((float)yRotDegBldUpDown.Value));
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             disableHandlers = false;
         }
@@ -3759,26 +3772,26 @@ namespace DSPRE {
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zRotation = (ushort)(zRotBuildUpDown.Value =
                 Building.DegToU16((float)zRotDegBldUpDown.Value));
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             disableHandlers = false;
         }
         private void buildingHeightUpDown_ValueChanged(object sender, EventArgs e) {
             if (buildingsListBox.SelectedIndex > -1) {
                 currentMapFile.buildings[buildingsListBox.SelectedIndex].height = (uint)buildingHeightUpDown.Value;
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             }
         }
         private void buildingLengthUpDown_ValueChanged(object sender, EventArgs e) {
             if (buildingsListBox.SelectedIndex > -1) {
                 currentMapFile.buildings[buildingsListBox.SelectedIndex].length = (uint)buildingLengthUpDown.Value;
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             }
         }
         private void buildingWidthUpDown_ValueChanged(object sender, EventArgs e) {
             if (buildingsListBox.SelectedIndex > -1) {
                 currentMapFile.buildings[buildingsListBox.SelectedIndex].width = (uint)buildingWidthUpDown.Value;
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             }
         }
         private void exportBuildingsButton_Click(object sender, EventArgs e) {
@@ -3811,7 +3824,7 @@ namespace DSPRE {
                 MW_LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
             }
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             MessageBox.Show("Buildings imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void interiorRadioButton_CheckedChanged(object sender, EventArgs e) {
@@ -3837,7 +3850,7 @@ namespace DSPRE {
             }
 
             /* Render the map */
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             disableHandlers = false;
         }
         private void removeBuildingButton_Click(object sender, EventArgs e) {
@@ -3851,7 +3864,7 @@ namespace DSPRE {
                 buildingsListBox.Items.RemoveAt(toRemoveListBoxID);
 
                 FillBuildingsBox(); // Update ListBox
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
                 disableHandlers = false;
 
@@ -3879,7 +3892,7 @@ namespace DSPRE {
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xPosition = (short)wholePart;
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xFraction = (ushort)(decPart * 65535);
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void zBuildUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || buildingsListBox.SelectedIndex < 0)
@@ -3895,7 +3908,7 @@ namespace DSPRE {
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zPosition = (short)wholePart;
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zFraction = (ushort)(decPart * 65535);
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void yBuildUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers || buildingsListBox.SelectedIndex < 0)
@@ -3911,7 +3924,7 @@ namespace DSPRE {
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yPosition = (short)wholePart;
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yFraction = (ushort)(decPart * 65535);
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         #endregion
 
@@ -4485,7 +4498,7 @@ namespace DSPRE {
             if (mapTextureComboBox.SelectedIndex > 0) {
                 MW_LoadModelTextures(currentMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, mapTextureComboBox.SelectedIndex - 1);
             }
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, showBuildingTextures);
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             modelSizeLBL.Text = currentMapFile.mapModelData.Length.ToString() + " B";
 
@@ -4742,7 +4755,7 @@ namespace DSPRE {
         private void eventPictureBox_MouseMove(object sender, MouseEventArgs e) {
             Point coordinates = eventPictureBox.PointToClient(Cursor.Position);
             Point mouseTilePos = new Point(coordinates.X / (tileSize + 1), coordinates.Y / (tileSize + 1));
-            statusLabel.Text = "Local: " + mouseTilePos.X + ", " + mouseTilePos.Y + "   |   " + "Global: " + (eventMatrixXUpDown.Value * MapFile.mapSize + mouseTilePos.X).ToString() + ", " + (eventMatrixYUpDown.Value * MapFile.mapSize + mouseTilePos.Y).ToString();
+            statusLabelMessage("Local: " + mouseTilePos.X + ", " + mouseTilePos.Y + "   |   " + "Global: " + (eventMatrixXUpDown.Value * MapFile.mapSize + mouseTilePos.X).ToString() + ", " + (eventMatrixYUpDown.Value * MapFile.mapSize + mouseTilePos.Y).ToString());
         }
 
         private void DisplayActiveEvents() {
@@ -4978,56 +4991,56 @@ namespace DSPRE {
 
             try {
                 FileStream stream = new FileStream(RomInfo.gameDirs[DirNames.OWSprites].unpackedDir + "\\" + result.spriteID.ToString("D4"), FileMode.Open);
-                NSMBe4.NSBMD.NSBTX_File nsbtx = new NSMBe4.NSBMD.NSBTX_File(stream);
+                NSBTX_File nsbtx = new NSBTX_File(stream);
 
-                if (nsbtx.TexInfo.num_objs <= 1) {
-                    return LoadTextureFromNSBTX(nsbtx, 0, 0); // Read nsbtx slot 0 if ow has only 2 frames
+                if (nsbtx.texInfo.num_objs <= 1) {
+                    return nsbtx.GetBitmap(0, 0).bmp; // Read nsbtx slot 0 if ow has only 2 frames
                 }
-                if (nsbtx.TexInfo.num_objs <= 4) {
+                if (nsbtx.texInfo.num_objs <= 4) {
                     switch (orientation) {
                         case 0:
-                            return LoadTextureFromNSBTX(nsbtx, 0, 0);
+                            return nsbtx.GetBitmap(0, 0).bmp;
                         case 1:
-                            return LoadTextureFromNSBTX(nsbtx, 1, 0);
+                            return nsbtx.GetBitmap(1, 0).bmp;
                         case 2:
-                            return LoadTextureFromNSBTX(nsbtx, 2, 0);
+                            return nsbtx.GetBitmap(2, 0).bmp;
                         default:
-                            return LoadTextureFromNSBTX(nsbtx, 3, 0);
+                            return nsbtx.GetBitmap(3, 0).bmp;
                     }
                 }
-                if (nsbtx.TexInfo.num_objs <= 8) { //Read nsbtx slot corresponding to overworld's movement
+                if (nsbtx.texInfo.num_objs <= 8) { //Read nsbtx slot corresponding to overworld's movement
                     switch (orientation) {
                         case 0:
-                            return LoadTextureFromNSBTX(nsbtx, 0, 0);
+                            return nsbtx.GetBitmap(0, 0).bmp;
                         case 1:
-                            return LoadTextureFromNSBTX(nsbtx, 2, 0);
+                            return nsbtx.GetBitmap(2, 0).bmp;
                         case 2:
-                            return LoadTextureFromNSBTX(nsbtx, 4, 0);
+                            return nsbtx.GetBitmap(4, 0).bmp;
                         default:
-                            return LoadTextureFromNSBTX(nsbtx, 6, 0);
+                            return nsbtx.GetBitmap(6, 0).bmp;
                     }
                 }
-                if (nsbtx.TexInfo.num_objs <= 16) { // Read nsbtx slot corresponding to overworld's movement
+                if (nsbtx.texInfo.num_objs <= 16) { // Read nsbtx slot corresponding to overworld's movement
                     switch (orientation) {
                         case 0:
-                            return LoadTextureFromNSBTX(nsbtx, 0, 0);
+                            return nsbtx.GetBitmap(0, 0).bmp;
                         case 1:
-                            return LoadTextureFromNSBTX(nsbtx, 11, 0);
+                            return nsbtx.GetBitmap(11, 0).bmp;
                         case 2:
-                            return LoadTextureFromNSBTX(nsbtx, 2, 0);
+                            return nsbtx.GetBitmap(2, 0).bmp;
                         default:
-                            return LoadTextureFromNSBTX(nsbtx, 4, 0);
+                            return nsbtx.GetBitmap(4, 0).bmp;
                     }
                 } else {
                     switch (orientation) {
                         case 0:
-                            return LoadTextureFromNSBTX(nsbtx, 0, 0);
+                            return nsbtx.GetBitmap(0, 0).bmp;
                         case 1:
-                            return LoadTextureFromNSBTX(nsbtx, 27, 0);
+                            return nsbtx.GetBitmap(27, 0).bmp;
                         case 2:
-                            return LoadTextureFromNSBTX(nsbtx, 2, 0);
+                            return nsbtx.GetBitmap(2, 0).bmp;
                         default:
-                            return LoadTextureFromNSBTX(nsbtx, 4, 0);
+                            return nsbtx.GetBitmap(4, 0).bmp;
                     }
                 }
             } catch { // Load bounding box if sprite cannot be found
@@ -5076,74 +5089,7 @@ namespace DSPRE {
             eventMatrixXUpDown.Value = xPosition;
             eventMatrixYUpDown.Value = yPosition;
         }
-        private Bitmap LoadTextureFromNSBTX(NSMBe4.NSBMD.NSBTX_File nsbtx, int imageIndex, int palIndex) {
-            Bitmap b_ = new Bitmap(nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].width, nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].height);
-            NSMBe4.NSBMD.ImageTexeler.LockBitmap b = new NSMBe4.NSBMD.ImageTexeler.LockBitmap(b_);
-            b.LockBits();
-            int pixelnum = b.Height * b.Width;
 
-            try {
-                switch (nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].format) {
-                    case 1:
-                        for (int j = 0; j < pixelnum; j++) {
-                            int index = nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].Image[j] & 0x1f;
-                            int alpha = (nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].Image[j] >> 5);
-                            alpha = ((alpha * 4) + (alpha / 2)) * 8;
-                            Color c = Color.FromArgb(alpha, nsbtx.PalInfo.infoBlock.PalInfo[palIndex].pal[index]);
-                            b.SetPixel(j - ((j / b.Width) * b.Width), j / b.Width, c);
-                        }
-                        break;
-                    case 2:
-                        for (int j = 0; j < pixelnum; j++) {
-                            uint index = nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].Image[j / 4];
-                            index = (index >> ((j % 4) << 1)) & 3;
-                            if (index == 0 && nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].color0 == 1) b.SetPixel(j - ((j / b.Width) * b.Width), (j / b.Width), Color.Transparent);
-                            else b.SetPixel(j - (j / b.Width) * b.Width, (j / b.Width), nsbtx.PalInfo.infoBlock.PalInfo[palIndex].pal[index]);
-                        }
-                        break;
-                    case 3:
-                        for (int j = 0; j < pixelnum; j++) {
-                            uint index = nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].Image[j / 2];
-                            index = (index >> ((j % 2) << 2)) & 0x0f;
-                            if (index == 0 && nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].color0 == 1) b.SetPixel(j - (j / b.Width) * b.Width, (j / b.Width), Color.Transparent);
-                            else b.SetPixel(j - (j / b.Width) * b.Width, (j / b.Width), nsbtx.PalInfo.infoBlock.PalInfo[palIndex].pal[index]);
-                        }
-                        break;
-                    case 4:
-                        for (int j = 0; j < pixelnum; j++) {
-                            byte index = nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].Image[j];
-                            if (index == 0 && nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].color0 == 1) b.SetPixel(j - (j / b.Width) * b.Width, j / b.Width, Color.Transparent);
-                            else b.SetPixel(j - (j / b.Width) * b.Width, j / b.Width, nsbtx.PalInfo.infoBlock.PalInfo[palIndex].pal[index]);
-                        }
-                        break;
-                    case 5:
-                        overworldFrames.convert_4x4texel_b(nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].Image, b.Width, b.Height, nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].spData, nsbtx.PalInfo.infoBlock.PalInfo[palIndex].pal, b);
-                        b.UnlockBits();
-                        break;
-                    case 6:
-                        for (int j = 0; j < pixelnum; j++) {
-                            int index = nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].Image[j] & 0x7;
-                            int alpha = (nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].Image[j] >> 3);// & 0x1f;
-                            alpha *= 8;
-                            Color c = Color.FromArgb(alpha, nsbtx.PalInfo.infoBlock.PalInfo[palIndex].pal[index]);
-                            b.SetPixel(j - (j / b.Width) * b.Width, j / b.Width, c);
-                        }
-                        break;
-                    case 7:
-                        for (int j = 0; j < pixelnum; j++) {
-                            ushort p = (ushort)(nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].Image[j * 2] + (nsbtx.TexInfo.infoBlock.TexInfo[imageIndex].Image[j * 2 + 1] << 8));
-                            Color c = Color.FromArgb((((p & 0x8000) != 0) ? 0xff : 0), (((p >> 0) & 0x1f) << 3), (((p >> 5) & 0x1f) << 3), (((p >> 10) & 0x1f) << 3));
-                            b.SetPixel(j - (j / b.Width) * b.Width, j / b.Width, c);
-                        }
-                        break;
-                }
-            } catch {
-                b.UnlockBits();
-            }
-
-            b.UnlockBits();
-            return b_;
-        }
         private bool isEventOnCurrentMatrix(Event ev) {
             if (ev.xMatrixPosition == eventMatrixXUpDown.Value) {
                 if (ev.yMatrixPosition == eventMatrixYUpDown.Value) {
@@ -5168,7 +5114,7 @@ namespace DSPRE {
         private void SetupEventEditor() {
             /* Extract essential NARCs sub-archives*/
 
-            statusLabel.Text = "Attempting to unpack Event Editor NARCs... Please wait. This might take a while";
+            statusLabelMessage("Attempting to unpack Event Editor NARCs... Please wait. This might take a while");
             toolStripProgressBar.Visible = true;
             toolStripProgressBar.Maximum = 12;
             toolStripProgressBar.Value = 0;
@@ -5218,7 +5164,7 @@ namespace DSPRE {
             }
 
             /* Add event file numbers to box */
-            statusLabel.Text = "Loading Events... Please wait.";
+            statusLabelMessage("Loading Events... Please wait.");
             Update();
 
             int eventCount = RomInfo.GetEventFileCount();
@@ -5302,7 +5248,7 @@ namespace DSPRE {
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
 
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
         }
         private void addEventFileButton_Click(object sender, EventArgs e) {
             /* Add copy of event 0 to event folder */
@@ -7298,7 +7244,7 @@ namespace DSPRE {
 
             if (scriptsDirty || functionsDirty || actionsDirty) {
                 DialogResult d = MessageBox.Show("There are unsaved changes in this Script File.\nDo you wish to discard them?", "Unsaved work", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                
+
                 if (!d.Equals(DialogResult.Yes)) {
                     disableHandlers = true;
                     selectScriptFileComboBox.SelectedIndex = (int)currentScriptFile.fileID;
@@ -7403,7 +7349,7 @@ namespace DSPRE {
             }
 
             ScriptEditorSetClean();
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
             disableHandlers = false;
             return true;
         }
@@ -7850,7 +7796,7 @@ namespace DSPRE {
         #endregion
 
         #region NSBTX Editor
-        public NSMBe4.NSBMD.NSBTX_File currentTileset;
+        public NSBTX_File currentNsbtx;
         public AreaData currentAreaData;
 
         public void FillTilesetBox() {
@@ -7868,7 +7814,7 @@ namespace DSPRE {
             }
         }
         private void SetupNSBTXEditor() {
-            statusLabel.Text = "Attempting to unpack Tileset Editor NARCs... Please wait.";
+            statusLabelMessage("Attempting to unpack Tileset Editor NARCs... Please wait.");
             Update();
 
             DSUtils.TryUnpackNarcs(new List<DirNames> {
@@ -7921,7 +7867,7 @@ namespace DSPRE {
             if (palettesListBox.Items.Count > 0) {
                 palettesListBox.SelectedIndex = 0;
             }
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
         }
         private void buildingsTilesetRadioButton_CheckedChanged(object sender, EventArgs e) {
             FillTilesetBox();
@@ -7965,7 +7911,7 @@ namespace DSPRE {
             File.Copy(ofd.FileName, tilesetPath, true);
 
             /* Update nsbtx object in memory and controls */
-            currentTileset = new NSMBe4.NSBMD.NSBTX_File(new FileStream(ofd.FileName, FileMode.Open));
+            currentNsbtx = new NSMBe4.NSBMD.NSBTX_File(new FileStream(ofd.FileName, FileMode.Open));
             texturePacksListBox_SelectedIndexChanged(null, null);
             MessageBox.Show("NSBTX tileset imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -7986,9 +7932,15 @@ namespace DSPRE {
             if (disableHandlers) {
                 return;
             }
-            try {
-                texturePictureBox.Image = LoadTextureFromNSBTX(currentTileset, texturesListBox.SelectedIndex, palettesListBox.SelectedIndex);
-            } catch { }
+
+            palettesLabel.Text = $"Palettes [{palettesListBox.SelectedIndex + 1}/{palettesListBox.Items.Count}]";
+
+            int ctrlCode = NSBTXRender(tex: texturesListBox.SelectedIndex, pal: palettesListBox.SelectedIndex, scale: nsbtxScaleFactor);
+            if (ctrlCode > 0) {
+                statusLabelError($"ERROR! The selected palette doesn't have enough colors for this Palette{ctrlCode} texture.");
+            } else {
+                statusLabelMessage();
+            }
         }
         private void texturePacksListBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) {
@@ -8005,10 +7957,10 @@ namespace DSPRE {
                 ? RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4")
                 : RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
 
-            currentTileset = new NSMBe4.NSBMD.NSBTX_File(new FileStream(tilesetPath, FileMode.Open));
+            currentNsbtx = new NSBTX_File(new FileStream(tilesetPath, FileMode.Open));
             string currentItemName = texturePacksListBox.Items[texturePacksListBox.SelectedIndex].ToString();
 
-            if (currentTileset.TexInfo.names is null || currentTileset.PalInfo.names is null) {
+            if (currentNsbtx.texInfo.names is null || currentNsbtx.palInfo.names is null) {
                 if (!currentItemName.StartsWith("Error!")) {
                     texturePacksListBox.Items[texturePacksListBox.SelectedIndex] = "Error! - " + currentItemName;
                 }
@@ -8017,8 +7969,8 @@ namespace DSPRE {
                 return;
             }
             /* Add textures and palette slot names to ListBoxes */
-            texturesListBox.Items.AddRange(currentTileset.TexInfo.names.ToArray());
-            palettesListBox.Items.AddRange(currentTileset.PalInfo.names.ToArray());
+            texturesListBox.Items.AddRange(currentNsbtx.texInfo.names.ToArray());
+            palettesListBox.Items.AddRange(currentNsbtx.palInfo.names.ToArray());
 
             disableHandlers = false;
 
@@ -8031,19 +7983,30 @@ namespace DSPRE {
                 return;
             }
 
-            string texSelected = texturesListBox.SelectedItem.ToString();
-            string result = findAndSelectMatchingPalette(texSelected);
-            if (result != null) {
-                palettesListBox.SelectedItem = result;
-                statusLabel.Text = "Ready";
+            bool disableHandlersBackup = disableHandlers;
+            disableHandlers = true;
+
+            texturesLabel.Text = $"Textures [{texturesListBox.SelectedIndex + 1}/{texturesListBox.Items.Count}]";
+
+            string findThis = texturesListBox.SelectedItem.ToString();
+            string matchingPalette = findAndSelectMatchingPalette(findThis);
+            if (matchingPalette == null) {
+                statusLabelError("Couldn't find a palette to match " + '"' + findThis + '"', severe: false);
+            } else {
+                //palettesListBox.SelectedIndex = 0;
+                palettesListBox.SelectedItem = matchingPalette;
+                statusLabelMessage("Ready");
             }
 
-            try {
-                texturePictureBox.Image = LoadTextureFromNSBTX(currentTileset, texturesListBox.SelectedIndex, palettesListBox.SelectedIndex);
-            } catch { }
+            disableHandlers = disableHandlersBackup;
+
+            int ctrlCode = NSBTXRender(tex: Math.Max(0, texturesListBox.SelectedIndex), pal: Math.Max(0, palettesListBox.SelectedIndex), scale: nsbtxScaleFactor);
+            if (matchingPalette != null && ctrlCode > 0) {
+                statusLabelError($"ERROR! The selected palette doesn't have enough colors for this Palette{ctrlCode} texture.");
+            }
         }
         private string findAndSelectMatchingPalette(string findThis) {
-            statusLabel.Text = "Searching palette...";
+            statusLabelMessage("Searching palette...");
 
             string copy = findThis;
             while (copy.Length > 0) {
@@ -8062,7 +8025,6 @@ namespace DSPRE {
                 }
             }
 
-            statusLabel.Text = "Couldn't find a palette to match " + '"' + findThis + '"';
             return null;
         }
         private void areaDataBuildingTilesetUpDown_ValueChanged(object sender, EventArgs e) {
@@ -8444,7 +8406,7 @@ namespace DSPRE {
             disableHandlers = true;
             SetupTrainerClassEncounterMusicTable();
             /* Extract essential NARCs sub-archives*/
-            statusLabel.Text = "Setting up Trainer Editor...";
+            statusLabelMessage("Setting up Trainer Editor...");
             Update();
 
             DSUtils.TryUnpackNarcs(new List<DirNames> { 
@@ -8572,7 +8534,7 @@ namespace DSPRE {
 
             disableHandlers = false;
             trainerComboBox_SelectedIndexChanged(null, null);
-            statusLabel.Text = "Ready";
+            statusLabelMessage();
         }
         private void trainerComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) {
@@ -10092,6 +10054,70 @@ namespace DSPRE {
         }
         private void locateCurrentTextArchive_Click(object sender, EventArgs e) {
             ExplorerSelect(Path.Combine(gameDirs[DirNames.textArchives].unpackedDir, selectTextFileComboBox.SelectedIndex.ToString("D4")));
+        }
+
+        //////////////////////////////////////////
+        ///NSBTX Visualizer
+
+        private float nsbtxScaleFactor = 1.0f;
+
+        public void PictureBoxDisable(object sender, PaintEventArgs e) {
+            if (sender is PictureBox pict && pict.Image != null && (!pict.Enabled)) {
+                using (var img = new Bitmap(pict.Image, pict.ClientSize)) {
+                    ControlPaint.DrawImageDisabled(e.Graphics, img, 0, 0, pict.BackColor);
+                }
+            }
+        }
+
+        private int NSBTXRender(int tex, int pal, float scale = -1, NSBTX_File file = null) {
+            NSBTX_File toload = file;
+            if (toload is null) {
+                if (currentNsbtx is null) {
+                    return -1;
+                }
+
+                toload = currentNsbtx;
+            }
+
+            (Bitmap bmp, int ctrlCode) ret;
+            if (tex == -1 && pal == -1) {
+                return -1;
+            } else {
+                ret = toload.GetBitmap(tex, pal);
+            }
+
+            if (ret.bmp != null) {
+                try {
+                    texturePictureBox.Image = ret.bmp.Resize(scale);
+                    texturePictureBox.Invalidate();
+                } catch { }
+            }
+            return ret.ctrlCode;
+        }
+        private void scalingTrackBar_Scroll(object sender, EventArgs e) {
+            int val = (sender as TrackBar).Value;
+            nsbtxScaleFactor = (float)(val > 0 ? val + 1 : Math.Pow(2, (sender as TrackBar).Value));
+
+            scalingLabel.Text = $"x{nsbtxScaleFactor}";
+            NSBTXRender(texturesListBox.SelectedIndex, palettesListBox.SelectedIndex, scale: nsbtxScaleFactor);
+        }
+
+        private void invertDragCheckbox_CheckedChanged(object sender, EventArgs e) {
+            texturePictureBox.invertDrag = invertDragCheckbox.Checked;
+        }
+
+        private void repositionImageButton_Click(object sender, EventArgs e) {
+            texturePictureBox.RedrawCentered();
+        }
+
+        private void texturedMapRenderCheckBox_CheckedChanged(object sender, EventArgs e) {
+            mapTexturesOn = (sender as CheckBox).Checked;
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+        }
+
+        private void texturedBldRenderCheckBox_CheckedChanged(object sender, EventArgs e) {
+            bldTexturesOn = (sender as CheckBox).Checked;
+            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
     }
 }
