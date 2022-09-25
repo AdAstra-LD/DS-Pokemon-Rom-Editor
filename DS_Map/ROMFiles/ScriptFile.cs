@@ -550,7 +550,7 @@ namespace DSPRE.ROMFiles {
                 }
             } catch (ArgumentOutOfRangeException) {
                 MessageBox.Show($"Unexpectedly reached end of lines.\n\n" +
-                    $"Last line index: {i}.\n" +
+                    $"Last line index: {lineSource[i].linenum}.\n" +
                     $"Managed to parse {ls.Count} Command Containers.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
