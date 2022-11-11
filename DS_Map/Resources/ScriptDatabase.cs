@@ -681,7 +681,12 @@ namespace DSPRE.Resources {
 
             [0x02C1] = "ShowSaveBox",
             [0x02C2] = "HideSaveBox",
-            [0x02C3] = "ScopeMode"
+            [0x02C3] = "ScopeMode",
+            
+            [0x360] = "CollisionZone",  // Command by AdAstra, big collision zone
+            [0x35D] = "SpawnBuilding", // Command by AdAstra, add building to the map
+            [0x35E] = "DeleteBuilding", // Remove previously added building
+            [0x35F] = "CollisionTile" // Command by AdAstra, small collision (tile)
         };
         public static Dictionary<ushort, byte[]> DPPtScrCmdParameters = new Dictionary<ushort, byte[]>() {
             [0x0000] = new byte[1] { 0 },
@@ -1434,6 +1439,10 @@ namespace DSPRE.Resources {
             [0x02C1] = new byte[1] { 0 },
             [0x02C2] = new byte[1] { 0 },
             [0x02C3] = new byte[1] { 1 },
+            [0x360] = new byte[] { 2, 2, 2, 2, 1, 2, 2 }, // big collision?
+            [0x35D] = new byte[] { 2, 2, 2, 2, 2, 2, 2, 2 }, // spawn bld
+            [0x35E] = new byte[] { 2 }, // despawn bld
+            [0x35F] = new byte[] { 2, 2, 1, 2, 2 } // small collision? 
         };
 
         public static Dictionary<ushort, string> DPScrCmdNames = new Dictionary<ushort, string>() {
