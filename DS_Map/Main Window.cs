@@ -2527,7 +2527,7 @@ namespace DSPRE {
                                             break;
                                         }
                                     }
-                                } else {
+                                } else if (gameFamily.Equals(gFamEnum.Plat)) {
                                     foreach (ushort r in result) {
                                         HeaderPt hpt;
                                         if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
@@ -2538,6 +2538,21 @@ namespace DSPRE {
 
                                         if (hpt.locationName != 0) {
                                             headerID = hpt.ID;
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    foreach (ushort r in result) {
+                                        HeaderHGSS hgss;
+                                        if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                                            hgss = (HeaderHGSS)MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + r.ToString("D4"), r, 0);
+                                        } 
+                                        else {
+                                            hgss = (HeaderHGSS)MapHeader.LoadFromARM9(r);
+                                        }
+
+                                        if (hgss.locationName != 0) {
+                                            headerID = hgss.ID;
                                             break;
                                         }
                                     }
