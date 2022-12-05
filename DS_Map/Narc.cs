@@ -8,7 +8,10 @@ namespace NarcAPI {
     public class Narc {
         public String Name { get; set; }
         private MemoryStream[] Elements;
-        private int FatbOffset, FntbOffset, FimgOffset;
+        private int FatbOffset, FntbOffset, FimgOffset; //fatb = File Allocation TaBle
+                                                        //fntb = File Name TaBle
+                                                        //fimg = File image
+        private const int MAGICNARCFILEHEADER = 0x4352414E; //"NARC" in ascii/unicode
 
         private Narc(String name) {
             this.Name = name;
@@ -24,8 +27,8 @@ namespace NarcAPI {
             Narc narc = new Narc(Path.GetFileNameWithoutExtension(filePath));
             BinaryReader br = new BinaryReader(file);
 
-            uint magicNumber = br.ReadUInt32();
-            if (magicNumber != 0x4352414E) {
+            uint fileHeader = br.ReadUInt32();
+            if (fileHeader != MAGICNARCFILEHEADER) {
                 return null;
             }
 
@@ -59,12 +62,12 @@ namespace NarcAPI {
             FileStream file = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(file);
             // Write NARC Section
-            bw.Write(0x4352414E);      // "NARC"
-            bw.Write(0x0100FFFE);      // Constant
+            bw.Write(NARCFILEHEADER);
+            bw.Write(0x0100FFFE);      //the end of the file signature for all nintendo files
             fileSizeOffset = (uint)bw.BaseStream.Position;
             bw.Write((UInt32)0x0);
-            bw.Write((ushort)16);
-            bw.Write((ushort)3);
+            bw.Write((ushort)16);      //full size of header section
+            bw.Write((ushort)3);       //the number of sections in the header
             // Write FATB Section
             bw.Write(0x46415442);      // "BTAF"
             bw.Write((UInt32)(0xC + Elements.Length * 8));  // FATB Size
@@ -80,14 +83,14 @@ namespace NarcAPI {
                 bw.Write(curOffset);
             }
             // Write FNTB Section (No names, sorry =( )
-            bw.Write(0x464E5442);       // "BTNF"
-            bw.Write(0x10);             // FNTB Size
-            bw.Write(0x4);              // <-
-            bw.Write(0x10000);          //  |-- Pointless data
+            bw.Write(0x464E5442);       //"BTNF"
+            bw.Write(0x10);             //FNTB Size
+            bw.Write(0x4);              //the offset of the first name directory
+            bw.Write(0x10000);          //filler data describing a file at position 0 with 1 directory in the archive
             // Write FIMG Section
             bw.Write(0x46494D47);       // "GMIF"
             fimgSizeOffset = (uint)bw.BaseStream.Position;
-            bw.Write((UInt32)0x0);
+            bw.Write((UInt32)0x0);      //FIMG section size is 0
             curOffset = 0;
             byte[] buffer;
             for (int i = 0; i < Elements.Length; i++) {
@@ -105,8 +108,8 @@ namespace NarcAPI {
             int fileSize = (int)bw.BaseStream.Position;
             bw.Seek((int)fileSizeOffset, SeekOrigin.Begin);         // File size
             bw.Write((UInt32)fileSize);
-            bw.Seek((int)fimgSizeOffset, SeekOrigin.Begin);         // FIMG size
-            bw.Write((UInt32)curOffset + 0x8);                      // FIMG size == Last end offset + 0x8
+            bw.Seek((int)fimgSizeOffset, SeekOrigin.Begin);         // seeks back to FIMG size
+            bw.Write((UInt32)curOffset + 0x8);                      // FIMG size == Last end offset + (FIMG header size = 8)
             bw.Close();
         }
 
@@ -180,9 +183,10 @@ namespace NarcAPI {
 
         private void ReadOffsets(BinaryReader br) {
             FatbOffset = 0x10;
-            br.BaseStream.Position = 0x18;                  // Number of elements
-            FntbOffset = (int)br.ReadUInt32() * 8 + FatbOffset + 12;
-            br.BaseStream.Position = FntbOffset + 0x4;      // FNTB Size
+            br.BaseStream.Position = 0x18;                           // location of number of elements
+            FntbOffset = (int)br.ReadUInt32() * 8 + FatbOffset + 12; //8 is the size of each element in fatB (startOffset size + endOffset size), 
+                                                                     //12 is Fatb header size
+            br.BaseStream.Position = FntbOffset + 0x4;               // FNTB Size, skip forward 4 bytes for Fntb file signature
             FimgOffset = (int)br.ReadUInt32() + FntbOffset;
         }
 
@@ -196,14 +200,14 @@ namespace NarcAPI {
             // Read offsets of each element
             startOffsets = new uint[numberOfElements]; 
             endOffsets = new uint[numberOfElements];
-            br.BaseStream.Position = FatbOffset + 0xC;
+            br.BaseStream.Position = FatbOffset + 12; //12 is Fatb header size
             for (int i = 0; i < numberOfElements; i++) { 
                 startOffsets[i] = br.ReadUInt32(); 
                 endOffsets[i] = br.ReadUInt32(); 
             }
             // Read elements
             for(int i = 0; i < numberOfElements; i++) {
-                br.BaseStream.Position = FimgOffset + startOffsets[i] + 0x8;
+                br.BaseStream.Position = FimgOffset + startOffsets[i] + 0x8; //8 is the header size of Fimg
                 byte[] buffer = new byte[endOffsets[i] - startOffsets[i]];
                 br.Read(buffer, 0, (int)(endOffsets[i] - startOffsets[i]));
                 Elements[i] = new MemoryStream(buffer);
