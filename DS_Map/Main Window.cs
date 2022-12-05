@@ -865,7 +865,8 @@ namespace DSPRE {
                     trainerEditorIsReady = true;
                 }
             } else if (mainTabControl.SelectedTab == tableEditorTabPage) {
-                if(!tableEditorIsReady) {
+                if (!tableEditorIsReady) {
+                    resetHeaderSearch();
                     SetupConditionalMusicTable();
                     SetupBattleEffectsTables();
                     tableEditorIsReady = true;
@@ -1679,10 +1680,15 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void resetButton_Click(object sender, EventArgs e) {
+            resetHeaderSearch();
+        }
+
+        void resetHeaderSearch() {
             searchLocationTextBox.Clear();
             HeaderSearch.ResetResults(headerListBox, headerListBoxNames, prependNumbers: false);
             statusLabelMessage();
         }
+
         private void searchHeaderTextBox_KeyPress(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
                 startSearchGameLocation();
