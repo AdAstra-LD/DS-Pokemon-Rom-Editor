@@ -8,7 +8,7 @@ using static DSPRE.RomInfo;
 
 namespace DSPRE.ROMFiles {
     /// <summary>
-    /// Classes to store event data in Pokémon NDS games
+    /// Classes to store event data in PokÃ©mon NDS games
     /// </summary>
     public class EventFile : RomFile {
         public enum serializationOrder {
