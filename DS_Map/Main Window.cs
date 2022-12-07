@@ -906,11 +906,11 @@ namespace DSPRE {
             switch (RomInfo.gameFamily) {
                 case gFamEnum.DP:
                 case gFamEnum.Plat:
-                    using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, RomInfo.GetPokémonNames(), encToOpen))
+                    using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen))
                         editor.ShowDialog();
                     break;
                 default:
-                    using (WildEditorHGSS editor = new WildEditorHGSS(wildPokeUnpackedPath, RomInfo.GetPokémonNames(), encToOpen))
+                    using (WildEditorHGSS editor = new WildEditorHGSS(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen))
                         editor.ShowDialog();
                     break;
             }
@@ -1215,7 +1215,7 @@ namespace DSPRE {
             levelScriptUpDown.Value = currentHeader.levelScriptID;
             eventFileUpDown.Value = currentHeader.eventFileID;
             textFileUpDown.Value = currentHeader.textArchiveID;
-            wildPokeUpDown.Value = currentHeader.wildPokémon;
+            wildPokeUpDown.Value = currentHeader.wildPokemon;
             weatherUpDown.Value = currentHeader.weatherID;
             cameraUpDown.Value = currentHeader.cameraAngleID;
             battleBackgroundUpDown.Value = currentHeader.battleBackground;
@@ -1224,7 +1224,7 @@ namespace DSPRE {
                 areaSettingsComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).locationType;
             }
 
-            openWildEditorWithIdButton.Enabled = currentHeader.wildPokémon != RomInfo.nullEncounterID;
+            openWildEditorWithIdButton.Enabled = currentHeader.wildPokemon != RomInfo.nullEncounterID;
 
             /* Setup controls for fields with version-specific differences */
             try {
@@ -1779,14 +1779,14 @@ namespace DSPRE {
                 return;
             }
 
-            currentHeader.wildPokémon = (ushort)wildPokeUpDown.Value;
+            currentHeader.wildPokemon = (ushort)wildPokeUpDown.Value;
             if (wildPokeUpDown.Value == RomInfo.nullEncounterID) {
                 wildPokeUpDown.ForeColor = Color.Red;
             } else {
                 wildPokeUpDown.ForeColor = Color.Black;
             }
 
-            if (currentHeader.wildPokémon == RomInfo.nullEncounterID)
+            if (currentHeader.wildPokemon == RomInfo.nullEncounterID)
                 openWildEditorWithIdButton.Enabled = false;
             else
                 openWildEditorWithIdButton.Enabled = true;
@@ -8546,7 +8546,7 @@ namespace DSPRE {
             }
 
             string[] itemNames = RomInfo.GetItemNames();
-            string[] pokeNames = RomInfo.GetPokémonNames();
+            string[] pokeNames = RomInfo.GetPokemonNames();
             string[] moveNames = RomInfo.GetAttackNames();
 
             foreach(Control c in trainerItemsGroupBox.Controls) {
@@ -9215,7 +9215,7 @@ namespace DSPRE {
 
 
                     pbEffectsPokemonCombobox.Items.Clear();
-                    pokeNames = RomInfo.GetPokémonNames();
+                    pokeNames = RomInfo.GetPokemonNames();
                     for (int i = 0; i < pokeNames.Length; i++) {
                         pbEffectsPokemonCombobox.Items.Add("[" + i + "]" + " " + pokeNames[i]);
                     }
