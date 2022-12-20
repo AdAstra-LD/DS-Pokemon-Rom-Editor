@@ -64,7 +64,7 @@ namespace NarcAPI {
 
             BinaryWriter bw = new BinaryWriter(File.Create(filePath));
             // Write NARC Section
-            bw.Write(NARCFILEHEADER);
+            bw.Write(NARCFILEMAGICNUM);
             bw.Write(0x0100FFFE);                   //the end of the file signature for all nintendo files
             fileSizeOffset = (uint)bw.BaseStream.Position;
             bw.Write((UInt32)0x0);
