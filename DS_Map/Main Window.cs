@@ -8420,7 +8420,7 @@ namespace DSPRE {
             RomInfo.SetEncounterMusicTableOffsetToRAMAddress();
             trainerClassEncounterMusicDict = new Dictionary<byte, (uint entryOffset, ushort musicD, ushort? musicN)>();
 
-            uint encounterMusicTableTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.encounterMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
+            uint encounterMusicTableTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.encounterMusicTableOffsetToRAMAddress, 4), 0) - DSUtils.ARM9.address;
             
             uint entrySize = 4;
             uint tableSizeOffset = 10;
@@ -8670,30 +8670,29 @@ namespace DSPRE {
 
             // read arm9 table to grab pal ID
             int paletteId = 0;
-            byte[] iconPalTableBuf;
+            uint iconPalTableAddress;
 
             switch (RomInfo.gameFamily) {
                 case gFamEnum.DP:
-                    iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x6B838, 4);
+                    iconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B838, 4), 0);
                     break;
                 case gFamEnum.Plat:
-                    iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x79F80, 4);
+                    iconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x79F80, 4), 0);
                     break;
                 case gFamEnum.HGSS:
                 default:
-                    iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x74408, 4);
+                    iconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
                     break;
             }
 
-            int iconPalTableAddress = (iconPalTableBuf[3] & 0xFF) << 24 | (iconPalTableBuf[2] & 0xFF) << 16 | (iconPalTableBuf[1] & 0xFF) << 8 | (iconPalTableBuf[0] & 0xFF) /* << 0 */;
             string iconTablePath;
 
-            int iconPalTableOffsetFromFileStart;
-            if (iconPalTableAddress >= RomInfo.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
-                iconPalTableOffsetFromFileStart = iconPalTableAddress - (int)RomInfo.synthOverlayLoadAddress;
+            int iconPalTableOffsetFromFileStart = (int)(iconPalTableAddress - RomInfo.synthOverlayLoadAddress);
+            if (iconPalTableOffsetFromFileStart >= 0) { // if iconPalTableAddress >= RomInfo.synthOverlayLoadAddress
+                //In other words, if the pointer shows the table was moved to the synthetic overlay
                 iconTablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
             } else {
-                iconPalTableOffsetFromFileStart = iconPalTableAddress - 0x02000000;
+                iconPalTableOffsetFromFileStart = (int)(iconPalTableAddress - DSUtils.ARM9.address);
                 iconTablePath = RomInfo.arm9Path;
             }
             
@@ -9156,7 +9155,7 @@ namespace DSPRE {
                     RomInfo.SetConditionalMusicTableOffsetToRAMAddress();
                     conditionalMusicTable = new List<(ushort, ushort, ushort)>();
 
-                    conditionalMusicTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
+                    conditionalMusicTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - DSUtils.ARM9.address;
                     byte tableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.conditionalMusicTableOffsetToRAMAddress - 8);
 
                     conditionalMusicTableListBox.Items.Clear();

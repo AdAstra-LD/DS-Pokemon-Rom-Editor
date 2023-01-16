@@ -190,7 +190,7 @@ namespace DSPRE {
                         languageOffset = +8;
                     }
 
-                    byte[] read = DSUtils.ARM9.ReadBytes((uint)(offset - 0x02000000 + languageOffset), kv.Value.Length / 3 + 1);
+                    byte[] read = DSUtils.ARM9.ReadBytes((uint)(offset - DSUtils.ARM9.address + languageOffset), kv.Value.Length / 3 + 1);
                     byte[] code = DSUtils.HexStringToByteArray(kv.Value);
                     if (read.Length != code.Length || !read.SequenceEqual(code))
                         return false;
@@ -572,7 +572,7 @@ namespace DSPRE {
                     listOfChanges += "s";
 
                 for (int i = 0; i < kv.Key.Length; i++) {
-                    listOfChanges += " 0x" + (kv.Key[i] - 0x02000000 + languageOffset).ToString("X");
+                    listOfChanges += " 0x" + (kv.Key[i] - DSUtils.ARM9.address + languageOffset).ToString("X");
 
                     if (i < kv.Key.Length - 1)
                         listOfChanges += ",";
@@ -590,7 +590,7 @@ namespace DSPRE {
                 try {
                     foreach (KeyValuePair<uint[], string> kv in ToolboxDB.matrixExpansionDB) {
                         foreach (uint offset in kv.Key) {
-                            DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(kv.Value), (uint)(offset - 0x02000000 + languageOffset));
+                            DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(kv.Value), (uint)(offset - DSUtils.ARM9.address + languageOffset));
                         }
                     }
                 } catch {
@@ -694,7 +694,7 @@ namespace DSPRE {
 
                     foreach (Tuple<uint, uint> reference in DynamicHeadersPatchData.dynamicHeadersPointersDB [RomInfo.gameFamily]) {
                         DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.REFERENCE_STRING), (uint)(reference.Item1 + data.pointerDiff));
-                        uint pointerValue = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes((uint)(reference.Item2 + data.pointerDiff), 4), 0) - RomInfo.headerTableOffset - 0x02000000;
+                        uint pointerValue = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes((uint)(reference.Item2 + data.pointerDiff), 4), 0) - RomInfo.headerTableOffset - DSUtils.ARM9.address;
                         DSUtils.ARM9.WriteBytes(BitConverter.GetBytes(pointerValue), (uint)(reference.Item2 + data.pointerDiff));
                     }
 
