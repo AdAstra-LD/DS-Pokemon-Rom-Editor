@@ -5358,7 +5358,7 @@ namespace DSPRE {
 
             EventFile toImport = new EventFile(File.OpenRead(of.FileName));
             if (toImport.isEmpty()) {
-                DialogResult d = MessageBox.Show("Are you sure you want to import an empty event file?", "Empty File loaded", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult d = MessageBox.Show("Are you sure you want to import an empty event file?\nAll existing entities in the current file will disappear.", "Empty File loaded", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (!d.Equals(DialogResult.Yes)) {
                     return;
                 }
@@ -5383,6 +5383,21 @@ namespace DSPRE {
                     MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
+
+                if (efi.blankCurrentEvents) {
+                    DialogResult confirm = MessageBox.Show("You chose to import the entities into blank event file, which means all existing entities in the destination file will be deleted.\nProceed?", "Awaiting user confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (!confirm.Equals(DialogResult.Yes)) {
+                        MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    currentEvFile = new EventFile();
+                    spawnablesListBox.Items.Clear();
+                    overworldsListBox.Items.Clear();
+                    warpsListBox.Items.Clear();
+                    triggersListBox.Items.Clear();
+                }
+
 
                 int[] currentArray;
 
