@@ -2,9 +2,9 @@
 
 Major overhaul of Nomura's DS Pokemon ROM Editor, with lots of new features and bugfixes.
 
-![Screenshot](aDSPRE_170.png)
-![Screenshot](bDSPRE_170.png)
-![Screenshot](cDSPRE_170.png)
+![Screenshot](aDSPRE_180.png)
+![Screenshot](bDSPRE_180.png)
+![Screenshot](cDSPRE_180.png)
 
 ## Misc changes to the original DSPRE
 - Significantly shorter load and save times.
@@ -108,7 +108,8 @@ Allows you to change the map where the adventure begins and the initial money.
 - The Standardize Items patch is no longer necessary to edit/add Ground Items.
 - A blue box now appears under each Warp collision as a visual aid for placing Warp events.
 - Events can now be duplicated.
-- New fields (for Spawnables and Triggers).
+- Events can be selectively imported from another Event file.
+- New editable fields (for Spawnables and Triggers).
 - Complete rewrite of the Sprite finder.
 
 ### Script Editor:
