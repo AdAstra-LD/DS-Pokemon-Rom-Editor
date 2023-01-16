@@ -9184,13 +9184,14 @@ namespace DSPRE {
                 case gFamEnum.Plat:
                     pbEffectsMonGroupBox.Enabled = false;
                     pbEffectsTrainerGroupBox.Enabled = false;
+                    conditionalMusicGroupBox.Enabled = false;
                     break;
 
                 default:
-                    pbEffectsGroupBox.Enabled = false;
                     pbEffectsMonGroupBox.Enabled = false;
                     pbEffectsTrainerGroupBox.Enabled = false;
                     conditionalMusicGroupBox.Enabled = false;
+                    pbEffectsGroupBox.Enabled = false;
                     break;
             }
         }
