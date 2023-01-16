@@ -9197,7 +9197,11 @@ namespace DSPRE {
         }
         private void SetupBattleEffectsTables() {
             if (RomInfo.gameFamily == gFamEnum.HGSS || RomInfo.gameFamily == gFamEnum.Plat) {
-                DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.trainerGraphics, DirNames.textArchives });
+                DSUtils.TryUnpackNarcs(new List<DirNames> { 
+                    DirNames.trainerGraphics, 
+                    DirNames.textArchives,
+                    DirNames.monIcons
+                });
                 RomInfo.SetBattleEffectsData();
 
                 effectsComboTable = new List<(ushort vsGraph, ushort battleSSEQ)>();
