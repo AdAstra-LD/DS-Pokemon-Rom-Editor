@@ -695,14 +695,19 @@ namespace DSPRE.ROMFiles {
                             }
                         } else {
                             int functionUsescript = currentFunction.usedScript - 1;
-                            if (functionUsescript >= scriptOffsets.Count) {
+                            
+                            //Find script with same ID as the function's referenced UseScript
+                            int scriptUsedByFunction = scriptOffsets.FindIndex(ind => ind.ID == currentFunction.usedScript);
+
+                            if (functionUsescript >= scriptOffsets.Count || scriptUsedByFunction < 0) {
                                 MessageBox.Show($"Function #{currentFunction.manualUserID} refers to Script {currentFunction.usedScript}, which does not exist.\n" +
                                     $"This Script File can't be saved.", "Can't resolve UseScript reference", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return null;
                             }
+
                             functionOffsets.Add(new ContainerReference() {
                                 ID = currentFunction.manualUserID,
-                                offsetInFile = scriptOffsets[currentFunction.usedScript - 1].offsetInFile
+                                offsetInFile = scriptOffsets[scriptUsedByFunction].offsetInFile
                             });
                         }
                     }
