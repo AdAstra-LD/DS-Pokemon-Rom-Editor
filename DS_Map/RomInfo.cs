@@ -53,6 +53,8 @@ namespace DSPRE {
         public static uint OWTableOffset { get; internal set; }
         public static string OWtablePath { get; private set; }
 
+        public static uint monIconPalTableAddress { get; private set; }
+
         public static int nullEncounterID { get; private set; }
         public static int attackNamesTextNumber { get; private set; }
         public static int[] pokemonNamesTextNumbers { get; private set; }
@@ -660,6 +662,21 @@ namespace DSPRE {
                 break;
             }
         }
+        public static void SetMonIconsPalTableAddress() {
+            switch (RomInfo.gameFamily) {
+                case gFamEnum.DP:
+                    monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B838, 4), 0);
+                    break;
+                case gFamEnum.Plat:
+                    monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x79F80, 4), 0);
+                    break;
+                case gFamEnum.HGSS:
+                default:
+                    monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
+                    break;
+            }
+        }
+
         private void SetItemScriptFileNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:

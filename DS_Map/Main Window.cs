@@ -8456,6 +8456,8 @@ namespace DSPRE {
                 DirNames.monIcons
             });
 
+            RomInfo.SetMonIconsPalTableAddress();
+
             partyPokemonComboboxList.Clear();
             partyPokemonComboboxList.Add(partyPokemon1ComboBox);
             partyPokemonComboboxList.Add(partyPokemon2ComboBox);
@@ -8670,29 +8672,14 @@ namespace DSPRE {
 
             // read arm9 table to grab pal ID
             int paletteId = 0;
-            uint iconPalTableAddress;
-
-            switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
-                    iconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B838, 4), 0);
-                    break;
-                case gFamEnum.Plat:
-                    iconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x79F80, 4), 0);
-                    break;
-                case gFamEnum.HGSS:
-                default:
-                    iconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
-                    break;
-            }
-
             string iconTablePath;
 
-            int iconPalTableOffsetFromFileStart = (int)(iconPalTableAddress - RomInfo.synthOverlayLoadAddress);
+            int iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress);
             if (iconPalTableOffsetFromFileStart >= 0) { // if iconPalTableAddress >= RomInfo.synthOverlayLoadAddress
                 //In other words, if the pointer shows the table was moved to the synthetic overlay
                 iconTablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
             } else {
-                iconPalTableOffsetFromFileStart = (int)(iconPalTableAddress - DSUtils.ARM9.address);
+                iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - DSUtils.ARM9.address);
                 iconTablePath = RomInfo.arm9Path;
             }
             
@@ -9202,6 +9189,7 @@ namespace DSPRE {
                     DirNames.monIcons
                 });
                 RomInfo.SetBattleEffectsData();
+                RomInfo.SetMonIconsPalTableAddress();
 
                 effectsComboTable = new List<(ushort vsGraph, ushort battleSSEQ)>();
                 
