@@ -880,6 +880,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.directoryEntry2 = new System.DirectoryServices.DirectoryEntry();
+            this.advancedStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -10769,6 +10770,7 @@
             this.menuViewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.essentialToolStripMenuItem,
             this.simpleToolStripMenuItem,
+            this.advancedStripMenuItem,
             this.fullViewToolStripMenuItem});
             this.menuViewToolStripMenuItem.Name = "menuViewToolStripMenuItem";
             this.menuViewToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
@@ -10777,23 +10779,21 @@
             // essentialToolStripMenuItem
             // 
             this.essentialToolStripMenuItem.Name = "essentialToolStripMenuItem";
-            this.essentialToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.essentialToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.essentialToolStripMenuItem.Text = "Essential";
             this.essentialToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
             // simpleToolStripMenuItem
             // 
             this.simpleToolStripMenuItem.Name = "simpleToolStripMenuItem";
-            this.simpleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.simpleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.simpleToolStripMenuItem.Text = "Simple";
             this.simpleToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
             // fullViewToolStripMenuItem
             // 
-            this.fullViewToolStripMenuItem.Checked = true;
-            this.fullViewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.fullViewToolStripMenuItem.Name = "fullViewToolStripMenuItem";
-            this.fullViewToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.fullViewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fullViewToolStripMenuItem.Text = "Complete";
             this.fullViewToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
@@ -11172,6 +11172,15 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // advancedStripMenuItem
+            // 
+            this.advancedStripMenuItem.Checked = true;
+            this.advancedStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.advancedStripMenuItem.Name = "advancedStripMenuItem";
+            this.advancedStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.advancedStripMenuItem.Text = "Advanced";
+            this.advancedStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
             // MainProgram
             // 
@@ -12353,6 +12362,7 @@
         private System.Windows.Forms.TrackBar scalingTrackBar;
         private System.Windows.Forms.Button repositionImageButton;
         private System.Windows.Forms.CheckBox invertDragCheckbox;
+        private System.Windows.Forms.ToolStripMenuItem advancedStripMenuItem;
     }
 }
 

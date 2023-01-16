@@ -10036,6 +10036,27 @@ namespace DSPRE {
                     romToolboxToolStripButton.Visible = true;
                     break;
                 case 2:
+                    buildNarcFromFolderToolStripButton.Visible = true;
+                    unpackNARCtoFolderToolStripButton.Visible = true;
+                    separator_afterNarcUtils.Visible = true;
+
+                    listBasedBatchRenameToolStripButton.Visible = false;
+                    contentBasedBatchRenameToolStripButton.Visible = false;
+                    separator_afterRenameUtils.Visible = false;
+
+                    enumBasedListBuilderToolStripButton.Visible = false;
+                    folderBasedListBuilderToolStriButton.Visible = false;
+                    separator_afterListUtils.Visible = false;
+
+                    nsbmdAddTexButton.Visible = true;
+                    nsbmdRemoveTexButton.Visible = true;
+                    nsbmdExportTexButton.Visible = true;
+                    separator_afterNsbmdUtils.Visible = true;
+
+                    wildEditorButton.Visible = true;
+                    romToolboxToolStripButton.Visible = true;
+                    break;
+                case 3:
                 default:
                     foreach (ToolStripItem c in mainToolStrip.Items) {
                         c.Visible = true;
