@@ -201,6 +201,8 @@ namespace DSPRE.ROMFiles {
         }
 
         public ScriptCommand(string wholeLine, int lineNumber = 0) {
+            const int NAMEPARTS_PARAMS_FIRST = 1;
+
             name = wholeLine;
             cmdParams = new List<byte[]>();
 
@@ -230,122 +232,150 @@ namespace DSPRE.ROMFiles {
             /* Read parameters from remainder of the description */
             //Console.WriteLine("ID = " + ((ushort)id).ToString("X4"));
 
-            byte[] parametersSizeArr = RomInfo.ScriptCommandParametersDict[(ushort)id];
+            byte[] parametersDescriptorArr = RomInfo.ScriptCommandParametersDict[(ushort)id];
 
-            int paramLength = 0;
-            int paramsProcessed = 0;
+            Dictionary<int, byte[]> configurations = new Dictionary<int, byte[]>();
 
-            if (parametersSizeArr.First() == 0xFF) { 
-                int firstParamValue = int.Parse(nameParts[1].PurgeSpecial(ScriptFile.specialChars), nameParts[1].GetNumberStyle());
-                byte firstParamSize = parametersSizeArr[1];
+            int firstByte = parametersDescriptorArr.First();
+            int sizeKeyParam = -1; //In bytes. Unspecified by default.
+            int posKeyParam = -1; //Relative to the start of the descriptor [database] array. Unspecified by default.
 
-                cmdParams.Add(firstParamValue.ToByteArrayChooseSize(firstParamSize));
-                paramsProcessed++;
+            if (parametersDescriptorArr.Length == 1 && firstByte == 0) {
+                parametersDescriptorArr = new byte[0];
+            }
 
-                int i = 2;
-                int optionsCount = 0;
+            if (firstByte == 0xFF) { //When first byte of the descriptor [database] array is 0xFF, the command takes a variable number of parameters
+                int i = 1;
 
-                bool found = false;
-                while (i < parametersSizeArr.Length) {
-                    paramLength = parametersSizeArr[i + 1];
+                //The 2nd byte of the descriptor array is the number of fixed parameters
+                //(which must be read in all possible configurations of parameter count/size), since they're in common
+                int numFixedParams = parametersDescriptorArr[i++];
 
-                    if (parametersSizeArr[i] == firstParamValue) {
-                        //Firstly, build subarray of parameter sizes, starting from the chosen option [firstParamValue]
-                        //FOR EXAMPLE: CMD 0x235 and firstParamValue = 5
 
-                        // { 0xFF, 2,  
-                        // 0, 1,   2,       
-                        // 1, 3,   2, 2, 2, 
-                        // 2, 0,            
-                        // 3, 3,   2, 2, 2, 
-                        // 4, 2,   2, 2,    
-                        // 5, 3,   (2, 2, 2) => this will be the parameters subarray 
-                        // 6, 1,   2
-                        // },      
-                        byte[] subParametersSize = parametersSizeArr.SubArray(i + 2, paramLength++); 
+                //The key parameter is a switcher value (as in, switch-case)
+                //It selects a particular parameter configuration.
+                //It is included in the number of fixed params (numFixedParams).
+                posKeyParam = i;
+                sizeKeyParam = parametersDescriptorArr[i];
+                //In most [if not all cases], the number of fixed params is 1, meaning that
+                //there is just the key (switcher).
 
-                        //Create a slightly bigger temp array 
-                        byte[] temp = new byte[1 + subParametersSize.Length];
 
-                        //Store the size of the firstParamValue there
-                        temp[0] = firstParamSize;
+                byte[] sizesOfFixedParams = null; 
+                //do not instantiate an array of fixed parameter sizes until it's absolutely sure
+                //that it will contain more than 0 elements.
 
-                        //Then copy the whole subarray of parameter sizes
-                        Array.Copy(subParametersSize, 0, temp, 1, temp.Length-1);
 
-                        //Replace the original parametersSizeArr with the new array
-                        parametersSizeArr = temp;
-                        found = true;
-                        break;
-                    }
-                    i += 2 + paramLength;
-                    optionsCount++;
+                if (numFixedParams > 0) {
+                    sizesOfFixedParams = new byte[numFixedParams];
+
+                    //Copy the fixed [common] parameters from the descriptor to the new fixedParams array
+                    Array.Copy(parametersDescriptorArr, i, sizesOfFixedParams, 0, numFixedParams);
+                    i += numFixedParams;
                 }
-                if (!found) {
-                    MessageBox.Show($"Command {nameParts[0]} is a special Script Command.\n" +
-                        $"The value of the first parameter must be a number in the range [0 - {optionsCount}].\n\n" +
-                        $"Line {lineNumber}: {wholeLine}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                while (i < parametersDescriptorArr.Length) {
+                    byte keyValToCheck = parametersDescriptorArr[i++];
+                    byte numParamsToRead = parametersDescriptorArr[i++];
+
+                    List<byte> paramsSizesInOption = new List<byte>(sizesOfFixedParams);
+                    for (int opt = 0; opt < numParamsToRead; opt++, i++) {
+                        paramsSizesInOption.Add(parametersDescriptorArr[i + opt]);
+                    }
+                    configurations.Add(keyValToCheck, paramsSizesInOption.ToArray());
+                    //Each configuration will contain at least the size of the params, since those are in common (fixed)
+                }
+
+                if (configurations.Count > 0) {
+                    int offs = NAMEPARTS_PARAMS_FIRST;
+                    NumberStyles numStyle = nameParts[offs].GetNumberStyle();
+                    nameParts[offs] = nameParts[offs].PurgeSpecial(ScriptFile.specialChars);
+                    int chosenConfiguration = int.Parse(nameParts[offs], numStyle);
+
+                    if (!configurations.TryGetValue(chosenConfiguration, out parametersDescriptorArr)) {
+                        parametersDescriptorArr = configurations[-1];
+                    }
+                } else {
+                    MessageBox.Show($"The parameter database is corrupted.\nFailed to retrieve param configurations for command {cmdID} at line {lineNumber}.\n" +
+                        $"Line: '{wholeLine}'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     id = null;
                     return;
                 }
-            } else if (parametersSizeArr.Length == 1 && parametersSizeArr.First() == 0) {
-                paramLength = 0;
-            } else { 
-                paramLength = parametersSizeArr.Length;
             }
 
-            if (nameParts.Length - 1 == paramLength) {
-                for (int i = paramsProcessed; i < paramLength; i++) {
-                    Console.WriteLine($"Parameter #{i}: {nameParts[i + 1]}");
+            int lenParams = nameParts.Length - NAMEPARTS_PARAMS_FIRST;
 
-                    if (RomInfo.ScriptComparisonOperatorsReverseDict.TryGetValue(nameParts[i + 1].ToLower(), out cmdID)) { //Check succeeds when command is like "asdfg LESS" or "asdfg DIFFERENT"
-                        cmdParams.Add(new byte[] { (byte)cmdID });
-                    } else { //Not a comparison
-                        /* Convert strings of parameters to the correct datatypes */
-                        NumberStyles numStyle = nameParts[i + 1].GetNumberStyle();
-                        nameParts[i + 1] = nameParts[i + 1].PurgeSpecial(ScriptFile.specialChars);
-                        
-                        int result = 0;
-
-                        try {
-                            result = int.Parse(nameParts[i + 1], numStyle);
-                        } catch {
-                            if (string.IsNullOrWhiteSpace(nameParts[i + 1])) {
-                                MessageBox.Show($"You must specify an Overworld ID, Script, Function or Action number.\n\n" +
-                                    $"Line {lineNumber}: {wholeLine}", "Unspecified identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                id = null;
-                            } else { 
-                                var first = ScriptDatabase.specialOverworlds.FirstOrDefault(x => x.Value.IgnoreCaseEquals(nameParts[i + 1]));
-
-                                if (string.IsNullOrWhiteSpace(first.Value)) {
-                                    var res = ScriptDatabase.overworldDirections.FirstOrDefault(x => x.Value.IgnoreCaseEquals(nameParts[i + 1]));
-
-                                    if (string.IsNullOrWhiteSpace(res.Value)) {
-                                        MessageBox.Show($"Argument {nameParts[i + 1]} couldn't be parsed as a valid Condition, Overworld ID, Direction ID, Script, Function or Action number.\n\n" +
-                                        $"Line {lineNumber}: {wholeLine}", "Invalid identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                        id = null;
-                                    } else {
-                                        result = res.Key;
-                                    }
-                                } else {
-                                    result = first.Key;
-                                }
+            if (lenParams < sizeKeyParam || lenParams < parametersDescriptorArr.Length) {
+                string appendix = "";
+                if (configurations.Count > 0) {
+                    appendix += "\n\nThis command only accepts parameters in the following formats:\n";
+                    foreach (var kvp in configurations) {
+                        for (int par = 0; par < kvp.Value.Length; par++) {
+                            if (par == sizeKeyParam) {
+                                appendix += "{" + kvp.Value[par] + "B " + "} ";
+                            } else {
+                                appendix += kvp.Value[par] + "B ";
                             }
                         }
-
-                        try {
-                            cmdParams.Add(result.ToByteArrayChooseSize(parametersSizeArr[i]));
-                        } catch (OverflowException) {
-                            MessageBox.Show($"Argument {nameParts[i + 1]} at line {lineNumber} is not in the range [0, {Math.Pow(2, 8 * parametersSizeArr[i]) - 1}].", "Argument error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            id = null;
-                        }
+                        appendix += '\n';
                     }
                 }
-            } else {
+
                 MessageBox.Show($"Wrong number of parameters for command {nameParts[0]} at line {lineNumber}.\n" +
                     $"Received: {nameParts.Length - 1}\n" +
-                    $"Expected: {paramLength}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    $"Expected: {parametersDescriptorArr.Length}" + appendix, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 id = null;
+                return;
+            }
+
+            int paramsProcessed = 0;
+
+            for (int i = paramsProcessed; i < parametersDescriptorArr.Length; i++) {
+                int offs = i + NAMEPARTS_PARAMS_FIRST;
+                Console.WriteLine($"Parameter #{i}: {nameParts[offs]}");
+
+                if (RomInfo.ScriptComparisonOperatorsReverseDict.TryGetValue(nameParts[offs].ToLower(), out cmdID)) { //Check succeeds when command is like "asdfg LESS" or "asdfg DIFFERENT"
+                    cmdParams.Add(new byte[] { (byte)cmdID });
+                } else { //Not a comparison
+                    /* Convert strings of parameters to the correct datatypes */
+                    NumberStyles numStyle = nameParts[offs].GetNumberStyle();
+                    nameParts[offs] = nameParts[offs].PurgeSpecial(ScriptFile.specialChars);
+                        
+                    int result = 0;
+
+                    try {
+                        result = int.Parse(nameParts[offs], numStyle);
+                    } catch {
+                        if (string.IsNullOrWhiteSpace(nameParts[offs])) {
+                            MessageBox.Show($"You must specify an Overworld ID, Script, Function or Action number.\n\n" +
+                                $"Line {lineNumber}: {wholeLine}", "Unspecified identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            id = null;
+                        } else { 
+                            var first = ScriptDatabase.specialOverworlds.FirstOrDefault(x => x.Value.IgnoreCaseEquals(nameParts[offs]));
+
+                            if (string.IsNullOrWhiteSpace(first.Value)) {
+                                var res = ScriptDatabase.overworldDirections.FirstOrDefault(x => x.Value.IgnoreCaseEquals(nameParts[offs]));
+
+                                if (string.IsNullOrWhiteSpace(res.Value)) {
+                                    MessageBox.Show($"Argument {nameParts[offs]} couldn't be parsed as a valid Condition, Overworld ID, Direction ID, Script, Function or Action number.\n\n" +
+                                    $"Line {lineNumber}: {wholeLine}", "Invalid identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    id = null;
+                                } else {
+                                    result = res.Key;
+                                }
+                            } else {
+                                result = first.Key;
+                            }
+                        }
+                    }
+
+                    try {
+                        cmdParams.Add(result.ToByteArrayChooseSize(parametersDescriptorArr[i]));
+                    } catch (OverflowException) {
+                        MessageBox.Show($"Argument {nameParts[offs]} at line {lineNumber} is not in the range [0, {Math.Pow(2, 8 * parametersDescriptorArr[i]) - 1}].", "Argument error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        id = null;
+                    }
+                }
             }
         }
         #endregion

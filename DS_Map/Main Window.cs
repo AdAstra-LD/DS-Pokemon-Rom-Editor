@@ -7075,13 +7075,13 @@ namespace DSPRE {
         }
         private void saveScriptFileButton_Click(object sender, EventArgs e) {
             /* Create new ScriptFile object */
-            int idToAssign = selectScriptFileComboBox.SelectedIndex;
+            int selected = selectScriptFileComboBox.SelectedIndex;
 
             ScriptFile userEdited = new ScriptFile(
                 scriptLines: ScriptTextArea.Lines.ToStringsList(trim: true), 
                 functionLines: FunctionTextArea.Lines.ToStringsList(trim: true), 
-                actionLines: ActionTextArea.Lines.ToStringsList(trim: true), 
-                selectScriptFileComboBox.SelectedIndex
+                actionLines: ActionTextArea.Lines.ToStringsList(trim: true),
+                selected
             );
 
             /* Write new scripts to file */
@@ -7090,7 +7090,7 @@ namespace DSPRE {
             } else if (userEdited.fileID == int.MaxValue) {
                 MessageBox.Show("This " + typeof(ScriptFile).Name + " is couldn't be saved since it's empty.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             } else { //check if ScriptFile instance was created succesfully
-                if (userEdited.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex)) {
+                if (userEdited.SaveToFileDefaultDir(selected)) {
                     currentScriptFile = userEdited;
                     ScriptEditorSetClean();
                 }
