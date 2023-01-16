@@ -865,7 +865,8 @@ namespace DSPRE {
                     trainerEditorIsReady = true;
                 }
             } else if (mainTabControl.SelectedTab == tableEditorTabPage) {
-                if(!tableEditorIsReady) {
+                if (!tableEditorIsReady) {
+                    resetHeaderSearch();
                     SetupConditionalMusicTable();
                     SetupBattleEffectsTables();
                     tableEditorIsReady = true;
@@ -1679,10 +1680,15 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void resetButton_Click(object sender, EventArgs e) {
+            resetHeaderSearch();
+        }
+
+        void resetHeaderSearch() {
             searchLocationTextBox.Clear();
             HeaderSearch.ResetResults(headerListBox, headerListBoxNames, prependNumbers: false);
             statusLabelMessage();
         }
+
         private void searchHeaderTextBox_KeyPress(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
                 startSearchGameLocation();
@@ -2527,7 +2533,7 @@ namespace DSPRE {
                                             break;
                                         }
                                     }
-                                } else {
+                                } else if (gameFamily.Equals(gFamEnum.Plat)) {
                                     foreach (ushort r in result) {
                                         HeaderPt hpt;
                                         if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
@@ -2538,6 +2544,21 @@ namespace DSPRE {
 
                                         if (hpt.locationName != 0) {
                                             headerID = hpt.ID;
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    foreach (ushort r in result) {
+                                        HeaderHGSS hgss;
+                                        if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                                            hgss = (HeaderHGSS)MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + r.ToString("D4"), r, 0);
+                                        } 
+                                        else {
+                                            hgss = (HeaderHGSS)MapHeader.LoadFromARM9(r);
+                                        }
+
+                                        if (hgss.locationName != 0) {
+                                            headerID = hgss.ID;
                                             break;
                                         }
                                     }
@@ -6530,14 +6551,17 @@ namespace DSPRE {
             // CREATE CONTROLS
             ScriptTextArea = new ScintillaNET.Scintilla();
             scriptSearchManager = new SearchManager(this, ScriptTextArea, panelSearchScriptTextBox, PanelSearchScripts);
+            scintillaScriptsPanel.Controls.Clear();
             scintillaScriptsPanel.Controls.Add(ScriptTextArea);
 
             FunctionTextArea = new ScintillaNET.Scintilla();
             functionSearchManager = new SearchManager(this, FunctionTextArea, panelSearchFunctionTextBox, PanelSearchFunctions);
+            scintillaFunctionsPanel.Controls.Clear();
             scintillaFunctionsPanel.Controls.Add(FunctionTextArea);
 
             ActionTextArea = new ScintillaNET.Scintilla();
             actionSearchManager = new SearchManager(this, ActionTextArea, panelSearchActionTextBox, PanelSearchActions);
+            scintillaActionsPanel.Controls.Clear();
             scintillaActionsPanel.Controls.Add(ActionTextArea);
 
             currentScintillaEditor = ScriptTextArea;
