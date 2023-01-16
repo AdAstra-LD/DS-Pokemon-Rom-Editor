@@ -155,27 +155,9 @@ namespace DSPRE.Resources {
             [0x0068] = "WaitMoveForever",
             [0x00FE] = "End"
         };
-        public static Dictionary<ushort, string> customMovementsDictIDName = new Dictionary<ushort, string>() {
-            [0x0071] = "Descend",
-            [0x0072] = "Ascend",
-            [0x0073] = "Heart",
-            [0x0074] = "Smile",
-            [0x0075] = "Anger",
-            [0x0076] = "Sad",
-            [0x0077] = "Grin",
-            [0x0078] = "Suspecting",
-            [0x0079] = "MusicNote",
-            [0x007A] = "Question",
-            [0x007B] = "BigExclamation",
-            [0x007C] = "Water",
-            [0x007D] = "Exhaust",
-            [0x007E] = "Poison",
-            [0x007F] = "Ellipsis",
-            [0x0080] = "Asleep"
-        };
         public static Dictionary<ushort, string> DPPtScrCmdNames = new Dictionary<ushort, string>() {
-            [0x0000] = "Nop",
-            [0x0001] = "Dummy",
+            [0x0000] = "Debug",
+            [0x0001] = "LinkScriptOW", //Replaced dummy by LinkScriptOW
             [0x0002] = "End",
             [0x0003] = "WaitTime",
             [0x0004] = "RegValueSet",
@@ -450,7 +432,7 @@ namespace DSPRE.Resources {
             [0x0148] = "SpMartScreen",
             [0x0149] = "GoodsMartScreen",
             [0x014A] = "SealMartScreen",
-            [0x014B] = "DummyLostBattle",
+            [0x014B] = "BlackCenterText",
             [0x014C] = "SetLastWarp",
             [0x014D] = "CheckPlayerGender",
             [0x014E] = "HealPokemon",
@@ -686,11 +668,13 @@ namespace DSPRE.Resources {
             [0x360] = "CollisionZone",  // Command by AdAstra, big collision zone
             [0x35D] = "SpawnBuilding", // Command by AdAstra, add building to the map
             [0x35E] = "DeleteBuilding", // Remove previously added building
-            [0x35F] = "CollisionTile" // Command by AdAstra, small collision (tile)
+            [0x35F] = "CollisionTile", // Command by AdAstra, small collision (tile)
+            [0x349] = "MultiplyVar", // Command by me, multiplies variables
+            [0x34A] = "CreateOW" // 
         };
         public static Dictionary<ushort, byte[]> DPPtScrCmdParameters = new Dictionary<ushort, byte[]>() {
-            [0x0000] = new byte[1] { 0 },
-            [0x0001] = new byte[1] { 0 },
+            [0x0000] = new byte[] { 2 }, // Debug
+            [0x0001] = new byte[] { 2, 2 }, // LinkScriptOW
             [0x0002] = new byte[1] { 0 },
             [0x0003] = new byte[] { 2, 2 },
             [0x0004] = new byte[] { 1, 1 },
@@ -1020,7 +1004,7 @@ namespace DSPRE.Resources {
             [0x0148] = new byte[] { 2 },
             [0x0149] = new byte[] { 2 },
             [0x014A] = new byte[] { 2 },
-            [0x014B] = new byte[1] { 0 },
+            [0x014B] = new byte[] { 2 },
             [0x014C] = new byte[] { 2 },
             [0x014D] = new byte[] { 2 },
             [0x014E] = new byte[1] { 0 },
@@ -1442,7 +1426,9 @@ namespace DSPRE.Resources {
             [0x360] = new byte[] { 2, 2, 2, 2, 1, 2, 2 }, // big collision?
             [0x35D] = new byte[] { 2, 2, 2, 2, 2, 2, 2, 2 }, // spawn bld
             [0x35E] = new byte[] { 2 }, // despawn bld
-            [0x35F] = new byte[] { 2, 2, 1, 2, 2 } // small collision? 
+            [0x35F] = new byte[] { 2, 2, 1, 2, 2 }, // small collision? ,
+            [0x349] = new byte[] { 2, 2 }, // multiply var
+            [0x34A] = new byte[] { 2, 2, 2, 2, 2, 2 } // createOW
         };
 
         public static Dictionary<ushort, string> DPScrCmdNames = new Dictionary<ushort, string>() {
@@ -2987,46 +2973,6 @@ namespace DSPRE.Resources {
             [0x0352] = new byte[] { 1, 2 },
             [0x0353] = new byte[] { 1 },
             [0x0354] = new byte[] { 1, 1 }
-        };
-
-        public static Dictionary<ushort, string> CustomScrCmdNames = new Dictionary<ushort, string>() {
-            [0x0357] = "DivVar",
-            [0x0360] = "AddCameraMovementParam",
-            [0x0361] = "OverrideDefaultCam",
-            [0x0362] = "ResetCamMovement",
-            [0x0363] = "RestoreDefaultCam",
-            [0x0364] = "SetSSEQTrackVol",
-            [0x0365] = "ClearSSEQTrackChanges",
-            [0x0366] = "GetSSEQTrackVol",
-
-            [0x036A] = "DoubleFadeScreen",
-            [0x036B] = "MessageAllTextbox",
-            [0x036C] = "MessageTextbox",
-            [0x036D] = "SetTextboxAlpha",
-            [0x036E] = "TextPocketWhite",
-            [0x036F] = "SetLayerVisibility",
-            [0x0370] = "StopWeatherAlphaBlend",
-            [0x0371] = "SetRepelSteps"
-        };
-
-        public static Dictionary<ushort, byte[]> CustomScrCmdParameters = new Dictionary<ushort, byte[]>() {
-            [0x0357] = new byte[] { 2, 2 },
-            [0x0360] = new byte[] { 2, 2, 2, 2 },
-            [0x0361] = new byte[1] { 0 },
-            [0x0362] = new byte[1] { 0 },
-            [0x0363] = new byte[1] { 0 },
-            [0x0364] = new byte[] { 2, 2, 2, 2, 2, 2, 2 },
-            [0x0365] = new byte[1] { 0 },
-            [0x0366] = new byte[] { 2, 2 },
-
-            [0x036A] = new byte[] { 2, 2, 2, 2, 2, 2 },
-            [0x036B] = new byte[] { 2, 2, 2, 2, 2 },
-            [0x036C] = new byte[] { 2, 2, 2, 2, 2 },
-            [0x036D] = new byte[] { 2, 2 },
-            [0x036E] = new byte[] { 1, 2 },
-            [0x036F] = new byte[] { 2, 2 },
-            [0x0370] = new byte[] { 2 },
-            [0x0371] = new byte[] { 2 }
         };
     }
 }

@@ -10,7 +10,7 @@ using DSPRE.ROMFiles;
 namespace DSPRE {
 
     /// <summary>
-    /// Class to store ROM data from GEN IV Pokémon games
+    /// Class to store ROM data from GEN IV Pok?mon games
     /// </summary>
 
     public class RomInfo {
@@ -152,7 +152,7 @@ namespace DSPRE {
             try {
                 gameVersion = PokeDatabase.System.versionsDict[id];
             } catch (KeyNotFoundException) {
-                MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
+                MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pok?mon ROMS, for now.", "Unsupported ROM",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -168,7 +168,7 @@ namespace DSPRE {
             SetNullEncounterID();
 
             SetAttackNamesTextNumber();
-            SetPokémonNamesTextNumber();
+            SetPokemonNamesTextNumber();
             SetItemNamesTextNumber();
             SetItemScriptFileNumber();
             SetLocationNamesTextNumber();
@@ -204,11 +204,7 @@ namespace DSPRE {
                     break;
                 default:
                     commonDictionaryNames = ScriptDatabase.HGSSScrCmdNames;
-                    #if true
-                        specificDictionaryNames = new Dictionary<ushort, string>();
-                    #else
-                        specificDictionaryNames = ScriptDatabase.CustomScrCmdNames;
-                    #endif
+                    specificDictionaryNames = new Dictionary<ushort, string>();
                     break;
             }
             return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
@@ -228,11 +224,7 @@ namespace DSPRE {
                     break;
                 default:
                     commonDictionaryParams = ScriptDatabase.HGSSScrCmdParameters;
-                    #if true
-                        specificDictionaryParams = new Dictionary<ushort, byte[]>();
-                    #else
-                        specificDictionaryParams = ScriptDatabase.CustomScrCmdParameters;
-                    #endif
+                    specificDictionaryParams = new Dictionary<ushort, byte[]>();
                     break;
             }
             return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
@@ -243,13 +235,7 @@ namespace DSPRE {
                 case gFamEnum.Plat:
                     return ScriptDatabase.movementsDictIDName;
                 default:
-#if false
-                    var commonDictionaryParams = ScriptDatabase.movementsDictIDName;
-                    var customDictionaryParams = ScriptDatabase.customMovementsDictIDName;
-                    return commonDictionaryParams.Concat(customDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
-#else
                     return ScriptDatabase.movementsDictIDName;
-#endif
             }
         }
         public static Dictionary<ushort, string> BuildComparisonOperatorsDatabase(gFamEnum gameFam) {
@@ -469,7 +455,9 @@ namespace DSPRE {
                     }
                     break;
                 case gFamEnum.Plat:
-                    OWtablePath = DSUtils.GetOverlayPath(5);
+                    // OWtablePath = DSUtils.GetOverlayPath(5);
+                    int fileID = 65;
+                    OWtablePath = Path.Combine(gameDirs[DirNames.synthOverlay].unpackedDir, fileID.ToString("D4"));
                     switch (gameLanguage) { // Go to the beginning of the overworld table
                         case gLangEnum.Italian:
                             OWTableOffset = 0x2BC44;
@@ -485,7 +473,9 @@ namespace DSPRE {
                             OWTableOffset = 0x2BA24;
                             break;
                         default:
-                            OWTableOffset = 0x2BC34;
+                            Console.WriteLine("Default address");
+                            //OWTableOffset = 0x1AD38;
+                            OWTableOffset = 0x7B40;
                             break;
                     }
                     break;
@@ -529,7 +519,7 @@ namespace DSPRE {
                                 "displayed incorrectly or not displayed at all.", "Decompression error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-                        if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
+                        if (ramAddressOfTable <= RomInfo.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
                             OWTableOffset = ramAddressOfTable - RomInfo.synthOverlayLoadAddress;
                             OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
                         } else {
@@ -723,7 +713,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetPokémonNamesTextNumber() {
+        private void SetPokemonNamesTextNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     pokemonNamesTextNumbers = new int[2] { 362, 363 };
@@ -786,7 +776,7 @@ namespace DSPRE {
             TextArchive itemNames = new TextArchive(itemNamesTextNumber);
             return itemNames.messages.GetRange(startIndex, count == null ? itemNames.messages.Count-1 : (int)count).ToArray();
         }
-        public static string[] GetPokémonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
+        public static string[] GetPokemonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
         public static string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
         public int GetAreaDataCount() => Directory.GetFiles(gameDirs[DirNames.areaData].unpackedDir).Length;
         public int GetMapTexturesCount() => Directory.GetFiles(gameDirs[DirNames.mapTextures].unpackedDir).Length;
