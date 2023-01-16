@@ -155,24 +155,6 @@ namespace DSPRE.Resources {
             [0x0068] = "WaitMoveForever",
             [0x00FE] = "End"
         };
-        public static Dictionary<ushort, string> customMovementsDictIDName = new Dictionary<ushort, string>() {
-            [0x0071] = "Descend",
-            [0x0072] = "Ascend",
-            [0x0073] = "Heart",
-            [0x0074] = "Smile",
-            [0x0075] = "Anger",
-            [0x0076] = "Sad",
-            [0x0077] = "Grin",
-            [0x0078] = "Suspecting",
-            [0x0079] = "MusicNote",
-            [0x007A] = "Question",
-            [0x007B] = "BigExclamation",
-            [0x007C] = "Water",
-            [0x007D] = "Exhaust",
-            [0x007E] = "Poison",
-            [0x007F] = "Ellipsis",
-            [0x0080] = "Asleep"
-        };
         public static Dictionary<ushort, string> DPPtScrCmdNames = new Dictionary<ushort, string>() {
             [0x0000] = "Nop",
             [0x0001] = "Dummy",
@@ -2978,46 +2960,6 @@ namespace DSPRE.Resources {
             [0x0352] = new byte[] { 1, 2 },
             [0x0353] = new byte[] { 1 },
             [0x0354] = new byte[] { 1, 1 }
-        };
-
-        public static Dictionary<ushort, string> CustomScrCmdNames = new Dictionary<ushort, string>() {
-            [0x0357] = "DivVar",
-            [0x0360] = "AddCameraMovementParam",
-            [0x0361] = "OverrideDefaultCam",
-            [0x0362] = "ResetCamMovement",
-            [0x0363] = "RestoreDefaultCam",
-            [0x0364] = "SetSSEQTrackVol",
-            [0x0365] = "ClearSSEQTrackChanges",
-            [0x0366] = "GetSSEQTrackVol",
-
-            [0x036A] = "DoubleFadeScreen",
-            [0x036B] = "MessageAllTextbox",
-            [0x036C] = "MessageTextbox",
-            [0x036D] = "SetTextboxAlpha",
-            [0x036E] = "TextPocketWhite",
-            [0x036F] = "SetLayerVisibility",
-            [0x0370] = "StopWeatherAlphaBlend",
-            [0x0371] = "SetRepelSteps"
-        };
-
-        public static Dictionary<ushort, byte[]> CustomScrCmdParameters = new Dictionary<ushort, byte[]>() {
-            [0x0357] = new byte[] { 2, 2 },
-            [0x0360] = new byte[] { 2, 2, 2, 2 },
-            [0x0361] = new byte[1] { 0 },
-            [0x0362] = new byte[1] { 0 },
-            [0x0363] = new byte[1] { 0 },
-            [0x0364] = new byte[] { 2, 2, 2, 2, 2, 2, 2 },
-            [0x0365] = new byte[1] { 0 },
-            [0x0366] = new byte[] { 2, 2 },
-
-            [0x036A] = new byte[] { 2, 2, 2, 2, 2, 2 },
-            [0x036B] = new byte[] { 2, 2, 2, 2, 2 },
-            [0x036C] = new byte[] { 2, 2, 2, 2, 2 },
-            [0x036D] = new byte[] { 2, 2 },
-            [0x036E] = new byte[] { 1, 2 },
-            [0x036F] = new byte[] { 2, 2 },
-            [0x0370] = new byte[] { 2 },
-            [0x0371] = new byte[] { 2 }
         };
     }
 }
