@@ -9395,7 +9395,13 @@ namespace DSPRE {
             };
 
             disableHandlers = true;
-            pbEffectsCombosListbox.Items[index] = pbEffectsTrainerChooseMainCombobox.Items[index] = pbEffectsPokemonChooseMainCombobox.Items[index] = "Combo " + index.ToString("D2") + " - " + "Effect #" + battleIntroEffect + ", " + "Music #" + battleMusic;
+
+            string updatedEntry = "Combo " + index.ToString("D2") + " - " + "Effect #" + battleIntroEffect + ", " + "Music #" + battleMusic;
+            pbEffectsCombosListbox.Items[index] = updatedEntry;
+
+            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                pbEffectsTrainerChooseMainCombobox.Items[index] = pbEffectsPokemonChooseMainCombobox.Items[index] = updatedEntry;
+            }
             disableHandlers = false;
         }
 
