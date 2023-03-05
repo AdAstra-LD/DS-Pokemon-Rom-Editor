@@ -11179,10 +11179,10 @@
             // 
             this.glbExportButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.glbExportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.glbExportButton.Location = new System.Drawing.Point(468, 192);
+            this.glbExportButton.Location = new System.Drawing.Point(351, 156);
             this.glbExportButton.Margin = new System.Windows.Forms.Padding(4);
             this.glbExportButton.Name = "glbExportButton";
-            this.glbExportButton.Size = new System.Drawing.Size(160, 47);
+            this.glbExportButton.Size = new System.Drawing.Size(120, 38);
             this.glbExportButton.TabIndex = 31;
             this.glbExportButton.Text = "Export GLB";
             this.glbExportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
