@@ -4086,10 +4086,10 @@
             this.modelTabPage.Controls.Add(this.unsupported3DModelEditLBL);
             this.modelTabPage.Controls.Add(this.importMapButton);
             this.modelTabPage.Controls.Add(this.exportMapButton);
-            this.modelTabPage.Location = new System.Drawing.Point(468, 193);
+            this.modelTabPage.Location = new System.Drawing.Point(4, 22);
             this.modelTabPage.Name = "modelTabPage";
             this.modelTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.modelTabPage.Size = new System.Drawing.Size(160, 47);
+            this.modelTabPage.Size = new System.Drawing.Size(481, 450);
             this.modelTabPage.TabIndex = 2;
             this.modelTabPage.Text = "3D Model";
             this.modelTabPage.UseVisualStyleBackColor = true;
