@@ -4571,6 +4571,15 @@ namespace DSPRE {
                 textureData: mapTextureComboBox.SelectedIndex < 0 ? null : File.ReadAllBytes(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4"))
             );
         }
+
+        private void glbExportButton_Click(object sender, EventArgs e)
+        {
+            DSUtils.ModelToGLB(
+                modelName: selectMapComboBox.SelectedItem.ToString().TrimEnd('\0'),
+                modelData: currentMapFile.mapModelData,
+                textureData: mapTextureComboBox.SelectedIndex < 0 ? null : File.ReadAllBytes(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4"))
+            );
+        }
         #endregion
 
         #region BDHC Editor

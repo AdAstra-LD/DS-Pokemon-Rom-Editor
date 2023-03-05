@@ -880,6 +880,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.directoryEntry2 = new System.DirectoryServices.DirectoryEntry();
+            this.glbExportButton = new System.Windows.Forms.Button();
             this.advancedStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
@@ -4077,6 +4078,7 @@
             // 
             // modelTabPage
             // 
+            this.modelTabPage.Controls.Add(this.glbExportButton);
             this.modelTabPage.Controls.Add(this.daeExportButton);
             this.modelTabPage.Controls.Add(this.embedTexturesInMapModelCheckBox);
             this.modelTabPage.Controls.Add(this.modelSizeLBL);
@@ -11173,6 +11175,20 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // glbExportButton
+            // 
+            this.glbExportButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.glbExportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.glbExportButton.Location = new System.Drawing.Point(351, 156);
+            this.glbExportButton.Margin = new System.Windows.Forms.Padding(4);
+            this.glbExportButton.Name = "glbExportButton";
+            this.glbExportButton.Size = new System.Drawing.Size(120, 38);
+            this.glbExportButton.TabIndex = 31;
+            this.glbExportButton.Text = "Export GLB";
+            this.glbExportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.glbExportButton.UseVisualStyleBackColor = true;
+            this.glbExportButton.Click += new System.EventHandler(this.glbExportButton_Click);
+            // 
             // advancedStripMenuItem
             // 
             this.advancedStripMenuItem.Checked = true;
@@ -12363,6 +12379,7 @@
         private System.Windows.Forms.Button repositionImageButton;
         private System.Windows.Forms.CheckBox invertDragCheckbox;
         private System.Windows.Forms.ToolStripMenuItem advancedStripMenuItem;
+        private System.Windows.Forms.Button glbExportButton;
     }
 }
 
