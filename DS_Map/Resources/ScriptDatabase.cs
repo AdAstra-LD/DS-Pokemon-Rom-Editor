@@ -632,6 +632,9 @@ namespace DSPRE.Resources {
             [0x026D] = "MessageUnown",
             [0x026E] = "CheckGBACartidge",
             [0x026F] = "ResetSpiritombCounter",
+            [0x0270] = "SetMatrixAlternativeMap",
+            [0x0271] = "WriteStone",
+            [0x0272] = "TextStoneName",
 
             [0x027A] = "SunyshoreBinoculars",
 
@@ -642,6 +645,9 @@ namespace DSPRE.Resources {
             [0x0284] = "CountSeenUnown",
 
             [0x028B] = "CheckEventValidity",
+            
+            [0x028F] = "CountLeagueVictories",
+
 
             [0x0297] = "GetBP",
             [0x0298] = "AddBP",
@@ -649,12 +655,16 @@ namespace DSPRE.Resources {
             [0x029A] = "CompareBP",
 
             [0x029F] = "ShakeCamera",
-
             [0x02A0] = "Battle2vs2",
-            [0x02AC] = "ActivateMysteryGift",
-            [0x02AD] = "GetOWMovement",
 
             [0x02A5] = "PartyPokemonTradeScreen",
+
+            [0x02AC] = "ActivateMysteryGift",
+            [0x02AD] = "GetOWMovement",
+            [0x02AE] = "CountPlayingSeq",
+
+            [0x02B3] = "TextSeal",
+            [0x02B4] = "DummyLockAll",
 
             [0x02BC] = "LastBattleCheckCaught",
             [0x02BD] = "SpWildBattle",
@@ -1419,9 +1429,7 @@ namespace DSPRE.Resources {
         };
 
         public static Dictionary<ushort, string> DPScrCmdNames = new Dictionary<ushort, string>() {
-            [0x011D] = "ElevatorBox",
-
-            [0x0264] = "CheckBurmyForm",
+            [0x0264] = "CheckBurmyForms",
         };
         public static Dictionary<ushort, byte[]> DPScrCmdParameters = new Dictionary<ushort, byte[]>() {
             [0x011D] = new byte[] { 1, 1, 2 },
@@ -1449,8 +1457,6 @@ namespace DSPRE.Resources {
         };
 
         public static Dictionary<ushort, string> PlatScrCmdNames = new Dictionary<ushort, string>() {
-            [0x011D] = "ElevatorFloorWrite",
-
             [0x0264] = "CombeeCheck",
 
             //0x02C3 is the last command ID that DP and Plat have in common
@@ -1459,22 +1465,49 @@ namespace DSPRE.Resources {
 
             [0x02C9] = "InitEternaGym",
             [0x02CA] = "EternaGymClockAnim",
+
             [0x02CD] = "SetDarkFog",
             [0x02CE] = "ClearDarkFog",
-            
+
+            [0x02E5] = "CheckLearnableTutorMoves",
+            [0x02E6] = "ShowTutorMovesList",
+            [0x02E7] = "LearnMoveScreen",
+            [0x02E8] = "LearnMoveGetSelection",
+            [0x02E9] = "ChangePartyPokemonMove",
+            [0x02EA] = "CheckAffordMove",
+            [0x02EB] = "PayTutorShards",
+            [0x02EC] = "ShowMovePriceBoard",
+            [0x02ED] = "CloseMovePriceBoard",
+
+            [0x02F0] = "InitVilla",
+            [0x02F1] = "ChangePokemonForm",
+            [0x02F2] = "InitDistortionWorld",
+
             [0x02F9] = "LoadFieldAudio",
             [0x02FA] = "GetPlayingBGM",
             [0x02FB] = "SpearPillarSequence2",
+
+            [0x0302] = "CheckUsedRotomAppliances",
+
+            [0x0315] = "GetCurrentWeather",
+
+            [0x0319] = "GiratinaBattle",
+            [0x031A] = "RegisterSeenPokemon",
 
             [0x0320] = "PortalAnimation",
 
             [0x032B] = "CheckEventRegigigas",
 
             //International release exclusive
+            [0x0337] = "CheckPokemonIsSeen",
+            
             [0x033C] = "TextItemLowercase",
-            [0x0346] = "TextCapitalize",
+            [0x033D] = "TextItemPlural",
 
-            [0x0347] = "DisplayFloor"
+            [0x0344] = "TextTrainerClass",
+            [0x0345] = "TextSealPlural",
+            [0x0346] = "TextCapitalize",
+            [0x0347] = "DisplayFloor",
         };
 
         public static Dictionary<ushort, byte[]> PlatScrCmdParameters = new Dictionary<ushort, byte[]>() {
@@ -2188,7 +2221,7 @@ namespace DSPRE.Resources {
             [0x0071] = new byte[] { 2, 2 },
             [0x0072] = new byte[1] { 0 },
             [0x0073] = new byte[1] { 0 },
-            [0x0074] = new byte[] { 1 },
+            [0x0074] = new byte[] { 1, 2, 2 },
             [0x0075] = new byte[1] { 0 },
             [0x0076] = new byte[] { 1 },
             [0x0077] = new byte[] { 2 },
