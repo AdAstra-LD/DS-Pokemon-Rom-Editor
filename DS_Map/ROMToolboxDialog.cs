@@ -449,14 +449,16 @@ namespace DSPRE {
                     ScriptFile itemScriptFile = new ScriptFile(RomInfo.itemScriptFileNumber);
 
                     // Create map for: script no. -> vanilla item
-                    int[] vanillaItemsArray = new int[itemScriptFile.allScripts.Count];
+                    int[] vanillaItemsArray = new int[itemScriptFile.allScripts.Count-1];
 
                     for (int i = 0; i < itemScriptFile.allScripts.Count - 1; i++) {
                         vanillaItemsArray[i] = BitConverter.ToInt16(itemScriptFile.allScripts[i].commands[0].cmdParams[1], 0);
                     };
 
                     // Parse all event files and fix instances of ground items according to the new order
-                    for (int i = 0; i < RomInfo.GetEventFileCount(); i++) {
+                    int cnt = RomInfo.GetEventFileCount();
+                    for (int i = 0; i < cnt; i++) {
+                        bool dirty = false;
                         EventFile eventFile = new EventFile(i);
 
                         for (int j = 0; j < eventFile.overworlds.Count; j++) {
@@ -468,16 +470,19 @@ namespace DSPRE {
                             if (isItem) {
                                 int itemScriptID = eventFile.overworlds[j].scriptNumber - 6999;
                                 eventFile.overworlds[j].scriptNumber = (ushort)(7000 + vanillaItemsArray[itemScriptID-1]);
+                                dirty = true;
                             }
                         }
 
                         // Save event file
-                        eventFile.SaveToFileDefaultDir(i, showSuccessMessage: false);
+                        if (dirty) {
+                            eventFile.SaveToFileDefaultDir(i, showSuccessMessage: false);
+                        }
                     };
 
                     // Sort scripts in the Script File according to item indices
                     int itemCount = new TextArchive(RomInfo.itemNamesTextNumber).messages.Count;
-                    CommandContainer executeGive = new CommandContainer((uint)itemCount, itemScriptFile.allScripts[itemScriptFile.allScripts.Count - 1]);
+                    CommandContainer executeGive = new CommandContainer((uint)itemCount+1, itemScriptFile.allScripts[itemScriptFile.allScripts.Count - 1]);
                     
                     itemScriptFile.allScripts.Clear();
 
