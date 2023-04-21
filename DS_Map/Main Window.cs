@@ -5908,7 +5908,9 @@ namespace DSPRE {
                 owYMapUpDown.Value = selectedOw.yMapPosition;
                 owXMatrixUpDown.Value = selectedOw.xMatrixPosition;
                 owYMatrixUpDown.Value = selectedOw.yMatrixPosition;
-                owZPositionUpDown.Value = selectedOw.zPosition;
+
+                int zFld = (selectedOw.zPosition >> 4) /*convert from overworld units to fx*/;
+                owZPositionUpDown.Value = zFld / 0x1000; //then convert from fixed point to decimal
 
                 /*ID, Flag and Script number controls */
                 owIDNumericUpDown.Value = selectedOw.owID;
@@ -6095,7 +6097,8 @@ namespace DSPRE {
                 return;
             }
 
-            currentEvFile.overworlds[selection].zPosition = (short)owZPositionUpDown.Value;
+            int zFld = (short)owZPositionUpDown.Value >> 4; //decimal to overworld units
+            currentEvFile.overworlds[selection].zPosition = zFld * 0x1000; //overworld units to fixed point
         }
         private void owXMatrixUpDown_ValueChanged(object sender, EventArgs e) {
             int selection = overworldsListBox.SelectedIndex;

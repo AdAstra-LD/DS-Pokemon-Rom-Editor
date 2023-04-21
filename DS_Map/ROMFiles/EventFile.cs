@@ -119,7 +119,7 @@ namespace DSPRE.ROMFiles {
 
         public short xMapPosition;
         public short yMapPosition;
-        public short zPosition;
+        public int zPosition; //fixed point!
         public ushort xMatrixPosition;
         public ushort yMatrixPosition;
         #endregion
@@ -292,8 +292,7 @@ namespace DSPRE.ROMFiles {
                 xMatrixPosition = (ushort)(xPosition / MapFile.mapSize);
                 yMatrixPosition = (ushort)(yPosition / MapFile.mapSize);
 
-                zPosition = reader.ReadInt16();
-                unknown3 = reader.ReadUInt16();
+                zPosition = reader.ReadInt32();
             }
         }
         public Overworld(int owID, int xMatrixPosition, int yMatrixPosition) {
