@@ -155,6 +155,7 @@ namespace DSPRE.Resources {
             [0x0068] = "WaitMoveForever",
             [0x00FE] = "End"
         };
+
         public static Dictionary<ushort, string> DPPtScrCmdNames = new Dictionary<ushort, string>() {
             [0x0000] = "Nop",
             [0x0001] = "Dummy",
@@ -1769,11 +1770,14 @@ namespace DSPRE.Resources {
             [0x0071] = "ShowMoney",
             [0x0072] = "HideMoney",
             [0x0073] = "UpdateMoney",
+            [0x0074] = "ShowSpecialCurrency",
 
             [0x0077] = "CheckCoins",
             [0x0078] = "GiveCoins",
             [0x0079] = "TakeCoins",
-            
+            [0x007A] = "GiveAthletePoints",
+            [0x007B] = "TakeAthletePoints",
+            [0x007C] = "CompareAthletePoints",
             [0x007D] = "GiveItem",
             [0x007E] = "TakeItem",
             [0x007F] = "CheckItemSpace",
@@ -2227,9 +2231,9 @@ namespace DSPRE.Resources {
             [0x0077] = new byte[] { 2 },
             [0x0078] = new byte[] { 2 },
             [0x0079] = new byte[] { 2 },
-            [0x007A] = new byte[] { 2, 2, 2 },
-            [0x007B] = new byte[1] { 0 },
-            [0x007C] = new byte[] { 2, 2, 2 },
+            [0x007A] = new byte[] { 2 },
+            [0x007B] = new byte[] { 2 },
+            [0x007C] = new byte[] { 2, 2 },
             [0x007D] = new byte[] { 2, 2, 2 },
             [0x007E] = new byte[] { 2, 2, 2 },
             [0x007F] = new byte[] { 2, 2, 2 },
