@@ -5764,7 +5764,12 @@ namespace DSPRE {
         #region Overworlds Tab
         private void addOverworldButton_Click(object sender, EventArgs e) {
             int owCount = currentEvFile.overworlds.Count;
-            currentEvFile.overworlds.Add(new Overworld(owCount + 1, (int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
+            // Find the smallest unused ID
+            int newID = 0;
+            while (currentEvFile.overworlds.Any(ow => ow.owID == newID)) {
+                newID++;
+            }
+            currentEvFile.overworlds.Add(new Overworld(newID, (int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value));
 
             overworldsListBox.Items.Add("");
             overworldsListBox.SelectedIndex = owCount;
@@ -5790,6 +5795,19 @@ namespace DSPRE {
             } else {
                 DisplayActiveEvents();
             }
+        }
+        private void sortOWsByIDAscButton_Click(object sender, EventArgs e) {
+            currentEvFile.overworlds.Sort((x, y) => x.owID.CompareTo(y.owID));
+            overworldsListBox.BeginUpdate();
+            FillOverworldsBox();
+            overworldsListBox.EndUpdate();
+        }
+
+        private void sortOWsByIDDescButton_Click(object sender, EventArgs e) {
+            currentEvFile.overworlds.Sort((x, y) => y.owID.CompareTo(x.owID));
+            overworldsListBox.BeginUpdate();
+            FillOverworldsBox();
+            overworldsListBox.EndUpdate();
         }
         private void duplicateOverworldsButton_Click(object sender, EventArgs e) {
             if (overworldsListBox.SelectedIndex < 0) {

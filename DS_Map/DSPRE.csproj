@@ -510,6 +510,8 @@
     <None Include="Resources\Graphics\Program Icons\scriptDBIconPt.png" />
     <None Include="Resources\Graphics\Program Icons\scriptDBIconDP.png" />
     <None Include="Resources\Graphics\Program Icons\scriptDBIconHGSS.png" />
+    <Content Include="Resources\Graphics\Program Icons\sortAscending.png" />
+    <Content Include="Resources\Graphics\Program Icons\sortDescending.png" />
     <Content Include="Resources\Graphics\Program Icons\tableEditor.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptblueish.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptdarkfog.png" />
@@ -521,6 +523,8 @@
     <None Include="Resources\Graphics\Program Icons\wildEditorButton.png" />
     <None Include="Resources\Graphics\Program Icons\muteIcon.png" />
     <None Include="Resources\Graphics\Program Icons\SearchMiniIcon.png" />
+    <None Include="Resources\Graphics\Program Icons\sortAscending.png" />
+    <None Include="Resources\Graphics\Program Icons\sortDescending.png" />
     <Content Include="Tools\apicula.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
