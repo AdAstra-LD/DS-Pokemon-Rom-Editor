@@ -7521,8 +7521,49 @@ namespace DSPRE {
 
         }
         private void exportTextFileButton_Click(object sender, EventArgs e) {
-            currentTextArchive.SaveToFileExplorePath("Text Archive " + selectTextFileComboBox.SelectedIndex);
-            if (selectTextFileComboBox.SelectedIndex == RomInfo.locationNamesTextNumber) {
+            int textSelection = selectTextFileComboBox.SelectedIndex;
+
+            string msgFileType = "Gen IV Text Archive";
+            string txtFileType = "Plaintext file";
+            string suggestedFileName = "Text Archive " + textSelection;
+            bool showSuccessMessage = true;
+            string fileExtension = "*.msg;*.txt";
+
+            SaveFileDialog sf = new SaveFileDialog {
+                Filter = $"{msgFileType} (*.msg)|*.msg|{txtFileType} (*.txt)|*.txt"
+            };
+
+            if (!string.IsNullOrWhiteSpace(suggestedFileName)) {
+                sf.FileName = suggestedFileName;
+            }
+
+            if (sf.ShowDialog() != DialogResult.OK) {
+                return;
+            }
+
+            string selectedExtension = Path.GetExtension(sf.FileName);
+            string type = currentTextArchive.GetType().Name;
+
+            if (selectedExtension == ".msg") {
+                // Handle .msg case
+                currentTextArchive.SaveToFile(sf.FileName, showSuccessMessage);
+            } else if (selectedExtension == ".txt") {
+                // Handle .txt case
+                const int txtLinesWarningThreshold = 300;
+                if (currentTextArchive.messages.Count > txtLinesWarningThreshold) {
+                    DialogResult result = MessageBox.Show($"This {type} has over {txtLinesWarningThreshold} messages. Writing a large text file may take a long time, especially on slow machines.\n\nAre you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (result == DialogResult.No) {
+                        return;
+                    }
+                }
+                File.WriteAllText(sf.FileName, currentTextArchive.ToString());
+
+                if (showSuccessMessage) {
+                    MessageBox.Show($"{type} saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+
+            if (textSelection == RomInfo.locationNamesTextNumber) {
                 ReloadHeaderEditorLocationsList(currentTextArchive.messages);
             }
         }
@@ -7565,9 +7606,9 @@ namespace DSPRE {
             locationNameComboBox.SelectedIndex = selection;
         }
         private void importTextFileButton_Click(object sender, EventArgs e) {
-            /* Prompt user to select .msg file */
+            /* Prompt user to select .msg or .txt file */
             OpenFileDialog of = new OpenFileDialog {
-                Filter = "Text Archive (*.msg)|*.msg"
+                Filter = "Text Archive (*.msg;*.txt)|*.msg;*.txt|Gen IV Text Archive (*.msg)|*.msg|Plaintext file (*.txt)|*.txt"
             };
             if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -7575,14 +7616,33 @@ namespace DSPRE {
 
             /* Update Text Archive object in memory */
             string path = RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4");
-            File.Copy(of.FileName, path, true);
+            string selectedExtension = Path.GetExtension(of.FileName);
+
+            bool readagain = false;
+
+            if (selectedExtension == ".msg") {
+                // Handle .msg case
+                File.Copy(of.FileName, path, true);
+                readagain = true;
+            } else if (selectedExtension == ".txt") {
+                // Handle .txt case
+                try {
+                    string[] lines = File.ReadAllLines(of.FileName);
+                    currentTextArchive.messages.Clear();
+                    currentTextArchive.messages.AddRange(lines);
+                } catch (Exception ex) {
+                    MessageBox.Show($"Failed to import text file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
             /* Refresh controls */
-            selectTextFileComboBox_SelectedIndexChanged(null, null);
+            UpdateTextEditorFileView(readagain);
 
             /* Display success message */
             MessageBox.Show("Text Archive imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
         private void removeMessageFileButton_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("Are you sure you want to delete the last Text Archive?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (d.Equals(DialogResult.Yes)) {

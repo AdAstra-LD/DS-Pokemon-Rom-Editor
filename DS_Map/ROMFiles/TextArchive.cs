@@ -318,6 +318,11 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
+
+        public override string ToString() {
+            return string.Join(Environment.NewLine, messages);
+        }
+
         public override byte[] ToByteArray() {
             return this.ToByteArray(messages);
         }
