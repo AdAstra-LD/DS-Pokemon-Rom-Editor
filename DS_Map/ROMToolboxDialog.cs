@@ -457,19 +457,22 @@ namespace DSPRE {
 
                     // Parse all event files and fix instances of ground items according to the new order
                     int cnt = RomInfo.GetEventFileCount();
+                    (int min, int max) itemScriptRange = (7000, 8000);
+
                     for (int i = 0; i < cnt; i++) {
                         bool dirty = false;
+
                         EventFile eventFile = new EventFile(i);
 
                         for (int j = 0; j < eventFile.overworlds.Count; j++) {
                             // If ow is marked as an item, or in the rare case it is not but script no. falls within item script range:
                             bool isItem = eventFile.overworlds[j].type == (ushort)Overworld.OwType.ITEM 
-                                          || (eventFile.overworlds[j].scriptNumber >= 7000 
-                                          && eventFile.overworlds[j].scriptNumber <= 8000 );
+                                          || (eventFile.overworlds[j].scriptNumber >= itemScriptRange.min
+                                          && eventFile.overworlds[j].scriptNumber <= itemScriptRange.max);
                             
                             if (isItem) {
-                                int itemScriptID = eventFile.overworlds[j].scriptNumber - 6999;
-                                eventFile.overworlds[j].scriptNumber = (ushort)(7000 + vanillaItemsArray[itemScriptID-1]);
+                                int itemScriptID = eventFile.overworlds[j].scriptNumber - (itemScriptRange.min-1);
+                                eventFile.overworlds[j].scriptNumber = (ushort)(itemScriptRange.min + vanillaItemsArray[itemScriptID-1]);
                                 dirty = true;
                             }
                         }
@@ -479,6 +482,22 @@ namespace DSPRE {
                             eventFile.SaveToFileDefaultDir(i, showSuccessMessage: false);
                         }
                     };
+
+                    //Distortion world - turnback cave Griseous Orb fix
+                    if (gameFamily.Equals(gFamEnum.Plat)) {
+                        string ow9path = DSUtils.GetOverlayPath(9);
+                        int ow9offs = 0x8E20 + 10;
+
+                        int itemScriptID;
+
+                        using (DSUtils.EasyReader ewr = new DSUtils.EasyReader(ow9path, ow9offs)) {
+                            itemScriptID = ewr.ReadUInt16() - (itemScriptRange.min - 1);
+                        }
+
+                        using (DSUtils.EasyWriter ewr = new DSUtils.EasyWriter(ow9path, ow9offs)) {
+                            ewr.Write((ushort)(itemScriptRange.min + vanillaItemsArray[itemScriptID - 1]));
+                        }
+                    }
 
                     // Sort scripts in the Script File according to item indices
                     int itemCount = new TextArchive(RomInfo.itemNamesTextNumber).messages.Count;
