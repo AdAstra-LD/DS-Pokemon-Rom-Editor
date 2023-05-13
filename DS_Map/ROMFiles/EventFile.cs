@@ -263,7 +263,6 @@ namespace DSPRE.ROMFiles {
         public ushort unknown2;
         public ushort xRange;
         public ushort yRange;
-        public ushort unknown3;
         public bool is3D = new bool();
         #endregion
 
@@ -310,7 +309,6 @@ namespace DSPRE.ROMFiles {
             unknown2 = 0;
             xRange = 0;
             yRange = 0;
-            unknown3 = 0;
 
             xMapPosition = 16;
             yMapPosition = 16;
@@ -333,7 +331,6 @@ namespace DSPRE.ROMFiles {
             unknown2 = toCopy.unknown2;
             xRange = toCopy.xRange;
             yRange = toCopy.yRange;
-            unknown3 = toCopy.unknown3;
 
             xMapPosition = toCopy.xMapPosition;
             yMapPosition = toCopy.yMapPosition;
@@ -366,7 +363,6 @@ namespace DSPRE.ROMFiles {
                 writer.Write(yCoordinate);
 
                 writer.Write(zPosition);
-                writer.Write(unknown3);
 
                 return ((MemoryStream)writer.BaseStream).ToArray();
             }
