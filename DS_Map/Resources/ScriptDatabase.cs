@@ -1771,7 +1771,8 @@ namespace DSPRE.Resources {
             [0x0072] = "HideMoney",
             [0x0073] = "UpdateMoney",
             [0x0074] = "ShowSpecialCurrency",
-
+            [0x0075] = "HideSpecialCurrency",
+            [0x0076] = "UpdateSpecialCurrency",
             [0x0077] = "CheckCoins",
             [0x0078] = "GiveCoins",
             [0x0079] = "TakeCoins",
@@ -1789,7 +1790,8 @@ namespace DSPRE.Resources {
 
             [0x0089] = "GivePokemon",
             [0x008A] = "GivePokemonEgg",
-
+            [0x008B] = "ReplaceMove",
+            [0x008C] = "CheckPokemonHasMove",
             [0x008D] = "CheckMoveInParty",
 
             [0x008F] = "ChooseRivalName",
@@ -2037,6 +2039,8 @@ namespace DSPRE.Resources {
             [0x0211] = "GetFirstAlivePokemonSlot",
             [0x0212] = "SetMatrixAlternativeMap",
 
+            [0x0217] = "GetPokemonLevel",
+
             [0x021D] = "TextNumberSp",
 
             [0x021F] = "CheckBirthday",
@@ -2074,6 +2078,8 @@ namespace DSPRE.Resources {
             [0x026A] = "CheckAlbumPhoto",
 
             [0x026E] = "GetOWDirection",
+
+            [0x0290] = "CheckHeadbuttCompatibility",
 
             [0x02AC] = "GetCurrentWeather",
 
