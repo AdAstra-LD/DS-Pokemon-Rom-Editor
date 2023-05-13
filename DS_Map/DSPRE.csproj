@@ -120,6 +120,9 @@
     </Compile>
     <Compile Include="Extensions.cs" />
     <Compile Include="GameCamera.cs" />
+    <Compile Include="InputComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
