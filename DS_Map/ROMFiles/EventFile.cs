@@ -138,7 +138,6 @@ namespace DSPRE.ROMFiles {
         public ushort scriptNumber;
         public ushort type;
         public ushort unknown2;
-        public ushort unknown3;
         public ushort unknown4;
         public ushort dir;
         public ushort unknown5;
@@ -163,8 +162,7 @@ namespace DSPRE.ROMFiles {
                 yMapPosition = (short)(yPosition % MapFile.mapSize);
                 yMatrixPosition = (ushort)(yPosition / MapFile.mapSize);
 
-                unknown3 = reader.ReadUInt16();
-                zPosition = reader.ReadInt16();
+                zPosition = reader.ReadInt32();
                 unknown4 = reader.ReadUInt16();
                 dir = reader.ReadUInt16();
                 unknown5 = reader.ReadUInt16();
@@ -176,7 +174,6 @@ namespace DSPRE.ROMFiles {
             scriptNumber = 0;
             type = 0;
             unknown2 = 0;
-            unknown3 = 0;
             unknown4 = 0;
             unknown5 = 0;
             dir = 0;
@@ -193,7 +190,6 @@ namespace DSPRE.ROMFiles {
             scriptNumber = toCopy.scriptNumber;
             type = toCopy.type;
             unknown2 = toCopy.unknown2;
-            unknown3 = toCopy.unknown3;
             unknown4 = toCopy.unknown4;
             unknown5 = toCopy.unknown5;
             dir = toCopy.dir;
@@ -216,7 +212,6 @@ namespace DSPRE.ROMFiles {
                 writer.Write(unknown2);
                 short yCoordinate = (short)(yMapPosition + MapFile.mapSize * yMatrixPosition);
                 writer.Write(yCoordinate);
-                writer.Write(unknown3);
                 writer.Write(zPosition);
                 writer.Write(unknown4);
                 writer.Write(dir);
