@@ -6116,7 +6116,7 @@ namespace DSPRE {
                 return;
             }
 
-            int zFld = (short)owZPositionUpDown.Value >> 4; //decimal to overworld units
+            int zFld = (short)owZPositionUpDown.Value << 4; //decimal to overworld units
             currentEvFile.overworlds[selection].zPosition = zFld * 0x1000; //overworld units to fixed point
         }
         private void owXMatrixUpDown_ValueChanged(object sender, EventArgs e) {
