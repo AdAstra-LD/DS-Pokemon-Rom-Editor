@@ -431,7 +431,8 @@ namespace DSPRE {
 
         private void ApplyItemStandardizeButton_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("This process will apply the following changes:\n\n" +
-                "- Item scripts will be rearranged to follow the natural, ascending index order.\n\n",
+                "- Item scripts will be rearranged to follow the natural, ascending index order.\n\n" +
+                "- Any unsaved change to the current Event File will be discarded.\n\n",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {

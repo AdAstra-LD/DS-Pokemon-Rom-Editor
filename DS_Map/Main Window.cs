@@ -315,6 +315,7 @@ namespace DSPRE {
             using (ROMToolboxDialog window = new ROMToolboxDialog()) {
                 window.ShowDialog();
                 if (ROMToolboxDialog.flag_standardizedItems && eventEditorIsReady) {
+                    selectEventComboBox_SelectedIndexChanged(null, null);
                     UpdateItemComboBox(RomInfo.GetItemNames());
                 }
                 if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied) {
@@ -1288,19 +1289,35 @@ namespace DSPRE {
         }
         private void eventsTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (eventsTabControl.SelectedTab == signsTabPage) {
-                if (spawnablesListBox.Items.Count > 0) {
+                int spawnablesCount = spawnablesListBox.Items.Count;
+
+                if (spawnablesCount > 0) {
                     spawnablesListBox.SelectedIndex = 0;
                 }
             } else if (eventsTabControl.SelectedTab == overworldsTabPage) {
-                if (overworldsListBox.Items.Count > 0) {
-                    overworldsListBox.SelectedIndex = 0;
+                int overworldsCount = overworldsListBox.Items.Count;
+                
+                int selected = 0;
+
+                if (overworldsCount > 0) {
+                    if (selectedEvent is Overworld) {
+                        int owId = (selectedEvent as Overworld).owID;
+                        if (owId < overworldsCount) {
+                            selected = owId;
+                        }
+                    }
+                    overworldsListBox.SelectedIndex = selected;
                 }
             } else if (eventsTabControl.SelectedTab == warpsTabPage) {
-                if (warpsListBox.Items.Count > 0) {
+                int warpsCount = warpsListBox.Items.Count;
+
+                if (warpsCount > 0) {
                     warpsListBox.SelectedIndex = 0;
                 }
             } else if (eventsTabControl.SelectedTab == triggersTabPage) {
-                if (triggersListBox.Items.Count > 0) {
+                int triggersCount = triggersListBox.Items.Count;
+
+                if (triggersCount > 0) {
                     triggersListBox.SelectedIndex = 0;
                 }
             }
@@ -5821,7 +5838,7 @@ namespace DSPRE {
             updateSelectedOverworldName();
         }
         private void OWTypeChanged(object sender, EventArgs e) {
-            if (overworldsListBox.SelectedIndex < 0) {
+            if ( overworldsListBox.SelectedIndex < 0) {
                 return;
             }
 
@@ -5829,11 +5846,11 @@ namespace DSPRE {
                 owScriptNumericUpDown.Enabled = true;
                 owSpecialGroupBox.Enabled = false;
 
+                currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(owScriptNumericUpDown.Value = 0);
                 if (disableHandlers) {
                     return;
                 }
                 currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x0;
-                currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(owScriptNumericUpDown.Value = 0);
             } else if (isItemRadioButton.Checked == true) {
                 owScriptNumericUpDown.Enabled = false;
 
@@ -5844,16 +5861,16 @@ namespace DSPRE {
                 owSightRangeLabel.Enabled = false;
                 owPartnerTrainerCheckBox.Enabled = false;
 
-                if (disableHandlers) {
-                    return;
-                }
                 if (isItemRadioButton.Enabled) {
                     owItemComboBox.Enabled = true;
                     itemsSelectorHelpBtn.Enabled = true;
                     owItemLabel.Enabled = true;
 
-                    currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x3;
                     currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(owScriptNumericUpDown.Value = 7000 + owItemComboBox.SelectedIndex);
+                    if (disableHandlers) {
+                        return;
+                    }
+                    currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x3;
                 }
             } else { //trainer
                 owScriptNumericUpDown.Enabled = false;
