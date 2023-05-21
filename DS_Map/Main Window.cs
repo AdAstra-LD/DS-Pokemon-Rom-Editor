@@ -22,8 +22,6 @@ using ScintillaNET;
 using ScintillaNET.Utils;
 using System.Globalization;
 using static DSPRE.ROMFiles.Event;
-using static ScintillaNET.Style;
-using static OpenTK.Graphics.OpenGL.GL;
 using NSMBe4.NSBMD;
 
 namespace DSPRE {
@@ -515,7 +513,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor Reloaded by AdAstra/LD3005" + Environment.NewLine + "version 1.9.1" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor Reloaded by AdAstra/LD3005" + Environment.NewLine + "version 1.9.2" + Environment.NewLine
                 + Environment.NewLine + "Based on Nømura's DS Pokémon ROM Editor 1.0.4."
                 + Environment.NewLine + "Largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also reused." +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
