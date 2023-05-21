@@ -8741,8 +8741,8 @@ namespace DSPRE {
                 partyPokemonComboboxList[i].SelectedIndex = currentTrainerFile.party[i].pokeID ?? 0;
                 partyItemsComboboxList[i].SelectedIndex = currentTrainerFile.party[i].heldItem ?? 0;
                 partyLevelUpdownList[i].Value = Math.Max((ushort)1, currentTrainerFile.party[i].level);
-                partyIVUpdownList[i].Value = currentTrainerFile.party[i].unknown1_DATASTART;
-                partyBallUpdownList[i].Value = currentTrainerFile.party[i].unknown2_DATAEND;
+                partyIVUpdownList[i].Value = currentTrainerFile.party[i].difficulty;
+                partyBallUpdownList[i].Value = currentTrainerFile.party[i].ballSeals;
 
                 if (currentTrainerFile.party[i].moves == null) {
                     for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
@@ -8960,8 +8960,8 @@ namespace DSPRE {
                     currentTrainerFile.party[i].heldItem = (ushort)partyItemsComboboxList[i].SelectedIndex;
                 }
 
-                currentTrainerFile.party[i].unknown1_DATASTART = (ushort)partyIVUpdownList[i].Value;
-                currentTrainerFile.party[i].unknown2_DATAEND = (ushort)partyBallUpdownList[i].Value;
+                currentTrainerFile.party[i].difficulty = (ushort)partyIVUpdownList[i].Value;
+                currentTrainerFile.party[i].ballSeals = (ushort)partyBallUpdownList[i].Value;
             }
 
             /*Write to File*/
