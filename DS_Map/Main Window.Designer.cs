@@ -30,22 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle49 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle50 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle51 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle53 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle54 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle55 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle56 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle57 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle58 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle59 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle60 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle61 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle62 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle63 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle64 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
             this.removeLastHeaderBTN = new System.Windows.Forms.Button();
@@ -274,6 +274,7 @@
             this.ImportMovButton = new System.Windows.Forms.Button();
             this.exportMovButton = new System.Windows.Forms.Button();
             this.modelTabPage = new System.Windows.Forms.TabPage();
+            this.glbExportButton = new System.Windows.Forms.Button();
             this.daeExportButton = new System.Windows.Forms.Button();
             this.embedTexturesInMapModelCheckBox = new System.Windows.Forms.CheckBox();
             this.modelSizeLBL = new System.Windows.Forms.Label();
@@ -330,6 +331,7 @@
             this.addNSBTXButton = new System.Windows.Forms.Button();
             this.exportNSBTXButton = new System.Windows.Forms.Button();
             this.importNSBTXButton = new System.Windows.Forms.Button();
+            this.texturePictureBox = new DSPRE.OffsetPictureBox();
             this.palettesLabel = new System.Windows.Forms.Label();
             this.texturesLabel = new System.Windows.Forms.Label();
             this.palettesListBox = new System.Windows.Forms.ListBox();
@@ -384,6 +386,7 @@
             this.spawnableScriptUpDown = new System.Windows.Forms.NumericUpDown();
             this.spawnablesListBox = new System.Windows.Forms.ListBox();
             this.overworldsTabPage = new System.Windows.Forms.TabPage();
+            this.sortOWsByIDAscButton = new System.Windows.Forms.Button();
             this.groupBox22 = new System.Windows.Forms.GroupBox();
             this.normalRadioButton = new System.Windows.Forms.RadioButton();
             this.isTrainerRadioButton = new System.Windows.Forms.RadioButton();
@@ -633,96 +636,96 @@
             this.label61 = new System.Windows.Forms.Label();
             this.label62 = new System.Windows.Forms.Label();
             this.poke6MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove6_1ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove6_2ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove6_3ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove6_4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove6_1ComboBox = new DSPRE.InputComboBox();
+            this.partyMove6_2ComboBox = new DSPRE.InputComboBox();
+            this.partyMove6_3ComboBox = new DSPRE.InputComboBox();
+            this.partyMove6_4ComboBox = new DSPRE.InputComboBox();
             this.partyIV6UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel6UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall6UpDown = new System.Windows.Forms.NumericUpDown();
-            this.partyItem6ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyItem6ComboBox = new DSPRE.InputComboBox();
             this.partyPokemon6PictureBox = new System.Windows.Forms.PictureBox();
-            this.partyPokemon6ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyPokemon6ComboBox = new DSPRE.InputComboBox();
             this.party5GroupBox = new System.Windows.Forms.GroupBox();
             this.partyPokemonItemPictureBox5 = new System.Windows.Forms.PictureBox();
             this.label57 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
             this.label59 = new System.Windows.Forms.Label();
             this.poke5MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove5_1ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove5_2ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove5_3ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove5_4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove5_1ComboBox = new DSPRE.InputComboBox();
+            this.partyMove5_2ComboBox = new DSPRE.InputComboBox();
+            this.partyMove5_3ComboBox = new DSPRE.InputComboBox();
+            this.partyMove5_4ComboBox = new DSPRE.InputComboBox();
             this.partyIV5UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel5UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall5UpDown = new System.Windows.Forms.NumericUpDown();
-            this.partyItem5ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyItem5ComboBox = new DSPRE.InputComboBox();
             this.partyPokemon5PictureBox = new System.Windows.Forms.PictureBox();
-            this.partyPokemon5ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyPokemon5ComboBox = new DSPRE.InputComboBox();
             this.party4GroupBox = new System.Windows.Forms.GroupBox();
             this.partyPokemonItemPictureBox4 = new System.Windows.Forms.PictureBox();
             this.label54 = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
             this.label56 = new System.Windows.Forms.Label();
             this.poke4MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove4_1ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove4_2ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove4_3ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove4_4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove4_1ComboBox = new DSPRE.InputComboBox();
+            this.partyMove4_2ComboBox = new DSPRE.InputComboBox();
+            this.partyMove4_3ComboBox = new DSPRE.InputComboBox();
+            this.partyMove4_4ComboBox = new DSPRE.InputComboBox();
             this.partyIV4UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel4UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall4UpDown = new System.Windows.Forms.NumericUpDown();
-            this.partyItem4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyItem4ComboBox = new DSPRE.InputComboBox();
             this.partyPokemon4PictureBox = new System.Windows.Forms.PictureBox();
-            this.partyPokemon4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyPokemon4ComboBox = new DSPRE.InputComboBox();
             this.party3GroupBox = new System.Windows.Forms.GroupBox();
             this.partyPokemonItemPictureBox3 = new System.Windows.Forms.PictureBox();
             this.label51 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
             this.label53 = new System.Windows.Forms.Label();
             this.poke3MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove3_1ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove3_2ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove3_3ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove3_4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove3_1ComboBox = new DSPRE.InputComboBox();
+            this.partyMove3_2ComboBox = new DSPRE.InputComboBox();
+            this.partyMove3_3ComboBox = new DSPRE.InputComboBox();
+            this.partyMove3_4ComboBox = new DSPRE.InputComboBox();
             this.partyIV3UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel3UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall3UpDown = new System.Windows.Forms.NumericUpDown();
-            this.partyItem3ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyItem3ComboBox = new DSPRE.InputComboBox();
             this.partyPokemon3PictureBox = new System.Windows.Forms.PictureBox();
-            this.partyPokemon3ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyPokemon3ComboBox = new DSPRE.InputComboBox();
             this.party2GroupBox = new System.Windows.Forms.GroupBox();
             this.partyPokemonItemPictureBox2 = new System.Windows.Forms.PictureBox();
             this.label48 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
             this.label50 = new System.Windows.Forms.Label();
             this.poke2MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove2_1ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove2_2ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove2_3ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove2_4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove2_1ComboBox = new DSPRE.InputComboBox();
+            this.partyMove2_2ComboBox = new DSPRE.InputComboBox();
+            this.partyMove2_3ComboBox = new DSPRE.InputComboBox();
+            this.partyMove2_4ComboBox = new DSPRE.InputComboBox();
             this.partyIV2UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel2UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall2UpDown = new System.Windows.Forms.NumericUpDown();
-            this.partyItem2ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyItem2ComboBox = new DSPRE.InputComboBox();
             this.partyPokemon2PictureBox = new System.Windows.Forms.PictureBox();
-            this.partyPokemon2ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyPokemon2ComboBox = new DSPRE.InputComboBox();
             this.party1GroupBox = new System.Windows.Forms.GroupBox();
             this.partyPokemonItemPictureBox1 = new System.Windows.Forms.PictureBox();
             this.label47 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
             this.label45 = new System.Windows.Forms.Label();
             this.poke1MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove1_1ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove1_2ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove1_3ComboBox = new System.Windows.Forms.ComboBox();
-            this.partyMove1_4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyMove1_1ComboBox = new DSPRE.InputComboBox();
+            this.partyMove1_2ComboBox = new DSPRE.InputComboBox();
+            this.partyMove1_3ComboBox = new DSPRE.InputComboBox();
+            this.partyMove1_4ComboBox = new DSPRE.InputComboBox();
             this.partyIV1UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel1UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall1UpDown = new System.Windows.Forms.NumericUpDown();
-            this.partyItem1ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyItem1ComboBox = new DSPRE.InputComboBox();
             this.partyPokemon1PictureBox = new System.Windows.Forms.PictureBox();
-            this.partyPokemon1ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyPokemon1ComboBox = new DSPRE.InputComboBox();
             this.groupBox27 = new System.Windows.Forms.GroupBox();
             this.eyeContactMusicAltLabel = new System.Windows.Forms.Label();
             this.encounterSSEQAltUpDown = new System.Windows.Forms.NumericUpDown();
@@ -749,10 +752,10 @@
             this.trainerAI10CheckBox = new System.Windows.Forms.CheckBox();
             this.trainerAI11CheckBox = new System.Windows.Forms.CheckBox();
             this.trainerItemsGroupBox = new System.Windows.Forms.GroupBox();
-            this.trainerItem1ComboBox = new System.Windows.Forms.ComboBox();
-            this.trainerItem2ComboBox = new System.Windows.Forms.ComboBox();
-            this.trainerItem3ComboBox = new System.Windows.Forms.ComboBox();
-            this.trainerItem4ComboBox = new System.Windows.Forms.ComboBox();
+            this.trainerItem1ComboBox = new DSPRE.InputComboBox();
+            this.trainerItem2ComboBox = new DSPRE.InputComboBox();
+            this.trainerItem3ComboBox = new DSPRE.InputComboBox();
+            this.trainerItem4ComboBox = new DSPRE.InputComboBox();
             this.trainerItemsCheckBox = new System.Windows.Forms.CheckBox();
             this.trainerMovesCheckBox = new System.Windows.Forms.CheckBox();
             this.trainerDoubleCheckBox = new System.Windows.Forms.CheckBox();
@@ -841,6 +844,7 @@
             this.menuViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.essentialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simpleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.advancedStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fullViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -879,7 +883,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.directoryEntry2 = new System.DirectoryServices.DirectoryEntry();
-            this.texturePictureBox = new DSPRE.OffsetPictureBox();
+            this.sortOWsByIDDescButton = new System.Windows.Forms.Button();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -967,6 +971,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.areaDataDynamicTexturesNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.areaDataMapTilesetUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.areaDataBuildingTilesetUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).BeginInit();
             this.eventEditorTabPage.SuspendLayout();
             this.groupBox21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventAreaDataUpDown)).BeginInit();
@@ -1127,7 +1132,6 @@
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainToolStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // mainTabControl
@@ -2784,40 +2788,40 @@
             this.headersGridView.AllowUserToResizeColumns = false;
             this.headersGridView.AllowUserToResizeRows = false;
             this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle49.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle49.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle49.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle49.ForeColor = System.Drawing.SystemColors.Info;
-            dataGridViewCellStyle49.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle49.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle49.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle49;
+            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle33.ForeColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle33.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle33.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle33;
             this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle50.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle50.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle50.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle50.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle50.Format = "D4";
-            dataGridViewCellStyle50.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle50.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle50.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle50;
+            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle34.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle34.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle34.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle34.Format = "D4";
+            dataGridViewCellStyle34.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle34;
             this.headersGridView.Location = new System.Drawing.Point(0, 0);
             this.headersGridView.MultiSelect = false;
             this.headersGridView.Name = "headersGridView";
-            dataGridViewCellStyle51.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle51.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle51.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle51.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle51.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle51.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle51.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle51;
+            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle35.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle35.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle35.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle35.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle35.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle35;
             this.headersGridView.RowHeadersWidth = 50;
             this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle52.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle52.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle52;
+            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle36.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle36;
             this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.headersGridView.RowTemplate.Height = 18;
             this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -2846,43 +2850,43 @@
             this.heightsGridView.AllowUserToDeleteRows = false;
             this.heightsGridView.AllowUserToResizeColumns = false;
             this.heightsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle53.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle53;
+            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle37;
             this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle54.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle54.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle54.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle54.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle54.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle54.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle54.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle54;
+            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle38.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle38.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle38;
             this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle55.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle55.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle55.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            dataGridViewCellStyle55.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle55.Format = "D2";
-            dataGridViewCellStyle55.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle55.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle55.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle55;
+            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle39.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            dataGridViewCellStyle39.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle39.Format = "D2";
+            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle39;
             this.heightsGridView.Location = new System.Drawing.Point(0, 0);
             this.heightsGridView.MultiSelect = false;
             this.heightsGridView.Name = "heightsGridView";
-            dataGridViewCellStyle56.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle56.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle56.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle56.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle56.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle56.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle56.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle56;
+            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle40.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle40.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle40.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle40.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle40.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle40;
             this.heightsGridView.RowHeadersWidth = 50;
             this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle57.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle57.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle57;
+            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle41.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle41;
             this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.heightsGridView.RowTemplate.Height = 18;
             this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -2909,43 +2913,43 @@
             this.mapFilesGridView.AllowUserToDeleteRows = false;
             this.mapFilesGridView.AllowUserToResizeColumns = false;
             this.mapFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle58.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle58;
+            dataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle42;
             this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle59.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle59.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle59.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle59.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle59.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle59.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle59.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle59;
+            dataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle43.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle43.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle43.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle43.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle43.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle43.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle43;
             this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle60.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle60.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle60.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle60.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle60.Format = "D4";
-            dataGridViewCellStyle60.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle60.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle60.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle60;
+            dataGridViewCellStyle44.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle44.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle44.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle44.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle44.Format = "D4";
+            dataGridViewCellStyle44.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle44.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle44.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle44;
             this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
             this.mapFilesGridView.MultiSelect = false;
             this.mapFilesGridView.Name = "mapFilesGridView";
-            dataGridViewCellStyle61.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle61.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle61.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle61.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle61.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle61.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle61.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle61;
+            dataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle45.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle45.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle45.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle45.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle45.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle45.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle45;
             this.mapFilesGridView.RowHeadersWidth = 50;
             this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle62.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle62.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle62;
+            dataGridViewCellStyle46.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle46.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle46;
             this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.mapFilesGridView.RowTemplate.Height = 18;
             this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -4076,6 +4080,7 @@
             // 
             // modelTabPage
             // 
+            this.modelTabPage.Controls.Add(this.glbExportButton);
             this.modelTabPage.Controls.Add(this.daeExportButton);
             this.modelTabPage.Controls.Add(this.embedTexturesInMapModelCheckBox);
             this.modelTabPage.Controls.Add(this.modelSizeLBL);
@@ -4090,6 +4095,20 @@
             this.modelTabPage.TabIndex = 2;
             this.modelTabPage.Text = "3D Model";
             this.modelTabPage.UseVisualStyleBackColor = true;
+            // 
+            // glbExportButton
+            // 
+            this.glbExportButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.glbExportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.glbExportButton.Location = new System.Drawing.Point(351, 156);
+            this.glbExportButton.Margin = new System.Windows.Forms.Padding(4);
+            this.glbExportButton.Name = "glbExportButton";
+            this.glbExportButton.Size = new System.Drawing.Size(120, 38);
+            this.glbExportButton.TabIndex = 31;
+            this.glbExportButton.Text = "Export GLB";
+            this.glbExportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.glbExportButton.UseVisualStyleBackColor = true;
+            this.glbExportButton.Click += new System.EventHandler(this.glbExportButton_Click);
             // 
             // daeExportButton
             // 
@@ -4814,6 +4833,20 @@
             this.importNSBTXButton.UseVisualStyleBackColor = true;
             this.importNSBTXButton.Click += new System.EventHandler(this.importNSBTXButton_Click);
             // 
+            // texturePictureBox
+            // 
+            this.texturePictureBox.BackColor = System.Drawing.Color.White;
+            this.texturePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.texturePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.texturePictureBox.Image = global::DSPRE.Properties.Resources.alphabgCheckerboard;
+            this.texturePictureBox.invertDrag = true;
+            this.texturePictureBox.Location = new System.Drawing.Point(732, 52);
+            this.texturePictureBox.Name = "texturePictureBox";
+            this.texturePictureBox.Size = new System.Drawing.Size(256, 256);
+            this.texturePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.texturePictureBox.TabIndex = 7;
+            this.texturePictureBox.TabStop = false;
+            // 
             // palettesLabel
             // 
             this.palettesLabel.AutoSize = true;
@@ -5449,6 +5482,8 @@
             // 
             // overworldsTabPage
             // 
+            this.overworldsTabPage.Controls.Add(this.sortOWsByIDDescButton);
+            this.overworldsTabPage.Controls.Add(this.sortOWsByIDAscButton);
             this.overworldsTabPage.Controls.Add(this.groupBox22);
             this.overworldsTabPage.Controls.Add(this.spriteIDlabel);
             this.overworldsTabPage.Controls.Add(this.groupBox17);
@@ -5475,6 +5510,19 @@
             this.overworldsTabPage.TabIndex = 1;
             this.overworldsTabPage.Text = "Overworlds";
             this.overworldsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // sortOWsByIDAscButton
+            // 
+            this.sortOWsByIDAscButton.Image = global::DSPRE.Properties.Resources.sortAscending;
+            this.sortOWsByIDAscButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.sortOWsByIDAscButton.Location = new System.Drawing.Point(8, 9);
+            this.sortOWsByIDAscButton.Name = "sortOWsByIDAscButton";
+            this.sortOWsByIDAscButton.Size = new System.Drawing.Size(86, 28);
+            this.sortOWsByIDAscButton.TabIndex = 29;
+            this.sortOWsByIDAscButton.Text = "Sort Asc";
+            this.sortOWsByIDAscButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.sortOWsByIDAscButton.UseVisualStyleBackColor = true;
+            this.sortOWsByIDAscButton.Click += new System.EventHandler(this.sortOWsByIDAscButton_Click);
             // 
             // groupBox22
             // 
@@ -5538,9 +5586,9 @@
             this.groupBox17.Controls.Add(this.label12);
             this.groupBox17.Controls.Add(this.owXMatrixUpDown);
             this.groupBox17.Controls.Add(this.label11);
-            this.groupBox17.Location = new System.Drawing.Point(9, 256);
+            this.groupBox17.Location = new System.Drawing.Point(9, 287);
             this.groupBox17.Name = "groupBox17";
-            this.groupBox17.Size = new System.Drawing.Size(179, 90);
+            this.groupBox17.Size = new System.Drawing.Size(179, 59);
             this.groupBox17.TabIndex = 20;
             this.groupBox17.TabStop = false;
             this.groupBox17.Text = "Global Coordinates [Matrix]";
@@ -5549,32 +5597,32 @@
             // 
             this.button14.Image = global::DSPRE.Properties.Resources.goToOW;
             this.button14.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button14.Location = new System.Drawing.Point(20, 44);
+            this.button14.Location = new System.Drawing.Point(108, 15);
             this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(140, 39);
+            this.button14.Size = new System.Drawing.Size(63, 39);
             this.button14.TabIndex = 5;
-            this.button14.Text = "Find this Overworld";
+            this.button14.Text = "Find";
             this.button14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button14.UseVisualStyleBackColor = true;
             this.button14.Click += new System.EventHandler(this.centerEventViewOnSelectedEvent_Click);
             // 
             // owYMatrixUpDown
             // 
-            this.owYMatrixUpDown.Location = new System.Drawing.Point(117, 19);
+            this.owYMatrixUpDown.Location = new System.Drawing.Point(67, 25);
             this.owYMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.owYMatrixUpDown.Name = "owYMatrixUpDown";
-            this.owYMatrixUpDown.Size = new System.Drawing.Size(39, 20);
+            this.owYMatrixUpDown.Size = new System.Drawing.Size(35, 20);
             this.owYMatrixUpDown.TabIndex = 6;
             this.owYMatrixUpDown.ValueChanged += new System.EventHandler(this.owYMatrixUpDown_ValueChanged);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(19, 22);
+            this.label12.Location = new System.Drawing.Point(3, 27);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(14, 13);
             this.label12.TabIndex = 5;
@@ -5582,7 +5630,7 @@
             // 
             // owXMatrixUpDown
             // 
-            this.owXMatrixUpDown.Location = new System.Drawing.Point(36, 19);
+            this.owXMatrixUpDown.Location = new System.Drawing.Point(18, 24);
             this.owXMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -5596,7 +5644,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(99, 21);
+            this.label11.Location = new System.Drawing.Point(54, 28);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(14, 13);
             this.label11.TabIndex = 7;
@@ -5714,7 +5762,7 @@
             this.positionGroupBox.Controls.Add(this.owXPositionLabel);
             this.positionGroupBox.Controls.Add(this.owYMapUpDown);
             this.positionGroupBox.Controls.Add(this.label10);
-            this.positionGroupBox.Location = new System.Drawing.Point(8, 196);
+            this.positionGroupBox.Location = new System.Drawing.Point(8, 231);
             this.positionGroupBox.Name = "positionGroupBox";
             this.positionGroupBox.Size = new System.Drawing.Size(180, 57);
             this.positionGroupBox.TabIndex = 19;
@@ -5995,7 +6043,7 @@
             // 
             this.duplicateOverworldsButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
             this.duplicateOverworldsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.duplicateOverworldsButton.Location = new System.Drawing.Point(116, 167);
+            this.duplicateOverworldsButton.Location = new System.Drawing.Point(116, 202);
             this.duplicateOverworldsButton.Name = "duplicateOverworldsButton";
             this.duplicateOverworldsButton.Size = new System.Drawing.Size(72, 25);
             this.duplicateOverworldsButton.TabIndex = 26;
@@ -6018,7 +6066,7 @@
             // 
             this.removeOverworldButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeOverworldButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeOverworldButton.Location = new System.Drawing.Point(56, 167);
+            this.removeOverworldButton.Location = new System.Drawing.Point(56, 202);
             this.removeOverworldButton.Name = "removeOverworldButton";
             this.removeOverworldButton.Size = new System.Drawing.Size(60, 25);
             this.removeOverworldButton.TabIndex = 5;
@@ -6031,7 +6079,7 @@
             // 
             this.addOverworldButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addOverworldButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addOverworldButton.Location = new System.Drawing.Point(8, 167);
+            this.addOverworldButton.Location = new System.Drawing.Point(8, 202);
             this.addOverworldButton.Name = "addOverworldButton";
             this.addOverworldButton.Size = new System.Drawing.Size(48, 25);
             this.addOverworldButton.TabIndex = 4;
@@ -6043,7 +6091,7 @@
             // overworldsListBox
             // 
             this.overworldsListBox.FormattingEnabled = true;
-            this.overworldsListBox.Location = new System.Drawing.Point(8, 6);
+            this.overworldsListBox.Location = new System.Drawing.Point(8, 41);
             this.overworldsListBox.Name = "overworldsListBox";
             this.overworldsListBox.Size = new System.Drawing.Size(180, 160);
             this.overworldsListBox.TabIndex = 3;
@@ -6970,7 +7018,7 @@
             this.groupBox26.Controls.Add(this.scriptEditorNumberFormatNoPreference);
             this.groupBox26.Controls.Add(this.scriptEditorNumberFormatDecimal);
             this.groupBox26.Controls.Add(this.scriptEditorNumberFormatHex);
-            this.groupBox26.Location = new System.Drawing.Point(706, 4);
+            this.groupBox26.Location = new System.Drawing.Point(693, 4);
             this.groupBox26.Name = "groupBox26";
             this.groupBox26.Size = new System.Drawing.Size(190, 36);
             this.groupBox26.TabIndex = 50;
@@ -7894,7 +7942,7 @@
             this.groupBox13.Controls.Add(this.searchMessageTextBox);
             this.groupBox13.Controls.Add(this.searchMessageButton);
             this.groupBox13.Controls.Add(this.replaceMessageButton);
-            this.groupBox13.Location = new System.Drawing.Point(891, 71);
+            this.groupBox13.Location = new System.Drawing.Point(891, 75);
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.Size = new System.Drawing.Size(282, 502);
             this.groupBox13.TabIndex = 31;
@@ -8048,9 +8096,9 @@
             this.textEditorDataGridView.Location = new System.Drawing.Point(12, 77);
             this.textEditorDataGridView.Name = "textEditorDataGridView";
             this.textEditorDataGridView.RowHeadersWidth = 68;
-            dataGridViewCellStyle63.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle63;
-            this.textEditorDataGridView.Size = new System.Drawing.Size(873, 496);
+            dataGridViewCellStyle47.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle47;
+            this.textEditorDataGridView.Size = new System.Drawing.Size(873, 500);
             this.textEditorDataGridView.TabIndex = 24;
             this.textEditorDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellValueChanged);
             this.textEditorDataGridView.CurrentCellChanged += new System.EventHandler(this.textEditorDataGridView_CurrentCellChanged);
@@ -8067,7 +8115,7 @@
             // 
             this.removeStringButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeStringButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeStringButton.Location = new System.Drawing.Point(113, 579);
+            this.removeStringButton.Location = new System.Drawing.Point(113, 580);
             this.removeStringButton.Name = "removeStringButton";
             this.removeStringButton.Size = new System.Drawing.Size(124, 34);
             this.removeStringButton.TabIndex = 26;
@@ -8080,7 +8128,7 @@
             // 
             this.addStringButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addStringButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addStringButton.Location = new System.Drawing.Point(12, 579);
+            this.addStringButton.Location = new System.Drawing.Point(12, 580);
             this.addStringButton.Name = "addStringButton";
             this.addStringButton.Size = new System.Drawing.Size(95, 34);
             this.addStringButton.TabIndex = 25;
@@ -8152,9 +8200,9 @@
             this.cameraEditorDataGridView.CausesValidation = false;
             this.cameraEditorDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.cameraEditorDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle64.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle64.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle64;
+            dataGridViewCellStyle48.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle48.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle48;
             this.cameraEditorDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.cameraEditorDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DistanceGVCol,
@@ -10755,6 +10803,7 @@
             this.menuViewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.essentialToolStripMenuItem,
             this.simpleToolStripMenuItem,
+            this.advancedStripMenuItem,
             this.fullViewToolStripMenuItem});
             this.menuViewToolStripMenuItem.Name = "menuViewToolStripMenuItem";
             this.menuViewToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
@@ -10763,23 +10812,30 @@
             // essentialToolStripMenuItem
             // 
             this.essentialToolStripMenuItem.Name = "essentialToolStripMenuItem";
-            this.essentialToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.essentialToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.essentialToolStripMenuItem.Text = "Essential";
             this.essentialToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
             // simpleToolStripMenuItem
             // 
             this.simpleToolStripMenuItem.Name = "simpleToolStripMenuItem";
-            this.simpleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.simpleToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.simpleToolStripMenuItem.Text = "Simple";
             this.simpleToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
+            // advancedStripMenuItem
+            // 
+            this.advancedStripMenuItem.Checked = true;
+            this.advancedStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.advancedStripMenuItem.Name = "advancedStripMenuItem";
+            this.advancedStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.advancedStripMenuItem.Text = "Advanced";
+            this.advancedStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
+            // 
             // fullViewToolStripMenuItem
             // 
-            this.fullViewToolStripMenuItem.Checked = true;
-            this.fullViewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.fullViewToolStripMenuItem.Name = "fullViewToolStripMenuItem";
-            this.fullViewToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.fullViewToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.fullViewToolStripMenuItem.Text = "Complete";
             this.fullViewToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
@@ -11159,19 +11215,18 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // texturePictureBox
+            // sortOWsByIDDescButton
             // 
-            this.texturePictureBox.BackColor = System.Drawing.Color.White;
-            this.texturePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.texturePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.texturePictureBox.Image = global::DSPRE.Properties.Resources.alphabgCheckerboard;
-            this.texturePictureBox.invertDrag = true;
-            this.texturePictureBox.Location = new System.Drawing.Point(732, 52);
-            this.texturePictureBox.Name = "texturePictureBox";
-            this.texturePictureBox.Size = new System.Drawing.Size(256, 256);
-            this.texturePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.texturePictureBox.TabIndex = 7;
-            this.texturePictureBox.TabStop = false;
+            this.sortOWsByIDDescButton.Image = global::DSPRE.Properties.Resources.sortDescending;
+            this.sortOWsByIDDescButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.sortOWsByIDDescButton.Location = new System.Drawing.Point(102, 9);
+            this.sortOWsByIDDescButton.Name = "sortOWsByIDDescButton";
+            this.sortOWsByIDDescButton.Size = new System.Drawing.Size(86, 28);
+            this.sortOWsByIDDescButton.TabIndex = 30;
+            this.sortOWsByIDDescButton.Text = "Sort Desc";
+            this.sortOWsByIDDescButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.sortOWsByIDDescButton.UseVisualStyleBackColor = true;
+            this.sortOWsByIDDescButton.Click += new System.EventHandler(this.sortOWsByIDDescButton_Click);
             // 
             // MainProgram
             // 
@@ -11192,7 +11247,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
-            this.Text = "DS Pokémon Rom Editor Reloaded 1.8 (Nømura, AdAstra/LD3005)";
+            this.Text = "DS Pokémon Rom Editor Reloaded 1.9.2 (Nømura, AdAstra/LD3005)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainProgram_FormClosing);
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);
@@ -11305,6 +11360,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.areaDataDynamicTexturesNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.areaDataMapTilesetUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.areaDataBuildingTilesetUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).EndInit();
             this.eventEditorTabPage.ResumeLayout(false);
             this.eventEditorTabPage.PerformLayout();
             this.groupBox21.ResumeLayout(false);
@@ -11512,7 +11568,6 @@
             this.statusStrip1.PerformLayout();
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -12074,91 +12129,91 @@
         private System.Windows.Forms.Label label61;
         private System.Windows.Forms.Label label62;
         private System.Windows.Forms.GroupBox poke6MovesGroupBox;
-        private System.Windows.Forms.ComboBox partyMove6_1ComboBox;
-        private System.Windows.Forms.ComboBox partyMove6_2ComboBox;
-        private System.Windows.Forms.ComboBox partyMove6_3ComboBox;
-        private System.Windows.Forms.ComboBox partyMove6_4ComboBox;
+        private DSPRE.InputComboBox partyMove6_1ComboBox;
+        private DSPRE.InputComboBox partyMove6_2ComboBox;
+        private DSPRE.InputComboBox partyMove6_3ComboBox;
+        private DSPRE.InputComboBox partyMove6_4ComboBox;
         private System.Windows.Forms.NumericUpDown partyIV6UpDown;
         private System.Windows.Forms.NumericUpDown partyLevel6UpDown;
         private System.Windows.Forms.NumericUpDown partyBall6UpDown;
-        private System.Windows.Forms.ComboBox partyItem6ComboBox;
+        private DSPRE.InputComboBox partyItem6ComboBox;
         private System.Windows.Forms.PictureBox partyPokemon6PictureBox;
-        private System.Windows.Forms.ComboBox partyPokemon6ComboBox;
+        private DSPRE.InputComboBox partyPokemon6ComboBox;
         private System.Windows.Forms.GroupBox party5GroupBox;
         private System.Windows.Forms.Label label57;
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Label label59;
         private System.Windows.Forms.GroupBox poke5MovesGroupBox;
-        private System.Windows.Forms.ComboBox partyMove5_1ComboBox;
-        private System.Windows.Forms.ComboBox partyMove5_2ComboBox;
-        private System.Windows.Forms.ComboBox partyMove5_3ComboBox;
-        private System.Windows.Forms.ComboBox partyMove5_4ComboBox;
+        private DSPRE.InputComboBox partyMove5_1ComboBox;
+        private DSPRE.InputComboBox partyMove5_2ComboBox;
+        private DSPRE.InputComboBox partyMove5_3ComboBox;
+        private DSPRE.InputComboBox partyMove5_4ComboBox;
         private System.Windows.Forms.NumericUpDown partyIV5UpDown;
         private System.Windows.Forms.NumericUpDown partyLevel5UpDown;
         private System.Windows.Forms.NumericUpDown partyBall5UpDown;
-        private System.Windows.Forms.ComboBox partyItem5ComboBox;
+        private DSPRE.InputComboBox partyItem5ComboBox;
         private System.Windows.Forms.PictureBox partyPokemon5PictureBox;
-        private System.Windows.Forms.ComboBox partyPokemon5ComboBox;
+        private DSPRE.InputComboBox partyPokemon5ComboBox;
         private System.Windows.Forms.GroupBox party4GroupBox;
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.Label label55;
         private System.Windows.Forms.Label label56;
         private System.Windows.Forms.GroupBox poke4MovesGroupBox;
-        private System.Windows.Forms.ComboBox partyMove4_1ComboBox;
-        private System.Windows.Forms.ComboBox partyMove4_2ComboBox;
-        private System.Windows.Forms.ComboBox partyMove4_3ComboBox;
-        private System.Windows.Forms.ComboBox partyMove4_4ComboBox;
+        private DSPRE.InputComboBox partyMove4_1ComboBox;
+        private DSPRE.InputComboBox partyMove4_2ComboBox;
+        private DSPRE.InputComboBox partyMove4_3ComboBox;
+        private DSPRE.InputComboBox partyMove4_4ComboBox;
         private System.Windows.Forms.NumericUpDown partyIV4UpDown;
         private System.Windows.Forms.NumericUpDown partyLevel4UpDown;
         private System.Windows.Forms.NumericUpDown partyBall4UpDown;
-        private System.Windows.Forms.ComboBox partyItem4ComboBox;
+        private DSPRE.InputComboBox partyItem4ComboBox;
         private System.Windows.Forms.PictureBox partyPokemon4PictureBox;
-        private System.Windows.Forms.ComboBox partyPokemon4ComboBox;
+        private DSPRE.InputComboBox partyPokemon4ComboBox;
         private System.Windows.Forms.GroupBox party3GroupBox;
         private System.Windows.Forms.Label label51;
         private System.Windows.Forms.Label label52;
         private System.Windows.Forms.Label label53;
         private System.Windows.Forms.GroupBox poke3MovesGroupBox;
-        private System.Windows.Forms.ComboBox partyMove3_1ComboBox;
-        private System.Windows.Forms.ComboBox partyMove3_2ComboBox;
-        private System.Windows.Forms.ComboBox partyMove3_3ComboBox;
-        private System.Windows.Forms.ComboBox partyMove3_4ComboBox;
+        private DSPRE.InputComboBox partyMove3_1ComboBox;
+        private DSPRE.InputComboBox partyMove3_2ComboBox;
+        private DSPRE.InputComboBox partyMove3_3ComboBox;
+        private DSPRE.InputComboBox partyMove3_4ComboBox;
         private System.Windows.Forms.NumericUpDown partyIV3UpDown;
         private System.Windows.Forms.NumericUpDown partyLevel3UpDown;
         private System.Windows.Forms.NumericUpDown partyBall3UpDown;
-        private System.Windows.Forms.ComboBox partyItem3ComboBox;
+        private DSPRE.InputComboBox partyItem3ComboBox;
         private System.Windows.Forms.PictureBox partyPokemon3PictureBox;
-        private System.Windows.Forms.ComboBox partyPokemon3ComboBox;
+        private DSPRE.InputComboBox partyPokemon3ComboBox;
         private System.Windows.Forms.GroupBox party2GroupBox;
         private System.Windows.Forms.Label label48;
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.GroupBox poke2MovesGroupBox;
-        private System.Windows.Forms.ComboBox partyMove2_1ComboBox;
-        private System.Windows.Forms.ComboBox partyMove2_2ComboBox;
-        private System.Windows.Forms.ComboBox partyMove2_3ComboBox;
-        private System.Windows.Forms.ComboBox partyMove2_4ComboBox;
+        private DSPRE.InputComboBox partyMove2_1ComboBox;
+        private DSPRE.InputComboBox partyMove2_2ComboBox;
+        private DSPRE.InputComboBox partyMove2_3ComboBox;
+        private DSPRE.InputComboBox partyMove2_4ComboBox;
         private System.Windows.Forms.NumericUpDown partyIV2UpDown;
         private System.Windows.Forms.NumericUpDown partyLevel2UpDown;
         private System.Windows.Forms.NumericUpDown partyBall2UpDown;
-        private System.Windows.Forms.ComboBox partyItem2ComboBox;
+        private DSPRE.InputComboBox partyItem2ComboBox;
         private System.Windows.Forms.PictureBox partyPokemon2PictureBox;
-        private System.Windows.Forms.ComboBox partyPokemon2ComboBox;
+        private DSPRE.InputComboBox partyPokemon2ComboBox;
         private System.Windows.Forms.GroupBox party1GroupBox;
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.GroupBox poke1MovesGroupBox;
-        private System.Windows.Forms.ComboBox partyMove1_1ComboBox;
-        private System.Windows.Forms.ComboBox partyMove1_2ComboBox;
-        private System.Windows.Forms.ComboBox partyMove1_3ComboBox;
-        private System.Windows.Forms.ComboBox partyMove1_4ComboBox;
+        private DSPRE.InputComboBox partyMove1_1ComboBox;
+        private DSPRE.InputComboBox partyMove1_2ComboBox;
+        private DSPRE.InputComboBox partyMove1_3ComboBox;
+        private DSPRE.InputComboBox partyMove1_4ComboBox;
         private System.Windows.Forms.NumericUpDown partyIV1UpDown;
         private System.Windows.Forms.NumericUpDown partyLevel1UpDown;
         private System.Windows.Forms.NumericUpDown partyBall1UpDown;
-        private System.Windows.Forms.ComboBox partyItem1ComboBox;
+        private DSPRE.InputComboBox partyItem1ComboBox;
         private System.Windows.Forms.PictureBox partyPokemon1PictureBox;
-        private System.Windows.Forms.ComboBox partyPokemon1ComboBox;
+        private DSPRE.InputComboBox partyPokemon1ComboBox;
         private System.Windows.Forms.Button trainerSaveCurrentButton;
         private System.Windows.Forms.GroupBox groupBox27;
         private System.Windows.Forms.GroupBox groupBox25;
@@ -12175,10 +12230,10 @@
         private System.Windows.Forms.CheckBox trainerAI2CheckBox;
         private System.Windows.Forms.CheckBox trainerAI1CheckBox;
         private System.Windows.Forms.GroupBox trainerItemsGroupBox;
-        private System.Windows.Forms.ComboBox trainerItem4ComboBox;
-        private System.Windows.Forms.ComboBox trainerItem3ComboBox;
-        private System.Windows.Forms.ComboBox trainerItem2ComboBox;
-        private System.Windows.Forms.ComboBox trainerItem1ComboBox;
+        private DSPRE.InputComboBox trainerItem4ComboBox;
+        private DSPRE.InputComboBox trainerItem3ComboBox;
+        private DSPRE.InputComboBox trainerItem2ComboBox;
+        private DSPRE.InputComboBox trainerItem1ComboBox;
         private System.Windows.Forms.CheckBox trainerItemsCheckBox;
         private System.Windows.Forms.CheckBox trainerMovesCheckBox;
         private System.Windows.Forms.CheckBox trainerDoubleCheckBox;
@@ -12353,6 +12408,10 @@
         private System.Windows.Forms.TrackBar scalingTrackBar;
         private System.Windows.Forms.Button repositionImageButton;
         private System.Windows.Forms.CheckBox invertDragCheckbox;
+        private System.Windows.Forms.ToolStripMenuItem advancedStripMenuItem;
+        private System.Windows.Forms.Button glbExportButton;
+        private System.Windows.Forms.Button sortOWsByIDAscButton;
+        private System.Windows.Forms.Button sortOWsByIDDescButton;
     }
 }
 

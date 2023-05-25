@@ -1,15 +1,23 @@
-﻿using System;
+﻿using ScintillaNET;
+using System;
 using System.Collections;
 using System.IO;
 using System.Windows.Forms;
 
 namespace DSPRE.ROMFiles {
     public class PartyPokemon : RomFile {
+        public const int MON_NUMBER_BITSIZE = 10;
+        public const int MON_NUMBER_BITMASK = (1 << MON_NUMBER_BITSIZE) - 1;
+
+        public const int MON_FORM_BITSIZE = 6; //16-MON_NUMBER_BITSIZE
+        public const int MON_FORM_BITMASK = ((1 << MON_FORM_BITSIZE) - 1) << MON_NUMBER_BITSIZE;
+
         #region Fields
         public ushort? pokeID = null;
+        public ushort formID = 0;
         public ushort level = 0;
-        public ushort unknown1_DATASTART = 0;
-        public ushort unknown2_DATAEND = 0;
+        public ushort difficulty = 0;
+        public ushort ballSeals = 0;
 
         public ushort? heldItem = null;
         public ushort[] moves = null;
@@ -20,18 +28,23 @@ namespace DSPRE.ROMFiles {
             UpdateItemsAndMoves(hasItems, hasMoves);
         }
 
-        public PartyPokemon(ushort Unk1, ushort Level, ushort Pokemon, ushort Unk2, ushort? heldItem = null, ushort[] moves = null) {
-            pokeID = Pokemon;
+        public PartyPokemon(ushort difficulty, ushort Level, ushort pokeNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) {
+            pokeID = pokeNum;
             level = Level;
-            unknown1_DATASTART = Unk1;
-            unknown2_DATAEND = Unk2;
+            this.difficulty = difficulty;
+            ballSeals = ballSealConfig;
             this.heldItem = heldItem;
             this.moves = moves;
+        }
+        public PartyPokemon(ushort difficulty, ushort Level, ushort pokeNum, ushort formNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) :
+            this(difficulty, Level, pokeNum, ballSealConfig, heldItem, moves) {
+
+            formID = formNum;
         }
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
-                writer.Write(unknown1_DATASTART);
+                writer.Write(difficulty);
                 writer.Write(level);
                 writer.Write(pokeID ?? 0);
 
@@ -44,7 +57,7 @@ namespace DSPRE.ROMFiles {
                         writer.Write(move);
                     }
                 }
-                writer.Write(unknown2_DATAEND);
+                writer.Write(ballSeals);
             }
             return newData.ToArray();
         }
@@ -194,17 +207,10 @@ namespace DSPRE.ROMFiles {
                         ushort unknown1 = reader.ReadUInt16();
                         ushort level = reader.ReadUInt16();
 
-                        //NOTE: The following bitwise 'AND' operation fixes TUBER JARED [PLAT] and all trainers who
-                        //use pokemon with a special form --> ALL PARTY POKEMON WITH A SPECIAL FORM WILL LOSE IT
-                        
-                        //the way special forms are stored is
+                        ushort monFull = reader.ReadUInt16();
+                        ushort pokemon = (ushort)(monFull & PartyPokemon.MON_NUMBER_BITMASK);
+                        ushort form_no = (ushort)((monFull & PartyPokemon.MON_FORM_BITMASK) >> PartyPokemon.MON_NUMBER_BITSIZE);
 
-                        //U16 POKEMON
-                        // 0 1 2 3   4 5 6 7    8 9 A B   C D E F
-                        //BITS 6 - F --> pokemon ID
-                        //BITS 0 - 5 --> form ID 
-                        ushort pokemon = (ushort)(reader.ReadUInt16() & (ushort.MaxValue>>6)); 
-                        
                         ushort? heldItem = null;
                         ushort[] moves = null;
 
@@ -219,7 +225,7 @@ namespace DSPRE.ROMFiles {
                             }
                         }
 
-                        content[i] = new PartyPokemon(unknown1, level, pokemon, reader.ReadUInt16(), heldItem, moves);
+                        content[i] = new PartyPokemon(unknown1, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves);
                     }
                     for (int i = endval; i < maxPoke; i++) {
                         content[i] = new PartyPokemon();

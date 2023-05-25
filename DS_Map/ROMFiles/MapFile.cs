@@ -43,7 +43,7 @@ namespace DSPRE.ROMFiles {
 
 
     /// <summary>
-    /// Class to store map data in Pokémon NDS games
+    /// Class to store map data in PokÃ©mon NDS games
     /// </summary>
     public class MapFile : RomFile {
         #region Fields
@@ -249,7 +249,7 @@ namespace DSPRE.ROMFiles {
     }
 
     /// <summary>
-    /// Class to store building data from Pokémon NDS games
+    /// Class to store building data from PokÃ©mon NDS games
     /// </summary>
     public class Building {
         #region Fields (11)
