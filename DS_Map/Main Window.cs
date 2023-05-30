@@ -5420,14 +5420,12 @@ namespace DSPRE {
                 efi.ShowDialog();
 
                 if (!efi.DialogResult.Equals(DialogResult.OK)) {
-                    MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
                 if (efi.blankCurrentEvents) {
                     DialogResult confirm = MessageBox.Show("You chose to import the entities into blank event file, which means all existing entities in the destination file will be deleted.\nProceed?", "Awaiting user confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (!confirm.Equals(DialogResult.Yes)) {
-                        MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
 
@@ -9672,7 +9670,6 @@ namespace DSPRE {
                 Filter = "NARC File (*.narc)|*.narc"
             };
             if (of.ShowDialog(this) != DialogResult.OK) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -9690,7 +9687,6 @@ namespace DSPRE {
             };
 
             if (narcDir.ShowDialog() != CommonFileDialogResult.Ok) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -9711,7 +9707,6 @@ namespace DSPRE {
             };
 
             if (narcDir.ShowDialog() != CommonFileDialogResult.Ok) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -9722,7 +9717,6 @@ namespace DSPRE {
                 FileName = Path.GetFileName(narcDir.FileName)
             };
             if (sf.ShowDialog(this) != DialogResult.OK) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -9747,7 +9741,6 @@ namespace DSPRE {
             };
 
             if (of.ShowDialog(this) != DialogResult.OK) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -9823,8 +9816,6 @@ namespace DSPRE {
                         MessageBox.Show("Isolated files have been moved to " + "\"" + ISOLATED_FOLDERNAME + "\"", "Files moved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-            } else {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -9937,7 +9928,6 @@ namespace DSPRE {
                             FileName = d.Name + ".list"
                         };
                         if (sf.ShowDialog(this) != DialogResult.OK) {
-                            MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             return;
                         }
 
@@ -9947,9 +9937,7 @@ namespace DSPRE {
                 } else {
                     MessageBox.Show("No file content could be recognized.", "Operation terminated", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            } else {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            } 
         }
         private void fromFolderContentsToolStripMenuItem_Click(object sender, EventArgs e) {
             (DirectoryInfo d, FileInfo[] files) dirData = OpenNonEmptyDir(title: "Folder-Based List Builder");
@@ -9967,7 +9955,6 @@ namespace DSPRE {
                 FileName = d.Name + ".list"
             };
             if (sf.ShowDialog(this) != DialogResult.OK) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -9987,7 +9974,6 @@ namespace DSPRE {
                 Filter = "Any Text File(*.*)|*.*"
             };
             if (of.ShowDialog(this) != DialogResult.OK) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -10037,7 +10023,6 @@ namespace DSPRE {
                     FileName = shortFileName + ".list"
                 };
                 if (sf.ShowDialog(this) != DialogResult.OK) {
-                    MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
@@ -10122,7 +10107,6 @@ namespace DSPRE {
                 };
 
                 if (sourceDirDialog.ShowDialog() != CommonFileDialogResult.Ok) {
-                    MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return (null, null);
                 }
 
