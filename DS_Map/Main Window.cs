@@ -7561,7 +7561,6 @@ namespace DSPRE {
             string txtFileType = "Plaintext file";
             string suggestedFileName = "Text Archive " + textSelection;
             bool showSuccessMessage = true;
-            string fileExtension = "*.msg;*.txt";
 
             SaveFileDialog sf = new SaveFileDialog {
                 Filter = $"{msgFileType} (*.msg)|*.msg|{txtFileType} (*.txt)|*.txt"
@@ -8722,8 +8721,8 @@ namespace DSPRE {
 
             trainerClassListBox.SelectedIndex = currentTrainerFile.trp.trainerClass;
             trainerDoubleCheckBox.Checked = currentTrainerFile.trp.doubleBattle;
-            trainerMovesCheckBox.Checked = currentTrainerFile.trp.hasMoves;
-            trainerItemsCheckBox.Checked = currentTrainerFile.trp.hasItems;
+            trainerMovesCheckBox.Checked = currentTrainerFile.trp.chooseMoves;
+            trainerItemsCheckBox.Checked = currentTrainerFile.trp.chooseItems;
             partyCountUpDown.Value = currentTrainerFile.trp.partyCount;
 
             IList trainerItems = trainerItemsGroupBox.Controls;
@@ -8889,7 +8888,7 @@ namespace DSPRE {
                 partyPokemonPictureBoxList[i].Visible = partyGroupboxList[i].Enabled;
             }
             for (int i = Math.Min(currentTrainerFile.trp.partyCount, (int)partyCountUpDown.Value); i < TrainerFile.POKE_IN_PARTY; i++) {
-                currentTrainerFile.party[i] = new PartyPokemon(currentTrainerFile.trp.hasItems, currentTrainerFile.trp.hasMoves);
+                currentTrainerFile.party[i] = new PartyPokemon(currentTrainerFile.trp.chooseItems, currentTrainerFile.trp.chooseMoves);
             }
 
             //if (!disableHandlers) {
@@ -8927,8 +8926,8 @@ namespace DSPRE {
 
         private void trainerSaveCurrentButton_Click(object sender, EventArgs e) {
             currentTrainerFile.trp.partyCount = (byte)partyCountUpDown.Value;
-            currentTrainerFile.trp.hasMoves = trainerMovesCheckBox.Checked;
-            currentTrainerFile.trp.hasItems = trainerItemsCheckBox.Checked;
+            currentTrainerFile.trp.chooseMoves = trainerMovesCheckBox.Checked;
+            currentTrainerFile.trp.chooseItems = trainerItemsCheckBox.Checked;
             currentTrainerFile.trp.doubleBattle = trainerDoubleCheckBox.Checked;
 
             IList trainerItems = trainerItemsGroupBox.Controls;

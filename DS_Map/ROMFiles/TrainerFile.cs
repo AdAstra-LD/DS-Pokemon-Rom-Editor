@@ -91,8 +91,8 @@ namespace DSPRE.ROMFiles {
         public byte partyCount = 0;
 
         public bool doubleBattle = false;
-        public bool hasMoves = false;
-        public bool hasItems = false;
+        public bool chooseMoves = false;
+        public bool chooseItems = false;
 
         public ushort[] trainerItems = new ushort[TRAINER_ITEMS];
         public BitArray AI;
@@ -109,8 +109,8 @@ namespace DSPRE.ROMFiles {
             trainerID = ID;
             using (BinaryReader reader = new BinaryReader(trainerPropertiesStream)) {
                 byte flags = reader.ReadByte();
-                hasMoves = (flags & 1) != 0;
-                hasItems = (flags & 2) != 0;
+                chooseMoves = ((flags >> 0) & 1) != 0;
+                chooseItems = ((flags >> 1) & 1) != 0;
 
                 trainerClass = reader.ReadByte();
                 trDataUnknown = reader.ReadByte();
@@ -131,8 +131,8 @@ namespace DSPRE.ROMFiles {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 byte flags = 0;
-                flags |= (byte)(hasMoves ? 1 : 0);
-                flags |= (byte)(hasItems ? 2 : 0);
+                flags |= (byte)(chooseMoves ? 1 : 0);
+                flags |= (byte)(chooseItems ? 2 : 0);
 
                 writer.Write(flags);
                 writer.Write(trainerClass);
@@ -187,21 +187,21 @@ namespace DSPRE.ROMFiles {
                     if (readFirstByte) {
                         byte flags = reader.ReadByte();
 
-                        trp.hasMoves = (flags & 1) != 0;
-                        trp.hasItems = (flags & 2) != 0;
+                        trp.chooseMoves = (flags & 1) != 0;
+                        trp.chooseItems = (flags & 2) != 0;
                         trp.partyCount = (byte)((flags & 28) >> 2);
                     }
 
-                    int dividend = 8;
+                    int divisor = 8;
 
-                    if (trp.hasMoves) {
-                        dividend += Party.MOVES_PER_POKE * sizeof(ushort);
+                    if (trp.chooseMoves) {
+                        divisor += Party.MOVES_PER_POKE * sizeof(ushort);
                     }
-                    if (trp.hasItems) {
-                        dividend += sizeof(ushort);
+                    if (trp.chooseItems) {
+                        divisor += sizeof(ushort);
                     }
 
-                    int endval = Math.Min((int)(partyData.Length - 1 / dividend), trp.partyCount);
+                    int endval = Math.Min((int)(partyData.Length - 1 / divisor), trp.partyCount);
                     this.content = new PartyPokemon[maxPoke];
                     for (int i = 0; i < endval; i++) {
                         ushort unknown1 = reader.ReadUInt16();
@@ -214,10 +214,10 @@ namespace DSPRE.ROMFiles {
                         ushort? heldItem = null;
                         ushort[] moves = null;
 
-                        if (trp.hasItems) {
+                        if (trp.chooseItems) {
                             heldItem = reader.ReadUInt16();
                         }
-                        if (trp.hasMoves) {
+                        if (trp.chooseMoves) {
                             moves = new ushort[MOVES_PER_POKE];
                             for (int m = 0; m < moves.Length; m++) {
                                 ushort val = reader.ReadUInt16();
@@ -256,10 +256,10 @@ namespace DSPRE.ROMFiles {
                     }
                 }
                 buffer += nonEmptyCtr + " Poke ";
-                if (this.trp.hasMoves) {
+                if (this.trp.chooseMoves) {
                     buffer += ", moves ";
                 }
-                if (this.trp.hasItems) {
+                if (this.trp.chooseItems) {
                     buffer += ", items ";
                 }
                 return buffer;
@@ -269,7 +269,7 @@ namespace DSPRE.ROMFiles {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 if (this.exportCondensedData && trp != null) {
-                    byte condensedTrData = (byte)(((trp.hasMoves ? 1 : 0) & 0b_1) + (((trp.hasItems ? 1 : 0) & 0b_1) << 1) + ((trp.partyCount & 0b_1111_11) << 2));
+                    byte condensedTrData = (byte)(((trp.chooseMoves ? 1 : 0) & 0b_1) + (((trp.chooseItems ? 1 : 0) & 0b_1) << 1) + ((trp.partyCount & 0b_1111_11) << 2));
                     writer.Write(condensedTrData);
                 }
 
