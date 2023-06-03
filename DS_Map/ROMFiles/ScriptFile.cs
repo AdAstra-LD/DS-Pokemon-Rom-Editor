@@ -11,7 +11,7 @@ using static DSPRE.RomInfo;
 
 namespace DSPRE.ROMFiles {
     /// <summary>
-    /// Class to store script file data in Pokémon NDS games
+    /// Class to store script file data in PokÃ©mon NDS games
     /// </summary>
     public class ScriptFile : RomFile {
         #region Constants

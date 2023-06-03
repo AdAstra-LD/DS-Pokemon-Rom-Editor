@@ -112,7 +112,6 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AB.cs" />
     <Compile Include="EventFileImport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +120,9 @@
     </Compile>
     <Compile Include="Extensions.cs" />
     <Compile Include="GameCamera.cs" />
+    <Compile Include="InputComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -167,12 +169,6 @@
     <Compile Include="BuildingEditor.Designer.cs">
       <DependentUpon>BuildingEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="CameraView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CameraView.Designer.cs">
-      <DependentUpon>CameraView.cs</DependentUpon>
-    </Compile>
     <Compile Include="RomInfo.cs" />
     <Compile Include="ROMFiles\ScriptCommand.cs" />
     <Compile Include="ScintillaUtils\HotKeyManager.cs" />
@@ -204,7 +200,6 @@
     <Compile Include="ROMFiles\EncounterFile.cs" />
     <Compile Include="ROMFiles\TextArchive.cs" />
     <Compile Include="ROMFiles\MapHeader.cs" />
-    <Compile Include="RichTextBoxExt.cs" />
     <Compile Include="ROMFiles\ScriptFile.cs" />
     <Compile Include="ROMFiles\GameMatrix.cs" />
     <Compile Include="ROMFiles\EventFile.cs" />
@@ -293,9 +288,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BuildingEditor.resx">
       <DependentUpon>BuildingEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CameraView.resx">
-      <DependentUpon>CameraView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ScintillaUtils\ScriptTooltip.resx">
       <DependentUpon>ScriptTooltip.cs</DependentUpon>
@@ -521,6 +513,8 @@
     <None Include="Resources\Graphics\Program Icons\scriptDBIconPt.png" />
     <None Include="Resources\Graphics\Program Icons\scriptDBIconDP.png" />
     <None Include="Resources\Graphics\Program Icons\scriptDBIconHGSS.png" />
+    <Content Include="Resources\Graphics\Program Icons\sortAscending.png" />
+    <Content Include="Resources\Graphics\Program Icons\sortDescending.png" />
     <Content Include="Resources\Graphics\Program Icons\tableEditor.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptblueish.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptdarkfog.png" />
@@ -532,6 +526,8 @@
     <None Include="Resources\Graphics\Program Icons\wildEditorButton.png" />
     <None Include="Resources\Graphics\Program Icons\muteIcon.png" />
     <None Include="Resources\Graphics\Program Icons\SearchMiniIcon.png" />
+    <None Include="Resources\Graphics\Program Icons\sortAscending.png" />
+    <None Include="Resources\Graphics\Program Icons\sortDescending.png" />
     <Content Include="Tools\apicula.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

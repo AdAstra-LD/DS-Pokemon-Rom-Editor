@@ -1,15 +1,23 @@
-﻿using System;
+﻿using ScintillaNET;
+using System;
 using System.Collections;
 using System.IO;
 using System.Windows.Forms;
 
 namespace DSPRE.ROMFiles {
     public class PartyPokemon : RomFile {
+        public const int MON_NUMBER_BITSIZE = 10;
+        public const int MON_NUMBER_BITMASK = (1 << MON_NUMBER_BITSIZE) - 1;
+
+        public const int MON_FORM_BITSIZE = 6; //16-MON_NUMBER_BITSIZE
+        public const int MON_FORM_BITMASK = ((1 << MON_FORM_BITSIZE) - 1) << MON_NUMBER_BITSIZE;
+
         #region Fields
         public ushort? pokeID = null;
+        public ushort formID = 0;
         public ushort level = 0;
-        public ushort unknown1_DATASTART = 0;
-        public ushort unknown2_DATAEND = 0;
+        public ushort difficulty = 0;
+        public ushort ballSeals = 0;
 
         public ushort? heldItem = null;
         public ushort[] moves = null;
@@ -20,18 +28,23 @@ namespace DSPRE.ROMFiles {
             UpdateItemsAndMoves(hasItems, hasMoves);
         }
 
-        public PartyPokemon(ushort Unk1, ushort Level, ushort Pokemon, ushort Unk2, ushort? heldItem = null, ushort[] moves = null) {
-            pokeID = Pokemon;
+        public PartyPokemon(ushort difficulty, ushort Level, ushort pokeNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) {
+            pokeID = pokeNum;
             level = Level;
-            unknown1_DATASTART = Unk1;
-            unknown2_DATAEND = Unk2;
+            this.difficulty = difficulty;
+            ballSeals = ballSealConfig;
             this.heldItem = heldItem;
             this.moves = moves;
+        }
+        public PartyPokemon(ushort difficulty, ushort Level, ushort pokeNum, ushort formNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) :
+            this(difficulty, Level, pokeNum, ballSealConfig, heldItem, moves) {
+
+            formID = formNum;
         }
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
-                writer.Write(unknown1_DATASTART);
+                writer.Write(difficulty);
                 writer.Write(level);
                 writer.Write(pokeID ?? 0);
 
@@ -44,7 +57,7 @@ namespace DSPRE.ROMFiles {
                         writer.Write(move);
                     }
                 }
-                writer.Write(unknown2_DATAEND);
+                writer.Write(ballSeals);
             }
             return newData.ToArray();
         }
@@ -78,8 +91,8 @@ namespace DSPRE.ROMFiles {
         public byte partyCount = 0;
 
         public bool doubleBattle = false;
-        public bool hasMoves = false;
-        public bool hasItems = false;
+        public bool chooseMoves = false;
+        public bool chooseItems = false;
 
         public ushort[] trainerItems = new ushort[TRAINER_ITEMS];
         public BitArray AI;
@@ -96,8 +109,8 @@ namespace DSPRE.ROMFiles {
             trainerID = ID;
             using (BinaryReader reader = new BinaryReader(trainerPropertiesStream)) {
                 byte flags = reader.ReadByte();
-                hasMoves = (flags & 1) != 0;
-                hasItems = (flags & 2) != 0;
+                chooseMoves = ((flags >> 0) & 1) != 0;
+                chooseItems = ((flags >> 1) & 1) != 0;
 
                 trainerClass = reader.ReadByte();
                 trDataUnknown = reader.ReadByte();
@@ -118,8 +131,8 @@ namespace DSPRE.ROMFiles {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 byte flags = 0;
-                flags |= (byte)(hasMoves ? 1 : 0);
-                flags |= (byte)(hasItems ? 2 : 0);
+                flags |= (byte)(chooseMoves ? 1 : 0);
+                flags |= (byte)(chooseItems ? 2 : 0);
 
                 writer.Write(flags);
                 writer.Write(trainerClass);
@@ -174,44 +187,37 @@ namespace DSPRE.ROMFiles {
                     if (readFirstByte) {
                         byte flags = reader.ReadByte();
 
-                        trp.hasMoves = (flags & 1) != 0;
-                        trp.hasItems = (flags & 2) != 0;
+                        trp.chooseMoves = (flags & 1) != 0;
+                        trp.chooseItems = (flags & 2) != 0;
                         trp.partyCount = (byte)((flags & 28) >> 2);
                     }
 
-                    int dividend = 8;
+                    int divisor = 8;
 
-                    if (trp.hasMoves) {
-                        dividend += Party.MOVES_PER_POKE * sizeof(ushort);
+                    if (trp.chooseMoves) {
+                        divisor += Party.MOVES_PER_POKE * sizeof(ushort);
                     }
-                    if (trp.hasItems) {
-                        dividend += sizeof(ushort);
+                    if (trp.chooseItems) {
+                        divisor += sizeof(ushort);
                     }
 
-                    int endval = Math.Min((int)(partyData.Length - 1 / dividend), trp.partyCount);
+                    int endval = Math.Min((int)(partyData.Length - 1 / divisor), trp.partyCount);
                     this.content = new PartyPokemon[maxPoke];
                     for (int i = 0; i < endval; i++) {
                         ushort unknown1 = reader.ReadUInt16();
                         ushort level = reader.ReadUInt16();
 
-                        //NOTE: The following bitwise 'AND' operation fixes TUBER JARED [PLAT] and all trainers who
-                        //use pokemon with a special form --> ALL PARTY POKEMON WITH A SPECIAL FORM WILL LOSE IT
-                        
-                        //the way special forms are stored is
+                        ushort monFull = reader.ReadUInt16();
+                        ushort pokemon = (ushort)(monFull & PartyPokemon.MON_NUMBER_BITMASK);
+                        ushort form_no = (ushort)((monFull & PartyPokemon.MON_FORM_BITMASK) >> PartyPokemon.MON_NUMBER_BITSIZE);
 
-                        //U16 POKEMON
-                        // 0 1 2 3   4 5 6 7    8 9 A B   C D E F
-                        //BITS 6 - F --> pokemon ID
-                        //BITS 0 - 5 --> form ID 
-                        ushort pokemon = (ushort)(reader.ReadUInt16() & (ushort.MaxValue>>6)); 
-                        
                         ushort? heldItem = null;
                         ushort[] moves = null;
 
-                        if (trp.hasItems) {
+                        if (trp.chooseItems) {
                             heldItem = reader.ReadUInt16();
                         }
-                        if (trp.hasMoves) {
+                        if (trp.chooseMoves) {
                             moves = new ushort[MOVES_PER_POKE];
                             for (int m = 0; m < moves.Length; m++) {
                                 ushort val = reader.ReadUInt16();
@@ -219,7 +225,7 @@ namespace DSPRE.ROMFiles {
                             }
                         }
 
-                        content[i] = new PartyPokemon(unknown1, level, pokemon, reader.ReadUInt16(), heldItem, moves);
+                        content[i] = new PartyPokemon(unknown1, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves);
                     }
                     for (int i = endval; i < maxPoke; i++) {
                         content[i] = new PartyPokemon();
@@ -250,10 +256,10 @@ namespace DSPRE.ROMFiles {
                     }
                 }
                 buffer += nonEmptyCtr + " Poke ";
-                if (this.trp.hasMoves) {
+                if (this.trp.chooseMoves) {
                     buffer += ", moves ";
                 }
-                if (this.trp.hasItems) {
+                if (this.trp.chooseItems) {
                     buffer += ", items ";
                 }
                 return buffer;
@@ -263,7 +269,7 @@ namespace DSPRE.ROMFiles {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 if (this.exportCondensedData && trp != null) {
-                    byte condensedTrData = (byte)(((trp.hasMoves ? 1 : 0) & 0b_1) + (((trp.hasItems ? 1 : 0) & 0b_1) << 1) + ((trp.partyCount & 0b_1111_11) << 2));
+                    byte condensedTrData = (byte)(((trp.chooseMoves ? 1 : 0) & 0b_1) + (((trp.chooseItems ? 1 : 0) & 0b_1) << 1) + ((trp.partyCount & 0b_1111_11) << 2));
                     writer.Write(condensedTrData);
                 }
 

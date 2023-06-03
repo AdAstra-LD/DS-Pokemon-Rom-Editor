@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using static DSPRE.RomInfo;
 
 namespace DSPRE.ROMFiles {
-    /* ---------------------- WILD POKéMON DATA STRUCTURE (DPPt):----------------------------
+    /* ---------------------- WILD POKÃ‰MON DATA STRUCTURE (DPPt):----------------------------
         
        0x0  //  byte:       Walking encounter rate
        0x4  //  byte:       Level of
@@ -39,7 +39,7 @@ namespace DSPRE.ROMFiles {
        -----------------    7: Esc. Rope
        -----------------    8: ?
 
-    /* ---------------------- WILD POKéMON DATA STRUCTURE (HGSS):----------------------------
+    /* ---------------------- WILD POKÃ‰MON DATA STRUCTURE (HGSS):----------------------------
         
        0x0  //  byte:       Wild Pokemon file number
        0x1  //  byte:       Area data value
@@ -196,13 +196,13 @@ namespace DSPRE.ROMFiles {
                     }
                 }
 
-                /* Poké-Radar encounters */
+                /* PokÃ©-Radar encounters */
                 for (int i = 0; i < 4; i++) {
                     try {
                         radarPokemon[i] = reader.ReadUInt32();
                     } catch {
                         radarPokemon[i] = 0x00;
-                        fieldsWithErrors.Add("PokéRadar" + ' ' + '[' + i + ']' + msgFixed);
+                        fieldsWithErrors.Add("PokÃ©Radar" + ' ' + '[' + i + ']' + msgFixed);
                     }
                 }
 
@@ -349,7 +349,7 @@ namespace DSPRE.ROMFiles {
                     writer.Write(nightPokemon[i]);
                 }
 
-                /* Poké-Radar encounters */
+                /* PokÃ©-Radar encounters */
                 for (int i = 0; i < 4; i++) {
                     writer.Write(radarPokemon[i]);
                 }
@@ -529,7 +529,7 @@ namespace DSPRE.ROMFiles {
                     }
                 }
 
-                /* PokéGear music encounters */
+                /* PokÃ©Gear music encounters */
                 for (int i = 0; i < 2; i++) {
                     try {
                         hoennMusicPokemon[i] = reader.ReadUInt16();
@@ -568,7 +568,7 @@ namespace DSPRE.ROMFiles {
                         surfPokemon[i] = reader.ReadUInt16();
                     } catch {
                         surfMinLevels[i] = 0x00;
-                        fieldsWithErrors.Add("Surf Encounters" + ' ' + '[' + i + ']' + " Pokémon" + msgFixed);
+                        fieldsWithErrors.Add("Surf Encounters" + ' ' + '[' + i + ']' + " PokÃ©mon" + msgFixed);
                     }
                 }
 
@@ -592,7 +592,7 @@ namespace DSPRE.ROMFiles {
                         rockSmashPokemon[i] = reader.ReadUInt16();
                     } catch {
                         rockSmashPokemon[i] = 0x00;
-                        fieldsWithErrors.Add("Rock Smash Encounters" + ' ' + '[' + i + ']' + " Pokémon" + msgFixed);
+                        fieldsWithErrors.Add("Rock Smash Encounters" + ' ' + '[' + i + ']' + " PokÃ©mon" + msgFixed);
                     }
                 }
 
@@ -616,7 +616,7 @@ namespace DSPRE.ROMFiles {
                         oldRodPokemon[i] = reader.ReadUInt16();
                     } catch {
                         oldRodPokemon[i] = 0x00;
-                        fieldsWithErrors.Add("Old Rod Encounters" + ' ' + '[' + i + ']' + " Pokémon" + msgFixed);
+                        fieldsWithErrors.Add("Old Rod Encounters" + ' ' + '[' + i + ']' + " PokÃ©mon" + msgFixed);
                     }
                 }
 
@@ -640,7 +640,7 @@ namespace DSPRE.ROMFiles {
                         goodRodPokemon[i] = reader.ReadUInt16();
                     } catch {
                         goodRodPokemon[i] = 0x00;
-                        fieldsWithErrors.Add("Good Rod Encounters" + ' ' + '[' + i + ']' + " Pokémon" + msgFixed);
+                        fieldsWithErrors.Add("Good Rod Encounters" + ' ' + '[' + i + ']' + " PokÃ©mon" + msgFixed);
                     }
                 }
 
@@ -664,7 +664,7 @@ namespace DSPRE.ROMFiles {
                         superRodPokemon[i] = reader.ReadUInt16();
                     } catch {
                         superRodPokemon[i] = 0x00;
-                        fieldsWithErrors.Add("Super Rod Encounters" + ' ' + '[' + i + ']' + " Pokémon" + msgFixed);
+                        fieldsWithErrors.Add("Super Rod Encounters" + ' ' + '[' + i + ']' + " PokÃ©mon" + msgFixed);
                     }
                 }
 
@@ -724,7 +724,7 @@ namespace DSPRE.ROMFiles {
                     writer.Write(nightPokemon[i]);
                 }
 
-                /* PokéGear music encounters */
+                /* PokÃ©Gear music encounters */
                 for (int i = 0; i < 2; i++) {
                     writer.Write(hoennMusicPokemon[i]);
                 }

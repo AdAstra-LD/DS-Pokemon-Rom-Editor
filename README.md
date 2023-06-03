@@ -2,9 +2,9 @@
 
 Major overhaul of Nomura's DS Pokemon ROM Editor, with lots of new features and bugfixes.
 
-![Screenshot](aDSPRE_180.png)
-![Screenshot](bDSPRE_180.png)
-![Screenshot](cDSPRE_180.png)
+![Screenshot](aDSPRE_192.png)
+![Screenshot](bDSPRE_192.png)
+![Screenshot](cDSPRE_192.png)
 
 ## Misc changes to the original DSPRE
 - Significantly shorter load and save times.

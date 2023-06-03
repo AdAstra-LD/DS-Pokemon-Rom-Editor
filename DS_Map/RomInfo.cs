@@ -170,7 +170,7 @@ namespace DSPRE {
             SetNullEncounterID();
 
             SetAttackNamesTextNumber();
-            SetPokémonNamesTextNumber();
+            SetPokemonNamesTextNumber();
             SetItemNamesTextNumber();
             SetItemScriptFileNumber();
             SetLocationNamesTextNumber();
@@ -795,7 +795,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetPokémonNamesTextNumber() {
+        private void SetPokemonNamesTextNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     pokemonNamesTextNumbers = new int[2] { 362, 363 };
@@ -858,7 +858,7 @@ namespace DSPRE {
             TextArchive itemNames = new TextArchive(itemNamesTextNumber);
             return itemNames.messages.GetRange(startIndex, count == null ? itemNames.messages.Count-1 : (int)count).ToArray();
         }
-        public static string[] GetPokémonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
+        public static string[] GetPokemonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
         public static string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
         public int GetAreaDataCount() => Directory.GetFiles(gameDirs[DirNames.areaData].unpackedDir).Length;
         public int GetMapTexturesCount() => Directory.GetFiles(gameDirs[DirNames.mapTextures].unpackedDir).Length;

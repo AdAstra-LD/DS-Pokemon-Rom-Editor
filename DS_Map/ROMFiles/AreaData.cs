@@ -3,7 +3,7 @@ using static DSPRE.RomInfo;
 
 namespace DSPRE.ROMFiles {
     /// <summary>
-    /// Class to store area data in Pokémon NDS games
+    /// Class to store area data in PokÃ©mon NDS games
     /// </summary>
     public class AreaData : RomFile {
         internal static readonly byte TYPE_INDOOR = 0;
