@@ -514,7 +514,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "Lost in Time Rom Editor by AdAstra/LD3005 (Modified by Kuha)" + Environment.NewLine + "version 1.8.0" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor Reloaded by AdAstra/LD3005" + Environment.NewLine + "version 1.8.0" + Environment.NewLine
                 + Environment.NewLine + "Based on Nømura's DS Pokémon ROM Editor 1.0.4, largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also recycled. " +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
                 + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
@@ -865,7 +865,8 @@ namespace DSPRE {
                     trainerEditorIsReady = true;
                 }
             } else if (mainTabControl.SelectedTab == tableEditorTabPage) {
-                if(!tableEditorIsReady) {
+                if (!tableEditorIsReady) {
+                    resetHeaderSearch();
                     SetupConditionalMusicTable();
                     SetupBattleEffectsTables();
                     tableEditorIsReady = true;
@@ -905,11 +906,11 @@ namespace DSPRE {
             switch (RomInfo.gameFamily) {
                 case gFamEnum.DP:
                 case gFamEnum.Plat:
-                    using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen))
+                    using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, RomInfo.GetPokémonNames(), encToOpen))
                         editor.ShowDialog();
                     break;
                 default:
-                    using (WildEditorHGSS editor = new WildEditorHGSS(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen))
+                    using (WildEditorHGSS editor = new WildEditorHGSS(wildPokeUnpackedPath, RomInfo.GetPokémonNames(), encToOpen))
                         editor.ShowDialog();
                     break;
             }
@@ -1214,7 +1215,7 @@ namespace DSPRE {
             levelScriptUpDown.Value = currentHeader.levelScriptID;
             eventFileUpDown.Value = currentHeader.eventFileID;
             textFileUpDown.Value = currentHeader.textArchiveID;
-            wildPokeUpDown.Value = currentHeader.wildPokemon;
+            wildPokeUpDown.Value = currentHeader.wildPokémon;
             weatherUpDown.Value = currentHeader.weatherID;
             cameraUpDown.Value = currentHeader.cameraAngleID;
             battleBackgroundUpDown.Value = currentHeader.battleBackground;
@@ -1223,7 +1224,7 @@ namespace DSPRE {
                 areaSettingsComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).locationType;
             }
 
-            openWildEditorWithIdButton.Enabled = currentHeader.wildPokemon != RomInfo.nullEncounterID;
+            openWildEditorWithIdButton.Enabled = currentHeader.wildPokémon != RomInfo.nullEncounterID;
 
             /* Setup controls for fields with version-specific differences */
             try {
@@ -1679,10 +1680,15 @@ namespace DSPRE {
             disableHandlers = false;
         }
         private void resetButton_Click(object sender, EventArgs e) {
+            resetHeaderSearch();
+        }
+
+        void resetHeaderSearch() {
             searchLocationTextBox.Clear();
             HeaderSearch.ResetResults(headerListBox, headerListBoxNames, prependNumbers: false);
             statusLabelMessage();
         }
+
         private void searchHeaderTextBox_KeyPress(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
                 startSearchGameLocation();
@@ -1773,14 +1779,14 @@ namespace DSPRE {
                 return;
             }
 
-            currentHeader.wildPokemon = (ushort)wildPokeUpDown.Value;
+            currentHeader.wildPokémon = (ushort)wildPokeUpDown.Value;
             if (wildPokeUpDown.Value == RomInfo.nullEncounterID) {
                 wildPokeUpDown.ForeColor = Color.Red;
             } else {
                 wildPokeUpDown.ForeColor = Color.Black;
             }
 
-            if (currentHeader.wildPokemon == RomInfo.nullEncounterID)
+            if (currentHeader.wildPokémon == RomInfo.nullEncounterID)
                 openWildEditorWithIdButton.Enabled = false;
             else
                 openWildEditorWithIdButton.Enabled = true;
@@ -2527,7 +2533,7 @@ namespace DSPRE {
                                             break;
                                         }
                                     }
-                                } else {
+                                } else if (gameFamily.Equals(gFamEnum.Plat)) {
                                     foreach (ushort r in result) {
                                         HeaderPt hpt;
                                         if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
@@ -2538,6 +2544,21 @@ namespace DSPRE {
 
                                         if (hpt.locationName != 0) {
                                             headerID = hpt.ID;
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    foreach (ushort r in result) {
+                                        HeaderHGSS hgss;
+                                        if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                                            hgss = (HeaderHGSS)MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + r.ToString("D4"), r, 0);
+                                        } 
+                                        else {
+                                            hgss = (HeaderHGSS)MapHeader.LoadFromARM9(r);
+                                        }
+
+                                        if (hgss.locationName != 0) {
+                                            headerID = hgss.ID;
                                             break;
                                         }
                                     }
@@ -5337,7 +5358,7 @@ namespace DSPRE {
 
             EventFile toImport = new EventFile(File.OpenRead(of.FileName));
             if (toImport.isEmpty()) {
-                DialogResult d = MessageBox.Show("Are you sure you want to import an empty event file?", "Empty File loaded", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult d = MessageBox.Show("Are you sure you want to import an empty event file?\nAll existing entities in the current file will disappear.", "Empty File loaded", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (!d.Equals(DialogResult.Yes)) {
                     return;
                 }
@@ -5362,6 +5383,21 @@ namespace DSPRE {
                     MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
+
+                if (efi.blankCurrentEvents) {
+                    DialogResult confirm = MessageBox.Show("You chose to import the entities into blank event file, which means all existing entities in the destination file will be deleted.\nProceed?", "Awaiting user confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (!confirm.Equals(DialogResult.Yes)) {
+                        MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    currentEvFile = new EventFile();
+                    spawnablesListBox.Items.Clear();
+                    overworldsListBox.Items.Clear();
+                    warpsListBox.Items.Clear();
+                    triggersListBox.Items.Clear();
+                }
+
 
                 int[] currentArray;
 
@@ -6530,14 +6566,17 @@ namespace DSPRE {
             // CREATE CONTROLS
             ScriptTextArea = new ScintillaNET.Scintilla();
             scriptSearchManager = new SearchManager(this, ScriptTextArea, panelSearchScriptTextBox, PanelSearchScripts);
+            scintillaScriptsPanel.Controls.Clear();
             scintillaScriptsPanel.Controls.Add(ScriptTextArea);
 
             FunctionTextArea = new ScintillaNET.Scintilla();
             functionSearchManager = new SearchManager(this, FunctionTextArea, panelSearchFunctionTextBox, PanelSearchFunctions);
+            scintillaFunctionsPanel.Controls.Clear();
             scintillaFunctionsPanel.Controls.Add(FunctionTextArea);
 
             ActionTextArea = new ScintillaNET.Scintilla();
             actionSearchManager = new SearchManager(this, ActionTextArea, panelSearchActionTextBox, PanelSearchActions);
+            scintillaActionsPanel.Controls.Clear();
             scintillaActionsPanel.Controls.Add(ActionTextArea);
 
             currentScintillaEditor = ScriptTextArea;
@@ -8381,7 +8420,7 @@ namespace DSPRE {
             RomInfo.SetEncounterMusicTableOffsetToRAMAddress();
             trainerClassEncounterMusicDict = new Dictionary<byte, (uint entryOffset, ushort musicD, ushort? musicN)>();
 
-            uint encounterMusicTableTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.encounterMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
+            uint encounterMusicTableTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.encounterMusicTableOffsetToRAMAddress, 4), 0) - DSUtils.ARM9.address;
             
             uint entrySize = 4;
             uint tableSizeOffset = 10;
@@ -8416,6 +8455,8 @@ namespace DSPRE {
                 DirNames.textArchives,
                 DirNames.monIcons
             });
+
+            RomInfo.SetMonIconsPalTableAddress();
 
             partyPokemonComboboxList.Clear();
             partyPokemonComboboxList.Add(partyPokemon1ComboBox);
@@ -8505,7 +8546,7 @@ namespace DSPRE {
             }
 
             string[] itemNames = RomInfo.GetItemNames();
-            string[] pokeNames = RomInfo.GetPokemonNames();
+            string[] pokeNames = RomInfo.GetPokémonNames();
             string[] moveNames = RomInfo.GetAttackNames();
 
             foreach(Control c in trainerItemsGroupBox.Controls) {
@@ -8631,30 +8672,14 @@ namespace DSPRE {
 
             // read arm9 table to grab pal ID
             int paletteId = 0;
-            byte[] iconPalTableBuf;
-
-            switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
-                    iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x6B838, 4);
-                    break;
-                case gFamEnum.Plat:
-                    iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x79F80, 4);
-                    break;
-                case gFamEnum.HGSS:
-                default:
-                    iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x74408, 4);
-                    break;
-            }
-
-            int iconPalTableAddress = (iconPalTableBuf[3] & 0xFF) << 24 | (iconPalTableBuf[2] & 0xFF) << 16 | (iconPalTableBuf[1] & 0xFF) << 8 | (iconPalTableBuf[0] & 0xFF) /* << 0 */;
             string iconTablePath;
 
-            int iconPalTableOffsetFromFileStart;
-            if (iconPalTableAddress >= RomInfo.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
-                iconPalTableOffsetFromFileStart = iconPalTableAddress - (int)RomInfo.synthOverlayLoadAddress;
+            int iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress);
+            if (iconPalTableOffsetFromFileStart >= 0) { // if iconPalTableAddress >= RomInfo.synthOverlayLoadAddress
+                //In other words, if the pointer shows the table was moved to the synthetic overlay
                 iconTablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
             } else {
-                iconPalTableOffsetFromFileStart = iconPalTableAddress - 0x02000000;
+                iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - DSUtils.ARM9.address);
                 iconTablePath = RomInfo.arm9Path;
             }
             
@@ -9117,7 +9142,7 @@ namespace DSPRE {
                     RomInfo.SetConditionalMusicTableOffsetToRAMAddress();
                     conditionalMusicTable = new List<(ushort, ushort, ushort)>();
 
-                    conditionalMusicTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - 0x02000000;
+                    conditionalMusicTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - DSUtils.ARM9.address;
                     byte tableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.conditionalMusicTableOffsetToRAMAddress - 8);
 
                     conditionalMusicTableListBox.Items.Clear();
@@ -9145,20 +9170,26 @@ namespace DSPRE {
                 case gFamEnum.Plat:
                     pbEffectsMonGroupBox.Enabled = false;
                     pbEffectsTrainerGroupBox.Enabled = false;
+                    conditionalMusicGroupBox.Enabled = false;
                     break;
 
                 default:
-                    pbEffectsGroupBox.Enabled = false;
                     pbEffectsMonGroupBox.Enabled = false;
                     pbEffectsTrainerGroupBox.Enabled = false;
                     conditionalMusicGroupBox.Enabled = false;
+                    pbEffectsGroupBox.Enabled = false;
                     break;
             }
         }
         private void SetupBattleEffectsTables() {
             if (RomInfo.gameFamily == gFamEnum.HGSS || RomInfo.gameFamily == gFamEnum.Plat) {
-                DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.trainerGraphics, DirNames.textArchives });
+                DSUtils.TryUnpackNarcs(new List<DirNames> { 
+                    DirNames.trainerGraphics, 
+                    DirNames.textArchives,
+                    DirNames.monIcons
+                });
                 RomInfo.SetBattleEffectsData();
+                RomInfo.SetMonIconsPalTableAddress();
 
                 effectsComboTable = new List<(ushort vsGraph, ushort battleSSEQ)>();
                 
@@ -9184,7 +9215,7 @@ namespace DSPRE {
 
 
                     pbEffectsPokemonCombobox.Items.Clear();
-                    pokeNames = RomInfo.GetPokemonNames();
+                    pokeNames = RomInfo.GetPokémonNames();
                     for (int i = 0; i < pokeNames.Length; i++) {
                         pbEffectsPokemonCombobox.Items.Add("[" + i + "]" + " " + pokeNames[i]);
                     }
@@ -9356,7 +9387,13 @@ namespace DSPRE {
             };
 
             disableHandlers = true;
-            pbEffectsCombosListbox.Items[index] = pbEffectsTrainerChooseMainCombobox.Items[index] = pbEffectsPokemonChooseMainCombobox.Items[index] = "Combo " + index.ToString("D2") + " - " + "Effect #" + battleIntroEffect + ", " + "Music #" + battleMusic;
+
+            string updatedEntry = "Combo " + index.ToString("D2") + " - " + "Effect #" + battleIntroEffect + ", " + "Music #" + battleMusic;
+            pbEffectsCombosListbox.Items[index] = updatedEntry;
+
+            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                pbEffectsTrainerChooseMainCombobox.Items[index] = pbEffectsPokemonChooseMainCombobox.Items[index] = updatedEntry;
+            }
             disableHandlers = false;
         }
 
@@ -10012,6 +10049,27 @@ namespace DSPRE {
                     romToolboxToolStripButton.Visible = true;
                     break;
                 case 2:
+                    buildNarcFromFolderToolStripButton.Visible = true;
+                    unpackNARCtoFolderToolStripButton.Visible = true;
+                    separator_afterNarcUtils.Visible = true;
+
+                    listBasedBatchRenameToolStripButton.Visible = false;
+                    contentBasedBatchRenameToolStripButton.Visible = false;
+                    separator_afterRenameUtils.Visible = false;
+
+                    enumBasedListBuilderToolStripButton.Visible = false;
+                    folderBasedListBuilderToolStriButton.Visible = false;
+                    separator_afterListUtils.Visible = false;
+
+                    nsbmdAddTexButton.Visible = true;
+                    nsbmdRemoveTexButton.Visible = true;
+                    nsbmdExportTexButton.Visible = true;
+                    separator_afterNsbmdUtils.Visible = true;
+
+                    wildEditorButton.Visible = true;
+                    romToolboxToolStripButton.Visible = true;
+                    break;
+                case 3:
                 default:
                     foreach (ToolStripItem c in mainToolStrip.Items) {
                         c.Visible = true;
@@ -10118,26 +10176,6 @@ namespace DSPRE {
         private void texturedBldRenderCheckBox_CheckedChanged(object sender, EventArgs e) {
             bldTexturesOn = (sender as CheckBox).Checked;
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
-        }
-
-        private void MainProgram_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox10_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void worldmapCoordsGroupBox_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void separator_AfterOpenSave_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

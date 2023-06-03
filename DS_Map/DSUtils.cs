@@ -28,7 +28,7 @@ namespace DSPRE {
             }
         }
         public static class ARM9 {
-            public static uint address = 0x02000000;
+            public static readonly uint address = 0x02000000;
             public class Reader : EasyReader {
                 public Reader(long pos = 0) : base(arm9Path, pos) {
                     this.BaseStream.Position = pos;

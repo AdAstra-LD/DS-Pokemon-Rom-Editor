@@ -16,10 +16,16 @@ namespace DSPRE {
 
         public readonly int[][] userSelected = new int[eventTypesCount][];
 
+        private bool _blankCurrentEvents;
+        public bool blankCurrentEvents {
+            get { return _blankCurrentEvents; }
+            set { _blankCurrentEvents = value; }
+        }
         public EventFileImport(EventFile ef) {
             InitializeComponent();
+            blankCurrentEvents = blankCurrentEventFileCheckbox.Checked;
 
-            for(int i = 0; i < toImport.Length; i++) {
+            for (int i = 0; i < toImport.Length; i++) {
                 toImport[i] = true;
             }
 
@@ -91,6 +97,10 @@ namespace DSPRE {
         }
         private void uncheckAllButtonClicked(object sender, EventArgs e) {
             listBoxes[tableLayoutPanel1.GetPositionFromControl(sender as Button).Column / 2].SetAllItemsChecked(false);
+        }
+
+        private void blankCurrentEventFileCheckbox_CheckedChanged(object sender, EventArgs e) {
+            blankCurrentEvents = blankCurrentEventFileCheckbox.Checked;
         }
     }
 }

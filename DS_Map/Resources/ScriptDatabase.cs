@@ -153,8 +153,23 @@ namespace DSPRE.Resources {
             [0x0065] = "WaitJumpSite",
             [0x0067] = "WaitDoubleExclamation",
             [0x0068] = "WaitMoveForever",
+            [0x009e] = "Heart",
+            [0x009f] = "Smile",
+            [0x00A0] = "Anger",
+            [0x00A1] = "Sad",
+            [0x00A2] = "Grin",
+            [0x00A3] = "Suspecting",
+            [0x00A4] = "MusicNote",
+            [0x00A5] = "Question",
+            [0x00A6] = "BigExclamation",
+            [0x00A7] = "Water",
+            [0x00A8] = "Exhaust",
+            [0x00A9] = "Poison",
+            [0x00AA] = "Ellipsis",
+            [0x00AB] = "Asleep",
             [0x00FE] = "End"
         };
+
         public static Dictionary<ushort, string> DPPtScrCmdNames = new Dictionary<ushort, string>() {
             [0x0000] = "Debug",
             [0x0001] = "LinkScriptOW", //Replaced dummy by LinkScriptOW
@@ -285,7 +300,7 @@ namespace DSPRE.Resources {
             [0x007E] = "CheckPlayerHasItem",
             [0x007F] = "CheckItemIsMachine",
             [0x0080] = "GetItemPocket",
-            [0x0081] = "DummyGivePCItem",
+            [0x0081] = "FullscreenMessage",
             [0x0082] = "DummyCheckPCItem",
             [0x0083] = "GiveGoods",
             [0x0084] = "DummyTakeGoods",
@@ -652,6 +667,7 @@ namespace DSPRE.Resources {
 
             [0x02A0] = "Battle2vs2",
             [0x02AC] = "ActivateMysteryGift",
+            [0x02AC] = "ActivateMysteryGift",
             [0x02AD] = "GetOWMovement",
 
             [0x02A5] = "PartyPokemonTradeScreen",
@@ -802,7 +818,7 @@ namespace DSPRE.Resources {
             [0x007E] = new byte[] { 2, 2, 2 },
             [0x007F] = new byte[] { 2, 2 },
             [0x0080] = new byte[] { 2, 2 },
-            [0x0081] = new byte[1] { 0 },
+            [0x0081] = new byte[] { 2 },
             [0x0082] = new byte[1] { 0 },
             [0x0083] = new byte[] { 2, 2, 2 },
             [0x0084] = new byte[1] { 0 },

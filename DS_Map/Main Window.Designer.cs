@@ -842,6 +842,7 @@
             this.menuViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.essentialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simpleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.advancedStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fullViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -1154,7 +1155,7 @@
             // 
             // headerEditorTabPage
             // 
-            this.headerEditorTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
+            this.headerEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
             this.headerEditorTabPage.Controls.Add(this.removeLastHeaderBTN);
             this.headerEditorTabPage.Controls.Add(this.addHeaderBTN);
             this.headerEditorTabPage.Controls.Add(this.worldmapCoordsGroupBox);
@@ -1178,7 +1179,6 @@
             this.headerEditorTabPage.Controls.Add(this.cameraPictureBox);
             this.headerEditorTabPage.Controls.Add(this.weatherPicLabel);
             this.headerEditorTabPage.Controls.Add(this.weatherPictureBox);
-            this.headerEditorTabPage.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.headerEditorTabPage.ImageIndex = 0;
             this.headerEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.headerEditorTabPage.Name = "headerEditorTabPage";
@@ -1190,7 +1190,6 @@
             // removeLastHeaderBTN
             // 
             this.removeLastHeaderBTN.Enabled = false;
-            this.removeLastHeaderBTN.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.removeLastHeaderBTN.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeLastHeaderBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeLastHeaderBTN.Location = new System.Drawing.Point(13, 578);
@@ -1204,7 +1203,6 @@
             // addHeaderBTN
             // 
             this.addHeaderBTN.Enabled = false;
-            this.addHeaderBTN.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.addHeaderBTN.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addHeaderBTN.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addHeaderBTN.Location = new System.Drawing.Point(13, 552);
@@ -1224,7 +1222,6 @@
             this.worldmapCoordsGroupBox.Controls.Add(this.label36);
             this.worldmapCoordsGroupBox.Controls.Add(this.worldmapXCoordUpDown);
             this.worldmapCoordsGroupBox.Enabled = false;
-            this.worldmapCoordsGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.worldmapCoordsGroupBox.Location = new System.Drawing.Point(238, 468);
             this.worldmapCoordsGroupBox.Name = "worldmapCoordsGroupBox";
             this.worldmapCoordsGroupBox.Size = new System.Drawing.Size(84, 136);
@@ -1235,7 +1232,6 @@
             // worldmapCoordsPasteButton
             // 
             this.worldmapCoordsPasteButton.Enabled = false;
-            this.worldmapCoordsPasteButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.worldmapCoordsPasteButton.Image = ((System.Drawing.Image)(resources.GetObject("worldmapCoordsPasteButton.Image")));
             this.worldmapCoordsPasteButton.Location = new System.Drawing.Point(43, 93);
             this.worldmapCoordsPasteButton.Name = "worldmapCoordsPasteButton";
@@ -1255,7 +1251,6 @@
             // 
             // worldmapCoordsCopyButton
             // 
-            this.worldmapCoordsCopyButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.worldmapCoordsCopyButton.Image = ((System.Drawing.Image)(resources.GetObject("worldmapCoordsCopyButton.Image")));
             this.worldmapCoordsCopyButton.Location = new System.Drawing.Point(6, 93);
             this.worldmapCoordsCopyButton.Name = "worldmapCoordsCopyButton";
@@ -1266,9 +1261,6 @@
             // 
             // worldmapYCoordUpDown
             // 
-            this.worldmapYCoordUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.worldmapYCoordUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.worldmapYCoordUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.worldmapYCoordUpDown.Location = new System.Drawing.Point(25, 67);
             this.worldmapYCoordUpDown.Maximum = new decimal(new int[] {
             63,
@@ -1291,9 +1283,6 @@
             // 
             // worldmapXCoordUpDown
             // 
-            this.worldmapXCoordUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.worldmapXCoordUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.worldmapXCoordUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.worldmapXCoordUpDown.Location = new System.Drawing.Point(25, 29);
             this.worldmapXCoordUpDown.Maximum = new decimal(new int[] {
             63,
@@ -1311,7 +1300,6 @@
             this.groupBox18.Controls.Add(this.pasteWildEncountersButton);
             this.groupBox18.Controls.Add(this.wildPokeUpDown);
             this.groupBox18.Controls.Add(this.copyWildEncountersButton);
-            this.groupBox18.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox18.Location = new System.Drawing.Point(806, 12);
             this.groupBox18.Name = "groupBox18";
             this.groupBox18.Size = new System.Drawing.Size(94, 140);
@@ -1321,7 +1309,6 @@
             // 
             // openWildEditorWithIdButton
             // 
-            this.openWildEditorWithIdButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.openWildEditorWithIdButton.Location = new System.Drawing.Point(10, 46);
             this.openWildEditorWithIdButton.Name = "openWildEditorWithIdButton";
             this.openWildEditorWithIdButton.Size = new System.Drawing.Size(73, 41);
@@ -1333,7 +1320,6 @@
             // pasteWildEncountersButton
             // 
             this.pasteWildEncountersButton.Enabled = false;
-            this.pasteWildEncountersButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteWildEncountersButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteWildEncountersButton.Image")));
             this.pasteWildEncountersButton.Location = new System.Drawing.Point(48, 91);
             this.pasteWildEncountersButton.Name = "pasteWildEncountersButton";
@@ -1344,9 +1330,6 @@
             // 
             // wildPokeUpDown
             // 
-            this.wildPokeUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.wildPokeUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.wildPokeUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.wildPokeUpDown.Location = new System.Drawing.Point(11, 20);
             this.wildPokeUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -1360,7 +1343,6 @@
             // 
             // copyWildEncountersButton
             // 
-            this.copyWildEncountersButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyWildEncountersButton.Image = ((System.Drawing.Image)(resources.GetObject("copyWildEncountersButton.Image")));
             this.copyWildEncountersButton.Location = new System.Drawing.Point(10, 91);
             this.copyWildEncountersButton.Name = "copyWildEncountersButton";
@@ -1371,7 +1353,6 @@
             // 
             // importHeaderFromFileButton
             // 
-            this.importHeaderFromFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.importHeaderFromFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importHeaderFromFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importHeaderFromFileButton.Location = new System.Drawing.Point(912, 518);
@@ -1386,7 +1367,6 @@
             // 
             // exportHeaderToFileButton
             // 
-            this.exportHeaderToFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.exportHeaderToFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportHeaderToFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportHeaderToFileButton.Location = new System.Drawing.Point(992, 518);
@@ -1402,8 +1382,6 @@
             // pasteHeaderButton
             // 
             this.pasteHeaderButton.Enabled = false;
-            this.pasteHeaderButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.pasteHeaderButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.pasteHeaderButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteHeaderButton.Image")));
             this.pasteHeaderButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.pasteHeaderButton.Location = new System.Drawing.Point(992, 563);
@@ -1428,7 +1406,6 @@
             this.groupBox10.Controls.Add(this.openEventsButton);
             this.groupBox10.Controls.Add(this.eventLabel);
             this.groupBox10.Controls.Add(this.eventFileUpDown);
-            this.groupBox10.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox10.Location = new System.Drawing.Point(238, 389);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(662, 76);
@@ -1439,7 +1416,6 @@
             // pasteTextsButton
             // 
             this.pasteTextsButton.Enabled = false;
-            this.pasteTextsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteTextsButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteTextsButton.Image")));
             this.pasteTextsButton.Location = new System.Drawing.Point(616, 28);
             this.pasteTextsButton.Name = "pasteTextsButton";
@@ -1450,7 +1426,6 @@
             // 
             // openMessageFileButton
             // 
-            this.openMessageFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.openMessageFileButton.Location = new System.Drawing.Point(495, 27);
             this.openMessageFileButton.Name = "openMessageFileButton";
             this.openMessageFileButton.Size = new System.Drawing.Size(79, 40);
@@ -1461,7 +1436,6 @@
             // 
             // copyTextsButton
             // 
-            this.copyTextsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyTextsButton.Image = ((System.Drawing.Image)(resources.GetObject("copyTextsButton.Image")));
             this.copyTextsButton.Location = new System.Drawing.Point(578, 29);
             this.copyTextsButton.Name = "copyTextsButton";
@@ -1473,7 +1447,6 @@
             // pasteEventsButton
             // 
             this.pasteEventsButton.Enabled = false;
-            this.pasteEventsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteEventsButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteEventsButton.Image")));
             this.pasteEventsButton.Location = new System.Drawing.Point(252, 29);
             this.pasteEventsButton.Name = "pasteEventsButton";
@@ -1484,9 +1457,6 @@
             // 
             // textFileUpDown
             // 
-            this.textFileUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.textFileUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textFileUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.textFileUpDown.Location = new System.Drawing.Point(376, 36);
             this.textFileUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -1500,7 +1470,6 @@
             // 
             // copyEventsButton
             // 
-            this.copyEventsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyEventsButton.Image = ((System.Drawing.Image)(resources.GetObject("copyEventsButton.Image")));
             this.copyEventsButton.Location = new System.Drawing.Point(215, 29);
             this.copyEventsButton.Name = "copyEventsButton";
@@ -1520,7 +1489,6 @@
             // 
             // openEventsButton
             // 
-            this.openEventsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.openEventsButton.Location = new System.Drawing.Point(133, 28);
             this.openEventsButton.Name = "openEventsButton";
             this.openEventsButton.Size = new System.Drawing.Size(79, 40);
@@ -1540,9 +1508,6 @@
             // 
             // eventFileUpDown
             // 
-            this.eventFileUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.eventFileUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.eventFileUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.eventFileUpDown.Location = new System.Drawing.Point(14, 39);
             this.eventFileUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -1566,7 +1531,6 @@
             this.groupBox4.Controls.Add(this.areaDataUpDown);
             this.groupBox4.Controls.Add(this.matrixLabel);
             this.groupBox4.Controls.Add(this.matrixUpDown);
-            this.groupBox4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox4.Location = new System.Drawing.Point(615, 468);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(285, 136);
@@ -1577,7 +1541,6 @@
             // pasteAreaDataButton
             // 
             this.pasteAreaDataButton.Enabled = false;
-            this.pasteAreaDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteAreaDataButton.Image")));
             this.pasteAreaDataButton.Location = new System.Drawing.Point(239, 87);
             this.pasteAreaDataButton.Name = "pasteAreaDataButton";
@@ -1588,7 +1551,6 @@
             // 
             // copyAreaDataButton
             // 
-            this.copyAreaDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("copyAreaDataButton.Image")));
             this.copyAreaDataButton.Location = new System.Drawing.Point(201, 87);
             this.copyAreaDataButton.Name = "copyAreaDataButton";
@@ -1600,7 +1562,6 @@
             // pasteMatrixButton
             // 
             this.pasteMatrixButton.Enabled = false;
-            this.pasteMatrixButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteMatrixButton.Image")));
             this.pasteMatrixButton.Location = new System.Drawing.Point(239, 29);
             this.pasteMatrixButton.Name = "pasteMatrixButton";
@@ -1611,7 +1572,6 @@
             // 
             // openAreaDataButton
             // 
-            this.openAreaDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.openAreaDataButton.Location = new System.Drawing.Point(118, 85);
             this.openAreaDataButton.Name = "openAreaDataButton";
             this.openAreaDataButton.Size = new System.Drawing.Size(79, 40);
@@ -1622,7 +1582,6 @@
             // 
             // copyMatrixButton
             // 
-            this.copyMatrixButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("copyMatrixButton.Image")));
             this.copyMatrixButton.Location = new System.Drawing.Point(201, 29);
             this.copyMatrixButton.Name = "copyMatrixButton";
@@ -1633,7 +1592,6 @@
             // 
             // openMatrixButton
             // 
-            this.openMatrixButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.openMatrixButton.Location = new System.Drawing.Point(118, 28);
             this.openMatrixButton.Name = "openMatrixButton";
             this.openMatrixButton.Size = new System.Drawing.Size(79, 39);
@@ -1653,9 +1611,6 @@
             // 
             // areaDataUpDown
             // 
-            this.areaDataUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.areaDataUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.areaDataUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.areaDataUpDown.Location = new System.Drawing.Point(13, 98);
             this.areaDataUpDown.Maximum = new decimal(new int[] {
             255,
@@ -1678,9 +1633,6 @@
             // 
             // matrixUpDown
             // 
-            this.matrixUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.matrixUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.matrixUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.matrixUpDown.Location = new System.Drawing.Point(13, 40);
             this.matrixUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -1697,7 +1649,6 @@
             this.groupBox9.Controls.Add(this.resetButton);
             this.groupBox9.Controls.Add(this.searchHeaderButton);
             this.groupBox9.Controls.Add(this.searchLocationTextBox);
-            this.groupBox9.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox9.Location = new System.Drawing.Point(13, 12);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(214, 49);
@@ -1707,7 +1658,6 @@
             // 
             // resetButton
             // 
-            this.resetButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.resetButton.Location = new System.Drawing.Point(161, 17);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(47, 23);
@@ -1718,7 +1668,6 @@
             // 
             // searchHeaderButton
             // 
-            this.searchHeaderButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.searchHeaderButton.Location = new System.Drawing.Point(131, 17);
             this.searchHeaderButton.Name = "searchHeaderButton";
             this.searchHeaderButton.Size = new System.Drawing.Size(29, 23);
@@ -1729,9 +1678,6 @@
             // 
             // searchLocationTextBox
             // 
-            this.searchLocationTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.searchLocationTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.searchLocationTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.searchLocationTextBox.Location = new System.Drawing.Point(8, 19);
             this.searchLocationTextBox.Name = "searchLocationTextBox";
             this.searchLocationTextBox.Size = new System.Drawing.Size(119, 20);
@@ -1740,7 +1686,6 @@
             // 
             // copyHeaderButton
             // 
-            this.copyHeaderButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyHeaderButton.Image = ((System.Drawing.Image)(resources.GetObject("copyHeaderButton.Image")));
             this.copyHeaderButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.copyHeaderButton.Location = new System.Drawing.Point(912, 563);
@@ -1755,7 +1700,6 @@
             // 
             // areaIconPictureBox
             // 
-            this.areaIconPictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.areaIconPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.areaIconPictureBox.Location = new System.Drawing.Point(912, 28);
             this.areaIconPictureBox.Name = "areaIconPictureBox";
@@ -1792,7 +1736,6 @@
             this.nameGroupBox.Controls.Add(this.areaIconComboBox);
             this.nameGroupBox.Controls.Add(this.areaSettingsComboBox);
             this.nameGroupBox.Controls.Add(this.locationNameComboBox);
-            this.nameGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.nameGroupBox.Location = new System.Drawing.Point(238, 12);
             this.nameGroupBox.Name = "nameGroupBox";
             this.nameGroupBox.Size = new System.Drawing.Size(562, 140);
@@ -1812,7 +1755,6 @@
             // pasteLocationNameButton
             // 
             this.pasteLocationNameButton.Enabled = false;
-            this.pasteLocationNameButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteLocationNameButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteLocationNameButton.Image")));
             this.pasteLocationNameButton.Location = new System.Drawing.Point(215, 32);
             this.pasteLocationNameButton.Name = "pasteLocationNameButton";
@@ -1823,7 +1765,6 @@
             // 
             // copyLocationNameButton
             // 
-            this.copyLocationNameButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyLocationNameButton.Image = global::DSPRE.Properties.Resources.copyIcon;
             this.copyLocationNameButton.Location = new System.Drawing.Point(178, 32);
             this.copyLocationNameButton.Name = "copyLocationNameButton";
@@ -1835,7 +1776,6 @@
             // pasteInternalNameButton
             // 
             this.pasteInternalNameButton.Enabled = false;
-            this.pasteInternalNameButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteInternalNameButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteInternalNameButton.Image")));
             this.pasteInternalNameButton.Location = new System.Drawing.Point(511, 31);
             this.pasteInternalNameButton.Name = "pasteInternalNameButton";
@@ -1846,7 +1786,6 @@
             // 
             // copyInternalNameButton
             // 
-            this.copyInternalNameButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyInternalNameButton.Image = ((System.Drawing.Image)(resources.GetObject("copyInternalNameButton.Image")));
             this.copyInternalNameButton.Location = new System.Drawing.Point(474, 31);
             this.copyInternalNameButton.Name = "copyInternalNameButton";
@@ -1858,7 +1797,6 @@
             // pasteAreaIconButton
             // 
             this.pasteAreaIconButton.Enabled = false;
-            this.pasteAreaIconButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteAreaIconButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteAreaIconButton.Image")));
             this.pasteAreaIconButton.Location = new System.Drawing.Point(511, 91);
             this.pasteAreaIconButton.Name = "pasteAreaIconButton";
@@ -1869,7 +1807,6 @@
             // 
             // copyAreaIconButton
             // 
-            this.copyAreaIconButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyAreaIconButton.Image = ((System.Drawing.Image)(resources.GetObject("copyAreaIconButton.Image")));
             this.copyAreaIconButton.Location = new System.Drawing.Point(474, 91);
             this.copyAreaIconButton.Name = "copyAreaIconButton";
@@ -1881,7 +1818,6 @@
             // pasteAreaSettingsButton
             // 
             this.pasteAreaSettingsButton.Enabled = false;
-            this.pasteAreaSettingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteAreaSettingsButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteAreaSettingsButton.Image")));
             this.pasteAreaSettingsButton.Location = new System.Drawing.Point(215, 91);
             this.pasteAreaSettingsButton.Name = "pasteAreaSettingsButton";
@@ -1901,7 +1837,6 @@
             // 
             // copyAreaSettingsButton
             // 
-            this.copyAreaSettingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyAreaSettingsButton.Image = ((System.Drawing.Image)(resources.GetObject("copyAreaSettingsButton.Image")));
             this.copyAreaSettingsButton.Location = new System.Drawing.Point(178, 91);
             this.copyAreaSettingsButton.Name = "copyAreaSettingsButton";
@@ -1930,9 +1865,6 @@
             // 
             // internalNameBox
             // 
-            this.internalNameBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.internalNameBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.internalNameBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.internalNameBox.Location = new System.Drawing.Point(310, 40);
             this.internalNameBox.MaxLength = 16;
             this.internalNameBox.Name = "internalNameBox";
@@ -1951,9 +1883,7 @@
             // 
             // areaIconComboBox
             // 
-            this.areaIconComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.areaIconComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.areaIconComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.areaIconComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.areaIconComboBox.FormattingEnabled = true;
             this.areaIconComboBox.IntegralHeight = false;
             this.areaIconComboBox.Location = new System.Drawing.Point(310, 102);
@@ -1964,9 +1894,7 @@
             // 
             // areaSettingsComboBox
             // 
-            this.areaSettingsComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.areaSettingsComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.areaSettingsComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.areaSettingsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.areaSettingsComboBox.FormattingEnabled = true;
             this.areaSettingsComboBox.IntegralHeight = false;
             this.areaSettingsComboBox.Location = new System.Drawing.Point(14, 102);
@@ -1977,9 +1905,7 @@
             // 
             // locationNameComboBox
             // 
-            this.locationNameComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.locationNameComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.locationNameComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.locationNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.locationNameComboBox.FormattingEnabled = true;
             this.locationNameComboBox.Location = new System.Drawing.Point(14, 40);
             this.locationNameComboBox.Name = "locationNameComboBox";
@@ -1989,7 +1915,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
+            this.groupBox2.BackColor = System.Drawing.SystemColors.Window;
             this.groupBox2.Controls.Add(this.cameraUpDown);
             this.groupBox2.Controls.Add(this.weatherUpDown);
             this.groupBox2.Controls.Add(this.musicNightUpDown);
@@ -2010,7 +1936,6 @@
             this.groupBox2.Controls.Add(this.cameraComboBox);
             this.groupBox2.Controls.Add(this.musicDayLabel);
             this.groupBox2.Controls.Add(this.musicDayComboBox);
-            this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox2.Location = new System.Drawing.Point(238, 157);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(662, 149);
@@ -2020,9 +1945,6 @@
             // 
             // cameraUpDown
             // 
-            this.cameraUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.cameraUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.cameraUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.cameraUpDown.Location = new System.Drawing.Point(376, 108);
             this.cameraUpDown.Maximum = new decimal(new int[] {
             255,
@@ -2036,9 +1958,6 @@
             // 
             // weatherUpDown
             // 
-            this.weatherUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.weatherUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.weatherUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.weatherUpDown.Location = new System.Drawing.Point(14, 108);
             this.weatherUpDown.Maximum = new decimal(new int[] {
             255,
@@ -2052,9 +1971,6 @@
             // 
             // musicNightUpDown
             // 
-            this.musicNightUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.musicNightUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.musicNightUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.musicNightUpDown.Location = new System.Drawing.Point(376, 40);
             this.musicNightUpDown.Maximum = new decimal(new int[] {
             9999,
@@ -2068,9 +1984,6 @@
             // 
             // musicDayUpDown
             // 
-            this.musicDayUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.musicDayUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.musicDayUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.musicDayUpDown.Location = new System.Drawing.Point(14, 41);
             this.musicDayUpDown.Maximum = new decimal(new int[] {
             9999,
@@ -2085,7 +1998,6 @@
             // pasteCameraAngleButton
             // 
             this.pasteCameraAngleButton.Enabled = false;
-            this.pasteCameraAngleButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteCameraAngleButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteCameraAngleButton.Image")));
             this.pasteCameraAngleButton.Location = new System.Drawing.Point(616, 97);
             this.pasteCameraAngleButton.Name = "pasteCameraAngleButton";
@@ -2096,7 +2008,6 @@
             // 
             // copyCameraAngleButton
             // 
-            this.copyCameraAngleButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyCameraAngleButton.Image = ((System.Drawing.Image)(resources.GetObject("copyCameraAngleButton.Image")));
             this.copyCameraAngleButton.Location = new System.Drawing.Point(578, 97);
             this.copyCameraAngleButton.Name = "copyCameraAngleButton";
@@ -2108,7 +2019,6 @@
             // pasteWeatherButton
             // 
             this.pasteWeatherButton.Enabled = false;
-            this.pasteWeatherButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteWeatherButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteWeatherButton.Image")));
             this.pasteWeatherButton.Location = new System.Drawing.Point(252, 99);
             this.pasteWeatherButton.Name = "pasteWeatherButton";
@@ -2119,7 +2029,6 @@
             // 
             // copyWeatherButton
             // 
-            this.copyWeatherButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyWeatherButton.Image = ((System.Drawing.Image)(resources.GetObject("copyWeatherButton.Image")));
             this.copyWeatherButton.Location = new System.Drawing.Point(215, 99);
             this.copyWeatherButton.Name = "copyWeatherButton";
@@ -2131,7 +2040,6 @@
             // pasteMusicNightButton
             // 
             this.pasteMusicNightButton.Enabled = false;
-            this.pasteMusicNightButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteMusicNightButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteMusicNightButton.Image")));
             this.pasteMusicNightButton.Location = new System.Drawing.Point(616, 31);
             this.pasteMusicNightButton.Name = "pasteMusicNightButton";
@@ -2142,7 +2050,6 @@
             // 
             // copyMusicNightButton
             // 
-            this.copyMusicNightButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyMusicNightButton.Image = ((System.Drawing.Image)(resources.GetObject("copyMusicNightButton.Image")));
             this.copyMusicNightButton.Location = new System.Drawing.Point(578, 31);
             this.copyMusicNightButton.Name = "copyMusicNightButton";
@@ -2154,7 +2061,6 @@
             // pasteMusicDayButton
             // 
             this.pasteMusicDayButton.Enabled = false;
-            this.pasteMusicDayButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteMusicDayButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteMusicDayButton.Image")));
             this.pasteMusicDayButton.Location = new System.Drawing.Point(252, 32);
             this.pasteMusicDayButton.Name = "pasteMusicDayButton";
@@ -2165,7 +2071,6 @@
             // 
             // copyMusicDayButton
             // 
-            this.copyMusicDayButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyMusicDayButton.Image = ((System.Drawing.Image)(resources.GetObject("copyMusicDayButton.Image")));
             this.copyMusicDayButton.Location = new System.Drawing.Point(215, 32);
             this.copyMusicDayButton.Name = "copyMusicDayButton";
@@ -2176,9 +2081,7 @@
             // 
             // weatherComboBox
             // 
-            this.weatherComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.weatherComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.weatherComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.weatherComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.weatherComboBox.FormattingEnabled = true;
             this.weatherComboBox.IntegralHeight = false;
             this.weatherComboBox.Location = new System.Drawing.Point(65, 107);
@@ -2190,9 +2093,7 @@
             // 
             // musicNightComboBox
             // 
-            this.musicNightComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.musicNightComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.musicNightComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.musicNightComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.musicNightComboBox.FormattingEnabled = true;
             this.musicNightComboBox.IntegralHeight = false;
             this.musicNightComboBox.Location = new System.Drawing.Point(427, 39);
@@ -2231,9 +2132,7 @@
             // 
             // cameraComboBox
             // 
-            this.cameraComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.cameraComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cameraComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cameraComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cameraComboBox.FormattingEnabled = true;
             this.cameraComboBox.Location = new System.Drawing.Point(427, 107);
             this.cameraComboBox.Name = "cameraComboBox";
@@ -2252,9 +2151,7 @@
             // 
             // musicDayComboBox
             // 
-            this.musicDayComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.musicDayComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.musicDayComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.musicDayComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.musicDayComboBox.FormattingEnabled = true;
             this.musicDayComboBox.IntegralHeight = false;
             this.musicDayComboBox.Location = new System.Drawing.Point(65, 40);
@@ -2276,7 +2173,6 @@
             this.groupBox3.Controls.Add(this.openScriptButton);
             this.groupBox3.Controls.Add(this.scriptLabel);
             this.groupBox3.Controls.Add(this.scriptFileUpDown);
-            this.groupBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox3.Location = new System.Drawing.Point(238, 310);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(662, 76);
@@ -2287,7 +2183,6 @@
             // pasteLevelScriptsButton
             // 
             this.pasteLevelScriptsButton.Enabled = false;
-            this.pasteLevelScriptsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteLevelScriptsButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteLevelScriptsButton.Image")));
             this.pasteLevelScriptsButton.Location = new System.Drawing.Point(616, 30);
             this.pasteLevelScriptsButton.Name = "pasteLevelScriptsButton";
@@ -2298,7 +2193,6 @@
             // 
             // copyLevelScriptsButton
             // 
-            this.copyLevelScriptsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyLevelScriptsButton.Image = ((System.Drawing.Image)(resources.GetObject("copyLevelScriptsButton.Image")));
             this.copyLevelScriptsButton.Location = new System.Drawing.Point(578, 30);
             this.copyLevelScriptsButton.Name = "copyLevelScriptsButton";
@@ -2310,7 +2204,6 @@
             // pasteScriptsButton
             // 
             this.pasteScriptsButton.Enabled = false;
-            this.pasteScriptsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteScriptsButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteScriptsButton.Image")));
             this.pasteScriptsButton.Location = new System.Drawing.Point(252, 30);
             this.pasteScriptsButton.Name = "pasteScriptsButton";
@@ -2321,7 +2214,6 @@
             // 
             // copyScriptsButton
             // 
-            this.copyScriptsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyScriptsButton.Image = ((System.Drawing.Image)(resources.GetObject("copyScriptsButton.Image")));
             this.copyScriptsButton.Location = new System.Drawing.Point(215, 30);
             this.copyScriptsButton.Name = "copyScriptsButton";
@@ -2332,9 +2224,6 @@
             // 
             // levelScriptUpDown
             // 
-            this.levelScriptUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.levelScriptUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.levelScriptUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.levelScriptUpDown.Location = new System.Drawing.Point(377, 39);
             this.levelScriptUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -2348,7 +2237,6 @@
             // 
             // openLevelScriptButton
             // 
-            this.openLevelScriptButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.openLevelScriptButton.Location = new System.Drawing.Point(495, 28);
             this.openLevelScriptButton.Name = "openLevelScriptButton";
             this.openLevelScriptButton.Size = new System.Drawing.Size(79, 40);
@@ -2368,7 +2256,6 @@
             // 
             // openScriptButton
             // 
-            this.openScriptButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.openScriptButton.Location = new System.Drawing.Point(133, 28);
             this.openScriptButton.Name = "openScriptButton";
             this.openScriptButton.Size = new System.Drawing.Size(79, 40);
@@ -2388,9 +2275,6 @@
             // 
             // scriptFileUpDown
             // 
-            this.scriptFileUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.scriptFileUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.scriptFileUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.scriptFileUpDown.Location = new System.Drawing.Point(14, 39);
             this.scriptFileUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -2404,9 +2288,7 @@
             // 
             // headerListBox
             // 
-            this.headerListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.headerListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headerListBox.ForeColor = System.Drawing.Color.White;
             this.headerListBox.FormattingEnabled = true;
             this.headerListBox.ItemHeight = 15;
             this.headerListBox.Location = new System.Drawing.Point(13, 67);
@@ -2418,7 +2300,6 @@
             // 
             // saveHeaderButton
             // 
-            this.saveHeaderButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.saveHeaderButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveHeaderButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveHeaderButton.Location = new System.Drawing.Point(1072, 517);
@@ -2447,7 +2328,6 @@
             this.flagsGroupBox.Controls.Add(this.flag6CheckBox);
             this.flagsGroupBox.Controls.Add(this.flag5CheckBox);
             this.flagsGroupBox.Controls.Add(this.flag4CheckBox);
-            this.flagsGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.flagsGroupBox.Location = new System.Drawing.Point(328, 468);
             this.flagsGroupBox.Name = "flagsGroupBox";
             this.flagsGroupBox.Size = new System.Drawing.Size(281, 136);
@@ -2457,9 +2337,7 @@
             // 
             // followModeComboBox
             // 
-            this.followModeComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.followModeComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.followModeComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.followModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.followModeComboBox.FormattingEnabled = true;
             this.followModeComboBox.IntegralHeight = false;
             this.followModeComboBox.Items.AddRange(new object[] {
@@ -2512,7 +2390,6 @@
             // pasteMapSettingsButton
             // 
             this.pasteMapSettingsButton.Enabled = false;
-            this.pasteMapSettingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.pasteMapSettingsButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteMapSettingsButton.Image")));
             this.pasteMapSettingsButton.Location = new System.Drawing.Point(239, 74);
             this.pasteMapSettingsButton.Name = "pasteMapSettingsButton";
@@ -2532,7 +2409,6 @@
             // 
             // copyFlagsButton
             // 
-            this.copyFlagsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.copyFlagsButton.Image = ((System.Drawing.Image)(resources.GetObject("copyFlagsButton.Image")));
             this.copyFlagsButton.Location = new System.Drawing.Point(239, 31);
             this.copyFlagsButton.Name = "copyFlagsButton";
@@ -2543,9 +2419,6 @@
             // 
             // battleBackgroundUpDown
             // 
-            this.battleBackgroundUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.battleBackgroundUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.battleBackgroundUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.battleBackgroundUpDown.Location = new System.Drawing.Point(154, 73);
             this.battleBackgroundUpDown.Maximum = new decimal(new int[] {
             31,
@@ -2645,7 +2518,6 @@
             // 
             // cameraPictureBox
             // 
-            this.cameraPictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.cameraPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.cameraPictureBox.Location = new System.Drawing.Point(912, 320);
             this.cameraPictureBox.Name = "cameraPictureBox";
@@ -2664,7 +2536,6 @@
             // 
             // weatherPictureBox
             // 
-            this.weatherPictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.weatherPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.weatherPictureBox.Location = new System.Drawing.Point(912, 106);
             this.weatherPictureBox.Name = "weatherPictureBox";
@@ -2674,7 +2545,7 @@
             // 
             // matrixEditorTabPage
             // 
-            this.matrixEditorTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
+            this.matrixEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
             this.matrixEditorTabPage.Controls.Add(this.locateCurrentMatrixFile);
             this.matrixEditorTabPage.Controls.Add(this.setSpawnPointButton);
             this.matrixEditorTabPage.Controls.Add(this.resetColorTableButton);
@@ -2696,7 +2567,6 @@
             this.matrixEditorTabPage.Controls.Add(this.widthLabel);
             this.matrixEditorTabPage.Controls.Add(this.selectMatrixComboBox);
             this.matrixEditorTabPage.Controls.Add(this.saveMatrixButton);
-            this.matrixEditorTabPage.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.matrixEditorTabPage.ImageIndex = 1;
             this.matrixEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.matrixEditorTabPage.Name = "matrixEditorTabPage";
@@ -2707,24 +2577,18 @@
             // 
             // locateCurrentMatrixFile
             // 
-            this.locateCurrentMatrixFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.locateCurrentMatrixFile.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.locateCurrentMatrixFile.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.locateCurrentMatrixFile.Image = global::DSPRE.Properties.Resources.open_file;
             this.locateCurrentMatrixFile.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.locateCurrentMatrixFile.Location = new System.Drawing.Point(50, 232);
             this.locateCurrentMatrixFile.Name = "locateCurrentMatrixFile";
             this.locateCurrentMatrixFile.Size = new System.Drawing.Size(41, 38);
             this.locateCurrentMatrixFile.TabIndex = 33;
-            this.locateCurrentMatrixFile.UseVisualStyleBackColor = false;
+            this.locateCurrentMatrixFile.UseVisualStyleBackColor = true;
             this.locateCurrentMatrixFile.Click += new System.EventHandler(this.locateCurrentMatrixFile_Click);
             // 
             // setSpawnPointButton
             // 
             this.setSpawnPointButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.setSpawnPointButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.setSpawnPointButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.setSpawnPointButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
             this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -2735,14 +2599,11 @@
             this.setSpawnPointButton.Text = "Set Spawn\r\nto Selection";
             this.setSpawnPointButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolTip1.SetToolTip(this.setSpawnPointButton, "Sets the current matrix cell as the player\'s Spawn Point");
-            this.setSpawnPointButton.UseVisualStyleBackColor = false;
+            this.setSpawnPointButton.UseVisualStyleBackColor = true;
             this.setSpawnPointButton.Click += new System.EventHandler(this.setSpawnPointButton_Click);
             // 
             // resetColorTableButton
             // 
-            this.resetColorTableButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.resetColorTableButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.resetColorTableButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.resetColorTableButton.Image = global::DSPRE.Properties.Resources.resetColorTable;
             this.resetColorTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.resetColorTableButton.Location = new System.Drawing.Point(11, 446);
@@ -2751,14 +2612,11 @@
             this.resetColorTableButton.TabIndex = 31;
             this.resetColorTableButton.Text = "Reset Color Table";
             this.resetColorTableButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.resetColorTableButton.UseVisualStyleBackColor = false;
+            this.resetColorTableButton.UseVisualStyleBackColor = true;
             this.resetColorTableButton.Click += new System.EventHandler(this.resetColorTableButton_Click);
             // 
             // importColorTableButton
             // 
-            this.importColorTableButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.importColorTableButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.importColorTableButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.importColorTableButton.Image = global::DSPRE.Properties.Resources.loadColorTable;
             this.importColorTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importColorTableButton.Location = new System.Drawing.Point(11, 479);
@@ -2767,14 +2625,11 @@
             this.importColorTableButton.TabIndex = 30;
             this.importColorTableButton.Text = "Import Color Table";
             this.importColorTableButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importColorTableButton.UseVisualStyleBackColor = false;
+            this.importColorTableButton.UseVisualStyleBackColor = true;
             this.importColorTableButton.Click += new System.EventHandler(this.importColorTableButton_Click);
             // 
             // importMatrixButton
             // 
-            this.importMatrixButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.importMatrixButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.importMatrixButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.importMatrixButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importMatrixButton.Location = new System.Drawing.Point(11, 152);
@@ -2783,14 +2638,11 @@
             this.importMatrixButton.TabIndex = 29;
             this.importMatrixButton.Text = "Replace Matrix";
             this.importMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importMatrixButton.UseVisualStyleBackColor = false;
+            this.importMatrixButton.UseVisualStyleBackColor = true;
             this.importMatrixButton.Click += new System.EventHandler(this.importMatrixButton_Click);
             // 
             // exportMatrixButton
             // 
-            this.exportMatrixButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.exportMatrixButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.exportMatrixButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.exportMatrixButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportMatrixButton.Location = new System.Drawing.Point(11, 122);
@@ -2799,14 +2651,11 @@
             this.exportMatrixButton.TabIndex = 28;
             this.exportMatrixButton.Text = "Export Matrix";
             this.exportMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportMatrixButton.UseVisualStyleBackColor = false;
+            this.exportMatrixButton.UseVisualStyleBackColor = true;
             this.exportMatrixButton.Click += new System.EventHandler(this.exportMatrixButton_Click);
             // 
             // removeMatrixButton
             // 
-            this.removeMatrixButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.removeMatrixButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.removeMatrixButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.removeMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("removeMatrixButton.Image")));
             this.removeMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeMatrixButton.Location = new System.Drawing.Point(64, 183);
@@ -2815,14 +2664,11 @@
             this.removeMatrixButton.TabIndex = 27;
             this.removeMatrixButton.Text = "Delete Last";
             this.removeMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeMatrixButton.UseVisualStyleBackColor = false;
+            this.removeMatrixButton.UseVisualStyleBackColor = true;
             this.removeMatrixButton.Click += new System.EventHandler(this.removeMatrixButton_Click);
             // 
             // addMatrixButton
             // 
-            this.addMatrixButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.addMatrixButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.addMatrixButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.addMatrixButton.Image = ((System.Drawing.Image)(resources.GetObject("addMatrixButton.Image")));
             this.addMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addMatrixButton.Location = new System.Drawing.Point(11, 183);
@@ -2831,14 +2677,11 @@
             this.addMatrixButton.TabIndex = 2;
             this.addMatrixButton.Text = "Add";
             this.addMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addMatrixButton.UseVisualStyleBackColor = false;
+            this.addMatrixButton.UseVisualStyleBackColor = true;
             this.addMatrixButton.Click += new System.EventHandler(this.addMatrixButton_Click);
             // 
             // removeHeightsButton
             // 
-            this.removeHeightsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.removeHeightsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.removeHeightsButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.removeHeightsButton.Image = ((System.Drawing.Image)(resources.GetObject("removeHeightsButton.Image")));
             this.removeHeightsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeHeightsButton.Location = new System.Drawing.Point(11, 402);
@@ -2847,14 +2690,11 @@
             this.removeHeightsButton.TabIndex = 26;
             this.removeHeightsButton.Text = "Remove Heights";
             this.removeHeightsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeHeightsButton.UseVisualStyleBackColor = false;
+            this.removeHeightsButton.UseVisualStyleBackColor = true;
             this.removeHeightsButton.Click += new System.EventHandler(this.removeHeightsButton_Click);
             // 
             // removeHeadersButton
             // 
-            this.removeHeadersButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.removeHeadersButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.removeHeadersButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.removeHeadersButton.Image = ((System.Drawing.Image)(resources.GetObject("removeHeadersButton.Image")));
             this.removeHeadersButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeHeadersButton.Location = new System.Drawing.Point(11, 319);
@@ -2863,14 +2703,11 @@
             this.removeHeadersButton.TabIndex = 25;
             this.removeHeadersButton.Text = "Remove Headers";
             this.removeHeadersButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeHeadersButton.UseVisualStyleBackColor = false;
+            this.removeHeadersButton.UseVisualStyleBackColor = true;
             this.removeHeadersButton.Click += new System.EventHandler(this.removeHeadersButton_Click);
             // 
             // addHeightsButton
             // 
-            this.addHeightsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.addHeightsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.addHeightsButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.addHeightsButton.Image = ((System.Drawing.Image)(resources.GetObject("addHeightsButton.Image")));
             this.addHeightsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addHeightsButton.Location = new System.Drawing.Point(11, 366);
@@ -2879,14 +2716,11 @@
             this.addHeightsButton.TabIndex = 24;
             this.addHeightsButton.Text = "Add Heights Tab";
             this.addHeightsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addHeightsButton.UseVisualStyleBackColor = false;
+            this.addHeightsButton.UseVisualStyleBackColor = true;
             this.addHeightsButton.Click += new System.EventHandler(this.addHeightsButton_Click);
             // 
             // addHeadersButton
             // 
-            this.addHeadersButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.addHeadersButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.addHeadersButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.addHeadersButton.Image = ((System.Drawing.Image)(resources.GetObject("addHeadersButton.Image")));
             this.addHeadersButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addHeadersButton.Location = new System.Drawing.Point(11, 283);
@@ -2895,7 +2729,7 @@
             this.addHeadersButton.TabIndex = 23;
             this.addHeadersButton.Text = "Add Header Tab";
             this.addHeadersButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addHeadersButton.UseVisualStyleBackColor = false;
+            this.addHeadersButton.UseVisualStyleBackColor = true;
             this.addHeadersButton.Click += new System.EventHandler(this.addHeaderSectionButton_Click);
             // 
             // labelMatrices
@@ -2950,7 +2784,6 @@
             this.headersGridView.AllowUserToDeleteRows = false;
             this.headersGridView.AllowUserToResizeColumns = false;
             this.headersGridView.AllowUserToResizeRows = false;
-            this.headersGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -2964,13 +2797,12 @@
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle2.Format = "D4";
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.headersGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            this.headersGridView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.headersGridView.Location = new System.Drawing.Point(0, 0);
             this.headersGridView.MultiSelect = false;
             this.headersGridView.Name = "headersGridView";
@@ -3017,7 +2849,6 @@
             this.heightsGridView.AllowUserToResizeRows = false;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
-            this.heightsGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
@@ -3031,13 +2862,12 @@
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle7.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle7.Format = "D2";
             dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle7;
-            this.heightsGridView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.heightsGridView.Location = new System.Drawing.Point(0, 0);
             this.heightsGridView.MultiSelect = false;
             this.heightsGridView.Name = "heightsGridView";
@@ -3082,7 +2912,6 @@
             this.mapFilesGridView.AllowUserToResizeRows = false;
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
-            this.mapFilesGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
@@ -3096,13 +2925,12 @@
             dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle12.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle12.Format = "D4";
             dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle12;
-            this.mapFilesGridView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
             this.mapFilesGridView.MultiSelect = false;
             this.mapFilesGridView.Name = "mapFilesGridView";
@@ -3132,9 +2960,6 @@
             // 
             // matrixNameTextBox
             // 
-            this.matrixNameTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.matrixNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.matrixNameTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.matrixNameTextBox.Location = new System.Drawing.Point(13, 69);
             this.matrixNameTextBox.MaxLength = 16;
             this.matrixNameTextBox.Name = "matrixNameTextBox";
@@ -3144,9 +2969,6 @@
             // 
             // heightUpDown
             // 
-            this.heightUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.heightUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.heightUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.heightUpDown.Location = new System.Drawing.Point(84, 98);
             this.heightUpDown.Maximum = new decimal(new int[] {
             255,
@@ -3170,9 +2992,6 @@
             // 
             // widthUpDown
             // 
-            this.widthUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.widthUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.widthUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.widthUpDown.Location = new System.Drawing.Point(41, 98);
             this.widthUpDown.Maximum = new decimal(new int[] {
             255,
@@ -3206,9 +3025,7 @@
             // 
             // selectMatrixComboBox
             // 
-            this.selectMatrixComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.selectMatrixComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.selectMatrixComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.selectMatrixComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.selectMatrixComboBox.FormattingEnabled = true;
             this.selectMatrixComboBox.Location = new System.Drawing.Point(13, 27);
             this.selectMatrixComboBox.Name = "selectMatrixComboBox";
@@ -3219,9 +3036,6 @@
             // saveMatrixButton
             // 
             this.saveMatrixButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.saveMatrixButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.saveMatrixButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.saveMatrixButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -3231,12 +3045,12 @@
             this.saveMatrixButton.TabIndex = 22;
             this.saveMatrixButton.Text = "Save Matrix";
             this.saveMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.saveMatrixButton.UseVisualStyleBackColor = false;
+            this.saveMatrixButton.UseVisualStyleBackColor = true;
             this.saveMatrixButton.Click += new System.EventHandler(this.saveMatrixButton_Click);
             // 
             // mapEditorTabPage
             // 
-            this.mapEditorTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
+            this.mapEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
             this.mapEditorTabPage.Controls.Add(this.tableLayoutPanel3);
             this.mapEditorTabPage.Controls.Add(this.mapScreenshotButton);
             this.mapEditorTabPage.Controls.Add(this.mapRenderPanel);
@@ -3250,7 +3064,6 @@
             this.mapEditorTabPage.Controls.Add(this.radio3D);
             this.mapEditorTabPage.Controls.Add(this.radio2D);
             this.mapEditorTabPage.Controls.Add(this.wireframeCheckBox);
-            this.mapEditorTabPage.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.mapEditorTabPage.ImageIndex = 2;
             this.mapEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.mapEditorTabPage.Name = "mapEditorTabPage";
@@ -3284,10 +3097,8 @@
             // 
             // addMapFileButton
             // 
-            this.addMapFileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.tableLayoutPanel3.SetColumnSpan(this.addMapFileButton, 2);
             this.addMapFileButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.addMapFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.addMapFileButton.Image = ((System.Drawing.Image)(resources.GetObject("addMapFileButton.Image")));
             this.addMapFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addMapFileButton.Location = new System.Drawing.Point(3, 3);
@@ -3296,29 +3107,25 @@
             this.addMapFileButton.TabIndex = 36;
             this.addMapFileButton.Text = "Add \r\nMap File";
             this.addMapFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addMapFileButton.UseVisualStyleBackColor = false;
+            this.addMapFileButton.UseVisualStyleBackColor = true;
             this.addMapFileButton.Click += new System.EventHandler(this.addMapFileButton_Click);
             // 
             // locateCurrentMapBin
             // 
-            this.locateCurrentMapBin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.locateCurrentMapBin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.locateCurrentMapBin.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.locateCurrentMapBin.Image = global::DSPRE.Properties.Resources.open_file;
             this.locateCurrentMapBin.Location = new System.Drawing.Point(150, 89);
             this.locateCurrentMapBin.Name = "locateCurrentMapBin";
             this.locateCurrentMapBin.Size = new System.Drawing.Size(46, 37);
             this.locateCurrentMapBin.TabIndex = 40;
             this.locateCurrentMapBin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.locateCurrentMapBin.UseVisualStyleBackColor = false;
+            this.locateCurrentMapBin.UseVisualStyleBackColor = true;
             this.locateCurrentMapBin.Click += new System.EventHandler(this.locateCurrentMapBin_Click);
             // 
             // removeMapFileButton
             // 
-            this.removeMapFileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.tableLayoutPanel3.SetColumnSpan(this.removeMapFileButton, 2);
             this.removeMapFileButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.removeMapFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.removeMapFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeMapFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeMapFileButton.Location = new System.Drawing.Point(101, 3);
@@ -3327,15 +3134,13 @@
             this.removeMapFileButton.TabIndex = 35;
             this.removeMapFileButton.Text = "Remove \r\nLast Map";
             this.removeMapFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeMapFileButton.UseVisualStyleBackColor = false;
+            this.removeMapFileButton.UseVisualStyleBackColor = true;
             this.removeMapFileButton.Click += new System.EventHandler(this.removeLastMapFileButton_Click);
             // 
             // replaceMapBinButton
             // 
-            this.replaceMapBinButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.tableLayoutPanel3.SetColumnSpan(this.replaceMapBinButton, 2);
             this.replaceMapBinButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.replaceMapBinButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.replaceMapBinButton.Image = ((System.Drawing.Image)(resources.GetObject("replaceMapBinButton.Image")));
             this.replaceMapBinButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.replaceMapBinButton.Location = new System.Drawing.Point(3, 46);
@@ -3344,15 +3149,13 @@
             this.replaceMapBinButton.TabIndex = 37;
             this.replaceMapBinButton.Text = "Replace \r\nMap BIN";
             this.replaceMapBinButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.replaceMapBinButton.UseVisualStyleBackColor = false;
+            this.replaceMapBinButton.UseVisualStyleBackColor = true;
             this.replaceMapBinButton.Click += new System.EventHandler(this.replaceMapBinButton_Click);
             // 
             // exportCurrentMapBinButton
             // 
-            this.exportCurrentMapBinButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.tableLayoutPanel3.SetColumnSpan(this.exportCurrentMapBinButton, 2);
             this.exportCurrentMapBinButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.exportCurrentMapBinButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.exportCurrentMapBinButton.Image = ((System.Drawing.Image)(resources.GetObject("exportCurrentMapBinButton.Image")));
             this.exportCurrentMapBinButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportCurrentMapBinButton.Location = new System.Drawing.Point(101, 46);
@@ -3361,15 +3164,13 @@
             this.exportCurrentMapBinButton.TabIndex = 38;
             this.exportCurrentMapBinButton.Text = "Export \r\nMap BIN";
             this.exportCurrentMapBinButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportCurrentMapBinButton.UseVisualStyleBackColor = false;
+            this.exportCurrentMapBinButton.UseVisualStyleBackColor = true;
             this.exportCurrentMapBinButton.Click += new System.EventHandler(this.exportCurrentMapBinButton_Click);
             // 
             // saveMapButton
             // 
-            this.saveMapButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.tableLayoutPanel3.SetColumnSpan(this.saveMapButton, 3);
             this.saveMapButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.saveMapButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.saveMapButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveMapButton.Location = new System.Drawing.Point(3, 89);
@@ -3378,20 +3179,18 @@
             this.saveMapButton.TabIndex = 34;
             this.saveMapButton.Text = "Save This\r\nMap BIN\r\n";
             this.saveMapButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.saveMapButton.UseVisualStyleBackColor = false;
+            this.saveMapButton.UseVisualStyleBackColor = true;
             this.saveMapButton.Click += new System.EventHandler(this.saveMapButton_Click);
             // 
             // mapScreenshotButton
             // 
-            this.mapScreenshotButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.mapScreenshotButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.mapScreenshotButton.Image = global::DSPRE.Properties.Resources.cameraIcon;
             this.mapScreenshotButton.Location = new System.Drawing.Point(1135, 499);
             this.mapScreenshotButton.Name = "mapScreenshotButton";
             this.mapScreenshotButton.Size = new System.Drawing.Size(41, 40);
             this.mapScreenshotButton.TabIndex = 39;
             this.mapScreenshotButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.mapScreenshotButton.UseVisualStyleBackColor = false;
+            this.mapScreenshotButton.UseVisualStyleBackColor = true;
             this.mapScreenshotButton.Click += new System.EventHandler(this.mapScreenshotButton_Click);
             // 
             // mapRenderPanel
@@ -3447,9 +3246,7 @@
             // 
             // buildTextureComboBox
             // 
-            this.buildTextureComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.buildTextureComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buildTextureComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buildTextureComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.buildTextureComboBox.FormattingEnabled = true;
             this.buildTextureComboBox.Location = new System.Drawing.Point(19, 588);
             this.buildTextureComboBox.Name = "buildTextureComboBox";
@@ -3468,9 +3265,7 @@
             // 
             // mapTextureComboBox
             // 
-            this.mapTextureComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.mapTextureComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.mapTextureComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.mapTextureComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.mapTextureComboBox.FormattingEnabled = true;
             this.mapTextureComboBox.Location = new System.Drawing.Point(19, 544);
             this.mapTextureComboBox.Name = "mapTextureComboBox";
@@ -3489,9 +3284,7 @@
             // 
             // selectMapComboBox
             // 
-            this.selectMapComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.selectMapComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.selectMapComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.selectMapComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.selectMapComboBox.FormattingEnabled = true;
             this.selectMapComboBox.Location = new System.Drawing.Point(19, 500);
             this.selectMapComboBox.Name = "selectMapComboBox";
@@ -3515,7 +3308,6 @@
             // 
             // buildingsTabPage
             // 
-            this.buildingsTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.buildingsTabPage.Controls.Add(this.groupBox33);
             this.buildingsTabPage.Controls.Add(this.yLabel);
             this.buildingsTabPage.Controls.Add(this.lockXZgroupbox);
@@ -3532,13 +3324,13 @@
             this.buildingsTabPage.Controls.Add(this.addBuildingButton);
             this.buildingsTabPage.Controls.Add(this.buildPositionGroupBox);
             this.buildingsTabPage.Controls.Add(this.buildingsListBox);
-            this.buildingsTabPage.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.buildingsTabPage.Location = new System.Drawing.Point(4, 22);
             this.buildingsTabPage.Name = "buildingsTabPage";
             this.buildingsTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.buildingsTabPage.Size = new System.Drawing.Size(481, 450);
             this.buildingsTabPage.TabIndex = 0;
             this.buildingsTabPage.Text = "Buildings";
+            this.buildingsTabPage.UseVisualStyleBackColor = true;
             // 
             // groupBox33
             // 
@@ -3549,7 +3341,6 @@
             this.groupBox33.Controls.Add(this.xRotBuildUpDown);
             this.groupBox33.Controls.Add(this.zRotBuildUpDown);
             this.groupBox33.Enabled = false;
-            this.groupBox33.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox33.Location = new System.Drawing.Point(339, 141);
             this.groupBox33.Name = "groupBox33";
             this.groupBox33.Size = new System.Drawing.Size(131, 123);
@@ -3559,9 +3350,7 @@
             // 
             // yRotDegBldUpDown
             // 
-            this.yRotDegBldUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.yRotDegBldUpDown.DecimalPlaces = 2;
-            this.yRotDegBldUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.yRotDegBldUpDown.Location = new System.Drawing.Point(66, 56);
             this.yRotDegBldUpDown.Maximum = new decimal(new int[] {
             360,
@@ -3575,9 +3364,7 @@
             // 
             // xRotDegBldUpDown
             // 
-            this.xRotDegBldUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.xRotDegBldUpDown.DecimalPlaces = 2;
-            this.xRotDegBldUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.xRotDegBldUpDown.Location = new System.Drawing.Point(66, 20);
             this.xRotDegBldUpDown.Maximum = new decimal(new int[] {
             360,
@@ -3591,9 +3378,7 @@
             // 
             // zRotDegBldUpDown
             // 
-            this.zRotDegBldUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.zRotDegBldUpDown.DecimalPlaces = 2;
-            this.zRotDegBldUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.zRotDegBldUpDown.Location = new System.Drawing.Point(66, 93);
             this.zRotDegBldUpDown.Maximum = new decimal(new int[] {
             360,
@@ -3607,8 +3392,6 @@
             // 
             // yRotBuildUpDown
             // 
-            this.yRotBuildUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.yRotBuildUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.yRotBuildUpDown.Location = new System.Drawing.Point(6, 56);
             this.yRotBuildUpDown.Maximum = new decimal(new int[] {
             65536,
@@ -3622,8 +3405,6 @@
             // 
             // xRotBuildUpDown
             // 
-            this.xRotBuildUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.xRotBuildUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.xRotBuildUpDown.Location = new System.Drawing.Point(6, 20);
             this.xRotBuildUpDown.Maximum = new decimal(new int[] {
             65536,
@@ -3637,8 +3418,6 @@
             // 
             // zRotBuildUpDown
             // 
-            this.zRotBuildUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.zRotBuildUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.zRotBuildUpDown.Location = new System.Drawing.Point(6, 93);
             this.zRotBuildUpDown.Maximum = new decimal(new int[] {
             65536,
@@ -3666,7 +3445,6 @@
             this.lockXZgroupbox.Controls.Add(this.bldPlaceLockXcheckbox);
             this.lockXZgroupbox.Controls.Add(this.bldPlaceLockZcheckbox);
             this.lockXZgroupbox.Enabled = false;
-            this.lockXZgroupbox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.lockXZgroupbox.Location = new System.Drawing.Point(272, 271);
             this.lockXZgroupbox.Name = "lockXZgroupbox";
             this.lockXZgroupbox.Size = new System.Drawing.Size(154, 36);
@@ -3677,9 +3455,7 @@
             // 
             this.bldPlaceLockXcheckbox.Appearance = System.Windows.Forms.Appearance.Button;
             this.bldPlaceLockXcheckbox.AutoSize = true;
-            this.bldPlaceLockXcheckbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.bldPlaceLockXcheckbox.Enabled = false;
-            this.bldPlaceLockXcheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bldPlaceLockXcheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bldPlaceLockXcheckbox.ForeColor = System.Drawing.Color.Red;
             this.bldPlaceLockXcheckbox.Location = new System.Drawing.Point(10, 9);
@@ -3687,16 +3463,14 @@
             this.bldPlaceLockXcheckbox.Size = new System.Drawing.Size(57, 23);
             this.bldPlaceLockXcheckbox.TabIndex = 41;
             this.bldPlaceLockXcheckbox.Text = "Lock X";
-            this.bldPlaceLockXcheckbox.UseVisualStyleBackColor = false;
+            this.bldPlaceLockXcheckbox.UseVisualStyleBackColor = true;
             this.bldPlaceLockXcheckbox.CheckedChanged += new System.EventHandler(this.bldPlaceLockXcheckbox_CheckedChanged);
             // 
             // bldPlaceLockZcheckbox
             // 
             this.bldPlaceLockZcheckbox.Appearance = System.Windows.Forms.Appearance.Button;
             this.bldPlaceLockZcheckbox.AutoSize = true;
-            this.bldPlaceLockZcheckbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.bldPlaceLockZcheckbox.Enabled = false;
-            this.bldPlaceLockZcheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bldPlaceLockZcheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bldPlaceLockZcheckbox.ForeColor = System.Drawing.Color.Blue;
             this.bldPlaceLockZcheckbox.Location = new System.Drawing.Point(85, 9);
@@ -3704,7 +3478,7 @@
             this.bldPlaceLockZcheckbox.Size = new System.Drawing.Size(57, 23);
             this.bldPlaceLockZcheckbox.TabIndex = 42;
             this.bldPlaceLockZcheckbox.Text = "Lock Z";
-            this.bldPlaceLockZcheckbox.UseVisualStyleBackColor = false;
+            this.bldPlaceLockZcheckbox.UseVisualStyleBackColor = true;
             this.bldPlaceLockZcheckbox.CheckedChanged += new System.EventHandler(this.bldPlaceLockZcheckbox_CheckedChanged);
             // 
             // zLabel
@@ -3733,7 +3507,6 @@
             // 
             this.bldRoundGroupbox.Controls.Add(this.tableLayoutPanel2);
             this.bldRoundGroupbox.Enabled = false;
-            this.bldRoundGroupbox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.bldRoundGroupbox.Location = new System.Drawing.Point(195, 316);
             this.bldRoundGroupbox.Name = "bldRoundGroupbox";
             this.bldRoundGroupbox.Size = new System.Drawing.Size(269, 83);
@@ -3765,56 +3538,47 @@
             // bldRoundDecmil
             // 
             this.bldRoundDecmil.Appearance = System.Windows.Forms.Appearance.Button;
-            this.bldRoundDecmil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.bldRoundDecmil.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bldRoundDecmil.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bldRoundDecmil.Location = new System.Drawing.Point(90, 35);
             this.bldRoundDecmil.Name = "bldRoundDecmil";
             this.bldRoundDecmil.Size = new System.Drawing.Size(81, 26);
             this.bldRoundDecmil.TabIndex = 4;
             this.bldRoundDecmil.Text = ".0001";
             this.bldRoundDecmil.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.bldRoundDecmil.UseVisualStyleBackColor = false;
+            this.bldRoundDecmil.UseVisualStyleBackColor = true;
             this.bldRoundDecmil.CheckedChanged += new System.EventHandler(this.bldRoundDecmil_CheckedChanged);
             // 
             // bldRoundCentMil
             // 
             this.bldRoundCentMil.Appearance = System.Windows.Forms.Appearance.Button;
-            this.bldRoundCentMil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.bldRoundCentMil.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bldRoundCentMil.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bldRoundCentMil.Location = new System.Drawing.Point(177, 35);
             this.bldRoundCentMil.Name = "bldRoundCentMil";
             this.bldRoundCentMil.Size = new System.Drawing.Size(83, 26);
             this.bldRoundCentMil.TabIndex = 5;
             this.bldRoundCentMil.Text = ".00001";
             this.bldRoundCentMil.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.bldRoundCentMil.UseVisualStyleBackColor = false;
+            this.bldRoundCentMil.UseVisualStyleBackColor = true;
             this.bldRoundCentMil.CheckedChanged += new System.EventHandler(this.bldRoundCentMil_CheckedChanged);
             // 
             // bldRoundWhole
             // 
             this.bldRoundWhole.Appearance = System.Windows.Forms.Appearance.Button;
-            this.bldRoundWhole.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.bldRoundWhole.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bldRoundWhole.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.bldRoundWhole.ForeColor = System.Drawing.SystemColors.ControlText;
             this.bldRoundWhole.Location = new System.Drawing.Point(3, 3);
             this.bldRoundWhole.Name = "bldRoundWhole";
             this.bldRoundWhole.Size = new System.Drawing.Size(81, 26);
             this.bldRoundWhole.TabIndex = 0;
             this.bldRoundWhole.Text = "Whole";
             this.bldRoundWhole.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.bldRoundWhole.UseVisualStyleBackColor = false;
+            this.bldRoundWhole.UseVisualStyleBackColor = true;
             this.bldRoundWhole.CheckedChanged += new System.EventHandler(this.bldRoundWhole_CheckedChanged);
             // 
             // bldRoundDec
             // 
             this.bldRoundDec.Appearance = System.Windows.Forms.Appearance.Button;
-            this.bldRoundDec.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.bldRoundDec.Checked = true;
             this.bldRoundDec.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bldRoundDec.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bldRoundDec.Location = new System.Drawing.Point(90, 3);
             this.bldRoundDec.Name = "bldRoundDec";
             this.bldRoundDec.Size = new System.Drawing.Size(81, 26);
@@ -3822,57 +3586,49 @@
             this.bldRoundDec.TabStop = true;
             this.bldRoundDec.Text = ".1";
             this.bldRoundDec.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.bldRoundDec.UseVisualStyleBackColor = false;
+            this.bldRoundDec.UseVisualStyleBackColor = true;
             this.bldRoundDec.CheckedChanged += new System.EventHandler(this.bldRoundDec_CheckedChanged);
             // 
             // bldRoundCent
             // 
             this.bldRoundCent.Appearance = System.Windows.Forms.Appearance.Button;
-            this.bldRoundCent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.bldRoundCent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bldRoundCent.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bldRoundCent.Location = new System.Drawing.Point(177, 3);
             this.bldRoundCent.Name = "bldRoundCent";
             this.bldRoundCent.Size = new System.Drawing.Size(83, 26);
             this.bldRoundCent.TabIndex = 2;
             this.bldRoundCent.Text = ".01";
             this.bldRoundCent.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.bldRoundCent.UseVisualStyleBackColor = false;
+            this.bldRoundCent.UseVisualStyleBackColor = true;
             this.bldRoundCent.CheckedChanged += new System.EventHandler(this.bldRoundCent_CheckedChanged);
             // 
             // bldRoundMil
             // 
             this.bldRoundMil.Appearance = System.Windows.Forms.Appearance.Button;
-            this.bldRoundMil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.bldRoundMil.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bldRoundMil.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bldRoundMil.Location = new System.Drawing.Point(3, 35);
             this.bldRoundMil.Name = "bldRoundMil";
             this.bldRoundMil.Size = new System.Drawing.Size(81, 26);
             this.bldRoundMil.TabIndex = 3;
             this.bldRoundMil.Text = ".001";
             this.bldRoundMil.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.bldRoundMil.UseVisualStyleBackColor = false;
+            this.bldRoundMil.UseVisualStyleBackColor = true;
             this.bldRoundMil.CheckedChanged += new System.EventHandler(this.bldRoundMil_CheckedChanged);
             // 
             // bldPlaceWithMouseCheckbox
             // 
             this.bldPlaceWithMouseCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.bldPlaceWithMouseCheckbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.bldPlaceWithMouseCheckbox.Enabled = false;
-            this.bldPlaceWithMouseCheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bldPlaceWithMouseCheckbox.Image = global::DSPRE.Properties.Resources.selectBldWithMouse;
             this.bldPlaceWithMouseCheckbox.Location = new System.Drawing.Point(227, 271);
             this.bldPlaceWithMouseCheckbox.Name = "bldPlaceWithMouseCheckbox";
             this.bldPlaceWithMouseCheckbox.Size = new System.Drawing.Size(39, 40);
             this.bldPlaceWithMouseCheckbox.TabIndex = 40;
-            this.bldPlaceWithMouseCheckbox.UseVisualStyleBackColor = false;
+            this.bldPlaceWithMouseCheckbox.UseVisualStyleBackColor = true;
             this.bldPlaceWithMouseCheckbox.CheckedChanged += new System.EventHandler(this.bldPlaceWithMouseCheckbox_CheckedChanged);
             // 
             // importBuildingsButton
             // 
-            this.importBuildingsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.importBuildingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.importBuildingsButton.Image = ((System.Drawing.Image)(resources.GetObject("importBuildingsButton.Image")));
             this.importBuildingsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importBuildingsButton.Location = new System.Drawing.Point(193, 11);
@@ -3881,7 +3637,7 @@
             this.importBuildingsButton.TabIndex = 21;
             this.importBuildingsButton.Text = "Import\r\nBuildings";
             this.importBuildingsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importBuildingsButton.UseVisualStyleBackColor = false;
+            this.importBuildingsButton.UseVisualStyleBackColor = true;
             this.importBuildingsButton.Click += new System.EventHandler(this.importBuildingsButton_Click);
             // 
             // groupBox20
@@ -3889,7 +3645,6 @@
             this.groupBox20.Controls.Add(this.interiorbldRadioButton);
             this.groupBox20.Controls.Add(this.exteriorbldRadioButton);
             this.groupBox20.Controls.Add(this.buildIndexComboBox);
-            this.groupBox20.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox20.Location = new System.Drawing.Point(189, 57);
             this.groupBox20.Name = "groupBox20";
             this.groupBox20.Size = new System.Drawing.Size(284, 81);
@@ -3899,38 +3654,34 @@
             // 
             // interiorbldRadioButton
             // 
+            this.interiorbldRadioButton.Appearance = System.Windows.Forms.Appearance.Button;
             this.interiorbldRadioButton.AutoSize = true;
-            this.interiorbldRadioButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.interiorbldRadioButton.Enabled = false;
-            this.interiorbldRadioButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.interiorbldRadioButton.Location = new System.Drawing.Point(9, 18);
             this.interiorbldRadioButton.Name = "interiorbldRadioButton";
-            this.interiorbldRadioButton.Size = new System.Drawing.Size(75, 17);
+            this.interiorbldRadioButton.Size = new System.Drawing.Size(68, 23);
             this.interiorbldRadioButton.TabIndex = 3;
             this.interiorbldRadioButton.Text = "Interior List";
-            this.interiorbldRadioButton.UseVisualStyleBackColor = false;
+            this.interiorbldRadioButton.UseVisualStyleBackColor = true;
             this.interiorbldRadioButton.CheckedChanged += new System.EventHandler(this.interiorRadioButton_CheckedChanged);
             // 
             // exteriorbldRadioButton
             // 
+            this.exteriorbldRadioButton.Appearance = System.Windows.Forms.Appearance.Button;
             this.exteriorbldRadioButton.AutoSize = true;
-            this.exteriorbldRadioButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.exteriorbldRadioButton.Checked = true;
             this.exteriorbldRadioButton.Enabled = false;
-            this.exteriorbldRadioButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.exteriorbldRadioButton.Location = new System.Drawing.Point(83, 18);
             this.exteriorbldRadioButton.Name = "exteriorbldRadioButton";
-            this.exteriorbldRadioButton.Size = new System.Drawing.Size(78, 17);
+            this.exteriorbldRadioButton.Size = new System.Drawing.Size(71, 23);
             this.exteriorbldRadioButton.TabIndex = 4;
             this.exteriorbldRadioButton.TabStop = true;
             this.exteriorbldRadioButton.Text = "Exterior List";
-            this.exteriorbldRadioButton.UseVisualStyleBackColor = false;
+            this.exteriorbldRadioButton.UseVisualStyleBackColor = true;
             // 
             // buildIndexComboBox
             // 
-            this.buildIndexComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.buildIndexComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buildIndexComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buildIndexComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.buildIndexComboBox.FormattingEnabled = true;
             this.buildIndexComboBox.Location = new System.Drawing.Point(9, 48);
             this.buildIndexComboBox.Name = "buildIndexComboBox";
@@ -3943,7 +3694,6 @@
             this.groupBox19.Controls.Add(this.buildingHeightUpDown);
             this.groupBox19.Controls.Add(this.buildingWidthUpDown);
             this.groupBox19.Controls.Add(this.buildingLengthUpDown);
-            this.groupBox19.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox19.Location = new System.Drawing.Point(283, 141);
             this.groupBox19.Name = "groupBox19";
             this.groupBox19.Size = new System.Drawing.Size(53, 123);
@@ -3953,8 +3703,6 @@
             // 
             // buildingHeightUpDown
             // 
-            this.buildingHeightUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.buildingHeightUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.buildingHeightUpDown.Location = new System.Drawing.Point(4, 56);
             this.buildingHeightUpDown.Name = "buildingHeightUpDown";
             this.buildingHeightUpDown.Size = new System.Drawing.Size(43, 20);
@@ -3963,8 +3711,6 @@
             // 
             // buildingWidthUpDown
             // 
-            this.buildingWidthUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.buildingWidthUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.buildingWidthUpDown.Location = new System.Drawing.Point(4, 20);
             this.buildingWidthUpDown.Name = "buildingWidthUpDown";
             this.buildingWidthUpDown.Size = new System.Drawing.Size(43, 20);
@@ -3973,8 +3719,6 @@
             // 
             // buildingLengthUpDown
             // 
-            this.buildingLengthUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.buildingLengthUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.buildingLengthUpDown.Location = new System.Drawing.Point(4, 93);
             this.buildingLengthUpDown.Name = "buildingLengthUpDown";
             this.buildingLengthUpDown.Size = new System.Drawing.Size(43, 20);
@@ -3983,8 +3727,6 @@
             // 
             // duplicateBuildingButton
             // 
-            this.duplicateBuildingButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.duplicateBuildingButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.duplicateBuildingButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
             this.duplicateBuildingButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.duplicateBuildingButton.Location = new System.Drawing.Point(352, 405);
@@ -3993,13 +3735,11 @@
             this.duplicateBuildingButton.TabIndex = 25;
             this.duplicateBuildingButton.Text = "Duplicate";
             this.duplicateBuildingButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.duplicateBuildingButton.UseVisualStyleBackColor = false;
+            this.duplicateBuildingButton.UseVisualStyleBackColor = true;
             this.duplicateBuildingButton.Click += new System.EventHandler(this.duplicateBuildingButton_Click);
             // 
             // exportBuildingsButton
             // 
-            this.exportBuildingsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.exportBuildingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.exportBuildingsButton.Image = ((System.Drawing.Image)(resources.GetObject("exportBuildingsButton.Image")));
             this.exportBuildingsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportBuildingsButton.Location = new System.Drawing.Point(298, 11);
@@ -4008,13 +3748,11 @@
             this.exportBuildingsButton.TabIndex = 20;
             this.exportBuildingsButton.Text = "Export\r\nBuildings";
             this.exportBuildingsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportBuildingsButton.UseVisualStyleBackColor = false;
+            this.exportBuildingsButton.UseVisualStyleBackColor = true;
             this.exportBuildingsButton.Click += new System.EventHandler(this.exportBuildingsButton_Click);
             // 
             // removeBuildingButton
             // 
-            this.removeBuildingButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.removeBuildingButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.removeBuildingButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeBuildingButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeBuildingButton.Location = new System.Drawing.Point(281, 405);
@@ -4023,13 +3761,11 @@
             this.removeBuildingButton.TabIndex = 13;
             this.removeBuildingButton.Text = "Delete";
             this.removeBuildingButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeBuildingButton.UseVisualStyleBackColor = false;
+            this.removeBuildingButton.UseVisualStyleBackColor = true;
             this.removeBuildingButton.Click += new System.EventHandler(this.removeBuildingButton_Click);
             // 
             // addBuildingButton
             // 
-            this.addBuildingButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.addBuildingButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.addBuildingButton.Image = ((System.Drawing.Image)(resources.GetObject("addBuildingButton.Image")));
             this.addBuildingButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addBuildingButton.Location = new System.Drawing.Point(224, 405);
@@ -4038,7 +3774,7 @@
             this.addBuildingButton.TabIndex = 12;
             this.addBuildingButton.Text = "Add";
             this.addBuildingButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addBuildingButton.UseVisualStyleBackColor = false;
+            this.addBuildingButton.UseVisualStyleBackColor = true;
             this.addBuildingButton.Click += new System.EventHandler(this.addBuildingButton_Click);
             // 
             // buildPositionGroupBox
@@ -4046,7 +3782,6 @@
             this.buildPositionGroupBox.Controls.Add(this.yBuildUpDown);
             this.buildPositionGroupBox.Controls.Add(this.xBuildUpDown);
             this.buildPositionGroupBox.Controls.Add(this.zBuildUpDown);
-            this.buildPositionGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.buildPositionGroupBox.Location = new System.Drawing.Point(198, 141);
             this.buildPositionGroupBox.Name = "buildPositionGroupBox";
             this.buildPositionGroupBox.Size = new System.Drawing.Size(81, 123);
@@ -4056,9 +3791,7 @@
             // 
             // yBuildUpDown
             // 
-            this.yBuildUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.yBuildUpDown.DecimalPlaces = 5;
-            this.yBuildUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.yBuildUpDown.Location = new System.Drawing.Point(6, 56);
             this.yBuildUpDown.Maximum = new decimal(new int[] {
             255,
@@ -4077,9 +3810,7 @@
             // 
             // xBuildUpDown
             // 
-            this.xBuildUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.xBuildUpDown.DecimalPlaces = 5;
-            this.xBuildUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.xBuildUpDown.Location = new System.Drawing.Point(6, 20);
             this.xBuildUpDown.Maximum = new decimal(new int[] {
             255,
@@ -4098,9 +3829,7 @@
             // 
             // zBuildUpDown
             // 
-            this.zBuildUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.zBuildUpDown.DecimalPlaces = 5;
-            this.zBuildUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.zBuildUpDown.Location = new System.Drawing.Point(6, 93);
             this.zBuildUpDown.Maximum = new decimal(new int[] {
             255,
@@ -4119,8 +3848,6 @@
             // 
             // buildingsListBox
             // 
-            this.buildingsListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.buildingsListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.buildingsListBox.FormattingEnabled = true;
             this.buildingsListBox.Location = new System.Drawing.Point(9, 7);
             this.buildingsListBox.Name = "buildingsListBox";
@@ -4130,7 +3857,6 @@
             // 
             // permissionsTabPage
             // 
-            this.permissionsTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.permissionsTabPage.Controls.Add(this.clearCurrentButton);
             this.permissionsTabPage.Controls.Add(this.typeLabel);
             this.permissionsTabPage.Controls.Add(this.collisionLabel);
@@ -4146,17 +3872,16 @@
             this.permissionsTabPage.Size = new System.Drawing.Size(481, 450);
             this.permissionsTabPage.TabIndex = 1;
             this.permissionsTabPage.Text = "Move Permissions";
+            this.permissionsTabPage.UseVisualStyleBackColor = true;
             // 
             // clearCurrentButton
             // 
-            this.clearCurrentButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.clearCurrentButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.clearCurrentButton.Location = new System.Drawing.Point(11, 134);
             this.clearCurrentButton.Name = "clearCurrentButton";
             this.clearCurrentButton.Size = new System.Drawing.Size(212, 23);
             this.clearCurrentButton.TabIndex = 32;
             this.clearCurrentButton.Text = "Clear current";
-            this.clearCurrentButton.UseVisualStyleBackColor = false;
+            this.clearCurrentButton.UseVisualStyleBackColor = true;
             this.clearCurrentButton.Click += new System.EventHandler(this.clearCurrentButton_Click);
             // 
             // typeLabel
@@ -4187,7 +3912,6 @@
             this.typeGroupBox.Controls.Add(this.collisionTypePainterComboBox);
             this.typeGroupBox.Controls.Add(this.typePainterPictureBox);
             this.typeGroupBox.Enabled = false;
-            this.typeGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.typeGroupBox.Location = new System.Drawing.Point(12, 301);
             this.typeGroupBox.Name = "typeGroupBox";
             this.typeGroupBox.Size = new System.Drawing.Size(444, 134);
@@ -4221,10 +3945,7 @@
             // 
             // typePainterUpDown
             // 
-            this.typePainterUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.typePainterUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.typePainterUpDown.Enabled = false;
-            this.typePainterUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.typePainterUpDown.Hexadecimal = true;
             this.typePainterUpDown.Location = new System.Drawing.Point(134, 101);
             this.typePainterUpDown.Maximum = new decimal(new int[] {
@@ -4239,9 +3960,7 @@
             // 
             // collisionTypePainterComboBox
             // 
-            this.collisionTypePainterComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.collisionTypePainterComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.collisionTypePainterComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.collisionTypePainterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.collisionTypePainterComboBox.FormattingEnabled = true;
             this.collisionTypePainterComboBox.IntegralHeight = false;
             this.collisionTypePainterComboBox.Location = new System.Drawing.Point(135, 44);
@@ -4253,8 +3972,8 @@
             // 
             // typePainterPictureBox
             // 
-            this.typePainterPictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.typePainterPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.typePainterPictureBox.BackColor = System.Drawing.Color.White;
+            this.typePainterPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.typePainterPictureBox.Location = new System.Drawing.Point(18, 31);
             this.typePainterPictureBox.Name = "typePainterPictureBox";
             this.typePainterPictureBox.Size = new System.Drawing.Size(80, 80);
@@ -4265,7 +3984,6 @@
             // 
             this.collisionGroupBox.Controls.Add(this.collisionPainterComboBox);
             this.collisionGroupBox.Controls.Add(this.collisionPainterPictureBox);
-            this.collisionGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.collisionGroupBox.Location = new System.Drawing.Point(12, 167);
             this.collisionGroupBox.Name = "collisionGroupBox";
             this.collisionGroupBox.Size = new System.Drawing.Size(444, 118);
@@ -4275,9 +3993,7 @@
             // 
             // collisionPainterComboBox
             // 
-            this.collisionPainterComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.collisionPainterComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.collisionPainterComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.collisionPainterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.collisionPainterComboBox.FormattingEnabled = true;
             this.collisionPainterComboBox.Location = new System.Drawing.Point(134, 50);
             this.collisionPainterComboBox.Name = "collisionPainterComboBox";
@@ -4287,8 +4003,8 @@
             // 
             // collisionPainterPictureBox
             // 
-            this.collisionPainterPictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.collisionPainterPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.collisionPainterPictureBox.BackColor = System.Drawing.Color.White;
+            this.collisionPainterPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.collisionPainterPictureBox.Location = new System.Drawing.Point(18, 23);
             this.collisionPainterPictureBox.Name = "collisionPainterPictureBox";
             this.collisionPainterPictureBox.Size = new System.Drawing.Size(80, 80);
@@ -4305,7 +4021,7 @@
             // 
             // collisionPictureBox
             // 
-            this.collisionPictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.collisionPictureBox.BackColor = System.Drawing.Color.White;
             this.collisionPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.collisionPictureBox.Location = new System.Drawing.Point(3, 3);
             this.collisionPictureBox.Name = "collisionPictureBox";
@@ -4324,7 +4040,7 @@
             // 
             // typePictureBox
             // 
-            this.typePictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.typePictureBox.BackColor = System.Drawing.Color.White;
             this.typePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.typePictureBox.Location = new System.Drawing.Point(3, 3);
             this.typePictureBox.Name = "typePictureBox";
@@ -4335,8 +4051,6 @@
             // 
             // ImportMovButton
             // 
-            this.ImportMovButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.ImportMovButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.ImportMovButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.ImportMovButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.ImportMovButton.Location = new System.Drawing.Point(318, 35);
@@ -4345,13 +4059,11 @@
             this.ImportMovButton.TabIndex = 23;
             this.ImportMovButton.Text = "Import Permissions";
             this.ImportMovButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ImportMovButton.UseVisualStyleBackColor = false;
+            this.ImportMovButton.UseVisualStyleBackColor = true;
             this.ImportMovButton.Click += new System.EventHandler(this.importMovButton_Click);
             // 
             // exportMovButton
             // 
-            this.exportMovButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.exportMovButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.exportMovButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportMovButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportMovButton.Location = new System.Drawing.Point(318, 79);
@@ -4360,12 +4072,11 @@
             this.exportMovButton.TabIndex = 22;
             this.exportMovButton.Text = "Export Permissions";
             this.exportMovButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportMovButton.UseVisualStyleBackColor = false;
+            this.exportMovButton.UseVisualStyleBackColor = true;
             this.exportMovButton.Click += new System.EventHandler(this.exportMovButton_Click);
             // 
             // modelTabPage
             // 
-            this.modelTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.modelTabPage.Controls.Add(this.daeExportButton);
             this.modelTabPage.Controls.Add(this.embedTexturesInMapModelCheckBox);
             this.modelTabPage.Controls.Add(this.modelSizeLBL);
@@ -4373,18 +4084,16 @@
             this.modelTabPage.Controls.Add(this.unsupported3DModelEditLBL);
             this.modelTabPage.Controls.Add(this.importMapButton);
             this.modelTabPage.Controls.Add(this.exportMapButton);
-            this.modelTabPage.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.modelTabPage.Location = new System.Drawing.Point(4, 22);
             this.modelTabPage.Name = "modelTabPage";
             this.modelTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.modelTabPage.Size = new System.Drawing.Size(481, 450);
             this.modelTabPage.TabIndex = 2;
             this.modelTabPage.Text = "3D Model";
+            this.modelTabPage.UseVisualStyleBackColor = true;
             // 
             // daeExportButton
             // 
-            this.daeExportButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.daeExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.daeExportButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.daeExportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.daeExportButton.Location = new System.Drawing.Point(351, 111);
@@ -4393,7 +4102,7 @@
             this.daeExportButton.TabIndex = 30;
             this.daeExportButton.Text = "Export DAE";
             this.daeExportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.daeExportButton.UseVisualStyleBackColor = false;
+            this.daeExportButton.UseVisualStyleBackColor = true;
             this.daeExportButton.Click += new System.EventHandler(this.daeExportButton_Click);
             // 
             // embedTexturesInMapModelCheckBox
@@ -4412,7 +4121,7 @@
             // 
             this.modelSizeLBL.AutoSize = true;
             this.modelSizeLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.modelSizeLBL.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.modelSizeLBL.ForeColor = System.Drawing.SystemColors.ControlText;
             this.modelSizeLBL.Location = new System.Drawing.Point(104, 9);
             this.modelSizeLBL.Name = "modelSizeLBL";
             this.modelSizeLBL.Size = new System.Drawing.Size(97, 16);
@@ -4424,7 +4133,7 @@
             this.nsbmdSizeLabel.AutoSize = true;
             this.nsbmdSizeLabel.BackColor = System.Drawing.Color.Transparent;
             this.nsbmdSizeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nsbmdSizeLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.nsbmdSizeLabel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.nsbmdSizeLabel.Location = new System.Drawing.Point(6, 9);
             this.nsbmdSizeLabel.Name = "nsbmdSizeLabel";
             this.nsbmdSizeLabel.Size = new System.Drawing.Size(100, 16);
@@ -4435,7 +4144,7 @@
             // 
             this.unsupported3DModelEditLBL.AutoSize = true;
             this.unsupported3DModelEditLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.unsupported3DModelEditLBL.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.unsupported3DModelEditLBL.ForeColor = System.Drawing.SystemColors.ControlText;
             this.unsupported3DModelEditLBL.Location = new System.Drawing.Point(132, 248);
             this.unsupported3DModelEditLBL.Name = "unsupported3DModelEditLBL";
             this.unsupported3DModelEditLBL.Size = new System.Drawing.Size(256, 48);
@@ -4446,8 +4155,6 @@
             // 
             // importMapButton
             // 
-            this.importMapButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.importMapButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.importMapButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importMapButton.Location = new System.Drawing.Point(351, 9);
@@ -4456,13 +4163,11 @@
             this.importMapButton.TabIndex = 25;
             this.importMapButton.Text = "Import NSBMD";
             this.importMapButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importMapButton.UseVisualStyleBackColor = false;
+            this.importMapButton.UseVisualStyleBackColor = true;
             this.importMapButton.Click += new System.EventHandler(this.importMapButton_Click);
             // 
             // exportMapButton
             // 
-            this.exportMapButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.exportMapButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.exportMapButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportMapButton.Location = new System.Drawing.Point(351, 54);
@@ -4471,12 +4176,11 @@
             this.exportMapButton.TabIndex = 24;
             this.exportMapButton.Text = "Export NSBMD";
             this.exportMapButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportMapButton.UseVisualStyleBackColor = false;
+            this.exportMapButton.UseVisualStyleBackColor = true;
             this.exportMapButton.Click += new System.EventHandler(this.exportMapButton_Click);
             // 
             // terrainTabPage
             // 
-            this.terrainTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.terrainTabPage.Controls.Add(this.terrainSizeLBL);
             this.terrainTabPage.Controls.Add(this.terrainDataLBL);
             this.terrainTabPage.Controls.Add(this.unsupportedBDHCEditLBL);
@@ -4488,6 +4192,7 @@
             this.terrainTabPage.Size = new System.Drawing.Size(481, 450);
             this.terrainTabPage.TabIndex = 3;
             this.terrainTabPage.Text = "Terrain Data";
+            this.terrainTabPage.UseVisualStyleBackColor = true;
             // 
             // terrainSizeLBL
             // 
@@ -4523,8 +4228,6 @@
             // 
             // bdhcImportButton
             // 
-            this.bdhcImportButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.bdhcImportButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bdhcImportButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.bdhcImportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bdhcImportButton.Location = new System.Drawing.Point(351, 9);
@@ -4533,13 +4236,11 @@
             this.bdhcImportButton.TabIndex = 27;
             this.bdhcImportButton.Text = "Import BDHC";
             this.bdhcImportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bdhcImportButton.UseVisualStyleBackColor = false;
+            this.bdhcImportButton.UseVisualStyleBackColor = true;
             this.bdhcImportButton.Click += new System.EventHandler(this.bdhcImportButton_Click);
             // 
             // bdhcExportButton
             // 
-            this.bdhcExportButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.bdhcExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bdhcExportButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.bdhcExportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bdhcExportButton.Location = new System.Drawing.Point(351, 54);
@@ -4548,12 +4249,11 @@
             this.bdhcExportButton.TabIndex = 26;
             this.bdhcExportButton.Text = "Export BDHC";
             this.bdhcExportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bdhcExportButton.UseVisualStyleBackColor = false;
+            this.bdhcExportButton.UseVisualStyleBackColor = true;
             this.bdhcExportButton.Click += new System.EventHandler(this.bdhcExportButton_Click);
             // 
             // bgsTabPage
             // 
-            this.bgsTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.bgsTabPage.Controls.Add(this.blankBGSButton);
             this.bgsTabPage.Controls.Add(this.BGSSizeLBL);
             this.bgsTabPage.Controls.Add(this.bgsDataLBL);
@@ -4565,11 +4265,10 @@
             this.bgsTabPage.Size = new System.Drawing.Size(481, 450);
             this.bgsTabPage.TabIndex = 4;
             this.bgsTabPage.Text = "Sound Plates";
+            this.bgsTabPage.UseVisualStyleBackColor = true;
             // 
             // blankBGSButton
             // 
-            this.blankBGSButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.blankBGSButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.blankBGSButton.Image = global::DSPRE.Properties.Resources.muteIcon;
             this.blankBGSButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.blankBGSButton.Location = new System.Drawing.Point(344, 112);
@@ -4578,7 +4277,7 @@
             this.blankBGSButton.TabIndex = 34;
             this.blankBGSButton.Text = "Blank BGS";
             this.blankBGSButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.blankBGSButton.UseVisualStyleBackColor = false;
+            this.blankBGSButton.UseVisualStyleBackColor = true;
             this.blankBGSButton.Click += new System.EventHandler(this.soundPlatesBlankButton_Click);
             // 
             // BGSSizeLBL
@@ -4586,7 +4285,7 @@
             this.BGSSizeLBL.AutoSize = true;
             this.BGSSizeLBL.BackColor = System.Drawing.Color.Transparent;
             this.BGSSizeLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BGSSizeLBL.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.BGSSizeLBL.ForeColor = System.Drawing.SystemColors.ControlText;
             this.BGSSizeLBL.Location = new System.Drawing.Point(73, 9);
             this.BGSSizeLBL.Name = "BGSSizeLBL";
             this.BGSSizeLBL.Size = new System.Drawing.Size(84, 16);
@@ -4617,8 +4316,6 @@
             // 
             // soundPlatesImportButton
             // 
-            this.soundPlatesImportButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.soundPlatesImportButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.soundPlatesImportButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.soundPlatesImportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.soundPlatesImportButton.Location = new System.Drawing.Point(344, 10);
@@ -4627,13 +4324,11 @@
             this.soundPlatesImportButton.TabIndex = 30;
             this.soundPlatesImportButton.Text = "Import BGS";
             this.soundPlatesImportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.soundPlatesImportButton.UseVisualStyleBackColor = false;
+            this.soundPlatesImportButton.UseVisualStyleBackColor = true;
             this.soundPlatesImportButton.Click += new System.EventHandler(this.soundPlatesImportButton_Click);
             // 
             // soundPlatesExportButton
             // 
-            this.soundPlatesExportButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.soundPlatesExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.soundPlatesExportButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.soundPlatesExportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.soundPlatesExportButton.Location = new System.Drawing.Point(344, 55);
@@ -4642,7 +4337,7 @@
             this.soundPlatesExportButton.TabIndex = 29;
             this.soundPlatesExportButton.Text = "Export BGS";
             this.soundPlatesExportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.soundPlatesExportButton.UseVisualStyleBackColor = false;
+            this.soundPlatesExportButton.UseVisualStyleBackColor = true;
             this.soundPlatesExportButton.Click += new System.EventHandler(this.soundPlatesExportButton_Click);
             // 
             // radio3D
@@ -4650,9 +4345,7 @@
             this.radio3D.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.radio3D.Appearance = System.Windows.Forms.Appearance.Button;
             this.radio3D.AutoSize = true;
-            this.radio3D.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.radio3D.Checked = true;
-            this.radio3D.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.radio3D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.radio3D.Location = new System.Drawing.Point(1140, 542);
             this.radio3D.Name = "radio3D";
@@ -4661,15 +4354,13 @@
             this.radio3D.TabStop = true;
             this.radio3D.Text = "3D";
             this.radio3D.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.radio3D.UseVisualStyleBackColor = false;
+            this.radio3D.UseVisualStyleBackColor = true;
             // 
             // radio2D
             // 
             this.radio2D.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.radio2D.Appearance = System.Windows.Forms.Appearance.Button;
             this.radio2D.AutoSize = true;
-            this.radio2D.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.radio2D.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.radio2D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.radio2D.Location = new System.Drawing.Point(1140, 566);
             this.radio2D.Name = "radio2D";
@@ -4677,7 +4368,7 @@
             this.radio2D.TabIndex = 25;
             this.radio2D.Text = "2D";
             this.radio2D.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.radio2D.UseVisualStyleBackColor = false;
+            this.radio2D.UseVisualStyleBackColor = true;
             this.radio2D.CheckedChanged += new System.EventHandler(this.radio2D_CheckedChanged);
             // 
             // wireframeCheckBox
@@ -4685,22 +4376,18 @@
             this.wireframeCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.wireframeCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.wireframeCheckBox.AutoSize = true;
-            this.wireframeCheckBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.wireframeCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.wireframeCheckBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.wireframeCheckBox.Location = new System.Drawing.Point(1140, 590);
             this.wireframeCheckBox.Name = "wireframeCheckBox";
             this.wireframeCheckBox.Size = new System.Drawing.Size(31, 23);
             this.wireframeCheckBox.TabIndex = 27;
             this.wireframeCheckBox.Text = " W";
-            this.wireframeCheckBox.UseVisualStyleBackColor = false;
+            this.wireframeCheckBox.UseVisualStyleBackColor = true;
             this.wireframeCheckBox.CheckedChanged += new System.EventHandler(this.wireframeCheckBox_CheckedChanged);
             // 
             // nsbtxEditorTabPage
             // 
-            this.nsbtxEditorTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.nsbtxEditorTabPage.Controls.Add(this.groupBox7);
-            this.nsbtxEditorTabPage.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.nsbtxEditorTabPage.ImageIndex = 6;
             this.nsbtxEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.nsbtxEditorTabPage.Name = "nsbtxEditorTabPage";
@@ -4708,10 +4395,10 @@
             this.nsbtxEditorTabPage.Size = new System.Drawing.Size(1185, 619);
             this.nsbtxEditorTabPage.TabIndex = 6;
             this.nsbtxEditorTabPage.Text = "NSBTX Editor";
+            this.nsbtxEditorTabPage.UseVisualStyleBackColor = true;
             // 
             // groupBox7
             // 
-            this.groupBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.groupBox7.Controls.Add(this.tableLayoutPanel37);
             this.groupBox7.Controls.Add(this.locateCurrentNsbtx);
             this.groupBox7.Controls.Add(this.removeNSBTXButton);
@@ -4727,8 +4414,6 @@
             this.groupBox7.Controls.Add(this.buildingsTilesetRadioButton);
             this.groupBox7.Controls.Add(this.mapTilesetRadioButton);
             this.groupBox7.Controls.Add(this.texturePacksListBox);
-            this.groupBox7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.groupBox7.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox7.Location = new System.Drawing.Point(6, 6);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(1171, 599);
@@ -4809,52 +4494,44 @@
             // 
             // repositionImageButton
             // 
-            this.repositionImageButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.repositionImageButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.repositionImageButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.repositionImageButton.Location = new System.Drawing.Point(3, 3);
             this.repositionImageButton.Name = "repositionImageButton";
             this.repositionImageButton.Size = new System.Drawing.Size(79, 40);
             this.repositionImageButton.TabIndex = 21;
             this.repositionImageButton.Text = "Reposition";
-            this.repositionImageButton.UseVisualStyleBackColor = false;
+            this.repositionImageButton.UseVisualStyleBackColor = true;
             this.repositionImageButton.Click += new System.EventHandler(this.repositionImageButton_Click);
             // 
             // invertDragCheckbox
             // 
             this.invertDragCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
             this.invertDragCheckbox.AutoSize = true;
-            this.invertDragCheckbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.invertDragCheckbox.Checked = true;
             this.invertDragCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.invertDragCheckbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.invertDragCheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.invertDragCheckbox.Location = new System.Drawing.Point(3, 49);
             this.invertDragCheckbox.Name = "invertDragCheckbox";
             this.invertDragCheckbox.Size = new System.Drawing.Size(79, 23);
             this.invertDragCheckbox.TabIndex = 22;
             this.invertDragCheckbox.Text = "Invert Drag";
             this.invertDragCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.invertDragCheckbox.UseVisualStyleBackColor = false;
+            this.invertDragCheckbox.UseVisualStyleBackColor = true;
             this.invertDragCheckbox.CheckedChanged += new System.EventHandler(this.invertDragCheckbox_CheckedChanged);
             // 
             // locateCurrentNsbtx
             // 
-            this.locateCurrentNsbtx.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.locateCurrentNsbtx.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.locateCurrentNsbtx.Image = global::DSPRE.Properties.Resources.open_file;
             this.locateCurrentNsbtx.Location = new System.Drawing.Point(438, 20);
             this.locateCurrentNsbtx.Name = "locateCurrentNsbtx";
             this.locateCurrentNsbtx.Size = new System.Drawing.Size(42, 40);
             this.locateCurrentNsbtx.TabIndex = 41;
             this.locateCurrentNsbtx.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.locateCurrentNsbtx.UseVisualStyleBackColor = false;
+            this.locateCurrentNsbtx.UseVisualStyleBackColor = true;
             this.locateCurrentNsbtx.Click += new System.EventHandler(this.locateCurrentNsbtx_Click);
             // 
             // removeNSBTXButton
             // 
-            this.removeNSBTXButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.removeNSBTXButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.removeNSBTXButton.Image = ((System.Drawing.Image)(resources.GetObject("removeNSBTXButton.Image")));
             this.removeNSBTXButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeNSBTXButton.Location = new System.Drawing.Point(331, 18);
@@ -4863,7 +4540,7 @@
             this.removeNSBTXButton.TabIndex = 11;
             this.removeNSBTXButton.Text = "Remove Last";
             this.removeNSBTXButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeNSBTXButton.UseVisualStyleBackColor = false;
+            this.removeNSBTXButton.UseVisualStyleBackColor = true;
             this.removeNSBTXButton.Click += new System.EventHandler(this.removeNSBTXButton_Click);
             // 
             // areaDataGroupBox
@@ -4893,21 +4570,17 @@
             // 
             // locateCurrentAreaData
             // 
-            this.locateCurrentAreaData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.locateCurrentAreaData.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.locateCurrentAreaData.Image = global::DSPRE.Properties.Resources.open_file;
             this.locateCurrentAreaData.Location = new System.Drawing.Point(395, 74);
             this.locateCurrentAreaData.Name = "locateCurrentAreaData";
             this.locateCurrentAreaData.Size = new System.Drawing.Size(42, 40);
             this.locateCurrentAreaData.TabIndex = 42;
             this.locateCurrentAreaData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.locateCurrentAreaData.UseVisualStyleBackColor = false;
+            this.locateCurrentAreaData.UseVisualStyleBackColor = true;
             this.locateCurrentAreaData.Click += new System.EventHandler(this.locateCurrentAreaData_Click);
             // 
             // exportAreaDataButton
             // 
-            this.exportAreaDataButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.exportAreaDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.exportAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("exportAreaDataButton.Image")));
             this.exportAreaDataButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportAreaDataButton.Location = new System.Drawing.Point(177, 72);
@@ -4916,7 +4589,7 @@
             this.exportAreaDataButton.TabIndex = 13;
             this.exportAreaDataButton.Text = "Export \r\nSelected";
             this.exportAreaDataButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportAreaDataButton.UseVisualStyleBackColor = false;
+            this.exportAreaDataButton.UseVisualStyleBackColor = true;
             this.exportAreaDataButton.Click += new System.EventHandler(this.exportAreaDataButton_Click);
             // 
             // areaTypeGroupbox
@@ -4924,7 +4597,6 @@
             this.areaTypeGroupbox.Controls.Add(this.outdoorAreaRadioButton);
             this.areaTypeGroupbox.Controls.Add(this.indoorAreaRadioButton);
             this.areaTypeGroupbox.Enabled = false;
-            this.areaTypeGroupbox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.areaTypeGroupbox.Location = new System.Drawing.Point(188, 185);
             this.areaTypeGroupbox.Name = "areaTypeGroupbox";
             this.areaTypeGroupbox.Size = new System.Drawing.Size(154, 52);
@@ -4935,9 +4607,7 @@
             // outdoorAreaRadioButton
             // 
             this.outdoorAreaRadioButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.outdoorAreaRadioButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.outdoorAreaRadioButton.Checked = true;
-            this.outdoorAreaRadioButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.outdoorAreaRadioButton.Location = new System.Drawing.Point(80, 19);
             this.outdoorAreaRadioButton.Name = "outdoorAreaRadioButton";
             this.outdoorAreaRadioButton.Size = new System.Drawing.Size(61, 25);
@@ -4945,26 +4615,22 @@
             this.outdoorAreaRadioButton.TabStop = true;
             this.outdoorAreaRadioButton.Text = "Outdoor";
             this.outdoorAreaRadioButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.outdoorAreaRadioButton.UseVisualStyleBackColor = false;
+            this.outdoorAreaRadioButton.UseVisualStyleBackColor = true;
             // 
             // indoorAreaRadioButton
             // 
             this.indoorAreaRadioButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.indoorAreaRadioButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.indoorAreaRadioButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.indoorAreaRadioButton.Location = new System.Drawing.Point(13, 19);
             this.indoorAreaRadioButton.Name = "indoorAreaRadioButton";
             this.indoorAreaRadioButton.Size = new System.Drawing.Size(61, 25);
             this.indoorAreaRadioButton.TabIndex = 0;
             this.indoorAreaRadioButton.Text = "Indoor";
             this.indoorAreaRadioButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.indoorAreaRadioButton.UseVisualStyleBackColor = false;
+            this.indoorAreaRadioButton.UseVisualStyleBackColor = true;
             this.indoorAreaRadioButton.CheckedChanged += new System.EventHandler(this.indoorAreaRadioButton_CheckedChanged);
             // 
             // importAreaDataButton
             // 
-            this.importAreaDataButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.importAreaDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.importAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("importAreaDataButton.Image")));
             this.importAreaDataButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importAreaDataButton.Location = new System.Drawing.Point(286, 72);
@@ -4973,13 +4639,11 @@
             this.importAreaDataButton.TabIndex = 12;
             this.importAreaDataButton.Text = "Import and\r\nReplace";
             this.importAreaDataButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importAreaDataButton.UseVisualStyleBackColor = false;
+            this.importAreaDataButton.UseVisualStyleBackColor = true;
             this.importAreaDataButton.Click += new System.EventHandler(this.importAreaDataButton_Click);
             // 
             // removeAreaDataButton
             // 
-            this.removeAreaDataButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.removeAreaDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.removeAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("removeAreaDataButton.Image")));
             this.removeAreaDataButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeAreaDataButton.Location = new System.Drawing.Point(395, 23);
@@ -4988,13 +4652,11 @@
             this.removeAreaDataButton.TabIndex = 14;
             this.removeAreaDataButton.Text = "Remove Last";
             this.removeAreaDataButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeAreaDataButton.UseVisualStyleBackColor = false;
+            this.removeAreaDataButton.UseVisualStyleBackColor = true;
             this.removeAreaDataButton.Click += new System.EventHandler(this.removeAreaDataButton_Click);
             // 
             // addAreaDataButton
             // 
-            this.addAreaDataButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.addAreaDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.addAreaDataButton.Image = ((System.Drawing.Image)(resources.GetObject("addAreaDataButton.Image")));
             this.addAreaDataButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addAreaDataButton.Location = new System.Drawing.Point(286, 23);
@@ -5003,13 +4665,11 @@
             this.addAreaDataButton.TabIndex = 13;
             this.addAreaDataButton.Text = "Add Area Data";
             this.addAreaDataButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addAreaDataButton.UseVisualStyleBackColor = false;
+            this.addAreaDataButton.UseVisualStyleBackColor = true;
             this.addAreaDataButton.Click += new System.EventHandler(this.addAreaDataButton_Click);
             // 
             // saveAreaDataButton
             // 
-            this.saveAreaDataButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.saveAreaDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.saveAreaDataButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveAreaDataButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveAreaDataButton.Location = new System.Drawing.Point(177, 23);
@@ -5018,7 +4678,7 @@
             this.saveAreaDataButton.TabIndex = 12;
             this.saveAreaDataButton.Text = "&Save \r\nArea Data";
             this.saveAreaDataButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.saveAreaDataButton.UseVisualStyleBackColor = false;
+            this.saveAreaDataButton.UseVisualStyleBackColor = true;
             this.saveAreaDataButton.Click += new System.EventHandler(this.saveAreaDataButton_Click);
             // 
             // label35
@@ -5032,8 +4692,6 @@
             // 
             // areaDataDynamicTexturesNumericUpDown
             // 
-            this.areaDataDynamicTexturesNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.areaDataDynamicTexturesNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.areaDataDynamicTexturesNumericUpDown.Enabled = false;
             this.areaDataDynamicTexturesNumericUpDown.Location = new System.Drawing.Point(400, 157);
             this.areaDataDynamicTexturesNumericUpDown.Maximum = new decimal(new int[] {
@@ -5057,8 +4715,7 @@
             // 
             // areaDataLightTypeComboBox
             // 
-            this.areaDataLightTypeComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.areaDataLightTypeComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.areaDataLightTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.areaDataLightTypeComboBox.FormattingEnabled = true;
             this.areaDataLightTypeComboBox.Location = new System.Drawing.Point(355, 207);
             this.areaDataLightTypeComboBox.Name = "areaDataLightTypeComboBox";
@@ -5077,8 +4734,6 @@
             // 
             // areaDataMapTilesetUpDown
             // 
-            this.areaDataMapTilesetUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.areaDataMapTilesetUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.areaDataMapTilesetUpDown.Location = new System.Drawing.Point(191, 157);
             this.areaDataMapTilesetUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -5101,8 +4756,6 @@
             // 
             // areaDataBuildingTilesetUpDown
             // 
-            this.areaDataBuildingTilesetUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.areaDataBuildingTilesetUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.areaDataBuildingTilesetUpDown.Location = new System.Drawing.Point(296, 157);
             this.areaDataBuildingTilesetUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -5116,8 +4769,6 @@
             // 
             // selectAreaDataListBox
             // 
-            this.selectAreaDataListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.selectAreaDataListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.selectAreaDataListBox.FormattingEnabled = true;
             this.selectAreaDataListBox.Location = new System.Drawing.Point(12, 24);
             this.selectAreaDataListBox.Name = "selectAreaDataListBox";
@@ -5127,8 +4778,6 @@
             // 
             // addNSBTXButton
             // 
-            this.addNSBTXButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.addNSBTXButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.addNSBTXButton.Image = ((System.Drawing.Image)(resources.GetObject("addNSBTXButton.Image")));
             this.addNSBTXButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addNSBTXButton.Location = new System.Drawing.Point(240, 18);
@@ -5137,13 +4786,11 @@
             this.addNSBTXButton.TabIndex = 10;
             this.addNSBTXButton.Text = "Add NSBTX";
             this.addNSBTXButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addNSBTXButton.UseVisualStyleBackColor = false;
+            this.addNSBTXButton.UseVisualStyleBackColor = true;
             this.addNSBTXButton.Click += new System.EventHandler(this.addNSBTXButton_Click);
             // 
             // exportNSBTXButton
             // 
-            this.exportNSBTXButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.exportNSBTXButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.exportNSBTXButton.Image = ((System.Drawing.Image)(resources.GetObject("exportNSBTXButton.Image")));
             this.exportNSBTXButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportNSBTXButton.Location = new System.Drawing.Point(125, 18);
@@ -5152,13 +4799,11 @@
             this.exportNSBTXButton.TabIndex = 9;
             this.exportNSBTXButton.Text = "&Export\r\nSelected";
             this.exportNSBTXButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportNSBTXButton.UseVisualStyleBackColor = false;
+            this.exportNSBTXButton.UseVisualStyleBackColor = true;
             this.exportNSBTXButton.Click += new System.EventHandler(this.exportNSBTXButton_Click);
             // 
             // importNSBTXButton
             // 
-            this.importNSBTXButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.importNSBTXButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.importNSBTXButton.Image = ((System.Drawing.Image)(resources.GetObject("importNSBTXButton.Image")));
             this.importNSBTXButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importNSBTXButton.Location = new System.Drawing.Point(21, 18);
@@ -5167,12 +4812,12 @@
             this.importNSBTXButton.TabIndex = 8;
             this.importNSBTXButton.Text = "&Replace\r\nSelected...";
             this.importNSBTXButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importNSBTXButton.UseVisualStyleBackColor = false;
+            this.importNSBTXButton.UseVisualStyleBackColor = true;
             this.importNSBTXButton.Click += new System.EventHandler(this.importNSBTXButton_Click);
             // 
             // texturePictureBox
             // 
-            this.texturePictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.texturePictureBox.BackColor = System.Drawing.Color.White;
             this.texturePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.texturePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.texturePictureBox.Image = global::DSPRE.Properties.Resources.alphabgCheckerboard;
@@ -5204,8 +4849,6 @@
             // 
             // palettesListBox
             // 
-            this.palettesListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.palettesListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.palettesListBox.FormattingEnabled = true;
             this.palettesListBox.Location = new System.Drawing.Point(438, 84);
             this.palettesListBox.Name = "palettesListBox";
@@ -5215,8 +4858,6 @@
             // 
             // texturesListBox
             // 
-            this.texturesListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.texturesListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.texturesListBox.FormattingEnabled = true;
             this.texturesListBox.Location = new System.Drawing.Point(240, 84);
             this.texturesListBox.Name = "texturesListBox";
@@ -5250,8 +4891,6 @@
             // 
             // texturePacksListBox
             // 
-            this.texturePacksListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.texturePacksListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.texturePacksListBox.FormattingEnabled = true;
             this.texturePacksListBox.Location = new System.Drawing.Point(21, 84);
             this.texturePacksListBox.Name = "texturePacksListBox";
@@ -5261,7 +4900,7 @@
             // 
             // eventEditorTabPage
             // 
-            this.eventEditorTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
+            this.eventEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
             this.eventEditorTabPage.Controls.Add(this.locateCurrentEvFile);
             this.eventEditorTabPage.Controls.Add(this.groupBox21);
             this.eventEditorTabPage.Controls.Add(this.RightClickLabel);
@@ -5290,7 +4929,6 @@
             this.eventEditorTabPage.Controls.Add(this.exportEventFileButton);
             this.eventEditorTabPage.Controls.Add(this.importEventFileButton);
             this.eventEditorTabPage.Controls.Add(this.saveEventsButton);
-            this.eventEditorTabPage.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.eventEditorTabPage.ImageIndex = 3;
             this.eventEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.eventEditorTabPage.Name = "eventEditorTabPage";
@@ -5302,16 +4940,13 @@
             // 
             // locateCurrentEvFile
             // 
-            this.locateCurrentEvFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.locateCurrentEvFile.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.locateCurrentEvFile.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.locateCurrentEvFile.Image = global::DSPRE.Properties.Resources.open_file;
             this.locateCurrentEvFile.Location = new System.Drawing.Point(461, 14);
             this.locateCurrentEvFile.Name = "locateCurrentEvFile";
             this.locateCurrentEvFile.Size = new System.Drawing.Size(42, 40);
             this.locateCurrentEvFile.TabIndex = 62;
             this.locateCurrentEvFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.locateCurrentEvFile.UseVisualStyleBackColor = false;
+            this.locateCurrentEvFile.UseVisualStyleBackColor = true;
             this.locateCurrentEvFile.Click += new System.EventHandler(this.locateCurrentEvFile_Click);
             // 
             // groupBox21
@@ -5383,9 +5018,6 @@
             // 
             // eventAreaDataUpDown
             // 
-            this.eventAreaDataUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.eventAreaDataUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.eventAreaDataUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.eventAreaDataUpDown.Location = new System.Drawing.Point(9, 108);
             this.eventAreaDataUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -5436,9 +5068,6 @@
             // 
             // eventMatrixYUpDown
             // 
-            this.eventMatrixYUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.eventMatrixYUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.eventMatrixYUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.eventMatrixYUpDown.Location = new System.Drawing.Point(466, 173);
             this.eventMatrixYUpDown.Name = "eventMatrixYUpDown";
             this.eventMatrixYUpDown.Size = new System.Drawing.Size(40, 20);
@@ -5447,9 +5076,6 @@
             // 
             // eventMatrixXUpDown
             // 
-            this.eventMatrixXUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.eventMatrixXUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.eventMatrixXUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.eventMatrixXUpDown.Location = new System.Drawing.Point(466, 147);
             this.eventMatrixXUpDown.Name = "eventMatrixXUpDown";
             this.eventMatrixXUpDown.Size = new System.Drawing.Size(40, 20);
@@ -5500,7 +5126,6 @@
             // 
             // eventMatrixPictureBox
             // 
-            this.eventMatrixPictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.eventMatrixPictureBox.Location = new System.Drawing.Point(0, -1);
             this.eventMatrixPictureBox.Name = "eventMatrixPictureBox";
             this.eventMatrixPictureBox.Size = new System.Drawing.Size(440, 150);
@@ -5511,9 +5136,7 @@
             // 
             // selectEventComboBox
             // 
-            this.selectEventComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.selectEventComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.selectEventComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.selectEventComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.selectEventComboBox.FormattingEnabled = true;
             this.selectEventComboBox.Location = new System.Drawing.Point(10, 11);
             this.selectEventComboBox.Name = "selectEventComboBox";
@@ -5533,9 +5156,6 @@
             // 
             // eventMatrixUpDown
             // 
-            this.eventMatrixUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.eventMatrixUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.eventMatrixUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.eventMatrixUpDown.Location = new System.Drawing.Point(466, 101);
             this.eventMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -5562,7 +5182,6 @@
             // 
             // signsTabPage
             // 
-            this.signsTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.signsTabPage.Controls.Add(this.spawnableTypeComboBox);
             this.signsTabPage.Controls.Add(this.label18);
             this.signsTabPage.Controls.Add(this.duplicateSpawnableButton);
@@ -5580,11 +5199,11 @@
             this.signsTabPage.Size = new System.Drawing.Size(444, 352);
             this.signsTabPage.TabIndex = 0;
             this.signsTabPage.Text = "Spawnables";
+            this.signsTabPage.UseVisualStyleBackColor = true;
             // 
             // spawnableTypeComboBox
             // 
-            this.spawnableTypeComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.spawnableTypeComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.spawnableTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.spawnableTypeComboBox.FormattingEnabled = true;
             this.spawnableTypeComboBox.Location = new System.Drawing.Point(229, 71);
             this.spawnableTypeComboBox.Name = "spawnableTypeComboBox";
@@ -5603,7 +5222,6 @@
             // 
             // duplicateSpawnableButton
             // 
-            this.duplicateSpawnableButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.duplicateSpawnableButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
             this.duplicateSpawnableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.duplicateSpawnableButton.Location = new System.Drawing.Point(139, 318);
@@ -5637,8 +5255,6 @@
             // 
             // goToSignButton
             // 
-            this.goToSignButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.goToSignButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.goToSignButton.Image = global::DSPRE.Properties.Resources.goToSpawnable;
             this.goToSignButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.goToSignButton.Location = new System.Drawing.Point(30, 137);
@@ -5647,7 +5263,7 @@
             this.goToSignButton.TabIndex = 20;
             this.goToSignButton.Text = "Find this Spawnable";
             this.goToSignButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.goToSignButton.UseVisualStyleBackColor = false;
+            this.goToSignButton.UseVisualStyleBackColor = true;
             this.goToSignButton.Click += new System.EventHandler(this.centerEventViewOnSelectedEvent_Click);
             // 
             // signMatrixYLabel
@@ -5661,9 +5277,6 @@
             // 
             // spawnableXMatrixUpDown
             // 
-            this.spawnableXMatrixUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.spawnableXMatrixUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.spawnableXMatrixUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.spawnableXMatrixUpDown.Location = new System.Drawing.Point(74, 74);
             this.spawnableXMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -5686,9 +5299,6 @@
             // 
             // spawnableYMatrixUpDown
             // 
-            this.spawnableYMatrixUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.spawnableYMatrixUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.spawnableYMatrixUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.spawnableYMatrixUpDown.Location = new System.Drawing.Point(74, 104);
             this.spawnableYMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -5711,9 +5321,6 @@
             // 
             // spawnablexMapUpDown
             // 
-            this.spawnablexMapUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.spawnablexMapUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.spawnablexMapUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.spawnablexMapUpDown.Location = new System.Drawing.Point(28, 38);
             this.spawnablexMapUpDown.Maximum = new decimal(new int[] {
             32768,
@@ -5732,9 +5339,6 @@
             // 
             // spawnableUpDown
             // 
-            this.spawnableUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.spawnableUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.spawnableUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.spawnableUpDown.Location = new System.Drawing.Point(138, 38);
             this.spawnableUpDown.Maximum = new decimal(new int[] {
             32768,
@@ -5762,9 +5366,6 @@
             // 
             // spawnableYMapUpDown
             // 
-            this.spawnableYMapUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.spawnableYMapUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.spawnableYMapUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.spawnableYMapUpDown.Location = new System.Drawing.Point(83, 38);
             this.spawnableYMapUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -5787,7 +5388,6 @@
             // 
             // removeSpawnableButton
             // 
-            this.removeSpawnableButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.removeSpawnableButton.Image = ((System.Drawing.Image)(resources.GetObject("removeSpawnableButton.Image")));
             this.removeSpawnableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeSpawnableButton.Location = new System.Drawing.Point(68, 317);
@@ -5801,7 +5401,6 @@
             // 
             // addSpawnableButton
             // 
-            this.addSpawnableButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.addSpawnableButton.Image = ((System.Drawing.Image)(resources.GetObject("addSpawnableButton.Image")));
             this.addSpawnableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addSpawnableButton.Location = new System.Drawing.Point(10, 317);
@@ -5815,8 +5414,7 @@
             // 
             // spawnableDirComboBox
             // 
-            this.spawnableDirComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.spawnableDirComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.spawnableDirComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.spawnableDirComboBox.FormattingEnabled = true;
             this.spawnableDirComboBox.Location = new System.Drawing.Point(229, 121);
             this.spawnableDirComboBox.Name = "spawnableDirComboBox";
@@ -5844,9 +5442,6 @@
             // 
             // spawnableScriptUpDown
             // 
-            this.spawnableScriptUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.spawnableScriptUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.spawnableScriptUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.spawnableScriptUpDown.Location = new System.Drawing.Point(325, 22);
             this.spawnableScriptUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -5860,8 +5455,6 @@
             // 
             // spawnablesListBox
             // 
-            this.spawnablesListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.spawnablesListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.spawnablesListBox.FormattingEnabled = true;
             this.spawnablesListBox.Location = new System.Drawing.Point(10, 11);
             this.spawnablesListBox.Name = "spawnablesListBox";
@@ -5871,7 +5464,6 @@
             // 
             // overworldsTabPage
             // 
-            this.overworldsTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.overworldsTabPage.Controls.Add(this.groupBox22);
             this.overworldsTabPage.Controls.Add(this.spriteIDlabel);
             this.overworldsTabPage.Controls.Add(this.groupBox17);
@@ -5897,6 +5489,7 @@
             this.overworldsTabPage.Size = new System.Drawing.Size(444, 352);
             this.overworldsTabPage.TabIndex = 1;
             this.overworldsTabPage.Text = "Overworlds";
+            this.overworldsTabPage.UseVisualStyleBackColor = true;
             // 
             // groupBox22
             // 
@@ -5969,7 +5562,6 @@
             // 
             // button14
             // 
-            this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button14.Image = global::DSPRE.Properties.Resources.goToOW;
             this.button14.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button14.Location = new System.Drawing.Point(20, 44);
@@ -5983,9 +5575,6 @@
             // 
             // owYMatrixUpDown
             // 
-            this.owYMatrixUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.owYMatrixUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.owYMatrixUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.owYMatrixUpDown.Location = new System.Drawing.Point(117, 19);
             this.owYMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -6008,9 +5597,6 @@
             // 
             // owXMatrixUpDown
             // 
-            this.owXMatrixUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.owXMatrixUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.owXMatrixUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.owXMatrixUpDown.Location = new System.Drawing.Point(36, 19);
             this.owXMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -6037,7 +5623,6 @@
             this.owMovementGroupBox.Controls.Add(this.label4);
             this.owMovementGroupBox.Controls.Add(this.owOrientationComboBox);
             this.owMovementGroupBox.Controls.Add(this.owMovementComboBox);
-            this.owMovementGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.owMovementGroupBox.Location = new System.Drawing.Point(197, 256);
             this.owMovementGroupBox.Name = "owMovementGroupBox";
             this.owMovementGroupBox.Size = new System.Drawing.Size(232, 90);
@@ -6113,9 +5698,7 @@
             // 
             // owOrientationComboBox
             // 
-            this.owOrientationComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.owOrientationComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.owOrientationComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.owOrientationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.owOrientationComboBox.FormattingEnabled = true;
             this.owOrientationComboBox.Items.AddRange(new object[] {
             "Up",
@@ -6130,9 +5713,7 @@
             // 
             // owMovementComboBox
             // 
-            this.owMovementComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.owMovementComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.owMovementComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.owMovementComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.owMovementComboBox.FormattingEnabled = true;
             this.owMovementComboBox.Location = new System.Drawing.Point(11, 16);
             this.owMovementComboBox.Name = "owMovementComboBox";
@@ -6166,9 +5747,6 @@
             // 
             // owXMapUpDown
             // 
-            this.owXMapUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.owXMapUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.owXMapUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.owXMapUpDown.Location = new System.Drawing.Point(18, 24);
             this.owXMapUpDown.Maximum = new decimal(new int[] {
             32768,
@@ -6187,9 +5765,6 @@
             // 
             // owZPositionUpDown
             // 
-            this.owZPositionUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.owZPositionUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.owZPositionUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.owZPositionUpDown.Location = new System.Drawing.Point(136, 24);
             this.owZPositionUpDown.Maximum = new decimal(new int[] {
             32768,
@@ -6217,9 +5792,6 @@
             // 
             // owYMapUpDown
             // 
-            this.owYMapUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.owYMapUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.owYMapUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.owYMapUpDown.Location = new System.Drawing.Point(77, 24);
             this.owYMapUpDown.Maximum = new decimal(new int[] {
             32768,
@@ -6256,7 +5828,6 @@
             this.owSpecialGroupBox.Controls.Add(this.owSightRangeUpDown);
             this.owSpecialGroupBox.Controls.Add(this.owTrainerLabel);
             this.owSpecialGroupBox.Enabled = false;
-            this.owSpecialGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.owSpecialGroupBox.Location = new System.Drawing.Point(197, 150);
             this.owSpecialGroupBox.Name = "owSpecialGroupBox";
             this.owSpecialGroupBox.Size = new System.Drawing.Size(232, 102);
@@ -6266,7 +5837,6 @@
             // 
             // itemsSelectorHelpBtn
             // 
-            this.itemsSelectorHelpBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.itemsSelectorHelpBtn.Image = global::DSPRE.Properties.Resources.questionMark;
             this.itemsSelectorHelpBtn.Location = new System.Drawing.Point(194, 67);
             this.itemsSelectorHelpBtn.Name = "itemsSelectorHelpBtn";
@@ -6288,9 +5858,7 @@
             // 
             // owItemComboBox
             // 
-            this.owItemComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.owItemComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.owItemComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.owItemComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.owItemComboBox.FormattingEnabled = true;
             this.owItemComboBox.Location = new System.Drawing.Point(49, 72);
             this.owItemComboBox.Name = "owItemComboBox";
@@ -6310,10 +5878,8 @@
             // 
             // owTrainerComboBox
             // 
-            this.owTrainerComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.owTrainerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.owTrainerComboBox.Enabled = false;
-            this.owTrainerComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.owTrainerComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.owTrainerComboBox.FormattingEnabled = true;
             this.owTrainerComboBox.Location = new System.Drawing.Point(49, 19);
             this.owTrainerComboBox.Name = "owTrainerComboBox";
@@ -6333,10 +5899,7 @@
             // 
             // owSightRangeUpDown
             // 
-            this.owSightRangeUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.owSightRangeUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.owSightRangeUpDown.Enabled = false;
-            this.owSightRangeUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.owSightRangeUpDown.Location = new System.Drawing.Point(108, 46);
             this.owSightRangeUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -6369,9 +5932,6 @@
             // 
             // owScriptNumericUpDown
             // 
-            this.owScriptNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.owScriptNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.owScriptNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.owScriptNumericUpDown.Location = new System.Drawing.Point(368, 22);
             this.owScriptNumericUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -6394,9 +5954,6 @@
             // 
             // owFlagNumericUpDown
             // 
-            this.owFlagNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.owFlagNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.owFlagNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.owFlagNumericUpDown.Location = new System.Drawing.Point(286, 22);
             this.owFlagNumericUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -6411,7 +5968,6 @@
             // owSpriteLabel
             // 
             this.owSpriteLabel.AutoSize = true;
-            this.owSpriteLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.owSpriteLabel.Location = new System.Drawing.Point(197, 51);
             this.owSpriteLabel.Name = "owSpriteLabel";
             this.owSpriteLabel.Size = new System.Drawing.Size(45, 13);
@@ -6420,9 +5976,7 @@
             // 
             // owSpriteComboBox
             // 
-            this.owSpriteComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.owSpriteComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.owSpriteComboBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.owSpriteComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.owSpriteComboBox.FormattingEnabled = true;
             this.owSpriteComboBox.Location = new System.Drawing.Point(200, 67);
             this.owSpriteComboBox.Name = "owSpriteComboBox";
@@ -6433,7 +5987,6 @@
             // owIDLabel
             // 
             this.owIDLabel.AutoSize = true;
-            this.owIDLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(1)))));
             this.owIDLabel.Location = new System.Drawing.Point(198, 6);
             this.owIDLabel.Name = "owIDLabel";
             this.owIDLabel.Size = new System.Drawing.Size(58, 13);
@@ -6442,9 +5995,6 @@
             // 
             // owIDNumericUpDown
             // 
-            this.owIDNumericUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.owIDNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.owIDNumericUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.owIDNumericUpDown.Location = new System.Drawing.Point(201, 22);
             this.owIDNumericUpDown.Maximum = new decimal(new int[] {
             255,
@@ -6458,7 +6008,6 @@
             // 
             // duplicateOverworldsButton
             // 
-            this.duplicateOverworldsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.duplicateOverworldsButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
             this.duplicateOverworldsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.duplicateOverworldsButton.Location = new System.Drawing.Point(116, 167);
@@ -6482,7 +6031,6 @@
             // 
             // removeOverworldButton
             // 
-            this.removeOverworldButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.removeOverworldButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeOverworldButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeOverworldButton.Location = new System.Drawing.Point(56, 167);
@@ -6496,7 +6044,6 @@
             // 
             // addOverworldButton
             // 
-            this.addOverworldButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.addOverworldButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addOverworldButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addOverworldButton.Location = new System.Drawing.Point(8, 167);
@@ -6510,8 +6057,6 @@
             // 
             // overworldsListBox
             // 
-            this.overworldsListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.overworldsListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.overworldsListBox.FormattingEnabled = true;
             this.overworldsListBox.Location = new System.Drawing.Point(8, 6);
             this.overworldsListBox.Name = "overworldsListBox";
@@ -6521,7 +6066,6 @@
             // 
             // warpsTabPage
             // 
-            this.warpsTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.warpsTabPage.Controls.Add(this.duplicateWarpsButton);
             this.warpsTabPage.Controls.Add(this.groupBox11);
             this.warpsTabPage.Controls.Add(this.groupBox1);
@@ -6534,11 +6078,10 @@
             this.warpsTabPage.Size = new System.Drawing.Size(444, 352);
             this.warpsTabPage.TabIndex = 2;
             this.warpsTabPage.Text = "Warps";
+            this.warpsTabPage.UseVisualStyleBackColor = true;
             // 
             // duplicateWarpsButton
             // 
-            this.duplicateWarpsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.duplicateWarpsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.duplicateWarpsButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
             this.duplicateWarpsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.duplicateWarpsButton.Location = new System.Drawing.Point(112, 308);
@@ -6547,7 +6090,7 @@
             this.duplicateWarpsButton.TabIndex = 23;
             this.duplicateWarpsButton.Text = "Duplicate";
             this.duplicateWarpsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.duplicateWarpsButton.UseVisualStyleBackColor = false;
+            this.duplicateWarpsButton.UseVisualStyleBackColor = true;
             this.duplicateWarpsButton.Click += new System.EventHandler(this.duplicateWarpsButton_Click);
             // 
             // groupBox11
@@ -6557,7 +6100,6 @@
             this.groupBox11.Controls.Add(this.destinationWarpGoToButton);
             this.groupBox11.Controls.Add(this.warpAnchorUpDown);
             this.groupBox11.Controls.Add(this.warpAnchorLabel);
-            this.groupBox11.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox11.Location = new System.Drawing.Point(193, 193);
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(242, 150);
@@ -6575,8 +6117,6 @@
             // 
             // eventEditorWarpHeaderListBox
             // 
-            this.eventEditorWarpHeaderListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.eventEditorWarpHeaderListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.eventEditorWarpHeaderListBox.FormattingEnabled = true;
             this.eventEditorWarpHeaderListBox.Location = new System.Drawing.Point(7, 20);
             this.eventEditorWarpHeaderListBox.Name = "eventEditorWarpHeaderListBox";
@@ -6586,8 +6126,6 @@
             // 
             // destinationWarpGoToButton
             // 
-            this.destinationWarpGoToButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.destinationWarpGoToButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.destinationWarpGoToButton.Image = global::DSPRE.Properties.Resources.warpGo;
             this.destinationWarpGoToButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.destinationWarpGoToButton.Location = new System.Drawing.Point(138, 98);
@@ -6596,14 +6134,11 @@
             this.destinationWarpGoToButton.TabIndex = 26;
             this.destinationWarpGoToButton.Text = "Test\r\nWarp";
             this.destinationWarpGoToButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.destinationWarpGoToButton.UseVisualStyleBackColor = false;
+            this.destinationWarpGoToButton.UseVisualStyleBackColor = true;
             this.destinationWarpGoToButton.Click += new System.EventHandler(this.goToWarpDestination_Click);
             // 
             // warpAnchorUpDown
             // 
-            this.warpAnchorUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.warpAnchorUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.warpAnchorUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.warpAnchorUpDown.Location = new System.Drawing.Point(138, 73);
             this.warpAnchorUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -6628,7 +6163,6 @@
             // 
             this.groupBox1.Controls.Add(this.groupBox14);
             this.groupBox1.Controls.Add(this.groupBox12);
-            this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox1.Location = new System.Drawing.Point(193, 6);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(242, 182);
@@ -6643,7 +6177,6 @@
             this.groupBox14.Controls.Add(this.warpXMatrixUpDown);
             this.groupBox14.Controls.Add(this.label15);
             this.groupBox14.Controls.Add(this.warpYMatrixUpDown);
-            this.groupBox14.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox14.Location = new System.Drawing.Point(9, 74);
             this.groupBox14.Name = "groupBox14";
             this.groupBox14.Size = new System.Drawing.Size(223, 97);
@@ -6653,8 +6186,6 @@
             // 
             // goToWarpButton
             // 
-            this.goToWarpButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.goToWarpButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.goToWarpButton.Image = global::DSPRE.Properties.Resources.goToWarp;
             this.goToWarpButton.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.goToWarpButton.Location = new System.Drawing.Point(63, 51);
@@ -6663,7 +6194,7 @@
             this.goToWarpButton.TabIndex = 25;
             this.goToWarpButton.Text = "Go to start \r\ncoordinates";
             this.goToWarpButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.goToWarpButton.UseVisualStyleBackColor = false;
+            this.goToWarpButton.UseVisualStyleBackColor = true;
             this.goToWarpButton.Click += new System.EventHandler(this.centerEventViewOnSelectedEvent_Click);
             // 
             // label9
@@ -6677,9 +6208,6 @@
             // 
             // warpXMatrixUpDown
             // 
-            this.warpXMatrixUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.warpXMatrixUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.warpXMatrixUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.warpXMatrixUpDown.Location = new System.Drawing.Point(49, 23);
             this.warpXMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -6702,9 +6230,6 @@
             // 
             // warpYMatrixUpDown
             // 
-            this.warpYMatrixUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.warpYMatrixUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.warpYMatrixUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.warpYMatrixUpDown.Location = new System.Drawing.Point(157, 23);
             this.warpYMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -6733,9 +6258,6 @@
             // 
             // warpXMapUpDown
             // 
-            this.warpXMapUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.warpXMapUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.warpXMapUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.warpXMapUpDown.Location = new System.Drawing.Point(25, 19);
             this.warpXMapUpDown.Maximum = new decimal(new int[] {
             32768,
@@ -6772,9 +6294,6 @@
             // 
             // warpYMapUpDown
             // 
-            this.warpYMapUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.warpYMapUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.warpYMapUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.warpYMapUpDown.Location = new System.Drawing.Point(100, 19);
             this.warpYMapUpDown.Maximum = new decimal(new int[] {
             32768,
@@ -6793,9 +6312,6 @@
             // 
             // warpZUpDown
             // 
-            this.warpZUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.warpZUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.warpZUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.warpZUpDown.Location = new System.Drawing.Point(175, 19);
             this.warpZUpDown.Maximum = new decimal(new int[] {
             32768,
@@ -6823,8 +6339,6 @@
             // 
             // removeWarpButton
             // 
-            this.removeWarpButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.removeWarpButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.removeWarpButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeWarpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeWarpButton.Location = new System.Drawing.Point(60, 308);
@@ -6833,13 +6347,11 @@
             this.removeWarpButton.TabIndex = 10;
             this.removeWarpButton.Text = "Rem";
             this.removeWarpButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeWarpButton.UseVisualStyleBackColor = false;
+            this.removeWarpButton.UseVisualStyleBackColor = true;
             this.removeWarpButton.Click += new System.EventHandler(this.removeWarpButton_Click);
             // 
             // addWarpButton
             // 
-            this.addWarpButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.addWarpButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.addWarpButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addWarpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addWarpButton.Location = new System.Drawing.Point(8, 308);
@@ -6848,13 +6360,11 @@
             this.addWarpButton.TabIndex = 9;
             this.addWarpButton.Text = "Add";
             this.addWarpButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addWarpButton.UseVisualStyleBackColor = false;
+            this.addWarpButton.UseVisualStyleBackColor = true;
             this.addWarpButton.Click += new System.EventHandler(this.addWarpButton_Click);
             // 
             // warpsListBox
             // 
-            this.warpsListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.warpsListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.warpsListBox.FormattingEnabled = true;
             this.warpsListBox.Location = new System.Drawing.Point(9, 12);
             this.warpsListBox.Name = "warpsListBox";
@@ -6864,7 +6374,6 @@
             // 
             // triggersTabPage
             // 
-            this.triggersTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.triggersTabPage.Controls.Add(this.triggerLogicGroupBox);
             this.triggersTabPage.Controls.Add(this.groupBox16);
             this.triggersTabPage.Controls.Add(this.groupBox15);
@@ -6879,6 +6388,7 @@
             this.triggersTabPage.Size = new System.Drawing.Size(444, 352);
             this.triggersTabPage.TabIndex = 3;
             this.triggersTabPage.Text = "Triggers";
+            this.triggersTabPage.UseVisualStyleBackColor = true;
             // 
             // triggerLogicGroupBox
             // 
@@ -6897,9 +6407,6 @@
             // 
             // expectedVarValueTriggerUpDown
             // 
-            this.expectedVarValueTriggerUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.expectedVarValueTriggerUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.expectedVarValueTriggerUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.expectedVarValueTriggerUpDown.Location = new System.Drawing.Point(112, 36);
             this.expectedVarValueTriggerUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -6922,9 +6429,6 @@
             // 
             // triggerVariableWatchedUpDown
             // 
-            this.triggerVariableWatchedUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.triggerVariableWatchedUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.triggerVariableWatchedUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.triggerVariableWatchedUpDown.Location = new System.Drawing.Point(17, 36);
             this.triggerVariableWatchedUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -6947,9 +6451,6 @@
             // 
             // triggerScriptUpDown
             // 
-            this.triggerScriptUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.triggerScriptUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.triggerScriptUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.triggerScriptUpDown.Location = new System.Drawing.Point(68, 77);
             this.triggerScriptUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -6994,9 +6495,6 @@
             // 
             // triggerLengthUpDown
             // 
-            this.triggerLengthUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.triggerLengthUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.triggerLengthUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.triggerLengthUpDown.Location = new System.Drawing.Point(119, 36);
             this.triggerLengthUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -7019,9 +6517,6 @@
             // 
             // triggerWidthUpDown
             // 
-            this.triggerWidthUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.triggerWidthUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.triggerWidthUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.triggerWidthUpDown.Location = new System.Drawing.Point(18, 36);
             this.triggerWidthUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -7059,9 +6554,6 @@
             // 
             // triggerXMapUpDown
             // 
-            this.triggerXMapUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.triggerXMapUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.triggerXMapUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.triggerXMapUpDown.Location = new System.Drawing.Point(28, 23);
             this.triggerXMapUpDown.Maximum = new decimal(new int[] {
             32768,
@@ -7080,9 +6572,6 @@
             // 
             // triggerZUpDown
             // 
-            this.triggerZUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.triggerZUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.triggerZUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.triggerZUpDown.Location = new System.Drawing.Point(156, 23);
             this.triggerZUpDown.Maximum = new decimal(new int[] {
             32768,
@@ -7110,9 +6599,6 @@
             // 
             // triggerYMapUpDown
             // 
-            this.triggerYMapUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.triggerYMapUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.triggerYMapUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.triggerYMapUpDown.Location = new System.Drawing.Point(91, 23);
             this.triggerYMapUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -7149,8 +6635,6 @@
             // 
             // goToTriggerButton
             // 
-            this.goToTriggerButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.goToTriggerButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.goToTriggerButton.Image = global::DSPRE.Properties.Resources.goToTrigger;
             this.goToTriggerButton.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.goToTriggerButton.Location = new System.Drawing.Point(44, 47);
@@ -7159,7 +6643,7 @@
             this.goToTriggerButton.TabIndex = 20;
             this.goToTriggerButton.Text = "Find this trigger";
             this.goToTriggerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.goToTriggerButton.UseVisualStyleBackColor = false;
+            this.goToTriggerButton.UseVisualStyleBackColor = true;
             this.goToTriggerButton.Click += new System.EventHandler(this.centerEventViewOnSelectedEvent_Click);
             // 
             // triggerYMatrixLabel
@@ -7173,9 +6657,6 @@
             // 
             // triggerXMatrixUpDown
             // 
-            this.triggerXMatrixUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.triggerXMatrixUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.triggerXMatrixUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.triggerXMatrixUpDown.Location = new System.Drawing.Point(52, 21);
             this.triggerXMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -7198,9 +6679,6 @@
             // 
             // triggerYMatrixUpDown
             // 
-            this.triggerYMatrixUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.triggerYMatrixUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.triggerYMatrixUpDown.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.triggerYMatrixUpDown.Location = new System.Drawing.Point(152, 21);
             this.triggerYMatrixUpDown.Maximum = new decimal(new int[] {
             65535,
@@ -7214,8 +6692,6 @@
             // 
             // duplicateTriggersButton
             // 
-            this.duplicateTriggersButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.duplicateTriggersButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.duplicateTriggersButton.Image = global::DSPRE.Properties.Resources.copyIcon_small;
             this.duplicateTriggersButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.duplicateTriggersButton.Location = new System.Drawing.Point(130, 308);
@@ -7224,13 +6700,11 @@
             this.duplicateTriggersButton.TabIndex = 36;
             this.duplicateTriggersButton.Text = "Duplicate";
             this.duplicateTriggersButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.duplicateTriggersButton.UseVisualStyleBackColor = false;
+            this.duplicateTriggersButton.UseVisualStyleBackColor = true;
             this.duplicateTriggersButton.Click += new System.EventHandler(this.duplicateTriggersButton_Click);
             // 
             // removeTriggerButton
             // 
-            this.removeTriggerButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.removeTriggerButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.removeTriggerButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeTriggerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeTriggerButton.Location = new System.Drawing.Point(66, 308);
@@ -7239,13 +6713,11 @@
             this.removeTriggerButton.TabIndex = 10;
             this.removeTriggerButton.Text = "Delete";
             this.removeTriggerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeTriggerButton.UseVisualStyleBackColor = false;
+            this.removeTriggerButton.UseVisualStyleBackColor = true;
             this.removeTriggerButton.Click += new System.EventHandler(this.removeTriggerButton_Click);
             // 
             // addTriggerButton
             // 
-            this.addTriggerButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.addTriggerButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.addTriggerButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addTriggerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addTriggerButton.Location = new System.Drawing.Point(14, 308);
@@ -7254,13 +6726,11 @@
             this.addTriggerButton.TabIndex = 9;
             this.addTriggerButton.Text = "Add";
             this.addTriggerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addTriggerButton.UseVisualStyleBackColor = false;
+            this.addTriggerButton.UseVisualStyleBackColor = true;
             this.addTriggerButton.Click += new System.EventHandler(this.addTriggerButton_Click);
             // 
             // triggersListBox
             // 
-            this.triggersListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.triggersListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.triggersListBox.FormattingEnabled = true;
             this.triggersListBox.Location = new System.Drawing.Point(14, 12);
             this.triggersListBox.Name = "triggersListBox";
@@ -7280,7 +6750,7 @@
             // 
             // eventPictureBox
             // 
-            this.eventPictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
+            this.eventPictureBox.BackColor = System.Drawing.Color.White;
             this.eventPictureBox.Location = new System.Drawing.Point(0, 0);
             this.eventPictureBox.Name = "eventPictureBox";
             this.eventPictureBox.Size = new System.Drawing.Size(544, 544);
@@ -7348,7 +6818,6 @@
             // 
             // removeEventFileButton
             // 
-            this.removeEventFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.removeEventFileButton.Image = ((System.Drawing.Image)(resources.GetObject("removeEventFileButton.Image")));
             this.removeEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.removeEventFileButton.Location = new System.Drawing.Point(354, 36);
@@ -7362,9 +6831,6 @@
             // 
             // addEventFileButton
             // 
-            this.addEventFileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.addEventFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.addEventFileButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.addEventFileButton.Image = ((System.Drawing.Image)(resources.GetObject("addEventFileButton.Image")));
             this.addEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.addEventFileButton.Location = new System.Drawing.Point(354, 9);
@@ -7373,72 +6839,57 @@
             this.addEventFileButton.TabIndex = 53;
             this.addEventFileButton.Text = "Add Event File";
             this.addEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addEventFileButton.UseVisualStyleBackColor = false;
+            this.addEventFileButton.UseVisualStyleBackColor = true;
             this.addEventFileButton.Click += new System.EventHandler(this.addEventFileButton_Click);
             // 
             // eventShiftRightButton
             // 
-            this.eventShiftRightButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.eventShiftRightButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.eventShiftRightButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.eventShiftRightButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.eventShiftRightButton.Image = global::DSPRE.Properties.Resources.arrowright;
             this.eventShiftRightButton.Location = new System.Drawing.Point(1152, 233);
             this.eventShiftRightButton.Name = "eventShiftRightButton";
             this.eventShiftRightButton.Size = new System.Drawing.Size(25, 156);
             this.eventShiftRightButton.TabIndex = 45;
-            this.eventShiftRightButton.UseVisualStyleBackColor = false;
+            this.eventShiftRightButton.UseVisualStyleBackColor = true;
             this.eventShiftRightButton.Click += new System.EventHandler(this.eventShiftRightButton_Click);
             // 
             // eventShiftLeftButton
             // 
-            this.eventShiftLeftButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.eventShiftLeftButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.eventShiftLeftButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.eventShiftLeftButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.eventShiftLeftButton.Image = global::DSPRE.Properties.Resources.arrowleft;
             this.eventShiftLeftButton.Location = new System.Drawing.Point(570, 233);
             this.eventShiftLeftButton.Name = "eventShiftLeftButton";
             this.eventShiftLeftButton.Size = new System.Drawing.Size(25, 156);
             this.eventShiftLeftButton.TabIndex = 44;
-            this.eventShiftLeftButton.UseVisualStyleBackColor = false;
+            this.eventShiftLeftButton.UseVisualStyleBackColor = true;
             this.eventShiftLeftButton.Click += new System.EventHandler(this.eventShiftLeftButton_Click);
             // 
             // eventShiftUpButton
             // 
-            this.eventShiftUpButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.eventShiftUpButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.eventShiftUpButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.eventShiftUpButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.eventShiftUpButton.Image = global::DSPRE.Properties.Resources.arrowup;
             this.eventShiftUpButton.Location = new System.Drawing.Point(795, 8);
             this.eventShiftUpButton.Name = "eventShiftUpButton";
             this.eventShiftUpButton.Size = new System.Drawing.Size(156, 25);
             this.eventShiftUpButton.TabIndex = 43;
             this.eventShiftUpButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.eventShiftUpButton.UseVisualStyleBackColor = false;
+            this.eventShiftUpButton.UseVisualStyleBackColor = true;
             this.eventShiftUpButton.Click += new System.EventHandler(this.eventShiftUpButton_Click);
             // 
             // eventShiftDownButton
             // 
-            this.eventShiftDownButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.eventShiftDownButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.eventShiftDownButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.eventShiftDownButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.eventShiftDownButton.Image = global::DSPRE.Properties.Resources.arrowdown;
             this.eventShiftDownButton.Location = new System.Drawing.Point(795, 589);
             this.eventShiftDownButton.Name = "eventShiftDownButton";
             this.eventShiftDownButton.Size = new System.Drawing.Size(156, 25);
             this.eventShiftDownButton.TabIndex = 42;
             this.eventShiftDownButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.eventShiftDownButton.UseVisualStyleBackColor = false;
+            this.eventShiftDownButton.UseVisualStyleBackColor = true;
             this.eventShiftDownButton.Click += new System.EventHandler(this.eventShiftDownButton_Click);
             // 
             // exportEventFileButton
             // 
-            this.exportEventFileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.exportEventFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.exportEventFileButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.exportEventFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportEventFileButton.Location = new System.Drawing.Point(266, 9);
@@ -7447,14 +6898,11 @@
             this.exportEventFileButton.TabIndex = 36;
             this.exportEventFileButton.Text = "Export";
             this.exportEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportEventFileButton.UseVisualStyleBackColor = false;
+            this.exportEventFileButton.UseVisualStyleBackColor = true;
             this.exportEventFileButton.Click += new System.EventHandler(this.exportEventFileButton_Click);
             // 
             // importEventFileButton
             // 
-            this.importEventFileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.importEventFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.importEventFileButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.importEventFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importEventFileButton.Location = new System.Drawing.Point(178, 9);
@@ -7463,14 +6911,11 @@
             this.importEventFileButton.TabIndex = 35;
             this.importEventFileButton.Text = "Import";
             this.importEventFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importEventFileButton.UseVisualStyleBackColor = false;
+            this.importEventFileButton.UseVisualStyleBackColor = true;
             this.importEventFileButton.Click += new System.EventHandler(this.importEventFileButton_Click);
             // 
             // saveEventsButton
             // 
-            this.saveEventsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.saveEventsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.saveEventsButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.saveEventsButton.Image = global::DSPRE.Properties.Resources.saveButton;
             this.saveEventsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveEventsButton.Location = new System.Drawing.Point(9, 36);
@@ -7478,12 +6923,11 @@
             this.saveEventsButton.Size = new System.Drawing.Size(166, 25);
             this.saveEventsButton.TabIndex = 34;
             this.saveEventsButton.Text = "Save Event File";
-            this.saveEventsButton.UseVisualStyleBackColor = false;
+            this.saveEventsButton.UseVisualStyleBackColor = true;
             this.saveEventsButton.Click += new System.EventHandler(this.saveEventsButton_Click);
             // 
             // scriptEditorTabPage
             // 
-            this.scriptEditorTabPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.scriptEditorTabPage.Controls.Add(this.locateCurrentScriptFile);
             this.scriptEditorTabPage.Controls.Add(this.clearCurrentLevelScriptButton);
             this.scriptEditorTabPage.Controls.Add(this.groupBox26);
@@ -7502,7 +6946,6 @@
             this.scriptEditorTabPage.Controls.Add(this.scriptEditorTabControl);
             this.scriptEditorTabPage.Controls.Add(this.label5);
             this.scriptEditorTabPage.Controls.Add(this.selectScriptFileComboBox);
-            this.scriptEditorTabPage.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.scriptEditorTabPage.ImageIndex = 5;
             this.scriptEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.scriptEditorTabPage.Name = "scriptEditorTabPage";
@@ -7510,24 +6953,21 @@
             this.scriptEditorTabPage.Size = new System.Drawing.Size(1185, 619);
             this.scriptEditorTabPage.TabIndex = 4;
             this.scriptEditorTabPage.Text = "Script Editor";
+            this.scriptEditorTabPage.UseVisualStyleBackColor = true;
             // 
             // locateCurrentScriptFile
             // 
-            this.locateCurrentScriptFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.locateCurrentScriptFile.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.locateCurrentScriptFile.Image = global::DSPRE.Properties.Resources.open_file;
             this.locateCurrentScriptFile.Location = new System.Drawing.Point(429, 29);
             this.locateCurrentScriptFile.Name = "locateCurrentScriptFile";
             this.locateCurrentScriptFile.Size = new System.Drawing.Size(42, 40);
             this.locateCurrentScriptFile.TabIndex = 63;
             this.locateCurrentScriptFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.locateCurrentScriptFile.UseVisualStyleBackColor = false;
+            this.locateCurrentScriptFile.UseVisualStyleBackColor = true;
             this.locateCurrentScriptFile.Click += new System.EventHandler(this.locateCurrentScriptFile_Click);
             // 
             // clearCurrentLevelScriptButton
             // 
-            this.clearCurrentLevelScriptButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.clearCurrentLevelScriptButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.clearCurrentLevelScriptButton.Image = global::DSPRE.Properties.Resources.destroyLevelScript;
             this.clearCurrentLevelScriptButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.clearCurrentLevelScriptButton.Location = new System.Drawing.Point(320, 22);
@@ -7536,7 +6976,7 @@
             this.clearCurrentLevelScriptButton.TabIndex = 19;
             this.clearCurrentLevelScriptButton.Text = "&Clear This\r\nLevel Script";
             this.clearCurrentLevelScriptButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.clearCurrentLevelScriptButton.UseVisualStyleBackColor = false;
+            this.clearCurrentLevelScriptButton.UseVisualStyleBackColor = true;
             this.clearCurrentLevelScriptButton.Visible = false;
             this.clearCurrentLevelScriptButton.Click += new System.EventHandler(this.clearCurrentLevelScriptButton_Click);
             // 
@@ -7545,8 +6985,7 @@
             this.groupBox26.Controls.Add(this.scriptEditorNumberFormatNoPreference);
             this.groupBox26.Controls.Add(this.scriptEditorNumberFormatDecimal);
             this.groupBox26.Controls.Add(this.scriptEditorNumberFormatHex);
-            this.groupBox26.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBox26.Location = new System.Drawing.Point(706, 4);
+            this.groupBox26.Location = new System.Drawing.Point(693, 4);
             this.groupBox26.Name = "groupBox26";
             this.groupBox26.Size = new System.Drawing.Size(190, 36);
             this.groupBox26.TabIndex = 50;
@@ -7592,38 +7031,32 @@
             // 
             this.scriptEditorWhitespacesCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
             this.scriptEditorWhitespacesCheckbox.AutoSize = true;
-            this.scriptEditorWhitespacesCheckbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.scriptEditorWhitespacesCheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.scriptEditorWhitespacesCheckbox.Location = new System.Drawing.Point(987, 12);
             this.scriptEditorWhitespacesCheckbox.Name = "scriptEditorWhitespacesCheckbox";
             this.scriptEditorWhitespacesCheckbox.Size = new System.Drawing.Size(79, 23);
             this.scriptEditorWhitespacesCheckbox.TabIndex = 46;
             this.scriptEditorWhitespacesCheckbox.Text = "Whitespaces";
             this.scriptEditorWhitespacesCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.scriptEditorWhitespacesCheckbox.UseVisualStyleBackColor = false;
+            this.scriptEditorWhitespacesCheckbox.UseVisualStyleBackColor = true;
             this.scriptEditorWhitespacesCheckbox.CheckedChanged += new System.EventHandler(this.viewWhiteSpacesButton_Click);
             // 
             // scriptEditorWordWrapCheckbox
             // 
             this.scriptEditorWordWrapCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
             this.scriptEditorWordWrapCheckbox.AutoSize = true;
-            this.scriptEditorWordWrapCheckbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.scriptEditorWordWrapCheckbox.Checked = true;
             this.scriptEditorWordWrapCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.scriptEditorWordWrapCheckbox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.scriptEditorWordWrapCheckbox.Location = new System.Drawing.Point(913, 12);
             this.scriptEditorWordWrapCheckbox.Name = "scriptEditorWordWrapCheckbox";
             this.scriptEditorWordWrapCheckbox.Size = new System.Drawing.Size(72, 23);
             this.scriptEditorWordWrapCheckbox.TabIndex = 43;
             this.scriptEditorWordWrapCheckbox.Text = "Word Wrap";
             this.scriptEditorWordWrapCheckbox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.scriptEditorWordWrapCheckbox.UseVisualStyleBackColor = false;
+            this.scriptEditorWordWrapCheckbox.UseVisualStyleBackColor = true;
             this.scriptEditorWordWrapCheckbox.CheckedChanged += new System.EventHandler(this.scriptEditorWordWrapCheckbox_CheckedChanged);
             // 
             // compressScriptTextButton
             // 
-            this.compressScriptTextButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.compressScriptTextButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.compressScriptTextButton.Image = global::DSPRE.Properties.Resources.compressArrow;
             this.compressScriptTextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.compressScriptTextButton.Location = new System.Drawing.Point(1141, 11);
@@ -7631,13 +7064,11 @@
             this.compressScriptTextButton.Size = new System.Drawing.Size(24, 24);
             this.compressScriptTextButton.TabIndex = 49;
             this.compressScriptTextButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.compressScriptTextButton.UseVisualStyleBackColor = false;
+            this.compressScriptTextButton.UseVisualStyleBackColor = true;
             this.compressScriptTextButton.Click += new System.EventHandler(this.ScriptEditorCollapseButton_Click);
             // 
             // expandScriptTextButton
             // 
-            this.expandScriptTextButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.expandScriptTextButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.expandScriptTextButton.Image = global::DSPRE.Properties.Resources.expandArrow;
             this.expandScriptTextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.expandScriptTextButton.Location = new System.Drawing.Point(1113, 11);
@@ -7645,13 +7076,11 @@
             this.expandScriptTextButton.Size = new System.Drawing.Size(24, 24);
             this.expandScriptTextButton.TabIndex = 48;
             this.expandScriptTextButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.expandScriptTextButton.UseVisualStyleBackColor = false;
+            this.expandScriptTextButton.UseVisualStyleBackColor = true;
             this.expandScriptTextButton.Click += new System.EventHandler(this.ScriptEditorExpandButton_Click);
             // 
             // openSearchScriptEditorButton
             // 
-            this.openSearchScriptEditorButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.openSearchScriptEditorButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.openSearchScriptEditorButton.Image = global::DSPRE.Properties.Resources.SearchMiniIcon;
             this.openSearchScriptEditorButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.openSearchScriptEditorButton.Location = new System.Drawing.Point(1085, 11);
@@ -7659,14 +7088,13 @@
             this.openSearchScriptEditorButton.Size = new System.Drawing.Size(24, 24);
             this.openSearchScriptEditorButton.TabIndex = 47;
             this.openSearchScriptEditorButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.openSearchScriptEditorButton.UseVisualStyleBackColor = false;
+            this.openSearchScriptEditorButton.UseVisualStyleBackColor = true;
             this.openSearchScriptEditorButton.Click += new System.EventHandler(this.openSearchScriptEditorButton_Click);
             // 
             // groupBox24
             // 
             this.groupBox24.Controls.Add(this.SyncNavigatorCB);
             this.groupBox24.Controls.Add(this.ScriptNavigatorTabControl);
-            this.groupBox24.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox24.Location = new System.Drawing.Point(9, 75);
             this.groupBox24.Name = "groupBox24";
             this.groupBox24.Size = new System.Drawing.Size(472, 234);
@@ -7678,23 +7106,21 @@
             // 
             this.SyncNavigatorCB.Appearance = System.Windows.Forms.Appearance.Button;
             this.SyncNavigatorCB.AutoSize = true;
-            this.SyncNavigatorCB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.SyncNavigatorCB.Checked = true;
             this.SyncNavigatorCB.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.SyncNavigatorCB.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.SyncNavigatorCB.Location = new System.Drawing.Point(417, 11);
             this.SyncNavigatorCB.Name = "SyncNavigatorCB";
             this.SyncNavigatorCB.Size = new System.Drawing.Size(41, 23);
             this.SyncNavigatorCB.TabIndex = 43;
             this.SyncNavigatorCB.Text = "Sync";
-            this.SyncNavigatorCB.UseVisualStyleBackColor = false;
+            this.SyncNavigatorCB.UseVisualStyleBackColor = true;
             // 
             // ScriptNavigatorTabControl
             // 
             this.ScriptNavigatorTabControl.Controls.Add(this.ScriptsNavTab);
             this.ScriptNavigatorTabControl.Controls.Add(this.FunctionsNavTab);
             this.ScriptNavigatorTabControl.Controls.Add(this.ActionsNavTab);
-            this.ScriptNavigatorTabControl.Location = new System.Drawing.Point(6, 19);
+            this.ScriptNavigatorTabControl.Location = new System.Drawing.Point(6, 16);
             this.ScriptNavigatorTabControl.Name = "ScriptNavigatorTabControl";
             this.ScriptNavigatorTabControl.SelectedIndex = 0;
             this.ScriptNavigatorTabControl.Size = new System.Drawing.Size(456, 209);
@@ -7713,11 +7139,8 @@
             // 
             // scriptsNavListbox
             // 
-            this.scriptsNavListbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.scriptsNavListbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.scriptsNavListbox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scriptsNavListbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.scriptsNavListbox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.scriptsNavListbox.ItemHeight = 15;
             this.scriptsNavListbox.Location = new System.Drawing.Point(3, 3);
             this.scriptsNavListbox.Name = "scriptsNavListbox";
@@ -7738,11 +7161,8 @@
             // 
             // functionsNavListbox
             // 
-            this.functionsNavListbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.functionsNavListbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.functionsNavListbox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.functionsNavListbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.functionsNavListbox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.functionsNavListbox.ItemHeight = 15;
             this.functionsNavListbox.Location = new System.Drawing.Point(3, 3);
             this.functionsNavListbox.Name = "functionsNavListbox";
@@ -7763,11 +7183,8 @@
             // 
             // actionsNavListbox
             // 
-            this.actionsNavListbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.actionsNavListbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.actionsNavListbox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.actionsNavListbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.actionsNavListbox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.actionsNavListbox.ItemHeight = 15;
             this.actionsNavListbox.Location = new System.Drawing.Point(3, 3);
             this.actionsNavListbox.Name = "actionsNavListbox";
@@ -7786,7 +7203,6 @@
             this.groupBox8.Controls.Add(this.label29);
             this.groupBox8.Controls.Add(this.searchInScriptsButton);
             this.groupBox8.Controls.Add(this.searchInScriptsResultListBox);
-            this.groupBox8.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox8.Location = new System.Drawing.Point(8, 315);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(472, 298);
@@ -7817,9 +7233,6 @@
             // 
             // searchInScriptsTextBox
             // 
-            this.searchInScriptsTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.searchInScriptsTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.searchInScriptsTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.searchInScriptsTextBox.Location = new System.Drawing.Point(11, 35);
             this.searchInScriptsTextBox.Name = "searchInScriptsTextBox";
             this.searchInScriptsTextBox.Size = new System.Drawing.Size(255, 20);
@@ -7862,8 +7275,6 @@
             // 
             // searchInScriptsButton
             // 
-            this.searchInScriptsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.searchInScriptsButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.searchInScriptsButton.Image = global::DSPRE.Properties.Resources.SearchMiniIcon;
             this.searchInScriptsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.searchInScriptsButton.Location = new System.Drawing.Point(371, 26);
@@ -7872,25 +7283,20 @@
             this.searchInScriptsButton.TabIndex = 32;
             this.searchInScriptsButton.Text = "Search";
             this.searchInScriptsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.searchInScriptsButton.UseVisualStyleBackColor = false;
+            this.searchInScriptsButton.UseVisualStyleBackColor = true;
             this.searchInScriptsButton.Click += new System.EventHandler(this.searchInScriptsButton_Click);
             // 
             // searchInScriptsResultListBox
             // 
-            this.searchInScriptsResultListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.searchInScriptsResultListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.searchInScriptsResultListBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.searchInScriptsResultListBox.Location = new System.Drawing.Point(10, 79);
             this.searchInScriptsResultListBox.Name = "searchInScriptsResultListBox";
-            this.searchInScriptsResultListBox.Size = new System.Drawing.Size(452, 156);
+            this.searchInScriptsResultListBox.Size = new System.Drawing.Size(452, 160);
             this.searchInScriptsResultListBox.TabIndex = 17;
             this.searchInScriptsResultListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchInScriptsResultListBox_KeyDown);
             this.searchInScriptsResultListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.searchInScripts_GoToEntryResult);
             // 
             // importScriptFileButton
             // 
-            this.importScriptFileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.importScriptFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.importScriptFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importScriptFileButton.Location = new System.Drawing.Point(170, 22);
@@ -7899,13 +7305,11 @@
             this.importScriptFileButton.TabIndex = 16;
             this.importScriptFileButton.Text = "&Import\r\nFile";
             this.importScriptFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importScriptFileButton.UseVisualStyleBackColor = false;
+            this.importScriptFileButton.UseVisualStyleBackColor = true;
             this.importScriptFileButton.Click += new System.EventHandler(this.importScriptFileButton_Click);
             // 
             // exportScriptFileButton
             // 
-            this.exportScriptFileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.exportScriptFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.exportScriptFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportScriptFileButton.Location = new System.Drawing.Point(245, 22);
@@ -7914,13 +7318,11 @@
             this.exportScriptFileButton.TabIndex = 15;
             this.exportScriptFileButton.Text = "&Export \r\nFile";
             this.exportScriptFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportScriptFileButton.UseVisualStyleBackColor = false;
+            this.exportScriptFileButton.UseVisualStyleBackColor = true;
             this.exportScriptFileButton.Click += new System.EventHandler(this.exportScriptFileButton_Click);
             // 
             // saveScriptFileButton
             // 
-            this.saveScriptFileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
-            this.saveScriptFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.saveScriptFileButton.Image = global::DSPRE.Properties.Resources.saveButton;
             this.saveScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveScriptFileButton.Location = new System.Drawing.Point(12, 50);
@@ -7928,7 +7330,7 @@
             this.saveScriptFileButton.Size = new System.Drawing.Size(154, 23);
             this.saveScriptFileButton.TabIndex = 14;
             this.saveScriptFileButton.Text = "&Save Current File";
-            this.saveScriptFileButton.UseVisualStyleBackColor = false;
+            this.saveScriptFileButton.UseVisualStyleBackColor = true;
             this.saveScriptFileButton.Click += new System.EventHandler(this.saveScriptFileButton_Click);
             // 
             // removeScriptFileButton
@@ -7985,7 +7387,7 @@
             // PanelSearchScripts
             // 
             this.PanelSearchScripts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PanelSearchScripts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
+            this.PanelSearchScripts.BackColor = System.Drawing.Color.White;
             this.PanelSearchScripts.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PanelSearchScripts.Controls.Add(this.BtnNextSearchScript);
             this.PanelSearchScripts.Controls.Add(this.BtnPrevSearchScript);
@@ -8000,8 +7402,8 @@
             // BtnNextSearchScript
             // 
             this.BtnNextSearchScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnNextSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.BtnNextSearchScript.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.BtnNextSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnNextSearchScript.ForeColor = System.Drawing.Color.White;
             this.BtnNextSearchScript.Image = global::DSPRE.Properties.Resources.arrowdown;
             this.BtnNextSearchScript.Location = new System.Drawing.Point(233, 4);
             this.BtnNextSearchScript.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -8015,8 +7417,8 @@
             // BtnPrevSearchScript
             // 
             this.BtnPrevSearchScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnPrevSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.BtnPrevSearchScript.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.BtnPrevSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnPrevSearchScript.ForeColor = System.Drawing.Color.White;
             this.BtnPrevSearchScript.Image = global::DSPRE.Properties.Resources.arrowup;
             this.BtnPrevSearchScript.Location = new System.Drawing.Point(205, 4);
             this.BtnPrevSearchScript.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -8030,8 +7432,8 @@
             // BtnCloseSearchScript
             // 
             this.BtnCloseSearchScript.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnCloseSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.BtnCloseSearchScript.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
+            this.BtnCloseSearchScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnCloseSearchScript.ForeColor = System.Drawing.Color.White;
             this.BtnCloseSearchScript.Image = global::DSPRE.Properties.Resources.Cross;
             this.BtnCloseSearchScript.Location = new System.Drawing.Point(261, 4);
             this.BtnCloseSearchScript.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -8046,10 +7448,8 @@
             // 
             this.panelSearchScriptTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelSearchScriptTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.panelSearchScriptTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.panelSearchScriptTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panelSearchScriptTextBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.panelSearchScriptTextBox.Location = new System.Drawing.Point(10, 6);
             this.panelSearchScriptTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelSearchScriptTextBox.Name = "panelSearchScriptTextBox";
@@ -8060,9 +7460,7 @@
             // 
             // scintillaScriptsPanel
             // 
-            this.scintillaScriptsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(13)))), ((int)(((byte)(13)))));
             this.scintillaScriptsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scintillaScriptsPanel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.scintillaScriptsPanel.Location = new System.Drawing.Point(3, 3);
             this.scintillaScriptsPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.scintillaScriptsPanel.Name = "scintillaScriptsPanel";
@@ -8511,7 +7909,7 @@
             this.groupBox13.Controls.Add(this.searchMessageTextBox);
             this.groupBox13.Controls.Add(this.searchMessageButton);
             this.groupBox13.Controls.Add(this.replaceMessageButton);
-            this.groupBox13.Location = new System.Drawing.Point(891, 71);
+            this.groupBox13.Location = new System.Drawing.Point(891, 75);
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.Size = new System.Drawing.Size(282, 502);
             this.groupBox13.TabIndex = 31;
@@ -8667,7 +8065,7 @@
             this.textEditorDataGridView.RowHeadersWidth = 68;
             dataGridViewCellStyle15.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
-            this.textEditorDataGridView.Size = new System.Drawing.Size(873, 496);
+            this.textEditorDataGridView.Size = new System.Drawing.Size(873, 500);
             this.textEditorDataGridView.TabIndex = 24;
             this.textEditorDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellValueChanged);
             this.textEditorDataGridView.CurrentCellChanged += new System.EventHandler(this.textEditorDataGridView_CurrentCellChanged);
@@ -8684,7 +8082,7 @@
             // 
             this.removeStringButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeStringButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeStringButton.Location = new System.Drawing.Point(113, 579);
+            this.removeStringButton.Location = new System.Drawing.Point(113, 580);
             this.removeStringButton.Name = "removeStringButton";
             this.removeStringButton.Size = new System.Drawing.Size(124, 34);
             this.removeStringButton.TabIndex = 26;
@@ -8697,7 +8095,7 @@
             // 
             this.addStringButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addStringButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addStringButton.Location = new System.Drawing.Point(12, 579);
+            this.addStringButton.Location = new System.Drawing.Point(12, 580);
             this.addStringButton.Name = "addStringButton";
             this.addStringButton.Size = new System.Drawing.Size(95, 34);
             this.addStringButton.TabIndex = 25;
@@ -11100,7 +10498,6 @@
             // 
             // gameIcon
             // 
-            this.gameIcon.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.gameIcon.ErrorImage = null;
             this.gameIcon.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.gameIcon.InitialImage = null;
@@ -11114,7 +10511,6 @@
             // languageLabel
             // 
             this.languageLabel.AutoSize = true;
-            this.languageLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.languageLabel.Location = new System.Drawing.Point(1042, 52);
             this.languageLabel.Name = "languageLabel";
             this.languageLabel.Size = new System.Drawing.Size(58, 13);
@@ -11124,7 +10520,7 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.Window;
             this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
@@ -11143,15 +10539,12 @@
             this.openROMToolStripMenuItem,
             this.openFolderToolStripMenuItem,
             this.saveROMToolStripMenuItem});
-            this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // openROMToolStripMenuItem
             // 
-            this.openROMToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.openROMToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.openROMToolStripMenuItem.Image = global::DSPRE.Properties.Resources.open_rom;
             this.openROMToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.openROMToolStripMenuItem.Name = "openROMToolStripMenuItem";
@@ -11161,8 +10554,6 @@
             // 
             // openFolderToolStripMenuItem
             // 
-            this.openFolderToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.openFolderToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.openFolderToolStripMenuItem.Image = global::DSPRE.Properties.Resources.open_file;
             this.openFolderToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
@@ -11172,9 +10563,7 @@
             // 
             // saveROMToolStripMenuItem
             // 
-            this.saveROMToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.saveROMToolStripMenuItem.Enabled = false;
-            this.saveROMToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.saveROMToolStripMenuItem.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveROMToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.saveROMToolStripMenuItem.Name = "saveROMToolStripMenuItem";
@@ -11193,16 +10582,13 @@
             this.listBasedBatchRenameToolStripMenuItem,
             this.listBuilderToolStripMenuItem,
             this.nSBMDUtilityToolStripMenuItem});
-            this.aboutToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.aboutToolStripMenuItem.Text = "Tools";
             // 
             // romToolboxToolStripMenuItem
             // 
-            this.romToolboxToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.romToolboxToolStripMenuItem.Enabled = false;
-            this.romToolboxToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.romToolboxToolStripMenuItem.Name = "romToolboxToolStripMenuItem";
             this.romToolboxToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.romToolboxToolStripMenuItem.Text = "ROM Toolbox";
@@ -11210,9 +10596,7 @@
             // 
             // headerSearchToolStripMenuItem
             // 
-            this.headerSearchToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.headerSearchToolStripMenuItem.Enabled = false;
-            this.headerSearchToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.headerSearchToolStripMenuItem.Name = "headerSearchToolStripMenuItem";
             this.headerSearchToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.headerSearchToolStripMenuItem.Text = "Advanced Header Search";
@@ -11220,12 +10604,10 @@
             // 
             // scriptCommandsDatabaseToolStripMenuItem
             // 
-            this.scriptCommandsDatabaseToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.scriptCommandsDatabaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.diamondAndPearlToolStripMenuItem,
             this.platinumToolStripMenuItem,
             this.heartGoldAndSoulSilverToolStripMenuItem});
-            this.scriptCommandsDatabaseToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.scriptCommandsDatabaseToolStripMenuItem.Name = "scriptCommandsDatabaseToolStripMenuItem";
             this.scriptCommandsDatabaseToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.scriptCommandsDatabaseToolStripMenuItem.Text = "Script Commands Database";
@@ -11259,9 +10641,7 @@
             // 
             // spawnEditorToolStripMenuItem
             // 
-            this.spawnEditorToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.spawnEditorToolStripMenuItem.Enabled = false;
-            this.spawnEditorToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.spawnEditorToolStripMenuItem.Name = "spawnEditorToolStripMenuItem";
             this.spawnEditorToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.spawnEditorToolStripMenuItem.Text = "Spawn Point Editor";
@@ -11269,11 +10649,9 @@
             // 
             // NarcUtilityToolStripMenuItem
             // 
-            this.NarcUtilityToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.NarcUtilityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buildFomFolderToolStripMenuItem,
             this.unpackToFolderToolStripMenuItem});
-            this.NarcUtilityToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.NarcUtilityToolStripMenuItem.Name = "NarcUtilityToolStripMenuItem";
             this.NarcUtilityToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.NarcUtilityToolStripMenuItem.Text = "NARC Utility";
@@ -11298,11 +10676,9 @@
             // 
             // listBasedBatchRenameToolStripMenuItem
             // 
-            this.listBasedBatchRenameToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.listBasedBatchRenameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.listBasedToolStripMenuItem,
             this.contentBasedToolStripMenuItem});
-            this.listBasedBatchRenameToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.listBasedBatchRenameToolStripMenuItem.Name = "listBasedBatchRenameToolStripMenuItem";
             this.listBasedBatchRenameToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.listBasedBatchRenameToolStripMenuItem.Text = "Batch Rename Utility";
@@ -11327,11 +10703,9 @@
             // 
             // listBuilderToolStripMenuItem
             // 
-            this.listBuilderToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.listBuilderToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fromCEnumToolStripMenuItem,
             this.fromFolderContentsToolStripMenuItem});
-            this.listBuilderToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.listBuilderToolStripMenuItem.Name = "listBuilderToolStripMenuItem";
             this.listBuilderToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.listBuilderToolStripMenuItem.Text = "Folder-Based List Builder";
@@ -11356,12 +10730,10 @@
             // 
             // nSBMDUtilityToolStripMenuItem
             // 
-            this.nSBMDUtilityToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.nSBMDUtilityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.texturizeNSBMDToolStripMenuItem,
             this.untexturizeToolStripMenuItem,
             this.extractNSBTXFromNSBMDToolStripMenuItem});
-            this.nSBMDUtilityToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.nSBMDUtilityToolStripMenuItem.Name = "nSBMDUtilityToolStripMenuItem";
             this.nSBMDUtilityToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.nSBMDUtilityToolStripMenuItem.Text = "NSBMD Utility";
@@ -11395,48 +10767,47 @@
             // 
             // menuViewToolStripMenuItem
             // 
-            this.menuViewToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.menuViewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.essentialToolStripMenuItem,
             this.simpleToolStripMenuItem,
+            this.advancedStripMenuItem,
             this.fullViewToolStripMenuItem});
-            this.menuViewToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.menuViewToolStripMenuItem.Name = "menuViewToolStripMenuItem";
             this.menuViewToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
             this.menuViewToolStripMenuItem.Text = "Menu View";
             // 
             // essentialToolStripMenuItem
             // 
-            this.essentialToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.essentialToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.essentialToolStripMenuItem.Name = "essentialToolStripMenuItem";
-            this.essentialToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.essentialToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.essentialToolStripMenuItem.Text = "Essential";
             this.essentialToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
             // simpleToolStripMenuItem
             // 
-            this.simpleToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.simpleToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.simpleToolStripMenuItem.Name = "simpleToolStripMenuItem";
-            this.simpleToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.simpleToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.simpleToolStripMenuItem.Text = "Simple";
             this.simpleToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
+            // advancedStripMenuItem
+            // 
+            this.advancedStripMenuItem.Checked = true;
+            this.advancedStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.advancedStripMenuItem.Name = "advancedStripMenuItem";
+            this.advancedStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.advancedStripMenuItem.Text = "Advanced";
+            this.advancedStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
+            // 
             // fullViewToolStripMenuItem
             // 
-            this.fullViewToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
-            this.fullViewToolStripMenuItem.Checked = true;
-            this.fullViewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.fullViewToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.fullViewToolStripMenuItem.Name = "fullViewToolStripMenuItem";
-            this.fullViewToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.fullViewToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.fullViewToolStripMenuItem.Text = "Complete";
             this.fullViewToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
             // aboutToolStripMenuItem1
             // 
-            this.aboutToolStripMenuItem1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
             this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem1.Text = "About";
@@ -11444,7 +10815,7 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
+            this.statusStrip1.BackColor = System.Drawing.SystemColors.Control;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
             this.toolStripProgressBar});
@@ -11456,7 +10827,6 @@
             // 
             // statusLabel
             // 
-            this.statusLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(39, 17);
             this.statusLabel.Text = "Ready";
@@ -11470,7 +10840,7 @@
             // mainToolStrip
             // 
             this.mainToolStrip.AllowMerge = false;
-            this.mainToolStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
+            this.mainToolStrip.BackColor = System.Drawing.SystemColors.Menu;
             this.mainToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.mainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadRomButton,
@@ -11502,7 +10872,6 @@
             this.separator_afterMiscButtons});
             this.mainToolStrip.Location = new System.Drawing.Point(0, 24);
             this.mainToolStrip.Name = "mainToolStrip";
-            this.mainToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.mainToolStrip.Size = new System.Drawing.Size(1214, 44);
             this.mainToolStrip.TabIndex = 16;
             this.mainToolStrip.Text = "mainToolStrip";
@@ -11802,7 +11171,6 @@
             // versionLabel
             // 
             this.versionLabel.AutoSize = true;
-            this.versionLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.versionLabel.Location = new System.Drawing.Point(1042, 36);
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(35, 13);
@@ -11819,7 +11187,6 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.ClientSize = new System.Drawing.Size(1214, 743);
             this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.languageLabel);
@@ -11834,8 +11201,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
-            this.Text = "Lost in Time Rom Editor - DSPRE Reloaded 1.8 (Nømura, AdAstra/LD3005, Modified by" +
-    " Kuha)";
+            this.Text = "Lost in Time Rom Editor 1.8 (Nømura, AdAstra/LD3005, Modified by Kuha)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainProgram_FormClosing);
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);
@@ -12188,6 +11554,8 @@
         private System.Windows.Forms.TabPage mapEditorTabPage;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openROMToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveROMToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Button saveMapButton;
         private System.Windows.Forms.Label label26;
@@ -12893,6 +12261,7 @@
         private System.Windows.Forms.Label tbEditortrainerClassFrameMaxLabel;
         private System.Windows.Forms.NumericUpDown tbEditorTrClassFramePreviewUpDown;
         private System.Windows.Forms.PictureBox tbEditorPokeminiPictureBox;
+        private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
         private System.Windows.Forms.Panel PanelSearchScripts;
         private System.Windows.Forms.Button BtnNextSearchScript;
         private System.Windows.Forms.Button BtnPrevSearchScript;
@@ -12993,9 +12362,7 @@
         private System.Windows.Forms.TrackBar scalingTrackBar;
         private System.Windows.Forms.Button repositionImageButton;
         private System.Windows.Forms.CheckBox invertDragCheckbox;
-        private System.Windows.Forms.ToolStripMenuItem openROMToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveROMToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem advancedStripMenuItem;
     }
 }
 

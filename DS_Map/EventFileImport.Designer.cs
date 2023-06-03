@@ -42,6 +42,7 @@
             this.overworldsCheckAllButton = new System.Windows.Forms.Button();
             this.warpsCheckAllButton = new System.Windows.Forms.Button();
             this.triggersCheckAllButton = new System.Windows.Forms.Button();
+            this.blankCurrentEventFileCheckbox = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,6 +74,7 @@
             this.tableLayoutPanel1.Controls.Add(this.overworldsCheckAllButton, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.warpsCheckAllButton, 4, 1);
             this.tableLayoutPanel1.Controls.Add(this.triggersCheckAllButton, 6, 1);
+            this.tableLayoutPanel1.Controls.Add(this.blankCurrentEventFileCheckbox, 5, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -82,6 +84,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(959, 581);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -133,7 +136,7 @@
             // 
             this.confirmButton.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.confirmButton, 2);
-            this.confirmButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.confirmButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.confirmButton.Location = new System.Drawing.Point(719, 545);
             this.confirmButton.Name = "confirmButton";
             this.confirmButton.Size = new System.Drawing.Size(235, 31);
@@ -294,6 +297,22 @@
             this.triggersCheckAllButton.UseVisualStyleBackColor = true;
             this.triggersCheckAllButton.Click += new System.EventHandler(this.checkAllButtonClicked);
             // 
+            // blankCurrentEventFileCheckbox
+            // 
+            this.blankCurrentEventFileCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.blankCurrentEventFileCheckbox.AutoSize = true;
+            this.blankCurrentEventFileCheckbox.Checked = true;
+            this.blankCurrentEventFileCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.blankCurrentEventFileCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.blankCurrentEventFileCheckbox.Location = new System.Drawing.Point(600, 545);
+            this.blankCurrentEventFileCheckbox.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
+            this.blankCurrentEventFileCheckbox.Name = "blankCurrentEventFileCheckbox";
+            this.blankCurrentEventFileCheckbox.Size = new System.Drawing.Size(111, 31);
+            this.blankCurrentEventFileCheckbox.TabIndex = 21;
+            this.blankCurrentEventFileCheckbox.Text = "Import on empty file";
+            this.blankCurrentEventFileCheckbox.UseVisualStyleBackColor = true;
+            this.blankCurrentEventFileCheckbox.CheckedChanged += new System.EventHandler(this.blankCurrentEventFileCheckbox_CheckedChanged);
+            // 
             // EventFileImport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -334,5 +353,6 @@
         private System.Windows.Forms.Button overworldsCheckAllButton;
         private System.Windows.Forms.Button warpsCheckAllButton;
         private System.Windows.Forms.Button triggersCheckAllButton;
+        private System.Windows.Forms.CheckBox blankCurrentEventFileCheckbox;
     }
 }

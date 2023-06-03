@@ -122,7 +122,7 @@ namespace DSPRE.ROMFiles {
         public ushort textArchiveID { get; set; }
         public byte weatherID { get; set; }
         public byte flags { get; set; }
-        public ushort wildPokemon { get; set; }
+        public ushort wildPokémon { get; set; }
         #endregion Fields
 
         #region Methods (1)
@@ -181,7 +181,7 @@ namespace DSPRE.ROMFiles {
                 textArchiveID = reader.ReadUInt16();
                 musicDayID = reader.ReadUInt16();
                 musicNightID = reader.ReadUInt16();
-                wildPokemon = reader.ReadUInt16();
+                wildPokémon = reader.ReadUInt16();
                 eventFileID = reader.ReadUInt16();
                 locationName = reader.ReadUInt16();
                 weatherID = reader.ReadByte();
@@ -207,7 +207,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(textArchiveID);
                 writer.Write(musicDayID);
                 writer.Write(musicNightID);
-                writer.Write(wildPokemon);
+                writer.Write(wildPokémon);
                 writer.Write(eventFileID);
                 writer.Write(locationName);
                 writer.Write(weatherID);
@@ -245,7 +245,7 @@ namespace DSPRE.ROMFiles {
                     textArchiveID = reader.ReadUInt16();
                     musicDayID = reader.ReadUInt16();
                     musicNightID = reader.ReadUInt16();
-                    wildPokemon = reader.ReadUInt16();
+                    wildPokémon = reader.ReadUInt16();
                     eventFileID = reader.ReadUInt16();
                     locationName = reader.ReadByte();
                     areaIcon = reader.ReadByte();
@@ -276,7 +276,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(textArchiveID);
                 writer.Write(musicDayID);
                 writer.Write(musicNightID);
-                writer.Write(wildPokemon);
+                writer.Write(wildPokémon);
                 writer.Write(eventFileID);
                 writer.Write(locationName);
                 writer.Write(areaIcon);
@@ -312,7 +312,7 @@ namespace DSPRE.ROMFiles {
             this.ID = headerNumber;
             using (BinaryReader reader = new BinaryReader(data)) {
                 try {
-                    wildPokemon = reader.ReadByte();
+                    wildPokémon = reader.ReadByte();
                     areaDataID = reader.ReadByte();
 
                     ushort coords = reader.ReadUInt16();
@@ -355,7 +355,7 @@ namespace DSPRE.ROMFiles {
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
-                writer.Write((byte)wildPokemon);
+                writer.Write((byte)wildPokémon);
                 writer.Write(areaDataID);
 
                 ushort worldMapCoordinates = (ushort)((unknown0 & 0b_1111) + ((worldmapX & 0b_1111_11) << 4) + ((worldmapY & 0b_1111_11) << 10));

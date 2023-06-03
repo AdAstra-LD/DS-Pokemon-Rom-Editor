@@ -10,7 +10,7 @@ using DSPRE.ROMFiles;
 namespace DSPRE {
 
     /// <summary>
-    /// Class to store ROM data from GEN IV Pok?mon games
+    /// Class to store ROM data from GEN IV Pokémon games
     /// </summary>
 
     public class RomInfo {
@@ -52,6 +52,8 @@ namespace DSPRE {
 
         public static uint OWTableOffset { get; internal set; }
         public static string OWtablePath { get; private set; }
+
+        public static uint monIconPalTableAddress { get; private set; }
 
         public static int nullEncounterID { get; private set; }
         public static int attackNamesTextNumber { get; private set; }
@@ -152,7 +154,7 @@ namespace DSPRE {
             try {
                 gameVersion = PokeDatabase.System.versionsDict[id];
             } catch (KeyNotFoundException) {
-                MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pok?mon ROMS, for now.", "Unsupported ROM",
+                MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -168,7 +170,7 @@ namespace DSPRE {
             SetNullEncounterID();
 
             SetAttackNamesTextNumber();
-            SetPokemonNamesTextNumber();
+            SetPokémonNamesTextNumber();
             SetItemNamesTextNumber();
             SetItemScriptFileNumber();
             SetLocationNamesTextNumber();
@@ -204,7 +206,11 @@ namespace DSPRE {
                     break;
                 default:
                     commonDictionaryNames = ScriptDatabase.HGSSScrCmdNames;
-                    specificDictionaryNames = new Dictionary<ushort, string>();
+                    #if true
+                        specificDictionaryNames = new Dictionary<ushort, string>();
+                    #else
+                        specificDictionaryNames = ScriptDatabase.CustomScrCmdNames;
+                    #endif
                     break;
             }
             return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
@@ -224,7 +230,11 @@ namespace DSPRE {
                     break;
                 default:
                     commonDictionaryParams = ScriptDatabase.HGSSScrCmdParameters;
-                    specificDictionaryParams = new Dictionary<ushort, byte[]>();
+                    #if true
+                        specificDictionaryParams = new Dictionary<ushort, byte[]>();
+                    #else
+                        specificDictionaryParams = ScriptDatabase.CustomScrCmdParameters;
+                    #endif
                     break;
             }
             return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
@@ -235,7 +245,13 @@ namespace DSPRE {
                 case gFamEnum.Plat:
                     return ScriptDatabase.movementsDictIDName;
                 default:
+#if false
+                    var commonDictionaryParams = ScriptDatabase.movementsDictIDName;
+                    var customDictionaryParams = ScriptDatabase.customMovementsDictIDName;
+                    return commonDictionaryParams.Concat(customDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+#else
                     return ScriptDatabase.movementsDictIDName;
+#endif
             }
         }
         public static Dictionary<ushort, string> BuildComparisonOperatorsDatabase(gFamEnum gameFam) {
@@ -650,6 +666,72 @@ namespace DSPRE {
                 break;
             }
         }
+        public static void SetMonIconsPalTableAddress() {
+            switch (RomInfo.gameFamily) {
+                case gFamEnum.DP:
+                    switch (gameLanguage) {
+                        case gLangEnum.English:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B838, 4), 0);
+                            break;
+                        case gLangEnum.Italian:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B874, 4), 0);
+                            break;
+                        case gLangEnum.German:
+                        case gLangEnum.French:
+                        case gLangEnum.Spanish:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B894, 4), 0);
+                            break;
+                        case gLangEnum.Japanese:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6FDEC, 4), 0);
+                            break;
+                    }
+                    break;
+                case gFamEnum.Plat:
+                    switch (gameLanguage) {
+                        case gLangEnum.English:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x79F80, 4), 0);
+                            break;
+                        case gLangEnum.Italian:
+                        case gLangEnum.German:
+                        case gLangEnum.French:
+                        case gLangEnum.Spanish:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x7A020, 4), 0);
+                            break;
+                        case gLangEnum.Japanese:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x79858, 4), 0);
+                            break;
+                    }
+                    break;
+                case gFamEnum.HGSS:
+                default:
+                    switch (gameLanguage) {
+                        case gLangEnum.English:
+                        case gLangEnum.Italian:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
+                            break;
+                        case gLangEnum.German:
+                            if (gameVersion == gVerEnum.HeartGold) {
+                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
+                            } else {
+                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74400, 4), 0);
+                            }
+                            break;
+                        case gLangEnum.French:
+                        case gLangEnum.Spanish:
+                            if (gameVersion == gVerEnum.HeartGold) {
+                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74400, 4), 0);
+                            } else {
+                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
+                            }
+                            break;
+                        case gLangEnum.Japanese:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x73EA0, 4), 0);
+                            break;
+                    }
+                    break;
+            }
+        }
+
         private void SetItemScriptFileNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
@@ -713,7 +795,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetPokemonNamesTextNumber() {
+        private void SetPokémonNamesTextNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     pokemonNamesTextNumbers = new int[2] { 362, 363 };
@@ -776,7 +858,7 @@ namespace DSPRE {
             TextArchive itemNames = new TextArchive(itemNamesTextNumber);
             return itemNames.messages.GetRange(startIndex, count == null ? itemNames.messages.Count-1 : (int)count).ToArray();
         }
-        public static string[] GetPokemonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
+        public static string[] GetPokémonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
         public static string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
         public int GetAreaDataCount() => Directory.GetFiles(gameDirs[DirNames.areaData].unpackedDir).Length;
         public int GetMapTexturesCount() => Directory.GetFiles(gameDirs[DirNames.mapTextures].unpackedDir).Length;
