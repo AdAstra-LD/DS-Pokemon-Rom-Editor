@@ -4040,7 +4040,7 @@ namespace DSPRE {
             using (Graphics gSmall = Graphics.FromImage(smallBm)) {
                 for (int i = 0; i < 32; i++) {
                     for (int j = 0; j < 32; j++) {
-                        PrepareTypePainterGraphics(paintByte = currentMapFile.types[i, j]);
+                        PrepareTypePainterGraphics(currentMapFile.types[i, j]);
 
                         /* Draw collision on the small image */
                         smallCell = new Rectangle(3 * j, 3 * i, 3, 3);
