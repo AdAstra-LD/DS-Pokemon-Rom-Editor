@@ -5843,12 +5843,12 @@ namespace DSPRE {
             if (normalRadioButton.Checked == true) {
                 owScriptNumericUpDown.Enabled = true;
                 owSpecialGroupBox.Enabled = false;
-
-                currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(owScriptNumericUpDown.Value = 0);
+                
                 if (disableHandlers) {
                     return;
                 }
                 currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x0;
+                currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(owScriptNumericUpDown.Value = 0);
             } else if (isItemRadioButton.Checked == true) {
                 owScriptNumericUpDown.Enabled = false;
 
@@ -5909,7 +5909,7 @@ namespace DSPRE {
             disableHandlers = true;
 
             selectedEvent = currentEvFile.overworlds[index];
-            Overworld selectedOw = (Overworld)selectedEvent;
+            Overworld selectedOw = (Overworld)selectedEvent;            
             try {
                 /* Sprite index and image controls */
                 owSpriteComboBox.SelectedIndex = Array.IndexOf(RomInfo.overworldTableKeys, selectedOw.overlayTableEntry);
