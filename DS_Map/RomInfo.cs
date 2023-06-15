@@ -531,9 +531,15 @@ namespace DSPRE {
                                 "displayed incorrectly or not displayed at all.", "Decompression error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-                        if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
-                            OWTableOffset = ramAddressOfTable - RomInfo.synthOverlayLoadAddress;
-                            OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+                        if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) { 
+                            // if the pointer shows the table was moved to the synthetic overlay
+                            if (File.Exists(DSUtils.GetOverlayPath(131))) {
+                                OWTableOffset = ramAddressOfTable - DSUtils.GetOverlayRAMAddress(131);
+                                OWtablePath = DSUtils.GetOverlayPath(131); // HG-Engine new OW overlay
+                            } else {
+                                OWTableOffset = ramAddressOfTable - RomInfo.synthOverlayLoadAddress;
+                                OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+                            }
                         } else {
                             OWTableOffset = ramAddressOfTable - ov1Address;
                             OWtablePath = ov1Path;
