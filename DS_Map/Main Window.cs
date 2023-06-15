@@ -8782,7 +8782,10 @@ namespace DSPRE {
             int iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress);
             if (iconPalTableOffsetFromFileStart >= 0) { // if iconPalTableAddress >= RomInfo.synthOverlayLoadAddress
                 //In other words, if the pointer shows the table was moved to the synthetic overlay
-                iconTablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+                if (File.Exists(DSUtils.GetOverlayPath(129)))
+                    iconTablePath = DSUtils.GetOverlayPath(129); // HG-engine new overlay for icons
+                else
+                    iconTablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
             } else {
                 iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - DSUtils.ARM9.address);
                 iconTablePath = RomInfo.arm9Path;
