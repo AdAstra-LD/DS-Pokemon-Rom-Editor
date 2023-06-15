@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Windows.Forms;
+using static DSPRE.DSUtils.ARM9;
 
 namespace DSPRE.ROMFiles {
     public class PartyPokemon : RomFile {
@@ -36,6 +37,15 @@ namespace DSPRE.ROMFiles {
             this.heldItem = heldItem;
             this.moves = moves;
         }
+        public PartyPokemon(ushort difficulty, ushort Level, ushort pokeNum, ushort? heldItem = null, ushort[] moves = null)
+        {
+            // Simply adding a new constructor for Diamond and Pearl since they dont have ball seal config
+            pokeID = pokeNum;
+            level = Level;
+            this.difficulty = difficulty;
+            this.heldItem = heldItem;
+            this.moves = moves;
+        }
         public PartyPokemon(ushort difficulty, ushort Level, ushort pokeNum, ushort formNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) :
             this(difficulty, Level, pokeNum, ballSealConfig, heldItem, moves) {
 
@@ -57,7 +67,8 @@ namespace DSPRE.ROMFiles {
                         writer.Write(move);
                     }
                 }
-                writer.Write(ballSeals);
+                if(RomInfo.gameFamily == RomInfo.gFamEnum.HGSS || RomInfo.gameFamily == RomInfo.gFamEnum.Plat) 
+                    writer.Write(ballSeals); // Diamond and Pearl apparently dont save ball capsule data in enemy trainer pokedata!!!
             }
             return newData.ToArray();
         }
@@ -224,8 +235,11 @@ namespace DSPRE.ROMFiles {
                                 moves[m] = (ushort)(val == ushort.MaxValue ? 0 : val);
                             }
                         }
+                        if (RomInfo.gameFamily == RomInfo.gFamEnum.HGSS || RomInfo.gameFamily == RomInfo.gFamEnum.Plat)
+                            content[i] = new PartyPokemon(unknown1, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves); 
+                        else
+                            content[i] = new PartyPokemon(unknown1, level, pokemon, form_no, heldItem, moves); // Diamond and Pearl apparently dont save ball capsule data in enemy trainer pokedata!!!
 
-                        content[i] = new PartyPokemon(unknown1, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves);
                     }
                     for (int i = endval; i < maxPoke; i++) {
                         content[i] = new PartyPokemon();
