@@ -8693,7 +8693,6 @@ namespace DSPRE {
             string[] trNames = RomInfo.GetSimpleTrainerNames();
 
             bool error = currentIndex >= trNames.Length;
-
             currentTrainerFile = new TrainerFile(
                 new TrainerProperties(
                     (ushort)trainerComboBox.SelectedIndex, 
@@ -8702,7 +8701,6 @@ namespace DSPRE {
                 new FileStream(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + suffix, FileMode.Open),
                 error ? TrainerFile.NAME_NOT_FOUND : trNames[currentIndex]
             );
-
             RefreshTrainerPartyGUI();
             RefreshTrainerPropertiesGUI();
 
