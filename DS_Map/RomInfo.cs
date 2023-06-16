@@ -526,20 +526,21 @@ namespace DSPRE {
 
                     using (DSUtils.EasyReader bReader = new DSUtils.EasyReader(ov1Path, ramAddrOfPointer - ov1Address)) { // read the pointer at the specified ram address and adjust accordingly below
                         uint ramAddressOfTable = bReader.ReadUInt32();
-                        if (ramAddressOfTable >= 0x03000000) {
+                        if ((((UInt32)(ramAddressOfTable) >> 0x18)) != 0x02) {
                             MessageBox.Show("Something went wrong reading the Overworld configuration table.\nOverworld sprites in the Event Editor will be " +
                                 "displayed incorrectly or not displayed at all.", "Decompression error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-                        if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) { 
+                        if (File.Exists(DSUtils.GetOverlayPath(131))) { 
+                            // if HGE field extension overlay exists
+                            OWTableOffset = ramAddressOfTable - DSUtils.GetOverlayRAMAddress(131);
+                            OWtablePath = DSUtils.GetOverlayPath(131);
+                        }
+                        else if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) { 
                             // if the pointer shows the table was moved to the synthetic overlay
-                            if (File.Exists(DSUtils.GetOverlayPath(131))) {
-                                OWTableOffset = ramAddressOfTable - DSUtils.GetOverlayRAMAddress(131);
-                                OWtablePath = DSUtils.GetOverlayPath(131); // HG-Engine new OW overlay
-                            } else {
-                                OWTableOffset = ramAddressOfTable - RomInfo.synthOverlayLoadAddress;
-                                OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
-                            }
+                            OWTableOffset = ramAddressOfTable - RomInfo.synthOverlayLoadAddress;
+                            OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+                            
                         } else {
                             OWTableOffset = ramAddressOfTable - ov1Address;
                             OWtablePath = ov1Path;
