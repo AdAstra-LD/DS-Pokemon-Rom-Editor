@@ -88,7 +88,7 @@ namespace DSPRE.ROMFiles {
                                     pokemonText.Append(car.ToString("X4"));
                                     specialCharON = false;
                                 } else if (compressed) {
-                                    #region Compressed String
+                                    #region Compressed String                                    
                                     int shift = 0;
                                     int trans = 0;
                                     string uncomp = "";
