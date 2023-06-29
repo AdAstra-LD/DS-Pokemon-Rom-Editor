@@ -8930,53 +8930,67 @@ namespace DSPRE {
         }
 
         private void trainerSaveCurrentButton_Click(object sender, EventArgs e) {
-            currentTrainerFile.trp.partyCount = (byte)partyCountUpDown.Value;
-            currentTrainerFile.trp.chooseMoves = trainerMovesCheckBox.Checked;
-            currentTrainerFile.trp.chooseItems = trainerItemsCheckBox.Checked;
-            currentTrainerFile.trp.doubleBattle = trainerDoubleCheckBox.Checked;
+            if(trainerNameTextBox.Text.Length < 8)
+            {
+                currentTrainerFile.trp.partyCount = (byte)partyCountUpDown.Value;
+                currentTrainerFile.trp.chooseMoves = trainerMovesCheckBox.Checked;
+                currentTrainerFile.trp.chooseItems = trainerItemsCheckBox.Checked;
+                currentTrainerFile.trp.doubleBattle = trainerDoubleCheckBox.Checked;
 
-            IList trainerItems = trainerItemsGroupBox.Controls;
-            for (int i = 0; i < trainerItems.Count; i++) {
-                currentTrainerFile.trp.trainerItems[i] = (ushort)(trainerItems[i] as ComboBox).SelectedIndex;
-            }
+                IList trainerItems = trainerItemsGroupBox.Controls;
+                for (int i = 0; i < trainerItems.Count; i++)
+                {
+                    currentTrainerFile.trp.trainerItems[i] = (ushort)(trainerItems[i] as ComboBox).SelectedIndex;
+                }
 
-            IList trainerAI = TrainerAIGroupBox.Controls;
-            for (int i = 0; i < trainerAI.Count; i++) {
-                currentTrainerFile.trp.AI[i] = (trainerAI[i] as CheckBox).Checked;
-            }
+                IList trainerAI = TrainerAIGroupBox.Controls;
+                for (int i = 0; i < trainerAI.Count; i++)
+                {
+                    currentTrainerFile.trp.AI[i] = (trainerAI[i] as CheckBox).Checked;
+                }
 
-            for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
-                currentTrainerFile.party[i].moves = trainerMovesCheckBox.Checked ? new ushort[4] : null;
-            }
+                for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++)
+                {
+                    currentTrainerFile.party[i].moves = trainerMovesCheckBox.Checked ? new ushort[4] : null;
+                }
 
-            for (int i = 0; i < partyCountUpDown.Value; i++) {
-                currentTrainerFile.party[i].pokeID = (ushort)partyPokemonComboboxList[i].SelectedIndex;
-                currentTrainerFile.party[i].level = (ushort)partyLevelUpdownList[i].Value;
+                for (int i = 0; i < partyCountUpDown.Value; i++)
+                {
+                    currentTrainerFile.party[i].pokeID = (ushort)partyPokemonComboboxList[i].SelectedIndex;
+                    currentTrainerFile.party[i].level = (ushort)partyLevelUpdownList[i].Value;
 
-                if (trainerMovesCheckBox.Checked) {
-                    IList movesList = partyMovesGroupboxList[i].Controls;
-                    for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
-                        currentTrainerFile.party[i].moves[j] = (ushort)(movesList[j] as ComboBox).SelectedIndex;
+                    if (trainerMovesCheckBox.Checked)
+                    {
+                        IList movesList = partyMovesGroupboxList[i].Controls;
+                        for (int j = 0; j < Party.MOVES_PER_POKE; j++)
+                        {
+                            currentTrainerFile.party[i].moves[j] = (ushort)(movesList[j] as ComboBox).SelectedIndex;
+                        }
                     }
+
+                    if (trainerItemsCheckBox.Checked)
+                    {
+                        currentTrainerFile.party[i].heldItem = (ushort)partyItemsComboboxList[i].SelectedIndex;
+                    }
+
+                    currentTrainerFile.party[i].difficulty = (ushort)partyIVUpdownList[i].Value;
+                    currentTrainerFile.party[i].ballSeals = (ushort)partyBallUpdownList[i].Value;
                 }
 
-                if (trainerItemsCheckBox.Checked) {
-                    currentTrainerFile.party[i].heldItem = (ushort)partyItemsComboboxList[i].SelectedIndex;
-                }
+                /*Write to File*/
+                string indexStr = "\\" + trainerComboBox.SelectedIndex.ToString("D4");
+                File.WriteAllBytes(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + indexStr, currentTrainerFile.trp.ToByteArray());
+                File.WriteAllBytes(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + indexStr, currentTrainerFile.party.ToByteArray());
 
-                currentTrainerFile.party[i].difficulty = (ushort)partyIVUpdownList[i].Value;
-                currentTrainerFile.party[i].ballSeals = (ushort)partyBallUpdownList[i].Value;
+                UpdateCurrentTrainerName(newName: trainerNameTextBox.Text);
+                UpdateCurrentTrainerShownName();
+
+                MessageBox.Show("Trainer saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            } else
+            {
+                MessageBox.Show("The length of the trainer name exceeds the maximum allowed by DSPRE currently which is 7 characters.", "Trainer data could not be saved!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            /*Write to File*/
-            string indexStr = "\\" + trainerComboBox.SelectedIndex.ToString("D4");
-            File.WriteAllBytes(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + indexStr, currentTrainerFile.trp.ToByteArray());
-            File.WriteAllBytes(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + indexStr, currentTrainerFile.party.ToByteArray());
-
-            UpdateCurrentTrainerName(newName: trainerNameTextBox.Text);
-            UpdateCurrentTrainerShownName();
-
-            MessageBox.Show("Trainer saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
         }
 
         private void UpdateCurrentTrainerShownName() {

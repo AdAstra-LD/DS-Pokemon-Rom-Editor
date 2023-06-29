@@ -1,6 +1,8 @@
 ﻿using ScintillaNET;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 using static DSPRE.DSUtils.ARM9;
@@ -307,6 +309,9 @@ namespace DSPRE.ROMFiles {
         public string name;
         public TrainerProperties trp;
         public Party party;
+        public int COMPRESSED_MASK = 0x01FF;
+        public int COMPRESSED_EOS = 0x01FF;
+        public ushort CHAR_EOS = 0xFFFF;
         #endregion
 
         #region Constructor
@@ -327,8 +332,10 @@ namespace DSPRE.ROMFiles {
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
-                writer.Write(name);
-
+                ushort[] compName = CompressTrainerName(name);
+                byte[] compressedName = new byte[compName.Length];
+                Array.Copy(compName, 0, compressedName, 0, compName.Length - 1);
+                writer.Write(compressedName);
                 byte[] trDat = trp.ToByteArray();
                 writer.Write((byte)trDat.Length);
                 writer.Write(trDat);
@@ -343,6 +350,73 @@ namespace DSPRE.ROMFiles {
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
             SaveToFileExplorePath("Gen IV Trainer File", "trf", suggestedFileName, showSuccessMessage);
         }
+
+        public int[] Compress(char[] uncompressedString)
+        {
+            int container = 0;
+            int bitshift = 0;
+            int index = 0;
+            int[] newBinaryString = new int[uncompressedString.Length / 2];
+
+            newBinaryString[0] = 0xf100;
+            for (int i = 1; i < newBinaryString.Length; i++)
+            {
+                int c = uncompressedString[index];
+                if ((c >> 9) == 1)
+                    throw new Exception(string.Format("{0:x4} cannot be compressed", c));
+                container |= c << bitshift;
+                bitshift += 9;
+                while (bitshift >= 0xf)
+                {
+                    bitshift -= 0xf;
+                    newBinaryString[index++] = container & 0xffff;
+                    container >>= 0xf;
+                }
+            }
+            container |= 0xffff << bitshift;
+            newBinaryString[index] = container & 0xffff;            
+            return newBinaryString;
+        }
+
+        public ushort[] CompressTrainerName(string src)
+        {
+            ushort[] dstChar = new ushort[src.Length / 2];
+            ushort[] srcChar = new ushort[src.Length];
+            Array.Copy(src.ToCharArray(), 1, srcChar, 0, src.Length - 1);
+            int shift = 0;
+            int charsAdded = 0;
+            ushort curChar = 0;
+
+            while (true)
+            {
+                curChar = dstChar[charsAdded];
+
+                if (curChar == COMPRESSED_EOS)
+                {
+                    break;
+                }
+
+                if (shift != 0)
+                {
+                    srcChar[2] = srcChar[1];
+                    srcChar[1] = srcChar[0];
+                    srcChar[0] = (ushort)((curChar >> (9 - shift)) & COMPRESSED_MASK);
+                }
+
+                shift += 9;
+
+                if (shift >= 15)
+                {
+                    shift -= 15;
+                }
+
+                charsAdded++;
+            }
+
+            dstChar[charsAdded] = CHAR_EOS;
+            return dstChar;
+        }
+
         #endregion
 
     }
