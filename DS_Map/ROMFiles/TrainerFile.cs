@@ -1,6 +1,8 @@
 ﻿using ScintillaNET;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 using static DSPRE.DSUtils.ARM9;
@@ -335,7 +337,6 @@ namespace DSPRE.ROMFiles {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write(name);
-
                 byte[] trDat = trp.ToByteArray();
                 writer.Write((byte)trDat.Length);
                 writer.Write(trDat);
@@ -349,7 +350,8 @@ namespace DSPRE.ROMFiles {
 
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
             SaveToFileExplorePath("Gen IV Trainer File", "trf", suggestedFileName, showSuccessMessage);
-        }
+        }      
+
         #endregion
 
     }
