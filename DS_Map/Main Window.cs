@@ -23,6 +23,7 @@ using ScintillaNET.Utils;
 using System.Globalization;
 using static DSPRE.ROMFiles.Event;
 using NSMBe4.NSBMD;
+using static OpenTK.Graphics.OpenGL.GL;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -52,6 +53,7 @@ namespace DSPRE {
         public static string gameCode;
         public static byte europeByte;
         RomInfo romInfo;
+        public Dictionary<ushort, ushort> eventToHeader = new Dictionary<ushort, ushort>();
 
         #endregion
 
@@ -935,7 +937,7 @@ namespace DSPRE {
 
             statusLabelMessage("Reading internal names... Please wait.");
             Update();
-
+            
             internalNames = new List<string>();
             headerListBoxNames = new List<string>();
             int headerCount;
@@ -965,6 +967,22 @@ namespace DSPRE {
                 MessageBox.Show(RomInfo.internalNamesLocation + " doesn't exist.", "Couldn't read internal names", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            // Creating a dictionary linking events to headers to fetch header data for Event Editor
+            for (ushort i = 0; i < internalNames.Count; i++)
+            {
+                MapHeader h;
+                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied())
+                {
+                    h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
+                }
+                else
+                {
+                    h = MapHeader.LoadFromARM9(i);
+                }
+                if (!eventToHeader.ContainsKey(h.eventFileID)) eventToHeader.Add(h.eventFileID, i);
+            }
+
 
             /*Add list of options to each control */
             currentTextArchive = new TextArchive(RomInfo.locationNamesTextNumber);
@@ -5494,6 +5512,7 @@ namespace DSPRE {
             if (disableHandlers) {
                 return;
             }
+            disableHandlers = true;
 
             /* Load events data into EventFile class instance */
             currentEvFile = new EventFile(selectEventComboBox.SelectedIndex);
@@ -5503,8 +5522,27 @@ namespace DSPRE {
             FillOverworldsBox();
             FillTriggersBox();
             FillWarpsBox();
+            ushort mapHeader = eventToHeader[(ushort)selectEventComboBox.SelectedIndex];
+            MapHeader h;
+            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied())
+            {
+                h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + mapHeader.ToString("D4"), mapHeader, 0);
+            }
+            else
+            {
+                h = MapHeader.LoadFromARM9(mapHeader);
+            }            
+            eventMatrixUpDown.Value = h.matrixID;
 
+            eventMatrix = new GameMatrix((int)eventMatrixUpDown.Value);
+            eventMatrixXUpDown.Maximum = eventMatrix.width - 1;
+            eventMatrixYUpDown.Maximum = eventMatrix.height - 1;
+            eventAreaDataUpDown.Value = h.areaDataID;
             eventEditorFullMapReload((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value);
+
+            disableHandlers = false;
+
+            CenterEventViewOnEntities();
         }
         private void showEventsCheckBoxes_CheckedChanged(object sender, EventArgs e) {
             if (disableHandlers) {
