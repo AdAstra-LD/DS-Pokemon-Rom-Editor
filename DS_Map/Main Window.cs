@@ -8816,12 +8816,12 @@ namespace DSPRE {
             string iconTablePath;
 
             int iconPalTableOffsetFromFileStart;
-            if (File.Exists(DSUtils.GetOverlayPath(129))) {
+            string ov129path = DSUtils.GetOverlayPath(129);
+            if (File.Exists(ov129path)) {
                 // if overlay 129 exists, read it from there
                 iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - DSUtils.GetOverlayRAMAddress(129));
-                iconTablePath = DSUtils.GetOverlayPath(129);
-            }
-            else if ((int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress) >= 0) { 
+                iconTablePath = ov129path;
+            } else if ((int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress) >= 0) {
                 // if there is a synthetic overlay, read it from there
                 iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress);
                 iconTablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
