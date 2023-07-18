@@ -526,21 +526,21 @@ namespace DSPRE {
 
                     using (DSUtils.EasyReader bReader = new DSUtils.EasyReader(ov1Path, ramAddrOfPointer - ov1Address)) { // read the pointer at the specified ram address and adjust accordingly below
                         uint ramAddressOfTable = bReader.ReadUInt32();
-                        if ((((UInt32)(ramAddressOfTable) >> 0x18)) != 0x02) {
+                        if ((ramAddressOfTable >> 0x18) != 0x02) {
                             MessageBox.Show("Something went wrong reading the Overworld configuration table.\nOverworld sprites in the Event Editor will be " +
                                 "displayed incorrectly or not displayed at all.", "Decompression error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-                        if (File.Exists(DSUtils.GetOverlayPath(131))) { 
+
+                        string ov131path = DSUtils.GetOverlayPath(131);
+                        if (File.Exists(ov131path)) { 
                             // if HGE field extension overlay exists
                             OWTableOffset = ramAddressOfTable - DSUtils.GetOverlayRAMAddress(131);
-                            OWtablePath = DSUtils.GetOverlayPath(131);
-                        }
-                        else if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) { 
+                            OWtablePath = ov131path;
+                        } else if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) {
                             // if the pointer shows the table was moved to the synthetic overlay
                             OWTableOffset = ramAddressOfTable - RomInfo.synthOverlayLoadAddress;
                             OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
-                            
                         } else {
                             OWTableOffset = ramAddressOfTable - ov1Address;
                             OWtablePath = ov1Path;
