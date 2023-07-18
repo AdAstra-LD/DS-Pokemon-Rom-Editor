@@ -1,11 +1,7 @@
-﻿using ScintillaNET;
-using System;
+﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
-using static DSPRE.DSUtils.ARM9;
 
 namespace DSPRE.ROMFiles {
     public class PartyPokemon : RomFile {
