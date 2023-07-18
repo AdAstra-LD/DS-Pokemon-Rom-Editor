@@ -23,7 +23,6 @@ using ScintillaNET.Utils;
 using System.Globalization;
 using static DSPRE.ROMFiles.Event;
 using NSMBe4.NSBMD;
-using static OpenTK.Graphics.OpenGL.GL;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -969,18 +968,16 @@ namespace DSPRE {
             }
 
             // Creating a dictionary linking events to headers to fetch header data for Event Editor
-            for (ushort i = 0; i < internalNames.Count; i++)
-            {
+            for (ushort i = 0; i < internalNames.Count; i++) {
                 MapHeader h;
-                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied())
-                {
+                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                     h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
-                }
-                else
-                {
+                } else {
                     h = MapHeader.LoadFromARM9(i);
                 }
-                if (!eventToHeader.ContainsKey(h.eventFileID)) eventToHeader.Add(h.eventFileID, i);
+                if (!eventToHeader.ContainsKey(h.eventFileID)) {
+                    eventToHeader.Add(h.eventFileID, i);
+                }
             }
 
 
