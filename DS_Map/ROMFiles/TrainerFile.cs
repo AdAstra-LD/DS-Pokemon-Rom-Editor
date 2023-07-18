@@ -237,11 +237,12 @@ namespace DSPRE.ROMFiles {
                                 moves[m] = (ushort)(val == ushort.MaxValue ? 0 : val);
                             }
                         }
-                        if (RomInfo.gameFamily == RomInfo.gFamEnum.HGSS || RomInfo.gameFamily == RomInfo.gFamEnum.Plat)
-                            content[i] = new PartyPokemon(unknown1, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves); 
-                        else
-                            content[i] = new PartyPokemon(unknown1, level, pokemon, form_no, heldItem, moves); // Diamond and Pearl apparently dont save ball capsule data in enemy trainer pokedata!!!
 
+                        if (RomInfo.gameFamily == RomInfo.gFamEnum.HGSS || RomInfo.gameFamily == RomInfo.gFamEnum.Plat) {
+                            content[i] = new PartyPokemon(unknown1, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves);
+                        } else {
+                            content[i] = new PartyPokemon(unknown1, level, pokemon, form_no, heldItem, moves); // Diamond and Pearl apparently dont save ball capsule data in enemy trainer pokedata!!!
+                        }
                     }
                     for (int i = endval; i < maxPoke; i++) {
                         content[i] = new PartyPokemon();
