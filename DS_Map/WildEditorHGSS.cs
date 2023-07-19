@@ -29,12 +29,27 @@ namespace DSPRE {
 
             currentFile = new EncounterFileHGSS(selectEncounterComboBox.SelectedIndex);
 
+            /* Once the GUI overhaul is complete - i.e.: once everything is a TableLayoutPanel, 
+             * this can be simplified a lot. */
             foreach (TabPage page in mainTabControl.TabPages) {
                 foreach (Control g in page.Controls) {
                     if (g != null && g is GroupBox) {
                         foreach (Control c in g.Controls) {
-                            if (c != null && c is ComboBox) {
-                                (c as ComboBox).DataSource = new BindingSource(names, string.Empty);
+                            if (c != null) {
+                                if (c is InputComboBox) {
+                                    (c as InputComboBox).DataSource = new BindingSource(names, string.Empty);
+                                } else if (c is TableLayoutPanel) {
+                                    TableLayoutPanel tbl = (c as TableLayoutPanel);
+
+                                    foreach (Control tblC in tbl.Controls) {
+                                        if (c != null) {
+                                            if (tblC is InputComboBox) {
+                                                (tblC as InputComboBox).DataSource = new BindingSource(names, string.Empty);
+                                            }
+                                        }
+                                    }
+
+                                }
                             }
                         }
                     }
