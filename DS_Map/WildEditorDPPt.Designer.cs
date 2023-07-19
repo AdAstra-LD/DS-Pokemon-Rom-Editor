@@ -43,92 +43,94 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.radarGroupBox = new System.Windows.Forms.GroupBox();
             this.label42 = new System.Windows.Forms.Label();
-            this.radarFourthComboBox = new System.Windows.Forms.ComboBox();
+            this.radarFourthComboBox = new DSPRE.InputComboBox();
             this.label41 = new System.Windows.Forms.Label();
-            this.radarThirdComboBox = new System.Windows.Forms.ComboBox();
+            this.radarThirdComboBox = new DSPRE.InputComboBox();
             this.label40 = new System.Windows.Forms.Label();
-            this.radarSecondComboBox = new System.Windows.Forms.ComboBox();
+            this.radarSecondComboBox = new DSPRE.InputComboBox();
             this.label34 = new System.Windows.Forms.Label();
-            this.radarFirstComboBox = new System.Windows.Forms.ComboBox();
+            this.radarFirstComboBox = new DSPRE.InputComboBox();
             this.dualSlotGroupBox = new System.Windows.Forms.GroupBox();
-            this.leafGreenFirstComboBox = new System.Windows.Forms.ComboBox();
+            this.leafGreenFirstComboBox = new DSPRE.InputComboBox();
             this.label33 = new System.Windows.Forms.Label();
-            this.fireRedSecondComboBox = new System.Windows.Forms.ComboBox();
+            this.fireRedSecondComboBox = new DSPRE.InputComboBox();
             this.label35 = new System.Windows.Forms.Label();
-            this.fireRedFirstComboBox = new System.Windows.Forms.ComboBox();
+            this.fireRedFirstComboBox = new DSPRE.InputComboBox();
             this.label36 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
-            this.leafGreenSecondComboBox = new System.Windows.Forms.ComboBox();
+            this.leafGreenSecondComboBox = new DSPRE.InputComboBox();
             this.label39 = new System.Windows.Forms.Label();
-            this.sapphireFirstComboBox = new System.Windows.Forms.ComboBox();
-            this.rubyFirstComboBox = new System.Windows.Forms.ComboBox();
+            this.sapphireFirstComboBox = new DSPRE.InputComboBox();
+            this.rubyFirstComboBox = new DSPRE.InputComboBox();
             this.label24 = new System.Windows.Forms.Label();
-            this.emeraldSecondComboBox = new System.Windows.Forms.ComboBox();
+            this.emeraldSecondComboBox = new DSPRE.InputComboBox();
             this.label25 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
-            this.rubySecondComboBox = new System.Windows.Forms.ComboBox();
+            this.rubySecondComboBox = new DSPRE.InputComboBox();
             this.label31 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
-            this.emeraldFirstComboBox = new System.Windows.Forms.ComboBox();
+            this.emeraldFirstComboBox = new DSPRE.InputComboBox();
             this.label27 = new System.Windows.Forms.Label();
-            this.sapphireSecondComboBox = new System.Windows.Forms.ComboBox();
+            this.sapphireSecondComboBox = new DSPRE.InputComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.timeGroupBox = new System.Windows.Forms.GroupBox();
-            this.nightFirstComboBox = new System.Windows.Forms.ComboBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label16 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.morningSecondComboBox = new System.Windows.Forms.ComboBox();
+            this.nightFirstComboBox = new DSPRE.InputComboBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.morningFirstComboBox = new System.Windows.Forms.ComboBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
+            this.morningSecondComboBox = new DSPRE.InputComboBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.nightSecondComboBox = new System.Windows.Forms.ComboBox();
-            this.swarmFirstComboBox = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.morningFirstComboBox = new DSPRE.InputComboBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.swarmFirstComboBox = new DSPRE.InputComboBox();
             this.label17 = new System.Windows.Forms.Label();
+            this.nightSecondComboBox = new DSPRE.InputComboBox();
+            this.swarmSecondComboBox = new DSPRE.InputComboBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
-            this.swarmSecondComboBox = new System.Windows.Forms.ComboBox();
             this.walkingGroupBox = new System.Windows.Forms.GroupBox();
-            this.walkingTwentyFirstComboBox = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.walkingFiveFirstComboBox = new System.Windows.Forms.ComboBox();
-            this.walkingTenFourthComboBox = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.walkingTenThirdComboBox = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.walkingFourFirstComboBox = new System.Windows.Forms.ComboBox();
-            this.walkingTenSecondComboBox = new System.Windows.Forms.ComboBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.walkingFourSecondComboBox = new System.Windows.Forms.ComboBox();
-            this.walkingTenFirstComboBox = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.walkingOneFirstComboBox = new System.Windows.Forms.ComboBox();
-            this.walkingOneSecondUpDown = new System.Windows.Forms.NumericUpDown();
-            this.walkingTwentySecondComboBox = new System.Windows.Forms.ComboBox();
-            this.walkingOneFirstUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label11 = new System.Windows.Forms.Label();
-            this.walkingTenFourthUpDown = new System.Windows.Forms.NumericUpDown();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
-            this.walkingTenThirdUpDown = new System.Windows.Forms.NumericUpDown();
-            this.walkingOneSecondComboBox = new System.Windows.Forms.ComboBox();
-            this.walkingFourSecondUpDown = new System.Windows.Forms.NumericUpDown();
+            this.walkingOneSecondUpDown = new System.Windows.Forms.NumericUpDown();
+            this.walkingOneFirstComboBox = new DSPRE.InputComboBox();
+            this.walkingOneFirstUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.walkingOneSecondComboBox = new DSPRE.InputComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.walkingTwentyFirstComboBox = new DSPRE.InputComboBox();
+            this.walkingTenFourthComboBox = new DSPRE.InputComboBox();
+            this.walkingFiveFirstComboBox = new DSPRE.InputComboBox();
+            this.walkingTenThirdComboBox = new DSPRE.InputComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.walkingTenThirdUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.walkingFourFirstComboBox = new DSPRE.InputComboBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.walkingFourSecondComboBox = new DSPRE.InputComboBox();
+            this.walkingTwentySecondComboBox = new DSPRE.InputComboBox();
+            this.walkingFourSecondUpDown = new System.Windows.Forms.NumericUpDown();
+            this.walkingTenSecondComboBox = new DSPRE.InputComboBox();
+            this.walkingFiveSecondComboBox = new DSPRE.InputComboBox();
             this.walkingFourFirstUpDown = new System.Windows.Forms.NumericUpDown();
-            this.walkingFiveSecondComboBox = new System.Windows.Forms.ComboBox();
-            this.walkingTenSecondUpDown = new System.Windows.Forms.NumericUpDown();
             this.walkingTwentyFirstUpDown = new System.Windows.Forms.NumericUpDown();
+            this.walkingTenSecondUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
             this.walkingTenFirstUpDown = new System.Windows.Forms.NumericUpDown();
+            this.walkingTenFirstComboBox = new DSPRE.InputComboBox();
             this.walkingTwentySecondUpDown = new System.Windows.Forms.NumericUpDown();
-            this.walkingFiveSecondUpDown = new System.Windows.Forms.NumericUpDown();
             this.walkingFiveFirstUpDown = new System.Windows.Forms.NumericUpDown();
+            this.walkingFiveSecondUpDown = new System.Windows.Forms.NumericUpDown();
+            this.walkingTenFourthUpDown = new System.Windows.Forms.NumericUpDown();
             this.walkingRateUpDown = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
             this.waterTabPage = new System.Windows.Forms.TabPage();
@@ -144,23 +146,23 @@
             this.superRodOneMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.superRodOneMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label70 = new System.Windows.Forms.Label();
-            this.superRodOneComboBox = new System.Windows.Forms.ComboBox();
+            this.superRodOneComboBox = new DSPRE.InputComboBox();
             this.superRodFourMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.superRodFourMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label71 = new System.Windows.Forms.Label();
-            this.superRodFourComboBox = new System.Windows.Forms.ComboBox();
+            this.superRodFourComboBox = new DSPRE.InputComboBox();
             this.superRodFifteenMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.superRodFifteenMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label72 = new System.Windows.Forms.Label();
-            this.superRodFifteenComboBox = new System.Windows.Forms.ComboBox();
+            this.superRodFifteenComboBox = new DSPRE.InputComboBox();
             this.superRodSecondFortyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.superRodSecondFortyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label73 = new System.Windows.Forms.Label();
-            this.superRodSecondFortyComboBox = new System.Windows.Forms.ComboBox();
+            this.superRodSecondFortyComboBox = new DSPRE.InputComboBox();
             this.superRodFirstFortyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.superRodFirstFortyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label74 = new System.Windows.Forms.Label();
-            this.superRodFirstFortyComboBox = new System.Windows.Forms.ComboBox();
+            this.superRodFirstFortyComboBox = new DSPRE.InputComboBox();
             this.goodRodGroupBox = new System.Windows.Forms.GroupBox();
             this.label51 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
@@ -169,23 +171,23 @@
             this.goodRodOneMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.goodRodOneMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label54 = new System.Windows.Forms.Label();
-            this.goodRodOneComboBox = new System.Windows.Forms.ComboBox();
+            this.goodRodOneComboBox = new DSPRE.InputComboBox();
             this.goodRodFourMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.goodRodFourMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label55 = new System.Windows.Forms.Label();
-            this.goodRodFourComboBox = new System.Windows.Forms.ComboBox();
+            this.goodRodFourComboBox = new DSPRE.InputComboBox();
             this.goodRodFifteenMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.goodRodFifteenMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label56 = new System.Windows.Forms.Label();
-            this.goodRodFifteenComboBox = new System.Windows.Forms.ComboBox();
+            this.goodRodFifteenComboBox = new DSPRE.InputComboBox();
             this.goodRodSecondFortyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.goodRodSecondFortyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label57 = new System.Windows.Forms.Label();
-            this.goodRodSecondFortyComboBox = new System.Windows.Forms.ComboBox();
+            this.goodRodSecondFortyComboBox = new DSPRE.InputComboBox();
             this.goodRodFirstFortyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.goodRodFirstFortyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label58 = new System.Windows.Forms.Label();
-            this.goodRodFirstFortyComboBox = new System.Windows.Forms.ComboBox();
+            this.goodRodFirstFortyComboBox = new DSPRE.InputComboBox();
             this.oldRodGroupBox = new System.Windows.Forms.GroupBox();
             this.label43 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
@@ -194,23 +196,23 @@
             this.oldRodOneMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.oldRodOneMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label46 = new System.Windows.Forms.Label();
-            this.oldRodOneComboBox = new System.Windows.Forms.ComboBox();
+            this.oldRodOneComboBox = new DSPRE.InputComboBox();
             this.oldRodFourMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.oldRodFourMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label47 = new System.Windows.Forms.Label();
-            this.oldRodFourComboBox = new System.Windows.Forms.ComboBox();
+            this.oldRodFourComboBox = new DSPRE.InputComboBox();
             this.oldRodFiveMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.oldRodFiveMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label48 = new System.Windows.Forms.Label();
-            this.oldRodFiveComboBox = new System.Windows.Forms.ComboBox();
+            this.oldRodFiveComboBox = new DSPRE.InputComboBox();
             this.oldRodThirtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.oldRodThirtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label49 = new System.Windows.Forms.Label();
-            this.oldRodThirtyComboBox = new System.Windows.Forms.ComboBox();
+            this.oldRodThirtyComboBox = new DSPRE.InputComboBox();
             this.oldRodSixtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.oldRodSixtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label50 = new System.Windows.Forms.Label();
-            this.oldRodSixtyComboBox = new System.Windows.Forms.ComboBox();
+            this.oldRodSixtyComboBox = new DSPRE.InputComboBox();
             this.surfGroupBox = new System.Windows.Forms.GroupBox();
             this.label68 = new System.Windows.Forms.Label();
             this.label67 = new System.Windows.Forms.Label();
@@ -219,23 +221,23 @@
             this.surfOneMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfOneMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label62 = new System.Windows.Forms.Label();
-            this.surfOneComboBox = new System.Windows.Forms.ComboBox();
+            this.surfOneComboBox = new DSPRE.InputComboBox();
             this.surfFourMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfFourMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label63 = new System.Windows.Forms.Label();
-            this.surfFourComboBox = new System.Windows.Forms.ComboBox();
+            this.surfFourComboBox = new DSPRE.InputComboBox();
             this.surfFiveMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfFiveMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label64 = new System.Windows.Forms.Label();
-            this.surfFiveComboBox = new System.Windows.Forms.ComboBox();
+            this.surfFiveComboBox = new DSPRE.InputComboBox();
             this.surfThirtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfThirtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label65 = new System.Windows.Forms.Label();
-            this.surfThirtyComboBox = new System.Windows.Forms.ComboBox();
+            this.surfThirtyComboBox = new DSPRE.InputComboBox();
             this.surfSixtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfSixtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.label66 = new System.Windows.Forms.Label();
-            this.surfSixtyComboBox = new System.Windows.Forms.ComboBox();
+            this.surfSixtyComboBox = new DSPRE.InputComboBox();
             this.repairAllButton = new System.Windows.Forms.Button();
             this.mainTabControl.SuspendLayout();
             this.grassGroundTabPage.SuspendLayout();
@@ -245,19 +247,21 @@
             this.radarGroupBox.SuspendLayout();
             this.dualSlotGroupBox.SuspendLayout();
             this.timeGroupBox.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.walkingGroupBox.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.walkingOneSecondUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingOneFirstUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.walkingTenFourthUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingTenThirdUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingFourSecondUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingFourFirstUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.walkingTenSecondUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingTwentyFirstUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.walkingTenSecondUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingTenFirstUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingTwentySecondUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.walkingFiveSecondUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingFiveFirstUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.walkingFiveSecondUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.walkingTenFourthUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingRateUpDown)).BeginInit();
             this.waterTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.surfPicture)).BeginInit();
@@ -319,9 +323,9 @@
             this.encounterFileLabel.AutoSize = true;
             this.encounterFileLabel.Location = new System.Drawing.Point(12, 10);
             this.encounterFileLabel.Name = "encounterFileLabel";
-            this.encounterFileLabel.Size = new System.Drawing.Size(80, 13);
+            this.encounterFileLabel.Size = new System.Drawing.Size(117, 13);
             this.encounterFileLabel.TabIndex = 1;
-            this.encounterFileLabel.Text = "Encounters File";
+            this.encounterFileLabel.Text = "Current Encounters File";
             // 
             // removeEventFileButton
             // 
@@ -340,7 +344,7 @@
             // 
             this.addEventFileButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addEventFileButton.Location = new System.Drawing.Point(422, 13);
+            this.addEventFileButton.Location = new System.Drawing.Point(426, 13);
             this.addEventFileButton.Name = "addEventFileButton";
             this.addEventFileButton.Size = new System.Drawing.Size(72, 35);
             this.addEventFileButton.TabIndex = 59;
@@ -367,7 +371,7 @@
             this.exportEncounterFileButton.Name = "exportEncounterFileButton";
             this.exportEncounterFileButton.Size = new System.Drawing.Size(90, 35);
             this.exportEncounterFileButton.TabIndex = 57;
-            this.exportEncounterFileButton.Text = "Export File";
+            this.exportEncounterFileButton.Text = "Export\r\nCurrent";
             this.exportEncounterFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.exportEncounterFileButton.UseVisualStyleBackColor = true;
             this.exportEncounterFileButton.Click += new System.EventHandler(this.exportEncounterFileButton_Click);
@@ -380,7 +384,7 @@
             this.importEncounterFileButton.Name = "importEncounterFileButton";
             this.importEncounterFileButton.Size = new System.Drawing.Size(90, 35);
             this.importEncounterFileButton.TabIndex = 56;
-            this.importEncounterFileButton.Text = "Import File";
+            this.importEncounterFileButton.Text = "Replace Current";
             this.importEncounterFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.importEncounterFileButton.UseVisualStyleBackColor = true;
             this.importEncounterFileButton.Click += new System.EventHandler(this.importEncounterFileButton_Click);
@@ -448,7 +452,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(82, 488);
+            this.pictureBox1.Location = new System.Drawing.Point(82, 490);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(25, 26);
             this.pictureBox1.TabIndex = 192;
@@ -482,6 +486,8 @@
             // 
             // radarFourthComboBox
             // 
+            this.radarFourthComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.radarFourthComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.radarFourthComboBox.FormattingEnabled = true;
             this.radarFourthComboBox.Location = new System.Drawing.Point(567, 28);
             this.radarFourthComboBox.Name = "radarFourthComboBox";
@@ -500,6 +506,8 @@
             // 
             // radarThirdComboBox
             // 
+            this.radarThirdComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.radarThirdComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.radarThirdComboBox.FormattingEnabled = true;
             this.radarThirdComboBox.Location = new System.Drawing.Point(394, 28);
             this.radarThirdComboBox.Name = "radarThirdComboBox";
@@ -518,6 +526,8 @@
             // 
             // radarSecondComboBox
             // 
+            this.radarSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.radarSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.radarSecondComboBox.FormattingEnabled = true;
             this.radarSecondComboBox.Location = new System.Drawing.Point(220, 28);
             this.radarSecondComboBox.Name = "radarSecondComboBox";
@@ -536,6 +546,8 @@
             // 
             // radarFirstComboBox
             // 
+            this.radarFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.radarFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.radarFirstComboBox.FormattingEnabled = true;
             this.radarFirstComboBox.Location = new System.Drawing.Point(43, 28);
             this.radarFirstComboBox.Name = "radarFirstComboBox";
@@ -579,8 +591,10 @@
             // 
             // leafGreenFirstComboBox
             // 
+            this.leafGreenFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.leafGreenFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.leafGreenFirstComboBox.FormattingEnabled = true;
-            this.leafGreenFirstComboBox.Location = new System.Drawing.Point(278, 117);
+            this.leafGreenFirstComboBox.Location = new System.Drawing.Point(278, 119);
             this.leafGreenFirstComboBox.Name = "leafGreenFirstComboBox";
             this.leafGreenFirstComboBox.Size = new System.Drawing.Size(184, 21);
             this.leafGreenFirstComboBox.TabIndex = 207;
@@ -589,7 +603,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(16, 148);
+            this.label33.Location = new System.Drawing.Point(16, 150);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(21, 13);
             this.label33.TabIndex = 206;
@@ -597,8 +611,10 @@
             // 
             // fireRedSecondComboBox
             // 
+            this.fireRedSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.fireRedSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.fireRedSecondComboBox.FormattingEnabled = true;
-            this.fireRedSecondComboBox.Location = new System.Drawing.Point(43, 144);
+            this.fireRedSecondComboBox.Location = new System.Drawing.Point(43, 146);
             this.fireRedSecondComboBox.Name = "fireRedSecondComboBox";
             this.fireRedSecondComboBox.Size = new System.Drawing.Size(182, 21);
             this.fireRedSecondComboBox.TabIndex = 205;
@@ -607,7 +623,7 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(16, 121);
+            this.label35.Location = new System.Drawing.Point(16, 123);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(21, 13);
             this.label35.TabIndex = 204;
@@ -615,8 +631,10 @@
             // 
             // fireRedFirstComboBox
             // 
+            this.fireRedFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.fireRedFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.fireRedFirstComboBox.FormattingEnabled = true;
-            this.fireRedFirstComboBox.Location = new System.Drawing.Point(43, 117);
+            this.fireRedFirstComboBox.Location = new System.Drawing.Point(43, 119);
             this.fireRedFirstComboBox.Name = "fireRedFirstComboBox";
             this.fireRedFirstComboBox.Size = new System.Drawing.Size(182, 21);
             this.fireRedFirstComboBox.TabIndex = 203;
@@ -625,7 +643,7 @@
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(275, 99);
+            this.label36.Location = new System.Drawing.Point(275, 101);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(60, 13);
             this.label36.TabIndex = 216;
@@ -634,7 +652,7 @@
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(249, 148);
+            this.label37.Location = new System.Drawing.Point(249, 150);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(21, 13);
             this.label37.TabIndex = 210;
@@ -643,7 +661,7 @@
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(40, 99);
+            this.label38.Location = new System.Drawing.Point(40, 101);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(47, 13);
             this.label38.TabIndex = 215;
@@ -651,8 +669,10 @@
             // 
             // leafGreenSecondComboBox
             // 
+            this.leafGreenSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.leafGreenSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.leafGreenSecondComboBox.FormattingEnabled = true;
-            this.leafGreenSecondComboBox.Location = new System.Drawing.Point(278, 144);
+            this.leafGreenSecondComboBox.Location = new System.Drawing.Point(278, 146);
             this.leafGreenSecondComboBox.Name = "leafGreenSecondComboBox";
             this.leafGreenSecondComboBox.Size = new System.Drawing.Size(183, 21);
             this.leafGreenSecondComboBox.TabIndex = 209;
@@ -661,7 +681,7 @@
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(249, 121);
+            this.label39.Location = new System.Drawing.Point(249, 123);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(21, 13);
             this.label39.TabIndex = 208;
@@ -669,8 +689,10 @@
             // 
             // sapphireFirstComboBox
             // 
+            this.sapphireFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.sapphireFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.sapphireFirstComboBox.FormattingEnabled = true;
-            this.sapphireFirstComboBox.Location = new System.Drawing.Point(279, 40);
+            this.sapphireFirstComboBox.Location = new System.Drawing.Point(279, 42);
             this.sapphireFirstComboBox.Name = "sapphireFirstComboBox";
             this.sapphireFirstComboBox.Size = new System.Drawing.Size(184, 21);
             this.sapphireFirstComboBox.TabIndex = 192;
@@ -678,8 +700,10 @@
             // 
             // rubyFirstComboBox
             // 
+            this.rubyFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.rubyFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.rubyFirstComboBox.FormattingEnabled = true;
-            this.rubyFirstComboBox.Location = new System.Drawing.Point(44, 40);
+            this.rubyFirstComboBox.Location = new System.Drawing.Point(44, 42);
             this.rubyFirstComboBox.Name = "rubyFirstComboBox";
             this.rubyFirstComboBox.Size = new System.Drawing.Size(182, 21);
             this.rubyFirstComboBox.TabIndex = 188;
@@ -688,7 +712,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(16, 71);
+            this.label24.Location = new System.Drawing.Point(16, 73);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(21, 13);
             this.label24.TabIndex = 191;
@@ -696,8 +720,10 @@
             // 
             // emeraldSecondComboBox
             // 
+            this.emeraldSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.emeraldSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.emeraldSecondComboBox.FormattingEnabled = true;
-            this.emeraldSecondComboBox.Location = new System.Drawing.Point(515, 67);
+            this.emeraldSecondComboBox.Location = new System.Drawing.Point(515, 69);
             this.emeraldSecondComboBox.Name = "emeraldSecondComboBox";
             this.emeraldSecondComboBox.Size = new System.Drawing.Size(184, 21);
             this.emeraldSecondComboBox.TabIndex = 198;
@@ -706,7 +732,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(512, 21);
+            this.label25.Location = new System.Drawing.Point(512, 23);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(45, 13);
             this.label25.TabIndex = 202;
@@ -715,7 +741,7 @@
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(488, 71);
+            this.label32.Location = new System.Drawing.Point(488, 73);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(21, 13);
             this.label32.TabIndex = 199;
@@ -723,8 +749,10 @@
             // 
             // rubySecondComboBox
             // 
+            this.rubySecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.rubySecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.rubySecondComboBox.FormattingEnabled = true;
-            this.rubySecondComboBox.Location = new System.Drawing.Point(44, 67);
+            this.rubySecondComboBox.Location = new System.Drawing.Point(44, 69);
             this.rubySecondComboBox.Name = "rubySecondComboBox";
             this.rubySecondComboBox.Size = new System.Drawing.Size(182, 21);
             this.rubySecondComboBox.TabIndex = 190;
@@ -733,7 +761,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(488, 44);
+            this.label31.Location = new System.Drawing.Point(488, 46);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(21, 13);
             this.label31.TabIndex = 197;
@@ -742,7 +770,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(16, 44);
+            this.label26.Location = new System.Drawing.Point(16, 46);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(21, 13);
             this.label26.TabIndex = 189;
@@ -751,7 +779,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(251, 44);
+            this.label30.Location = new System.Drawing.Point(251, 46);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(21, 13);
             this.label30.TabIndex = 193;
@@ -759,8 +787,10 @@
             // 
             // emeraldFirstComboBox
             // 
+            this.emeraldFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.emeraldFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.emeraldFirstComboBox.FormattingEnabled = true;
-            this.emeraldFirstComboBox.Location = new System.Drawing.Point(515, 40);
+            this.emeraldFirstComboBox.Location = new System.Drawing.Point(515, 42);
             this.emeraldFirstComboBox.Name = "emeraldFirstComboBox";
             this.emeraldFirstComboBox.Size = new System.Drawing.Size(184, 21);
             this.emeraldFirstComboBox.TabIndex = 196;
@@ -769,7 +799,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(276, 22);
+            this.label27.Location = new System.Drawing.Point(276, 24);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(49, 13);
             this.label27.TabIndex = 201;
@@ -777,8 +807,10 @@
             // 
             // sapphireSecondComboBox
             // 
+            this.sapphireSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.sapphireSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.sapphireSecondComboBox.FormattingEnabled = true;
-            this.sapphireSecondComboBox.Location = new System.Drawing.Point(279, 67);
+            this.sapphireSecondComboBox.Location = new System.Drawing.Point(279, 69);
             this.sapphireSecondComboBox.Name = "sapphireSecondComboBox";
             this.sapphireSecondComboBox.Size = new System.Drawing.Size(183, 21);
             this.sapphireSecondComboBox.TabIndex = 194;
@@ -787,7 +819,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(251, 71);
+            this.label28.Location = new System.Drawing.Point(251, 73);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(21, 13);
             this.label28.TabIndex = 195;
@@ -796,7 +828,7 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(41, 22);
+            this.label29.Location = new System.Drawing.Point(41, 24);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(32, 13);
             this.label29.TabIndex = 200;
@@ -804,21 +836,7 @@
             // 
             // timeGroupBox
             // 
-            this.timeGroupBox.Controls.Add(this.nightFirstComboBox);
-            this.timeGroupBox.Controls.Add(this.label16);
-            this.timeGroupBox.Controls.Add(this.label23);
-            this.timeGroupBox.Controls.Add(this.morningSecondComboBox);
-            this.timeGroupBox.Controls.Add(this.label15);
-            this.timeGroupBox.Controls.Add(this.morningFirstComboBox);
-            this.timeGroupBox.Controls.Add(this.label22);
-            this.timeGroupBox.Controls.Add(this.label18);
-            this.timeGroupBox.Controls.Add(this.label21);
-            this.timeGroupBox.Controls.Add(this.nightSecondComboBox);
-            this.timeGroupBox.Controls.Add(this.swarmFirstComboBox);
-            this.timeGroupBox.Controls.Add(this.label17);
-            this.timeGroupBox.Controls.Add(this.label19);
-            this.timeGroupBox.Controls.Add(this.label20);
-            this.timeGroupBox.Controls.Add(this.swarmSecondComboBox);
+            this.timeGroupBox.Controls.Add(this.tableLayoutPanel2);
             this.timeGroupBox.Location = new System.Drawing.Point(15, 186);
             this.timeGroupBox.Name = "timeGroupBox";
             this.timeGroupBox.Size = new System.Drawing.Size(721, 110);
@@ -826,501 +844,670 @@
             this.timeGroupBox.TabStop = false;
             this.timeGroupBox.Text = "Time-dependent";
             // 
-            // nightFirstComboBox
+            // tableLayoutPanel2
             // 
-            this.nightFirstComboBox.FormattingEnabled = true;
-            this.nightFirstComboBox.Location = new System.Drawing.Point(279, 42);
-            this.nightFirstComboBox.Name = "nightFirstComboBox";
-            this.nightFirstComboBox.Size = new System.Drawing.Size(184, 21);
-            this.nightFirstComboBox.TabIndex = 173;
-            this.nightFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.nightFirstComboBox_SelectedIndexChanged);
+            this.tableLayoutPanel2.ColumnCount = 8;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel2.Controls.Add(this.label16, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.nightFirstComboBox, 4, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label15, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.morningSecondComboBox, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.label21, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label22, 4, 0);
+            this.tableLayoutPanel2.Controls.Add(this.morningFirstComboBox, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label23, 7, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label18, 3, 2);
+            this.tableLayoutPanel2.Controls.Add(this.swarmFirstComboBox, 7, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label17, 3, 1);
+            this.tableLayoutPanel2.Controls.Add(this.nightSecondComboBox, 4, 2);
+            this.tableLayoutPanel2.Controls.Add(this.swarmSecondComboBox, 7, 2);
+            this.tableLayoutPanel2.Controls.Add(this.label19, 6, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label20, 6, 2);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(715, 91);
+            this.tableLayoutPanel2.TabIndex = 195;
             // 
             // label16
             // 
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(13, 73);
+            this.label16.Location = new System.Drawing.Point(3, 66);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(27, 13);
+            this.label16.Size = new System.Drawing.Size(30, 13);
             this.label16.TabIndex = 170;
             this.label16.Text = "10%";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label23
+            // nightFirstComboBox
             // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(512, 23);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(44, 13);
-            this.label23.TabIndex = 187;
-            this.label23.Text = "Swarms";
-            // 
-            // morningSecondComboBox
-            // 
-            this.morningSecondComboBox.FormattingEnabled = true;
-            this.morningSecondComboBox.Location = new System.Drawing.Point(44, 69);
-            this.morningSecondComboBox.Name = "morningSecondComboBox";
-            this.morningSecondComboBox.Size = new System.Drawing.Size(182, 21);
-            this.morningSecondComboBox.TabIndex = 169;
-            this.morningSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.morningSecondComboBox_SelectedIndexChanged);
+            this.nightFirstComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.nightFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.nightFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.nightFirstComboBox.FormattingEnabled = true;
+            this.nightFirstComboBox.Location = new System.Drawing.Point(284, 27);
+            this.nightFirstComboBox.Name = "nightFirstComboBox";
+            this.nightFirstComboBox.Size = new System.Drawing.Size(183, 21);
+            this.nightFirstComboBox.TabIndex = 173;
+            this.nightFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.nightFirstComboBox_SelectedIndexChanged);
             // 
             // label15
             // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(12, 46);
+            this.label15.Location = new System.Drawing.Point(3, 31);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(27, 13);
+            this.label15.Size = new System.Drawing.Size(30, 13);
             this.label15.TabIndex = 168;
             this.label15.Text = "10%";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // morningFirstComboBox
+            // morningSecondComboBox
             // 
-            this.morningFirstComboBox.FormattingEnabled = true;
-            this.morningFirstComboBox.Location = new System.Drawing.Point(44, 42);
-            this.morningFirstComboBox.Name = "morningFirstComboBox";
-            this.morningFirstComboBox.Size = new System.Drawing.Size(182, 21);
-            this.morningFirstComboBox.TabIndex = 167;
-            this.morningFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.morningFirstComboBox_SelectedIndexChanged);
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(276, 24);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(54, 13);
-            this.label22.TabIndex = 186;
-            this.label22.Text = "Night only";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(248, 73);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(27, 13);
-            this.label18.TabIndex = 176;
-            this.label18.Text = "10%";
+            this.morningSecondComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.morningSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.morningSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.morningSecondComboBox.FormattingEnabled = true;
+            this.morningSecondComboBox.Location = new System.Drawing.Point(39, 62);
+            this.morningSecondComboBox.Name = "morningSecondComboBox";
+            this.morningSecondComboBox.Size = new System.Drawing.Size(183, 21);
+            this.morningSecondComboBox.TabIndex = 169;
+            this.morningSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.morningSecondComboBox_SelectedIndexChanged);
             // 
             // label21
             // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(41, 24);
+            this.label21.Location = new System.Drawing.Point(39, 3);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(48, 13);
+            this.label21.Size = new System.Drawing.Size(183, 13);
             this.label21.TabIndex = 185;
             this.label21.Text = "Day only";
             // 
-            // nightSecondComboBox
+            // label22
             // 
-            this.nightSecondComboBox.FormattingEnabled = true;
-            this.nightSecondComboBox.Location = new System.Drawing.Point(279, 69);
-            this.nightSecondComboBox.Name = "nightSecondComboBox";
-            this.nightSecondComboBox.Size = new System.Drawing.Size(183, 21);
-            this.nightSecondComboBox.TabIndex = 175;
-            this.nightSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.nightSecondComboBox_SelectedIndexChanged);
+            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(284, 3);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(183, 13);
+            this.label22.TabIndex = 186;
+            this.label22.Text = "Night only";
+            // 
+            // morningFirstComboBox
+            // 
+            this.morningFirstComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.morningFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.morningFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.morningFirstComboBox.FormattingEnabled = true;
+            this.morningFirstComboBox.Location = new System.Drawing.Point(39, 27);
+            this.morningFirstComboBox.Name = "morningFirstComboBox";
+            this.morningFirstComboBox.Size = new System.Drawing.Size(183, 21);
+            this.morningFirstComboBox.TabIndex = 167;
+            this.morningFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.morningFirstComboBox_SelectedIndexChanged);
+            // 
+            // label23
+            // 
+            this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(529, 3);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(183, 13);
+            this.label23.TabIndex = 187;
+            this.label23.Text = "Swarms";
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(248, 66);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(30, 13);
+            this.label18.TabIndex = 176;
+            this.label18.Text = "10%";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // swarmFirstComboBox
             // 
+            this.swarmFirstComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.swarmFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.swarmFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.swarmFirstComboBox.FormattingEnabled = true;
-            this.swarmFirstComboBox.Location = new System.Drawing.Point(515, 42);
+            this.swarmFirstComboBox.Location = new System.Drawing.Point(529, 27);
             this.swarmFirstComboBox.Name = "swarmFirstComboBox";
-            this.swarmFirstComboBox.Size = new System.Drawing.Size(184, 21);
+            this.swarmFirstComboBox.Size = new System.Drawing.Size(183, 21);
             this.swarmFirstComboBox.TabIndex = 179;
             this.swarmFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.swarmFirstComboBox_SelectedIndexChanged);
             // 
             // label17
             // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(247, 46);
+            this.label17.Location = new System.Drawing.Point(248, 31);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(27, 13);
+            this.label17.Size = new System.Drawing.Size(30, 13);
             this.label17.TabIndex = 174;
             this.label17.Text = "10%";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label19
+            // nightSecondComboBox
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(483, 46);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(27, 13);
-            this.label19.TabIndex = 180;
-            this.label19.Text = "20%";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(483, 73);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(27, 13);
-            this.label20.TabIndex = 182;
-            this.label20.Text = "20%";
+            this.nightSecondComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.nightSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.nightSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.nightSecondComboBox.FormattingEnabled = true;
+            this.nightSecondComboBox.Location = new System.Drawing.Point(284, 62);
+            this.nightSecondComboBox.Name = "nightSecondComboBox";
+            this.nightSecondComboBox.Size = new System.Drawing.Size(183, 21);
+            this.nightSecondComboBox.TabIndex = 175;
+            this.nightSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.nightSecondComboBox_SelectedIndexChanged);
             // 
             // swarmSecondComboBox
             // 
+            this.swarmSecondComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.swarmSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.swarmSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.swarmSecondComboBox.FormattingEnabled = true;
-            this.swarmSecondComboBox.Location = new System.Drawing.Point(515, 69);
+            this.swarmSecondComboBox.Location = new System.Drawing.Point(529, 62);
             this.swarmSecondComboBox.Name = "swarmSecondComboBox";
-            this.swarmSecondComboBox.Size = new System.Drawing.Size(184, 21);
+            this.swarmSecondComboBox.Size = new System.Drawing.Size(183, 21);
             this.swarmSecondComboBox.TabIndex = 181;
             this.swarmSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.swarmSecondComboBox_SelectedIndexChanged);
             // 
+            // label19
+            // 
+            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(493, 31);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(30, 13);
+            this.label19.TabIndex = 180;
+            this.label19.Text = "20%";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label20
+            // 
+            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(493, 66);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(30, 13);
+            this.label20.TabIndex = 182;
+            this.label20.Text = "20%";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // walkingGroupBox
             // 
-            this.walkingGroupBox.Controls.Add(this.walkingTwentyFirstComboBox);
-            this.walkingGroupBox.Controls.Add(this.label8);
-            this.walkingGroupBox.Controls.Add(this.walkingFiveFirstComboBox);
-            this.walkingGroupBox.Controls.Add(this.walkingTenFourthComboBox);
-            this.walkingGroupBox.Controls.Add(this.label7);
-            this.walkingGroupBox.Controls.Add(this.label9);
-            this.walkingGroupBox.Controls.Add(this.walkingTenThirdComboBox);
-            this.walkingGroupBox.Controls.Add(this.label6);
-            this.walkingGroupBox.Controls.Add(this.label4);
-            this.walkingGroupBox.Controls.Add(this.walkingFourFirstComboBox);
-            this.walkingGroupBox.Controls.Add(this.walkingTenSecondComboBox);
-            this.walkingGroupBox.Controls.Add(this.label13);
-            this.walkingGroupBox.Controls.Add(this.label5);
-            this.walkingGroupBox.Controls.Add(this.walkingFourSecondComboBox);
-            this.walkingGroupBox.Controls.Add(this.walkingTenFirstComboBox);
-            this.walkingGroupBox.Controls.Add(this.label12);
-            this.walkingGroupBox.Controls.Add(this.label3);
-            this.walkingGroupBox.Controls.Add(this.walkingOneFirstComboBox);
-            this.walkingGroupBox.Controls.Add(this.walkingOneSecondUpDown);
-            this.walkingGroupBox.Controls.Add(this.walkingTwentySecondComboBox);
-            this.walkingGroupBox.Controls.Add(this.walkingOneFirstUpDown);
-            this.walkingGroupBox.Controls.Add(this.label11);
-            this.walkingGroupBox.Controls.Add(this.walkingTenFourthUpDown);
-            this.walkingGroupBox.Controls.Add(this.label2);
-            this.walkingGroupBox.Controls.Add(this.walkingTenThirdUpDown);
-            this.walkingGroupBox.Controls.Add(this.walkingOneSecondComboBox);
-            this.walkingGroupBox.Controls.Add(this.walkingFourSecondUpDown);
-            this.walkingGroupBox.Controls.Add(this.label10);
-            this.walkingGroupBox.Controls.Add(this.walkingFourFirstUpDown);
-            this.walkingGroupBox.Controls.Add(this.walkingFiveSecondComboBox);
-            this.walkingGroupBox.Controls.Add(this.walkingTenSecondUpDown);
-            this.walkingGroupBox.Controls.Add(this.walkingTwentyFirstUpDown);
-            this.walkingGroupBox.Controls.Add(this.walkingTenFirstUpDown);
-            this.walkingGroupBox.Controls.Add(this.walkingTwentySecondUpDown);
-            this.walkingGroupBox.Controls.Add(this.walkingFiveSecondUpDown);
-            this.walkingGroupBox.Controls.Add(this.walkingFiveFirstUpDown);
+            this.walkingGroupBox.Controls.Add(this.tableLayoutPanel1);
             this.walkingGroupBox.Location = new System.Drawing.Point(15, 35);
             this.walkingGroupBox.Name = "walkingGroupBox";
+            this.walkingGroupBox.Padding = new System.Windows.Forms.Padding(5);
             this.walkingGroupBox.Size = new System.Drawing.Size(721, 147);
             this.walkingGroupBox.TabIndex = 188;
             this.walkingGroupBox.TabStop = false;
             this.walkingGroupBox.Text = "Walking";
             // 
-            // walkingTwentyFirstComboBox
+            // tableLayoutPanel1
             // 
-            this.walkingTwentyFirstComboBox.FormattingEnabled = true;
-            this.walkingTwentyFirstComboBox.Location = new System.Drawing.Point(45, 20);
-            this.walkingTwentyFirstComboBox.Name = "walkingTwentyFirstComboBox";
-            this.walkingTwentyFirstComboBox.Size = new System.Drawing.Size(133, 21);
-            this.walkingTwentyFirstComboBox.TabIndex = 131;
-            this.walkingTwentyFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingTwentyFirstComboBox_SelectedIndexChanged);
+            this.tableLayoutPanel1.ColumnCount = 11;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.24242F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 14F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.24242F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 14F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.24242F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
+            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.walkingOneSecondUpDown, 10, 4);
+            this.tableLayoutPanel1.Controls.Add(this.walkingOneFirstComboBox, 9, 3);
+            this.tableLayoutPanel1.Controls.Add(this.walkingOneFirstUpDown, 10, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label8, 8, 1);
+            this.tableLayoutPanel1.Controls.Add(this.walkingOneSecondComboBox, 9, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label11, 8, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label10, 8, 4);
+            this.tableLayoutPanel1.Controls.Add(this.walkingTwentyFirstComboBox, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.walkingTenFourthComboBox, 9, 1);
+            this.tableLayoutPanel1.Controls.Add(this.walkingFiveFirstComboBox, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.walkingTenThirdComboBox, 9, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label9, 8, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.walkingTenThirdUpDown, 10, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label13, 4, 3);
+            this.tableLayoutPanel1.Controls.Add(this.walkingFourFirstComboBox, 5, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label12, 4, 4);
+            this.tableLayoutPanel1.Controls.Add(this.walkingFourSecondComboBox, 5, 4);
+            this.tableLayoutPanel1.Controls.Add(this.walkingTwentySecondComboBox, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.walkingFourSecondUpDown, 6, 4);
+            this.tableLayoutPanel1.Controls.Add(this.walkingTenSecondComboBox, 5, 1);
+            this.tableLayoutPanel1.Controls.Add(this.walkingFiveSecondComboBox, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.walkingFourFirstUpDown, 6, 3);
+            this.tableLayoutPanel1.Controls.Add(this.walkingTwentyFirstUpDown, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.walkingTenSecondUpDown, 6, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.walkingTenFirstUpDown, 6, 0);
+            this.tableLayoutPanel1.Controls.Add(this.walkingTenFirstComboBox, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.walkingTwentySecondUpDown, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.walkingFiveFirstUpDown, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.walkingFiveSecondUpDown, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.walkingTenFourthUpDown, 10, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(5, 18);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(711, 124);
+            this.tableLayoutPanel1.TabIndex = 195;
             // 
-            // label8
+            // label2
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(484, 49);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(27, 13);
-            this.label8.TabIndex = 142;
-            this.label8.Text = "10%";
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 7);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(30, 13);
+            this.label2.TabIndex = 132;
+            this.label2.Text = "20%";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // walkingFiveFirstComboBox
+            // walkingOneSecondUpDown
             // 
-            this.walkingFiveFirstComboBox.FormattingEnabled = true;
-            this.walkingFiveFirstComboBox.Location = new System.Drawing.Point(45, 81);
-            this.walkingFiveFirstComboBox.Name = "walkingFiveFirstComboBox";
-            this.walkingFiveFirstComboBox.Size = new System.Drawing.Size(133, 21);
-            this.walkingFiveFirstComboBox.TabIndex = 143;
-            this.walkingFiveFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingFiveFirstComboBox_SelectedIndexChanged);
-            // 
-            // walkingTenFourthComboBox
-            // 
-            this.walkingTenFourthComboBox.FormattingEnabled = true;
-            this.walkingTenFourthComboBox.Location = new System.Drawing.Point(516, 45);
-            this.walkingTenFourthComboBox.Name = "walkingTenFourthComboBox";
-            this.walkingTenFourthComboBox.Size = new System.Drawing.Size(133, 21);
-            this.walkingTenFourthComboBox.TabIndex = 141;
-            this.walkingTenFourthComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingTenFourthComboBox_SelectedIndexChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(19, 85);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(21, 13);
-            this.label7.TabIndex = 144;
-            this.label7.Text = "5%";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(484, 22);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(27, 13);
-            this.label9.TabIndex = 140;
-            this.label9.Text = "10%";
-            // 
-            // walkingTenThirdComboBox
-            // 
-            this.walkingTenThirdComboBox.FormattingEnabled = true;
-            this.walkingTenThirdComboBox.Location = new System.Drawing.Point(516, 18);
-            this.walkingTenThirdComboBox.Name = "walkingTenThirdComboBox";
-            this.walkingTenThirdComboBox.Size = new System.Drawing.Size(133, 21);
-            this.walkingTenThirdComboBox.TabIndex = 139;
-            this.walkingTenThirdComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingTenThirdComboBox_SelectedIndexChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(19, 112);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(21, 13);
-            this.label6.TabIndex = 146;
-            this.label6.Text = "5%";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(249, 50);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(27, 13);
-            this.label4.TabIndex = 138;
-            this.label4.Text = "10%";
-            // 
-            // walkingFourFirstComboBox
-            // 
-            this.walkingFourFirstComboBox.FormattingEnabled = true;
-            this.walkingFourFirstComboBox.Location = new System.Drawing.Point(280, 80);
-            this.walkingFourFirstComboBox.Name = "walkingFourFirstComboBox";
-            this.walkingFourFirstComboBox.Size = new System.Drawing.Size(133, 21);
-            this.walkingFourFirstComboBox.TabIndex = 147;
-            this.walkingFourFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingFourFirstComboBox_SelectedIndexChanged);
-            // 
-            // walkingTenSecondComboBox
-            // 
-            this.walkingTenSecondComboBox.FormattingEnabled = true;
-            this.walkingTenSecondComboBox.Location = new System.Drawing.Point(280, 46);
-            this.walkingTenSecondComboBox.Name = "walkingTenSecondComboBox";
-            this.walkingTenSecondComboBox.Size = new System.Drawing.Size(133, 21);
-            this.walkingTenSecondComboBox.TabIndex = 137;
-            this.walkingTenSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingTenSecondComboBox_SelectedIndexChanged);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(254, 84);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(21, 13);
-            this.label13.TabIndex = 148;
-            this.label13.Text = "4%";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(248, 23);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(27, 13);
-            this.label5.TabIndex = 136;
-            this.label5.Text = "10%";
-            // 
-            // walkingFourSecondComboBox
-            // 
-            this.walkingFourSecondComboBox.FormattingEnabled = true;
-            this.walkingFourSecondComboBox.Location = new System.Drawing.Point(280, 107);
-            this.walkingFourSecondComboBox.Name = "walkingFourSecondComboBox";
-            this.walkingFourSecondComboBox.Size = new System.Drawing.Size(133, 21);
-            this.walkingFourSecondComboBox.TabIndex = 149;
-            this.walkingFourSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingFourSecondComboBox_SelectedIndexChanged);
-            // 
-            // walkingTenFirstComboBox
-            // 
-            this.walkingTenFirstComboBox.FormattingEnabled = true;
-            this.walkingTenFirstComboBox.Location = new System.Drawing.Point(280, 19);
-            this.walkingTenFirstComboBox.Name = "walkingTenFirstComboBox";
-            this.walkingTenFirstComboBox.Size = new System.Drawing.Size(133, 21);
-            this.walkingTenFirstComboBox.TabIndex = 135;
-            this.walkingTenFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingTenFirstComboBox_SelectedIndexChanged);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(254, 111);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(21, 13);
-            this.label12.TabIndex = 150;
-            this.label12.Text = "4%";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 51);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(27, 13);
-            this.label3.TabIndex = 134;
-            this.label3.Text = "20%";
+            this.walkingOneSecondUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingOneSecondUpDown.Location = new System.Drawing.Point(660, 100);
+            this.walkingOneSecondUpDown.Name = "walkingOneSecondUpDown";
+            this.walkingOneSecondUpDown.Size = new System.Drawing.Size(48, 20);
+            this.walkingOneSecondUpDown.TabIndex = 166;
+            this.walkingOneSecondUpDown.ValueChanged += new System.EventHandler(this.walkingOneSecondUpDown_ValueChanged);
             // 
             // walkingOneFirstComboBox
             // 
+            this.walkingOneFirstComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingOneFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.walkingOneFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.walkingOneFirstComboBox.FormattingEnabled = true;
-            this.walkingOneFirstComboBox.Location = new System.Drawing.Point(516, 80);
+            this.walkingOneFirstComboBox.Location = new System.Drawing.Point(521, 72);
             this.walkingOneFirstComboBox.Name = "walkingOneFirstComboBox";
             this.walkingOneFirstComboBox.Size = new System.Drawing.Size(133, 21);
             this.walkingOneFirstComboBox.TabIndex = 151;
             this.walkingOneFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingOneFirstComboBox_SelectedIndexChanged);
             // 
-            // walkingOneSecondUpDown
-            // 
-            this.walkingOneSecondUpDown.Location = new System.Drawing.Point(656, 108);
-            this.walkingOneSecondUpDown.Name = "walkingOneSecondUpDown";
-            this.walkingOneSecondUpDown.Size = new System.Drawing.Size(44, 20);
-            this.walkingOneSecondUpDown.TabIndex = 166;
-            this.walkingOneSecondUpDown.ValueChanged += new System.EventHandler(this.walkingOneSecondUpDown_ValueChanged);
-            // 
-            // walkingTwentySecondComboBox
-            // 
-            this.walkingTwentySecondComboBox.FormattingEnabled = true;
-            this.walkingTwentySecondComboBox.Location = new System.Drawing.Point(45, 47);
-            this.walkingTwentySecondComboBox.Name = "walkingTwentySecondComboBox";
-            this.walkingTwentySecondComboBox.Size = new System.Drawing.Size(133, 21);
-            this.walkingTwentySecondComboBox.TabIndex = 133;
-            this.walkingTwentySecondComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingTwentySecondComboBox_SelectedIndexChanged);
-            // 
             // walkingOneFirstUpDown
             // 
-            this.walkingOneFirstUpDown.Location = new System.Drawing.Point(656, 81);
+            this.walkingOneFirstUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingOneFirstUpDown.Location = new System.Drawing.Point(660, 72);
             this.walkingOneFirstUpDown.Name = "walkingOneFirstUpDown";
-            this.walkingOneFirstUpDown.Size = new System.Drawing.Size(44, 20);
+            this.walkingOneFirstUpDown.Size = new System.Drawing.Size(48, 20);
             this.walkingOneFirstUpDown.TabIndex = 165;
             this.walkingOneFirstUpDown.ValueChanged += new System.EventHandler(this.walkingOneFirstUpDown_ValueChanged);
             // 
-            // label11
+            // label8
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(490, 84);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(21, 13);
-            this.label11.TabIndex = 152;
-            this.label11.Text = "1%";
-            // 
-            // walkingTenFourthUpDown
-            // 
-            this.walkingTenFourthUpDown.Location = new System.Drawing.Point(655, 46);
-            this.walkingTenFourthUpDown.Name = "walkingTenFourthUpDown";
-            this.walkingTenFourthUpDown.Size = new System.Drawing.Size(44, 20);
-            this.walkingTenFourthUpDown.TabIndex = 164;
-            this.walkingTenFourthUpDown.ValueChanged += new System.EventHandler(this.walkingTenFourthUpDown_ValueChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 24);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(27, 13);
-            this.label2.TabIndex = 132;
-            this.label2.Text = "20%";
-            // 
-            // walkingTenThirdUpDown
-            // 
-            this.walkingTenThirdUpDown.Location = new System.Drawing.Point(655, 19);
-            this.walkingTenThirdUpDown.Name = "walkingTenThirdUpDown";
-            this.walkingTenThirdUpDown.Size = new System.Drawing.Size(44, 20);
-            this.walkingTenThirdUpDown.TabIndex = 163;
-            this.walkingTenThirdUpDown.ValueChanged += new System.EventHandler(this.walkingTenThirdUpDown_ValueChanged);
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(485, 34);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(30, 13);
+            this.label8.TabIndex = 142;
+            this.label8.Text = "10%";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // walkingOneSecondComboBox
             // 
+            this.walkingOneSecondComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingOneSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.walkingOneSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.walkingOneSecondComboBox.FormattingEnabled = true;
-            this.walkingOneSecondComboBox.Location = new System.Drawing.Point(516, 107);
+            this.walkingOneSecondComboBox.Location = new System.Drawing.Point(521, 99);
             this.walkingOneSecondComboBox.Name = "walkingOneSecondComboBox";
             this.walkingOneSecondComboBox.Size = new System.Drawing.Size(133, 21);
             this.walkingOneSecondComboBox.TabIndex = 153;
             this.walkingOneSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingOneSecondComboBox_SelectedIndexChanged);
             // 
-            // walkingFourSecondUpDown
+            // label11
             // 
-            this.walkingFourSecondUpDown.Location = new System.Drawing.Point(420, 108);
-            this.walkingFourSecondUpDown.Name = "walkingFourSecondUpDown";
-            this.walkingFourSecondUpDown.Size = new System.Drawing.Size(44, 20);
-            this.walkingFourSecondUpDown.TabIndex = 162;
-            this.walkingFourSecondUpDown.ValueChanged += new System.EventHandler(this.walkingFourSecondUpDown_ValueChanged);
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(485, 76);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(30, 13);
+            this.label11.TabIndex = 152;
+            this.label11.Text = "1%";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label10
             // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(490, 111);
+            this.label10.Location = new System.Drawing.Point(485, 103);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(21, 13);
+            this.label10.Size = new System.Drawing.Size(30, 13);
             this.label10.TabIndex = 154;
             this.label10.Text = "1%";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // walkingFourFirstUpDown
+            // walkingTwentyFirstComboBox
             // 
-            this.walkingFourFirstUpDown.Location = new System.Drawing.Point(420, 81);
-            this.walkingFourFirstUpDown.Name = "walkingFourFirstUpDown";
-            this.walkingFourFirstUpDown.Size = new System.Drawing.Size(44, 20);
-            this.walkingFourFirstUpDown.TabIndex = 161;
-            this.walkingFourFirstUpDown.ValueChanged += new System.EventHandler(this.walkingFourFirstUpDown_ValueChanged);
+            this.walkingTwentyFirstComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingTwentyFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.walkingTwentyFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.walkingTwentyFirstComboBox.FormattingEnabled = true;
+            this.walkingTwentyFirstComboBox.Location = new System.Drawing.Point(39, 3);
+            this.walkingTwentyFirstComboBox.Name = "walkingTwentyFirstComboBox";
+            this.walkingTwentyFirstComboBox.Size = new System.Drawing.Size(133, 21);
+            this.walkingTwentyFirstComboBox.TabIndex = 131;
+            this.walkingTwentyFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingTwentyFirstComboBox_SelectedIndexChanged);
+            // 
+            // walkingTenFourthComboBox
+            // 
+            this.walkingTenFourthComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingTenFourthComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.walkingTenFourthComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.walkingTenFourthComboBox.FormattingEnabled = true;
+            this.walkingTenFourthComboBox.Location = new System.Drawing.Point(521, 30);
+            this.walkingTenFourthComboBox.Name = "walkingTenFourthComboBox";
+            this.walkingTenFourthComboBox.Size = new System.Drawing.Size(133, 21);
+            this.walkingTenFourthComboBox.TabIndex = 141;
+            this.walkingTenFourthComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingTenFourthComboBox_SelectedIndexChanged);
+            // 
+            // walkingFiveFirstComboBox
+            // 
+            this.walkingFiveFirstComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingFiveFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.walkingFiveFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.walkingFiveFirstComboBox.FormattingEnabled = true;
+            this.walkingFiveFirstComboBox.Location = new System.Drawing.Point(39, 72);
+            this.walkingFiveFirstComboBox.Name = "walkingFiveFirstComboBox";
+            this.walkingFiveFirstComboBox.Size = new System.Drawing.Size(133, 21);
+            this.walkingFiveFirstComboBox.TabIndex = 143;
+            this.walkingFiveFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingFiveFirstComboBox_SelectedIndexChanged);
+            // 
+            // walkingTenThirdComboBox
+            // 
+            this.walkingTenThirdComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingTenThirdComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.walkingTenThirdComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.walkingTenThirdComboBox.FormattingEnabled = true;
+            this.walkingTenThirdComboBox.Location = new System.Drawing.Point(521, 3);
+            this.walkingTenThirdComboBox.Name = "walkingTenThirdComboBox";
+            this.walkingTenThirdComboBox.Size = new System.Drawing.Size(133, 21);
+            this.walkingTenThirdComboBox.TabIndex = 139;
+            this.walkingTenThirdComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingTenThirdComboBox_SelectedIndexChanged);
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(485, 7);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(30, 13);
+            this.label9.TabIndex = 140;
+            this.label9.Text = "10%";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 34);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(30, 13);
+            this.label3.TabIndex = 134;
+            this.label3.Text = "20%";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 76);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(30, 13);
+            this.label7.TabIndex = 144;
+            this.label7.Text = "5%";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(244, 34);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(30, 13);
+            this.label4.TabIndex = 138;
+            this.label4.Text = "10%";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // walkingTenThirdUpDown
+            // 
+            this.walkingTenThirdUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingTenThirdUpDown.Location = new System.Drawing.Point(660, 3);
+            this.walkingTenThirdUpDown.Name = "walkingTenThirdUpDown";
+            this.walkingTenThirdUpDown.Size = new System.Drawing.Size(48, 20);
+            this.walkingTenThirdUpDown.TabIndex = 163;
+            this.walkingTenThirdUpDown.ValueChanged += new System.EventHandler(this.walkingTenThirdUpDown_ValueChanged);
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 103);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(30, 13);
+            this.label6.TabIndex = 146;
+            this.label6.Text = "5%";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(244, 76);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(30, 13);
+            this.label13.TabIndex = 148;
+            this.label13.Text = "4%";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // walkingFourFirstComboBox
+            // 
+            this.walkingFourFirstComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingFourFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.walkingFourFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.walkingFourFirstComboBox.FormattingEnabled = true;
+            this.walkingFourFirstComboBox.Location = new System.Drawing.Point(280, 72);
+            this.walkingFourFirstComboBox.Name = "walkingFourFirstComboBox";
+            this.walkingFourFirstComboBox.Size = new System.Drawing.Size(133, 21);
+            this.walkingFourFirstComboBox.TabIndex = 147;
+            this.walkingFourFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingFourFirstComboBox_SelectedIndexChanged);
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(244, 103);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(30, 13);
+            this.label12.TabIndex = 150;
+            this.label12.Text = "4%";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // walkingFourSecondComboBox
+            // 
+            this.walkingFourSecondComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingFourSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.walkingFourSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.walkingFourSecondComboBox.FormattingEnabled = true;
+            this.walkingFourSecondComboBox.Location = new System.Drawing.Point(280, 99);
+            this.walkingFourSecondComboBox.Name = "walkingFourSecondComboBox";
+            this.walkingFourSecondComboBox.Size = new System.Drawing.Size(133, 21);
+            this.walkingFourSecondComboBox.TabIndex = 149;
+            this.walkingFourSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingFourSecondComboBox_SelectedIndexChanged);
+            // 
+            // walkingTwentySecondComboBox
+            // 
+            this.walkingTwentySecondComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingTwentySecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.walkingTwentySecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.walkingTwentySecondComboBox.FormattingEnabled = true;
+            this.walkingTwentySecondComboBox.Location = new System.Drawing.Point(39, 30);
+            this.walkingTwentySecondComboBox.Name = "walkingTwentySecondComboBox";
+            this.walkingTwentySecondComboBox.Size = new System.Drawing.Size(133, 21);
+            this.walkingTwentySecondComboBox.TabIndex = 133;
+            this.walkingTwentySecondComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingTwentySecondComboBox_SelectedIndexChanged);
+            // 
+            // walkingFourSecondUpDown
+            // 
+            this.walkingFourSecondUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingFourSecondUpDown.Location = new System.Drawing.Point(419, 100);
+            this.walkingFourSecondUpDown.Name = "walkingFourSecondUpDown";
+            this.walkingFourSecondUpDown.Size = new System.Drawing.Size(46, 20);
+            this.walkingFourSecondUpDown.TabIndex = 162;
+            this.walkingFourSecondUpDown.ValueChanged += new System.EventHandler(this.walkingFourSecondUpDown_ValueChanged);
+            // 
+            // walkingTenSecondComboBox
+            // 
+            this.walkingTenSecondComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingTenSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.walkingTenSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.walkingTenSecondComboBox.FormattingEnabled = true;
+            this.walkingTenSecondComboBox.Location = new System.Drawing.Point(280, 30);
+            this.walkingTenSecondComboBox.Name = "walkingTenSecondComboBox";
+            this.walkingTenSecondComboBox.Size = new System.Drawing.Size(133, 21);
+            this.walkingTenSecondComboBox.TabIndex = 137;
+            this.walkingTenSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingTenSecondComboBox_SelectedIndexChanged);
             // 
             // walkingFiveSecondComboBox
             // 
+            this.walkingFiveSecondComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingFiveSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.walkingFiveSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.walkingFiveSecondComboBox.FormattingEnabled = true;
-            this.walkingFiveSecondComboBox.Location = new System.Drawing.Point(45, 108);
+            this.walkingFiveSecondComboBox.Location = new System.Drawing.Point(39, 99);
             this.walkingFiveSecondComboBox.Name = "walkingFiveSecondComboBox";
             this.walkingFiveSecondComboBox.Size = new System.Drawing.Size(133, 21);
             this.walkingFiveSecondComboBox.TabIndex = 145;
             this.walkingFiveSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingFiveSecondComboBox_SelectedIndexChanged);
             // 
-            // walkingTenSecondUpDown
+            // walkingFourFirstUpDown
             // 
-            this.walkingTenSecondUpDown.Location = new System.Drawing.Point(419, 47);
-            this.walkingTenSecondUpDown.Name = "walkingTenSecondUpDown";
-            this.walkingTenSecondUpDown.Size = new System.Drawing.Size(44, 20);
-            this.walkingTenSecondUpDown.TabIndex = 160;
-            this.walkingTenSecondUpDown.ValueChanged += new System.EventHandler(this.walkingTenSecondUpDown_ValueChanged);
+            this.walkingFourFirstUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingFourFirstUpDown.Location = new System.Drawing.Point(419, 72);
+            this.walkingFourFirstUpDown.Name = "walkingFourFirstUpDown";
+            this.walkingFourFirstUpDown.Size = new System.Drawing.Size(46, 20);
+            this.walkingFourFirstUpDown.TabIndex = 161;
+            this.walkingFourFirstUpDown.ValueChanged += new System.EventHandler(this.walkingFourFirstUpDown_ValueChanged);
             // 
             // walkingTwentyFirstUpDown
             // 
-            this.walkingTwentyFirstUpDown.Location = new System.Drawing.Point(182, 21);
+            this.walkingTwentyFirstUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingTwentyFirstUpDown.Location = new System.Drawing.Point(178, 3);
             this.walkingTwentyFirstUpDown.Name = "walkingTwentyFirstUpDown";
-            this.walkingTwentyFirstUpDown.Size = new System.Drawing.Size(44, 20);
+            this.walkingTwentyFirstUpDown.Size = new System.Drawing.Size(46, 20);
             this.walkingTwentyFirstUpDown.TabIndex = 155;
             this.walkingTwentyFirstUpDown.ValueChanged += new System.EventHandler(this.walkingTwentyFirstUpDown_ValueChanged);
             // 
+            // walkingTenSecondUpDown
+            // 
+            this.walkingTenSecondUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingTenSecondUpDown.Location = new System.Drawing.Point(419, 30);
+            this.walkingTenSecondUpDown.Name = "walkingTenSecondUpDown";
+            this.walkingTenSecondUpDown.Size = new System.Drawing.Size(46, 20);
+            this.walkingTenSecondUpDown.TabIndex = 160;
+            this.walkingTenSecondUpDown.ValueChanged += new System.EventHandler(this.walkingTenSecondUpDown_ValueChanged);
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(244, 7);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(30, 13);
+            this.label5.TabIndex = 136;
+            this.label5.Text = "10%";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // walkingTenFirstUpDown
             // 
-            this.walkingTenFirstUpDown.Location = new System.Drawing.Point(419, 20);
+            this.walkingTenFirstUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingTenFirstUpDown.Location = new System.Drawing.Point(419, 3);
             this.walkingTenFirstUpDown.Name = "walkingTenFirstUpDown";
-            this.walkingTenFirstUpDown.Size = new System.Drawing.Size(44, 20);
+            this.walkingTenFirstUpDown.Size = new System.Drawing.Size(46, 20);
             this.walkingTenFirstUpDown.TabIndex = 159;
             this.walkingTenFirstUpDown.ValueChanged += new System.EventHandler(this.walkingTenFirstUpDown_ValueChanged);
             // 
+            // walkingTenFirstComboBox
+            // 
+            this.walkingTenFirstComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingTenFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.walkingTenFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.walkingTenFirstComboBox.FormattingEnabled = true;
+            this.walkingTenFirstComboBox.Location = new System.Drawing.Point(280, 3);
+            this.walkingTenFirstComboBox.Name = "walkingTenFirstComboBox";
+            this.walkingTenFirstComboBox.Size = new System.Drawing.Size(133, 21);
+            this.walkingTenFirstComboBox.TabIndex = 135;
+            this.walkingTenFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.walkingTenFirstComboBox_SelectedIndexChanged);
+            // 
             // walkingTwentySecondUpDown
             // 
-            this.walkingTwentySecondUpDown.Location = new System.Drawing.Point(182, 48);
+            this.walkingTwentySecondUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingTwentySecondUpDown.Location = new System.Drawing.Point(178, 30);
             this.walkingTwentySecondUpDown.Name = "walkingTwentySecondUpDown";
-            this.walkingTwentySecondUpDown.Size = new System.Drawing.Size(44, 20);
+            this.walkingTwentySecondUpDown.Size = new System.Drawing.Size(46, 20);
             this.walkingTwentySecondUpDown.TabIndex = 156;
             this.walkingTwentySecondUpDown.ValueChanged += new System.EventHandler(this.walkingTwentySecondUpDown_ValueChanged);
             // 
-            // walkingFiveSecondUpDown
-            // 
-            this.walkingFiveSecondUpDown.Location = new System.Drawing.Point(183, 109);
-            this.walkingFiveSecondUpDown.Name = "walkingFiveSecondUpDown";
-            this.walkingFiveSecondUpDown.Size = new System.Drawing.Size(44, 20);
-            this.walkingFiveSecondUpDown.TabIndex = 158;
-            this.walkingFiveSecondUpDown.ValueChanged += new System.EventHandler(this.walkingFiveSecondUpDown_ValueChanged);
-            // 
             // walkingFiveFirstUpDown
             // 
-            this.walkingFiveFirstUpDown.Location = new System.Drawing.Point(183, 82);
+            this.walkingFiveFirstUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingFiveFirstUpDown.Location = new System.Drawing.Point(178, 72);
             this.walkingFiveFirstUpDown.Name = "walkingFiveFirstUpDown";
-            this.walkingFiveFirstUpDown.Size = new System.Drawing.Size(44, 20);
+            this.walkingFiveFirstUpDown.Size = new System.Drawing.Size(46, 20);
             this.walkingFiveFirstUpDown.TabIndex = 157;
             this.walkingFiveFirstUpDown.ValueChanged += new System.EventHandler(this.walkingFiveFirstUpDown_ValueChanged);
             // 
+            // walkingFiveSecondUpDown
+            // 
+            this.walkingFiveSecondUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingFiveSecondUpDown.Location = new System.Drawing.Point(178, 100);
+            this.walkingFiveSecondUpDown.Name = "walkingFiveSecondUpDown";
+            this.walkingFiveSecondUpDown.Size = new System.Drawing.Size(46, 20);
+            this.walkingFiveSecondUpDown.TabIndex = 158;
+            this.walkingFiveSecondUpDown.ValueChanged += new System.EventHandler(this.walkingFiveSecondUpDown_ValueChanged);
+            // 
+            // walkingTenFourthUpDown
+            // 
+            this.walkingTenFourthUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.walkingTenFourthUpDown.Location = new System.Drawing.Point(660, 30);
+            this.walkingTenFourthUpDown.Name = "walkingTenFourthUpDown";
+            this.walkingTenFourthUpDown.Size = new System.Drawing.Size(48, 20);
+            this.walkingTenFourthUpDown.TabIndex = 164;
+            this.walkingTenFourthUpDown.ValueChanged += new System.EventHandler(this.walkingTenFourthUpDown_ValueChanged);
+            // 
             // walkingRateUpDown
             // 
-            this.walkingRateUpDown.Location = new System.Drawing.Point(661, 11);
+            this.walkingRateUpDown.Location = new System.Drawing.Point(655, 14);
             this.walkingRateUpDown.Name = "walkingRateUpDown";
             this.walkingRateUpDown.Size = new System.Drawing.Size(75, 20);
             this.walkingRateUpDown.TabIndex = 101;
@@ -1329,7 +1516,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(572, 14);
+            this.label14.Location = new System.Drawing.Point(566, 17);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(82, 13);
             this.label14.TabIndex = 100;
@@ -1356,7 +1543,7 @@
             // surfPicture
             // 
             this.surfPicture.Image = global::DSPRE.Properties.Resources.SurfIcon;
-            this.surfPicture.Location = new System.Drawing.Point(66, 4);
+            this.surfPicture.Location = new System.Drawing.Point(66, 11);
             this.surfPicture.Name = "surfPicture";
             this.surfPicture.Size = new System.Drawing.Size(42, 42);
             this.surfPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1384,7 +1571,7 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(466, 12);
+            this.pictureBox5.Location = new System.Drawing.Point(466, 19);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(25, 26);
             this.pictureBox5.TabIndex = 194;
@@ -1492,6 +1679,8 @@
             // 
             // superRodOneComboBox
             // 
+            this.superRodOneComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.superRodOneComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.superRodOneComboBox.FormattingEnabled = true;
             this.superRodOneComboBox.Location = new System.Drawing.Point(45, 185);
             this.superRodOneComboBox.Name = "superRodOneComboBox";
@@ -1527,6 +1716,8 @@
             // 
             // superRodFourComboBox
             // 
+            this.superRodFourComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.superRodFourComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.superRodFourComboBox.FormattingEnabled = true;
             this.superRodFourComboBox.Location = new System.Drawing.Point(45, 158);
             this.superRodFourComboBox.Name = "superRodFourComboBox";
@@ -1562,6 +1753,8 @@
             // 
             // superRodFifteenComboBox
             // 
+            this.superRodFifteenComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.superRodFifteenComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.superRodFifteenComboBox.FormattingEnabled = true;
             this.superRodFifteenComboBox.Location = new System.Drawing.Point(45, 131);
             this.superRodFifteenComboBox.Name = "superRodFifteenComboBox";
@@ -1597,6 +1790,8 @@
             // 
             // superRodSecondFortyComboBox
             // 
+            this.superRodSecondFortyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.superRodSecondFortyComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.superRodSecondFortyComboBox.FormattingEnabled = true;
             this.superRodSecondFortyComboBox.Location = new System.Drawing.Point(45, 104);
             this.superRodSecondFortyComboBox.Name = "superRodSecondFortyComboBox";
@@ -1632,6 +1827,8 @@
             // 
             // superRodFirstFortyComboBox
             // 
+            this.superRodFirstFortyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.superRodFirstFortyComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.superRodFirstFortyComboBox.FormattingEnabled = true;
             this.superRodFirstFortyComboBox.Location = new System.Drawing.Point(45, 77);
             this.superRodFirstFortyComboBox.Name = "superRodFirstFortyComboBox";
@@ -1741,6 +1938,8 @@
             // 
             // goodRodOneComboBox
             // 
+            this.goodRodOneComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.goodRodOneComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.goodRodOneComboBox.FormattingEnabled = true;
             this.goodRodOneComboBox.Location = new System.Drawing.Point(45, 185);
             this.goodRodOneComboBox.Name = "goodRodOneComboBox";
@@ -1776,6 +1975,8 @@
             // 
             // goodRodFourComboBox
             // 
+            this.goodRodFourComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.goodRodFourComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.goodRodFourComboBox.FormattingEnabled = true;
             this.goodRodFourComboBox.Location = new System.Drawing.Point(45, 158);
             this.goodRodFourComboBox.Name = "goodRodFourComboBox";
@@ -1811,6 +2012,8 @@
             // 
             // goodRodFifteenComboBox
             // 
+            this.goodRodFifteenComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.goodRodFifteenComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.goodRodFifteenComboBox.FormattingEnabled = true;
             this.goodRodFifteenComboBox.Location = new System.Drawing.Point(45, 131);
             this.goodRodFifteenComboBox.Name = "goodRodFifteenComboBox";
@@ -1846,6 +2049,8 @@
             // 
             // goodRodSecondFortyComboBox
             // 
+            this.goodRodSecondFortyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.goodRodSecondFortyComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.goodRodSecondFortyComboBox.FormattingEnabled = true;
             this.goodRodSecondFortyComboBox.Location = new System.Drawing.Point(45, 104);
             this.goodRodSecondFortyComboBox.Name = "goodRodSecondFortyComboBox";
@@ -1881,6 +2086,8 @@
             // 
             // goodRodFirstFortyComboBox
             // 
+            this.goodRodFirstFortyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.goodRodFirstFortyComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.goodRodFirstFortyComboBox.FormattingEnabled = true;
             this.goodRodFirstFortyComboBox.Location = new System.Drawing.Point(45, 77);
             this.goodRodFirstFortyComboBox.Name = "goodRodFirstFortyComboBox";
@@ -1914,7 +2121,7 @@
             this.oldRodGroupBox.Controls.Add(this.oldRodSixtyMinLevelUpDown);
             this.oldRodGroupBox.Controls.Add(this.label50);
             this.oldRodGroupBox.Controls.Add(this.oldRodSixtyComboBox);
-            this.oldRodGroupBox.Location = new System.Drawing.Point(408, 18);
+            this.oldRodGroupBox.Location = new System.Drawing.Point(408, 25);
             this.oldRodGroupBox.Name = "oldRodGroupBox";
             this.oldRodGroupBox.Size = new System.Drawing.Size(325, 220);
             this.oldRodGroupBox.TabIndex = 42;
@@ -1990,6 +2197,8 @@
             // 
             // oldRodOneComboBox
             // 
+            this.oldRodOneComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.oldRodOneComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.oldRodOneComboBox.FormattingEnabled = true;
             this.oldRodOneComboBox.Location = new System.Drawing.Point(45, 185);
             this.oldRodOneComboBox.Name = "oldRodOneComboBox";
@@ -2025,6 +2234,8 @@
             // 
             // oldRodFourComboBox
             // 
+            this.oldRodFourComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.oldRodFourComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.oldRodFourComboBox.FormattingEnabled = true;
             this.oldRodFourComboBox.Location = new System.Drawing.Point(45, 158);
             this.oldRodFourComboBox.Name = "oldRodFourComboBox";
@@ -2060,6 +2271,8 @@
             // 
             // oldRodFiveComboBox
             // 
+            this.oldRodFiveComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.oldRodFiveComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.oldRodFiveComboBox.FormattingEnabled = true;
             this.oldRodFiveComboBox.Location = new System.Drawing.Point(45, 131);
             this.oldRodFiveComboBox.Name = "oldRodFiveComboBox";
@@ -2095,6 +2308,8 @@
             // 
             // oldRodThirtyComboBox
             // 
+            this.oldRodThirtyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.oldRodThirtyComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.oldRodThirtyComboBox.FormattingEnabled = true;
             this.oldRodThirtyComboBox.Location = new System.Drawing.Point(45, 104);
             this.oldRodThirtyComboBox.Name = "oldRodThirtyComboBox";
@@ -2130,6 +2345,8 @@
             // 
             // oldRodSixtyComboBox
             // 
+            this.oldRodSixtyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.oldRodSixtyComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.oldRodSixtyComboBox.FormattingEnabled = true;
             this.oldRodSixtyComboBox.Location = new System.Drawing.Point(45, 77);
             this.oldRodSixtyComboBox.Name = "oldRodSixtyComboBox";
@@ -2163,7 +2380,7 @@
             this.surfGroupBox.Controls.Add(this.surfSixtyMinLevelUpDown);
             this.surfGroupBox.Controls.Add(this.label66);
             this.surfGroupBox.Controls.Add(this.surfSixtyComboBox);
-            this.surfGroupBox.Location = new System.Drawing.Point(16, 18);
+            this.surfGroupBox.Location = new System.Drawing.Point(16, 25);
             this.surfGroupBox.Name = "surfGroupBox";
             this.surfGroupBox.Size = new System.Drawing.Size(325, 220);
             this.surfGroupBox.TabIndex = 4;
@@ -2239,6 +2456,8 @@
             // 
             // surfOneComboBox
             // 
+            this.surfOneComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.surfOneComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.surfOneComboBox.FormattingEnabled = true;
             this.surfOneComboBox.Location = new System.Drawing.Point(45, 185);
             this.surfOneComboBox.Name = "surfOneComboBox";
@@ -2274,6 +2493,8 @@
             // 
             // surfFourComboBox
             // 
+            this.surfFourComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.surfFourComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.surfFourComboBox.FormattingEnabled = true;
             this.surfFourComboBox.Location = new System.Drawing.Point(45, 158);
             this.surfFourComboBox.Name = "surfFourComboBox";
@@ -2309,6 +2530,8 @@
             // 
             // surfFiveComboBox
             // 
+            this.surfFiveComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.surfFiveComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.surfFiveComboBox.FormattingEnabled = true;
             this.surfFiveComboBox.Location = new System.Drawing.Point(45, 131);
             this.surfFiveComboBox.Name = "surfFiveComboBox";
@@ -2344,6 +2567,8 @@
             // 
             // surfThirtyComboBox
             // 
+            this.surfThirtyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.surfThirtyComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.surfThirtyComboBox.FormattingEnabled = true;
             this.surfThirtyComboBox.Location = new System.Drawing.Point(45, 104);
             this.surfThirtyComboBox.Name = "surfThirtyComboBox";
@@ -2379,6 +2604,8 @@
             // 
             // surfSixtyComboBox
             // 
+            this.surfSixtyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.surfSixtyComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.surfSixtyComboBox.FormattingEnabled = true;
             this.surfSixtyComboBox.Location = new System.Drawing.Point(45, 77);
             this.surfSixtyComboBox.Name = "surfSixtyComboBox";
@@ -2389,7 +2616,7 @@
             // repairAllButton
             // 
             this.repairAllButton.Image = global::DSPRE.Properties.Resources.wrenchIcon;
-            this.repairAllButton.Location = new System.Drawing.Point(614, 11);
+            this.repairAllButton.Location = new System.Drawing.Point(616, 11);
             this.repairAllButton.Name = "repairAllButton";
             this.repairAllButton.Size = new System.Drawing.Size(38, 40);
             this.repairAllButton.TabIndex = 61;
@@ -2410,8 +2637,9 @@
             this.Controls.Add(this.importEncounterFileButton);
             this.Controls.Add(this.saveEventsButton);
             this.Controls.Add(this.encounterFileLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "WildEditorDPPt";
-            this.Text = "DSPRE - DPPt Encounters Editor";
+            this.Text = "DSPRE Reloaded 1.9.3 - DPPt Encounters Editor";
             this.mainTabControl.ResumeLayout(false);
             this.grassGroundTabPage.ResumeLayout(false);
             this.grassGroundTabPage.PerformLayout();
@@ -2423,21 +2651,23 @@
             this.dualSlotGroupBox.ResumeLayout(false);
             this.dualSlotGroupBox.PerformLayout();
             this.timeGroupBox.ResumeLayout(false);
-            this.timeGroupBox.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.walkingGroupBox.ResumeLayout(false);
-            this.walkingGroupBox.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.walkingOneSecondUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingOneFirstUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.walkingTenFourthUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingTenThirdUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingFourSecondUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingFourFirstUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.walkingTenSecondUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingTwentyFirstUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.walkingTenSecondUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingTenFirstUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingTwentySecondUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.walkingFiveSecondUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingFiveFirstUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.walkingFiveSecondUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.walkingTenFourthUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkingRateUpDown)).EndInit();
             this.waterTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.surfPicture)).EndInit();
@@ -2514,17 +2744,17 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.ComboBox swarmFirstComboBox;
+        private DSPRE.InputComboBox swarmFirstComboBox;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.ComboBox swarmSecondComboBox;
+        private DSPRE.InputComboBox swarmSecondComboBox;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.ComboBox nightFirstComboBox;
+        private DSPRE.InputComboBox nightFirstComboBox;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.ComboBox nightSecondComboBox;
+        private DSPRE.InputComboBox nightSecondComboBox;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.ComboBox morningFirstComboBox;
+        private DSPRE.InputComboBox morningFirstComboBox;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.ComboBox morningSecondComboBox;
+        private DSPRE.InputComboBox morningSecondComboBox;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.NumericUpDown walkingOneSecondUpDown;
         private System.Windows.Forms.NumericUpDown walkingOneFirstUpDown;
@@ -2538,69 +2768,69 @@
         private System.Windows.Forms.NumericUpDown walkingFiveFirstUpDown;
         private System.Windows.Forms.NumericUpDown walkingTwentySecondUpDown;
         private System.Windows.Forms.NumericUpDown walkingTwentyFirstUpDown;
-        private System.Windows.Forms.ComboBox walkingFiveSecondComboBox;
+        private DSPRE.InputComboBox walkingFiveSecondComboBox;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ComboBox walkingTwentyFirstComboBox;
-        private System.Windows.Forms.ComboBox walkingOneSecondComboBox;
+        private DSPRE.InputComboBox walkingTwentyFirstComboBox;
+        private DSPRE.InputComboBox walkingOneSecondComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ComboBox walkingTwentySecondComboBox;
-        private System.Windows.Forms.ComboBox walkingOneFirstComboBox;
+        private DSPRE.InputComboBox walkingTwentySecondComboBox;
+        private DSPRE.InputComboBox walkingOneFirstComboBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox walkingTenFirstComboBox;
-        private System.Windows.Forms.ComboBox walkingFourSecondComboBox;
+        private DSPRE.InputComboBox walkingTenFirstComboBox;
+        private DSPRE.InputComboBox walkingFourSecondComboBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ComboBox walkingTenSecondComboBox;
-        private System.Windows.Forms.ComboBox walkingFourFirstComboBox;
+        private DSPRE.InputComboBox walkingTenSecondComboBox;
+        private DSPRE.InputComboBox walkingFourFirstComboBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox walkingTenThirdComboBox;
+        private DSPRE.InputComboBox walkingTenThirdComboBox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox walkingTenFourthComboBox;
-        private System.Windows.Forms.ComboBox walkingFiveFirstComboBox;
+        private DSPRE.InputComboBox walkingTenFourthComboBox;
+        private DSPRE.InputComboBox walkingFiveFirstComboBox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown walkingRateUpDown;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.GroupBox walkingGroupBox;
         private System.Windows.Forms.GroupBox timeGroupBox;
         private System.Windows.Forms.GroupBox dualSlotGroupBox;
-        private System.Windows.Forms.ComboBox leafGreenFirstComboBox;
+        private DSPRE.InputComboBox leafGreenFirstComboBox;
         private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.ComboBox fireRedSecondComboBox;
+        private DSPRE.InputComboBox fireRedSecondComboBox;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.ComboBox fireRedFirstComboBox;
+        private DSPRE.InputComboBox fireRedFirstComboBox;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.ComboBox leafGreenSecondComboBox;
+        private DSPRE.InputComboBox leafGreenSecondComboBox;
         private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.ComboBox sapphireFirstComboBox;
-        private System.Windows.Forms.ComboBox rubyFirstComboBox;
+        private DSPRE.InputComboBox sapphireFirstComboBox;
+        private DSPRE.InputComboBox rubyFirstComboBox;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.ComboBox emeraldSecondComboBox;
+        private DSPRE.InputComboBox emeraldSecondComboBox;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.ComboBox rubySecondComboBox;
+        private DSPRE.InputComboBox rubySecondComboBox;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.ComboBox emeraldFirstComboBox;
+        private DSPRE.InputComboBox emeraldFirstComboBox;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.ComboBox sapphireSecondComboBox;
+        private DSPRE.InputComboBox sapphireSecondComboBox;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.GroupBox radarGroupBox;
         private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.ComboBox radarFourthComboBox;
+        private DSPRE.InputComboBox radarFourthComboBox;
         private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.ComboBox radarThirdComboBox;
+        private DSPRE.InputComboBox radarThirdComboBox;
         private System.Windows.Forms.Label label40;
-        private System.Windows.Forms.ComboBox radarSecondComboBox;
+        private DSPRE.InputComboBox radarSecondComboBox;
         private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.ComboBox radarFirstComboBox;
+        private DSPRE.InputComboBox radarFirstComboBox;
         private System.Windows.Forms.TabPage waterTabPage;
         private System.Windows.Forms.GroupBox surfGroupBox;
         private System.Windows.Forms.NumericUpDown surfRateUpDown;
@@ -2608,23 +2838,23 @@
         private System.Windows.Forms.NumericUpDown surfOneMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown surfOneMinLevelUpDown;
         private System.Windows.Forms.Label label62;
-        private System.Windows.Forms.ComboBox surfOneComboBox;
+        private DSPRE.InputComboBox surfOneComboBox;
         private System.Windows.Forms.NumericUpDown surfFourMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown surfFourMinLevelUpDown;
         private System.Windows.Forms.Label label63;
-        private System.Windows.Forms.ComboBox surfFourComboBox;
+        private DSPRE.InputComboBox surfFourComboBox;
         private System.Windows.Forms.NumericUpDown surfFiveMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown surfFiveMinLevelUpDown;
         private System.Windows.Forms.Label label64;
-        private System.Windows.Forms.ComboBox surfFiveComboBox;
+        private DSPRE.InputComboBox surfFiveComboBox;
         private System.Windows.Forms.NumericUpDown surfThirtyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown surfThirtyMinLevelUpDown;
         private System.Windows.Forms.Label label65;
-        private System.Windows.Forms.ComboBox surfThirtyComboBox;
+        private DSPRE.InputComboBox surfThirtyComboBox;
         private System.Windows.Forms.NumericUpDown surfSixtyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown surfSixtyMinLevelUpDown;
         private System.Windows.Forms.Label label66;
-        private System.Windows.Forms.ComboBox surfSixtyComboBox;
+        private DSPRE.InputComboBox surfSixtyComboBox;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label68;
         private System.Windows.Forms.Label label67;
@@ -2636,23 +2866,23 @@
         private System.Windows.Forms.NumericUpDown superRodOneMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown superRodOneMinLevelUpDown;
         private System.Windows.Forms.Label label70;
-        private System.Windows.Forms.ComboBox superRodOneComboBox;
+        private DSPRE.InputComboBox superRodOneComboBox;
         private System.Windows.Forms.NumericUpDown superRodFourMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown superRodFourMinLevelUpDown;
         private System.Windows.Forms.Label label71;
-        private System.Windows.Forms.ComboBox superRodFourComboBox;
+        private DSPRE.InputComboBox superRodFourComboBox;
         private System.Windows.Forms.NumericUpDown superRodFifteenMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown superRodFifteenMinLevelUpDown;
         private System.Windows.Forms.Label label72;
-        private System.Windows.Forms.ComboBox superRodFifteenComboBox;
+        private DSPRE.InputComboBox superRodFifteenComboBox;
         private System.Windows.Forms.NumericUpDown superRodSecondFortyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown superRodSecondFortyMinLevelUpDown;
         private System.Windows.Forms.Label label73;
-        private System.Windows.Forms.ComboBox superRodSecondFortyComboBox;
+        private DSPRE.InputComboBox superRodSecondFortyComboBox;
         private System.Windows.Forms.NumericUpDown superRodFirstFortyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown superRodFirstFortyMinLevelUpDown;
         private System.Windows.Forms.Label label74;
-        private System.Windows.Forms.ComboBox superRodFirstFortyComboBox;
+        private DSPRE.InputComboBox superRodFirstFortyComboBox;
         private System.Windows.Forms.GroupBox goodRodGroupBox;
         private System.Windows.Forms.Label label51;
         private System.Windows.Forms.Label label52;
@@ -2661,23 +2891,23 @@
         private System.Windows.Forms.NumericUpDown goodRodOneMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown goodRodOneMinLevelUpDown;
         private System.Windows.Forms.Label label54;
-        private System.Windows.Forms.ComboBox goodRodOneComboBox;
+        private DSPRE.InputComboBox goodRodOneComboBox;
         private System.Windows.Forms.NumericUpDown goodRodFourMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown goodRodFourMinLevelUpDown;
         private System.Windows.Forms.Label label55;
-        private System.Windows.Forms.ComboBox goodRodFourComboBox;
+        private DSPRE.InputComboBox goodRodFourComboBox;
         private System.Windows.Forms.NumericUpDown goodRodFifteenMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown goodRodFifteenMinLevelUpDown;
         private System.Windows.Forms.Label label56;
-        private System.Windows.Forms.ComboBox goodRodFifteenComboBox;
+        private DSPRE.InputComboBox goodRodFifteenComboBox;
         private System.Windows.Forms.NumericUpDown goodRodSecondFortyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown goodRodSecondFortyMinLevelUpDown;
         private System.Windows.Forms.Label label57;
-        private System.Windows.Forms.ComboBox goodRodSecondFortyComboBox;
+        private DSPRE.InputComboBox goodRodSecondFortyComboBox;
         private System.Windows.Forms.NumericUpDown goodRodFirstFortyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown goodRodFirstFortyMinLevelUpDown;
         private System.Windows.Forms.Label label58;
-        private System.Windows.Forms.ComboBox goodRodFirstFortyComboBox;
+        private DSPRE.InputComboBox goodRodFirstFortyComboBox;
         private System.Windows.Forms.GroupBox oldRodGroupBox;
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.Label label44;
@@ -2686,23 +2916,23 @@
         private System.Windows.Forms.NumericUpDown oldRodOneMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown oldRodOneMinLevelUpDown;
         private System.Windows.Forms.Label label46;
-        private System.Windows.Forms.ComboBox oldRodOneComboBox;
+        private DSPRE.InputComboBox oldRodOneComboBox;
         private System.Windows.Forms.NumericUpDown oldRodFourMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown oldRodFourMinLevelUpDown;
         private System.Windows.Forms.Label label47;
-        private System.Windows.Forms.ComboBox oldRodFourComboBox;
+        private DSPRE.InputComboBox oldRodFourComboBox;
         private System.Windows.Forms.NumericUpDown oldRodFiveMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown oldRodFiveMinLevelUpDown;
         private System.Windows.Forms.Label label48;
-        private System.Windows.Forms.ComboBox oldRodFiveComboBox;
+        private DSPRE.InputComboBox oldRodFiveComboBox;
         private System.Windows.Forms.NumericUpDown oldRodThirtyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown oldRodThirtyMinLevelUpDown;
         private System.Windows.Forms.Label label49;
-        private System.Windows.Forms.ComboBox oldRodThirtyComboBox;
+        private DSPRE.InputComboBox oldRodThirtyComboBox;
         private System.Windows.Forms.NumericUpDown oldRodSixtyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown oldRodSixtyMinLevelUpDown;
         private System.Windows.Forms.Label label50;
-        private System.Windows.Forms.ComboBox oldRodSixtyComboBox;
+        private DSPRE.InputComboBox oldRodSixtyComboBox;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox7;
@@ -2710,5 +2940,7 @@
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox surfPicture;
         private System.Windows.Forms.Button repairAllButton;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }
