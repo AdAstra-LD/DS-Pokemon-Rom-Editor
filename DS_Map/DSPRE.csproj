@@ -156,6 +156,7 @@
     </Compile>
     <Compile Include="ROMFiles\RomFile.cs" />
     <Compile Include="ROMFiles\ScriptAction.cs" />
+    <Compile Include="ROMFiles\SpeciesFile.cs" />
     <Compile Include="ROMFiles\TrainerFile.cs" />
     <Compile Include="ROMToolboxDialog.cs">
       <SubType>Form</SubType>

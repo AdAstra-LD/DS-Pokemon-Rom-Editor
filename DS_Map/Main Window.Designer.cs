@@ -632,6 +632,8 @@
             this.addTrainerButton = new System.Windows.Forms.Button();
             this.groupBox28 = new System.Windows.Forms.GroupBox();
             this.party6GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyAbility6ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender6ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox6 = new System.Windows.Forms.PictureBox();
             this.label60 = new System.Windows.Forms.Label();
             this.label61 = new System.Windows.Forms.Label();
@@ -648,6 +650,8 @@
             this.partyPokemon6PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon6ComboBox = new DSPRE.InputComboBox();
             this.party5GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyAbility5ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender5ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox5 = new System.Windows.Forms.PictureBox();
             this.label57 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
@@ -664,6 +668,8 @@
             this.partyPokemon5PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon5ComboBox = new DSPRE.InputComboBox();
             this.party4GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyAbility4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender4ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox4 = new System.Windows.Forms.PictureBox();
             this.label54 = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
@@ -680,6 +686,8 @@
             this.partyPokemon4PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon4ComboBox = new DSPRE.InputComboBox();
             this.party3GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyAbility3ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender3ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox3 = new System.Windows.Forms.PictureBox();
             this.label51 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
@@ -696,6 +704,8 @@
             this.partyPokemon3PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon3ComboBox = new DSPRE.InputComboBox();
             this.party2GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyAbility2ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender2ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox2 = new System.Windows.Forms.PictureBox();
             this.label48 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
@@ -712,6 +722,7 @@
             this.partyPokemon2PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon2ComboBox = new DSPRE.InputComboBox();
             this.party1GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyAbility1ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox1 = new System.Windows.Forms.PictureBox();
             this.label47 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
@@ -884,6 +895,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.directoryEntry2 = new System.DirectoryServices.DirectoryEntry();
+            this.partyGender1ComboBox = new System.Windows.Forms.ComboBox();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -1151,7 +1163,7 @@
             this.mainTabControl.Location = new System.Drawing.Point(11, 72);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(1193, 646);
+            this.mainTabControl.Size = new System.Drawing.Size(1193, 730);
             this.mainTabControl.TabIndex = 5;
             this.mainTabControl.Visible = false;
             this.mainTabControl.SelectedIndexChanged += new System.EventHandler(this.mainTabControl_SelectedIndexChanged);
@@ -1186,7 +1198,7 @@
             this.headerEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.headerEditorTabPage.Name = "headerEditorTabPage";
             this.headerEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.headerEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.headerEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.headerEditorTabPage.TabIndex = 0;
             this.headerEditorTabPage.Text = "Header Editor";
             // 
@@ -2574,7 +2586,7 @@
             this.matrixEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.matrixEditorTabPage.Name = "matrixEditorTabPage";
             this.matrixEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.matrixEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.matrixEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.matrixEditorTabPage.TabIndex = 1;
             this.matrixEditorTabPage.Text = "Matrix Editor";
             // 
@@ -2595,7 +2607,7 @@
             this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
             this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.setSpawnPointButton.Location = new System.Drawing.Point(11, 521);
+            this.setSpawnPointButton.Location = new System.Drawing.Point(11, 605);
             this.setSpawnPointButton.Name = "setSpawnPointButton";
             this.setSpawnPointButton.Size = new System.Drawing.Size(117, 43);
             this.setSpawnPointButton.TabIndex = 32;
@@ -2767,7 +2779,7 @@
             this.matrixTabControl.Multiline = true;
             this.matrixTabControl.Name = "matrixTabControl";
             this.matrixTabControl.SelectedIndex = 0;
-            this.matrixTabControl.Size = new System.Drawing.Size(1040, 602);
+            this.matrixTabControl.Size = new System.Drawing.Size(1040, 686);
             this.matrixTabControl.TabIndex = 18;
             // 
             // headersTabPage
@@ -2776,7 +2788,7 @@
             this.headersTabPage.Location = new System.Drawing.Point(4, 22);
             this.headersTabPage.Name = "headersTabPage";
             this.headersTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.headersTabPage.Size = new System.Drawing.Size(1032, 576);
+            this.headersTabPage.Size = new System.Drawing.Size(1032, 660);
             this.headersTabPage.TabIndex = 1;
             this.headersTabPage.Text = "Map Headers";
             this.headersTabPage.UseVisualStyleBackColor = true;
@@ -2839,7 +2851,7 @@
             this.heightsTabPage.Controls.Add(this.heightsGridView);
             this.heightsTabPage.Location = new System.Drawing.Point(4, 22);
             this.heightsTabPage.Name = "heightsTabPage";
-            this.heightsTabPage.Size = new System.Drawing.Size(1032, 576);
+            this.heightsTabPage.Size = new System.Drawing.Size(1032, 660);
             this.heightsTabPage.TabIndex = 2;
             this.heightsTabPage.Text = "Map Heights";
             this.heightsTabPage.UseVisualStyleBackColor = true;
@@ -2902,7 +2914,7 @@
             this.mapFilesTabPage.Controls.Add(this.mapFilesGridView);
             this.mapFilesTabPage.Location = new System.Drawing.Point(4, 22);
             this.mapFilesTabPage.Name = "mapFilesTabPage";
-            this.mapFilesTabPage.Size = new System.Drawing.Size(1032, 576);
+            this.mapFilesTabPage.Size = new System.Drawing.Size(1032, 660);
             this.mapFilesTabPage.TabIndex = 3;
             this.mapFilesTabPage.Text = "Map Files";
             this.mapFilesTabPage.UseVisualStyleBackColor = true;
@@ -3042,7 +3054,7 @@
             this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.saveMatrixButton.Location = new System.Drawing.Point(11, 566);
+            this.saveMatrixButton.Location = new System.Drawing.Point(11, 650);
             this.saveMatrixButton.Name = "saveMatrixButton";
             this.saveMatrixButton.Size = new System.Drawing.Size(117, 43);
             this.saveMatrixButton.TabIndex = 22;
@@ -3071,7 +3083,7 @@
             this.mapEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.mapEditorTabPage.Name = "mapEditorTabPage";
             this.mapEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.mapEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.mapEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.mapEditorTabPage.TabIndex = 2;
             this.mapEditorTabPage.Text = "Map Editor";
             this.mapEditorTabPage.Enter += new System.EventHandler(this.mapEditorTabPage_Enter);
@@ -4365,7 +4377,7 @@
             this.radio3D.AutoSize = true;
             this.radio3D.Checked = true;
             this.radio3D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio3D.Location = new System.Drawing.Point(1140, 542);
+            this.radio3D.Location = new System.Drawing.Point(1140, 626);
             this.radio3D.Name = "radio3D";
             this.radio3D.Size = new System.Drawing.Size(31, 23);
             this.radio3D.TabIndex = 26;
@@ -4380,7 +4392,7 @@
             this.radio2D.Appearance = System.Windows.Forms.Appearance.Button;
             this.radio2D.AutoSize = true;
             this.radio2D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio2D.Location = new System.Drawing.Point(1140, 566);
+            this.radio2D.Location = new System.Drawing.Point(1140, 650);
             this.radio2D.Name = "radio2D";
             this.radio2D.Size = new System.Drawing.Size(31, 23);
             this.radio2D.TabIndex = 25;
@@ -4395,7 +4407,7 @@
             this.wireframeCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.wireframeCheckBox.AutoSize = true;
             this.wireframeCheckBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, 590);
+            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, 674);
             this.wireframeCheckBox.Name = "wireframeCheckBox";
             this.wireframeCheckBox.Size = new System.Drawing.Size(31, 23);
             this.wireframeCheckBox.TabIndex = 27;
@@ -4410,7 +4422,7 @@
             this.nsbtxEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.nsbtxEditorTabPage.Name = "nsbtxEditorTabPage";
             this.nsbtxEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.nsbtxEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.nsbtxEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.nsbtxEditorTabPage.TabIndex = 6;
             this.nsbtxEditorTabPage.Text = "NSBTX Editor";
             this.nsbtxEditorTabPage.UseVisualStyleBackColor = true;
@@ -4951,7 +4963,7 @@
             this.eventEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.eventEditorTabPage.Name = "eventEditorTabPage";
             this.eventEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.eventEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.eventEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.eventEditorTabPage.TabIndex = 3;
             this.eventEditorTabPage.Text = "Event Editor";
             this.eventEditorTabPage.Enter += new System.EventHandler(this.eventEditorTabPage_Enter);
@@ -6996,7 +7008,7 @@
             this.scriptEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.scriptEditorTabPage.Name = "scriptEditorTabPage";
             this.scriptEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.scriptEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.scriptEditorTabPage.TabIndex = 4;
             this.scriptEditorTabPage.Text = "Script Editor";
             this.scriptEditorTabPage.UseVisualStyleBackColor = true;
@@ -7735,7 +7747,7 @@
             this.textEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.textEditorTabPage.Name = "textEditorTabPage";
             this.textEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.textEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.textEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.textEditorTabPage.TabIndex = 5;
             this.textEditorTabPage.Text = "Text Editor";
             this.textEditorTabPage.UseVisualStyleBackColor = true;
@@ -8159,7 +8171,7 @@
             this.cameraEditorTabPage.ImageIndex = 7;
             this.cameraEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.cameraEditorTabPage.Name = "cameraEditorTabPage";
-            this.cameraEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.cameraEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.cameraEditorTabPage.TabIndex = 7;
             this.cameraEditorTabPage.Text = "Camera Editor";
             this.cameraEditorTabPage.UseVisualStyleBackColor = true;
@@ -8353,7 +8365,7 @@
             this.trainerEditorTabPage.ImageIndex = 8;
             this.trainerEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.trainerEditorTabPage.Name = "trainerEditorTabPage";
-            this.trainerEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.trainerEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.trainerEditorTabPage.TabIndex = 8;
             this.trainerEditorTabPage.Text = "Trainer Editor";
             this.trainerEditorTabPage.UseVisualStyleBackColor = true;
@@ -8520,13 +8532,15 @@
             this.groupBox28.Controls.Add(this.party1GroupBox);
             this.groupBox28.Location = new System.Drawing.Point(439, 75);
             this.groupBox28.Name = "groupBox28";
-            this.groupBox28.Size = new System.Drawing.Size(731, 534);
+            this.groupBox28.Size = new System.Drawing.Size(731, 625);
             this.groupBox28.TabIndex = 32;
             this.groupBox28.TabStop = false;
             this.groupBox28.Text = "Party";
             // 
             // party6GroupBox
             // 
+            this.party6GroupBox.Controls.Add(this.partyAbility6ComboBox);
+            this.party6GroupBox.Controls.Add(this.partyGender6ComboBox);
             this.party6GroupBox.Controls.Add(this.partyPokemonItemPictureBox6);
             this.party6GroupBox.Controls.Add(this.label60);
             this.party6GroupBox.Controls.Add(this.label61);
@@ -8539,12 +8553,34 @@
             this.party6GroupBox.Controls.Add(this.partyPokemon6PictureBox);
             this.party6GroupBox.Controls.Add(this.partyPokemon6ComboBox);
             this.party6GroupBox.Enabled = false;
-            this.party6GroupBox.Location = new System.Drawing.Point(371, 355);
+            this.party6GroupBox.Location = new System.Drawing.Point(371, 418);
             this.party6GroupBox.Name = "party6GroupBox";
-            this.party6GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party6GroupBox.Size = new System.Drawing.Size(343, 189);
             this.party6GroupBox.TabIndex = 13;
             this.party6GroupBox.TabStop = false;
             this.party6GroupBox.Text = "Pokemon 6";
+            // 
+            // partyAbility6ComboBox
+            // 
+            this.partyAbility6ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility6ComboBox.FormattingEnabled = true;
+            this.partyAbility6ComboBox.Location = new System.Drawing.Point(15, 157);
+            this.partyAbility6ComboBox.Name = "partyAbility6ComboBox";
+            this.partyAbility6ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility6ComboBox.TabIndex = 19;
+            // 
+            // partyGender6ComboBox
+            // 
+            this.partyGender6ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender6ComboBox.FormattingEnabled = true;
+            this.partyGender6ComboBox.Items.AddRange(new object[] {
+            "Default Gender",
+            "Force Male",
+            "Force Female"});
+            this.partyGender6ComboBox.Location = new System.Drawing.Point(154, 157);
+            this.partyGender6ComboBox.Name = "partyGender6ComboBox";
+            this.partyGender6ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender6ComboBox.TabIndex = 15;
             // 
             // partyPokemonItemPictureBox6
             // 
@@ -8648,7 +8684,7 @@
             // 
             this.partyIV6UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV6UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -8719,6 +8755,8 @@
             // 
             // party5GroupBox
             // 
+            this.party5GroupBox.Controls.Add(this.partyAbility5ComboBox);
+            this.party5GroupBox.Controls.Add(this.partyGender5ComboBox);
             this.party5GroupBox.Controls.Add(this.partyPokemonItemPictureBox5);
             this.party5GroupBox.Controls.Add(this.label57);
             this.party5GroupBox.Controls.Add(this.label58);
@@ -8731,12 +8769,34 @@
             this.party5GroupBox.Controls.Add(this.partyPokemon5PictureBox);
             this.party5GroupBox.Controls.Add(this.partyPokemon5ComboBox);
             this.party5GroupBox.Enabled = false;
-            this.party5GroupBox.Location = new System.Drawing.Point(16, 355);
+            this.party5GroupBox.Location = new System.Drawing.Point(16, 418);
             this.party5GroupBox.Name = "party5GroupBox";
-            this.party5GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party5GroupBox.Size = new System.Drawing.Size(343, 189);
             this.party5GroupBox.TabIndex = 12;
             this.party5GroupBox.TabStop = false;
             this.party5GroupBox.Text = "Pokemon 5";
+            // 
+            // partyAbility5ComboBox
+            // 
+            this.partyAbility5ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility5ComboBox.FormattingEnabled = true;
+            this.partyAbility5ComboBox.Location = new System.Drawing.Point(15, 157);
+            this.partyAbility5ComboBox.Name = "partyAbility5ComboBox";
+            this.partyAbility5ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility5ComboBox.TabIndex = 18;
+            // 
+            // partyGender5ComboBox
+            // 
+            this.partyGender5ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender5ComboBox.FormattingEnabled = true;
+            this.partyGender5ComboBox.Items.AddRange(new object[] {
+            "Default Gender",
+            "Force Male",
+            "Force Female"});
+            this.partyGender5ComboBox.Location = new System.Drawing.Point(156, 157);
+            this.partyGender5ComboBox.Name = "partyGender5ComboBox";
+            this.partyGender5ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender5ComboBox.TabIndex = 14;
             // 
             // partyPokemonItemPictureBox5
             // 
@@ -8840,7 +8900,7 @@
             // 
             this.partyIV5UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV5UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -8911,6 +8971,8 @@
             // 
             // party4GroupBox
             // 
+            this.party4GroupBox.Controls.Add(this.partyAbility4ComboBox);
+            this.party4GroupBox.Controls.Add(this.partyGender4ComboBox);
             this.party4GroupBox.Controls.Add(this.partyPokemonItemPictureBox4);
             this.party4GroupBox.Controls.Add(this.label54);
             this.party4GroupBox.Controls.Add(this.label55);
@@ -8923,12 +8985,34 @@
             this.party4GroupBox.Controls.Add(this.partyPokemon4PictureBox);
             this.party4GroupBox.Controls.Add(this.partyPokemon4ComboBox);
             this.party4GroupBox.Enabled = false;
-            this.party4GroupBox.Location = new System.Drawing.Point(371, 189);
+            this.party4GroupBox.Location = new System.Drawing.Point(371, 225);
             this.party4GroupBox.Name = "party4GroupBox";
-            this.party4GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party4GroupBox.Size = new System.Drawing.Size(343, 185);
             this.party4GroupBox.TabIndex = 11;
             this.party4GroupBox.TabStop = false;
             this.party4GroupBox.Text = "Pokemon 4";
+            // 
+            // partyAbility4ComboBox
+            // 
+            this.partyAbility4ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility4ComboBox.FormattingEnabled = true;
+            this.partyAbility4ComboBox.Location = new System.Drawing.Point(15, 157);
+            this.partyAbility4ComboBox.Name = "partyAbility4ComboBox";
+            this.partyAbility4ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility4ComboBox.TabIndex = 17;
+            // 
+            // partyGender4ComboBox
+            // 
+            this.partyGender4ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender4ComboBox.FormattingEnabled = true;
+            this.partyGender4ComboBox.Items.AddRange(new object[] {
+            "Default Gender",
+            "Force Male",
+            "Force Female"});
+            this.partyGender4ComboBox.Location = new System.Drawing.Point(154, 157);
+            this.partyGender4ComboBox.Name = "partyGender4ComboBox";
+            this.partyGender4ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender4ComboBox.TabIndex = 16;
             // 
             // partyPokemonItemPictureBox4
             // 
@@ -9032,7 +9116,7 @@
             // 
             this.partyIV4UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV4UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -9103,6 +9187,8 @@
             // 
             // party3GroupBox
             // 
+            this.party3GroupBox.Controls.Add(this.partyAbility3ComboBox);
+            this.party3GroupBox.Controls.Add(this.partyGender3ComboBox);
             this.party3GroupBox.Controls.Add(this.partyPokemonItemPictureBox3);
             this.party3GroupBox.Controls.Add(this.label51);
             this.party3GroupBox.Controls.Add(this.label52);
@@ -9115,12 +9201,34 @@
             this.party3GroupBox.Controls.Add(this.partyPokemon3PictureBox);
             this.party3GroupBox.Controls.Add(this.partyPokemon3ComboBox);
             this.party3GroupBox.Enabled = false;
-            this.party3GroupBox.Location = new System.Drawing.Point(16, 189);
+            this.party3GroupBox.Location = new System.Drawing.Point(16, 225);
             this.party3GroupBox.Name = "party3GroupBox";
-            this.party3GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party3GroupBox.Size = new System.Drawing.Size(343, 187);
             this.party3GroupBox.TabIndex = 10;
             this.party3GroupBox.TabStop = false;
             this.party3GroupBox.Text = "Pokemon 3";
+            // 
+            // partyAbility3ComboBox
+            // 
+            this.partyAbility3ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility3ComboBox.FormattingEnabled = true;
+            this.partyAbility3ComboBox.Location = new System.Drawing.Point(15, 157);
+            this.partyAbility3ComboBox.Name = "partyAbility3ComboBox";
+            this.partyAbility3ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility3ComboBox.TabIndex = 14;
+            // 
+            // partyGender3ComboBox
+            // 
+            this.partyGender3ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender3ComboBox.FormattingEnabled = true;
+            this.partyGender3ComboBox.Items.AddRange(new object[] {
+            "Default Gender",
+            "Force Male",
+            "Force Female"});
+            this.partyGender3ComboBox.Location = new System.Drawing.Point(156, 157);
+            this.partyGender3ComboBox.Name = "partyGender3ComboBox";
+            this.partyGender3ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender3ComboBox.TabIndex = 13;
             // 
             // partyPokemonItemPictureBox3
             // 
@@ -9224,7 +9332,7 @@
             // 
             this.partyIV3UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV3UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -9295,6 +9403,8 @@
             // 
             // party2GroupBox
             // 
+            this.party2GroupBox.Controls.Add(this.partyAbility2ComboBox);
+            this.party2GroupBox.Controls.Add(this.partyGender2ComboBox);
             this.party2GroupBox.Controls.Add(this.partyPokemonItemPictureBox2);
             this.party2GroupBox.Controls.Add(this.label48);
             this.party2GroupBox.Controls.Add(this.label49);
@@ -9309,10 +9419,32 @@
             this.party2GroupBox.Enabled = false;
             this.party2GroupBox.Location = new System.Drawing.Point(371, 23);
             this.party2GroupBox.Name = "party2GroupBox";
-            this.party2GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party2GroupBox.Size = new System.Drawing.Size(343, 196);
             this.party2GroupBox.TabIndex = 10;
             this.party2GroupBox.TabStop = false;
             this.party2GroupBox.Text = "Pokemon 2";
+            // 
+            // partyAbility2ComboBox
+            // 
+            this.partyAbility2ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility2ComboBox.FormattingEnabled = true;
+            this.partyAbility2ComboBox.Location = new System.Drawing.Point(15, 162);
+            this.partyAbility2ComboBox.Name = "partyAbility2ComboBox";
+            this.partyAbility2ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility2ComboBox.TabIndex = 18;
+            // 
+            // partyGender2ComboBox
+            // 
+            this.partyGender2ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender2ComboBox.FormattingEnabled = true;
+            this.partyGender2ComboBox.Items.AddRange(new object[] {
+            "Default Gender",
+            "Force Male",
+            "Force Female"});
+            this.partyGender2ComboBox.Location = new System.Drawing.Point(154, 162);
+            this.partyGender2ComboBox.Name = "partyGender2ComboBox";
+            this.partyGender2ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender2ComboBox.TabIndex = 17;
             // 
             // partyPokemonItemPictureBox2
             // 
@@ -9416,7 +9548,7 @@
             // 
             this.partyIV2UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV2UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -9487,6 +9619,8 @@
             // 
             // party1GroupBox
             // 
+            this.party1GroupBox.Controls.Add(this.partyAbility1ComboBox);
+            this.party1GroupBox.Controls.Add(this.partyGender1ComboBox);
             this.party1GroupBox.Controls.Add(this.partyPokemonItemPictureBox1);
             this.party1GroupBox.Controls.Add(this.label47);
             this.party1GroupBox.Controls.Add(this.label46);
@@ -9501,10 +9635,19 @@
             this.party1GroupBox.Enabled = false;
             this.party1GroupBox.Location = new System.Drawing.Point(16, 23);
             this.party1GroupBox.Name = "party1GroupBox";
-            this.party1GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party1GroupBox.Size = new System.Drawing.Size(343, 196);
             this.party1GroupBox.TabIndex = 0;
             this.party1GroupBox.TabStop = false;
             this.party1GroupBox.Text = "Pokemon 1";
+            // 
+            // partyAbility1ComboBox
+            // 
+            this.partyAbility1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility1ComboBox.FormattingEnabled = true;
+            this.partyAbility1ComboBox.Location = new System.Drawing.Point(15, 162);
+            this.partyAbility1ComboBox.Name = "partyAbility1ComboBox";
+            this.partyAbility1ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility1ComboBox.TabIndex = 13;
             // 
             // partyPokemonItemPictureBox1
             // 
@@ -9608,7 +9751,7 @@
             // 
             this.partyIV1UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV1UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -10136,7 +10279,7 @@
             this.tableEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.tableEditorTabPage.Name = "tableEditorTabPage";
             this.tableEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tableEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.tableEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.tableEditorTabPage.TabIndex = 9;
             this.tableEditorTabPage.Text = "Table Editor";
             this.tableEditorTabPage.UseVisualStyleBackColor = true;
@@ -10650,8 +10793,8 @@
             this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.menuViewToolStripMenuItem,
             this.aboutToolStripMenuItem,
+            this.menuViewToolStripMenuItem,
             this.aboutToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -10905,14 +11048,14 @@
             // essentialToolStripMenuItem
             // 
             this.essentialToolStripMenuItem.Name = "essentialToolStripMenuItem";
-            this.essentialToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.essentialToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.essentialToolStripMenuItem.Text = "Essential";
             this.essentialToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
             // simpleToolStripMenuItem
             // 
             this.simpleToolStripMenuItem.Name = "simpleToolStripMenuItem";
-            this.simpleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.simpleToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.simpleToolStripMenuItem.Text = "Simple";
             this.simpleToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
@@ -10921,14 +11064,14 @@
             this.advancedStripMenuItem.Checked = true;
             this.advancedStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.advancedStripMenuItem.Name = "advancedStripMenuItem";
-            this.advancedStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.advancedStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.advancedStripMenuItem.Text = "Advanced";
             this.advancedStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
             // fullViewToolStripMenuItem
             // 
             this.fullViewToolStripMenuItem.Name = "fullViewToolStripMenuItem";
-            this.fullViewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fullViewToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.fullViewToolStripMenuItem.Text = "Complete";
             this.fullViewToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
@@ -10945,7 +11088,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
             this.toolStripProgressBar});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 721);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 805);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1214, 22);
             this.statusStrip1.TabIndex = 13;
@@ -11308,12 +11451,25 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // partyGender1ComboBox
+            // 
+            this.partyGender1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender1ComboBox.FormattingEnabled = true;
+            this.partyGender1ComboBox.Items.AddRange(new object[] {
+            "Default Gender",
+            "Force Male",
+            "Force Female"});
+            this.partyGender1ComboBox.Location = new System.Drawing.Point(156, 162);
+            this.partyGender1ComboBox.Name = "partyGender1ComboBox";
+            this.partyGender1ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender1ComboBox.TabIndex = 12;
+            // 
             // MainProgram
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1214, 743);
+            this.ClientSize = new System.Drawing.Size(1214, 827);
             this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.languageLabel);
             this.Controls.Add(this.gameIcon);
@@ -11327,7 +11483,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
-            this.Text = "DS Pokémon Rom Editor Reloaded 1.9.3 (Nømura, AdAstra/LD3005)";
+            this.Text = "DS Pokémon Rom Editor Reloaded 1.9.2 (Nømura, AdAstra/LD3005)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainProgram_FormClosing);
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);
@@ -12492,6 +12648,18 @@
         private System.Windows.Forms.Button glbExportButton;
         private System.Windows.Forms.Button sortOWsByIDAscButton;
         private System.Windows.Forms.Button sortOWsByIDDescButton;
+        private System.Windows.Forms.ComboBox partyGender6ComboBox;
+        private System.Windows.Forms.ComboBox partyGender5ComboBox;
+        private System.Windows.Forms.ComboBox partyGender4ComboBox;
+        private System.Windows.Forms.ComboBox partyGender3ComboBox;
+        private System.Windows.Forms.ComboBox partyGender2ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility1ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility6ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility5ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility4ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility3ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility2ComboBox;
+        private System.Windows.Forms.ComboBox partyGender1ComboBox;
     }
 }
 

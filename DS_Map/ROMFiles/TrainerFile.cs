@@ -1,7 +1,9 @@
-﻿using System;
+﻿using ScintillaNET;
+using System;
 using System.Collections;
 using System.IO;
 using System.Windows.Forms;
+using static DSPRE.ROMFiles.PartyPokemon;
 
 namespace DSPRE.ROMFiles {
     public class PartyPokemon : RomFile {
@@ -15,37 +17,39 @@ namespace DSPRE.ROMFiles {
         public ushort? pokeID = null;
         public ushort formID = 0;
         public ushort level = 0;
-        public ushort difficulty = 0;
+        public byte difficulty = 0;
+        public GenderAndAbilityFlags genderAndAbilityFlags;
         public ushort ballSeals = 0;
 
         public ushort? heldItem = null;
         public ushort[] moves = null;
+
+        public enum GenderAndAbilityFlags
+        {
+            NO_FLAGS = 0,
+            FORCE_MALE = 0x1,
+            FORCE_FEMALE = 0x2,
+            ABILITY_SLOT1 = 0x10,
+            ABILITY_SLOT2 = 0x20
+        }
         #endregion
 
         #region Constructor
-        public PartyPokemon(bool hasItems = false, bool hasMoves = false) {
-            UpdateItemsAndMoves(hasItems, hasMoves);
+        public PartyPokemon(bool chooseItems = false, bool chooseMoves = false) {
+            UpdateItemsAndMoves(chooseItems, chooseMoves);
         }
 
-        public PartyPokemon(ushort difficulty, ushort Level, ushort pokeNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) {
+        public PartyPokemon(byte difficulty, GenderAndAbilityFlags genderAndAbilityFlags, ushort Level, ushort pokeNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) {
             pokeID = pokeNum;
             level = Level;
             this.difficulty = difficulty;
+            this.genderAndAbilityFlags = genderAndAbilityFlags;
             ballSeals = ballSealConfig;
             this.heldItem = heldItem;
             this.moves = moves;
         }
-        public PartyPokemon(ushort difficulty, ushort Level, ushort pokeNum, ushort? heldItem = null, ushort[] moves = null)
-        {
-            // Simply adding a new constructor for Diamond and Pearl since they dont have ball seal config
-            pokeID = pokeNum;
-            level = Level;
-            this.difficulty = difficulty;
-            this.heldItem = heldItem;
-            this.moves = moves;
-        }
-        public PartyPokemon(ushort difficulty, ushort Level, ushort pokeNum, ushort formNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) :
-            this(difficulty, Level, pokeNum, ballSealConfig, heldItem, moves) {
+        public PartyPokemon(byte difficulty, GenderAndAbilityFlags genderAndAbilityFlags, ushort Level, ushort pokeNum, ushort formNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) :
+            this(difficulty, genderAndAbilityFlags, Level, pokeNum, ballSealConfig, heldItem, moves) {
 
             formID = formNum;
         }
@@ -53,6 +57,7 @@ namespace DSPRE.ROMFiles {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write(difficulty);
+                writer.Write((byte)genderAndAbilityFlags);
                 writer.Write(level);
                 writer.Write(pokeID ?? 0);
 
@@ -65,16 +70,15 @@ namespace DSPRE.ROMFiles {
                         writer.Write(move);
                     }
                 }
-                if(RomInfo.gameFamily == RomInfo.gFamEnum.HGSS || RomInfo.gameFamily == RomInfo.gFamEnum.Plat) 
-                    writer.Write(ballSeals); // Diamond and Pearl apparently dont save ball capsule data in enemy trainer pokedata!!!
+                writer.Write(ballSeals);
             }
             return newData.ToArray();
         }
-        public void UpdateItemsAndMoves(bool hasItems = false, bool hasMoves = false) {
-            if (hasItems) {
+        public void UpdateItemsAndMoves(bool chooseItems = false, bool chooseMoves = false) {
+            if (chooseItems) {
                 this.heldItem = 0;
             }
-            if (hasMoves) {
+            if (chooseMoves) {
                 this.moves = new ushort[4];
             }
         }
@@ -118,8 +122,8 @@ namespace DSPRE.ROMFiles {
             trainerID = ID;
             using (BinaryReader reader = new BinaryReader(trainerPropertiesStream)) {
                 byte flags = reader.ReadByte();
-                chooseMoves = ((flags >> 0) & 1) != 0;
-                chooseItems = ((flags >> 1) & 1) != 0;
+                chooseMoves = (flags & 1) != 0;
+                chooseItems = (flags & 2) != 0;
 
                 trainerClass = reader.ReadByte();
                 trDataUnknown = reader.ReadByte();
@@ -201,19 +205,20 @@ namespace DSPRE.ROMFiles {
                         trp.partyCount = (byte)((flags & 28) >> 2);
                     }
 
-                    int divisor = 8;
+                    int dividend = 8;
 
                     if (trp.chooseMoves) {
-                        divisor += Party.MOVES_PER_POKE * sizeof(ushort);
+                        dividend += Party.MOVES_PER_POKE * sizeof(ushort);
                     }
                     if (trp.chooseItems) {
-                        divisor += sizeof(ushort);
+                        dividend += sizeof(ushort);
                     }
 
-                    int endval = Math.Min((int)(partyData.Length - 1 / divisor), trp.partyCount);
+                    int endval = Math.Min((int)(partyData.Length - 1 / dividend), trp.partyCount);
                     this.content = new PartyPokemon[maxPoke];
                     for (int i = 0; i < endval; i++) {
-                        ushort unknown1 = reader.ReadUInt16();
+                        byte difficulty = reader.ReadByte();
+                        GenderAndAbilityFlags genderAndAbilityFlags = (GenderAndAbilityFlags)reader.ReadByte();
                         ushort level = reader.ReadUInt16();
 
                         ushort monFull = reader.ReadUInt16();
@@ -234,11 +239,7 @@ namespace DSPRE.ROMFiles {
                             }
                         }
 
-                        if (RomInfo.gameFamily == RomInfo.gFamEnum.HGSS || RomInfo.gameFamily == RomInfo.gFamEnum.Plat) {
-                            content[i] = new PartyPokemon(unknown1, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves);
-                        } else {
-                            content[i] = new PartyPokemon(unknown1, level, pokemon, form_no, heldItem, moves); // Diamond and Pearl apparently dont save ball capsule data in enemy trainer pokedata!!!
-                        }
+                        content[i] = new PartyPokemon(difficulty, genderAndAbilityFlags, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves);
                     }
                     for (int i = endval; i < maxPoke; i++) {
                         content[i] = new PartyPokemon();
@@ -262,7 +263,12 @@ namespace DSPRE.ROMFiles {
                 return "Empty";
             } else {
                 string buffer = "";
-                byte nonEmptyCtr = CountNonEmptyMons();
+                byte nonEmptyCtr = 0;
+                foreach(PartyPokemon p in this.content) {
+                    if (!p.CheckEmpty()) {
+                        nonEmptyCtr++;
+                    }
+                }
                 buffer += nonEmptyCtr + " Poke ";
                 if (this.trp.chooseMoves) {
                     buffer += ", moves ";
@@ -273,18 +279,6 @@ namespace DSPRE.ROMFiles {
                 return buffer;
             }
         }
-
-        public byte CountNonEmptyMons() {
-            byte nonEmptyCtr = 0;
-            foreach (PartyPokemon p in this.content) {
-                if (!p.CheckEmpty()) {
-                    nonEmptyCtr++;
-                }
-            }
-
-            return nonEmptyCtr;
-        }
-
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
@@ -308,7 +302,6 @@ namespace DSPRE.ROMFiles {
     public class TrainerFile : RomFile {
         public const int POKE_IN_PARTY = 6;
         public static readonly string NAME_NOT_FOUND = "NAME READ ERROR";
-        public static int maxNameLen = 7;
 
         #region Fields
         public string name;
@@ -335,6 +328,7 @@ namespace DSPRE.ROMFiles {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write(name);
+
                 byte[] trDat = trp.ToByteArray();
                 writer.Write((byte)trDat.Length);
                 writer.Write(trDat);
@@ -348,8 +342,7 @@ namespace DSPRE.ROMFiles {
 
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
             SaveToFileExplorePath("Gen IV Trainer File", "trf", suggestedFileName, showSuccessMessage);
-        }      
-
+        }
         #endregion
 
     }
