@@ -56,6 +56,7 @@ namespace DSPRE {
         public static uint monIconPalTableAddress { get; private set; }
 
         public static int nullEncounterID { get; private set; }
+        public static int abilityNamesTextNumber { get; private set; }
         public static int attackNamesTextNumber { get; private set; }
         public static int[] pokemonNamesTextNumbers { get; private set; }
         public static int itemNamesTextNumber { get; private set; }
@@ -109,6 +110,8 @@ namespace DSPRE {
             German
         }
         public enum DirNames : byte {
+            speciesData,
+
             synthOverlay,            
             dynamicHeaders,
             
@@ -169,6 +172,7 @@ namespace DSPRE {
             SetHeaderTableOffset();
             SetNullEncounterID();
 
+            SetAbilityNamesTextNumber();
             SetAttackNamesTextNumber();
             SetPokemonNamesTextNumber();
             SetItemNamesTextNumber();
@@ -752,6 +756,25 @@ namespace DSPRE {
                     break;
             }
         }
+
+        private void SetAbilityNamesTextNumber()
+        {
+            switch (gameFamily)
+            {
+                case gFamEnum.DP:
+                    abilityNamesTextNumber = 552;
+                    break;
+                case gFamEnum.Plat:
+                    abilityNamesTextNumber = 610;
+                    break;
+                case gFamEnum.HGSS:
+                    abilityNamesTextNumber = 720;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private void SetAttackNamesTextNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
@@ -855,6 +878,7 @@ namespace DSPRE {
             return itemNames.messages.GetRange(startIndex, count == null ? itemNames.messages.Count-1 : (int)count).ToArray();
         }
         public static string[] GetPokemonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
+        public static string[] GetAbilityNames() => new TextArchive(abilityNamesTextNumber).messages.ToArray();
         public static string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
         public int GetAreaDataCount() => Directory.GetFiles(gameDirs[DirNames.areaData].unpackedDir).Length;
         public int GetMapTexturesCount() => Directory.GetFiles(gameDirs[DirNames.mapTextures].unpackedDir).Length;
@@ -941,6 +965,7 @@ namespace DSPRE {
                         suffix = "_release";
 
                     packedDirsDict = new Dictionary<DirNames, string>() {
+                        [DirNames.speciesData] = @"data\poketool\personal\personal.narc",
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.textArchives] = @"data\msgdata\msg.narc",
 
@@ -969,6 +994,7 @@ namespace DSPRE {
                     break;
                 case gFamEnum.Plat:
                     packedDirsDict = new Dictionary<DirNames, string>() {
+                        [DirNames.speciesData] = @"data\poketool\personal\pl_personal.narc",
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.dynamicHeaders] = @"data\debug\cb_edit\d_test.narc",
 
@@ -999,6 +1025,7 @@ namespace DSPRE {
                     break;
                 case gFamEnum.HGSS:
                     packedDirsDict = new Dictionary<DirNames, string>() {
+                        [DirNames.speciesData] = @"data\a\0\0\2",
                         [DirNames.synthOverlay] = @"data\a\0\2\8",
                         [DirNames.dynamicHeaders] = @"data\a\0\5\0",
 

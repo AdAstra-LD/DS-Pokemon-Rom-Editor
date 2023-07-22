@@ -30,22 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
             this.removeLastHeaderBTN = new System.Windows.Forms.Button();
@@ -386,6 +386,7 @@
             this.spawnableScriptUpDown = new System.Windows.Forms.NumericUpDown();
             this.spawnablesListBox = new System.Windows.Forms.ListBox();
             this.overworldsTabPage = new System.Windows.Forms.TabPage();
+            this.sortOWsByIDDescButton = new System.Windows.Forms.Button();
             this.sortOWsByIDAscButton = new System.Windows.Forms.Button();
             this.groupBox22 = new System.Windows.Forms.GroupBox();
             this.normalRadioButton = new System.Windows.Forms.RadioButton();
@@ -631,6 +632,8 @@
             this.addTrainerButton = new System.Windows.Forms.Button();
             this.groupBox28 = new System.Windows.Forms.GroupBox();
             this.party6GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyAbility6ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender6ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox6 = new System.Windows.Forms.PictureBox();
             this.label60 = new System.Windows.Forms.Label();
             this.label61 = new System.Windows.Forms.Label();
@@ -647,6 +650,8 @@
             this.partyPokemon6PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon6ComboBox = new DSPRE.InputComboBox();
             this.party5GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyAbility5ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender5ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox5 = new System.Windows.Forms.PictureBox();
             this.label57 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
@@ -663,6 +668,8 @@
             this.partyPokemon5PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon5ComboBox = new DSPRE.InputComboBox();
             this.party4GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyAbility4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender4ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox4 = new System.Windows.Forms.PictureBox();
             this.label54 = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
@@ -679,6 +686,8 @@
             this.partyPokemon4PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon4ComboBox = new DSPRE.InputComboBox();
             this.party3GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyAbility3ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender3ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox3 = new System.Windows.Forms.PictureBox();
             this.label51 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
@@ -695,6 +704,8 @@
             this.partyPokemon3PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon3ComboBox = new DSPRE.InputComboBox();
             this.party2GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyAbility2ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender2ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox2 = new System.Windows.Forms.PictureBox();
             this.label48 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
@@ -711,6 +722,7 @@
             this.partyPokemon2PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon2ComboBox = new DSPRE.InputComboBox();
             this.party1GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyAbility1ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox1 = new System.Windows.Forms.PictureBox();
             this.label47 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
@@ -883,7 +895,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.directoryEntry2 = new System.DirectoryServices.DirectoryEntry();
-            this.sortOWsByIDDescButton = new System.Windows.Forms.Button();
+            this.partyGender1ComboBox = new System.Windows.Forms.ComboBox();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -1151,7 +1163,7 @@
             this.mainTabControl.Location = new System.Drawing.Point(11, 72);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(1193, 646);
+            this.mainTabControl.Size = new System.Drawing.Size(1193, 730);
             this.mainTabControl.TabIndex = 5;
             this.mainTabControl.Visible = false;
             this.mainTabControl.SelectedIndexChanged += new System.EventHandler(this.mainTabControl_SelectedIndexChanged);
@@ -1186,7 +1198,7 @@
             this.headerEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.headerEditorTabPage.Name = "headerEditorTabPage";
             this.headerEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.headerEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.headerEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.headerEditorTabPage.TabIndex = 0;
             this.headerEditorTabPage.Text = "Header Editor";
             // 
@@ -2574,7 +2586,7 @@
             this.matrixEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.matrixEditorTabPage.Name = "matrixEditorTabPage";
             this.matrixEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.matrixEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.matrixEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.matrixEditorTabPage.TabIndex = 1;
             this.matrixEditorTabPage.Text = "Matrix Editor";
             // 
@@ -2595,7 +2607,7 @@
             this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
             this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.setSpawnPointButton.Location = new System.Drawing.Point(11, 521);
+            this.setSpawnPointButton.Location = new System.Drawing.Point(11, 605);
             this.setSpawnPointButton.Name = "setSpawnPointButton";
             this.setSpawnPointButton.Size = new System.Drawing.Size(117, 43);
             this.setSpawnPointButton.TabIndex = 32;
@@ -2767,7 +2779,7 @@
             this.matrixTabControl.Multiline = true;
             this.matrixTabControl.Name = "matrixTabControl";
             this.matrixTabControl.SelectedIndex = 0;
-            this.matrixTabControl.Size = new System.Drawing.Size(1040, 602);
+            this.matrixTabControl.Size = new System.Drawing.Size(1040, 686);
             this.matrixTabControl.TabIndex = 18;
             // 
             // headersTabPage
@@ -2776,7 +2788,7 @@
             this.headersTabPage.Location = new System.Drawing.Point(4, 22);
             this.headersTabPage.Name = "headersTabPage";
             this.headersTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.headersTabPage.Size = new System.Drawing.Size(1032, 576);
+            this.headersTabPage.Size = new System.Drawing.Size(1032, 660);
             this.headersTabPage.TabIndex = 1;
             this.headersTabPage.Text = "Map Headers";
             this.headersTabPage.UseVisualStyleBackColor = true;
@@ -2788,40 +2800,40 @@
             this.headersGridView.AllowUserToResizeColumns = false;
             this.headersGridView.AllowUserToResizeRows = false;
             this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle33.ForeColor = System.Drawing.SystemColors.Info;
-            dataGridViewCellStyle33.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle33.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle34.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle34.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle34.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle34.Format = "D4";
-            dataGridViewCellStyle34.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle34;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.Format = "D4";
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.headersGridView.Location = new System.Drawing.Point(0, 0);
             this.headersGridView.MultiSelect = false;
             this.headersGridView.Name = "headersGridView";
-            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle35.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle35.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle35.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle35.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle35.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle35;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.headersGridView.RowHeadersWidth = 50;
             this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle36.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle36;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.headersGridView.RowTemplate.Height = 18;
             this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -2839,7 +2851,7 @@
             this.heightsTabPage.Controls.Add(this.heightsGridView);
             this.heightsTabPage.Location = new System.Drawing.Point(4, 22);
             this.heightsTabPage.Name = "heightsTabPage";
-            this.heightsTabPage.Size = new System.Drawing.Size(1032, 576);
+            this.heightsTabPage.Size = new System.Drawing.Size(1032, 660);
             this.heightsTabPage.TabIndex = 2;
             this.heightsTabPage.Text = "Map Heights";
             this.heightsTabPage.UseVisualStyleBackColor = true;
@@ -2850,43 +2862,43 @@
             this.heightsGridView.AllowUserToDeleteRows = false;
             this.heightsGridView.AllowUserToResizeColumns = false;
             this.heightsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle38.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle38.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle39.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle39.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            dataGridViewCellStyle39.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle39.Format = "D2";
-            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle39;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.Format = "D2";
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle7;
             this.heightsGridView.Location = new System.Drawing.Point(0, 0);
             this.heightsGridView.MultiSelect = false;
             this.heightsGridView.Name = "heightsGridView";
-            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle40.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle40.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle40.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle40.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle40.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle40;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.heightsGridView.RowHeadersWidth = 50;
             this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle41.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle41;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.heightsGridView.RowTemplate.Height = 18;
             this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -2902,7 +2914,7 @@
             this.mapFilesTabPage.Controls.Add(this.mapFilesGridView);
             this.mapFilesTabPage.Location = new System.Drawing.Point(4, 22);
             this.mapFilesTabPage.Name = "mapFilesTabPage";
-            this.mapFilesTabPage.Size = new System.Drawing.Size(1032, 576);
+            this.mapFilesTabPage.Size = new System.Drawing.Size(1032, 660);
             this.mapFilesTabPage.TabIndex = 3;
             this.mapFilesTabPage.Text = "Map Files";
             this.mapFilesTabPage.UseVisualStyleBackColor = true;
@@ -2913,43 +2925,43 @@
             this.mapFilesGridView.AllowUserToDeleteRows = false;
             this.mapFilesGridView.AllowUserToResizeColumns = false;
             this.mapFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle42;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle43.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle43.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle43.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle43.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle43.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle43.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle43;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle44.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle44.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle44.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle44.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle44.Format = "D4";
-            dataGridViewCellStyle44.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle44.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle44.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle44;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle12.Format = "D4";
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle12;
             this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
             this.mapFilesGridView.MultiSelect = false;
             this.mapFilesGridView.Name = "mapFilesGridView";
-            dataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle45.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle45.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle45.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle45.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle45.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle45.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle45;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.mapFilesGridView.RowHeadersWidth = 50;
             this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle46.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle46.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle46;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle14;
             this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.mapFilesGridView.RowTemplate.Height = 18;
             this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -3042,7 +3054,7 @@
             this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.saveMatrixButton.Location = new System.Drawing.Point(11, 566);
+            this.saveMatrixButton.Location = new System.Drawing.Point(11, 650);
             this.saveMatrixButton.Name = "saveMatrixButton";
             this.saveMatrixButton.Size = new System.Drawing.Size(117, 43);
             this.saveMatrixButton.TabIndex = 22;
@@ -3071,7 +3083,7 @@
             this.mapEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.mapEditorTabPage.Name = "mapEditorTabPage";
             this.mapEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.mapEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.mapEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.mapEditorTabPage.TabIndex = 2;
             this.mapEditorTabPage.Text = "Map Editor";
             this.mapEditorTabPage.Enter += new System.EventHandler(this.mapEditorTabPage_Enter);
@@ -4365,7 +4377,7 @@
             this.radio3D.AutoSize = true;
             this.radio3D.Checked = true;
             this.radio3D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio3D.Location = new System.Drawing.Point(1140, 542);
+            this.radio3D.Location = new System.Drawing.Point(1140, 626);
             this.radio3D.Name = "radio3D";
             this.radio3D.Size = new System.Drawing.Size(31, 23);
             this.radio3D.TabIndex = 26;
@@ -4380,7 +4392,7 @@
             this.radio2D.Appearance = System.Windows.Forms.Appearance.Button;
             this.radio2D.AutoSize = true;
             this.radio2D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio2D.Location = new System.Drawing.Point(1140, 566);
+            this.radio2D.Location = new System.Drawing.Point(1140, 650);
             this.radio2D.Name = "radio2D";
             this.radio2D.Size = new System.Drawing.Size(31, 23);
             this.radio2D.TabIndex = 25;
@@ -4395,7 +4407,7 @@
             this.wireframeCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.wireframeCheckBox.AutoSize = true;
             this.wireframeCheckBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, 590);
+            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, 674);
             this.wireframeCheckBox.Name = "wireframeCheckBox";
             this.wireframeCheckBox.Size = new System.Drawing.Size(31, 23);
             this.wireframeCheckBox.TabIndex = 27;
@@ -4410,7 +4422,7 @@
             this.nsbtxEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.nsbtxEditorTabPage.Name = "nsbtxEditorTabPage";
             this.nsbtxEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.nsbtxEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.nsbtxEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.nsbtxEditorTabPage.TabIndex = 6;
             this.nsbtxEditorTabPage.Text = "NSBTX Editor";
             this.nsbtxEditorTabPage.UseVisualStyleBackColor = true;
@@ -4951,7 +4963,7 @@
             this.eventEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.eventEditorTabPage.Name = "eventEditorTabPage";
             this.eventEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.eventEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.eventEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.eventEditorTabPage.TabIndex = 3;
             this.eventEditorTabPage.Text = "Event Editor";
             this.eventEditorTabPage.Enter += new System.EventHandler(this.eventEditorTabPage_Enter);
@@ -5510,6 +5522,19 @@
             this.overworldsTabPage.TabIndex = 1;
             this.overworldsTabPage.Text = "Overworlds";
             this.overworldsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // sortOWsByIDDescButton
+            // 
+            this.sortOWsByIDDescButton.Image = global::DSPRE.Properties.Resources.sortDescending;
+            this.sortOWsByIDDescButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.sortOWsByIDDescButton.Location = new System.Drawing.Point(102, 9);
+            this.sortOWsByIDDescButton.Name = "sortOWsByIDDescButton";
+            this.sortOWsByIDDescButton.Size = new System.Drawing.Size(86, 28);
+            this.sortOWsByIDDescButton.TabIndex = 30;
+            this.sortOWsByIDDescButton.Text = "Sort Desc";
+            this.sortOWsByIDDescButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.sortOWsByIDDescButton.UseVisualStyleBackColor = true;
+            this.sortOWsByIDDescButton.Click += new System.EventHandler(this.sortOWsByIDDescButton_Click);
             // 
             // sortOWsByIDAscButton
             // 
@@ -6983,7 +7008,7 @@
             this.scriptEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.scriptEditorTabPage.Name = "scriptEditorTabPage";
             this.scriptEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.scriptEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.scriptEditorTabPage.TabIndex = 4;
             this.scriptEditorTabPage.Text = "Script Editor";
             this.scriptEditorTabPage.UseVisualStyleBackColor = true;
@@ -7722,7 +7747,7 @@
             this.textEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.textEditorTabPage.Name = "textEditorTabPage";
             this.textEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.textEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.textEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.textEditorTabPage.TabIndex = 5;
             this.textEditorTabPage.Text = "Text Editor";
             this.textEditorTabPage.UseVisualStyleBackColor = true;
@@ -8096,8 +8121,8 @@
             this.textEditorDataGridView.Location = new System.Drawing.Point(12, 77);
             this.textEditorDataGridView.Name = "textEditorDataGridView";
             this.textEditorDataGridView.RowHeadersWidth = 68;
-            dataGridViewCellStyle47.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle47;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.textEditorDataGridView.Size = new System.Drawing.Size(873, 500);
             this.textEditorDataGridView.TabIndex = 24;
             this.textEditorDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellValueChanged);
@@ -8146,7 +8171,7 @@
             this.cameraEditorTabPage.ImageIndex = 7;
             this.cameraEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.cameraEditorTabPage.Name = "cameraEditorTabPage";
-            this.cameraEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.cameraEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.cameraEditorTabPage.TabIndex = 7;
             this.cameraEditorTabPage.Text = "Camera Editor";
             this.cameraEditorTabPage.UseVisualStyleBackColor = true;
@@ -8200,9 +8225,9 @@
             this.cameraEditorDataGridView.CausesValidation = false;
             this.cameraEditorDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.cameraEditorDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle48.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle48.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle48;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.cameraEditorDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.cameraEditorDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DistanceGVCol,
@@ -8340,7 +8365,7 @@
             this.trainerEditorTabPage.ImageIndex = 8;
             this.trainerEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.trainerEditorTabPage.Name = "trainerEditorTabPage";
-            this.trainerEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.trainerEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.trainerEditorTabPage.TabIndex = 8;
             this.trainerEditorTabPage.Text = "Trainer Editor";
             this.trainerEditorTabPage.UseVisualStyleBackColor = true;
@@ -8507,13 +8532,15 @@
             this.groupBox28.Controls.Add(this.party1GroupBox);
             this.groupBox28.Location = new System.Drawing.Point(439, 75);
             this.groupBox28.Name = "groupBox28";
-            this.groupBox28.Size = new System.Drawing.Size(731, 534);
+            this.groupBox28.Size = new System.Drawing.Size(731, 625);
             this.groupBox28.TabIndex = 32;
             this.groupBox28.TabStop = false;
             this.groupBox28.Text = "Party";
             // 
             // party6GroupBox
             // 
+            this.party6GroupBox.Controls.Add(this.partyAbility6ComboBox);
+            this.party6GroupBox.Controls.Add(this.partyGender6ComboBox);
             this.party6GroupBox.Controls.Add(this.partyPokemonItemPictureBox6);
             this.party6GroupBox.Controls.Add(this.label60);
             this.party6GroupBox.Controls.Add(this.label61);
@@ -8526,12 +8553,34 @@
             this.party6GroupBox.Controls.Add(this.partyPokemon6PictureBox);
             this.party6GroupBox.Controls.Add(this.partyPokemon6ComboBox);
             this.party6GroupBox.Enabled = false;
-            this.party6GroupBox.Location = new System.Drawing.Point(371, 355);
+            this.party6GroupBox.Location = new System.Drawing.Point(371, 418);
             this.party6GroupBox.Name = "party6GroupBox";
-            this.party6GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party6GroupBox.Size = new System.Drawing.Size(343, 189);
             this.party6GroupBox.TabIndex = 13;
             this.party6GroupBox.TabStop = false;
             this.party6GroupBox.Text = "Pokemon 6";
+            // 
+            // partyAbility6ComboBox
+            // 
+            this.partyAbility6ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility6ComboBox.FormattingEnabled = true;
+            this.partyAbility6ComboBox.Location = new System.Drawing.Point(15, 157);
+            this.partyAbility6ComboBox.Name = "partyAbility6ComboBox";
+            this.partyAbility6ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility6ComboBox.TabIndex = 19;
+            // 
+            // partyGender6ComboBox
+            // 
+            this.partyGender6ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender6ComboBox.FormattingEnabled = true;
+            this.partyGender6ComboBox.Items.AddRange(new object[] {
+            "Default Gender",
+            "Force Male",
+            "Force Female"});
+            this.partyGender6ComboBox.Location = new System.Drawing.Point(154, 157);
+            this.partyGender6ComboBox.Name = "partyGender6ComboBox";
+            this.partyGender6ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender6ComboBox.TabIndex = 15;
             // 
             // partyPokemonItemPictureBox6
             // 
@@ -8585,6 +8634,8 @@
             // 
             // partyMove6_1ComboBox
             // 
+            this.partyMove6_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove6_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove6_1ComboBox.Enabled = false;
             this.partyMove6_1ComboBox.FormattingEnabled = true;
             this.partyMove6_1ComboBox.Location = new System.Drawing.Point(10, 21);
@@ -8595,6 +8646,8 @@
             // 
             // partyMove6_2ComboBox
             // 
+            this.partyMove6_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove6_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove6_2ComboBox.Enabled = false;
             this.partyMove6_2ComboBox.FormattingEnabled = true;
             this.partyMove6_2ComboBox.Location = new System.Drawing.Point(116, 21);
@@ -8605,6 +8658,8 @@
             // 
             // partyMove6_3ComboBox
             // 
+            this.partyMove6_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove6_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove6_3ComboBox.Enabled = false;
             this.partyMove6_3ComboBox.FormattingEnabled = true;
             this.partyMove6_3ComboBox.Location = new System.Drawing.Point(10, 48);
@@ -8615,6 +8670,8 @@
             // 
             // partyMove6_4ComboBox
             // 
+            this.partyMove6_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove6_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove6_4ComboBox.Enabled = false;
             this.partyMove6_4ComboBox.FormattingEnabled = true;
             this.partyMove6_4ComboBox.Location = new System.Drawing.Point(116, 48);
@@ -8627,7 +8684,7 @@
             // 
             this.partyIV6UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV6UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -8666,6 +8723,8 @@
             // 
             // partyItem6ComboBox
             // 
+            this.partyItem6ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem6ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyItem6ComboBox.Enabled = false;
             this.partyItem6ComboBox.FormattingEnabled = true;
             this.partyItem6ComboBox.Location = new System.Drawing.Point(228, 28);
@@ -8685,6 +8744,8 @@
             // 
             // partyPokemon6ComboBox
             // 
+            this.partyPokemon6ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon6ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyPokemon6ComboBox.FormattingEnabled = true;
             this.partyPokemon6ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon6ComboBox.Name = "partyPokemon6ComboBox";
@@ -8694,6 +8755,8 @@
             // 
             // party5GroupBox
             // 
+            this.party5GroupBox.Controls.Add(this.partyAbility5ComboBox);
+            this.party5GroupBox.Controls.Add(this.partyGender5ComboBox);
             this.party5GroupBox.Controls.Add(this.partyPokemonItemPictureBox5);
             this.party5GroupBox.Controls.Add(this.label57);
             this.party5GroupBox.Controls.Add(this.label58);
@@ -8706,12 +8769,34 @@
             this.party5GroupBox.Controls.Add(this.partyPokemon5PictureBox);
             this.party5GroupBox.Controls.Add(this.partyPokemon5ComboBox);
             this.party5GroupBox.Enabled = false;
-            this.party5GroupBox.Location = new System.Drawing.Point(16, 355);
+            this.party5GroupBox.Location = new System.Drawing.Point(16, 418);
             this.party5GroupBox.Name = "party5GroupBox";
-            this.party5GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party5GroupBox.Size = new System.Drawing.Size(343, 189);
             this.party5GroupBox.TabIndex = 12;
             this.party5GroupBox.TabStop = false;
             this.party5GroupBox.Text = "Pokemon 5";
+            // 
+            // partyAbility5ComboBox
+            // 
+            this.partyAbility5ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility5ComboBox.FormattingEnabled = true;
+            this.partyAbility5ComboBox.Location = new System.Drawing.Point(15, 157);
+            this.partyAbility5ComboBox.Name = "partyAbility5ComboBox";
+            this.partyAbility5ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility5ComboBox.TabIndex = 18;
+            // 
+            // partyGender5ComboBox
+            // 
+            this.partyGender5ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender5ComboBox.FormattingEnabled = true;
+            this.partyGender5ComboBox.Items.AddRange(new object[] {
+            "Default Gender",
+            "Force Male",
+            "Force Female"});
+            this.partyGender5ComboBox.Location = new System.Drawing.Point(156, 157);
+            this.partyGender5ComboBox.Name = "partyGender5ComboBox";
+            this.partyGender5ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender5ComboBox.TabIndex = 14;
             // 
             // partyPokemonItemPictureBox5
             // 
@@ -8765,6 +8850,8 @@
             // 
             // partyMove5_1ComboBox
             // 
+            this.partyMove5_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove5_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove5_1ComboBox.Enabled = false;
             this.partyMove5_1ComboBox.FormattingEnabled = true;
             this.partyMove5_1ComboBox.Location = new System.Drawing.Point(10, 21);
@@ -8775,6 +8862,8 @@
             // 
             // partyMove5_2ComboBox
             // 
+            this.partyMove5_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove5_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove5_2ComboBox.Enabled = false;
             this.partyMove5_2ComboBox.FormattingEnabled = true;
             this.partyMove5_2ComboBox.Location = new System.Drawing.Point(116, 21);
@@ -8785,6 +8874,8 @@
             // 
             // partyMove5_3ComboBox
             // 
+            this.partyMove5_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove5_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove5_3ComboBox.Enabled = false;
             this.partyMove5_3ComboBox.FormattingEnabled = true;
             this.partyMove5_3ComboBox.Location = new System.Drawing.Point(10, 48);
@@ -8795,6 +8886,8 @@
             // 
             // partyMove5_4ComboBox
             // 
+            this.partyMove5_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove5_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove5_4ComboBox.Enabled = false;
             this.partyMove5_4ComboBox.FormattingEnabled = true;
             this.partyMove5_4ComboBox.Location = new System.Drawing.Point(116, 48);
@@ -8807,7 +8900,7 @@
             // 
             this.partyIV5UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV5UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -8846,6 +8939,8 @@
             // 
             // partyItem5ComboBox
             // 
+            this.partyItem5ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem5ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyItem5ComboBox.Enabled = false;
             this.partyItem5ComboBox.FormattingEnabled = true;
             this.partyItem5ComboBox.Location = new System.Drawing.Point(228, 28);
@@ -8865,6 +8960,8 @@
             // 
             // partyPokemon5ComboBox
             // 
+            this.partyPokemon5ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon5ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyPokemon5ComboBox.FormattingEnabled = true;
             this.partyPokemon5ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon5ComboBox.Name = "partyPokemon5ComboBox";
@@ -8874,6 +8971,8 @@
             // 
             // party4GroupBox
             // 
+            this.party4GroupBox.Controls.Add(this.partyAbility4ComboBox);
+            this.party4GroupBox.Controls.Add(this.partyGender4ComboBox);
             this.party4GroupBox.Controls.Add(this.partyPokemonItemPictureBox4);
             this.party4GroupBox.Controls.Add(this.label54);
             this.party4GroupBox.Controls.Add(this.label55);
@@ -8886,12 +8985,34 @@
             this.party4GroupBox.Controls.Add(this.partyPokemon4PictureBox);
             this.party4GroupBox.Controls.Add(this.partyPokemon4ComboBox);
             this.party4GroupBox.Enabled = false;
-            this.party4GroupBox.Location = new System.Drawing.Point(371, 189);
+            this.party4GroupBox.Location = new System.Drawing.Point(371, 225);
             this.party4GroupBox.Name = "party4GroupBox";
-            this.party4GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party4GroupBox.Size = new System.Drawing.Size(343, 185);
             this.party4GroupBox.TabIndex = 11;
             this.party4GroupBox.TabStop = false;
             this.party4GroupBox.Text = "Pokemon 4";
+            // 
+            // partyAbility4ComboBox
+            // 
+            this.partyAbility4ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility4ComboBox.FormattingEnabled = true;
+            this.partyAbility4ComboBox.Location = new System.Drawing.Point(15, 157);
+            this.partyAbility4ComboBox.Name = "partyAbility4ComboBox";
+            this.partyAbility4ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility4ComboBox.TabIndex = 17;
+            // 
+            // partyGender4ComboBox
+            // 
+            this.partyGender4ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender4ComboBox.FormattingEnabled = true;
+            this.partyGender4ComboBox.Items.AddRange(new object[] {
+            "Default Gender",
+            "Force Male",
+            "Force Female"});
+            this.partyGender4ComboBox.Location = new System.Drawing.Point(154, 157);
+            this.partyGender4ComboBox.Name = "partyGender4ComboBox";
+            this.partyGender4ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender4ComboBox.TabIndex = 16;
             // 
             // partyPokemonItemPictureBox4
             // 
@@ -8945,6 +9066,8 @@
             // 
             // partyMove4_1ComboBox
             // 
+            this.partyMove4_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove4_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove4_1ComboBox.Enabled = false;
             this.partyMove4_1ComboBox.FormattingEnabled = true;
             this.partyMove4_1ComboBox.Location = new System.Drawing.Point(10, 21);
@@ -8955,6 +9078,8 @@
             // 
             // partyMove4_2ComboBox
             // 
+            this.partyMove4_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove4_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove4_2ComboBox.Enabled = false;
             this.partyMove4_2ComboBox.FormattingEnabled = true;
             this.partyMove4_2ComboBox.Location = new System.Drawing.Point(116, 21);
@@ -8965,6 +9090,8 @@
             // 
             // partyMove4_3ComboBox
             // 
+            this.partyMove4_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove4_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove4_3ComboBox.Enabled = false;
             this.partyMove4_3ComboBox.FormattingEnabled = true;
             this.partyMove4_3ComboBox.Location = new System.Drawing.Point(10, 48);
@@ -8975,6 +9102,8 @@
             // 
             // partyMove4_4ComboBox
             // 
+            this.partyMove4_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove4_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove4_4ComboBox.Enabled = false;
             this.partyMove4_4ComboBox.FormattingEnabled = true;
             this.partyMove4_4ComboBox.Location = new System.Drawing.Point(116, 48);
@@ -8987,7 +9116,7 @@
             // 
             this.partyIV4UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV4UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -9026,6 +9155,8 @@
             // 
             // partyItem4ComboBox
             // 
+            this.partyItem4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyItem4ComboBox.Enabled = false;
             this.partyItem4ComboBox.FormattingEnabled = true;
             this.partyItem4ComboBox.Location = new System.Drawing.Point(228, 28);
@@ -9045,6 +9176,8 @@
             // 
             // partyPokemon4ComboBox
             // 
+            this.partyPokemon4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyPokemon4ComboBox.FormattingEnabled = true;
             this.partyPokemon4ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon4ComboBox.Name = "partyPokemon4ComboBox";
@@ -9054,6 +9187,8 @@
             // 
             // party3GroupBox
             // 
+            this.party3GroupBox.Controls.Add(this.partyAbility3ComboBox);
+            this.party3GroupBox.Controls.Add(this.partyGender3ComboBox);
             this.party3GroupBox.Controls.Add(this.partyPokemonItemPictureBox3);
             this.party3GroupBox.Controls.Add(this.label51);
             this.party3GroupBox.Controls.Add(this.label52);
@@ -9066,12 +9201,34 @@
             this.party3GroupBox.Controls.Add(this.partyPokemon3PictureBox);
             this.party3GroupBox.Controls.Add(this.partyPokemon3ComboBox);
             this.party3GroupBox.Enabled = false;
-            this.party3GroupBox.Location = new System.Drawing.Point(16, 189);
+            this.party3GroupBox.Location = new System.Drawing.Point(16, 225);
             this.party3GroupBox.Name = "party3GroupBox";
-            this.party3GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party3GroupBox.Size = new System.Drawing.Size(343, 187);
             this.party3GroupBox.TabIndex = 10;
             this.party3GroupBox.TabStop = false;
             this.party3GroupBox.Text = "Pokemon 3";
+            // 
+            // partyAbility3ComboBox
+            // 
+            this.partyAbility3ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility3ComboBox.FormattingEnabled = true;
+            this.partyAbility3ComboBox.Location = new System.Drawing.Point(15, 157);
+            this.partyAbility3ComboBox.Name = "partyAbility3ComboBox";
+            this.partyAbility3ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility3ComboBox.TabIndex = 14;
+            // 
+            // partyGender3ComboBox
+            // 
+            this.partyGender3ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender3ComboBox.FormattingEnabled = true;
+            this.partyGender3ComboBox.Items.AddRange(new object[] {
+            "Default Gender",
+            "Force Male",
+            "Force Female"});
+            this.partyGender3ComboBox.Location = new System.Drawing.Point(156, 157);
+            this.partyGender3ComboBox.Name = "partyGender3ComboBox";
+            this.partyGender3ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender3ComboBox.TabIndex = 13;
             // 
             // partyPokemonItemPictureBox3
             // 
@@ -9125,6 +9282,8 @@
             // 
             // partyMove3_1ComboBox
             // 
+            this.partyMove3_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove3_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove3_1ComboBox.Enabled = false;
             this.partyMove3_1ComboBox.FormattingEnabled = true;
             this.partyMove3_1ComboBox.Location = new System.Drawing.Point(10, 21);
@@ -9135,6 +9294,8 @@
             // 
             // partyMove3_2ComboBox
             // 
+            this.partyMove3_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove3_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove3_2ComboBox.Enabled = false;
             this.partyMove3_2ComboBox.FormattingEnabled = true;
             this.partyMove3_2ComboBox.Location = new System.Drawing.Point(116, 21);
@@ -9145,6 +9306,8 @@
             // 
             // partyMove3_3ComboBox
             // 
+            this.partyMove3_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove3_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove3_3ComboBox.Enabled = false;
             this.partyMove3_3ComboBox.FormattingEnabled = true;
             this.partyMove3_3ComboBox.Location = new System.Drawing.Point(10, 48);
@@ -9155,6 +9318,8 @@
             // 
             // partyMove3_4ComboBox
             // 
+            this.partyMove3_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove3_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove3_4ComboBox.Enabled = false;
             this.partyMove3_4ComboBox.FormattingEnabled = true;
             this.partyMove3_4ComboBox.Location = new System.Drawing.Point(116, 48);
@@ -9167,7 +9332,7 @@
             // 
             this.partyIV3UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV3UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -9206,6 +9371,8 @@
             // 
             // partyItem3ComboBox
             // 
+            this.partyItem3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyItem3ComboBox.Enabled = false;
             this.partyItem3ComboBox.FormattingEnabled = true;
             this.partyItem3ComboBox.Location = new System.Drawing.Point(228, 28);
@@ -9225,6 +9392,8 @@
             // 
             // partyPokemon3ComboBox
             // 
+            this.partyPokemon3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyPokemon3ComboBox.FormattingEnabled = true;
             this.partyPokemon3ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon3ComboBox.Name = "partyPokemon3ComboBox";
@@ -9234,6 +9403,8 @@
             // 
             // party2GroupBox
             // 
+            this.party2GroupBox.Controls.Add(this.partyAbility2ComboBox);
+            this.party2GroupBox.Controls.Add(this.partyGender2ComboBox);
             this.party2GroupBox.Controls.Add(this.partyPokemonItemPictureBox2);
             this.party2GroupBox.Controls.Add(this.label48);
             this.party2GroupBox.Controls.Add(this.label49);
@@ -9248,10 +9419,32 @@
             this.party2GroupBox.Enabled = false;
             this.party2GroupBox.Location = new System.Drawing.Point(371, 23);
             this.party2GroupBox.Name = "party2GroupBox";
-            this.party2GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party2GroupBox.Size = new System.Drawing.Size(343, 196);
             this.party2GroupBox.TabIndex = 10;
             this.party2GroupBox.TabStop = false;
             this.party2GroupBox.Text = "Pokemon 2";
+            // 
+            // partyAbility2ComboBox
+            // 
+            this.partyAbility2ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility2ComboBox.FormattingEnabled = true;
+            this.partyAbility2ComboBox.Location = new System.Drawing.Point(15, 162);
+            this.partyAbility2ComboBox.Name = "partyAbility2ComboBox";
+            this.partyAbility2ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility2ComboBox.TabIndex = 18;
+            // 
+            // partyGender2ComboBox
+            // 
+            this.partyGender2ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender2ComboBox.FormattingEnabled = true;
+            this.partyGender2ComboBox.Items.AddRange(new object[] {
+            "Default Gender",
+            "Force Male",
+            "Force Female"});
+            this.partyGender2ComboBox.Location = new System.Drawing.Point(154, 162);
+            this.partyGender2ComboBox.Name = "partyGender2ComboBox";
+            this.partyGender2ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender2ComboBox.TabIndex = 17;
             // 
             // partyPokemonItemPictureBox2
             // 
@@ -9305,6 +9498,8 @@
             // 
             // partyMove2_1ComboBox
             // 
+            this.partyMove2_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove2_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove2_1ComboBox.Enabled = false;
             this.partyMove2_1ComboBox.FormattingEnabled = true;
             this.partyMove2_1ComboBox.Location = new System.Drawing.Point(10, 21);
@@ -9315,6 +9510,8 @@
             // 
             // partyMove2_2ComboBox
             // 
+            this.partyMove2_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove2_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove2_2ComboBox.Enabled = false;
             this.partyMove2_2ComboBox.FormattingEnabled = true;
             this.partyMove2_2ComboBox.Location = new System.Drawing.Point(116, 21);
@@ -9325,6 +9522,8 @@
             // 
             // partyMove2_3ComboBox
             // 
+            this.partyMove2_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove2_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove2_3ComboBox.Enabled = false;
             this.partyMove2_3ComboBox.FormattingEnabled = true;
             this.partyMove2_3ComboBox.Location = new System.Drawing.Point(10, 48);
@@ -9335,6 +9534,8 @@
             // 
             // partyMove2_4ComboBox
             // 
+            this.partyMove2_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove2_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove2_4ComboBox.Enabled = false;
             this.partyMove2_4ComboBox.FormattingEnabled = true;
             this.partyMove2_4ComboBox.Location = new System.Drawing.Point(116, 48);
@@ -9347,7 +9548,7 @@
             // 
             this.partyIV2UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV2UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -9386,6 +9587,8 @@
             // 
             // partyItem2ComboBox
             // 
+            this.partyItem2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyItem2ComboBox.Enabled = false;
             this.partyItem2ComboBox.FormattingEnabled = true;
             this.partyItem2ComboBox.Location = new System.Drawing.Point(228, 28);
@@ -9405,6 +9608,8 @@
             // 
             // partyPokemon2ComboBox
             // 
+            this.partyPokemon2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyPokemon2ComboBox.FormattingEnabled = true;
             this.partyPokemon2ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon2ComboBox.Name = "partyPokemon2ComboBox";
@@ -9414,6 +9619,8 @@
             // 
             // party1GroupBox
             // 
+            this.party1GroupBox.Controls.Add(this.partyAbility1ComboBox);
+            this.party1GroupBox.Controls.Add(this.partyGender1ComboBox);
             this.party1GroupBox.Controls.Add(this.partyPokemonItemPictureBox1);
             this.party1GroupBox.Controls.Add(this.label47);
             this.party1GroupBox.Controls.Add(this.label46);
@@ -9428,10 +9635,19 @@
             this.party1GroupBox.Enabled = false;
             this.party1GroupBox.Location = new System.Drawing.Point(16, 23);
             this.party1GroupBox.Name = "party1GroupBox";
-            this.party1GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party1GroupBox.Size = new System.Drawing.Size(343, 196);
             this.party1GroupBox.TabIndex = 0;
             this.party1GroupBox.TabStop = false;
             this.party1GroupBox.Text = "Pokemon 1";
+            // 
+            // partyAbility1ComboBox
+            // 
+            this.partyAbility1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility1ComboBox.FormattingEnabled = true;
+            this.partyAbility1ComboBox.Location = new System.Drawing.Point(15, 162);
+            this.partyAbility1ComboBox.Name = "partyAbility1ComboBox";
+            this.partyAbility1ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility1ComboBox.TabIndex = 13;
             // 
             // partyPokemonItemPictureBox1
             // 
@@ -9485,6 +9701,8 @@
             // 
             // partyMove1_1ComboBox
             // 
+            this.partyMove1_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove1_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove1_1ComboBox.Enabled = false;
             this.partyMove1_1ComboBox.FormattingEnabled = true;
             this.partyMove1_1ComboBox.Location = new System.Drawing.Point(10, 21);
@@ -9495,6 +9713,8 @@
             // 
             // partyMove1_2ComboBox
             // 
+            this.partyMove1_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove1_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove1_2ComboBox.Enabled = false;
             this.partyMove1_2ComboBox.FormattingEnabled = true;
             this.partyMove1_2ComboBox.Location = new System.Drawing.Point(116, 21);
@@ -9505,6 +9725,8 @@
             // 
             // partyMove1_3ComboBox
             // 
+            this.partyMove1_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove1_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove1_3ComboBox.Enabled = false;
             this.partyMove1_3ComboBox.FormattingEnabled = true;
             this.partyMove1_3ComboBox.Location = new System.Drawing.Point(10, 48);
@@ -9515,6 +9737,8 @@
             // 
             // partyMove1_4ComboBox
             // 
+            this.partyMove1_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove1_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove1_4ComboBox.Enabled = false;
             this.partyMove1_4ComboBox.FormattingEnabled = true;
             this.partyMove1_4ComboBox.Location = new System.Drawing.Point(116, 48);
@@ -9527,7 +9751,7 @@
             // 
             this.partyIV1UpDown.Location = new System.Drawing.Point(48, 98);
             this.partyIV1UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -9566,6 +9790,8 @@
             // 
             // partyItem1ComboBox
             // 
+            this.partyItem1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyItem1ComboBox.Enabled = false;
             this.partyItem1ComboBox.FormattingEnabled = true;
             this.partyItem1ComboBox.Location = new System.Drawing.Point(228, 28);
@@ -9585,6 +9811,8 @@
             // 
             // partyPokemon1ComboBox
             // 
+            this.partyPokemon1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyPokemon1ComboBox.FormattingEnabled = true;
             this.partyPokemon1ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon1ComboBox.Name = "partyPokemon1ComboBox";
@@ -9885,6 +10113,8 @@
             // 
             // trainerItem1ComboBox
             // 
+            this.trainerItem1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.trainerItem1ComboBox.FormattingEnabled = true;
             this.trainerItem1ComboBox.Location = new System.Drawing.Point(9, 20);
             this.trainerItem1ComboBox.Name = "trainerItem1ComboBox";
@@ -9893,6 +10123,8 @@
             // 
             // trainerItem2ComboBox
             // 
+            this.trainerItem2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.trainerItem2ComboBox.FormattingEnabled = true;
             this.trainerItem2ComboBox.Location = new System.Drawing.Point(9, 47);
             this.trainerItem2ComboBox.Name = "trainerItem2ComboBox";
@@ -9901,6 +10133,8 @@
             // 
             // trainerItem3ComboBox
             // 
+            this.trainerItem3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.trainerItem3ComboBox.FormattingEnabled = true;
             this.trainerItem3ComboBox.Location = new System.Drawing.Point(9, 74);
             this.trainerItem3ComboBox.Name = "trainerItem3ComboBox";
@@ -9909,6 +10143,8 @@
             // 
             // trainerItem4ComboBox
             // 
+            this.trainerItem4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.trainerItem4ComboBox.FormattingEnabled = true;
             this.trainerItem4ComboBox.Location = new System.Drawing.Point(9, 101);
             this.trainerItem4ComboBox.Name = "trainerItem4ComboBox";
@@ -10043,7 +10279,7 @@
             this.tableEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.tableEditorTabPage.Name = "tableEditorTabPage";
             this.tableEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tableEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.tableEditorTabPage.Size = new System.Drawing.Size(1185, 703);
             this.tableEditorTabPage.TabIndex = 9;
             this.tableEditorTabPage.Text = "Table Editor";
             this.tableEditorTabPage.UseVisualStyleBackColor = true;
@@ -10852,7 +11088,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
             this.toolStripProgressBar});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 721);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 805);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1214, 22);
             this.statusStrip1.TabIndex = 13;
@@ -11215,25 +11451,25 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // sortOWsByIDDescButton
+            // partyGender1ComboBox
             // 
-            this.sortOWsByIDDescButton.Image = global::DSPRE.Properties.Resources.sortDescending;
-            this.sortOWsByIDDescButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.sortOWsByIDDescButton.Location = new System.Drawing.Point(102, 9);
-            this.sortOWsByIDDescButton.Name = "sortOWsByIDDescButton";
-            this.sortOWsByIDDescButton.Size = new System.Drawing.Size(86, 28);
-            this.sortOWsByIDDescButton.TabIndex = 30;
-            this.sortOWsByIDDescButton.Text = "Sort Desc";
-            this.sortOWsByIDDescButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.sortOWsByIDDescButton.UseVisualStyleBackColor = true;
-            this.sortOWsByIDDescButton.Click += new System.EventHandler(this.sortOWsByIDDescButton_Click);
+            this.partyGender1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender1ComboBox.FormattingEnabled = true;
+            this.partyGender1ComboBox.Items.AddRange(new object[] {
+            "Default Gender",
+            "Force Male",
+            "Force Female"});
+            this.partyGender1ComboBox.Location = new System.Drawing.Point(156, 162);
+            this.partyGender1ComboBox.Name = "partyGender1ComboBox";
+            this.partyGender1ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender1ComboBox.TabIndex = 12;
             // 
             // MainProgram
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1214, 743);
+            this.ClientSize = new System.Drawing.Size(1214, 827);
             this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.languageLabel);
             this.Controls.Add(this.gameIcon);
@@ -12412,6 +12648,18 @@
         private System.Windows.Forms.Button glbExportButton;
         private System.Windows.Forms.Button sortOWsByIDAscButton;
         private System.Windows.Forms.Button sortOWsByIDDescButton;
+        private System.Windows.Forms.ComboBox partyGender6ComboBox;
+        private System.Windows.Forms.ComboBox partyGender5ComboBox;
+        private System.Windows.Forms.ComboBox partyGender4ComboBox;
+        private System.Windows.Forms.ComboBox partyGender3ComboBox;
+        private System.Windows.Forms.ComboBox partyGender2ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility1ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility6ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility5ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility4ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility3ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility2ComboBox;
+        private System.Windows.Forms.ComboBox partyGender1ComboBox;
     }
 }
 

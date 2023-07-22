@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Windows.Forms;
+using static DSPRE.ROMFiles.PartyPokemon;
 
 namespace DSPRE.ROMFiles {
     public class PartyPokemon : RomFile {
@@ -16,11 +17,21 @@ namespace DSPRE.ROMFiles {
         public ushort? pokeID = null;
         public ushort formID = 0;
         public ushort level = 0;
-        public ushort difficulty = 0;
+        public byte difficulty = 0;
+        public GenderAndAbilityFlags genderAndAbilityFlags;
         public ushort ballSeals = 0;
 
         public ushort? heldItem = null;
         public ushort[] moves = null;
+
+        public enum GenderAndAbilityFlags
+        {
+            NO_FLAGS = 0,
+            FORCE_MALE = 0x1,
+            FORCE_FEMALE = 0x2,
+            ABILITY_SLOT1 = 0x10,
+            ABILITY_SLOT2 = 0x20
+        }
         #endregion
 
         #region Constructor
@@ -28,16 +39,17 @@ namespace DSPRE.ROMFiles {
             UpdateItemsAndMoves(hasItems, hasMoves);
         }
 
-        public PartyPokemon(ushort difficulty, ushort Level, ushort pokeNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) {
+        public PartyPokemon(byte difficulty, GenderAndAbilityFlags genderAndAbilityFlags, ushort Level, ushort pokeNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) {
             pokeID = pokeNum;
             level = Level;
             this.difficulty = difficulty;
+            this.genderAndAbilityFlags = genderAndAbilityFlags;
             ballSeals = ballSealConfig;
             this.heldItem = heldItem;
             this.moves = moves;
         }
-        public PartyPokemon(ushort difficulty, ushort Level, ushort pokeNum, ushort formNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) :
-            this(difficulty, Level, pokeNum, ballSealConfig, heldItem, moves) {
+        public PartyPokemon(byte difficulty, GenderAndAbilityFlags genderAndAbilityFlags, ushort Level, ushort pokeNum, ushort formNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) :
+            this(difficulty, genderAndAbilityFlags, Level, pokeNum, ballSealConfig, heldItem, moves) {
 
             formID = formNum;
         }
@@ -45,6 +57,7 @@ namespace DSPRE.ROMFiles {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write(difficulty);
+                writer.Write((byte)genderAndAbilityFlags);
                 writer.Write(level);
                 writer.Write(pokeID ?? 0);
 
@@ -204,7 +217,8 @@ namespace DSPRE.ROMFiles {
                     int endval = Math.Min((int)(partyData.Length - 1 / dividend), trp.partyCount);
                     this.content = new PartyPokemon[maxPoke];
                     for (int i = 0; i < endval; i++) {
-                        ushort unknown1 = reader.ReadUInt16();
+                        byte difficulty = reader.ReadByte();
+                        GenderAndAbilityFlags genderAndAbilityFlags = (GenderAndAbilityFlags)reader.ReadByte();
                         ushort level = reader.ReadUInt16();
 
                         ushort monFull = reader.ReadUInt16();
@@ -225,7 +239,7 @@ namespace DSPRE.ROMFiles {
                             }
                         }
 
-                        content[i] = new PartyPokemon(unknown1, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves);
+                        content[i] = new PartyPokemon(difficulty, genderAndAbilityFlags, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves);
                     }
                     for (int i = endval; i < maxPoke; i++) {
                         content[i] = new PartyPokemon();
