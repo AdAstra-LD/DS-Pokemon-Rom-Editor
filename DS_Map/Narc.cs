@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NarcAPI {
-    public class Narc { //Nintendo Archive
+    public class Narc { //Nitro Archive
         public String Name { get; set; }
         private MemoryStream[] Elements;
         private int FileNameTableOffset, FileImageOffset;
