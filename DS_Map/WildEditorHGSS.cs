@@ -1,7 +1,9 @@
 ﻿using DSPRE.ROMFiles;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using static DSPRE.RomInfo;
 
 namespace DSPRE {
     public partial class WildEditorHGSS : Form {
@@ -9,14 +11,37 @@ namespace DSPRE {
         EncounterFileHGSS currentFile;
         bool disableHandlers = false;
 
-        public WildEditorHGSS(string dirPath, string[] names, int encToOpen) {
+        public WildEditorHGSS(string dirPath, string[] names, int encToOpen, int totalNumHeaderFiles) {
             InitializeComponent();
             encounterFileFolder = dirPath;
 
-            disableHandlers = true; //
+            disableHandlers = true;
+
+            MapHeader tempMapHeader;
+            List<string> locationNames = RomInfo.GetLocationNames();
+            Dictionary<int, string> EncounterFileLocationName = new Dictionary<int, string>();
+
+            for (ushort i = 0; i < totalNumHeaderFiles; i++)
+            {
+                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied())
+                {
+                    tempMapHeader = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
+                }
+                else
+                {
+                    tempMapHeader = MapHeader.LoadFromARM9(i);
+                }
+
+                if (tempMapHeader.wildPokemon != MapHeader.HGSS_NULL_ENCOUNTER_FILE_ID)
+                    EncounterFileLocationName.Add(tempMapHeader.wildPokemon, locationNames[((HeaderHGSS)tempMapHeader).locationName]);
+            }
+
 
             for (int i = 0; i < Directory.GetFiles(encounterFileFolder).Length; i++) {
-                selectEncounterComboBox.Items.Add("Encounters File " + i.ToString());
+                if (EncounterFileLocationName.ContainsKey(i))
+                    selectEncounterComboBox.Items.Add( "[" + i + "] " + EncounterFileLocationName[i]);
+                else
+                    selectEncounterComboBox.Items.Add("[" + i + "] " + " Unused");
             }
 
             if (encToOpen > selectEncounterComboBox.Items.Count) {

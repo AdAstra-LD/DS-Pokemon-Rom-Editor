@@ -907,11 +907,11 @@ namespace DSPRE {
             switch (RomInfo.gameFamily) {
                 case gFamEnum.DP:
                 case gFamEnum.Plat:
-                    using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen))
+                    using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen, internalNames.Count))
                         editor.ShowDialog();
                     break;
                 default:
-                    using (WildEditorHGSS editor = new WildEditorHGSS(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen))
+                    using (WildEditorHGSS editor = new WildEditorHGSS(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen, internalNames.Count))
                         editor.ShowDialog();
                     break;
             }
@@ -2934,16 +2934,6 @@ namespace DSPRE {
 
         #region Variables & Constants 
         public const int mapEditorSquareSize = 19;
-
-        /* Trainer Editor */
-
-        private const int POKEMON_NUM_POSSIBLE_ABILITIES = 2;
-        private const int TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX = 0;
-        public const int TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX = 1;
-        public const int TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX = 2;
-
-        public const int TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX = 0;
-        public const int TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX = 1;
 
         /* Map Rotation vars */
         public bool lRot;
@@ -8533,6 +8523,12 @@ namespace DSPRE {
         private List<GroupBox> partyGroupboxList = new List<GroupBox>();
         private List<PictureBox> partyPokemonPictureBoxList = new List<PictureBox>();
         private List<PictureBox> partyPokemonItemIconList = new List<PictureBox>();
+
+        private const int TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX = 0;
+        public const int TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX = 1;
+        public const int TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX = 2;
+        public const int TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX = 0;
+        public const int TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX = 1;
 
         string[] abilityNames;
 
