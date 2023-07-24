@@ -2410,6 +2410,7 @@
             this.Controls.Add(this.importEncounterFileButton);
             this.Controls.Add(this.saveEventsButton);
             this.Controls.Add(this.encounterFileLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "WildEditorDPPt";
             this.Text = "DSPRE - DPPt Encounters Editor";
             this.mainTabControl.ResumeLayout(false);

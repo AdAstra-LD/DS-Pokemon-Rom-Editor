@@ -89,6 +89,8 @@ namespace DSPRE.ROMFiles {
         public ushort ID { get; set; }
         public static readonly byte length = 24;
         public static readonly string nameSeparator = " -   ";
+        public const int HGSS_NULL_ENCOUNTER_FILE_ID = 0xff;
+        public const int DPPT_NULL_ENCOUNTER_FILE_ID = 0xffff;
 
         public enum SearchableFields: byte {
             AreaDataID,
@@ -105,7 +107,7 @@ namespace DSPRE.ROMFiles {
             TextArchiveID,
             WeatherID,
         };
-        /**/
+
 
 
         #region Fields (10)

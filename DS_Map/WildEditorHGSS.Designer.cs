@@ -42,6 +42,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.rockSmashGroupBox = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.rockSmashTenMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
@@ -241,8 +243,6 @@
             this.label66 = new System.Windows.Forms.Label();
             this.surfSixtyComboBox = new System.Windows.Forms.ComboBox();
             this.repairAllButton = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
             this.mainTabControl.SuspendLayout();
             this.grassGroundTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -483,6 +483,24 @@
             this.rockSmashGroupBox.TabIndex = 165;
             this.rockSmashGroupBox.TabStop = false;
             this.rockSmashGroupBox.Text = "Rock Smash";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(177, 60);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(47, 13);
+            this.label15.TabIndex = 77;
+            this.label15.Text = "Max Lvl.";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(130, 60);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(44, 13);
+            this.label16.TabIndex = 76;
+            this.label16.Text = "Min Lvl.";
             // 
             // label11
             // 
@@ -2468,24 +2486,6 @@
             this.repairAllButton.UseVisualStyleBackColor = true;
             this.repairAllButton.Click += new System.EventHandler(this.repairAllButton_Click);
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(177, 60);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(47, 13);
-            this.label15.TabIndex = 77;
-            this.label15.Text = "Max Lvl.";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(130, 60);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(44, 13);
-            this.label16.TabIndex = 76;
-            this.label16.Text = "Min Lvl.";
-            // 
             // WildEditorHGSS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2500,6 +2500,7 @@
             this.Controls.Add(this.importEncounterFileButton);
             this.Controls.Add(this.saveEncountersButton);
             this.Controls.Add(this.encounterFileLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "WildEditorHGSS";
             this.Text = "DSPRE - HGSS Encounters Editor";
             this.mainTabControl.ResumeLayout(false);
