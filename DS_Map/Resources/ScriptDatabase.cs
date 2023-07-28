@@ -2087,6 +2087,9 @@ namespace DSPRE.Resources {
 
             [0x02C7] = "TalkFollowingPoke",
 
+            [0x02D3] = "BoatAnimation",
+
+
             [0x02D9] = "CheckPokemonAlive",
             [0x02DA] = "CheckFollowingPoke",
 
@@ -2873,7 +2876,7 @@ namespace DSPRE.Resources {
             [0x02D0] = new byte[] { 2 },
             [0x02D1] = new byte[] { 2 },
             [0x02D2] = new byte[] { 1, 1, 2, 2, 2 },
-            [0x02D3] = new byte[] { 2, 2, 2 },
+            [0x02D3] = new byte[] { 1, 1, 2, 2, 2 },
             [0x02D4] = new byte[] { 2, 2 },
             [0x02D5] = new byte[] { 1, 2 },
             [0x02D6] = new byte[1] { 0 },
