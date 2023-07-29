@@ -15,10 +15,10 @@ namespace DSPRE.ROMFiles {
 
         #region Fields
         public ushort? pokeID = null;
-        public ushort formID = 0;
+        public ushort formID = 0; //unused in DP
         public ushort level = 0;
         public byte difficulty = 0;
-        public GenderAndAbilityFlags genderAndAbilityFlags;
+        public GenderAndAbilityFlags genderAndAbilityFlags; //only used for HGSS, filler byte for the rest of the games
         public ushort ballSeals = 0;
 
         public ushort? heldItem = null;
@@ -48,6 +48,16 @@ namespace DSPRE.ROMFiles {
             this.heldItem = heldItem;
             this.moves = moves;
         }
+
+        public PartyPokemon(byte difficulty, ushort Level, ushort pokeNum, ushort? heldItem = null, ushort[] moves = null)
+        {
+            // Simply adding a new constructor for Diamond and Pearl since they dont have ball seal config
+            pokeID = pokeNum;
+            level = Level;
+            this.difficulty = difficulty;
+            this.heldItem = heldItem;
+            this.moves = moves;
+        }
         public PartyPokemon(byte difficulty, GenderAndAbilityFlags genderAndAbilityFlags, ushort Level, ushort pokeNum, ushort formNum, ushort ballSealConfig, ushort? heldItem = null, ushort[] moves = null) :
             this(difficulty, genderAndAbilityFlags, Level, pokeNum, ballSealConfig, heldItem, moves) {
 
@@ -59,7 +69,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(difficulty);
                 writer.Write((byte)genderAndAbilityFlags);
                 writer.Write(level);
-                writer.Write(pokeID ?? 0);
+                writer.Write((ushort)((pokeID ?? 0) | formID << MON_NUMBER_BITSIZE));
 
                 if (heldItem != null) {
                     writer.Write((ushort)heldItem);
@@ -70,7 +80,8 @@ namespace DSPRE.ROMFiles {
                         writer.Write(move);
                     }
                 }
-                writer.Write(ballSeals);
+                if (RomInfo.gameFamily == RomInfo.gFamEnum.HGSS || RomInfo.gameFamily == RomInfo.gFamEnum.Plat)
+                    writer.Write(ballSeals); // Diamond and Pearl apparently dont save ball capsule data in enemy trainer pokedata!!!
             }
             return newData.ToArray();
         }
@@ -239,7 +250,12 @@ namespace DSPRE.ROMFiles {
                             }
                         }
 
-                        content[i] = new PartyPokemon(difficulty, genderAndAbilityFlags, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves);
+
+                        if (RomInfo.gameFamily == RomInfo.gFamEnum.HGSS || RomInfo.gameFamily == RomInfo.gFamEnum.Plat)
+                            content[i] = new PartyPokemon(difficulty, genderAndAbilityFlags, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves);
+                        else
+                            content[i] = new PartyPokemon(difficulty, level, pokemon, heldItem, moves); // Diamond and Pearl apparently dont save ball capsule data in enemy trainer pokedata!!!
+
                     }
                     for (int i = endval; i < maxPoke; i++) {
                         content[i] = new PartyPokemon();
