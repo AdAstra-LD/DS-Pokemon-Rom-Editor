@@ -279,12 +279,7 @@ namespace DSPRE.ROMFiles {
                 return "Empty";
             } else {
                 string buffer = "";
-                byte nonEmptyCtr = 0;
-                foreach(PartyPokemon p in this.content) {
-                    if (!p.CheckEmpty()) {
-                        nonEmptyCtr++;
-                    }
-                }
+                byte nonEmptyCtr = CountNonEmptyMons();
                 buffer += nonEmptyCtr + " Poke ";
                 if (this.trp.chooseMoves) {
                     buffer += ", moves ";
@@ -295,6 +290,18 @@ namespace DSPRE.ROMFiles {
                 return buffer;
             }
         }
+
+        public byte CountNonEmptyMons() {
+            byte nonEmptyCtr = 0;
+            foreach (PartyPokemon p in this.content) {
+                if (!p.CheckEmpty()) {
+                    nonEmptyCtr++;
+                }
+            }
+
+            return nonEmptyCtr;
+        }
+
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
@@ -316,6 +323,7 @@ namespace DSPRE.ROMFiles {
         }
     }
     public class TrainerFile : RomFile {
+        public const int maxNameLen = 7;
         public const int POKE_IN_PARTY = 6;
         public static readonly string NAME_NOT_FOUND = "NAME READ ERROR";
 
