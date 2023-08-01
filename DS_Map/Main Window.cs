@@ -23,6 +23,7 @@ using ScintillaNET.Utils;
 using System.Globalization;
 using static DSPRE.ROMFiles.Event;
 using NSMBe4.NSBMD;
+using static DSPRE.ROMFiles.SpeciesFile;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -896,6 +897,8 @@ namespace DSPRE {
             Update();
 
             DSUtils.TryUnpackNarcs(new List<DirNames>() { DirNames.encounters, DirNames.monIcons });
+            DSUtils.TryUnpackNarcs(new List<DirNames>() { DirNames.headbuttEncounters });
+            DSUtils.TryUnpackNarcs(new List<DirNames>() { DirNames.safariZoneEncounters });
 
             statusLabelMessage("Passing control to Wild Pokémon Editor...");
             Update();
@@ -8370,6 +8373,7 @@ namespace DSPRE {
         private List<NumericUpDown> partyLevelUpdownList = new List<NumericUpDown>();
         private List<ComboBox> partyGenderComboBoxList = new List<ComboBox>();
         private List<ComboBox> partyAbilityComboBoxList = new List<ComboBox>();
+        private List<ComboBox> partyFormComboBoxList = new List<ComboBox>();
         private List<NumericUpDown> partyIVUpdownList = new List<NumericUpDown>();
         private List<NumericUpDown> partyBallUpdownList = new List<NumericUpDown>();
         private List<GroupBox> partyGroupboxList = new List<GroupBox>();
@@ -8377,12 +8381,14 @@ namespace DSPRE {
         private List<PictureBox> partyPokemonItemIconList = new List<PictureBox>();
 
         private const int TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX = 0;
-        public const int TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX = 1;
-        public const int TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX = 2;
-        public const int TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX = 0;
-        public const int TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX = 1;
+        private const int TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX = 1;
+        private const int TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX = 2;
+        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX = 0;
+        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX = 1;
 
+        
         string[] abilityNames;
+        SpeciesFile[] pokemonSpecies;
 
         private Tuple<int, int>[] pokemonSpeciesAbilities;
         
@@ -8439,6 +8445,7 @@ namespace DSPRE {
 
             int numPokemonSpecies = Directory.GetFiles(RomInfo.gameDirs[DirNames.speciesData].unpackedDir, "*").Count();
             pokemonSpeciesAbilities = new Tuple<int, int>[numPokemonSpecies];
+            pokemonSpecies = new SpeciesFile[numPokemonSpecies];
 
             RomInfo.SetMonIconsPalTableAddress();
 
@@ -8481,6 +8488,14 @@ namespace DSPRE {
             partyAbilityComboBoxList.Add(partyAbility4ComboBox);
             partyAbilityComboBoxList.Add(partyAbility5ComboBox);
             partyAbilityComboBoxList.Add(partyAbility6ComboBox);
+
+            partyFormComboBoxList.Clear();
+            partyFormComboBoxList.Add(partyForm1ComboBox);
+            partyFormComboBoxList.Add(partyForm2ComboBox);
+            partyFormComboBoxList.Add(partyForm3ComboBox);
+            partyFormComboBoxList.Add(partyForm4ComboBox);
+            partyFormComboBoxList.Add(partyForm5ComboBox);
+            partyFormComboBoxList.Add(partyForm6ComboBox);
 
             partyIVUpdownList.Clear();
             partyIVUpdownList.Add(partyIV1UpDown);
@@ -8545,7 +8560,44 @@ namespace DSPRE {
                 trainerClassListBox.Items.Add("[" + i.ToString("D3") + "]" + " " + classNames[i]);
             }
 
-            
+            for (int i = 0; i < numPokemonSpecies; i++)
+            {
+                pokemonSpecies[i] = new SpeciesFile(new FileStream(RomInfo.gameDirs[DirNames.speciesData].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
+            }
+
+            if (gameFamily == gFamEnum.HGSS)
+            {
+                foreach (ComboBox partyGenderComboBox in partyGenderComboBoxList)
+                {
+                    partyGenderComboBox.Visible = true;
+                    partyGenderComboBox.Items.Add("Default Gender");
+                    partyGenderComboBox.Items.Add("Male");
+                    partyGenderComboBox.Items.Add("Female");
+                }
+            }
+            else
+            {
+                foreach (ComboBox partyGenderComboBox in partyGenderComboBoxList)
+                    partyGenderComboBox.Visible = false;
+            }
+
+            if (gameFamily == gFamEnum.DP)
+            {
+                foreach (ComboBox partyFormComboBox in partyFormComboBoxList)
+                    partyFormComboBox.Visible = false;
+
+                foreach (NumericUpDown partyBallSealUpDown in partyBallUpdownList)
+                    partyBallSealUpDown.Enabled = false;
+            }
+            else
+            {
+                foreach (ComboBox partyFormComboBox in partyFormComboBoxList)
+                    partyFormComboBox.Visible = true;
+
+                foreach (NumericUpDown partyBallSealUpDown in partyBallUpdownList)
+                    partyBallSealUpDown.Enabled = true;
+            }
+
             string[] itemNames = RomInfo.GetItemNames();
             string[] pokeNames = RomInfo.GetPokemonNames();
             string[] moveNames = RomInfo.GetAttackNames();
@@ -8643,28 +8695,15 @@ namespace DSPRE {
                 partyBallUpdownList[i].Value = currentTrainerFile.party[i].ballSeals;
 
                 setTrainerPartyPokemonAbilities(i);
+                setTrainerPartyPokemonForm(i);
+                setTrainerPokemonGender(i);
 
-                if (gameFamily == gFamEnum.HGSS)
-                {
-                    if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_MALE))
-                        partyGenderComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX;
-                    else if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_FEMALE))
-                        partyGenderComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX;
-                    else
-                        partyGenderComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX;
-
-                    if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2))
-                        partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX;
-                    else
-                        partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
-                }
+                if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2))
+                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX;
                 else
-                {
-                    partyGenderComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX;
-                    partyGenderComboBoxList[i].Enabled = false;
-                }
-                
+                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
 
+                partyFormComboBoxList[i].SelectedIndex = currentTrainerFile.party[i].formID;
 
                 if (currentTrainerFile.party[i].moves == null) {
                     for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
@@ -8748,36 +8787,60 @@ namespace DSPRE {
 
             //event handler is called before currentTrainerFile is set, need to null check to avoid null object reference
             if (currentTrainerFile != null)
+            {
                 setTrainerPartyPokemonAbilities(0);
+                setTrainerPartyPokemonForm(0);
+                setTrainerPokemonGender(0);
+            }
         }
         private void partyPokemon2ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ShowPartyPokemonPic(1);
             if (currentTrainerFile != null)
+            {
                 setTrainerPartyPokemonAbilities(1);
+                setTrainerPartyPokemonForm(1);
+                setTrainerPokemonGender(1);
+            }
         }
 
         private void partyPokemon3ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ShowPartyPokemonPic(2);
             if (currentTrainerFile != null)
+            {
                 setTrainerPartyPokemonAbilities(2);
+                setTrainerPartyPokemonForm(2);
+                setTrainerPokemonGender(2);
+            }
         }
 
         private void partyPokemon4ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ShowPartyPokemonPic(3);
             if (currentTrainerFile != null)
+            {
                 setTrainerPartyPokemonAbilities(3);
+                setTrainerPartyPokemonForm(3);
+                setTrainerPokemonGender(3);
+            }
         }
 
         private void partyPokemon5ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ShowPartyPokemonPic(4);
             if (currentTrainerFile != null)
+            {
                 setTrainerPartyPokemonAbilities(4);
+                setTrainerPartyPokemonForm(4);
+                setTrainerPokemonGender(4);
+            }
         }
 
         private void partyPokemon6ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ShowPartyPokemonPic(5);
             if (currentTrainerFile != null)
+            {
                 setTrainerPartyPokemonAbilities(5);
+                setTrainerPartyPokemonForm(5);
+                setTrainerPokemonGender(5);
+            }
         }
 
         private void showTrainerEditorItemPic(byte partyPos) {
@@ -8876,6 +8939,7 @@ namespace DSPRE {
 
             for (int i = 0; i < partyCountUpDown.Value; i++) {
                 currentTrainerFile.party[i].pokeID = (ushort)partyPokemonComboboxList[i].SelectedIndex;
+                currentTrainerFile.party[i].formID = (ushort)partyFormComboBoxList[i].SelectedIndex;
                 currentTrainerFile.party[i].level = (ushort)partyLevelUpdownList[i].Value;
 
                 if (trainerMovesCheckBox.Checked) {
@@ -8891,29 +8955,37 @@ namespace DSPRE {
 
                 currentTrainerFile.party[i].difficulty = (byte)partyIVUpdownList[i].Value;
 
-                /* this is a bit weird but if gender is set to anything other than default without setting the ability_slot1 flag it will be slot 2
-                 * so setting the force_female flag but not ability_slot1 flag means the pokemon will be female with ability set to slot 2 (or slot 1 if there is no second ability)
-                 * in order to set gender to not default with ability 1 you must have the ability_slot1 flag set
-                 * gender is never set using this bitfield in the base games but it does work
-                 */
-
-                switch (partyGenderComboBoxList[i].SelectedIndex)
+                if (hasMoreThanOneGender((int)currentTrainerFile.party[i].pokeID, pokemonSpecies) && gameFamily == gFamEnum.HGSS)
                 {
-                    case TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX:
-                        currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.NO_FLAGS;
-                        break;
-                    case TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX:
-                        currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.FORCE_MALE;
-                        break;
-                    case TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX:
-                        currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.FORCE_FEMALE;
-                        break;
+                    switch (partyGenderComboBoxList[i].SelectedIndex)
+                    {
+                        case TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX:
+                            currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.NO_FLAGS;
+                            break;
+                        case TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX:
+                            currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.FORCE_MALE;
+                            break;
+                        case TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX:
+                            currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.FORCE_FEMALE;
+                            break;
+                    }
                 }
+                else
+                    currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.NO_FLAGS;
+
+
 
                 if (partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX)
-                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2;
-                else
+                {
+                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2; 
+                }
+                //ability slot 1 flag must be set if the pokemon's gender is forced to male or female, otherwise the pokemon will have ability2 even if the ability2 flag is not set
+                //the ability 1 flag should not be set if neither of the gender flags are set, otherwise this will cause a problem with using alternate forms
+                else if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_MALE) 
+                        || currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_FEMALE))
+                {
                     currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1;
+                }
 
                 currentTrainerFile.party[i].ballSeals = (ushort)partyBallUpdownList[i].Value;
             }
@@ -9173,14 +9245,11 @@ namespace DSPRE {
 
         private Tuple<int, int>[] getPokemonAbilities(int numPokemonSpecies)
         {
-            SpeciesFile species;
             var pokemonSpeciesAbilities = new Tuple<int, int>[numPokemonSpecies];
-
 
             for (int i = 0; i < numPokemonSpecies; i++)
             {
-                species = new SpeciesFile(new FileStream(RomInfo.gameDirs[DirNames.speciesData].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
-                pokemonSpeciesAbilities[i] = new Tuple<int, int>(species.Ability1, species.Ability2);
+                pokemonSpeciesAbilities[i] = new Tuple<int, int>(pokemonSpecies[i].Ability1, pokemonSpecies[i].Ability2);
             }
             
             return pokemonSpeciesAbilities;
@@ -9200,17 +9269,134 @@ namespace DSPRE {
             partyAbilityComboBoxList[partyPokemonPosition].Items.Add(currentPartyPokemonAbilities.ability1);
 
             //if the name " -" is returned for ability 2 then there is no ability 2
-            if (!currentPartyPokemonAbilities.ability2.Equals(" -") && gameFamily == gFamEnum.HGSS)
+            if (currentPartyPokemonAbilities.ability2.Equals(" -") || currentPartyPokemonAbilities.ability2.Equals(currentPartyPokemonAbilities.ability1) || gameFamily != gFamEnum.HGSS)
+            {
+                partyAbilityComboBoxList[partyPokemonPosition].Enabled = false;
+            }
+            else
             {
                 partyAbilityComboBoxList[partyPokemonPosition].Items.Add(currentPartyPokemonAbilities.ability2);
                 partyAbilityComboBoxList[partyPokemonPosition].Enabled = true;
             }
-            else
-            {
-                partyAbilityComboBoxList[partyPokemonPosition].Enabled = false;
-            }
 
             partyAbilityComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
+        }
+
+        private void setTrainerPokemonGender(int partyPokemonPosition)
+        {
+            int currentPokemonGenderRatio = pokemonSpecies[partyPokemonComboboxList[partyPokemonPosition].SelectedIndex].GenderRatioMaleToFemale;
+            PartyPokemon.GenderAndAbilityFlags currentPokemonGenderAndAbilityFlags = currentTrainerFile.party[partyPokemonPosition].genderAndAbilityFlags;
+
+            if (gameFamily == gFamEnum.HGSS)
+            {
+                switch (currentPokemonGenderRatio)
+                {
+                    case GENDER_RATIO_MALE:
+                        partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX;
+                        partyGenderComboBoxList[partyPokemonPosition].Enabled = false;
+                        break;
+                    case GENDER_RATIO_FEMALE:
+                        partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX;
+                        partyGenderComboBoxList[partyPokemonPosition].Enabled = false;
+                        break;
+                    case GENDER_RATIO_GENDERLESS:
+                        partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX;
+                        partyGenderComboBoxList[partyPokemonPosition].Enabled = false;
+                        break;
+                    default:
+                        partyGenderComboBoxList[partyPokemonPosition].Enabled = true;
+
+                        if (currentPokemonGenderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_MALE))
+                            partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX;
+                        else if (currentPokemonGenderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_FEMALE))
+                            partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX;
+                        else
+                            partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX;
+                        break;
+                }
+            }
+        }
+
+        private List<string> getPokemonFormNames(int pokemonID)
+        {
+            List<string> pokemonFormNames = new List<string>();
+
+            switch (pokemonID)
+            {
+                case PICHU_ID_NUM:
+                    if (RomInfo.gameFamily == gFamEnum.HGSS)
+                    {
+                        pokemonFormNames.Add("Non-Spiky-Eared");
+                        pokemonFormNames.Add("Spiky-Eared");
+                    }
+                    else
+                    {
+                        pokemonFormNames.Add("No Alt Form");
+                    }
+                    break;
+                case UNOWN_ID_NUM:
+                    for (char c = 'A'; c <= 'Z'; c++)
+                        pokemonFormNames.Add(c + " Form");
+
+                    pokemonFormNames.Add("! Form");
+                    pokemonFormNames.Add("? Form");
+                    break;
+                case CASTFORM_ID_NUM:
+                    pokemonFormNames.Add("Normal Form");
+                    pokemonFormNames.Add("Sunny Form");
+                    pokemonFormNames.Add("Rainy Form");
+                    pokemonFormNames.Add("Snowy Form");
+                    break;
+                case DEOXYS_ID_NUM:
+                    pokemonFormNames.Add("Normal Form");
+                    pokemonFormNames.Add("Attack Form");
+                    pokemonFormNames.Add("Defense Form");
+                    pokemonFormNames.Add("Speed Form");
+                    break;
+                case BURMY_ID_NUM:
+                case WORMADAM_ID_NUM:
+                    pokemonFormNames.Add("Plant Cloak");
+                    pokemonFormNames.Add("Sand Cloak");
+                    pokemonFormNames.Add("Trash Cloak");
+                    break;
+                case SHELLOS_ID_NUM:
+                case GASTRODON_ID_NUM:
+                    pokemonFormNames.Add("West sea");
+                    pokemonFormNames.Add("East sea");
+                    break;
+                case ROTOM_ID_NUM:
+                    pokemonFormNames.Add("Rotom");
+                    pokemonFormNames.Add("Heat Rotom");
+                    pokemonFormNames.Add("Wash Rotom");
+                    pokemonFormNames.Add("Frost Rotom");
+                    pokemonFormNames.Add("Fan Rotom");
+                    pokemonFormNames.Add("Mow Rotom");
+                    break;
+                case SHAYMIN_ID_NUM:
+                    pokemonFormNames.Add("Land Form");
+                    pokemonFormNames.Add("Sky Form");
+                    break;
+                default:
+                    pokemonFormNames.Add("No Alt Form");
+                    break;
+            }
+            return pokemonFormNames;
+
+        }
+
+        private void setTrainerPartyPokemonForm(int partyPokemonPosition)
+        {
+            if (gameFamily != gFamEnum.DP)
+            { 
+			    partyFormComboBoxList[partyPokemonPosition].Items.Clear();
+			    List<string> currentPokemonFormName = getPokemonFormNames(partyPokemonComboboxList[partyPokemonPosition].SelectedIndex);
+			    foreach (string formName in currentPokemonFormName)
+				    partyFormComboBoxList[partyPokemonPosition].Items.Add(formName);
+
+			    partyFormComboBoxList[partyPokemonPosition].Enabled = currentPokemonFormName.Count > 1;
+			    partyFormComboBoxList[partyPokemonPosition].SelectedIndex = 0;
+            }
+
         }
 
         #endregion

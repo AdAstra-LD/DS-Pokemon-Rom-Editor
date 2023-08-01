@@ -632,6 +632,7 @@
             this.addTrainerButton = new System.Windows.Forms.Button();
             this.groupBox28 = new System.Windows.Forms.GroupBox();
             this.party6GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyForm6ComboBox = new System.Windows.Forms.ComboBox();
             this.partyAbility6ComboBox = new System.Windows.Forms.ComboBox();
             this.partyGender6ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox6 = new System.Windows.Forms.PictureBox();
@@ -650,6 +651,7 @@
             this.partyPokemon6PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon6ComboBox = new DSPRE.InputComboBox();
             this.party5GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyForm5ComboBox = new System.Windows.Forms.ComboBox();
             this.partyAbility5ComboBox = new System.Windows.Forms.ComboBox();
             this.partyGender5ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox5 = new System.Windows.Forms.PictureBox();
@@ -668,6 +670,7 @@
             this.partyPokemon5PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon5ComboBox = new DSPRE.InputComboBox();
             this.party4GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyForm4ComboBox = new System.Windows.Forms.ComboBox();
             this.partyAbility4ComboBox = new System.Windows.Forms.ComboBox();
             this.partyGender4ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox4 = new System.Windows.Forms.PictureBox();
@@ -686,6 +689,7 @@
             this.partyPokemon4PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon4ComboBox = new DSPRE.InputComboBox();
             this.party3GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyForm3ComboBox = new System.Windows.Forms.ComboBox();
             this.partyAbility3ComboBox = new System.Windows.Forms.ComboBox();
             this.partyGender3ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox3 = new System.Windows.Forms.PictureBox();
@@ -704,6 +708,7 @@
             this.partyPokemon3PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon3ComboBox = new DSPRE.InputComboBox();
             this.party2GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyForm2ComboBox = new System.Windows.Forms.ComboBox();
             this.partyAbility2ComboBox = new System.Windows.Forms.ComboBox();
             this.partyGender2ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox2 = new System.Windows.Forms.PictureBox();
@@ -722,7 +727,9 @@
             this.partyPokemon2PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon2ComboBox = new DSPRE.InputComboBox();
             this.party1GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyForm1ComboBox = new System.Windows.Forms.ComboBox();
             this.partyAbility1ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender1ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox1 = new System.Windows.Forms.PictureBox();
             this.label47 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
@@ -895,7 +902,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.directoryEntry2 = new System.DirectoryServices.DirectoryEntry();
-            this.partyGender1ComboBox = new System.Windows.Forms.ComboBox();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -8539,6 +8545,7 @@
             // 
             // party6GroupBox
             // 
+            this.party6GroupBox.Controls.Add(this.partyForm6ComboBox);
             this.party6GroupBox.Controls.Add(this.partyAbility6ComboBox);
             this.party6GroupBox.Controls.Add(this.partyGender6ComboBox);
             this.party6GroupBox.Controls.Add(this.partyPokemonItemPictureBox6);
@@ -8560,26 +8567,33 @@
             this.party6GroupBox.TabStop = false;
             this.party6GroupBox.Text = "Pokemon 6";
             // 
+            // partyForm6ComboBox
+            // 
+            this.partyForm6ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyForm6ComboBox.FormattingEnabled = true;
+            this.partyForm6ComboBox.Items.AddRange(new object[] {
+            "Defense form"});
+            this.partyForm6ComboBox.Location = new System.Drawing.Point(228, 157);
+            this.partyForm6ComboBox.Name = "partyForm6ComboBox";
+            this.partyForm6ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyForm6ComboBox.TabIndex = 20;
+            // 
             // partyAbility6ComboBox
             // 
             this.partyAbility6ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.partyAbility6ComboBox.FormattingEnabled = true;
             this.partyAbility6ComboBox.Location = new System.Drawing.Point(15, 157);
             this.partyAbility6ComboBox.Name = "partyAbility6ComboBox";
-            this.partyAbility6ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility6ComboBox.Size = new System.Drawing.Size(105, 21);
             this.partyAbility6ComboBox.TabIndex = 19;
             // 
             // partyGender6ComboBox
             // 
             this.partyGender6ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.partyGender6ComboBox.FormattingEnabled = true;
-            this.partyGender6ComboBox.Items.AddRange(new object[] {
-            "Default Gender",
-            "Force Male",
-            "Force Female"});
-            this.partyGender6ComboBox.Location = new System.Drawing.Point(154, 157);
+            this.partyGender6ComboBox.Location = new System.Drawing.Point(126, 157);
             this.partyGender6ComboBox.Name = "partyGender6ComboBox";
-            this.partyGender6ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender6ComboBox.Size = new System.Drawing.Size(95, 21);
             this.partyGender6ComboBox.TabIndex = 15;
             // 
             // partyPokemonItemPictureBox6
@@ -8755,6 +8769,7 @@
             // 
             // party5GroupBox
             // 
+            this.party5GroupBox.Controls.Add(this.partyForm5ComboBox);
             this.party5GroupBox.Controls.Add(this.partyAbility5ComboBox);
             this.party5GroupBox.Controls.Add(this.partyGender5ComboBox);
             this.party5GroupBox.Controls.Add(this.partyPokemonItemPictureBox5);
@@ -8776,26 +8791,33 @@
             this.party5GroupBox.TabStop = false;
             this.party5GroupBox.Text = "Pokemon 5";
             // 
+            // partyForm5ComboBox
+            // 
+            this.partyForm5ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyForm5ComboBox.FormattingEnabled = true;
+            this.partyForm5ComboBox.Items.AddRange(new object[] {
+            "Defense form"});
+            this.partyForm5ComboBox.Location = new System.Drawing.Point(228, 157);
+            this.partyForm5ComboBox.Name = "partyForm5ComboBox";
+            this.partyForm5ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyForm5ComboBox.TabIndex = 19;
+            // 
             // partyAbility5ComboBox
             // 
             this.partyAbility5ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.partyAbility5ComboBox.FormattingEnabled = true;
             this.partyAbility5ComboBox.Location = new System.Drawing.Point(15, 157);
             this.partyAbility5ComboBox.Name = "partyAbility5ComboBox";
-            this.partyAbility5ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility5ComboBox.Size = new System.Drawing.Size(105, 21);
             this.partyAbility5ComboBox.TabIndex = 18;
             // 
             // partyGender5ComboBox
             // 
             this.partyGender5ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.partyGender5ComboBox.FormattingEnabled = true;
-            this.partyGender5ComboBox.Items.AddRange(new object[] {
-            "Default Gender",
-            "Force Male",
-            "Force Female"});
-            this.partyGender5ComboBox.Location = new System.Drawing.Point(156, 157);
+            this.partyGender5ComboBox.Location = new System.Drawing.Point(126, 157);
             this.partyGender5ComboBox.Name = "partyGender5ComboBox";
-            this.partyGender5ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender5ComboBox.Size = new System.Drawing.Size(95, 21);
             this.partyGender5ComboBox.TabIndex = 14;
             // 
             // partyPokemonItemPictureBox5
@@ -8971,6 +8993,7 @@
             // 
             // party4GroupBox
             // 
+            this.party4GroupBox.Controls.Add(this.partyForm4ComboBox);
             this.party4GroupBox.Controls.Add(this.partyAbility4ComboBox);
             this.party4GroupBox.Controls.Add(this.partyGender4ComboBox);
             this.party4GroupBox.Controls.Add(this.partyPokemonItemPictureBox4);
@@ -8992,26 +9015,33 @@
             this.party4GroupBox.TabStop = false;
             this.party4GroupBox.Text = "Pokemon 4";
             // 
+            // partyForm4ComboBox
+            // 
+            this.partyForm4ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyForm4ComboBox.FormattingEnabled = true;
+            this.partyForm4ComboBox.Items.AddRange(new object[] {
+            "Defense form"});
+            this.partyForm4ComboBox.Location = new System.Drawing.Point(228, 157);
+            this.partyForm4ComboBox.Name = "partyForm4ComboBox";
+            this.partyForm4ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyForm4ComboBox.TabIndex = 18;
+            // 
             // partyAbility4ComboBox
             // 
             this.partyAbility4ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.partyAbility4ComboBox.FormattingEnabled = true;
             this.partyAbility4ComboBox.Location = new System.Drawing.Point(15, 157);
             this.partyAbility4ComboBox.Name = "partyAbility4ComboBox";
-            this.partyAbility4ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility4ComboBox.Size = new System.Drawing.Size(105, 21);
             this.partyAbility4ComboBox.TabIndex = 17;
             // 
             // partyGender4ComboBox
             // 
             this.partyGender4ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.partyGender4ComboBox.FormattingEnabled = true;
-            this.partyGender4ComboBox.Items.AddRange(new object[] {
-            "Default Gender",
-            "Force Male",
-            "Force Female"});
-            this.partyGender4ComboBox.Location = new System.Drawing.Point(154, 157);
+            this.partyGender4ComboBox.Location = new System.Drawing.Point(126, 157);
             this.partyGender4ComboBox.Name = "partyGender4ComboBox";
-            this.partyGender4ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender4ComboBox.Size = new System.Drawing.Size(95, 21);
             this.partyGender4ComboBox.TabIndex = 16;
             // 
             // partyPokemonItemPictureBox4
@@ -9187,6 +9217,7 @@
             // 
             // party3GroupBox
             // 
+            this.party3GroupBox.Controls.Add(this.partyForm3ComboBox);
             this.party3GroupBox.Controls.Add(this.partyAbility3ComboBox);
             this.party3GroupBox.Controls.Add(this.partyGender3ComboBox);
             this.party3GroupBox.Controls.Add(this.partyPokemonItemPictureBox3);
@@ -9208,26 +9239,33 @@
             this.party3GroupBox.TabStop = false;
             this.party3GroupBox.Text = "Pokemon 3";
             // 
+            // partyForm3ComboBox
+            // 
+            this.partyForm3ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyForm3ComboBox.FormattingEnabled = true;
+            this.partyForm3ComboBox.Items.AddRange(new object[] {
+            "Defense form"});
+            this.partyForm3ComboBox.Location = new System.Drawing.Point(228, 157);
+            this.partyForm3ComboBox.Name = "partyForm3ComboBox";
+            this.partyForm3ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyForm3ComboBox.TabIndex = 15;
+            // 
             // partyAbility3ComboBox
             // 
             this.partyAbility3ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.partyAbility3ComboBox.FormattingEnabled = true;
             this.partyAbility3ComboBox.Location = new System.Drawing.Point(15, 157);
             this.partyAbility3ComboBox.Name = "partyAbility3ComboBox";
-            this.partyAbility3ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility3ComboBox.Size = new System.Drawing.Size(105, 21);
             this.partyAbility3ComboBox.TabIndex = 14;
             // 
             // partyGender3ComboBox
             // 
             this.partyGender3ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.partyGender3ComboBox.FormattingEnabled = true;
-            this.partyGender3ComboBox.Items.AddRange(new object[] {
-            "Default Gender",
-            "Force Male",
-            "Force Female"});
-            this.partyGender3ComboBox.Location = new System.Drawing.Point(156, 157);
+            this.partyGender3ComboBox.Location = new System.Drawing.Point(126, 157);
             this.partyGender3ComboBox.Name = "partyGender3ComboBox";
-            this.partyGender3ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender3ComboBox.Size = new System.Drawing.Size(95, 21);
             this.partyGender3ComboBox.TabIndex = 13;
             // 
             // partyPokemonItemPictureBox3
@@ -9403,6 +9441,7 @@
             // 
             // party2GroupBox
             // 
+            this.party2GroupBox.Controls.Add(this.partyForm2ComboBox);
             this.party2GroupBox.Controls.Add(this.partyAbility2ComboBox);
             this.party2GroupBox.Controls.Add(this.partyGender2ComboBox);
             this.party2GroupBox.Controls.Add(this.partyPokemonItemPictureBox2);
@@ -9424,26 +9463,33 @@
             this.party2GroupBox.TabStop = false;
             this.party2GroupBox.Text = "Pokemon 2";
             // 
+            // partyForm2ComboBox
+            // 
+            this.partyForm2ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyForm2ComboBox.FormattingEnabled = true;
+            this.partyForm2ComboBox.Items.AddRange(new object[] {
+            "Defense form"});
+            this.partyForm2ComboBox.Location = new System.Drawing.Point(228, 162);
+            this.partyForm2ComboBox.Name = "partyForm2ComboBox";
+            this.partyForm2ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyForm2ComboBox.TabIndex = 20;
+            // 
             // partyAbility2ComboBox
             // 
             this.partyAbility2ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.partyAbility2ComboBox.FormattingEnabled = true;
             this.partyAbility2ComboBox.Location = new System.Drawing.Point(15, 162);
             this.partyAbility2ComboBox.Name = "partyAbility2ComboBox";
-            this.partyAbility2ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility2ComboBox.Size = new System.Drawing.Size(105, 21);
             this.partyAbility2ComboBox.TabIndex = 18;
             // 
             // partyGender2ComboBox
             // 
             this.partyGender2ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.partyGender2ComboBox.FormattingEnabled = true;
-            this.partyGender2ComboBox.Items.AddRange(new object[] {
-            "Default Gender",
-            "Force Male",
-            "Force Female"});
-            this.partyGender2ComboBox.Location = new System.Drawing.Point(154, 162);
+            this.partyGender2ComboBox.Location = new System.Drawing.Point(126, 162);
             this.partyGender2ComboBox.Name = "partyGender2ComboBox";
-            this.partyGender2ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyGender2ComboBox.Size = new System.Drawing.Size(95, 21);
             this.partyGender2ComboBox.TabIndex = 17;
             // 
             // partyPokemonItemPictureBox2
@@ -9619,6 +9665,7 @@
             // 
             // party1GroupBox
             // 
+            this.party1GroupBox.Controls.Add(this.partyForm1ComboBox);
             this.party1GroupBox.Controls.Add(this.partyAbility1ComboBox);
             this.party1GroupBox.Controls.Add(this.partyGender1ComboBox);
             this.party1GroupBox.Controls.Add(this.partyPokemonItemPictureBox1);
@@ -9640,14 +9687,34 @@
             this.party1GroupBox.TabStop = false;
             this.party1GroupBox.Text = "Pokemon 1";
             // 
+            // partyForm1ComboBox
+            // 
+            this.partyForm1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyForm1ComboBox.FormattingEnabled = true;
+            this.partyForm1ComboBox.Items.AddRange(new object[] {
+            "Defense form"});
+            this.partyForm1ComboBox.Location = new System.Drawing.Point(228, 162);
+            this.partyForm1ComboBox.Name = "partyForm1ComboBox";
+            this.partyForm1ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyForm1ComboBox.TabIndex = 14;
+            // 
             // partyAbility1ComboBox
             // 
             this.partyAbility1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.partyAbility1ComboBox.FormattingEnabled = true;
             this.partyAbility1ComboBox.Location = new System.Drawing.Point(15, 162);
             this.partyAbility1ComboBox.Name = "partyAbility1ComboBox";
-            this.partyAbility1ComboBox.Size = new System.Drawing.Size(121, 21);
+            this.partyAbility1ComboBox.Size = new System.Drawing.Size(105, 21);
             this.partyAbility1ComboBox.TabIndex = 13;
+            // 
+            // partyGender1ComboBox
+            // 
+            this.partyGender1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender1ComboBox.FormattingEnabled = true;
+            this.partyGender1ComboBox.Location = new System.Drawing.Point(126, 162);
+            this.partyGender1ComboBox.Name = "partyGender1ComboBox";
+            this.partyGender1ComboBox.Size = new System.Drawing.Size(95, 21);
+            this.partyGender1ComboBox.TabIndex = 12;
             // 
             // partyPokemonItemPictureBox1
             // 
@@ -11451,19 +11518,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // partyGender1ComboBox
-            // 
-            this.partyGender1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.partyGender1ComboBox.FormattingEnabled = true;
-            this.partyGender1ComboBox.Items.AddRange(new object[] {
-            "Default Gender",
-            "Force Male",
-            "Force Female"});
-            this.partyGender1ComboBox.Location = new System.Drawing.Point(156, 162);
-            this.partyGender1ComboBox.Name = "partyGender1ComboBox";
-            this.partyGender1ComboBox.Size = new System.Drawing.Size(121, 21);
-            this.partyGender1ComboBox.TabIndex = 12;
-            // 
             // MainProgram
             // 
             this.AllowDrop = true;
@@ -12660,6 +12714,12 @@
         private System.Windows.Forms.ComboBox partyAbility3ComboBox;
         private System.Windows.Forms.ComboBox partyAbility2ComboBox;
         private System.Windows.Forms.ComboBox partyGender1ComboBox;
+        private System.Windows.Forms.ComboBox partyForm1ComboBox;
+        private System.Windows.Forms.ComboBox partyForm6ComboBox;
+        private System.Windows.Forms.ComboBox partyForm5ComboBox;
+        private System.Windows.Forms.ComboBox partyForm4ComboBox;
+        private System.Windows.Forms.ComboBox partyForm3ComboBox;
+        private System.Windows.Forms.ComboBox partyForm2ComboBox;
     }
 }
 
