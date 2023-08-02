@@ -898,8 +898,6 @@ namespace DSPRE {
             Update();
 
             DSUtils.TryUnpackNarcs(new List<DirNames>() { DirNames.encounters, DirNames.monIcons });
-            DSUtils.TryUnpackNarcs(new List<DirNames>() { DirNames.headbuttEncounters });
-            DSUtils.TryUnpackNarcs(new List<DirNames>() { DirNames.safariZoneEncounters });
 
             statusLabelMessage("Passing control to Wild Pokémon Editor...");
             Update();
