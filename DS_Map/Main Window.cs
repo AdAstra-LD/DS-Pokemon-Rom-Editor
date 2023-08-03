@@ -9323,7 +9323,7 @@ namespace DSPRE {
             currentTrainerFile.trp.SaveToFileExplorePath("G4 Trainer Properties " + trainerComboBox.SelectedItem);
         }
 
-        private void importReplacePropertiesButton_Click(object sender, EventArgs e) {
+        private void replacePropertiesButton_Click(object sender, EventArgs e) {
             OpenFileDialog of = new OpenFileDialog {
                 Filter = "Gen IV Trainer Properties (*.trp)|*.trp"
             };
