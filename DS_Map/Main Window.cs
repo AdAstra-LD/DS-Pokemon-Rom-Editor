@@ -8536,7 +8536,7 @@ namespace DSPRE {
         string[] abilityNames;
         SpeciesFile[] pokemonSpecies;
 
-        private Tuple<int, int>[] pokemonSpeciesAbilities;
+        private (int abi1, int abi2)[] pokemonSpeciesAbilities;
         
         TrainerFile currentTrainerFile;
         PaletteBase trainerPal;
@@ -8590,7 +8590,7 @@ namespace DSPRE {
             });
 
             int numPokemonSpecies = Directory.GetFiles(RomInfo.gameDirs[DirNames.speciesData].unpackedDir, "*").Count();
-            pokemonSpeciesAbilities = new Tuple<int, int>[numPokemonSpecies];
+            pokemonSpeciesAbilities = new (int abi1, int abi2)[numPokemonSpecies];
             pokemonSpecies = new SpeciesFile[numPokemonSpecies];
 
             RomInfo.SetMonIconsPalTableAddress();
@@ -9399,13 +9399,12 @@ namespace DSPRE {
             UpdateTrainerClassPic(trainerClassPicBox, (int)((NumericUpDown)sender).Value);
         }
 
-        private Tuple<int, int>[] getPokemonAbilities(int numPokemonSpecies)
-        {
-            var pokemonSpeciesAbilities = new Tuple<int, int>[numPokemonSpecies];
+        private (int abi1, int abi2)[] getPokemonAbilities(int numPokemonSpecies) {
+            var pokemonSpeciesAbilities = new (int abi1, int abi2)[numPokemonSpecies];
 
             for (int i = 0; i < numPokemonSpecies; i++)
             {
-                pokemonSpeciesAbilities[i] = new Tuple<int, int>(pokemonSpecies[i].Ability1, pokemonSpecies[i].Ability2);
+                pokemonSpeciesAbilities[i] = (pokemonSpecies[i].Ability1, pokemonSpecies[i].Ability2);
             }
             
             return pokemonSpeciesAbilities;
