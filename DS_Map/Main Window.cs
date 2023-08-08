@@ -5376,6 +5376,9 @@ namespace DSPRE {
             currentEvFile.SaveToFileExplorePath("Event File " + selectEventComboBox.SelectedIndex);
         }
         private void saveEventsButton_Click(object sender, EventArgs e) {
+            
+            
+            
             currentEvFile.SaveToFileDefaultDir(selectEventComboBox.SelectedIndex);
         }
         private void importEventFileButton_Click(object sender, EventArgs e) {
