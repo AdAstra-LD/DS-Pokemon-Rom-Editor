@@ -123,6 +123,18 @@
     <Compile Include="InputComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="LearnsetEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LearnsetEditor.designer.cs">
+      <DependentUpon>LearnsetEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalDataEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PersonalDataEditor.designer.cs">
+      <DependentUpon>PersonalDataEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -154,6 +166,8 @@
     <Compile Include="OffsetPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ROMFiles\LearnsetData.cs" />
+    <Compile Include="ROMFiles\PokemonPersonalData.cs" />
     <Compile Include="ROMFiles\RomFile.cs" />
     <Compile Include="ROMFiles\ScriptAction.cs" />
     <Compile Include="ROMFiles\SpeciesFile.cs" />
@@ -186,6 +200,7 @@
     <Compile Include="SpawnEditor.Designer.cs">
       <DependentUpon>SpawnEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="UniqueList.cs" />
     <Compile Include="WildEditorHGSS.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -273,6 +288,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HeaderSearch.resx">
       <DependentUpon>HeaderSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LearnsetEditor.resx">
+      <DependentUpon>LearnsetEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PersonalDataEditor.resx">
+      <DependentUpon>PersonalDataEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ROMToolboxDB\BDHCAMPatchDB.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -529,6 +550,7 @@
     <None Include="Resources\Graphics\Program Icons\SearchMiniIcon.png" />
     <None Include="Resources\Graphics\Program Icons\sortAscending.png" />
     <None Include="Resources\Graphics\Program Icons\sortDescending.png" />
+    <None Include="Resources\RenameIcon.png" />
     <Content Include="Tools\apicula.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

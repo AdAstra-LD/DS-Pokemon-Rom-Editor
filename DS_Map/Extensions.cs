@@ -26,6 +26,11 @@ namespace DSPRE {
             Array.Copy(array, offset, result, 0, length);
             return result;
         }
+        public static void Move<T>(this IList<T> l, int currentIndex, int newIndex) {
+            T item = l[currentIndex];
+            l.RemoveAt(currentIndex);
+            l.Insert(newIndex, item);
+        }
         public static Dictionary<string, ushort> Reverse (this Dictionary<ushort, string> source) {
             var dictionary = new Dictionary<string, ushort>(StringComparer.InvariantCultureIgnoreCase);
             foreach (var entry in source) {

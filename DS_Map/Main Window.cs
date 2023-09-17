@@ -681,6 +681,7 @@ namespace DSPRE {
             headerSearchToolStripMenuItem.Enabled = true;
             spawnEditorToolStripButton.Enabled = true;
             spawnEditorToolStripMenuItem.Enabled = true;
+            monEditorToolStripMenuItem.Enabled = true;
 
             scriptCommandsButton.Enabled = true;
             statusLabelMessage();
@@ -8589,10 +8590,10 @@ namespace DSPRE {
                 DirNames.trainerGraphics, 
                 DirNames.textArchives,
                 DirNames.monIcons,
-                DirNames.speciesData
+                DirNames.personalPokeData
             });
 
-            int numPokemonSpecies = Directory.GetFiles(RomInfo.gameDirs[DirNames.speciesData].unpackedDir, "*").Count();
+            int numPokemonSpecies = Directory.GetFiles(RomInfo.gameDirs[DirNames.personalPokeData].unpackedDir, "*").Count();
             pokemonSpeciesAbilities = new (int abi1, int abi2)[numPokemonSpecies];
             pokemonSpecies = new SpeciesFile[numPokemonSpecies];
 
@@ -8711,7 +8712,7 @@ namespace DSPRE {
 
             for (int i = 0; i < numPokemonSpecies; i++)
             {
-                pokemonSpecies[i] = new SpeciesFile(new FileStream(RomInfo.gameDirs[DirNames.speciesData].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
+                pokemonSpecies[i] = new SpeciesFile(new FileStream(RomInfo.gameDirs[DirNames.personalPokeData].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
             }
 
             if (gameFamily == gFamEnum.HGSS)
@@ -8870,72 +8871,9 @@ namespace DSPRE {
 
             PictureBox pb = partyPokemonPictureBoxList[partyPos];
 
-            partyPokemonPictureBoxList[partyPos].Image = GetPokePic(species, pb.Width, pb.Height, monIconPals[partyPos], monIconTiles[partyPos], monIconSprites[partyPos]);
+            partyPokemonPictureBoxList[partyPos].Image = DSUtils.GetPokePic(species, pb.Width, pb.Height);
         }
-        private Image GetPokePic(int species, int w, int h, PaletteBase paletteBase, ImageBase imageBase, SpriteBase spriteBase) {
-            bool fiveDigits = false; // some extreme future proofing
-            string filename = "0000";
-
-            try {
-                paletteBase = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + filename, 0, filename);
-            } catch (FileNotFoundException) {
-                filename += '0';
-                paletteBase = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + filename, 0, filename);
-                fiveDigits = true;
-            }
-
-            // read arm9 table to grab pal ID
-            int paletteId = 0;
-            string iconTablePath;
-
-            int iconPalTableOffsetFromFileStart;
-            string ov129path = DSUtils.GetOverlayPath(129);
-            if (File.Exists(ov129path)) {
-                // if overlay 129 exists, read it from there
-                iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - DSUtils.GetOverlayRAMAddress(129));
-                iconTablePath = ov129path;
-            } else if ((int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress) >= 0) {
-                // if there is a synthetic overlay, read it from there
-                iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress);
-                iconTablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
-            } else {
-                // default handling
-                iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - DSUtils.ARM9.address);
-                iconTablePath = RomInfo.arm9Path;
-            }
-            
-            using (DSUtils.EasyReader idReader = new DSUtils.EasyReader(iconTablePath, iconPalTableOffsetFromFileStart + species)) {
-                paletteId = idReader.ReadByte();
-            }
-
-            if (paletteId != 0) {
-                paletteBase.Palette[0] = paletteBase.Palette[paletteId]; // update pal 0 to be the new pal
-            }
-
-            // grab tiles
-            int spriteFileID = species + 7;
-            string spriteFilename = spriteFileID.ToString("D" + (fiveDigits ? "5" : "4"));
-            imageBase = new NCGR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
-
-            // grab sprite
-            int ncerFileId = 2;
-            string ncerFileName = ncerFileId.ToString("D" + (fiveDigits ? "5" : "4"));
-            spriteBase = new NCER(gameDirs[DirNames.monIcons].unpackedDir + "\\" + ncerFileName, 2, ncerFileName);
-
-            // copy this from the trainer
-            int bank0OAMcount = spriteBase.Banks[0].oams.Length;
-            int[] OAMenabled = new int[bank0OAMcount];
-            for (int i = 0; i < OAMenabled.Length; i++) {
-                OAMenabled[i] = i;
-            }
-
-            // finally compose image
-            try {
-                return spriteBase.Get_Image(imageBase, paletteBase, 0, w, h, false, false, false, true, true, -1, OAMenabled);
-            } catch (FormatException) {
-                return Properties.Resources.IconPokeball;
-            }
-        }
+        
         private void partyPokemon1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ShowPartyPokemonPic(0);
 
@@ -9944,7 +9882,7 @@ namespace DSPRE {
         }
         private void pbEffectsPokemonCombobox_SelectedIndexChanged(object sender, EventArgs e) {
             ComboBox cb = sender as ComboBox;
-            tbEditorPokeminiPictureBox.Image = GetPokePic(cb.SelectedIndex, tbEditorPokeminiPictureBox.Width, tbEditorPokeminiPictureBox.Height, tableEditorMonIconPal, tableEditorMonIconTile, tableEditorMonIconSprite);
+            tbEditorPokeminiPictureBox.Image = DSUtils.GetPokePic(cb.SelectedIndex, tbEditorPokeminiPictureBox.Width, tbEditorPokeminiPictureBox.Height);
             tbEditorPokeminiPictureBox.Update();
         }
 
@@ -10691,6 +10629,39 @@ namespace DSPRE {
             }
 
             Console.WriteLine("CSV file exported successfully.");
+        }
+
+        private void personalDataEditorToolStripMenuItem_Click(object sender, EventArgs e) {
+            string[] itemNames = RomInfo.GetItemNames();
+            string[] abilityNames = RomInfo.GetAbilityNames();
+
+            statusLabelMessage("Setting up Personal Data Editor...");
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.monIcons });
+            RomInfo.SetMonIconsPalTableAddress();
+
+            PersonalDataEditor pde = new PersonalDataEditor(itemNames, abilityNames);
+            pde.ShowDialog();
+
+            statusLabelMessage();
+            Update();
+        }
+
+        private void learnsetsEditorToolStripMenuItem_Click(object sender, EventArgs e) {
+            string[] moveNames = RomInfo.GetAttackNames();
+
+            statusLabelMessage("Setting up Learnsets Editor...");
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.learnsets, DirNames.monIcons });
+            RomInfo.SetMonIconsPalTableAddress();
+
+            LearnsetEditor le = new LearnsetEditor(moveNames);
+            le.ShowDialog();
+
+            statusLabelMessage();
+            Update();
         }
     }
 }
