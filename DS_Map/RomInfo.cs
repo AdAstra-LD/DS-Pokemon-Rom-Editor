@@ -6,6 +6,7 @@ using System.Linq;
 using DSPRE.Resources;
 using System;
 using DSPRE.ROMFiles;
+using static DSPRE.RomInfo;
 
 namespace DSPRE {
 
@@ -110,7 +111,7 @@ namespace DSPRE {
             German
         }
         public enum DirNames : byte {
-            speciesData,
+            personalPokeData,
 
             synthOverlay,            
             dynamicHeaders,
@@ -137,7 +138,8 @@ namespace DSPRE {
 
             monIcons,
 
-            interiorBuildingModels
+            interiorBuildingModels,
+            learnsets
         };
         public static Dictionary<DirNames, (string packedDir, string unpackedDir)> gameDirs { get; private set; }
 
@@ -887,6 +889,9 @@ namespace DSPRE {
         public static string[] GetPokemonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
         public static string[] GetAbilityNames() => new TextArchive(abilityNamesTextNumber).messages.ToArray();
         public static string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
+        public static int GetLearnsetFilesCount() => Directory.GetFiles(gameDirs[DirNames.learnsets].unpackedDir).Length;
+        public static int GetPersonalFilesCount() => Directory.GetFiles(gameDirs[DirNames.personalPokeData].unpackedDir).Length;
+
         public int GetAreaDataCount() => Directory.GetFiles(gameDirs[DirNames.areaData].unpackedDir).Length;
         public int GetMapTexturesCount() => Directory.GetFiles(gameDirs[DirNames.mapTextures].unpackedDir).Length;
         public int GetBuildingTexturesCount() => Directory.GetFiles(gameDirs[DirNames.buildingTextures].unpackedDir).Length;
@@ -972,7 +977,7 @@ namespace DSPRE {
                         suffix = "_release";
 
                     packedDirsDict = new Dictionary<DirNames, string>() {
-                        [DirNames.speciesData] = @"data\poketool\personal\personal.narc",
+                        [DirNames.personalPokeData] = @"data\poketool\personal\personal.narc",
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.textArchives] = @"data\msgdata\msg.narc",
 
@@ -995,13 +1000,14 @@ namespace DSPRE {
                         [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
 
                         [DirNames.monIcons] = @"data\poketool\icongra\poke_icon.narc",
-
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc"
+                        
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc",
+                        [DirNames.learnsets] = workDir + @"data\poketool\personal\wotbl.narc",
                     };
                     break;
                 case gFamEnum.Plat:
                     packedDirsDict = new Dictionary<DirNames, string>() {
-                        [DirNames.speciesData] = @"data\poketool\personal\pl_personal.narc",
+                        [DirNames.personalPokeData] = @"data\poketool\personal\pl_personal.narc",
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.dynamicHeaders] = @"data\debug\cb_edit\d_test.narc",
 
@@ -1027,12 +1033,13 @@ namespace DSPRE {
 
                         [DirNames.monIcons] = @"data\poketool\icongra\pl_poke_icon.narc",
 
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "enc_data.narc"
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "enc_data.narc",
+                        [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
                     };
                     break;
                 case gFamEnum.HGSS:
                     packedDirsDict = new Dictionary<DirNames, string>() {
-                        [DirNames.speciesData] = @"data\a\0\0\2",
+                        [DirNames.personalPokeData] = @"data\a\0\0\2",
                         [DirNames.synthOverlay] = @"data\a\0\2\8",
                         [DirNames.dynamicHeaders] = @"data\a\0\5\0",
 
@@ -1058,7 +1065,8 @@ namespace DSPRE {
 
                         [DirNames.monIcons] = @"data\a\0\2\0",
 
-                        [DirNames.interiorBuildingModels] = @"data\a\1\4\8"
+                        [DirNames.interiorBuildingModels] = @"data\a\1\4\8",
+                        [DirNames.learnsets] = @"data\a\0\3\3",
                     };
 
                     //Encounter archive is different for SS 
