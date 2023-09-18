@@ -88,7 +88,7 @@ namespace DSPRE {
             int trainerCount = Directory.GetFiles(trainerPropertiesUnpackedDir).Length;
 
             for (int i = 0; i < trainerCount; i++) {
-                int classMessageID = BitConverter.ToUInt16(DSUtils.ReadFromFile(trainerPropertiesUnpackedDir + "\\" + i.ToString("D4"), startOffset: 1, 2), 0);
+                int classMessageID = DSUtils.ReadFromFile(trainerPropertiesUnpackedDir + "\\" + i.ToString("D4"), startOffset: 1, 1)[0];
                 string currentTrainerName;
 
                 if (i < trainerNames.messages.Count) {
