@@ -49,7 +49,7 @@ namespace DSPRE {
 
 
             /* ---------------- */
-            int count = RomInfo.GetLearnsetFilesCount();
+            int count = RomInfo.GetPersonalFilesCount();
             this.pokenames = RomInfo.GetPokemonNames();
             List<string> fileNames = new List<string>(count);
             fileNames.AddRange(pokenames);
