@@ -203,7 +203,7 @@ namespace DSPRE {
             if (disableHandlers) {
                 return;
             }
-            currentLoadedFile.givenExp = (ushort)baseExpYieldNumericUpDown.Value;
+            currentLoadedFile.givenExp = (byte)baseExpYieldNumericUpDown.Value;
             setDirty(true);
         }
 

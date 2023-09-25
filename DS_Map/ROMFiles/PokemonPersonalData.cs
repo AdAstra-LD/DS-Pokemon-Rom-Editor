@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using static DSPRE.RomInfo;
@@ -85,7 +86,7 @@ namespace DSPRE.ROMFiles {
         public PokemonType type2;
 
         public byte catchRate;
-        public ushort givenExp;
+        public byte givenExp;
 
         //Part of a u16 bitfield, 2 bits each.
         public byte evHP;   
@@ -146,6 +147,7 @@ namespace DSPRE.ROMFiles {
                 firstAbility = reader.ReadByte();
                 secondAbility = reader.ReadByte();
                 escapeRate = reader.ReadByte();
+
                 byte colorAndFlip = reader.ReadByte();
                 color = (PokemonDexColor)(colorAndFlip & 0b01111111);
                 flip = ((colorAndFlip >> 7) & 0b00000001) == 1;
@@ -195,15 +197,20 @@ namespace DSPRE.ROMFiles {
                     writer.Write(firstAbility);
                     writer.Write(secondAbility);
                     writer.Write(escapeRate);
-                    byte colorAndReverse = (byte)(((byte)color & 0b01111111) |
+                    byte colorAndFlipflag = (byte)(((byte)color & 0b01111111) |
                                                   (((flip ? 1 : 0) & 0b00000001) << 7));
-                    writer.Write(colorAndReverse);
+                    writer.Write(colorAndFlipflag);
 
                     uint[] bfs = SetToBitField(machines);
-                    writer.Write(bfs[0]);
-                    writer.Write(bfs[1]);
-                    writer.Write(bfs[2]);
-                    writer.Write(bfs[3]);
+                    int l = Math.Min(bfs.Length, 4);
+                    int i;
+                    for (i = 0; i < l; i++) {
+                        writer.Write(bfs[i]);
+                    }
+                    while (i < 4) {
+                        writer.Write((uint)0);
+                        i++;
+                    }
                 }
                 return stream.ToArray();
             }

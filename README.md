@@ -18,13 +18,12 @@ Major overhaul of Nomura's DS Pokemon ROM Editor, with lots of new features and 
 - NARC Packer/Unpacker utilities.
 - List based and Content based Batch Rename utilities.
 - Lots of new buttons and icons.
-- Some fields will now show a colored text depending on their value.
-- DSPRE can now read extracted data from a directory, without loading a ROM.
-- DSPRE now warns you about ARM9 status mismatches.
+- Color coding of numeric values.
+- Read extracted data from a directory, without loading a ROM.
+- ARM9 mismatch warning.
 - Added new ALT key shortcuts (Hold alt to see which shortcuts are available).
 - Fixed Encounter Editor unpacking HG encounters for SS ROMs.
 - Fixed Overworld sprite search algorithm for most (if not all) supported ROMs.
-- Fixed app name.
 - Fixed many Exceptions, which now show user-friendly messages.
 - Files used by each editor are easily locatable.
 - New ROM Toolbox.
@@ -140,3 +139,9 @@ Change the Trainer Class, Party, Movesets, AIs and Items of any Trainer in the g
 ### New Table Editor:
 - Conditional Music Table: allows you to pick a different Header music to play when a specific flag is set. [HGSS only]
 - Pre-Battle Effects: you can now associate many different VS. Sequences and Battle tracks to any Trainer Classes or Pokémon.
+
+### New Personal Data Editor:
+Edit base stats, Learnable TMs, EVs yield, and more.
+
+### New Learnset Editor:
+Edit the moves that a given Pokemon can learn by leveling up.

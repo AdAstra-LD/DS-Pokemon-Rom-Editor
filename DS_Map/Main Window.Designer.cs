@@ -30,22 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
             this.removeLastHeaderBTN = new System.Windows.Forms.Button();
@@ -168,7 +168,6 @@
             this.weatherPictureBox = new System.Windows.Forms.PictureBox();
             this.matrixEditorTabPage = new System.Windows.Forms.TabPage();
             this.locateCurrentMatrixFile = new System.Windows.Forms.Button();
-            this.setSpawnPointButton = new System.Windows.Forms.Button();
             this.resetColorTableButton = new System.Windows.Forms.Button();
             this.importColorTableButton = new System.Windows.Forms.Button();
             this.importMatrixButton = new System.Windows.Forms.Button();
@@ -193,7 +192,6 @@
             this.widthUpDown = new System.Windows.Forms.NumericUpDown();
             this.widthLabel = new System.Windows.Forms.Label();
             this.selectMatrixComboBox = new System.Windows.Forms.ComboBox();
-            this.saveMatrixButton = new System.Windows.Forms.Button();
             this.mapEditorTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.addMapFileButton = new System.Windows.Forms.Button();
@@ -862,6 +860,9 @@
             this.texturizeNSBMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.untexturizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractNSBTXFromNSBMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.monEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.personalDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.learnsetsEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.essentialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simpleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -904,9 +905,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.directoryEntry2 = new System.DirectoryServices.DirectoryEntry();
-            this.monEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.personalDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.learnsetsEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setSpawnPointButton = new System.Windows.Forms.Button();
+            this.saveMatrixButton = new System.Windows.Forms.Button();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -1176,7 +1176,7 @@
             this.mainTabControl.Location = new System.Drawing.Point(11, 72);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(1193, 730);
+            this.mainTabControl.Size = new System.Drawing.Size(1193, 660);
             this.mainTabControl.TabIndex = 5;
             this.mainTabControl.Visible = false;
             this.mainTabControl.SelectedIndexChanged += new System.EventHandler(this.mainTabControl_SelectedIndexChanged);
@@ -1211,7 +1211,7 @@
             this.headerEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.headerEditorTabPage.Name = "headerEditorTabPage";
             this.headerEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.headerEditorTabPage.Size = new System.Drawing.Size(1185, 703);
+            this.headerEditorTabPage.Size = new System.Drawing.Size(1185, 705);
             this.headerEditorTabPage.TabIndex = 0;
             this.headerEditorTabPage.Text = "Header Editor";
             // 
@@ -2574,8 +2574,9 @@
             // matrixEditorTabPage
             // 
             this.matrixEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
-            this.matrixEditorTabPage.Controls.Add(this.locateCurrentMatrixFile);
             this.matrixEditorTabPage.Controls.Add(this.setSpawnPointButton);
+            this.matrixEditorTabPage.Controls.Add(this.saveMatrixButton);
+            this.matrixEditorTabPage.Controls.Add(this.locateCurrentMatrixFile);
             this.matrixEditorTabPage.Controls.Add(this.resetColorTableButton);
             this.matrixEditorTabPage.Controls.Add(this.importColorTableButton);
             this.matrixEditorTabPage.Controls.Add(this.importMatrixButton);
@@ -2594,12 +2595,11 @@
             this.matrixEditorTabPage.Controls.Add(this.widthUpDown);
             this.matrixEditorTabPage.Controls.Add(this.widthLabel);
             this.matrixEditorTabPage.Controls.Add(this.selectMatrixComboBox);
-            this.matrixEditorTabPage.Controls.Add(this.saveMatrixButton);
             this.matrixEditorTabPage.ImageIndex = 1;
             this.matrixEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.matrixEditorTabPage.Name = "matrixEditorTabPage";
             this.matrixEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.matrixEditorTabPage.Size = new System.Drawing.Size(1185, 703);
+            this.matrixEditorTabPage.Size = new System.Drawing.Size(1185, 633);
             this.matrixEditorTabPage.TabIndex = 1;
             this.matrixEditorTabPage.Text = "Matrix Editor";
             // 
@@ -2613,22 +2613,6 @@
             this.locateCurrentMatrixFile.TabIndex = 33;
             this.locateCurrentMatrixFile.UseVisualStyleBackColor = true;
             this.locateCurrentMatrixFile.Click += new System.EventHandler(this.locateCurrentMatrixFile_Click);
-            // 
-            // setSpawnPointButton
-            // 
-            this.setSpawnPointButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
-            this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.setSpawnPointButton.Location = new System.Drawing.Point(11, 605);
-            this.setSpawnPointButton.Name = "setSpawnPointButton";
-            this.setSpawnPointButton.Size = new System.Drawing.Size(117, 43);
-            this.setSpawnPointButton.TabIndex = 32;
-            this.setSpawnPointButton.Text = "Set Spawn\r\nto Selection";
-            this.setSpawnPointButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.setSpawnPointButton, "Sets the current matrix cell as the player\'s Spawn Point");
-            this.setSpawnPointButton.UseVisualStyleBackColor = true;
-            this.setSpawnPointButton.Click += new System.EventHandler(this.setSpawnPointButton_Click);
             // 
             // resetColorTableButton
             // 
@@ -2792,7 +2776,7 @@
             this.matrixTabControl.Multiline = true;
             this.matrixTabControl.Name = "matrixTabControl";
             this.matrixTabControl.SelectedIndex = 0;
-            this.matrixTabControl.Size = new System.Drawing.Size(1040, 686);
+            this.matrixTabControl.Size = new System.Drawing.Size(1040, 616);
             this.matrixTabControl.TabIndex = 18;
             // 
             // headersTabPage
@@ -2801,7 +2785,7 @@
             this.headersTabPage.Location = new System.Drawing.Point(4, 22);
             this.headersTabPage.Name = "headersTabPage";
             this.headersTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.headersTabPage.Size = new System.Drawing.Size(1032, 660);
+            this.headersTabPage.Size = new System.Drawing.Size(1032, 590);
             this.headersTabPage.TabIndex = 1;
             this.headersTabPage.Text = "Map Headers";
             this.headersTabPage.UseVisualStyleBackColor = true;
@@ -3060,21 +3044,6 @@
             this.selectMatrixComboBox.Size = new System.Drawing.Size(112, 21);
             this.selectMatrixComboBox.TabIndex = 12;
             this.selectMatrixComboBox.SelectedIndexChanged += new System.EventHandler(this.selectMatrixComboBox_SelectedIndexChanged);
-            // 
-            // saveMatrixButton
-            // 
-            this.saveMatrixButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
-            this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.saveMatrixButton.Location = new System.Drawing.Point(11, 650);
-            this.saveMatrixButton.Name = "saveMatrixButton";
-            this.saveMatrixButton.Size = new System.Drawing.Size(117, 43);
-            this.saveMatrixButton.TabIndex = 22;
-            this.saveMatrixButton.Text = "Save Matrix";
-            this.saveMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.saveMatrixButton.UseVisualStyleBackColor = true;
-            this.saveMatrixButton.Click += new System.EventHandler(this.saveMatrixButton_Click);
             // 
             // mapEditorTabPage
             // 
@@ -8374,7 +8343,7 @@
             this.trainerEditorTabPage.ImageIndex = 8;
             this.trainerEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.trainerEditorTabPage.Name = "trainerEditorTabPage";
-            this.trainerEditorTabPage.Size = new System.Drawing.Size(1185, 703);
+            this.trainerEditorTabPage.Size = new System.Drawing.Size(1185, 633);
             this.trainerEditorTabPage.TabIndex = 8;
             this.trainerEditorTabPage.Text = "Trainer Editor";
             this.trainerEditorTabPage.UseVisualStyleBackColor = true;
@@ -11140,6 +11109,30 @@
             this.extractNSBTXFromNSBMDToolStripMenuItem.Text = "Save textures from NSBMD";
             this.extractNSBTXFromNSBMDToolStripMenuItem.Click += new System.EventHandler(this.nsbmdExportTexButton_Click);
             // 
+            // monEditorToolStripMenuItem
+            // 
+            this.monEditorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.personalDataEditorToolStripMenuItem,
+            this.learnsetsEditorToolStripMenuItem});
+            this.monEditorToolStripMenuItem.Enabled = false;
+            this.monEditorToolStripMenuItem.Name = "monEditorToolStripMenuItem";
+            this.monEditorToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
+            this.monEditorToolStripMenuItem.Text = "Mon Editor";
+            // 
+            // personalDataEditorToolStripMenuItem
+            // 
+            this.personalDataEditorToolStripMenuItem.Name = "personalDataEditorToolStripMenuItem";
+            this.personalDataEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.personalDataEditorToolStripMenuItem.Text = "Personal Data Editor";
+            this.personalDataEditorToolStripMenuItem.Click += new System.EventHandler(this.personalDataEditorToolStripMenuItem_Click);
+            // 
+            // learnsetsEditorToolStripMenuItem
+            // 
+            this.learnsetsEditorToolStripMenuItem.Name = "learnsetsEditorToolStripMenuItem";
+            this.learnsetsEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.learnsetsEditorToolStripMenuItem.Text = "Learnsets Editor";
+            this.learnsetsEditorToolStripMenuItem.Click += new System.EventHandler(this.learnsetsEditorToolStripMenuItem_Click);
+            // 
             // menuViewToolStripMenuItem
             // 
             this.menuViewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -11194,9 +11187,9 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
             this.toolStripProgressBar});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 724);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 737);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1214, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1214, 24);
             this.statusStrip1.TabIndex = 13;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -11557,36 +11550,41 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // monEditorToolStripMenuItem
+            // setSpawnPointButton
             // 
-            this.monEditorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.personalDataEditorToolStripMenuItem,
-            this.learnsetsEditorToolStripMenuItem});
-            this.monEditorToolStripMenuItem.Enabled = false;
-            this.monEditorToolStripMenuItem.Name = "monEditorToolStripMenuItem";
-            this.monEditorToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
-            this.monEditorToolStripMenuItem.Text = "Mon Editor";
+            this.setSpawnPointButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
+            this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.setSpawnPointButton.Location = new System.Drawing.Point(12, 522);
+            this.setSpawnPointButton.Name = "setSpawnPointButton";
+            this.setSpawnPointButton.Size = new System.Drawing.Size(117, 43);
+            this.setSpawnPointButton.TabIndex = 35;
+            this.setSpawnPointButton.Text = "Set Spawn\r\nto Selection";
+            this.setSpawnPointButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.setSpawnPointButton, "Sets the current matrix cell as the player\'s Spawn Point");
+            this.setSpawnPointButton.UseVisualStyleBackColor = true;
             // 
-            // personalDataEditorToolStripMenuItem
+            // saveMatrixButton
             // 
-            this.personalDataEditorToolStripMenuItem.Name = "personalDataEditorToolStripMenuItem";
-            this.personalDataEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.personalDataEditorToolStripMenuItem.Text = "Personal Data Editor";
-            this.personalDataEditorToolStripMenuItem.Click += new System.EventHandler(this.personalDataEditorToolStripMenuItem_Click);
-            // 
-            // learnsetsEditorToolStripMenuItem
-            // 
-            this.learnsetsEditorToolStripMenuItem.Name = "learnsetsEditorToolStripMenuItem";
-            this.learnsetsEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.learnsetsEditorToolStripMenuItem.Text = "Learnsets Editor";
-            this.learnsetsEditorToolStripMenuItem.Click += new System.EventHandler(this.learnsetsEditorToolStripMenuItem_Click);
+            this.saveMatrixButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
+            this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.saveMatrixButton.Location = new System.Drawing.Point(12, 567);
+            this.saveMatrixButton.Name = "saveMatrixButton";
+            this.saveMatrixButton.Size = new System.Drawing.Size(117, 43);
+            this.saveMatrixButton.TabIndex = 34;
+            this.saveMatrixButton.Text = "Save Matrix";
+            this.saveMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.saveMatrixButton.UseVisualStyleBackColor = true;
             // 
             // MainProgram
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1214, 746);
+            this.ClientSize = new System.Drawing.Size(1214, 761);
             this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.languageLabel);
             this.Controls.Add(this.gameIcon);
@@ -11947,7 +11945,6 @@
         private System.Windows.Forms.NumericUpDown widthUpDown;
         private System.Windows.Forms.Label widthLabel;
         private System.Windows.Forms.ComboBox selectMatrixComboBox;
-        private System.Windows.Forms.Button saveMatrixButton;
         private System.Windows.Forms.DataGridView headersGridView;
         private System.Windows.Forms.Button addHeadersButton;
         private System.Windows.Forms.Button addHeightsButton;
@@ -12419,7 +12416,6 @@
         private System.Windows.Forms.ToolStripMenuItem platinumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem heartGoldAndSoulSilverToolStripMenuItem;
         private System.Windows.Forms.Label spriteIDlabel;
-        private System.Windows.Forms.Button setSpawnPointButton;
         private System.Windows.Forms.ToolStripButton spawnEditorToolStripButton;
         private System.Windows.Forms.ToolStripMenuItem spawnEditorToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox22;
@@ -12791,6 +12787,8 @@
         private System.Windows.Forms.ToolStripMenuItem monEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem personalDataEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem learnsetsEditorToolStripMenuItem;
+        private System.Windows.Forms.Button setSpawnPointButton;
+        private System.Windows.Forms.Button saveMatrixButton;
     }
 }
 
