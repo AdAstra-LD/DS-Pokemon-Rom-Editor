@@ -9037,9 +9037,24 @@ namespace DSPRE {
         }
 
         private void trainerSaveCurrentButton_Click(object sender, EventArgs e) {
-            if (trainerNameTextBox.Text.Length > TrainerFile.maxNameLen) {
-                MessageBox.Show($"The length of this Trainer name exceeds {TrainerFile.maxNameLen} characters.", "Trainer data could not be saved!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (!ROMToolboxDialog.flag_TrainerNamesExpanded && trainerNameTextBox.Text.Length > TrainerFile.maxNameLen) {
+                DialogResult d;
+                MessageBox.Show($"The length of this Trainer name exceeds {TrainerFile.maxNameLen} characters.", 
+                    "Trainer data could not be saved!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                d = MessageBox.Show("Within the RomToolBox (found near the wild editor) you can expand this limit if you are working on an ENglish or Spanish rom (for now).", 
+                    "Do you wish to go there now?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (d == DialogResult.Yes)
+                {
+                    romToolBoxToolStripMenuItem_Click(null, null);
+                }
                 return;
+            }
+            if(trainerNameTextBox.Text.Length > ROMToolboxDialog.expandedTrainerNameLength)
+            {
+                MessageBox.Show($"The length of this Trainer name exceeds {ROMToolboxDialog.expandedTrainerNameLength} characters.",
+                    "Trainer data could not be saved!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+
             }
 
             currentTrainerFile.trp.partyCount = (byte)partyCountUpDown.Value;

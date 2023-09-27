@@ -11,6 +11,7 @@ using DSPRE.Resources;
 using static DSPRE.RomInfo;
 using System.Threading.Tasks;
 using static DSPRE.Resources.ROMToolboxDB.ToolboxDB;
+using static NSMBe4.ROM;
 
 namespace DSPRE {
     public partial class ROMToolboxDialog : Form {
@@ -25,8 +26,11 @@ namespace DSPRE {
         public static bool flag_MainComboTableRepointed { get; set; } = false;
         public static bool flag_TrainerClassBattleTableRepointed { get; set; } = false;
         public static bool flag_PokemonBattleTableRepointed { get; set; } = false;
-        
+        public static bool flag_TrainerNamesExpanded { get; set; } = false;
+
         public static bool overlay1MustBeRestoredFromBackup { get; private set; } = true;
+
+        public static int expandedTrainerNameLength = 12;
 
         #region Constructor
         public ROMToolboxDialog() {
@@ -36,10 +40,12 @@ namespace DSPRE {
 
             if (RomInfo.gameLanguage == gLangEnum.English || RomInfo.gameLanguage == gLangEnum.Spanish) {
                 CheckARM9ExpansionApplied();
+                CheckExpandedTrainerNamespatchApplied();
             } else {
                 DisableARM9patch("Unsupported\nlanguage");
                 DisableBDHCamPatch("Unsupported\nlanguage");
                 DisableScrcmdRepointPatch("Unsupported\nlanguage");
+                DisableTrainerNameExpansionPatch("Unsuported\nlanguage");
             }
 
             switch (RomInfo.gameFamily) {
@@ -131,6 +137,13 @@ namespace DSPRE {
             disableTextureAnimationsLBL.Enabled = false;
             disableTextureAnimationsTextLBL.Enabled = false;
             disableTextureAnimationsButton.Text = reason;
+        }
+        private void DisableTrainerNameExpansionPatch(string reason)
+        {
+            expandTrainerNamesButton.Enabled = false;
+            expandTrainerNamesLBL.Enabled = false;
+            expandTrainerNamesTextLBL.Enabled = false;
+            expandTrainerNamesButton.Text = reason;
         }
         #endregion
         #endregion
@@ -302,6 +315,29 @@ namespace DSPRE {
         }
         public void CheckScrcmdRepointPatchApplied() {
             //throw new NotImplementedException();
+        }
+
+        public void CheckExpandedTrainerNamespatchApplied()
+        {
+            uint position = 0x6AC32;
+            switch (RomInfo.gameFamily)
+            {
+                case gFamEnum.DP:
+                    if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x6AC32;
+                    else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x6AC8E;
+                    break;
+                case gFamEnum.Plat:
+                    if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x791DE;
+                    else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x7927E;
+                    break;
+                case gFamEnum.HGSS:
+                    if (RomInfo.gameLanguage.Equals(gLangEnum.English) || RomInfo.gameVersion.Equals(gVerEnum.SoulSilver)) position = 0x7342E;
+                    else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x73426;
+                    break;
+            }
+            byte initValue = DSUtils.ARM9.ReadByte(position);
+            if(initValue == (byte)ROMToolboxDialog.expandedTrainerNameLength)  DisableTrainerNameExpansionPatch("AlreadyApplied");
+            
         }
         #endregion
 
@@ -782,7 +818,74 @@ namespace DSPRE {
             } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-}
+        }
+
+        private void expandTrainerNamesButton_Click(object sender, EventArgs e)
+        {
+            // Pearl        USA     ARM9 at 0x6AC32     // TODO: Verify
+            // Pearl        Spain   ARM9 at 0x6AC8E     // TODO: Verify
+            // Diamond      USA     ARM9 at 0x6AC32
+            // Diamond      Spain   ARM9 at 0x6AC8E
+            // Platinum     USA     ARM9 at 0x791DE
+            // Platinum     Spain   ARM9 at 0x7927E
+            // HeartGold    USA     ARM9 at 0x7342E
+            // HeartGold    Spain   ARM9 at 0x73426
+            // SoulSilver   USA     ARM9 at 0x7342E
+            // SoulSilver   Spain   ARM9 at 0x7342E     // TODO: Verify
+            DialogResult d;
+            int position = 0x7342E;
+            bool gameFamGood = true;
+            d = MessageBox.Show($"Applying this patch will set the Trainer Name max length to { ROMToolboxDialog.expandedTrainerNameLength }.\n"+
+                "Please note that if you have modified the ARM9 these offsets may be wrong.\n"+
+                "If you have done so we encourage you to seek in your ARM9 for where to make the modification as your offset might change.\n\n" +
+                "Are you sure you want to proceed?",
+                "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (d == DialogResult.Yes)
+            {
+                switch (RomInfo.gameFamily)
+                {
+                    case gFamEnum.DP:
+                        if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x6AC32;
+                        else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x6AC8E;
+                        else gameFamGood = false;
+                        break;
+                    case gFamEnum.Plat:
+                        if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x791DE;
+                        else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x7927E;
+                        else gameFamGood = false;
+                        break;
+                    case gFamEnum.HGSS:
+                        if (RomInfo.gameLanguage.Equals(gLangEnum.English) || RomInfo.gameVersion.Equals(gVerEnum.SoulSilver)) position = 0x7342E;
+                        else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x73426;
+                        else gameFamGood = false;
+                        break;
+                }
+                if (gameFamGood)
+                {
+                    using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer())
+                    { 
+                        wr.BaseStream.Position = position;
+                        wr.Write((byte)ROMToolboxDialog.expandedTrainerNameLength);
+                    }
+                    ROMToolboxDialog.flag_TrainerNamesExpanded = true;
+                    DisableTrainerNameExpansionPatch("Already applied");
+                    expandTrainerNamesCB.Visible = true;
+                    MessageBox.Show("Trainer Names have been expanded.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Sorry this game language does not have a recorded offset for this patch.\n\n"+
+                        "Reach out in our discord if you want to help researching it!", 
+                        "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         #region Mikelan's custom commands
         private void applyCustomCommands(object sender, EventArgs e) {
             int expTableOffset = GetCommandTableOffset();
@@ -923,5 +1026,7 @@ namespace DSPRE {
             MessageBox.Show("This patch has already been applied.", "Can't reapply patch", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
+
+       
     }
 }
