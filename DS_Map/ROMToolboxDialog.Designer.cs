@@ -68,6 +68,10 @@
             this.disableTextureAnimationsTextLBL = new System.Windows.Forms.Label();
             this.disableTextureAnimationsLBL = new System.Windows.Forms.Label();
             this.disableTextureAnimationsButton = new System.Windows.Forms.Button();
+            this.expandTrainerNamesCB = new System.Windows.Forms.PictureBox();
+            this.expandTrainerNamesTextLBL = new System.Windows.Forms.Label();
+            this.expandTrainerNamesLBL = new System.Windows.Forms.Label();
+            this.expandTrainerNamesButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.arm9patchCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlay1CB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BDHCamCB)).BeginInit();
@@ -77,6 +81,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.repointScrcmdCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dynamicHeadersPatchCB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.disableTextureAnimationsCB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.expandTrainerNamesCB)).BeginInit();
             this.SuspendLayout();
             // 
             // applyItemStandardizeButton
@@ -443,11 +448,11 @@
             this.applyDynamicHeadersButton.UseVisualStyleBackColor = true;
             this.applyDynamicHeadersButton.Click += new System.EventHandler(this.dynamicHeadersButton_Click);
             // 
-            // disableDynamicTexturesCB
+            // disableTextureAnimationsCB
             // 
-            this.disableTextureAnimationsCB.Image = ((System.Drawing.Image)(resources.GetObject("disableDynamicTexturesCB.Image")));
+            this.disableTextureAnimationsCB.Image = ((System.Drawing.Image)(resources.GetObject("disableTextureAnimationsCB.Image")));
             this.disableTextureAnimationsCB.Location = new System.Drawing.Point(803, 238);
-            this.disableTextureAnimationsCB.Name = "disableDynamicTexturesCB";
+            this.disableTextureAnimationsCB.Name = "disableTextureAnimationsCB";
             this.disableTextureAnimationsCB.Size = new System.Drawing.Size(20, 20);
             this.disableTextureAnimationsCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.disableTextureAnimationsCB.TabIndex = 39;
@@ -484,12 +489,56 @@
             this.disableTextureAnimationsButton.UseVisualStyleBackColor = true;
             this.disableTextureAnimationsButton.Click += new System.EventHandler(this.disableDynamicTexturesButton_Click);
             // 
+            // expandTrainerNamesCB
+            // 
+            this.expandTrainerNamesCB.Image = ((System.Drawing.Image)(resources.GetObject("expandTrainerNamesCB.Image")));
+            this.expandTrainerNamesCB.Location = new System.Drawing.Point(803, 317);
+            this.expandTrainerNamesCB.Name = "expandTrainerNamesCB";
+            this.expandTrainerNamesCB.Size = new System.Drawing.Size(20, 20);
+            this.expandTrainerNamesCB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.expandTrainerNamesCB.TabIndex = 43;
+            this.expandTrainerNamesCB.TabStop = false;
+            this.expandTrainerNamesCB.Visible = false;
+            // 
+            // expandTrainerNamesTextLBL
+            // 
+            this.expandTrainerNamesTextLBL.Location = new System.Drawing.Point(481, 320);
+            this.expandTrainerNamesTextLBL.Name = "expandTrainerNamesTextLBL";
+            this.expandTrainerNamesTextLBL.Size = new System.Drawing.Size(288, 58);
+            this.expandTrainerNamesTextLBL.TabIndex = 42;
+            this.expandTrainerNamesTextLBL.Text = "Expands trainer names to be up to 12 characters long.";
+            this.expandTrainerNamesTextLBL.UseMnemonic = false;
+            // 
+            // expandTrainerNamesLBL
+            // 
+            this.expandTrainerNamesLBL.AutoSize = true;
+            this.expandTrainerNamesLBL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.expandTrainerNamesLBL.Location = new System.Drawing.Point(481, 305);
+            this.expandTrainerNamesLBL.Name = "expandTrainerNamesLBL";
+            this.expandTrainerNamesLBL.Size = new System.Drawing.Size(135, 13);
+            this.expandTrainerNamesLBL.TabIndex = 41;
+            this.expandTrainerNamesLBL.Text = "Expand Trainer Names";
+            // 
+            // expandTrainerNamesButton
+            // 
+            this.expandTrainerNamesButton.Location = new System.Drawing.Point(829, 301);
+            this.expandTrainerNamesButton.Name = "expandTrainerNamesButton";
+            this.expandTrainerNamesButton.Size = new System.Drawing.Size(100, 50);
+            this.expandTrainerNamesButton.TabIndex = 40;
+            this.expandTrainerNamesButton.Text = "Apply Patch";
+            this.expandTrainerNamesButton.UseVisualStyleBackColor = true;
+            this.expandTrainerNamesButton.Click += new System.EventHandler(this.expandTrainerNamesButton_Click);
+            // 
             // ROMToolboxDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(950, 513);
+            this.Controls.Add(this.expandTrainerNamesCB);
+            this.Controls.Add(this.expandTrainerNamesTextLBL);
+            this.Controls.Add(this.expandTrainerNamesLBL);
+            this.Controls.Add(this.expandTrainerNamesButton);
             this.Controls.Add(this.disableTextureAnimationsCB);
             this.Controls.Add(this.disableTextureAnimationsTextLBL);
             this.Controls.Add(this.disableTextureAnimationsLBL);
@@ -544,6 +593,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.repointScrcmdCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dynamicHeadersPatchCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.disableTextureAnimationsCB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.expandTrainerNamesCB)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -591,5 +641,9 @@
         private System.Windows.Forms.Label disableTextureAnimationsTextLBL;
         private System.Windows.Forms.Label disableTextureAnimationsLBL;
         private System.Windows.Forms.Button disableTextureAnimationsButton;
+        private System.Windows.Forms.PictureBox expandTrainerNamesCB;
+        private System.Windows.Forms.Label expandTrainerNamesTextLBL;
+        private System.Windows.Forms.Label expandTrainerNamesLBL;
+        private System.Windows.Forms.Button expandTrainerNamesButton;
     }
 }
