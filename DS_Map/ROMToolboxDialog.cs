@@ -336,7 +336,11 @@ namespace DSPRE {
                     break;
             }
             byte initValue = DSUtils.ARM9.ReadByte(position);
-            if(initValue == (byte)ROMToolboxDialog.expandedTrainerNameLength)  DisableTrainerNameExpansionPatch("AlreadyApplied");
+            if (initValue == (byte)ROMToolboxDialog.expandedTrainerNameLength)
+            {
+                DisableTrainerNameExpansionPatch("Already\nApplied");
+                ROMToolboxDialog.flag_TrainerNamesExpanded = true;
+            }
             
         }
         #endregion
