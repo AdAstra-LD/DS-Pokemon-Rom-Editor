@@ -6287,26 +6287,39 @@ namespace DSPRE {
 
             eventEditorHeaderLocationNameLabel.Text = (string)locationNameComboBox.Items[locNum];
 
-            if (disableHandlers) {
+            int warpSel = warpsListBox.SelectedIndex;
+            if (disableHandlers || warpSel < 0) {
                 return;
             }
-            currentEvFile.warps[warpsListBox.SelectedIndex].header = destHeaderID;
+            currentEvFile.warps[warpSel].header = destHeaderID;
             updateSelectedWarpName();
         }
         private void updateSelectedSpawnableName() {
             int index = spawnablesListBox.SelectedIndex;
+            if (index < 0) {
+                return;
+            }
             spawnablesListBox.Items[index] = index.ToString("D" + Math.Max(0, spawnablesListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Spawnable).ToString();
         }
         private void updateSelectedOverworldName() {
             int index = overworldsListBox.SelectedIndex;
+            if (index < 0) {
+                return;
+            }
             overworldsListBox.Items[index] = index.ToString("D" + Math.Max(0, overworldsListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Overworld).ToString();
         }
         private void updateSelectedWarpName() {
             int index = warpsListBox.SelectedIndex;
+            if (index < 0) {
+                return;
+            }
             warpsListBox.Items[index] = index.ToString("D" + Math.Max(0, warpsListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Warp).ToString();
         }
         private void updateSelectedTriggerName() {
             int index = triggersListBox.SelectedIndex;
+            if (index < 0) {
+                return;
+            }
             triggersListBox.Items[index] = index.ToString("D" + Math.Max(0, triggersListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Trigger).ToString();
         }
 
@@ -6335,43 +6348,48 @@ namespace DSPRE {
             #endregion
         }
         private void warpMatrixXUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0) {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].xMatrixPosition = (ushort)warpXMatrixUpDown.Value;
+            currentEvFile.warps[index].xMatrixPosition = (ushort)warpXMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpMatrixYUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0) {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].yMatrixPosition = (ushort)warpYMatrixUpDown.Value;
+            currentEvFile.warps[index].yMatrixPosition = (ushort)warpYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpXMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0) {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].xMapPosition = (short)warpXMapUpDown.Value;
+            currentEvFile.warps[index].xMapPosition = (short)warpXMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpYMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0) {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].yMapPosition = (short)warpYMapUpDown.Value;
+            currentEvFile.warps[index].yMapPosition = (short)warpYMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpZUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0) {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].zPosition = (short)warpZUpDown.Value;
+            currentEvFile.warps[index].zPosition = (short)warpZUpDown.Value;
             DisplayActiveEvents();
         }
         private void goToWarpDestination_Click(object sender, EventArgs e) {
