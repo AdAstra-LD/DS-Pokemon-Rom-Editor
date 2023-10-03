@@ -6369,7 +6369,7 @@ namespace DSPRE {
             disableHandlers = false;
             #endregion
         }
-
+         
         private void warpMatrixXUpDown_ValueChanged(object sender, EventArgs e)
         {
             int index = warpsListBox.SelectedIndex;
