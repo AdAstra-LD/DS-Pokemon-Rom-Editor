@@ -9038,15 +9038,25 @@ namespace DSPRE {
 
         private void trainerSaveCurrentButton_Click(object sender, EventArgs e) {
             if (!ROMToolboxDialog.flag_TrainerNamesExpanded && trainerNameTextBox.Text.Length > TrainerFile.maxNameLen) {
-                DialogResult d;
+                DialogResult d, d2;
                 MessageBox.Show($"The length of this Trainer name exceeds {TrainerFile.maxNameLen} characters.", 
                     "Trainer data could not be saved!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                d = MessageBox.Show("Within the RomToolBox (found near the wild editor) you can expand this limit if you are working on an ENglish or Spanish rom (for now).", 
-                    "Do you wish to go there now?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                d = MessageBox.Show("This tool currently checks if you have performed an ARM9 edit to change the max trainer name length to " + ROMToolboxDialog.expandedTrainerNameLength + ".\n" +
+                    "However you may have already manually edited max trainer length to be something other than that.",
+                    "Have you done so?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (d == DialogResult.Yes)
                 {
-                    romToolBoxToolStripMenuItem_Click(null, null);
+                    ROMToolboxDialog.flag_TrainerNamesExpanded = true;              
                 }
+                else
+                {
+                    d2 = MessageBox.Show("Within the RomToolBox (found near the wild editor) you can expand this limit if you are working on an English or Spanish rom (for now).",
+                    "Do you wish to go there now?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (d2 == DialogResult.Yes)
+                    {
+                        romToolBoxToolStripMenuItem_Click(null, null);
+                    }
+                }                
                 return;
             }
             if(trainerNameTextBox.Text.Length > ROMToolboxDialog.expandedTrainerNameLength)

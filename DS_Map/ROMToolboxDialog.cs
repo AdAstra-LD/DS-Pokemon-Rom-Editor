@@ -319,28 +319,34 @@ namespace DSPRE {
 
         public void CheckExpandedTrainerNamespatchApplied()
         {
-            uint position = 0x6AC32;
-            switch (RomInfo.gameFamily)
+            if(!flag_TrainerNamesExpanded)
             {
-                case gFamEnum.DP:
-                    if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x6AC32;
-                    else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x6AC8E;
-                    break;
-                case gFamEnum.Plat:
-                    if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x791DE;
-                    else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x7927E;
-                    break;
-                case gFamEnum.HGSS:
-                    if (RomInfo.gameLanguage.Equals(gLangEnum.English) || RomInfo.gameVersion.Equals(gVerEnum.SoulSilver)) position = 0x7342E;
-                    else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x73426;
-                    break;
-            }
-            byte initValue = DSUtils.ARM9.ReadByte(position);
-            if (initValue == (byte)ROMToolboxDialog.expandedTrainerNameLength)
+                uint position = 0x6AC32;
+                switch (RomInfo.gameFamily)
+                {
+                    case gFamEnum.DP:
+                        if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x6AC32;
+                        else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x6AC8E;
+                        break;
+                    case gFamEnum.Plat:
+                        if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x791DE;
+                        else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x7927E;
+                        break;
+                    case gFamEnum.HGSS:
+                        if (RomInfo.gameLanguage.Equals(gLangEnum.English) || RomInfo.gameVersion.Equals(gVerEnum.SoulSilver)) position = 0x7342E;
+                        else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x73426;
+                        break;
+                }
+                byte initValue = DSUtils.ARM9.ReadByte(position);
+                if (initValue == (byte)ROMToolboxDialog.expandedTrainerNameLength)
+                {
+                    DisableTrainerNameExpansionPatch("Already\nApplied");
+                    ROMToolboxDialog.flag_TrainerNamesExpanded = true;
+                }
+            } else
             {
                 DisableTrainerNameExpansionPatch("Already\nApplied");
-                ROMToolboxDialog.flag_TrainerNamesExpanded = true;
-            }
+            }         
             
         }
         #endregion
