@@ -24,12 +24,14 @@ using System.Globalization;
 using static DSPRE.ROMFiles.Event;
 using NSMBe4.NSBMD;
 using static DSPRE.ROMFiles.SpeciesFile;
+using System.Reflection;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
         public MainProgram() {
             InitializeComponent();
             SetMenuLayout(Properties.Settings.Default.menuLayout); //Read user settings for menu layout
+            Text = "DS Pokémon Rom Editor Reloaded " + GetDSPREVersion() + " (Nømura, AdAstra/LD3005, Mixone)";
         }
 
         #region Program Window
@@ -311,6 +313,13 @@ namespace DSPRE {
             return true;
         }
         #endregion
+
+        public string GetDSPREVersion()
+        {
+            return "" + Assembly.GetExecutingAssembly().GetName().Version.Major + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor +
+                "." + Assembly.GetExecutingAssembly().GetName().Version.Build;
+        }
+
         private void romToolBoxToolStripMenuItem_Click(object sender, EventArgs e) {
             using (ROMToolboxDialog window = new ROMToolboxDialog()) {
                 window.ShowDialog();
@@ -515,7 +524,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor Reloaded by AdAstra/LD3005" + Environment.NewLine + "version 1.10" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor Reloaded by AdAstra/LD3005" + Environment.NewLine + "version " + GetDSPREVersion() + Environment.NewLine
                 + Environment.NewLine + "Based on Nømura's DS Pokémon ROM Editor 1.0.4."
                 + Environment.NewLine + "Largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also reused." +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
@@ -6287,26 +6296,52 @@ namespace DSPRE {
 
             eventEditorHeaderLocationNameLabel.Text = (string)locationNameComboBox.Items[locNum];
 
-            if (disableHandlers) {
+            int warpSel = warpsListBox.SelectedIndex;
+            if (disableHandlers || warpSel < 0)
+            {
                 return;
             }
-            currentEvFile.warps[warpsListBox.SelectedIndex].header = destHeaderID;
+            currentEvFile.warps[warpSel].header = destHeaderID;
             updateSelectedWarpName();
         }
-        private void updateSelectedSpawnableName() {
+
+        private void updateSelectedSpawnableName()
+        {
             int index = spawnablesListBox.SelectedIndex;
+            if (index < 0)
+            {
+                return;
+            }
             spawnablesListBox.Items[index] = index.ToString("D" + Math.Max(0, spawnablesListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Spawnable).ToString();
         }
-        private void updateSelectedOverworldName() {
+
+        private void updateSelectedOverworldName()
+        {
             int index = overworldsListBox.SelectedIndex;
+            if (index < 0)
+            {
+                return;
+            }
             overworldsListBox.Items[index] = index.ToString("D" + Math.Max(0, overworldsListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Overworld).ToString();
         }
-        private void updateSelectedWarpName() {
+
+        private void updateSelectedWarpName()
+        {
             int index = warpsListBox.SelectedIndex;
+            if (index < 0)
+            {
+                return;
+            }
             warpsListBox.Items[index] = index.ToString("D" + Math.Max(0, warpsListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Warp).ToString();
         }
-        private void updateSelectedTriggerName() {
+
+        private void updateSelectedTriggerName()
+        {
             int index = triggersListBox.SelectedIndex;
+            if (index < 0)
+            {
+                return;
+            }
             triggersListBox.Items[index] = index.ToString("D" + Math.Max(0, triggersListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Trigger).ToString();
         }
 
@@ -6334,46 +6369,67 @@ namespace DSPRE {
             disableHandlers = false;
             #endregion
         }
-        private void warpMatrixXUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+
+        private void warpMatrixXUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0)
+            {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].xMatrixPosition = (ushort)warpXMatrixUpDown.Value;
+            currentEvFile.warps[index].xMatrixPosition = (ushort)warpXMatrixUpDown.Value;
             DisplayActiveEvents();
         }
-        private void warpMatrixYUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+
+        private void warpMatrixYUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0)
+            {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].yMatrixPosition = (ushort)warpYMatrixUpDown.Value;
+            currentEvFile.warps[index].yMatrixPosition = (ushort)warpYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
-        private void warpXMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+
+        private void warpXMapUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0)
+            {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].xMapPosition = (short)warpXMapUpDown.Value;
+            currentEvFile.warps[index].xMapPosition = (short)warpXMapUpDown.Value;
             DisplayActiveEvents();
         }
-        private void warpYMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+
+        private void warpYMapUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0)
+            {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].yMapPosition = (short)warpYMapUpDown.Value;
+            currentEvFile.warps[index].yMapPosition = (short)warpYMapUpDown.Value;
             DisplayActiveEvents();
         }
-        private void warpZUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+
+        private void warpZUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0)
+            {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].zPosition = (short)warpZUpDown.Value;
+            currentEvFile.warps[index].zPosition = (short)warpZUpDown.Value;
             DisplayActiveEvents();
         }
+
         private void goToWarpDestination_Click(object sender, EventArgs e) {
             if (warpsListBox.SelectedIndex < 0) {
                 return;
