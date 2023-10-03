@@ -21,14 +21,10 @@ namespace DSPRE {
             List<string> locationNames = RomInfo.GetLocationNames();
             Dictionary<int, string> EncounterFileLocationName = new Dictionary<int, string>();
 
-            for (ushort i = 0; i < totalNumHeaderFiles; i++)
-            {
-                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied())
-                {
+            for (ushort i = 0; i < totalNumHeaderFiles; i++) {
+                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                     tempMapHeader = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
-                }
-                else
-                {
+                } else {
                     tempMapHeader = MapHeader.LoadFromARM9(i);
                 }
 
@@ -39,7 +35,7 @@ namespace DSPRE {
 
             for (int i = 0; i < Directory.GetFiles(encounterFileFolder).Length; i++) {
                 if (EncounterFileLocationName.ContainsKey(i))
-                    selectEncounterComboBox.Items.Add( "[" + i + "] " + EncounterFileLocationName[i]);
+                    selectEncounterComboBox.Items.Add("[" + i + "] " + EncounterFileLocationName[i]);
                 else
                     selectEncounterComboBox.Items.Add("[" + i + "] " + " Unused");
             }
@@ -275,11 +271,11 @@ namespace DSPRE {
             /* Update controls */
             SetupControls();
         }
-		private void selectEncounterComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+        private void selectEncounterComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return;
             }
-            
+
             currentFile = new EncounterFileHGSS(selectEncounterComboBox.SelectedIndex);
             SetupControls();
         }
@@ -288,426 +284,426 @@ namespace DSPRE {
         }
 
         private void walkingRateUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.walkingRate = (byte)walkingRateUpDown.Value;
         }
         private void rockSmashRateUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.rockSmashRate = (byte)rockSmashRateUpDown.Value;
         }
         private void surfRateUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.surfRate = (byte)surfRateUpDown.Value;
         }
         private void oldRodRateUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.oldRodRate = (byte)oldRodRateUpDown.Value;
         }
         private void goodRodRateUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.goodRodRate = (byte)goodRodRateUpDown.Value;
         }
         private void superRodRateUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.superRodRate = (byte)superRodRateUpDown.Value;
         }
         private void morningTwentyFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.morningPokemon[0] = (ushort)morningTwentyFirstComboBox.SelectedIndex;
         }
         private void morningTwentySecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.morningPokemon[1] = (ushort)morningTwentySecondComboBox.SelectedIndex;
         }
         private void morningTenFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.morningPokemon[2] = (ushort)morningTenFirstComboBox.SelectedIndex;
         }
         private void morningTenSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.morningPokemon[3] = (ushort)morningTenSecondComboBox.SelectedIndex;
         }
         private void morningTenThirdComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.morningPokemon[4] = (ushort)morningTenThirdComboBox.SelectedIndex;
         }
         private void morningTenFourthComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.morningPokemon[5] = (ushort)morningTenFourthComboBox.SelectedIndex;
         }
         private void morningFiveFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.morningPokemon[6] = (ushort)morningFiveFirstComboBox.SelectedIndex;
         }
         private void morningFiveSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.morningPokemon[7] = (ushort)morningFiveSecondComboBox.SelectedIndex;
         }
         private void morningFourFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.morningPokemon[8] = (ushort)morningFourFirstComboBox.SelectedIndex;
         }
         private void morningFourSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.morningPokemon[9] = (ushort)morningFourSecondComboBox.SelectedIndex;
         }
         private void morningOneFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.morningPokemon[10] = (ushort)morningOneFirstComboBox.SelectedIndex;
         }
         private void morningOneSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.morningPokemon[11] = (ushort)morningOneSecondComboBox.SelectedIndex;
         }
         private void dayTwentyFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.dayPokemon[0] = (ushort)dayTwentyFirstComboBox.SelectedIndex;
         }
         private void dayTwentySecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.dayPokemon[1] = (ushort)dayTwentySecondComboBox.SelectedIndex;
         }
         private void dayTenFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.dayPokemon[2] = (ushort)dayTenFirstComboBox.SelectedIndex;
         }
         private void dayTenSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.dayPokemon[3] = (ushort)dayTenSecondComboBox.SelectedIndex;
         }
         private void dayTenThirdComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.dayPokemon[4] = (ushort)dayTenThirdComboBox.SelectedIndex;
         }
         private void dayTenFourthComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.dayPokemon[5] = (ushort)dayTenFourthComboBox.SelectedIndex;
         }
         private void dayFiveFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.dayPokemon[6] = (ushort)dayFiveFirstComboBox.SelectedIndex;
         }
         private void dayFiveSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.dayPokemon[7] = (ushort)dayFiveSecondComboBox.SelectedIndex;
         }
         private void dayFourFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.dayPokemon[8] = (ushort)dayFourFirstComboBox.SelectedIndex;
         }
         private void dayFourSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.dayPokemon[9] = (ushort)dayFourSecondComboBox.SelectedIndex;
         }
         private void dayOneFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.dayPokemon[10] = (ushort)dayOneFirstComboBox.SelectedIndex;
         }
         private void dayOneSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.dayPokemon[11] = (ushort)dayOneSecondComboBox.SelectedIndex;
         }
         private void nightTwentyFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.nightPokemon[0] = (ushort)nightTwentyFirstComboBox.SelectedIndex;
         }
         private void nightTwentySecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.nightPokemon[1] = (ushort)nightTwentySecondComboBox.SelectedIndex;
         }
         private void nightTenFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.nightPokemon[2] = (ushort)nightTenFirstComboBox.SelectedIndex;
         }
         private void nightTenSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.nightPokemon[3] = (ushort)nightTenSecondComboBox.SelectedIndex;
         }
         private void nightTenThirdComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.nightPokemon[4] = (ushort)nightTenThirdComboBox.SelectedIndex;
         }
         private void nightTenFourthComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.nightPokemon[5] = (ushort)nightTenFourthComboBox.SelectedIndex;
         }
         private void nightFiveFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.nightPokemon[6] = (ushort)nightFiveFirstComboBox.SelectedIndex;
         }
         private void nightFiveSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.nightPokemon[7] = (ushort)nightFiveSecondComboBox.SelectedIndex;
         }
         private void nightFourFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.nightPokemon[8] = (ushort)nightFourFirstComboBox.SelectedIndex;
         }
         private void nightFourSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.nightPokemon[9] = (ushort)nightFourSecondComboBox.SelectedIndex;
         }
         private void nightOneFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.nightPokemon[10] = (ushort)nightOneFirstComboBox.SelectedIndex;
         }
         private void nightOneSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.nightPokemon[11] = (ushort)nightOneSecondComboBox.SelectedIndex;
         }
 
         private void twentyFirstLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.walkingLevels[0] = (byte)twentyFirstLevelUpDown.Value;
         }
         private void twentySecondLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.walkingLevels[1] = (byte)twentySecondLevelUpDown.Value;
         }
         private void tenFirstLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.walkingLevels[2] = (byte)tenFirstLevelUpDown.Value;
         }
         private void tenSecondLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.walkingLevels[3] = (byte)tenSecondLevelUpDown.Value;
         }
         private void tenThirdLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.walkingLevels[4] = (byte)tenThirdLevelUpDown.Value;
         }
         private void tenFourthLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.walkingLevels[5] = (byte)tenFourthLevelUpDown.Value;
         }
         private void fiveFirstLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.walkingLevels[6] = (byte)fiveFirstLevelUpDown.Value;
         }
         private void fiveSecondLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.walkingLevels[7] = (byte)fiveSecondLevelUpDown.Value;
         }
         private void fourFirstLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.walkingLevels[8] = (byte)fourFirstLevelUpDown.Value;
         }
         private void fourSecondLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.walkingLevels[9] = (byte)fourSecondLevelUpDown.Value;
         }
         private void oneFirstLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.walkingLevels[10] = (byte)oneFirstLevelUpDown.Value;
         }
         private void oneSecondLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.walkingLevels[11] = (byte)oneSecondLevelUpDown.Value;
         }
 
         private void hoennFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.hoennMusicPokemon[0] = (ushort)hoennFirstComboBox.SelectedIndex;
         }
         private void hoennSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.hoennMusicPokemon[1] = (ushort)hoennSecondComboBox.SelectedIndex;
         }
         private void sinnohFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.sinnohMusicPokemon[0] = (ushort)sinnohFirstComboBox.SelectedIndex;
         }
         private void sinnohSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.sinnohMusicPokemon[1] = (ushort)sinnohSecondComboBox.SelectedIndex;
         }
 
         private void rockSmashNinetyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.rockSmashPokemon[0] = (ushort)rockSmashNinetyComboBox.SelectedIndex;
         }
         private void rockSmashTenComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.rockSmashPokemon[1] = (ushort)rockSmashTenComboBox.SelectedIndex;
         }
         private void rockSmashNinetyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.rockSmashMinLevels[0] = (byte)rockSmashNinetyMinLevelUpDown.Value;
         }
         private void rockSmashTenMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.rockSmashMinLevels[1] = (byte)rockSmashTenMinLevelUpDown.Value;
         }
         private void rockSmashNinetyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.rockSmashMaxLevels[0] = (byte)rockSmashNinetyMaxLevelUpDown.Value;
         }
         private void rockSmashTenMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.rockSmashMaxLevels[1] = (byte)rockSmashNinetyMaxLevelUpDown.Value;
         }
         private void rockSmashNinetyMaxLevelUpDown_ValueChanged_1(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.rockSmashMaxLevels[0] = (byte)rockSmashNinetyMaxLevelUpDown.Value;
         }
         private void rockSmashTenMaxLevelUpDown_ValueChanged_1(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.rockSmashMaxLevels[1] = (byte)rockSmashTenMaxLevelUpDown.Value;
         }
 
         private void grassSwarmComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.swarmPokemon[0] = (ushort)grassSwarmComboBox.SelectedIndex;
         }
         private void surfSwarmComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.swarmPokemon[1] = (ushort)surfSwarmComboBox.SelectedIndex;
         }
         private void goodRodSwarmComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.swarmPokemon[2] = (ushort)goodRodSwarmComboBox.SelectedIndex;
         }
         private void superRodSwarmComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (disableHandlers) { 
-                return; 
+            if (disableHandlers) {
+                return;
             }
             currentFile.swarmPokemon[3] = (ushort)superRodSwarmComboBox.SelectedIndex;
         }

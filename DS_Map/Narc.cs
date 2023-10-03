@@ -9,7 +9,7 @@ namespace NarcAPI {
         public String Name { get; set; }
         private MemoryStream[] Elements;
         private int FileNameTableOffset, FileImageOffset;
-        
+
         private const int NARC_FILE_MAGIC_NUM = 0x4352414E;                 //"NARC" in ascii/unicode
         private const int FILE_ALLOCATION_TABLE_OFFSET = 0x10;
         private const int FILE_ALLOCATION_TABLE_NUM_ELEMENTS_OFFSET = 0x18;
@@ -92,13 +92,13 @@ namespace NarcAPI {
             // Write FIMG Section
             bw.Write(0x46494D47);       // "GMIF"
             fileImageSizeOffset = (uint)bw.BaseStream.Position;
-            bw.Write((UInt32)0x0);      
+            bw.Write((UInt32)0x0);
             curOffset = 0;
             byte[] buffer;
             for (int i = 0; i < Elements.Length; i++) {
                 while (curOffset % 4 != 0) { // Force offsets to be a multiple of 4
-                    bw.Write((Byte)0xFF); curOffset++; 
-                }     
+                    bw.Write((Byte)0xFF); curOffset++;
+                }
                 // Data writin'
                 buffer = new byte[Elements[i].Length];
                 Elements[i].Seek(0, SeekOrigin.Begin);
@@ -116,7 +116,7 @@ namespace NarcAPI {
         }
 
         public void ExtractToFolder(String dirPath, string extension = null) {
-            if ( string.IsNullOrWhiteSpace(dirPath) ) {
+            if (string.IsNullOrWhiteSpace(dirPath)) {
                 MessageBox.Show("Dir path + \"" + dirPath + "\" is invalid.", "Can't create directory", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -153,7 +153,7 @@ namespace NarcAPI {
             }
 
             Parallel.For(0, Elements.Length, i => {
-                string path = Path.Combine(dirPath, i.ToString("D4") + (string.IsNullOrWhiteSpace(extension) ? "" : extension) );
+                string path = Path.Combine(dirPath, i.ToString("D4") + (string.IsNullOrWhiteSpace(extension) ? "" : extension));
                 using (BinaryWriter wr = new BinaryWriter(File.Create(path))) {
                     long len = Elements[i].Length;
                     byte[] buffer = new byte[len];
@@ -184,7 +184,7 @@ namespace NarcAPI {
         }
 
         private void ReadOffsets(BinaryReader br) {
-            br.BaseStream.Position = FILE_ALLOCATION_TABLE_NUM_ELEMENTS_OFFSET;             
+            br.BaseStream.Position = FILE_ALLOCATION_TABLE_NUM_ELEMENTS_OFFSET;
             FileNameTableOffset = (int)br.ReadUInt32() * FILE_ALLOCATION_TABLE_ELEMENT_LENGTH + FILE_ALLOCATION_TABLE_OFFSET + FILE_ALLOCATION_TABLE_HEADER_LENGTH;
             br.BaseStream.Position = FileNameTableOffset + FILE_NAME_TABLE_SIGNATURE_LENGTH;
             FileImageOffset = (int)br.ReadUInt32() + FileNameTableOffset;
@@ -198,15 +198,15 @@ namespace NarcAPI {
             Elements = new MemoryStream[numberOfElements = br.ReadUInt32()];
 
             // Read offsets of each element
-            startOffsets = new uint[numberOfElements]; 
+            startOffsets = new uint[numberOfElements];
             endOffsets = new uint[numberOfElements];
             br.BaseStream.Position = FILE_ALLOCATION_TABLE_OFFSET + FILE_ALLOCATION_TABLE_HEADER_LENGTH;
-            for (int i = 0; i < numberOfElements; i++) { 
-                startOffsets[i] = br.ReadUInt32(); 
-                endOffsets[i] = br.ReadUInt32(); 
+            for (int i = 0; i < numberOfElements; i++) {
+                startOffsets[i] = br.ReadUInt32();
+                endOffsets[i] = br.ReadUInt32();
             }
             // Read elements
-            for(int i = 0; i < numberOfElements; i++) {
+            for (int i = 0; i < numberOfElements; i++) {
                 br.BaseStream.Position = FileImageOffset + startOffsets[i] + FILE_IMAGE_HEADER_SIZE;
                 byte[] buffer = new byte[endOffsets[i] - startOffsets[i]];
                 br.Read(buffer, 0, (int)(endOffsets[i] - startOffsets[i]));

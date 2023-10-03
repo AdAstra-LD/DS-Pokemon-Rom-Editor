@@ -92,7 +92,7 @@ namespace DSPRE.ROMFiles {
         public const int HGSS_NULL_ENCOUNTER_FILE_ID = 0xff;
         public const int DPPT_NULL_ENCOUNTER_FILE_ID = 0xffff;
 
-        public enum SearchableFields: byte {
+        public enum SearchableFields : byte {
             AreaDataID,
             CameraAngleID,
             EventFileID,
@@ -158,7 +158,7 @@ namespace DSPRE.ROMFiles {
             return LoadFromFile(RomInfo.arm9Path, headerNumber, headerOffset, gameFamily);
         }
 
-        
+
         #endregion
     }
 
@@ -330,7 +330,7 @@ namespace DSPRE.ROMFiles {
                     musicNightID = reader.ReadUInt16();
                     eventFileID = reader.ReadUInt16();
                     locationName = reader.ReadByte();
-                    
+
                     byte areaProperties = reader.ReadByte();
                     areaIcon = (byte)(areaProperties & 0b_1111); //get 4 bits
                     unknown1 = (byte)((areaProperties >> 4) & 0b_1111); //get 4 bits after the first 4

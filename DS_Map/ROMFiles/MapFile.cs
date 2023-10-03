@@ -58,7 +58,7 @@ namespace DSPRE.ROMFiles {
 
         public static readonly string BDHCFilter = "Terrain File (*.bdhc)|*.bdhc";
         public static readonly string BDHCamFilter = "Terrain File (*.bdhc, *.bdhcam)|*.bdhc;*.bdhcam";
-        
+
         public static readonly string BGSFilter = "BackGround Sound File (*.bgs)|*.bgs";
 
         public bool correctnessFlag = true;
@@ -76,7 +76,7 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (1)
-        public MapFile(string path, gFamEnum gFamily, bool discardMoveperms = false, bool showMessages = true) : this (new FileStream(path, FileMode.Open), gFamily, discardMoveperms, showMessages) {}
+        public MapFile(string path, gFamEnum gFamily, bool discardMoveperms = false, bool showMessages = true) : this(new FileStream(path, FileMode.Open), gFamily, discardMoveperms, showMessages) { }
         public MapFile(int mapNumber, gFamEnum gFamily, bool discardMoveperms = false, bool showMessages = true) : this(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + mapNumber.ToString("D4"), gFamily, discardMoveperms, showMessages) { }
         public MapFile(Stream data, gFamEnum gFamily, bool discardMoveperms = false, bool showMessages = true) {
             using (BinaryReader reader = new BinaryReader(data)) {
@@ -114,7 +114,7 @@ namespace DSPRE.ROMFiles {
                 ImportBuildings(reader.ReadBytes(buildingsSectionLength));
 
                 /* Read nsbmd model */
-                if ( !LoadMapModel(reader.ReadBytes(nsbmdSectionLength), showMessages) ) { //Assign result to flag
+                if (!LoadMapModel(reader.ReadBytes(nsbmdSectionLength), showMessages)) { //Assign result to flag
                     correctnessFlag = false;
                     mapModel = null;
                 };
@@ -280,7 +280,7 @@ namespace DSPRE.ROMFiles {
                 yPosition = reader.ReadInt16();
                 zFraction = reader.ReadUInt16();
                 zPosition = reader.ReadInt16();
-                
+
                 xRotation = reader.ReadUInt16();
                 reader.BaseStream.Position += 0x2;
                 yRotation = reader.ReadUInt16();
@@ -295,7 +295,7 @@ namespace DSPRE.ROMFiles {
                 height = reader.ReadUInt16();
                 reader.BaseStream.Position += 0x2;
                 length = reader.ReadUInt16();
-                
+
                 //reader.BaseStream.Position += 0x2;
             }
         }

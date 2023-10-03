@@ -138,8 +138,7 @@ namespace DSPRE {
             disableTextureAnimationsTextLBL.Enabled = false;
             disableTextureAnimationsButton.Text = reason;
         }
-        private void DisableTrainerNameExpansionPatch(string reason)
-        {
+        private void DisableTrainerNameExpansionPatch(string reason) {
             expandTrainerNamesButton.Enabled = false;
             expandTrainerNamesLBL.Enabled = false;
             expandTrainerNamesTextLBL.Enabled = false;
@@ -317,13 +316,10 @@ namespace DSPRE {
             //throw new NotImplementedException();
         }
 
-        public void CheckExpandedTrainerNamespatchApplied()
-        {
-            if(!flag_TrainerNamesExpanded)
-            {
+        public void CheckExpandedTrainerNamespatchApplied() {
+            if (!flag_TrainerNamesExpanded) {
                 uint position = 0x6AC32;
-                switch (RomInfo.gameFamily)
-                {
+                switch (RomInfo.gameFamily) {
                     case gFamEnum.DP:
                         if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x6AC32;
                         else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x6AC8E;
@@ -338,16 +334,15 @@ namespace DSPRE {
                         break;
                 }
                 byte initValue = DSUtils.ARM9.ReadByte(position);
-                if (initValue == (byte)ROMToolboxDialog.expandedTrainerNameLength)
-                {
+                if (initValue > (byte)TrainerFile.maxNameLen) {
                     DisableTrainerNameExpansionPatch("Already\nApplied");
                     ROMToolboxDialog.flag_TrainerNamesExpanded = true;
+                    ROMToolboxDialog.expandedTrainerNameLength = initValue;
                 }
-            } else
-            {
+            } else {
                 DisableTrainerNameExpansionPatch("Already\nApplied");
-            }         
-            
+            }
+
         }
         #endregion
 
@@ -488,15 +483,13 @@ namespace DSPRE {
 
                 if (ROMToolboxDialog.flag_standardizedItems) {
                     AlreadyApplied();
-                } 
-                
-                else {
+                } else {
 
                     // Load item script file data
                     ScriptFile itemScriptFile = new ScriptFile(RomInfo.itemScriptFileNumber);
 
                     // Create map for: script no. -> vanilla item
-                    int[] vanillaItemsArray = new int[itemScriptFile.allScripts.Count-1];
+                    int[] vanillaItemsArray = new int[itemScriptFile.allScripts.Count - 1];
 
                     for (int i = 0; i < itemScriptFile.allScripts.Count - 1; i++) {
                         vanillaItemsArray[i] = BitConverter.ToInt16(itemScriptFile.allScripts[i].commands[0].cmdParams[1], 0);
@@ -513,13 +506,13 @@ namespace DSPRE {
 
                         for (int j = 0; j < eventFile.overworlds.Count; j++) {
                             // If ow is marked as an item, or in the rare case it is not but script no. falls within item script range:
-                            bool isItem = eventFile.overworlds[j].type == (ushort)Overworld.OwType.ITEM 
+                            bool isItem = eventFile.overworlds[j].type == (ushort)Overworld.OwType.ITEM
                                           || (eventFile.overworlds[j].scriptNumber >= itemScriptRange.min
                                           && eventFile.overworlds[j].scriptNumber <= itemScriptRange.max);
-                            
+
                             if (isItem) {
-                                int itemScriptID = eventFile.overworlds[j].scriptNumber - (itemScriptRange.min-1);
-                                eventFile.overworlds[j].scriptNumber = (ushort)(itemScriptRange.min + vanillaItemsArray[itemScriptID-1]);
+                                int itemScriptID = eventFile.overworlds[j].scriptNumber - (itemScriptRange.min - 1);
+                                eventFile.overworlds[j].scriptNumber = (ushort)(itemScriptRange.min + vanillaItemsArray[itemScriptID - 1]);
                                 dirty = true;
                             }
                         }
@@ -548,12 +541,12 @@ namespace DSPRE {
 
                     // Sort scripts in the Script File according to item indices
                     int itemCount = new TextArchive(RomInfo.itemNamesTextNumber).messages.Count;
-                    CommandContainer executeGive = new CommandContainer((uint)itemCount+1, itemScriptFile.allScripts[itemScriptFile.allScripts.Count - 1]);
-                    
+                    CommandContainer executeGive = new CommandContainer((uint)itemCount + 1, itemScriptFile.allScripts[itemScriptFile.allScripts.Count - 1]);
+
                     itemScriptFile.allScripts.Clear();
 
                     for (ushort i = 0; i < itemCount; i++) {
-                        
+
                         List<ScriptCommand> cmdList = new List<ScriptCommand> {
                             new ScriptCommand("SetVar 0x8008 " + i),
                             new ScriptCommand("SetVar 0x8009 0x1"),
@@ -562,7 +555,7 @@ namespace DSPRE {
 
                         itemScriptFile.allScripts.Add(new CommandContainer((ushort)(i + 1), ScriptFile.containerTypes.Script, commandList: cmdList));
                     }
-                    
+
                     itemScriptFile.allScripts.Add(executeGive);
                     itemScriptFile.allFunctions[0].usedScript = itemCount + 1;
 
@@ -570,13 +563,11 @@ namespace DSPRE {
                     MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     DisableStandardizeItemsPatch("Already applied");
-                    
+
                     itemNumbersCB.Visible = true;
                     ROMToolboxDialog.flag_standardizedItems = true;
                 }
-            } 
-            
-            else {
+            } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -695,7 +686,7 @@ namespace DSPRE {
                 "- NARC file at " + headersDir.packedDir + " will become the new header container." + "\n\n" +
                 "- The default ARM9 header table will be split into multiple files (one per header), each one saved into NARC" + headersDir.packedDir + " upon saving the ROM." + "\n\n" +
                 "- Replace " + (data.initString.Length / 3 + 1) + " bytes of data at arm9 offset 0x" + data.initOffset.ToString("X") + " with " + '\n' + data.initString + "\n\n" +
-                "- Neutralize instances of (HeaderID * 0x18) so the base offset which the data is read from is always 0x0." + "\n\n" + 
+                "- Neutralize instances of (HeaderID * 0x18) so the base offset which the data is read from is always 0x0." + "\n\n" +
                 "- Change pointers to header fields, from(ARM9_HEADER_TABLE_OFFSET + n) to simply(0 + n)" + "\n\n" +
                 specialCaseChanges +
                 "Do you wish to continue?",
@@ -763,7 +754,7 @@ namespace DSPRE {
 
                      */
 
-                    foreach (Tuple<uint, uint> reference in DynamicHeadersPatchData.dynamicHeadersPointersDB [RomInfo.gameFamily]) {
+                    foreach (Tuple<uint, uint> reference in DynamicHeadersPatchData.dynamicHeadersPointersDB[RomInfo.gameFamily]) {
                         DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.REFERENCE_STRING), (uint)(reference.Item1 + data.pointerDiff));
                         uint pointerValue = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes((uint)(reference.Item2 + data.pointerDiff), 4), 0) - RomInfo.headerTableOffset - DSUtils.ARM9.address;
                         DSUtils.ARM9.WriteBytes(BitConverter.GetBytes(pointerValue), (uint)(reference.Item2 + data.pointerDiff));
@@ -830,8 +821,7 @@ namespace DSPRE {
             }
         }
 
-        private void expandTrainerNamesButton_Click(object sender, EventArgs e)
-        {
+        private void expandTrainerNamesButton_Click(object sender, EventArgs e) {
             // Pearl        USA     ARM9 at 0x6AC32     // TODO: Verify
             // Pearl        Spain   ARM9 at 0x6AC8E     // TODO: Verify
             // Diamond      USA     ARM9 at 0x6AC32
@@ -845,16 +835,14 @@ namespace DSPRE {
             DialogResult d;
             int position = 0x7342E;
             bool gameFamGood = true;
-            d = MessageBox.Show($"Applying this patch will set the Trainer Name max length to { ROMToolboxDialog.expandedTrainerNameLength }.\n"+
-                "Please note that if you have modified the ARM9 these offsets may be wrong.\n"+
+            d = MessageBox.Show($"Applying this patch will set the Trainer Name max length to {ROMToolboxDialog.expandedTrainerNameLength}.\n" +
+                "Please note that if you have modified the ARM9 these offsets may be wrong.\n" +
                 "If you have done so we encourage you to seek in your ARM9 for where to make the modification as your offset might change.\n\n" +
                 "Are you sure you want to proceed?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-            if (d == DialogResult.Yes)
-            {
-                switch (RomInfo.gameFamily)
-                {
+            if (d == DialogResult.Yes) {
+                switch (RomInfo.gameFamily) {
                     case gFamEnum.DP:
                         if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x6AC32;
                         else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x6AC8E;
@@ -871,10 +859,8 @@ namespace DSPRE {
                         else gameFamGood = false;
                         break;
                 }
-                if (gameFamGood)
-                {
-                    using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer())
-                    { 
+                if (gameFamGood) {
+                    using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer()) {
                         wr.BaseStream.Position = position;
                         wr.Write((byte)ROMToolboxDialog.expandedTrainerNameLength);
                     }
@@ -882,16 +868,12 @@ namespace DSPRE {
                     DisableTrainerNameExpansionPatch("Already applied");
                     expandTrainerNamesCB.Visible = true;
                     MessageBox.Show("Trainer Names have been expanded.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Sorry this game language does not have a recorded offset for this patch.\n\n"+
-                        "Reach out in our discord if you want to help researching it!", 
+                } else {
+                    MessageBox.Show("Sorry this game language does not have a recorded offset for this patch.\n\n" +
+                        "Reach out in our discord if you want to help researching it!",
                         "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }
-            else
-            {
+            } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -923,7 +905,7 @@ namespace DSPRE {
         private int GetCommandTableOffset() { // Checks if command table is repointed IN THE EXPANDED ARM9 FILE, returns pointer inside this file
             ResourceManager customcmdDB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.CustomScrCmdDB", Assembly.GetExecutingAssembly());
             int pointerOffset = int.Parse(customcmdDB.GetString("pointerOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage));
-            using (DSUtils.ARM9.Reader r = new DSUtils.ARM9.Reader(pointerOffset)) {  
+            using (DSUtils.ARM9.Reader r = new DSUtils.ARM9.Reader(pointerOffset)) {
                 uint cmdTable = r.ReadUInt32();
                 uint offset = cmdTable - synthOverlayLoadAddress;
 
@@ -1037,6 +1019,6 @@ namespace DSPRE {
         }
         #endregion
 
-       
+
     }
 }

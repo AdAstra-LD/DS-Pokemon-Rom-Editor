@@ -24,10 +24,10 @@ namespace DSPRE {
                     int maskMove = (1 << (bitsMove)) - 1;
                     int move = entry & maskMove;
                     entry >>= bitsMove;
-                    
+
                     int maskLevel = (1 << (bitsLevel)) - 1;
                     int lv = entry & maskLevel;
-                    
+
                     list.Add(((byte)lv, (ushort)move));
                 }
             }
