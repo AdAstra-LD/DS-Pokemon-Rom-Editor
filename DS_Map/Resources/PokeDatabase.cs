@@ -1573,5 +1573,42 @@ namespace DSPRE.Resources {
                 };
             }
         }
+        public static class PersonalData {
+            public class PersonalExtraFiles {
+                public int monId { get; set; } 
+                public string description { get; set; } 
+                public int iconId { get; set; }
+
+                public PersonalExtraFiles(int monId, string desc, int iconId) {
+                    this.monId = monId;
+                    this.description = desc;
+                    this.iconId = iconId;
+                }
+            }
+
+            public static PersonalExtraFiles[] personalExtraFiles = new PersonalExtraFiles[] {
+                /* Deoxys */
+                new PersonalExtraFiles(386, "Attack", 496), /* Ideally replace this last number with an alt form icon id? */
+                new PersonalExtraFiles(386, "Defense", 497),
+                new PersonalExtraFiles(386, "Speed", 498),
+
+                /* Wormadam */
+                new PersonalExtraFiles(413, "Sandy", 529),
+                new PersonalExtraFiles(413, "Trash", 530),
+
+                /* Giratina */
+                new PersonalExtraFiles(487, "Origin", 533),
+
+                /* Shaymin */
+                new PersonalExtraFiles(492, "Sky", 534),
+
+                /* Rotom */
+                new PersonalExtraFiles(479, "Heat", 535),
+                new PersonalExtraFiles(479, "Wash", 536),
+                new PersonalExtraFiles(479, "Frost", 537),
+                new PersonalExtraFiles(479, "Fan", 538),
+                new PersonalExtraFiles(479, "Mow", 539),
+            };
+        }
     }
 }

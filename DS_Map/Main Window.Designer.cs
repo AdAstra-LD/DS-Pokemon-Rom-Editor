@@ -30,22 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
             this.removeLastHeaderBTN = new System.Windows.Forms.Button();
@@ -167,8 +167,9 @@
             this.weatherPicLabel = new System.Windows.Forms.Label();
             this.weatherPictureBox = new System.Windows.Forms.PictureBox();
             this.matrixEditorTabPage = new System.Windows.Forms.TabPage();
-            this.locateCurrentMatrixFile = new System.Windows.Forms.Button();
             this.setSpawnPointButton = new System.Windows.Forms.Button();
+            this.saveMatrixButton = new System.Windows.Forms.Button();
+            this.locateCurrentMatrixFile = new System.Windows.Forms.Button();
             this.resetColorTableButton = new System.Windows.Forms.Button();
             this.importColorTableButton = new System.Windows.Forms.Button();
             this.importMatrixButton = new System.Windows.Forms.Button();
@@ -193,7 +194,6 @@
             this.widthUpDown = new System.Windows.Forms.NumericUpDown();
             this.widthLabel = new System.Windows.Forms.Label();
             this.selectMatrixComboBox = new System.Windows.Forms.ComboBox();
-            this.saveMatrixButton = new System.Windows.Forms.Button();
             this.mapEditorTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.addMapFileButton = new System.Windows.Forms.Button();
@@ -386,6 +386,7 @@
             this.spawnableScriptUpDown = new System.Windows.Forms.NumericUpDown();
             this.spawnablesListBox = new System.Windows.Forms.ListBox();
             this.overworldsTabPage = new System.Windows.Forms.TabPage();
+            this.sortOWsByIDDescButton = new System.Windows.Forms.Button();
             this.sortOWsByIDAscButton = new System.Windows.Forms.Button();
             this.groupBox22 = new System.Windows.Forms.GroupBox();
             this.normalRadioButton = new System.Windows.Forms.RadioButton();
@@ -621,16 +622,16 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.exportTrainerButton = new System.Windows.Forms.Button();
             this.importTrainerButton = new System.Windows.Forms.Button();
-            this.exportPropertiesButton = new System.Windows.Forms.Button();
-            this.importReplacePropertiesButton = new System.Windows.Forms.Button();
-            this.importReplacePartyButton = new System.Windows.Forms.Button();
-            this.exportPartyButton = new System.Windows.Forms.Button();
-            this.label74 = new System.Windows.Forms.Label();
-            this.DVExplainButton = new System.Windows.Forms.Button();
-            this.deleteTrainerButton = new System.Windows.Forms.Button();
-            this.addTrainerButton = new System.Windows.Forms.Button();
             this.groupBox28 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.DVExplainButton = new System.Windows.Forms.Button();
+            this.label74 = new System.Windows.Forms.Label();
             this.party6GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyForm6ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyAbility6ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender6ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox6 = new System.Windows.Forms.PictureBox();
             this.label60 = new System.Windows.Forms.Label();
             this.label61 = new System.Windows.Forms.Label();
@@ -647,6 +648,9 @@
             this.partyPokemon6PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon6ComboBox = new DSPRE.InputComboBox();
             this.party5GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyForm5ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyAbility5ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender5ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox5 = new System.Windows.Forms.PictureBox();
             this.label57 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
@@ -663,6 +667,9 @@
             this.partyPokemon5PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon5ComboBox = new DSPRE.InputComboBox();
             this.party4GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyForm4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyAbility4ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender4ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox4 = new System.Windows.Forms.PictureBox();
             this.label54 = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
@@ -679,6 +686,9 @@
             this.partyPokemon4PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon4ComboBox = new DSPRE.InputComboBox();
             this.party3GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyForm3ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyAbility3ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender3ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox3 = new System.Windows.Forms.PictureBox();
             this.label51 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
@@ -695,6 +705,9 @@
             this.partyPokemon3PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon3ComboBox = new DSPRE.InputComboBox();
             this.party2GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyForm2ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyAbility2ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender2ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox2 = new System.Windows.Forms.PictureBox();
             this.label48 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
@@ -711,6 +724,9 @@
             this.partyPokemon2PictureBox = new System.Windows.Forms.PictureBox();
             this.partyPokemon2ComboBox = new DSPRE.InputComboBox();
             this.party1GroupBox = new System.Windows.Forms.GroupBox();
+            this.partyForm1ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyAbility1ComboBox = new System.Windows.Forms.ComboBox();
+            this.partyGender1ComboBox = new System.Windows.Forms.ComboBox();
             this.partyPokemonItemPictureBox1 = new System.Windows.Forms.PictureBox();
             this.label47 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
@@ -739,6 +755,9 @@
             this.label17 = new System.Windows.Forms.Label();
             this.trainerClassPicBox = new System.Windows.Forms.PictureBox();
             this.groupBox25 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.replacePropertiesButton = new System.Windows.Forms.Button();
+            this.exportPropertiesButton = new System.Windows.Forms.Button();
             this.TrainerAIGroupBox = new System.Windows.Forms.GroupBox();
             this.trainerAI1CheckBox = new System.Windows.Forms.CheckBox();
             this.trainerAI2CheckBox = new System.Windows.Forms.CheckBox();
@@ -756,7 +775,9 @@
             this.trainerItem2ComboBox = new DSPRE.InputComboBox();
             this.trainerItem3ComboBox = new DSPRE.InputComboBox();
             this.trainerItem4ComboBox = new DSPRE.InputComboBox();
+            this.deleteTrainerButton = new System.Windows.Forms.Button();
             this.trainerItemsCheckBox = new System.Windows.Forms.CheckBox();
+            this.addTrainerButton = new System.Windows.Forms.Button();
             this.trainerMovesCheckBox = new System.Windows.Forms.CheckBox();
             this.trainerDoubleCheckBox = new System.Windows.Forms.CheckBox();
             this.trainerNameTextBox = new System.Windows.Forms.TextBox();
@@ -841,6 +862,9 @@
             this.texturizeNSBMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.untexturizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractNSBTXFromNSBMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.monEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.personalDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.learnsetsEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.essentialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simpleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -883,7 +907,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.directoryEntry2 = new System.DirectoryServices.DirectoryEntry();
-            this.sortOWsByIDDescButton = new System.Windows.Forms.Button();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -1064,6 +1087,7 @@
             this.trainerEditorTabPage.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.groupBox28.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
             this.party6GroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox6)).BeginInit();
             this.poke6MovesGroupBox.SuspendLayout();
@@ -1112,6 +1136,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trClassFramePreviewUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trainerClassPicBox)).BeginInit();
             this.groupBox25.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.TrainerAIGroupBox.SuspendLayout();
             this.trainerItemsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.partyCountUpDown)).BeginInit();
@@ -1151,7 +1176,7 @@
             this.mainTabControl.Location = new System.Drawing.Point(11, 72);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(1193, 646);
+            this.mainTabControl.Size = new System.Drawing.Size(1193, 660);
             this.mainTabControl.TabIndex = 5;
             this.mainTabControl.Visible = false;
             this.mainTabControl.SelectedIndexChanged += new System.EventHandler(this.mainTabControl_SelectedIndexChanged);
@@ -1186,7 +1211,7 @@
             this.headerEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.headerEditorTabPage.Name = "headerEditorTabPage";
             this.headerEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.headerEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.headerEditorTabPage.Size = new System.Drawing.Size(1185, 633);
             this.headerEditorTabPage.TabIndex = 0;
             this.headerEditorTabPage.Text = "Header Editor";
             // 
@@ -2549,8 +2574,9 @@
             // matrixEditorTabPage
             // 
             this.matrixEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
-            this.matrixEditorTabPage.Controls.Add(this.locateCurrentMatrixFile);
             this.matrixEditorTabPage.Controls.Add(this.setSpawnPointButton);
+            this.matrixEditorTabPage.Controls.Add(this.saveMatrixButton);
+            this.matrixEditorTabPage.Controls.Add(this.locateCurrentMatrixFile);
             this.matrixEditorTabPage.Controls.Add(this.resetColorTableButton);
             this.matrixEditorTabPage.Controls.Add(this.importColorTableButton);
             this.matrixEditorTabPage.Controls.Add(this.importMatrixButton);
@@ -2569,14 +2595,44 @@
             this.matrixEditorTabPage.Controls.Add(this.widthUpDown);
             this.matrixEditorTabPage.Controls.Add(this.widthLabel);
             this.matrixEditorTabPage.Controls.Add(this.selectMatrixComboBox);
-            this.matrixEditorTabPage.Controls.Add(this.saveMatrixButton);
             this.matrixEditorTabPage.ImageIndex = 1;
             this.matrixEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.matrixEditorTabPage.Name = "matrixEditorTabPage";
             this.matrixEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.matrixEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.matrixEditorTabPage.Size = new System.Drawing.Size(1185, 633);
             this.matrixEditorTabPage.TabIndex = 1;
             this.matrixEditorTabPage.Text = "Matrix Editor";
+            // 
+            // setSpawnPointButton
+            // 
+            this.setSpawnPointButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
+            this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.setSpawnPointButton.Location = new System.Drawing.Point(12, 522);
+            this.setSpawnPointButton.Name = "setSpawnPointButton";
+            this.setSpawnPointButton.Size = new System.Drawing.Size(117, 43);
+            this.setSpawnPointButton.TabIndex = 35;
+            this.setSpawnPointButton.Text = "Set Spawn\r\nto Selection";
+            this.setSpawnPointButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.setSpawnPointButton, "Sets the current matrix cell as the player\'s Spawn Point");
+            this.setSpawnPointButton.UseVisualStyleBackColor = true;
+            this.setSpawnPointButton.Click += new System.EventHandler(this.setSpawnPointButton_Click);
+            // 
+            // saveMatrixButton
+            // 
+            this.saveMatrixButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
+            this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.saveMatrixButton.Location = new System.Drawing.Point(12, 567);
+            this.saveMatrixButton.Name = "saveMatrixButton";
+            this.saveMatrixButton.Size = new System.Drawing.Size(117, 43);
+            this.saveMatrixButton.TabIndex = 34;
+            this.saveMatrixButton.Text = "Save Matrix";
+            this.saveMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.saveMatrixButton.UseVisualStyleBackColor = true;
+            this.saveMatrixButton.Click += new System.EventHandler(this.saveMatrixButton_Click);
             // 
             // locateCurrentMatrixFile
             // 
@@ -2588,22 +2644,6 @@
             this.locateCurrentMatrixFile.TabIndex = 33;
             this.locateCurrentMatrixFile.UseVisualStyleBackColor = true;
             this.locateCurrentMatrixFile.Click += new System.EventHandler(this.locateCurrentMatrixFile_Click);
-            // 
-            // setSpawnPointButton
-            // 
-            this.setSpawnPointButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
-            this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.setSpawnPointButton.Location = new System.Drawing.Point(11, 521);
-            this.setSpawnPointButton.Name = "setSpawnPointButton";
-            this.setSpawnPointButton.Size = new System.Drawing.Size(117, 43);
-            this.setSpawnPointButton.TabIndex = 32;
-            this.setSpawnPointButton.Text = "Set Spawn\r\nto Selection";
-            this.setSpawnPointButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.setSpawnPointButton, "Sets the current matrix cell as the player\'s Spawn Point");
-            this.setSpawnPointButton.UseVisualStyleBackColor = true;
-            this.setSpawnPointButton.Click += new System.EventHandler(this.setSpawnPointButton_Click);
             // 
             // resetColorTableButton
             // 
@@ -2767,7 +2807,7 @@
             this.matrixTabControl.Multiline = true;
             this.matrixTabControl.Name = "matrixTabControl";
             this.matrixTabControl.SelectedIndex = 0;
-            this.matrixTabControl.Size = new System.Drawing.Size(1040, 602);
+            this.matrixTabControl.Size = new System.Drawing.Size(1040, 616);
             this.matrixTabControl.TabIndex = 18;
             // 
             // headersTabPage
@@ -2776,7 +2816,7 @@
             this.headersTabPage.Location = new System.Drawing.Point(4, 22);
             this.headersTabPage.Name = "headersTabPage";
             this.headersTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.headersTabPage.Size = new System.Drawing.Size(1032, 576);
+            this.headersTabPage.Size = new System.Drawing.Size(1032, 590);
             this.headersTabPage.TabIndex = 1;
             this.headersTabPage.Text = "Map Headers";
             this.headersTabPage.UseVisualStyleBackColor = true;
@@ -2788,40 +2828,40 @@
             this.headersGridView.AllowUserToResizeColumns = false;
             this.headersGridView.AllowUserToResizeRows = false;
             this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle33.ForeColor = System.Drawing.SystemColors.Info;
-            dataGridViewCellStyle33.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle33.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle34.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle34.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle34.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle34.Format = "D4";
-            dataGridViewCellStyle34.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle34;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.Format = "D4";
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.headersGridView.Location = new System.Drawing.Point(0, 0);
             this.headersGridView.MultiSelect = false;
             this.headersGridView.Name = "headersGridView";
-            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle35.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle35.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle35.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle35.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle35.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle35;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.headersGridView.RowHeadersWidth = 50;
             this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle36.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle36;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.headersGridView.RowTemplate.Height = 18;
             this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -2839,7 +2879,7 @@
             this.heightsTabPage.Controls.Add(this.heightsGridView);
             this.heightsTabPage.Location = new System.Drawing.Point(4, 22);
             this.heightsTabPage.Name = "heightsTabPage";
-            this.heightsTabPage.Size = new System.Drawing.Size(1032, 576);
+            this.heightsTabPage.Size = new System.Drawing.Size(1032, 590);
             this.heightsTabPage.TabIndex = 2;
             this.heightsTabPage.Text = "Map Heights";
             this.heightsTabPage.UseVisualStyleBackColor = true;
@@ -2850,43 +2890,43 @@
             this.heightsGridView.AllowUserToDeleteRows = false;
             this.heightsGridView.AllowUserToResizeColumns = false;
             this.heightsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle38.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle38.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle39.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle39.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            dataGridViewCellStyle39.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle39.Format = "D2";
-            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle39;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.Format = "D2";
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle7;
             this.heightsGridView.Location = new System.Drawing.Point(0, 0);
             this.heightsGridView.MultiSelect = false;
             this.heightsGridView.Name = "heightsGridView";
-            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle40.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle40.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle40.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle40.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle40.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle40;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.heightsGridView.RowHeadersWidth = 50;
             this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle41.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle41;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.heightsGridView.RowTemplate.Height = 18;
             this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -2902,7 +2942,7 @@
             this.mapFilesTabPage.Controls.Add(this.mapFilesGridView);
             this.mapFilesTabPage.Location = new System.Drawing.Point(4, 22);
             this.mapFilesTabPage.Name = "mapFilesTabPage";
-            this.mapFilesTabPage.Size = new System.Drawing.Size(1032, 576);
+            this.mapFilesTabPage.Size = new System.Drawing.Size(1032, 590);
             this.mapFilesTabPage.TabIndex = 3;
             this.mapFilesTabPage.Text = "Map Files";
             this.mapFilesTabPage.UseVisualStyleBackColor = true;
@@ -2913,43 +2953,43 @@
             this.mapFilesGridView.AllowUserToDeleteRows = false;
             this.mapFilesGridView.AllowUserToResizeColumns = false;
             this.mapFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle42;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle43.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle43.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle43.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle43.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle43.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle43.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle43;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle44.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle44.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle44.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle44.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle44.Format = "D4";
-            dataGridViewCellStyle44.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle44.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle44.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle44;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle12.Format = "D4";
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle12;
             this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
             this.mapFilesGridView.MultiSelect = false;
             this.mapFilesGridView.Name = "mapFilesGridView";
-            dataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle45.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle45.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle45.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle45.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle45.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle45.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle45;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.mapFilesGridView.RowHeadersWidth = 50;
             this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle46.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle46.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle46;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle14;
             this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.mapFilesGridView.RowTemplate.Height = 18;
             this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -3036,21 +3076,6 @@
             this.selectMatrixComboBox.TabIndex = 12;
             this.selectMatrixComboBox.SelectedIndexChanged += new System.EventHandler(this.selectMatrixComboBox_SelectedIndexChanged);
             // 
-            // saveMatrixButton
-            // 
-            this.saveMatrixButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
-            this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.saveMatrixButton.Location = new System.Drawing.Point(11, 566);
-            this.saveMatrixButton.Name = "saveMatrixButton";
-            this.saveMatrixButton.Size = new System.Drawing.Size(117, 43);
-            this.saveMatrixButton.TabIndex = 22;
-            this.saveMatrixButton.Text = "Save Matrix";
-            this.saveMatrixButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.saveMatrixButton.UseVisualStyleBackColor = true;
-            this.saveMatrixButton.Click += new System.EventHandler(this.saveMatrixButton_Click);
-            // 
             // mapEditorTabPage
             // 
             this.mapEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
@@ -3071,7 +3096,7 @@
             this.mapEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.mapEditorTabPage.Name = "mapEditorTabPage";
             this.mapEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.mapEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.mapEditorTabPage.Size = new System.Drawing.Size(1185, 633);
             this.mapEditorTabPage.TabIndex = 2;
             this.mapEditorTabPage.Text = "Map Editor";
             this.mapEditorTabPage.Enter += new System.EventHandler(this.mapEditorTabPage_Enter);
@@ -4365,7 +4390,7 @@
             this.radio3D.AutoSize = true;
             this.radio3D.Checked = true;
             this.radio3D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio3D.Location = new System.Drawing.Point(1140, 542);
+            this.radio3D.Location = new System.Drawing.Point(1140, 626);
             this.radio3D.Name = "radio3D";
             this.radio3D.Size = new System.Drawing.Size(31, 23);
             this.radio3D.TabIndex = 26;
@@ -4380,7 +4405,7 @@
             this.radio2D.Appearance = System.Windows.Forms.Appearance.Button;
             this.radio2D.AutoSize = true;
             this.radio2D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio2D.Location = new System.Drawing.Point(1140, 566);
+            this.radio2D.Location = new System.Drawing.Point(1140, 650);
             this.radio2D.Name = "radio2D";
             this.radio2D.Size = new System.Drawing.Size(31, 23);
             this.radio2D.TabIndex = 25;
@@ -4395,7 +4420,7 @@
             this.wireframeCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.wireframeCheckBox.AutoSize = true;
             this.wireframeCheckBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, 590);
+            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, 674);
             this.wireframeCheckBox.Name = "wireframeCheckBox";
             this.wireframeCheckBox.Size = new System.Drawing.Size(31, 23);
             this.wireframeCheckBox.TabIndex = 27;
@@ -4410,7 +4435,7 @@
             this.nsbtxEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.nsbtxEditorTabPage.Name = "nsbtxEditorTabPage";
             this.nsbtxEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.nsbtxEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.nsbtxEditorTabPage.Size = new System.Drawing.Size(1185, 633);
             this.nsbtxEditorTabPage.TabIndex = 6;
             this.nsbtxEditorTabPage.Text = "NSBTX Editor";
             this.nsbtxEditorTabPage.UseVisualStyleBackColor = true;
@@ -4951,7 +4976,7 @@
             this.eventEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.eventEditorTabPage.Name = "eventEditorTabPage";
             this.eventEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.eventEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.eventEditorTabPage.Size = new System.Drawing.Size(1185, 633);
             this.eventEditorTabPage.TabIndex = 3;
             this.eventEditorTabPage.Text = "Event Editor";
             this.eventEditorTabPage.Enter += new System.EventHandler(this.eventEditorTabPage_Enter);
@@ -5510,6 +5535,19 @@
             this.overworldsTabPage.TabIndex = 1;
             this.overworldsTabPage.Text = "Overworlds";
             this.overworldsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // sortOWsByIDDescButton
+            // 
+            this.sortOWsByIDDescButton.Image = global::DSPRE.Properties.Resources.sortDescending;
+            this.sortOWsByIDDescButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.sortOWsByIDDescButton.Location = new System.Drawing.Point(102, 9);
+            this.sortOWsByIDDescButton.Name = "sortOWsByIDDescButton";
+            this.sortOWsByIDDescButton.Size = new System.Drawing.Size(86, 28);
+            this.sortOWsByIDDescButton.TabIndex = 30;
+            this.sortOWsByIDDescButton.Text = "Sort Desc";
+            this.sortOWsByIDDescButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.sortOWsByIDDescButton.UseVisualStyleBackColor = true;
+            this.sortOWsByIDDescButton.Click += new System.EventHandler(this.sortOWsByIDDescButton_Click);
             // 
             // sortOWsByIDAscButton
             // 
@@ -6983,7 +7021,7 @@
             this.scriptEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.scriptEditorTabPage.Name = "scriptEditorTabPage";
             this.scriptEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.scriptEditorTabPage.Size = new System.Drawing.Size(1185, 633);
             this.scriptEditorTabPage.TabIndex = 4;
             this.scriptEditorTabPage.Text = "Script Editor";
             this.scriptEditorTabPage.UseVisualStyleBackColor = true;
@@ -7722,7 +7760,7 @@
             this.textEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.textEditorTabPage.Name = "textEditorTabPage";
             this.textEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.textEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.textEditorTabPage.Size = new System.Drawing.Size(1185, 633);
             this.textEditorTabPage.TabIndex = 5;
             this.textEditorTabPage.Text = "Text Editor";
             this.textEditorTabPage.UseVisualStyleBackColor = true;
@@ -8096,8 +8134,8 @@
             this.textEditorDataGridView.Location = new System.Drawing.Point(12, 77);
             this.textEditorDataGridView.Name = "textEditorDataGridView";
             this.textEditorDataGridView.RowHeadersWidth = 68;
-            dataGridViewCellStyle47.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle47;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.textEditorDataGridView.Size = new System.Drawing.Size(873, 500);
             this.textEditorDataGridView.TabIndex = 24;
             this.textEditorDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellValueChanged);
@@ -8146,7 +8184,7 @@
             this.cameraEditorTabPage.ImageIndex = 7;
             this.cameraEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.cameraEditorTabPage.Name = "cameraEditorTabPage";
-            this.cameraEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.cameraEditorTabPage.Size = new System.Drawing.Size(1185, 633);
             this.cameraEditorTabPage.TabIndex = 7;
             this.cameraEditorTabPage.Text = "Camera Editor";
             this.cameraEditorTabPage.UseVisualStyleBackColor = true;
@@ -8200,9 +8238,9 @@
             this.cameraEditorDataGridView.CausesValidation = false;
             this.cameraEditorDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.cameraEditorDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle48.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle48.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle48;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.cameraEditorDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.cameraEditorDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DistanceGVCol,
@@ -8327,10 +8365,6 @@
             // trainerEditorTabPage
             // 
             this.trainerEditorTabPage.Controls.Add(this.tableLayoutPanel4);
-            this.trainerEditorTabPage.Controls.Add(this.label74);
-            this.trainerEditorTabPage.Controls.Add(this.DVExplainButton);
-            this.trainerEditorTabPage.Controls.Add(this.deleteTrainerButton);
-            this.trainerEditorTabPage.Controls.Add(this.addTrainerButton);
             this.trainerEditorTabPage.Controls.Add(this.groupBox28);
             this.trainerEditorTabPage.Controls.Add(this.groupBox27);
             this.trainerEditorTabPage.Controls.Add(this.groupBox25);
@@ -8340,30 +8374,24 @@
             this.trainerEditorTabPage.ImageIndex = 8;
             this.trainerEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.trainerEditorTabPage.Name = "trainerEditorTabPage";
-            this.trainerEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.trainerEditorTabPage.Size = new System.Drawing.Size(1185, 633);
             this.trainerEditorTabPage.TabIndex = 8;
             this.trainerEditorTabPage.Text = "Trainer Editor";
             this.trainerEditorTabPage.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel4
             // 
-            this.tableLayoutPanel4.ColumnCount = 4;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel4.ColumnCount = 1;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.0167F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tableLayoutPanel4.Controls.Add(this.exportTrainerButton, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.importTrainerButton, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.exportPropertiesButton, 2, 0);
-            this.tableLayoutPanel4.Controls.Add(this.importReplacePropertiesButton, 2, 1);
-            this.tableLayoutPanel4.Controls.Add(this.importReplacePartyButton, 3, 1);
-            this.tableLayoutPanel4.Controls.Add(this.exportPartyButton, 3, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(642, 9);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(219, 15);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(429, 62);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(128, 62);
             this.tableLayoutPanel4.TabIndex = 47;
             // 
             // exportTrainerButton
@@ -8373,9 +8401,9 @@
             this.exportTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.exportTrainerButton.Location = new System.Drawing.Point(3, 3);
             this.exportTrainerButton.Name = "exportTrainerButton";
-            this.exportTrainerButton.Size = new System.Drawing.Size(130, 25);
+            this.exportTrainerButton.Size = new System.Drawing.Size(122, 25);
             this.exportTrainerButton.TabIndex = 42;
-            this.exportTrainerButton.Text = "Export Full Trainer";
+            this.exportTrainerButton.Text = "Export Full";
             this.exportTrainerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.exportTrainerButton.UseVisualStyleBackColor = true;
             this.exportTrainerButton.Click += new System.EventHandler(this.exportTrainerButton_Click);
@@ -8387,133 +8415,99 @@
             this.importTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.importTrainerButton.Location = new System.Drawing.Point(3, 34);
             this.importTrainerButton.Name = "importTrainerButton";
-            this.importTrainerButton.Size = new System.Drawing.Size(130, 25);
+            this.importTrainerButton.Size = new System.Drawing.Size(122, 25);
             this.importTrainerButton.TabIndex = 43;
-            this.importTrainerButton.Text = "Import Full Trainer";
+            this.importTrainerButton.Text = "Replace Full";
             this.importTrainerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.importTrainerButton.UseVisualStyleBackColor = true;
             this.importTrainerButton.Click += new System.EventHandler(this.importTrainerButton_Click);
             // 
-            // exportPropertiesButton
-            // 
-            this.exportPropertiesButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.exportPropertiesButton.Image = ((System.Drawing.Image)(resources.GetObject("exportPropertiesButton.Image")));
-            this.exportPropertiesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportPropertiesButton.Location = new System.Drawing.Point(159, 3);
-            this.exportPropertiesButton.Name = "exportPropertiesButton";
-            this.exportPropertiesButton.Size = new System.Drawing.Size(130, 25);
-            this.exportPropertiesButton.TabIndex = 39;
-            this.exportPropertiesButton.Text = "Export Properties";
-            this.exportPropertiesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportPropertiesButton.UseVisualStyleBackColor = true;
-            this.exportPropertiesButton.Click += new System.EventHandler(this.exportPropertiesButton_Click);
-            // 
-            // importReplacePropertiesButton
-            // 
-            this.importReplacePropertiesButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.importReplacePropertiesButton.Image = ((System.Drawing.Image)(resources.GetObject("importReplacePropertiesButton.Image")));
-            this.importReplacePropertiesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importReplacePropertiesButton.Location = new System.Drawing.Point(159, 34);
-            this.importReplacePropertiesButton.Name = "importReplacePropertiesButton";
-            this.importReplacePropertiesButton.Size = new System.Drawing.Size(130, 25);
-            this.importReplacePropertiesButton.TabIndex = 40;
-            this.importReplacePropertiesButton.Text = "Replace Properties";
-            this.importReplacePropertiesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importReplacePropertiesButton.UseVisualStyleBackColor = true;
-            this.importReplacePropertiesButton.Click += new System.EventHandler(this.importReplacePropertiesButton_Click);
-            // 
-            // importReplacePartyButton
-            // 
-            this.importReplacePartyButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.importReplacePartyButton.Image = ((System.Drawing.Image)(resources.GetObject("importReplacePartyButton.Image")));
-            this.importReplacePartyButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importReplacePartyButton.Location = new System.Drawing.Point(295, 34);
-            this.importReplacePartyButton.Name = "importReplacePartyButton";
-            this.importReplacePartyButton.Size = new System.Drawing.Size(131, 25);
-            this.importReplacePartyButton.TabIndex = 41;
-            this.importReplacePartyButton.Text = "Replace Party";
-            this.importReplacePartyButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importReplacePartyButton.UseVisualStyleBackColor = true;
-            this.importReplacePartyButton.Click += new System.EventHandler(this.importReplacePartyButton_Click);
-            // 
-            // exportPartyButton
-            // 
-            this.exportPartyButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.exportPartyButton.Image = ((System.Drawing.Image)(resources.GetObject("exportPartyButton.Image")));
-            this.exportPartyButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportPartyButton.Location = new System.Drawing.Point(295, 3);
-            this.exportPartyButton.Name = "exportPartyButton";
-            this.exportPartyButton.Size = new System.Drawing.Size(131, 25);
-            this.exportPartyButton.TabIndex = 38;
-            this.exportPartyButton.Text = "Export Party";
-            this.exportPartyButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportPartyButton.UseVisualStyleBackColor = true;
-            this.exportPartyButton.Click += new System.EventHandler(this.exportPartyButton_Click);
-            // 
-            // label74
-            // 
-            this.label74.AutoSize = true;
-            this.label74.Location = new System.Drawing.Point(1086, 26);
-            this.label74.Name = "label74";
-            this.label74.Size = new System.Drawing.Size(78, 13);
-            this.label74.TabIndex = 46;
-            this.label74.Text = "Info about DVs";
-            // 
-            // DVExplainButton
-            // 
-            this.DVExplainButton.Image = ((System.Drawing.Image)(resources.GetObject("DVExplainButton.Image")));
-            this.DVExplainButton.Location = new System.Drawing.Point(1108, 41);
-            this.DVExplainButton.Name = "DVExplainButton";
-            this.DVExplainButton.Size = new System.Drawing.Size(28, 29);
-            this.DVExplainButton.TabIndex = 45;
-            this.DVExplainButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.DVExplainButton.UseVisualStyleBackColor = true;
-            this.DVExplainButton.Click += new System.EventHandler(this.DVExplainButton_Click);
-            // 
-            // deleteTrainerButton
-            // 
-            this.deleteTrainerButton.Enabled = false;
-            this.deleteTrainerButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
-            this.deleteTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.deleteTrainerButton.Location = new System.Drawing.Point(218, 49);
-            this.deleteTrainerButton.Name = "deleteTrainerButton";
-            this.deleteTrainerButton.Size = new System.Drawing.Size(116, 23);
-            this.deleteTrainerButton.TabIndex = 44;
-            this.deleteTrainerButton.Text = "Delete Trainer";
-            this.deleteTrainerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.deleteTrainerButton.UseVisualStyleBackColor = true;
-            // 
-            // addTrainerButton
-            // 
-            this.addTrainerButton.Enabled = false;
-            this.addTrainerButton.Image = global::DSPRE.Properties.Resources.addIcon;
-            this.addTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addTrainerButton.Location = new System.Drawing.Point(218, 20);
-            this.addTrainerButton.Name = "addTrainerButton";
-            this.addTrainerButton.Size = new System.Drawing.Size(116, 23);
-            this.addTrainerButton.TabIndex = 35;
-            this.addTrainerButton.Text = "Add Trainer";
-            this.addTrainerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addTrainerButton.UseVisualStyleBackColor = true;
-            this.addTrainerButton.Click += new System.EventHandler(this.addTrainerButton_Click);
-            // 
             // groupBox28
             // 
+            this.groupBox28.Controls.Add(this.tableLayoutPanel6);
+            this.groupBox28.Controls.Add(this.DVExplainButton);
+            this.groupBox28.Controls.Add(this.label74);
             this.groupBox28.Controls.Add(this.party6GroupBox);
             this.groupBox28.Controls.Add(this.party5GroupBox);
             this.groupBox28.Controls.Add(this.party4GroupBox);
             this.groupBox28.Controls.Add(this.party3GroupBox);
             this.groupBox28.Controls.Add(this.party2GroupBox);
             this.groupBox28.Controls.Add(this.party1GroupBox);
-            this.groupBox28.Location = new System.Drawing.Point(439, 75);
+            this.groupBox28.Location = new System.Drawing.Point(439, 3);
             this.groupBox28.Name = "groupBox28";
-            this.groupBox28.Size = new System.Drawing.Size(731, 534);
+            this.groupBox28.Size = new System.Drawing.Size(731, 609);
             this.groupBox28.TabIndex = 32;
             this.groupBox28.TabStop = false;
             this.groupBox28.Text = "Party";
             // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 2;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.00001F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel6.Controls.Add(this.button3, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.button4, 0, 0);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(471, 10);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 1;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(237, 29);
+            this.tableLayoutPanel6.TabIndex = 48;
+            // 
+            // button3
+            // 
+            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
+            this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button3.Location = new System.Drawing.Point(121, 3);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(113, 23);
+            this.button3.TabIndex = 41;
+            this.button3.Text = "Replace Party";
+            this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
+            this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button4.Location = new System.Drawing.Point(3, 3);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(112, 23);
+            this.button4.TabIndex = 38;
+            this.button4.Text = "Export Party";
+            this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // DVExplainButton
+            // 
+            this.DVExplainButton.Image = ((System.Drawing.Image)(resources.GetObject("DVExplainButton.Image")));
+            this.DVExplainButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.DVExplainButton.Location = new System.Drawing.Point(251, 11);
+            this.DVExplainButton.Name = "DVExplainButton";
+            this.DVExplainButton.Size = new System.Drawing.Size(109, 29);
+            this.DVExplainButton.TabIndex = 45;
+            this.DVExplainButton.Text = "Info about DVs";
+            this.DVExplainButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.DVExplainButton.UseVisualStyleBackColor = true;
+            this.DVExplainButton.Click += new System.EventHandler(this.DVExplainButton_Click);
+            // 
+            // label74
+            // 
+            this.label74.AutoSize = true;
+            this.label74.Location = new System.Drawing.Point(247, 16);
+            this.label74.Name = "label74";
+            this.label74.Size = new System.Drawing.Size(0, 13);
+            this.label74.TabIndex = 46;
+            // 
             // party6GroupBox
             // 
+            this.party6GroupBox.Controls.Add(this.partyForm6ComboBox);
+            this.party6GroupBox.Controls.Add(this.partyAbility6ComboBox);
+            this.party6GroupBox.Controls.Add(this.partyGender6ComboBox);
             this.party6GroupBox.Controls.Add(this.partyPokemonItemPictureBox6);
             this.party6GroupBox.Controls.Add(this.label60);
             this.party6GroupBox.Controls.Add(this.label61);
@@ -8526,12 +8520,41 @@
             this.party6GroupBox.Controls.Add(this.partyPokemon6PictureBox);
             this.party6GroupBox.Controls.Add(this.partyPokemon6ComboBox);
             this.party6GroupBox.Enabled = false;
-            this.party6GroupBox.Location = new System.Drawing.Point(371, 355);
+            this.party6GroupBox.Location = new System.Drawing.Point(371, 408);
             this.party6GroupBox.Name = "party6GroupBox";
-            this.party6GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party6GroupBox.Size = new System.Drawing.Size(343, 183);
             this.party6GroupBox.TabIndex = 13;
             this.party6GroupBox.TabStop = false;
             this.party6GroupBox.Text = "Pokemon 6";
+            // 
+            // partyForm6ComboBox
+            // 
+            this.partyForm6ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyForm6ComboBox.FormattingEnabled = true;
+            this.partyForm6ComboBox.Items.AddRange(new object[] {
+            "Defense form"});
+            this.partyForm6ComboBox.Location = new System.Drawing.Point(228, 151);
+            this.partyForm6ComboBox.Name = "partyForm6ComboBox";
+            this.partyForm6ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyForm6ComboBox.TabIndex = 20;
+            // 
+            // partyAbility6ComboBox
+            // 
+            this.partyAbility6ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility6ComboBox.FormattingEnabled = true;
+            this.partyAbility6ComboBox.Location = new System.Drawing.Point(15, 151);
+            this.partyAbility6ComboBox.Name = "partyAbility6ComboBox";
+            this.partyAbility6ComboBox.Size = new System.Drawing.Size(105, 21);
+            this.partyAbility6ComboBox.TabIndex = 19;
+            // 
+            // partyGender6ComboBox
+            // 
+            this.partyGender6ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender6ComboBox.FormattingEnabled = true;
+            this.partyGender6ComboBox.Location = new System.Drawing.Point(126, 151);
+            this.partyGender6ComboBox.Name = "partyGender6ComboBox";
+            this.partyGender6ComboBox.Size = new System.Drawing.Size(95, 21);
+            this.partyGender6ComboBox.TabIndex = 15;
             // 
             // partyPokemonItemPictureBox6
             // 
@@ -8546,7 +8569,7 @@
             // label60
             // 
             this.label60.AutoSize = true;
-            this.label60.Location = new System.Drawing.Point(12, 124);
+            this.label60.Location = new System.Drawing.Point(12, 118);
             this.label60.Name = "label60";
             this.label60.Size = new System.Drawing.Size(28, 26);
             this.label60.TabIndex = 9;
@@ -8555,7 +8578,7 @@
             // label61
             // 
             this.label61.AutoSize = true;
-            this.label61.Location = new System.Drawing.Point(12, 100);
+            this.label61.Location = new System.Drawing.Point(12, 94);
             this.label61.Name = "label61";
             this.label61.Size = new System.Drawing.Size(22, 13);
             this.label61.TabIndex = 8;
@@ -8564,7 +8587,7 @@
             // label62
             // 
             this.label62.AutoSize = true;
-            this.label62.Location = new System.Drawing.Point(12, 73);
+            this.label62.Location = new System.Drawing.Point(12, 67);
             this.label62.Name = "label62";
             this.label62.Size = new System.Drawing.Size(22, 13);
             this.label62.TabIndex = 7;
@@ -8576,7 +8599,7 @@
             this.poke6MovesGroupBox.Controls.Add(this.partyMove6_2ComboBox);
             this.poke6MovesGroupBox.Controls.Add(this.partyMove6_3ComboBox);
             this.poke6MovesGroupBox.Controls.Add(this.partyMove6_4ComboBox);
-            this.poke6MovesGroupBox.Location = new System.Drawing.Point(110, 63);
+            this.poke6MovesGroupBox.Location = new System.Drawing.Point(110, 57);
             this.poke6MovesGroupBox.Name = "poke6MovesGroupBox";
             this.poke6MovesGroupBox.Size = new System.Drawing.Size(227, 85);
             this.poke6MovesGroupBox.TabIndex = 6;
@@ -8585,6 +8608,8 @@
             // 
             // partyMove6_1ComboBox
             // 
+            this.partyMove6_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove6_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove6_1ComboBox.Enabled = false;
             this.partyMove6_1ComboBox.FormattingEnabled = true;
             this.partyMove6_1ComboBox.Location = new System.Drawing.Point(10, 21);
@@ -8595,6 +8620,8 @@
             // 
             // partyMove6_2ComboBox
             // 
+            this.partyMove6_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove6_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove6_2ComboBox.Enabled = false;
             this.partyMove6_2ComboBox.FormattingEnabled = true;
             this.partyMove6_2ComboBox.Location = new System.Drawing.Point(116, 21);
@@ -8605,6 +8632,8 @@
             // 
             // partyMove6_3ComboBox
             // 
+            this.partyMove6_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove6_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove6_3ComboBox.Enabled = false;
             this.partyMove6_3ComboBox.FormattingEnabled = true;
             this.partyMove6_3ComboBox.Location = new System.Drawing.Point(10, 48);
@@ -8615,6 +8644,8 @@
             // 
             // partyMove6_4ComboBox
             // 
+            this.partyMove6_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove6_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove6_4ComboBox.Enabled = false;
             this.partyMove6_4ComboBox.FormattingEnabled = true;
             this.partyMove6_4ComboBox.Location = new System.Drawing.Point(116, 48);
@@ -8625,9 +8656,9 @@
             // 
             // partyIV6UpDown
             // 
-            this.partyIV6UpDown.Location = new System.Drawing.Point(48, 98);
+            this.partyIV6UpDown.Location = new System.Drawing.Point(48, 92);
             this.partyIV6UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -8637,7 +8668,7 @@
             // 
             // partyLevel6UpDown
             // 
-            this.partyLevel6UpDown.Location = new System.Drawing.Point(48, 69);
+            this.partyLevel6UpDown.Location = new System.Drawing.Point(48, 63);
             this.partyLevel6UpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -8654,7 +8685,7 @@
             // 
             // partyBall6UpDown
             // 
-            this.partyBall6UpDown.Location = new System.Drawing.Point(48, 127);
+            this.partyBall6UpDown.Location = new System.Drawing.Point(48, 121);
             this.partyBall6UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8666,6 +8697,8 @@
             // 
             // partyItem6ComboBox
             // 
+            this.partyItem6ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem6ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyItem6ComboBox.Enabled = false;
             this.partyItem6ComboBox.FormattingEnabled = true;
             this.partyItem6ComboBox.Location = new System.Drawing.Point(228, 28);
@@ -8685,6 +8718,8 @@
             // 
             // partyPokemon6ComboBox
             // 
+            this.partyPokemon6ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon6ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyPokemon6ComboBox.FormattingEnabled = true;
             this.partyPokemon6ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon6ComboBox.Name = "partyPokemon6ComboBox";
@@ -8694,6 +8729,9 @@
             // 
             // party5GroupBox
             // 
+            this.party5GroupBox.Controls.Add(this.partyForm5ComboBox);
+            this.party5GroupBox.Controls.Add(this.partyAbility5ComboBox);
+            this.party5GroupBox.Controls.Add(this.partyGender5ComboBox);
             this.party5GroupBox.Controls.Add(this.partyPokemonItemPictureBox5);
             this.party5GroupBox.Controls.Add(this.label57);
             this.party5GroupBox.Controls.Add(this.label58);
@@ -8706,12 +8744,41 @@
             this.party5GroupBox.Controls.Add(this.partyPokemon5PictureBox);
             this.party5GroupBox.Controls.Add(this.partyPokemon5ComboBox);
             this.party5GroupBox.Enabled = false;
-            this.party5GroupBox.Location = new System.Drawing.Point(16, 355);
+            this.party5GroupBox.Location = new System.Drawing.Point(16, 408);
             this.party5GroupBox.Name = "party5GroupBox";
-            this.party5GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party5GroupBox.Size = new System.Drawing.Size(343, 183);
             this.party5GroupBox.TabIndex = 12;
             this.party5GroupBox.TabStop = false;
             this.party5GroupBox.Text = "Pokemon 5";
+            // 
+            // partyForm5ComboBox
+            // 
+            this.partyForm5ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyForm5ComboBox.FormattingEnabled = true;
+            this.partyForm5ComboBox.Items.AddRange(new object[] {
+            "Defense form"});
+            this.partyForm5ComboBox.Location = new System.Drawing.Point(228, 151);
+            this.partyForm5ComboBox.Name = "partyForm5ComboBox";
+            this.partyForm5ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyForm5ComboBox.TabIndex = 19;
+            // 
+            // partyAbility5ComboBox
+            // 
+            this.partyAbility5ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility5ComboBox.FormattingEnabled = true;
+            this.partyAbility5ComboBox.Location = new System.Drawing.Point(15, 151);
+            this.partyAbility5ComboBox.Name = "partyAbility5ComboBox";
+            this.partyAbility5ComboBox.Size = new System.Drawing.Size(105, 21);
+            this.partyAbility5ComboBox.TabIndex = 18;
+            // 
+            // partyGender5ComboBox
+            // 
+            this.partyGender5ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender5ComboBox.FormattingEnabled = true;
+            this.partyGender5ComboBox.Location = new System.Drawing.Point(126, 151);
+            this.partyGender5ComboBox.Name = "partyGender5ComboBox";
+            this.partyGender5ComboBox.Size = new System.Drawing.Size(95, 21);
+            this.partyGender5ComboBox.TabIndex = 14;
             // 
             // partyPokemonItemPictureBox5
             // 
@@ -8726,7 +8793,7 @@
             // label57
             // 
             this.label57.AutoSize = true;
-            this.label57.Location = new System.Drawing.Point(12, 124);
+            this.label57.Location = new System.Drawing.Point(12, 118);
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(28, 26);
             this.label57.TabIndex = 9;
@@ -8735,7 +8802,7 @@
             // label58
             // 
             this.label58.AutoSize = true;
-            this.label58.Location = new System.Drawing.Point(12, 100);
+            this.label58.Location = new System.Drawing.Point(12, 94);
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(22, 13);
             this.label58.TabIndex = 8;
@@ -8744,7 +8811,7 @@
             // label59
             // 
             this.label59.AutoSize = true;
-            this.label59.Location = new System.Drawing.Point(12, 73);
+            this.label59.Location = new System.Drawing.Point(12, 67);
             this.label59.Name = "label59";
             this.label59.Size = new System.Drawing.Size(22, 13);
             this.label59.TabIndex = 7;
@@ -8756,7 +8823,7 @@
             this.poke5MovesGroupBox.Controls.Add(this.partyMove5_2ComboBox);
             this.poke5MovesGroupBox.Controls.Add(this.partyMove5_3ComboBox);
             this.poke5MovesGroupBox.Controls.Add(this.partyMove5_4ComboBox);
-            this.poke5MovesGroupBox.Location = new System.Drawing.Point(110, 63);
+            this.poke5MovesGroupBox.Location = new System.Drawing.Point(110, 57);
             this.poke5MovesGroupBox.Name = "poke5MovesGroupBox";
             this.poke5MovesGroupBox.Size = new System.Drawing.Size(227, 85);
             this.poke5MovesGroupBox.TabIndex = 6;
@@ -8765,6 +8832,8 @@
             // 
             // partyMove5_1ComboBox
             // 
+            this.partyMove5_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove5_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove5_1ComboBox.Enabled = false;
             this.partyMove5_1ComboBox.FormattingEnabled = true;
             this.partyMove5_1ComboBox.Location = new System.Drawing.Point(10, 21);
@@ -8775,6 +8844,8 @@
             // 
             // partyMove5_2ComboBox
             // 
+            this.partyMove5_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove5_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove5_2ComboBox.Enabled = false;
             this.partyMove5_2ComboBox.FormattingEnabled = true;
             this.partyMove5_2ComboBox.Location = new System.Drawing.Point(116, 21);
@@ -8785,6 +8856,8 @@
             // 
             // partyMove5_3ComboBox
             // 
+            this.partyMove5_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove5_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove5_3ComboBox.Enabled = false;
             this.partyMove5_3ComboBox.FormattingEnabled = true;
             this.partyMove5_3ComboBox.Location = new System.Drawing.Point(10, 48);
@@ -8795,6 +8868,8 @@
             // 
             // partyMove5_4ComboBox
             // 
+            this.partyMove5_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove5_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove5_4ComboBox.Enabled = false;
             this.partyMove5_4ComboBox.FormattingEnabled = true;
             this.partyMove5_4ComboBox.Location = new System.Drawing.Point(116, 48);
@@ -8805,9 +8880,9 @@
             // 
             // partyIV5UpDown
             // 
-            this.partyIV5UpDown.Location = new System.Drawing.Point(48, 98);
+            this.partyIV5UpDown.Location = new System.Drawing.Point(48, 92);
             this.partyIV5UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -8817,7 +8892,7 @@
             // 
             // partyLevel5UpDown
             // 
-            this.partyLevel5UpDown.Location = new System.Drawing.Point(48, 69);
+            this.partyLevel5UpDown.Location = new System.Drawing.Point(48, 63);
             this.partyLevel5UpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -8834,7 +8909,7 @@
             // 
             // partyBall5UpDown
             // 
-            this.partyBall5UpDown.Location = new System.Drawing.Point(48, 127);
+            this.partyBall5UpDown.Location = new System.Drawing.Point(48, 121);
             this.partyBall5UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -8846,6 +8921,8 @@
             // 
             // partyItem5ComboBox
             // 
+            this.partyItem5ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem5ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyItem5ComboBox.Enabled = false;
             this.partyItem5ComboBox.FormattingEnabled = true;
             this.partyItem5ComboBox.Location = new System.Drawing.Point(228, 28);
@@ -8865,6 +8942,8 @@
             // 
             // partyPokemon5ComboBox
             // 
+            this.partyPokemon5ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon5ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyPokemon5ComboBox.FormattingEnabled = true;
             this.partyPokemon5ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon5ComboBox.Name = "partyPokemon5ComboBox";
@@ -8874,6 +8953,9 @@
             // 
             // party4GroupBox
             // 
+            this.party4GroupBox.Controls.Add(this.partyForm4ComboBox);
+            this.party4GroupBox.Controls.Add(this.partyAbility4ComboBox);
+            this.party4GroupBox.Controls.Add(this.partyGender4ComboBox);
             this.party4GroupBox.Controls.Add(this.partyPokemonItemPictureBox4);
             this.party4GroupBox.Controls.Add(this.label54);
             this.party4GroupBox.Controls.Add(this.label55);
@@ -8886,12 +8968,41 @@
             this.party4GroupBox.Controls.Add(this.partyPokemon4PictureBox);
             this.party4GroupBox.Controls.Add(this.partyPokemon4ComboBox);
             this.party4GroupBox.Enabled = false;
-            this.party4GroupBox.Location = new System.Drawing.Point(371, 189);
+            this.party4GroupBox.Location = new System.Drawing.Point(371, 223);
             this.party4GroupBox.Name = "party4GroupBox";
-            this.party4GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party4GroupBox.Size = new System.Drawing.Size(343, 183);
             this.party4GroupBox.TabIndex = 11;
             this.party4GroupBox.TabStop = false;
             this.party4GroupBox.Text = "Pokemon 4";
+            // 
+            // partyForm4ComboBox
+            // 
+            this.partyForm4ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyForm4ComboBox.FormattingEnabled = true;
+            this.partyForm4ComboBox.Items.AddRange(new object[] {
+            "Defense form"});
+            this.partyForm4ComboBox.Location = new System.Drawing.Point(228, 151);
+            this.partyForm4ComboBox.Name = "partyForm4ComboBox";
+            this.partyForm4ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyForm4ComboBox.TabIndex = 18;
+            // 
+            // partyAbility4ComboBox
+            // 
+            this.partyAbility4ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility4ComboBox.FormattingEnabled = true;
+            this.partyAbility4ComboBox.Location = new System.Drawing.Point(15, 151);
+            this.partyAbility4ComboBox.Name = "partyAbility4ComboBox";
+            this.partyAbility4ComboBox.Size = new System.Drawing.Size(105, 21);
+            this.partyAbility4ComboBox.TabIndex = 17;
+            // 
+            // partyGender4ComboBox
+            // 
+            this.partyGender4ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender4ComboBox.FormattingEnabled = true;
+            this.partyGender4ComboBox.Location = new System.Drawing.Point(126, 151);
+            this.partyGender4ComboBox.Name = "partyGender4ComboBox";
+            this.partyGender4ComboBox.Size = new System.Drawing.Size(95, 21);
+            this.partyGender4ComboBox.TabIndex = 16;
             // 
             // partyPokemonItemPictureBox4
             // 
@@ -8906,7 +9017,7 @@
             // label54
             // 
             this.label54.AutoSize = true;
-            this.label54.Location = new System.Drawing.Point(12, 124);
+            this.label54.Location = new System.Drawing.Point(12, 118);
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(28, 26);
             this.label54.TabIndex = 9;
@@ -8915,7 +9026,7 @@
             // label55
             // 
             this.label55.AutoSize = true;
-            this.label55.Location = new System.Drawing.Point(12, 100);
+            this.label55.Location = new System.Drawing.Point(12, 94);
             this.label55.Name = "label55";
             this.label55.Size = new System.Drawing.Size(22, 13);
             this.label55.TabIndex = 8;
@@ -8924,7 +9035,7 @@
             // label56
             // 
             this.label56.AutoSize = true;
-            this.label56.Location = new System.Drawing.Point(12, 73);
+            this.label56.Location = new System.Drawing.Point(12, 67);
             this.label56.Name = "label56";
             this.label56.Size = new System.Drawing.Size(22, 13);
             this.label56.TabIndex = 7;
@@ -8936,7 +9047,7 @@
             this.poke4MovesGroupBox.Controls.Add(this.partyMove4_2ComboBox);
             this.poke4MovesGroupBox.Controls.Add(this.partyMove4_3ComboBox);
             this.poke4MovesGroupBox.Controls.Add(this.partyMove4_4ComboBox);
-            this.poke4MovesGroupBox.Location = new System.Drawing.Point(110, 63);
+            this.poke4MovesGroupBox.Location = new System.Drawing.Point(110, 57);
             this.poke4MovesGroupBox.Name = "poke4MovesGroupBox";
             this.poke4MovesGroupBox.Size = new System.Drawing.Size(227, 85);
             this.poke4MovesGroupBox.TabIndex = 6;
@@ -8945,6 +9056,8 @@
             // 
             // partyMove4_1ComboBox
             // 
+            this.partyMove4_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove4_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove4_1ComboBox.Enabled = false;
             this.partyMove4_1ComboBox.FormattingEnabled = true;
             this.partyMove4_1ComboBox.Location = new System.Drawing.Point(10, 21);
@@ -8955,6 +9068,8 @@
             // 
             // partyMove4_2ComboBox
             // 
+            this.partyMove4_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove4_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove4_2ComboBox.Enabled = false;
             this.partyMove4_2ComboBox.FormattingEnabled = true;
             this.partyMove4_2ComboBox.Location = new System.Drawing.Point(116, 21);
@@ -8965,6 +9080,8 @@
             // 
             // partyMove4_3ComboBox
             // 
+            this.partyMove4_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove4_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove4_3ComboBox.Enabled = false;
             this.partyMove4_3ComboBox.FormattingEnabled = true;
             this.partyMove4_3ComboBox.Location = new System.Drawing.Point(10, 48);
@@ -8975,6 +9092,8 @@
             // 
             // partyMove4_4ComboBox
             // 
+            this.partyMove4_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove4_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove4_4ComboBox.Enabled = false;
             this.partyMove4_4ComboBox.FormattingEnabled = true;
             this.partyMove4_4ComboBox.Location = new System.Drawing.Point(116, 48);
@@ -8985,9 +9104,9 @@
             // 
             // partyIV4UpDown
             // 
-            this.partyIV4UpDown.Location = new System.Drawing.Point(48, 98);
+            this.partyIV4UpDown.Location = new System.Drawing.Point(48, 92);
             this.partyIV4UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -8997,7 +9116,7 @@
             // 
             // partyLevel4UpDown
             // 
-            this.partyLevel4UpDown.Location = new System.Drawing.Point(48, 69);
+            this.partyLevel4UpDown.Location = new System.Drawing.Point(48, 63);
             this.partyLevel4UpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -9014,7 +9133,7 @@
             // 
             // partyBall4UpDown
             // 
-            this.partyBall4UpDown.Location = new System.Drawing.Point(48, 127);
+            this.partyBall4UpDown.Location = new System.Drawing.Point(48, 121);
             this.partyBall4UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -9026,6 +9145,8 @@
             // 
             // partyItem4ComboBox
             // 
+            this.partyItem4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyItem4ComboBox.Enabled = false;
             this.partyItem4ComboBox.FormattingEnabled = true;
             this.partyItem4ComboBox.Location = new System.Drawing.Point(228, 28);
@@ -9045,6 +9166,8 @@
             // 
             // partyPokemon4ComboBox
             // 
+            this.partyPokemon4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyPokemon4ComboBox.FormattingEnabled = true;
             this.partyPokemon4ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon4ComboBox.Name = "partyPokemon4ComboBox";
@@ -9054,6 +9177,9 @@
             // 
             // party3GroupBox
             // 
+            this.party3GroupBox.Controls.Add(this.partyForm3ComboBox);
+            this.party3GroupBox.Controls.Add(this.partyAbility3ComboBox);
+            this.party3GroupBox.Controls.Add(this.partyGender3ComboBox);
             this.party3GroupBox.Controls.Add(this.partyPokemonItemPictureBox3);
             this.party3GroupBox.Controls.Add(this.label51);
             this.party3GroupBox.Controls.Add(this.label52);
@@ -9066,12 +9192,41 @@
             this.party3GroupBox.Controls.Add(this.partyPokemon3PictureBox);
             this.party3GroupBox.Controls.Add(this.partyPokemon3ComboBox);
             this.party3GroupBox.Enabled = false;
-            this.party3GroupBox.Location = new System.Drawing.Point(16, 189);
+            this.party3GroupBox.Location = new System.Drawing.Point(16, 223);
             this.party3GroupBox.Name = "party3GroupBox";
-            this.party3GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party3GroupBox.Size = new System.Drawing.Size(343, 183);
             this.party3GroupBox.TabIndex = 10;
             this.party3GroupBox.TabStop = false;
             this.party3GroupBox.Text = "Pokemon 3";
+            // 
+            // partyForm3ComboBox
+            // 
+            this.partyForm3ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyForm3ComboBox.FormattingEnabled = true;
+            this.partyForm3ComboBox.Items.AddRange(new object[] {
+            "Defense form"});
+            this.partyForm3ComboBox.Location = new System.Drawing.Point(228, 151);
+            this.partyForm3ComboBox.Name = "partyForm3ComboBox";
+            this.partyForm3ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyForm3ComboBox.TabIndex = 15;
+            // 
+            // partyAbility3ComboBox
+            // 
+            this.partyAbility3ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility3ComboBox.FormattingEnabled = true;
+            this.partyAbility3ComboBox.Location = new System.Drawing.Point(15, 151);
+            this.partyAbility3ComboBox.Name = "partyAbility3ComboBox";
+            this.partyAbility3ComboBox.Size = new System.Drawing.Size(105, 21);
+            this.partyAbility3ComboBox.TabIndex = 14;
+            // 
+            // partyGender3ComboBox
+            // 
+            this.partyGender3ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender3ComboBox.FormattingEnabled = true;
+            this.partyGender3ComboBox.Location = new System.Drawing.Point(126, 151);
+            this.partyGender3ComboBox.Name = "partyGender3ComboBox";
+            this.partyGender3ComboBox.Size = new System.Drawing.Size(95, 21);
+            this.partyGender3ComboBox.TabIndex = 13;
             // 
             // partyPokemonItemPictureBox3
             // 
@@ -9086,7 +9241,7 @@
             // label51
             // 
             this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(12, 124);
+            this.label51.Location = new System.Drawing.Point(12, 118);
             this.label51.Name = "label51";
             this.label51.Size = new System.Drawing.Size(28, 26);
             this.label51.TabIndex = 9;
@@ -9095,7 +9250,7 @@
             // label52
             // 
             this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(12, 100);
+            this.label52.Location = new System.Drawing.Point(12, 94);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(22, 13);
             this.label52.TabIndex = 8;
@@ -9104,7 +9259,7 @@
             // label53
             // 
             this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(12, 73);
+            this.label53.Location = new System.Drawing.Point(12, 67);
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(22, 13);
             this.label53.TabIndex = 7;
@@ -9116,7 +9271,7 @@
             this.poke3MovesGroupBox.Controls.Add(this.partyMove3_2ComboBox);
             this.poke3MovesGroupBox.Controls.Add(this.partyMove3_3ComboBox);
             this.poke3MovesGroupBox.Controls.Add(this.partyMove3_4ComboBox);
-            this.poke3MovesGroupBox.Location = new System.Drawing.Point(110, 63);
+            this.poke3MovesGroupBox.Location = new System.Drawing.Point(110, 57);
             this.poke3MovesGroupBox.Name = "poke3MovesGroupBox";
             this.poke3MovesGroupBox.Size = new System.Drawing.Size(227, 85);
             this.poke3MovesGroupBox.TabIndex = 6;
@@ -9125,6 +9280,8 @@
             // 
             // partyMove3_1ComboBox
             // 
+            this.partyMove3_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove3_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove3_1ComboBox.Enabled = false;
             this.partyMove3_1ComboBox.FormattingEnabled = true;
             this.partyMove3_1ComboBox.Location = new System.Drawing.Point(10, 21);
@@ -9135,6 +9292,8 @@
             // 
             // partyMove3_2ComboBox
             // 
+            this.partyMove3_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove3_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove3_2ComboBox.Enabled = false;
             this.partyMove3_2ComboBox.FormattingEnabled = true;
             this.partyMove3_2ComboBox.Location = new System.Drawing.Point(116, 21);
@@ -9145,6 +9304,8 @@
             // 
             // partyMove3_3ComboBox
             // 
+            this.partyMove3_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove3_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove3_3ComboBox.Enabled = false;
             this.partyMove3_3ComboBox.FormattingEnabled = true;
             this.partyMove3_3ComboBox.Location = new System.Drawing.Point(10, 48);
@@ -9155,6 +9316,8 @@
             // 
             // partyMove3_4ComboBox
             // 
+            this.partyMove3_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove3_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove3_4ComboBox.Enabled = false;
             this.partyMove3_4ComboBox.FormattingEnabled = true;
             this.partyMove3_4ComboBox.Location = new System.Drawing.Point(116, 48);
@@ -9165,9 +9328,9 @@
             // 
             // partyIV3UpDown
             // 
-            this.partyIV3UpDown.Location = new System.Drawing.Point(48, 98);
+            this.partyIV3UpDown.Location = new System.Drawing.Point(48, 92);
             this.partyIV3UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -9177,7 +9340,7 @@
             // 
             // partyLevel3UpDown
             // 
-            this.partyLevel3UpDown.Location = new System.Drawing.Point(48, 69);
+            this.partyLevel3UpDown.Location = new System.Drawing.Point(48, 63);
             this.partyLevel3UpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -9194,7 +9357,7 @@
             // 
             // partyBall3UpDown
             // 
-            this.partyBall3UpDown.Location = new System.Drawing.Point(48, 127);
+            this.partyBall3UpDown.Location = new System.Drawing.Point(48, 121);
             this.partyBall3UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -9206,6 +9369,8 @@
             // 
             // partyItem3ComboBox
             // 
+            this.partyItem3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyItem3ComboBox.Enabled = false;
             this.partyItem3ComboBox.FormattingEnabled = true;
             this.partyItem3ComboBox.Location = new System.Drawing.Point(228, 28);
@@ -9225,6 +9390,8 @@
             // 
             // partyPokemon3ComboBox
             // 
+            this.partyPokemon3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyPokemon3ComboBox.FormattingEnabled = true;
             this.partyPokemon3ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon3ComboBox.Name = "partyPokemon3ComboBox";
@@ -9234,6 +9401,9 @@
             // 
             // party2GroupBox
             // 
+            this.party2GroupBox.Controls.Add(this.partyForm2ComboBox);
+            this.party2GroupBox.Controls.Add(this.partyAbility2ComboBox);
+            this.party2GroupBox.Controls.Add(this.partyGender2ComboBox);
             this.party2GroupBox.Controls.Add(this.partyPokemonItemPictureBox2);
             this.party2GroupBox.Controls.Add(this.label48);
             this.party2GroupBox.Controls.Add(this.label49);
@@ -9246,12 +9416,41 @@
             this.party2GroupBox.Controls.Add(this.partyPokemon2PictureBox);
             this.party2GroupBox.Controls.Add(this.partyPokemon2ComboBox);
             this.party2GroupBox.Enabled = false;
-            this.party2GroupBox.Location = new System.Drawing.Point(371, 23);
+            this.party2GroupBox.Location = new System.Drawing.Point(371, 37);
             this.party2GroupBox.Name = "party2GroupBox";
-            this.party2GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party2GroupBox.Size = new System.Drawing.Size(343, 183);
             this.party2GroupBox.TabIndex = 10;
             this.party2GroupBox.TabStop = false;
             this.party2GroupBox.Text = "Pokemon 2";
+            // 
+            // partyForm2ComboBox
+            // 
+            this.partyForm2ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyForm2ComboBox.FormattingEnabled = true;
+            this.partyForm2ComboBox.Items.AddRange(new object[] {
+            "Defense form"});
+            this.partyForm2ComboBox.Location = new System.Drawing.Point(228, 151);
+            this.partyForm2ComboBox.Name = "partyForm2ComboBox";
+            this.partyForm2ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyForm2ComboBox.TabIndex = 20;
+            // 
+            // partyAbility2ComboBox
+            // 
+            this.partyAbility2ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility2ComboBox.FormattingEnabled = true;
+            this.partyAbility2ComboBox.Location = new System.Drawing.Point(15, 151);
+            this.partyAbility2ComboBox.Name = "partyAbility2ComboBox";
+            this.partyAbility2ComboBox.Size = new System.Drawing.Size(105, 21);
+            this.partyAbility2ComboBox.TabIndex = 18;
+            // 
+            // partyGender2ComboBox
+            // 
+            this.partyGender2ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender2ComboBox.FormattingEnabled = true;
+            this.partyGender2ComboBox.Location = new System.Drawing.Point(126, 151);
+            this.partyGender2ComboBox.Name = "partyGender2ComboBox";
+            this.partyGender2ComboBox.Size = new System.Drawing.Size(95, 21);
+            this.partyGender2ComboBox.TabIndex = 17;
             // 
             // partyPokemonItemPictureBox2
             // 
@@ -9266,7 +9465,7 @@
             // label48
             // 
             this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(12, 124);
+            this.label48.Location = new System.Drawing.Point(12, 118);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(28, 26);
             this.label48.TabIndex = 9;
@@ -9275,7 +9474,7 @@
             // label49
             // 
             this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(12, 100);
+            this.label49.Location = new System.Drawing.Point(12, 94);
             this.label49.Name = "label49";
             this.label49.Size = new System.Drawing.Size(22, 13);
             this.label49.TabIndex = 8;
@@ -9284,7 +9483,7 @@
             // label50
             // 
             this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(12, 73);
+            this.label50.Location = new System.Drawing.Point(12, 67);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(22, 13);
             this.label50.TabIndex = 7;
@@ -9296,7 +9495,7 @@
             this.poke2MovesGroupBox.Controls.Add(this.partyMove2_2ComboBox);
             this.poke2MovesGroupBox.Controls.Add(this.partyMove2_3ComboBox);
             this.poke2MovesGroupBox.Controls.Add(this.partyMove2_4ComboBox);
-            this.poke2MovesGroupBox.Location = new System.Drawing.Point(110, 63);
+            this.poke2MovesGroupBox.Location = new System.Drawing.Point(110, 57);
             this.poke2MovesGroupBox.Name = "poke2MovesGroupBox";
             this.poke2MovesGroupBox.Size = new System.Drawing.Size(227, 85);
             this.poke2MovesGroupBox.TabIndex = 6;
@@ -9305,6 +9504,8 @@
             // 
             // partyMove2_1ComboBox
             // 
+            this.partyMove2_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove2_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove2_1ComboBox.Enabled = false;
             this.partyMove2_1ComboBox.FormattingEnabled = true;
             this.partyMove2_1ComboBox.Location = new System.Drawing.Point(10, 21);
@@ -9315,6 +9516,8 @@
             // 
             // partyMove2_2ComboBox
             // 
+            this.partyMove2_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove2_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove2_2ComboBox.Enabled = false;
             this.partyMove2_2ComboBox.FormattingEnabled = true;
             this.partyMove2_2ComboBox.Location = new System.Drawing.Point(116, 21);
@@ -9325,6 +9528,8 @@
             // 
             // partyMove2_3ComboBox
             // 
+            this.partyMove2_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove2_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove2_3ComboBox.Enabled = false;
             this.partyMove2_3ComboBox.FormattingEnabled = true;
             this.partyMove2_3ComboBox.Location = new System.Drawing.Point(10, 48);
@@ -9335,6 +9540,8 @@
             // 
             // partyMove2_4ComboBox
             // 
+            this.partyMove2_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove2_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove2_4ComboBox.Enabled = false;
             this.partyMove2_4ComboBox.FormattingEnabled = true;
             this.partyMove2_4ComboBox.Location = new System.Drawing.Point(116, 48);
@@ -9345,9 +9552,9 @@
             // 
             // partyIV2UpDown
             // 
-            this.partyIV2UpDown.Location = new System.Drawing.Point(48, 98);
+            this.partyIV2UpDown.Location = new System.Drawing.Point(48, 92);
             this.partyIV2UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -9357,7 +9564,7 @@
             // 
             // partyLevel2UpDown
             // 
-            this.partyLevel2UpDown.Location = new System.Drawing.Point(48, 69);
+            this.partyLevel2UpDown.Location = new System.Drawing.Point(48, 63);
             this.partyLevel2UpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -9374,7 +9581,7 @@
             // 
             // partyBall2UpDown
             // 
-            this.partyBall2UpDown.Location = new System.Drawing.Point(48, 127);
+            this.partyBall2UpDown.Location = new System.Drawing.Point(48, 121);
             this.partyBall2UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -9386,6 +9593,8 @@
             // 
             // partyItem2ComboBox
             // 
+            this.partyItem2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyItem2ComboBox.Enabled = false;
             this.partyItem2ComboBox.FormattingEnabled = true;
             this.partyItem2ComboBox.Location = new System.Drawing.Point(228, 28);
@@ -9405,6 +9614,8 @@
             // 
             // partyPokemon2ComboBox
             // 
+            this.partyPokemon2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyPokemon2ComboBox.FormattingEnabled = true;
             this.partyPokemon2ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon2ComboBox.Name = "partyPokemon2ComboBox";
@@ -9414,6 +9625,9 @@
             // 
             // party1GroupBox
             // 
+            this.party1GroupBox.Controls.Add(this.partyForm1ComboBox);
+            this.party1GroupBox.Controls.Add(this.partyAbility1ComboBox);
+            this.party1GroupBox.Controls.Add(this.partyGender1ComboBox);
             this.party1GroupBox.Controls.Add(this.partyPokemonItemPictureBox1);
             this.party1GroupBox.Controls.Add(this.label47);
             this.party1GroupBox.Controls.Add(this.label46);
@@ -9426,12 +9640,41 @@
             this.party1GroupBox.Controls.Add(this.partyPokemon1PictureBox);
             this.party1GroupBox.Controls.Add(this.partyPokemon1ComboBox);
             this.party1GroupBox.Enabled = false;
-            this.party1GroupBox.Location = new System.Drawing.Point(16, 23);
+            this.party1GroupBox.Location = new System.Drawing.Point(16, 37);
             this.party1GroupBox.Name = "party1GroupBox";
-            this.party1GroupBox.Size = new System.Drawing.Size(343, 162);
+            this.party1GroupBox.Size = new System.Drawing.Size(343, 183);
             this.party1GroupBox.TabIndex = 0;
             this.party1GroupBox.TabStop = false;
             this.party1GroupBox.Text = "Pokemon 1";
+            // 
+            // partyForm1ComboBox
+            // 
+            this.partyForm1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyForm1ComboBox.FormattingEnabled = true;
+            this.partyForm1ComboBox.Items.AddRange(new object[] {
+            "Defense form"});
+            this.partyForm1ComboBox.Location = new System.Drawing.Point(228, 151);
+            this.partyForm1ComboBox.Name = "partyForm1ComboBox";
+            this.partyForm1ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyForm1ComboBox.TabIndex = 14;
+            // 
+            // partyAbility1ComboBox
+            // 
+            this.partyAbility1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyAbility1ComboBox.FormattingEnabled = true;
+            this.partyAbility1ComboBox.Location = new System.Drawing.Point(15, 151);
+            this.partyAbility1ComboBox.Name = "partyAbility1ComboBox";
+            this.partyAbility1ComboBox.Size = new System.Drawing.Size(105, 21);
+            this.partyAbility1ComboBox.TabIndex = 13;
+            // 
+            // partyGender1ComboBox
+            // 
+            this.partyGender1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.partyGender1ComboBox.FormattingEnabled = true;
+            this.partyGender1ComboBox.Location = new System.Drawing.Point(126, 151);
+            this.partyGender1ComboBox.Name = "partyGender1ComboBox";
+            this.partyGender1ComboBox.Size = new System.Drawing.Size(95, 21);
+            this.partyGender1ComboBox.TabIndex = 12;
             // 
             // partyPokemonItemPictureBox1
             // 
@@ -9446,7 +9689,7 @@
             // label47
             // 
             this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(12, 124);
+            this.label47.Location = new System.Drawing.Point(12, 118);
             this.label47.Name = "label47";
             this.label47.Size = new System.Drawing.Size(28, 26);
             this.label47.TabIndex = 9;
@@ -9455,7 +9698,7 @@
             // label46
             // 
             this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(12, 100);
+            this.label46.Location = new System.Drawing.Point(12, 94);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(22, 13);
             this.label46.TabIndex = 8;
@@ -9464,7 +9707,7 @@
             // label45
             // 
             this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(12, 73);
+            this.label45.Location = new System.Drawing.Point(12, 67);
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(22, 13);
             this.label45.TabIndex = 7;
@@ -9476,7 +9719,7 @@
             this.poke1MovesGroupBox.Controls.Add(this.partyMove1_2ComboBox);
             this.poke1MovesGroupBox.Controls.Add(this.partyMove1_3ComboBox);
             this.poke1MovesGroupBox.Controls.Add(this.partyMove1_4ComboBox);
-            this.poke1MovesGroupBox.Location = new System.Drawing.Point(110, 63);
+            this.poke1MovesGroupBox.Location = new System.Drawing.Point(110, 57);
             this.poke1MovesGroupBox.Name = "poke1MovesGroupBox";
             this.poke1MovesGroupBox.Size = new System.Drawing.Size(227, 85);
             this.poke1MovesGroupBox.TabIndex = 6;
@@ -9485,6 +9728,8 @@
             // 
             // partyMove1_1ComboBox
             // 
+            this.partyMove1_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove1_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove1_1ComboBox.Enabled = false;
             this.partyMove1_1ComboBox.FormattingEnabled = true;
             this.partyMove1_1ComboBox.Location = new System.Drawing.Point(10, 21);
@@ -9495,6 +9740,8 @@
             // 
             // partyMove1_2ComboBox
             // 
+            this.partyMove1_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove1_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove1_2ComboBox.Enabled = false;
             this.partyMove1_2ComboBox.FormattingEnabled = true;
             this.partyMove1_2ComboBox.Location = new System.Drawing.Point(116, 21);
@@ -9505,6 +9752,8 @@
             // 
             // partyMove1_3ComboBox
             // 
+            this.partyMove1_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove1_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove1_3ComboBox.Enabled = false;
             this.partyMove1_3ComboBox.FormattingEnabled = true;
             this.partyMove1_3ComboBox.Location = new System.Drawing.Point(10, 48);
@@ -9515,6 +9764,8 @@
             // 
             // partyMove1_4ComboBox
             // 
+            this.partyMove1_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove1_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyMove1_4ComboBox.Enabled = false;
             this.partyMove1_4ComboBox.FormattingEnabled = true;
             this.partyMove1_4ComboBox.Location = new System.Drawing.Point(116, 48);
@@ -9525,9 +9776,9 @@
             // 
             // partyIV1UpDown
             // 
-            this.partyIV1UpDown.Location = new System.Drawing.Point(48, 98);
+            this.partyIV1UpDown.Location = new System.Drawing.Point(48, 92);
             this.partyIV1UpDown.Maximum = new decimal(new int[] {
-            65535,
+            255,
             0,
             0,
             0});
@@ -9537,7 +9788,7 @@
             // 
             // partyLevel1UpDown
             // 
-            this.partyLevel1UpDown.Location = new System.Drawing.Point(48, 69);
+            this.partyLevel1UpDown.Location = new System.Drawing.Point(48, 63);
             this.partyLevel1UpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -9554,7 +9805,7 @@
             // 
             // partyBall1UpDown
             // 
-            this.partyBall1UpDown.Location = new System.Drawing.Point(48, 127);
+            this.partyBall1UpDown.Location = new System.Drawing.Point(48, 121);
             this.partyBall1UpDown.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -9566,6 +9817,8 @@
             // 
             // partyItem1ComboBox
             // 
+            this.partyItem1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyItem1ComboBox.Enabled = false;
             this.partyItem1ComboBox.FormattingEnabled = true;
             this.partyItem1ComboBox.Location = new System.Drawing.Point(228, 28);
@@ -9585,6 +9838,8 @@
             // 
             // partyPokemon1ComboBox
             // 
+            this.partyPokemon1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.partyPokemon1ComboBox.FormattingEnabled = true;
             this.partyPokemon1ComboBox.Location = new System.Drawing.Point(58, 28);
             this.partyPokemon1ComboBox.Name = "partyPokemon1ComboBox";
@@ -9605,12 +9860,12 @@
             this.groupBox27.Controls.Add(this.trainerClassNameTextbox);
             this.groupBox27.Controls.Add(this.label17);
             this.groupBox27.Controls.Add(this.trainerClassPicBox);
-            this.groupBox27.Location = new System.Drawing.Point(15, 486);
+            this.groupBox27.Location = new System.Drawing.Point(15, 489);
             this.groupBox27.Name = "groupBox27";
             this.groupBox27.Size = new System.Drawing.Size(414, 123);
             this.groupBox27.TabIndex = 30;
             this.groupBox27.TabStop = false;
-            this.groupBox27.Text = "Trainer Class";
+            this.groupBox27.Text = "Trainer Class Editor";
             // 
             // eyeContactMusicAltLabel
             // 
@@ -9685,9 +9940,9 @@
             // 
             this.saveTrainerClassButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveTrainerClassButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveTrainerClassButton.Location = new System.Drawing.Point(327, 15);
+            this.saveTrainerClassButton.Location = new System.Drawing.Point(322, 15);
             this.saveTrainerClassButton.Name = "saveTrainerClassButton";
-            this.saveTrainerClassButton.Size = new System.Drawing.Size(75, 45);
+            this.saveTrainerClassButton.Size = new System.Drawing.Size(80, 45);
             this.saveTrainerClassButton.TabIndex = 29;
             this.saveTrainerClassButton.Text = "&Save\r\nClass";
             this.saveTrainerClassButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -9696,15 +9951,15 @@
             // 
             // trainerClassNameTextbox
             // 
-            this.trainerClassNameTextbox.Location = new System.Drawing.Point(221, 29);
+            this.trainerClassNameTextbox.Location = new System.Drawing.Point(213, 29);
             this.trainerClassNameTextbox.Name = "trainerClassNameTextbox";
-            this.trainerClassNameTextbox.Size = new System.Drawing.Size(95, 20);
+            this.trainerClassNameTextbox.Size = new System.Drawing.Size(99, 20);
             this.trainerClassNameTextbox.TabIndex = 24;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(218, 13);
+            this.label17.Location = new System.Drawing.Point(210, 13);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(63, 13);
             this.label17.TabIndex = 23;
@@ -9722,9 +9977,12 @@
             // 
             // groupBox25
             // 
+            this.groupBox25.Controls.Add(this.tableLayoutPanel5);
             this.groupBox25.Controls.Add(this.TrainerAIGroupBox);
             this.groupBox25.Controls.Add(this.trainerItemsGroupBox);
+            this.groupBox25.Controls.Add(this.deleteTrainerButton);
             this.groupBox25.Controls.Add(this.trainerItemsCheckBox);
+            this.groupBox25.Controls.Add(this.addTrainerButton);
             this.groupBox25.Controls.Add(this.trainerMovesCheckBox);
             this.groupBox25.Controls.Add(this.trainerDoubleCheckBox);
             this.groupBox25.Controls.Add(this.trainerNameTextBox);
@@ -9738,7 +9996,53 @@
             this.groupBox25.Size = new System.Drawing.Size(414, 405);
             this.groupBox25.TabIndex = 29;
             this.groupBox25.TabStop = false;
-            this.groupBox25.Text = "Trainer Properties";
+            this.groupBox25.Text = "Trainer Properties [TRP]";
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 1;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel5.Controls.Add(this.replacePropertiesButton, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.exportPropertiesButton, 0, 0);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(288, 304);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 2;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(121, 62);
+            this.tableLayoutPanel5.TabIndex = 48;
+            // 
+            // replacePropertiesButton
+            // 
+            this.replacePropertiesButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.replacePropertiesButton.Image = ((System.Drawing.Image)(resources.GetObject("replacePropertiesButton.Image")));
+            this.replacePropertiesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.replacePropertiesButton.Location = new System.Drawing.Point(3, 34);
+            this.replacePropertiesButton.Name = "replacePropertiesButton";
+            this.replacePropertiesButton.Size = new System.Drawing.Size(115, 25);
+            this.replacePropertiesButton.TabIndex = 42;
+            this.replacePropertiesButton.Text = "Replace TRP";
+            this.replacePropertiesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.replacePropertiesButton.UseVisualStyleBackColor = true;
+            this.replacePropertiesButton.Click += new System.EventHandler(this.replacePropertiesButton_Click);
+            // 
+            // exportPropertiesButton
+            // 
+            this.exportPropertiesButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.exportPropertiesButton.Image = ((System.Drawing.Image)(resources.GetObject("exportPropertiesButton.Image")));
+            this.exportPropertiesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.exportPropertiesButton.Location = new System.Drawing.Point(3, 3);
+            this.exportPropertiesButton.Name = "exportPropertiesButton";
+            this.exportPropertiesButton.Size = new System.Drawing.Size(115, 25);
+            this.exportPropertiesButton.TabIndex = 41;
+            this.exportPropertiesButton.Text = "Export TRP";
+            this.exportPropertiesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.exportPropertiesButton.UseVisualStyleBackColor = true;
+            this.exportPropertiesButton.Click += new System.EventHandler(this.exportPropertiesButton_Click);
             // 
             // TrainerAIGroupBox
             // 
@@ -9755,7 +10059,7 @@
             this.TrainerAIGroupBox.Controls.Add(this.trainerAI11CheckBox);
             this.TrainerAIGroupBox.Location = new System.Drawing.Point(9, 282);
             this.TrainerAIGroupBox.Name = "TrainerAIGroupBox";
-            this.TrainerAIGroupBox.Size = new System.Drawing.Size(393, 116);
+            this.TrainerAIGroupBox.Size = new System.Drawing.Size(272, 116);
             this.TrainerAIGroupBox.TabIndex = 27;
             this.TrainerAIGroupBox.TabStop = false;
             this.TrainerAIGroupBox.Text = "AI";
@@ -9763,7 +10067,7 @@
             // trainerAI1CheckBox
             // 
             this.trainerAI1CheckBox.AutoSize = true;
-            this.trainerAI1CheckBox.Location = new System.Drawing.Point(16, 21);
+            this.trainerAI1CheckBox.Location = new System.Drawing.Point(10, 21);
             this.trainerAI1CheckBox.Name = "trainerAI1CheckBox";
             this.trainerAI1CheckBox.Size = new System.Drawing.Size(52, 17);
             this.trainerAI1CheckBox.TabIndex = 0;
@@ -9773,7 +10077,7 @@
             // trainerAI2CheckBox
             // 
             this.trainerAI2CheckBox.AutoSize = true;
-            this.trainerAI2CheckBox.Location = new System.Drawing.Point(16, 44);
+            this.trainerAI2CheckBox.Location = new System.Drawing.Point(80, 21);
             this.trainerAI2CheckBox.Name = "trainerAI2CheckBox";
             this.trainerAI2CheckBox.Size = new System.Drawing.Size(102, 17);
             this.trainerAI2CheckBox.TabIndex = 1;
@@ -9783,7 +10087,7 @@
             // trainerAI3CheckBox
             // 
             this.trainerAI3CheckBox.AutoSize = true;
-            this.trainerAI3CheckBox.Location = new System.Drawing.Point(16, 67);
+            this.trainerAI3CheckBox.Location = new System.Drawing.Point(10, 44);
             this.trainerAI3CheckBox.Name = "trainerAI3CheckBox";
             this.trainerAI3CheckBox.Size = new System.Drawing.Size(56, 17);
             this.trainerAI3CheckBox.TabIndex = 2;
@@ -9793,7 +10097,7 @@
             // trainerAI4CheckBox
             // 
             this.trainerAI4CheckBox.AutoSize = true;
-            this.trainerAI4CheckBox.Location = new System.Drawing.Point(16, 90);
+            this.trainerAI4CheckBox.Location = new System.Drawing.Point(10, 90);
             this.trainerAI4CheckBox.Name = "trainerAI4CheckBox";
             this.trainerAI4CheckBox.Size = new System.Drawing.Size(56, 17);
             this.trainerAI4CheckBox.TabIndex = 3;
@@ -9803,7 +10107,7 @@
             // trainerAI5CheckBox
             // 
             this.trainerAI5CheckBox.AutoSize = true;
-            this.trainerAI5CheckBox.Location = new System.Drawing.Point(138, 21);
+            this.trainerAI5CheckBox.Location = new System.Drawing.Point(10, 67);
             this.trainerAI5CheckBox.Name = "trainerAI5CheckBox";
             this.trainerAI5CheckBox.Size = new System.Drawing.Size(47, 17);
             this.trainerAI5CheckBox.TabIndex = 4;
@@ -9813,7 +10117,7 @@
             // trainerAI6CheckBox
             // 
             this.trainerAI6CheckBox.AutoSize = true;
-            this.trainerAI6CheckBox.Location = new System.Drawing.Point(138, 44);
+            this.trainerAI6CheckBox.Location = new System.Drawing.Point(80, 44);
             this.trainerAI6CheckBox.Name = "trainerAI6CheckBox";
             this.trainerAI6CheckBox.Size = new System.Drawing.Size(100, 17);
             this.trainerAI6CheckBox.TabIndex = 5;
@@ -9823,7 +10127,7 @@
             // trainerAI7CheckBox
             // 
             this.trainerAI7CheckBox.AutoSize = true;
-            this.trainerAI7CheckBox.Location = new System.Drawing.Point(138, 67);
+            this.trainerAI7CheckBox.Location = new System.Drawing.Point(80, 67);
             this.trainerAI7CheckBox.Name = "trainerAI7CheckBox";
             this.trainerAI7CheckBox.Size = new System.Drawing.Size(80, 17);
             this.trainerAI7CheckBox.TabIndex = 6;
@@ -9833,7 +10137,7 @@
             // trainerAI8CheckBox
             // 
             this.trainerAI8CheckBox.AutoSize = true;
-            this.trainerAI8CheckBox.Location = new System.Drawing.Point(138, 90);
+            this.trainerAI8CheckBox.Location = new System.Drawing.Point(80, 90);
             this.trainerAI8CheckBox.Name = "trainerAI8CheckBox";
             this.trainerAI8CheckBox.Size = new System.Drawing.Size(87, 17);
             this.trainerAI8CheckBox.TabIndex = 7;
@@ -9843,7 +10147,7 @@
             // trainerAI9CheckBox
             // 
             this.trainerAI9CheckBox.AutoSize = true;
-            this.trainerAI9CheckBox.Location = new System.Drawing.Point(271, 21);
+            this.trainerAI9CheckBox.Location = new System.Drawing.Point(191, 21);
             this.trainerAI9CheckBox.Name = "trainerAI9CheckBox";
             this.trainerAI9CheckBox.Size = new System.Drawing.Size(75, 17);
             this.trainerAI9CheckBox.TabIndex = 8;
@@ -9853,7 +10157,7 @@
             // trainerAI10CheckBox
             // 
             this.trainerAI10CheckBox.AutoSize = true;
-            this.trainerAI10CheckBox.Location = new System.Drawing.Point(271, 44);
+            this.trainerAI10CheckBox.Location = new System.Drawing.Point(191, 44);
             this.trainerAI10CheckBox.Name = "trainerAI10CheckBox";
             this.trainerAI10CheckBox.Size = new System.Drawing.Size(67, 17);
             this.trainerAI10CheckBox.TabIndex = 9;
@@ -9863,7 +10167,7 @@
             // trainerAI11CheckBox
             // 
             this.trainerAI11CheckBox.AutoSize = true;
-            this.trainerAI11CheckBox.Location = new System.Drawing.Point(271, 67);
+            this.trainerAI11CheckBox.Location = new System.Drawing.Point(191, 67);
             this.trainerAI11CheckBox.Name = "trainerAI11CheckBox";
             this.trainerAI11CheckBox.Size = new System.Drawing.Size(44, 17);
             this.trainerAI11CheckBox.TabIndex = 10;
@@ -9885,6 +10189,8 @@
             // 
             // trainerItem1ComboBox
             // 
+            this.trainerItem1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.trainerItem1ComboBox.FormattingEnabled = true;
             this.trainerItem1ComboBox.Location = new System.Drawing.Point(9, 20);
             this.trainerItem1ComboBox.Name = "trainerItem1ComboBox";
@@ -9893,6 +10199,8 @@
             // 
             // trainerItem2ComboBox
             // 
+            this.trainerItem2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.trainerItem2ComboBox.FormattingEnabled = true;
             this.trainerItem2ComboBox.Location = new System.Drawing.Point(9, 47);
             this.trainerItem2ComboBox.Name = "trainerItem2ComboBox";
@@ -9901,6 +10209,8 @@
             // 
             // trainerItem3ComboBox
             // 
+            this.trainerItem3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.trainerItem3ComboBox.FormattingEnabled = true;
             this.trainerItem3ComboBox.Location = new System.Drawing.Point(9, 74);
             this.trainerItem3ComboBox.Name = "trainerItem3ComboBox";
@@ -9909,16 +10219,32 @@
             // 
             // trainerItem4ComboBox
             // 
+            this.trainerItem4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.trainerItem4ComboBox.FormattingEnabled = true;
             this.trainerItem4ComboBox.Location = new System.Drawing.Point(9, 101);
             this.trainerItem4ComboBox.Name = "trainerItem4ComboBox";
             this.trainerItem4ComboBox.Size = new System.Drawing.Size(171, 21);
             this.trainerItem4ComboBox.TabIndex = 3;
             // 
+            // deleteTrainerButton
+            // 
+            this.deleteTrainerButton.Enabled = false;
+            this.deleteTrainerButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.deleteTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.deleteTrainerButton.Location = new System.Drawing.Point(289, 372);
+            this.deleteTrainerButton.Name = "deleteTrainerButton";
+            this.deleteTrainerButton.Size = new System.Drawing.Size(102, 23);
+            this.deleteTrainerButton.TabIndex = 44;
+            this.deleteTrainerButton.Text = "Delete Trainer";
+            this.deleteTrainerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.deleteTrainerButton.UseVisualStyleBackColor = true;
+            this.deleteTrainerButton.Visible = false;
+            // 
             // trainerItemsCheckBox
             // 
             this.trainerItemsCheckBox.AutoSize = true;
-            this.trainerItemsCheckBox.Location = new System.Drawing.Point(215, 119);
+            this.trainerItemsCheckBox.Location = new System.Drawing.Point(215, 115);
             this.trainerItemsCheckBox.Name = "trainerItemsCheckBox";
             this.trainerItemsCheckBox.Size = new System.Drawing.Size(117, 17);
             this.trainerItemsCheckBox.TabIndex = 25;
@@ -9926,10 +10252,25 @@
             this.trainerItemsCheckBox.UseVisualStyleBackColor = true;
             this.trainerItemsCheckBox.CheckedChanged += new System.EventHandler(this.trainerItemsCheckBox_CheckedChanged);
             // 
+            // addTrainerButton
+            // 
+            this.addTrainerButton.Enabled = false;
+            this.addTrainerButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.addTrainerButton.Location = new System.Drawing.Point(294, 275);
+            this.addTrainerButton.Name = "addTrainerButton";
+            this.addTrainerButton.Size = new System.Drawing.Size(102, 23);
+            this.addTrainerButton.TabIndex = 35;
+            this.addTrainerButton.Text = "Add Trainer";
+            this.addTrainerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.addTrainerButton.UseVisualStyleBackColor = true;
+            this.addTrainerButton.Visible = false;
+            this.addTrainerButton.Click += new System.EventHandler(this.addTrainerButton_Click);
+            // 
             // trainerMovesCheckBox
             // 
             this.trainerMovesCheckBox.AutoSize = true;
-            this.trainerMovesCheckBox.Location = new System.Drawing.Point(215, 98);
+            this.trainerMovesCheckBox.Location = new System.Drawing.Point(215, 94);
             this.trainerMovesCheckBox.Name = "trainerMovesCheckBox";
             this.trainerMovesCheckBox.Size = new System.Drawing.Size(97, 17);
             this.trainerMovesCheckBox.TabIndex = 24;
@@ -9940,7 +10281,7 @@
             // trainerDoubleCheckBox
             // 
             this.trainerDoubleCheckBox.AutoSize = true;
-            this.trainerDoubleCheckBox.Location = new System.Drawing.Point(215, 76);
+            this.trainerDoubleCheckBox.Location = new System.Drawing.Point(215, 72);
             this.trainerDoubleCheckBox.Name = "trainerDoubleCheckBox";
             this.trainerDoubleCheckBox.Size = new System.Drawing.Size(90, 17);
             this.trainerDoubleCheckBox.TabIndex = 23;
@@ -10026,11 +10367,11 @@
             // 
             this.trainerSaveCurrentButton.Image = global::DSPRE.Properties.Resources.saveButton;
             this.trainerSaveCurrentButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.trainerSaveCurrentButton.Location = new System.Drawing.Point(14, 48);
+            this.trainerSaveCurrentButton.Location = new System.Drawing.Point(15, 49);
             this.trainerSaveCurrentButton.Name = "trainerSaveCurrentButton";
-            this.trainerSaveCurrentButton.Size = new System.Drawing.Size(200, 23);
+            this.trainerSaveCurrentButton.Size = new System.Drawing.Size(199, 23);
             this.trainerSaveCurrentButton.TabIndex = 31;
-            this.trainerSaveCurrentButton.Text = "&Save Current Trainer";
+            this.trainerSaveCurrentButton.Text = "&Save Full Trainer File";
             this.trainerSaveCurrentButton.UseVisualStyleBackColor = true;
             this.trainerSaveCurrentButton.Click += new System.EventHandler(this.trainerSaveCurrentButton_Click);
             // 
@@ -10043,7 +10384,7 @@
             this.tableEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.tableEditorTabPage.Name = "tableEditorTabPage";
             this.tableEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tableEditorTabPage.Size = new System.Drawing.Size(1185, 619);
+            this.tableEditorTabPage.Size = new System.Drawing.Size(1185, 633);
             this.tableEditorTabPage.TabIndex = 9;
             this.tableEditorTabPage.Text = "Table Editor";
             this.tableEditorTabPage.UseVisualStyleBackColor = true;
@@ -10558,6 +10899,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.aboutToolStripMenuItem,
+            this.monEditorToolStripMenuItem,
             this.menuViewToolStripMenuItem,
             this.aboutToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -10798,6 +11140,30 @@
             this.extractNSBTXFromNSBMDToolStripMenuItem.Text = "Save textures from NSBMD";
             this.extractNSBTXFromNSBMDToolStripMenuItem.Click += new System.EventHandler(this.nsbmdExportTexButton_Click);
             // 
+            // monEditorToolStripMenuItem
+            // 
+            this.monEditorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.personalDataEditorToolStripMenuItem,
+            this.learnsetsEditorToolStripMenuItem});
+            this.monEditorToolStripMenuItem.Enabled = false;
+            this.monEditorToolStripMenuItem.Name = "monEditorToolStripMenuItem";
+            this.monEditorToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
+            this.monEditorToolStripMenuItem.Text = "Mon Editor";
+            // 
+            // personalDataEditorToolStripMenuItem
+            // 
+            this.personalDataEditorToolStripMenuItem.Name = "personalDataEditorToolStripMenuItem";
+            this.personalDataEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.personalDataEditorToolStripMenuItem.Text = "Personal Data Editor";
+            this.personalDataEditorToolStripMenuItem.Click += new System.EventHandler(this.personalDataEditorToolStripMenuItem_Click);
+            // 
+            // learnsetsEditorToolStripMenuItem
+            // 
+            this.learnsetsEditorToolStripMenuItem.Name = "learnsetsEditorToolStripMenuItem";
+            this.learnsetsEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.learnsetsEditorToolStripMenuItem.Text = "Learnsets Editor";
+            this.learnsetsEditorToolStripMenuItem.Click += new System.EventHandler(this.learnsetsEditorToolStripMenuItem_Click);
+            // 
             // menuViewToolStripMenuItem
             // 
             this.menuViewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -10852,7 +11218,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
             this.toolStripProgressBar});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 721);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 739);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1214, 22);
             this.statusStrip1.TabIndex = 13;
@@ -11215,25 +11581,12 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // sortOWsByIDDescButton
-            // 
-            this.sortOWsByIDDescButton.Image = global::DSPRE.Properties.Resources.sortDescending;
-            this.sortOWsByIDDescButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.sortOWsByIDDescButton.Location = new System.Drawing.Point(102, 9);
-            this.sortOWsByIDDescButton.Name = "sortOWsByIDDescButton";
-            this.sortOWsByIDDescButton.Size = new System.Drawing.Size(86, 28);
-            this.sortOWsByIDDescButton.TabIndex = 30;
-            this.sortOWsByIDDescButton.Text = "Sort Desc";
-            this.sortOWsByIDDescButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.sortOWsByIDDescButton.UseVisualStyleBackColor = true;
-            this.sortOWsByIDDescButton.Click += new System.EventHandler(this.sortOWsByIDDescButton_Click);
-            // 
             // MainProgram
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1214, 743);
+            this.ClientSize = new System.Drawing.Size(1214, 761);
             this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.languageLabel);
             this.Controls.Add(this.gameIcon);
@@ -11247,7 +11600,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
-            this.Text = "Lost in Time Rom Editor 1.9.2 (Nømura, AdAstra/LD3005, Modified by Kuha)";
+            this.Text = "Lost in Time Rom Editor 1.10.1 (Nømura, AdAstra/LD3005, Modified by Kuha)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainProgram_FormClosing);
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);
@@ -11483,6 +11836,8 @@
             this.trainerEditorTabPage.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.groupBox28.ResumeLayout(false);
+            this.groupBox28.PerformLayout();
+            this.tableLayoutPanel6.ResumeLayout(false);
             this.party6GroupBox.ResumeLayout(false);
             this.party6GroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.partyPokemonItemPictureBox6)).EndInit();
@@ -11539,6 +11894,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trainerClassPicBox)).EndInit();
             this.groupBox25.ResumeLayout(false);
             this.groupBox25.PerformLayout();
+            this.tableLayoutPanel5.ResumeLayout(false);
             this.TrainerAIGroupBox.ResumeLayout(false);
             this.TrainerAIGroupBox.PerformLayout();
             this.trainerItemsGroupBox.ResumeLayout(false);
@@ -11591,7 +11947,6 @@
         private System.Windows.Forms.NumericUpDown widthUpDown;
         private System.Windows.Forms.Label widthLabel;
         private System.Windows.Forms.ComboBox selectMatrixComboBox;
-        private System.Windows.Forms.Button saveMatrixButton;
         private System.Windows.Forms.DataGridView headersGridView;
         private System.Windows.Forms.Button addHeadersButton;
         private System.Windows.Forms.Button addHeightsButton;
@@ -12063,7 +12418,6 @@
         private System.Windows.Forms.ToolStripMenuItem platinumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem heartGoldAndSoulSilverToolStripMenuItem;
         private System.Windows.Forms.Label spriteIDlabel;
-        private System.Windows.Forms.Button setSpawnPointButton;
         private System.Windows.Forms.ToolStripButton spawnEditorToolStripButton;
         private System.Windows.Forms.ToolStripMenuItem spawnEditorToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox22;
@@ -12249,10 +12603,6 @@
         private System.Windows.Forms.Label followModeLabel;
         private System.Windows.Forms.Button importTrainerButton;
         private System.Windows.Forms.Button exportTrainerButton;
-        private System.Windows.Forms.Button importReplacePartyButton;
-        private System.Windows.Forms.Button importReplacePropertiesButton;
-        private System.Windows.Forms.Button exportPropertiesButton;
-        private System.Windows.Forms.Button exportPartyButton;
         private System.Windows.Forms.PictureBox trainerClassPicBox;
         private System.Windows.Forms.TextBox trainerClassNameTextbox;
         private System.Windows.Forms.Label label17;
@@ -12412,6 +12762,35 @@
         private System.Windows.Forms.Button glbExportButton;
         private System.Windows.Forms.Button sortOWsByIDAscButton;
         private System.Windows.Forms.Button sortOWsByIDDescButton;
+        private System.Windows.Forms.ComboBox partyGender6ComboBox;
+        private System.Windows.Forms.ComboBox partyGender5ComboBox;
+        private System.Windows.Forms.ComboBox partyGender4ComboBox;
+        private System.Windows.Forms.ComboBox partyGender3ComboBox;
+        private System.Windows.Forms.ComboBox partyGender2ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility1ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility6ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility5ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility4ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility3ComboBox;
+        private System.Windows.Forms.ComboBox partyAbility2ComboBox;
+        private System.Windows.Forms.ComboBox partyGender1ComboBox;
+        private System.Windows.Forms.ComboBox partyForm1ComboBox;
+        private System.Windows.Forms.ComboBox partyForm6ComboBox;
+        private System.Windows.Forms.ComboBox partyForm5ComboBox;
+        private System.Windows.Forms.ComboBox partyForm4ComboBox;
+        private System.Windows.Forms.ComboBox partyForm3ComboBox;
+        private System.Windows.Forms.ComboBox partyForm2ComboBox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.Button exportPropertiesButton;
+        private System.Windows.Forms.Button replacePropertiesButton;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.ToolStripMenuItem monEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem personalDataEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem learnsetsEditorToolStripMenuItem;
+        private System.Windows.Forms.Button setSpawnPointButton;
+        private System.Windows.Forms.Button saveMatrixButton;
     }
 }
 

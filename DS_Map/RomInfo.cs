@@ -6,11 +6,12 @@ using System.Linq;
 using DSPRE.Resources;
 using System;
 using DSPRE.ROMFiles;
+using static DSPRE.RomInfo;
 
 namespace DSPRE {
 
     /// <summary>
-    /// Class to store ROM data from GEN IV Pokémon games
+    /// Class to store ROM data from GEN IV Pokï¿½mon games
     /// </summary>
 
     public class RomInfo {
@@ -56,6 +57,7 @@ namespace DSPRE {
         public static uint monIconPalTableAddress { get; private set; }
 
         public static int nullEncounterID { get; private set; }
+        public static int abilityNamesTextNumber { get; private set; }
         public static int attackNamesTextNumber { get; private set; }
         public static int[] pokemonNamesTextNumbers { get; private set; }
         public static int itemNamesTextNumber { get; private set; }
@@ -109,6 +111,8 @@ namespace DSPRE {
             German
         }
         public enum DirNames : byte {
+            personalPokeData,
+
             synthOverlay,            
             dynamicHeaders,
             
@@ -134,7 +138,8 @@ namespace DSPRE {
 
             monIcons,
 
-            interiorBuildingModels
+            interiorBuildingModels,
+            learnsets
         };
         public static Dictionary<DirNames, (string packedDir, string unpackedDir)> gameDirs { get; private set; }
 
@@ -154,7 +159,7 @@ namespace DSPRE {
             try {
                 gameVersion = PokeDatabase.System.versionsDict[id];
             } catch (KeyNotFoundException) {
-                MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
+                MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokï¿½mon ROMS, for now.", "Unsupported ROM",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -169,6 +174,7 @@ namespace DSPRE {
             SetHeaderTableOffset();
             SetNullEncounterID();
 
+            SetAbilityNamesTextNumber();
             SetAttackNamesTextNumber();
             SetPokemonNamesTextNumber();
             SetItemNamesTextNumber();
@@ -530,7 +536,7 @@ namespace DSPRE {
 
                     using (DSUtils.EasyReader bReader = new DSUtils.EasyReader(ov1Path, ramAddrOfPointer - ov1Address)) { // read the pointer at the specified ram address and adjust accordingly below
                         uint ramAddressOfTable = bReader.ReadUInt32();
-                        if (ramAddressOfTable >= 0x03000000) {
+                        if ((ramAddressOfTable >> 0x18) != 0x02) {
                             MessageBox.Show("Something went wrong reading the Overworld configuration table.\nOverworld sprites in the Event Editor will be " +
                                 "displayed incorrectly or not displayed at all.", "Decompression error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
@@ -756,6 +762,25 @@ namespace DSPRE {
                     break;
             }
         }
+
+        private void SetAbilityNamesTextNumber()
+        {
+            switch (gameFamily)
+            {
+                case gFamEnum.DP:
+                    abilityNamesTextNumber = 552;
+                    break;
+                case gFamEnum.Plat:
+                    abilityNamesTextNumber = 610;
+                    break;
+                case gFamEnum.HGSS:
+                    abilityNamesTextNumber = 720;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private void SetAttackNamesTextNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
@@ -859,7 +884,11 @@ namespace DSPRE {
             return itemNames.messages.GetRange(startIndex, count == null ? itemNames.messages.Count-1 : (int)count).ToArray();
         }
         public static string[] GetPokemonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
+        public static string[] GetAbilityNames() => new TextArchive(abilityNamesTextNumber).messages.ToArray();
         public static string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
+        public static int GetLearnsetFilesCount() => Directory.GetFiles(gameDirs[DirNames.learnsets].unpackedDir).Length;
+        public static int GetPersonalFilesCount() => Directory.GetFiles(gameDirs[DirNames.personalPokeData].unpackedDir).Length;
+
         public int GetAreaDataCount() => Directory.GetFiles(gameDirs[DirNames.areaData].unpackedDir).Length;
         public int GetMapTexturesCount() => Directory.GetFiles(gameDirs[DirNames.mapTextures].unpackedDir).Length;
         public int GetBuildingTexturesCount() => Directory.GetFiles(gameDirs[DirNames.buildingTextures].unpackedDir).Length;
@@ -945,6 +974,7 @@ namespace DSPRE {
                         suffix = "_release";
 
                     packedDirsDict = new Dictionary<DirNames, string>() {
+                        [DirNames.personalPokeData] = @"data\poketool\personal\personal.narc",
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.textArchives] = @"data\msgdata\msg.narc",
 
@@ -967,12 +997,14 @@ namespace DSPRE {
                         [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
 
                         [DirNames.monIcons] = @"data\poketool\icongra\poke_icon.narc",
-
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc"
+                        
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc",
+                        [DirNames.learnsets] = workDir + @"data\poketool\personal\wotbl.narc",
                     };
                     break;
                 case gFamEnum.Plat:
                     packedDirsDict = new Dictionary<DirNames, string>() {
+                        [DirNames.personalPokeData] = @"data\poketool\personal\pl_personal.narc",
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.dynamicHeaders] = @"data\debug\cb_edit\d_test.narc",
 
@@ -998,11 +1030,13 @@ namespace DSPRE {
 
                         [DirNames.monIcons] = @"data\poketool\icongra\pl_poke_icon.narc",
 
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "enc_data.narc"
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "enc_data.narc",
+                        [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
                     };
                     break;
                 case gFamEnum.HGSS:
                     packedDirsDict = new Dictionary<DirNames, string>() {
+                        [DirNames.personalPokeData] = @"data\a\0\0\2",
                         [DirNames.synthOverlay] = @"data\a\0\2\8",
                         [DirNames.dynamicHeaders] = @"data\a\0\5\0",
 
@@ -1028,7 +1062,8 @@ namespace DSPRE {
 
                         [DirNames.monIcons] = @"data\a\0\2\0",
 
-                        [DirNames.interiorBuildingModels] = @"data\a\1\4\8"
+                        [DirNames.interiorBuildingModels] = @"data\a\1\4\8",
+                        [DirNames.learnsets] = @"data\a\0\3\3",
                     };
 
                     //Encounter archive is different for SS 

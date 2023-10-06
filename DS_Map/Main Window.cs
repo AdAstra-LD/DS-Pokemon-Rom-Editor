@@ -23,6 +23,7 @@ using ScintillaNET.Utils;
 using System.Globalization;
 using static DSPRE.ROMFiles.Event;
 using NSMBe4.NSBMD;
+using static DSPRE.ROMFiles.SpeciesFile;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -52,6 +53,7 @@ namespace DSPRE {
         public static string gameCode;
         public static byte europeByte;
         RomInfo romInfo;
+        public Dictionary<ushort, ushort> eventToHeader = new Dictionary<ushort, ushort>();
 
         #endregion
 
@@ -86,7 +88,7 @@ namespace DSPRE {
             int trainerCount = Directory.GetFiles(trainerPropertiesUnpackedDir).Length;
 
             for (int i = 0; i < trainerCount; i++) {
-                int classMessageID = BitConverter.ToUInt16(DSUtils.ReadFromFile(trainerPropertiesUnpackedDir + "\\" + i.ToString("D4"), startOffset: 1, 2), 0);
+                int classMessageID = DSUtils.ReadFromFile(trainerPropertiesUnpackedDir + "\\" + i.ToString("D4"), startOffset: 1, 1)[0];
                 string currentTrainerName;
 
                 if (i < trainerNames.messages.Count) {
@@ -513,11 +515,11 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor Reloaded by AdAstra/LD3005" + Environment.NewLine + "version 1.9.2" + Environment.NewLine
+            string message = "DS Pokémon ROM Editor Reloaded by AdAstra/LD3005" + Environment.NewLine + "version 1.10.1" + Environment.NewLine
                 + Environment.NewLine + "Based on Nømura's DS Pokémon ROM Editor 1.0.4."
                 + Environment.NewLine + "Largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also reused." +
                 "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
-                + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
+                + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, Mixone, JackHack96, Pleonex and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS ROM Hacking made the development of this tool possible.";
 
             MessageBox.Show(message, "About...", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -679,6 +681,7 @@ namespace DSPRE {
             headerSearchToolStripMenuItem.Enabled = true;
             spawnEditorToolStripButton.Enabled = true;
             spawnEditorToolStripMenuItem.Enabled = true;
+            monEditorToolStripMenuItem.Enabled = true;
 
             scriptCommandsButton.Enabled = true;
             statusLabelMessage();
@@ -906,11 +909,11 @@ namespace DSPRE {
             switch (RomInfo.gameFamily) {
                 case gFamEnum.DP:
                 case gFamEnum.Plat:
-                    using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen))
+                    using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen, internalNames.Count))
                         editor.ShowDialog();
                     break;
                 default:
-                    using (WildEditorHGSS editor = new WildEditorHGSS(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen))
+                    using (WildEditorHGSS editor = new WildEditorHGSS(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen, internalNames.Count))
                         editor.ShowDialog();
                     break;
             }
@@ -935,7 +938,7 @@ namespace DSPRE {
 
             statusLabelMessage("Reading internal names... Please wait.");
             Update();
-
+            
             internalNames = new List<string>();
             headerListBoxNames = new List<string>();
             int headerCount;
@@ -965,6 +968,20 @@ namespace DSPRE {
                 MessageBox.Show(RomInfo.internalNamesLocation + " doesn't exist.", "Couldn't read internal names", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            // Creating a dictionary linking events to headers to fetch header data for Event Editor
+            for (ushort i = 0; i < internalNames.Count; i++) {
+                MapHeader h;
+                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                    h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
+                } else {
+                    h = MapHeader.LoadFromARM9(i);
+                }
+                if (!eventToHeader.ContainsKey(h.eventFileID)) {
+                    eventToHeader.Add(h.eventFileID, i);
+                }
+            }
+
 
             /*Add list of options to each control */
             currentTextArchive = new TextArchive(RomInfo.locationNamesTextNumber);
@@ -1177,8 +1194,6 @@ namespace DSPRE {
                     flagVal += (byte)Math.Pow(2, 5);
                 if (flag6CheckBox.Checked)
                     flagVal += (byte)Math.Pow(2, 6);
-                //if (flag7CheckBox.Checked)
-                //    flagVal += (byte)Math.Pow(2, 7);
             }
             currentHeader.flags = flagVal;
         }
@@ -1282,7 +1297,6 @@ namespace DSPRE {
                 flag4CheckBox.Checked = ba[4];
                 flag5CheckBox.Checked = ba[5];
                 flag6CheckBox.Checked = ba[6];
-                //flag6CheckBox.Checked = ba[7];
             }
         }
         private void eventsTabControl_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1777,9 +1791,6 @@ namespace DSPRE {
                 case gFamEnum.HGSS:
                     HeaderHGSS ch = (HeaderHGSS)currentHeader;
                     ch.locationType = (byte)areaSettingsComboBox.SelectedIndex;
-                    //areaImageLabel.Text = "Area icon";
-                    //areaIconComboBox.Enabled = true;
-                    //areaIconPictureBox.Visible = true;
                     break;
             }
         }
@@ -2536,13 +2547,7 @@ namespace DSPRE {
                                 if (gameFamily.Equals(gFamEnum.DP)) {
                                     foreach (ushort r in result) {
                                         HeaderDP hdp;
-
-                                        ////Dynamic headers patch unsupported in DP
-                                        //if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
-                                        //    hdp = (HeaderDP)MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + r.ToString("D4"), r, 0);
-                                        //} else {
-                                            hdp = (HeaderDP)MapHeader.LoadFromARM9(r);
-                                        //}
+                                        hdp = (HeaderDP)MapHeader.LoadFromARM9(r);
 
                                         if (hdp.locationName != 0) {
                                             headerID = hdp.ID;
@@ -4040,7 +4045,7 @@ namespace DSPRE {
             using (Graphics gSmall = Graphics.FromImage(smallBm)) {
                 for (int i = 0; i < 32; i++) {
                     for (int j = 0; j < 32; j++) {
-                        PrepareTypePainterGraphics(paintByte = currentMapFile.types[i, j]);
+                        PrepareTypePainterGraphics(currentMapFile.types[i, j]);
 
                         /* Draw collision on the small image */
                         smallCell = new Rectangle(3 * j, 3 * i, 3, 3);
@@ -4682,6 +4687,8 @@ namespace DSPRE {
         public Brush eventBrush;
         public Rectangle eventMatrixRectangle;
         #endregion
+
+
 
         #region Subroutines
         private void itemsSelectorHelpBtn_Click(object sender, EventArgs e) {
@@ -5370,6 +5377,9 @@ namespace DSPRE {
             currentEvFile.SaveToFileExplorePath("Event File " + selectEventComboBox.SelectedIndex);
         }
         private void saveEventsButton_Click(object sender, EventArgs e) {
+            
+            
+            
             currentEvFile.SaveToFileDefaultDir(selectEventComboBox.SelectedIndex);
         }
         private void importEventFileButton_Click(object sender, EventArgs e) {
@@ -5405,14 +5415,12 @@ namespace DSPRE {
                 efi.ShowDialog();
 
                 if (!efi.DialogResult.Equals(DialogResult.OK)) {
-                    MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
                 if (efi.blankCurrentEvents) {
                     DialogResult confirm = MessageBox.Show("You chose to import the entities into blank event file, which means all existing entities in the destination file will be deleted.\nProceed?", "Awaiting user confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (!confirm.Equals(DialogResult.Yes)) {
-                        MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
 
@@ -5494,6 +5502,7 @@ namespace DSPRE {
             if (disableHandlers) {
                 return;
             }
+            disableHandlers = true;
 
             /* Load events data into EventFile class instance */
             currentEvFile = new EventFile(selectEventComboBox.SelectedIndex);
@@ -5503,8 +5512,27 @@ namespace DSPRE {
             FillOverworldsBox();
             FillTriggersBox();
             FillWarpsBox();
+            ushort mapHeader = eventToHeader[(ushort)selectEventComboBox.SelectedIndex];
+            MapHeader h;
+            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied())
+            {
+                h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + mapHeader.ToString("D4"), mapHeader, 0);
+            }
+            else
+            {
+                h = MapHeader.LoadFromARM9(mapHeader);
+            }            
+            eventMatrixUpDown.Value = h.matrixID;
 
+            eventMatrix = new GameMatrix((int)eventMatrixUpDown.Value);
+            eventMatrixXUpDown.Maximum = eventMatrix.width - 1;
+            eventMatrixYUpDown.Maximum = eventMatrix.height - 1;
+            eventAreaDataUpDown.Value = h.areaDataID;
             eventEditorFullMapReload((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value);
+
+            disableHandlers = false;
+
+            CenterEventViewOnEntities();
         }
         private void showEventsCheckBoxes_CheckedChanged(object sender, EventArgs e) {
             if (disableHandlers) {
@@ -5843,12 +5871,12 @@ namespace DSPRE {
             if (normalRadioButton.Checked == true) {
                 owScriptNumericUpDown.Enabled = true;
                 owSpecialGroupBox.Enabled = false;
-
-                currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(owScriptNumericUpDown.Value = 0);
+                
                 if (disableHandlers) {
                     return;
                 }
                 currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x0;
+                currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(owScriptNumericUpDown.Value = 0);
             } else if (isItemRadioButton.Checked == true) {
                 owScriptNumericUpDown.Enabled = false;
 
@@ -5863,12 +5891,12 @@ namespace DSPRE {
                     owItemComboBox.Enabled = true;
                     itemsSelectorHelpBtn.Enabled = true;
                     owItemLabel.Enabled = true;
-
-                    currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(owScriptNumericUpDown.Value = 7000 + owItemComboBox.SelectedIndex);
+                    
                     if (disableHandlers) {
                         return;
                     }
                     currentEvFile.overworlds[overworldsListBox.SelectedIndex].type = 0x3;
+                    currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(owScriptNumericUpDown.Value = 7000 + owItemComboBox.SelectedIndex);
                 }
             } else { //trainer
                 owScriptNumericUpDown.Enabled = false;
@@ -5909,7 +5937,7 @@ namespace DSPRE {
             disableHandlers = true;
 
             selectedEvent = currentEvFile.overworlds[index];
-            Overworld selectedOw = (Overworld)selectedEvent;
+            Overworld selectedOw = (Overworld)selectedEvent;            
             try {
                 /* Sprite index and image controls */
                 owSpriteComboBox.SelectedIndex = Array.IndexOf(RomInfo.overworldTableKeys, selectedOw.overlayTableEntry);
@@ -6259,26 +6287,39 @@ namespace DSPRE {
 
             eventEditorHeaderLocationNameLabel.Text = (string)locationNameComboBox.Items[locNum];
 
-            if (disableHandlers) {
+            int warpSel = warpsListBox.SelectedIndex;
+            if (disableHandlers || warpSel < 0) {
                 return;
             }
-            currentEvFile.warps[warpsListBox.SelectedIndex].header = destHeaderID;
+            currentEvFile.warps[warpSel].header = destHeaderID;
             updateSelectedWarpName();
         }
         private void updateSelectedSpawnableName() {
             int index = spawnablesListBox.SelectedIndex;
+            if (index < 0) {
+                return;
+            }
             spawnablesListBox.Items[index] = index.ToString("D" + Math.Max(0, spawnablesListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Spawnable).ToString();
         }
         private void updateSelectedOverworldName() {
             int index = overworldsListBox.SelectedIndex;
+            if (index < 0) {
+                return;
+            }
             overworldsListBox.Items[index] = index.ToString("D" + Math.Max(0, overworldsListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Overworld).ToString();
         }
         private void updateSelectedWarpName() {
             int index = warpsListBox.SelectedIndex;
+            if (index < 0) {
+                return;
+            }
             warpsListBox.Items[index] = index.ToString("D" + Math.Max(0, warpsListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Warp).ToString();
         }
         private void updateSelectedTriggerName() {
             int index = triggersListBox.SelectedIndex;
+            if (index < 0) {
+                return;
+            }
             triggersListBox.Items[index] = index.ToString("D" + Math.Max(0, triggersListBox.Items.Count - 1).ToString().Length) + ": " + (selectedEvent as Trigger).ToString();
         }
 
@@ -6307,43 +6348,48 @@ namespace DSPRE {
             #endregion
         }
         private void warpMatrixXUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0) {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].xMatrixPosition = (ushort)warpXMatrixUpDown.Value;
+            currentEvFile.warps[index].xMatrixPosition = (ushort)warpXMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpMatrixYUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0) {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].yMatrixPosition = (ushort)warpYMatrixUpDown.Value;
+            currentEvFile.warps[index].yMatrixPosition = (ushort)warpYMatrixUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpXMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0) {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].xMapPosition = (short)warpXMapUpDown.Value;
+            currentEvFile.warps[index].xMapPosition = (short)warpXMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpYMapUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0) {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].yMapPosition = (short)warpYMapUpDown.Value;
+            currentEvFile.warps[index].yMapPosition = (short)warpYMapUpDown.Value;
             DisplayActiveEvents();
         }
         private void warpZUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers || warpsListBox.SelectedIndex < 0) {
+            int index = warpsListBox.SelectedIndex;
+            if (disableHandlers || index < 0) {
                 return;
             }
 
-            currentEvFile.warps[warpsListBox.SelectedIndex].zPosition = (short)warpZUpDown.Value;
+            currentEvFile.warps[index].zPosition = (short)warpZUpDown.Value;
             DisplayActiveEvents();
         }
         private void goToWarpDestination_Click(object sender, EventArgs e) {
@@ -6870,14 +6916,12 @@ namespace DSPRE {
         }
 
         private void InitBookmarkMargin(Scintilla textArea) {
-            //TextArea.SetFoldMarginColor(true, IntToColor(BACK_COLOR));
 
             var margin = textArea.Margins[BOOKMARK_MARGIN];
             margin.Width = 20;
             margin.Sensitive = true;
             margin.Type = MarginType.Symbol;
             margin.Mask = (1 << BOOKMARK_MARKER);
-            //margin.Cursor = MarginCursor.Arrow;
 
             var marker = textArea.Markers[BOOKMARK_MARKER];
             marker.Symbol = MarkerSymbol.Circle;
@@ -6950,20 +6994,12 @@ namespace DSPRE {
 
         #region Main Menu Commands
 
-        //private void selectLineToolStripMenuItem_Click(object sender, EventArgs e) {
-        //    Line line = TextArea.Lines[TextArea.CurrentLine];
-        //    TextArea.SetSelection(line.Position + line.Length, line.Position);
-        //}
         private void scriptEditorWordWrapCheckbox_CheckedChanged(object sender, EventArgs e) {
             ScriptTextArea.WrapMode = scriptEditorWordWrapCheckbox.Checked ? ScintillaNET.WrapMode.Word : ScintillaNET.WrapMode.None;
             FunctionTextArea.WrapMode = scriptEditorWordWrapCheckbox.Checked ? ScintillaNET.WrapMode.Word : ScintillaNET.WrapMode.None;
             ActionTextArea.WrapMode = scriptEditorWordWrapCheckbox.Checked ? ScintillaNET.WrapMode.Word : ScintillaNET.WrapMode.None;
         }
-        //private void indentGuidesCheckbox_CheckedChanged(object sender, EventArgs e) {
-        //    ScriptTextArea.IndentationGuides = scriptEditorIndentGuidesCheckbox.Checked ? IndentView.LookBoth : IndentView.None;
-        //    FunctionTextArea.IndentationGuides = scriptEditorIndentGuidesCheckbox.Checked ? IndentView.LookBoth : IndentView.None;
-        //    ActionTextArea.IndentationGuides = scriptEditorIndentGuidesCheckbox.Checked ? IndentView.LookBoth : IndentView.None;
-        //}
+
 
         private void viewWhiteSpacesButton_Click(object sender, EventArgs e) {
             ScriptTextArea.ViewWhitespace = scriptEditorWhitespacesCheckbox.Checked ? WhitespaceMode.VisibleAlways : WhitespaceMode.Invisible;
@@ -8137,7 +8173,6 @@ namespace DSPRE {
             if (matchingPalette == null) {
                 statusLabelError("Couldn't find a palette to match " + '"' + findThis + '"', severe: false);
             } else {
-                //palettesListBox.SelectedIndex = 0;
                 palettesListBox.SelectedItem = matchingPalette;
                 statusLabelMessage("Ready");
             }
@@ -8420,7 +8455,6 @@ namespace DSPRE {
             SaveCameraTable(DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber), overlayCameraTblOffset);
         }
         private void cameraEditorDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e) {
-            //cameraEditorDataGridView.Columns[0].ValueType = typeof(int);
             currentCameraTable[e.RowIndex][e.ColumnIndex] = cameraEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
             cameraEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = currentCameraTable[e.RowIndex][e.ColumnIndex];
         }
@@ -8505,12 +8539,27 @@ namespace DSPRE {
         private List<ComboBox> partyItemsComboboxList = new List<ComboBox>();
         private List<GroupBox> partyMovesGroupboxList = new List<GroupBox>();
         private List<NumericUpDown> partyLevelUpdownList = new List<NumericUpDown>();
+        private List<ComboBox> partyGenderComboBoxList = new List<ComboBox>();
+        private List<ComboBox> partyAbilityComboBoxList = new List<ComboBox>();
+        private List<ComboBox> partyFormComboBoxList = new List<ComboBox>();
         private List<NumericUpDown> partyIVUpdownList = new List<NumericUpDown>();
         private List<NumericUpDown> partyBallUpdownList = new List<NumericUpDown>();
         private List<GroupBox> partyGroupboxList = new List<GroupBox>();
         private List<PictureBox> partyPokemonPictureBoxList = new List<PictureBox>();
         private List<PictureBox> partyPokemonItemIconList = new List<PictureBox>();
 
+        private const int TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX = 0;
+        private const int TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX = 1;
+        private const int TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX = 2;
+        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX = 0;
+        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX = 1;
+
+        
+        string[] abilityNames;
+        SpeciesFile[] pokemonSpecies;
+
+        private (int abi1, int abi2)[] pokemonSpeciesAbilities;
+        
         TrainerFile currentTrainerFile;
         PaletteBase trainerPal;
         ImageBase trainerTile;
@@ -8558,8 +8607,13 @@ namespace DSPRE {
                 DirNames.trainerParty, 
                 DirNames.trainerGraphics, 
                 DirNames.textArchives,
-                DirNames.monIcons
+                DirNames.monIcons,
+                DirNames.personalPokeData
             });
+
+            int numPokemonSpecies = Directory.GetFiles(RomInfo.gameDirs[DirNames.personalPokeData].unpackedDir, "*").Count();
+            pokemonSpeciesAbilities = new (int abi1, int abi2)[numPokemonSpecies];
+            pokemonSpecies = new SpeciesFile[numPokemonSpecies];
 
             RomInfo.SetMonIconsPalTableAddress();
 
@@ -8586,6 +8640,30 @@ namespace DSPRE {
             partyLevelUpdownList.Add(partyLevel4UpDown);
             partyLevelUpdownList.Add(partyLevel5UpDown);
             partyLevelUpdownList.Add(partyLevel6UpDown);
+
+            partyGenderComboBoxList.Clear();
+            partyGenderComboBoxList.Add(partyGender1ComboBox);
+            partyGenderComboBoxList.Add(partyGender2ComboBox);
+            partyGenderComboBoxList.Add(partyGender3ComboBox);
+            partyGenderComboBoxList.Add(partyGender4ComboBox);
+            partyGenderComboBoxList.Add(partyGender5ComboBox);
+            partyGenderComboBoxList.Add(partyGender6ComboBox);
+
+            partyAbilityComboBoxList.Clear();
+            partyAbilityComboBoxList.Add(partyAbility1ComboBox);
+            partyAbilityComboBoxList.Add(partyAbility2ComboBox);
+            partyAbilityComboBoxList.Add(partyAbility3ComboBox);
+            partyAbilityComboBoxList.Add(partyAbility4ComboBox);
+            partyAbilityComboBoxList.Add(partyAbility5ComboBox);
+            partyAbilityComboBoxList.Add(partyAbility6ComboBox);
+
+            partyFormComboBoxList.Clear();
+            partyFormComboBoxList.Add(partyForm1ComboBox);
+            partyFormComboBoxList.Add(partyForm2ComboBox);
+            partyFormComboBoxList.Add(partyForm3ComboBox);
+            partyFormComboBoxList.Add(partyForm4ComboBox);
+            partyFormComboBoxList.Add(partyForm5ComboBox);
+            partyFormComboBoxList.Add(partyForm6ComboBox);
 
             partyIVUpdownList.Clear();
             partyIVUpdownList.Add(partyIV1UpDown);
@@ -8650,11 +8728,52 @@ namespace DSPRE {
                 trainerClassListBox.Items.Add("[" + i.ToString("D3") + "]" + " " + classNames[i]);
             }
 
+            for (int i = 0; i < numPokemonSpecies; i++)
+            {
+                pokemonSpecies[i] = new SpeciesFile(new FileStream(RomInfo.gameDirs[DirNames.personalPokeData].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
+            }
+
+            if (gameFamily == gFamEnum.HGSS)
+            {
+                foreach (ComboBox partyGenderComboBox in partyGenderComboBoxList)
+                {
+                    partyGenderComboBox.Visible = true;
+                    partyGenderComboBox.Items.Add("Default Gender");
+                    partyGenderComboBox.Items.Add("Male");
+                    partyGenderComboBox.Items.Add("Female");
+                }
+            }
+            else
+            {
+                foreach (ComboBox partyGenderComboBox in partyGenderComboBoxList)
+                    partyGenderComboBox.Visible = false;
+            }
+
+            if (gameFamily == gFamEnum.DP)
+            {
+                foreach (ComboBox partyFormComboBox in partyFormComboBoxList)
+                    partyFormComboBox.Visible = false;
+
+                foreach (NumericUpDown partyBallSealUpDown in partyBallUpdownList)
+                    partyBallSealUpDown.Enabled = false;
+            }
+            else
+            {
+                foreach (ComboBox partyFormComboBox in partyFormComboBoxList)
+                    partyFormComboBox.Visible = true;
+
+                foreach (NumericUpDown partyBallSealUpDown in partyBallUpdownList)
+                    partyBallSealUpDown.Enabled = true;
+            }
+
             string[] itemNames = RomInfo.GetItemNames();
             string[] pokeNames = RomInfo.GetPokemonNames();
             string[] moveNames = RomInfo.GetAttackNames();
+            abilityNames = RomInfo.GetAbilityNames();
 
-            foreach(Control c in trainerItemsGroupBox.Controls) {
+            pokemonSpeciesAbilities = getPokemonAbilities(numPokemonSpecies);
+
+            foreach (Control c in trainerItemsGroupBox.Controls) {
                 if (c is ComboBox) {
                     (c as ComboBox).DataSource = new BindingSource(itemNames, string.Empty);
                 }
@@ -8693,7 +8812,6 @@ namespace DSPRE {
             string[] trNames = RomInfo.GetSimpleTrainerNames();
 
             bool error = currentIndex >= trNames.Length;
-
             currentTrainerFile = new TrainerFile(
                 new TrainerProperties(
                     (ushort)trainerComboBox.SelectedIndex, 
@@ -8702,7 +8820,6 @@ namespace DSPRE {
                 new FileStream(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + suffix, FileMode.Open),
                 error ? TrainerFile.NAME_NOT_FOUND : trNames[currentIndex]
             );
-
             RefreshTrainerPartyGUI();
             RefreshTrainerPropertiesGUI();
 
@@ -8743,6 +8860,17 @@ namespace DSPRE {
                 partyIVUpdownList[i].Value = currentTrainerFile.party[i].difficulty;
                 partyBallUpdownList[i].Value = currentTrainerFile.party[i].ballSeals;
 
+                setTrainerPartyPokemonAbilities(i);
+                setTrainerPartyPokemonForm(i);
+                setTrainerPokemonGender(i);
+
+                if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2))
+                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX;
+                else
+                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
+
+                partyFormComboBoxList[i].SelectedIndex = currentTrainerFile.party[i].formID;
+
                 if (currentTrainerFile.party[i].moves == null) {
                     for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
                         (partyMovesGroupboxList[i].Controls[j] as ComboBox).SelectedIndex = 0;
@@ -8761,88 +8889,68 @@ namespace DSPRE {
 
             PictureBox pb = partyPokemonPictureBoxList[partyPos];
 
-            partyPokemonPictureBoxList[partyPos].Image = GetPokePic(species, pb.Width, pb.Height, monIconPals[partyPos], monIconTiles[partyPos], monIconSprites[partyPos]);
+            partyPokemonPictureBoxList[partyPos].Image = DSUtils.GetPokePic(species, pb.Width, pb.Height);
         }
-        private Image GetPokePic(int species, int w, int h, PaletteBase paletteBase, ImageBase imageBase, SpriteBase spriteBase) {
-            bool fiveDigits = false; // some extreme future proofing
-            string filename = "0000";
-
-            try {
-                paletteBase = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + filename, 0, filename);
-            } catch (FileNotFoundException) {
-                filename += '0';
-                paletteBase = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + filename, 0, filename);
-                fiveDigits = true;
-            }
-
-            // read arm9 table to grab pal ID
-            int paletteId = 0;
-            string iconTablePath;
-
-            int iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress);
-            if (iconPalTableOffsetFromFileStart >= 0) { // if iconPalTableAddress >= RomInfo.synthOverlayLoadAddress
-                //In other words, if the pointer shows the table was moved to the synthetic overlay
-                iconTablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
-            } else {
-                iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - DSUtils.ARM9.address);
-                iconTablePath = RomInfo.arm9Path;
-            }
-            
-            using (DSUtils.EasyReader idReader = new DSUtils.EasyReader(iconTablePath, iconPalTableOffsetFromFileStart + species)) {
-                paletteId = idReader.ReadByte();
-            }
-
-            if (paletteId != 0) {
-                paletteBase.Palette[0] = paletteBase.Palette[paletteId]; // update pal 0 to be the new pal
-            }
-
-            // grab tiles
-            int spriteFileID = species + 7;
-            string spriteFilename = spriteFileID.ToString("D" + (fiveDigits ? "5" : "4"));
-            imageBase = new NCGR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
-
-            // grab sprite
-            int ncerFileId = 2;
-            string ncerFileName = ncerFileId.ToString("D" + (fiveDigits ? "5" : "4"));
-            spriteBase = new NCER(gameDirs[DirNames.monIcons].unpackedDir + "\\" + ncerFileName, 2, ncerFileName);
-
-            // copy this from the trainer
-            int bank0OAMcount = spriteBase.Banks[0].oams.Length;
-            int[] OAMenabled = new int[bank0OAMcount];
-            for (int i = 0; i < OAMenabled.Length; i++) {
-                OAMenabled[i] = i;
-            }
-
-            // finally compose image
-            try {
-                return spriteBase.Get_Image(imageBase, paletteBase, 0, w, h, false, false, false, true, true, -1, OAMenabled);
-            } catch (FormatException) {
-                return Properties.Resources.IconPokeball;
-            }
-            // default:
-            //partyPokemonPictureBoxList[partyPos].Image = cb.SelectedIndex > 0 ? (Image)Properties.PokePics.ResourceManager.GetObject(FixPokenameString(PokeDatabase.System.pokeNames[(ushort)cb.SelectedIndex])) : global::DSPRE.Properties.Resources.IconPokeball;
-        }
+        
         private void partyPokemon1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ShowPartyPokemonPic(0);
+
+            //event handler is called before currentTrainerFile is set, need to null check to avoid null object reference
+            if (currentTrainerFile != null)
+            {
+                setTrainerPartyPokemonAbilities(0);
+                setTrainerPartyPokemonForm(0);
+                setTrainerPokemonGender(0);
+            }
         }
         private void partyPokemon2ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ShowPartyPokemonPic(1);
+            if (currentTrainerFile != null)
+            {
+                setTrainerPartyPokemonAbilities(1);
+                setTrainerPartyPokemonForm(1);
+                setTrainerPokemonGender(1);
+            }
         }
 
         private void partyPokemon3ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ShowPartyPokemonPic(2);
+            if (currentTrainerFile != null)
+            {
+                setTrainerPartyPokemonAbilities(2);
+                setTrainerPartyPokemonForm(2);
+                setTrainerPokemonGender(2);
+            }
         }
 
         private void partyPokemon4ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ShowPartyPokemonPic(3);
+            if (currentTrainerFile != null)
+            {
+                setTrainerPartyPokemonAbilities(3);
+                setTrainerPartyPokemonForm(3);
+                setTrainerPokemonGender(3);
+            }
         }
 
         private void partyPokemon5ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ShowPartyPokemonPic(4);
+            if (currentTrainerFile != null)
+            {
+                setTrainerPartyPokemonAbilities(4);
+                setTrainerPartyPokemonForm(4);
+                setTrainerPokemonGender(4);
+            }
         }
 
         private void partyPokemon6ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             ShowPartyPokemonPic(5);
+            if (currentTrainerFile != null)
+            {
+                setTrainerPartyPokemonAbilities(5);
+                setTrainerPartyPokemonForm(5);
+                setTrainerPokemonGender(5);
+            }
         }
 
         private void showTrainerEditorItemPic(byte partyPos) {
@@ -8890,11 +8998,6 @@ namespace DSPRE {
             for (int i = Math.Min(currentTrainerFile.trp.partyCount, (int)partyCountUpDown.Value); i < TrainerFile.POKE_IN_PARTY; i++) {
                 currentTrainerFile.party[i] = new PartyPokemon(currentTrainerFile.trp.chooseItems, currentTrainerFile.trp.chooseMoves);
             }
-
-            //if (!disableHandlers) {
-            //    RefreshTrainerPartyGUI();
-            //    RefreshTrainerPropertiesGUI();
-            //}
         }
 
         private void trainerMovesCheckBox_CheckedChanged(object sender, EventArgs e) {
@@ -8925,6 +9028,11 @@ namespace DSPRE {
         }
 
         private void trainerSaveCurrentButton_Click(object sender, EventArgs e) {
+            if (trainerNameTextBox.Text.Length > TrainerFile.maxNameLen) {
+                MessageBox.Show($"The length of this Trainer name exceeds {TrainerFile.maxNameLen} characters.", "Trainer data could not be saved!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             currentTrainerFile.trp.partyCount = (byte)partyCountUpDown.Value;
             currentTrainerFile.trp.chooseMoves = trainerMovesCheckBox.Checked;
             currentTrainerFile.trp.chooseItems = trainerItemsCheckBox.Checked;
@@ -8946,6 +9054,7 @@ namespace DSPRE {
 
             for (int i = 0; i < partyCountUpDown.Value; i++) {
                 currentTrainerFile.party[i].pokeID = (ushort)partyPokemonComboboxList[i].SelectedIndex;
+                currentTrainerFile.party[i].formID = (ushort)partyFormComboBoxList[i].SelectedIndex;
                 currentTrainerFile.party[i].level = (ushort)partyLevelUpdownList[i].Value;
 
                 if (trainerMovesCheckBox.Checked) {
@@ -8959,7 +9068,40 @@ namespace DSPRE {
                     currentTrainerFile.party[i].heldItem = (ushort)partyItemsComboboxList[i].SelectedIndex;
                 }
 
-                currentTrainerFile.party[i].difficulty = (ushort)partyIVUpdownList[i].Value;
+                currentTrainerFile.party[i].difficulty = (byte)partyIVUpdownList[i].Value;
+
+                if (hasMoreThanOneGender((int)currentTrainerFile.party[i].pokeID, pokemonSpecies) && gameFamily == gFamEnum.HGSS)
+                {
+                    switch (partyGenderComboBoxList[i].SelectedIndex)
+                    {
+                        case TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX:
+                            currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.NO_FLAGS;
+                            break;
+                        case TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX:
+                            currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.FORCE_MALE;
+                            break;
+                        case TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX:
+                            currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.FORCE_FEMALE;
+                            break;
+                    }
+                }
+                else
+                    currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.NO_FLAGS;
+
+
+
+                if (partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX)
+                {
+                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2; 
+                }
+                //ability slot 1 flag must be set if the pokemon's gender is forced to male or female, otherwise the pokemon will have ability2 even if the ability2 flag is not set
+                //the ability 1 flag should not be set if neither of the gender flags are set, otherwise this will cause a problem with using alternate forms
+                else if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_MALE) 
+                        || currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_FEMALE))
+                {
+                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1;
+                }
+
                 currentTrainerFile.party[i].ballSeals = (ushort)partyBallUpdownList[i].Value;
             }
 
@@ -9140,7 +9282,7 @@ namespace DSPRE {
             currentTrainerFile.trp.SaveToFileExplorePath("G4 Trainer Properties " + trainerComboBox.SelectedItem);
         }
 
-        private void importReplacePropertiesButton_Click(object sender, EventArgs e) {
+        private void replacePropertiesButton_Click(object sender, EventArgs e) {
             OpenFileDialog of = new OpenFileDialog {
                 Filter = "Gen IV Trainer Properties (*.trp)|*.trp"
             };
@@ -9201,7 +9343,6 @@ namespace DSPRE {
             }
             disableHandlers = false;
 
-            //trainerClassListBox_SelectedIndexChanged(null, null);
             if ( gameFamily.Equals(gFamEnum.HGSS) && tableEditorIsReady ) { 
                 pbEffectsTrainerCombobox.Items[selectedTrClass] = trainerClassListBox.Items[selectedTrClass];
                 for (int i = 0; i < vsTrainerEffectsList.Count; i++) {
@@ -9216,6 +9357,162 @@ namespace DSPRE {
         private void trClassFramePreviewUpDown_ValueChanged(object sender, EventArgs e) {
             UpdateTrainerClassPic(trainerClassPicBox, (int)((NumericUpDown)sender).Value);
         }
+
+        private (int abi1, int abi2)[] getPokemonAbilities(int numPokemonSpecies) {
+            var pokemonSpeciesAbilities = new (int abi1, int abi2)[numPokemonSpecies];
+
+            for (int i = 0; i < numPokemonSpecies; i++)
+            {
+                pokemonSpeciesAbilities[i] = (pokemonSpecies[i].Ability1, pokemonSpecies[i].Ability2);
+            }
+            
+            return pokemonSpeciesAbilities;
+        }
+
+        private (string ability1, string ability2) getPokemonAbilityNames(int pokemonID)
+        {
+            return (abilityNames[pokemonSpeciesAbilities[pokemonID].Item1], 
+                    abilityNames[pokemonSpeciesAbilities[pokemonID].Item2]);
+        }
+
+        private void setTrainerPartyPokemonAbilities(int partyPokemonPosition)
+        {
+
+            (string ability1, string ability2) currentPartyPokemonAbilities = getPokemonAbilityNames(partyPokemonComboboxList[partyPokemonPosition].SelectedIndex);
+            partyAbilityComboBoxList[partyPokemonPosition].Items.Clear();
+            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(currentPartyPokemonAbilities.ability1);
+
+            //if the name " -" is returned for ability 2 then there is no ability 2
+            if (currentPartyPokemonAbilities.ability2.Equals(" -") || currentPartyPokemonAbilities.ability2.Equals(currentPartyPokemonAbilities.ability1) || gameFamily != gFamEnum.HGSS)
+            {
+                partyAbilityComboBoxList[partyPokemonPosition].Enabled = false;
+            }
+            else
+            {
+                partyAbilityComboBoxList[partyPokemonPosition].Items.Add(currentPartyPokemonAbilities.ability2);
+                partyAbilityComboBoxList[partyPokemonPosition].Enabled = true;
+            }
+
+            partyAbilityComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
+        }
+
+        private void setTrainerPokemonGender(int partyPokemonPosition)
+        {
+            int currentPokemonGenderRatio = pokemonSpecies[partyPokemonComboboxList[partyPokemonPosition].SelectedIndex].GenderRatioMaleToFemale;
+            PartyPokemon.GenderAndAbilityFlags currentPokemonGenderAndAbilityFlags = currentTrainerFile.party[partyPokemonPosition].genderAndAbilityFlags;
+
+            if (gameFamily == gFamEnum.HGSS)
+            {
+                switch (currentPokemonGenderRatio)
+                {
+                    case GENDER_RATIO_MALE:
+                        partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX;
+                        partyGenderComboBoxList[partyPokemonPosition].Enabled = false;
+                        break;
+                    case GENDER_RATIO_FEMALE:
+                        partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX;
+                        partyGenderComboBoxList[partyPokemonPosition].Enabled = false;
+                        break;
+                    case GENDER_RATIO_GENDERLESS:
+                        partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX;
+                        partyGenderComboBoxList[partyPokemonPosition].Enabled = false;
+                        break;
+                    default:
+                        partyGenderComboBoxList[partyPokemonPosition].Enabled = true;
+
+                        if (currentPokemonGenderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_MALE))
+                            partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX;
+                        else if (currentPokemonGenderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_FEMALE))
+                            partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX;
+                        else
+                            partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX;
+                        break;
+                }
+            }
+        }
+
+        private List<string> getPokemonFormNames(int pokemonID)
+        {
+            List<string> pokemonFormNames = new List<string>();
+
+            switch (pokemonID)
+            {
+                case PICHU_ID_NUM:
+                    if (RomInfo.gameFamily == gFamEnum.HGSS)
+                    {
+                        pokemonFormNames.Add("Non-Spiky-Eared");
+                        pokemonFormNames.Add("Spiky-Eared");
+                    }
+                    else
+                    {
+                        pokemonFormNames.Add("No Alt Form");
+                    }
+                    break;
+                case UNOWN_ID_NUM:
+                    for (char c = 'A'; c <= 'Z'; c++)
+                        pokemonFormNames.Add(c + " Form");
+
+                    pokemonFormNames.Add("! Form");
+                    pokemonFormNames.Add("? Form");
+                    break;
+                case CASTFORM_ID_NUM:
+                    pokemonFormNames.Add("Normal Form");
+                    pokemonFormNames.Add("Sunny Form");
+                    pokemonFormNames.Add("Rainy Form");
+                    pokemonFormNames.Add("Snowy Form");
+                    break;
+                case DEOXYS_ID_NUM:
+                    pokemonFormNames.Add("Normal Form");
+                    pokemonFormNames.Add("Attack Form");
+                    pokemonFormNames.Add("Defense Form");
+                    pokemonFormNames.Add("Speed Form");
+                    break;
+                case BURMY_ID_NUM:
+                case WORMADAM_ID_NUM:
+                    pokemonFormNames.Add("Plant Cloak");
+                    pokemonFormNames.Add("Sand Cloak");
+                    pokemonFormNames.Add("Trash Cloak");
+                    break;
+                case SHELLOS_ID_NUM:
+                case GASTRODON_ID_NUM:
+                    pokemonFormNames.Add("West sea");
+                    pokemonFormNames.Add("East sea");
+                    break;
+                case ROTOM_ID_NUM:
+                    pokemonFormNames.Add("Rotom");
+                    pokemonFormNames.Add("Heat Rotom");
+                    pokemonFormNames.Add("Wash Rotom");
+                    pokemonFormNames.Add("Frost Rotom");
+                    pokemonFormNames.Add("Fan Rotom");
+                    pokemonFormNames.Add("Mow Rotom");
+                    break;
+                case SHAYMIN_ID_NUM:
+                    pokemonFormNames.Add("Land Form");
+                    pokemonFormNames.Add("Sky Form");
+                    break;
+                default:
+                    pokemonFormNames.Add("No Alt Form");
+                    break;
+            }
+            return pokemonFormNames;
+
+        }
+
+        private void setTrainerPartyPokemonForm(int partyPokemonPosition)
+        {
+            if (gameFamily != gFamEnum.DP)
+            { 
+			    partyFormComboBoxList[partyPokemonPosition].Items.Clear();
+			    List<string> currentPokemonFormName = getPokemonFormNames(partyPokemonComboboxList[partyPokemonPosition].SelectedIndex);
+			    foreach (string formName in currentPokemonFormName)
+				    partyFormComboBoxList[partyPokemonPosition].Items.Add(formName);
+
+			    partyFormComboBoxList[partyPokemonPosition].Enabled = currentPokemonFormName.Count > 1;
+			    partyFormComboBoxList[partyPokemonPosition].SelectedIndex = 0;
+            }
+
+        }
+
         #endregion
 
         #region Table Editor
@@ -9603,7 +9900,7 @@ namespace DSPRE {
         }
         private void pbEffectsPokemonCombobox_SelectedIndexChanged(object sender, EventArgs e) {
             ComboBox cb = sender as ComboBox;
-            tbEditorPokeminiPictureBox.Image = GetPokePic(cb.SelectedIndex, tbEditorPokeminiPictureBox.Width, tbEditorPokeminiPictureBox.Height, tableEditorMonIconPal, tableEditorMonIconTile, tableEditorMonIconSprite);
+            tbEditorPokeminiPictureBox.Image = DSUtils.GetPokePic(cb.SelectedIndex, tbEditorPokeminiPictureBox.Width, tbEditorPokeminiPictureBox.Height);
             tbEditorPokeminiPictureBox.Update();
         }
 
@@ -9627,7 +9924,6 @@ namespace DSPRE {
                 Filter = "NARC File (*.narc)|*.narc"
             };
             if (of.ShowDialog(this) != DialogResult.OK) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -9645,7 +9941,6 @@ namespace DSPRE {
             };
 
             if (narcDir.ShowDialog() != CommonFileDialogResult.Ok) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -9666,7 +9961,6 @@ namespace DSPRE {
             };
 
             if (narcDir.ShowDialog() != CommonFileDialogResult.Ok) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -9677,7 +9971,6 @@ namespace DSPRE {
                 FileName = Path.GetFileName(narcDir.FileName)
             };
             if (sf.ShowDialog(this) != DialogResult.OK) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -9702,7 +9995,6 @@ namespace DSPRE {
             };
 
             if (of.ShowDialog(this) != DialogResult.OK) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -9778,8 +10070,6 @@ namespace DSPRE {
                         MessageBox.Show("Isolated files have been moved to " + "\"" + ISOLATED_FOLDERNAME + "\"", "Files moved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-            } else {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -9892,7 +10182,6 @@ namespace DSPRE {
                             FileName = d.Name + ".list"
                         };
                         if (sf.ShowDialog(this) != DialogResult.OK) {
-                            MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             return;
                         }
 
@@ -9902,9 +10191,7 @@ namespace DSPRE {
                 } else {
                     MessageBox.Show("No file content could be recognized.", "Operation terminated", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            } else {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            } 
         }
         private void fromFolderContentsToolStripMenuItem_Click(object sender, EventArgs e) {
             (DirectoryInfo d, FileInfo[] files) dirData = OpenNonEmptyDir(title: "Folder-Based List Builder");
@@ -9922,7 +10209,6 @@ namespace DSPRE {
                 FileName = d.Name + ".list"
             };
             if (sf.ShowDialog(this) != DialogResult.OK) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -9942,7 +10228,6 @@ namespace DSPRE {
                 Filter = "Any Text File(*.*)|*.*"
             };
             if (of.ShowDialog(this) != DialogResult.OK) {
-                MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -9992,7 +10277,6 @@ namespace DSPRE {
                     FileName = shortFileName + ".list"
                 };
                 if (sf.ShowDialog(this) != DialogResult.OK) {
-                    MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
@@ -10077,7 +10361,6 @@ namespace DSPRE {
                 };
 
                 if (sourceDirDialog.ShowDialog() != CommonFileDialogResult.Ok) {
-                    MessageBox.Show("Operation cancelled.", "User discarded operation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return (null, null);
                 }
 
@@ -10281,6 +10564,122 @@ namespace DSPRE {
         private void texturedBldRenderCheckBox_CheckedChanged(object sender, EventArgs e) {
             bldTexturesOn = (sender as CheckBox).Checked;
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+        }
+
+        private void trainerEditorStatButton_Click(object sender, EventArgs e) {
+            string[] trcNames = RomInfo.GetTrainerClassNames();
+            string[] pokeNames = RomInfo.GetPokemonNames();
+            string[] trainerNames = GetSimpleTrainerNames();
+            for (int i = 0; i < trcNames.Length; i++) {
+                trcNames[i] = trcNames[i].Replace("♂", " M").Replace("♀", " F");
+            }
+
+            Dictionary<string, Dictionary<string, int>> trainerUsage = new Dictionary<string, Dictionary<string, int>>();
+
+            for (int i = 0; i < trainerNames.Length; i++) {
+                if (trainerNames[i].Equals("Angelica") || trainerNames[i].Equals("Mickey")) {
+                    continue;
+                }
+                string suffix = "\\" + i.ToString("D4");
+
+                TrainerFile f = new TrainerFile(
+                    new TrainerProperties(
+                        (ushort)trainerComboBox.SelectedIndex,
+                        new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + suffix, FileMode.Open)
+                    ),
+                    new FileStream(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + suffix, FileMode.Open),
+                    trainerNames[i]
+                );
+
+                if (f.party.CountNonEmptyMons() == 0) {
+                    continue;
+                }
+
+                string className = trcNames[f.trp.trainerClass];
+
+
+                if (trainerUsage.TryGetValue(className, out Dictionary<string, int> innerDict) == false) {
+                    innerDict = trainerUsage[className] = new Dictionary<string, int>();
+                }
+
+                for (int p = 0; p < f.trp.partyCount; p++) {
+                    PartyPokemon pp = f.party[p];
+                    if (pp.CheckEmpty()) {
+                        continue;
+                    }
+                    string pokeName = pokeNames[(int)pp.pokeID];
+
+                    if (innerDict.TryGetValue(pokeName, out int occurrences)) {
+                        innerDict[pokeName]++;
+                    } else {
+                        innerDict[pokeName] = 1;
+                    }
+                }
+            }
+
+            ExportTrainerUsageToCSV(trainerUsage, "Report.csv");
+        }
+
+        public void ExportTrainerUsageToCSV(Dictionary<string, Dictionary<string, int>> trainerUsage, string csvFilePath) {
+            // Create the StreamWriter to write data to the CSV file
+            var sortedTrainerClasses = trainerUsage.Keys.OrderBy(className => className);
+
+            using (StreamWriter sw = new StreamWriter(csvFilePath)) {
+                // Write the header row
+                sw.WriteLine("Trainer Class;Pokemon Name;Occurrences");
+
+                // Iterate over the sorted trainer class names
+                foreach (string className in sortedTrainerClasses) {
+                    Dictionary<string, int> innerDict = trainerUsage[className];
+
+                    // Sort the Pokemon names alphabetically
+                    var sortedPokemonNames = innerDict.Keys.OrderByDescending(pokeName => innerDict[pokeName]);
+
+                    // Iterate over the sorted mon names
+                    foreach (string pokeName in sortedPokemonNames) {
+                        int occurrences = innerDict[pokeName];
+
+                        // Write the data row
+                        sw.WriteLine($"{className};{pokeName};{occurrences}");
+                    }
+                    sw.WriteLine($"-;-;-");
+                }
+            }
+
+            Console.WriteLine("CSV file exported successfully.");
+        }
+
+        private void personalDataEditorToolStripMenuItem_Click(object sender, EventArgs e) {
+            string[] itemNames = RomInfo.GetItemNames();
+            string[] abilityNames = RomInfo.GetAbilityNames();
+
+            statusLabelMessage("Setting up Personal Data Editor...");
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.monIcons });
+            RomInfo.SetMonIconsPalTableAddress();
+
+            PersonalDataEditor pde = new PersonalDataEditor(itemNames, abilityNames);
+            pde.ShowDialog();
+
+            statusLabelMessage();
+            Update();
+        }
+
+        private void learnsetsEditorToolStripMenuItem_Click(object sender, EventArgs e) {
+            string[] moveNames = RomInfo.GetAttackNames();
+
+            statusLabelMessage("Setting up Learnsets Editor...");
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.learnsets, DirNames.monIcons });
+            RomInfo.SetMonIconsPalTableAddress();
+
+            LearnsetEditor le = new LearnsetEditor(moveNames);
+            le.ShowDialog();
+
+            statusLabelMessage();
+            Update();
         }
     }
 }

@@ -1,9 +1,12 @@
-﻿using LibNDSFormats.NSBMD;
+﻿using Ekona.Images;
+using Images;
+using LibNDSFormats.NSBMD;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using NarcAPI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -592,6 +595,72 @@ namespace DSPRE {
             Buffer.BlockCopy(NSBFile, (int)offsetToMainBlock, blockData, 0, blockSize);
 
             return blockData;
+        }
+
+        public static Image GetPokePic(int species, int w, int h) {
+            PaletteBase paletteBase;
+            bool fiveDigits = false; // some extreme future proofing
+            string filename = "0000";
+
+            try {
+                paletteBase = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + filename, 0, filename);
+            } catch (FileNotFoundException) {
+                filename += '0';
+                paletteBase = new NCLR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + filename, 0, filename);
+                fiveDigits = true;
+            }
+
+            // read arm9 table to grab pal ID
+            int paletteId = 0;
+            string iconTablePath;
+
+            int iconPalTableOffsetFromFileStart;
+            string ov129path = DSUtils.GetOverlayPath(129);
+            if (File.Exists(ov129path)) {
+                // if overlay 129 exists, read it from there
+                iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - DSUtils.GetOverlayRAMAddress(129));
+                iconTablePath = ov129path;
+            } else if ((int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress) >= 0) {
+                // if there is a synthetic overlay, read it from there
+                iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress);
+                iconTablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+            } else {
+                // default handling
+                iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - DSUtils.ARM9.address);
+                iconTablePath = RomInfo.arm9Path;
+            }
+
+            using (DSUtils.EasyReader idReader = new DSUtils.EasyReader(iconTablePath, iconPalTableOffsetFromFileStart + species)) {
+                paletteId = idReader.ReadByte();
+            }
+
+            if (paletteId != 0) {
+                paletteBase.Palette[0] = paletteBase.Palette[paletteId]; // update pal 0 to be the new pal
+            }
+
+            // grab tiles
+            int spriteFileID = species + 7;
+            string spriteFilename = spriteFileID.ToString("D" + (fiveDigits ? "5" : "4"));
+            ImageBase imageBase = new NCGR(gameDirs[DirNames.monIcons].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
+
+            // grab sprite
+            int ncerFileId = 2;
+            string ncerFileName = ncerFileId.ToString("D" + (fiveDigits ? "5" : "4"));
+            SpriteBase spriteBase = new NCER(gameDirs[DirNames.monIcons].unpackedDir + "\\" + ncerFileName, 2, ncerFileName);
+
+            // copy this from the trainer
+            int bank0OAMcount = spriteBase.Banks[0].oams.Length;
+            int[] OAMenabled = new int[bank0OAMcount];
+            for (int i = 0; i < OAMenabled.Length; i++) {
+                OAMenabled[i] = i;
+            }
+
+            // finally compose image
+            try {
+                return spriteBase.Get_Image(imageBase, paletteBase, 0, w, h, false, false, false, true, true, -1, OAMenabled);
+            } catch (FormatException) {
+                return Properties.Resources.IconPokeball;
+            }
         }
     }
 }

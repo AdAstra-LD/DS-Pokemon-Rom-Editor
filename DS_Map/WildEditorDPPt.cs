@@ -1,7 +1,9 @@
 ﻿using DSPRE.ROMFiles;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using static DSPRE.RomInfo;
 
 namespace DSPRE {
     public partial class WildEditorDPPt : Form {
@@ -9,14 +11,39 @@ namespace DSPRE {
         EncounterFileDPPt currentFile;
         bool disableHandlers = false;
 
-        public WildEditorDPPt(string dirPath, string[] names, int encToOpen) {
+        public WildEditorDPPt(string dirPath, string[] names, int encToOpen, int totalNumHeaderFiles) {
             InitializeComponent();
             encounterFileFolder = dirPath;
 
-            disableHandlers = true; //
+            disableHandlers = true;
+
+            MapHeader tempMapHeader;
+            List<string> locationNames = RomInfo.GetLocationNames();
+            Dictionary<int, string> EncounterFileLocationName = new Dictionary<int, string>();
+
+            for (ushort i = 0; i < totalNumHeaderFiles; i++) {
+                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                    tempMapHeader = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
+                } else {
+                    tempMapHeader = MapHeader.LoadFromARM9(i);
+                }
+
+                if (tempMapHeader.wildPokemon != MapHeader.DPPT_NULL_ENCOUNTER_FILE_ID) {
+                    if (RomInfo.gameFamily == gFamEnum.DP) {
+                        EncounterFileLocationName.Add(tempMapHeader.wildPokemon, locationNames[((HeaderDP)tempMapHeader).locationName]);
+                    } else {
+                        EncounterFileLocationName.Add(tempMapHeader.wildPokemon, locationNames[((HeaderPt)tempMapHeader).locationName]);
+                    }
+                }
+            }
+
 
             for (int i = 0; i < Directory.GetFiles(encounterFileFolder).Length; i++) {
-                selectEncounterComboBox.Items.Add("Encounters File " + i.ToString());
+                if (EncounterFileLocationName.ContainsKey(i)) {
+                    selectEncounterComboBox.Items.Add("[" + i + "] " + EncounterFileLocationName[i]);
+                } else {
+                    selectEncounterComboBox.Items.Add("[" + i + "] " + " Unused");
+                }
             }
 
             if (encToOpen > selectEncounterComboBox.Items.Count) {
@@ -29,12 +56,27 @@ namespace DSPRE {
 
             currentFile = new EncounterFileDPPt(selectEncounterComboBox.SelectedIndex);
 
+            /* Once the GUI overhaul is complete - i.e.: once everything is a TableLayoutPanel, 
+             * this can be simplified a lot. */
             foreach (TabPage page in mainTabControl.TabPages) {
                 foreach (Control g in page.Controls) {
                     if (g != null && g is GroupBox) {
                         foreach (Control c in g.Controls) {
-                            if (c != null && c is ComboBox) {
-                                (c as ComboBox).DataSource = new BindingSource(names, string.Empty);
+                            if (c != null) {
+                                if (c is InputComboBox) {
+                                    (c as InputComboBox).DataSource = new BindingSource(names, string.Empty);
+                                } else if (c is TableLayoutPanel) {
+                                    TableLayoutPanel tbl = (c as TableLayoutPanel);
+                                   
+                                    foreach (Control tblC in tbl.Controls) {
+                                        if (c != null) {
+                                            if (tblC is InputComboBox) {
+                                                (tblC as InputComboBox).DataSource = new BindingSource(names, string.Empty);
+                                            }
+                                        }
+                                    }
+
+                                }
                             }
                         }
                     }
