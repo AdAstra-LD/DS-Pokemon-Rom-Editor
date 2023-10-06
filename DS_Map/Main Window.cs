@@ -4155,8 +4155,8 @@ namespace DSPRE {
         private void PrepareCollisionPainterGraphics(byte collisionValue) {
             switch (collisionValue) {
                 case 0x0:
-                    paintPen = new Pen(Color.FromArgb(128, Color.White));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.White));
+                    paintPen = new Pen(Color.FromArgb(16, Color.White));
+                    paintBrush = new SolidBrush(Color.FromArgb(16, Color.White));
                     break;
                 case 0x80:
                     paintPen = new Pen(Color.FromArgb(128, Color.Red));
@@ -4171,8 +4171,8 @@ namespace DSPRE {
         private void PrepareTypePainterGraphics(byte typeValue) {
             switch (typeValue) {
                 case 0x0:
-                    paintPen = new Pen(Color.FromArgb(128, Color.White));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.White));
+                    paintPen = new Pen(Color.FromArgb(16, Color.White));
+                    paintBrush = new SolidBrush(Color.FromArgb(16, Color.White));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 9.0f);
                     break;
