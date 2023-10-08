@@ -226,7 +226,7 @@ namespace DSPRE.ROMFiles {
 
                 for (int j = 0; j < 32; j++) {
                     if ((currentBitfield & (1 << j)) != 0) {
-                        result.Add((byte)(i * 32 + j+1));
+                        result.Add((byte)(i * 32 + j));
                     }
                 }
             }
