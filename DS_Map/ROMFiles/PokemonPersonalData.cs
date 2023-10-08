@@ -31,12 +31,12 @@ namespace DSPRE.ROMFiles {
         Dark
     }
     public enum PokemonGrowthCurve {
-        Erratic = 0,
-        Fast,
-        MediumFast,
-        MediumSlow,
-        Slow,
+        MediumFast = 0,
+        Erratic,
         Fluctuating,
+        MediumSlow,
+        Fast,
+        Slow
     }
 
     public enum PokemonEggGroup {
