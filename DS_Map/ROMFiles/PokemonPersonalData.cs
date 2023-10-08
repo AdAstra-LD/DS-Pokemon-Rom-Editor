@@ -151,6 +151,8 @@ namespace DSPRE.ROMFiles {
                 color = (PokemonDexColor)(colorAndFlip & 0b01111111);
                 flip = ((colorAndFlip >> 7) & 0b00000001) == 1;
 
+                reader.BaseStream.Position += 2; //Alignment
+
                 uint tm1 = reader.ReadUInt32();
                 uint tm2 = reader.ReadUInt32();
                 uint tm3 = reader.ReadUInt32();
@@ -198,6 +200,8 @@ namespace DSPRE.ROMFiles {
                     byte colorAndFlipflag = (byte)(((byte)color & 0b01111111) |
                                                   (((flip ? 1 : 0) & 0b00000001) << 7));
                     writer.Write(colorAndFlipflag);
+
+                    writer.BaseStream.Position += 2; //Alignment
 
                     uint[] bfs = SetToBitField(machines);
                     int l = Math.Min(bfs.Length, 4);
