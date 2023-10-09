@@ -37,7 +37,7 @@ namespace DSPRE {
                     this.BaseStream.Position = pos;
                 }
             }
-            public class Writer : EasyWriter { 
+            public class Writer : EasyWriter {
                 public Writer(long pos = 0) : base(arm9Path, pos) {
                     this.BaseStream.Position = pos;
                 }
@@ -70,7 +70,7 @@ namespace DSPRE {
                 return new FileInfo(RomInfo.arm9Path).Length <= 0xBC000;
             }
             public static bool CheckCompressionMark() {
-                return BitConverter.ToInt32( DSUtils.ARM9.ReadBytes((uint)(RomInfo.gameFamily == gFamEnum.DP ? 0xB7C : 0xBB4), 4), 0 ) != 0;
+                return BitConverter.ToInt32(DSUtils.ARM9.ReadBytes((uint)(RomInfo.gameFamily == gFamEnum.DP ? 0xB7C : 0xBB4), 4), 0) != 0;
             }
             public static byte[] ReadBytes(uint startOffset, long numberOfBytes = 0) {
                 return ReadFromFile(RomInfo.arm9Path, startOffset, numberOfBytes);
@@ -122,7 +122,7 @@ namespace DSPRE {
             string outDir = Path.Combine(cofd.FileName, modelName);
 
             if (Directory.Exists(outDir)) {
-                if(Directory.GetFiles(outDir).Length > 0) {
+                if (Directory.GetFiles(outDir).Length > 0) {
                     DialogResult d = MessageBox.Show($"Directory \"{outDir}\" already exists and is not empty.\nIts contents will be lost.\n\nDo you want to proceed?", "Directory not empty", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (d.Equals(DialogResult.No)) {
@@ -173,54 +173,42 @@ namespace DSPRE {
             }
         }
 
-        public static void ModelToGLB(string modelName, byte[] modelData, byte[] textureData)
-        {
+        public static void ModelToGLB(string modelName, byte[] modelData, byte[] textureData) {
             MessageBox.Show("Choose output folder.\nDSPRE will automatically create a sub-folder in it.", "Awaiting user input", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            CommonOpenFileDialog cofd = new CommonOpenFileDialog
-            {
+            CommonOpenFileDialog cofd = new CommonOpenFileDialog {
                 IsFolderPicker = true,
                 Multiselect = false
             };
-            if (cofd.ShowDialog() != CommonFileDialogResult.Ok)
-            {
+            if (cofd.ShowDialog() != CommonFileDialogResult.Ok) {
                 return;
             }
 
             string outDir = Path.Combine(cofd.FileName, modelName);
 
-            if (Directory.Exists(outDir))
-            {
-                if (Directory.GetFiles(outDir).Length > 0)
-                {
+            if (Directory.Exists(outDir)) {
+                if (Directory.GetFiles(outDir).Length > 0) {
                     DialogResult d = MessageBox.Show($"Directory \"{outDir}\" already exists and is not empty.\nIts contents will be lost.\n\nDo you want to proceed?", "Directory not empty", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                    if (d.Equals(DialogResult.No))
-                    {
+                    if (d.Equals(DialogResult.No)) {
                         return;
-                    }
-                    else
-                    {
+                    } else {
                         Directory.Delete(outDir, recursive: true);
                     }
-                }
-                else
-                {
+                } else {
                     Directory.Delete(outDir, recursive: true);
                 }
             }
             string tempNSBMDPath = outDir + "_temp.nsbmd";
 
-            if (textureData != null && textureData.Length > 0)
-            {
+            if (textureData != null && textureData.Length > 0) {
                 modelData = DSUtils.BuildNSBMDwithTextures(modelData, textureData);
             }
 
             File.WriteAllBytes(tempNSBMDPath, modelData);
 
             /* Check correct creation of temp NSBMD file*/
-            if (!File.Exists(tempNSBMDPath))
-            {
+            if (!File.Exists(tempNSBMDPath)) {
                 MessageBox.Show("NSBMD file corresponding to this map could not be found.\nAborting", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -233,26 +221,19 @@ namespace DSPRE {
             apicula.Start();
             apicula.WaitForExit();
 
-            if (File.Exists(tempNSBMDPath))
-            {
+            if (File.Exists(tempNSBMDPath)) {
                 File.Delete(tempNSBMDPath);
 
-                if (File.Exists(tempNSBMDPath))
-                {
+                if (File.Exists(tempNSBMDPath)) {
                     MessageBox.Show("Temporary NSBMD file deletion failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-            }
-            else
-            {
+            } else {
                 MessageBox.Show("Temporary NSBMD file corresponding to this map disappeared.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            if (apicula.ExitCode == 0)
-            {
+            if (apicula.ExitCode == 0) {
                 MessageBox.Show("NSBMD was exported and converted successfully!", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
+            } else {
                 MessageBox.Show("NSBMD to GLB conversion failed.", "Apicula error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -362,7 +343,7 @@ namespace DSPRE {
                 }
             }
         }
-        
+
         /**
          * Only checks if the overlay is CONFIGURED as compressed
          **/
@@ -481,7 +462,7 @@ namespace DSPRE {
             });
         }
 
-        public static byte[] GetModelWithoutTextures (byte[] modelFile) {
+        public static byte[] GetModelWithoutTextures(byte[] modelFile) {
             byte[] nsbmdHeaderData;
             uint mdl0Size;
             byte[] mdl0Data;
@@ -510,7 +491,7 @@ namespace DSPRE {
             }
             return output.ToArray();
         }
-        
+
         public static byte[] GetTexturesFromTexturedNSBMD(byte[] modelFile) {
             using (BinaryReader byteArrReader = new BinaryReader(new MemoryStream(modelFile))) {
                 byteArrReader.BaseStream.Position = 14;
@@ -574,7 +555,7 @@ namespace DSPRE {
                 msWriter.Write(nBlocks); //Number of blocks, now it's 2 because we are inserting textures
 
                 msWriter.Write((uint)(msWriter.BaseStream.Position + 4 * nBlocks)); //Absolute offset to model data. We are gonna have to write two offsets
-                    
+
                 msWriter.Write(modelLength); //Copy offset to TEX0
                 msWriter.Write(wholeMDL0);
                 msWriter.Write(wholeTEX0);
