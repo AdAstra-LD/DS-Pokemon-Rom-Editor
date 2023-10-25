@@ -455,7 +455,7 @@ namespace DSPRE {
             if (disableHandlers) {
                 return;
             }
-            currentFile.radarPokemon[3] = (uint)radarThirdComboBox.SelectedIndex;
+            currentFile.radarPokemon[3] = (uint)radarFourthComboBox.SelectedIndex;
         }
         private void surfSixtyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (disableHandlers) {
