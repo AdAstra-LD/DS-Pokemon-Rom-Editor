@@ -1976,6 +1976,9 @@ namespace DSPRE.Resources {
             [0x01A8] = "CheckCompleteNationalDex",
 
             [0x01AD] = "GetFossilCount",
+            
+            [0x01AE] = "PreparePokeGearCall",
+            [0x01AF] = "StartPokeGearCall",
 
             [0x01B0] = "GetPokeNameFromFossil",
             [0x01B1] = "CheckFossil",
