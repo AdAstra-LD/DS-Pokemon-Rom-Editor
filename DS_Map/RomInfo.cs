@@ -971,11 +971,13 @@ namespace DSPRE {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     string suffix = "";
+                    string pokepersonal = @"data\poketool\personal\personal.narc";
                     if (!gameLanguage.Equals(gLangEnum.Japanese))
                         suffix = "_release";
-
+                    if (gameVersion == gVerEnum.Pearl)
+                        pokepersonal = @"data\poketool\personal_pearl\personal.narc";
                     packedDirsDict = new Dictionary<DirNames, string>() {
-                        [DirNames.personalPokeData] = @"data\poketool\personal\personal.narc",
+                        [DirNames.personalPokeData] = pokepersonal,
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.textArchives] = @"data\msgdata\msg.narc",
 

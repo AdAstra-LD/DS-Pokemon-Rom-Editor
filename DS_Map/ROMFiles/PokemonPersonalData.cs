@@ -151,7 +151,7 @@ namespace DSPRE.ROMFiles {
                 byte colorAndFlip = reader.ReadByte();
                 color = (PokemonDexColor)(colorAndFlip & 0b01111111);
                 flip = ((colorAndFlip >> 7) & 0b00000001) == 1;
-                reader.BaseStream.Position += 2; //alignment
+                //reader.BaseStream.Position += 2; //alignment
 
                 reader.BaseStream.Position += 2; //Alignment
 

@@ -316,7 +316,7 @@ namespace DSPRE {
 
         public string GetDSPREVersion() {
             return "" + Assembly.GetExecutingAssembly().GetName().Version.Major + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor +
-                "." + Assembly.GetExecutingAssembly().GetName().Version.Build;
+                "." + Assembly.GetExecutingAssembly().GetName().Version.Build + "-beta";
         }
 
         private void romToolBoxToolStripMenuItem_Click(object sender, EventArgs e) {
