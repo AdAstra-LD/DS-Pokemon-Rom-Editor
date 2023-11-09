@@ -4609,7 +4609,7 @@ namespace DSPRE {
         }
         #endregion
 
-        #region BDHC Editor
+        #region BDHC I/O
         private void bdhcImportButton_Click(object sender, EventArgs e) {
             OpenFileDialog it = new OpenFileDialog() {
                 Filter = RomInfo.gameFamily == gFamEnum.DP ? MapFile.BDHCFilter : MapFile.BDHCamFilter
@@ -4638,6 +4638,9 @@ namespace DSPRE {
             terrainSizeLBL.Text = currentMapFile.bdhc.Length.ToString() + " B";
             MessageBox.Show("Terrain settings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        #endregion
+
+        #region Soundplates I/O
         private void soundPlatesImportButton_Click(object sender, EventArgs e) {
             OpenFileDialog it = new OpenFileDialog {
                 Filter = MapFile.BGSFilter
