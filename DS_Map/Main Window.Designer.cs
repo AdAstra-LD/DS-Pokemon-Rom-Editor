@@ -907,6 +907,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
             this.directoryEntry2 = new System.DirectoryServices.DirectoryEntry();
+            this.evolutionsEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -11144,7 +11145,8 @@
             // 
             this.monEditorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.personalDataEditorToolStripMenuItem,
-            this.learnsetsEditorToolStripMenuItem});
+            this.learnsetsEditorToolStripMenuItem,
+            this.evolutionsEditorToolStripMenuItem});
             this.monEditorToolStripMenuItem.Enabled = false;
             this.monEditorToolStripMenuItem.Name = "monEditorToolStripMenuItem";
             this.monEditorToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
@@ -11580,6 +11582,13 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // evolutionsEditorToolStripMenuItem
+            // 
+            this.evolutionsEditorToolStripMenuItem.Name = "evolutionsEditorToolStripMenuItem";
+            this.evolutionsEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.evolutionsEditorToolStripMenuItem.Text = "Evolutions Editor";
+            this.evolutionsEditorToolStripMenuItem.Click += new System.EventHandler(this.evolutionsEditorToolStripMenuItem_Click);
             // 
             // MainProgram
             // 
@@ -12791,6 +12800,7 @@
         private System.Windows.Forms.ToolStripMenuItem learnsetsEditorToolStripMenuItem;
         private System.Windows.Forms.Button setSpawnPointButton;
         private System.Windows.Forms.Button saveMatrixButton;
+        private System.Windows.Forms.ToolStripMenuItem evolutionsEditorToolStripMenuItem;
     }
 }
 

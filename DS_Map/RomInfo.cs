@@ -139,7 +139,8 @@ namespace DSPRE {
             monIcons,
 
             interiorBuildingModels,
-            learnsets
+            learnsets,
+            evolutions
         };
         public static Dictionary<DirNames, (string packedDir, string unpackedDir)> gameDirs { get; private set; }
 
@@ -889,6 +890,8 @@ namespace DSPRE {
         public static string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
         public static int GetLearnsetFilesCount() => Directory.GetFiles(gameDirs[DirNames.learnsets].unpackedDir).Length;
         public static int GetPersonalFilesCount() => Directory.GetFiles(gameDirs[DirNames.personalPokeData].unpackedDir).Length;
+        public static string[] GetEvolutionFilesList() => Directory.GetFiles(gameDirs[DirNames.evolutions].unpackedDir);
+        public static int GetEvolutionFilesCount() => GetEvolutionFilesList().Length;
 
         public int GetAreaDataCount() => Directory.GetFiles(gameDirs[DirNames.areaData].unpackedDir).Length;
         public int GetMapTexturesCount() => Directory.GetFiles(gameDirs[DirNames.mapTextures].unpackedDir).Length;
@@ -1001,6 +1004,7 @@ namespace DSPRE {
 
                         [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc",
                         [DirNames.learnsets] = workDir + @"data\poketool\personal\wotbl.narc",
+                        [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
                     };
                     break;
                 case gFamEnum.Plat:
@@ -1033,6 +1037,7 @@ namespace DSPRE {
 
                         [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "enc_data.narc",
                         [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
+                        [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
                     };
                     break;
                 case gFamEnum.HGSS:
@@ -1065,6 +1070,7 @@ namespace DSPRE {
 
                         [DirNames.interiorBuildingModels] = @"data\a\1\4\8",
                         [DirNames.learnsets] = @"data\a\0\3\3",
+                        [DirNames.evolutions] = @"data\a\0\3\4",
                     };
 
                     //Encounter archive is different for SS 

@@ -10667,5 +10667,19 @@ namespace DSPRE {
             statusLabelMessage();
             Update();
         }
+
+        private void evolutionsEditorToolStripMenuItem_Click(object sender, EventArgs e) {
+            statusLabelMessage("Setting up Evolutions Editor...");
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.evolutions, DirNames.monIcons });
+            RomInfo.SetMonIconsPalTableAddress();
+
+            EvolutionsEditor eved = new EvolutionsEditor();
+            eved.ShowDialog();
+
+            statusLabelMessage();
+            Update();
+        }
     }
 }
