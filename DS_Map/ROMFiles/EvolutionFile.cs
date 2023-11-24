@@ -1,4 +1,5 @@
 ﻿using DSPRE.ROMFiles;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using static DSPRE.RomInfo;
@@ -34,6 +35,16 @@ namespace DSPRE {
         Loc_EternaForest = LevelingUp_Female + 2,
         Loc_Route217 = LevelingUp_Female + 3
     }
+
+    public enum EvolutionParamMeaning {
+        Ignored,
+        FromLevel,
+        ItemName,
+        MoveName,
+        PokemonName,
+        BeautyValue,
+    }
+    
     public struct EvolutionData {
         public EvolutionMethod method;
         public ushort param;
@@ -62,6 +73,45 @@ namespace DSPRE {
         public const int numEvolutions = 7;
 
         public EvolutionData[] data;
+
+        public static readonly Dictionary<EvolutionMethod, EvolutionParamMeaning> evoDescriptions = new Dictionary<EvolutionMethod, EvolutionParamMeaning>() {
+            [EvolutionMethod.None] =    EvolutionParamMeaning.Ignored,
+
+            [EvolutionMethod.Friendship220] =       EvolutionParamMeaning.Ignored,
+            [EvolutionMethod.Friendship220_Day] =   EvolutionParamMeaning.Ignored,
+            [EvolutionMethod.Friendship220_Night] = EvolutionParamMeaning.Ignored,
+            [EvolutionMethod.LevelingUp] =          EvolutionParamMeaning.FromLevel,
+            [EvolutionMethod.Trade] =               EvolutionParamMeaning.Ignored,
+
+            [EvolutionMethod.Trade_HeldItem] =  EvolutionParamMeaning.ItemName,
+            [EvolutionMethod.Item] =            EvolutionParamMeaning.ItemName,
+
+            [EvolutionMethod.Atk_Greater_Def] = EvolutionParamMeaning.FromLevel,
+            [EvolutionMethod.Atk_Equal_Def] =   EvolutionParamMeaning.FromLevel,
+            [EvolutionMethod.Def_Greater_Atk] = EvolutionParamMeaning.FromLevel,
+            [EvolutionMethod.Personality1] =    EvolutionParamMeaning.FromLevel,
+            [EvolutionMethod.Personality2] =    EvolutionParamMeaning.FromLevel,
+            [EvolutionMethod.FreeSpaceCheck] =  EvolutionParamMeaning.FromLevel,
+            [EvolutionMethod.Shedinja] =        EvolutionParamMeaning.FromLevel,
+
+            [EvolutionMethod.BeautyThreshold] = EvolutionParamMeaning.BeautyValue,
+            
+            [EvolutionMethod.ItemMale] =        EvolutionParamMeaning.ItemName,
+            [EvolutionMethod.ItemFemale] =      EvolutionParamMeaning.ItemName,
+            [EvolutionMethod.HeldItem_Day] =    EvolutionParamMeaning.ItemName,
+            [EvolutionMethod.HeldItem_Night] =  EvolutionParamMeaning.ItemName,
+
+            [EvolutionMethod.KnowsMove] =       EvolutionParamMeaning.MoveName,
+            
+            [EvolutionMethod.PartyPokemonPresence] = EvolutionParamMeaning.PokemonName,
+
+            [EvolutionMethod.LevelingUp_Male] =   EvolutionParamMeaning.FromLevel,
+            [EvolutionMethod.LevelingUp_Female] = EvolutionParamMeaning.FromLevel,
+
+            [EvolutionMethod.Loc_EternaForest] =     EvolutionParamMeaning.Ignored,
+            [EvolutionMethod.Loc_MtCoronet] =        EvolutionParamMeaning.Ignored,
+            [EvolutionMethod.Loc_Route217] =         EvolutionParamMeaning.Ignored,
+        };
 
         public EvolutionFile(Stream stream) {
             data = new EvolutionData[numEvolutions];

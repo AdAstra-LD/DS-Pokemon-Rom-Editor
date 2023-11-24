@@ -28,18 +28,11 @@
             this.saveDataButton = new System.Windows.Forms.Button();
             this.pokemonPictureBox = new System.Windows.Forms.PictureBox();
             this.monNumberNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.pokemonNameInputComboBox = new DSPRE.InputComboBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.paramLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.evoParamUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.evoParamUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.evoParamUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.evoParamUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.evoParamUpDown5 = new System.Windows.Forms.NumericUpDown();
-            this.evoParamUpDown6 = new System.Windows.Forms.NumericUpDown();
-            this.evoParamUpDown7 = new System.Windows.Forms.NumericUpDown();
-            this.pokemonNameInputComboBox = new DSPRE.InputComboBox();
             this.evoMethodComboBox1 = new DSPRE.InputComboBox();
             this.evoMethodComboBox2 = new DSPRE.InputComboBox();
             this.evoMethodComboBox3 = new DSPRE.InputComboBox();
@@ -47,6 +40,13 @@
             this.evoMethodComboBox5 = new DSPRE.InputComboBox();
             this.evoMethodComboBox6 = new DSPRE.InputComboBox();
             this.evoMethodComboBox7 = new DSPRE.InputComboBox();
+            this.evoParamUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.evoParamUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.evoParamUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.evoParamUpDown4 = new System.Windows.Forms.NumericUpDown();
+            this.evoParamUpDown5 = new System.Windows.Forms.NumericUpDown();
+            this.evoParamUpDown6 = new System.Windows.Forms.NumericUpDown();
+            this.evoParamUpDown7 = new System.Windows.Forms.NumericUpDown();
             this.evoTargetMonComboBox1 = new DSPRE.InputComboBox();
             this.evoTargetMonComboBox2 = new DSPRE.InputComboBox();
             this.evoTargetMonComboBox3 = new DSPRE.InputComboBox();
@@ -54,6 +54,13 @@
             this.evoTargetMonComboBox5 = new DSPRE.InputComboBox();
             this.evoTargetMonComboBox6 = new DSPRE.InputComboBox();
             this.evoTargetMonComboBox7 = new DSPRE.InputComboBox();
+            this.descLabel1 = new System.Windows.Forms.Label();
+            this.descLabel2 = new System.Windows.Forms.Label();
+            this.descLabel3 = new System.Windows.Forms.Label();
+            this.descLabel4 = new System.Windows.Forms.Label();
+            this.descLabel5 = new System.Windows.Forms.Label();
+            this.descLabel6 = new System.Windows.Forms.Label();
+            this.descLabel7 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pokemonPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.monNumberNumericUpDown)).BeginInit();
@@ -119,15 +126,28 @@
             this.monNumberNumericUpDown.TabIndex = 16;
             this.monNumberNumericUpDown.ValueChanged += new System.EventHandler(this.monNumberNumericUpDown_ValueChanged);
             // 
+            // pokemonNameInputComboBox
+            // 
+            this.pokemonNameInputComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.pokemonNameInputComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.pokemonNameInputComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.pokemonNameInputComboBox.FormattingEnabled = true;
+            this.pokemonNameInputComboBox.Location = new System.Drawing.Point(62, 17);
+            this.pokemonNameInputComboBox.Name = "pokemonNameInputComboBox";
+            this.pokemonNameInputComboBox.Size = new System.Drawing.Size(341, 21);
+            this.pokemonNameInputComboBox.TabIndex = 31;
+            this.pokemonNameInputComboBox.SelectedIndexChanged += new System.EventHandler(this.pokemonNameInputComboBox_SelectedIndexChanged);
+            // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnCount = 4;
             this.tableLayoutPanel1.SetColumnSpan(this.tableLayoutPanel2, 4);
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel2.Controls.Add(this.label2, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.paramLabel, 1, 0);
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 89F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.5074F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.7463F));
+            this.tableLayoutPanel2.Controls.Add(this.label2, 3, 0);
+            this.tableLayoutPanel2.Controls.Add(this.paramLabel, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.evoMethodComboBox1, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.evoMethodComboBox2, 0, 2);
@@ -136,20 +156,27 @@
             this.tableLayoutPanel2.Controls.Add(this.evoMethodComboBox5, 0, 5);
             this.tableLayoutPanel2.Controls.Add(this.evoMethodComboBox6, 0, 6);
             this.tableLayoutPanel2.Controls.Add(this.evoMethodComboBox7, 0, 7);
-            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown1, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown2, 1, 2);
-            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown3, 1, 3);
-            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown4, 1, 4);
-            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown5, 1, 5);
-            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown6, 1, 6);
-            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown7, 1, 7);
-            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox1, 2, 1);
-            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox2, 2, 2);
-            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox3, 2, 3);
-            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox4, 2, 4);
-            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox5, 2, 5);
-            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox6, 2, 6);
-            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox7, 2, 7);
+            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown1, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown2, 2, 2);
+            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown3, 2, 3);
+            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown4, 2, 4);
+            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown5, 2, 5);
+            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown6, 2, 6);
+            this.tableLayoutPanel2.Controls.Add(this.evoParamUpDown7, 2, 7);
+            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox1, 3, 1);
+            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox2, 3, 2);
+            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox3, 3, 3);
+            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox4, 3, 4);
+            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox5, 3, 5);
+            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox6, 3, 6);
+            this.tableLayoutPanel2.Controls.Add(this.evoTargetMonComboBox7, 3, 7);
+            this.tableLayoutPanel2.Controls.Add(this.descLabel1, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.descLabel2, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.descLabel3, 1, 3);
+            this.tableLayoutPanel2.Controls.Add(this.descLabel4, 1, 4);
+            this.tableLayoutPanel2.Controls.Add(this.descLabel5, 1, 5);
+            this.tableLayoutPanel2.Controls.Add(this.descLabel6, 1, 6);
+            this.tableLayoutPanel2.Controls.Add(this.descLabel7, 1, 7);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 58);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -169,7 +196,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(343, 4);
+            this.label2.Location = new System.Drawing.Point(380, 4);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 13);
             this.label2.TabIndex = 2;
@@ -178,11 +205,11 @@
             // paramLabel
             // 
             this.paramLabel.AutoSize = true;
-            this.paramLabel.Location = new System.Drawing.Point(231, 4);
+            this.paramLabel.Location = new System.Drawing.Point(284, 4);
             this.paramLabel.Name = "paramLabel";
-            this.paramLabel.Size = new System.Drawing.Size(37, 13);
+            this.paramLabel.Size = new System.Drawing.Size(55, 13);
             this.paramLabel.TabIndex = 1;
-            this.paramLabel.Text = "Param";
+            this.paramLabel.Text = "Parameter";
             // 
             // label1
             // 
@@ -193,109 +220,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Evolution Method";
             // 
-            // evoParamUpDown1
-            // 
-            this.evoParamUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.evoParamUpDown1.Location = new System.Drawing.Point(231, 30);
-            this.evoParamUpDown1.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.evoParamUpDown1.Name = "evoParamUpDown1";
-            this.evoParamUpDown1.Size = new System.Drawing.Size(106, 20);
-            this.evoParamUpDown1.TabIndex = 10;
-            // 
-            // evoParamUpDown2
-            // 
-            this.evoParamUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.evoParamUpDown2.Location = new System.Drawing.Point(231, 63);
-            this.evoParamUpDown2.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.evoParamUpDown2.Name = "evoParamUpDown2";
-            this.evoParamUpDown2.Size = new System.Drawing.Size(106, 20);
-            this.evoParamUpDown2.TabIndex = 11;
-            // 
-            // evoParamUpDown3
-            // 
-            this.evoParamUpDown3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.evoParamUpDown3.Location = new System.Drawing.Point(231, 96);
-            this.evoParamUpDown3.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.evoParamUpDown3.Name = "evoParamUpDown3";
-            this.evoParamUpDown3.Size = new System.Drawing.Size(106, 20);
-            this.evoParamUpDown3.TabIndex = 12;
-            // 
-            // evoParamUpDown4
-            // 
-            this.evoParamUpDown4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.evoParamUpDown4.Location = new System.Drawing.Point(231, 129);
-            this.evoParamUpDown4.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.evoParamUpDown4.Name = "evoParamUpDown4";
-            this.evoParamUpDown4.Size = new System.Drawing.Size(106, 20);
-            this.evoParamUpDown4.TabIndex = 13;
-            // 
-            // evoParamUpDown5
-            // 
-            this.evoParamUpDown5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.evoParamUpDown5.Location = new System.Drawing.Point(231, 162);
-            this.evoParamUpDown5.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.evoParamUpDown5.Name = "evoParamUpDown5";
-            this.evoParamUpDown5.Size = new System.Drawing.Size(106, 20);
-            this.evoParamUpDown5.TabIndex = 14;
-            // 
-            // evoParamUpDown6
-            // 
-            this.evoParamUpDown6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.evoParamUpDown6.Location = new System.Drawing.Point(231, 195);
-            this.evoParamUpDown6.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.evoParamUpDown6.Name = "evoParamUpDown6";
-            this.evoParamUpDown6.Size = new System.Drawing.Size(106, 20);
-            this.evoParamUpDown6.TabIndex = 15;
-            // 
-            // evoParamUpDown7
-            // 
-            this.evoParamUpDown7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.evoParamUpDown7.Location = new System.Drawing.Point(231, 229);
-            this.evoParamUpDown7.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.evoParamUpDown7.Name = "evoParamUpDown7";
-            this.evoParamUpDown7.Size = new System.Drawing.Size(106, 20);
-            this.evoParamUpDown7.TabIndex = 16;
-            // 
-            // pokemonNameInputComboBox
-            // 
-            this.pokemonNameInputComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.pokemonNameInputComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.pokemonNameInputComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.pokemonNameInputComboBox.FormattingEnabled = true;
-            this.pokemonNameInputComboBox.Location = new System.Drawing.Point(62, 17);
-            this.pokemonNameInputComboBox.Name = "pokemonNameInputComboBox";
-            this.pokemonNameInputComboBox.Size = new System.Drawing.Size(341, 21);
-            this.pokemonNameInputComboBox.TabIndex = 31;
-            this.pokemonNameInputComboBox.SelectedIndexChanged += new System.EventHandler(this.pokemonNameInputComboBox_SelectedIndexChanged);
-            // 
             // evoMethodComboBox1
             // 
             this.evoMethodComboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -304,8 +228,9 @@
             this.evoMethodComboBox1.FormattingEnabled = true;
             this.evoMethodComboBox1.Location = new System.Drawing.Point(7, 30);
             this.evoMethodComboBox1.Name = "evoMethodComboBox1";
-            this.evoMethodComboBox1.Size = new System.Drawing.Size(218, 21);
+            this.evoMethodComboBox1.Size = new System.Drawing.Size(182, 21);
             this.evoMethodComboBox1.TabIndex = 3;
+            this.evoMethodComboBox1.SelectedIndexChanged += new System.EventHandler(this.evoMethodComboBox1_SelectedIndexChanged);
             // 
             // evoMethodComboBox2
             // 
@@ -315,8 +240,9 @@
             this.evoMethodComboBox2.FormattingEnabled = true;
             this.evoMethodComboBox2.Location = new System.Drawing.Point(7, 63);
             this.evoMethodComboBox2.Name = "evoMethodComboBox2";
-            this.evoMethodComboBox2.Size = new System.Drawing.Size(218, 21);
+            this.evoMethodComboBox2.Size = new System.Drawing.Size(182, 21);
             this.evoMethodComboBox2.TabIndex = 4;
+            this.evoMethodComboBox2.SelectedIndexChanged += new System.EventHandler(this.evoMethodComboBox2_SelectedIndexChanged);
             // 
             // evoMethodComboBox3
             // 
@@ -326,8 +252,9 @@
             this.evoMethodComboBox3.FormattingEnabled = true;
             this.evoMethodComboBox3.Location = new System.Drawing.Point(7, 96);
             this.evoMethodComboBox3.Name = "evoMethodComboBox3";
-            this.evoMethodComboBox3.Size = new System.Drawing.Size(218, 21);
+            this.evoMethodComboBox3.Size = new System.Drawing.Size(182, 21);
             this.evoMethodComboBox3.TabIndex = 5;
+            this.evoMethodComboBox3.SelectedIndexChanged += new System.EventHandler(this.evoMethodComboBox3_SelectedIndexChanged);
             // 
             // evoMethodComboBox4
             // 
@@ -337,8 +264,9 @@
             this.evoMethodComboBox4.FormattingEnabled = true;
             this.evoMethodComboBox4.Location = new System.Drawing.Point(7, 129);
             this.evoMethodComboBox4.Name = "evoMethodComboBox4";
-            this.evoMethodComboBox4.Size = new System.Drawing.Size(218, 21);
+            this.evoMethodComboBox4.Size = new System.Drawing.Size(182, 21);
             this.evoMethodComboBox4.TabIndex = 6;
+            this.evoMethodComboBox4.SelectedIndexChanged += new System.EventHandler(this.evoMethodComboBox4_SelectedIndexChanged);
             // 
             // evoMethodComboBox5
             // 
@@ -348,8 +276,9 @@
             this.evoMethodComboBox5.FormattingEnabled = true;
             this.evoMethodComboBox5.Location = new System.Drawing.Point(7, 162);
             this.evoMethodComboBox5.Name = "evoMethodComboBox5";
-            this.evoMethodComboBox5.Size = new System.Drawing.Size(218, 21);
+            this.evoMethodComboBox5.Size = new System.Drawing.Size(182, 21);
             this.evoMethodComboBox5.TabIndex = 7;
+            this.evoMethodComboBox5.SelectedIndexChanged += new System.EventHandler(this.evoMethodComboBox5_SelectedIndexChanged);
             // 
             // evoMethodComboBox6
             // 
@@ -359,8 +288,9 @@
             this.evoMethodComboBox6.FormattingEnabled = true;
             this.evoMethodComboBox6.Location = new System.Drawing.Point(7, 195);
             this.evoMethodComboBox6.Name = "evoMethodComboBox6";
-            this.evoMethodComboBox6.Size = new System.Drawing.Size(218, 21);
+            this.evoMethodComboBox6.Size = new System.Drawing.Size(182, 21);
             this.evoMethodComboBox6.TabIndex = 8;
+            this.evoMethodComboBox6.SelectedIndexChanged += new System.EventHandler(this.evoMethodComboBox6_SelectedIndexChanged);
             // 
             // evoMethodComboBox7
             // 
@@ -370,8 +300,107 @@
             this.evoMethodComboBox7.FormattingEnabled = true;
             this.evoMethodComboBox7.Location = new System.Drawing.Point(7, 228);
             this.evoMethodComboBox7.Name = "evoMethodComboBox7";
-            this.evoMethodComboBox7.Size = new System.Drawing.Size(218, 21);
+            this.evoMethodComboBox7.Size = new System.Drawing.Size(182, 21);
             this.evoMethodComboBox7.TabIndex = 9;
+            this.evoMethodComboBox7.SelectedIndexChanged += new System.EventHandler(this.evoMethodComboBox7_SelectedIndexChanged);
+            // 
+            // evoParamUpDown1
+            // 
+            this.evoParamUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.evoParamUpDown1.Location = new System.Drawing.Point(284, 30);
+            this.evoParamUpDown1.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.evoParamUpDown1.Name = "evoParamUpDown1";
+            this.evoParamUpDown1.Size = new System.Drawing.Size(90, 20);
+            this.evoParamUpDown1.TabIndex = 10;
+            this.evoParamUpDown1.ValueChanged += new System.EventHandler(this.evoParamUpDown1_ValueChanged);
+            // 
+            // evoParamUpDown2
+            // 
+            this.evoParamUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.evoParamUpDown2.Location = new System.Drawing.Point(284, 63);
+            this.evoParamUpDown2.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.evoParamUpDown2.Name = "evoParamUpDown2";
+            this.evoParamUpDown2.Size = new System.Drawing.Size(90, 20);
+            this.evoParamUpDown2.TabIndex = 11;
+            this.evoParamUpDown2.ValueChanged += new System.EventHandler(this.evoParamUpDown2_ValueChanged);
+            // 
+            // evoParamUpDown3
+            // 
+            this.evoParamUpDown3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.evoParamUpDown3.Location = new System.Drawing.Point(284, 96);
+            this.evoParamUpDown3.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.evoParamUpDown3.Name = "evoParamUpDown3";
+            this.evoParamUpDown3.Size = new System.Drawing.Size(90, 20);
+            this.evoParamUpDown3.TabIndex = 12;
+            this.evoParamUpDown3.ValueChanged += new System.EventHandler(this.evoParamUpDown3_ValueChanged);
+            // 
+            // evoParamUpDown4
+            // 
+            this.evoParamUpDown4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.evoParamUpDown4.Location = new System.Drawing.Point(284, 129);
+            this.evoParamUpDown4.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.evoParamUpDown4.Name = "evoParamUpDown4";
+            this.evoParamUpDown4.Size = new System.Drawing.Size(90, 20);
+            this.evoParamUpDown4.TabIndex = 13;
+            this.evoParamUpDown4.ValueChanged += new System.EventHandler(this.evoParamUpDown4_ValueChanged);
+            // 
+            // evoParamUpDown5
+            // 
+            this.evoParamUpDown5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.evoParamUpDown5.Location = new System.Drawing.Point(284, 162);
+            this.evoParamUpDown5.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.evoParamUpDown5.Name = "evoParamUpDown5";
+            this.evoParamUpDown5.Size = new System.Drawing.Size(90, 20);
+            this.evoParamUpDown5.TabIndex = 14;
+            this.evoParamUpDown5.ValueChanged += new System.EventHandler(this.evoParamUpDown5_ValueChanged);
+            // 
+            // evoParamUpDown6
+            // 
+            this.evoParamUpDown6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.evoParamUpDown6.Location = new System.Drawing.Point(284, 195);
+            this.evoParamUpDown6.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.evoParamUpDown6.Name = "evoParamUpDown6";
+            this.evoParamUpDown6.Size = new System.Drawing.Size(90, 20);
+            this.evoParamUpDown6.TabIndex = 15;
+            this.evoParamUpDown6.ValueChanged += new System.EventHandler(this.evoParamUpDown6_ValueChanged);
+            // 
+            // evoParamUpDown7
+            // 
+            this.evoParamUpDown7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.evoParamUpDown7.Location = new System.Drawing.Point(284, 229);
+            this.evoParamUpDown7.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.evoParamUpDown7.Name = "evoParamUpDown7";
+            this.evoParamUpDown7.Size = new System.Drawing.Size(90, 20);
+            this.evoParamUpDown7.TabIndex = 16;
+            this.evoParamUpDown7.ValueChanged += new System.EventHandler(this.evoParamUpDown7_ValueChanged);
             // 
             // evoTargetMonComboBox1
             // 
@@ -379,9 +408,9 @@
             this.evoTargetMonComboBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.evoTargetMonComboBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.evoTargetMonComboBox1.FormattingEnabled = true;
-            this.evoTargetMonComboBox1.Location = new System.Drawing.Point(343, 30);
+            this.evoTargetMonComboBox1.Location = new System.Drawing.Point(380, 30);
             this.evoTargetMonComboBox1.Name = "evoTargetMonComboBox1";
-            this.evoTargetMonComboBox1.Size = new System.Drawing.Size(220, 21);
+            this.evoTargetMonComboBox1.Size = new System.Drawing.Size(183, 21);
             this.evoTargetMonComboBox1.TabIndex = 17;
             // 
             // evoTargetMonComboBox2
@@ -390,9 +419,9 @@
             this.evoTargetMonComboBox2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.evoTargetMonComboBox2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.evoTargetMonComboBox2.FormattingEnabled = true;
-            this.evoTargetMonComboBox2.Location = new System.Drawing.Point(343, 63);
+            this.evoTargetMonComboBox2.Location = new System.Drawing.Point(380, 63);
             this.evoTargetMonComboBox2.Name = "evoTargetMonComboBox2";
-            this.evoTargetMonComboBox2.Size = new System.Drawing.Size(220, 21);
+            this.evoTargetMonComboBox2.Size = new System.Drawing.Size(183, 21);
             this.evoTargetMonComboBox2.TabIndex = 18;
             // 
             // evoTargetMonComboBox3
@@ -401,9 +430,9 @@
             this.evoTargetMonComboBox3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.evoTargetMonComboBox3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.evoTargetMonComboBox3.FormattingEnabled = true;
-            this.evoTargetMonComboBox3.Location = new System.Drawing.Point(343, 96);
+            this.evoTargetMonComboBox3.Location = new System.Drawing.Point(380, 96);
             this.evoTargetMonComboBox3.Name = "evoTargetMonComboBox3";
-            this.evoTargetMonComboBox3.Size = new System.Drawing.Size(220, 21);
+            this.evoTargetMonComboBox3.Size = new System.Drawing.Size(183, 21);
             this.evoTargetMonComboBox3.TabIndex = 19;
             // 
             // evoTargetMonComboBox4
@@ -412,9 +441,9 @@
             this.evoTargetMonComboBox4.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.evoTargetMonComboBox4.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.evoTargetMonComboBox4.FormattingEnabled = true;
-            this.evoTargetMonComboBox4.Location = new System.Drawing.Point(343, 129);
+            this.evoTargetMonComboBox4.Location = new System.Drawing.Point(380, 129);
             this.evoTargetMonComboBox4.Name = "evoTargetMonComboBox4";
-            this.evoTargetMonComboBox4.Size = new System.Drawing.Size(220, 21);
+            this.evoTargetMonComboBox4.Size = new System.Drawing.Size(183, 21);
             this.evoTargetMonComboBox4.TabIndex = 20;
             // 
             // evoTargetMonComboBox5
@@ -423,9 +452,9 @@
             this.evoTargetMonComboBox5.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.evoTargetMonComboBox5.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.evoTargetMonComboBox5.FormattingEnabled = true;
-            this.evoTargetMonComboBox5.Location = new System.Drawing.Point(343, 162);
+            this.evoTargetMonComboBox5.Location = new System.Drawing.Point(380, 162);
             this.evoTargetMonComboBox5.Name = "evoTargetMonComboBox5";
-            this.evoTargetMonComboBox5.Size = new System.Drawing.Size(220, 21);
+            this.evoTargetMonComboBox5.Size = new System.Drawing.Size(183, 21);
             this.evoTargetMonComboBox5.TabIndex = 21;
             // 
             // evoTargetMonComboBox6
@@ -434,9 +463,9 @@
             this.evoTargetMonComboBox6.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.evoTargetMonComboBox6.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.evoTargetMonComboBox6.FormattingEnabled = true;
-            this.evoTargetMonComboBox6.Location = new System.Drawing.Point(343, 195);
+            this.evoTargetMonComboBox6.Location = new System.Drawing.Point(380, 195);
             this.evoTargetMonComboBox6.Name = "evoTargetMonComboBox6";
-            this.evoTargetMonComboBox6.Size = new System.Drawing.Size(220, 21);
+            this.evoTargetMonComboBox6.Size = new System.Drawing.Size(183, 21);
             this.evoTargetMonComboBox6.TabIndex = 22;
             // 
             // evoTargetMonComboBox7
@@ -444,10 +473,87 @@
             this.evoTargetMonComboBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.evoTargetMonComboBox7.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.evoTargetMonComboBox7.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.evoTargetMonComboBox7.Location = new System.Drawing.Point(343, 228);
+            this.evoTargetMonComboBox7.Location = new System.Drawing.Point(380, 228);
             this.evoTargetMonComboBox7.Name = "evoTargetMonComboBox7";
-            this.evoTargetMonComboBox7.Size = new System.Drawing.Size(220, 21);
+            this.evoTargetMonComboBox7.Size = new System.Drawing.Size(183, 21);
             this.evoTargetMonComboBox7.TabIndex = 0;
+            // 
+            // descLabel1
+            // 
+            this.descLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.descLabel1.AutoSize = true;
+            this.descLabel1.Location = new System.Drawing.Point(195, 34);
+            this.descLabel1.Name = "descLabel1";
+            this.descLabel1.Size = new System.Drawing.Size(83, 13);
+            this.descLabel1.TabIndex = 23;
+            this.descLabel1.Text = "at Level";
+            this.descLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // descLabel2
+            // 
+            this.descLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.descLabel2.AutoSize = true;
+            this.descLabel2.Location = new System.Drawing.Point(195, 67);
+            this.descLabel2.Name = "descLabel2";
+            this.descLabel2.Size = new System.Drawing.Size(83, 13);
+            this.descLabel2.TabIndex = 24;
+            this.descLabel2.Text = "at Level";
+            this.descLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // descLabel3
+            // 
+            this.descLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.descLabel3.AutoSize = true;
+            this.descLabel3.Location = new System.Drawing.Point(195, 100);
+            this.descLabel3.Name = "descLabel3";
+            this.descLabel3.Size = new System.Drawing.Size(83, 13);
+            this.descLabel3.TabIndex = 25;
+            this.descLabel3.Text = "at Level";
+            this.descLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // descLabel4
+            // 
+            this.descLabel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.descLabel4.AutoSize = true;
+            this.descLabel4.Location = new System.Drawing.Point(195, 133);
+            this.descLabel4.Name = "descLabel4";
+            this.descLabel4.Size = new System.Drawing.Size(83, 13);
+            this.descLabel4.TabIndex = 26;
+            this.descLabel4.Text = "at Level";
+            this.descLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // descLabel5
+            // 
+            this.descLabel5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.descLabel5.AutoSize = true;
+            this.descLabel5.Location = new System.Drawing.Point(195, 166);
+            this.descLabel5.Name = "descLabel5";
+            this.descLabel5.Size = new System.Drawing.Size(83, 13);
+            this.descLabel5.TabIndex = 27;
+            this.descLabel5.Text = "at Level";
+            this.descLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // descLabel6
+            // 
+            this.descLabel6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.descLabel6.AutoSize = true;
+            this.descLabel6.Location = new System.Drawing.Point(195, 199);
+            this.descLabel6.Name = "descLabel6";
+            this.descLabel6.Size = new System.Drawing.Size(83, 13);
+            this.descLabel6.TabIndex = 28;
+            this.descLabel6.Text = "at Level";
+            this.descLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // descLabel7
+            // 
+            this.descLabel7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.descLabel7.AutoSize = true;
+            this.descLabel7.Location = new System.Drawing.Point(195, 232);
+            this.descLabel7.Name = "descLabel7";
+            this.descLabel7.Size = new System.Drawing.Size(83, 13);
+            this.descLabel7.TabIndex = 29;
+            this.descLabel7.Text = "at Level";
+            this.descLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // EvolutionsEditor
             // 
@@ -506,5 +612,12 @@
         private InputComboBox evoTargetMonComboBox5;
         private InputComboBox evoTargetMonComboBox6;
         private InputComboBox evoTargetMonComboBox7;
+        private System.Windows.Forms.Label descLabel1;
+        private System.Windows.Forms.Label descLabel2;
+        private System.Windows.Forms.Label descLabel3;
+        private System.Windows.Forms.Label descLabel4;
+        private System.Windows.Forms.Label descLabel5;
+        private System.Windows.Forms.Label descLabel6;
+        private System.Windows.Forms.Label descLabel7;
     }
 }
