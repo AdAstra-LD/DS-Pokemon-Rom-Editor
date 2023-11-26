@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using static DSPRE.RomInfo;
 
 namespace DSPRE {
-    public enum EvolutionMethod : ushort {
+    public enum EvolutionMethod : short {
         None = 0,
         Friendship220 = 1,
         Friendship220_Day = 2,
@@ -47,8 +47,8 @@ namespace DSPRE {
     
     public struct EvolutionData {
         public EvolutionMethod method;
-        public ushort param;
-        public ushort target;
+        public short param;
+        public short target;
 
         public bool isValid() {
             if (method == EvolutionMethod.None) {
@@ -62,7 +62,7 @@ namespace DSPRE {
                 return param > 0 && param <= 100;
             }
 
-            if (target == 0) {
+            if (target <= 0) {
                 return false;
             }
 
@@ -118,21 +118,23 @@ namespace DSPRE {
 
             using (BinaryReader reader = new BinaryReader(stream)) {
                 for (int i = 0; i < numEvolutions; i++) {
-                    data[i].method = (EvolutionMethod)reader.ReadUInt16();
-                    data[i].param = reader.ReadUInt16();
-                    data[i].target = reader.ReadUInt16();
+                    data[i].method = (EvolutionMethod)reader.ReadInt16();
+                    data[i].param = reader.ReadInt16();
+                    data[i].target = reader.ReadInt16();
                 }
             }
         }
 
         public EvolutionFile(int ID) : this(new FileStream(RomInfo.gameDirs[DirNames.evolutions].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
 
+        public EvolutionFile() { }
+
         public override byte[] ToByteArray() {
             using (MemoryStream memoryStream = new MemoryStream()) {
                 using (BinaryWriter writer = new BinaryWriter(memoryStream)) {
                     foreach (EvolutionData evData in data) {
                         if (evData.isValid()) {
-                            writer.Write((ushort)evData.method);
+                            writer.Write((short)evData.method);
                             writer.Write(evData.param);
                             writer.Write(evData.target);
                         }

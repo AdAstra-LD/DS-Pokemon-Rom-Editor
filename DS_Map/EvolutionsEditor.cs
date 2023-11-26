@@ -116,7 +116,34 @@ namespace DSPRE {
         }
 
         private void saveDataButton_Click(object sender, EventArgs e) {
-            currentLoadedFile.SaveToFileDefaultDir(currentLoadedId, true);
+            //Build a new EvolutionFile from the current GUI state
+
+            EvolutionFile newFile = new EvolutionFile();
+            List<EvolutionData> data = new List<EvolutionData>();
+
+            for (int i = 0; i < EvolutionFile.numEvolutions; i++) {
+                (ComboBox m, Label l, NumericUpDown p, ComboBox t) = evoRows[i];
+
+                //Retrieve method from enum
+                EvolutionMethod method = (EvolutionMethod)m.SelectedIndex;
+                short param = (short)p.Value;
+                short target = (short)t.SelectedIndex;
+
+                EvolutionData ed = new EvolutionData() {
+                    method = method,
+                    param = param,
+                    target = target
+                };
+
+                if (ed.isValid()) {
+                    data.Add(ed);
+                }
+            }
+
+            newFile.data = data.ToArray();
+            newFile.SaveToFileDefaultDir(currentLoadedId, true);
+            currentLoadedFile = newFile;
+
             setDirty(false);
         }
         private bool CheckDiscardChanges() {
