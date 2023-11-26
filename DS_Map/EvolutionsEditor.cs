@@ -208,6 +208,14 @@ namespace DSPRE {
         }
 
 
+        private void ResetGUIRow(int index) {
+            //Reset GUI row
+            (ComboBox m, Label l, NumericUpDown p, ComboBox t) = evoRows[index];
+            l.Text = "";
+            p.Enabled = false;
+            t.Enabled = false;
+            p.Value = 0;
+        }
 
         private void UpdateDescriptionLabel(int index) {
             if (index < 0 || index >= evoRows.Length) {
@@ -215,8 +223,13 @@ namespace DSPRE {
             }
             (ComboBox m, Label l, NumericUpDown p, ComboBox t) = evoRows[index];
 
-            if (m.SelectedIndex < 0 || m.SelectedIndex > Enum.GetValues(typeof(EvolutionMethod)).Length) {
-                l.Text = "";
+            if (m.SelectedIndex <= (int)EvolutionMethod.None) {
+                ResetGUIRow(index);
+                return;
+            }
+            if ( m.SelectedIndex > Enum.GetValues(typeof(EvolutionMethod)).Length){
+                MessageBox.Show("Invalid evolution method selected", "Evolution method error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ResetGUIRow(index);
                 return;
             }
 
@@ -230,39 +243,47 @@ namespace DSPRE {
                 case EvolutionParamMeaning.Ignored:
                     l.Text = "";
                     p.Enabled = false;
+                    t.Enabled = true;
+
                     if (p.Value != 0) {
                         Console.WriteLine("Warning: Evolution parameter is not 0, but it should be.");
                     }
+                    
                     p.Value = 0;
                     break;
 
                 case EvolutionParamMeaning.FromLevel:
                     l.Text = "From Level: ";
                     p.Enabled = true;
+                    t.Enabled = true;
                     p.Maximum = 100;
                     break;
 
                 case EvolutionParamMeaning.ItemName:
                     l.Text = $"({itemNames[(int)p.Value]})";
                     p.Enabled = true;
+                    t.Enabled = true;
                     p.Maximum = itemNames.Length - 1;
                     break;
 
                 case EvolutionParamMeaning.MoveName:
                     l.Text = $"({moveNames[(int)p.Value]})";
                     p.Enabled = true;
+                    t.Enabled = true;
                     p.Maximum = moveNames.Length - 1;
                     break;
 
                 case EvolutionParamMeaning.PokemonName:
                     l.Text = $"({pokeNames[(int)p.Value]})";
                     p.Enabled = true;
+                    t.Enabled = true;
                     p.Maximum = pokeNames.Length - 1;
                     break;
 
                 case EvolutionParamMeaning.BeautyValue:
                     l.Text = "Beauty >=";
                     p.Enabled = true;
+                    t.Enabled = true;
                     p.Maximum = 255;
                     break;
 
