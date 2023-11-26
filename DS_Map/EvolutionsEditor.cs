@@ -231,6 +231,9 @@ namespace DSPRE {
                     p.Enabled = true;
                     p.Maximum = 255;
                     break;
+
+                default:
+                    throw new Exception("Unknown evolution parameter type: " + type);
             }
 
             disableHandlers = false;
