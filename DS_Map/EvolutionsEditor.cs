@@ -122,18 +122,7 @@ namespace DSPRE {
             List<EvolutionData> data = new List<EvolutionData>();
 
             for (int i = 0; i < EvolutionFile.numEvolutions; i++) {
-                (ComboBox m, Label l, NumericUpDown p, ComboBox t) = evoRows[i];
-
-                //Retrieve method from enum
-                EvolutionMethod method = (EvolutionMethod)m.SelectedIndex;
-                short param = (short)p.Value;
-                short target = (short)t.SelectedIndex;
-
-                EvolutionData ed = new EvolutionData() {
-                    method = method,
-                    param = param,
-                    target = target
-                };
+                EvolutionData ed = EvolutionDataFromGUI(i);
 
                 if (ed.isValid()) {
                     data.Add(ed);
@@ -146,6 +135,24 @@ namespace DSPRE {
 
             setDirty(false);
         }
+
+        private EvolutionData EvolutionDataFromGUI(int i) {
+            (ComboBox m, Label l, NumericUpDown p, ComboBox t) = evoRows[i];
+
+            //Retrieve evo method from enum
+            EvolutionMethod method = (EvolutionMethod)m.SelectedIndex;
+            short param = (short)p.Value;
+            short target = (short)t.SelectedIndex;
+
+            EvolutionData ed = new EvolutionData() {
+                method = method,
+                param = param,
+                target = target
+            };
+
+            return ed;
+        }
+
         private bool CheckDiscardChanges() {
             if (!dirty) {
                 return true;
