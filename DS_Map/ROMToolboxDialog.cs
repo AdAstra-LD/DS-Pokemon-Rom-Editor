@@ -30,7 +30,7 @@ namespace DSPRE {
 
         public static bool overlay1MustBeRestoredFromBackup { get; private set; } = true;
 
-        public static int expandedTrainerNameLength = 12;
+        public static readonly int expandedTrainerNameLength = 12;
 
         #region Constructor
         public ROMToolboxDialog() {
@@ -40,13 +40,14 @@ namespace DSPRE {
 
             if (RomInfo.gameLanguage == gLangEnum.English || RomInfo.gameLanguage == gLangEnum.Spanish) {
                 CheckARM9ExpansionApplied();
-                CheckExpandedTrainerNamespatchApplied();
             } else {
                 DisableARM9patch("Unsupported\nlanguage");
                 DisableBDHCamPatch("Unsupported\nlanguage");
                 DisableScrcmdRepointPatch("Unsupported\nlanguage");
-                DisableTrainerNameExpansionPatch("Unsuported\nlanguage");
             }
+
+            CheckExpandedTrainerNamesPatchApplied();
+
 
             switch (RomInfo.gameFamily) {
                 case gFamEnum.DP:
@@ -316,33 +317,21 @@ namespace DSPRE {
             //throw new NotImplementedException();
         }
 
-        public void CheckExpandedTrainerNamespatchApplied() {
-            if (!flag_TrainerNamesExpanded) {
-                uint position = 0x6AC32;
-                switch (RomInfo.gameFamily) {
-                    case gFamEnum.DP:
-                        if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x6AC32;
-                        else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x6AC8E;
-                        break;
-                    case gFamEnum.Plat:
-                        if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x791DE;
-                        else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x7927E;
-                        break;
-                    case gFamEnum.HGSS:
-                        if (RomInfo.gameLanguage.Equals(gLangEnum.English) || RomInfo.gameVersion.Equals(gVerEnum.SoulSilver)) position = 0x7342E;
-                        else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x73426;
-                        break;
-                }
-                byte initValue = DSUtils.ARM9.ReadByte(position);
-                if (initValue > (byte)TrainerFile.maxNameLen) {
-                    DisableTrainerNameExpansionPatch("Already\nApplied");
-                    ROMToolboxDialog.flag_TrainerNamesExpanded = true;
-                    ROMToolboxDialog.expandedTrainerNameLength = initValue;
-                }
-            } else {
+        public void CheckExpandedTrainerNamesPatchApplied() {
+            if (flag_TrainerNamesExpanded) {
                 DisableTrainerNameExpansionPatch("Already\nApplied");
-            }
+            } else {
+                if (RomInfo.trainerNameLenOffset < 0 ) {
+                    DisableTrainerNameExpansionPatch("Unsupported");
+                } else {
+                    int v = RomInfo.SetTrainerNameMaxLen();
 
+                    if (v > TrainerFile.defaultNameLen+1) { 
+                        DisableTrainerNameExpansionPatch("Already\nApplied");
+                        ROMToolboxDialog.flag_TrainerNamesExpanded = true;
+                    }
+                }
+            }
         }
         #endregion
 
@@ -832,46 +821,24 @@ namespace DSPRE {
             // HeartGold    Spain   ARM9 at 0x73426
             // SoulSilver   USA     ARM9 at 0x7342E
             // SoulSilver   Spain   ARM9 at 0x7342E     // TODO: Verify
-            DialogResult d;
-            int position = 0x7342E;
-            bool gameFamGood = true;
-            d = MessageBox.Show($"Applying this patch will set the Trainer Name max length to {ROMToolboxDialog.expandedTrainerNameLength}.\n" +
-                "Please note that if you have modified the ARM9 these offsets may be wrong.\n" +
-                "If you have done so we encourage you to seek in your ARM9 for where to make the modification as your offset might change.\n\n" +
+
+            DialogResult d = MessageBox.Show($"Applying this patch will set the Trainer Name max length to {ROMToolboxDialog.expandedTrainerNameLength-1} usable characters.\n" +
                 "Are you sure you want to proceed?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
-                switch (RomInfo.gameFamily) {
-                    case gFamEnum.DP:
-                        if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x6AC32;
-                        else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x6AC8E;
-                        else gameFamGood = false;
-                        break;
-                    case gFamEnum.Plat:
-                        if (RomInfo.gameLanguage.Equals(gLangEnum.English)) position = 0x791DE;
-                        else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x7927E;
-                        else gameFamGood = false;
-                        break;
-                    case gFamEnum.HGSS:
-                        if (RomInfo.gameLanguage.Equals(gLangEnum.English) || RomInfo.gameVersion.Equals(gVerEnum.SoulSilver)) position = 0x7342E;
-                        else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) position = 0x73426;
-                        else gameFamGood = false;
-                        break;
-                }
-                if (gameFamGood) {
-                    using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer()) {
-                        wr.BaseStream.Position = position;
+                try {
+                    using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer(RomInfo.trainerNameLenOffset)) {
                         wr.Write((byte)ROMToolboxDialog.expandedTrainerNameLength);
                     }
+
                     ROMToolboxDialog.flag_TrainerNamesExpanded = true;
                     DisableTrainerNameExpansionPatch("Already applied");
                     expandTrainerNamesCB.Visible = true;
-                    MessageBox.Show("Trainer Names have been expanded.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                } else {
-                    MessageBox.Show("Sorry this game language does not have a recorded offset for this patch.\n\n" +
-                        "Reach out in our discord if you want to help researching it!",
-                        "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    RomInfo.SetTrainerNameMaxLen();
+                    MessageBox.Show("Trainer Names have been extended.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } catch (IOException) {
+                    MessageBox.Show("ARM9 could not be written.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);

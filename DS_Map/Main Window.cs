@@ -8603,6 +8603,8 @@ namespace DSPRE {
         }
         private void SetupTrainerEditor() {
             disableHandlers = true;
+
+            SetTrainerNameMaxLen();
             SetupTrainerClassEncounterMusicTable();
             /* Extract essential NARCs sub-archives*/
             statusLabelMessage("Setting up Trainer Editor...");
@@ -9020,26 +9022,6 @@ namespace DSPRE {
         }
 
         private void trainerSaveCurrentButton_Click(object sender, EventArgs e) {
-            if (!ROMToolboxDialog.flag_TrainerNamesExpanded && trainerNameTextBox.Text.Length > TrainerFile.maxNameLen) {
-                DialogResult d2;
-                MessageBox.Show($"The length of this Trainer name exceeds {TrainerFile.maxNameLen} characters.",
-                    "Trainer data could not be saved!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                d2 = MessageBox.Show("Within the RomToolBox (found near the wild editor) you can expand this limit if you are working on an English or Spanish rom (for now).",
-                "Do you wish to go there now?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (d2 == DialogResult.Yes) {
-                    romToolBoxToolStripMenuItem_Click(null, null);
-                }
-                return;
-            }
-
-            if (trainerNameTextBox.Text.Length > ROMToolboxDialog.expandedTrainerNameLength) {
-                MessageBox.Show($"The length of this Trainer name exceeds {ROMToolboxDialog.expandedTrainerNameLength} characters.",
-                    "Trainer data could not be saved!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-
-            }
-
             currentTrainerFile.trp.partyCount = (byte)partyCountUpDown.Value;
             currentTrainerFile.trp.chooseMoves = trainerMovesCheckBox.Checked;
             currentTrainerFile.trp.chooseItems = trainerItemsCheckBox.Checked;
@@ -9115,7 +9097,20 @@ namespace DSPRE {
             UpdateCurrentTrainerName(newName: trainerNameTextBox.Text);
             UpdateCurrentTrainerShownName();
 
-            MessageBox.Show("Trainer saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (trainerNameTextBox.Text.Length > RomInfo.trainerNameMaxLen - 1) { //Subtract 1 to account for special end character. 
+                //Expose a smaller limit to the user
+                if (RomInfo.trainerNameLenOffset >= 0) {
+                    MessageBox.Show($"Trainer File saved successfully. However:\nYou attempted to save a Trainer whose name exceeds {RomInfo.trainerNameMaxLen-1} characters.\nThis may lead to issues in game." +
+                        (ROMToolboxDialog.flag_TrainerNamesExpanded ? "\n\nIt's recommended that you use a shorter name." : "\n\nRefer to the ROM Toolbox to extend Trainer names."),
+                        "Saved successfully, but...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                } else {
+                    MessageBox.Show($"Trainer File saved successfully. However:\nThe Trainer name length could not be safely determined for this ROM.\n" +
+                        $"You attempted to save a Trainer whose name exceeds {RomInfo.trainerNameMaxLen-1} characters.\nThis will most likely lead to issues in game.",
+                        "Saved successfully, but...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            } else {
+                MessageBox.Show("Trainer saved successfully!", "Saved successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void UpdateCurrentTrainerShownName() {

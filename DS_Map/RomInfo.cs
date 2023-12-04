@@ -65,6 +65,8 @@ namespace DSPRE {
         public static int trainerClassMessageNumber { get; private set; }
         public static int trainerNamesMessageNumber { get; private set; }
         public static int locationNamesTextNumber { get; private set; }
+        public static int trainerNameLenOffset { get; private set; }
+        public static int trainerNameMaxLen { get; private set; }
 
         public static string internalNamesLocation { get; private set; }
         public static readonly byte internalNameLength = 16;
@@ -183,6 +185,7 @@ namespace DSPRE {
             SetLocationNamesTextNumber();
             SetTrainerNamesMessageNumber();
             SetTrainerClassMessageNumber();
+            SetTrainerNameLenOffset();
 
             /* System */
             ScriptCommandParametersDict = BuildCommandParametersDatabase(gameFamily);
@@ -742,7 +745,7 @@ namespace DSPRE {
             }
         }
 
-        private void SetItemScriptFileNumber() {
+        private static void SetItemScriptFileNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     itemScriptFileNumber = 370;
@@ -755,7 +758,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetNullEncounterID() {
+        private static void SetNullEncounterID() {
             switch (gameFamily) {
                 case gFamEnum.DP:
                 case gFamEnum.Plat:
@@ -767,7 +770,7 @@ namespace DSPRE {
             }
         }
 
-        private void SetAbilityNamesTextNumber() {
+        private static void SetAbilityNamesTextNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     abilityNamesTextNumber = 552;
@@ -783,7 +786,7 @@ namespace DSPRE {
             }
         }
 
-        private void SetAttackNamesTextNumber() {
+        private static void SetAttackNamesTextNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     attackNamesTextNumber = 588;
@@ -796,7 +799,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetItemNamesTextNumber() {
+        private static void SetItemNamesTextNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     itemNamesTextNumber = 344;
@@ -809,7 +812,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetLocationNamesTextNumber() {
+        private static void SetLocationNamesTextNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     locationNamesTextNumber = 382;
@@ -822,7 +825,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetPokemonNamesTextNumber() {
+        private static void SetPokemonNamesTextNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     pokemonNamesTextNumbers = new int[2] { 362, 363 };
@@ -835,7 +838,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetTrainerNamesMessageNumber() {
+        private static void SetTrainerNamesMessageNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     trainerNamesMessageNumber = 559;
@@ -854,7 +857,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetTrainerClassMessageNumber() {
+        private static void SetTrainerClassMessageNumber() {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     trainerClassMessageNumber = 560;
@@ -872,6 +875,61 @@ namespace DSPRE {
                     }
                     break;
             }
+        }
+
+        private static void SetTrainerNameLenOffset() {
+            switch (RomInfo.gameFamily) {
+                case gFamEnum.DP:
+                    switch (RomInfo.gameLanguage) {
+                        case gLangEnum.English:
+                            trainerNameLenOffset = 0x6AC32;
+                            break;
+                        case gLangEnum.Spanish:
+                            trainerNameLenOffset = 0x6AC8E;
+                            break;
+                        default:
+                            trainerNameLenOffset = -1;
+                            break;
+                    }
+
+                    break;
+                case gFamEnum.Plat:
+                    switch (RomInfo.gameLanguage) {
+                        case gLangEnum.English:
+                            trainerNameLenOffset = 0x791DE;
+                            break;
+                        case gLangEnum.Spanish:
+                        case gLangEnum.German:
+                            trainerNameLenOffset = 0x7927E;
+                            break;
+                        default:
+                            trainerNameLenOffset = -1;
+                            break;
+                    }
+
+                    break;
+                case gFamEnum.HGSS:
+                    if (RomInfo.gameLanguage.Equals(gLangEnum.English) || RomInfo.gameVersion.Equals(gVerEnum.SoulSilver)) {
+                        trainerNameLenOffset = 0x7342E;
+                    } else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) {
+                        trainerNameLenOffset = 0x73426;
+                    } else {
+                        trainerNameLenOffset = -1;
+                    }
+
+                    break;
+            }
+        }
+
+        public static int SetTrainerNameMaxLen() {
+            if(trainerNameLenOffset < 0) {
+                trainerNameMaxLen = TrainerFile.defaultNameLen;
+            } else {
+                using (DSUtils.ARM9.Reader ar = new DSUtils.ARM9.Reader(trainerNameLenOffset)) {
+                    trainerNameMaxLen = ar.ReadByte();
+                }
+            }
+            return trainerNameMaxLen;
         }
 
         public string GetBuildingModelsDirPath(bool interior) => interior ? gameDirs[DirNames.interiorBuildingModels].unpackedDir : gameDirs[DirNames.exteriorBuildingModels].unpackedDir;
