@@ -865,6 +865,7 @@
             this.monEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.personalDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.learnsetsEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.evolutionsEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.essentialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simpleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -904,10 +905,6 @@
             this.separator_afterMiscButtons = new System.Windows.Forms.ToolStripSeparator();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.directoryEntry1 = new System.DirectoryServices.DirectoryEntry();
-            this.directoryEntry2 = new System.DirectoryServices.DirectoryEntry();
-            this.evolutionsEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -11166,6 +11163,13 @@
             this.learnsetsEditorToolStripMenuItem.Text = "Learnsets Editor";
             this.learnsetsEditorToolStripMenuItem.Click += new System.EventHandler(this.learnsetsEditorToolStripMenuItem_Click);
             // 
+            // evolutionsEditorToolStripMenuItem
+            // 
+            this.evolutionsEditorToolStripMenuItem.Name = "evolutionsEditorToolStripMenuItem";
+            this.evolutionsEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.evolutionsEditorToolStripMenuItem.Text = "Evolutions Editor";
+            this.evolutionsEditorToolStripMenuItem.Click += new System.EventHandler(this.evolutionsEditorToolStripMenuItem_Click);
+            // 
             // menuViewToolStripMenuItem
             // 
             this.menuViewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -11578,17 +11582,6 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             this.versionLabel.Visible = false;
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // evolutionsEditorToolStripMenuItem
-            // 
-            this.evolutionsEditorToolStripMenuItem.Name = "evolutionsEditorToolStripMenuItem";
-            this.evolutionsEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.evolutionsEditorToolStripMenuItem.Text = "Evolutions Editor";
-            this.evolutionsEditorToolStripMenuItem.Click += new System.EventHandler(this.evolutionsEditorToolStripMenuItem_Click);
             // 
             // MainProgram
             // 
@@ -12728,9 +12721,6 @@
         private System.Windows.Forms.ToolStripMenuItem essentialToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simpleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fullViewToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.DirectoryServices.DirectoryEntry directoryEntry1;
-        private System.DirectoryServices.DirectoryEntry directoryEntry2;
         private System.Windows.Forms.ToolStripMenuItem nSBMDUtilityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem texturizeNSBMDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem untexturizeToolStripMenuItem;
