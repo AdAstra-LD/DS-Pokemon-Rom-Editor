@@ -9267,6 +9267,7 @@ namespace DSPRE {
 
                 UpdateCurrentTrainerName(trName);
             }
+
             /* Refresh controls and re-read file */
             trainerComboBox_SelectedIndexChanged(null, null);
             UpdateCurrentTrainerShownName();
@@ -9366,21 +9367,20 @@ namespace DSPRE {
         }
 
         private (string ability1, string ability2) getPokemonAbilityNames(int pokemonID) {
-            return (abilityNames[pokemonSpeciesAbilities[pokemonID].Item1],
-                    abilityNames[pokemonSpeciesAbilities[pokemonID].Item2]);
+            return (abilityNames[pokemonSpeciesAbilities[pokemonID].abi1],
+                    abilityNames[pokemonSpeciesAbilities[pokemonID].abi2]);
         }
 
         private void setTrainerPartyPokemonAbilities(int partyPokemonPosition) {
-
-            (string ability1, string ability2) currentPartyPokemonAbilities = getPokemonAbilityNames(partyPokemonComboboxList[partyPokemonPosition].SelectedIndex);
+            (string ability1, string ability2) = getPokemonAbilityNames(partyPokemonComboboxList[partyPokemonPosition].SelectedIndex);
             partyAbilityComboBoxList[partyPokemonPosition].Items.Clear();
-            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(currentPartyPokemonAbilities.ability1);
+            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability1);
 
             //if the name " -" is returned for ability 2 then there is no ability 2
-            if (currentPartyPokemonAbilities.ability2.Equals(" -") || currentPartyPokemonAbilities.ability2.Equals(currentPartyPokemonAbilities.ability1) || gameFamily != gFamEnum.HGSS) {
+            if (ability2.Equals(" -") || ability2.Equals(ability1) || gameFamily != gFamEnum.HGSS) {
                 partyAbilityComboBoxList[partyPokemonPosition].Enabled = false;
             } else {
-                partyAbilityComboBoxList[partyPokemonPosition].Items.Add(currentPartyPokemonAbilities.ability2);
+                partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability2);
                 partyAbilityComboBoxList[partyPokemonPosition].Enabled = true;
             }
 
