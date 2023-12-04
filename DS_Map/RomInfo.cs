@@ -974,11 +974,11 @@ namespace DSPRE {
             switch (gameFamily) {
                 case gFamEnum.DP:
                     string suffix = "";
-                    if (!gameLanguage.Equals(gLangEnum.Japanese))
+                    if (!gameLanguage.Equals(gLangEnum.Japanese)) {
                         suffix = "_release";
+                    }
 
                     packedDirsDict = new Dictionary<DirNames, string>() {
-                        [DirNames.personalPokeData] = @"data\poketool\personal\personal.narc",
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.textArchives] = @"data\msgdata\msg.narc",
 
@@ -1006,14 +1006,25 @@ namespace DSPRE {
                         [DirNames.learnsets] = workDir + @"data\poketool\personal\wotbl.narc",
                         [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
                     };
+
+                    //Personal Data archive is different for Pearl
+                    string personal = @"data\poketool\personal";
+                    if (gameVersion == gVerEnum.Pearl) {
+                        personal += ("_" + gameVersion.ToString().ToLower());
+                    }
+                    personal += @"\personal.narc";
+                    packedDirsDict[DirNames.personalPokeData] = personal;
+
                     break;
                 case gFamEnum.Plat:
+                    suffix = gameVersion.ToString().Substring(0, 2).ToLower();
+
                     packedDirsDict = new Dictionary<DirNames, string>() {
                         [DirNames.personalPokeData] = @"data\poketool\personal\pl_personal.narc",
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.dynamicHeaders] = @"data\debug\cb_edit\d_test.narc",
 
-                        [DirNames.textArchives] = @"data\msgdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "msg.narc",
+                        [DirNames.textArchives] = @"data\msgdata\" + suffix + '_' + "msg.narc",
 
                         [DirNames.matrices] = @"data\fielddata\mapmatrix\map_matrix.narc",
 
@@ -1035,7 +1046,7 @@ namespace DSPRE {
 
                         [DirNames.monIcons] = @"data\poketool\icongra\pl_poke_icon.narc",
 
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "enc_data.narc",
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + suffix + '_' + "enc_data.narc",
                         [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
                         [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
                     };
