@@ -307,7 +307,7 @@ namespace DSPRE {
             if (disableHandlers) {
                 return;
             }
-            currentLoadedFile.item1 = (byte)item1InputComboBox.SelectedIndex;
+            currentLoadedFile.item1 = (ushort)item1InputComboBox.SelectedIndex;
             setDirty(true);
         }
 
@@ -315,7 +315,7 @@ namespace DSPRE {
             if (disableHandlers) {
                 return;
             }
-            currentLoadedFile.item2 = (byte)item2InputComboBox.SelectedIndex;
+            currentLoadedFile.item2 = (ushort)item2InputComboBox.SelectedIndex;
             setDirty(true);
         }
 
@@ -417,7 +417,6 @@ namespace DSPRE {
                 int newNumber = pokemonNameInputComboBox.SelectedIndex;
                 monNumberNumericUpDown.Value = newNumber;
                 ChangeLoadedFile(newNumber);
-               
             }
             disableHandlers = false;
         }
@@ -429,11 +428,9 @@ namespace DSPRE {
 
             disableHandlers = true;
             if (CheckDiscardChanges()) {
-
                 int newNumber = (int)monNumberNumericUpDown.Value;
                 pokemonNameInputComboBox.SelectedIndex = newNumber;
                 ChangeLoadedFile(newNumber);
-                
             }
             disableHandlers = false;
         }
