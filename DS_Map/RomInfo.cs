@@ -884,39 +884,64 @@ namespace DSPRE {
                         case gLangEnum.English:
                             trainerNameLenOffset = 0x6AC32;
                             break;
+                        case gLangEnum.Italian:
+                            trainerNameLenOffset = 0x6AC6E;
+                            break;
                         case gLangEnum.Spanish:
+                        case gLangEnum.German:
+                        case gLangEnum.French:
                             trainerNameLenOffset = 0x6AC8E;
                             break;
+
+                        case gLangEnum.Japanese: //?
                         default:
                             trainerNameLenOffset = -1;
                             break;
                     }
-
                     break;
+
                 case gFamEnum.Plat:
                     switch (RomInfo.gameLanguage) {
                         case gLangEnum.English:
                             trainerNameLenOffset = 0x791DE;
                             break;
                         case gLangEnum.Spanish:
+                        case gLangEnum.Italian:
                         case gLangEnum.German:
+                        case gLangEnum.French:
                             trainerNameLenOffset = 0x7927E;
                             break;
+                        case gLangEnum.Japanese:
+                            trainerNameLenOffset = 0x78AB6;
+                            break;
+
                         default:
                             trainerNameLenOffset = -1;
                             break;
                     }
-
                     break;
-                case gFamEnum.HGSS:
-                    if (RomInfo.gameLanguage.Equals(gLangEnum.English) || RomInfo.gameVersion.Equals(gVerEnum.SoulSilver)) {
-                        trainerNameLenOffset = 0x7342E;
-                    } else if (RomInfo.gameLanguage.Equals(gLangEnum.Spanish)) {
-                        trainerNameLenOffset = 0x73426;
-                    } else {
-                        trainerNameLenOffset = -1;
-                    }
 
+                case gFamEnum.HGSS:
+                    if (RomInfo.gameLanguage.Equals(gLangEnum.Japanese)) {
+                        //Jap HGSS
+                        trainerNameLenOffset = 0x7342E;
+                    } else if(gameVersion.Equals(gVerEnum.SoulSilver)){
+                        //All SS languages except Jap
+                        trainerNameLenOffset = 0x72EC2;
+                    } else {
+                        //All HG languages except Jap
+                        switch (RomInfo.gameLanguage) {
+                            case gLangEnum.English:
+                            case gLangEnum.Italian:
+                            case gLangEnum.German:
+                            case gLangEnum.French:
+                                trainerNameLenOffset = 0x7342E;
+                                break;
+                            case gLangEnum.Spanish:
+                                trainerNameLenOffset = 0x73426;
+                                break;
+                        }
+                    }
                     break;
             }
         }
