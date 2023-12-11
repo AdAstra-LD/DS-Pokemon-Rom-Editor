@@ -1061,7 +1061,7 @@ namespace DSPRE {
                         [DirNames.monIcons] = @"data\poketool\icongra\poke_icon.narc",
 
                         [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc",
-                        [DirNames.learnsets] = workDir + @"data\poketool\personal\wotbl.narc",
+                        [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
                         [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
                     };
 
