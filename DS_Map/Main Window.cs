@@ -55,7 +55,7 @@ namespace DSPRE {
         public static string gameCode;
         public static byte europeByte;
         RomInfo romInfo;
-        public Dictionary<ushort, ushort> eventToHeader = new Dictionary<ushort, ushort>();
+        public Dictionary<ushort /*evFile*/, ushort /*header*/> eventToHeader = new Dictionary<ushort, ushort>();
 
         #endregion
 
@@ -978,15 +978,15 @@ namespace DSPRE {
             }
 
             // Creating a dictionary linking events to headers to fetch header data for Event Editor
-            for (ushort i = 0; i < internalNames.Count; i++) {
-                MapHeader h;
-                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
-                    h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
-                } else {
-                    h = MapHeader.LoadFromARM9(i);
+            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                for (ushort i = 0; i < internalNames.Count; i++) {
+                    MapHeader h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
+                    eventToHeader[h.eventFileID] = i;
                 }
-                if (!eventToHeader.ContainsKey(h.eventFileID)) {
-                    eventToHeader.Add(h.eventFileID, i);
+            } else {
+                for (ushort i = 0; i < internalNames.Count; i++) {
+                    MapHeader h = MapHeader.LoadFromARM9(i);
+                    eventToHeader[h.eventFileID] = i;
                 }
             }
 
@@ -5521,19 +5521,26 @@ namespace DSPRE {
             FillOverworldsBox();
             FillTriggersBox();
             FillWarpsBox();
-            ushort mapHeader = eventToHeader[(ushort)selectEventComboBox.SelectedIndex];
-            MapHeader h;
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
-                h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + mapHeader.ToString("D4"), mapHeader, 0);
-            } else {
-                h = MapHeader.LoadFromARM9(mapHeader);
-            }
-            eventMatrixUpDown.Value = h.matrixID;
 
-            eventMatrix = new GameMatrix((int)eventMatrixUpDown.Value);
-            eventMatrixXUpDown.Maximum = eventMatrix.width - 1;
-            eventMatrixYUpDown.Maximum = eventMatrix.height - 1;
-            eventAreaDataUpDown.Value = h.areaDataID;
+            if (eventToHeader.TryGetValue((ushort)selectEventComboBox.SelectedIndex, out ushort mapHeader)) {
+                MapHeader h;
+                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                    h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + mapHeader.ToString("D4"), mapHeader, 0);
+                } else {
+                    h = MapHeader.LoadFromARM9(mapHeader);
+                }
+                eventMatrixUpDown.Value = h.matrixID;
+
+                eventMatrix = new GameMatrix((int)eventMatrixUpDown.Value);
+                eventMatrixXUpDown.Maximum = eventMatrix.width - 1;
+                eventMatrixYUpDown.Maximum = eventMatrix.height - 1;
+                eventAreaDataUpDown.Value = h.areaDataID;
+
+                statusLabelMessage($"Detected link between Event File {selectEventComboBox.SelectedIndex} and Header {mapHeader}");
+            } else {
+                statusLabelError($"Could not link Event File {selectEventComboBox.SelectedIndex} to any Header");
+            }
+
             eventEditorFullMapReload((int)eventMatrixXUpDown.Value, (int)eventMatrixYUpDown.Value);
 
             disableHandlers = false;
