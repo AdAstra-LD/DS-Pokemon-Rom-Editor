@@ -161,13 +161,7 @@ namespace LibNDSFormats.NSBMD {
 		/// Render model to OpenGL surface.
 		/// </summary>
 		public void RenderModel(string file2, MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File ani, int[] aniframeS, int[] aniframeT, int[] aniframeScaleS, int[] aniframeScaleT, int[] aniframeR, MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File ca, RenderMode r, bool anim, bool anim2, int selectedanim, float X, float Y, float dist, float elev, float ang, bool licht, MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File p, NSBMD nsb) {
-			MTX44 tmp = new MTX44();
 			file = file2;
-			for (var j = 0; j < Model.Polygons.Count - 1; j++) {
-				var poly = Model.Polygons[j];
-				int matid = poly.MatId;
-				var mat = Model.Materials[matid];
-			}
 			int light = Gl.glIsEnabled(Gl.GL_LIGHTING);
 			Gl.glDisable(Gl.GL_LIGHTING);
 			Gl.glLineWidth(2.0F);
@@ -204,7 +198,7 @@ namespace LibNDSFormats.NSBMD {
 
 			////////////////////////////////////////////////////////////
 			// display all polygons of the current model
-			for (var i = 0; i < Model.Polygons.Count - 1; i++) {
+            for (var i = 0; i < Model.Polygons.Count - 1; i++) {
 				var poly = Model.Polygons[i];
 
 				if (gOptTexture && !gOptWireFrame && g_mat) {
@@ -232,56 +226,61 @@ namespace LibNDSFormats.NSBMD {
 						// Convert pixel coords to normalised STs
 						Gl.glMatrixMode(Gl.GL_TEXTURE);
 						Gl.glLoadIdentity();
-                        if (p.Header.file_size != 0 && new List<string>(p.MPT.names).Contains(mat.MaterialName)) {
-							NSBMDMaterial mmm = mat;
-							int texid = 0;
-							for (int l = 0; l < nsb.Textures.Count; l++) {
-								if (nsb.Textures[l].texname == p.AnimData[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)].KeyFrames[frame_[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)]].texName) {
-									texid = l;
-									break;
+						
+                        if (p.Header.file_size != 0 ) { 
+							List<string> mptNames = new List<string>(p.MPT.names);
+
+							if (mptNames.Contains(mat.MaterialName)) {
+								NSBMDMaterial mmm = mat;
+								int texid = 0;
+								for (int l = 0; l < nsb.Textures.Count; l++) {
+									if (nsb.Textures[l].texname == p.AnimData[mptNames.IndexOf(mat.MaterialName)].KeyFrames[frame_[mptNames.IndexOf(mat.MaterialName)]].texName) {
+										texid = l;
+										break;
+									}
 								}
-							}
-							mmm.spdata = nsb.Textures[texid].spdata;
-							mmm.texdata = nsb.Textures[texid].texdata;
-							mmm.texname = nsb.Textures[texid].texname;
-							mmm.texoffset = nsb.Textures[texid].texoffset;
-							mmm.texsize = nsb.Textures[texid].texsize;
-							mmm.width = nsb.Textures[texid].width;
-							mmm.height = nsb.Textures[texid].height;
-							mmm.format = nsb.Textures[texid].format;
-							mmm.color0 = nsb.Textures[texid].color0;
+								mmm.spdata = nsb.Textures[texid].spdata;
+								mmm.texdata = nsb.Textures[texid].texdata;
+								mmm.texname = nsb.Textures[texid].texname;
+								mmm.texoffset = nsb.Textures[texid].texoffset;
+								mmm.texsize = nsb.Textures[texid].texsize;
+								mmm.width = nsb.Textures[texid].width;
+								mmm.height = nsb.Textures[texid].height;
+								mmm.format = nsb.Textures[texid].format;
+								mmm.color0 = nsb.Textures[texid].color0;
 
-							int palid = 0;
-							for (int l = 0; l < nsb.Textures.Count; l++) {
-								if (nsb.Palettes[l].palname == p.AnimData[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)].KeyFrames[frame_[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)]].palName) {
-									palid = l;
-									break;
+								int palid = 0;
+								for (int l = 0; l < nsb.Textures.Count; l++) {
+									if (nsb.Palettes[l].palname == p.AnimData[mptNames.IndexOf(mat.MaterialName)].KeyFrames[frame_[mptNames.IndexOf(mat.MaterialName)]].palName) {
+										palid = l;
+										break;
+									}
 								}
-							}
-							mmm.paldata = nsb.Palettes[palid].paldata;
-							mmm.palname = nsb.Palettes[palid].palname;
-							mmm.paloffset = nsb.Palettes[palid].paloffset;
-							mmm.palsize = nsb.Palettes[palid].palsize;
-							MakeTexture(matid, mmm);
+								mmm.paldata = nsb.Palettes[palid].paldata;
+								mmm.palname = nsb.Palettes[palid].palname;
+								mmm.paloffset = nsb.Palettes[palid].paloffset;
+								mmm.palsize = nsb.Palettes[palid].palsize;
+								MakeTexture(matid, mmm);
 
-							if (anim2) {
-								int index = new List<string>(p.MPT.names).IndexOf(mat.MaterialName);
+								if (anim2) {
+									int index = mptNames.IndexOf(mat.MaterialName);
 
-								if (nr[index] == Math.Round(p.MPT.infoBlock.Data[index].Unknown1 / 512f)) {
-									nr[index] = 0;
-									if (frame[index] == p.MPT.NoFrames - 1) {
-										frame[index] = 0;
-										frame_[index] = 0;
-									} else {
-										frame[index]++;
-										if (p.AnimData[index].KeyFrames.Length != frame_[index] + 1) {
-											if (frame[index] == p.AnimData[index].KeyFrames[frame_[index] + 1].Start) {
-												frame_[index]++;
+									if (nr[index] == Math.Round(p.MPT.infoBlock.Data[index].Unknown1 / 512f)) {
+										nr[index] = 0;
+										if (frame[index] == p.MPT.NoFrames - 1) {
+											frame[index] = 0;
+											frame_[index] = 0;
+										} else {
+											frame[index]++;
+											if (p.AnimData[index].KeyFrames.Length != frame_[index] + 1) {
+												if (frame[index] == p.AnimData[index].KeyFrames[frame_[index] + 1].Start) {
+													frame_[index]++;
+												}
 											}
 										}
+									} else {
+										nr[index]++;//= (float)p.MPT.infoBlock.Data[index].Unknown1 / 4096f;
 									}
-								} else {
-									nr[index]++;//= (float)p.MPT.infoBlock.Data[index].Unknown1 / 4096f;
 								}
 							}
 						}
@@ -463,9 +462,14 @@ namespace LibNDSFormats.NSBMD {
 					Gl.glColor3f(1, 1, 1);
 				}
 				stackID = poly.StackID; // the first matrix used by this polygon
-				Process3DCommand(poly.PolyData, Model.Materials[poly.MatId], poly.JointID, true);
 
-			}
+				try {
+                    Process3DCommand(poly.PolyData, Model.Materials[poly.MatId], poly.JointID, true);
+                } catch {
+					Console.WriteLine($"Invalid MatID {poly.MatId}! Could not read model [file: {file}]");
+					return;
+				}
+            }
 			writevertex = false;
 		}
 		/// <summary>
