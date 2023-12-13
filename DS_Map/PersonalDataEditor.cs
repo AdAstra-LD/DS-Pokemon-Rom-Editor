@@ -333,7 +333,7 @@ namespace DSPRE {
             if (elemAdd < 0) {
                 return;
             }
-            int id = IndexFromMachineName((string)addableMachinesListBox.SelectedItem);
+            int id = ZeroBasedIndexFromMachineName((string)addableMachinesListBox.SelectedItem);
 
             currentLoadedFile.machines.Add((byte)id);
 
@@ -351,7 +351,7 @@ namespace DSPRE {
             if (elemRemove < 0) {
                 return;
             }
-            int id = IndexFromMachineName((string)addedMachinesListBox.SelectedItem);
+            int id = ZeroBasedIndexFromMachineName((string)addedMachinesListBox.SelectedItem);
             currentLoadedFile.machines.Remove((byte)id);
 
             RebuildMachinesListBoxes(true, false);
@@ -370,7 +370,7 @@ namespace DSPRE {
             }
 
             currentLoadedFile.machines = new SortedSet<byte>();
-            for (byte i = 1; i < tot + 1; i++) {
+            for (byte i = 0; i < tot; i++) {
                 currentLoadedFile.machines.Add(i);
             }
             RebuildMachinesListBoxes();
@@ -506,8 +506,8 @@ namespace DSPRE {
 
             int dataIndex = 0;
             byte tot = (byte)(PokemonPersonalData.tmsCount + PokemonPersonalData.hmsCount);
-            for (byte i = 1; i < tot + 1; i++) {
-                string currentItem = MachineNameFromIndex(i);
+            for (byte i = 0; i < tot; i++) {
+                string currentItem = MachineNameFromZeroBasedIndex(i);
                 if (dataIndex < currentLoadedFile.machines.Count && currentLoadedFile.machines.Contains(i)) {
                     addedMachinesListBox.Items.Add(currentItem);
                     dataIndex++;
@@ -532,12 +532,15 @@ namespace DSPRE {
             }
         }
 
-        private static string MachineNameFromIndex(int n) {
+        private static string MachineNameFromZeroBasedIndex(int n) {
+            //0-91 --> TMs
+            //>=92 --> HM
+            n += 1;
             int diff = n - PokemonPersonalData.tmsCount;
             string item = diff > 0 ? "HM " + diff : "TM " + n;
             return item;
         }
-        private static int IndexFromMachineName(string machineName) {
+        private static int ZeroBasedIndexFromMachineName(string machineName) {
             // Split the machineName to get the prefix (TM or HM) and the number
             string[] parts = machineName.Split(' ');
 
@@ -547,6 +550,7 @@ namespace DSPRE {
 
                 if (isTM || parts[0].Equals("HM", StringComparison.OrdinalIgnoreCase)) {
                     if (int.TryParse(parts[1], out int number)) {
+                        number--;
                         // Calculate the index based on the prefix (TM or HM)
                         int index = isTM ? number : number + PokemonPersonalData.tmsCount;
                         return index;
