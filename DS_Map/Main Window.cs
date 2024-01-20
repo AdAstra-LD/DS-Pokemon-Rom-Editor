@@ -25,6 +25,8 @@ using static DSPRE.ROMFiles.Event;
 using NSMBe4.NSBMD;
 using static DSPRE.ROMFiles.SpeciesFile;
 using System.Reflection;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -10682,6 +10684,34 @@ namespace DSPRE {
 
             statusLabelMessage();
             Update();
+        }
+
+        async void MainProgram_Load(object sender, EventArgs e) {
+            string latestReleaseVersion = await GetLatestReleaseVersion();
+            if (latestReleaseVersion != null && latestReleaseVersion != "v" + GetDSPREVersion().Trim()) {
+                if (MessageBox.Show("You are not using the latest version of DSPRE. It is suggested to update." +
+                    " Do you want to get the latest version?", "DSPRE Version", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
+                    Process.Start(new ProcessStartInfo("https://github.com/AdAstra-LD/DS-Pokemon-Rom-Editor/releases/latest"));
+                }
+            }
+        }
+
+        private async Task<string> GetLatestReleaseVersion() {
+            using (HttpClient client = new HttpClient()) {
+                client.DefaultRequestHeaders.Add("User-Agent", "DSPRE");
+                string apiUrl = "https://api.github.com/repos/AdAstra-LD/DS-Pokemon-Rom-Editor/releases/latest";
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode) {
+                    string json = await response.Content.ReadAsStringAsync();
+                    int tagIndex = json.IndexOf("\"tag_name\":\"") + 12;
+                    int endIndex = json.IndexOf("\"", tagIndex);
+
+                    string version = json.Substring(tagIndex, endIndex - tagIndex);
+                    return version;
+                }
+                return null;
+            }
         }
     }
 }
