@@ -8640,10 +8640,6 @@ namespace DSPRE {
         ImageBase trainerTile;
         SpriteBase trainerSprite;
 
-        private readonly PaletteBase[] monIconPals = new PaletteBase[6];
-        private readonly ImageBase[] monIconTiles = new ImageBase[6];
-        private readonly SpriteBase[] monIconSprites = new SpriteBase[6];
-
         Dictionary<byte, (uint entryOffset, ushort musicD, ushort? musicN)> trainerClassEncounterMusicDict;
         private void SetupTrainerClassEncounterMusicTable() {
             RomInfo.SetEncounterMusicTableOffsetToRAMAddress();
