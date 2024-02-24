@@ -1782,6 +1782,68 @@ namespace DSPRE {
                 HeaderSearch.ResetResults(headerListBox, headerListBoxNames, prependNumbers: false);
             }
         }
+        private void PrintMapHeadersSummary() {
+            List<string> output = new List<string>();
+            int sameInARow = 0;
+
+            MapHeader[] hBuff = new MapHeader[2] {
+                null,
+                MapHeader.LoadFromARM9(0),
+            };
+
+
+            string[] locBuff = new string[2];
+            switch (RomInfo.gameFamily) {
+                case gFamEnum.DP:
+                    locBuff[1] = locationNameComboBox.Items[((HeaderDP)hBuff[1]).locationName].ToString();
+                    break;
+                case gFamEnum.Plat:
+                    locBuff[1] = locationNameComboBox.Items[((HeaderPt)hBuff[1]).locationName].ToString();
+                    break;
+                case gFamEnum.HGSS:
+                    locBuff[1] = locationNameComboBox.Items[((HeaderHGSS)hBuff[1]).locationName].ToString();
+                    break;
+            }
+
+            for (ushort i = 0; i < internalNames.Count; i++) {
+                hBuff[0] = hBuff[1];
+                hBuff[1] = MapHeader.LoadFromARM9((ushort)(i + 1));
+
+                string lastName = locBuff[0]; //Kind of a locBuff[-1]
+                locBuff[0] = locBuff[1];
+                switch (RomInfo.gameFamily) {
+                    case gFamEnum.DP:
+                        locBuff[1] = locationNameComboBox.Items[((HeaderDP)hBuff[1]).locationName].ToString();
+                        break;
+                    case gFamEnum.Plat:
+                        locBuff[1] = locationNameComboBox.Items[((HeaderPt)hBuff[1]).locationName].ToString();
+                        break;
+                    case gFamEnum.HGSS:
+                        locBuff[1] = locationNameComboBox.Items[((HeaderHGSS)hBuff[1]).locationName].ToString();
+                        break;
+                }
+
+
+                string newStr = i.ToString("D3") + " - " + internalNames[i] + " - " + locBuff[0];
+
+                if (output.Count > 0) {
+                    if (lastName.Equals(locBuff[0])) {
+                        output.Add(newStr);
+                        sameInARow++;
+                    } else {
+                        if (sameInARow > 0 || (sameInARow == 0 && locBuff[0].Equals(locBuff[1]))) {
+                            output.Add("");
+                        }
+                        output.Add(newStr);
+                        sameInARow = 0;
+                    }
+                } else {
+                    output.Add(newStr);
+                }
+            }
+
+            //File.WriteAllLines("dummy.txt", output);
+        }
         private void scriptFileUpDown_ValueChanged(object sender, EventArgs e) {
             if (disableHandlers) {
                 return;
@@ -8579,10 +8641,6 @@ namespace DSPRE {
         PaletteBase trainerPal;
         ImageBase trainerTile;
         SpriteBase trainerSprite;
-
-        private readonly PaletteBase[] monIconPals = new PaletteBase[6];
-        private readonly ImageBase[] monIconTiles = new ImageBase[6];
-        private readonly SpriteBase[] monIconSprites = new SpriteBase[6];
 
         Dictionary<byte, (uint entryOffset, ushort musicD, ushort? musicN)> trainerClassEncounterMusicDict;
         private void SetupTrainerClassEncounterMusicTable() {
