@@ -10770,20 +10770,20 @@ namespace DSPRE {
             uint[] LatestVersion = StrArrToUintArr(version.Split('.'));
             uint[] CurrentVersion = StrArrToUintArr(GetDSPREVersion().Split('.'));
             if (LatestVersion[1] - CurrentVersion[1] >= 2) {
-                VersionMessageBox("You are using a fully outdated version, you should update.", MessageBoxIcon.Stop);
+                VersionMessageBox("You are using an outdated version, you should update.", MessageBoxIcon.Stop);
                 return;
             }
             if (LatestVersion[1] - CurrentVersion[1] == 1) {
-                VersionMessageBox("You are using a version that is a version behind the current release.", MessageBoxIcon.Warning);
+                VersionMessageBox("You are using a version behind the current release.", MessageBoxIcon.Warning);
                 return;
             }
             if (LatestVersion[2] - CurrentVersion[2] >= 1) {
-                VersionMessageBox("There is a recent minor release addressing some bugs you might want to download.", MessageBoxIcon.Information);
+                VersionMessageBox("There is a recent minor release addressing some bugs.", MessageBoxIcon.Information);
                 return;
             }
         }
         void VersionMessageBox(string MainText, MessageBoxIcon Icon) {
-            if (MessageBox.Show(MainText + " Do you want to get the latest version?", "DSPRE Version", MessageBoxButtons.YesNo, Icon) == DialogResult.Yes)
+            if (MessageBox.Show(MainText + "\nDo you want to get the latest version?", "DSPRE Version", MessageBoxButtons.YesNo, Icon) == DialogResult.Yes)
                 Process.Start(new ProcessStartInfo("https://github.com/AdAstra-LD/DS-Pokemon-Rom-Editor/releases/latest"));
         }
 
