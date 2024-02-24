@@ -25,6 +25,8 @@ using static DSPRE.ROMFiles.Event;
 using NSMBe4.NSBMD;
 using static DSPRE.ROMFiles.SpeciesFile;
 using System.Reflection;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace DSPRE {
     public partial class MainProgram : Form {
@@ -10740,6 +10742,57 @@ namespace DSPRE {
 
             statusLabelMessage();
             Update();
+        }
+
+        async void MainProgram_Load(object sender, EventArgs e) {
+            string latestReleaseVersion = await GetLatestReleaseVersion();
+            VersionChecker(latestReleaseVersion.Substring(1));
+        }
+        private async Task<string> GetLatestReleaseVersion() {
+            using (HttpClient client = new HttpClient()) {
+                client.DefaultRequestHeaders.Add("User-Agent", "DSPRE");
+                string apiUrl = "https://api.github.com/repos/AdAstra-LD/DS-Pokemon-Rom-Editor/releases/latest";
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode) {
+                    string json = await response.Content.ReadAsStringAsync();
+                    int tagIndex = json.IndexOf("\"tag_name\":\"") + 12;
+                    int endIndex = json.IndexOf("\"", tagIndex);
+
+                    string version = json.Substring(tagIndex, endIndex - tagIndex);
+                    return version;
+                }
+                return null;
+            }
+        }
+        private void VersionChecker(string version) {
+            if (string.IsNullOrEmpty(version)) return;
+            uint[] LatestVersion = StrArrToUintArr(version.Split('.'));
+            uint[] CurrentVersion = StrArrToUintArr(GetDSPREVersion().Split('.'));
+            if (LatestVersion[1] - CurrentVersion[1] >= 2) {
+                VersionMessageBox("You are using an outdated version, you should update.", MessageBoxIcon.Stop);
+                return;
+            }
+            if (LatestVersion[1] - CurrentVersion[1] == 1) {
+                VersionMessageBox("You are using a version behind the current release.", MessageBoxIcon.Warning);
+                return;
+            }
+            if (LatestVersion[2] - CurrentVersion[2] >= 1) {
+                VersionMessageBox("There is a recent minor release addressing some bugs.", MessageBoxIcon.Information);
+                return;
+            }
+        }
+        void VersionMessageBox(string MainText, MessageBoxIcon Icon) {
+            if (MessageBox.Show(MainText + "\nDo you want to get the latest version?", "DSPRE Version", MessageBoxButtons.YesNo, Icon) == DialogResult.Yes)
+                Process.Start(new ProcessStartInfo("https://github.com/AdAstra-LD/DS-Pokemon-Rom-Editor/releases/latest"));
+        }
+
+        private uint[] StrArrToUintArr(string[] SplitVersion) {
+            uint[] NewArray = new uint[3];
+            for (int i = 0; i < SplitVersion.Length; i++) {
+                NewArray[i] = uint.Parse(SplitVersion[i]);
+            }
+            return NewArray;
         }
     }
 }
