@@ -10698,14 +10698,15 @@ namespace DSPRE {
         private void personalDataEditorToolStripMenuItem_Click(object sender, EventArgs e) {
             string[] itemNames = RomInfo.GetItemNames();
             string[] abilityNames = RomInfo.GetAbilityNames();
+            string[] moveNames = RomInfo.GetAttackNames();
 
-            statusLabelMessage("Setting up Personal Data Editor...");
+            statusLabelMessage("Setting up Pokemon Data Editor...");
             Update();
 
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.monIcons });
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.evolutions, DirNames.monIcons });
             RomInfo.SetMonIconsPalTableAddress();
 
-            PersonalDataEditor pde = new PersonalDataEditor(itemNames, abilityNames);
+            PokemonEditor pde = new PokemonEditor(itemNames, abilityNames, moveNames);
             pde.ShowDialog();
 
             statusLabelMessage();
