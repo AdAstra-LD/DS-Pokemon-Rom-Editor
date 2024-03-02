@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using static DSPRE.RomInfo;
 
@@ -10,11 +11,11 @@ namespace DSPRE {
         public string encounterFileFolder { get; private set; }
         EncounterFileDPPt currentFile;
         bool disableHandlers = false;
-
+       
         public WildEditorDPPt(string dirPath, string[] names, int encToOpen, int totalNumHeaderFiles) {
             InitializeComponent();
             encounterFileFolder = dirPath;
-
+            Text = "DSPRE Reloaded " + GetDSPREVersion() + " - DPPt Encounters Editor";
             disableHandlers = true;
 
             MapHeader tempMapHeader;
@@ -234,6 +235,11 @@ namespace DSPRE {
             superRodOneMaxLevelUpDown.Value = currentFile.superRodMaxLevels[4];
 
             disableHandlers = false;
+        }
+
+        public string GetDSPREVersion() {
+            return "" + Assembly.GetExecutingAssembly().GetName().Version.Major + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor +
+                "." + Assembly.GetExecutingAssembly().GetName().Version.Build;
         }
 
         private void exportEncounterFileButton_Click(object sender, EventArgs e) {

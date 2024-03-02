@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using static DSPRE.RomInfo;
 
@@ -16,7 +17,7 @@ namespace DSPRE {
             encounterFileFolder = dirPath;
 
             disableHandlers = true;
-
+            Text = "DSPRE Reloaded " + GetDSPREVersion() + " - HGSS Encounters Editor";
             MapHeader tempMapHeader;
             List<string> locationNames = RomInfo.GetLocationNames();
             Dictionary<int, string> EncounterFileLocationName = new Dictionary<int, string>();
@@ -84,6 +85,11 @@ namespace DSPRE {
             disableHandlers = false;
 
             SetupControls();
+        }
+
+        public string GetDSPREVersion() {
+            return "" + Assembly.GetExecutingAssembly().GetName().Version.Major + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor +
+                "." + Assembly.GetExecutingAssembly().GetName().Version.Build;
         }
 
         public void SetupControls() {
