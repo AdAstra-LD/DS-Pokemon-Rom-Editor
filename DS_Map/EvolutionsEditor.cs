@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace DSPRE {
     public partial class EvolutionsEditor : Form {
@@ -19,7 +20,7 @@ namespace DSPRE {
         private static readonly string formName = "Evolutions Editor";
 
         private (ComboBox m, Label l, NumericUpDown p, ComboBox t)[] evoRows;
-        public EvolutionsEditor() {
+        public EvolutionsEditor(Control parent = null) {
             this.pokeNames = RomInfo.GetPokemonNames();
             this.moveNames = RomInfo.GetAttackNames();
             this.itemNames = RomInfo.GetItemNames();
@@ -30,7 +31,9 @@ namespace DSPRE {
 
             this.fileNames = fileNames.ToArray();
             InitializeComponent();
-            
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Size = parent.Size;
+            this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             disableHandlers = true;
 
             evoRows = new (ComboBox m, Label l, NumericUpDown p, ComboBox t)[EvolutionFile.numEvolutions] {

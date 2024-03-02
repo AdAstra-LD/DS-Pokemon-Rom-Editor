@@ -141,6 +141,12 @@
     <Compile Include="PersonalDataEditor.designer.cs">
       <DependentUpon>PersonalDataEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="PokemonEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PokemonEditor.Designer.cs">
+      <DependentUpon>PokemonEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -304,6 +310,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PersonalDataEditor.resx">
       <DependentUpon>PersonalDataEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PokemonEditor.resx">
+      <DependentUpon>PokemonEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ROMToolboxDB\BDHCAMPatchDB.resx">
       <Generator>ResXFileCodeGenerator</Generator>

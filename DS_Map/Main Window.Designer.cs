@@ -11168,7 +11168,7 @@
             // 
             this.personalDataEditorToolStripMenuItem.Name = "personalDataEditorToolStripMenuItem";
             this.personalDataEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.personalDataEditorToolStripMenuItem.Text = "Personal Data Editor";
+            this.personalDataEditorToolStripMenuItem.Text = "Pokemon Editor";
             this.personalDataEditorToolStripMenuItem.Click += new System.EventHandler(this.personalDataEditorToolStripMenuItem_Click);
             // 
             // learnsetsEditorToolStripMenuItem
@@ -11176,6 +11176,7 @@
             this.learnsetsEditorToolStripMenuItem.Name = "learnsetsEditorToolStripMenuItem";
             this.learnsetsEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.learnsetsEditorToolStripMenuItem.Text = "Learnsets Editor";
+            this.learnsetsEditorToolStripMenuItem.Visible = false;
             this.learnsetsEditorToolStripMenuItem.Click += new System.EventHandler(this.learnsetsEditorToolStripMenuItem_Click);
             // 
             // evolutionsEditorToolStripMenuItem
@@ -11183,6 +11184,7 @@
             this.evolutionsEditorToolStripMenuItem.Name = "evolutionsEditorToolStripMenuItem";
             this.evolutionsEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.evolutionsEditorToolStripMenuItem.Text = "Evolutions Editor";
+            this.evolutionsEditorToolStripMenuItem.Visible = false;
             this.evolutionsEditorToolStripMenuItem.Click += new System.EventHandler(this.evolutionsEditorToolStripMenuItem_Click);
             // 
             // menuViewToolStripMenuItem

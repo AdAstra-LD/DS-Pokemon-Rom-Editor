@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using static ScintillaNET.Style;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace DSPRE {
@@ -33,11 +34,13 @@ namespace DSPRE {
         private static bool dirty = false;
         private static readonly string formName = "Learnset Editor";
 
-        public LearnsetEditor(string[] moveNames) {
+        public LearnsetEditor(string[] moveNames, Control parent = null) {
             this.moveNames = moveNames;
 
             InitializeComponent();
-
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Size = parent.Size;
+            this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             disableHandlers = true;
 
             BindingList<string> listMoveNames = new BindingList<string>(moveNames);

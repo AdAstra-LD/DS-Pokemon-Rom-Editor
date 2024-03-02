@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace DSPRE {
     public partial class PersonalDataEditor : Form {
@@ -20,11 +21,13 @@ namespace DSPRE {
         private static bool dirty = false;
         private static readonly string formName = "Personal Data Editor";
 
-        public PersonalDataEditor(string[] itemNames, string[] abilityNames) {
+        public PersonalDataEditor(string[] itemNames, string[] abilityNames, System.Windows.Forms.Control parent = null) {
             this.fileNames = RomInfo.GetPokemonNames().ToArray();;
 
             InitializeComponent();
-
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Size = parent.Size;
+            this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             disableHandlers = true;
 
             BindingList<string> listItemNames = new BindingList<string>(itemNames);
