@@ -1675,7 +1675,7 @@
             this.label70.Name = "label70";
             this.label70.Size = new System.Drawing.Size(21, 13);
             this.label70.TabIndex = 20;
-            this.label70.Text = "1%";
+            this.label70.Text = "5%";
             // 
             // superRodOneComboBox
             // 
@@ -1708,11 +1708,11 @@
             // 
             this.label71.AutoSize = true;
             this.label71.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label71.Location = new System.Drawing.Point(18, 161);
+            this.label71.Location = new System.Drawing.Point(12, 161);
             this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(21, 13);
+            this.label71.Size = new System.Drawing.Size(27, 13);
             this.label71.TabIndex = 16;
-            this.label71.Text = "4%";
+            this.label71.Text = "10%";
             // 
             // superRodFourComboBox
             // 
@@ -1786,7 +1786,7 @@
             this.label73.Name = "label73";
             this.label73.Size = new System.Drawing.Size(27, 13);
             this.label73.TabIndex = 8;
-            this.label73.Text = "40%";
+            this.label73.Text = "30%";
             // 
             // superRodSecondFortyComboBox
             // 
@@ -1934,7 +1934,7 @@
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(21, 13);
             this.label54.TabIndex = 20;
-            this.label54.Text = "1%";
+            this.label54.Text = "5%";
             // 
             // goodRodOneComboBox
             // 
@@ -1967,11 +1967,11 @@
             // 
             this.label55.AutoSize = true;
             this.label55.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label55.Location = new System.Drawing.Point(18, 161);
+            this.label55.Location = new System.Drawing.Point(12, 161);
             this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(21, 13);
+            this.label55.Size = new System.Drawing.Size(27, 13);
             this.label55.TabIndex = 16;
-            this.label55.Text = "4%";
+            this.label55.Text = "10%";
             // 
             // goodRodFourComboBox
             // 
@@ -2045,7 +2045,7 @@
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(27, 13);
             this.label57.TabIndex = 8;
-            this.label57.Text = "40%";
+            this.label57.Text = "30%";
             // 
             // goodRodSecondFortyComboBox
             // 
@@ -2193,7 +2193,7 @@
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(21, 13);
             this.label46.TabIndex = 20;
-            this.label46.Text = "1%";
+            this.label46.Text = "5%";
             // 
             // oldRodOneComboBox
             // 
@@ -2226,11 +2226,11 @@
             // 
             this.label47.AutoSize = true;
             this.label47.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label47.Location = new System.Drawing.Point(18, 161);
+            this.label47.Location = new System.Drawing.Point(11, 161);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(21, 13);
+            this.label47.Size = new System.Drawing.Size(27, 13);
             this.label47.TabIndex = 16;
-            this.label47.Text = "4%";
+            this.label47.Text = "10%";
             // 
             // oldRodFourComboBox
             // 
@@ -2263,11 +2263,11 @@
             // 
             this.label48.AutoSize = true;
             this.label48.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label48.Location = new System.Drawing.Point(18, 134);
+            this.label48.Location = new System.Drawing.Point(11, 134);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(21, 13);
+            this.label48.Size = new System.Drawing.Size(27, 13);
             this.label48.TabIndex = 12;
-            this.label48.Text = "5%";
+            this.label48.Text = "15%";
             // 
             // oldRodFiveComboBox
             // 
@@ -2341,7 +2341,7 @@
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(27, 13);
             this.label50.TabIndex = 4;
-            this.label50.Text = "60%";
+            this.label50.Text = "40%";
             // 
             // oldRodSixtyComboBox
             // 
