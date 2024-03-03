@@ -146,7 +146,7 @@ public class GameCamera {
                 nearClip = b.ReadUInt32();
                 farClip = b.ReadUInt32();
 
-                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                if (RomInfo.gameFamily == GameFamilies.HGSS) {
                     xOffset = b.ReadInt32();
                     yOffset = b.ReadInt32();
                     zOffset = b.ReadInt32();

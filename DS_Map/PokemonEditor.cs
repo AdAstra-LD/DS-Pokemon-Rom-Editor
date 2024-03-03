@@ -14,12 +14,6 @@ namespace DSPRE {
     public partial class PokemonEditor : Form {
         public PokemonEditor(string[] itemNames, string[] abilityNames, string[] moveNames) {
             InitializeComponent();
-            foreach (var cb in Controls.OfType<ComboBox>()) {
-                cb.Resize += (sender, e) => {
-                    if (!cb.Focused)
-                        cb.SelectionLength = 0;
-                };
-            }
             IsMdiContainer = true;
 
             PersonalDataEditor personalEditor = new PersonalDataEditor(itemNames, abilityNames, evoPage);

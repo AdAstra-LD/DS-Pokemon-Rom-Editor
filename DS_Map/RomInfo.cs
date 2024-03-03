@@ -6,7 +6,6 @@ using System.Linq;
 using DSPRE.Resources;
 using System;
 using DSPRE.ROMFiles;
-using static DSPRE.RomInfo;
 
 namespace DSPRE {
 
@@ -15,49 +14,44 @@ namespace DSPRE {
     /// </summary>
 
     public class RomInfo {
+        public static readonly byte internalNameLength = 16;
+        public static uint synthOverlayLoadAddress = 0x023C8000;
+        public Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary;
         public static string folderSuffix = "_DSPRE_contents";
+        const string dataFolderName = @"data";
+
         public static string romID { get; private set; }
         public static string fileName { get; private set; }
         public static string workDir { get; private set; }
         public static string arm9Path { get; private set; }
+        public static string arm7Path { get; private set; }
         public static string overlayTablePath { get; set; }
+        public static string y7Path { get; set; }
+        public static string dataPath { get; set; }
         public static string overlayPath { get; set; }
-
-        public static gLangEnum gameLanguage { get; private set; }
-        public static gVerEnum gameVersion { get; private set; }
-        public static gFamEnum gameFamily { get; private set; }
-
-
-        public static uint synthOverlayLoadAddress = 0x023C8000;
+        public static string unpackedPath { get; set; }
+        public static string bannerPath { get; set; }
+        public static string headerPath { get; set; }
+        public static GameLanguages gameLanguage { get; private set; }
+        public static GameVersions gameVersion { get; private set; }
+        public static GameFamilies gameFamily { get; private set; }
         public static uint arm9spawnOffset { get; private set; }
-
         public static int initialMoneyOverlayNumber { get; private set; }
         public static uint initialMoneyOverlayOffset { get; private set; }
-
         public static int cameraTblOverlayNumber { get; private set; }
         public static uint[] cameraTblOffsetsToRAMaddress { get; private set; }
-
         public static uint headerTableOffset { get; private set; }
-
         public static uint conditionalMusicTableOffsetToRAMAddress { get; internal set; }
         public static uint encounterMusicTableOffsetToRAMAddress { get; internal set; }
-
         public static uint vsTrainerEntryTableOffsetToRAMAddress { get; internal set; }
         public static uint vsPokemonEntryTableOffsetToRAMAddress { get; internal set; }
         public static uint effectsComboTableOffsetToRAMAddress { get; internal set; }
-
         public static uint vsTrainerEntryTableOffsetToSizeLimiter { get; internal set; }
         public static uint vsPokemonEntryTableOffsetToSizeLimiter { get; internal set; }
         public static uint effectsComboTableOffsetToSizeLimiter { get; internal set; }
-
-
         public static uint OWTableOffset { get; internal set; }
         public static string OWtablePath { get; private set; }
-
-        public static uint monIconPalTableAddress { get; private set; }
-
         public static int nullEncounterID { get; private set; }
-        public static int abilityNamesTextNumber { get; private set; }
         public static int attackNamesTextNumber { get; private set; }
         public static int[] pokemonNamesTextNumbers { get; private set; }
         public static int itemNamesTextNumber { get; private set; }
@@ -65,37 +59,26 @@ namespace DSPRE {
         public static int trainerClassMessageNumber { get; private set; }
         public static int trainerNamesMessageNumber { get; private set; }
         public static int locationNamesTextNumber { get; private set; }
-        public static int trainerNameLenOffset { get; private set; }
-        public static int trainerNameMaxLen { get; private set; }
-
-        public static string internalNamesLocation { get; private set; }
-        public static readonly byte internalNameLength = 16;
+        public static string internalNamesPath { get; private set; }
         public static int cameraSize { get; private set; }
-
-        public Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary;
         public static SortedDictionary<uint, (uint spriteID, ushort properties)> OverworldTable { get; private set; }
         public static uint[] overworldTableKeys { get; private set; }
         public static Dictionary<uint, string> ow3DSpriteDict { get; private set; }
-
-
         public static Dictionary<ushort, string> ScriptCommandNamesDict { get; private set; }
         public static Dictionary<string, ushort> ScriptCommandNamesReverseDict { get; private set; }
-
         public static Dictionary<ushort, string> ScriptActionNamesDict { get; private set; }
         public static Dictionary<string, ushort> ScriptActionNamesReverseDict { get; private set; }
-
         public static Dictionary<ushort, byte[]> ScriptCommandParametersDict { get; private set; }
-
         public static Dictionary<ushort, string> ScriptComparisonOperatorsDict { get; private set; }
         public static Dictionary<string, ushort> ScriptComparisonOperatorsReverseDict { get; private set; }
 
-        public enum gVerEnum : byte {
+        public enum GameVersions : byte {
             Diamond, Pearl, Platinum,
             HeartGold, SoulSilver,
             Black, White,
             Black2, White2
         }
-        public enum gFamEnum : byte {
+        public enum GameFamilies : byte {
             NULL,
             DP,
             Plat,
@@ -103,7 +86,7 @@ namespace DSPRE {
             BW,
             BW2
         }
-        public enum gLangEnum : byte {
+        public enum GameLanguages : byte {
             English,
             Japanese,
 
@@ -113,8 +96,6 @@ namespace DSPRE {
             German
         }
         public enum DirNames : byte {
-            personalPokeData,
-
             synthOverlay,
             dynamicHeaders,
 
@@ -132,7 +113,10 @@ namespace DSPRE {
             OWSprites,
 
             scripts,
+
             encounters,
+            headbutt,
+            safariZone,
 
             trainerProperties,
             trainerParty,
@@ -140,12 +124,9 @@ namespace DSPRE {
 
             monIcons,
 
-            interiorBuildingModels,
-            learnsets,
-            evolutions
+            interiorBuildingModels
         };
         public static Dictionary<DirNames, (string packedDir, string unpackedDir)> gameDirs { get; private set; }
-
 
         #region Constructors (1)
         public RomInfo(string id, string romName, bool useSuffix = true) {
@@ -153,11 +134,19 @@ namespace DSPRE {
                 folderSuffix = "";
             }
 
-            workDir = Path.GetDirectoryName(romName) + "\\" + Path.GetFileNameWithoutExtension(romName) + folderSuffix + "\\";
-            arm9Path = workDir + @"arm9.bin";
-            overlayTablePath = workDir + @"y9.bin";
-            overlayPath = workDir + "overlay";
-            internalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
+            string path = Path.GetDirectoryName(romName) + "\\" + Path.GetFileNameWithoutExtension(romName) + folderSuffix + "\\";
+
+            workDir = path;
+            arm9Path = Path.Combine(workDir, @"arm9.bin");
+            arm7Path = Path.Combine(workDir, @"arm7.bin");
+            overlayTablePath = Path.Combine(workDir, @"y9.bin");
+            y7Path = Path.Combine(workDir, @"y7.bin");
+            dataPath = Path.Combine(workDir, dataFolderName);
+            overlayPath = Path.Combine(workDir, @"overlay");
+            bannerPath = Path.Combine(workDir, @"banner.bin");
+            headerPath = Path.Combine(workDir, @"header.bin");
+            unpackedPath = Path.Combine(workDir, @"unpacked");
+            internalNamesPath = Path.Combine(workDir, $@"{dataFolderName}\fielddata\maptable\mapname.bin");
 
             try {
                 gameVersion = PokeDatabase.System.versionsDict[id];
@@ -177,7 +166,6 @@ namespace DSPRE {
             SetHeaderTableOffset();
             SetNullEncounterID();
 
-            SetAbilityNamesTextNumber();
             SetAttackNamesTextNumber();
             SetPokemonNamesTextNumber();
             SetItemNamesTextNumber();
@@ -185,7 +173,6 @@ namespace DSPRE {
             SetLocationNamesTextNumber();
             SetTrainerNamesMessageNumber();
             SetTrainerClassMessageNumber();
-            SetTrainerNameLenOffset();
 
             /* System */
             ScriptCommandParametersDict = BuildCommandParametersDatabase(gameFamily);
@@ -201,16 +188,16 @@ namespace DSPRE {
         #endregion
 
         #region Methods (22)
-        public static Dictionary<ushort, string> BuildCommandNamesDatabase(gFamEnum gameFam) {
+        public static Dictionary<ushort, string> BuildCommandNamesDatabase(GameFamilies gameFam) {
             Dictionary<ushort, string> commonDictionaryNames;
             Dictionary<ushort, string> specificDictionaryNames;
 
             switch (gameFam) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     commonDictionaryNames = ScriptDatabase.DPPtScrCmdNames;
                     specificDictionaryNames = ScriptDatabase.DPScrCmdNames;
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     commonDictionaryNames = ScriptDatabase.DPPtScrCmdNames;
                     specificDictionaryNames = ScriptDatabase.PlatScrCmdNames;
                     break;
@@ -225,16 +212,16 @@ namespace DSPRE {
             }
             return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
         }
-        public static Dictionary<ushort, byte[]> BuildCommandParametersDatabase(gFamEnum gameFam) {
+        public static Dictionary<ushort, byte[]> BuildCommandParametersDatabase(GameFamilies gameFam) {
             Dictionary<ushort, byte[]> commonDictionaryParams;
             Dictionary<ushort, byte[]> specificDictionaryParams;
 
             switch (gameFam) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     commonDictionaryParams = ScriptDatabase.DPPtScrCmdParameters;
                     specificDictionaryParams = ScriptDatabase.DPScrCmdParameters;
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     commonDictionaryParams = ScriptDatabase.DPPtScrCmdParameters;
                     specificDictionaryParams = ScriptDatabase.PlatScrCmdParameters;
                     break;
@@ -249,10 +236,10 @@ namespace DSPRE {
             }
             return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
         }
-        public static Dictionary<ushort, string> BuildActionNamesDatabase(gFamEnum gameFam) {
+        public static Dictionary<ushort, string> BuildActionNamesDatabase(GameFamilies gameFam) {
             switch (gameFam) {
-                case gFamEnum.DP:
-                case gFamEnum.Plat:
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
                     return ScriptDatabase.movementsDictIDName;
                 default:
 #if false
@@ -264,11 +251,11 @@ namespace DSPRE {
 #endif
             }
         }
-        public static Dictionary<ushort, string> BuildComparisonOperatorsDatabase(gFamEnum gameFam) {
+        public static Dictionary<ushort, string> BuildComparisonOperatorsDatabase(GameFamilies gameFam) {
             switch (gameFam) {
-                case gFamEnum.DP:
-                case gFamEnum.Plat:
-                case gFamEnum.HGSS:
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
+                case GameFamilies.HGSS:
                     return ScriptDatabase.comparisonOperatorsDict;
                 default:
                     var commonDict = ScriptDatabase.comparisonOperatorsDict;
@@ -290,68 +277,68 @@ namespace DSPRE {
         }
         public static void SetHeaderTableOffset() {
             switch (gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     switch (gameLanguage) {
-                        case gLangEnum.English:
+                        case GameLanguages.English:
                             headerTableOffset = 0xEEDBC;
                             break;
-                        case gLangEnum.Spanish:
+                        case GameLanguages.Spanish:
                             headerTableOffset = 0xEEE08;
                             break;
-                        case gLangEnum.Italian:
+                        case GameLanguages.Italian:
                             headerTableOffset = 0xEED70;
                             break;
-                        case gLangEnum.French:
+                        case GameLanguages.French:
                             headerTableOffset = 0xEEDFC;
                             break;
-                        case gLangEnum.German:
+                        case GameLanguages.German:
                             headerTableOffset = 0xEEDCC;
                             break;
-                        case gLangEnum.Japanese:
-                            headerTableOffset = gameVersion == gVerEnum.Diamond ? (uint)0xF0D68 : 0xF0D6C;
+                        case GameLanguages.Japanese:
+                            headerTableOffset = gameVersion == GameVersions.Diamond ? (uint)0xF0D68 : 0xF0D6C;
                             break;
                     }
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     switch (gameLanguage) {
-                        case gLangEnum.English:
+                        case GameLanguages.English:
                             headerTableOffset = 0xE601C;
                             break;
-                        case gLangEnum.Spanish:
+                        case GameLanguages.Spanish:
                             headerTableOffset = 0xE60B0;
                             break;
-                        case gLangEnum.Italian:
+                        case GameLanguages.Italian:
                             headerTableOffset = 0xE6038;
                             break;
-                        case gLangEnum.French:
+                        case GameLanguages.French:
                             headerTableOffset = 0xE60A4;
                             break;
-                        case gLangEnum.German:
+                        case GameLanguages.German:
                             headerTableOffset = 0xE6074;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             headerTableOffset = 0xE56F0;
                             break;
                     }
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     switch (gameLanguage) {
-                        case gLangEnum.English:
+                        case GameLanguages.English:
                             headerTableOffset = 0xF6BE0;
                             break;
-                        case gLangEnum.Spanish:
-                            headerTableOffset = gameVersion == gVerEnum.HeartGold ? 0xF6BC8 : (uint)0xF6BD0;
+                        case GameLanguages.Spanish:
+                            headerTableOffset = gameVersion == GameVersions.HeartGold ? 0xF6BC8 : (uint)0xF6BD0;
                             break;
-                        case gLangEnum.Italian:
+                        case GameLanguages.Italian:
                             headerTableOffset = 0xF6B58;
                             break;
-                        case gLangEnum.French:
+                        case GameLanguages.French:
                             headerTableOffset = 0xF6BC4;
                             break;
-                        case gLangEnum.German:
+                        case GameLanguages.German:
                             headerTableOffset = 0xF6B94;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             headerTableOffset = 0xF6390;
                             break;
                     }
@@ -360,74 +347,74 @@ namespace DSPRE {
         }
         public static void SetupSpawnSettings() {
             switch (gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     initialMoneyOverlayNumber = 52;
                     initialMoneyOverlayOffset = 0x1E4;
                     switch (gameLanguage) {
-                        case gLangEnum.English:
+                        case GameLanguages.English:
                             arm9spawnOffset = 0xF2B9C;
                             break;
-                        case gLangEnum.Spanish:
+                        case GameLanguages.Spanish:
                             arm9spawnOffset = 0xF2BE8;
                             break;
-                        case gLangEnum.Italian:
+                        case GameLanguages.Italian:
                             arm9spawnOffset = 0xF2B50;
                             break;
-                        case gLangEnum.French:
+                        case GameLanguages.French:
                             arm9spawnOffset = 0xF2BDC;
                             break;
-                        case gLangEnum.German:
+                        case GameLanguages.German:
                             arm9spawnOffset = 0xF2BAC;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             arm9spawnOffset = 0xF4B48;
                             break;
                     }
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     initialMoneyOverlayNumber = 57;
                     initialMoneyOverlayOffset = 0x1EC;
                     switch (gameLanguage) {
-                        case gLangEnum.English:
+                        case GameLanguages.English:
                             arm9spawnOffset = 0xEA12C;
                             break;
-                        case gLangEnum.Spanish:
+                        case GameLanguages.Spanish:
                             arm9spawnOffset = 0xEA1C0;
                             break;
-                        case gLangEnum.Italian:
+                        case GameLanguages.Italian:
                             arm9spawnOffset = 0xEA148;
                             break;
-                        case gLangEnum.French:
+                        case GameLanguages.French:
                             arm9spawnOffset = 0xEA1B4;
                             break;
-                        case gLangEnum.German:
+                        case GameLanguages.German:
                             arm9spawnOffset = 0xEA184;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             arm9spawnOffset = 0xE9800;
                             break;
                     }
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     initialMoneyOverlayNumber = 36;
                     initialMoneyOverlayOffset = 0x2FC;
                     switch (gameLanguage) {
-                        case gLangEnum.English:
+                        case GameLanguages.English:
                             arm9spawnOffset = 0xFA17C;
                             break;
-                        case gLangEnum.Spanish:
-                            arm9spawnOffset = gameVersion == gVerEnum.HeartGold ? 0xFA164 : (uint)0xFA16C;
+                        case GameLanguages.Spanish:
+                            arm9spawnOffset = gameVersion == GameVersions.HeartGold ? 0xFA164 : (uint)0xFA16C;
                             break;
-                        case gLangEnum.Italian:
+                        case GameLanguages.Italian:
                             arm9spawnOffset = 0xFA0F4;
                             break;
-                        case gLangEnum.French:
+                        case GameLanguages.French:
                             arm9spawnOffset = 0xFA160;
                             break;
-                        case gLangEnum.German:
+                        case GameLanguages.German:
                             arm9spawnOffset = 0xFA130;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             arm9spawnOffset = 0xF992C;
                             break;
                     }
@@ -436,28 +423,28 @@ namespace DSPRE {
         }
         public static void PrepareCameraData() {
             switch (gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     cameraTblOverlayNumber = 5;
-                    cameraTblOffsetsToRAMaddress = gameLanguage.Equals(gLangEnum.Japanese) ? (new uint[] { 0x4C50 }) : (new uint[] { 0x4908 });
+                    cameraTblOffsetsToRAMaddress = gameLanguage.Equals(GameLanguages.Japanese) ? (new uint[] { 0x4C50 }) : (new uint[] { 0x4908 });
                     cameraSize = 24;
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     cameraTblOverlayNumber = 5;
                     cameraTblOffsetsToRAMaddress = new uint[] { 0x4E24 };
                     cameraSize = 24;
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     cameraTblOverlayNumber = 1;
                     cameraSize = 36;
                     switch (gameLanguage) {
-                        case gLangEnum.English:
-                        case gLangEnum.Spanish:
-                        case gLangEnum.French:
-                        case gLangEnum.German:
-                        case gLangEnum.Italian:
+                        case GameLanguages.English:
+                        case GameLanguages.Spanish:
+                        case GameLanguages.French:
+                        case GameLanguages.German:
+                        case GameLanguages.Italian:
                             cameraTblOffsetsToRAMaddress = new uint[] { 0x532C, 0x547C };
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             cameraTblOffsetsToRAMaddress = new uint[] { 0x5324, 0x5474 };
                             break;
                     }
@@ -466,13 +453,13 @@ namespace DSPRE {
         }
         public static void SetOWtable() {
             switch (gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     OWtablePath = DSUtils.GetOverlayPath(5);
                     switch (gameLanguage) { // Go to the beginning of the overworld table
-                        case gLangEnum.English:
+                        case GameLanguages.English:
                             OWTableOffset = 0x22BCC;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             OWTableOffset = 0x23BB8;
                             break;
                         default:
@@ -480,20 +467,20 @@ namespace DSPRE {
                             break;
                     }
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     OWtablePath = DSUtils.GetOverlayPath(5);
                     switch (gameLanguage) { // Go to the beginning of the overworld table
-                        case gLangEnum.Italian:
+                        case GameLanguages.Italian:
                             OWTableOffset = 0x2BC44;
                             break;
-                        case gLangEnum.French:
-                        case gLangEnum.Spanish:
+                        case GameLanguages.French:
+                        case GameLanguages.Spanish:
                             OWTableOffset = 0x2BC3C;
                             break;
-                        case gLangEnum.German:
+                        case GameLanguages.German:
                             OWTableOffset = 0x2BC50;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             OWTableOffset = 0x2BA24;
                             break;
                         default:
@@ -501,7 +488,7 @@ namespace DSPRE {
                             break;
                     }
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
                         if (DSUtils.OverlayIsCompressed(1)) {
                             if (DSUtils.DecompressOverlay(1) < 0) {
@@ -516,17 +503,17 @@ namespace DSPRE {
 
                     int ramAddrOfPointer;
                     switch (gameLanguage) {
-                        case gLangEnum.Italian:
+                        case GameLanguages.Italian:
                             ramAddrOfPointer = 0x021F929C;
                             break;
-                        case gLangEnum.French:
-                        case gLangEnum.Spanish:
+                        case GameLanguages.French:
+                        case GameLanguages.Spanish:
                             ramAddrOfPointer = 0x021F931C;
                             break;
-                        case gLangEnum.German:
+                        case GameLanguages.German:
                             ramAddrOfPointer = 0x021F92DC;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             ramAddrOfPointer = 0x021F86C4;
                             break;
                         default:
@@ -536,21 +523,14 @@ namespace DSPRE {
 
                     using (DSUtils.EasyReader bReader = new DSUtils.EasyReader(ov1Path, ramAddrOfPointer - ov1Address)) { // read the pointer at the specified ram address and adjust accordingly below
                         uint ramAddressOfTable = bReader.ReadUInt32();
-                        if ((ramAddressOfTable >> 0x18) != 0x02) {
+                        if (ramAddressOfTable >= 0x03000000) {
                             MessageBox.Show("Something went wrong reading the Overworld configuration table.\nOverworld sprites in the Event Editor will be " +
                                 "displayed incorrectly or not displayed at all.", "Decompression error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-
-                        string ov131path = DSUtils.GetOverlayPath(131);
-                        if (File.Exists(ov131path)) {
-                            // if HGE field extension overlay exists
-                            OWTableOffset = ramAddressOfTable - DSUtils.GetOverlayRAMAddress(131);
-                            OWtablePath = ov131path;
-                        } else if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) {
-                            // if the pointer shows the table was moved to the synthetic overlay
+                        if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
                             OWTableOffset = ramAddressOfTable - RomInfo.synthOverlayLoadAddress;
-                            OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+                            OWtablePath = Filesystem.expArmPath;
                         } else {
                             OWTableOffset = ramAddressOfTable - ov1Address;
                             OWtablePath = ov1Path;
@@ -561,18 +541,18 @@ namespace DSPRE {
         }
         public static void SetConditionalMusicTableOffsetToRAMAddress() {
             switch (gameFamily) {
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     switch (gameLanguage) {
-                        case gLangEnum.Spanish:
-                            conditionalMusicTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x667D0 : 0x667D8;
+                        case GameLanguages.Spanish:
+                            conditionalMusicTableOffsetToRAMAddress = gameVersion == GameVersions.HeartGold ? (uint)0x667D0 : 0x667D8;
                             break;
-                        case gLangEnum.English:
-                        case gLangEnum.Italian:
-                        case gLangEnum.French:
-                        case gLangEnum.German:
+                        case GameLanguages.English:
+                        case GameLanguages.Italian:
+                        case GameLanguages.French:
+                        case GameLanguages.German:
                             conditionalMusicTableOffsetToRAMAddress = 0x667D8;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             conditionalMusicTableOffsetToRAMAddress = 0x66238;
                             break;
                     }
@@ -581,22 +561,22 @@ namespace DSPRE {
         }
         public static void SetBattleEffectsData() {
             switch (gameFamily) {
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     switch (gameLanguage) {
-                        case gLangEnum.Spanish:
-                            vsPokemonEntryTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x518CC : 0x518D4;
-                            vsTrainerEntryTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x51888 : 0x51890;
-                            effectsComboTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x517C0 : 0x517C8;
+                        case GameLanguages.Spanish:
+                            vsPokemonEntryTableOffsetToRAMAddress = gameVersion == GameVersions.HeartGold ? (uint)0x518CC : 0x518D4;
+                            vsTrainerEntryTableOffsetToRAMAddress = gameVersion == GameVersions.HeartGold ? (uint)0x51888 : 0x51890;
+                            effectsComboTableOffsetToRAMAddress = gameVersion == GameVersions.HeartGold ? (uint)0x517C0 : 0x517C8;
                             break;
-                        case gLangEnum.English:
-                        case gLangEnum.Italian:
-                        case gLangEnum.French:
-                        case gLangEnum.German:
+                        case GameLanguages.English:
+                        case GameLanguages.Italian:
+                        case GameLanguages.French:
+                        case GameLanguages.German:
                             vsPokemonEntryTableOffsetToRAMAddress = 0x518D4;
                             vsTrainerEntryTableOffsetToRAMAddress = 0x51890;
                             effectsComboTableOffsetToRAMAddress = 0x517C8;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             vsPokemonEntryTableOffsetToRAMAddress = 0x5136C;
                             vsTrainerEntryTableOffsetToRAMAddress = 0x51328;
                             effectsComboTableOffsetToRAMAddress = 0x51260;
@@ -607,18 +587,18 @@ namespace DSPRE {
                     effectsComboTableOffsetToSizeLimiter = effectsComboTableOffsetToRAMAddress - 0x1E;
                     break;
 
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     switch (gameLanguage) {
-                        case gLangEnum.English:
+                        case GameLanguages.English:
                             effectsComboTableOffsetToRAMAddress = 0x51BE0;
                             break;
-                        case gLangEnum.Italian:
-                        case gLangEnum.French:
-                        case gLangEnum.Spanish:
-                        case gLangEnum.German:
+                        case GameLanguages.Italian:
+                        case GameLanguages.French:
+                        case GameLanguages.Spanish:
+                        case GameLanguages.German:
                             effectsComboTableOffsetToRAMAddress = 0x51C84;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             effectsComboTableOffsetToRAMAddress = 0x514C0;
                             break;
                     }
@@ -627,130 +607,64 @@ namespace DSPRE {
         }
         public static void SetEncounterMusicTableOffsetToRAMAddress() {
             switch (gameFamily) {
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     switch (gameLanguage) {
-                        case gLangEnum.Spanish:
-                            encounterMusicTableOffsetToRAMAddress = gameVersion == gVerEnum.HeartGold ? (uint)0x550D8 : 0x550E0;
+                        case GameLanguages.Spanish:
+                            encounterMusicTableOffsetToRAMAddress = gameVersion == GameVersions.HeartGold ? (uint)0x550D8 : 0x550E0;
                             break;
-                        case gLangEnum.English:
-                        case gLangEnum.Italian:
-                        case gLangEnum.French:
-                        case gLangEnum.German:
+                        case GameLanguages.English:
+                        case GameLanguages.Italian:
+                        case GameLanguages.French:
+                        case GameLanguages.German:
                             encounterMusicTableOffsetToRAMAddress = 0x550E0;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             encounterMusicTableOffsetToRAMAddress = 0x54B44;
                             break;
                     }
                     break;
 
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     switch (gameLanguage) {
-                        case gLangEnum.English:
+                        case GameLanguages.English:
                             encounterMusicTableOffsetToRAMAddress = 0x5563C;
                             break;
-                        case gLangEnum.Italian:
-                        case gLangEnum.French:
-                        case gLangEnum.Spanish:
-                        case gLangEnum.German:
+                        case GameLanguages.Italian:
+                        case GameLanguages.French:
+                        case GameLanguages.Spanish:
+                        case GameLanguages.German:
                             encounterMusicTableOffsetToRAMAddress = 0x556E0;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             encounterMusicTableOffsetToRAMAddress = 0x54F04;
                             break;
                     }
                     break;
 
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     switch (gameLanguage) {
-                        case gLangEnum.English:
+                        case GameLanguages.English:
                             encounterMusicTableOffsetToRAMAddress = 0x4AD3C;
                             break;
-                        case gLangEnum.Italian:
-                        case gLangEnum.French:
-                        case gLangEnum.Spanish:
-                        case gLangEnum.German:
+                        case GameLanguages.Italian:
+                        case GameLanguages.French:
+                        case GameLanguages.Spanish:
+                        case GameLanguages.German:
                             encounterMusicTableOffsetToRAMAddress = 0x4ADAC;
                             break;
-                        case gLangEnum.Japanese:
+                        case GameLanguages.Japanese:
                             encounterMusicTableOffsetToRAMAddress = 0x4D9AC;
                             break;
                     }
                     break;
             }
         }
-        public static void SetMonIconsPalTableAddress() {
-            switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
-                    switch (gameLanguage) {
-                        case gLangEnum.English:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B838, 4), 0);
-                            break;
-                        case gLangEnum.Italian:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B874, 4), 0);
-                            break;
-                        case gLangEnum.German:
-                        case gLangEnum.French:
-                        case gLangEnum.Spanish:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B894, 4), 0);
-                            break;
-                        case gLangEnum.Japanese:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6FDEC, 4), 0);
-                            break;
-                    }
-                    break;
-                case gFamEnum.Plat:
-                    switch (gameLanguage) {
-                        case gLangEnum.English:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x79F80, 4), 0);
-                            break;
-                        case gLangEnum.Italian:
-                        case gLangEnum.German:
-                        case gLangEnum.French:
-                        case gLangEnum.Spanish:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x7A020, 4), 0);
-                            break;
-                        case gLangEnum.Japanese:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x79858, 4), 0);
-                            break;
-                    }
-                    break;
-                case gFamEnum.HGSS:
-                default:
-                    switch (gameLanguage) {
-                        case gLangEnum.English:
-                        case gLangEnum.Italian:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
-                            break;
-                        case gLangEnum.German:
-                            if (gameVersion == gVerEnum.HeartGold) {
-                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
-                            } else {
-                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74400, 4), 0);
-                            }
-                            break;
-                        case gLangEnum.French:
-                        case gLangEnum.Spanish:
-                            if (gameVersion == gVerEnum.HeartGold) {
-                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74400, 4), 0);
-                            } else {
-                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
-                            }
-                            break;
-                        case gLangEnum.Japanese:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x73EA0, 4), 0);
-                            break;
-                    }
-                    break;
-            }
-        }
-
-        private static void SetItemScriptFileNumber() {
+        private void SetItemScriptFileNumber() {
             switch (gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     itemScriptFileNumber = 370;
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     itemScriptFileNumber = 404;
                     break;
                 default:
@@ -758,208 +672,110 @@ namespace DSPRE {
                     break;
             }
         }
-        private static void SetNullEncounterID() {
+        private void SetNullEncounterID() {
             switch (gameFamily) {
-                case gFamEnum.DP:
-                case gFamEnum.Plat:
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
                     nullEncounterID = ushort.MaxValue;
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     nullEncounterID = Byte.MaxValue;
                     break;
             }
         }
-
-        private static void SetAbilityNamesTextNumber() {
+        private void SetAttackNamesTextNumber() {
             switch (gameFamily) {
-                case gFamEnum.DP:
-                    abilityNamesTextNumber = 552;
-                    break;
-                case gFamEnum.Plat:
-                    abilityNamesTextNumber = 610;
-                    break;
-                case gFamEnum.HGSS:
-                    abilityNamesTextNumber = 720;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private static void SetAttackNamesTextNumber() {
-            switch (gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     attackNamesTextNumber = 588;
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     attackNamesTextNumber = 647;
                     break;
                 default:
-                    attackNamesTextNumber = gameLanguage == gLangEnum.Japanese ? 739 : 750;
+                    attackNamesTextNumber = gameLanguage == GameLanguages.Japanese ? 739 : 750;
                     break;
             }
         }
-        private static void SetItemNamesTextNumber() {
+        private void SetItemNamesTextNumber() {
             switch (gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     itemNamesTextNumber = 344;
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     itemNamesTextNumber = 392;
                     break;
                 default:
-                    itemNamesTextNumber = gameLanguage == gLangEnum.Japanese ? 219 : 222;
+                    itemNamesTextNumber = gameLanguage == GameLanguages.Japanese ? 219 : 222;
                     break;
             }
         }
-        private static void SetLocationNamesTextNumber() {
+        private void SetLocationNamesTextNumber() {
             switch (gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     locationNamesTextNumber = 382;
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     locationNamesTextNumber = 433;
                     break;
                 default:
-                    locationNamesTextNumber = gameLanguage == gLangEnum.Japanese ? 272 : 279;
+                    locationNamesTextNumber = gameLanguage == GameLanguages.Japanese ? 272 : 279;
                     break;
             }
         }
-        private static void SetPokemonNamesTextNumber() {
+        private void SetPokemonNamesTextNumber() {
             switch (gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     pokemonNamesTextNumbers = new int[2] { 362, 363 };
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     pokemonNamesTextNumbers = new int[7] { 412, 413, 712, 713, 714, 715, 716 }; //413?
                     break;
-                case gFamEnum.HGSS:
-                    pokemonNamesTextNumbers = gameLanguage.Equals(gLangEnum.Japanese) ? new int[1] { 232 } : new int[7] { 237, 238, 817, 818, 819, 820, 821 }; //238?
+                case GameFamilies.HGSS:
+                    pokemonNamesTextNumbers = gameLanguage.Equals(GameLanguages.Japanese) ? new int[1] { 232 } : new int[7] { 237, 238, 817, 818, 819, 820, 821 }; //238?
                     break;
             }
         }
-        private static void SetTrainerNamesMessageNumber() {
+        private void SetTrainerNamesMessageNumber() {
             switch (gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     trainerNamesMessageNumber = 559;
-                    if (gameLanguage.Equals(gLangEnum.Japanese)) {
+                    if (gameLanguage.Equals(GameLanguages.Japanese)) {
                         trainerNamesMessageNumber -= 9;
                     }
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     trainerNamesMessageNumber = 618;
                     break;
                 default:
                     trainerNamesMessageNumber = 729;
-                    if (gameLanguage == gLangEnum.Japanese) {
+                    if (gameLanguage == GameLanguages.Japanese) {
                         trainerNamesMessageNumber -= 10;
                     }
                     break;
             }
         }
-        private static void SetTrainerClassMessageNumber() {
+        private void SetTrainerClassMessageNumber() {
             switch (gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     trainerClassMessageNumber = 560;
-                    if (gameLanguage.Equals(gLangEnum.Japanese)) {
+                    if (gameLanguage.Equals(GameLanguages.Japanese)) {
                         trainerClassMessageNumber -= 9;
                     }
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     trainerClassMessageNumber = 619;
                     break;
                 default:
                     trainerClassMessageNumber = 730;
-                    if (gameLanguage.Equals(gLangEnum.Japanese)) {
+                    if (gameLanguage.Equals(GameLanguages.Japanese)) {
                         trainerClassMessageNumber -= 10;
                     }
                     break;
             }
         }
 
-        private static void SetTrainerNameLenOffset() {
-            switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
-                    switch (RomInfo.gameLanguage) {
-                        case gLangEnum.English:
-                            trainerNameLenOffset = 0x6AC32;
-                            break;
-                        case gLangEnum.Italian:
-                            trainerNameLenOffset = 0x6AC6E;
-                            break;
-                        case gLangEnum.Spanish:
-                        case gLangEnum.German:
-                        case gLangEnum.French:
-                            trainerNameLenOffset = 0x6AC8E;
-                            break;
-
-                        case gLangEnum.Japanese: //?
-                        default:
-                            trainerNameLenOffset = -1;
-                            break;
-                    }
-                    break;
-
-                case gFamEnum.Plat:
-                    switch (RomInfo.gameLanguage) {
-                        case gLangEnum.English:
-                            trainerNameLenOffset = 0x791DE;
-                            break;
-                        case gLangEnum.Spanish:
-                        case gLangEnum.Italian:
-                        case gLangEnum.German:
-                        case gLangEnum.French:
-                            trainerNameLenOffset = 0x7927E;
-                            break;
-                        case gLangEnum.Japanese:
-                            trainerNameLenOffset = 0x78AB6;
-                            break;
-
-                        default:
-                            trainerNameLenOffset = -1;
-                            break;
-                    }
-                    break;
-
-                case gFamEnum.HGSS:
-                    if (RomInfo.gameLanguage.Equals(gLangEnum.Japanese)) {
-                        //Jap HGSS
-                        trainerNameLenOffset = 0x7342E;
-                    } else if(gameVersion.Equals(gVerEnum.SoulSilver)){
-                        //All SS languages except Jap
-                        trainerNameLenOffset = 0x72EC2;
-                    } else {
-                        //All HG languages except Jap
-                        switch (RomInfo.gameLanguage) {
-                            case gLangEnum.English:
-                            case gLangEnum.Italian:
-                            case gLangEnum.German:
-                            case gLangEnum.French:
-                                trainerNameLenOffset = 0x7342E;
-                                break;
-                            case gLangEnum.Spanish:
-                                trainerNameLenOffset = 0x73426;
-                                break;
-                        }
-                    }
-                    break;
-            }
-        }
-
-        public static int SetTrainerNameMaxLen() {
-            if(trainerNameLenOffset < 0) {
-                trainerNameMaxLen = TrainerFile.defaultNameLen;
-            } else {
-                using (DSUtils.ARM9.Reader ar = new DSUtils.ARM9.Reader(trainerNameLenOffset)) {
-                    trainerNameMaxLen = ar.ReadByte();
-                }
-            }
-            return trainerNameMaxLen;
-        }
-
-        public string GetBuildingModelsDirPath(bool interior) => interior ? gameDirs[DirNames.interiorBuildingModels].unpackedDir : gameDirs[DirNames.exteriorBuildingModels].unpackedDir;
         public string GetRomNameFromWorkdir() => workDir.Substring(0, workDir.Length - folderSuffix.Length - 1);
-        public static int GetHeaderCount() => (int)new FileInfo(internalNamesLocation).Length / internalNameLength;
+        public static int GetHeaderCount() => (int)new FileInfo(internalNamesPath).Length / internalNameLength;
         public static List<string> GetLocationNames() => new TextArchive(locationNamesTextNumber).messages;
         public static string[] GetSimpleTrainerNames() => new TextArchive(trainerNamesMessageNumber).messages.ToArray();
         public static string[] GetTrainerClassNames() => new TextArchive(trainerClassMessageNumber).messages.ToArray();
@@ -969,23 +785,7 @@ namespace DSPRE {
             return itemNames.messages.GetRange(startIndex, count == null ? itemNames.messages.Count - 1 : (int)count).ToArray();
         }
         public static string[] GetPokemonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
-        public static string[] GetAbilityNames() => new TextArchive(abilityNamesTextNumber).messages.ToArray();
         public static string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
-        public static int GetLearnsetFilesCount() => Directory.GetFiles(gameDirs[DirNames.learnsets].unpackedDir).Length;
-        public static int GetPersonalFilesCount() => Directory.GetFiles(gameDirs[DirNames.personalPokeData].unpackedDir).Length;
-        public static string[] GetEvolutionFilesList() => Directory.GetFiles(gameDirs[DirNames.evolutions].unpackedDir);
-        public static int GetEvolutionFilesCount() => GetEvolutionFilesList().Length;
-
-        public int GetAreaDataCount() => Directory.GetFiles(gameDirs[DirNames.areaData].unpackedDir).Length;
-        public int GetMapTexturesCount() => Directory.GetFiles(gameDirs[DirNames.mapTextures].unpackedDir).Length;
-        public int GetBuildingTexturesCount() => Directory.GetFiles(gameDirs[DirNames.buildingTextures].unpackedDir).Length;
-        public int GetMatrixCount() => Directory.GetFiles(gameDirs[DirNames.matrices].unpackedDir).Length;
-        public int GetTextArchivesCount() => Directory.GetFiles(gameDirs[DirNames.textArchives].unpackedDir).Length;
-        public int GetMapCount() => Directory.GetFiles(gameDirs[DirNames.maps].unpackedDir).Length;
-        public int GetEventCount() => Directory.GetFiles(gameDirs[DirNames.eventFiles].unpackedDir).Length;
-        public int GetScriptCount() => Directory.GetFiles(gameDirs[DirNames.scripts].unpackedDir).Length;
-        public int GetBuildingCount(bool interior) => Directory.GetFiles(GetBuildingModelsDirPath(interior)).Length;
-        public static int GetEventFileCount() => Directory.GetFiles(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir).Length;
         #endregion
 
         #region System Methods
@@ -996,7 +796,7 @@ namespace DSPRE {
                 case "CPUE":
                 case "IPKE":
                 case "IPGE":
-                    gameLanguage = gLangEnum.English;
+                    gameLanguage = GameLanguages.English;
                     break;
 
                 case "ADAS":
@@ -1005,7 +805,7 @@ namespace DSPRE {
                 case "IPKS":
                 case "IPGS":
                 case "LATA":
-                    gameLanguage = gLangEnum.Spanish;
+                    gameLanguage = GameLanguages.Spanish;
                     break;
 
                 case "ADAI":
@@ -1013,7 +813,7 @@ namespace DSPRE {
                 case "CPUI":
                 case "IPKI":
                 case "IPGI":
-                    gameLanguage = gLangEnum.Italian;
+                    gameLanguage = GameLanguages.Italian;
                     break;
 
                 case "ADAF":
@@ -1021,7 +821,7 @@ namespace DSPRE {
                 case "CPUF":
                 case "IPKF":
                 case "IPGF":
-                    gameLanguage = gLangEnum.French;
+                    gameLanguage = GameLanguages.French;
                     break;
 
                 case "ADAD":
@@ -1029,161 +829,152 @@ namespace DSPRE {
                 case "CPUD":
                 case "IPKD":
                 case "IPGD":
-                    gameLanguage = gLangEnum.German;
+                    gameLanguage = GameLanguages.German;
                     break;
 
                 default:
-                    gameLanguage = gLangEnum.Japanese;
+                    gameLanguage = GameLanguages.Japanese;
                     break;
             }
         }
         private void LoadGameFamily() {
             switch (gameVersion) {
-                case gVerEnum.Diamond:
-                case gVerEnum.Pearl:
-                    gameFamily = gFamEnum.DP;
+                case GameVersions.Diamond:
+                case GameVersions.Pearl:
+                    gameFamily = GameFamilies.DP;
                     break;
-                case gVerEnum.Platinum:
-                    gameFamily = gFamEnum.Plat;
+                case GameVersions.Platinum:
+                    gameFamily = GameFamilies.Plat;
                     break;
-                case gVerEnum.HeartGold:
-                case gVerEnum.SoulSilver:
-                    gameFamily = gFamEnum.HGSS;
+                case GameVersions.HeartGold:
+                case GameVersions.SoulSilver:
+                    gameFamily = GameFamilies.HGSS;
                     break;
             }
         }
         private void SetNarcDirs() {
             Dictionary<DirNames, string> packedDirsDict = null;
             switch (gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     string suffix = "";
-                    if (!gameLanguage.Equals(gLangEnum.Japanese)) {
+                    if (!gameLanguage.Equals(GameLanguages.Japanese))
                         suffix = "_release";
-                    }
 
                     packedDirsDict = new Dictionary<DirNames, string>() {
-                        [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
-                        [DirNames.textArchives] = @"data\msgdata\msg.narc",
+                        [DirNames.synthOverlay] = @"data\weather_sys.narc",
+                        [DirNames.textArchives] = @"msgdata\msg.narc",
 
-                        [DirNames.matrices] = @"data\fielddata\mapmatrix\map_matrix.narc",
+                        [DirNames.matrices] = @"fielddata\mapmatrix\map_matrix.narc",
 
-                        [DirNames.maps] = @"data\fielddata\land_data\land_data" + suffix + ".narc",
-                        [DirNames.exteriorBuildingModels] = @"data\fielddata\build_model\build_model.narc",
-                        [DirNames.buildingConfigFiles] = @"data\fielddata\areadata\area_build_model\area_build.narc",
-                        [DirNames.buildingTextures] = @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
-                        [DirNames.mapTextures] = @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
-                        [DirNames.areaData] = @"data\fielddata\areadata\area_data.narc",
+                        [DirNames.maps] = @"fielddata\land_data\land_data" + suffix + ".narc",
+                        [DirNames.exteriorBuildingModels] = @"fielddata\build_model\build_model.narc",
+                        [DirNames.buildingConfigFiles] = @"fielddata\areadata\area_build_model\area_build.narc",
+                        [DirNames.buildingTextures] = @"fielddata\areadata\area_build_model\areabm_texset.narc",
+                        [DirNames.mapTextures] = @"fielddata\areadata\area_map_tex\map_tex_set.narc",
+                        [DirNames.areaData] = @"fielddata\areadata\area_data.narc",
 
-                        [DirNames.eventFiles] = @"data\fielddata\eventdata\zone_event" + suffix + ".narc",
-                        [DirNames.OWSprites] = @"data\data\mmodel\mmodel.narc",
+                        [DirNames.eventFiles] = @"fielddata\eventdata\zone_event" + suffix + ".narc",
+                        [DirNames.OWSprites] = @"data\mmodel\mmodel.narc",
 
-                        [DirNames.scripts] = @"data\fielddata\script\scr_seq" + suffix + ".narc",
+                        [DirNames.scripts] = @"fielddata\script\scr_seq" + suffix + ".narc",
 
-                        [DirNames.trainerProperties] = @"data\poketool\trainer\trdata.narc",
-                        [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
-                        [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
+                        [DirNames.trainerProperties] = @"poketool\trainer\trdata.narc",
+                        [DirNames.trainerParty] = @"poketool\trainer\trpoke.narc",
+                        [DirNames.trainerGraphics] = @"poketool\trgra\trfgra.narc",
 
-                        [DirNames.monIcons] = @"data\poketool\icongra\poke_icon.narc",
+                        [DirNames.monIcons] = @"poketool\icongra\poke_icon.narc",
 
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc",
-                        [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
-                        [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
-                    };
-
-                    //Personal Data archive is different for Pearl
-                    string personal = @"data\poketool\personal";
-                    if (gameVersion == gVerEnum.Pearl) {
-                        personal += ("_" + gameVersion.ToString().ToLower());
-                    }
-                    personal += @"\personal.narc";
-                    packedDirsDict[DirNames.personalPokeData] = personal;
-
-                    break;
-                case gFamEnum.Plat:
-                    suffix = gameVersion.ToString().Substring(0, 2).ToLower();
-
-                    packedDirsDict = new Dictionary<DirNames, string>() {
-                        [DirNames.personalPokeData] = @"data\poketool\personal\pl_personal.narc",
-                        [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
-                        [DirNames.dynamicHeaders] = @"data\debug\cb_edit\d_test.narc",
-
-                        [DirNames.textArchives] = @"data\msgdata\" + suffix + '_' + "msg.narc",
-
-                        [DirNames.matrices] = @"data\fielddata\mapmatrix\map_matrix.narc",
-
-                        [DirNames.maps] = @"data\fielddata\land_data\land_data.narc",
-                        [DirNames.exteriorBuildingModels] = @"data\fielddata\build_model\build_model.narc",
-                        [DirNames.buildingConfigFiles] = @"data\fielddata\areadata\area_build_model\area_build.narc",
-                        [DirNames.buildingTextures] = @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
-                        [DirNames.mapTextures] = @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
-                        [DirNames.areaData] = @"data\fielddata\areadata\area_data.narc",
-
-                        [DirNames.eventFiles] = @"data\fielddata\eventdata\zone_event.narc",
-                        [DirNames.OWSprites] = @"data\data\mmodel\mmodel.narc",
-
-                        [DirNames.scripts] = @"data\fielddata\script\scr_seq.narc",
-
-                        [DirNames.trainerProperties] = @"data\poketool\trainer\trdata.narc",
-                        [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
-                        [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
-
-                        [DirNames.monIcons] = @"data\poketool\icongra\pl_poke_icon.narc",
-
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + suffix + '_' + "enc_data.narc",
-                        [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
-                        [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
+                        [DirNames.encounters] = @"fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc"
                     };
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.Plat:
                     packedDirsDict = new Dictionary<DirNames, string>() {
-                        [DirNames.personalPokeData] = @"data\a\0\0\2",
-                        [DirNames.synthOverlay] = @"data\a\0\2\8",
-                        [DirNames.dynamicHeaders] = @"data\a\0\5\0",
+                        [DirNames.synthOverlay] = @"data\weather_sys.narc",
+                        [DirNames.dynamicHeaders] = @"debug\cb_edit\d_test.narc",
 
-                        [DirNames.textArchives] = @"data\a\0\2\7",
+                        [DirNames.textArchives] = @"msgdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "msg.narc",
 
-                        [DirNames.matrices] = @"data\a\0\4\1",
+                        [DirNames.matrices] = @"fielddata\mapmatrix\map_matrix.narc",
 
-                        [DirNames.maps] = @"data\a\0\6\5",
-                        [DirNames.exteriorBuildingModels] = @"data\a\0\4\0",
-                        [DirNames.buildingConfigFiles] = @"data\a\0\4\3",
-                        [DirNames.buildingTextures] = @"data\a\0\7\0",
-                        [DirNames.mapTextures] = @"data\a\0\4\4",
-                        [DirNames.areaData] = @"data\a\0\4\2",
+                        [DirNames.maps] = @"fielddata\land_data\land_data.narc",
+                        [DirNames.exteriorBuildingModels] = @"fielddata\build_model\build_model.narc",
+                        [DirNames.buildingConfigFiles] = @"fielddata\areadata\area_build_model\area_build.narc",
+                        [DirNames.buildingTextures] = @"fielddata\areadata\area_build_model\areabm_texset.narc",
+                        [DirNames.mapTextures] = @"fielddata\areadata\area_map_tex\map_tex_set.narc",
+                        [DirNames.areaData] = @"fielddata\areadata\area_data.narc",
 
-                        [DirNames.eventFiles] = @"data\a\0\3\2",
-                        [DirNames.OWSprites] = @"data\a\0\8\1",
+                        [DirNames.eventFiles] = @"fielddata\eventdata\zone_event.narc",
+                        [DirNames.OWSprites] = @"data\mmodel\mmodel.narc",
 
-                        [DirNames.scripts] = @"data\a\0\1\2",
+                        [DirNames.scripts] = @"fielddata\script\scr_seq.narc",
+
+                        [DirNames.trainerProperties] = @"poketool\trainer\trdata.narc",
+                        [DirNames.trainerParty] = @"poketool\trainer\trpoke.narc",
+                        [DirNames.trainerGraphics] = @"poketool\trgra\trfgra.narc",
+
+                        [DirNames.monIcons] = @"poketool\icongra\pl_poke_icon.narc",
+
+                        [DirNames.encounters] = @"fielddata\encountdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "enc_data.narc"
+                    };
+                    break;
+                case GameFamilies.HGSS:
+                    packedDirsDict = new Dictionary<DirNames, string>() {
+                        [DirNames.synthOverlay] = @"a\0\2\8",
+                        [DirNames.dynamicHeaders] = @"a\0\5\0",
+
+                        [DirNames.textArchives] = @"a\0\2\7",
+
+                        [DirNames.matrices] = @"a\0\4\1",
+
+                        [DirNames.maps] = @"a\0\6\5",
+                        [DirNames.exteriorBuildingModels] = @"a\0\4\0",
+                        [DirNames.buildingConfigFiles] = @"a\0\4\3",
+                        [DirNames.buildingTextures] = @"a\0\7\0",
+                        [DirNames.mapTextures] = @"a\0\4\4",
+                        [DirNames.areaData] = @"a\0\4\2",
+
+                        [DirNames.eventFiles] = @"a\0\3\2",
+                        [DirNames.OWSprites] = @"a\0\8\1",
+
+                        [DirNames.scripts] = @"a\0\1\2",
+
                         //ENCOUNTERS FOLDER DEPENDS ON VERSION
-                        [DirNames.trainerProperties] = @"data\a\0\5\5",
-                        [DirNames.trainerParty] = @"data\a\0\5\6",
-                        [DirNames.trainerGraphics] = @"data\a\0\5\8",
+                        [DirNames.trainerProperties] = @"a\0\5\5",
+                        [DirNames.trainerParty] = @"a\0\5\6",
+                        [DirNames.trainerGraphics] = @"a\0\5\8",
 
-                        [DirNames.monIcons] = @"data\a\0\2\0",
+                        [DirNames.monIcons] = @"a\0\2\0",
 
-                        [DirNames.interiorBuildingModels] = @"data\a\1\4\8",
-                        [DirNames.learnsets] = @"data\a\0\3\3",
-                        [DirNames.evolutions] = @"data\a\0\3\4",
+                        [DirNames.interiorBuildingModels] = @"a\1\4\8",
+
+                        [DirNames.safariZone] = @"a\2\3\0",
+                        [DirNames.headbutt] = @"a\2\5\2", //both versions use the same folder with different data
                     };
 
                     //Encounter archive is different for SS 
-                    packedDirsDict[DirNames.encounters] = gameVersion == gVerEnum.HeartGold ? @"data\a\0\3\7" : @"data\a\1\3\6";
+                    if (gameVersion == GameVersions.HeartGold) {
+                        packedDirsDict[DirNames.encounters] = @"a\0\3\7";
+                    } else {
+                        packedDirsDict[DirNames.encounters] = @"a\1\3\6";
+                    }
+
                     break;
             }
 
             gameDirs = new Dictionary<DirNames, (string packedDir, string unpackedDir)>();
             foreach (KeyValuePair<DirNames, string> kvp in packedDirsDict) {
-                gameDirs.Add(kvp.Key, (workDir + kvp.Value, workDir + @"unpacked" + '\\' + kvp.Key.ToString()));
+                string _packedPath = Path.Combine(workDir, Path.Combine(dataFolderName, kvp.Value));
+                string _unpackedPath = Path.Combine(unpackedPath, kvp.Key.ToString());
+                gameDirs.Add(kvp.Key, (_packedPath, _unpackedPath));
             }
         }
         public void ResetMapCellsColorDictionary() {
             switch (gameFamily) {
-                case gFamEnum.DP:
-                case gFamEnum.Plat:
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
                     MapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.DPPtmatrixColorsDict;
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     MapCellsColorDictionary = PokeDatabase.System.MatrixCellColors.HGSSmatrixColorsDict;
                     break;
             }
@@ -1191,8 +982,8 @@ namespace DSPRE {
         public static void ReadOWTable() {
             OverworldTable = new SortedDictionary<uint, (uint spriteID, ushort properties)>();
             switch (gameFamily) {
-                case gFamEnum.DP:
-                case gFamEnum.Plat:
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
                     using (BinaryReader idReader = new BinaryReader(new FileStream(OWtablePath, FileMode.Open))) {
                         idReader.BaseStream.Position = OWTableOffset;
 
@@ -1205,7 +996,7 @@ namespace DSPRE {
                         }
                     }
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     using (BinaryReader idReader = new BinaryReader(new FileStream(OWtablePath, FileMode.Open))) {
                         idReader.BaseStream.Position = OWTableOffset;
 

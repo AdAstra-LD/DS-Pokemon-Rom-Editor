@@ -14,36 +14,36 @@ namespace DSPRE.Resources.ROMToolboxDB {
             internal uint initOffset;
 
             public static Dictionary<string, string> arm9ExpansionCodeDB = new Dictionary<string, string>() {
-                ["branchString" + "_" + RomInfo.gFamEnum.DP + "_" + RomInfo.gLangEnum.English] = "05 F1 34 FC",
-                ["branchString" + "_" + RomInfo.gFamEnum.DP + "_" + RomInfo.gLangEnum.Spanish] = "05 F1 04 FD",
-                ["branchString" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.English] = "00 F1 B4 F8",
-                ["branchString" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.Spanish] = "00 F1 B2 F9",
-                ["branchString" + "_" + RomInfo.gFamEnum.HGSS + "_" + RomInfo.gLangEnum.English] = "0F F1 30 FB",
-                ["branchString" + "_" + RomInfo.gFamEnum.HGSS + "_" + RomInfo.gLangEnum.Spanish] = "0F F1 40 FB",
+                ["branchString" + "_" + RomInfo.GameFamilies.DP + "_" + RomInfo.GameLanguages.English] = "05 F1 34 FC",
+                ["branchString" + "_" + RomInfo.GameFamilies.DP + "_" + RomInfo.GameLanguages.Spanish] = "05 F1 04 FD",
+                ["branchString" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.English] = "00 F1 B4 F8",
+                ["branchString" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.Spanish] = "00 F1 B2 F9",
+                ["branchString" + "_" + RomInfo.GameFamilies.HGSS + "_" + RomInfo.GameLanguages.English] = "0F F1 30 FB",
+                ["branchString" + "_" + RomInfo.GameFamilies.HGSS + "_" + RomInfo.GameLanguages.Spanish] = "0F F1 40 FB",
 
-                ["initString" + "_" + RomInfo.gFamEnum.DP] = "FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD F1 64 00 02 00 80 3C 02",  //Valid for ENG and ESP, also for P            
-                ["initString" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.English] = "FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD A5 6A 00 02 00 80 3C 02",
-                ["initString" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.Spanish] = "FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD B9 6A 00 02 00 80 3C 02",
-                ["initString" + "_" + RomInfo.gFamEnum.HGSS] = "FC B5 05 48 C0 46 1C 21 00 22 02 4D A8 47 00 20 03 21 FC BD 09 75 00 02 00 80 3C 02" //Valid for ENG and ESP, also for SS
+                ["initString" + "_" + RomInfo.GameFamilies.DP] = "FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD F1 64 00 02 00 80 3C 02",  //Valid for ENG and ESP, also for P            
+                ["initString" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.English] = "FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD A5 6A 00 02 00 80 3C 02",
+                ["initString" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.Spanish] = "FC B5 05 48 C0 46 41 21 09 22 02 4D A8 47 00 20 03 21 FC BD B9 6A 00 02 00 80 3C 02",
+                ["initString" + "_" + RomInfo.GameFamilies.HGSS] = "FC B5 05 48 C0 46 1C 21 00 22 02 4D A8 47 00 20 03 21 FC BD 09 75 00 02 00 80 3C 02" //Valid for ENG and ESP, also for SS
             };
             public static Dictionary<string, uint> arm9ExpansionOffsetsDB = new Dictionary<string, uint>() {
-                ["branchOffset" + "_" + RomInfo.gFamEnum.DP] = 0x02000C80, //Valid also for P
-                ["branchOffset" + "_" + RomInfo.gFamEnum.Plat] = 0x02000CB4,
-                ["branchOffset" + "_" + RomInfo.gFamEnum.HGSS] = 0x02000CD0, //Valid also for SS
+                ["branchOffset" + "_" + RomInfo.GameFamilies.DP] = 0x02000C80, //Valid also for P
+                ["branchOffset" + "_" + RomInfo.GameFamilies.Plat] = 0x02000CB4,
+                ["branchOffset" + "_" + RomInfo.GameFamilies.HGSS] = 0x02000CD0, //Valid also for SS
 
-                ["initOffset" + "_" + RomInfo.gFamEnum.DP + "_" + RomInfo.gLangEnum.English] = 0x021064EC,
-                ["initOffset" + "_" + RomInfo.gFamEnum.DP + "_" + RomInfo.gLangEnum.Spanish] = 0x0210668C,
-                ["initOffset" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.English] = 0x02100E20,
-                ["initOffset" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.Spanish] = 0x0210101C,
-                ["initOffset" + "_" + RomInfo.gFamEnum.HGSS + "_" + RomInfo.gLangEnum.English] = 0x02110334,
-                ["initOffset" + "_" + RomInfo.gFamEnum.HGSS + "_" + RomInfo.gLangEnum.Spanish] = 0x02110354
+                ["initOffset" + "_" + RomInfo.GameFamilies.DP + "_" + RomInfo.GameLanguages.English] = 0x021064EC,
+                ["initOffset" + "_" + RomInfo.GameFamilies.DP + "_" + RomInfo.GameLanguages.Spanish] = 0x0210668C,
+                ["initOffset" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.English] = 0x02100E20,
+                ["initOffset" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.Spanish] = 0x0210101C,
+                ["initOffset" + "_" + RomInfo.GameFamilies.HGSS + "_" + RomInfo.GameLanguages.English] = 0x02110334,
+                ["initOffset" + "_" + RomInfo.GameFamilies.HGSS + "_" + RomInfo.GameLanguages.Spanish] = 0x02110354
             };
             internal ARM9PatchData() {
                 branchOffset = arm9ExpansionOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameFamily] - DSUtils.ARM9.address;
                 initOffset = arm9ExpansionOffsetsDB[nameof(initOffset) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage] - DSUtils.ARM9.address;
                 branchString = arm9ExpansionCodeDB[nameof(branchString) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
 
-                if (RomInfo.gameFamily == gFamEnum.Plat) {
+                if (RomInfo.gameFamily == GameFamilies.Plat) {
                     initString = arm9ExpansionCodeDB[nameof(initString) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
                 } else {
                     initString = arm9ExpansionCodeDB[nameof(initString) + "_" + RomInfo.gameFamily];
@@ -65,32 +65,32 @@ namespace DSPRE.Resources.ROMToolboxDB {
             internal byte[] subroutine;
 
             public static Dictionary<string, string> BDHCamCodeDB = new Dictionary<string, string>() {
-                ["branchString" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.English] = "B9 F3 E2 F8",
-                ["branchString" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.Spanish] = "B9 F3 AA F8",
-                ["branchString" + "_" + RomInfo.gFamEnum.HGSS] = "B6 F3 2E FA", //Also valid for SS, both ESP and ENG
+                ["branchString" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.English] = "B9 F3 E2 F8",
+                ["branchString" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.Spanish] = "B9 F3 AA F8",
+                ["branchString" + "_" + RomInfo.GameFamilies.HGSS] = "B6 F3 2E FA", //Also valid for SS, both ESP and ENG
 
                 ["overlayString1"] = "00 4B 18 47 41 9C 3D 02",
                 ["overlayString2"] = "00 4B 18 47 01 9C 3D 02",
             };
             public static Dictionary<string, uint> BDHCamOffsetsDB = new Dictionary<string, uint>() {
-                ["branchOffset" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.English] = 0x0202040C,
-                ["branchOffset" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.Spanish] = 0x0202047C,
-                ["branchOffset" + "_" + RomInfo.gFamEnum.HGSS] = 0x02023174, //Also valid for SS, both ESP and ENG
+                ["branchOffset" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.English] = 0x0202040C,
+                ["branchOffset" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.Spanish] = 0x0202047C,
+                ["branchOffset" + "_" + RomInfo.GameFamilies.HGSS] = 0x02023174, //Also valid for SS, both ESP and ENG
 
-                ["overlayOffset1" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.English] = 0x0001E1B4,
-                ["overlayOffset1" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.Spanish] = 0x0001E1BC,
-                ["overlayOffset1" + "_" + RomInfo.gFamEnum.HGSS] = 0x0001574C,
+                ["overlayOffset1" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.English] = 0x0001E1B4,
+                ["overlayOffset1" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.Spanish] = 0x0001E1BC,
+                ["overlayOffset1" + "_" + RomInfo.GameFamilies.HGSS] = 0x0001574C,
 
-                ["overlayOffset2" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.English] = 0x0001E2CC,
-                ["overlayOffset2" + "_" + RomInfo.gFamEnum.Plat + "_" + RomInfo.gLangEnum.Spanish] = 0x0001E2D4,
-                ["overlayOffset2" + "_" + RomInfo.gFamEnum.HGSS] = 0x00015864,
+                ["overlayOffset2" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.English] = 0x0001E2CC,
+                ["overlayOffset2" + "_" + RomInfo.GameFamilies.Plat + "_" + RomInfo.GameLanguages.Spanish] = 0x0001E2D4,
+                ["overlayOffset2" + "_" + RomInfo.GameFamilies.HGSS] = 0x00015864,
             };
 
             public static uint BDHCamSubroutineOffset = 0x000115B0;
 
             internal BDHCAMPatchData() {
                 switch (RomInfo.gameFamily) {
-                    case gFamEnum.Plat:
+                    case GameFamilies.Plat:
                         overlayNumber = 5;
                         branchString = BDHCamCodeDB[nameof(branchString) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
 
@@ -98,7 +98,7 @@ namespace DSPRE.Resources.ROMToolboxDB {
                         overlayOffset1 = BDHCamOffsetsDB[nameof(overlayOffset1) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
                         overlayOffset2 = BDHCamOffsetsDB[nameof(overlayOffset2) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
                         break;
-                    case gFamEnum.HGSS:
+                    case GameFamilies.HGSS:
                         overlayNumber = 1;
                         branchString = BDHCamCodeDB[nameof(branchString) + "_" + RomInfo.gameFamily];
 
@@ -167,9 +167,9 @@ namespace DSPRE.Resources.ROMToolboxDB {
                         return "00 B5 01 1C 32 20 00 22 CC F7 58 F9 03 1C DF F7 49 FC 00 BD";
                 }
             }
-            public static Dictionary<gFamEnum, Tuple<uint, uint>[]> dynamicHeadersPointersDB = new Dictionary<gFamEnum, Tuple<uint, uint>[]>() {
+            public static Dictionary<GameFamilies, Tuple<uint, uint>[]> dynamicHeadersPointersDB = new Dictionary<GameFamilies, Tuple<uint, uint>[]>() {
                 // format: headerID*18 offset, (ARM9_HEADER_TABLE_OFFSET + n) offset
-                [gFamEnum.Plat] = new Tuple<uint, uint>[] {
+                [GameFamilies.Plat] = new Tuple<uint, uint>[] {
                     new Tuple<uint, uint>(0x3A03E, 0x3A048),
                     new Tuple<uint, uint>(0x3A052, 0x3A05C),
                     new Tuple<uint, uint>(0x3A066, 0x3A080),
@@ -191,7 +191,7 @@ namespace DSPRE.Resources.ROMToolboxDB {
                     new Tuple<uint, uint>(0x3A1F6, 0x3A208),
                     new Tuple<uint, uint>(0x3A212, 0x3A224),
                 },
-                [gFamEnum.HGSS] = new Tuple<uint, uint>[] {
+                [GameFamilies.HGSS] = new Tuple<uint, uint>[] {
                     new Tuple<uint, uint>(0x3B282, 0x3B28C),
                     new Tuple<uint, uint>(0x3B296, 0x3B2A8),
                     new Tuple<uint, uint>(0x3B2B2, 0x3B2BC),
@@ -225,7 +225,7 @@ namespace DSPRE.Resources.ROMToolboxDB {
                 initOffset = getDynamicHeadersInitOffset(RomInfo.romID);
                 initString = getDynamicHeadersInitString(RomInfo.romID);
 
-                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                if (RomInfo.gameFamily == GameFamilies.HGSS) {
                     pointerDiff = (int)(initOffset - getDynamicHeadersInitOffset("IPKE"));
                 } else {
                     pointerDiff = (int)(initOffset - getDynamicHeadersInitOffset("CPUE"));
@@ -233,10 +233,10 @@ namespace DSPRE.Resources.ROMToolboxDB {
             }
         }
 
-        public static Dictionary<gFamEnum, uint> syntheticOverlayFileNumbersDB = new Dictionary<gFamEnum, uint>() {
-            [gFamEnum.DP] = 9,
-            [gFamEnum.Plat] = 9,
-            [gFamEnum.HGSS] = 0,
+        public static Dictionary<GameFamilies, uint> syntheticOverlayFileNumbersDB = new Dictionary<GameFamilies, uint>() {
+            [GameFamilies.DP] = 9,
+            [GameFamilies.Plat] = 9,
+            [GameFamilies.HGSS] = 0,
         };
 
         public static Dictionary<uint[], string> matrixExpansionDB = new Dictionary<uint[], string>() {

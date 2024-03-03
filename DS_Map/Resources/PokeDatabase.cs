@@ -612,42 +612,42 @@ namespace DSPRE.Resources {
             }
         }
         public static class System {
-            public static Dictionary<string, gVerEnum> versionsDict = new Dictionary<string, gVerEnum>() {
-                ["ADAE"] = gVerEnum.Diamond,
-                ["ADAS"] = gVerEnum.Diamond,
-                ["ADAI"] = gVerEnum.Diamond,
-                ["ADAF"] = gVerEnum.Diamond,
-                ["ADAD"] = gVerEnum.Diamond,
-                ["ADAJ"] = gVerEnum.Diamond,
+            public static Dictionary<string, GameVersions> versionsDict = new Dictionary<string, GameVersions>() {
+                ["ADAE"] = GameVersions.Diamond,
+                ["ADAS"] = GameVersions.Diamond,
+                ["ADAI"] = GameVersions.Diamond,
+                ["ADAF"] = GameVersions.Diamond,
+                ["ADAD"] = GameVersions.Diamond,
+                ["ADAJ"] = GameVersions.Diamond,
 
-                ["APAE"] = gVerEnum.Pearl,
-                ["APAS"] = gVerEnum.Pearl,
-                ["APAI"] = gVerEnum.Pearl,
-                ["APAF"] = gVerEnum.Pearl,
-                ["APAD"] = gVerEnum.Pearl,
-                ["APAJ"] = gVerEnum.Pearl,
+                ["APAE"] = GameVersions.Pearl,
+                ["APAS"] = GameVersions.Pearl,
+                ["APAI"] = GameVersions.Pearl,
+                ["APAF"] = GameVersions.Pearl,
+                ["APAD"] = GameVersions.Pearl,
+                ["APAJ"] = GameVersions.Pearl,
 
-                ["CPUE"] = gVerEnum.Platinum,
-                ["CPUS"] = gVerEnum.Platinum,
-                ["CPUI"] = gVerEnum.Platinum,
-                ["CPUF"] = gVerEnum.Platinum,
-                ["CPUD"] = gVerEnum.Platinum,
-                ["CPUJ"] = gVerEnum.Platinum,
-                ["CPUP"] = gVerEnum.Platinum,
+                ["CPUE"] = GameVersions.Platinum,
+                ["CPUS"] = GameVersions.Platinum,
+                ["CPUI"] = GameVersions.Platinum,
+                ["CPUF"] = GameVersions.Platinum,
+                ["CPUD"] = GameVersions.Platinum,
+                ["CPUJ"] = GameVersions.Platinum,
+                ["CPUP"] = GameVersions.Platinum,
 
-                ["IPKE"] = gVerEnum.HeartGold,
-                ["IPKS"] = gVerEnum.HeartGold,
-                ["IPKI"] = gVerEnum.HeartGold,
-                ["IPKF"] = gVerEnum.HeartGold,
-                ["IPKD"] = gVerEnum.HeartGold,
-                ["IPKJ"] = gVerEnum.HeartGold,
+                ["IPKE"] = GameVersions.HeartGold,
+                ["IPKS"] = GameVersions.HeartGold,
+                ["IPKI"] = GameVersions.HeartGold,
+                ["IPKF"] = GameVersions.HeartGold,
+                ["IPKD"] = GameVersions.HeartGold,
+                ["IPKJ"] = GameVersions.HeartGold,
 
-                ["IPGE"] = gVerEnum.SoulSilver,
-                ["IPGS"] = gVerEnum.SoulSilver,
-                ["IPGI"] = gVerEnum.SoulSilver,
-                ["IPGF"] = gVerEnum.SoulSilver,
-                ["IPGD"] = gVerEnum.SoulSilver,
-                ["IPGJ"] = gVerEnum.SoulSilver
+                ["IPGE"] = GameVersions.SoulSilver,
+                ["IPGS"] = GameVersions.SoulSilver,
+                ["IPGI"] = GameVersions.SoulSilver,
+                ["IPGF"] = GameVersions.SoulSilver,
+                ["IPGD"] = GameVersions.SoulSilver,
+                ["IPGJ"] = GameVersions.SoulSilver
             };
 
             public static Dictionary<byte, string> MapCollisionPainters = new Dictionary<byte, string>() {

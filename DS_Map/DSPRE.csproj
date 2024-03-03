@@ -125,7 +125,9 @@
       <DependentUpon>EvolutionsEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions.cs" />
+    <Compile Include="Filesystem.cs" />
     <Compile Include="GameCamera.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="InputComboBox.cs">
       <SubType>Component</SubType>
     </Compile>

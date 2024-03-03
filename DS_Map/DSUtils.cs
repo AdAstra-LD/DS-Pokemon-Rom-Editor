@@ -70,7 +70,7 @@ namespace DSPRE {
                 return new FileInfo(RomInfo.arm9Path).Length <= 0xBC000;
             }
             public static bool CheckCompressionMark() {
-                return BitConverter.ToInt32(DSUtils.ARM9.ReadBytes((uint)(RomInfo.gameFamily == gFamEnum.DP ? 0xB7C : 0xBB4), 4), 0) != 0;
+                return BitConverter.ToInt32(DSUtils.ARM9.ReadBytes((uint)(RomInfo.gameFamily == GameFamilies.DP ? 0xB7C : 0xBB4), 4), 0) != 0;
             }
             public static byte[] ReadBytes(uint startOffset, long numberOfBytes = 0) {
                 return ReadFromFile(RomInfo.arm9Path, startOffset, numberOfBytes);

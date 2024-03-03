@@ -120,13 +120,13 @@ namespace DSPRE {
             matrixyUpDown.Maximum = headerMatrix.maps.GetLength(0) - 1;
 
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     locationNameLBL.Text = locations[((HeaderDP)currentHeader).locationName];
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     locationNameLBL.Text = locations[((HeaderPt)currentHeader).locationName];
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     locationNameLBL.Text = locations[((HeaderHGSS)currentHeader).locationName];
                     break;
             }

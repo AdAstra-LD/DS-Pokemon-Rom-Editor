@@ -506,13 +506,13 @@ namespace DSPRE {
             if (forceUnpack) {
                 DSUtils.ForceUnpackNarcs(toUnpack);
 
-                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                if (RomInfo.gameFamily == GameFamilies.HGSS) {
                     DSUtils.ForceUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels });// Last = interior buildings dir
                 }
             } else {
                 DSUtils.TryUnpackNarcs(toUnpack);
 
-                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                if (RomInfo.gameFamily == GameFamilies.HGSS) {
                     DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels });
                 }
             }
@@ -594,7 +594,11 @@ namespace DSPRE {
             gameIcon.Refresh();  // Paint game icon
             statusLabelMessage("Attempting to unpack NARCs from folder...");
             Update();
-
+            for (int i = 0; i < 128; i++) {
+                if (DSUtils.OverlayIsCompressed(i)) {
+                    DSUtils.DecompressOverlay(i);
+                }
+            }
             ReadROMInitData();
         }
 
@@ -605,7 +609,7 @@ namespace DSPRE {
             versionLabel.Text = RomInfo.gameVersion.ToString() + " " + "[" + RomInfo.romID + "]";
             languageLabel.Text = "Lang: " + RomInfo.gameLanguage;
 
-            if (RomInfo.gameLanguage == gLangEnum.English) {
+            if (RomInfo.gameLanguage == GameLanguages.English) {
                 if (europeByte == 0x0A) {
                     languageLabel.Text += " [Europe]";
                 } else {
@@ -654,7 +658,7 @@ namespace DSPRE {
 
         private void ReadROMInitData() {
             if (DSUtils.ARM9.CheckCompressionMark()) {
-                if (!RomInfo.gameFamily.Equals(gFamEnum.HGSS)) {
+                if (!RomInfo.gameFamily.Equals(GameFamilies.HGSS)) {
                     MessageBox.Show("Unexpected compressed ARM9. It is advised that you double check the ARM9.");
                 }
                 if (!DSUtils.ARM9.Decompress(RomInfo.arm9Path)) {
@@ -724,7 +728,7 @@ namespace DSPRE {
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (d == DialogResult.Yes) {
-                    DSUtils.ARM9.WriteBytes(new byte[4] { 0, 0, 0, 0 }, (uint)(RomInfo.gameFamily == gFamEnum.DP ? 0xB7C : 0xBB4));
+                    DSUtils.ARM9.WriteBytes(new byte[4] { 0, 0, 0, 0 }, (uint)(RomInfo.gameFamily == GameFamilies.DP ? 0xB7C : 0xBB4));
                 }
             }
 
@@ -749,9 +753,15 @@ namespace DSPRE {
 
             Update();
 
+            for (int i = 0; i < 128; i++) {
+                if (!DSUtils.OverlayIsCompressed(i)) {
+                    DSUtils.CompressOverlay(i);
+                }
+            }
+
             DSUtils.RepackROM(saveRom.FileName);
 
-            if (RomInfo.gameFamily != gFamEnum.DP && RomInfo.gameFamily != gFamEnum.Plat) {
+            if (RomInfo.gameFamily != GameFamilies.DP && RomInfo.gameFamily != GameFamilies.Plat) {
                 if (eventEditorIsReady) {
                     if (DSUtils.OverlayIsCompressed(1)) {
                         DSUtils.DecompressOverlay(1);
@@ -819,16 +829,16 @@ namespace DSPRE {
             }
         }
         private void diamondAndPearlToolStripMenuItem_Click(object sender, EventArgs e) {
-            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(gFamEnum.DP), RomInfo.BuildCommandParametersDatabase(gFamEnum.DP),
-                RomInfo.BuildActionNamesDatabase(gFamEnum.DP), RomInfo.BuildComparisonOperatorsDatabase(gFamEnum.DP));
+            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(GameFamilies.DP), RomInfo.BuildCommandParametersDatabase(GameFamilies.DP),
+                RomInfo.BuildActionNamesDatabase(GameFamilies.DP), RomInfo.BuildComparisonOperatorsDatabase(GameFamilies.DP));
         }
         private void platinumToolStripMenuItem_Click(object sender, EventArgs e) {
-            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(gFamEnum.Plat), RomInfo.BuildCommandParametersDatabase(gFamEnum.Plat),
-                RomInfo.BuildActionNamesDatabase(gFamEnum.Plat), RomInfo.BuildComparisonOperatorsDatabase(gFamEnum.Plat));
+            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(GameFamilies.Plat), RomInfo.BuildCommandParametersDatabase(GameFamilies.Plat),
+                RomInfo.BuildActionNamesDatabase(GameFamilies.Plat), RomInfo.BuildComparisonOperatorsDatabase(GameFamilies.Plat));
         }
         private void heartGoldAndSoulSilverToolStripMenuItem_Click(object sender, EventArgs e) {
-            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(gFamEnum.HGSS), RomInfo.BuildCommandParametersDatabase(gFamEnum.HGSS),
-                RomInfo.BuildActionNamesDatabase(gFamEnum.HGSS), RomInfo.BuildComparisonOperatorsDatabase(gFamEnum.HGSS));
+            OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(GameFamilies.HGSS), RomInfo.BuildCommandParametersDatabase(GameFamilies.HGSS),
+                RomInfo.BuildActionNamesDatabase(GameFamilies.HGSS), RomInfo.BuildComparisonOperatorsDatabase(GameFamilies.HGSS));
         }
         private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (mainTabControl.SelectedTab == headerEditorTabPage) {
@@ -915,8 +925,8 @@ namespace DSPRE {
 
             string wildPokeUnpackedPath = gameDirs[DirNames.encounters].unpackedDir;
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
-                case gFamEnum.Plat:
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
                     using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen, internalNames.Count))
                         editor.ShowDialog();
                     break;
@@ -996,7 +1006,7 @@ namespace DSPRE {
             ReloadHeaderEditorLocationsList(currentTextArchive.messages);
 
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     areaIconComboBox.Enabled = false;
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("dpareaicon");
                     areaSettingsLabel.Text = "Show nametag:";
@@ -1014,7 +1024,7 @@ namespace DSPRE {
                     battleBackgroundLabel.Location = new Point(battleBackgroundLabel.Location.X - 25, battleBackgroundLabel.Location.Y - 8);
                     battleBackgroundUpDown.Location = new Point(battleBackgroundUpDown.Location.X - 25, battleBackgroundUpDown.Location.Y - 8);
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     areaSettingsLabel.Text = "Show nametag:";
                     areaIconComboBox.Items.Clear();
                     cameraComboBox.Items.Clear();
@@ -1134,9 +1144,9 @@ namespace DSPRE {
 
             string imageName;
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     ((HeaderPt)currentHeader).areaIcon = (byte)areaIconComboBox.SelectedIndex;
                     imageName = "areaicon0" + areaIconComboBox.SelectedIndex.ToString();
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject(imageName);
@@ -1162,7 +1172,7 @@ namespace DSPRE {
                 return;
             }
 
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+            if (RomInfo.gameFamily == GameFamilies.HGSS) {
                 HeaderHGSS currentHeaderHGSS = (HeaderHGSS)currentHeader;
                 currentHeaderHGSS.followMode = (byte)followModeComboBox.SelectedIndex;
             }
@@ -1172,7 +1182,7 @@ namespace DSPRE {
             if (disableHandlers) {
                 return;
             }
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+            if (RomInfo.gameFamily == GameFamilies.HGSS) {
                 HeaderHGSS currentHeaderHGSS = (HeaderHGSS)currentHeader;
                 currentHeaderHGSS.kantoFlag = kantoRadioButton.Checked;
             }
@@ -1195,7 +1205,7 @@ namespace DSPRE {
             if (flag3CheckBox.Checked)
                 flagVal += (byte)Math.Pow(2, 3);
 
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+            if (RomInfo.gameFamily == GameFamilies.HGSS) {
                 if (flag4CheckBox.Checked)
                     flagVal += (byte)Math.Pow(2, 4);
                 if (flag5CheckBox.Checked)
@@ -1243,7 +1253,7 @@ namespace DSPRE {
             cameraUpDown.Value = currentHeader.cameraAngleID;
             battleBackgroundUpDown.Value = currentHeader.battleBackground;
 
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+            if (RomInfo.gameFamily == GameFamilies.HGSS) {
                 areaSettingsComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).locationType;
             }
 
@@ -1252,7 +1262,7 @@ namespace DSPRE {
             /* Setup controls for fields with version-specific differences */
             try {
                 switch (RomInfo.gameFamily) {
-                    case gFamEnum.DP: {
+                    case GameFamilies.DP: {
                             HeaderDP h = (HeaderDP)currentHeader;
 
                             locationNameComboBox.SelectedIndex = h.locationName;
@@ -1261,7 +1271,7 @@ namespace DSPRE {
                             areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.locationSpecifier:D3}");
                             break;
                         }
-                    case gFamEnum.Plat: {
+                    case GameFamilies.Plat: {
                             HeaderPt h = (HeaderPt)currentHeader;
 
                             areaIconComboBox.SelectedIndex = h.areaIcon;
@@ -1301,7 +1311,7 @@ namespace DSPRE {
             flag2CheckBox.Checked = ba[2];
             flag3CheckBox.Checked = ba[3];
 
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+            if (RomInfo.gameFamily == GameFamilies.HGSS) {
                 flag4CheckBox.Checked = ba[4];
                 flag5CheckBox.Checked = ba[5];
                 flag6CheckBox.Checked = ba[6];
@@ -1360,10 +1370,10 @@ namespace DSPRE {
             }
 
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     ((HeaderDP)currentHeader).locationName = (ushort)locationNameComboBox.SelectedIndex;
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     ((HeaderPt)currentHeader).locationName = (byte)locationNameComboBox.SelectedIndex;
                     break;
                 default:
@@ -1382,10 +1392,10 @@ namespace DSPRE {
                 return;
             }
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     currentHeader.musicDayID = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     currentHeader.musicDayID = (ushort)(musicDayUpDown.Value = PokeDatabase.MusicDB.PtMusicDict.Keys.ElementAt(musicDayComboBox.SelectedIndex));
                     break;
                 default:
@@ -1399,10 +1409,10 @@ namespace DSPRE {
             }
 
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     currentHeader.musicNightID = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.DPMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     currentHeader.musicNightID = (ushort)(musicNightUpDown.Value = PokeDatabase.MusicDB.PtMusicDict.Keys.ElementAt(musicNightComboBox.SelectedIndex));
                     break;
                 default:
@@ -1420,10 +1430,10 @@ namespace DSPRE {
             currentHeader.musicDayID = updValue;
             try {
                 switch (RomInfo.gameFamily) {
-                    case gFamEnum.DP:
+                    case GameFamilies.DP:
                         musicDayComboBox.SelectedItem = PokeDatabase.MusicDB.DPMusicDict[updValue];
                         break;
-                    case gFamEnum.Plat:
+                    case GameFamilies.Plat:
                         musicDayComboBox.SelectedItem = PokeDatabase.MusicDB.PtMusicDict[updValue];
                         break;
                     default:
@@ -1445,10 +1455,10 @@ namespace DSPRE {
             currentHeader.musicNightID = updValue;
             try {
                 switch (RomInfo.gameFamily) {
-                    case gFamEnum.DP:
+                    case GameFamilies.DP:
                         musicNightComboBox.SelectedItem = PokeDatabase.MusicDB.DPMusicDict[updValue];
                         break;
-                    case gFamEnum.Plat:
+                    case GameFamilies.Plat:
                         musicNightComboBox.SelectedItem = PokeDatabase.MusicDB.PtMusicDict[updValue];
                         break;
                     default:
@@ -1475,10 +1485,10 @@ namespace DSPRE {
             disableHandlers = true;
             try {
                 switch (RomInfo.gameFamily) {
-                    case gFamEnum.DP:
+                    case GameFamilies.DP:
                         weatherComboBox.SelectedItem = PokeDatabase.Weather.DPWeatherDict[currentHeader.weatherID];
                         break;
-                    case gFamEnum.Plat:
+                    case GameFamilies.Plat:
                         weatherComboBox.SelectedItem = PokeDatabase.Weather.PtWeatherDict[currentHeader.weatherID];
                         break;
                     default:
@@ -1494,10 +1504,10 @@ namespace DSPRE {
             try {
                 Dictionary<byte[], string> dict;
                 switch (RomInfo.gameFamily) {
-                    case gFamEnum.DP:
+                    case GameFamilies.DP:
                         dict = PokeDatabase.System.WeatherPics.dpWeatherImageDict;
                         break;
-                    case gFamEnum.Plat:
+                    case GameFamilies.Plat:
                         dict = PokeDatabase.System.WeatherPics.ptWeatherImageDict;
                         break;
                     default:
@@ -1528,10 +1538,10 @@ namespace DSPRE {
             disableHandlers = true;
             try {
                 switch (RomInfo.gameFamily) {
-                    case gFamEnum.DP:
+                    case GameFamilies.DP:
                         cameraComboBox.SelectedItem = PokeDatabase.CameraAngles.DPPtCameraDict[currentHeader.cameraAngleID];
                         break;
-                    case gFamEnum.Plat:
+                    case GameFamilies.Plat:
                         cameraComboBox.SelectedItem = PokeDatabase.CameraAngles.DPPtCameraDict[currentHeader.cameraAngleID];
                         break;
                     default:
@@ -1547,11 +1557,11 @@ namespace DSPRE {
             string imageName;
             try {
                 switch (RomInfo.gameFamily) {
-                    case gFamEnum.DP:
+                    case GameFamilies.DP:
                         currentHeader.cameraAngleID = (byte)cameraComboBox.SelectedIndex;
                         imageName = "dpcamera" + cameraUpDown.Value.ToString();
                         break;
-                    case gFamEnum.Plat:
+                    case GameFamilies.Plat:
                         currentHeader.cameraAngleID = (byte)cameraComboBox.SelectedIndex;
                         imageName = "ptcamera" + cameraUpDown.Value.ToString();
                         break;
@@ -1572,10 +1582,10 @@ namespace DSPRE {
             }
 
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     weatherUpDown.Value = PokeDatabase.Weather.DPWeatherDict.Keys.ElementAt(weatherComboBox.SelectedIndex);
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     weatherUpDown.Value = PokeDatabase.Weather.PtWeatherDict.Keys.ElementAt(weatherComboBox.SelectedIndex);
                     break;
                 default:
@@ -1594,10 +1604,10 @@ namespace DSPRE {
             }
 
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     cameraUpDown.Value = PokeDatabase.CameraAngles.DPPtCameraDict.Keys.ElementAt(cameraComboBox.SelectedIndex);
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     cameraUpDown.Value = PokeDatabase.CameraAngles.DPPtCameraDict.Keys.ElementAt(cameraComboBox.SelectedIndex);
                     break;
                 default:
@@ -1751,13 +1761,13 @@ namespace DSPRE {
 
                     string locationName = "";
                     switch (RomInfo.gameFamily) {
-                        case gFamEnum.DP:
+                        case GameFamilies.DP:
                             locationName = locationNameComboBox.Items[((HeaderDP)h).locationName].ToString();
                             break;
-                        case gFamEnum.Plat:
+                        case GameFamilies.Plat:
                             locationName = locationNameComboBox.Items[((HeaderPt)h).locationName].ToString();
                             break;
-                        case gFamEnum.HGSS:
+                        case GameFamilies.HGSS:
                             locationName = locationNameComboBox.Items[((HeaderHGSS)h).locationName].ToString();
                             break;
                     }
@@ -1792,13 +1802,13 @@ namespace DSPRE {
 
             string[] locBuff = new string[2];
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     locBuff[1] = locationNameComboBox.Items[((HeaderDP)hBuff[1]).locationName].ToString();
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     locBuff[1] = locationNameComboBox.Items[((HeaderPt)hBuff[1]).locationName].ToString();
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     locBuff[1] = locationNameComboBox.Items[((HeaderHGSS)hBuff[1]).locationName].ToString();
                     break;
             }
@@ -1810,13 +1820,13 @@ namespace DSPRE {
                 string lastName = locBuff[0]; //Kind of a locBuff[-1]
                 locBuff[0] = locBuff[1];
                 switch (RomInfo.gameFamily) {
-                    case gFamEnum.DP:
+                    case GameFamilies.DP:
                         locBuff[1] = locationNameComboBox.Items[((HeaderDP)hBuff[1]).locationName].ToString();
                         break;
-                    case gFamEnum.Plat:
+                    case GameFamilies.Plat:
                         locBuff[1] = locationNameComboBox.Items[((HeaderPt)hBuff[1]).locationName].ToString();
                         break;
-                    case gFamEnum.HGSS:
+                    case GameFamilies.HGSS:
                         locBuff[1] = locationNameComboBox.Items[((HeaderHGSS)hBuff[1]).locationName].ToString();
                         break;
                 }
@@ -1854,11 +1864,11 @@ namespace DSPRE {
             }
 
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
-                case gFamEnum.Plat:
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
                     currentHeader.locationSpecifier = Byte.Parse(areaSettingsComboBox.SelectedItem.ToString().Substring(1, 3));
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     HeaderHGSS ch = (HeaderHGSS)currentHeader;
                     ch.locationType = (byte)areaSettingsComboBox.SelectedIndex;
                     break;
@@ -2124,11 +2134,11 @@ namespace DSPRE {
             wildPokeUpDown.Value = encountersIDCopy;
 
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
-                case gFamEnum.Plat:
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
                     areaSettingsComboBox.SelectedIndex = shownameCopy;
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     areaSettingsComboBox.SelectedIndex = areaSettingsCopy;
                     break;
             }
@@ -2614,7 +2624,7 @@ namespace DSPRE {
 
                                 statusLabelMessage("Multiple Headers are associated to this Matrix, including the last selected one [Header " + headerID + "]. Now using its textures.");
                             } else {
-                                if (gameFamily.Equals(gFamEnum.DP)) {
+                                if (gameFamily.Equals(GameFamilies.DP)) {
                                     foreach (ushort r in result) {
                                         HeaderDP hdp;
                                         hdp = (HeaderDP)MapHeader.LoadFromARM9(r);
@@ -2624,7 +2634,7 @@ namespace DSPRE {
                                             break;
                                         }
                                     }
-                                } else if (gameFamily.Equals(gFamEnum.Plat)) {
+                                } else if (gameFamily.Equals(GameFamilies.Plat)) {
                                     foreach (ushort r in result) {
                                         HeaderPt hpt;
                                         if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
@@ -3195,7 +3205,7 @@ namespace DSPRE {
                 DirNames.areaData,
             });
 
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+            if (RomInfo.gameFamily == GameFamilies.HGSS) {
                 DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels });
             }
 
@@ -3204,8 +3214,8 @@ namespace DSPRE {
             collisionPainterPictureBox.Image = new Bitmap(100, 100);
             typePainterPictureBox.Image = new Bitmap(100, 100);
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
-                case gFamEnum.Plat:
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
                     mapPartsTabControl.TabPages.Remove(bgsTabPage);
                     break;
                 default:
@@ -3222,8 +3232,8 @@ namespace DSPRE {
             for (int i = 0; i < mapCount; i++) {
                 using (DSUtils.EasyReader reader = new DSUtils.EasyReader(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + i.ToString("D4"))) {
                     switch (RomInfo.gameFamily) {
-                        case gFamEnum.DP:
-                        case gFamEnum.Plat:
+                        case GameFamilies.DP:
+                        case GameFamilies.Plat:
                             reader.BaseStream.Position = 0x10 + reader.ReadUInt32() + reader.ReadUInt32();
                             break;
                         default:
@@ -3288,12 +3298,12 @@ namespace DSPRE {
             selectMapComboBox.SelectedIndex = 0;
             exteriorbldRadioButton.Checked = true;
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
-                case gFamEnum.Plat:
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
                     mapTextureComboBox.SelectedIndex = 7;
                     buildTextureComboBox.SelectedIndex = 1;
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     mapTextureComboBox.SelectedIndex = 3;
                     buildTextureComboBox.SelectedIndex = 1;
                     break;
@@ -3328,12 +3338,12 @@ namespace DSPRE {
                 UpdateMapBinAndRefresh(temp, "Map BIN imported successfully!");
                 return;
             } else {
-                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                if (RomInfo.gameFamily == GameFamilies.HGSS) {
                     //If HGSS didn't work try reading as Platinum Map
-                    temp = new MapFile(of.FileName, gFamEnum.Plat, false);
+                    temp = new MapFile(of.FileName, GameFamilies.Plat, false);
                 } else {
                     //If Plat didn't work try reading as HGSS Map
-                    temp = new MapFile(of.FileName, gFamEnum.HGSS, false);
+                    temp = new MapFile(of.FileName, GameFamilies.HGSS, false);
                 }
 
                 if (temp.correctnessFlag) {
@@ -3723,7 +3733,7 @@ namespace DSPRE {
             modelSizeLBL.Text = currentMapFile.mapModelData.Length.ToString() + " B";
             terrainSizeLBL.Text = currentMapFile.bdhc.Length.ToString() + " B";
 
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+            if (RomInfo.gameFamily == GameFamilies.HGSS) {
                 BGSSizeLBL.Text = currentMapFile.bgs.Length.ToString() + " B";
             }
         }
@@ -4674,7 +4684,7 @@ namespace DSPRE {
         #region BDHC I/O
         private void bdhcImportButton_Click(object sender, EventArgs e) {
             OpenFileDialog it = new OpenFileDialog() {
-                Filter = RomInfo.gameFamily == gFamEnum.DP ? MapFile.BDHCFilter : MapFile.BDHCamFilter
+                Filter = RomInfo.gameFamily == GameFamilies.DP ? MapFile.BDHCFilter : MapFile.BDHCamFilter
             };
 
             if (it.ShowDialog(this) != DialogResult.OK) {
@@ -4688,7 +4698,7 @@ namespace DSPRE {
         private void bdhcExportButton_Click(object sender, EventArgs e) {
             SaveFileDialog sf = new SaveFileDialog {
                 FileName = selectMapComboBox.SelectedItem.ToString(),
-                Filter = RomInfo.gameFamily == gFamEnum.DP ? MapFile.BDHCFilter : MapFile.BDHCamFilter
+                Filter = RomInfo.gameFamily == GameFamilies.DP ? MapFile.BDHCFilter : MapFile.BDHCamFilter
             };
 
             if (sf.ShowDialog(this) != DialogResult.OK) {
@@ -4811,7 +4821,7 @@ namespace DSPRE {
 
                         Dictionary<ushort, ushort> dict = new Dictionary<ushort, ushort>();
 
-                        if (gameFamily.Equals(gFamEnum.DP)) {
+                        if (gameFamily.Equals(GameFamilies.DP)) {
                             foreach (ushort headerID in result) {
                                 HeaderDP hdp = (HeaderDP)MapHeader.LoadFromARM9(headerID);
 
@@ -5041,7 +5051,7 @@ namespace DSPRE {
                 MW_LoadModelTextures(eventMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, areaData.mapTileset);
 
                 bool isInteriorMap = false;
-                if ((RomInfo.gameVersion == gVerEnum.HeartGold || RomInfo.gameVersion == gVerEnum.SoulSilver) && areaData.areaType == 0x0)
+                if ((RomInfo.gameVersion == GameVersions.HeartGold || RomInfo.gameVersion == GameVersions.SoulSilver) && areaData.areaType == 0x0)
                     isInteriorMap = true;
 
                 for (int i = 0; i < eventMapFile.buildings.Count; i++) {
@@ -5262,15 +5272,15 @@ namespace DSPRE {
             RomInfo.SetOWtable();
             RomInfo.Set3DOverworldsDict();
 
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+            if (RomInfo.gameFamily == GameFamilies.HGSS) {
                 DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.interiorBuildingModels });
             }
 
             disableHandlers = true;
             if (File.Exists(RomInfo.OWtablePath)) {
                 switch (RomInfo.gameFamily) {
-                    case gFamEnum.DP:
-                    case gFamEnum.Plat:
+                    case GameFamilies.DP:
+                    case GameFamilies.Plat:
                         break;
                     default:
                         // HGSS Overlay 1 must be decompressed in order to read the overworld table
@@ -6340,13 +6350,13 @@ namespace DSPRE {
 
             int locNum;
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP: {
+                case GameFamilies.DP: {
                         HeaderDP h = (HeaderDP)destHeader;
 
                         locNum = h.locationName;
                         break;
                     }
-                case gFamEnum.Plat: {
+                case GameFamilies.Plat: {
                         HeaderPt h = (HeaderPt)destHeader;
 
                         locNum = h.locationName;
@@ -8093,8 +8103,8 @@ namespace DSPRE {
             string[] lightTypes;
 
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
-                case gFamEnum.Plat:
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
                     lightTypes = new string[3] { "Day/Night Light", "Model's light", "Unknown Light" };
                     break;
                 default:
@@ -8322,7 +8332,7 @@ namespace DSPRE {
             areaDataLightTypeComboBox.SelectedIndex = currentAreaData.lightType;
 
             disableHandlers = true;
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+            if (RomInfo.gameFamily == GameFamilies.HGSS) {
                 areaDataDynamicTexturesNumericUpDown.Value = currentAreaData.dynamicTextureType;
 
                 bool interior = currentAreaData.areaType == 0;
@@ -8499,7 +8509,7 @@ namespace DSPRE {
 
             overlayCameraTblOffset = RAMaddresses[0] - DSUtils.GetOverlayRAMAddress(RomInfo.cameraTblOverlayNumber);
             using (DSUtils.EasyReader br = new DSUtils.EasyReader(camOverlayPath, overlayCameraTblOffset)) {
-                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                if (RomInfo.gameFamily == GameFamilies.HGSS) {
                     currentCameraTable = new GameCamera[17];
                     for (int i = 0; i < currentCameraTable.Length; i++) {
                         currentCameraTable[i] = new GameCamera(br.ReadUInt32(), br.ReadInt16(), br.ReadInt16(), br.ReadInt16(),
@@ -8649,7 +8659,7 @@ namespace DSPRE {
 
             uint entrySize = 4;
             uint tableSizeOffset = 10;
-            if (gameFamily == gFamEnum.HGSS) {
+            if (gameFamily == GameFamilies.HGSS) {
                 entrySize += 2;
                 tableSizeOffset += 2;
                 encounterSSEQAltUpDown.Enabled = true;
@@ -8661,7 +8671,7 @@ namespace DSPRE {
                     uint entryOffset = (uint)ar.BaseStream.Position;
                     byte tclass = (byte)ar.ReadUInt16();
                     ushort musicD = ar.ReadUInt16();
-                    ushort? musicN = gameFamily == gFamEnum.HGSS ? ar.ReadUInt16() : (ushort?)null;
+                    ushort? musicN = gameFamily == GameFamilies.HGSS ? ar.ReadUInt16() : (ushort?)null;
                     trainerClassEncounterMusicDict[tclass] = (entryOffset, musicD, musicN);
                 }
             }
@@ -8805,7 +8815,7 @@ namespace DSPRE {
                 pokemonSpecies[i] = new SpeciesFile(new FileStream(RomInfo.gameDirs[DirNames.personalPokeData].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
             }
 
-            if (gameFamily == gFamEnum.HGSS) {
+            if (gameFamily == GameFamilies.HGSS) {
                 foreach (ComboBox partyGenderComboBox in partyGenderComboBoxList) {
                     partyGenderComboBox.Visible = true;
                     partyGenderComboBox.Items.Add("Default Gender");
@@ -8817,7 +8827,7 @@ namespace DSPRE {
                     partyGenderComboBox.Visible = false;
             }
 
-            if (gameFamily == gFamEnum.DP) {
+            if (gameFamily == GameFamilies.DP) {
                 foreach (ComboBox partyFormComboBox in partyFormComboBoxList)
                     partyFormComboBox.Visible = false;
 
@@ -9124,7 +9134,7 @@ namespace DSPRE {
 
                 currentTrainerFile.party[i].difficulty = (byte)partyIVUpdownList[i].Value;
 
-                if (hasMoreThanOneGender((int)currentTrainerFile.party[i].pokeID, pokemonSpecies) && gameFamily == gFamEnum.HGSS) {
+                if (hasMoreThanOneGender((int)currentTrainerFile.party[i].pokeID, pokemonSpecies) && gameFamily == GameFamilies.HGSS) {
                     switch (partyGenderComboBoxList[i].SelectedIndex) {
                         case TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX:
                             currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.NO_FLAGS;
@@ -9239,7 +9249,7 @@ namespace DSPRE {
                 encounterSSEQMainUpDown.Value = 0;
             }
 
-            eyeContactMusicAltLabel.Enabled = encounterSSEQAltUpDown.Enabled = (encounterSSEQMainUpDown.Enabled && gameFamily == gFamEnum.HGSS);
+            eyeContactMusicAltLabel.Enabled = encounterSSEQAltUpDown.Enabled = (encounterSSEQMainUpDown.Enabled && gameFamily == GameFamilies.HGSS);
             encounterSSEQAltUpDown.Value = output.musicN != null ? (ushort)output.musicN : 0;
             currentTrainerFile.trp.trainerClass = (byte)selection;
         }
@@ -9253,7 +9263,7 @@ namespace DSPRE {
             string tilesFilename = tilesFileID.ToString("D4");
             trainerTile = new NCGR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + tilesFilename, tilesFileID, tilesFilename);
 
-            if (gameFamily == gFamEnum.DP) {
+            if (gameFamily == GameFamilies.DP) {
                 return 0;
             }
 
@@ -9406,7 +9416,7 @@ namespace DSPRE {
             }
             disableHandlers = false;
 
-            if (gameFamily.Equals(gFamEnum.HGSS) && tableEditorIsReady) {
+            if (gameFamily.Equals(GameFamilies.HGSS) && tableEditorIsReady) {
                 pbEffectsTrainerCombobox.Items[selectedTrClass] = trainerClassListBox.Items[selectedTrClass];
                 for (int i = 0; i < vsTrainerEffectsList.Count; i++) {
                     if (vsTrainerEffectsList[i].trainerClass == selectedTrClass) {
@@ -9442,7 +9452,7 @@ namespace DSPRE {
             partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability1);
 
             //if the name " -" is returned for ability 2 then there is no ability 2
-            if (ability2.Equals(" -") || ability2.Equals(ability1) || gameFamily != gFamEnum.HGSS) {
+            if (ability2.Equals(" -") || ability2.Equals(ability1) || gameFamily != GameFamilies.HGSS) {
                 partyAbilityComboBoxList[partyPokemonPosition].Enabled = false;
             } else {
                 partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability2);
@@ -9456,7 +9466,7 @@ namespace DSPRE {
             int currentPokemonGenderRatio = pokemonSpecies[partyPokemonComboboxList[partyPokemonPosition].SelectedIndex].GenderRatioMaleToFemale;
             PartyPokemon.GenderAndAbilityFlags currentPokemonGenderAndAbilityFlags = currentTrainerFile.party[partyPokemonPosition].genderAndAbilityFlags;
 
-            if (gameFamily == gFamEnum.HGSS) {
+            if (gameFamily == GameFamilies.HGSS) {
                 switch (currentPokemonGenderRatio) {
                     case GENDER_RATIO_MALE:
                         partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX;
@@ -9489,7 +9499,7 @@ namespace DSPRE {
 
             switch (pokemonID) {
                 case PICHU_ID_NUM:
-                    if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                    if (RomInfo.gameFamily == GameFamilies.HGSS) {
                         pokemonFormNames.Add("Non-Spiky-Eared");
                         pokemonFormNames.Add("Spiky-Eared");
                     } else {
@@ -9547,7 +9557,7 @@ namespace DSPRE {
         }
 
         private void setTrainerPartyPokemonForm(int partyPokemonPosition) {
-            if (gameFamily != gFamEnum.DP) {
+            if (gameFamily != GameFamilies.DP) {
                 partyFormComboBoxList[partyPokemonPosition].Items.Clear();
                 List<string> currentPokemonFormName = getPokemonFormNames(partyPokemonComboboxList[partyPokemonPosition].SelectedIndex);
                 foreach (string formName in currentPokemonFormName)
@@ -9586,7 +9596,7 @@ namespace DSPRE {
 
         private void SetupConditionalMusicTable() {
             switch (RomInfo.gameFamily) {
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     RomInfo.SetConditionalMusicTableOffsetToRAMAddress();
                     conditionalMusicTable = new List<(ushort, ushort, ushort)>();
 
@@ -9615,7 +9625,7 @@ namespace DSPRE {
                     }
                     break;
 
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     pbEffectsMonGroupBox.Enabled = false;
                     pbEffectsTrainerGroupBox.Enabled = false;
                     conditionalMusicGroupBox.Enabled = false;
@@ -9630,7 +9640,7 @@ namespace DSPRE {
             }
         }
         private void SetupBattleEffectsTables() {
-            if (RomInfo.gameFamily == gFamEnum.HGSS || RomInfo.gameFamily == gFamEnum.Plat) {
+            if (RomInfo.gameFamily == GameFamilies.HGSS || RomInfo.gameFamily == GameFamilies.Plat) {
                 DSUtils.TryUnpackNarcs(new List<DirNames> {
                     DirNames.trainerGraphics,
                     DirNames.textArchives,
@@ -9647,7 +9657,7 @@ namespace DSPRE {
 
                 byte comboTableEntriesCount;
 
-                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                if (RomInfo.gameFamily == GameFamilies.HGSS) {
                     comboTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.effectsComboTableOffsetToSizeLimiter);
 
                     vsPokemonEffectsList = new List<(int pokemonID, int comboID)>();
@@ -9680,7 +9690,7 @@ namespace DSPRE {
 
                 String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + ROMToolboxDialog.expandedARMfileID.ToString("D4");
 
-                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                if (RomInfo.gameFamily == GameFamilies.HGSS) {
                     using (DSUtils.EasyReader ar = new DSUtils.EasyReader(ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsTrainerTableStartAddress)) {
                         byte trainerTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.vsTrainerEntryTableOffsetToSizeLimiter);
 
@@ -9722,7 +9732,7 @@ namespace DSPRE {
                     }
                 }
 
-                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                if (RomInfo.gameFamily == GameFamilies.HGSS) {
                     var items = pbEffectsCombosListbox.Items.Cast<Object>().ToArray();
 
                     pbEffectsPokemonChooseMainCombobox.Items.Clear();
@@ -9777,13 +9787,13 @@ namespace DSPRE {
 
             MapHeader selected = MapHeader.LoadFromARM9(newTuple.header);
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
+                case GameFamilies.DP:
                     locationNameConditionalMusicLBL.Text = RomInfo.GetLocationNames()[(selected as HeaderDP).locationName];
                     break;
-                case gFamEnum.Plat:
+                case GameFamilies.Plat:
                     locationNameConditionalMusicLBL.Text = RomInfo.GetLocationNames()[(selected as HeaderPt).locationName];
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     locationNameConditionalMusicLBL.Text = RomInfo.GetLocationNames()[(selected as HeaderHGSS).locationName];
                     break;
             }
@@ -9839,7 +9849,7 @@ namespace DSPRE {
             string updatedEntry = "Combo " + index.ToString("D2") + " - " + "Effect #" + battleIntroEffect + ", " + "Music #" + battleMusic;
             pbEffectsCombosListbox.Items[index] = updatedEntry;
 
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+            if (RomInfo.gameFamily == GameFamilies.HGSS) {
                 pbEffectsTrainerChooseMainCombobox.Items[index] = pbEffectsPokemonChooseMainCombobox.Items[index] = updatedEntry;
             }
             disableHandlers = false;
@@ -9880,7 +9890,7 @@ namespace DSPRE {
 
         private void HOWpbEffectsTableButton_Click(object sender, EventArgs e) {
             MessageBox.Show("An entry of this table is a combination of VS. Graphics + Battle Theme.\n\n" +
-                (RomInfo.gameFamily.Equals(gFamEnum.HGSS) ? "Each entry can be \"inherited\" by one or more Pokémon or Trainer classes." : ""),
+                (RomInfo.gameFamily.Equals(GameFamilies.HGSS) ? "Each entry can be \"inherited\" by one or more Pokémon or Trainer classes." : ""),
                 "How this table works", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
