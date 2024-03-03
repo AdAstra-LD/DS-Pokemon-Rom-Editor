@@ -29,7 +29,10 @@ using System.ComponentModel;
 using DSPRE.Editors;
 
 namespace DSPRE {
+    
+
     public partial class MainProgram : Form {
+
         public MainProgram() {
             InitializeComponent();
             EditorPanels.Initialize(this);
