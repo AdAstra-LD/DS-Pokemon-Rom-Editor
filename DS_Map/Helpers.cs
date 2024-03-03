@@ -47,11 +47,11 @@ namespace DSPRE {
         }
 
         public static void DisableHandlers() {
-            disableHandlers = true;
+            Helpers.DisableHandlers();
         }
 
         public static void EnableHandlers() {
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
 
         public static void statusLabelMessage(string msg = "Ready") {
@@ -370,28 +370,6 @@ namespace DSPRE {
             }
 
             return internalNames;
-        }
-
-        public static void OpenWildEditor(int encToOpen = 0) {
-            Helpers.statusLabelMessage("Attempting to extract Wild Encounters NARC...");
-
-            DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames>() { RomInfo.DirNames.encounters, RomInfo.DirNames.monIcons });
-
-            Helpers.statusLabelMessage("Passing control to Wild Pokémon Editor...");
-
-            switch (RomInfo.gameFamily) {
-                case RomInfo.GameFamilies.DP:
-                case RomInfo.GameFamilies.Plat:
-                    using (WildEditorDPPt editor = new WildEditorDPPt(encToOpen))
-                        editor.ShowDialog();
-                    break;
-                default:
-                    using (WildEditorHGSS editor = new WildEditorHGSS(encToOpen))
-                        editor.ShowDialog();
-                    break;
-            }
-
-            Helpers.statusLabelMessage();
         }
     }
 }

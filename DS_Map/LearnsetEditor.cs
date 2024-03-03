@@ -11,7 +11,6 @@ using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace DSPRE {
     public partial class LearnsetEditor : Form {
-        private bool disableHandlers = false;
 
         private readonly string[] fileNames;
         private readonly string[] pokenames;
@@ -41,7 +40,7 @@ namespace DSPRE {
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Size = parent.Size;
             this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            disableHandlers = true;
+            Helpers.DisableHandlers();
 
             BindingList<string> listMoveNames = new BindingList<string>(moveNames);
             moveInputComboBox.DataSource = listMoveNames;
@@ -65,7 +64,7 @@ namespace DSPRE {
             descriptorLabel.Text = "";
             statusLabel.Text = "";
 
-            disableHandlers = false;
+            Helpers.EnableHandlers();
 
             pokemonNameInputComboBox.SelectedIndex = 1;
         }
@@ -128,26 +127,26 @@ namespace DSPRE {
         }
 
         private void pokemonNameInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
 
-            disableHandlers = true;
+            Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
                 int newNumber = pokemonNameInputComboBox.SelectedIndex;
                 monNumberNumericUpDown.Value = newNumber;
                 ChangeLoadedFile(newNumber);
                
             }
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
 
         private void monNumberNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
+            if (Helpers.HandlersDisabled) { 
                 return; 
             }
 
-            disableHandlers = true;
+            Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
 
                 int newNumber = (int)monNumberNumericUpDown.Value;
@@ -155,7 +154,7 @@ namespace DSPRE {
                 ChangeLoadedFile(newNumber);
                 
             }
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
 
         private void moveInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {

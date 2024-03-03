@@ -10,7 +10,6 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace DSPRE {
     public partial class PersonalDataEditor : Form {
-        private bool disableHandlers = false;
 
         private readonly string[] fileNames;
         private readonly string[] pokenames;
@@ -28,7 +27,7 @@ namespace DSPRE {
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Size = parent.Size;
             this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            disableHandlers = true;
+            Helpers.DisableHandlers();
 
             BindingList<string> listItemNames = new BindingList<string>(itemNames);
             item1InputComboBox.DataSource = new BindingSource(listItemNames, string.Empty);
@@ -68,7 +67,7 @@ namespace DSPRE {
             pokemonNameInputComboBox.Items.AddRange(this.fileNames);
             /* ---------------- */
 
-            disableHandlers = false;
+            Helpers.EnableHandlers();
 
 
             pokemonNameInputComboBox.SelectedIndex = 1;
@@ -83,7 +82,7 @@ namespace DSPRE {
             }
         }
         private void baseHpNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseHP = (byte)baseHpNumericUpDown.Value;
@@ -91,14 +90,14 @@ namespace DSPRE {
         }
 
         private void baseAtkNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseAtk = (byte)baseAtkNumericUpDown.Value;
             setDirty(true);
         }
         private void baseDefNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseDef = (byte)baseDefNumericUpDown.Value;
@@ -106,7 +105,7 @@ namespace DSPRE {
         }
 
         private void baseSpAtkNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseSpAtk = (byte)baseSpAtkNumericUpDown.Value;
@@ -114,7 +113,7 @@ namespace DSPRE {
         }
 
         private void baseSpDefNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseSpDef = (byte)baseSpDefNumericUpDown.Value;
@@ -122,7 +121,7 @@ namespace DSPRE {
         }
 
         private void baseSpeedNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseSpeed = (byte)baseSpeedNumericUpDown.Value;
@@ -130,7 +129,7 @@ namespace DSPRE {
         }
 
         private void evHpNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.evHP = (byte)evHpNumericUpDown.Value;
@@ -138,7 +137,7 @@ namespace DSPRE {
         }
 
         private void evAtkNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.evAtk = (byte)evAtkNumericUpDown.Value;
@@ -146,7 +145,7 @@ namespace DSPRE {
         }
 
         private void evDefNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.evDef = (byte)evDefNumericUpDown.Value;
@@ -154,7 +153,7 @@ namespace DSPRE {
         }
 
         private void evSpAtkNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.evSpAtk = (byte)evSpAtkNumericUpDown.Value;
@@ -162,7 +161,7 @@ namespace DSPRE {
         }
 
         private void evSpDefNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.evSpDef = (byte)evSpDefNumericUpDown.Value;
@@ -170,7 +169,7 @@ namespace DSPRE {
         }
 
         private void evSpeedNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.evSpeed = (byte)evSpeedNumericUpDown.Value;
@@ -179,7 +178,7 @@ namespace DSPRE {
 
 
         private void type1InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.type1 = (PokemonType)type1InputComboBox.SelectedIndex;
@@ -187,7 +186,7 @@ namespace DSPRE {
         }
 
         private void type2InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.type2 = (PokemonType)type2InputComboBox.SelectedIndex;
@@ -195,7 +194,7 @@ namespace DSPRE {
         }
 
         private void growthCurveInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.growthCurve = (PokemonGrowthCurve)growthCurveInputComboBox.SelectedIndex;
@@ -203,7 +202,7 @@ namespace DSPRE {
         }
 
         private void baseExpYieldNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.givenExp = (byte)baseExpYieldNumericUpDown.Value;
@@ -211,7 +210,7 @@ namespace DSPRE {
         }
 
         private void dexColorInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.color = (PokemonDexColor)dexColorInputComboBox.SelectedIndex;
@@ -219,7 +218,7 @@ namespace DSPRE {
         }
 
         private void flipFlagCheckBox_CheckedChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.flip = flipFlagCheckBox.Checked;
@@ -227,7 +226,7 @@ namespace DSPRE {
         }
 
         private void escapeRateNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.escapeRate = (byte)escapeRateNumericUpDown.Value;
@@ -235,7 +234,7 @@ namespace DSPRE {
         }
 
         private void catchRateNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.catchRate = (byte)catchRateNumericUpDown.Value;
@@ -243,7 +242,7 @@ namespace DSPRE {
         }
 
         private void genderProbabilityNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.genderVec = (byte)genderProbabilityNumericUpDown.Value;
@@ -269,21 +268,21 @@ namespace DSPRE {
         }
 
         private void ability1InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.firstAbility = (byte)ability1InputComboBox.SelectedIndex;
             setDirty(true);
         }
         private void ability2InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.secondAbility = (byte)ability2InputComboBox.SelectedIndex;
             setDirty(true);
         }
         private void eggGroup1InputCombobox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.eggGroup1 = (byte)eggGroup1InputCombobox.SelectedIndex;
@@ -291,7 +290,7 @@ namespace DSPRE {
         }
 
         private void eggGroup2InputCombobox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.eggGroup2 = (byte)eggGroup2InputCombobox.SelectedIndex;
@@ -299,7 +298,7 @@ namespace DSPRE {
         }
 
         private void eggStepsNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.eggSteps = (byte)eggStepsNumericUpDown.Value;
@@ -307,7 +306,7 @@ namespace DSPRE {
         }
 
         private void item1InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.item1 = (ushort)item1InputComboBox.SelectedIndex;
@@ -315,7 +314,7 @@ namespace DSPRE {
         }
 
         private void item2InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.item2 = (ushort)item2InputComboBox.SelectedIndex;
@@ -323,7 +322,7 @@ namespace DSPRE {
         }
 
         private void baseFriendshipNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseFriendship = (byte)baseFriendshipNumericUpDown.Value;
@@ -411,31 +410,31 @@ namespace DSPRE {
         }
 
         private void pokemonNameInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
 
-            disableHandlers = true;
+            Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
                 int newNumber = pokemonNameInputComboBox.SelectedIndex;
                 monNumberNumericUpDown.Value = newNumber;
                 ChangeLoadedFile(newNumber);
             }
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
 
         private void monNumberNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
+            if (Helpers.HandlersDisabled) { 
                 return; 
             }
 
-            disableHandlers = true;
+            Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
                 int newNumber = (int)monNumberNumericUpDown.Value;
                 pokemonNameInputComboBox.SelectedIndex = newNumber;
                 ChangeLoadedFile(newNumber);
             }
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
         private void ChangeLoadedFile(int toLoad) {
             currentLoadedId = toLoad;
