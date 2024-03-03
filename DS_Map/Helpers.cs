@@ -47,11 +47,11 @@ namespace DSPRE {
         }
 
         public static void DisableHandlers() {
-            Helpers.DisableHandlers();
+            disableHandlers = true;
         }
 
         public static void EnableHandlers() {
-            Helpers.EnableHandlers();
+            disableHandlers = false;
         }
 
         public static void statusLabelMessage(string msg = "Ready") {
