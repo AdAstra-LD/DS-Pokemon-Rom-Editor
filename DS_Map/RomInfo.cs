@@ -6,6 +6,7 @@ using System.Linq;
 using DSPRE.Resources;
 using System;
 using DSPRE.ROMFiles;
+using static DSPRE.RomInfo;
 
 namespace DSPRE {
 
@@ -14,44 +15,49 @@ namespace DSPRE {
     /// </summary>
 
     public class RomInfo {
-        public static readonly byte internalNameLength = 16;
-        public static uint synthOverlayLoadAddress = 0x023C8000;
-        public Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary;
         public static string folderSuffix = "_DSPRE_contents";
-        const string dataFolderName = @"data";
-
         public static string romID { get; private set; }
         public static string fileName { get; private set; }
         public static string workDir { get; private set; }
         public static string arm9Path { get; private set; }
-        public static string arm7Path { get; private set; }
         public static string overlayTablePath { get; set; }
-        public static string y7Path { get; set; }
-        public static string dataPath { get; set; }
         public static string overlayPath { get; set; }
-        public static string unpackedPath { get; set; }
-        public static string bannerPath { get; set; }
-        public static string headerPath { get; set; }
+
         public static GameLanguages gameLanguage { get; private set; }
         public static GameVersions gameVersion { get; private set; }
         public static GameFamilies gameFamily { get; private set; }
+
+
+        public static uint synthOverlayLoadAddress = 0x023C8000;
         public static uint arm9spawnOffset { get; private set; }
+
         public static int initialMoneyOverlayNumber { get; private set; }
         public static uint initialMoneyOverlayOffset { get; private set; }
+
         public static int cameraTblOverlayNumber { get; private set; }
         public static uint[] cameraTblOffsetsToRAMaddress { get; private set; }
+
         public static uint headerTableOffset { get; private set; }
+
         public static uint conditionalMusicTableOffsetToRAMAddress { get; internal set; }
         public static uint encounterMusicTableOffsetToRAMAddress { get; internal set; }
+
         public static uint vsTrainerEntryTableOffsetToRAMAddress { get; internal set; }
         public static uint vsPokemonEntryTableOffsetToRAMAddress { get; internal set; }
         public static uint effectsComboTableOffsetToRAMAddress { get; internal set; }
+
         public static uint vsTrainerEntryTableOffsetToSizeLimiter { get; internal set; }
         public static uint vsPokemonEntryTableOffsetToSizeLimiter { get; internal set; }
         public static uint effectsComboTableOffsetToSizeLimiter { get; internal set; }
+
+
         public static uint OWTableOffset { get; internal set; }
         public static string OWtablePath { get; private set; }
+
+        public static uint monIconPalTableAddress { get; private set; }
+
         public static int nullEncounterID { get; private set; }
+        public static int abilityNamesTextNumber { get; private set; }
         public static int attackNamesTextNumber { get; private set; }
         public static int[] pokemonNamesTextNumbers { get; private set; }
         public static int itemNamesTextNumber { get; private set; }
@@ -59,16 +65,27 @@ namespace DSPRE {
         public static int trainerClassMessageNumber { get; private set; }
         public static int trainerNamesMessageNumber { get; private set; }
         public static int locationNamesTextNumber { get; private set; }
-        public static string internalNamesPath { get; private set; }
+        public static int trainerNameLenOffset { get; private set; }
+        public static int trainerNameMaxLen { get; private set; }
+
+        public static string internalNamesLocation { get; private set; }
+        public static readonly byte internalNameLength = 16;
         public static int cameraSize { get; private set; }
+
+        public Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary;
         public static SortedDictionary<uint, (uint spriteID, ushort properties)> OverworldTable { get; private set; }
         public static uint[] overworldTableKeys { get; private set; }
         public static Dictionary<uint, string> ow3DSpriteDict { get; private set; }
+
+
         public static Dictionary<ushort, string> ScriptCommandNamesDict { get; private set; }
         public static Dictionary<string, ushort> ScriptCommandNamesReverseDict { get; private set; }
+
         public static Dictionary<ushort, string> ScriptActionNamesDict { get; private set; }
         public static Dictionary<string, ushort> ScriptActionNamesReverseDict { get; private set; }
+
         public static Dictionary<ushort, byte[]> ScriptCommandParametersDict { get; private set; }
+
         public static Dictionary<ushort, string> ScriptComparisonOperatorsDict { get; private set; }
         public static Dictionary<string, ushort> ScriptComparisonOperatorsReverseDict { get; private set; }
 
@@ -96,6 +113,8 @@ namespace DSPRE {
             German
         }
         public enum DirNames : byte {
+            personalPokeData,
+
             synthOverlay,
             dynamicHeaders,
 
@@ -113,10 +132,7 @@ namespace DSPRE {
             OWSprites,
 
             scripts,
-
             encounters,
-            headbutt,
-            safariZone,
 
             trainerProperties,
             trainerParty,
@@ -124,9 +140,12 @@ namespace DSPRE {
 
             monIcons,
 
-            interiorBuildingModels
+            interiorBuildingModels,
+            learnsets,
+            evolutions
         };
         public static Dictionary<DirNames, (string packedDir, string unpackedDir)> gameDirs { get; private set; }
+
 
         #region Constructors (1)
         public RomInfo(string id, string romName, bool useSuffix = true) {
@@ -134,19 +153,11 @@ namespace DSPRE {
                 folderSuffix = "";
             }
 
-            string path = Path.GetDirectoryName(romName) + "\\" + Path.GetFileNameWithoutExtension(romName) + folderSuffix + "\\";
-
-            workDir = path;
-            arm9Path = Path.Combine(workDir, @"arm9.bin");
-            arm7Path = Path.Combine(workDir, @"arm7.bin");
-            overlayTablePath = Path.Combine(workDir, @"y9.bin");
-            y7Path = Path.Combine(workDir, @"y7.bin");
-            dataPath = Path.Combine(workDir, dataFolderName);
-            overlayPath = Path.Combine(workDir, @"overlay");
-            bannerPath = Path.Combine(workDir, @"banner.bin");
-            headerPath = Path.Combine(workDir, @"header.bin");
-            unpackedPath = Path.Combine(workDir, @"unpacked");
-            internalNamesPath = Path.Combine(workDir, $@"{dataFolderName}\fielddata\maptable\mapname.bin");
+            workDir = Path.GetDirectoryName(romName) + "\\" + Path.GetFileNameWithoutExtension(romName) + folderSuffix + "\\";
+            arm9Path = workDir + @"arm9.bin";
+            overlayTablePath = workDir + @"y9.bin";
+            overlayPath = workDir + "overlay";
+            internalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
 
             try {
                 gameVersion = PokeDatabase.System.versionsDict[id];
@@ -166,6 +177,7 @@ namespace DSPRE {
             SetHeaderTableOffset();
             SetNullEncounterID();
 
+            SetAbilityNamesTextNumber();
             SetAttackNamesTextNumber();
             SetPokemonNamesTextNumber();
             SetItemNamesTextNumber();
@@ -173,6 +185,7 @@ namespace DSPRE {
             SetLocationNamesTextNumber();
             SetTrainerNamesMessageNumber();
             SetTrainerClassMessageNumber();
+            SetTrainerNameLenOffset();
 
             /* System */
             ScriptCommandParametersDict = BuildCommandParametersDatabase(gameFamily);
@@ -523,14 +536,21 @@ namespace DSPRE {
 
                     using (DSUtils.EasyReader bReader = new DSUtils.EasyReader(ov1Path, ramAddrOfPointer - ov1Address)) { // read the pointer at the specified ram address and adjust accordingly below
                         uint ramAddressOfTable = bReader.ReadUInt32();
-                        if (ramAddressOfTable >= 0x03000000) {
+                        if ((ramAddressOfTable >> 0x18) != 0x02) {
                             MessageBox.Show("Something went wrong reading the Overworld configuration table.\nOverworld sprites in the Event Editor will be " +
                                 "displayed incorrectly or not displayed at all.", "Decompression error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-                        if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) { // if the pointer shows the table was moved to the synthetic overlay
+
+                        string ov131path = DSUtils.GetOverlayPath(131);
+                        if (File.Exists(ov131path)) {
+                            // if HGE field extension overlay exists
+                            OWTableOffset = ramAddressOfTable - DSUtils.GetOverlayRAMAddress(131);
+                            OWtablePath = ov131path;
+                        } else if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) {
+                            // if the pointer shows the table was moved to the synthetic overlay
                             OWTableOffset = ramAddressOfTable - RomInfo.synthOverlayLoadAddress;
-                            OWtablePath = Filesystem.expArmPath;
+                            OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
                         } else {
                             OWTableOffset = ramAddressOfTable - ov1Address;
                             OWtablePath = ov1Path;
@@ -659,7 +679,73 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetItemScriptFileNumber() {
+        public static void SetMonIconsPalTableAddress() {
+            switch (RomInfo.gameFamily) {
+                case GameFamilies.DP:
+                    switch (gameLanguage) {
+                        case GameLanguages.English:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B838, 4), 0);
+                            break;
+                        case GameLanguages.Italian:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B874, 4), 0);
+                            break;
+                        case GameLanguages.German:
+                        case GameLanguages.French:
+                        case GameLanguages.Spanish:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B894, 4), 0);
+                            break;
+                        case GameLanguages.Japanese:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6FDEC, 4), 0);
+                            break;
+                    }
+                    break;
+                case GameFamilies.Plat:
+                    switch (gameLanguage) {
+                        case GameLanguages.English:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x79F80, 4), 0);
+                            break;
+                        case GameLanguages.Italian:
+                        case GameLanguages.German:
+                        case GameLanguages.French:
+                        case GameLanguages.Spanish:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x7A020, 4), 0);
+                            break;
+                        case GameLanguages.Japanese:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x79858, 4), 0);
+                            break;
+                    }
+                    break;
+                case GameFamilies.HGSS:
+                default:
+                    switch (gameLanguage) {
+                        case GameLanguages.English:
+                        case GameLanguages.Italian:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
+                            break;
+                        case GameLanguages.German:
+                            if (gameVersion == GameVersions.HeartGold) {
+                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
+                            } else {
+                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74400, 4), 0);
+                            }
+                            break;
+                        case GameLanguages.French:
+                        case GameLanguages.Spanish:
+                            if (gameVersion == GameVersions.HeartGold) {
+                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74400, 4), 0);
+                            } else {
+                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
+                            }
+                            break;
+                        case GameLanguages.Japanese:
+                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x73EA0, 4), 0);
+                            break;
+                    }
+                    break;
+            }
+        }
+
+        private static void SetItemScriptFileNumber() {
             switch (gameFamily) {
                 case GameFamilies.DP:
                     itemScriptFileNumber = 370;
@@ -672,7 +758,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetNullEncounterID() {
+        private static void SetNullEncounterID() {
             switch (gameFamily) {
                 case GameFamilies.DP:
                 case GameFamilies.Plat:
@@ -683,7 +769,24 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetAttackNamesTextNumber() {
+
+        private static void SetAbilityNamesTextNumber() {
+            switch (gameFamily) {
+                case GameFamilies.DP:
+                    abilityNamesTextNumber = 552;
+                    break;
+                case GameFamilies.Plat:
+                    abilityNamesTextNumber = 610;
+                    break;
+                case GameFamilies.HGSS:
+                    abilityNamesTextNumber = 720;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private static void SetAttackNamesTextNumber() {
             switch (gameFamily) {
                 case GameFamilies.DP:
                     attackNamesTextNumber = 588;
@@ -696,7 +799,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetItemNamesTextNumber() {
+        private static void SetItemNamesTextNumber() {
             switch (gameFamily) {
                 case GameFamilies.DP:
                     itemNamesTextNumber = 344;
@@ -709,7 +812,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetLocationNamesTextNumber() {
+        private static void SetLocationNamesTextNumber() {
             switch (gameFamily) {
                 case GameFamilies.DP:
                     locationNamesTextNumber = 382;
@@ -722,7 +825,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetPokemonNamesTextNumber() {
+        private static void SetPokemonNamesTextNumber() {
             switch (gameFamily) {
                 case GameFamilies.DP:
                     pokemonNamesTextNumbers = new int[2] { 362, 363 };
@@ -735,7 +838,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetTrainerNamesMessageNumber() {
+        private static void SetTrainerNamesMessageNumber() {
             switch (gameFamily) {
                 case GameFamilies.DP:
                     trainerNamesMessageNumber = 559;
@@ -754,7 +857,7 @@ namespace DSPRE {
                     break;
             }
         }
-        private void SetTrainerClassMessageNumber() {
+        private static void SetTrainerClassMessageNumber() {
             switch (gameFamily) {
                 case GameFamilies.DP:
                     trainerClassMessageNumber = 560;
@@ -774,8 +877,89 @@ namespace DSPRE {
             }
         }
 
+        private static void SetTrainerNameLenOffset() {
+            switch (RomInfo.gameFamily) {
+                case GameFamilies.DP:
+                    switch (RomInfo.gameLanguage) {
+                        case GameLanguages.English:
+                            trainerNameLenOffset = 0x6AC32;
+                            break;
+                        case GameLanguages.Italian:
+                            trainerNameLenOffset = 0x6AC6E;
+                            break;
+                        case GameLanguages.Spanish:
+                        case GameLanguages.German:
+                        case GameLanguages.French:
+                            trainerNameLenOffset = 0x6AC8E;
+                            break;
+
+                        case GameLanguages.Japanese: //?
+                        default:
+                            trainerNameLenOffset = -1;
+                            break;
+                    }
+                    break;
+
+                case GameFamilies.Plat:
+                    switch (RomInfo.gameLanguage) {
+                        case GameLanguages.English:
+                            trainerNameLenOffset = 0x791DE;
+                            break;
+                        case GameLanguages.Spanish:
+                        case GameLanguages.Italian:
+                        case GameLanguages.German:
+                        case GameLanguages.French:
+                            trainerNameLenOffset = 0x7927E;
+                            break;
+                        case GameLanguages.Japanese:
+                            trainerNameLenOffset = 0x78AB6;
+                            break;
+
+                        default:
+                            trainerNameLenOffset = -1;
+                            break;
+                    }
+                    break;
+
+                case GameFamilies.HGSS:
+                    if (RomInfo.gameLanguage.Equals(GameLanguages.Japanese)) {
+                        //Jap HGSS
+                        trainerNameLenOffset = 0x7342E;
+                    } else if(gameVersion.Equals(GameVersions.SoulSilver)){
+                        //All SS languages except Jap
+                        trainerNameLenOffset = 0x72EC2;
+                    } else {
+                        //All HG languages except Jap
+                        switch (RomInfo.gameLanguage) {
+                            case GameLanguages.English:
+                            case GameLanguages.Italian:
+                            case GameLanguages.German:
+                            case GameLanguages.French:
+                                trainerNameLenOffset = 0x7342E;
+                                break;
+                            case GameLanguages.Spanish:
+                                trainerNameLenOffset = 0x73426;
+                                break;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        public static int SetTrainerNameMaxLen() {
+            if(trainerNameLenOffset < 0) {
+                trainerNameMaxLen = TrainerFile.defaultNameLen;
+            } else {
+                using (DSUtils.ARM9.Reader ar = new DSUtils.ARM9.Reader(trainerNameLenOffset)) {
+                    trainerNameMaxLen = ar.ReadByte();
+                }
+            }
+            return trainerNameMaxLen;
+        }
+
+        public string GetBuildingModelsDirPath(bool interior) => interior ? gameDirs[DirNames.interiorBuildingModels].unpackedDir : gameDirs[DirNames.exteriorBuildingModels].unpackedDir;
         public string GetRomNameFromWorkdir() => workDir.Substring(0, workDir.Length - folderSuffix.Length - 1);
-        public static int GetHeaderCount() => (int)new FileInfo(internalNamesPath).Length / internalNameLength;
+        public static int GetHeaderCount() => (int)new FileInfo(internalNamesLocation).Length / internalNameLength;
         public static List<string> GetLocationNames() => new TextArchive(locationNamesTextNumber).messages;
         public static string[] GetSimpleTrainerNames() => new TextArchive(trainerNamesMessageNumber).messages.ToArray();
         public static string[] GetTrainerClassNames() => new TextArchive(trainerClassMessageNumber).messages.ToArray();
@@ -785,7 +969,23 @@ namespace DSPRE {
             return itemNames.messages.GetRange(startIndex, count == null ? itemNames.messages.Count - 1 : (int)count).ToArray();
         }
         public static string[] GetPokemonNames() => new TextArchive(pokemonNamesTextNumbers[0]).messages.ToArray();
+        public static string[] GetAbilityNames() => new TextArchive(abilityNamesTextNumber).messages.ToArray();
         public static string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
+        public static int GetLearnsetFilesCount() => Directory.GetFiles(gameDirs[DirNames.learnsets].unpackedDir).Length;
+        public static int GetPersonalFilesCount() => Directory.GetFiles(gameDirs[DirNames.personalPokeData].unpackedDir).Length;
+        public static string[] GetEvolutionFilesList() => Directory.GetFiles(gameDirs[DirNames.evolutions].unpackedDir);
+        public static int GetEvolutionFilesCount() => GetEvolutionFilesList().Length;
+
+        public int GetAreaDataCount() => Directory.GetFiles(gameDirs[DirNames.areaData].unpackedDir).Length;
+        public int GetMapTexturesCount() => Directory.GetFiles(gameDirs[DirNames.mapTextures].unpackedDir).Length;
+        public int GetBuildingTexturesCount() => Directory.GetFiles(gameDirs[DirNames.buildingTextures].unpackedDir).Length;
+        public int GetMatrixCount() => Directory.GetFiles(gameDirs[DirNames.matrices].unpackedDir).Length;
+        public int GetTextArchivesCount() => Directory.GetFiles(gameDirs[DirNames.textArchives].unpackedDir).Length;
+        public int GetMapCount() => Directory.GetFiles(gameDirs[DirNames.maps].unpackedDir).Length;
+        public int GetEventCount() => Directory.GetFiles(gameDirs[DirNames.eventFiles].unpackedDir).Length;
+        public int GetScriptCount() => Directory.GetFiles(gameDirs[DirNames.scripts].unpackedDir).Length;
+        public int GetBuildingCount(bool interior) => Directory.GetFiles(GetBuildingModelsDirPath(interior)).Length;
+        public static int GetEventFileCount() => Directory.GetFiles(RomInfo.gameDirs[DirNames.eventFiles].unpackedDir).Length;
         #endregion
 
         #region System Methods
@@ -857,115 +1057,124 @@ namespace DSPRE {
             switch (gameFamily) {
                 case GameFamilies.DP:
                     string suffix = "";
-                    if (!gameLanguage.Equals(GameLanguages.Japanese))
+                    if (!gameLanguage.Equals(GameLanguages.Japanese)) {
                         suffix = "_release";
+                    }
 
                     packedDirsDict = new Dictionary<DirNames, string>() {
-                        [DirNames.synthOverlay] = @"data\weather_sys.narc",
-                        [DirNames.textArchives] = @"msgdata\msg.narc",
+                        [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
+                        [DirNames.textArchives] = @"data\msgdata\msg.narc",
 
-                        [DirNames.matrices] = @"fielddata\mapmatrix\map_matrix.narc",
+                        [DirNames.matrices] = @"data\fielddata\mapmatrix\map_matrix.narc",
 
-                        [DirNames.maps] = @"fielddata\land_data\land_data" + suffix + ".narc",
-                        [DirNames.exteriorBuildingModels] = @"fielddata\build_model\build_model.narc",
-                        [DirNames.buildingConfigFiles] = @"fielddata\areadata\area_build_model\area_build.narc",
-                        [DirNames.buildingTextures] = @"fielddata\areadata\area_build_model\areabm_texset.narc",
-                        [DirNames.mapTextures] = @"fielddata\areadata\area_map_tex\map_tex_set.narc",
-                        [DirNames.areaData] = @"fielddata\areadata\area_data.narc",
+                        [DirNames.maps] = @"data\fielddata\land_data\land_data" + suffix + ".narc",
+                        [DirNames.exteriorBuildingModels] = @"data\fielddata\build_model\build_model.narc",
+                        [DirNames.buildingConfigFiles] = @"data\fielddata\areadata\area_build_model\area_build.narc",
+                        [DirNames.buildingTextures] = @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
+                        [DirNames.mapTextures] = @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
+                        [DirNames.areaData] = @"data\fielddata\areadata\area_data.narc",
 
-                        [DirNames.eventFiles] = @"fielddata\eventdata\zone_event" + suffix + ".narc",
-                        [DirNames.OWSprites] = @"data\mmodel\mmodel.narc",
+                        [DirNames.eventFiles] = @"data\fielddata\eventdata\zone_event" + suffix + ".narc",
+                        [DirNames.OWSprites] = @"data\data\mmodel\mmodel.narc",
 
-                        [DirNames.scripts] = @"fielddata\script\scr_seq" + suffix + ".narc",
+                        [DirNames.scripts] = @"data\fielddata\script\scr_seq" + suffix + ".narc",
 
-                        [DirNames.trainerProperties] = @"poketool\trainer\trdata.narc",
-                        [DirNames.trainerParty] = @"poketool\trainer\trpoke.narc",
-                        [DirNames.trainerGraphics] = @"poketool\trgra\trfgra.narc",
+                        [DirNames.trainerProperties] = @"data\poketool\trainer\trdata.narc",
+                        [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
+                        [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
 
-                        [DirNames.monIcons] = @"poketool\icongra\poke_icon.narc",
+                        [DirNames.monIcons] = @"data\poketool\icongra\poke_icon.narc",
 
-                        [DirNames.encounters] = @"fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc"
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc",
+                        [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
+                        [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
                     };
+
+                    //Personal Data archive is different for Pearl
+                    string personal = @"data\poketool\personal";
+                    if (gameVersion == GameVersions.Pearl) {
+                        personal += ("_" + gameVersion.ToString().ToLower());
+                    }
+                    personal += @"\personal.narc";
+                    packedDirsDict[DirNames.personalPokeData] = personal;
+
                     break;
                 case GameFamilies.Plat:
+                    suffix = gameVersion.ToString().Substring(0, 2).ToLower();
+
                     packedDirsDict = new Dictionary<DirNames, string>() {
-                        [DirNames.synthOverlay] = @"data\weather_sys.narc",
-                        [DirNames.dynamicHeaders] = @"debug\cb_edit\d_test.narc",
+                        [DirNames.personalPokeData] = @"data\poketool\personal\pl_personal.narc",
+                        [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
+                        [DirNames.dynamicHeaders] = @"data\debug\cb_edit\d_test.narc",
 
-                        [DirNames.textArchives] = @"msgdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "msg.narc",
+                        [DirNames.textArchives] = @"data\msgdata\" + suffix + '_' + "msg.narc",
 
-                        [DirNames.matrices] = @"fielddata\mapmatrix\map_matrix.narc",
+                        [DirNames.matrices] = @"data\fielddata\mapmatrix\map_matrix.narc",
 
-                        [DirNames.maps] = @"fielddata\land_data\land_data.narc",
-                        [DirNames.exteriorBuildingModels] = @"fielddata\build_model\build_model.narc",
-                        [DirNames.buildingConfigFiles] = @"fielddata\areadata\area_build_model\area_build.narc",
-                        [DirNames.buildingTextures] = @"fielddata\areadata\area_build_model\areabm_texset.narc",
-                        [DirNames.mapTextures] = @"fielddata\areadata\area_map_tex\map_tex_set.narc",
-                        [DirNames.areaData] = @"fielddata\areadata\area_data.narc",
+                        [DirNames.maps] = @"data\fielddata\land_data\land_data.narc",
+                        [DirNames.exteriorBuildingModels] = @"data\fielddata\build_model\build_model.narc",
+                        [DirNames.buildingConfigFiles] = @"data\fielddata\areadata\area_build_model\area_build.narc",
+                        [DirNames.buildingTextures] = @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
+                        [DirNames.mapTextures] = @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
+                        [DirNames.areaData] = @"data\fielddata\areadata\area_data.narc",
 
-                        [DirNames.eventFiles] = @"fielddata\eventdata\zone_event.narc",
-                        [DirNames.OWSprites] = @"data\mmodel\mmodel.narc",
+                        [DirNames.eventFiles] = @"data\fielddata\eventdata\zone_event.narc",
+                        [DirNames.OWSprites] = @"data\data\mmodel\mmodel.narc",
 
-                        [DirNames.scripts] = @"fielddata\script\scr_seq.narc",
+                        [DirNames.scripts] = @"data\fielddata\script\scr_seq.narc",
 
-                        [DirNames.trainerProperties] = @"poketool\trainer\trdata.narc",
-                        [DirNames.trainerParty] = @"poketool\trainer\trpoke.narc",
-                        [DirNames.trainerGraphics] = @"poketool\trgra\trfgra.narc",
+                        [DirNames.trainerProperties] = @"data\poketool\trainer\trdata.narc",
+                        [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
+                        [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
 
-                        [DirNames.monIcons] = @"poketool\icongra\pl_poke_icon.narc",
+                        [DirNames.monIcons] = @"data\poketool\icongra\pl_poke_icon.narc",
 
-                        [DirNames.encounters] = @"fielddata\encountdata\" + gameVersion.ToString().Substring(0, 2).ToLower() + '_' + "enc_data.narc"
+                        [DirNames.encounters] = @"data\fielddata\encountdata\" + suffix + '_' + "enc_data.narc",
+                        [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
+                        [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
                     };
                     break;
                 case GameFamilies.HGSS:
                     packedDirsDict = new Dictionary<DirNames, string>() {
-                        [DirNames.synthOverlay] = @"a\0\2\8",
-                        [DirNames.dynamicHeaders] = @"a\0\5\0",
+                        [DirNames.personalPokeData] = @"data\a\0\0\2",
+                        [DirNames.synthOverlay] = @"data\a\0\2\8",
+                        [DirNames.dynamicHeaders] = @"data\a\0\5\0",
 
-                        [DirNames.textArchives] = @"a\0\2\7",
+                        [DirNames.textArchives] = @"data\a\0\2\7",
 
-                        [DirNames.matrices] = @"a\0\4\1",
+                        [DirNames.matrices] = @"data\a\0\4\1",
 
-                        [DirNames.maps] = @"a\0\6\5",
-                        [DirNames.exteriorBuildingModels] = @"a\0\4\0",
-                        [DirNames.buildingConfigFiles] = @"a\0\4\3",
-                        [DirNames.buildingTextures] = @"a\0\7\0",
-                        [DirNames.mapTextures] = @"a\0\4\4",
-                        [DirNames.areaData] = @"a\0\4\2",
+                        [DirNames.maps] = @"data\a\0\6\5",
+                        [DirNames.exteriorBuildingModels] = @"data\a\0\4\0",
+                        [DirNames.buildingConfigFiles] = @"data\a\0\4\3",
+                        [DirNames.buildingTextures] = @"data\a\0\7\0",
+                        [DirNames.mapTextures] = @"data\a\0\4\4",
+                        [DirNames.areaData] = @"data\a\0\4\2",
 
-                        [DirNames.eventFiles] = @"a\0\3\2",
-                        [DirNames.OWSprites] = @"a\0\8\1",
+                        [DirNames.eventFiles] = @"data\a\0\3\2",
+                        [DirNames.OWSprites] = @"data\a\0\8\1",
 
-                        [DirNames.scripts] = @"a\0\1\2",
-
+                        [DirNames.scripts] = @"data\a\0\1\2",
                         //ENCOUNTERS FOLDER DEPENDS ON VERSION
-                        [DirNames.trainerProperties] = @"a\0\5\5",
-                        [DirNames.trainerParty] = @"a\0\5\6",
-                        [DirNames.trainerGraphics] = @"a\0\5\8",
+                        [DirNames.trainerProperties] = @"data\a\0\5\5",
+                        [DirNames.trainerParty] = @"data\a\0\5\6",
+                        [DirNames.trainerGraphics] = @"data\a\0\5\8",
 
-                        [DirNames.monIcons] = @"a\0\2\0",
+                        [DirNames.monIcons] = @"data\a\0\2\0",
 
-                        [DirNames.interiorBuildingModels] = @"a\1\4\8",
-
-                        [DirNames.safariZone] = @"a\2\3\0",
-                        [DirNames.headbutt] = @"a\2\5\2", //both versions use the same folder with different data
+                        [DirNames.interiorBuildingModels] = @"data\a\1\4\8",
+                        [DirNames.learnsets] = @"data\a\0\3\3",
+                        [DirNames.evolutions] = @"data\a\0\3\4",
                     };
 
                     //Encounter archive is different for SS 
-                    if (gameVersion == GameVersions.HeartGold) {
-                        packedDirsDict[DirNames.encounters] = @"a\0\3\7";
-                    } else {
-                        packedDirsDict[DirNames.encounters] = @"a\1\3\6";
-                    }
-
+                    packedDirsDict[DirNames.encounters] = gameVersion == GameVersions.HeartGold ? @"data\a\0\3\7" : @"data\a\1\3\6";
                     break;
             }
 
             gameDirs = new Dictionary<DirNames, (string packedDir, string unpackedDir)>();
             foreach (KeyValuePair<DirNames, string> kvp in packedDirsDict) {
-                string _packedPath = Path.Combine(workDir, Path.Combine(dataFolderName, kvp.Value));
-                string _unpackedPath = Path.Combine(unpackedPath, kvp.Key.ToString());
-                gameDirs.Add(kvp.Key, (_packedPath, _unpackedPath));
+                gameDirs.Add(kvp.Key, (workDir + kvp.Value, workDir + @"unpacked" + '\\' + kvp.Key.ToString()));
             }
         }
         public void ResetMapCellsColorDictionary() {
