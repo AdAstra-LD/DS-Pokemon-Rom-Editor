@@ -7,6 +7,8 @@ using DSPRE.Resources;
 using System;
 using DSPRE.ROMFiles;
 using static DSPRE.RomInfo;
+using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace DSPRE {
 
@@ -22,8 +24,14 @@ namespace DSPRE {
         public static string fileName { get; private set; }
         public static string workDir { get; private set; }
         public static string arm9Path { get; private set; }
+        public static string arm7Path { get; private set; }
         public static string overlayTablePath { get; set; }
+        public static string y7Path { get; set; }
+        public static string dataPath { get; set; }
         public static string overlayPath { get; set; }
+        public static string unpackedPath { get; set; }
+        public static string bannerPath { get; set; }
+        public static string headerPath { get; set; }
 
         public static GameLanguages gameLanguage { get; private set; }
         public static GameVersions gameVersion { get; private set; }
@@ -160,11 +168,19 @@ namespace DSPRE {
                 folderSuffix = "";
             }
 
-            workDir = Path.GetDirectoryName(romName) + "\\" + Path.GetFileNameWithoutExtension(romName) + folderSuffix + "\\";
-            arm9Path = workDir + @"arm9.bin";
-            overlayTablePath = workDir + @"y9.bin";
-            overlayPath = workDir + "overlay";
-            internalNamesLocation = workDir + @"data\fielddata\maptable\mapname.bin";
+            string path = System.IO.Path.GetDirectoryName(romName) + "\\" + Path.GetFileNameWithoutExtension(romName) + folderSuffix + "\\";
+
+            workDir = path;
+            arm9Path = Path.Combine(workDir, @"arm9.bin");
+            arm7Path = Path.Combine(workDir, @"arm7.bin");
+            overlayTablePath = Path.Combine(workDir, @"y9.bin");
+            y7Path = Path.Combine(workDir, @"y7.bin");
+            dataPath = Path.Combine(workDir, dataFolderName);
+            overlayPath = Path.Combine(workDir, @"overlay");
+            bannerPath = Path.Combine(workDir, @"banner.bin");
+            headerPath = Path.Combine(workDir, @"header.bin");
+            unpackedPath = Path.Combine(workDir, @"unpacked");
+            internalNamesPath = Path.Combine(workDir, $@"{dataFolderName}\fielddata\maptable\mapname.bin");
 
             try {
                 gameVersion = PokeDatabase.System.versionsDict[id];
@@ -966,7 +982,7 @@ namespace DSPRE {
 
         public string GetBuildingModelsDirPath(bool interior) => interior ? gameDirs[DirNames.interiorBuildingModels].unpackedDir : gameDirs[DirNames.exteriorBuildingModels].unpackedDir;
         public string GetRomNameFromWorkdir() => workDir.Substring(0, workDir.Length - folderSuffix.Length - 1);
-        public static int GetHeaderCount() => (int)new FileInfo(internalNamesLocation).Length / internalNameLength;
+        public static int GetHeaderCount() => (int)new FileInfo(internalNamesPath).Length / internalNameLength;
         public static List<string> GetLocationNames() => new TextArchive(locationNamesTextNumber).messages;
         public static string[] GetSimpleTrainerNames() => new TextArchive(trainerNamesMessageNumber).messages.ToArray();
         public static string[] GetTrainerClassNames() => new TextArchive(trainerClassMessageNumber).messages.ToArray();
@@ -1172,6 +1188,9 @@ namespace DSPRE {
                         [DirNames.interiorBuildingModels] = @"data\a\1\4\8",
                         [DirNames.learnsets] = @"data\a\0\3\3",
                         [DirNames.evolutions] = @"data\a\0\3\4",
+
+                        [DirNames.safariZone] = @"data\a\2\3\0",
+                        [DirNames.headbutt] = @"data\a\2\5\2", //both versions use the same folder with different data
                     };
 
                     //Encounter archive is different for SS 

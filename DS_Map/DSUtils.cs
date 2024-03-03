@@ -431,23 +431,28 @@ namespace DSPRE {
             return b;
         }
 
-        public static void TryUnpackNarcs(List<DirNames> IDs) {
+        public static void TryUnpackNarcs(List<RomInfo.DirNames> IDs) {
             Parallel.ForEach(IDs, id => {
-                if (gameDirs.TryGetValue(id, out (string packedPath, string unpackedPath) paths)) {
-                    DirectoryInfo di = new DirectoryInfo(paths.unpackedPath);
-
-                    if (!di.Exists || di.GetFiles().Length == 0) {
-                        Narc opened = Narc.Open(paths.packedPath);
-
-                        if (opened is null) {
-                            throw new NullReferenceException();
-                        }
-
-                        opened.ExtractToFolder(paths.unpackedPath);
-                    }
+                if (!RomInfo.gameDirs.TryGetValue(id, out (string packedPath, string unpackedPath) paths)) {
+                    return;
                 }
+
+                DirectoryInfo di = new DirectoryInfo(paths.unpackedPath);
+
+                if (di.Exists && di.GetFiles().Length != 0) {
+                    return;
+                }
+
+                Narc opened = Narc.Open(paths.packedPath);
+
+                if (opened is null) {
+                    throw new NullReferenceException();
+                }
+
+                opened.ExtractToFolder(paths.unpackedPath);
             });
         }
+
         public static void ForceUnpackNarcs(List<DirNames> IDs) {
             Parallel.ForEach(IDs, id => {
                 if (gameDirs.TryGetValue(id, out (string packedPath, string unpackedPath) paths)) {

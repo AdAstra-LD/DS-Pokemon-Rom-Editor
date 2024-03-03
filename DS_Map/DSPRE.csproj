@@ -96,11 +96,47 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EditorPanels.cs" />
+    <Compile Include="Editors\EncountersEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\EncountersEditor.Designer.cs">
+      <DependentUpon>EncountersEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\HeadbuttEncounterEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\HeadbuttEncounterEditor.Designer.cs">
+      <DependentUpon>HeadbuttEncounterEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\HeadbuttEncounterEditorTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\HeadbuttEncounterEditorTab.Designer.cs">
+      <DependentUpon>HeadbuttEncounterEditorTab.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\LevelScriptEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Editors\LevelScriptEditor.Designer.cs">
       <DependentUpon>LevelScriptEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\SafariZoneEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\SafariZoneEditor.Designer.cs">
+      <DependentUpon>SafariZoneEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\SafariZoneEncounterEditorTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\SafariZoneEncounterEditorTab.Designer.cs">
+      <DependentUpon>SafariZoneEncounterEditorTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\SafariZoneEncounterGroupEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\SafariZoneEncounterGroupEditor.Designer.cs">
+      <DependentUpon>SafariZoneEncounterGroupEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\ScriptEditor.cs">
       <SubType>UserControl</SubType>
@@ -311,8 +347,26 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\writeText.Designer.cs" />
+    <EmbeddedResource Include="Editors\EncountersEditor.resx">
+      <DependentUpon>EncountersEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\HeadbuttEncounterEditor.resx">
+      <DependentUpon>HeadbuttEncounterEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\HeadbuttEncounterEditorTab.resx">
+      <DependentUpon>HeadbuttEncounterEditorTab.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\LevelScriptEditor.resx">
       <DependentUpon>LevelScriptEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\SafariZoneEditor.resx">
+      <DependentUpon>SafariZoneEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\SafariZoneEncounterEditorTab.resx">
+      <DependentUpon>SafariZoneEncounterEditorTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\SafariZoneEncounterGroupEditor.resx">
+      <DependentUpon>SafariZoneEncounterGroupEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\ScriptEditor.resx">
       <DependentUpon>ScriptEditor.cs</DependentUpon>
