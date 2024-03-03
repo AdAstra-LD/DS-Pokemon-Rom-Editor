@@ -211,8 +211,8 @@ namespace DSPRE.ROMFiles {
 
             /* How to read parameters for different commands for DPPt*/
             switch (RomInfo.gameFamily) {
-                case gFamEnum.DP:
-                case gFamEnum.Plat:
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
                     switch (id) {
                         case 0x16: //Jump
                         case 0x1A: //Call 
@@ -318,7 +318,7 @@ namespace DSPRE.ROMFiles {
                             }
                             break;
                         case 0x2C5: {
-                                if (RomInfo.gameVersion == gVerEnum.Platinum) {
+                                if (RomInfo.gameVersion == GameVersions.Platinum) {
                                     parameterList.Add(dataReader.ReadBytes(2));
                                     parameterList.Add(dataReader.ReadBytes(2));
                                 } else {
@@ -330,13 +330,13 @@ namespace DSPRE.ROMFiles {
                         case 0x2C9:
                         case 0x2CA:
                         case 0x2CD:
-                            if (RomInfo.gameVersion == gVerEnum.Platinum) {
+                            if (RomInfo.gameVersion == GameVersions.Platinum) {
                                 break;
                             } else {
                                 goto default;
                             }
                         case 0x2CF:
-                            if (RomInfo.gameVersion == gVerEnum.Platinum) {
+                            if (RomInfo.gameVersion == GameVersions.Platinum) {
                                 parameterList.Add(dataReader.ReadBytes(2));
                                 parameterList.Add(dataReader.ReadBytes(2));
                             } else {
@@ -348,7 +348,7 @@ namespace DSPRE.ROMFiles {
                             break;
                     }
                     break;
-                case gFamEnum.HGSS:
+                case GameFamilies.HGSS:
                     switch (id) {
                         case 0x16: //Jump
                         case 0x1A: //Call 

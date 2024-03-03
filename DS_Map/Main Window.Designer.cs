@@ -11167,14 +11167,14 @@
             // personalDataEditorToolStripMenuItem
             // 
             this.personalDataEditorToolStripMenuItem.Name = "personalDataEditorToolStripMenuItem";
-            this.personalDataEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.personalDataEditorToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.personalDataEditorToolStripMenuItem.Text = "Pokemon Editor";
             this.personalDataEditorToolStripMenuItem.Click += new System.EventHandler(this.personalDataEditorToolStripMenuItem_Click);
             // 
             // learnsetsEditorToolStripMenuItem
             // 
             this.learnsetsEditorToolStripMenuItem.Name = "learnsetsEditorToolStripMenuItem";
-            this.learnsetsEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.learnsetsEditorToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.learnsetsEditorToolStripMenuItem.Text = "Learnsets Editor";
             this.learnsetsEditorToolStripMenuItem.Visible = false;
             this.learnsetsEditorToolStripMenuItem.Click += new System.EventHandler(this.learnsetsEditorToolStripMenuItem_Click);
@@ -11182,7 +11182,7 @@
             // evolutionsEditorToolStripMenuItem
             // 
             this.evolutionsEditorToolStripMenuItem.Name = "evolutionsEditorToolStripMenuItem";
-            this.evolutionsEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.evolutionsEditorToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.evolutionsEditorToolStripMenuItem.Text = "Evolutions Editor";
             this.evolutionsEditorToolStripMenuItem.Visible = false;
             this.evolutionsEditorToolStripMenuItem.Click += new System.EventHandler(this.evolutionsEditorToolStripMenuItem_Click);
@@ -11241,16 +11241,16 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
             this.toolStripProgressBar});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 739);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 737);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1214, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1214, 24);
             this.statusStrip1.TabIndex = 13;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(39, 17);
+            this.statusLabel.Size = new System.Drawing.Size(39, 19);
             this.statusLabel.Text = "Ready";
             // 
             // toolStripProgressBar
@@ -12016,7 +12016,6 @@
         private System.Windows.Forms.RadioButton radio2D;
         private System.Windows.Forms.CheckBox wireframeCheckBox;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.PictureBox collisionPictureBox;
         private System.Windows.Forms.PictureBox typePictureBox;
         private System.Windows.Forms.Label typeLabel;
@@ -12332,7 +12331,6 @@
         private System.Windows.Forms.PictureBox rightClickPicture;
         private System.Windows.Forms.Label WheelClickLabel;
         private System.Windows.Forms.Label LeftClickLabel;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
         private System.Windows.Forms.ToolStripButton unpackAllButton;
         private System.Windows.Forms.Button pasteHeaderButton;
         private System.Windows.Forms.Button copyHeaderButton;

@@ -30,7 +30,7 @@ namespace DSPRE {
                 }
 
                 if (tempMapHeader.wildPokemon != MapHeader.DPPT_NULL_ENCOUNTER_FILE_ID) {
-                    if (RomInfo.gameFamily == gFamEnum.DP) {
+                    if (RomInfo.gameFamily == GameFamilies.DP) {
                         EncounterFileLocationName.Add(tempMapHeader.wildPokemon, locationNames[((HeaderDP)tempMapHeader).locationName]);
                     } else {
                         EncounterFileLocationName.Add(tempMapHeader.wildPokemon, locationNames[((HeaderPt)tempMapHeader).locationName]);
