@@ -889,6 +889,10 @@ namespace DSPRE {
             levelScriptEditor.SetUpLevelScriptEditor(this);
         }
 
+        private void tabPageEncountersEditor_Enter(object sender, EventArgs e) {
+            encountersEditor.SetupEncountersEditor();
+        }
+
         private void spawnEditorToolStripButton_Click(object sender, EventArgs e) {
             if (!matrixEditorIsReady) {
                 SetupMatrixEditor();
@@ -964,20 +968,13 @@ namespace DSPRE {
 
             /* Read Header internal names */
             try {
-                using (DSUtils.EasyReader reader = new DSUtils.EasyReader(RomInfo.internalNamesLocation)) {
-                    for (int i = 0; i < headerCount; i++) {
-                        byte[] row = reader.ReadBytes(RomInfo.internalNameLength);
-
-                        string internalName = Encoding.ASCII.GetString(row);//.TrimEnd();
-                        headerListBoxNames.Add(i.ToString("D3") + MapHeader.nameSeparator + internalName);
-                        internalNames.Add(internalName.TrimEnd('\0'));
-                    }
-                }
+                headerListBoxNames = Helpers.getHeaderListBoxNames();
+                internalNames = Helpers.getInternalNames();
 
                 headerListBox.Items.Clear();
                 headerListBox.Items.AddRange(headerListBoxNames.ToArray());
             } catch (FileNotFoundException) {
-                MessageBox.Show(RomInfo.internalNamesLocation + " doesn't exist.", "Couldn't read internal names", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(RomInfo.internalNamesPath + " doesn't exist.", "Couldn't read internal names", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
