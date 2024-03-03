@@ -16,6 +16,8 @@ namespace DSPRE {
 
     public class RomInfo {
         public static string folderSuffix = "_DSPRE_contents";
+        const string dataFolderName = @"data";
+
         public static string romID { get; private set; }
         public static string fileName { get; private set; }
         public static string workDir { get; private set; }
@@ -70,6 +72,8 @@ namespace DSPRE {
 
         public static string internalNamesLocation { get; private set; }
         public static readonly byte internalNameLength = 16;
+        public static string internalNamesPath { get; private set; }
+
         public static int cameraSize { get; private set; }
 
         public Dictionary<List<uint>, (Color background, Color foreground)> MapCellsColorDictionary;
@@ -132,7 +136,10 @@ namespace DSPRE {
             OWSprites,
 
             scripts,
+
             encounters,
+            headbutt,
+            safariZone,
 
             trainerProperties,
             trainerParty,

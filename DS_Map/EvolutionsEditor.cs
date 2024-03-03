@@ -6,7 +6,6 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace DSPRE {
     public partial class EvolutionsEditor : Form {
-        private bool disableHandlers = false;
 
         private readonly string[] fileNames;
         private readonly string[] pokeNames;
@@ -34,7 +33,7 @@ namespace DSPRE {
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Size = parent.Size;
             this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            disableHandlers = true;
+            Helpers.DisableHandlers();
 
             evoRows = new (ComboBox m, Label l, NumericUpDown p, ComboBox t)[EvolutionFile.numEvolutions] {
                 (evoMethodComboBox1, descLabel1, evoParamUpDown1, evoTargetMonComboBox1),
@@ -59,32 +58,32 @@ namespace DSPRE {
 
             pokemonNameInputComboBox.Items.AddRange(this.fileNames);
 
-            disableHandlers = false;
+            Helpers.EnableHandlers();
 
             pokemonNameInputComboBox.SelectedIndex = 1;
         }
 
         private void pokemonNameInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
 
-            disableHandlers = true;
+            Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
                 int newNumber = pokemonNameInputComboBox.SelectedIndex;
                 monNumberNumericUpDown.Value = newNumber;
                 ChangeLoadedFile(newNumber);
 
             }
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
 
         private void monNumberNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
 
-            disableHandlers = true;
+            Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
 
                 int newNumber = (int)monNumberNumericUpDown.Value;
@@ -92,7 +91,7 @@ namespace DSPRE {
                 ChangeLoadedFile(newNumber);
 
             }
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
         private void ChangeLoadedFile(int toLoad) {
             currentLoadedId = toLoad;
@@ -236,7 +235,7 @@ namespace DSPRE {
                 return;
             }
 
-            disableHandlers = true;
+            Helpers.DisableHandlers();
 
             EvolutionMethod method = (EvolutionMethod)m.SelectedIndex;
             EvolutionParamMeaning type = EvolutionFile.evoDescriptions[method];
@@ -294,7 +293,7 @@ namespace DSPRE {
                     throw new Exception("Unknown evolution parameter type: " + type);
             }
 
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
 
         private void evoParamUpDown1_ValueChanged(object sender, EventArgs e) {
