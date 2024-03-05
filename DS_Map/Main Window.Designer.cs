@@ -255,6 +255,7 @@
             this.zBuildUpDown = new System.Windows.Forms.NumericUpDown();
             this.buildingsListBox = new System.Windows.Forms.ListBox();
             this.permissionsTabPage = new System.Windows.Forms.TabPage();
+            this.scanUnusedCollisionTypesButton = new System.Windows.Forms.Button();
             this.clearCurrentButton = new System.Windows.Forms.Button();
             this.typeLabel = new System.Windows.Forms.Label();
             this.collisionLabel = new System.Windows.Forms.Label();
@@ -3819,6 +3820,7 @@
             // 
             // permissionsTabPage
             // 
+            this.permissionsTabPage.Controls.Add(this.scanUnusedCollisionTypesButton);
             this.permissionsTabPage.Controls.Add(this.clearCurrentButton);
             this.permissionsTabPage.Controls.Add(this.typeLabel);
             this.permissionsTabPage.Controls.Add(this.collisionLabel);
@@ -3835,6 +3837,19 @@
             this.permissionsTabPage.TabIndex = 1;
             this.permissionsTabPage.Text = "Move Permissions";
             this.permissionsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // scanUnusedCollisionTypesButton
+            // 
+            this.scanUnusedCollisionTypesButton.Image = global::DSPRE.Properties.Resources.SearchMiniIcon;
+            this.scanUnusedCollisionTypesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.scanUnusedCollisionTypesButton.Location = new System.Drawing.Point(345, 110);
+            this.scanUnusedCollisionTypesButton.Name = "scanUnusedCollisionTypesButton";
+            this.scanUnusedCollisionTypesButton.Size = new System.Drawing.Size(111, 27);
+            this.scanUnusedCollisionTypesButton.TabIndex = 33;
+            this.scanUnusedCollisionTypesButton.Text = "Scan used types";
+            this.scanUnusedCollisionTypesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.scanUnusedCollisionTypesButton.UseVisualStyleBackColor = true;
+            this.scanUnusedCollisionTypesButton.Click += new System.EventHandler(this.scanUsedCollisionTypesButton_Click);
             // 
             // clearCurrentButton
             // 
@@ -4015,7 +4030,7 @@
             // 
             this.ImportMovButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.ImportMovButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ImportMovButton.Location = new System.Drawing.Point(318, 35);
+            this.ImportMovButton.Location = new System.Drawing.Point(318, 22);
             this.ImportMovButton.Name = "ImportMovButton";
             this.ImportMovButton.Size = new System.Drawing.Size(138, 38);
             this.ImportMovButton.TabIndex = 23;
@@ -4028,7 +4043,7 @@
             // 
             this.exportMovButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportMovButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportMovButton.Location = new System.Drawing.Point(318, 79);
+            this.exportMovButton.Location = new System.Drawing.Point(318, 64);
             this.exportMovButton.Name = "exportMovButton";
             this.exportMovButton.Size = new System.Drawing.Size(138, 38);
             this.exportMovButton.TabIndex = 22;
@@ -11962,6 +11977,7 @@
         public System.Windows.Forms.NumericUpDown scriptFileUpDown;
         public System.Windows.Forms.TabPage tabPageEncountersEditor;
         public Editors.EncountersEditor encountersEditor;
+        private System.Windows.Forms.Button scanUnusedCollisionTypesButton;
     }
 }
 
