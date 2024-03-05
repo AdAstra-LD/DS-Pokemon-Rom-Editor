@@ -4126,33 +4126,46 @@ namespace DSPRE {
             typePictureBox.Image = smallBm;
             typePictureBox.Invalidate();
         }
+        private void scanUsedCollisionTypesButton_Click(object sender, EventArgs e) {
+            SortedSet<byte> allUsed = FindUsedCollisions();
 
-        private void FindUnusedCollisions() {
-            int mapCount = romInfo.GetMapCount();
-            
-            SortedSet<byte> allUsedTypes = new SortedSet<byte>();
-            for (int i = 0; i <= byte.MaxValue; i++) {
-                allUsedTypes.Add((byte)i);
-            }
-
-            for (int i = 0; i < mapCount; i++) {
-                allUsedTypes.ExceptWith(new MapFile(i, gameFamily, false, false).GetUsedTypes());
-            }
-
-            List<byte> lst = allUsedTypes.ToList();
+            List<byte> lst = allUsed.ToList();
             StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < allUsedTypes.Count; i++) {
+            for (int i = 0; i < allUsed.Count; i++) {
                 sb.Append("0x");
                 sb.Append(lst[i].ToString("X2"));
 
-                if (i != allUsedTypes.Count - 1) {
+                if (i != allUsed.Count - 1) {
                     sb.Append(", ");
                 }
             }
             string report = sb.ToString();
 
-            MessageBox.Show($"This report has been copied to the clipboard as well, for your convenience.\n\nUnused collisions: \n{report}", "Unused collisions report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"This report has been copied to the clipboard as well, for your convenience.\n\nUsed types (in all Map BINs): \n{report}", "Used collision types report", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Clipboard.SetText(report);
+        }
+
+        private SortedSet<byte> FindUsedCollisions() {
+            int mapCount = romInfo.GetMapCount();
+
+            SortedSet<byte> allUsedTypes = new SortedSet<byte>();
+
+            for (int i = 0; i < mapCount; i++) {
+                allUsedTypes.UnionWith(new MapFile(i, gameFamily, false, false).GetUsedTypes());
+            }
+
+            return allUsedTypes;
+        }
+        private SortedSet<byte> FindUnusedCollisions() {
+            int mapCount = romInfo.GetMapCount();
+            
+            SortedSet<byte> allUnusedTypes = new SortedSet<byte>();
+            for (int i = 0; i <= byte.MaxValue; i++) {
+                allUnusedTypes.Add((byte)i);
+            }
+            allUnusedTypes.ExceptWith(FindUsedCollisions());
+
+            return allUnusedTypes;
         }
         private void EditCell(int xPosition, int yPosition) {
             try {
