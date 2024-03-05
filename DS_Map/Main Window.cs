@@ -4126,6 +4126,34 @@ namespace DSPRE {
             typePictureBox.Image = smallBm;
             typePictureBox.Invalidate();
         }
+
+        private void FindUnusedCollisions() {
+            int mapCount = romInfo.GetMapCount();
+            
+            SortedSet<byte> allUsedTypes = new SortedSet<byte>();
+            for (int i = 0; i <= byte.MaxValue; i++) {
+                allUsedTypes.Add((byte)i);
+            }
+
+            for (int i = 0; i < mapCount; i++) {
+                allUsedTypes.ExceptWith(new MapFile(i, gameFamily, false, false).GetUsedTypes());
+            }
+
+            List<byte> lst = allUsedTypes.ToList();
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < allUsedTypes.Count; i++) {
+                sb.Append("0x");
+                sb.Append(lst[i].ToString("X2"));
+
+                if (i != allUsedTypes.Count - 1) {
+                    sb.Append(", ");
+                }
+            }
+            string report = sb.ToString();
+
+            MessageBox.Show($"This report has been copied to the clipboard as well, for your convenience.\n\nUnused collisions: \n{report}", "Unused collisions report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Clipboard.SetText(report);
+        }
         private void EditCell(int xPosition, int yPosition) {
             try {
                 mainCell = new Rectangle(xPosition * mapEditorSquareSize, yPosition * mapEditorSquareSize, mapEditorSquareSize, mapEditorSquareSize);

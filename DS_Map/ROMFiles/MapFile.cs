@@ -239,6 +239,19 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
+
+        public SortedSet<byte> GetUsedTypes() {
+            SortedSet<byte> sortedBytes = new SortedSet<byte>();
+
+            for (int i = 0; i < mapSize; i++) {
+                for (int j = 0; j < mapSize; j++) {
+                    sortedBytes.Add(types[i, j]);
+                }
+            }
+
+            return sortedBytes;
+        }
+
         public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
             SaveToFileDefaultDir(DirNames.maps, IDtoReplace, showSuccessMessage);
         }
