@@ -728,6 +728,8 @@ namespace DSPRE {
                 }
             }
 
+            DSUtils.ARM9.WriteBytes(new byte[4] { 0, 0, 0, 0 }, (uint)(RomInfo.gameFamily == GameFamilies.DP ? 0xB7C : 0xBB4));
+
             Helpers.statusLabelMessage("Repacking ROM...");
 
             if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
@@ -751,7 +753,7 @@ namespace DSPRE {
 
             for (int i = 0; i < 128; i++) {
                 if (!DSUtils.OverlayIsCompressed(i)) {
-                    DSUtils.CompressOverlay(i);
+                    //DSUtils.CompressOverlay(i);
                 }
             }
 
@@ -881,6 +883,12 @@ namespace DSPRE {
                     SetupBattleEffectsTables();
                     tableEditorIsReady = true;
                 }
+            } else if (mainTabControl.SelectedTab == EditorPanels.scriptEditorTabPage) {
+                scriptEditor.SetupScriptEditor(this);
+            } else if (mainTabControl.SelectedTab == EditorPanels.levelScriptEditorTabPage) {
+                levelScriptEditor.SetUpLevelScriptEditor(this);
+            } else if (mainTabControl.SelectedTab == EditorPanels.tabPageEncountersEditor) {
+                encountersEditor.SetupEncountersEditor();
             }
         }
 
