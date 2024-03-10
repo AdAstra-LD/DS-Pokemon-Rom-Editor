@@ -15,7 +15,7 @@ namespace DSPRE {
         private readonly string[] fileNames;
         private readonly string[] pokenames;
         private readonly string[] moveNames;
-
+        private PokemonEditor _parent;
         private readonly string[] editButtonNames = new string[] {
             "Edit",
             "Confirm"
@@ -33,9 +33,9 @@ namespace DSPRE {
         private static bool dirty = false;
         private static readonly string formName = "Learnset Editor";
 
-        public LearnsetEditor(string[] moveNames, Control parent = null) {
+        public LearnsetEditor(string[] moveNames, Control parent, PokemonEditor pokeEditor) {
             this.moveNames = moveNames;
-
+            this._parent = pokeEditor;
             InitializeComponent();
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Size = parent.Size;
@@ -127,10 +127,11 @@ namespace DSPRE {
         }
 
         private void pokemonNameInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            Update();
             if (Helpers.HandlersDisabled) {
                 return;
             }
-
+            this._parent.TrySyncIndices((ComboBox)sender);
             Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
                 int newNumber = pokemonNameInputComboBox.SelectedIndex;

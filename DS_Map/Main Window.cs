@@ -590,11 +590,11 @@ namespace DSPRE {
             gameIcon.Refresh();  // Paint game icon
             Helpers.statusLabelMessage("Attempting to unpack NARCs from folder...");
             Update();
-            for (int i = 0; i < 128; i++) {
-                if (DSUtils.OverlayIsCompressed(i)) {
-                    //DSUtils.DecompressOverlay(i);
-                }
-            }
+            //for (int i = 0; i < 128; i++) {
+            //    if (DSUtils.OverlayIsCompressed(i)) {
+            //        DSUtils.DecompressOverlay(i);
+            //    }
+            //}
             ReadROMInitData();
         }
 
@@ -751,11 +751,11 @@ namespace DSPRE {
 
             Update();
 
-            for (int i = 0; i < 128; i++) {
-                if (!DSUtils.OverlayIsCompressed(i)) {
-                    //DSUtils.CompressOverlay(i);
-                }
-            }
+            //for (int i = 0; i < 128; i++) {
+            //    if (!DSUtils.OverlayIsCompressed(i)) {
+            //        DSUtils.CompressOverlay(i);
+            //    }
+            //}
 
             DSUtils.RepackROM(saveRom.FileName);
 
@@ -9815,33 +9815,11 @@ namespace DSPRE {
         }
 
         private void learnsetsEditorToolStripMenuItem_Click(object sender, EventArgs e) {
-            string[] moveNames = RomInfo.GetAttackNames();
-
-            Helpers.statusLabelMessage("Setting up Learnsets Editor...");
-            Update();
-
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.learnsets, DirNames.monIcons });
-            RomInfo.SetMonIconsPalTableAddress();
-
-            LearnsetEditor le = new LearnsetEditor(moveNames);
-            le.ShowDialog();
-
-            Helpers.statusLabelMessage();
-            Update();
+            // Dummy func, to be deleted from MainWIndow
         }
 
         private void evolutionsEditorToolStripMenuItem_Click(object sender, EventArgs e) {
-            Helpers.statusLabelMessage("Setting up Evolutions Editor...");
-            Update();
-
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.evolutions, DirNames.monIcons });
-            RomInfo.SetMonIconsPalTableAddress();
-
-            EvolutionsEditor eved = new EvolutionsEditor();
-            eved.ShowDialog();
-
-            Helpers.statusLabelMessage();
-            Update();
+            // Dummy func, to be deleted from MainWIndow
         }
     }
 }

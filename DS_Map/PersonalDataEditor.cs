@@ -20,9 +20,11 @@ namespace DSPRE {
         private static bool dirty = false;
         private static readonly string formName = "Personal Data Editor";
 
-        public PersonalDataEditor(string[] itemNames, string[] abilityNames, System.Windows.Forms.Control parent = null) {
-            this.fileNames = RomInfo.GetPokemonNames().ToArray();;
+        PokemonEditor _parent;
 
+        public PersonalDataEditor(string[] itemNames, string[] abilityNames, System.Windows.Forms.Control parent, PokemonEditor pokeEditor) {
+            this.fileNames = RomInfo.GetPokemonNames().ToArray();;
+            this._parent = pokeEditor;
             InitializeComponent();
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Size = parent.Size;
@@ -410,10 +412,11 @@ namespace DSPRE {
         }
 
         private void pokemonNameInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            Update();
             if (Helpers.HandlersDisabled) {
                 return;
             }
-
+            this._parent.TrySyncIndices((System.Windows.Forms.ComboBox)sender);
             Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
                 int newNumber = pokemonNameInputComboBox.SelectedIndex;

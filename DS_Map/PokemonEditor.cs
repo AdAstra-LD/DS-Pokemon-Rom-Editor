@@ -12,24 +12,42 @@ using static DSPRE.RomInfo;
 
 namespace DSPRE {
     public partial class PokemonEditor : Form {
+        PersonalDataEditor personalEditor;
+        LearnsetEditor learnsetEditor;
+        EvolutionsEditor evoEditor;
+
         public PokemonEditor(string[] itemNames, string[] abilityNames, string[] moveNames) {
             InitializeComponent();
             IsMdiContainer = true;
 
-            PersonalDataEditor personalEditor = new PersonalDataEditor(itemNames, abilityNames, evoPage);
+            personalEditor = new PersonalDataEditor(itemNames, abilityNames, personalPage, this);
             personalEditor.TopLevel = false;
             personalEditor.Show();
             personalPage.Controls.Add(personalEditor);
 
-            LearnsetEditor learnsetEditor = new LearnsetEditor(moveNames, evoPage);
+            learnsetEditor = new LearnsetEditor(moveNames, learnsetPage, this);
             learnsetEditor.TopLevel = false;
             learnsetEditor.Show();
             learnsetPage.Controls.Add(learnsetEditor);
 
-            EvolutionsEditor evoEditor = new EvolutionsEditor(evoPage);
+            evoEditor = new EvolutionsEditor(evoPage, this);
             evoEditor.TopLevel = false;
             evoEditor.Show();
             evoPage.Controls.Add(evoEditor);
+        }
+
+        public void TrySyncIndices(ComboBox sender) {
+            if(!syncChangesCheckbox.Checked) {
+                return;
+            }
+
+            Helpers.BackUpDisableHandler();
+            //Helpers.DisableHandlers();
+            personalEditor.pokemonNameInputComboBox.SelectedIndex = sender.SelectedIndex;
+            learnsetEditor.pokemonNameInputComboBox.SelectedIndex = sender.SelectedIndex;
+            evoEditor.pokemonNameInputComboBox.SelectedItem = sender.SelectedItem;
+
+            Helpers.RestoreDisableHandler();
         }
     }
 }

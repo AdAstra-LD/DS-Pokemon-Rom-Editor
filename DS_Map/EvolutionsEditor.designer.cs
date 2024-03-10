@@ -586,7 +586,6 @@
         private System.Windows.Forms.Button saveDataButton;
         private System.Windows.Forms.PictureBox pokemonPictureBox;
         private System.Windows.Forms.NumericUpDown monNumberNumericUpDown;
-        private InputComboBox pokemonNameInputComboBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label paramLabel;
@@ -619,5 +618,6 @@
         private System.Windows.Forms.Label descLabel5;
         private System.Windows.Forms.Label descLabel6;
         private System.Windows.Forms.Label descLabel7;
+        public InputComboBox pokemonNameInputComboBox;
     }
 }

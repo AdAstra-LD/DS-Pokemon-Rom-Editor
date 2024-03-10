@@ -8,6 +8,7 @@ namespace DSPRE {
     public partial class EvolutionsEditor : Form {
 
         private readonly string[] fileNames;
+        private PokemonEditor _parent;
         private readonly string[] pokeNames;
         private readonly string[] moveNames;
         private readonly string[] itemNames;
@@ -19,7 +20,8 @@ namespace DSPRE {
         private static readonly string formName = "Evolutions Editor";
 
         private (ComboBox m, Label l, NumericUpDown p, ComboBox t)[] evoRows;
-        public EvolutionsEditor(Control parent = null) {
+        public EvolutionsEditor(Control parent, PokemonEditor pokeEditor) {
+            this._parent = pokeEditor;
             this.pokeNames = RomInfo.GetPokemonNames();
             this.moveNames = RomInfo.GetAttackNames();
             this.itemNames = RomInfo.GetItemNames();
@@ -64,10 +66,11 @@ namespace DSPRE {
         }
 
         private void pokemonNameInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            Update();
             if (Helpers.HandlersDisabled) {
                 return;
             }
-
+            this._parent.TrySyncIndices((ComboBox)sender);
             Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
                 int newNumber = pokemonNameInputComboBox.SelectedIndex;
