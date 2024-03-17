@@ -7792,7 +7792,8 @@ namespace DSPRE {
                 DirNames.trainerGraphics,
                 DirNames.textArchives,
                 DirNames.monIcons,
-                DirNames.personalPokeData
+                DirNames.personalPokeData,
+                DirNames.learnsets
             });
 
             int numPokemonSpecies = Directory.GetFiles(RomInfo.gameDirs[DirNames.personalPokeData].unpackedDir, "*").Count();
@@ -8171,12 +8172,34 @@ namespace DSPRE {
         }
 
         private void trainerMovesCheckBox_CheckedChanged(object sender, EventArgs e) {
-            for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
+            for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {                
                 for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
-                    (partyMovesGroupboxList[i].Controls[j] as ComboBox).Enabled = trainerMovesCheckBox.Checked;
+                    (partyMovesGroupboxList[i].Controls[j] as ComboBox).Enabled = trainerMovesCheckBox.Checked;                    
                 }
-                currentTrainerFile.party[i].moves = trainerMovesCheckBox.Checked ? new ushort[Party.MOVES_PER_POKE] : null;
+                if (trainerMovesCheckBox.Checked && i < currentTrainerFile.trp.partyCount) {
+                    Helpers.BackUpDisableHandler();
+                    Helpers.DisableHandlers();
+                    LearnsetData learnset = new LearnsetData((int)currentTrainerFile.party[i].pokeID);
+                    int level = currentTrainerFile.party[i].level;
+                    currentTrainerFile.party[i].moves = learnset.GetLearnsetAtLevel(level);
+                    Debug.Print("Changing the moves of Pokemon " + i.ToString() + " which is Pokemon " + currentTrainerFile.party[i].pokeID);
+                    Debug.Print("The new moves will be: " + string.Join(", ", currentTrainerFile.party[i].moves));
+                    for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
+                        (partyMovesGroupboxList[i].Controls[j] as ComboBox).SelectedIndex = currentTrainerFile.party[i].moves[j];
+                        Debug.Print("Move for dropdwon " + j.ToString() + " is " + currentTrainerFile.party[i].moves[j].ToString());
+                    }                    
+                    Helpers.EnableHandlers();
+                    RefreshTrainerPartyGUI();
+                    Helpers.RestoreDisableHandler();
+                } else {
+                    currentTrainerFile.party[i].moves = null;
+                }
             }
+            Helpers.BackUpDisableHandler();
+            Helpers.EnableHandlers();
+            RefreshTrainerPartyGUI();
+            Helpers.RestoreDisableHandler();
+            
         }
         private void trainerItemsCheckBox_CheckedChanged(object sender, EventArgs e) {
             for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {

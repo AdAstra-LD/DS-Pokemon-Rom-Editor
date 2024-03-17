@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using DSPRE.ROMFiles;
 using static DSPRE.RomInfo;
@@ -9,6 +10,31 @@ namespace DSPRE {
         public static readonly int bitsLevel = 7;
 
         public readonly UniqueList<(byte level, ushort move)> list;
+
+        public ushort[] GetLearnsetAtLevel(int atLevel) {
+            ushort[] learnset = new ushort[4] {0, 0 , 0, 0};
+            foreach ((ushort level, ushort move) in list)
+            {
+                if (level <= atLevel) 
+                {
+                    if (learnset[0] == 0) {
+                        learnset[0] = move;
+                    } else if (learnset[1] == 0) {
+                        learnset[1] = move;
+                    } else if (learnset[2] == 0) {
+                        learnset[2] = move;
+                    } else if (learnset[3] == 0) {
+                        learnset[3] = move;
+                    } else {
+                        learnset[0] = learnset[1];
+                        learnset[1] = learnset[2];
+                        learnset[2] = learnset[3];
+                        learnset[3] = move;
+                    }
+                }
+            }
+            return learnset;
+        }
 
         public LearnsetData(Stream stream) {
             int numEntries = (int)(stream.Length / sizeof(ushort));
