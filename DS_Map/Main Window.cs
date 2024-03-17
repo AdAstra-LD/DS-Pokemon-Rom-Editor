@@ -7767,6 +7767,16 @@ namespace DSPRE {
                 }
             }
         }
+
+        public void RefreshAbilities(int forPokemon) {
+            DialogResult res = MessageBox.Show("You have modified a Pokemon's ability.\nDo you wish to refresh the Trainer Editor so your changes are available?", "Refresh Trainer Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (res.Equals(DialogResult.Yes)) {
+                int currentIndex = trainerComboBox.SelectedIndex;
+                SetupTrainerEditor();
+                trainerComboBox.SelectedIndex = currentIndex;
+            }            
+        }
+
         private void SetupTrainerEditor() {
             Helpers.DisableHandlers();
 

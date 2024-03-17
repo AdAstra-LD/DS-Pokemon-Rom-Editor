@@ -18,6 +18,7 @@ namespace DSPRE {
         private PokemonPersonalData currentLoadedFile = null;
 
         private static bool dirty = false;
+        private bool modifiedAbilities = false;
         private static readonly string formName = "Personal Data Editor";
 
         PokemonEditor _parent;
@@ -275,6 +276,7 @@ namespace DSPRE {
             }
             currentLoadedFile.firstAbility = (byte)ability1InputComboBox.SelectedIndex;
             setDirty(true);
+            modifiedAbilities = true;
         }
         private void ability2InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (Helpers.HandlersDisabled) {
@@ -282,6 +284,7 @@ namespace DSPRE {
             }
             currentLoadedFile.secondAbility = (byte)ability2InputComboBox.SelectedIndex;
             setDirty(true);
+            modifiedAbilities = true;
         }
         private void eggGroup1InputCombobox_SelectedIndexChanged(object sender, EventArgs e) {
             if (Helpers.HandlersDisabled) {
@@ -391,6 +394,10 @@ namespace DSPRE {
         }
         private void saveDataButton_Click(object sender, EventArgs e) {
             currentLoadedFile.SaveToFileDefaultDir(currentLoadedId, true);
+            if (modifiedAbilities) {
+                EditorPanels.MainProgram.RefreshAbilities(currentLoadedId);
+                modifiedAbilities = false;
+            }
             setDirty(false);
         }
         //-------------------------------
