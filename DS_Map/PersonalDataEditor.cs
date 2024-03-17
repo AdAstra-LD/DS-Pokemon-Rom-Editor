@@ -394,12 +394,12 @@ namespace DSPRE {
             setDirty(false);
         }
         //-------------------------------
-        private bool CheckDiscardChanges() {
+        public bool CheckDiscardChanges() {
             if (!dirty) {
                 return true;
             }
 
-            DialogResult res = MessageBox.Show("There are unsaved changes to the current Pokémon data.\nDiscard and proceed?", "Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult res = MessageBox.Show("Personal Editor\nThere are unsaved changes to the current Personal data.\nDiscard and proceed?", "Personal Editor - Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res.Equals(DialogResult.Yes)) {
                 return true;
             }
@@ -427,10 +427,11 @@ namespace DSPRE {
         }
 
         private void monNumberNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
+            Update();
+            if (Helpers.HandlersDisabled) {
+                return;
             }
-
+            this._parent.TrySyncIndices((NumericUpDown)sender);
             Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
                 int newNumber = (int)monNumberNumericUpDown.Value;
@@ -439,7 +440,8 @@ namespace DSPRE {
             }
             Helpers.EnableHandlers();
         }
-        private void ChangeLoadedFile(int toLoad) {
+
+        public void ChangeLoadedFile(int toLoad) {
             currentLoadedId = toLoad;
             currentLoadedFile = new PokemonPersonalData(currentLoadedId);
 

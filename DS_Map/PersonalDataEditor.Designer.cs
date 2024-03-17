@@ -1513,7 +1513,6 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox pokemonPictureBox;
-        private System.Windows.Forms.NumericUpDown monNumberNumericUpDown;
         private System.Windows.Forms.Button saveDataButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -1605,5 +1604,6 @@
         private InputComboBox type2InputComboBox;
         private InputComboBox type1InputComboBox;
         public InputComboBox pokemonNameInputComboBox;
+        public System.Windows.Forms.NumericUpDown monNumberNumericUpDown;
     }
 }

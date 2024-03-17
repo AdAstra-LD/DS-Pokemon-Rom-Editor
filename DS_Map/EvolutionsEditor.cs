@@ -76,27 +76,26 @@ namespace DSPRE {
                 int newNumber = pokemonNameInputComboBox.SelectedIndex;
                 monNumberNumericUpDown.Value = newNumber;
                 ChangeLoadedFile(newNumber);
-
             }
             Helpers.EnableHandlers();
         }
 
         private void monNumberNumericUpDown_ValueChanged(object sender, EventArgs e) {
+            Update();
             if (Helpers.HandlersDisabled) {
                 return;
             }
-
+            this._parent.TrySyncIndices((NumericUpDown)sender);
             Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
-
                 int newNumber = (int)monNumberNumericUpDown.Value;
                 pokemonNameInputComboBox.SelectedIndex = newNumber;
                 ChangeLoadedFile(newNumber);
-
             }
             Helpers.EnableHandlers();
         }
-        private void ChangeLoadedFile(int toLoad) {
+
+        public void ChangeLoadedFile(int toLoad) {
             currentLoadedId = toLoad;
             currentLoadedFile = new EvolutionFile(currentLoadedId);
 
@@ -158,12 +157,12 @@ namespace DSPRE {
             return ed;
         }
 
-        private bool CheckDiscardChanges() {
+        public bool CheckDiscardChanges() {
             if (!dirty) {
                 return true;
             }
 
-            DialogResult res = MessageBox.Show("There are unsaved changes to the current Evolution data.\nDiscard and proceed?", "Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult res = MessageBox.Show("Evolutions Editor\nThere are unsaved changes to the current Evolution data.\nDiscard and proceed?", "Evolutions Editor - Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res.Equals(DialogResult.Yes)) {
                 return true;
             }
