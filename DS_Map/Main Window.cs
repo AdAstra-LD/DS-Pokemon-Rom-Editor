@@ -8154,11 +8154,8 @@ namespace DSPRE {
         }
 
         private void DVExplainButton_Click(object sender, EventArgs e) {
-            MessageBox.Show("DV, or \"Difficulty Value\", is used by the game engine to calculate how tough an opponent Pokemon should be.\n" +
-                "The DV affects a Pokemon's Nature and IVs - the higher the value, the stronger the Pokemon.\n" +
-                "DVs will go from 1 (0 IVs) to 255 (31 IVs). Natures are chosen semi-randomly." +
-                "\nIVs will be the same value for all Stats at any DV, so Hidden Power will only be Fighting or Dark Type." +
-                "\n\nFor the time being, DSPRE Reloaded is unable to calculate the target DV of a Pokémon for a given Nature and set of IVs.", "Difficulty Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DVCalc DVcalcForm = new DVCalc(trainerComboBox.SelectedIndex, trainerClassListBox.SelectedIndex);
+            DVcalcForm.ShowDialog();
         }
 
         private void partyCountUpDown_ValueChanged(object sender, EventArgs e) {
