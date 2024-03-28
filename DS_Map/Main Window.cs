@@ -8168,12 +8168,12 @@ namespace DSPRE {
             }
         }
 
-        private void trainerMovesCheckBox_CheckedChanged(object sender, EventArgs e) {
+        private void trainerMovesCheckBox_CheckedChanged(object sender, EventArgs e) {            
             for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {                
                 for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
                     (partyMovesGroupboxList[i].Controls[j] as ComboBox).Enabled = trainerMovesCheckBox.Checked;                    
                 }
-                if (trainerMovesCheckBox.Checked && i < currentTrainerFile.trp.partyCount) {
+                if (trainerMovesCheckBox.Checked && i < currentTrainerFile.trp.partyCount && Helpers.HandlersEnabled) {
                     Helpers.BackUpDisableHandler();
                     Helpers.DisableHandlers();
                     LearnsetData learnset = new LearnsetData((int)currentTrainerFile.party[i].pokeID);
@@ -8184,19 +8184,13 @@ namespace DSPRE {
                     for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
                         (partyMovesGroupboxList[i].Controls[j] as ComboBox).SelectedIndex = currentTrainerFile.party[i].moves[j];
                         Debug.Print("Move for dropdwon " + j.ToString() + " is " + currentTrainerFile.party[i].moves[j].ToString());
-                    }                    
-                    Helpers.EnableHandlers();
-                    RefreshTrainerPartyGUI();
+                    }                   
                     Helpers.RestoreDisableHandler();
                 } else {
-                    currentTrainerFile.party[i].moves = null;
+                    //currentTrainerFile.party[i].moves = null;
                 }
             }
-            Helpers.BackUpDisableHandler();
-            Helpers.EnableHandlers();
-            RefreshTrainerPartyGUI();
-            Helpers.RestoreDisableHandler();
-            
+            RefreshTrainerPartyGUI();            
         }
         private void trainerItemsCheckBox_CheckedChanged(object sender, EventArgs e) {
             for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
