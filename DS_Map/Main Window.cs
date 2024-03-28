@@ -1089,7 +1089,7 @@ namespace DSPRE {
 
             // Add row to internal names table
             const string newmap = "NEWMAP";
-            DSUtils.WriteToFile(RomInfo.internalNamesLocation, StringToInternalName(newmap), (uint)RomInfo.GetHeaderCount() * RomInfo.internalNameLength);
+            DSUtils.WriteToFile(RomInfo.internalNamesPath, StringToInternalName(newmap), (uint)RomInfo.GetHeaderCount() * RomInfo.internalNameLength);
 
             // Update headers ListBox and internal names list
             headerListBox.Items.Add(headerListBox.Items.Count + MapHeader.nameSeparator + " " + newmap);
@@ -1110,7 +1110,7 @@ namespace DSPRE {
 
                 /* Physically delete last header file */
                 File.Delete(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + lastIndex.ToString("D4"));
-                using (DSUtils.EasyWriter ew = new DSUtils.EasyWriter(RomInfo.internalNamesLocation)) {
+                using (DSUtils.EasyWriter ew = new DSUtils.EasyWriter(RomInfo.internalNamesPath)) {
                     ew.EditSize(-internalNameLength); //Delete internalNameLength amount of bytes from file end
                 }
 
@@ -1718,7 +1718,7 @@ namespace DSPRE {
             /* Update internal name according to internalNameBox text*/
             ushort headerID = currentHeader.ID;
 
-            using (DSUtils.EasyWriter writer = new DSUtils.EasyWriter(RomInfo.internalNamesLocation, headerID * RomInfo.internalNameLength)) {
+            using (DSUtils.EasyWriter writer = new DSUtils.EasyWriter(RomInfo.internalNamesPath, headerID * RomInfo.internalNameLength)) {
                 writer.Write(StringToInternalName(internalNameBox.Text));
             }
 

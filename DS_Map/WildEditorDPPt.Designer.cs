@@ -239,6 +239,7 @@
             this.label66 = new System.Windows.Forms.Label();
             this.surfSixtyComboBox = new DSPRE.InputComboBox();
             this.repairAllButton = new System.Windows.Forms.Button();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.mainTabControl.SuspendLayout();
             this.grassGroundTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -316,6 +317,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMinLevelUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMaxLevelUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMinLevelUpDown)).BeginInit();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // encounterFileLabel
@@ -557,34 +559,10 @@
             // 
             // dualSlotGroupBox
             // 
-            this.dualSlotGroupBox.Controls.Add(this.leafGreenFirstComboBox);
-            this.dualSlotGroupBox.Controls.Add(this.label33);
-            this.dualSlotGroupBox.Controls.Add(this.fireRedSecondComboBox);
-            this.dualSlotGroupBox.Controls.Add(this.label35);
-            this.dualSlotGroupBox.Controls.Add(this.fireRedFirstComboBox);
-            this.dualSlotGroupBox.Controls.Add(this.label36);
-            this.dualSlotGroupBox.Controls.Add(this.label37);
-            this.dualSlotGroupBox.Controls.Add(this.label38);
-            this.dualSlotGroupBox.Controls.Add(this.leafGreenSecondComboBox);
-            this.dualSlotGroupBox.Controls.Add(this.label39);
-            this.dualSlotGroupBox.Controls.Add(this.sapphireFirstComboBox);
-            this.dualSlotGroupBox.Controls.Add(this.rubyFirstComboBox);
-            this.dualSlotGroupBox.Controls.Add(this.label24);
-            this.dualSlotGroupBox.Controls.Add(this.emeraldSecondComboBox);
-            this.dualSlotGroupBox.Controls.Add(this.label25);
-            this.dualSlotGroupBox.Controls.Add(this.label32);
-            this.dualSlotGroupBox.Controls.Add(this.rubySecondComboBox);
-            this.dualSlotGroupBox.Controls.Add(this.label31);
-            this.dualSlotGroupBox.Controls.Add(this.label26);
-            this.dualSlotGroupBox.Controls.Add(this.label30);
-            this.dualSlotGroupBox.Controls.Add(this.emeraldFirstComboBox);
-            this.dualSlotGroupBox.Controls.Add(this.label27);
-            this.dualSlotGroupBox.Controls.Add(this.sapphireSecondComboBox);
-            this.dualSlotGroupBox.Controls.Add(this.label28);
-            this.dualSlotGroupBox.Controls.Add(this.label29);
+            this.dualSlotGroupBox.Controls.Add(this.tableLayoutPanel3);
             this.dualSlotGroupBox.Location = new System.Drawing.Point(15, 307);
             this.dualSlotGroupBox.Name = "dualSlotGroupBox";
-            this.dualSlotGroupBox.Size = new System.Drawing.Size(721, 179);
+            this.dualSlotGroupBox.Size = new System.Drawing.Size(721, 182);
             this.dualSlotGroupBox.TabIndex = 190;
             this.dualSlotGroupBox.TabStop = false;
             this.dualSlotGroupBox.Text = "Dual Slot";
@@ -594,7 +572,7 @@
             this.leafGreenFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.leafGreenFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.leafGreenFirstComboBox.FormattingEnabled = true;
-            this.leafGreenFirstComboBox.Location = new System.Drawing.Point(278, 119);
+            this.leafGreenFirstComboBox.Location = new System.Drawing.Point(277, 104);
             this.leafGreenFirstComboBox.Name = "leafGreenFirstComboBox";
             this.leafGreenFirstComboBox.Size = new System.Drawing.Size(184, 21);
             this.leafGreenFirstComboBox.TabIndex = 207;
@@ -603,7 +581,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(16, 150);
+            this.label33.Location = new System.Drawing.Point(3, 131);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(21, 13);
             this.label33.TabIndex = 206;
@@ -614,7 +592,7 @@
             this.fireRedSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.fireRedSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.fireRedSecondComboBox.FormattingEnabled = true;
-            this.fireRedSecondComboBox.Location = new System.Drawing.Point(43, 146);
+            this.fireRedSecondComboBox.Location = new System.Drawing.Point(40, 134);
             this.fireRedSecondComboBox.Name = "fireRedSecondComboBox";
             this.fireRedSecondComboBox.Size = new System.Drawing.Size(182, 21);
             this.fireRedSecondComboBox.TabIndex = 205;
@@ -623,7 +601,7 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(16, 123);
+            this.label35.Location = new System.Drawing.Point(3, 101);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(21, 13);
             this.label35.TabIndex = 204;
@@ -634,7 +612,7 @@
             this.fireRedFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.fireRedFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.fireRedFirstComboBox.FormattingEnabled = true;
-            this.fireRedFirstComboBox.Location = new System.Drawing.Point(43, 119);
+            this.fireRedFirstComboBox.Location = new System.Drawing.Point(40, 104);
             this.fireRedFirstComboBox.Name = "fireRedFirstComboBox";
             this.fireRedFirstComboBox.Size = new System.Drawing.Size(182, 21);
             this.fireRedFirstComboBox.TabIndex = 203;
@@ -643,7 +621,7 @@
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(275, 101);
+            this.label36.Location = new System.Drawing.Point(277, 84);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(60, 13);
             this.label36.TabIndex = 216;
@@ -652,7 +630,7 @@
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(249, 150);
+            this.label37.Location = new System.Drawing.Point(250, 131);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(21, 13);
             this.label37.TabIndex = 210;
@@ -661,7 +639,7 @@
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(40, 101);
+            this.label38.Location = new System.Drawing.Point(40, 84);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(47, 13);
             this.label38.TabIndex = 215;
@@ -672,7 +650,7 @@
             this.leafGreenSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.leafGreenSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.leafGreenSecondComboBox.FormattingEnabled = true;
-            this.leafGreenSecondComboBox.Location = new System.Drawing.Point(278, 146);
+            this.leafGreenSecondComboBox.Location = new System.Drawing.Point(277, 134);
             this.leafGreenSecondComboBox.Name = "leafGreenSecondComboBox";
             this.leafGreenSecondComboBox.Size = new System.Drawing.Size(183, 21);
             this.leafGreenSecondComboBox.TabIndex = 209;
@@ -681,7 +659,7 @@
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(249, 123);
+            this.label39.Location = new System.Drawing.Point(250, 101);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(21, 13);
             this.label39.TabIndex = 208;
@@ -692,7 +670,7 @@
             this.sapphireFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.sapphireFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.sapphireFirstComboBox.FormattingEnabled = true;
-            this.sapphireFirstComboBox.Location = new System.Drawing.Point(279, 42);
+            this.sapphireFirstComboBox.Location = new System.Drawing.Point(277, 12);
             this.sapphireFirstComboBox.Name = "sapphireFirstComboBox";
             this.sapphireFirstComboBox.Size = new System.Drawing.Size(184, 21);
             this.sapphireFirstComboBox.TabIndex = 192;
@@ -703,7 +681,7 @@
             this.rubyFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.rubyFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.rubyFirstComboBox.FormattingEnabled = true;
-            this.rubyFirstComboBox.Location = new System.Drawing.Point(44, 42);
+            this.rubyFirstComboBox.Location = new System.Drawing.Point(40, 12);
             this.rubyFirstComboBox.Name = "rubyFirstComboBox";
             this.rubyFirstComboBox.Size = new System.Drawing.Size(182, 21);
             this.rubyFirstComboBox.TabIndex = 188;
@@ -712,7 +690,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(16, 73);
+            this.label24.Location = new System.Drawing.Point(3, 45);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(21, 13);
             this.label24.TabIndex = 191;
@@ -723,7 +701,7 @@
             this.emeraldSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.emeraldSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.emeraldSecondComboBox.FormattingEnabled = true;
-            this.emeraldSecondComboBox.Location = new System.Drawing.Point(515, 69);
+            this.emeraldSecondComboBox.Location = new System.Drawing.Point(521, 48);
             this.emeraldSecondComboBox.Name = "emeraldSecondComboBox";
             this.emeraldSecondComboBox.Size = new System.Drawing.Size(184, 21);
             this.emeraldSecondComboBox.TabIndex = 198;
@@ -732,16 +710,16 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(512, 23);
+            this.label25.Location = new System.Drawing.Point(521, 0);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(45, 13);
+            this.label25.Size = new System.Drawing.Size(45, 9);
             this.label25.TabIndex = 202;
             this.label25.Text = "Emerald";
             // 
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(488, 73);
+            this.label32.Location = new System.Drawing.Point(482, 45);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(21, 13);
             this.label32.TabIndex = 199;
@@ -752,7 +730,7 @@
             this.rubySecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.rubySecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.rubySecondComboBox.FormattingEnabled = true;
-            this.rubySecondComboBox.Location = new System.Drawing.Point(44, 69);
+            this.rubySecondComboBox.Location = new System.Drawing.Point(40, 48);
             this.rubySecondComboBox.Name = "rubySecondComboBox";
             this.rubySecondComboBox.Size = new System.Drawing.Size(182, 21);
             this.rubySecondComboBox.TabIndex = 190;
@@ -761,7 +739,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(488, 46);
+            this.label31.Location = new System.Drawing.Point(482, 9);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(21, 13);
             this.label31.TabIndex = 197;
@@ -770,7 +748,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(16, 46);
+            this.label26.Location = new System.Drawing.Point(3, 9);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(21, 13);
             this.label26.TabIndex = 189;
@@ -779,7 +757,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(251, 46);
+            this.label30.Location = new System.Drawing.Point(250, 9);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(21, 13);
             this.label30.TabIndex = 193;
@@ -790,7 +768,7 @@
             this.emeraldFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.emeraldFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.emeraldFirstComboBox.FormattingEnabled = true;
-            this.emeraldFirstComboBox.Location = new System.Drawing.Point(515, 42);
+            this.emeraldFirstComboBox.Location = new System.Drawing.Point(521, 12);
             this.emeraldFirstComboBox.Name = "emeraldFirstComboBox";
             this.emeraldFirstComboBox.Size = new System.Drawing.Size(184, 21);
             this.emeraldFirstComboBox.TabIndex = 196;
@@ -799,9 +777,9 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(276, 24);
+            this.label27.Location = new System.Drawing.Point(277, 0);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(49, 13);
+            this.label27.Size = new System.Drawing.Size(49, 9);
             this.label27.TabIndex = 201;
             this.label27.Text = "Sapphire";
             // 
@@ -810,7 +788,7 @@
             this.sapphireSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.sapphireSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.sapphireSecondComboBox.FormattingEnabled = true;
-            this.sapphireSecondComboBox.Location = new System.Drawing.Point(279, 69);
+            this.sapphireSecondComboBox.Location = new System.Drawing.Point(277, 48);
             this.sapphireSecondComboBox.Name = "sapphireSecondComboBox";
             this.sapphireSecondComboBox.Size = new System.Drawing.Size(183, 21);
             this.sapphireSecondComboBox.TabIndex = 194;
@@ -819,7 +797,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(251, 73);
+            this.label28.Location = new System.Drawing.Point(250, 45);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(21, 13);
             this.label28.TabIndex = 195;
@@ -828,9 +806,9 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(41, 24);
+            this.label29.Location = new System.Drawing.Point(40, 0);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(32, 13);
+            this.label29.Size = new System.Drawing.Size(32, 9);
             this.label29.TabIndex = 200;
             this.label29.Text = "Ruby";
             // 
@@ -2623,6 +2601,56 @@
             this.repairAllButton.UseVisualStyleBackColor = true;
             this.repairAllButton.Click += new System.EventHandler(this.repairAllButton_Click);
             // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 8;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.91356F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.08644F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 15F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 193F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 12F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 196F));
+            this.tableLayoutPanel3.Controls.Add(this.label33, 0, 6);
+            this.tableLayoutPanel3.Controls.Add(this.leafGreenFirstComboBox, 4, 5);
+            this.tableLayoutPanel3.Controls.Add(this.fireRedSecondComboBox, 1, 6);
+            this.tableLayoutPanel3.Controls.Add(this.label29, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label37, 3, 6);
+            this.tableLayoutPanel3.Controls.Add(this.label26, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.leafGreenSecondComboBox, 4, 6);
+            this.tableLayoutPanel3.Controls.Add(this.label24, 0, 2);
+            this.tableLayoutPanel3.Controls.Add(this.label35, 0, 5);
+            this.tableLayoutPanel3.Controls.Add(this.rubyFirstComboBox, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.label39, 3, 5);
+            this.tableLayoutPanel3.Controls.Add(this.fireRedFirstComboBox, 1, 5);
+            this.tableLayoutPanel3.Controls.Add(this.rubySecondComboBox, 1, 2);
+            this.tableLayoutPanel3.Controls.Add(this.label36, 4, 4);
+            this.tableLayoutPanel3.Controls.Add(this.label38, 1, 4);
+            this.tableLayoutPanel3.Controls.Add(this.label27, 4, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label30, 3, 1);
+            this.tableLayoutPanel3.Controls.Add(this.label28, 3, 2);
+            this.tableLayoutPanel3.Controls.Add(this.sapphireFirstComboBox, 4, 1);
+            this.tableLayoutPanel3.Controls.Add(this.sapphireSecondComboBox, 4, 2);
+            this.tableLayoutPanel3.Controls.Add(this.label32, 6, 2);
+            this.tableLayoutPanel3.Controls.Add(this.emeraldSecondComboBox, 7, 2);
+            this.tableLayoutPanel3.Controls.Add(this.label31, 6, 1);
+            this.tableLayoutPanel3.Controls.Add(this.emeraldFirstComboBox, 7, 1);
+            this.tableLayoutPanel3.Controls.Add(this.label25, 7, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 7;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 17F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(715, 163);
+            this.tableLayoutPanel3.TabIndex = 217;
+            // 
             // WildEditorDPPt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2649,7 +2677,6 @@
             this.radarGroupBox.ResumeLayout(false);
             this.radarGroupBox.PerformLayout();
             this.dualSlotGroupBox.ResumeLayout(false);
-            this.dualSlotGroupBox.PerformLayout();
             this.timeGroupBox.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
@@ -2726,6 +2753,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.surfThirtyMinLevelUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMaxLevelUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surfSixtyMinLevelUpDown)).EndInit();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2942,5 +2971,6 @@
         private System.Windows.Forms.Button repairAllButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
     }
 }
