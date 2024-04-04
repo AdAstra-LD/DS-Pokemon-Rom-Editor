@@ -1145,7 +1145,7 @@
             this.headerEditorTabPage.ImageIndex = 0;
             this.headerEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.headerEditorTabPage.Name = "headerEditorTabPage";
-            this.headerEditorTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.headerEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.headerEditorTabPage.Size = new System.Drawing.Size(1185, 675);
             this.headerEditorTabPage.TabIndex = 0;
             this.headerEditorTabPage.Text = "Header Editor";
@@ -2533,7 +2533,7 @@
             this.matrixEditorTabPage.ImageIndex = 1;
             this.matrixEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.matrixEditorTabPage.Name = "matrixEditorTabPage";
-            this.matrixEditorTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.matrixEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.matrixEditorTabPage.Size = new System.Drawing.Size(1185, 675);
             this.matrixEditorTabPage.TabIndex = 1;
             this.matrixEditorTabPage.Text = "Matrix Editor";
@@ -2544,7 +2544,7 @@
             this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
             this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.setSpawnPointButton.Location = new System.Drawing.Point(12, -5857);
+            this.setSpawnPointButton.Location = new System.Drawing.Point(12, -7059);
             this.setSpawnPointButton.Name = "setSpawnPointButton";
             this.setSpawnPointButton.Size = new System.Drawing.Size(117, 43);
             this.setSpawnPointButton.TabIndex = 35;
@@ -2560,7 +2560,7 @@
             this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.saveMatrixButton.Location = new System.Drawing.Point(12, -5813);
+            this.saveMatrixButton.Location = new System.Drawing.Point(12, -7015);
             this.saveMatrixButton.Name = "saveMatrixButton";
             this.saveMatrixButton.Size = new System.Drawing.Size(117, 43);
             this.saveMatrixButton.TabIndex = 34;
@@ -2750,7 +2750,7 @@
             this.headersTabPage.Controls.Add(this.headersGridView);
             this.headersTabPage.Location = new System.Drawing.Point(4, 22);
             this.headersTabPage.Name = "headersTabPage";
-            this.headersTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.headersTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.headersTabPage.Size = new System.Drawing.Size(1032, 584);
             this.headersTabPage.TabIndex = 1;
             this.headersTabPage.Text = "Map Headers";
@@ -3030,7 +3030,7 @@
             this.mapEditorTabPage.ImageIndex = 2;
             this.mapEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.mapEditorTabPage.Name = "mapEditorTabPage";
-            this.mapEditorTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.mapEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.mapEditorTabPage.Size = new System.Drawing.Size(1185, 675);
             this.mapEditorTabPage.TabIndex = 2;
             this.mapEditorTabPage.Text = "Map Editor";
@@ -3289,7 +3289,7 @@
             this.buildingsTabPage.Controls.Add(this.buildingsListBox);
             this.buildingsTabPage.Location = new System.Drawing.Point(4, 22);
             this.buildingsTabPage.Name = "buildingsTabPage";
-            this.buildingsTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.buildingsTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.buildingsTabPage.Size = new System.Drawing.Size(481, 450);
             this.buildingsTabPage.TabIndex = 0;
             this.buildingsTabPage.Text = "Buildings";
@@ -3303,7 +3303,6 @@
             this.groupBox33.Controls.Add(this.yRotBuildUpDown);
             this.groupBox33.Controls.Add(this.xRotBuildUpDown);
             this.groupBox33.Controls.Add(this.zRotBuildUpDown);
-            this.groupBox33.Enabled = false;
             this.groupBox33.Location = new System.Drawing.Point(339, 141);
             this.groupBox33.Name = "groupBox33";
             this.groupBox33.Size = new System.Drawing.Size(131, 123);
@@ -3832,7 +3831,7 @@
             this.permissionsTabPage.Controls.Add(this.exportMovButton);
             this.permissionsTabPage.Location = new System.Drawing.Point(4, 22);
             this.permissionsTabPage.Name = "permissionsTabPage";
-            this.permissionsTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.permissionsTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.permissionsTabPage.Size = new System.Drawing.Size(481, 450);
             this.permissionsTabPage.TabIndex = 1;
             this.permissionsTabPage.Text = "Move Permissions";
@@ -4064,7 +4063,7 @@
             this.modelTabPage.Controls.Add(this.exportMapButton);
             this.modelTabPage.Location = new System.Drawing.Point(4, 22);
             this.modelTabPage.Name = "modelTabPage";
-            this.modelTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.modelTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.modelTabPage.Size = new System.Drawing.Size(481, 450);
             this.modelTabPage.TabIndex = 2;
             this.modelTabPage.Text = "3D Model";
@@ -4075,7 +4074,7 @@
             this.glbExportButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.glbExportButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.glbExportButton.Location = new System.Drawing.Point(351, 156);
-            this.glbExportButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.glbExportButton.Margin = new System.Windows.Forms.Padding(4);
             this.glbExportButton.Name = "glbExportButton";
             this.glbExportButton.Size = new System.Drawing.Size(120, 38);
             this.glbExportButton.TabIndex = 31;
@@ -4180,7 +4179,7 @@
             this.terrainTabPage.Controls.Add(this.bdhcExportButton);
             this.terrainTabPage.Location = new System.Drawing.Point(4, 22);
             this.terrainTabPage.Name = "terrainTabPage";
-            this.terrainTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.terrainTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.terrainTabPage.Size = new System.Drawing.Size(481, 450);
             this.terrainTabPage.TabIndex = 3;
             this.terrainTabPage.Text = "Terrain Data";
@@ -4339,7 +4338,7 @@
             this.radio3D.AutoSize = true;
             this.radio3D.Checked = true;
             this.radio3D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio3D.Location = new System.Drawing.Point(-9834, -5833);
+            this.radio3D.Location = new System.Drawing.Point(-11820, -7035);
             this.radio3D.Name = "radio3D";
             this.radio3D.Size = new System.Drawing.Size(31, 23);
             this.radio3D.TabIndex = 26;
@@ -4354,7 +4353,7 @@
             this.radio2D.Appearance = System.Windows.Forms.Appearance.Button;
             this.radio2D.AutoSize = true;
             this.radio2D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio2D.Location = new System.Drawing.Point(-9834, -5809);
+            this.radio2D.Location = new System.Drawing.Point(-11820, -7011);
             this.radio2D.Name = "radio2D";
             this.radio2D.Size = new System.Drawing.Size(31, 23);
             this.radio2D.TabIndex = 25;
@@ -4369,7 +4368,7 @@
             this.wireframeCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.wireframeCheckBox.AutoSize = true;
             this.wireframeCheckBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, -5785);
+            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, -6987);
             this.wireframeCheckBox.Name = "wireframeCheckBox";
             this.wireframeCheckBox.Size = new System.Drawing.Size(31, 23);
             this.wireframeCheckBox.TabIndex = 27;
@@ -4383,7 +4382,7 @@
             this.nsbtxEditorTabPage.ImageIndex = 6;
             this.nsbtxEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.nsbtxEditorTabPage.Name = "nsbtxEditorTabPage";
-            this.nsbtxEditorTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.nsbtxEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.nsbtxEditorTabPage.Size = new System.Drawing.Size(1185, 675);
             this.nsbtxEditorTabPage.TabIndex = 6;
             this.nsbtxEditorTabPage.Text = "NSBTX Editor";
@@ -4436,7 +4435,7 @@
             this.groupBox35.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox35.Location = new System.Drawing.Point(3, 78);
             this.groupBox35.Name = "groupBox35";
-            this.groupBox35.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox35.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox35.Size = new System.Drawing.Size(79, 178);
             this.groupBox35.TabIndex = 23;
             this.groupBox35.TabStop = false;
@@ -4453,7 +4452,7 @@
             this.tableLayoutPanel38.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel38.Location = new System.Drawing.Point(4, 17);
             this.tableLayoutPanel38.Name = "tableLayoutPanel38";
-            this.tableLayoutPanel38.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel38.Padding = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel38.RowCount = 1;
             this.tableLayoutPanel38.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel38.Size = new System.Drawing.Size(71, 157);
@@ -4924,7 +4923,7 @@
             this.eventEditorTabPage.ImageIndex = 3;
             this.eventEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.eventEditorTabPage.Name = "eventEditorTabPage";
-            this.eventEditorTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.eventEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.eventEditorTabPage.Size = new System.Drawing.Size(1185, 675);
             this.eventEditorTabPage.TabIndex = 3;
             this.eventEditorTabPage.Text = "Event Editor";
@@ -5187,7 +5186,7 @@
             this.signsTabPage.Controls.Add(this.spawnablesListBox);
             this.signsTabPage.Location = new System.Drawing.Point(4, 22);
             this.signsTabPage.Name = "signsTabPage";
-            this.signsTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.signsTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.signsTabPage.Size = new System.Drawing.Size(444, 352);
             this.signsTabPage.TabIndex = 0;
             this.signsTabPage.Text = "Spawnables";
@@ -5479,7 +5478,7 @@
             this.overworldsTabPage.Controls.Add(this.overworldsListBox);
             this.overworldsTabPage.Location = new System.Drawing.Point(4, 22);
             this.overworldsTabPage.Name = "overworldsTabPage";
-            this.overworldsTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.overworldsTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.overworldsTabPage.Size = new System.Drawing.Size(444, 352);
             this.overworldsTabPage.TabIndex = 1;
             this.overworldsTabPage.Text = "Overworlds";
@@ -6094,7 +6093,7 @@
             this.warpsTabPage.Controls.Add(this.warpsListBox);
             this.warpsTabPage.Location = new System.Drawing.Point(4, 22);
             this.warpsTabPage.Name = "warpsTabPage";
-            this.warpsTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.warpsTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.warpsTabPage.Size = new System.Drawing.Size(444, 352);
             this.warpsTabPage.TabIndex = 2;
             this.warpsTabPage.Text = "Warps";
@@ -6404,7 +6403,7 @@
             this.triggersTabPage.Controls.Add(this.triggersListBox);
             this.triggersTabPage.Location = new System.Drawing.Point(4, 22);
             this.triggersTabPage.Name = "triggersTabPage";
-            this.triggersTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.triggersTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.triggersTabPage.Size = new System.Drawing.Size(444, 352);
             this.triggersTabPage.TabIndex = 3;
             this.triggersTabPage.Text = "Triggers";
@@ -6956,7 +6955,7 @@
             this.textEditorTabPage.ImageIndex = 4;
             this.textEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.textEditorTabPage.Name = "textEditorTabPage";
-            this.textEditorTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.textEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.textEditorTabPage.Size = new System.Drawing.Size(1185, 675);
             this.textEditorTabPage.TabIndex = 5;
             this.textEditorTabPage.Text = "Text Editor";
@@ -9595,7 +9594,7 @@
             this.tableEditorTabPage.ImageIndex = 9;
             this.tableEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.tableEditorTabPage.Name = "tableEditorTabPage";
-            this.tableEditorTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tableEditorTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.tableEditorTabPage.Size = new System.Drawing.Size(1185, 675);
             this.tableEditorTabPage.TabIndex = 9;
             this.tableEditorTabPage.Text = "Table Editor";
@@ -10073,7 +10072,7 @@
             this.tabPageScriptEditor.ImageIndex = 5;
             this.tabPageScriptEditor.Location = new System.Drawing.Point(4, 23);
             this.tabPageScriptEditor.Name = "tabPageScriptEditor";
-            this.tabPageScriptEditor.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPageScriptEditor.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageScriptEditor.Size = new System.Drawing.Size(1185, 675);
             this.tabPageScriptEditor.TabIndex = 10;
             this.tabPageScriptEditor.Text = "Script Editor New";
@@ -10082,7 +10081,7 @@
             // scriptEditor
             // 
             this.scriptEditor.Location = new System.Drawing.Point(2, 3);
-            this.scriptEditor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.scriptEditor.Margin = new System.Windows.Forms.Padding(4);
             this.scriptEditor.Name = "scriptEditor";
             this.scriptEditor.scriptEditorIsReady = false;
             this.scriptEditor.Size = new System.Drawing.Size(1177, 735);
@@ -10093,7 +10092,7 @@
             this.tabPageLevelScriptEditor.Controls.Add(this.levelScriptEditor);
             this.tabPageLevelScriptEditor.Location = new System.Drawing.Point(4, 23);
             this.tabPageLevelScriptEditor.Name = "tabPageLevelScriptEditor";
-            this.tabPageLevelScriptEditor.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPageLevelScriptEditor.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageLevelScriptEditor.Size = new System.Drawing.Size(1185, 675);
             this.tabPageLevelScriptEditor.TabIndex = 11;
             this.tabPageLevelScriptEditor.Text = "Level Script Editor";
@@ -10104,7 +10103,7 @@
             this.levelScriptEditor.BackColor = System.Drawing.SystemColors.Control;
             this.levelScriptEditor.levelScriptEditorIsReady = false;
             this.levelScriptEditor.Location = new System.Drawing.Point(6, 8);
-            this.levelScriptEditor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.levelScriptEditor.Margin = new System.Windows.Forms.Padding(4);
             this.levelScriptEditor.Name = "levelScriptEditor";
             this.levelScriptEditor.Size = new System.Drawing.Size(408, 622);
             this.levelScriptEditor.TabIndex = 0;
@@ -10114,7 +10113,7 @@
             this.tabPageEncountersEditor.Controls.Add(this.encountersEditor);
             this.tabPageEncountersEditor.Location = new System.Drawing.Point(4, 23);
             this.tabPageEncountersEditor.Name = "tabPageEncountersEditor";
-            this.tabPageEncountersEditor.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPageEncountersEditor.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageEncountersEditor.Size = new System.Drawing.Size(1185, 675);
             this.tabPageEncountersEditor.TabIndex = 12;
             this.tabPageEncountersEditor.Text = "Encounters";
@@ -10123,7 +10122,7 @@
             // encountersEditor
             // 
             this.encountersEditor.Location = new System.Drawing.Point(6, 3);
-            this.encountersEditor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.encountersEditor.Margin = new System.Windows.Forms.Padding(4);
             this.encountersEditor.Name = "encountersEditor";
             this.encountersEditor.Size = new System.Drawing.Size(1176, 672);
             this.encountersEditor.TabIndex = 0;

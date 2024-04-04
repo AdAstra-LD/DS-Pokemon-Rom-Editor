@@ -3762,11 +3762,13 @@ namespace DSPRE {
         private void addBuildingButton_Click(object sender, EventArgs e) {
             AddBuildingToMap(new Building());
         }
+        
         private void duplicateBuildingButton_Click(object sender, EventArgs e) {
             if (buildingsListBox.SelectedIndex > -1) {
                 AddBuildingToMap(new Building(currentMapFile.buildings[buildingsListBox.SelectedIndex]));
             }
         }
+        
         private void AddBuildingToMap(Building b) {
             currentMapFile.buildings.Add(b);
 
@@ -3782,6 +3784,7 @@ namespace DSPRE {
             /* Redraw scene with new building */
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
+        
         private void buildIndexComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (Helpers.HandlersDisabled || buildingsListBox.SelectedIndex < 0) {
                 return;
@@ -3797,6 +3800,7 @@ namespace DSPRE {
 
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
+        
         private void buildingsListBox_SelectedIndexChanged(object sender, EventArgs e) {
             int buildingNumber = buildingsListBox.SelectedIndex;
             if (Helpers.HandlersDisabled || buildingNumber < 0) {
@@ -3828,6 +3832,7 @@ namespace DSPRE {
 
             Helpers.RestoreDisableHandler();
         }
+        
         private void xRotBuildUpDown_ValueChanged(object sender, EventArgs e) {
             int selection = buildingsListBox.SelectedIndex;
 
@@ -3908,24 +3913,28 @@ namespace DSPRE {
 
             Helpers.EnableHandlers();
         }
+        
         private void buildingHeightUpDown_ValueChanged(object sender, EventArgs e) {
             if (buildingsListBox.SelectedIndex > -1) {
                 currentMapFile.buildings[buildingsListBox.SelectedIndex].height = (uint)buildingHeightUpDown.Value;
                 RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             }
         }
+        
         private void buildingLengthUpDown_ValueChanged(object sender, EventArgs e) {
             if (buildingsListBox.SelectedIndex > -1) {
                 currentMapFile.buildings[buildingsListBox.SelectedIndex].length = (uint)buildingLengthUpDown.Value;
                 RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             }
         }
+        
         private void buildingWidthUpDown_ValueChanged(object sender, EventArgs e) {
             if (buildingsListBox.SelectedIndex > -1) {
                 currentMapFile.buildings[buildingsListBox.SelectedIndex].width = (uint)buildingWidthUpDown.Value;
                 RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             }
         }
+        
         private void exportBuildingsButton_Click(object sender, EventArgs e) {
             SaveFileDialog sf = new SaveFileDialog {
                 Filter = MapFile.BuildingsFilter,
@@ -3939,6 +3948,7 @@ namespace DSPRE {
 
             MessageBox.Show("Buildings exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        
         private void importBuildingsButton_Click(object sender, EventArgs e) {
             OpenFileDialog ib = new OpenFileDialog {
                 Filter = MapFile.BuildingsFilter
@@ -3959,6 +3969,7 @@ namespace DSPRE {
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             MessageBox.Show("Buildings imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        
         private void interiorRadioButton_CheckedChanged(object sender, EventArgs e) {
             Helpers.DisableHandlers();
             int index = buildIndexComboBox.SelectedIndex;
@@ -3985,6 +3996,7 @@ namespace DSPRE {
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             Helpers.EnableHandlers();
         }
+        
         private void removeBuildingButton_Click(object sender, EventArgs e) {
             int toRemoveListBoxID = buildingsListBox.SelectedIndex;
             if (toRemoveListBoxID > -1) {
@@ -4009,6 +4021,7 @@ namespace DSPRE {
                 }
             }
         }
+        
         private void xBuildUpDown_ValueChanged(object sender, EventArgs e) {
             if (Helpers.HandlersDisabled || buildingsListBox.SelectedIndex < 0) {
                 return;
@@ -4026,6 +4039,7 @@ namespace DSPRE {
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xFraction = (ushort)(decPart * 65535);
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
+        
         private void zBuildUpDown_ValueChanged(object sender, EventArgs e) {
             if (Helpers.HandlersDisabled || buildingsListBox.SelectedIndex < 0)
                 return;
@@ -4042,6 +4056,7 @@ namespace DSPRE {
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zFraction = (ushort)(decPart * 65535);
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
+        
         private void yBuildUpDown_ValueChanged(object sender, EventArgs e) {
             if (Helpers.HandlersDisabled || buildingsListBox.SelectedIndex < 0)
                 return;
@@ -4658,6 +4673,7 @@ namespace DSPRE {
 
         #region 3D Model Editor
         public const ushort MAPMODEL_CRITICALSIZE = 61000;
+        
         private void importMapButton_Click(object sender, EventArgs e) {
             OpenFileDialog im = new OpenFileDialog {
                 Filter = MapFile.NSBMDFilter
@@ -4687,6 +4703,7 @@ namespace DSPRE {
             }
             MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        
         private void exportMapButton_Click(object sender, EventArgs e) {
             SaveFileDialog em = new SaveFileDialog {
                 FileName = selectMapComboBox.SelectedItem.ToString()
