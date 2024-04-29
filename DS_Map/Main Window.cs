@@ -105,7 +105,7 @@ namespace DSPRE {
                     currentTrainerName = TrainerFile.NAME_NOT_FOUND;
                 }
 
-                trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[classMessageID] + " " + currentTrainerName);
+                trainerList.Add(currentTrainerName + " - " + trainerClasses.messages[classMessageID] + " [" + i.ToString("D2") + "] ");
 
             }
             return trainerList.ToArray();
@@ -692,6 +692,10 @@ namespace DSPRE {
             monEditorToolStripMenuItem.Enabled = true;
 
             scriptCommandsButton.Enabled = true;
+            if(RomInfo.gameFamily == RomInfo.GameFamilies.Plat || RomInfo.gameFamily == RomInfo.GameFamilies.DP)
+            {
+                EditorPanels.tabPageEncountersEditor.Hide();
+            }
             Helpers.statusLabelMessage();
             this.Text += "  -  " + RomInfo.fileName;
         }
