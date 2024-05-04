@@ -692,6 +692,9 @@ namespace DSPRE {
             monEditorToolStripMenuItem.Enabled = true;
 
             scriptCommandsButton.Enabled = true;
+            if (!RomInfo.gameFamily.Equals(GameFamilies.HGSS)) {
+                mainTabControl.TabPages.Remove(tabPageEncountersEditor);
+            }
             Helpers.statusLabelMessage();
             this.Text += "  -  " + RomInfo.fileName;
         }

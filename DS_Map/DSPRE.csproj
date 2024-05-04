@@ -179,6 +179,12 @@
     <Compile Include="LearnsetEditor.designer.cs">
       <DependentUpon>LearnsetEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="MoveEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MoveEditor.Designer.cs">
+      <DependentUpon>MoveEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="PersonalDataEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -232,6 +238,7 @@
     <Compile Include="ROMFiles\LevelScriptFile.cs" />
     <Compile Include="ROMFiles\LevelScriptTrigger.cs" />
     <Compile Include="ROMFiles\MapScreenLoadTrigger.cs" />
+    <Compile Include="ROMFiles\MoveFile.cs" />
     <Compile Include="ROMFiles\PokemonPersonalData.cs" />
     <Compile Include="ROMFiles\RomFile.cs" />
     <Compile Include="ROMFiles\SafariZoneEncounter.cs" />
