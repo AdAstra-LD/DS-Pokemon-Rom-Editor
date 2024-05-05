@@ -136,8 +136,8 @@
     <Compile Include="LearnsetEditor.designer.cs">
       <DependentUpon>LearnsetEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="NSBUtils.cs" />
-    <Compile Include="OverlayUtils.cs" />
+    <Compile Include="DSUtils\NSBUtils.cs" />
+    <Compile Include="DSUtils\OverlayUtils.cs" />
     <Compile Include="PersonalDataEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,7 +152,7 @@
     <Compile Include="Resources\ROMToolboxDB\ToolboxDB.cs" />
     <Compile Include="Resources\ScriptDatabase.cs" />
     <Compile Include="ROMFiles\AreaData.cs" />
-    <Compile Include="DSUtils.cs" />
+    <Compile Include="DSUtils\DSUtils.cs" />
     <Compile Include="Resources\CommandsDatabase.cs">
       <SubType>Form</SubType>
     </Compile>
