@@ -153,12 +153,12 @@ namespace DSPRE {
             ARM9PatchData data = new ARM9PatchData();
 
             byte[] branchCode = DSUtils.HexStringToByteArray(data.branchString);
-            byte[] branchCodeRead = DSUtils.ARM9.ReadBytes(data.branchOffset, data.branchString.Length / 3 + 1); //Read branchCode
+            byte[] branchCodeRead = ARM9.ReadBytes(data.branchOffset, data.branchString.Length / 3 + 1); //Read branchCode
             if (branchCodeRead.Length != branchCode.Length || !branchCodeRead.SequenceEqual(branchCode))
                 return false;
 
             byte[] initCode = DSUtils.HexStringToByteArray(data.initString);
-            byte[] initCodeRead = DSUtils.ARM9.ReadBytes(data.initOffset, data.initString.Length / 3 + 1); //Read initCode
+            byte[] initCodeRead = ARM9.ReadBytes(data.initOffset, data.initString.Length / 3 + 1); //Read initCode
             if (initCodeRead.Length != initCode.Length || !initCodeRead.SequenceEqual(initCode))
                 return false;
 
@@ -168,7 +168,7 @@ namespace DSPRE {
             BDHCAMPatchData data = new BDHCAMPatchData();
 
             byte[] branchCode = DSUtils.HexStringToByteArray(data.branchString);
-            byte[] branchCodeRead = DSUtils.ARM9.ReadBytes(data.branchOffset, branchCode.Length);
+            byte[] branchCodeRead = ARM9.ReadBytes(data.branchOffset, branchCode.Length);
 
             if (branchCode.Length != branchCodeRead.Length || !branchCode.SequenceEqual(branchCodeRead)) {
                 return false;
@@ -203,7 +203,7 @@ namespace DSPRE {
                         languageOffset = +8;
                     }
 
-                    byte[] read = DSUtils.ARM9.ReadBytes((uint)(offset - DSUtils.ARM9.address + languageOffset), kv.Value.Length / 3 + 1);
+                    byte[] read = ARM9.ReadBytes((uint)(offset - ARM9.address + languageOffset), kv.Value.Length / 3 + 1);
                     byte[] code = DSUtils.HexStringToByteArray(kv.Value);
                     if (read.Length != code.Length || !read.SequenceEqual(code))
                         return false;
@@ -291,7 +291,7 @@ namespace DSPRE {
 
         public static bool CheckFilesDynamicHeadersPatchApplied() {
             DynamicHeadersPatchData data = new DynamicHeadersPatchData();
-            ushort initValue = BitConverter.ToUInt16(DSUtils.ARM9.ReadBytes(data.initOffset, 0x2), 0);
+            ushort initValue = BitConverter.ToUInt16(ARM9.ReadBytes(data.initOffset, 0x2), 0);
             return initValue == 0xB500;
         }
 
@@ -391,7 +391,7 @@ namespace DSPRE {
                 File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + backupSuffix, overwrite: true);
 
                 try {
-                    DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.branchString), data.branchOffset); //Write new branchOffset
+                    ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.branchString), data.branchOffset); //Write new branchOffset
 
                     /* Write to overlayfile */
                     string overlayFilePath = DSUtils.GetOverlayPath(data.overlayNumber);
@@ -575,8 +575,8 @@ namespace DSPRE {
                 File.Copy(RomInfo.arm9Path, RomInfo.arm9Path + backupSuffix, overwrite: true);
 
                 try {
-                    DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.branchString), data.branchOffset); //Write new branchOffset
-                    DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.initString), data.initOffset); //Write new initOffset
+                    ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.branchString), data.branchOffset); //Write new branchOffset
+                    ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.initString), data.initOffset); //Write new initOffset
 
                     string fullFilePath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + expandedARMfileID.ToString("D4");
                     File.Delete(fullFilePath);
@@ -623,7 +623,7 @@ namespace DSPRE {
                     listOfChanges += "s";
 
                 for (int i = 0; i < kv.Key.Length; i++) {
-                    listOfChanges += " 0x" + (kv.Key[i] - DSUtils.ARM9.address + languageOffset).ToString("X");
+                    listOfChanges += " 0x" + (kv.Key[i] - ARM9.address + languageOffset).ToString("X");
 
                     if (i < kv.Key.Length - 1)
                         listOfChanges += ",";
@@ -641,7 +641,7 @@ namespace DSPRE {
                 try {
                     foreach (KeyValuePair<uint[], string> kv in ToolboxDB.matrixExpansionDB) {
                         foreach (uint offset in kv.Key) {
-                            DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(kv.Value), (uint)(offset - DSUtils.ARM9.address + languageOffset));
+                            ARM9.WriteBytes(DSUtils.HexStringToByteArray(kv.Value), (uint)(offset - ARM9.address + languageOffset));
                         }
                     }
                 } catch {
@@ -722,7 +722,7 @@ namespace DSPRE {
                      DE F7 3D F9	    bl 0x02017E6C	@Free_Memory
                      */
 
-                    DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.initString), data.initOffset);
+                    ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.initString), data.initOffset);
 
                     /* - Neutralize instances of (HeaderID * 0x18) so the base offset which the data is read from is always 0x0:
                            
@@ -744,18 +744,18 @@ namespace DSPRE {
                      */
 
                     foreach (Tuple<uint, uint> reference in DynamicHeadersPatchData.dynamicHeadersPointersDB[RomInfo.gameFamily]) {
-                        DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.REFERENCE_STRING), (uint)(reference.Item1 + data.pointerDiff));
-                        uint pointerValue = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes((uint)(reference.Item2 + data.pointerDiff), 4), 0) - RomInfo.headerTableOffset - DSUtils.ARM9.address;
-                        DSUtils.ARM9.WriteBytes(BitConverter.GetBytes(pointerValue), (uint)(reference.Item2 + data.pointerDiff));
+                        ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.REFERENCE_STRING), (uint)(reference.Item1 + data.pointerDiff));
+                        uint pointerValue = BitConverter.ToUInt32(ARM9.ReadBytes((uint)(reference.Item2 + data.pointerDiff), 4), 0) - RomInfo.headerTableOffset - ARM9.address;
+                        ARM9.WriteBytes(BitConverter.GetBytes(pointerValue), (uint)(reference.Item2 + data.pointerDiff));
                     }
 
                     if (specialCase) {
                         /*  Special case: at 0x3B522 (non-JAP and non-Spanish HG offset) there is an instruction 
                             between the (mov r1, #0x18) and (mul r1, r0) commands, so we must handle this separately */
 
-                        DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.specialCaseData1), (uint)(data.specialCaseOffset1 + data.pointerDiff));
-                        DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.specialCaseData2), (uint)(data.specialCaseOffset2 + data.pointerDiff));
-                        DSUtils.ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.specialCaseData3), (uint)(data.specialCaseOffset3 + data.pointerDiff));
+                        ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.specialCaseData1), (uint)(data.specialCaseOffset1 + data.pointerDiff));
+                        ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.specialCaseData2), (uint)(data.specialCaseOffset2 + data.pointerDiff));
+                        ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.specialCaseData3), (uint)(data.specialCaseOffset3 + data.pointerDiff));
                     }
 
                     // Clear the dynamic headers directory in 'unpacked'
@@ -828,7 +828,7 @@ namespace DSPRE {
 
             if (d == DialogResult.Yes) {
                 try {
-                    using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer(RomInfo.trainerNameLenOffset)) {
+                    using (ARM9.Writer wr = new ARM9.Writer(RomInfo.trainerNameLenOffset)) {
                         wr.Write((byte)PatchToolboxDialog.expandedTrainerNameLength);
                     }
 
@@ -872,7 +872,7 @@ namespace DSPRE {
         private int GetCommandTableOffset() { // Checks if command table is repointed IN THE EXPANDED ARM9 FILE, returns pointer inside this file
             ResourceManager customcmdDB = new ResourceManager("DSPRE.Resources.ROMToolboxDB.CustomScrCmdDB", Assembly.GetExecutingAssembly());
             int pointerOffset = int.Parse(customcmdDB.GetString("pointerOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage));
-            using (DSUtils.ARM9.Reader r = new DSUtils.ARM9.Reader(pointerOffset)) {
+            using (ARM9.Reader r = new ARM9.Reader(pointerOffset)) {
                 uint cmdTable = r.ReadUInt32();
                 uint offset = cmdTable - synthOverlayLoadAddress;
 
@@ -898,7 +898,7 @@ namespace DSPRE {
 
             arm9FileStream.Close();
 
-            using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer()) { // Change both the pointer and the limit
+            using (ARM9.Writer wr = new ARM9.Writer()) { // Change both the pointer and the limit
                 wr.BaseStream.Position = int.Parse(customcmdDB.GetString("pointerOffset" + "_" + RomInfo.gameVersion + "_" + RomInfo.gameLanguage));
                 wr.Write((uint)0x023C8200);
 

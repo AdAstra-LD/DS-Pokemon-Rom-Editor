@@ -684,34 +684,34 @@ namespace DSPRE {
                 case gFamEnum.DP:
                     switch (gameLanguage) {
                         case gLangEnum.English:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B838, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x6B838, 4), 0);
                             break;
                         case gLangEnum.Italian:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B874, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x6B874, 4), 0);
                             break;
                         case gLangEnum.German:
                         case gLangEnum.French:
                         case gLangEnum.Spanish:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B894, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x6B894, 4), 0);
                             break;
                         case gLangEnum.Japanese:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6FDEC, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x6FDEC, 4), 0);
                             break;
                     }
                     break;
                 case gFamEnum.Plat:
                     switch (gameLanguage) {
                         case gLangEnum.English:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x79F80, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x79F80, 4), 0);
                             break;
                         case gLangEnum.Italian:
                         case gLangEnum.German:
                         case gLangEnum.French:
                         case gLangEnum.Spanish:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x7A020, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x7A020, 4), 0);
                             break;
                         case gLangEnum.Japanese:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x79858, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x79858, 4), 0);
                             break;
                     }
                     break;
@@ -720,25 +720,25 @@ namespace DSPRE {
                     switch (gameLanguage) {
                         case gLangEnum.English:
                         case gLangEnum.Italian:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x74408, 4), 0);
                             break;
                         case gLangEnum.German:
                             if (gameVersion == gVerEnum.HeartGold) {
-                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
+                                monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x74408, 4), 0);
                             } else {
-                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74400, 4), 0);
+                                monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x74400, 4), 0);
                             }
                             break;
                         case gLangEnum.French:
                         case gLangEnum.Spanish:
                             if (gameVersion == gVerEnum.HeartGold) {
-                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74400, 4), 0);
+                                monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x74400, 4), 0);
                             } else {
-                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
+                                monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x74408, 4), 0);
                             }
                             break;
                         case gLangEnum.Japanese:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x73EA0, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x73EA0, 4), 0);
                             break;
                     }
                     break;
@@ -950,7 +950,7 @@ namespace DSPRE {
             if(trainerNameLenOffset < 0) {
                 trainerNameMaxLen = TrainerFile.defaultNameLen;
             } else {
-                using (DSUtils.ARM9.Reader ar = new DSUtils.ARM9.Reader(trainerNameLenOffset)) {
+                using (ARM9.Reader ar = new ARM9.Reader(trainerNameLenOffset)) {
                     trainerNameMaxLen = ar.ReadByte();
                 }
             }
