@@ -30,58 +30,6 @@ namespace DSPRE {
                 this.BaseStream.SetLength(this.BaseStream.Length + increment);
             }
         }
-        public static class ARM9 {
-            public static readonly uint address = 0x02000000;
-            public class Reader : EasyReader {
-                public Reader(long pos = 0) : base(arm9Path, pos) {
-                    this.BaseStream.Position = pos;
-                }
-            }
-            public class Writer : EasyWriter {
-                public Writer(long pos = 0) : base(arm9Path, pos) {
-                    this.BaseStream.Position = pos;
-                }
-            }
-            public static void EditSize(int increment) {
-                using (Writer w = new Writer()) {
-                    w.EditSize(increment);
-                }
-            }
-            public static bool Decompress(string path) {
-                Process decompress = CreateDecompressProcess(path);
-                decompress.Start();
-                decompress.WaitForExit();
-
-                return new FileInfo(RomInfo.arm9Path).Length > 0xBC000;
-            }
-
-            public static bool Compress(string path) {
-                Process compress = new Process();
-                compress.StartInfo.FileName = @"Tools\blz.exe";
-                compress.StartInfo.Arguments = @" -en9 " + '"' + path + '"';
-                compress.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                compress.StartInfo.CreateNoWindow = true;
-                compress.Start();
-                compress.WaitForExit();
-
-                return new FileInfo(RomInfo.arm9Path).Length <= 0xBC000;
-            }
-            public static bool CheckCompressionMark() {
-                return BitConverter.ToInt32(DSUtils.ARM9.ReadBytes((uint)(RomInfo.gameFamily == gFamEnum.DP ? 0xB7C : 0xBB4), 4), 0) != 0;
-            }
-            public static byte[] ReadBytes(uint startOffset, long numberOfBytes = 0) {
-                return ReadFromFile(RomInfo.arm9Path, startOffset, numberOfBytes);
-            }
-            public static void WriteBytes(byte[] bytesToWrite, uint destOffset, int indexFirstByteToWrite = 0, int? indexLastByteToWrite = null) {
-                WriteToFile(RomInfo.arm9Path, bytesToWrite, destOffset, indexFirstByteToWrite, indexLastByteToWrite);
-            }
-            public static byte ReadByte(uint startOffset) {
-                return ReadFromFile(RomInfo.arm9Path, startOffset, 1)[0];
-            }
-            public static void WriteByte(byte value, uint destOffset) {
-                WriteToFile(RomInfo.arm9Path, BitConverter.GetBytes(value), destOffset, 0);
-            }
-        }
 
         public const int NSBMD_DOESNTHAVE_TEXTURE = 0;
         public const int NSBMD_HAS_TEXTURE = 1;
@@ -324,7 +272,7 @@ namespace DSPRE {
             return compress.ExitCode;
         }
         public static string GetOverlayPath(int overlayNumber) {
-            return RomInfo.workDir + "overlay" + "\\" + "overlay_" + overlayNumber.ToString("D4") + ".bin";
+            return $"{workDir}overlay\\overlay_{overlayNumber:D4}.bin";
         }
         public static void RestoreOverlayFromCompressedBackup(int overlayNumber, bool eventEditorIsReady) {
             String overlayFilePath = GetOverlayPath(overlayNumber);
