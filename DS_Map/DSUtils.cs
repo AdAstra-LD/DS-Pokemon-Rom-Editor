@@ -271,11 +271,9 @@ namespace DSPRE {
             }
             return buffer;
         }
-        public static int DecompressOverlay(int overlayNumber, bool makeBackup = true) {
-            string overlayFilePath = GetOverlayPath(overlayNumber);
-
+        public static int DecompressOverlay(string overlayFilePath, bool makeBackup = true) {
             if (!File.Exists(overlayFilePath)) {
-                MessageBox.Show("Overlay to decompress #" + overlayNumber + " doesn't exist",
+                MessageBox.Show($"File to decompress \"{overlayFilePath}\" doesn't exist",
                     "Overlay not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return ERR_OVERLAY_NOTFOUND;
             }
@@ -291,6 +289,9 @@ namespace DSPRE {
             decompress.Start();
             decompress.WaitForExit();
             return decompress.ExitCode;
+        }
+        public static int DecompressOverlay(int overlayNumber, bool makeBackup = true) {
+            return DecompressOverlay(GetOverlayPath(overlayNumber), makeBackup);
         }
 
         public static Process CreateDecompressProcess(string path) {
