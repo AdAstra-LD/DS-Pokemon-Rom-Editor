@@ -355,7 +355,7 @@ namespace DSPRE {
             }
 
             byte[] modelFile = DSUtils.ReadFromFile(of.FileName);
-            if (DSUtils.CheckNSBMDHeader(modelFile) == DSUtils.NSBMD_DOESNTHAVE_TEXTURE) {
+            if (NSBUtils.CheckNSBMDHeader(modelFile) == NSBUtils.NSBMD_DOESNTHAVE_TEXTURE) {
                 MessageBox.Show("This NSBMD file is untextured.", "No textures to extract", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -370,7 +370,7 @@ namespace DSPRE {
                 return;
             }
 
-            DSUtils.WriteToFile(texSf.FileName, DSUtils.GetTexturesFromTexturedNSBMD(modelFile));
+            DSUtils.WriteToFile(texSf.FileName, NSBUtils.GetTexturesFromTexturedNSBMD(modelFile));
             MessageBox.Show("The textures of " + of.FileName + " have been extracted and saved.", "Textures saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -384,7 +384,7 @@ namespace DSPRE {
             }
 
             byte[] modelFile = DSUtils.ReadFromFile(of.FileName);
-            if (DSUtils.CheckNSBMDHeader(modelFile) == DSUtils.NSBMD_DOESNTHAVE_TEXTURE) {
+            if (NSBUtils.CheckNSBMDHeader(modelFile) == NSBUtils.NSBMD_DOESNTHAVE_TEXTURE) {
                 MessageBox.Show("This NSBMD file is already untextured.", "No textures to remove", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -400,7 +400,7 @@ namespace DSPRE {
                 };
 
                 if (texSf.ShowDialog() == DialogResult.OK) {
-                    DSUtils.WriteToFile(texSf.FileName, DSUtils.GetTexturesFromTexturedNSBMD(modelFile));
+                    DSUtils.WriteToFile(texSf.FileName, NSBUtils.GetTexturesFromTexturedNSBMD(modelFile));
                     extramsg = " exported and";
                 }
             }
@@ -415,7 +415,7 @@ namespace DSPRE {
                 return;
             }
 
-            DSUtils.WriteToFile(sf.FileName, DSUtils.GetModelWithoutTextures(modelFile));
+            DSUtils.WriteToFile(sf.FileName, NSBUtils.GetModelWithoutTextures(modelFile));
             MessageBox.Show("Textures correctly" + extramsg + " removed!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void nsbmdAddTexButton_Click(object sender, EventArgs e) {
@@ -426,7 +426,7 @@ namespace DSPRE {
                 return;
 
             byte[] modelFile = File.ReadAllBytes(of.FileName);
-            if (DSUtils.CheckNSBMDHeader(modelFile) == DSUtils.NSBMD_HAS_TEXTURE) {
+            if (NSBUtils.CheckNSBMDHeader(modelFile) == NSBUtils.NSBMD_HAS_TEXTURE) {
                 DialogResult d = MessageBox.Show("This NSBMD file is already textured.\nDo you want to overwrite its textures?", "Textures found", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (d.Equals(DialogResult.No)) {
                     return;
@@ -461,7 +461,7 @@ namespace DSPRE {
             if (sf.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            DSUtils.WriteToFile(sf.FileName, DSUtils.BuildNSBMDwithTextures(modelFile, textureFile), fmode: FileMode.Create);
+            DSUtils.WriteToFile(sf.FileName, NSBUtils.BuildNSBMDwithTextures(modelFile, textureFile), fmode: FileMode.Create);
             MessageBox.Show("Textures correctly written to NSBMD file.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void OpenCommandsDatabase(Dictionary<ushort, string> namesDict, Dictionary<ushort, byte[]> paramsDict, Dictionary<ushort, string> actionsDict,
@@ -730,19 +730,19 @@ namespace DSPRE {
 
             statusLabelMessage("Repacking ROM...");
 
-            if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
+            if (OverlayUtils.OverlayTable.IsDefaultCompressed(1)) {
                 if (PatchToolboxDialog.overlay1MustBeRestoredFromBackup) {
-                    DSUtils.RestoreOverlayFromCompressedBackup(1, eventEditorIsReady);
+                    OverlayUtils.RestoreFromCompressedBackup(1, eventEditorIsReady);
                 } else {
-                    if (!DSUtils.OverlayIsCompressed(1)) {
-                        DSUtils.CompressOverlay(1);
+                    if (!OverlayUtils.IsCompressed(1)) {
+                        OverlayUtils.Compress(1);
                     }
                 }
             }
 
-            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.initialMoneyOverlayNumber)) {
-                if (!DSUtils.OverlayIsCompressed(RomInfo.initialMoneyOverlayNumber)) {
-                    DSUtils.CompressOverlay(RomInfo.initialMoneyOverlayNumber);
+            if (OverlayUtils.OverlayTable.IsDefaultCompressed(RomInfo.initialMoneyOverlayNumber)) {
+                if (!OverlayUtils.IsCompressed(RomInfo.initialMoneyOverlayNumber)) {
+                    OverlayUtils.Compress(RomInfo.initialMoneyOverlayNumber);
                 }
             }
 
@@ -753,8 +753,8 @@ namespace DSPRE {
 
             if (RomInfo.gameFamily != gFamEnum.DP && RomInfo.gameFamily != gFamEnum.Plat) {
                 if (eventEditorIsReady) {
-                    if (DSUtils.OverlayIsCompressed(1)) {
-                        DSUtils.DecompressOverlay(1);
+                    if (OverlayUtils.IsCompressed(1)) {
+                        OverlayUtils.Decompress(1);
                     }
                 }
             }
@@ -3237,7 +3237,7 @@ namespace DSPRE {
                     };
 
                     reader.BaseStream.Position += 0x14;
-                    selectMapComboBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + DSUtils.ReadNSBMDname(reader));
+                    selectMapComboBox.Items.Add(i.ToString("D3") + MapHeader.nameSeparator + NSBUtils.ReadNSBMDname(reader));
                 }
 
             }
@@ -4681,7 +4681,7 @@ namespace DSPRE {
 
                 string texturePath = RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4");
                 byte[] texturesToEmbed = File.ReadAllBytes(texturePath);
-                modelToWrite = DSUtils.BuildNSBMDwithTextures(currentMapFile.mapModelData, texturesToEmbed);
+                modelToWrite = NSBUtils.BuildNSBMDwithTextures(currentMapFile.mapModelData, texturesToEmbed);
             } else { /* Untextured NSBMD file */
                 em.Filter = MapFile.UntexturedNSBMDFilter;
                 if (em.ShowDialog(this) != DialogResult.OK) {
@@ -5315,9 +5315,9 @@ namespace DSPRE {
                         break;
                     default:
                         // HGSS Overlay 1 must be decompressed in order to read the overworld table
-                        if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
-                            if (DSUtils.OverlayIsCompressed(1)) {
-                                if (DSUtils.DecompressOverlay(1) < 0) {
+                        if (OverlayUtils.OverlayTable.IsDefaultCompressed(1)) {
+                            if (OverlayUtils.IsCompressed(1)) {
+                                if (OverlayUtils.Decompress(1) < 0) {
                                     MessageBox.Show("Overlay 1 couldn't be decompressed.\nOverworld sprites in the Event Editor will be " +
                                 "displayed incorrectly or not displayed at all.", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
@@ -8500,7 +8500,7 @@ namespace DSPRE {
             RomInfo.PrepareCameraData();
             cameraEditorDataGridView.Rows.Clear();
 
-            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.cameraTblOverlayNumber)) {
+            if (OverlayUtils.OverlayTable.IsDefaultCompressed(RomInfo.cameraTblOverlayNumber)) {
                 DialogResult d1 = MessageBox.Show("It is STRONGLY recommended to configure Overlay1 as uncompressed before proceeding.\n\n" +
                         "More details in the following dialog.\n\n" + "Do you want to know more?",
                         "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -8513,15 +8513,15 @@ namespace DSPRE {
                             "If you change your mind, you can apply it later by accessing the Patch Toolbox.",
                             "Caution", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    if (DSUtils.OverlayIsCompressed(RomInfo.cameraTblOverlayNumber)) {
-                        DSUtils.DecompressOverlay(RomInfo.cameraTblOverlayNumber);
+                    if (OverlayUtils.IsCompressed(RomInfo.cameraTblOverlayNumber)) {
+                        OverlayUtils.Decompress(RomInfo.cameraTblOverlayNumber);
                     }
                 }
             }
 
 
             uint[] RAMaddresses = new uint[RomInfo.cameraTblOffsetsToRAMaddress.Length];
-            string camOverlayPath = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
+            string camOverlayPath = OverlayUtils.GetPath(RomInfo.cameraTblOverlayNumber);
             using (DSUtils.EasyReader br = new DSUtils.EasyReader(camOverlayPath)) {
                 for (int i = 0; i < RomInfo.cameraTblOffsetsToRAMaddress.Length; i++) {
                     br.BaseStream.Position = RomInfo.cameraTblOffsetsToRAMaddress[i];
@@ -8538,7 +8538,7 @@ namespace DSPRE {
                 }
             }
 
-            overlayCameraTblOffset = RAMaddresses[0] - DSUtils.GetOverlayRAMAddress(RomInfo.cameraTblOverlayNumber);
+            overlayCameraTblOffset = RAMaddresses[0] - OverlayUtils.OverlayTable.GetRAMAddress(RomInfo.cameraTblOverlayNumber);
             using (DSUtils.EasyReader br = new DSUtils.EasyReader(camOverlayPath, overlayCameraTblOffset)) {
                 if (RomInfo.gameFamily == gFamEnum.HGSS) {
                     currentCameraTable = new GameCamera[17];
@@ -8568,7 +8568,7 @@ namespace DSPRE {
             }
         }
         private void saveCameraTableButton_Click(object sender, EventArgs e) {
-            SaveCameraTable(DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber), overlayCameraTblOffset);
+            SaveCameraTable(OverlayUtils.GetPath(RomInfo.cameraTblOverlayNumber), overlayCameraTblOffset);
         }
         private void cameraEditorDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e) {
             currentCameraTable[e.RowIndex][e.ColumnIndex] = cameraEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;

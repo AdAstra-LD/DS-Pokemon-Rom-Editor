@@ -136,6 +136,8 @@
     <Compile Include="LearnsetEditor.designer.cs">
       <DependentUpon>LearnsetEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="NSBUtils.cs" />
+    <Compile Include="OverlayUtils.cs" />
     <Compile Include="PersonalDataEditor.cs">
       <SubType>Form</SubType>
     </Compile>

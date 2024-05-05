@@ -69,7 +69,7 @@ namespace DSPRE {
                     CheckDynamicHeadersPatchApplied();
                     break;
                 case gFamEnum.HGSS:
-                    if (!DSUtils.CheckOverlayHasCompressionFlag(1)) {
+                    if (!OverlayUtils.OverlayTable.IsDefaultCompressed(1)) {
                         DisableOverlay1patch("Already applied");
                         overlay1CB.Visible = true;
                     }
@@ -174,8 +174,8 @@ namespace DSPRE {
                 return false;
             }
 
-            string overlayFilePath = DSUtils.GetOverlayPath(data.overlayNumber);
-            DSUtils.DecompressOverlay(data.overlayNumber);
+            string overlayFilePath = OverlayUtils.GetPath(data.overlayNumber);
+            OverlayUtils.Decompress(data.overlayNumber);
 
             byte[] overlayCode1 = DSUtils.HexStringToByteArray(data.overlayString1);
             byte[] overlayCode1Read = DSUtils.ReadFromFile(overlayFilePath, data.overlayOffset1, overlayCode1.Length);
@@ -365,7 +365,7 @@ namespace DSPRE {
             BDHCAMPatchData data = new BDHCAMPatchData();
 
             if (RomInfo.gameFamily == gFamEnum.HGSS) {
-                if (DSUtils.CheckOverlayHasCompressionFlag(data.overlayNumber)) {
+                if (OverlayUtils.OverlayTable.IsDefaultCompressed(data.overlayNumber)) {
                     DialogResult d1 = MessageBox.Show("It is STRONGLY recommended to configure Overlay1 as uncompressed before proceeding.\n\n" +
                         "More details in the following dialog.\n\n" + "Do you want to know more?",
                         "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -394,9 +394,9 @@ namespace DSPRE {
                     ARM9.WriteBytes(DSUtils.HexStringToByteArray(data.branchString), data.branchOffset); //Write new branchOffset
 
                     /* Write to overlayfile */
-                    string overlayFilePath = DSUtils.GetOverlayPath(data.overlayNumber);
-                    if (DSUtils.OverlayIsCompressed(data.overlayNumber)) {
-                        DSUtils.DecompressOverlay(data.overlayNumber);
+                    string overlayFilePath = OverlayUtils.GetPath(data.overlayNumber);
+                    if (OverlayUtils.IsCompressed(data.overlayNumber)) {
+                        OverlayUtils.Decompress(data.overlayNumber);
                     }
 
                     DSUtils.WriteToFile(overlayFilePath, DSUtils.HexStringToByteArray(data.overlayString1), data.overlayOffset1); //Write new overlayCode1
@@ -434,7 +434,7 @@ namespace DSPRE {
             bool isCompressed = false;
             string stringDecompressOverlay = "";
 
-            if (DSUtils.OverlayIsCompressed(1)) {
+            if (OverlayUtils.IsCompressed(1)) {
                 isCompressed = true;
                 stringDecompressOverlay = "- Overlay 1 will be decompressed.\n\n";
             }
@@ -446,9 +446,9 @@ namespace DSPRE {
             "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
-                DSUtils.SetOverlayCompressionInTable(1, 0);
+                OverlayUtils.OverlayTable.SetDefaultCompressed(1, false);
                 if (isCompressed) {
-                    DSUtils.DecompressOverlay(1);
+                    OverlayUtils.Decompress(1);
                 }
 
                 MessageBox.Show("Overlay1 is now configured as uncompressed.", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -514,7 +514,7 @@ namespace DSPRE {
 
                     //Distortion world - turnback cave Griseous Orb fix
                     if (gameFamily.Equals(gFamEnum.Plat)) {
-                        string ow9path = DSUtils.GetOverlayPath(9);
+                        string ow9path = OverlayUtils.GetPath(9);
                         int ow9offs = 0x8E20 + 10;
 
                         int itemScriptID;

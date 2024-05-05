@@ -16,6 +16,12 @@ using static DSPRE.RomInfo;
 
 namespace DSPRE {
     public static class DSUtils {
+
+        public const int ERR_OVERLAY_NOTFOUND = -1;
+        public const int ERR_OVERLAY_ALREADY_UNCOMPRESSED = -2;
+
+        public const string backupSuffix = ".backup";
+
         public static readonly string NDSRomFilter = "NDS File (*.nds)|*.nds";
         public class EasyReader : BinaryReader {
             public EasyReader(string path, long pos = 0) : base(File.OpenRead(path)) {
@@ -29,28 +35,6 @@ namespace DSPRE {
             public void EditSize(int increment) {
                 this.BaseStream.SetLength(this.BaseStream.Length + increment);
             }
-        }
-
-        public const int NSBMD_DOESNTHAVE_TEXTURE = 0;
-        public const int NSBMD_HAS_TEXTURE = 1;
-
-        public const int ERR_OVERLAY_NOTFOUND = -1;
-        public const int ERR_OVERLAY_ALREADY_UNCOMPRESSED = -2;
-
-        public const string backupSuffix = ".backup";
-
-        public static string ReadNSBMDname(BinaryReader reader, long? startPos = null) {
-            if (startPos != null) {
-                reader.BaseStream.Position = (long)startPos;
-            }
-
-            if (reader.ReadUInt32() == NSBMD.NDS_TYPE_MDL0) { //MDL0
-                reader.BaseStream.Position += 0x1c;
-            } else {
-                reader.BaseStream.Position += 0x1c + 4;
-            }
-
-            return Encoding.UTF8.GetString(reader.ReadBytes(16));
         }
 
         public static void ModelToDAE(string modelName, byte[] modelData, byte[] textureData) {
@@ -82,14 +66,14 @@ namespace DSPRE {
             string tempNSBMDPath = outDir + "_temp.nsbmd";
 
             if (textureData != null && textureData.Length > 0) {
-                modelData = DSUtils.BuildNSBMDwithTextures(modelData, textureData);
+                modelData = NSBUtils.BuildNSBMDwithTextures(modelData, textureData);
             }
 
             File.WriteAllBytes(tempNSBMDPath, modelData);
 
             /* Check correct creation of temp NSBMD file*/
             if (!File.Exists(tempNSBMDPath)) {
-                MessageBox.Show("NSBMD file corresponding to this map could not be found.\nAborting", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Expected NSBMD file could not be found.\nAborting", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -147,7 +131,7 @@ namespace DSPRE {
             string tempNSBMDPath = outDir + "_temp.nsbmd";
 
             if (textureData != null && textureData.Length > 0) {
-                modelData = DSUtils.BuildNSBMDwithTextures(modelData, textureData);
+                modelData = NSBUtils.BuildNSBMDwithTextures(modelData, textureData);
             }
 
             File.WriteAllBytes(tempNSBMDPath, modelData);
@@ -219,29 +203,6 @@ namespace DSPRE {
             }
             return buffer;
         }
-        public static int DecompressOverlay(string overlayFilePath, bool makeBackup = true) {
-            if (!File.Exists(overlayFilePath)) {
-                MessageBox.Show($"File to decompress \"{overlayFilePath}\" doesn't exist",
-                    "Overlay not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return ERR_OVERLAY_NOTFOUND;
-            }
-
-            if (makeBackup) {
-                if (File.Exists(overlayFilePath + backupSuffix)) {
-                    File.Delete(overlayFilePath + backupSuffix);
-                }
-                File.Copy(overlayFilePath, overlayFilePath + backupSuffix);
-            }
-
-            Process decompress = DSUtils.CreateDecompressProcess(overlayFilePath);
-            decompress.Start();
-            decompress.WaitForExit();
-            return decompress.ExitCode;
-        }
-        public static int DecompressOverlay(int overlayNumber, bool makeBackup = true) {
-            return DecompressOverlay(GetOverlayPath(overlayNumber), makeBackup);
-        }
-
         public static Process CreateDecompressProcess(string path) {
             Process decompress = new Process();
             decompress.StartInfo.FileName = @"Tools\blz.exe";
@@ -252,87 +213,6 @@ namespace DSPRE {
 
         }
 
-        public static int CompressOverlay(int overlayNumber) {
-            string overlayFilePath = GetOverlayPath(overlayNumber);
-
-            if (!File.Exists(overlayFilePath)) {
-                MessageBox.Show("Overlay to decompress #" + overlayNumber + " doesn't exist",
-                    "Overlay not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return ERR_OVERLAY_NOTFOUND;
-            }
-
-            Process compress = new Process();
-            compress.StartInfo.FileName = @"Tools\blz.exe";
-            compress.StartInfo.Arguments = "-en " + '"' + overlayFilePath + '"';
-            Application.DoEvents();
-            compress.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            compress.StartInfo.CreateNoWindow = true;
-            compress.Start();
-            compress.WaitForExit();
-            return compress.ExitCode;
-        }
-        public static string GetOverlayPath(int overlayNumber) {
-            return $"{workDir}overlay\\overlay_{overlayNumber:D4}.bin";
-        }
-        public static void RestoreOverlayFromCompressedBackup(int overlayNumber, bool eventEditorIsReady) {
-            String overlayFilePath = GetOverlayPath(overlayNumber);
-
-            if (File.Exists(overlayFilePath + backupSuffix)) {
-                if (new FileInfo(overlayFilePath).Length <= new FileInfo(overlayFilePath + backupSuffix).Length) { //if overlay is bigger than its backup
-                    Console.WriteLine("Overlay " + overlayNumber + " is already compressed.");
-                    return;
-                } else {
-                    File.Delete(overlayFilePath);
-                    File.Move(overlayFilePath + backupSuffix, overlayFilePath);
-                }
-            } else {
-                string msg = "Overlay File " + '"' + overlayFilePath + backupSuffix + '"' + " couldn't be found and restored.";
-                Console.WriteLine(msg);
-
-                if (eventEditorIsReady) {
-                    MessageBox.Show(msg, "Can't restore overlay from backup", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        /**
-         * Only checks if the overlay is CONFIGURED as compressed
-         **/
-        public static bool CheckOverlayHasCompressionFlag(int ovNumber) {
-            using (BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath))) {
-                f.BaseStream.Position = ovNumber * 32 + 31; //overlayNumber * size of entry + offset
-                return f.ReadByte() % 2 != 0;
-            }
-        }
-
-        /**
-         * Checks the actual size of the overlay file
-         **/
-        public static bool OverlayIsCompressed(int ovNumber) {
-            return (new FileInfo(GetOverlayPath(ovNumber)).Length < GetOverlayUncompressedSize(ovNumber));
-        }
-        public static uint GetOverlayUncompressedSize(int ovNumber) {
-            using (BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath))) {
-                f.BaseStream.Position = ovNumber * 32 + 8; //overlayNumber * size of entry + offset
-                return f.ReadUInt32();
-            }
-        }
-        public static uint GetOverlayRAMAddress(int ovNumber) {
-            using (BinaryReader f = new BinaryReader(File.OpenRead(RomInfo.overlayTablePath))) {
-                f.BaseStream.Position = ovNumber * 32 + 4; //overlayNumber * size of entry + offset
-                return f.ReadUInt32();
-            }
-        }
-        public static void SetOverlayCompressionInTable(int ovNumber, byte compressStatus) {
-            if (compressStatus < 0 || compressStatus > 3) {
-                Console.WriteLine("Compression status " + compressStatus + " is invalid. No operation performed.");
-                return;
-            }
-            using (BinaryWriter f = new BinaryWriter(File.OpenWrite(RomInfo.overlayTablePath))) {
-                f.BaseStream.Position = ovNumber * 32 + 31; //overlayNumber * size of entry + offset
-                f.Write(compressStatus);
-            }
-        }
         public static void RepackROM(string ndsFileName) {
             Process repack = new Process();
             repack.StartInfo.FileName = @"Tools\ndstool.exe";
@@ -413,122 +293,6 @@ namespace DSPRE {
             });
         }
 
-        public static byte[] GetModelWithoutTextures(byte[] modelFile) {
-            byte[] nsbmdHeaderData;
-            uint mdl0Size;
-            byte[] mdl0Data;
-
-            using (BinaryReader modelReader = new BinaryReader(new MemoryStream(modelFile))) {
-                modelReader.BaseStream.Position = 0x0;
-                nsbmdHeaderData = modelReader.ReadBytes(0x8);
-
-                modelReader.BaseStream.Position = 0x1C;
-                mdl0Size = modelReader.ReadUInt32(); // Read mdl0 file size
-
-                modelReader.BaseStream.Position = 0x18;
-                mdl0Data = modelReader.ReadBytes((int)mdl0Size);
-            }
-
-            MemoryStream output = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(output)) {
-
-                writer.Write(nsbmdHeaderData); // Write first header bytes, same for all NSBMD.
-                writer.Write(mdl0Size + 0x14);
-                writer.Write((short)0x10); // Writes BMD0 header size (always 16)
-                writer.Write((short)0x1); // Write new number of sub-files, since embedded textures are removed
-                writer.Write((uint)0x14); // Writes new start offset of MDL0
-
-                writer.Write(mdl0Data); // Writes MDL0;
-            }
-            return output.ToArray();
-        }
-
-        public static byte[] GetTexturesFromTexturedNSBMD(byte[] modelFile) {
-            using (BinaryReader byteArrReader = new BinaryReader(new MemoryStream(modelFile))) {
-                byteArrReader.BaseStream.Position = 14;
-                if (byteArrReader.ReadUInt16() < 2) //No textures
-                    return new byte[0];
-
-                byteArrReader.BaseStream.Position = 20;
-                int texAbsoluteOffset = byteArrReader.ReadInt32();
-
-                byteArrReader.BaseStream.Position = texAbsoluteOffset + 4;
-                uint textureSize = byteArrReader.ReadUInt32();
-
-                byte[] nsbtxHeader = DSUtils.BuildNSBTXHeader(20 + textureSize);
-                byte[] texData = DSUtils.ReadFromByteArray(modelFile, readFrom: texAbsoluteOffset);
-
-                byte[] output = new byte[nsbtxHeader.Length + texData.Length];
-                Buffer.BlockCopy(nsbtxHeader, 0, output, 0, nsbtxHeader.Length);
-                Buffer.BlockCopy(texData, 0, output, nsbtxHeader.Length, texData.Length);
-                return output;
-            }
-        }
-        public static int CheckNSBMDHeader(byte[] modelFile) {
-            using (BinaryReader byteArrReader = new BinaryReader(new MemoryStream(modelFile))) {
-                if (byteArrReader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0) {
-                    MessageBox.Show("Please select an NSBMD file.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return -1;
-                }
-
-                byteArrReader.BaseStream.Position = 0xE;
-                return byteArrReader.ReadInt16() >= 2 ? NSBMD_HAS_TEXTURE : NSBMD_DOESNTHAVE_TEXTURE;
-            }
-        }
-        public static byte[] BuildNSBTXHeader(uint texturesSize) {
-            MemoryStream ms = new MemoryStream();
-
-            using (BinaryWriter bw = new BinaryWriter(ms)) {
-                bw.Write(Encoding.UTF8.GetBytes("BTX0")); // Write magic code BTX0
-                bw.Write((ushort)0xFEFF); // Byte order
-                bw.Write((ushort)0x0001); // ???
-                bw.Write(texturesSize); // Write size of textures block
-                bw.Write((short)0x10); //Header size 
-                bw.Write((short)0x01); //Number of sub-files???
-                bw.Write((uint)0x14); // Offset to sub-file
-            }
-            return ms.ToArray();
-        }
-        public static byte[] BuildNSBMDwithTextures(byte[] nsbmd, byte[] nsbtx) {
-            byte[] wholeMDL0 = GetFirstBlock(nsbmd);
-            byte[] wholeTEX0 = GetFirstBlock(nsbtx);
-
-            MemoryStream ms = new MemoryStream();
-            using (BinaryWriter msWriter = new BinaryWriter(ms)) {
-                msWriter.Write(NSBMD.NDS_TYPE_BMD0);
-                msWriter.Write(NSBMD.NDS_TYPE_BYTEORDER);
-                msWriter.Write(NSBMD.NDS_TYPE_UNK2);
-
-                ushort nBlocks = 2;
-                uint modelLength = (uint)(wholeMDL0.Length + NSBMD.HEADERSIZE + 4 * nBlocks);
-                msWriter.Write((uint)(modelLength + wholeTEX0.Length));
-                msWriter.Write(NSBMD.HEADERSIZE); //Header size, always 16
-                msWriter.Write(nBlocks); //Number of blocks, now it's 2 because we are inserting textures
-
-                msWriter.Write((uint)(msWriter.BaseStream.Position + 4 * nBlocks)); //Absolute offset to model data. We are gonna have to write two offsets
-
-                msWriter.Write(modelLength); //Copy offset to TEX0
-                msWriter.Write(wholeMDL0);
-                msWriter.Write(wholeTEX0);
-            }
-            return ms.ToArray();
-        }
-        private static byte[] GetFirstBlock(byte[] NSBFile) {
-            int blockSize;
-            uint offsetToMainBlock;
-            using (BinaryReader reader = new BinaryReader(new MemoryStream(NSBFile))) {
-                reader.BaseStream.Position = 16;
-                offsetToMainBlock = reader.ReadUInt32();
-
-                reader.BaseStream.Position = offsetToMainBlock + 4;
-                blockSize = reader.ReadInt32();
-            }
-            byte[] blockData = new byte[blockSize];
-            Buffer.BlockCopy(NSBFile, (int)offsetToMainBlock, blockData, 0, blockSize);
-
-            return blockData;
-        }
-
         public static Image GetPokePic(int species, int w, int h) {
             PaletteBase paletteBase;
             bool fiveDigits = false; // some extreme future proofing
@@ -547,10 +311,10 @@ namespace DSPRE {
             string iconTablePath;
 
             int iconPalTableOffsetFromFileStart;
-            string ov129path = DSUtils.GetOverlayPath(129);
+            string ov129path = OverlayUtils.GetPath(129);
             if (File.Exists(ov129path)) {
                 // if overlay 129 exists, read it from there
-                iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - DSUtils.GetOverlayRAMAddress(129));
+                iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - OverlayUtils.OverlayTable.GetRAMAddress(129));
                 iconTablePath = ov129path;
             } else if ((int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress) >= 0) {
                 // if there is a synthetic overlay, read it from there

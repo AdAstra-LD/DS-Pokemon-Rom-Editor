@@ -52,7 +52,7 @@ namespace DSPRE {
                 Environment.NewLine + "\nProceed?", "Confirmation required",  MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (d == DialogResult.Yes) {
-                string moneyOverlayPath = DSUtils.GetOverlayPath(RomInfo.initialMoneyOverlayNumber);
+                string moneyOverlayPath = OverlayUtils.GetPath(RomInfo.initialMoneyOverlayNumber);
                 ushort headerNumber = ushort.Parse(spawnHeaderComboBox.SelectedItem.ToString().Split()[0]);
 
                 ARM9.WriteBytes(BitConverter.GetBytes(headerNumber), RomInfo.arm9spawnOffset);
@@ -95,13 +95,13 @@ namespace DSPRE {
             playerDirCombobox.SelectedIndex = BitConverter.ToUInt16(ARM9.ReadBytes(RomInfo.arm9spawnOffset + 16, 2), 0);
         }
         private void ReadDefaultMoney() {
-            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.initialMoneyOverlayNumber)) {
-                if (DSUtils.OverlayIsCompressed(RomInfo.initialMoneyOverlayNumber)) {
-                    DSUtils.DecompressOverlay(RomInfo.initialMoneyOverlayNumber);
+            if (OverlayUtils.OverlayTable.IsDefaultCompressed(RomInfo.initialMoneyOverlayNumber)) {
+                if (OverlayUtils.IsCompressed(RomInfo.initialMoneyOverlayNumber)) {
+                    OverlayUtils.Decompress(RomInfo.initialMoneyOverlayNumber);
                 }
             }
 
-            string pathToMoneyOverlay = DSUtils.GetOverlayPath(RomInfo.initialMoneyOverlayNumber);
+            string pathToMoneyOverlay = OverlayUtils.GetPath(RomInfo.initialMoneyOverlayNumber);
             initialMoneyUpDown.Value = BitConverter.ToUInt32(DSUtils.ReadFromFile(pathToMoneyOverlay, RomInfo.initialMoneyOverlayOffset, 4), 0);
         }
 

@@ -467,7 +467,7 @@ namespace DSPRE {
         public static void SetOWtable() {
             switch (gameFamily) {
                 case gFamEnum.DP:
-                    OWtablePath = DSUtils.GetOverlayPath(5);
+                    OWtablePath = OverlayUtils.GetPath(5);
                     switch (gameLanguage) { // Go to the beginning of the overworld table
                         case gLangEnum.English:
                             OWTableOffset = 0x22BCC;
@@ -481,7 +481,7 @@ namespace DSPRE {
                     }
                     break;
                 case gFamEnum.Plat:
-                    OWtablePath = DSUtils.GetOverlayPath(5);
+                    OWtablePath = OverlayUtils.GetPath(5);
                     switch (gameLanguage) { // Go to the beginning of the overworld table
                         case gLangEnum.Italian:
                             OWTableOffset = 0x2BC44;
@@ -502,17 +502,17 @@ namespace DSPRE {
                     }
                     break;
                 case gFamEnum.HGSS:
-                    if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
-                        if (DSUtils.OverlayIsCompressed(1)) {
-                            if (DSUtils.DecompressOverlay(1) < 0) {
+                    if (OverlayUtils.OverlayTable.IsDefaultCompressed(1)) {
+                        if (OverlayUtils.IsCompressed(1)) {
+                            if (OverlayUtils.Decompress(1) < 0) {
                                 MessageBox.Show("Overlay 1 couldn't be decompressed.\nOverworld sprites in the Event Editor will be " +
                                 "displayed incorrectly or not displayed at all.", "Decompression error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                     }
 
-                    string ov1Path = DSUtils.GetOverlayPath(1);
-                    uint ov1Address = DSUtils.GetOverlayRAMAddress(1);
+                    string ov1Path = OverlayUtils.GetPath(1);
+                    uint ov1Address = OverlayUtils.OverlayTable.GetRAMAddress(1);
 
                     int ramAddrOfPointer;
                     switch (gameLanguage) {
@@ -542,10 +542,10 @@ namespace DSPRE {
                             return;
                         }
 
-                        string ov131path = DSUtils.GetOverlayPath(131);
+                        string ov131path = OverlayUtils.GetPath(131);
                         if (File.Exists(ov131path)) {
                             // if HGE field extension overlay exists
-                            OWTableOffset = ramAddressOfTable - DSUtils.GetOverlayRAMAddress(131);
+                            OWTableOffset = ramAddressOfTable - OverlayUtils.OverlayTable.GetRAMAddress(131);
                             OWtablePath = ov131path;
                         } else if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) {
                             // if the pointer shows the table was moved to the synthetic overlay
