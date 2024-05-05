@@ -48,16 +48,13 @@ namespace DSPRE {
                 }
             }
             public static bool Decompress(string path) {
-                Process decompress = new Process();
-                decompress.StartInfo.FileName = @"Tools\blz.exe";
-                decompress.StartInfo.Arguments = @" -d " + '"' + path + '"';
-                decompress.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                decompress.StartInfo.CreateNoWindow = true;
+                Process decompress = CreateDecompressProcess(path);
                 decompress.Start();
                 decompress.WaitForExit();
 
                 return new FileInfo(RomInfo.arm9Path).Length > 0xBC000;
             }
+
             public static bool Compress(string path) {
                 Process compress = new Process();
                 compress.StartInfo.FileName = @"Tools\blz.exe";
@@ -290,17 +287,22 @@ namespace DSPRE {
                 File.Copy(overlayFilePath, overlayFilePath + backupSuffix);
             }
 
-            Process unpack = new Process();
-            unpack.StartInfo.FileName = @"Tools\blz.exe";
-            String arguments = "-d " + '"' + overlayFilePath + '"';
-            unpack.StartInfo.Arguments = arguments;
-            Application.DoEvents();
-            unpack.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
-            unpack.StartInfo.CreateNoWindow = false;
-            unpack.Start();
-            unpack.WaitForExit();
-            return unpack.ExitCode;
+            Process decompress = DSUtils.CreateDecompressProcess(overlayFilePath);
+            decompress.Start();
+            decompress.WaitForExit();
+            return decompress.ExitCode;
         }
+
+        public static Process CreateDecompressProcess(string path) {
+            Process decompress = new Process();
+            decompress.StartInfo.FileName = @"Tools\blz.exe";
+            decompress.StartInfo.Arguments = @" -d " + '"' + path + '"';
+            decompress.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            decompress.StartInfo.CreateNoWindow = true;
+            return decompress;
+
+        }
+
         public static int CompressOverlay(int overlayNumber) {
             string overlayFilePath = GetOverlayPath(overlayNumber);
 
