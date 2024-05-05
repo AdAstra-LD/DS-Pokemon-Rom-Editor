@@ -550,7 +550,7 @@ namespace DSPRE {
                         } else if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) {
                             // if the pointer shows the table was moved to the synthetic overlay
                             OWTableOffset = ramAddressOfTable - RomInfo.synthOverlayLoadAddress;
-                            OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+                            OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + PatchToolboxDialog.expandedARMfileID.ToString("D4");
                         } else {
                             OWTableOffset = ramAddressOfTable - ov1Address;
                             OWtablePath = ov1Path;

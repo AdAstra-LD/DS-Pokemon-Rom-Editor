@@ -10979,7 +10979,7 @@
             this.romToolboxToolStripMenuItem.Enabled = false;
             this.romToolboxToolStripMenuItem.Name = "romToolboxToolStripMenuItem";
             this.romToolboxToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.romToolboxToolStripMenuItem.Text = "ROM Toolbox";
+            this.romToolboxToolStripMenuItem.Text = "Patch Toolbox";
             this.romToolboxToolStripMenuItem.Click += new System.EventHandler(this.romToolBoxToolStripMenuItem_Click);
             // 
             // headerSearchToolStripMenuItem
@@ -11552,8 +11552,8 @@
             this.romToolboxToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
             this.romToolboxToolStripButton.Name = "romToolboxToolStripButton";
             this.romToolboxToolStripButton.Size = new System.Drawing.Size(36, 36);
-            this.romToolboxToolStripButton.Text = "ROM Toolbox";
-            this.romToolboxToolStripButton.ToolTipText = "ROM Toolbox";
+            this.romToolboxToolStripButton.Text = "Patch Toolbox";
+            this.romToolboxToolStripButton.ToolTipText = "Patch Toolbox";
             this.romToolboxToolStripButton.Click += new System.EventHandler(this.romToolBoxToolStripMenuItem_Click);
             // 
             // headerSearchToolStripButton

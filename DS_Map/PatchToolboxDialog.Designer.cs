@@ -1,6 +1,6 @@
 ﻿namespace DSPRE
 {
-    partial class ROMToolboxDialog
+    partial class PatchToolboxDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -27,7 +27,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() { 
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ROMToolboxDialog));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PatchToolboxDialog));
             this.applyItemStandardizeButton = new System.Windows.Forms.Button();
             this.arm9expansionTextLBL = new System.Windows.Forms.Label();
             this.arm9expansionLBL = new System.Windows.Forms.Label();
@@ -463,7 +463,7 @@
             // 
             this.disableTextureAnimationsTextLBL.Location = new System.Drawing.Point(481, 241);
             this.disableTextureAnimationsTextLBL.Name = "disableTextureAnimationsTextLBL";
-            this.disableTextureAnimationsTextLBL.Size = new System.Drawing.Size(288, 58);
+            this.disableTextureAnimationsTextLBL.Size = new System.Drawing.Size(288, 31);
             this.disableTextureAnimationsTextLBL.TabIndex = 38;
             this.disableTextureAnimationsTextLBL.Text = "Sets the Dynamic Textures (Texture Animation) field to 65535 [0xFFFF] for all Are" +
     "aData files.";
@@ -529,7 +529,7 @@
             this.expandTrainerNamesButton.UseVisualStyleBackColor = true;
             this.expandTrainerNamesButton.Click += new System.EventHandler(this.expandTrainerNamesButton_Click);
             // 
-            // ROMToolboxDialog
+            // PatchToolboxDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -581,9 +581,9 @@
             this.Controls.Add(this.applyItemStandardizeButton);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ROMToolboxDialog";
+            this.Name = "PatchToolboxDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "ROM Toolbox";
+            this.Text = "Patch Toolbox";
             ((System.ComponentModel.ISupportInitialize)(this.arm9patchCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlay1CB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BDHCamCB)).EndInit();

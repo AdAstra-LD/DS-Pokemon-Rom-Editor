@@ -14,7 +14,7 @@ using static DSPRE.Resources.ROMToolboxDB.ToolboxDB;
 using static NSMBe4.ROM;
 
 namespace DSPRE {
-    public partial class ROMToolboxDialog : Form {
+    public partial class PatchToolboxDialog : Form {
         public static uint expandedARMfileID = ToolboxDB.syntheticOverlayFileNumbersDB[RomInfo.gameFamily];
 
         public static bool flag_standardizedItems { get; private set; } = false;
@@ -33,7 +33,7 @@ namespace DSPRE {
         public static readonly int expandedTrainerNameLength = 12;
 
         #region Constructor
-        public ROMToolboxDialog() {
+        public PatchToolboxDialog() {
             InitializeComponent();
 
             CheckStandardizedItems();
@@ -188,7 +188,7 @@ namespace DSPRE {
             if (overlayCode2.Length != overlayCode2Read.Length || !overlayCode2.SequenceEqual(overlayCode2Read))
                 return false; //0 means BDHCAM patch has not been applied
 
-            String fullFilePath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+            String fullFilePath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + PatchToolboxDialog.expandedARMfileID.ToString("D4");
             byte[] subroutineRead = DSUtils.ReadFromFile(fullFilePath, BDHCAMPatchData.BDHCamSubroutineOffset, data.subroutine.Length); //Write new overlayCode1
             if (data.subroutine.Length != subroutineRead.Length || !data.subroutine.SequenceEqual(subroutineRead))
                 return false; //0 means BDHCAM patch has not been applied
@@ -227,39 +227,39 @@ namespace DSPRE {
         public bool CheckStandardizedItems() {
             DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.scripts });
 
-            if (!ROMToolboxDialog.flag_standardizedItems) {
-                if (!ROMToolboxDialog.CheckScriptsStandardizedItemNumbers()) {
+            if (!PatchToolboxDialog.flag_standardizedItems) {
+                if (!PatchToolboxDialog.CheckScriptsStandardizedItemNumbers()) {
                     return false;
                 }
             }
 
             itemNumbersCB.Visible = true;
-            ROMToolboxDialog.flag_standardizedItems = true;
+            PatchToolboxDialog.flag_standardizedItems = true;
 
             DisableStandardizeItemsPatch("Already applied");
             return true;
         }
         public bool CheckMatrixExpansionApplied() {
-            if (!ROMToolboxDialog.flag_MatrixExpansionApplied) {
-                if (!ROMToolboxDialog.CheckFilesMatrixExpansionApplied()) {
+            if (!PatchToolboxDialog.flag_MatrixExpansionApplied) {
+                if (!PatchToolboxDialog.CheckFilesMatrixExpansionApplied()) {
                     return false;
                 }
             }
 
             DisableMatrixExpansionPatch("Already applied");
-            ROMToolboxDialog.flag_MatrixExpansionApplied = true;
+            PatchToolboxDialog.flag_MatrixExpansionApplied = true;
             expandedMatrixCB.Visible = true;
             return true;
         }
         public string backupSuffix = ".backup";
         private bool CheckARM9ExpansionApplied() {
-            if (!ROMToolboxDialog.flag_arm9Expanded) {
-                if (!ROMToolboxDialog.CheckFilesArm9ExpansionApplied()) {
+            if (!PatchToolboxDialog.flag_arm9Expanded) {
+                if (!PatchToolboxDialog.CheckFilesArm9ExpansionApplied()) {
                     return false;
                 }
             }
 
-            ROMToolboxDialog.flag_arm9Expanded = true;
+            PatchToolboxDialog.flag_arm9Expanded = true;
             arm9patchCB.Visible = true;
             DisableARM9patch("Already applied");
 
@@ -277,12 +277,12 @@ namespace DSPRE {
         }
         public bool CheckDynamicHeadersPatchApplied() {
             if (!flag_DynamicHeadersPatchApplied) {
-                if (!ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                if (!PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                     return false;
                 }
             }
 
-            ROMToolboxDialog.flag_DynamicHeadersPatchApplied = true;
+            PatchToolboxDialog.flag_DynamicHeadersPatchApplied = true;
             dynamicHeadersPatchCB.Visible = true;
 
             DisableDynamicHeadersPatch("Already applied");
@@ -302,12 +302,12 @@ namespace DSPRE {
                 return false;
             }
 
-            if (!ROMToolboxDialog.flag_BDHCamPatchApplied) {
-                if (!ROMToolboxDialog.CheckFilesBDHCamPatchApplied()) {
+            if (!PatchToolboxDialog.flag_BDHCamPatchApplied) {
+                if (!PatchToolboxDialog.CheckFilesBDHCamPatchApplied()) {
                     return false;
                 }
             }
-            ROMToolboxDialog.flag_BDHCamPatchApplied = true;
+            PatchToolboxDialog.flag_BDHCamPatchApplied = true;
             BDHCamCB.Visible = true;
 
             DisableBDHCamPatch("Already applied");
@@ -328,7 +328,7 @@ namespace DSPRE {
 
                     if (v > TrainerFile.defaultNameLen+1) { 
                         DisableTrainerNameExpansionPatch("Already\nApplied");
-                        ROMToolboxDialog.flag_TrainerNamesExpanded = true;
+                        PatchToolboxDialog.flag_TrainerNamesExpanded = true;
                     }
                 }
             }
@@ -415,7 +415,7 @@ namespace DSPRE {
 
                 overlay1MustBeRestoredFromBackup = false;
                 DisableBDHCamPatch("Already applied");
-                ROMToolboxDialog.flag_BDHCamPatchApplied = true;
+                PatchToolboxDialog.flag_BDHCamPatchApplied = true;
                 BDHCamCB.Visible = true;
 
                 MessageBox.Show("The BDHCAM patch has been applied.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -470,7 +470,7 @@ namespace DSPRE {
                 DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.scripts });
                 DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.eventFiles });
 
-                if (ROMToolboxDialog.flag_standardizedItems) {
+                if (PatchToolboxDialog.flag_standardizedItems) {
                     AlreadyApplied();
                 } else {
 
@@ -554,7 +554,7 @@ namespace DSPRE {
                     DisableStandardizeItemsPatch("Already applied");
 
                     itemNumbersCB.Visible = true;
-                    ROMToolboxDialog.flag_standardizedItems = true;
+                    PatchToolboxDialog.flag_standardizedItems = true;
                 }
             } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -587,7 +587,7 @@ namespace DSPRE {
 
                     DisableARM9patch("Already applied");
                     arm9patchCB.Visible = true;
-                    ROMToolboxDialog.flag_arm9Expanded = true;
+                    PatchToolboxDialog.flag_arm9Expanded = true;
 
                     switch (RomInfo.gameFamily) {
                         case gFamEnum.Plat:
@@ -650,7 +650,7 @@ namespace DSPRE {
                 }
                 DisableMatrixExpansionPatch("Already applied");
                 expandedMatrixCB.Visible = true;
-                ROMToolboxDialog.flag_MatrixExpansionApplied = true;
+                PatchToolboxDialog.flag_MatrixExpansionApplied = true;
                 MessageBox.Show("Matrix 0 can now be freely expanded up to twice its size.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } else {
                 MessageBox.Show("No changes have been made.", "Operation canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -774,7 +774,7 @@ namespace DSPRE {
 
                     DisableDynamicHeadersPatch("Already applied");
                     dynamicHeadersPatchCB.Visible = true;
-                    ROMToolboxDialog.flag_DynamicHeadersPatchApplied = true;
+                    PatchToolboxDialog.flag_DynamicHeadersPatchApplied = true;
 
                     MessageBox.Show("The headers are now dynamically allocated in memory.", "Operation successful.", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 } catch {
@@ -822,17 +822,17 @@ namespace DSPRE {
             // SoulSilver   USA     ARM9 at 0x7342E
             // SoulSilver   Spain   ARM9 at 0x7342E     // TODO: Verify
 
-            DialogResult d = MessageBox.Show($"Applying this patch will set the Trainer Name max length to {ROMToolboxDialog.expandedTrainerNameLength-1} usable characters.\n" +
+            DialogResult d = MessageBox.Show($"Applying this patch will set the Trainer Name max length to {PatchToolboxDialog.expandedTrainerNameLength-1} usable characters.\n" +
                 "Are you sure you want to proceed?",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
                 try {
                     using (DSUtils.ARM9.Writer wr = new DSUtils.ARM9.Writer(RomInfo.trainerNameLenOffset)) {
-                        wr.Write((byte)ROMToolboxDialog.expandedTrainerNameLength);
+                        wr.Write((byte)PatchToolboxDialog.expandedTrainerNameLength);
                     }
 
-                    ROMToolboxDialog.flag_TrainerNamesExpanded = true;
+                    PatchToolboxDialog.flag_TrainerNamesExpanded = true;
                     DisableTrainerNameExpansionPatch("Already applied");
                     expandTrainerNamesCB.Visible = true;
                     RomInfo.SetTrainerNameMaxLen();
