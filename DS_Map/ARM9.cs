@@ -5,6 +5,7 @@ using static DSPRE.RomInfo;
 
 namespace DSPRE {
     public static class ARM9 {
+        private const int MAX_SIZE = 0xBC000;
         public static readonly uint address = 0x02000000;
         public class Reader : DSUtils.EasyReader {
             public Reader(long pos = 0) : base(arm9Path, pos) {
@@ -26,7 +27,7 @@ namespace DSPRE {
             decompress.Start();
             decompress.WaitForExit();
 
-            return new FileInfo(RomInfo.arm9Path).Length > 0xBC000;
+            return new FileInfo(path).Length > MAX_SIZE;
         }
 
         public static bool Compress(string path) {
@@ -38,7 +39,7 @@ namespace DSPRE {
             compress.Start();
             compress.WaitForExit();
 
-            return new FileInfo(RomInfo.arm9Path).Length <= 0xBC000;
+            return new FileInfo(path).Length <= MAX_SIZE;
         }
         public static bool CheckCompressionMark() {
             return BitConverter.ToInt32(ReadBytes((uint)(RomInfo.gameFamily == gFamEnum.DP ? 0xB7C : 0xBB4), 4), 0) != 0;
