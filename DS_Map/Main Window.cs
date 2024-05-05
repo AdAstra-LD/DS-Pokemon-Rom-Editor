@@ -4696,7 +4696,7 @@ namespace DSPRE {
         }
 
         private void daeExportButton_Click(object sender, EventArgs e) {
-            DSUtils.ModelToDAE(
+            ModelUtils.ModelToDAE(
                 modelName: selectMapComboBox.SelectedItem.ToString().TrimEnd('\0'),
                 modelData: currentMapFile.mapModelData,
                 textureData: mapTextureComboBox.SelectedIndex < 0 ? null : File.ReadAllBytes(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4"))
@@ -4704,7 +4704,7 @@ namespace DSPRE {
         }
 
         private void glbExportButton_Click(object sender, EventArgs e) {
-            DSUtils.ModelToGLB(
+            ModelUtils.ModelToGLB(
                 modelName: selectMapComboBox.SelectedItem.ToString().TrimEnd('\0'),
                 modelData: currentMapFile.mapModelData,
                 textureData: mapTextureComboBox.SelectedIndex < 0 ? null : File.ReadAllBytes(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (mapTextureComboBox.SelectedIndex - 1).ToString("D4"))

@@ -275,7 +275,7 @@ namespace DSPRE {
         }
 
         private void bldExportDAEbutton_Click(object sender, EventArgs e) {
-            DSUtils.ModelToDAE(
+            ModelUtils.ModelToDAE(
                 modelName: buildingEditorBldListBox.SelectedItem.ToString().TrimEnd('\0'), 
                 modelData: currentModelData, 
                 textureData: textureComboBox.SelectedIndex < 1 ? null : File.ReadAllBytes(RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (textureComboBox.SelectedIndex - 1).ToString("D4"))
