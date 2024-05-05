@@ -112,7 +112,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ARM9.cs" />
+    <Compile Include="DSUtils\ARM9.cs" />
     <Compile Include="DSUtils\ModelUtils.cs" />
     <Compile Include="EventFileImport.cs">
       <SubType>Form</SubType>
