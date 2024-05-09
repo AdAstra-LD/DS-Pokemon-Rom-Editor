@@ -42,7 +42,7 @@ namespace DSPRE {
             return new FileInfo(path).Length <= MAX_SIZE;
         }
         public static bool CheckCompressionMark() {
-            return BitConverter.ToInt32(ReadBytes((uint)(RomInfo.gameFamily == gFamEnum.DP ? 0xB7C : 0xBB4), 4), 0) != 0;
+            return BitConverter.ToInt32(ReadBytes((uint)(RomInfo.gameFamily == GameFamilies.DP ? 0xB7C : 0xBB4), 4), 0) != 0;
         }
 
         public static byte[] ReadBytes(uint startOffset, long numberOfBytes = 0) {

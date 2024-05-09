@@ -446,7 +446,7 @@ namespace DSPRE {
             "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
-                DSUtils.SetOverlayCompressionInTable(1, 0);
+                OverlayUtils.OverlayTable.SetDefaultCompressed(1, false);
                 if (isCompressed) {
                     OverlayUtils.Decompress(1);
                 }

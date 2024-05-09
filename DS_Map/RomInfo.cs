@@ -535,7 +535,7 @@ namespace DSPRE {
                     }
 
                     string ov1Path = OverlayUtils.GetPath(1);
-                    uint ov1Address = DSUtils.GetOverlayRAMAddress(1);
+                    uint ov1Address = OverlayUtils.OverlayTable.GetRAMAddress(1);
 
                     int ramAddrOfPointer;
                     switch (gameLanguage) {
@@ -568,7 +568,7 @@ namespace DSPRE {
                         string ov131path = OverlayUtils.GetPath(131);
                         if (File.Exists(ov131path)) {
                             // if HGE field extension overlay exists
-                            OWTableOffset = ramAddressOfTable - DSUtils.GetOverlayRAMAddress(131);
+                            OWTableOffset = ramAddressOfTable - OverlayUtils.OverlayTable.GetRAMAddress(131);
                             OWtablePath = ov131path;
                         } else if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) {
                             // if the pointer shows the table was moved to the synthetic overlay

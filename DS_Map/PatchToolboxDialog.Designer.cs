@@ -583,7 +583,7 @@
             this.MinimizeBox = false;
             this.Name = "ROMToolboxDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "ROM Toolbox";
+            this.Text = "Patch Toolbox";
             ((System.ComponentModel.ISupportInitialize)(this.arm9patchCB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlay1CB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BDHCamCB)).EndInit();
