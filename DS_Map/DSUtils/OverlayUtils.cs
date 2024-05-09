@@ -32,6 +32,17 @@ namespace DSPRE {
                     return f.ReadUInt32();
                 }
             }
+
+            /**
+            * Gets number of overlays
+            **/
+            public static long GetNumberOfOverlays() {
+                using (FileStream fileStream = File.OpenRead(RomInfo.overlayTablePath))
+                {
+                    // Get the length of the file in bytes
+                    return fileStream.Length / 32;
+                }
+            }
         }
 
 
@@ -45,6 +56,7 @@ namespace DSPRE {
         public static bool IsCompressed(int ovNumber) {
             return (new FileInfo(GetPath(ovNumber)).Length < OverlayTable.GetUncompressedSize(ovNumber));
         }
+
         public static void RestoreFromCompressedBackup(int overlayNumber, bool eventEditorIsReady) {
             String overlayFilePath = GetPath(overlayNumber);
 

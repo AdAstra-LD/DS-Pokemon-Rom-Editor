@@ -6,16 +6,16 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using static ScintillaNET.Style;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace DSPRE {
     public partial class LearnsetEditor : Form {
-        private bool disableHandlers = false;
 
         private readonly string[] fileNames;
         private readonly string[] pokenames;
         private readonly string[] moveNames;
-
+        private PokemonEditor _parent;
         private readonly string[] editButtonNames = new string[] {
             "Edit",
             "Confirm"
@@ -33,12 +33,14 @@ namespace DSPRE {
         private static bool dirty = false;
         private static readonly string formName = "Learnset Editor";
 
-        public LearnsetEditor(string[] moveNames) {
+        public LearnsetEditor(string[] moveNames, Control parent, PokemonEditor pokeEditor) {
             this.moveNames = moveNames;
-
+            this._parent = pokeEditor;
             InitializeComponent();
-
-            disableHandlers = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Size = parent.Size;
+            this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+            Helpers.DisableHandlers();
 
             BindingList<string> listMoveNames = new BindingList<string>(moveNames);
             moveInputComboBox.DataSource = listMoveNames;
@@ -62,7 +64,7 @@ namespace DSPRE {
             descriptorLabel.Text = "";
             statusLabel.Text = "";
 
-            disableHandlers = false;
+            Helpers.EnableHandlers();
 
             pokemonNameInputComboBox.SelectedIndex = 1;
         }
@@ -75,12 +77,12 @@ namespace DSPRE {
                 this.Text = formName;
             }
         }
-        private bool CheckDiscardChanges() {
+        public bool CheckDiscardChanges() {
             if (!dirty) {
                 return true;
             }
 
-            DialogResult res = MessageBox.Show(this, "There are unsaved changes to the current Pokémon data.\nDiscard and proceed?", "Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult res = MessageBox.Show(this, "Learnsets Editor\nThere are unsaved changes to the current Learnset data.\nDiscard and proceed?", "Learnset Editor - Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res.Equals(DialogResult.Yes)) {
                 return true;
             }
@@ -94,7 +96,7 @@ namespace DSPRE {
         private string ElemToString((ushort level, ushort move) elem) {
             return $"Lv. {elem.level}: {moveNames[elem.move]}";
         }
-        private void ChangeLoadedFile(int toLoad) {
+        public void ChangeLoadedFile(int toLoad) {
             currentLoadedId = toLoad;
             currentLoadedFile = new LearnsetData(currentLoadedId);
             PopulateAllFromCurrentFile();
@@ -125,34 +127,33 @@ namespace DSPRE {
         }
 
         private void pokemonNameInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            Update();
+            if (Helpers.HandlersDisabled) {
                 return;
             }
-
-            disableHandlers = true;
+            this._parent.TrySyncIndices((ComboBox)sender);
+            Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
                 int newNumber = pokemonNameInputComboBox.SelectedIndex;
                 monNumberNumericUpDown.Value = newNumber;
-                ChangeLoadedFile(newNumber);
-               
+                ChangeLoadedFile(newNumber);               
             }
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
 
         private void monNumberNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            Update();
+            if (Helpers.HandlersDisabled) {
+                return;
             }
-
-            disableHandlers = true;
+            this._parent.TrySyncIndices((NumericUpDown)sender);
+            Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
-
                 int newNumber = (int)monNumberNumericUpDown.Value;
                 pokemonNameInputComboBox.SelectedIndex = newNumber;
-                ChangeLoadedFile(newNumber);
-                
+                ChangeLoadedFile(newNumber);                
             }
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
 
         private void moveInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -209,6 +210,7 @@ namespace DSPRE {
             PopulateAllFromCurrentFile();
             movesListBox.SelectedIndex = currentLoadedFile.list.FindIndex(x => x == newEntry);
             UpdateAddEditStatus();
+            setDirty(true);
         }
 
         private void deleteMoveButton_Click(object sender, EventArgs e) {
@@ -232,6 +234,7 @@ namespace DSPRE {
             }
 
             UpdateByEditMode();
+            setDirty(true);
         }
 
         private void editMoveButton_Click(object sender, EventArgs e) {
@@ -272,6 +275,7 @@ namespace DSPRE {
             }
             UpdateByEditMode();
             addMoveButton.Enabled = (editMode == false && CheckValidEntry());
+            setDirty(true);
         }
 
         private void UpdateByEditMode() {

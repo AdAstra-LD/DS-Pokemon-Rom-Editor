@@ -156,6 +156,10 @@ namespace DSPRE.Resources {
             [0x00FE] = "End"
         };
 
+        public static HashSet<ushort?> movementEndCodes = new HashSet<ushort?>() {
+            0x00FE,
+        };
+
         public static Dictionary<ushort, string> DPPtScrCmdNames = new Dictionary<ushort, string>() {
             [0x0000] = "Nop",
             [0x0001] = "Dummy",
@@ -2089,6 +2093,9 @@ namespace DSPRE.Resources {
             [0x02C4] = "FloorTrapAnimation",
 
             [0x02C7] = "TalkFollowingPoke",
+
+            [0x02C9] = "OpenAlphaPuzzle",
+            [0x02CA] = "OpenRuinsofAlphHiddenRoom",
 
             [0x02D3] = "BoatAnimation",
 

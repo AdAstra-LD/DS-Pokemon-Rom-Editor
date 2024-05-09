@@ -128,37 +128,84 @@ namespace DSPRE.ROMFiles {
         #endregion Fields
 
         #region Methods (1)
-        public static MapHeader LoadFromByteArray(byte[] headerData, ushort headerNumber, GameFamilies gameFamily = GameFamilies.NULL) {
+        public static string BuildName(int headerID, string name) {
+            return headerID.ToString("D3") + MapHeader.nameSeparator + name;
+        }
+
+        public static MapHeader LoadFromByteArray(byte[] headerData, ushort headerNumber, RomInfo.GameFamilies gameFamily = RomInfo.GameFamilies.NULL) {
             /* Encapsulate header data into the class appropriate for the gameVersion */
             if (headerData.Length < MapHeader.length) {
                 MessageBox.Show("File of header " + headerNumber + " is too small and can't store header data.", "Header file too small", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
-            if (gameFamily == GameFamilies.NULL) {
+            if (gameFamily == RomInfo.GameFamilies.NULL) {
                 gameFamily = RomInfo.gameFamily;
             }
 
             switch (gameFamily) {
-                case GameFamilies.DP:
+                case RomInfo.GameFamilies.DP:
                     return new HeaderDP(headerNumber, new MemoryStream(headerData));
-                case GameFamilies.Plat:
+                case RomInfo.GameFamilies.Plat:
                     return new HeaderPt(headerNumber, new MemoryStream(headerData));
                 default:
                     return new HeaderHGSS(headerNumber, new MemoryStream(headerData));
             }
         }
-        public static MapHeader LoadFromFile(string filename, ushort headerNumber, long offsetInFile, GameFamilies gameFamily = GameFamilies.NULL) {
+
+        public static MapHeader LoadFromFile(string filename, ushort headerNumber, long offsetInFile, RomInfo.GameFamilies gameFamily = RomInfo.GameFamilies.NULL) {
             /* Calculate header offset and load data */
             byte[] headerData = DSUtils.ReadFromFile(filename, offsetInFile, MapHeader.length);
             return LoadFromByteArray(headerData, headerNumber, gameFamily);
         }
-        public static MapHeader LoadFromARM9(ushort headerNumber, GameFamilies gameFamily = GameFamilies.NULL) {
+
+        public static MapHeader LoadFromARM9(ushort headerNumber, RomInfo.GameFamilies gameFamily = RomInfo.GameFamilies.NULL) {
             long headerOffset = RomInfo.headerTableOffset + MapHeader.length * headerNumber;
             return LoadFromFile(RomInfo.arm9Path, headerNumber, headerOffset, gameFamily);
         }
 
-        
+        public static MapHeader GetMapHeader(ushort headerNumber) {
+            MapHeader mapHeader;
+
+            //Dynamic headers patch unsupported in DP
+            if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP)) {
+                return MapHeader.LoadFromARM9(headerNumber);
+            }
+
+            /* Check if dynamic headers patch has been applied, and load header from arm9 or a/0/5/0 accordingly */
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied) {
+                string path = Filesystem.GetDynamicHeaderPath(headerNumber);
+                mapHeader = MapHeader.LoadFromFile(path, headerNumber, 0);
+            } else {
+                mapHeader = MapHeader.LoadFromARM9(headerNumber);
+            }
+
+            return mapHeader;
+        }
+
+        public static int GetHeaderCount() {
+            int headerCount;
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied) {
+                headerCount = Filesystem.GetDynamicHeadersCount();
+            } else {
+                headerCount = RomInfo.GetHeaderCount();
+            }
+
+            return headerCount;
+        }
+
+        public void SaveFile() {
+            /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied) {
+                string path = Filesystem.GetDynamicHeaderPath(ID);
+                DSUtils.WriteToFile(path, this.ToByteArray(), 0, 0, fmode: FileMode.Create);
+            } else {
+                uint headerOffset = (uint)(RomInfo.headerTableOffset + MapHeader.length * this.ID);
+                ARM9.WriteBytes(this.ToByteArray(), headerOffset);
+            }
+        }
+
+
         #endregion
     }
 

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace DSPRE {
     public partial class EvolutionsEditor : Form {
-        private bool disableHandlers = false;
 
         private readonly string[] fileNames;
+        private PokemonEditor _parent;
         private readonly string[] pokeNames;
         private readonly string[] moveNames;
         private readonly string[] itemNames;
@@ -19,7 +20,8 @@ namespace DSPRE {
         private static readonly string formName = "Evolutions Editor";
 
         private (ComboBox m, Label l, NumericUpDown p, ComboBox t)[] evoRows;
-        public EvolutionsEditor() {
+        public EvolutionsEditor(Control parent, PokemonEditor pokeEditor) {
+            this._parent = pokeEditor;
             this.pokeNames = RomInfo.GetPokemonNames();
             this.moveNames = RomInfo.GetAttackNames();
             this.itemNames = RomInfo.GetItemNames();
@@ -30,8 +32,10 @@ namespace DSPRE {
 
             this.fileNames = fileNames.ToArray();
             InitializeComponent();
-            
-            disableHandlers = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Size = parent.Size;
+            this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+            Helpers.DisableHandlers();
 
             evoRows = new (ComboBox m, Label l, NumericUpDown p, ComboBox t)[EvolutionFile.numEvolutions] {
                 (evoMethodComboBox1, descLabel1, evoParamUpDown1, evoTargetMonComboBox1),
@@ -56,42 +60,42 @@ namespace DSPRE {
 
             pokemonNameInputComboBox.Items.AddRange(this.fileNames);
 
-            disableHandlers = false;
+            Helpers.EnableHandlers();
 
             pokemonNameInputComboBox.SelectedIndex = 1;
         }
 
         private void pokemonNameInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            Update();
+            if (Helpers.HandlersDisabled) {
                 return;
             }
-
-            disableHandlers = true;
+            this._parent.TrySyncIndices((ComboBox)sender);
+            Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
                 int newNumber = pokemonNameInputComboBox.SelectedIndex;
                 monNumberNumericUpDown.Value = newNumber;
                 ChangeLoadedFile(newNumber);
-
             }
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
 
         private void monNumberNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            Update();
+            if (Helpers.HandlersDisabled) {
                 return;
             }
-
-            disableHandlers = true;
+            this._parent.TrySyncIndices((NumericUpDown)sender);
+            Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
-
                 int newNumber = (int)monNumberNumericUpDown.Value;
                 pokemonNameInputComboBox.SelectedIndex = newNumber;
                 ChangeLoadedFile(newNumber);
-
             }
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
-        private void ChangeLoadedFile(int toLoad) {
+
+        public void ChangeLoadedFile(int toLoad) {
             currentLoadedId = toLoad;
             currentLoadedFile = new EvolutionFile(currentLoadedId);
 
@@ -153,12 +157,12 @@ namespace DSPRE {
             return ed;
         }
 
-        private bool CheckDiscardChanges() {
+        public bool CheckDiscardChanges() {
             if (!dirty) {
                 return true;
             }
 
-            DialogResult res = MessageBox.Show("There are unsaved changes to the current Evolution data.\nDiscard and proceed?", "Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult res = MessageBox.Show("Evolutions Editor\nThere are unsaved changes to the current Evolution data.\nDiscard and proceed?", "Evolutions Editor - Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res.Equals(DialogResult.Yes)) {
                 return true;
             }
@@ -233,7 +237,7 @@ namespace DSPRE {
                 return;
             }
 
-            disableHandlers = true;
+            Helpers.DisableHandlers();
 
             EvolutionMethod method = (EvolutionMethod)m.SelectedIndex;
             EvolutionParamMeaning type = EvolutionFile.evoDescriptions[method];
@@ -291,7 +295,7 @@ namespace DSPRE {
                     throw new Exception("Unknown evolution parameter type: " + type);
             }
 
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
 
         private void evoParamUpDown1_ValueChanged(object sender, EventArgs e) {

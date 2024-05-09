@@ -49,11 +49,11 @@ namespace DSPRE {
                 interiorCheckBox.Enabled = true;
             }
 
-            disableHandlers = true;
+            Helpers.DisableHandlers();
             FillListBox(false);
             FillTexturesBox();
             textureComboBox.SelectedIndex = 0;
-            disableHandlers = false;
+            Helpers.EnableHandlers();
             buildingEditorBldListBox.SelectedIndex = 0;
         }
 
@@ -167,7 +167,7 @@ namespace DSPRE {
             RenderModel();
         }
         private void buildingEditorListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || buildingEditorBldListBox.SelectedIndex < 0) {
+            if (Helpers.HandlersDisabled || buildingEditorBldListBox.SelectedIndex < 0) {
                 return;
             }
 
@@ -213,17 +213,17 @@ namespace DSPRE {
             }
         }
         private void interiorCheckBox_CheckedChanged(object sender, EventArgs e) {
-            disableHandlers = true;
+            Helpers.DisableHandlers();
 
             buildingEditorBldListBox.Items.Clear();
             FillListBox(interiorCheckBox.Checked);
 
-            disableHandlers = false;
+            Helpers.EnableHandlers();
 
             buildingEditorBldListBox.SelectedIndex = 0;
         }
         private void textureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             LoadModelTextures(textureComboBox.SelectedIndex - 1);

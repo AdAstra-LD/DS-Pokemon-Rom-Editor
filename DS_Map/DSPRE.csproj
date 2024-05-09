@@ -64,30 +64,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\HelixToolkit.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Core.1.1.0.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Shell.1.1.0.0\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.ShellExtensions, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Shell.1.1.0.0\lib\Microsoft.WindowsAPICodePack.ShellExtensions.dll</HintPath>
-    </Reference>
     <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Desktop\sdsme\Map_Editor\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="ScintillaNET, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\jacobslusser.ScintillaNET.3.6.3\lib\net40\ScintillaNET.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Collections.Specialized, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Specialized.4.3.0\lib\net46\System.Collections.Specialized.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xaml" />
@@ -113,7 +96,68 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DSUtils\ARM9.cs" />
+    <Compile Include="DSUtils\DSUtils.cs" />
     <Compile Include="DSUtils\ModelUtils.cs" />
+    <Compile Include="DSUtils\NSBUtils.cs" />
+    <Compile Include="DSUtils\OverlayUtils.cs" />
+    <Compile Include="DVCalculator\DVCalc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DVCalculator\DVCalc.Designer.cs" />
+    <Compile Include="DVCalculator\DVCalcNatureViewerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DVCalculator\DVCalcNatureViewerForm.Designer.cs" />
+    <Compile Include="DVCalculator\DVCalculator.cs" />
+    <Compile Include="EditorPanels.cs" />
+    <Compile Include="Editors\EncountersEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\EncountersEditor.Designer.cs">
+      <DependentUpon>EncountersEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\HeadbuttEncounterEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\HeadbuttEncounterEditor.Designer.cs">
+      <DependentUpon>HeadbuttEncounterEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\HeadbuttEncounterEditorTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\HeadbuttEncounterEditorTab.Designer.cs">
+      <DependentUpon>HeadbuttEncounterEditorTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\LevelScriptEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\LevelScriptEditor.Designer.cs">
+      <DependentUpon>LevelScriptEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\SafariZoneEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\SafariZoneEditor.Designer.cs">
+      <DependentUpon>SafariZoneEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\SafariZoneEncounterEditorTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\SafariZoneEncounterEditorTab.Designer.cs">
+      <DependentUpon>SafariZoneEncounterEditorTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\SafariZoneEncounterGroupEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\SafariZoneEncounterGroupEditor.Designer.cs">
+      <DependentUpon>SafariZoneEncounterGroupEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\ScriptEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\ScriptEditor.Designer.cs">
+      <DependentUpon>ScriptEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="EventFileImport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,8 +170,11 @@
     <Compile Include="EvolutionsEditor.designer.cs">
       <DependentUpon>EvolutionsEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Filesystem.cs" />
     <Compile Include="GameCamera.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="InputComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -137,13 +184,23 @@
     <Compile Include="LearnsetEditor.designer.cs">
       <DependentUpon>LearnsetEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="DSUtils\NSBUtils.cs" />
-    <Compile Include="DSUtils\OverlayUtils.cs" />
+    <Compile Include="MoveEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MoveEditor.Designer.cs">
+      <DependentUpon>MoveEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="PersonalDataEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PersonalDataEditor.designer.cs">
       <DependentUpon>PersonalDataEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PokemonEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PokemonEditor.Designer.cs">
+      <DependentUpon>PokemonEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -153,7 +210,6 @@
     <Compile Include="Resources\ROMToolboxDB\ToolboxDB.cs" />
     <Compile Include="Resources\ScriptDatabase.cs" />
     <Compile Include="ROMFiles\AreaData.cs" />
-    <Compile Include="DSUtils\DSUtils.cs" />
     <Compile Include="Resources\CommandsDatabase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -177,12 +233,29 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ROMFiles\EvolutionFile.cs" />
+    <Compile Include="ROMFiles\HeadbuttEncounter.cs" />
+    <Compile Include="ROMFiles\HeadbuttEncounterFile.cs" />
+    <Compile Include="ROMFiles\HeadbuttEncounterMap.cs" />
+    <Compile Include="ROMFiles\HeadbuttTree.cs" />
+    <Compile Include="ROMFiles\HeadbuttTreeGroup.cs" />
     <Compile Include="ROMFiles\LearnsetData.cs" />
+    <Compile Include="ROMFiles\LevelScriptFile.cs" />
+    <Compile Include="ROMFiles\LevelScriptTrigger.cs" />
+    <Compile Include="ROMFiles\MapScreenLoadTrigger.cs" />
+    <Compile Include="ROMFiles\MoveFile.cs" />
     <Compile Include="ROMFiles\PokemonPersonalData.cs" />
     <Compile Include="ROMFiles\RomFile.cs" />
+    <Compile Include="ROMFiles\SafariZoneEncounter.cs" />
+    <Compile Include="ROMFiles\SafariZoneEncounterFile.cs" />
+    <Compile Include="ROMFiles\SafariZoneEncounterGroup.cs" />
+    <Compile Include="ROMFiles\SafariZoneObjectRequirement.cs" />
     <Compile Include="ROMFiles\ScriptAction.cs" />
+    <Compile Include="ROMFiles\ScriptActionContainer.cs" />
+    <Compile Include="ROMFiles\ScriptCommandContainer.cs" />
+    <Compile Include="ROMFiles\ScriptReference.cs" />
     <Compile Include="ROMFiles\SpeciesFile.cs" />
     <Compile Include="ROMFiles\TrainerFile.cs" />
+    <Compile Include="ROMFiles\VariableValueTrigger.cs" />
     <Compile Include="PatchToolboxDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -294,6 +367,32 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\writeText.Designer.cs" />
+    <EmbeddedResource Include="DVCalculator\DVCalc.resx" />
+    <EmbeddedResource Include="DVCalculator\DVCalcNatureViewerForm.resx" />
+    <EmbeddedResource Include="Editors\EncountersEditor.resx">
+      <DependentUpon>EncountersEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\HeadbuttEncounterEditor.resx">
+      <DependentUpon>HeadbuttEncounterEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\HeadbuttEncounterEditorTab.resx">
+      <DependentUpon>HeadbuttEncounterEditorTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\LevelScriptEditor.resx">
+      <DependentUpon>LevelScriptEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\SafariZoneEditor.resx">
+      <DependentUpon>SafariZoneEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\SafariZoneEncounterEditorTab.resx">
+      <DependentUpon>SafariZoneEncounterEditorTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\SafariZoneEncounterGroupEditor.resx">
+      <DependentUpon>SafariZoneEncounterGroupEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\ScriptEditor.resx">
+      <DependentUpon>ScriptEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EventFileImport.resx">
       <DependentUpon>EventFileImport.cs</DependentUpon>
     </EmbeddedResource>
@@ -308,6 +407,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PersonalDataEditor.resx">
       <DependentUpon>PersonalDataEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PokemonEditor.resx">
+      <DependentUpon>PokemonEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ROMToolboxDB\BDHCAMPatchDB.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -347,7 +449,6 @@
     <EmbeddedResource Include="WildEditorDPPt.resx">
       <DependentUpon>WildEditorDPPt.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -357,6 +458,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\HGSSCommands.md" />
     <None Include="Resources\ROMToolboxDB\CPUE_cam.bin" />
     <None Include="Resources\ROMToolboxDB\CPUS_cam.bin" />
     <None Include="Resources\ROMToolboxDB\IPGE_cam.bin" />
@@ -603,6 +705,20 @@
       <Project>{8bb5da4b-5b71-4993-8941-4f38d4e6c81b}</Project>
       <Name>Images</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="jacobslusser.ScintillaNET">
+      <Version>3.6.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.WindowsAPICodePack-Core">
+      <Version>1.1.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.WindowsAPICodePack-Shell">
+      <Version>1.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Collections.Specialized">
+      <Version>4.3.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -461,8 +461,7 @@ namespace DSPRE {
 
         private void ApplyItemStandardizeButton_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("This process will apply the following changes:\n\n" +
-                "- Item scripts will be rearranged to follow the natural, ascending index order.\n\n" +
-                "- Any unsaved change to the current Event File will be discarded.\n\n",
+                "- Item scripts will be rearranged to follow the natural, ascending index order.\n\n",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
@@ -478,31 +477,25 @@ namespace DSPRE {
                     ScriptFile itemScriptFile = new ScriptFile(RomInfo.itemScriptFileNumber);
 
                     // Create map for: script no. -> vanilla item
-                    int[] vanillaItemsArray = new int[itemScriptFile.allScripts.Count - 1];
+                    int[] vanillaItemsArray = new int[itemScriptFile.allScripts.Count];
 
                     for (int i = 0; i < itemScriptFile.allScripts.Count - 1; i++) {
                         vanillaItemsArray[i] = BitConverter.ToInt16(itemScriptFile.allScripts[i].commands[0].cmdParams[1], 0);
-                    };
+                    }
 
                     // Parse all event files and fix instances of ground items according to the new order
-                    int cnt = RomInfo.GetEventFileCount();
-                    (int min, int max) itemScriptRange = (7000, 8000);
-
-                    for (int i = 0; i < cnt; i++) {
-                        bool dirty = false;
-
+                    for (int i = 0; i < Filesystem.GetEventFileCount(); i++) {
                         EventFile eventFile = new EventFile(i);
 
                         for (int j = 0; j < eventFile.overworlds.Count; j++) {
                             // If ow is marked as an item, or in the rare case it is not but script no. falls within item script range:
                             bool isItem = eventFile.overworlds[j].type == (ushort)Overworld.OwType.ITEM
-                                          || (eventFile.overworlds[j].scriptNumber >= itemScriptRange.min
-                                          && eventFile.overworlds[j].scriptNumber <= itemScriptRange.max);
+                                          || (eventFile.overworlds[j].scriptNumber >= 7000
+                                          && eventFile.overworlds[j].scriptNumber <= 8000);
 
                             if (isItem) {
-                                int itemScriptID = eventFile.overworlds[j].scriptNumber - (itemScriptRange.min - 1);
-                                eventFile.overworlds[j].scriptNumber = (ushort)(itemScriptRange.min + vanillaItemsArray[itemScriptID - 1]);
-                                dirty = true;
+                                int itemScriptID = eventFile.overworlds[j].scriptNumber - 6999;
+                                eventFile.overworlds[j].scriptNumber = (ushort)(7000 + vanillaItemsArray[itemScriptID - 1]);
                             }
                         }
 
@@ -530,7 +523,7 @@ namespace DSPRE {
 
                     // Sort scripts in the Script File according to item indices
                     int itemCount = new TextArchive(RomInfo.itemNamesTextNumber).messages.Count;
-                    CommandContainer executeGive = new CommandContainer((uint)itemCount + 1, itemScriptFile.allScripts[itemScriptFile.allScripts.Count - 1]);
+                    ScriptCommandContainer executeGive = new ScriptCommandContainer((uint)itemCount, itemScriptFile.allScripts[itemScriptFile.allScripts.Count - 1]);
 
                     itemScriptFile.allScripts.Clear();
 
@@ -542,11 +535,11 @@ namespace DSPRE {
                             new ScriptCommand("Jump Function_#1")
                         };
 
-                        itemScriptFile.allScripts.Add(new CommandContainer((ushort)(i + 1), ScriptFile.containerTypes.Script, commandList: cmdList));
+                        itemScriptFile.allScripts.Add(new ScriptCommandContainer((ushort)(i + 1), ScriptFile.ContainerTypes.Script, commandList: cmdList));
                     }
 
                     itemScriptFile.allScripts.Add(executeGive);
-                    itemScriptFile.allFunctions[0].usedScript = itemCount + 1;
+                    itemScriptFile.allFunctions[0].usedScriptID = itemCount + 1;
 
                     itemScriptFile.SaveToFileDefaultDir(RomInfo.itemScriptFileNumber, showSuccessMessage: false);
                     MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
