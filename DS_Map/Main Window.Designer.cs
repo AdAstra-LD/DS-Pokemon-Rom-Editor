@@ -689,7 +689,7 @@
             this.label43 = new System.Windows.Forms.Label();
             this.trainerClassListBox = new System.Windows.Forms.ListBox();
             this.label42 = new System.Windows.Forms.Label();
-            this.trainerComboBox = new System.Windows.Forms.ComboBox();
+            this.trainerComboBox = new DSPRE.InputComboBox();
             this.trainerSaveCurrentButton = new System.Windows.Forms.Button();
             this.tableEditorTabPage = new System.Windows.Forms.TabPage();
             this.label73 = new System.Windows.Forms.Label();
@@ -11826,7 +11826,7 @@
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.ListBox trainerClassListBox;
         private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.ComboBox trainerComboBox;
+        private DSPRE.InputComboBox trainerComboBox;
         private System.Windows.Forms.ComboBox followModeComboBox;
         private System.Windows.Forms.RadioButton johtoRadioButton;
         private System.Windows.Forms.RadioButton kantoRadioButton;

@@ -105,7 +105,7 @@ namespace DSPRE {
                     currentTrainerName = TrainerFile.NAME_NOT_FOUND;
                 }
 
-                trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[classMessageID] + " " + currentTrainerName);
+                trainerList.Add(currentTrainerName + " - " + trainerClasses.messages[classMessageID] + " [" + i.ToString("D2") + "] ");
 
             }
             return trainerList.ToArray();
