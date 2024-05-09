@@ -76,9 +76,9 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (1)
-        public MapFile(string path, gFamEnum gFamily, bool discardMoveperms = false, bool showMessages = true) : this (new FileStream(path, FileMode.Open), gFamily, discardMoveperms, showMessages) {}
-        public MapFile(int mapNumber, gFamEnum gFamily, bool discardMoveperms = false, bool showMessages = true) : this(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + mapNumber.ToString("D4"), gFamily, discardMoveperms, showMessages) { }
-        public MapFile(Stream data, gFamEnum gFamily, bool discardMoveperms = false, bool showMessages = true) {
+        public MapFile(string path, GameFamilies gFamily, bool discardMoveperms = false, bool showMessages = true) : this (new FileStream(path, FileMode.Open), gFamily, discardMoveperms, showMessages) {}
+        public MapFile(int mapNumber, GameFamilies gFamily, bool discardMoveperms = false, bool showMessages = true) : this(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + mapNumber.ToString("D4"), gFamily, discardMoveperms, showMessages) { }
+        public MapFile(Stream data, GameFamilies gFamily, bool discardMoveperms = false, bool showMessages = true) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 /* Read sections lengths */
                 int permissionsSectionLength = reader.ReadInt32();
@@ -87,7 +87,7 @@ namespace DSPRE.ROMFiles {
                 int bdhcSectionLength = reader.ReadInt32();
 
                 /* Read background sounds section */
-                if (gFamily == gFamEnum.HGSS) { //Map must be loaded as HGSS
+                if (gFamily == GameFamilies.HGSS) { //Map must be loaded as HGSS
                     ushort bgsSignature = reader.ReadUInt16();
                     if (bgsSignature == 0x1234) {
                         ushort bgsDataLength = reader.ReadUInt16();
@@ -227,7 +227,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(bdhc.Length);
 
                 /* Write soundplate section for HG/SS */
-                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                if (RomInfo.gameFamily == GameFamilies.HGSS) {
                     writer.Write(bgs);
                 }
 

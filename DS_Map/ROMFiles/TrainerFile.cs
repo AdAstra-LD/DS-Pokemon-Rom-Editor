@@ -78,7 +78,7 @@ namespace DSPRE.ROMFiles {
                         writer.Write(move);
                     }
                 }
-                if (RomInfo.gameFamily == RomInfo.gFamEnum.HGSS || RomInfo.gameFamily == RomInfo.gFamEnum.Plat)
+                if (RomInfo.gameFamily == RomInfo.GameFamilies.HGSS || RomInfo.gameFamily == RomInfo.GameFamilies.Plat)
                     writer.Write(ballSeals); // Diamond and Pearl apparently dont save ball capsule data in enemy trainer pokedata!!!
             }
             return newData.ToArray();
@@ -249,7 +249,7 @@ namespace DSPRE.ROMFiles {
                         }
 
 
-                        if (RomInfo.gameFamily == RomInfo.gFamEnum.HGSS || RomInfo.gameFamily == RomInfo.gFamEnum.Plat)
+                        if (RomInfo.gameFamily == RomInfo.GameFamilies.HGSS || RomInfo.gameFamily == RomInfo.GameFamilies.Plat)
                             content[i] = new PartyPokemon(difficulty, genderAndAbilityFlags, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves);
                         else
                             content[i] = new PartyPokemon(difficulty, level, pokemon, heldItem, moves); // Diamond and Pearl apparently dont save ball capsule data in enemy trainer pokedata!!!

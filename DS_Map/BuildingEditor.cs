@@ -45,7 +45,7 @@ namespace DSPRE {
             buildingOpenGLControl.MouseWheel += new MouseEventHandler(buildingOpenGLControl_MouseWheel);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
 
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+            if (RomInfo.gameFamily == GameFamilies.HGSS) {
                 interiorCheckBox.Enabled = true;
             }
 
