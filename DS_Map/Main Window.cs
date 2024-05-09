@@ -315,13 +315,13 @@ namespace DSPRE {
         }
 
         private void romToolBoxToolStripMenuItem_Click(object sender, EventArgs e) {
-            using (ROMToolboxDialog window = new ROMToolboxDialog()) {
+            using (PatchToolboxDialog window = new PatchToolboxDialog()) {
                 window.ShowDialog();
-                if (ROMToolboxDialog.flag_standardizedItems && eventEditorIsReady) {
+                if (PatchToolboxDialog.flag_standardizedItems && eventEditorIsReady) {
                     selectEventComboBox_SelectedIndexChanged(null, null);
                     UpdateItemComboBox(RomInfo.GetItemNames());
                 }
-                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied) {
+                if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied) {
                     addHeaderBTN.Enabled = true;
                     removeLastHeaderBTN.Enabled = true;
                 }
@@ -576,7 +576,7 @@ namespace DSPRE {
                             versionLabel.Text = "Error";
                             return;
                         }
-                        DSUtils.ARM9.EditSize(-12);
+                        ARM9.EditSize(-12);
                     } catch (IOException) {
                         MessageBox.Show("Can't access temp directory: \n" + RomInfo.workDir + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Helpers.statusLabelError("ERROR: Concurrent access to " + RomInfo.workDir);
@@ -591,8 +591,8 @@ namespace DSPRE {
             Helpers.statusLabelMessage("Attempting to unpack NARCs from folder...");
             Update();
             //for (int i = 0; i < 128; i++) {
-            //    if (DSUtils.OverlayIsCompressed(i)) {
-            //        DSUtils.DecompressOverlay(i);
+            //    if (OverlayUtils.IsCompressed(i)) {
+            //        OverlayUtils.Decompress(i);
             //    }
             //}
             ReadROMInitData();
@@ -653,11 +653,11 @@ namespace DSPRE {
         }
 
         private void ReadROMInitData() {
-            if (DSUtils.ARM9.CheckCompressionMark()) {
+            if (ARM9.CheckCompressionMark()) {
                 if (!RomInfo.gameFamily.Equals(GameFamilies.HGSS)) {
                     MessageBox.Show("Unexpected compressed ARM9. It is advised that you double check the ARM9.");
                 }
-                if (!DSUtils.ARM9.Decompress(RomInfo.arm9Path)) {
+                if (!ARM9.Decompress(RomInfo.arm9Path)) {
                     MessageBox.Show("ARM9 decompression failed. The program can't proceed.\nAborting.",
                                 "Error with ARM9 decompression", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -719,7 +719,7 @@ namespace DSPRE {
             }
 
 
-            if (DSUtils.ARM9.CheckCompressionMark()) {
+            if (ARM9.CheckCompressionMark()) {
                 Helpers.statusLabelMessage("Awaiting user response...");
                 DialogResult d = MessageBox.Show("The ARM9 file of this ROM is currently uncompressed, but marked as compressed.\n" +
                     "This will prevent your ROM from working on native hardware.\n\n" +
@@ -727,26 +727,26 @@ namespace DSPRE {
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (d == DialogResult.Yes) {
-                    DSUtils.ARM9.WriteBytes(new byte[4] { 0, 0, 0, 0 }, (uint)(RomInfo.gameFamily == GameFamilies.DP ? 0xB7C : 0xBB4));
+                    ARM9.WriteBytes(new byte[4] { 0, 0, 0, 0 }, (uint)(RomInfo.gameFamily == GameFamilies.DP ? 0xB7C : 0xBB4));
                 }
             }
 
-            DSUtils.ARM9.WriteBytes(new byte[4] { 0, 0, 0, 0 }, (uint)(RomInfo.gameFamily == GameFamilies.DP ? 0xB7C : 0xBB4));
+            ARM9.WriteBytes(new byte[4] { 0, 0, 0, 0 }, (uint)(RomInfo.gameFamily == GameFamilies.DP ? 0xB7C : 0xBB4));
 
             Helpers.statusLabelMessage("Repacking ROM...");
 
-            if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
-                if (ROMToolboxDialog.overlay1MustBeRestoredFromBackup) {
+            if (OverlayUtils.OverlayTable.IsDefaultCompressed(1)) {
+                if (PatchToolboxDialog.overlay1MustBeRestoredFromBackup) {
                     DSUtils.RestoreOverlayFromCompressedBackup(1, eventEditorIsReady);
                 } else {
-                    if (!DSUtils.OverlayIsCompressed(1)) {
+                    if (!OverlayUtils.IsCompressed(1)) {
                         DSUtils.CompressOverlay(1);
                     }
                 }
             }
 
-            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.initialMoneyOverlayNumber)) {
-                if (!DSUtils.OverlayIsCompressed(RomInfo.initialMoneyOverlayNumber)) {
+            if (OverlayUtils.OverlayTable.IsDefaultCompressed(RomInfo.initialMoneyOverlayNumber)) {
+                if (!OverlayUtils.IsCompressed(RomInfo.initialMoneyOverlayNumber)) {
                     DSUtils.CompressOverlay(RomInfo.initialMoneyOverlayNumber);
                 }
             }
@@ -755,7 +755,7 @@ namespace DSPRE {
             Update();
 
             //for (int i = 0; i < 128; i++) {
-            //    if (!DSUtils.OverlayIsCompressed(i)) {
+            //    if (!OverlayUtils.IsCompressed(i)) {
             //        DSUtils.CompressOverlay(i);
             //    }
             //}
@@ -764,8 +764,8 @@ namespace DSPRE {
 
             if (RomInfo.gameFamily != GameFamilies.DP && RomInfo.gameFamily != GameFamilies.Plat) {
                 if (eventEditorIsReady) {
-                    if (DSUtils.OverlayIsCompressed(1)) {
-                        DSUtils.DecompressOverlay(1);
+                    if (OverlayUtils.IsCompressed(1)) {
+                        OverlayUtils.Decompress(1);
                     }
                 }
             }
@@ -972,7 +972,7 @@ namespace DSPRE {
             internalNames = new List<string>();
             headerListBoxNames = new List<string>();
             int headerCount;
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                 addHeaderBTN.Enabled = true;
                 removeLastHeaderBTN.Enabled = true;
                 headerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir).Length;
@@ -993,7 +993,7 @@ namespace DSPRE {
             }
 
             // Creating a dictionary linking events to headers to fetch header data for Event Editor
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                 for (ushort i = 0; i < internalNames.Count; i++) {
                     MapHeader h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
                     eventToHeader[h.eventFileID] = i;
@@ -1232,7 +1232,7 @@ namespace DSPRE {
             }
 
             /* Check if dynamic headers patch has been applied, and load header from arm9 or a/0/5/0 accordingly */
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                 currentHeader = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + headerNumber.ToString("D4"), headerNumber, 0);
             } else {
                 currentHeader = MapHeader.LoadFromARM9(headerNumber);
@@ -1698,11 +1698,11 @@ namespace DSPRE {
         }
         private void saveHeaderButton_Click(object sender, EventArgs e) {
             /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                 DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, fmode: FileMode.Create);
             } else {
                 uint headerOffset = (uint)(RomInfo.headerTableOffset + MapHeader.length * currentHeader.ID);
-                DSUtils.ARM9.WriteBytes(currentHeader.ToByteArray(), headerOffset);
+                ARM9.WriteBytes(currentHeader.ToByteArray(), headerOffset);
             }
             Helpers.DisableHandlers();
 
@@ -1767,7 +1767,7 @@ namespace DSPRE {
                 /* Check if dynamic headers patch has been applied, and load header from arm9 or a/0/5/0 accordingly */
                 for (ushort i = 0; i < internalNames.Count; i++) {
                     MapHeader h;
-                    if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                    if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                         h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
                     } else {
                         h = MapHeader.LoadFromARM9(i);
@@ -1937,11 +1937,11 @@ namespace DSPRE {
 
             currentHeader = h;
             /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                 DSUtils.WriteToFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + currentHeader.ID.ToString("D4"), currentHeader.ToByteArray(), 0, 0, fmode: FileMode.Create);
             } else {
                 uint headerOffset = (uint)(RomInfo.headerTableOffset + MapHeader.length * currentHeader.ID);
-                DSUtils.ARM9.WriteBytes(currentHeader.ToByteArray(), headerOffset);
+                ARM9.WriteBytes(currentHeader.ToByteArray(), headerOffset);
             }
 
             try {
@@ -2651,7 +2651,7 @@ namespace DSPRE {
                                 } else if (gameFamily.Equals(GameFamilies.Plat)) {
                                     foreach (ushort r in result) {
                                         HeaderPt hpt;
-                                        if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                                        if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                                             hpt = (HeaderPt)MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + r.ToString("D4"), r, 0);
                                         } else {
                                             hpt = (HeaderPt)MapHeader.LoadFromARM9(r);
@@ -2665,7 +2665,7 @@ namespace DSPRE {
                                 } else {
                                     foreach (ushort r in result) {
                                         HeaderHGSS hgss;
-                                        if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                                        if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                                             hgss = (HeaderHGSS)MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + r.ToString("D4"), r, 0);
                                         } else {
                                             hgss = (HeaderHGSS)MapHeader.LoadFromARM9(r);
@@ -2696,7 +2696,7 @@ namespace DSPRE {
 
                 /* get texture file numbers from area data */
                 MapHeader h;
-                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                     h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + headerID.ToString("D4"), headerID, 0);
                 } else {
                     h = MapHeader.LoadFromARM9(headerID);
@@ -4905,7 +4905,7 @@ namespace DSPRE {
                             foreach (ushort headerID in result) {
                                 HeaderPt hpt;
 
-                                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                                if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                                     hpt = (HeaderPt)MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + headerID.ToString("D4"), headerID, 0);
                                 } else {
                                     hpt = (HeaderPt)MapHeader.LoadFromARM9(headerID);
@@ -5099,7 +5099,7 @@ namespace DSPRE {
                 if (eventMatrix.hasHeadersSection && readGraphicsFromHeader) {
                     ushort headerID = (ushort)eventMatrix.headers[(short)eventMatrixYUpDown.Value, (short)eventMatrixXUpDown.Value];
                     MapHeader h;
-                    if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                    if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                         h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + headerID.ToString("D4"), headerID, 0);
                     } else {
                         h = MapHeader.LoadFromARM9(headerID);
@@ -5356,9 +5356,9 @@ namespace DSPRE {
                         break;
                     default:
                         // HGSS Overlay 1 must be decompressed in order to read the overworld table
-                        if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
-                            if (DSUtils.OverlayIsCompressed(1)) {
-                                if (DSUtils.DecompressOverlay(1) < 0) {
+                        if (OverlayUtils.OverlayTable.IsDefaultCompressed(1)) {
+                            if (OverlayUtils.IsCompressed(1)) {
+                                if (OverlayUtils.Decompress(1) < 0) {
                                     MessageBox.Show("Overlay 1 couldn't be decompressed.\nOverworld sprites in the Event Editor will be " +
                                 "displayed incorrectly or not displayed at all.", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
@@ -5405,7 +5405,7 @@ namespace DSPRE {
 
             /* Add item list to ow item box */
             string[] itemNames = RomInfo.GetItemNames();
-            if (ROMToolboxDialog.CheckScriptsStandardizedItemNumbers()) {
+            if (PatchToolboxDialog.CheckScriptsStandardizedItemNumbers()) {
                 UpdateItemComboBox(itemNames);
             } else {
                 ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
@@ -5668,7 +5668,7 @@ namespace DSPRE {
 
             if (eventToHeader.TryGetValue((ushort)selectEventComboBox.SelectedIndex, out ushort mapHeader)) {
                 MapHeader h;
-                if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                     h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + mapHeader.ToString("D4"), mapHeader, 0);
                 } else {
                     h = MapHeader.LoadFromARM9(mapHeader);
@@ -6414,7 +6414,7 @@ namespace DSPRE {
             ushort destHeaderID = (ushort)eventEditorWarpHeaderListBox.SelectedIndex;
 
             MapHeader destHeader;
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                 destHeader = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + destHeaderID.ToString("D4"), destHeaderID, 0);
             } else {
                 destHeader = MapHeader.LoadFromARM9(destHeaderID);
@@ -6558,7 +6558,7 @@ namespace DSPRE {
             ushort destHeaderID = (ushort)eventEditorWarpHeaderListBox.SelectedIndex;
 
             MapHeader destHeader;
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                 destHeader = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + destHeaderID.ToString("D4"), destHeaderID, 0);
             } else {
                 destHeader = MapHeader.LoadFromARM9(destHeaderID);
@@ -7580,12 +7580,12 @@ namespace DSPRE {
             RomInfo.PrepareCameraData();
             cameraEditorDataGridView.Rows.Clear();
 
-            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.cameraTblOverlayNumber)) {
+            if (OverlayUtils.OverlayTable.IsDefaultCompressed(RomInfo.cameraTblOverlayNumber)) {
                 DialogResult d1 = MessageBox.Show("It is STRONGLY recommended to configure Overlay1 as uncompressed before proceeding.\n\n" +
                         "More details in the following dialog.\n\n" + "Do you want to know more?",
                         "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                bool userConfirmed = (d1 == DialogResult.Yes && ROMToolboxDialog.ConfigureOverlay1Uncompressed());
+                bool userConfirmed = (d1 == DialogResult.Yes && PatchToolboxDialog.ConfigureOverlay1Uncompressed());
 
 
                 if (!userConfirmed) {
@@ -7593,15 +7593,15 @@ namespace DSPRE {
                             "If you change your mind, you can apply it later by accessing the ROM Toolbox.",
                             "Caution", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    if (DSUtils.OverlayIsCompressed(RomInfo.cameraTblOverlayNumber)) {
-                        DSUtils.DecompressOverlay(RomInfo.cameraTblOverlayNumber);
+                    if (OverlayUtils.IsCompressed(RomInfo.cameraTblOverlayNumber)) {
+                        OverlayUtils.Decompress(RomInfo.cameraTblOverlayNumber);
                     }
                 }
             }
 
 
             uint[] RAMaddresses = new uint[RomInfo.cameraTblOffsetsToRAMaddress.Length];
-            string camOverlayPath = DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber);
+            string camOverlayPath = OverlayUtils.GetPath(RomInfo.cameraTblOverlayNumber);
             using (DSUtils.EasyReader br = new DSUtils.EasyReader(camOverlayPath)) {
                 for (int i = 0; i < RomInfo.cameraTblOffsetsToRAMaddress.Length; i++) {
                     br.BaseStream.Position = RomInfo.cameraTblOffsetsToRAMaddress[i];
@@ -7648,7 +7648,7 @@ namespace DSPRE {
             }
         }
         private void saveCameraTableButton_Click(object sender, EventArgs e) {
-            SaveCameraTable(DSUtils.GetOverlayPath(RomInfo.cameraTblOverlayNumber), overlayCameraTblOffset);
+            SaveCameraTable(OverlayUtils.GetPath(RomInfo.cameraTblOverlayNumber), overlayCameraTblOffset);
         }
         private void cameraEditorDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e) {
             currentCameraTable[e.RowIndex][e.ColumnIndex] = cameraEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
@@ -7766,7 +7766,7 @@ namespace DSPRE {
             RomInfo.SetEncounterMusicTableOffsetToRAMAddress();
             trainerClassEncounterMusicDict = new Dictionary<byte, (uint entryOffset, ushort musicD, ushort? musicN)>();
 
-            uint encounterMusicTableTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.encounterMusicTableOffsetToRAMAddress, 4), 0) - DSUtils.ARM9.address;
+            uint encounterMusicTableTableStartAddress = BitConverter.ToUInt32(ARM9.ReadBytes(RomInfo.encounterMusicTableOffsetToRAMAddress, 4), 0) - ARM9.address;
 
             uint entrySize = 4;
             uint tableSizeOffset = 10;
@@ -7776,8 +7776,8 @@ namespace DSPRE {
                 encounterSSEQAltUpDown.Enabled = true;
             }
 
-            byte tableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.encounterMusicTableOffsetToRAMAddress - tableSizeOffset);
-            using (DSUtils.ARM9.Reader ar = new DSUtils.ARM9.Reader(encounterMusicTableTableStartAddress)) {
+            byte tableEntriesCount = ARM9.ReadByte(RomInfo.encounterMusicTableOffsetToRAMAddress - tableSizeOffset);
+            using (ARM9.Reader ar = new ARM9.Reader(encounterMusicTableTableStartAddress)) {
                 for (int i = 0; i < tableEntriesCount; i++) {
                     uint entryOffset = (uint)ar.BaseStream.Position;
                     byte tclass = (byte)ar.ReadUInt16();
@@ -8311,7 +8311,7 @@ namespace DSPRE {
                 //Expose a smaller limit to the user
                 if (RomInfo.trainerNameLenOffset >= 0) {
                     MessageBox.Show($"Trainer File saved successfully. However:\nYou attempted to save a Trainer whose name exceeds {RomInfo.trainerNameMaxLen-1} characters.\nThis may lead to issues in game." +
-                        (ROMToolboxDialog.flag_TrainerNamesExpanded ? "\n\nIt's recommended that you use a shorter name." : "\n\nRefer to the ROM Toolbox to extend Trainer names."),
+                        (PatchToolboxDialog.flag_TrainerNamesExpanded ? "\n\nIt's recommended that you use a shorter name." : "\n\nRefer to the ROM Toolbox to extend Trainer names."),
                         "Saved successfully, but...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 } else {
                     MessageBox.Show($"Trainer File saved successfully. However:\nThe Trainer name length could not be safely determined for this ROM.\n" +
@@ -8538,7 +8538,7 @@ namespace DSPRE {
             ushort eyeMusicID = (ushort)encounterSSEQMainUpDown.Value;
 
             if (trainerClassEncounterMusicDict.TryGetValue(b_selectedTrClass, out var dictEntry)) {
-                DSUtils.ARM9.WriteBytes(BitConverter.GetBytes(eyeMusicID), dictEntry.entryOffset);
+                ARM9.WriteBytes(BitConverter.GetBytes(eyeMusicID), dictEntry.entryOffset);
                 trainerClassEncounterMusicDict[b_selectedTrClass] = (dictEntry.entryOffset, eyeMusicID, dictEntry.musicN);
             }
 
@@ -8735,11 +8735,11 @@ namespace DSPRE {
                     RomInfo.SetConditionalMusicTableOffsetToRAMAddress();
                     conditionalMusicTable = new List<(ushort, ushort, ushort)>();
 
-                    conditionalMusicTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - DSUtils.ARM9.address;
-                    byte tableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.conditionalMusicTableOffsetToRAMAddress - 8);
+                    conditionalMusicTableStartAddress = BitConverter.ToUInt32(ARM9.ReadBytes(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - ARM9.address;
+                    byte tableEntriesCount = ARM9.ReadByte(RomInfo.conditionalMusicTableOffsetToRAMAddress - 8);
 
                     conditionalMusicTableListBox.Items.Clear();
-                    using (DSUtils.ARM9.Reader ar = new DSUtils.ARM9.Reader(conditionalMusicTableStartAddress)) {
+                    using (ARM9.Reader ar = new ARM9.Reader(conditionalMusicTableStartAddress)) {
                         for (int i = 0; i < tableEntriesCount; i++) {
                             ushort header = ar.ReadUInt16();
                             ushort flag = ar.ReadUInt16();
@@ -8786,25 +8786,25 @@ namespace DSPRE {
 
                 effectsComboTable = new List<(ushort vsGraph, ushort battleSSEQ)>();
 
-                effectsComboMainTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.effectsComboTableOffsetToRAMAddress, 4), 0);
-                ROMToolboxDialog.flag_MainComboTableRepointed = (effectsComboMainTableStartAddress >= RomInfo.synthOverlayLoadAddress);
-                effectsComboMainTableStartAddress -= ROMToolboxDialog.flag_MainComboTableRepointed ? RomInfo.synthOverlayLoadAddress : DSUtils.ARM9.address;
+                effectsComboMainTableStartAddress = BitConverter.ToUInt32(ARM9.ReadBytes(RomInfo.effectsComboTableOffsetToRAMAddress, 4), 0);
+                PatchToolboxDialog.flag_MainComboTableRepointed = (effectsComboMainTableStartAddress >= RomInfo.synthOverlayLoadAddress);
+                effectsComboMainTableStartAddress -= PatchToolboxDialog.flag_MainComboTableRepointed ? RomInfo.synthOverlayLoadAddress : ARM9.address;
 
                 byte comboTableEntriesCount;
 
                 if (RomInfo.gameFamily == GameFamilies.HGSS) {
-                    comboTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.effectsComboTableOffsetToSizeLimiter);
+                    comboTableEntriesCount = ARM9.ReadByte(RomInfo.effectsComboTableOffsetToSizeLimiter);
 
                     vsPokemonEffectsList = new List<(int pokemonID, int comboID)>();
                     vsTrainerEffectsList = new List<(int trainerClass, int comboID)>();
 
-                    vsPokemonTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsPokemonEntryTableOffsetToRAMAddress, 4), 0);
-                    ROMToolboxDialog.flag_PokemonBattleTableRepointed = (vsPokemonTableStartAddress >= RomInfo.synthOverlayLoadAddress);
-                    vsPokemonTableStartAddress -= ROMToolboxDialog.flag_PokemonBattleTableRepointed ? RomInfo.synthOverlayLoadAddress : DSUtils.ARM9.address;
+                    vsPokemonTableStartAddress = BitConverter.ToUInt32(ARM9.ReadBytes(RomInfo.vsPokemonEntryTableOffsetToRAMAddress, 4), 0);
+                    PatchToolboxDialog.flag_PokemonBattleTableRepointed = (vsPokemonTableStartAddress >= RomInfo.synthOverlayLoadAddress);
+                    vsPokemonTableStartAddress -= PatchToolboxDialog.flag_PokemonBattleTableRepointed ? RomInfo.synthOverlayLoadAddress : ARM9.address;
 
-                    vsTrainerTableStartAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(RomInfo.vsTrainerEntryTableOffsetToRAMAddress, 4), 0);
-                    ROMToolboxDialog.flag_TrainerClassBattleTableRepointed = (vsTrainerTableStartAddress >= RomInfo.synthOverlayLoadAddress);
-                    vsTrainerTableStartAddress -= ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? RomInfo.synthOverlayLoadAddress : DSUtils.ARM9.address;
+                    vsTrainerTableStartAddress = BitConverter.ToUInt32(ARM9.ReadBytes(RomInfo.vsTrainerEntryTableOffsetToRAMAddress, 4), 0);
+                    PatchToolboxDialog.flag_TrainerClassBattleTableRepointed = (vsTrainerTableStartAddress >= RomInfo.synthOverlayLoadAddress);
+                    vsTrainerTableStartAddress -= PatchToolboxDialog.flag_TrainerClassBattleTableRepointed ? RomInfo.synthOverlayLoadAddress : ARM9.address;
 
 
                     pbEffectsPokemonCombobox.Items.Clear();
@@ -8823,11 +8823,11 @@ namespace DSPRE {
 
                 pbEffectsCombosListbox.Items.Clear();
 
-                String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+                String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + PatchToolboxDialog.expandedARMfileID.ToString("D4");
 
                 if (RomInfo.gameFamily == GameFamilies.HGSS) {
-                    using (DSUtils.EasyReader ar = new DSUtils.EasyReader(ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsTrainerTableStartAddress)) {
-                        byte trainerTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.vsTrainerEntryTableOffsetToSizeLimiter);
+                    using (DSUtils.EasyReader ar = new DSUtils.EasyReader(PatchToolboxDialog.flag_TrainerClassBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsTrainerTableStartAddress)) {
+                        byte trainerTableEntriesCount = ARM9.ReadByte(RomInfo.vsTrainerEntryTableOffsetToSizeLimiter);
 
                         for (int i = 0; i < trainerTableEntriesCount; i++) {
                             ushort entry = ar.ReadUInt16();
@@ -8838,8 +8838,8 @@ namespace DSPRE {
                         }
                     }
 
-                    using (DSUtils.EasyReader ar = new DSUtils.EasyReader(ROMToolboxDialog.flag_PokemonBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsPokemonTableStartAddress)) {
-                        byte pokemonTableEntriesCount = DSUtils.ARM9.ReadByte(RomInfo.vsPokemonEntryTableOffsetToSizeLimiter);
+                    using (DSUtils.EasyReader ar = new DSUtils.EasyReader(PatchToolboxDialog.flag_PokemonBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsPokemonTableStartAddress)) {
+                        byte pokemonTableEntriesCount = ARM9.ReadByte(RomInfo.vsPokemonEntryTableOffsetToSizeLimiter);
 
                         for (int i = 0; i < pokemonTableEntriesCount; i++) {
                             ushort entry = ar.ReadUInt16();
@@ -8858,7 +8858,7 @@ namespace DSPRE {
                     }
                 }
 
-                using (DSUtils.EasyReader ar = new DSUtils.EasyReader(ROMToolboxDialog.flag_MainComboTableRepointed ? expArmPath : RomInfo.arm9Path, effectsComboMainTableStartAddress)) {
+                using (DSUtils.EasyReader ar = new DSUtils.EasyReader(PatchToolboxDialog.flag_MainComboTableRepointed ? expArmPath : RomInfo.arm9Path, effectsComboMainTableStartAddress)) {
                     for (int i = 0; i < comboTableEntriesCount; i++) {
                         ushort battleIntroEffect = ar.ReadUInt16();
                         ushort battleMusic = ar.ReadUInt16();
@@ -8956,9 +8956,9 @@ namespace DSPRE {
 
         private void saveConditionalMusicTableBTN_Click(object sender, EventArgs e) {
             for (int i = 0; i < conditionalMusicTable.Count; i++) {
-                DSUtils.ARM9.WriteBytes(BitConverter.GetBytes(conditionalMusicTable[i].header), (uint)(conditionalMusicTableStartAddress + 6 * i));
-                DSUtils.ARM9.WriteBytes(BitConverter.GetBytes(conditionalMusicTable[i].flag), (uint)(conditionalMusicTableStartAddress + 6 * i + 2));
-                DSUtils.ARM9.WriteBytes(BitConverter.GetBytes(conditionalMusicTable[i].music), (uint)(conditionalMusicTableStartAddress + 6 * i + 4));
+                ARM9.WriteBytes(BitConverter.GetBytes(conditionalMusicTable[i].header), (uint)(conditionalMusicTableStartAddress + 6 * i));
+                ARM9.WriteBytes(BitConverter.GetBytes(conditionalMusicTable[i].flag), (uint)(conditionalMusicTableStartAddress + 6 * i + 2));
+                ARM9.WriteBytes(BitConverter.GetBytes(conditionalMusicTable[i].music), (uint)(conditionalMusicTableStartAddress + 6 * i + 4));
             }
         }
 
@@ -8973,8 +8973,8 @@ namespace DSPRE {
 
             effectsComboTable[index] = (battleIntroEffect, battleMusic);
 
-            String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + ROMToolboxDialog.expandedARMfileID.ToString("D4");
-            using (DSUtils.EasyWriter wr = new DSUtils.EasyWriter(ROMToolboxDialog.flag_MainComboTableRepointed ? expArmPath : RomInfo.arm9Path, effectsComboMainTableStartAddress + 4 * index)) {
+            String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + PatchToolboxDialog.expandedARMfileID.ToString("D4");
+            using (DSUtils.EasyWriter wr = new DSUtils.EasyWriter(PatchToolboxDialog.flag_MainComboTableRepointed ? expArmPath : RomInfo.arm9Path, effectsComboMainTableStartAddress + 4 * index)) {
                 wr.Write(battleIntroEffect);
                 wr.Write(battleMusic);
             };
@@ -8997,8 +8997,8 @@ namespace DSPRE {
 
             vsPokemonEffectsList[index] = (pokemonID, comboID);
 
-            String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + ROMToolboxDialog.expandedARMfileID.ToString("D4");
-            using (DSUtils.EasyWriter wr = new DSUtils.EasyWriter(ROMToolboxDialog.flag_PokemonBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsPokemonTableStartAddress + 2 * index)) {
+            String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + PatchToolboxDialog.expandedARMfileID.ToString("D4");
+            using (DSUtils.EasyWriter wr = new DSUtils.EasyWriter(PatchToolboxDialog.flag_PokemonBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsPokemonTableStartAddress + 2 * index)) {
                 wr.Write((ushort)((pokemonID & 1023) + (comboID << 10))); //PokemonID
             };
 
@@ -9013,8 +9013,8 @@ namespace DSPRE {
             ushort comboID = (ushort)pbEffectsTrainerChooseMainCombobox.SelectedIndex;
 
             vsTrainerEffectsList[index] = (trainerClass, comboID);
-            String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + ROMToolboxDialog.expandedARMfileID.ToString("D4");
-            using (DSUtils.EasyWriter wr = new DSUtils.EasyWriter(ROMToolboxDialog.flag_TrainerClassBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsTrainerTableStartAddress + 2 * index)) {
+            String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + PatchToolboxDialog.expandedARMfileID.ToString("D4");
+            using (DSUtils.EasyWriter wr = new DSUtils.EasyWriter(PatchToolboxDialog.flag_TrainerClassBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsTrainerTableStartAddress + 2 * index)) {
                 wr.Write((ushort)((trainerClass & 1023) + (comboID << 10)));
             };
 

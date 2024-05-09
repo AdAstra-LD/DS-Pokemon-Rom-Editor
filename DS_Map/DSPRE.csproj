@@ -95,6 +95,11 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DSUtils\ARM9.cs" />
+    <Compile Include="DSUtils\DSUtils.cs" />
+    <Compile Include="DSUtils\ModelUtils.cs" />
+    <Compile Include="DSUtils\NSBUtils.cs" />
+    <Compile Include="DSUtils\OverlayUtils.cs" />
     <Compile Include="DVCalculator\DVCalc.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -205,7 +210,6 @@
     <Compile Include="Resources\ROMToolboxDB\ToolboxDB.cs" />
     <Compile Include="Resources\ScriptDatabase.cs" />
     <Compile Include="ROMFiles\AreaData.cs" />
-    <Compile Include="DSUtils.cs" />
     <Compile Include="Resources\CommandsDatabase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -252,11 +256,11 @@
     <Compile Include="ROMFiles\SpeciesFile.cs" />
     <Compile Include="ROMFiles\TrainerFile.cs" />
     <Compile Include="ROMFiles\VariableValueTrigger.cs" />
-    <Compile Include="ROMToolboxDialog.cs">
+    <Compile Include="PatchToolboxDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ROMToolboxDialog.Designer.cs">
-      <DependentUpon>ROMToolboxDialog.cs</DependentUpon>
+    <Compile Include="PatchToolboxDialog.Designer.cs">
+      <DependentUpon>PatchToolboxDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="BuildingEditor.cs">
       <SubType>Form</SubType>
@@ -417,8 +421,8 @@
       <DependentUpon>CommandsDatabase.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ROMToolboxDialog.resx">
-      <DependentUpon>ROMToolboxDialog.cs</DependentUpon>
+    <EmbeddedResource Include="PatchToolboxDialog.resx">
+      <DependentUpon>PatchToolboxDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BuildingEditor.resx">
       <DependentUpon>BuildingEditor.cs</DependentUpon>

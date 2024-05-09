@@ -490,7 +490,7 @@ namespace DSPRE {
         public static void SetOWtable() {
             switch (gameFamily) {
                 case GameFamilies.DP:
-                    OWtablePath = DSUtils.GetOverlayPath(5);
+                    OWtablePath = OverlayUtils.GetPath(5);
                     switch (gameLanguage) { // Go to the beginning of the overworld table
                         case GameLanguages.English:
                             OWTableOffset = 0x22BCC;
@@ -504,7 +504,7 @@ namespace DSPRE {
                     }
                     break;
                 case GameFamilies.Plat:
-                    OWtablePath = DSUtils.GetOverlayPath(5);
+                    OWtablePath = OverlayUtils.GetPath(5);
                     switch (gameLanguage) { // Go to the beginning of the overworld table
                         case GameLanguages.Italian:
                             OWTableOffset = 0x2BC44;
@@ -525,16 +525,16 @@ namespace DSPRE {
                     }
                     break;
                 case GameFamilies.HGSS:
-                    if (DSUtils.CheckOverlayHasCompressionFlag(1)) {
-                        if (DSUtils.OverlayIsCompressed(1)) {
-                            if (DSUtils.DecompressOverlay(1) < 0) {
+                    if (OverlayUtils.OverlayTable.IsDefaultCompressed(1)) {
+                        if (OverlayUtils.IsCompressed(1)) {
+                            if (OverlayUtils.Decompress(1) < 0) {
                                 MessageBox.Show("Overlay 1 couldn't be decompressed.\nOverworld sprites in the Event Editor will be " +
                                 "displayed incorrectly or not displayed at all.", "Decompression error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                     }
 
-                    string ov1Path = DSUtils.GetOverlayPath(1);
+                    string ov1Path = OverlayUtils.GetPath(1);
                     uint ov1Address = DSUtils.GetOverlayRAMAddress(1);
 
                     int ramAddrOfPointer;
@@ -565,7 +565,7 @@ namespace DSPRE {
                             return;
                         }
 
-                        string ov131path = DSUtils.GetOverlayPath(131);
+                        string ov131path = OverlayUtils.GetPath(131);
                         if (File.Exists(ov131path)) {
                             // if HGE field extension overlay exists
                             OWTableOffset = ramAddressOfTable - DSUtils.GetOverlayRAMAddress(131);
@@ -573,7 +573,7 @@ namespace DSPRE {
                         } else if (ramAddressOfTable >= RomInfo.synthOverlayLoadAddress) {
                             // if the pointer shows the table was moved to the synthetic overlay
                             OWTableOffset = ramAddressOfTable - RomInfo.synthOverlayLoadAddress;
-                            OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + ROMToolboxDialog.expandedARMfileID.ToString("D4");
+                            OWtablePath = gameDirs[DirNames.synthOverlay].unpackedDir + "\\" + PatchToolboxDialog.expandedARMfileID.ToString("D4");
                         } else {
                             OWTableOffset = ramAddressOfTable - ov1Address;
                             OWtablePath = ov1Path;
@@ -707,34 +707,34 @@ namespace DSPRE {
                 case GameFamilies.DP:
                     switch (gameLanguage) {
                         case GameLanguages.English:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B838, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x6B838, 4), 0);
                             break;
                         case GameLanguages.Italian:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B874, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x6B874, 4), 0);
                             break;
                         case GameLanguages.German:
                         case GameLanguages.French:
                         case GameLanguages.Spanish:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6B894, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x6B894, 4), 0);
                             break;
                         case GameLanguages.Japanese:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x6FDEC, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x6FDEC, 4), 0);
                             break;
                     }
                     break;
                 case GameFamilies.Plat:
                     switch (gameLanguage) {
                         case GameLanguages.English:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x79F80, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x79F80, 4), 0);
                             break;
                         case GameLanguages.Italian:
                         case GameLanguages.German:
                         case GameLanguages.French:
                         case GameLanguages.Spanish:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x7A020, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x7A020, 4), 0);
                             break;
                         case GameLanguages.Japanese:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x79858, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x79858, 4), 0);
                             break;
                     }
                     break;
@@ -743,25 +743,25 @@ namespace DSPRE {
                     switch (gameLanguage) {
                         case GameLanguages.English:
                         case GameLanguages.Italian:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x74408, 4), 0);
                             break;
                         case GameLanguages.German:
                             if (gameVersion == GameVersions.HeartGold) {
-                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
+                                monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x74408, 4), 0);
                             } else {
-                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74400, 4), 0);
+                                monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x74400, 4), 0);
                             }
                             break;
                         case GameLanguages.French:
                         case GameLanguages.Spanish:
                             if (gameVersion == GameVersions.HeartGold) {
-                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74400, 4), 0);
+                                monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x74400, 4), 0);
                             } else {
-                                monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x74408, 4), 0);
+                                monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x74408, 4), 0);
                             }
                             break;
                         case GameLanguages.Japanese:
-                            monIconPalTableAddress = BitConverter.ToUInt32(DSUtils.ARM9.ReadBytes(0x73EA0, 4), 0);
+                            monIconPalTableAddress = BitConverter.ToUInt32(ARM9.ReadBytes(0x73EA0, 4), 0);
                             break;
                     }
                     break;
@@ -973,7 +973,7 @@ namespace DSPRE {
             if(trainerNameLenOffset < 0) {
                 trainerNameMaxLen = TrainerFile.defaultNameLen;
             } else {
-                using (DSUtils.ARM9.Reader ar = new DSUtils.ARM9.Reader(trainerNameLenOffset)) {
+                using (ARM9.Reader ar = new ARM9.Reader(trainerNameLenOffset)) {
                     trainerNameMaxLen = ar.ReadByte();
                 }
             }

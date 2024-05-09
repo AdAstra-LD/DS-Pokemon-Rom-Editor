@@ -52,13 +52,13 @@ namespace DSPRE {
                 Environment.NewLine + "\nProceed?", "Confirmation required",  MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (d == DialogResult.Yes) {
-                string moneyOverlayPath = DSUtils.GetOverlayPath(RomInfo.initialMoneyOverlayNumber);
+                string moneyOverlayPath = OverlayUtils.GetPath(RomInfo.initialMoneyOverlayNumber);
                 ushort headerNumber = ushort.Parse(spawnHeaderComboBox.SelectedItem.ToString().Split()[0]);
 
-                DSUtils.ARM9.WriteBytes(BitConverter.GetBytes(headerNumber), RomInfo.arm9spawnOffset);
-                DSUtils.ARM9.WriteBytes(BitConverter.GetBytes((short)(matrixxUpDown.Value * 32 + localmapxUpDown.Value)), RomInfo.arm9spawnOffset + 8);
-                DSUtils.ARM9.WriteBytes(BitConverter.GetBytes((short)(matrixyUpDown.Value * 32 + localmapyUpDown.Value)), RomInfo.arm9spawnOffset + 12);
-                DSUtils.ARM9.WriteBytes(BitConverter.GetBytes((short)playerDirCombobox.SelectedIndex), RomInfo.arm9spawnOffset + 16);
+                ARM9.WriteBytes(BitConverter.GetBytes(headerNumber), RomInfo.arm9spawnOffset);
+                ARM9.WriteBytes(BitConverter.GetBytes((short)(matrixxUpDown.Value * 32 + localmapxUpDown.Value)), RomInfo.arm9spawnOffset + 8);
+                ARM9.WriteBytes(BitConverter.GetBytes((short)(matrixyUpDown.Value * 32 + localmapyUpDown.Value)), RomInfo.arm9spawnOffset + 12);
+                ARM9.WriteBytes(BitConverter.GetBytes((short)playerDirCombobox.SelectedIndex), RomInfo.arm9spawnOffset + 16);
 
                 DSUtils.WriteToFile(moneyOverlayPath, BitConverter.GetBytes((int)initialMoneyUpDown.Value), RomInfo.initialMoneyOverlayOffset);
                 MessageBox.Show("Your spawn settings have been changed.", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -69,9 +69,9 @@ namespace DSPRE {
         private void readDefaultSpawnPosButton_Click(object sender, EventArgs e) {;
             SetupFields(names);
 
-            ushort headerNumber = BitConverter.ToUInt16(DSUtils.ARM9.ReadBytes(RomInfo.arm9spawnOffset, 2), 0);
-            ushort globalX = BitConverter.ToUInt16(DSUtils.ARM9.ReadBytes(RomInfo.arm9spawnOffset + 8, 2), 0);
-            ushort globalY = BitConverter.ToUInt16(DSUtils.ARM9.ReadBytes(RomInfo.arm9spawnOffset + 12, 2), 0);
+            ushort headerNumber = BitConverter.ToUInt16(ARM9.ReadBytes(RomInfo.arm9spawnOffset, 2), 0);
+            ushort globalX = BitConverter.ToUInt16(ARM9.ReadBytes(RomInfo.arm9spawnOffset + 8, 2), 0);
+            ushort globalY = BitConverter.ToUInt16(ARM9.ReadBytes(RomInfo.arm9spawnOffset + 12, 2), 0);
 
             spawnHeaderComboBox.SelectedIndex = headerNumber;
             
@@ -92,16 +92,16 @@ namespace DSPRE {
             }
             
             ReadDefaultMoney();
-            playerDirCombobox.SelectedIndex = BitConverter.ToUInt16(DSUtils.ARM9.ReadBytes(RomInfo.arm9spawnOffset + 16, 2), 0);
+            playerDirCombobox.SelectedIndex = BitConverter.ToUInt16(ARM9.ReadBytes(RomInfo.arm9spawnOffset + 16, 2), 0);
         }
         private void ReadDefaultMoney() {
-            if (DSUtils.CheckOverlayHasCompressionFlag(RomInfo.initialMoneyOverlayNumber)) {
-                if (DSUtils.OverlayIsCompressed(RomInfo.initialMoneyOverlayNumber)) {
-                    DSUtils.DecompressOverlay(RomInfo.initialMoneyOverlayNumber);
+            if (OverlayUtils.OverlayTable.IsDefaultCompressed(RomInfo.initialMoneyOverlayNumber)) {
+                if (OverlayUtils.IsCompressed(RomInfo.initialMoneyOverlayNumber)) {
+                    OverlayUtils.Decompress(RomInfo.initialMoneyOverlayNumber);
                 }
             }
 
-            string pathToMoneyOverlay = DSUtils.GetOverlayPath(RomInfo.initialMoneyOverlayNumber);
+            string pathToMoneyOverlay = OverlayUtils.GetPath(RomInfo.initialMoneyOverlayNumber);
             initialMoneyUpDown.Value = BitConverter.ToUInt32(DSUtils.ReadFromFile(pathToMoneyOverlay, RomInfo.initialMoneyOverlayOffset, 4), 0);
         }
 
@@ -109,7 +109,7 @@ namespace DSPRE {
             ushort headerNumber = ushort.Parse(spawnHeaderComboBox.SelectedItem.ToString().Split()[0]);
 
             MapHeader currentHeader;
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied || ROMToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                 currentHeader = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + headerNumber.ToString("D4"), headerNumber, 0);
             } else {
                 currentHeader = MapHeader.LoadFromARM9(headerNumber);

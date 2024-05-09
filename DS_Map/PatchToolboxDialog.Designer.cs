@@ -1,6 +1,6 @@
 ﻿namespace DSPRE
 {
-    partial class ROMToolboxDialog
+    partial class PatchToolboxDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -27,7 +27,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() { 
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ROMToolboxDialog));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PatchToolboxDialog));
             this.applyItemStandardizeButton = new System.Windows.Forms.Button();
             this.arm9expansionTextLBL = new System.Windows.Forms.Label();
             this.arm9expansionLBL = new System.Windows.Forms.Label();

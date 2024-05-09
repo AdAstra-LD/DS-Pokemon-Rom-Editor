@@ -62,7 +62,7 @@ namespace DSPRE {
             string readingPath = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + modelID.ToString("D4");
 
             byte[] txFile = File.ReadAllBytes(readingPath);
-            byte[] texData = DSUtils.GetTexturesFromTexturedNSBMD(txFile);
+            byte[] texData = NSBUtils.GetTexturesFromTexturedNSBMD(txFile);
 
             if (texData.Length <= 4) {
                 Console.WriteLine("No textures found");
@@ -76,7 +76,7 @@ namespace DSPRE {
                 string filePath = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + currentIndex.ToString("D4");
 
                 using (DSUtils.EasyReader reader = new DSUtils.EasyReader(filePath, 0x14)) {
-                    string nsbmdName = DSUtils.ReadNSBMDname(reader);
+                    string nsbmdName = NSBUtils.ReadNSBMDname(reader);
                     buildingEditorBldListBox.Items.Add("[" + currentIndex.ToString("D3") + "] " + nsbmdName);
                 }
             }
@@ -207,7 +207,7 @@ namespace DSPRE {
                     int currentIndex = buildingEditorBldListBox.SelectedIndex;
 
                     File.Copy(im.FileName, folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + currentIndex.ToString("D4"), true);
-                    buildingEditorBldListBox.Items[currentIndex] = "[" + currentIndex.ToString("D3") + "] " + DSUtils.ReadNSBMDname(reader, 0x14);
+                    buildingEditorBldListBox.Items[currentIndex] = "[" + currentIndex.ToString("D3") + "] " + NSBUtils.ReadNSBMDname(reader, 0x14);
                     buildingEditorListBox_SelectedIndexChanged(null, null);
                 }
             }
@@ -275,7 +275,7 @@ namespace DSPRE {
         }
 
         private void bldExportDAEbutton_Click(object sender, EventArgs e) {
-            DSUtils.ModelToDAE(
+            ModelUtils.ModelToDAE(
                 modelName: buildingEditorBldListBox.SelectedItem.ToString().TrimEnd('\0'), 
                 modelData: currentModelData, 
                 textureData: textureComboBox.SelectedIndex < 1 ? null : File.ReadAllBytes(RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (textureComboBox.SelectedIndex - 1).ToString("D4"))

@@ -256,14 +256,14 @@ namespace DSPRE {
 
             switch (RomInfo.gameFamily) {
                 case RomInfo.GameFamilies.DP:
-                    iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x6B838, 4);
+                    iconPalTableBuf = ARM9.ReadBytes(0x6B838, 4);
                     break;
                 case RomInfo.GameFamilies.Plat:
-                    iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x79F80, 4);
+                    iconPalTableBuf = ARM9.ReadBytes(0x79F80, 4);
                     break;
                 case RomInfo.GameFamilies.HGSS:
                 default:
-                    iconPalTableBuf = DSUtils.ARM9.ReadBytes(0x74408, 4);
+                    iconPalTableBuf = ARM9.ReadBytes(0x74408, 4);
                     break;
             }
 

@@ -173,7 +173,7 @@ namespace DSPRE.ROMFiles {
             }
 
             /* Check if dynamic headers patch has been applied, and load header from arm9 or a/0/5/0 accordingly */
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied) {
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied) {
                 string path = Filesystem.GetDynamicHeaderPath(headerNumber);
                 mapHeader = MapHeader.LoadFromFile(path, headerNumber, 0);
             } else {
@@ -185,7 +185,7 @@ namespace DSPRE.ROMFiles {
 
         public static int GetHeaderCount() {
             int headerCount;
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied) {
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied) {
                 headerCount = Filesystem.GetDynamicHeadersCount();
             } else {
                 headerCount = RomInfo.GetHeaderCount();
@@ -196,12 +196,12 @@ namespace DSPRE.ROMFiles {
 
         public void SaveFile() {
             /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
-            if (ROMToolboxDialog.flag_DynamicHeadersPatchApplied) {
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied) {
                 string path = Filesystem.GetDynamicHeaderPath(ID);
                 DSUtils.WriteToFile(path, this.ToByteArray(), 0, 0, fmode: FileMode.Create);
             } else {
                 uint headerOffset = (uint)(RomInfo.headerTableOffset + MapHeader.length * this.ID);
-                DSUtils.ARM9.WriteBytes(this.ToByteArray(), headerOffset);
+                ARM9.WriteBytes(this.ToByteArray(), headerOffset);
             }
         }
 

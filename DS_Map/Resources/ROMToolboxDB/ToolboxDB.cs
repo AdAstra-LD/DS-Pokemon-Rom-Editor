@@ -39,8 +39,8 @@ namespace DSPRE.Resources.ROMToolboxDB {
                 ["initOffset" + "_" + RomInfo.GameFamilies.HGSS + "_" + RomInfo.GameLanguages.Spanish] = 0x02110354
             };
             internal ARM9PatchData() {
-                branchOffset = arm9ExpansionOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameFamily] - DSUtils.ARM9.address;
-                initOffset = arm9ExpansionOffsetsDB[nameof(initOffset) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage] - DSUtils.ARM9.address;
+                branchOffset = arm9ExpansionOffsetsDB[nameof(branchOffset) + "_" + RomInfo.gameFamily] - ARM9.address;
+                initOffset = arm9ExpansionOffsetsDB[nameof(initOffset) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage] - ARM9.address;
                 branchString = arm9ExpansionCodeDB[nameof(branchString) + "_" + RomInfo.gameFamily + "_" + RomInfo.gameLanguage];
 
                 if (RomInfo.gameFamily == GameFamilies.Plat) {
@@ -107,7 +107,7 @@ namespace DSPRE.Resources.ROMToolboxDB {
                         overlayOffset2 = BDHCamOffsetsDB[nameof(overlayOffset2) + "_" + RomInfo.gameFamily];
                         break;
                 }
-                branchOffset -= DSUtils.ARM9.address;
+                branchOffset -= ARM9.address;
                 overlayString1 = BDHCamCodeDB[nameof(overlayString1)];
                 overlayString2 = BDHCamCodeDB[nameof(overlayString2)];
                 subroutine = (byte[])new ResourceManager("DSPRE.Resources.ROMToolboxDB.BDHCAMPatchDB", Assembly.GetExecutingAssembly()).GetObject(RomInfo.romID + "_cam");

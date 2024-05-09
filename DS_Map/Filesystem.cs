@@ -33,7 +33,7 @@ namespace DSPRE {
             }
         }
 
-        public static string expArmPath { get { return Path.Combine(synthOverlay, ROMToolboxDialog.expandedARMfileID.ToString("D4")); } }
+        public static string expArmPath { get { return Path.Combine(synthOverlay, PatchToolboxDialog.expandedARMfileID.ToString("D4")); } }
 
         public static string GetPath(string path, int id, string format = "D4") {
             return Path.Combine(path, id.ToString(format));
