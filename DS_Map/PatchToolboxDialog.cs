@@ -461,7 +461,8 @@ namespace DSPRE {
 
         private void ApplyItemStandardizeButton_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("This process will apply the following changes:\n\n" +
-                "- Item scripts will be rearranged to follow the natural, ascending index order.\n\n",
+                "- Item scripts will be rearranged to follow the natural, ascending index order.\n\n" +
+                "- Any unsaved change to the current Event File will be discarded.\n\n",
                 "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes) {
@@ -477,25 +478,31 @@ namespace DSPRE {
                     ScriptFile itemScriptFile = new ScriptFile(RomInfo.itemScriptFileNumber);
 
                     // Create map for: script no. -> vanilla item
-                    int[] vanillaItemsArray = new int[itemScriptFile.allScripts.Count];
+                    int[] vanillaItemsArray = new int[itemScriptFile.allScripts.Count - 1];
 
                     for (int i = 0; i < itemScriptFile.allScripts.Count - 1; i++) {
                         vanillaItemsArray[i] = BitConverter.ToInt16(itemScriptFile.allScripts[i].commands[0].cmdParams[1], 0);
-                    }
+                    };
 
                     // Parse all event files and fix instances of ground items according to the new order
-                    for (int i = 0; i < Filesystem.GetEventFileCount(); i++) {
+                    int cnt = Filesystem.GetEventFileCount();
+                    (int itemScrMin, int itemScrMax) = (7000, 8000);
+
+                    for (int i = 0; i < cnt; i++) {
+                        bool dirty = false;
+
                         EventFile eventFile = new EventFile(i);
 
                         for (int j = 0; j < eventFile.overworlds.Count; j++) {
                             // If ow is marked as an item, or in the rare case it is not but script no. falls within item script range:
                             bool isItem = eventFile.overworlds[j].type == (ushort)Overworld.OwType.ITEM
-                                          || (eventFile.overworlds[j].scriptNumber >= 7000
-                                          && eventFile.overworlds[j].scriptNumber <= 8000);
+                                          || (eventFile.overworlds[j].scriptNumber >= itemScrMin
+                                          && eventFile.overworlds[j].scriptNumber <= itemScrMax);
 
                             if (isItem) {
-                                int itemScriptID = eventFile.overworlds[j].scriptNumber - 6999;
-                                eventFile.overworlds[j].scriptNumber = (ushort)(7000 + vanillaItemsArray[itemScriptID - 1]);
+                                int itemScriptID = eventFile.overworlds[j].scriptNumber - (itemScrMin - 1);
+                                eventFile.overworlds[j].scriptNumber = (ushort)(itemScrMin + vanillaItemsArray[itemScriptID - 1]);
+                                dirty = true;
                             }
                         }
 
@@ -513,17 +520,17 @@ namespace DSPRE {
                         int itemScriptID;
 
                         using (DSUtils.EasyReader ewr = new DSUtils.EasyReader(ow9path, ow9offs)) {
-                            itemScriptID = ewr.ReadUInt16() - (itemScriptRange.min - 1);
+                            itemScriptID = ewr.ReadUInt16() - (itemScrMin - 1);
                         }
 
                         using (DSUtils.EasyWriter ewr = new DSUtils.EasyWriter(ow9path, ow9offs)) {
-                            ewr.Write((ushort)(itemScriptRange.min + vanillaItemsArray[itemScriptID - 1]));
+                            ewr.Write((ushort)(itemScrMin + vanillaItemsArray[itemScriptID - 1]));
                         }
                     }
 
                     // Sort scripts in the Script File according to item indices
                     int itemCount = new TextArchive(RomInfo.itemNamesTextNumber).messages.Count;
-                    ScriptCommandContainer executeGive = new ScriptCommandContainer((uint)itemCount, itemScriptFile.allScripts[itemScriptFile.allScripts.Count - 1]);
+                    ScriptCommandContainer executeGive = new ScriptCommandContainer((uint)itemCount + 1, itemScriptFile.allScripts[itemScriptFile.allScripts.Count - 1]);
 
                     itemScriptFile.allScripts.Clear();
 

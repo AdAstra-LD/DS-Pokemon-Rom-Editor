@@ -6,28 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DSPRE.ROMFiles {
-
-    public enum MoveTypes : short {
-        Normal,
-        Fighting,
-        Flying,
-        Poison,
-        Ground,
-        Rock,
-        Bug,
-        Ghost,
-        Steel,
-        Unknown,
-        Fire,
-        Water,
-        Grass,
-        Electric,
-        Psychic,
-        Ice,
-        Dragon,
-        Dark
-    }
-
     public enum MoveCategory {
         Physical,
         Special,
