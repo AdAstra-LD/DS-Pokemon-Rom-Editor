@@ -19,7 +19,7 @@ namespace DSPRE {
 
             MapHeader tempMapHeader;
             List<string> locationNames = RomInfo.GetLocationNames();
-            Dictionary<int, string> EncounterFileLocationName = new Dictionary<int, string>();
+            Dictionary<int, List<string>> EncounterFileLocationNames = new Dictionary<int, List<string>>();
 
             for (ushort i = 0; i < totalNumHeaderFiles; i++) {
                 if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
@@ -27,20 +27,19 @@ namespace DSPRE {
                 } else {
                     tempMapHeader = MapHeader.LoadFromARM9(i);
                 }
-
-                if (tempMapHeader.wildPokemon != MapHeader.DPPT_NULL_ENCOUNTER_FILE_ID) {
-                    if (RomInfo.gameFamily == GameFamilies.DP) {
-                        EncounterFileLocationName.Add(tempMapHeader.wildPokemon, locationNames[((HeaderDP)tempMapHeader).locationName]);
-                    } else {
-                        EncounterFileLocationName.Add(tempMapHeader.wildPokemon, locationNames[((HeaderPt)tempMapHeader).locationName]);
+                if (tempMapHeader.wildPokemon != MapHeader.DPPT_NULL_ENCOUNTER_FILE_ID) {                 
+                    if (!EncounterFileLocationNames.ContainsKey(tempMapHeader.wildPokemon)) {
+                        EncounterFileLocationNames[tempMapHeader.wildPokemon] = new List<string>();
                     }
+                    EncounterFileLocationNames[tempMapHeader.wildPokemon].Add((gameFamily == GameFamilies.DP) ? 
+                        locationNames[((HeaderDP)tempMapHeader).locationName] : 
+                        locationNames[((HeaderPt)tempMapHeader).locationName]);
                 }
             }
 
-
             for (int i = 0; i < Directory.GetFiles(encounterFileFolder).Length; i++) {
-                if (EncounterFileLocationName.ContainsKey(i)) {
-                    selectEncounterComboBox.Items.Add("[" + i + "] " + EncounterFileLocationName[i]);
+                if (EncounterFileLocationNames.ContainsKey(i)) {
+                    selectEncounterComboBox.Items.Add("[" + i + "] " + String.Join(" + ", EncounterFileLocationNames[i]));
                 } else {
                     selectEncounterComboBox.Items.Add("[" + i + "] " + " Unused");
                 }
