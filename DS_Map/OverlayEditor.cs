@@ -107,7 +107,7 @@ namespace DSPRE {
             }
 
             DialogResult d = MessageBox.Show("This operation will modify the following overlays: " + Environment.NewLine
-                + String.Join("\n", modifiedNumbers)
+                + String.Join(", ", modifiedNumbers)
                 + "\nProceed?", "Confirmation required", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (d == DialogResult.Yes) {
