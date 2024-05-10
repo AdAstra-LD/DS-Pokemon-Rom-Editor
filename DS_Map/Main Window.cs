@@ -9865,5 +9865,15 @@ namespace DSPRE {
         private void evolutionsEditorToolStripMenuItem_Click(object sender, EventArgs e) {
             // Dummy func, to be deleted from MainWIndow
         }
+
+        private void overlayEditorToolStripMenuItem_Click(object sender, EventArgs e) {
+            Helpers.statusLabelMessage("Setting up Overlay Editor...");
+            Update();
+            OverlayEditor ovlEditor = new OverlayEditor();
+            ovlEditor.ShowDialog();
+
+            Helpers.statusLabelMessage();
+            Update();
+        }
     }
 }
