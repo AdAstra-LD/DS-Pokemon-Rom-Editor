@@ -809,6 +809,7 @@
             this.texturizeNSBMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.untexturizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractNSBTXFromNSBMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.overlayEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.monEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.personalDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.learnsetsEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -2544,7 +2545,7 @@
             this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
             this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.setSpawnPointButton.Location = new System.Drawing.Point(12, -9463);
+            this.setSpawnPointButton.Location = new System.Drawing.Point(12, -10665);
             this.setSpawnPointButton.Name = "setSpawnPointButton";
             this.setSpawnPointButton.Size = new System.Drawing.Size(117, 43);
             this.setSpawnPointButton.TabIndex = 35;
@@ -2560,7 +2561,7 @@
             this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.saveMatrixButton.Location = new System.Drawing.Point(12, -9419);
+            this.saveMatrixButton.Location = new System.Drawing.Point(12, -10621);
             this.saveMatrixButton.Name = "saveMatrixButton";
             this.saveMatrixButton.Size = new System.Drawing.Size(117, 43);
             this.saveMatrixButton.TabIndex = 34;
@@ -2744,7 +2745,7 @@
             this.matrixTabControl.Multiline = true;
             this.matrixTabControl.Name = "matrixTabControl";
             this.matrixTabControl.SelectedIndex = 0;
-            this.matrixTabControl.Size = new System.Drawing.Size(1040, 625);
+            this.matrixTabControl.Size = new System.Drawing.Size(1000, 625);
             this.matrixTabControl.TabIndex = 18;
             // 
             // headersTabPage
@@ -2753,7 +2754,7 @@
             this.headersTabPage.Location = new System.Drawing.Point(4, 22);
             this.headersTabPage.Name = "headersTabPage";
             this.headersTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.headersTabPage.Size = new System.Drawing.Size(1032, 599);
+            this.headersTabPage.Size = new System.Drawing.Size(992, 599);
             this.headersTabPage.TabIndex = 1;
             this.headersTabPage.Text = "Map Headers";
             this.headersTabPage.UseVisualStyleBackColor = true;
@@ -2816,7 +2817,7 @@
             this.heightsTabPage.Controls.Add(this.heightsGridView);
             this.heightsTabPage.Location = new System.Drawing.Point(4, 22);
             this.heightsTabPage.Name = "heightsTabPage";
-            this.heightsTabPage.Size = new System.Drawing.Size(1032, 599);
+            this.heightsTabPage.Size = new System.Drawing.Size(992, 599);
             this.heightsTabPage.TabIndex = 2;
             this.heightsTabPage.Text = "Map Heights";
             this.heightsTabPage.UseVisualStyleBackColor = true;
@@ -2879,7 +2880,7 @@
             this.mapFilesTabPage.Controls.Add(this.mapFilesGridView);
             this.mapFilesTabPage.Location = new System.Drawing.Point(4, 22);
             this.mapFilesTabPage.Name = "mapFilesTabPage";
-            this.mapFilesTabPage.Size = new System.Drawing.Size(1032, 599);
+            this.mapFilesTabPage.Size = new System.Drawing.Size(992, 599);
             this.mapFilesTabPage.TabIndex = 3;
             this.mapFilesTabPage.Text = "Map Files";
             this.mapFilesTabPage.UseVisualStyleBackColor = true;
@@ -4340,7 +4341,7 @@
             this.radio3D.AutoSize = true;
             this.radio3D.Checked = true;
             this.radio3D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio3D.Location = new System.Drawing.Point(-15792, -9439);
+            this.radio3D.Location = new System.Drawing.Point(-17778, -10641);
             this.radio3D.Name = "radio3D";
             this.radio3D.Size = new System.Drawing.Size(31, 23);
             this.radio3D.TabIndex = 26;
@@ -4355,7 +4356,7 @@
             this.radio2D.Appearance = System.Windows.Forms.Appearance.Button;
             this.radio2D.AutoSize = true;
             this.radio2D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio2D.Location = new System.Drawing.Point(-15792, -9415);
+            this.radio2D.Location = new System.Drawing.Point(-17778, -10617);
             this.radio2D.Name = "radio2D";
             this.radio2D.Size = new System.Drawing.Size(31, 23);
             this.radio2D.TabIndex = 25;
@@ -4370,7 +4371,7 @@
             this.wireframeCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.wireframeCheckBox.AutoSize = true;
             this.wireframeCheckBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, -9391);
+            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, -10593);
             this.wireframeCheckBox.Name = "wireframeCheckBox";
             this.wireframeCheckBox.Size = new System.Drawing.Size(31, 23);
             this.wireframeCheckBox.TabIndex = 27;
@@ -10234,7 +10235,8 @@
             this.NarcUtilityToolStripMenuItem,
             this.listBasedBatchRenameToolStripMenuItem,
             this.listBuilderToolStripMenuItem,
-            this.nSBMDUtilityToolStripMenuItem});
+            this.nSBMDUtilityToolStripMenuItem,
+            this.overlayEditorToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.aboutToolStripMenuItem.Text = "Tools";
@@ -10417,6 +10419,14 @@
             this.extractNSBTXFromNSBMDToolStripMenuItem.Size = new System.Drawing.Size(251, 38);
             this.extractNSBTXFromNSBMDToolStripMenuItem.Text = "Save textures from NSBMD";
             this.extractNSBTXFromNSBMDToolStripMenuItem.Click += new System.EventHandler(this.nsbmdExportTexButton_Click);
+            // 
+            // overlayEditorToolStripMenuItem
+            // 
+            this.overlayEditorToolStripMenuItem.Enabled = false;
+            this.overlayEditorToolStripMenuItem.Name = "overlayEditorToolStripMenuItem";
+            this.overlayEditorToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.overlayEditorToolStripMenuItem.Text = "Overlay Editor";
+            this.overlayEditorToolStripMenuItem.Click += new System.EventHandler(this.overlayEditorToolStripMenuItem_Click);
             // 
             // monEditorToolStripMenuItem
             // 
@@ -12003,6 +12013,7 @@
         public System.Windows.Forms.TabPage tabPageEncountersEditor;
         public Editors.EncountersEditor encountersEditor;
         private System.Windows.Forms.Button scanUnusedCollisionTypesButton;
+        private System.Windows.Forms.ToolStripMenuItem overlayEditorToolStripMenuItem;
     }
 }
 

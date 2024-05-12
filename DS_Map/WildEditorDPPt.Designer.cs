@@ -333,7 +333,7 @@
             // 
             this.removeEventFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeEventFileButton.Location = new System.Drawing.Point(500, 13);
+            this.removeEventFileButton.Location = new System.Drawing.Point(101, 667);
             this.removeEventFileButton.Name = "removeEventFileButton";
             this.removeEventFileButton.Size = new System.Drawing.Size(95, 35);
             this.removeEventFileButton.TabIndex = 60;
@@ -346,7 +346,7 @@
             // 
             this.addEventFileButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addEventFileButton.Location = new System.Drawing.Point(426, 13);
+            this.addEventFileButton.Location = new System.Drawing.Point(19, 667);
             this.addEventFileButton.Name = "addEventFileButton";
             this.addEventFileButton.Size = new System.Drawing.Size(72, 35);
             this.addEventFileButton.TabIndex = 59;
@@ -361,7 +361,7 @@
             this.selectEncounterComboBox.FormattingEnabled = true;
             this.selectEncounterComboBox.Location = new System.Drawing.Point(14, 26);
             this.selectEncounterComboBox.Name = "selectEncounterComboBox";
-            this.selectEncounterComboBox.Size = new System.Drawing.Size(175, 21);
+            this.selectEncounterComboBox.Size = new System.Drawing.Size(438, 21);
             this.selectEncounterComboBox.TabIndex = 58;
             this.selectEncounterComboBox.SelectedIndexChanged += new System.EventHandler(this.selectEncounterComboBox_SelectedIndexChanged);
             // 
@@ -369,7 +369,7 @@
             // 
             this.exportEncounterFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportEncounterFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportEncounterFileButton.Location = new System.Drawing.Point(288, 13);
+            this.exportEncounterFileButton.Location = new System.Drawing.Point(623, 13);
             this.exportEncounterFileButton.Name = "exportEncounterFileButton";
             this.exportEncounterFileButton.Size = new System.Drawing.Size(90, 35);
             this.exportEncounterFileButton.TabIndex = 57;
@@ -382,7 +382,7 @@
             // 
             this.importEncounterFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importEncounterFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importEncounterFileButton.Location = new System.Drawing.Point(195, 13);
+            this.importEncounterFileButton.Location = new System.Drawing.Point(520, 13);
             this.importEncounterFileButton.Name = "importEncounterFileButton";
             this.importEncounterFileButton.Size = new System.Drawing.Size(90, 35);
             this.importEncounterFileButton.TabIndex = 56;
@@ -395,7 +395,7 @@
             // 
             this.saveEventsButton.Image = global::DSPRE.Properties.Resources.saveButton;
             this.saveEventsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveEventsButton.Location = new System.Drawing.Point(655, 13);
+            this.saveEventsButton.Location = new System.Drawing.Point(655, 667);
             this.saveEventsButton.Name = "saveEventsButton";
             this.saveEventsButton.Size = new System.Drawing.Size(117, 35);
             this.saveEventsButton.TabIndex = 55;
@@ -577,7 +577,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 193F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 12F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 39F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 197F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 198F));
             this.tableLayoutPanel3.Controls.Add(this.label33, 0, 6);
             this.tableLayoutPanel3.Controls.Add(this.leafGreenFirstComboBox, 4, 5);
             this.tableLayoutPanel3.Controls.Add(this.fireRedSecondComboBox, 1, 6);
@@ -631,7 +631,7 @@
             this.leafGreenFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.leafGreenFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.leafGreenFirstComboBox.FormattingEnabled = true;
-            this.leafGreenFirstComboBox.Location = new System.Drawing.Point(276, 104);
+            this.leafGreenFirstComboBox.Location = new System.Drawing.Point(275, 104);
             this.leafGreenFirstComboBox.Name = "leafGreenFirstComboBox";
             this.leafGreenFirstComboBox.Size = new System.Drawing.Size(184, 21);
             this.leafGreenFirstComboBox.TabIndex = 207;
@@ -660,7 +660,7 @@
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(249, 131);
+            this.label37.Location = new System.Drawing.Point(248, 131);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(21, 13);
             this.label37.TabIndex = 210;
@@ -680,7 +680,7 @@
             this.leafGreenSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.leafGreenSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.leafGreenSecondComboBox.FormattingEnabled = true;
-            this.leafGreenSecondComboBox.Location = new System.Drawing.Point(276, 134);
+            this.leafGreenSecondComboBox.Location = new System.Drawing.Point(275, 134);
             this.leafGreenSecondComboBox.Name = "leafGreenSecondComboBox";
             this.leafGreenSecondComboBox.Size = new System.Drawing.Size(183, 21);
             this.leafGreenSecondComboBox.TabIndex = 209;
@@ -718,7 +718,7 @@
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(249, 101);
+            this.label39.Location = new System.Drawing.Point(248, 101);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(21, 13);
             this.label39.TabIndex = 208;
@@ -749,7 +749,7 @@
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(276, 84);
+            this.label36.Location = new System.Drawing.Point(275, 84);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(60, 13);
             this.label36.TabIndex = 216;
@@ -767,7 +767,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(276, 0);
+            this.label27.Location = new System.Drawing.Point(275, 0);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(49, 9);
             this.label27.TabIndex = 201;
@@ -776,7 +776,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(249, 9);
+            this.label30.Location = new System.Drawing.Point(248, 9);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(21, 13);
             this.label30.TabIndex = 193;
@@ -785,7 +785,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(249, 45);
+            this.label28.Location = new System.Drawing.Point(248, 45);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(21, 13);
             this.label28.TabIndex = 195;
@@ -796,7 +796,7 @@
             this.sapphireFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.sapphireFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.sapphireFirstComboBox.FormattingEnabled = true;
-            this.sapphireFirstComboBox.Location = new System.Drawing.Point(276, 12);
+            this.sapphireFirstComboBox.Location = new System.Drawing.Point(275, 12);
             this.sapphireFirstComboBox.Name = "sapphireFirstComboBox";
             this.sapphireFirstComboBox.Size = new System.Drawing.Size(184, 21);
             this.sapphireFirstComboBox.TabIndex = 192;
@@ -807,7 +807,7 @@
             this.sapphireSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.sapphireSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.sapphireSecondComboBox.FormattingEnabled = true;
-            this.sapphireSecondComboBox.Location = new System.Drawing.Point(276, 48);
+            this.sapphireSecondComboBox.Location = new System.Drawing.Point(275, 48);
             this.sapphireSecondComboBox.Name = "sapphireSecondComboBox";
             this.sapphireSecondComboBox.Size = new System.Drawing.Size(183, 21);
             this.sapphireSecondComboBox.TabIndex = 194;
@@ -816,7 +816,7 @@
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(481, 45);
+            this.label32.Location = new System.Drawing.Point(480, 45);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(21, 13);
             this.label32.TabIndex = 199;
@@ -827,7 +827,7 @@
             this.emeraldSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.emeraldSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.emeraldSecondComboBox.FormattingEnabled = true;
-            this.emeraldSecondComboBox.Location = new System.Drawing.Point(520, 48);
+            this.emeraldSecondComboBox.Location = new System.Drawing.Point(519, 48);
             this.emeraldSecondComboBox.Name = "emeraldSecondComboBox";
             this.emeraldSecondComboBox.Size = new System.Drawing.Size(184, 21);
             this.emeraldSecondComboBox.TabIndex = 198;
@@ -836,7 +836,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(481, 9);
+            this.label31.Location = new System.Drawing.Point(480, 9);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(21, 13);
             this.label31.TabIndex = 197;
@@ -847,7 +847,7 @@
             this.emeraldFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.emeraldFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.emeraldFirstComboBox.FormattingEnabled = true;
-            this.emeraldFirstComboBox.Location = new System.Drawing.Point(520, 12);
+            this.emeraldFirstComboBox.Location = new System.Drawing.Point(519, 12);
             this.emeraldFirstComboBox.Name = "emeraldFirstComboBox";
             this.emeraldFirstComboBox.Size = new System.Drawing.Size(184, 21);
             this.emeraldFirstComboBox.TabIndex = 196;
@@ -856,7 +856,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(520, 0);
+            this.label25.Location = new System.Drawing.Point(519, 0);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(45, 9);
             this.label25.TabIndex = 202;
@@ -2644,7 +2644,7 @@
             // repairAllButton
             // 
             this.repairAllButton.Image = global::DSPRE.Properties.Resources.wrenchIcon;
-            this.repairAllButton.Location = new System.Drawing.Point(616, 11);
+            this.repairAllButton.Location = new System.Drawing.Point(734, 13);
             this.repairAllButton.Name = "repairAllButton";
             this.repairAllButton.Size = new System.Drawing.Size(38, 40);
             this.repairAllButton.TabIndex = 61;
@@ -2655,7 +2655,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(791, 673);
+            this.ClientSize = new System.Drawing.Size(777, 711);
             this.Controls.Add(this.repairAllButton);
             this.Controls.Add(this.mainTabControl);
             this.Controls.Add(this.removeEventFileButton);

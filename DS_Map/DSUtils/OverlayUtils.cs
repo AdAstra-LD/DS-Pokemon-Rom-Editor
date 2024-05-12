@@ -36,11 +36,11 @@ namespace DSPRE {
             /**
             * Gets number of overlays
             **/
-            public static long GetNumberOfOverlays() {
+            public static int GetNumberOfOverlays() {
                 using (FileStream fileStream = File.OpenRead(RomInfo.overlayTablePath))
                 {
                     // Get the length of the file in bytes
-                    return fileStream.Length / 32;
+                    return (int)(fileStream.Length / ENTRY_LEN);
                 }
             }
         }

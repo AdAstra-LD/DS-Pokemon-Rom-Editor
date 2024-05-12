@@ -190,6 +190,12 @@
     <Compile Include="MoveEditor.Designer.cs">
       <DependentUpon>MoveEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="OverlayEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OverlayEditor.Designer.cs">
+      <DependentUpon>OverlayEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="PersonalDataEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -404,6 +410,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LearnsetEditor.resx">
       <DependentUpon>LearnsetEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OverlayEditor.resx">
+      <DependentUpon>OverlayEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PersonalDataEditor.resx">
       <DependentUpon>PersonalDataEditor.cs</DependentUpon>
