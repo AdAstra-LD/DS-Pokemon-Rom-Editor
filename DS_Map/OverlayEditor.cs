@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static ScintillaNET.Style;
 
 namespace DSPRE { 
     public partial class OverlayEditor : Form {
@@ -77,7 +78,7 @@ namespace DSPRE {
                     e.Value = "0x" + value.ToString("X");
                     e.FormattingApplied = true;
                 }
-            }
+            }            
         }
 
         private void saveChangesButton_Click(object sender, EventArgs e) {
@@ -106,6 +107,12 @@ namespace DSPRE {
                 }
             }
 
+            if(FindMismatches(false)) {
+                MessageBox.Show("There are some overlays in a compression state that does not match the set value for compression in the y9 table.\n"
+                    + "This may cause errors or lack of usuability om hardware.\n"
+                    + "You can find the mismatched cells coloured in RED.\nThis message is purely informational.", "Compression Mark Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
             DialogResult d = MessageBox.Show("This operation will modify the following overlays: " + Environment.NewLine
                 + String.Join(", ", modifiedNumbers)
                 + "\nProceed?", "Confirmation required", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -119,6 +126,33 @@ namespace DSPRE {
                         OverlayUtils.Decompress(overlay.number);
                 }
             }
+        }
+
+        private bool FindMismatches(bool paintThem = true) {
+            foreach (DataGridViewRow row in overlayDataGrid.Rows) {
+                if ((bool)row.Cells[1].Value != (bool)row.Cells[2].Value) {
+                    if (paintThem) {
+                        row.Cells[1].Style.BackColor = Color.Red;
+                        row.Cells[2].Style.BackColor = Color.Red;
+                    } else {
+                        return true;
+                    }                    
+                } else {
+                    if (paintThem) {
+                        row.Cells[1].Style.BackColor = Color.White;
+                        row.Cells[2].Style.BackColor = Color.White;
+                    }                    
+                }
+            }
+            return false;
+        }
+
+        private void overlayDataGrid_SelectionChanged(object sender, EventArgs e) {
+            overlayDataGrid.ClearSelection();
+        }
+
+        private void overlayDataGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+            FindMismatches();
         }
     }
 
