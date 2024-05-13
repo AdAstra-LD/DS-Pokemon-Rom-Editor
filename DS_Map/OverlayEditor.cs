@@ -109,7 +109,7 @@ namespace DSPRE {
 
             if(FindMismatches(false)) {
                 MessageBox.Show("There are some overlays in a compression state that does not match the set value for compression in the y9 table.\n"
-                    + "This may cause errors or lack of usuability on hardware.\n"
+                    + "This may cause errors or lack of usability on hardware.\n"
                     + "You can find the mismatched cells coloured in RED.\nThis message is purely informational.", "Compression Mark Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
