@@ -7770,11 +7770,8 @@ namespace DSPRE {
             trainerClassEncounterMusicDict = new Dictionary<byte, (uint entryOffset, ushort musicD, ushort? musicN)>();
 
             uint encounterMusicTableTableStartAddress = BitConverter.ToUInt32(ARM9.ReadBytes(RomInfo.encounterMusicTableOffsetToRAMAddress, 4), 0) - ARM9.address;
-
-            uint entrySize = 4;
             uint tableSizeOffset = 10;
             if (gameFamily == GameFamilies.HGSS) {
-                entrySize += 2;
                 tableSizeOffset += 2;
                 encounterSSEQAltUpDown.Enabled = true;
             }
@@ -8539,10 +8536,16 @@ namespace DSPRE {
 
             byte b_selectedTrClass = (byte)selectedTrClass;
             ushort eyeMusicID = (ushort)encounterSSEQMainUpDown.Value;
+            ushort altEyeMusicID = (ushort)encounterSSEQAltUpDown.Value;
 
             if (trainerClassEncounterMusicDict.TryGetValue(b_selectedTrClass, out var dictEntry)) {
-                ARM9.WriteBytes(BitConverter.GetBytes(eyeMusicID), dictEntry.entryOffset);
-                trainerClassEncounterMusicDict[b_selectedTrClass] = (dictEntry.entryOffset, eyeMusicID, dictEntry.musicN);
+                ARM9.WriteBytes(BitConverter.GetBytes(eyeMusicID), dictEntry.entryOffset + 2);
+                
+                if (gameFamily.Equals(GameFamilies.HGSS)) {
+                    ARM9.WriteBytes(BitConverter.GetBytes(altEyeMusicID), dictEntry.entryOffset + 4);
+                }
+
+                trainerClassEncounterMusicDict[b_selectedTrClass] = (dictEntry.entryOffset, eyeMusicID, altEyeMusicID);
             }
 
             string newName = trainerClassNameTextbox.Text;

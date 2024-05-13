@@ -623,7 +623,7 @@ namespace DSPRE.Resources {
 
             [0x0252] = "CountPCFreeSpace",
 
-            [0x0261] = "TextAccesory",
+            [0x0261] = "TextAccessory",
             [0x0262] = "CheckPokemonInParty",
             [0x0263] = "SetDeoxysForm",
             //0x0264 is different between DP/Plat
@@ -2102,6 +2102,8 @@ namespace DSPRE.Resources {
 
             [0x02D9] = "CheckPokemonAlive",
             [0x02DA] = "CheckFollowingPoke",
+
+            [0x02DD] = "GetBornPokemonPartyPos",
 
             [0x02EA] = "OpenTouchScreen",
             [0x02EB] = "CloseTouchScreen",
