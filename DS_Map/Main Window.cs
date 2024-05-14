@@ -105,7 +105,7 @@ namespace DSPRE {
                     currentTrainerName = TrainerFile.NAME_NOT_FOUND;
                 }
 
-                trainerList.Add(currentTrainerName + " - " + trainerClasses.messages[classMessageID] + " [" + i.ToString("D2") + "] ");
+                trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[classMessageID] + " " + currentTrainerName);
 
             }
             return trainerList.ToArray();
@@ -734,8 +734,6 @@ namespace DSPRE {
                 }
             }
 
-            ARM9.WriteBytes(new byte[4] { 0, 0, 0, 0 }, (uint)(RomInfo.gameFamily == GameFamilies.DP ? 0xB7C : 0xBB4));
-
             Helpers.statusLabelMessage("Repacking ROM...");
 
             if (OverlayUtils.OverlayTable.IsDefaultCompressed(1)) {
@@ -985,7 +983,7 @@ namespace DSPRE {
 
             /* Read Header internal names */
             try {
-                headerListBoxNames = Helpers.getHeaderListBoxNames();
+                headerListBoxNames  = Helpers.getHeaderListBoxNames();
                 internalNames = Helpers.getInternalNames();
 
                 headerListBox.Items.Clear();
@@ -1258,7 +1256,7 @@ namespace DSPRE {
             textFileUpDown.Value = currentHeader.textArchiveID;
             wildPokeUpDown.Value = currentHeader.wildPokemon;
             weatherUpDown.Value = currentHeader.weatherID;
-            cameraUpDown.Value = currentHeader.cameraAngleID;
+            cameraUpDown.Value = currentHeader.cameraAngleID;            
             battleBackgroundUpDown.Value = currentHeader.battleBackground;
 
             if (RomInfo.gameFamily == GameFamilies.HGSS) {
