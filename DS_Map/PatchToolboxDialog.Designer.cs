@@ -506,7 +506,7 @@
             this.expandTrainerNamesTextLBL.Name = "expandTrainerNamesTextLBL";
             this.expandTrainerNamesTextLBL.Size = new System.Drawing.Size(288, 58);
             this.expandTrainerNamesTextLBL.TabIndex = 42;
-            this.expandTrainerNamesTextLBL.Text = "Expands trainer names to be up to 12 characters long.";
+            this.expandTrainerNamesTextLBL.Text = "Expands trainer names to be up to 16 characters long.";
             this.expandTrainerNamesTextLBL.UseMnemonic = false;
             // 
             // expandTrainerNamesLBL
