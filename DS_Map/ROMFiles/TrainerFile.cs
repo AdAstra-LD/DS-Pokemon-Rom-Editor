@@ -321,7 +321,7 @@ namespace DSPRE.ROMFiles {
         }
     }
     public class TrainerFile : RomFile {
-        public const int defaultNameLen = 7; //Does not include special \0 end character!
+        public const int defaultNameLen = 10; //Does not include special \0 end character!
         public const int POKE_IN_PARTY = 6;
         public static readonly string NAME_NOT_FOUND = "NAME READ ERROR";
 

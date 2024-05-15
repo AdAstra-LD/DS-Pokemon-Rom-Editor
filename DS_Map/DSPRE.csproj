@@ -184,6 +184,7 @@
     <Compile Include="LearnsetEditor.designer.cs">
       <DependentUpon>LearnsetEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="MessageEnc\EncryptText.cs" />
     <Compile Include="MoveEditor.cs">
       <SubType>Form</SubType>
     </Compile>
