@@ -655,10 +655,10 @@ namespace DSPRE.Resources {
                 [0x01] = "[01] Snow",
                 [0x02] = "[02] Leaves",
                 [0x04] = "[04] Grass",
-                [0x06] = "[06] Stairs, ice, but also some floor areas of S.S. Aqua",
+                [0x06] = "[06] Stairs & Ice",
                 [0x07] = "[07] Metal",
-                [0x0A] = "[0A] Stone ground (caves, etc.)",
-                [0x0D] = "[0D] Wood (Burned Tower, etc.)",
+                [0x0A] = "[0A] Cavern floor",
+                [0x0D] = "[0D] Wood",
                 [0x80] = "[80] Blocked"
             };
             public static Dictionary<byte, string> MapCollisionTypePainters = new Dictionary<byte, string>() {

@@ -4304,31 +4304,31 @@ namespace DSPRE {
         }
         private void PrepareCollisionPainterGraphics(byte collisionValue) {
             switch (collisionValue) {
-                case 0x01:
-                    paintPen = new Pen(Color.FromArgb(128, Color.AliceBlue));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.AliceBlue));
+                case 0x01: // Snow
+                    paintPen = new Pen(Color.FromArgb(128, Color.Lavender));
+                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Lavender));
                     break;
-                case 0x02:
+                case 0x02: // Leaves
                     paintPen = new Pen(Color.FromArgb(128, Color.ForestGreen));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.ForestGreen));
                     break;
-                case 0x04:
+                case 0x04: // Grass
                     paintPen = new Pen(Color.FromArgb(128, Color.LimeGreen));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.LimeGreen));
                     break;
-                case 0x06:
+                case 0x06: // Stairs and ice
                     paintPen = new Pen(Color.FromArgb(128, Color.PowderBlue));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.PowderBlue));
                     break;
-                case 0x07:
+                case 0x07: // Metal
                     paintPen = new Pen(Color.FromArgb(128, Color.Silver));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.Silver));
                     break;
-                case 0x0A:
+                case 0x0A: // Stone
                     paintPen = new Pen(Color.FromArgb(128, Color.DimGray));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.DimGray));
                     break;
-                case 0x0D:
+                case 0x0D: // Wood
                     paintPen = new Pen(Color.FromArgb(128, Color.SaddleBrown));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.SaddleBrown));
                     break;
@@ -4336,7 +4336,7 @@ namespace DSPRE {
                     paintPen = new Pen(Color.FromArgb(128, Color.Red));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.Red));
                     break;
-                default: // 0x00                    
+                default: // 0x00 - Walkeable               
                     paintPen = new Pen(Color.FromArgb(128, Color.White));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.White));
                     break;
