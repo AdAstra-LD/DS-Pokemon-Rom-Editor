@@ -76,6 +76,7 @@ namespace DSPRE
         public static int locationNamesTextNumber { get; private set; }
         public static int trainerNameLenOffset { get; private set; }
         public static int trainerNameMaxLen => SetTrainerNameMaxLen();
+        public static int trainerFunnyScriptNumber { get; private set; }
 
         public static string internalNamesLocation { get; private set; }
         public static readonly byte internalNameLength = 16;
@@ -219,6 +220,7 @@ namespace DSPRE
             SetLocationNamesTextNumber();
             SetTrainerNamesMessageNumber();
             SetTrainerClassMessageNumber();
+            SetTrainerFunnyScriptNumber();
             SetTrainerNameLenOffset();
 
             /* System */
@@ -1108,6 +1110,22 @@ namespace DSPRE
                     break;
             }
         }
+
+        private static void SetTrainerFunnyScriptNumber() {
+            switch (gameFamily) {
+                case GameFamilies.DP:
+                    trainerFunnyScriptNumber = 851;
+                    break;
+
+                case GameFamilies.Plat:
+                    trainerFunnyScriptNumber = 929;
+                    break;
+
+                default: // HGSS
+                    trainerFunnyScriptNumber = 740;
+                    break;
+            }
+        }        
 
         private static void SetTrainerNameLenOffset()
         {
