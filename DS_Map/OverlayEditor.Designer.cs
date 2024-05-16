@@ -39,9 +39,12 @@
             this.overlayDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.overlayDataGrid.Location = new System.Drawing.Point(12, 12);
             this.overlayDataGrid.Name = "overlayDataGrid";
+            this.overlayDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.overlayDataGrid.Size = new System.Drawing.Size(517, 271);
             this.overlayDataGrid.TabIndex = 0;
             this.overlayDataGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.overlayDataGrid_CellFormatting);
+            this.overlayDataGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.overlayDataGrid_CellValueChanged);
+            this.overlayDataGrid.SelectionChanged += new System.EventHandler(this.overlayDataGrid_SelectionChanged);
             // 
             // isCompressedButton
             // 

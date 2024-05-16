@@ -184,6 +184,7 @@
     <Compile Include="LearnsetEditor.designer.cs">
       <DependentUpon>LearnsetEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="MessageEnc\EncryptText.cs" />
     <Compile Include="MoveEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -474,6 +475,7 @@
     <None Include="Resources\ROMToolboxDB\IPGS_cam.bin" />
     <None Include="Resources\ROMToolboxDB\IPKE_cam.bin" />
     <None Include="Resources\ROMToolboxDB\IPKS_cam.bin" />
+    <None Include="Themes\.gitkeep" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
