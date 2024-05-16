@@ -652,7 +652,13 @@ namespace DSPRE.Resources {
 
             public static Dictionary<byte, string> MapCollisionPainters = new Dictionary<byte, string>() {
                 [0x00] = "[00] Walkable",
-                [0x04] = "[04] Grass Sound",
+                [0x01] = "[01] Snow",
+                [0x02] = "[02] Leaves",
+                [0x04] = "[04] Grass",
+                [0x06] = "[06] Stairs, ice, but also some floor areas of S.S. Aqua",
+                [0x07] = "[07] Metal",
+                [0x0A] = "[0A] Stone ground (caves, etc.)",
+                [0x0D] = "[0D] Wood (Burned Tower, etc.)",
                 [0x80] = "[80] Blocked"
             };
             public static Dictionary<byte, string> MapCollisionTypePainters = new Dictionary<byte, string>() {

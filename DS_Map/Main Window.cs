@@ -4304,17 +4304,41 @@ namespace DSPRE {
         }
         private void PrepareCollisionPainterGraphics(byte collisionValue) {
             switch (collisionValue) {
-                case 0x0:
-                    paintPen = new Pen(Color.FromArgb(128, Color.White));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.White));
+                case 0x01:
+                    paintPen = new Pen(Color.FromArgb(128, Color.AliceBlue));
+                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.AliceBlue));
+                    break;
+                case 0x02:
+                    paintPen = new Pen(Color.FromArgb(128, Color.ForestGreen));
+                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.ForestGreen));
+                    break;
+                case 0x04:
+                    paintPen = new Pen(Color.FromArgb(128, Color.LimeGreen));
+                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.LimeGreen));
+                    break;
+                case 0x06:
+                    paintPen = new Pen(Color.FromArgb(128, Color.PowderBlue));
+                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.PowderBlue));
+                    break;
+                case 0x07:
+                    paintPen = new Pen(Color.FromArgb(128, Color.Silver));
+                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Silver));
+                    break;
+                case 0x0A:
+                    paintPen = new Pen(Color.FromArgb(128, Color.DimGray));
+                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.DimGray));
+                    break;
+                case 0x0D:
+                    paintPen = new Pen(Color.FromArgb(128, Color.SaddleBrown));
+                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.SaddleBrown));
                     break;
                 case 0x80:
                     paintPen = new Pen(Color.FromArgb(128, Color.Red));
                     paintBrush = new SolidBrush(Color.FromArgb(128, Color.Red));
                     break;
-                default:
-                    paintPen = new Pen(Color.FromArgb(128, Color.LimeGreen));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.LimeGreen));
+                default: // 0x00                    
+                    paintPen = new Pen(Color.FromArgb(128, Color.White));
+                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.White));
                     break;
             }
         }
