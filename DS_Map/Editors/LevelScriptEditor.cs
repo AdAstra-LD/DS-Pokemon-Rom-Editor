@@ -56,8 +56,6 @@ namespace DSPRE.Editors {
             radioButtonLoadGame.Checked = false;
 
             textBoxScriptID.Enabled = false;
-            textBoxVariableName.Enabled = false;
-            textBoxVariableValue.Enabled = false;
 
             radioButtonVariableValue.Enabled = false;
             radioButtonMapChange.Enabled = false;
@@ -331,29 +329,40 @@ namespace DSPRE.Editors {
         private void radioButtonDecimal_CheckedChanged(object sender, EventArgs e) {
             handleDecimalFormat();
         }
+        private void AssignGroupBoxScriptText() {
+            if (radioButtonVariableValue.Checked) {
+                groupBoxScript.Text = "Keep running this Script";
+            } else {
+                groupBoxScript.Text = "Run this Script";
+            }
+        }
 
         private void radioButtonVariableValue_CheckedChanged(object sender, EventArgs e) {
-            textBoxVariableName.Enabled = true;
-            textBoxVariableValue.Enabled = true;
+            groupBoxVariable.Visible = true;
+            groupBoxValue.Visible = true;
             buttonAdd_logic();
+            AssignGroupBoxScriptText();
         }
 
         private void radioButtonMapChange_CheckedChanged(object sender, EventArgs e) {
-            textBoxVariableName.Enabled = false;
-            textBoxVariableValue.Enabled = false;
+            groupBoxVariable.Visible = false;
+            groupBoxValue.Visible = false;
             buttonAdd_logic();
+            AssignGroupBoxScriptText();
         }
 
         private void radioButtonScreenReset_CheckedChanged(object sender, EventArgs e) {
-            textBoxVariableName.Enabled = false;
-            textBoxVariableValue.Enabled = false;
+            groupBoxVariable.Visible = false;
+            groupBoxValue.Visible = false;
             buttonAdd_logic();
+            AssignGroupBoxScriptText();
         }
 
         private void radioButtonLoadGame_CheckedChanged(object sender, EventArgs e) {
-            textBoxVariableName.Enabled = false;
-            textBoxVariableValue.Enabled = false;
+            groupBoxVariable.Visible = false;
+            groupBoxValue.Visible = false;
             buttonAdd_logic();
+            AssignGroupBoxScriptText();
         }
 
         void textBoxScriptID_TextChanged(object sender, EventArgs e) {

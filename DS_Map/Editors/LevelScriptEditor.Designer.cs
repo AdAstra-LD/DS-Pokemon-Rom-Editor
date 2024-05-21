@@ -36,7 +36,7 @@ namespace DSPRE.Editors {
             this.textBoxScriptID = new System.Windows.Forms.TextBox();
             this.textBoxVariableName = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBoxScript = new System.Windows.Forms.GroupBox();
             this.groupBoxVariable = new System.Windows.Forms.GroupBox();
             this.groupBoxValue = new System.Windows.Forms.GroupBox();
             this.textBoxVariableValue = new System.Windows.Forms.TextBox();
@@ -58,7 +58,7 @@ namespace DSPRE.Editors {
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.groupBoxScript.SuspendLayout();
             this.groupBoxVariable.SuspendLayout();
             this.groupBoxValue.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -167,15 +167,15 @@ namespace DSPRE.Editors {
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Activation Condition";
             // 
-            // groupBox2
+            // groupBoxScript
             // 
-            this.groupBox2.Controls.Add(this.textBoxScriptID);
-            this.groupBox2.Location = new System.Drawing.Point(3, 480);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(149, 46);
-            this.groupBox2.TabIndex = 12;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Keep running this Script ID";
+            this.groupBoxScript.Controls.Add(this.textBoxScriptID);
+            this.groupBoxScript.Location = new System.Drawing.Point(3, 480);
+            this.groupBoxScript.Name = "groupBoxScript";
+            this.groupBoxScript.Size = new System.Drawing.Size(149, 46);
+            this.groupBoxScript.TabIndex = 12;
+            this.groupBoxScript.TabStop = false;
+            this.groupBoxScript.Text = "Keep running this Script ID";
             // 
             // groupBoxVariable
             // 
@@ -408,15 +408,15 @@ namespace DSPRE.Editors {
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBoxValue);
             this.Controls.Add(this.groupBoxVariable);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBoxScript);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.listBoxTriggers);
             this.Location = new System.Drawing.Point(15, 15);
             this.Name = "LevelScriptEditor";
             this.Size = new System.Drawing.Size(408, 622);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.groupBoxScript.ResumeLayout(false);
+            this.groupBoxScript.PerformLayout();
             this.groupBoxVariable.ResumeLayout(false);
             this.groupBoxVariable.PerformLayout();
             this.groupBoxValue.ResumeLayout(false);
@@ -451,7 +451,7 @@ namespace DSPRE.Editors {
     private System.Windows.Forms.TextBox textBoxScriptID;
     private System.Windows.Forms.TextBox textBoxVariableName;
     private System.Windows.Forms.GroupBox groupBox1;
-    private System.Windows.Forms.GroupBox groupBox2;
+    private System.Windows.Forms.GroupBox groupBoxScript;
     private System.Windows.Forms.GroupBox groupBoxVariable;
     private System.Windows.Forms.GroupBox groupBoxValue;
     private System.Windows.Forms.TextBox textBoxVariableValue;
