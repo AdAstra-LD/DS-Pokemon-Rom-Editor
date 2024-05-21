@@ -97,8 +97,7 @@
             this.syncChangesLabel.Name = "syncChangesLabel";
             this.syncChangesLabel.Size = new System.Drawing.Size(555, 13);
             this.syncChangesLabel.TabIndex = 2;
-            this.syncChangesLabel.Text = "When this checkbox is marked changinging the pokemon in any of the tabs will sync" +
-    "hronize it accross the other tabs";
+            this.syncChangesLabel.Text = "When this CheckBox is marked, all changes in any tab will be synchronized accross the other tabs.";
             // 
             // flowLayoutPanel1
             // 
