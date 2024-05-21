@@ -8075,10 +8075,9 @@ namespace DSPRE {
                 setTrainerPartyPokemonForm(i);
                 setTrainerPokemonGender(i);
 
-                if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2))
-                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX;
-                else
-                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
+                partyAbilityComboBoxList[i].SelectedIndex = currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2)
+                    ? TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX
+                    : TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
 
                 partyFormComboBoxList[i].SelectedIndex = currentTrainerFile.party[i].formID;
 
@@ -8605,12 +8604,17 @@ namespace DSPRE {
             (string ability1, string ability2) = getPokemonAbilityNames(partyPokemonComboboxList[partyPokemonPosition].SelectedIndex);
             partyAbilityComboBoxList[partyPokemonPosition].Items.Clear();
             partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability1);
-
+            
             //if the name " -" is returned for ability 2 then there is no ability 2
-            if (ability2.Equals(" -") || ability2.Equals(ability1) || gameFamily != GameFamilies.HGSS) {
+            if (ability2.Equals(" -") || gameFamily != GameFamilies.HGSS) {
                 partyAbilityComboBoxList[partyPokemonPosition].Enabled = false;
             } else {
-                partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability2);
+                string stringAbi2 = ability2;
+                if (ability2.Equals(ability1)) {
+                    stringAbi2 += " (2nd Slot)";
+                }
+
+                partyAbilityComboBoxList[partyPokemonPosition].Items.Add(stringAbi2);
                 partyAbilityComboBoxList[partyPokemonPosition].Enabled = true;
             }
 
