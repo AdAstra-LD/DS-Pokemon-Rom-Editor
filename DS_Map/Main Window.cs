@@ -687,9 +687,8 @@ namespace DSPRE {
             romToolboxToolStripMenuItem.Enabled = true;
             headerSearchToolStripButton.Enabled = true;
             headerSearchToolStripMenuItem.Enabled = true;
-            spawnEditorToolStripButton.Enabled = true;
             spawnEditorToolStripMenuItem.Enabled = true;
-            monEditorToolStripMenuItem.Enabled = true;
+            otherEditorsToolStripMenuItem.Enabled = true;
 
             scriptCommandsButton.Enabled = true;
             if (!RomInfo.gameFamily.Equals(GameFamilies.HGSS)) {
@@ -7959,22 +7958,27 @@ namespace DSPRE {
                     partyGenderComboBox.Items.Add("Female");
                 }
             } else {
-                foreach (ComboBox partyGenderComboBox in partyGenderComboBoxList)
+                foreach (ComboBox partyGenderComboBox in partyGenderComboBoxList) {
                     partyGenderComboBox.Visible = false;
+                }
             }
 
             if (gameFamily == GameFamilies.DP) {
-                foreach (ComboBox partyFormComboBox in partyFormComboBoxList)
+                foreach (ComboBox partyFormComboBox in partyFormComboBoxList) {
                     partyFormComboBox.Visible = false;
+                }
 
-                foreach (NumericUpDown partyBallSealUpDown in partyBallUpdownList)
+                foreach (NumericUpDown partyBallSealUpDown in partyBallUpdownList) {
                     partyBallSealUpDown.Enabled = false;
+                }
             } else {
-                foreach (ComboBox partyFormComboBox in partyFormComboBoxList)
+                foreach (ComboBox partyFormComboBox in partyFormComboBoxList) {
                     partyFormComboBox.Visible = true;
+                }
 
-                foreach (NumericUpDown partyBallSealUpDown in partyBallUpdownList)
+                foreach (NumericUpDown partyBallSealUpDown in partyBallUpdownList) {
                     partyBallSealUpDown.Enabled = true;
+                }
             }
 
             string[] itemNames = RomInfo.GetItemNames();
@@ -9864,7 +9868,7 @@ namespace DSPRE {
             Console.WriteLine("CSV file exported successfully.");
         }
 
-        private void personalDataEditorToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void pokemonDataEditorToolStripMenuItem_Click(object sender, EventArgs e) {
             string[] itemNames = RomInfo.GetItemNames();
             string[] abilityNames = RomInfo.GetAbilityNames();
             string[] moveNames = RomInfo.GetAttackNames();
@@ -9880,14 +9884,6 @@ namespace DSPRE {
 
             Helpers.statusLabelMessage();
             Update();
-        }
-
-        private void learnsetsEditorToolStripMenuItem_Click(object sender, EventArgs e) {
-            // Dummy func, to be deleted from MainWIndow
-        }
-
-        private void evolutionsEditorToolStripMenuItem_Click(object sender, EventArgs e) {
-            // Dummy func, to be deleted from MainWIndow
         }
 
         private void overlayEditorToolStripMenuItem_Click(object sender, EventArgs e) {
