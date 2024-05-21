@@ -134,6 +134,12 @@
     <Compile Include="Editors\LevelScriptEditor.Designer.cs">
       <DependentUpon>LevelScriptEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\MoveDataEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\MoveDataEditor.designer.cs">
+      <DependentUpon>MoveDataEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\SafariZoneEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -185,12 +191,6 @@
       <DependentUpon>LearnsetEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="MessageEnc\EncryptText.cs" />
-    <Compile Include="MoveEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MoveEditor.Designer.cs">
-      <DependentUpon>MoveEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="OverlayEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -249,7 +249,7 @@
     <Compile Include="ROMFiles\LevelScriptFile.cs" />
     <Compile Include="ROMFiles\LevelScriptTrigger.cs" />
     <Compile Include="ROMFiles\MapScreenLoadTrigger.cs" />
-    <Compile Include="ROMFiles\MoveFile.cs" />
+    <Compile Include="ROMFiles\MoveData.cs" />
     <Compile Include="ROMFiles\PokemonPersonalData.cs" />
     <Compile Include="ROMFiles\RomFile.cs" />
     <Compile Include="ROMFiles\SafariZoneEncounter.cs" />
@@ -387,6 +387,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\LevelScriptEditor.resx">
       <DependentUpon>LevelScriptEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\MoveDataEditor.resx">
+      <DependentUpon>MoveDataEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\SafariZoneEditor.resx">
       <DependentUpon>SafariZoneEditor.cs</DependentUpon>

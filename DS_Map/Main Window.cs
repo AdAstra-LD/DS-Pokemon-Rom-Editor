@@ -9895,5 +9895,24 @@ namespace DSPRE {
             Helpers.statusLabelMessage();
             Update();
         }
+
+        private void moveDataEditorToolStripMenuItem_Click(object sender, EventArgs e) {
+            Helpers.statusLabelMessage("Setting up Move Data Editor...");
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.moveData });
+
+            string[] moveDescriptions = new TextArchive(RomInfo.moveDescriptionsTextNumbers).messages.Select(
+            x => x.Replace("\\n", Environment.NewLine)).ToArray();
+
+            MoveDataEditor mde = new MoveDataEditor(
+                new TextArchive(RomInfo.moveNamesTextNumbers).messages.ToArray(),
+                moveDescriptions
+            );
+            mde.ShowDialog();
+
+            Helpers.statusLabelMessage();
+            Update();
+        }
     }
 }
