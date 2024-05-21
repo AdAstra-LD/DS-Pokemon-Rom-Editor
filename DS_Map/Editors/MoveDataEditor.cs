@@ -1,4 +1,5 @@
-﻿using DSPRE.ROMFiles;
+﻿using DSPRE.Resources;
+using DSPRE.ROMFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +14,6 @@ namespace DSPRE {
 
         private readonly string[] fileNames;
         private readonly string[] moveDescriptions;
-        private readonly string[] battleSequenceFiles;
 
         private int currentLoadedId = 0;
         private MoveData currentLoadedFile = null;
@@ -31,8 +31,17 @@ namespace DSPRE {
 
             moveNumberNumericUpDown.Maximum = fileNames.Length - 1;
             moveNameInputComboBox.Items.AddRange(this.fileNames);
-            this.battleSequenceFiles = RomInfo.GetBattleEffectSequenceFiles().Select( x => Path.GetFileName(x) ).ToArray();
-            battleSeqComboBox.Items.AddRange(this.battleSequenceFiles);
+            string[] battleSequenceFiles = RomInfo.GetBattleEffectSequenceFiles();
+
+            for (int i = 0; i < battleSequenceFiles.Length; i++) {
+                string[] db = PokeDatabase.MoveData.battleSequenceDescriptions;
+                
+                if (i >= db.Length || db[i] is null) {
+                    battleSeqComboBox.Items.Add($"{i:D3} - Undocumented");
+                } else {
+                    battleSeqComboBox.Items.Add(db[i]);
+                }
+            }
 
             moveSplitComboBox.Items.AddRange(Enum.GetNames(typeof(MoveData.MoveSplit)));
 
