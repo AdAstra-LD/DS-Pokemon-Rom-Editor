@@ -21,7 +21,7 @@ namespace DSPRE.ROMFiles {
     public override string ToString() {
       string[] pokemonNames = RomInfo.GetPokemonNames();
       string pokemon = pokemonNames[pokemonID];
-      return $"{pokemonID,4} {pokemon,10}: {minLevel,3} - {maxLevel,3}";
+      return $"({pokemonID,4}) {pokemon,10}: Lv {minLevel,3} to Lv.{maxLevel,3}";
     }
   }
 }
