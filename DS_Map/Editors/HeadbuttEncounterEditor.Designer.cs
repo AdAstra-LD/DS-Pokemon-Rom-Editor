@@ -191,7 +191,7 @@ namespace DSPRE.Editors {
             this.comboBoxMapFile.FormattingEnabled = true;
             this.comboBoxMapFile.Location = new System.Drawing.Point(45, 31);
             this.comboBoxMapFile.Name = "comboBoxMapFile";
-            this.comboBoxMapFile.Size = new System.Drawing.Size(287, 21);
+            this.comboBoxMapFile.Size = new System.Drawing.Size(168, 21);
             this.comboBoxMapFile.TabIndex = 40;
             this.comboBoxMapFile.SelectedIndexChanged += new System.EventHandler(this.comboBoxMapFile_SelectedIndexChanged);
             // 
@@ -216,7 +216,7 @@ namespace DSPRE.Editors {
             // labelLocationName
             // 
             this.labelLocationName.AutoSize = true;
-            this.labelLocationName.Location = new System.Drawing.Point(49, 55);
+            this.labelLocationName.Location = new System.Drawing.Point(219, 35);
             this.labelLocationName.Name = "labelLocationName";
             this.labelLocationName.Size = new System.Drawing.Size(35, 13);
             this.labelLocationName.TabIndex = 42;
