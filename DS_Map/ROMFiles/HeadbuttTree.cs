@@ -18,11 +18,6 @@ namespace DSPRE.ROMFiles {
       Special,
     }
 
-    public HeadbuttTree(BinaryReader br) {
-      this.globalX = br.ReadUInt16();
-      this.globalY = br.ReadUInt16();
-    }
-
     public HeadbuttTree(ushort globalX = ushort.MaxValue, ushort globalY = ushort.MaxValue) {
       this.globalX = globalX;
       this.globalY = globalY;

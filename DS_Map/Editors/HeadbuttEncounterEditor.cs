@@ -58,6 +58,7 @@ namespace DSPRE.Editors {
                 RomInfo.DirNames.maps,
                 RomInfo.DirNames.mapTextures,
                 RomInfo.DirNames.exteriorBuildingModels,
+                RomInfo.DirNames.interiorBuildingModels, //No trees in interior maps, but fixes exceptions. @AdAstra - 11.06.2024
                 RomInfo.DirNames.buildingTextures,
             });
 
@@ -88,7 +89,7 @@ namespace DSPRE.Editors {
 
             for (int i = 0; i < Filesystem.GetHeadbuttCount(); i++) {
                 if (i < headerListBoxNames.Count) {
-                    comboBoxMapHeader.Items.Add(headerListBoxNames[i]);
+                    headbuttFileComboBox.Items.Add(headerListBoxNames[i]);
                 } else {
                     i.ToString("D4");
                 }
@@ -108,8 +109,8 @@ namespace DSPRE.Editors {
 
             Helpers.EnableHandlers();
 
-            if (comboBoxMapHeader.Items.Count > 0) {
-                comboBoxMapHeader.SelectedIndex = 0;
+            if (headbuttFileComboBox.Items.Count > 0) {
+                headbuttFileComboBox.SelectedIndex = 0;
             }
         }
 
@@ -118,7 +119,7 @@ namespace DSPRE.Editors {
         }
 
         private void comboBoxMapHeader_SelectedIndexChanged(object sender, EventArgs e) {
-            ushort headbuttID = (ushort)comboBoxMapHeader.SelectedIndex;
+            ushort headbuttID = (ushort)headbuttFileComboBox.SelectedIndex;
             this.headbuttEncounterFile = new HeadbuttEncounterFile(headbuttID);
             setCurrentMap(headbuttEncounterFile);
         }
@@ -173,10 +174,13 @@ namespace DSPRE.Editors {
                     for (int x = 0; x < gameMatrix.width; x++) {
                         if (gameMatrix.headers[y, x] == mapHeader.ID) {
                             int mapID = gameMatrix.maps[y, x];
-                            if (mapID == GameMatrix.EMPTY) { continue; }
-                            HeadbuttEncounterMap map = new HeadbuttEncounterMap(mapID, x, y);
-                            if (mapHeaderMapsIDsList.Contains(map)) { continue; }
-                            mapHeaderMapsIDsList.Add(map);
+                            
+                            if (mapID != GameMatrix.EMPTY) {
+                                HeadbuttEncounterMap map = new HeadbuttEncounterMap(mapID, x, y);
+                                if (!mapHeaderMapsIDsList.Contains(map)) {
+                                    mapHeaderMapsIDsList.Add(map);
+                                }
+                            }
                         }
                     }
                 }
@@ -184,45 +188,48 @@ namespace DSPRE.Editors {
                 for (int y = 0; y < gameMatrix.height; y++) {
                     for (int x = 0; x < gameMatrix.width; x++) {
                         int mapID = gameMatrix.maps[y, x];
-                        if (mapID == GameMatrix.EMPTY) { continue; }
-                        HeadbuttEncounterMap map = new HeadbuttEncounterMap(mapID, x, y);
-                        if (mapHeaderMapsIDsList.Contains(map)) { continue; }
-                        mapHeaderMapsIDsList.Add(map);
+                        
+                        if (mapID != GameMatrix.EMPTY) {
+                            HeadbuttEncounterMap map = new HeadbuttEncounterMap(mapID, x, y);
+                            if (!mapHeaderMapsIDsList.Contains(map)) {
+                                mapHeaderMapsIDsList.Add(map);
+                            }
+                        }
                     }
                 }
             }
 
             foreach (HeadbuttTreeGroup treeGroup in headbuttEncounterFile.normalTreeGroups) {
                 foreach (HeadbuttTree tree in treeGroup.trees) {
-                    if (tree.unused) { continue; }
-                    if (tree.matrixX >= gameMatrix.width || tree.matrixY >= gameMatrix.height) { continue; }
-                    int x = tree.matrixX;
-                    int y = tree.matrixY;
-                    int mapID = gameMatrix.maps[y, x];
-                    if (mapID == GameMatrix.EMPTY) { continue; }
-                    HeadbuttEncounterMap map = new HeadbuttEncounterMap(mapID, x, y);
-                    if (mapHeaderMapsIDsList.Contains(map)) { continue; }
-                    mapHeaderMapsIDsList.Add(map);
+                    if (!tree.unused && tree.matrixX < gameMatrix.width && tree.matrixY < gameMatrix.height) {
+                        int mapID = gameMatrix.maps[tree.matrixY, tree.matrixX];
+                        if (mapID != GameMatrix.EMPTY) {
+                            HeadbuttEncounterMap map = new HeadbuttEncounterMap(mapID, tree.matrixX, tree.matrixY);
+                            if (!mapHeaderMapsIDsList.Contains(map)) {
+                                mapHeaderMapsIDsList.Add(map);
+                            }
+                        }
+                    }
                 }
             }
 
             foreach (HeadbuttTreeGroup treeGroup in headbuttEncounterFile.specialTreeGroups) {
                 foreach (HeadbuttTree tree in treeGroup.trees) {
-                    if (tree.unused) { continue; }
-                    if (tree.matrixX >= gameMatrix.width || tree.matrixY >= gameMatrix.height) { continue; }
-                    int x = tree.matrixX;
-                    int y = tree.matrixY;
-                    int mapID = gameMatrix.maps[y, x];
-                    if (mapID == GameMatrix.EMPTY) { continue; }
-                    HeadbuttEncounterMap map = new HeadbuttEncounterMap(mapID, x, y);
-                    if (mapHeaderMapsIDsList.Contains(map)) { continue; }
-                    mapHeaderMapsIDsList.Add(map);
+                    if (!tree.unused && tree.matrixX < gameMatrix.width && tree.matrixY < gameMatrix.height) {
+                        int mapID = gameMatrix.maps[tree.matrixY, tree.matrixX];
+                        if (mapID != GameMatrix.EMPTY) {
+                            HeadbuttEncounterMap map = new HeadbuttEncounterMap(mapID, tree.matrixX, tree.matrixY);
+                            if (!mapHeaderMapsIDsList.Contains(map)) {
+                                mapHeaderMapsIDsList.Add(map);
+                            }
+                        }
+                    }
                 }
             }
 
             mapHeaderMapsIDsList.Sort((first, second) => {
                 int ret = first.mapID.CompareTo(second.mapID);
-                return ret != 0 ? ret : first.x.CompareTo(second.x);
+                return ret == 0 ? first.x.CompareTo(second.x) : ret;
             });
             foreach (HeadbuttEncounterMap map in mapHeaderMapsIDsList) {
                 comboBoxMapFile.Items.Add(map);
@@ -260,15 +267,17 @@ namespace DSPRE.Editors {
             try {
                 ofd.InitialDirectory = Path.GetDirectoryName(ofd.FileName);
                 ofd.FileName = Path.GetFileName(ofd.FileName);
-            } catch (Exception ex) {
+            } catch (Exception) {
                 ofd.InitialDirectory = Path.GetDirectoryName(Environment.SpecialFolder.UserProfile.ToString());
                 ofd.FileName = Path.GetFileName(ofd.FileName);
             }
 
-            if (ofd.ShowDialog() != DialogResult.OK) { return; }
+            if (ofd.ShowDialog() != DialogResult.OK) { 
+                return; 
+            }
 
             this.headbuttEncounterFile = new HeadbuttEncounterFile(ofd.FileName);
-            headbuttEncounterFile.ID = (ushort)comboBoxMapHeader.SelectedIndex;
+            headbuttEncounterFile.ID = (ushort)headbuttFileComboBox.SelectedIndex;
             setCurrentMap(headbuttEncounterFile);
         }
 
@@ -332,13 +341,13 @@ namespace DSPRE.Editors {
 
         private void MarkTrees(Graphics g, BindingList<HeadbuttTreeGroup> treeGroups, HeadbuttTree.Types treeType) {
             HeadbuttEncounterMap map = comboBoxMapFile.SelectedItem as HeadbuttEncounterMap;
-            if (map == null) { return; }
-
-            foreach (HeadbuttTreeGroup treeGroup in treeGroups) {
-                foreach (HeadbuttTree tree in treeGroup.trees) {
-                    if (tree.unused) { continue; }
-                    if (tree.matrixX != map.x || tree.matrixY != map.y) { continue; }
-                    MarkTree(g, tree, treeType);
+            if (map != null) {
+                foreach (HeadbuttTreeGroup treeGroup in treeGroups) {
+                    foreach (HeadbuttTree tree in treeGroup.trees) {
+                        if (!tree.unused && tree.matrixX == map.x && tree.matrixY == map.y) {
+                            MarkTree(g, tree, treeType);
+                        }
+                    }
                 }
             }
         }
@@ -372,7 +381,9 @@ namespace DSPRE.Editors {
         private void ListBoxTrees_SelectedIndexChanged(object sender, EventArgs e) {
             listBoxTrees = sender as ListBox2;
             headbuttTree = listBoxTrees.SelectedItem as HeadbuttTree;
-            if (headbuttTree == null) { return; }
+            if (headbuttTree == null) { 
+                return; 
+            }
             numericUpDownTreeGlobalX.Value = headbuttTree.globalX;
             numericUpDownTreeGlobalY.Value = headbuttTree.globalY;
             numericUpDownTreeMatrixX.Value = headbuttTree.matrixX;
@@ -420,11 +431,12 @@ namespace DSPRE.Editors {
         private bool FindTreeFromMap(ListBox2 listBoxTreeGroups, ListBox2 listBoxTrees, int x, int y) {
             foreach (HeadbuttTreeGroup headbuttTreeGroup in listBoxTreeGroups.Items) {
                 foreach (HeadbuttTree tree in headbuttTreeGroup.trees) {
-                    if (tree.mapX != x || tree.mapY != y) { continue; }
-                    listBoxTreeGroups.SelectedItem = headbuttTreeGroup;
-                    listBoxTrees.SelectedItem = tree;
-                    tree.picked = true;
-                    return true;
+                    if (tree.mapX == x && tree.mapY == y) {
+                        listBoxTreeGroups.SelectedItem = headbuttTreeGroup;
+                        listBoxTrees.SelectedItem = tree;
+                        tree.picked = true;
+                        return true;
+                    }
                 }
             }
 
@@ -484,5 +496,6 @@ namespace DSPRE.Editors {
             dist = 115.2f;
             elev = 90f;
         }
+
     }
 }
