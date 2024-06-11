@@ -343,6 +343,10 @@ namespace DSPRE {
         }
 
         public static List<string> getHeaderListBoxNames() {
+            if (string.IsNullOrWhiteSpace(RomInfo.internalNamesPath)) {
+                return null;
+            }
+
             List<string> headerListBoxNames = new List<string>();
 
             using (DSUtils.EasyReader reader = new DSUtils.EasyReader(RomInfo.internalNamesPath)) {

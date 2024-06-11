@@ -70,15 +70,15 @@ namespace NSMBe4
                             switch (mode)
                             {
                                 case 0:
-                                    if (color == 3) col = Color.Transparent;
+                                    if (color == 3){ col = Color.Transparent; }
                                     break;
                                 case 1:
-                                    if (color == 2) col = ImageTiler.colorMean(p.getColorSafe(palOffs), p.getColorSafe(palOffs + 1), 1, 1);
-                                    if (color == 3) col = Color.Transparent;
+                                    if (color == 2){ col = ImageTiler.colorMean(p.getColorSafe(palOffs), p.getColorSafe(palOffs + 1), 1, 1); }
+                                    if (color == 3){ col = Color.Transparent; }
                                     break;
                                 case 3:
-                                    if (color == 2) col = ImageTiler.colorMean(p.getColorSafe(palOffs), p.getColorSafe(palOffs + 1), 5, 3);
-                                    if (color == 3) col = ImageTiler.colorMean(p.getColorSafe(palOffs), p.getColorSafe(palOffs + 1), 3, 5);
+                                    if (color == 2){ col = ImageTiler.colorMean(p.getColorSafe(palOffs), p.getColorSafe(palOffs + 1), 5, 3); }
+                                    if (color == 3){ col = ImageTiler.colorMean(p.getColorSafe(palOffs), p.getColorSafe(palOffs + 1), 3, 5); }
                                     break;
                             }
                             b.SetPixel((int)x * 4 + (int)xx, (int)y * 4 + (int)yy, col);

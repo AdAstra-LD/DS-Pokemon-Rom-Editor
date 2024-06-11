@@ -95,7 +95,7 @@ namespace NSMBe4
 
         //public static void close()
         //{
-        //    if (FS is null) return;
+        //    if (FS is null){ return; }
         //    FS.close();
         //}
 
@@ -126,7 +126,7 @@ namespace NSMBe4
             int lineNum = 0;
             try
             {
-                if (!System.IO.File.Exists(DescriptionPath)) return;
+                if (!System.IO.File.Exists(DescriptionPath)){ return; }
                 System.IO.StreamReader s = new System.IO.StreamReader(DescriptionPath);
                 List<string> curList = null;
                 while (!s.EndOfStream)

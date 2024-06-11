@@ -8,7 +8,7 @@ namespace DSPRE {
     /// </summary>
     public static void IncrementNoAnimation(this ProgressBar pb, int amount = 1) {
       pb.Value += amount;
-      if (pb.Value != pb.Maximum) pb.Value++;
+      if (pb.Value != pb.Maximum){ pb.Value++; }
       pb.Value--;
     }
 

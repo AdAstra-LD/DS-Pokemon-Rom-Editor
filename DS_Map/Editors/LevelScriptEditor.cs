@@ -16,7 +16,7 @@ namespace DSPRE.Editors {
         }
 
         public void SetUpLevelScriptEditor(MainProgram parent, bool force = false) {
-            if (levelScriptEditorIsReady && !force) return;
+            if (levelScriptEditorIsReady && !force){ return; }
             levelScriptEditorIsReady = true;
             this._parent = parent;
             DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.scripts }); //12 = scripts Narc Dir
@@ -126,7 +126,7 @@ namespace DSPRE.Editors {
                 _levelScriptFile = new LevelScriptFile(selectScriptFileComboBox.SelectedIndex);
 
                 listBoxTriggers.DataSource = _levelScriptFile.bufferSet;
-                if (listBoxTriggers.Items.Count > 0) listBoxTriggers.SelectedIndex = 0;
+                if (listBoxTriggers.Items.Count > 0){ listBoxTriggers.SelectedIndex = 0; }
 
                 enableButtons();
             } catch (InvalidDataException ex) { //not a level script
@@ -216,7 +216,7 @@ namespace DSPRE.Editors {
         }
 
         void buttonLocate_Click(object sender, EventArgs e) {
-            if (_levelScriptFile == null) return;
+            if (_levelScriptFile == null){ return; }
             string path = Filesystem.GetScriptPath(_levelScriptFile.ID);
             Helpers.ExplorerSelect(path);
         }
@@ -271,7 +271,7 @@ namespace DSPRE.Editors {
         }
 
         private void handleAutoFormat() {
-            if (!radioButtonAuto.Checked) return;
+            if (!radioButtonAuto.Checked){ return; }
 
             textBoxScriptID.Clear();
             textBoxVariableName.Clear();
@@ -287,7 +287,7 @@ namespace DSPRE.Editors {
         }
 
         private void handleHexFormat() {
-            if (!radioButtonHex.Checked) return;
+            if (!radioButtonHex.Checked){ return; }
 
             textBoxScriptID.Clear();
             textBoxVariableName.Clear();
@@ -303,7 +303,7 @@ namespace DSPRE.Editors {
         }
 
         private void handleDecimalFormat() {
-            if (!radioButtonDecimal.Checked) return;
+            if (!radioButtonDecimal.Checked){ return; }
 
             textBoxScriptID.Clear();
             textBoxVariableName.Clear();

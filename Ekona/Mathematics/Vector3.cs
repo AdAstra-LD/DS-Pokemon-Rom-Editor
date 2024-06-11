@@ -405,7 +405,7 @@ namespace Ekona.Mathematics
             double angle = firstVector.Angle(secondVector);
             Vector3 z = Vector3.CrossProduct(firstVector, secondVector);
             double det = Vector3.DotProduct(z, direction);
-            if (det < 0) angle = 2 * Math.PI - angle;
+            if (det < 0){ angle = 2 * Math.PI - angle; }
 
             return angle;
 
@@ -523,7 +523,7 @@ namespace Ekona.Mathematics
         public Vector3 Unit()
         {
             Vector3 result = new Vector3(this);
-            if (result == Vector3.Zero) return result;
+            if (result == Vector3.Zero){ return result; }
             result.Normalize();
             return result;
         }

@@ -70,57 +70,57 @@ namespace DSPRE.Editors {
     }
 
     private void listBoxObjectRequirements_SelectedIndexChanged(object sender, EventArgs e) {
-      if (Helpers.HandlersDisabled) return;
+      if (Helpers.HandlersDisabled){ return; }
       SafariZoneObjectRequirement safariZoneObjectRequirement = (SafariZoneObjectRequirement)listBoxObjectRequirements.SelectedItem;
-      if (safariZoneObjectRequirement == null) return;
+      if (safariZoneObjectRequirement == null){ return; }
       comboBoxObjectRequirementType.SelectedIndex = safariZoneObjectRequirement.typeID;
       numericUpDownObjectRequirementQty.Value = safariZoneObjectRequirement.quantity;
     }
 
     private void comboBoxObjectRequirementType_SelectedIndexChanged(object sender, EventArgs e) {
-      if (Helpers.HandlersDisabled) return;
-      // if (comboBoxObjectRequirementType.SelectedIndex == 0) comboBoxObjectRequirementType.SelectedIndex = 1; //no requirement is not valid
+      if (Helpers.HandlersDisabled){ return; }
+      // if (comboBoxObjectRequirementType.SelectedIndex == 0){ comboBoxObjectRequirementType.SelectedIndex = 1; } //no requirement is not valid
       SafariZoneObjectRequirement safariZoneObjectRequirement = (SafariZoneObjectRequirement)listBoxObjectRequirements.SelectedItem;
-      if (safariZoneObjectRequirement == null) return;
+      if (safariZoneObjectRequirement == null){ return; }
       safariZoneObjectRequirement.typeID = (byte)comboBoxObjectRequirementType.SelectedIndex;
       listBoxObjectRequirements.RefreshItem(listBoxObjectRequirements.SelectedIndex);
     }
 
     private void numericUpDownObjectRequirementQty_ValueChanged(object sender, EventArgs e) {
-      if (Helpers.HandlersDisabled) return;
+      if (Helpers.HandlersDisabled){ return; }
       SafariZoneObjectRequirement safariZoneObjectRequirement = (SafariZoneObjectRequirement)listBoxObjectRequirements.SelectedItem;
-      if (safariZoneObjectRequirement == null) return;
+      if (safariZoneObjectRequirement == null){ return; }
       safariZoneObjectRequirement.quantity = (byte)numericUpDownObjectRequirementQty.Value;
       listBoxObjectRequirements.RefreshItem(listBoxObjectRequirements.SelectedIndex);
     }
 
     private void listBoxObjectOptionalRequirements_SelectedIndexChanged(object sender, EventArgs e) {
-      if (Helpers.HandlersDisabled) return;
+      if (Helpers.HandlersDisabled){ return; }
       SafariZoneObjectRequirement safariZoneObjectRequirement = (SafariZoneObjectRequirement)listBoxObjectOptionalRequirements.SelectedItem;
-      if (safariZoneObjectRequirement == null) return;
+      if (safariZoneObjectRequirement == null){ return; }
       comboBoxOptionalObjectRequirementType.SelectedIndex = safariZoneObjectRequirement.typeID;
       numericUpDownObjectOptionalRequirementQty.Value = safariZoneObjectRequirement.quantity;
     }
 
     private void comboBoxOptionalObjectRequirementType_SelectedIndexChanged(object sender, EventArgs e) {
-      if (Helpers.HandlersDisabled) return;
+      if (Helpers.HandlersDisabled){ return; }
       SafariZoneObjectRequirement safariZoneObjectRequirement = (SafariZoneObjectRequirement)listBoxObjectOptionalRequirements.SelectedItem;
-      if (safariZoneObjectRequirement == null) return;
+      if (safariZoneObjectRequirement == null){ return; }
       safariZoneObjectRequirement.typeID = (byte)comboBoxOptionalObjectRequirementType.SelectedIndex;
       listBoxObjectOptionalRequirements.RefreshItem(listBoxObjectOptionalRequirements.SelectedIndex);
     }
 
     private void numericUpDownObjectOptionalRequirementQty_ValueChanged(object sender, EventArgs e) {
-      if (Helpers.HandlersDisabled) return;
+      if (Helpers.HandlersDisabled){ return; }
       SafariZoneObjectRequirement safariZoneObjectRequirement = (SafariZoneObjectRequirement)listBoxObjectOptionalRequirements.SelectedItem;
-      if (safariZoneObjectRequirement == null) return;
+      if (safariZoneObjectRequirement == null){ return; }
       safariZoneObjectRequirement.quantity = (byte)numericUpDownObjectOptionalRequirementQty.Value;
       listBoxObjectOptionalRequirements.RefreshItem(listBoxObjectOptionalRequirements.SelectedIndex);
     }
 
     private void buttonAddObjectEncounter_Click(object sender, EventArgs e) {
-      if (this.safariZoneEncounterGroup == null) return;
-      if (listBoxObjectOptionalRequirements.SelectedIndex == -1) return;
+      if (this.safariZoneEncounterGroup == null){ return; }
+      if (listBoxObjectOptionalRequirements.SelectedIndex == -1){ return; }
       safariZoneEncounterGroup.MorningEncountersObject.Add(new SafariZoneEncounter());
       safariZoneEncounterGroup.DayEncountersObject.Add(new SafariZoneEncounter());
       safariZoneEncounterGroup.NightEncountersObject.Add(new SafariZoneEncounter());
@@ -130,8 +130,8 @@ namespace DSPRE.Editors {
     }
 
     private void buttonRemoveObjectEncounter_Click(object sender, EventArgs e) {
-      if (this.safariZoneEncounterGroup == null) return;
-      if (listBoxObjectOptionalRequirements.SelectedIndex == -1) return;
+      if (this.safariZoneEncounterGroup == null){ return; }
+      if (listBoxObjectOptionalRequirements.SelectedIndex == -1){ return; }
       safariZoneEncounterGroup.MorningEncountersObject.RemoveAt(safariZoneEncounterGroup.MorningEncountersObject.Count - 1);
       safariZoneEncounterGroup.DayEncountersObject.RemoveAt(safariZoneEncounterGroup.DayEncountersObject.Count - 1);
       safariZoneEncounterGroup.NightEncountersObject.RemoveAt(safariZoneEncounterGroup.NightEncountersObject.Count - 1);

@@ -93,7 +93,7 @@ namespace Ekona.Images
             Byte[] img_tiles;
             if (tileForm == Images.TileForm.Horizontal)
             {
-                if (height < tile_size) height = tile_size;
+                if (height < tile_size){ height = tile_size; }
                 img_tiles = Actions.LinealToHorizontal(tiles, width, height, bpp, tile_size);
                 tilePal = Actions.LinealToHorizontal(tilePal, width, height, 8, tile_size);
             }
@@ -234,7 +234,7 @@ namespace Ekona.Images
                 height = value;
                 if (tileForm == TileForm.Horizontal || tileForm == TileForm.Vertical)
                 {
-                    if (this.height < this.tile_size) this.height = this.tile_size;
+                    if (this.height < this.tile_size){ this.height = this.tile_size; }
                     if (this.height % this.tile_size != 0)
                         this.height += this.tile_size - (this.height % this.tile_size);
                 }
@@ -248,7 +248,7 @@ namespace Ekona.Images
                 width = value;
                 if (tileForm == TileForm.Horizontal || tileForm == TileForm.Vertical)
                 {
-                    if (this.width < this.tile_size) this.width = this.tile_size;
+                    if (this.width < this.tile_size){ this.width = this.tile_size; }
                     if (this.width % this.tile_size != 0)
                         this.width += this.tile_size - (this.width % this.tile_size);
                 }

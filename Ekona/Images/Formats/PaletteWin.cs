@@ -79,7 +79,7 @@ namespace Ekona.Images.Formats
             bw.Write((uint)palette[0].Length * 4 + 4);              // data_size = file_length - 0x14
             bw.Write((ushort)0x0300);                               // version = 00 03
             bw.Write((ushort)(palette[0].Length));                  // num_colors
-            if (gimp_error) bw.Write((uint)0x00);                   // Error in Gimp 2.8
+            if (gimp_error){ bw.Write((uint)0x00); }                   // Error in Gimp 2.8
             for (int i = 0; i < palette[0].Length; i++)
             {
                 bw.Write(palette[0][i].R);

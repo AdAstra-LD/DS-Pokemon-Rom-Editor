@@ -39,8 +39,8 @@ namespace Ekona.Images
 
         private static double Clamp(double a)
         {
-            if (a > 255) a = 255;
-            if (a < 0) a = 0;
+            if (a > 255){ a = 255; }
+            if (a < 0){ a = 0; }
             return a;
         }
 
@@ -137,7 +137,7 @@ namespace Ekona.Images
             int r = 2 * c.R - boundColor.R;
             int g = 2 * c.G - boundColor.G;
             int b = 2 * c.B - boundColor.B;
-            if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) return c;
+            if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255){ return c; }
             return Color.FromArgb(255, r, g, b);
         }
 
@@ -150,7 +150,7 @@ namespace Ekona.Images
                 uniqueColors[0] = colors[aIndex];
                 uniqueColors[count - 1] = colors[bIndex];
                 for (int i = 0, j = 1; i < colors.Length && j < count - 1; i++)
-                    if (uniqueFlags[i] && i != aIndex && i != bIndex) uniqueColors[j++] = colors[i];
+                    if (uniqueFlags[i] && i != aIndex && i != bIndex){ uniqueColors[j++] = colors[i]; }
                 for (int i = 0; i < count; i++)
                     inputPoints[i] = new Vector3(uniqueColors[i].R / 8, uniqueColors[i].G / 8, uniqueColors[i].B / 8);
             }
@@ -335,7 +335,7 @@ namespace Ekona.Images
                 uint bits = indices >> (2 * i);
 
                 float beta = (float)(bits & 1);
-                if ((bits & 2) > 0) beta = 0.5f;
+                if ((bits & 2) > 0){ beta = 0.5f; }
                 float alpha = 1.0f - beta;
 
                 alpha2_sum += alpha * alpha;
@@ -346,7 +346,7 @@ namespace Ekona.Images
             }
 
             float denom = alpha2_sum * beta2_sum - alphabeta_sum * alphabeta_sum;
-            if (NvMath.Equal(denom, 0.0f)) return;
+            if (NvMath.Equal(denom, 0.0f)){ return; }
 
             float factor = 1.0f / denom;
 
@@ -383,7 +383,9 @@ namespace Ekona.Images
                 uint bits = indices >> (2 * i);
 
                 float beta = (float)(bits & 1);
-                if ((bits & 2) > 0) beta = (1 + beta) / 3.0f;
+                if ((bits & 2) > 0){ 
+                    beta = (1 + beta) / 3.0f; 
+                }
                 float alpha = 1.0f - beta;
 
                 alpha2_sum += alpha * alpha;
@@ -394,7 +396,7 @@ namespace Ekona.Images
             }
 
             float denom = alpha2_sum * beta2_sum - alphabeta_sum * alphabeta_sum;
-            if (NvMath.Equal(denom, 0.0f)) return;
+            if (NvMath.Equal(denom, 0.0f)){ return; }
 
             float factor = 1.0f / denom;
 
@@ -433,8 +435,8 @@ namespace Ekona.Images
                 double d2 = ColorDistance(palette[2], block[i]);
 
                 uint index;
-                if (d0 < d1 && d0 < d2) index = 0;
-                else if (d1 < d2) index = 1;
+                if (d0 < d1 && d0 < d2){ index = 0; }
+                else if (d1 < d2){ index = 1; }
                 else index = 2;
 
                 indices |= index << (2 * i);
@@ -489,15 +491,15 @@ namespace Ekona.Images
 
             float r0 = (float)(((r + 0) << 3) | ((r + 0) >> 2));
             float r1 = (float)(((r + 1) << 3) | ((r + 1) >> 2));
-            if (Math.Abs(v.X - r1) < Math.Abs(v.X - r0)) r = Math.Min(r + 1, 31U);
+            if (Math.Abs(v.X - r1) < Math.Abs(v.X - r0)){ r = Math.Min(r + 1, 31U); }
 
             float g0 = (float)(((g + 0) << 3) | ((g + 0) >> 2));
             float g1 = (float)(((g + 1) << 3) | ((g + 1) >> 2));
-            if (Math.Abs(v.Y - g1) < Math.Abs(v.Y - g0)) g = Math.Min(g + 1, 31U);
+            if (Math.Abs(v.Y - g1) < Math.Abs(v.Y - g0)){ g = Math.Min(g + 1, 31U); }
 
             float b0 = (float)(((b + 0) << 3) | ((b + 0) >> 2));
             float b1 = (float)(((b + 1) << 3) | ((b + 1) >> 2));
-            if (Math.Abs(v.Z - b1) < Math.Abs(v.Z - b0)) b = Math.Min(b + 1, 31U);
+            if (Math.Abs(v.Z - b1) < Math.Abs(v.Z - b0)){ b = Math.Min(b + 1, 31U); }
 
 
             ushort w = (ushort)((b << 10) | (g << 5) | r);
@@ -592,13 +594,13 @@ namespace Ekona.Images
                     {
                         count++;
                         uniqueFlags[i] = true;
-                        if (maxDistance < 0) lowIds[0] = i;
+                        if (maxDistance < 0){ lowIds[0] = i; }
                     }
 
                     if (!dubledWithMask && mask[i] > 0)
                     {
                         countWithmask++;
-                        if (maxDistanceWithMask < 0) lowIds[2] = i;
+                        if (maxDistanceWithMask < 0){ lowIds[2] = i; }
                     }
                 }
                 else hasAlpha = true;
@@ -675,14 +677,14 @@ namespace Ekona.Images
             c0 = RoundAndExpand(ref dxtBoundPoints[0]);
             c1 = RoundAndExpand(ref dxtBoundPoints[1]);
 
-            if (c0 == c1) hasAlpha = true;
+            if (c0 == c1){ hasAlpha = true; }
             if (c0 > c1 == hasAlpha)
             {
                 NvMath.Swap(ref c0, ref c1);
                 NvMath.Swap(ref dxtBoundPoints[0], ref dxtBoundPoints[1]);
             }
 
-            if (c0 > c1) NvMath.Swap(ref dxtBoundPoints[0], ref dxtBoundPoints[1]);
+            if (c0 > c1){ NvMath.Swap(ref dxtBoundPoints[0], ref dxtBoundPoints[1]); }
 
             compressColors = new Color[4];
             for (int i = 0; i < 2; i++) compressColors[i] = VectorToColor(dxtBoundPoints[i]);
@@ -842,7 +844,7 @@ namespace Ekona.Images
                                 ushort[] c = new ushort[4];
                                 for (int ci = 0; ci < 4; ci++)
                                 {
-                                    if (cN[ci] > 0) cV[ci] /= cN[ci];
+                                    if (cN[ci] > 0){ cV[ci] /= cN[ci]; }
                                     c[ci] = RoundAndExpand(ref cV[ci]);
                                 }
 
@@ -890,7 +892,7 @@ namespace Ekona.Images
                     }
                 }
 
-                if (colorIndex > 0x3FFF) colorIndex = 0;
+                if (colorIndex > 0x3FFF){ colorIndex = 0; }
                 ushort palInfo = (ushort)((colorIndex & 0x3FFF) | (palTypes[i] << 14));
                 uint resIndex = texelsCount * 4 + i * 2;
                 result[resIndex + 0] = (byte)((palInfo >> 0) & 0xFF);

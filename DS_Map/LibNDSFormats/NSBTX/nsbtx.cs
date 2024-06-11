@@ -824,7 +824,7 @@ namespace NSMBe4.NSBMD
                             switch (mode) {
                                 case 0:
                                     pixel = pal[(addr << 1) + texel];
-                                    if (texel == 3) pixel = Color.Transparent; // make it transparent, alpha = 0
+                                    if (texel == 3){ pixel = Color.Transparent; } // make it transparent, alpha = 0
                                     break;
                                 case 2:
                                     pixel = pal[(addr << 1) + texel];

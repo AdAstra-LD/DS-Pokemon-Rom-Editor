@@ -39,7 +39,7 @@ namespace DSPRE.ROMFiles {
     public void parse_file(string path) {
       FileStream fs = new FileStream(path, FileMode.Open);
       using (BinaryReader br = new BinaryReader(fs)) {
-        if (br.BaseStream.Length < 5) return;
+        if (br.BaseStream.Length < 5){ return; }
         //#1 Section - Object Arrangement Allocation
         grassEncounterGroup.readObjectSlots(br);
         surfEncounterGroup.readObjectSlots(br);

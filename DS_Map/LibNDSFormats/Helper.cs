@@ -37,9 +37,9 @@ namespace SM64DSe {
 
         public static bool VectorsEqual(Vector3 a, Vector3 b) {
             float epsilon = 0.00001f;
-            if (Math.Abs(a.X - b.X) > epsilon) return false;
-            if (Math.Abs(a.Y - b.Y) > epsilon) return false;
-            if (Math.Abs(a.Z - b.Z) > epsilon) return false;
+            if (Math.Abs(a.X - b.X) > epsilon){ return false; }
+            if (Math.Abs(a.Y - b.Y) > epsilon){ return false; }
+            if (Math.Abs(a.Z - b.Z) > epsilon){ return false; }
             return true;
         }
     }

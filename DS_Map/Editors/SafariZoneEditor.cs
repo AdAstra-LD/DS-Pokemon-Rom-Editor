@@ -14,7 +14,7 @@ namespace DSPRE.Editors {
     }
 
     public void SetupSafariZoneEditor(bool force = false) {
-      if (safariZoneEditorIsReady && !force) return;
+      if (safariZoneEditorIsReady && !force){ return; }
       safariZoneEditorIsReady = true;
 
       DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames>() {
@@ -59,12 +59,12 @@ namespace DSPRE.Editors {
     }
 
     private void buttonSave_Click(object sender, EventArgs e) {
-      if (safariZoneEncounterFile == null) return;
+      if (safariZoneEncounterFile == null){ return; }
       safariZoneEncounterFile.SaveToFile();
     }
 
     private void buttonSaveAs_Click(object sender, EventArgs e) {
-      if (safariZoneEncounterFile == null) return;
+      if (safariZoneEncounterFile == null){ return; }
 
       SaveFileDialog sfd = new SaveFileDialog();
       try {
@@ -75,13 +75,13 @@ namespace DSPRE.Editors {
         sfd.InitialDirectory = Path.GetDirectoryName(Environment.SpecialFolder.UserProfile.ToString());
         sfd.FileName = Path.GetFileName(sfd.FileName);
       }
-      if (sfd.ShowDialog() != DialogResult.OK) return;
+      if (sfd.ShowDialog() != DialogResult.OK){ return; }
 
       safariZoneEncounterFile.SaveToFile(sfd.FileName);
     }
 
     private void buttonImport_Click(object sender, EventArgs e) {
-      if (safariZoneEncounterFile == null) return;
+      if (safariZoneEncounterFile == null){ return; }
 
       OpenFileDialog ofd = new OpenFileDialog();
       try {
@@ -92,7 +92,7 @@ namespace DSPRE.Editors {
         ofd.InitialDirectory = Path.GetDirectoryName(Environment.SpecialFolder.UserProfile.ToString());
         ofd.FileName = Path.GetFileName(ofd.FileName);
       }
-      if (ofd.ShowDialog() != DialogResult.OK) return;
+      if (ofd.ShowDialog() != DialogResult.OK){ return; }
 
       safariZoneEncounterFile = new SafariZoneEncounterFile(ofd.FileName);
       safariZoneEncounterGroupEditorGrass.SetData(safariZoneEncounterFile.grassEncounterGroup);

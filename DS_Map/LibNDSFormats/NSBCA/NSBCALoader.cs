@@ -83,7 +83,7 @@ namespace LibNDSFormats.NSBCA {
             Console.WriteLine("No. of Joint = %02x\n", num);
 
             //dataoffset = (int*)malloc(sizeof(int));
-            //if (!dataoffset) return NULL;
+            //if (!dataoffset){ return NULL; }
 
             reader.BaseStream.Seek(10 + (num << 2), SeekOrigin.Current);		// skip [char xyz], useless
             blockptr += 10;
@@ -99,16 +99,16 @@ namespace LibNDSFormats.NSBCA {
             for (i = 0; i < num; i++) {
                 reader.BaseStream.Seek(dataoffset[i], SeekOrigin.Begin);
                 //j = getdword();
-                if (reader.ReadBytes(4) == new byte[] { 0x4A, 0x00, 0x41, 0x43 }) return null;
+                if (reader.ReadBytes(4) == new byte[] { 0x4A, 0x00, 0x41, 0x43 }){ return null; }
                 blockptr += 4;
 
                 animlen.Add(getword(reader.ReadBytes(2)));
                 objnum = getword(reader.ReadBytes(2));
-                //if (objnum != g_model[0].objnum) return NULL;
+                //if (objnum != g_model[0].objnum){ return NULL; }
                 blockptr += 4;
 
                 //animation = (ANIMATION*)calloc(sizeof(ANIMATION), objnum);
-                //if (!animation) return NULL;
+                //if (!animation){ return NULL; }
                 animation = new NSBMDAnimation[objnum];
 
                 reader.BaseStream.Seek(4, SeekOrigin.Current);	// skip 4 zeros

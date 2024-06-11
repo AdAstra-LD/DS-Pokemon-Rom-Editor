@@ -74,11 +74,11 @@ namespace NSMBe4
             for (int xt = 0; xt < (b.Height/8) * (b.Width/8); xt++)
             {
                 //p.setValue(xt);
-                if (tiles[xt] is null) continue;
+                if (tiles[xt] is null){ continue; }
 
                 for (int yt = 0; yt < xt; yt++)
                 {
-                    if (tiles[yt] is null) continue;
+                    if (tiles[yt] is null){ continue; }
                     float diff = tiles[xt].difference(tiles[yt]);
                     if (diff < 0.5)
                         mergeTiles(xt, yt);
@@ -116,9 +116,9 @@ namespace NSMBe4
                     TileDiff td = en.Current;
                     int t1 = td.t1;
                     int t2 = td.t2;
-                    if (tiles[t1] is null) continue;
-                    if (tiles[t2] is null) continue;
-                    if (t1 == t2) throw new Exception("Should never happen");
+                    if (tiles[t1] is null){ continue; }
+                    if (tiles[t2] is null){ continue; }
+                    if (t1 == t2){ throw new Exception("Should never happen"); }
 
                     mergeTiles(t1, t2);
 
@@ -213,8 +213,8 @@ namespace NSMBe4
         {
             for (int t = 0; t < tileCount; t++)
             {
-                if (t == tile) continue;
-                if (tiles[t] is null) continue;
+                if (t == tile){ continue; }
+                if (tiles[t] is null){ continue; }
                 float diff = tiles[tile].difference(tiles[t]);
                 if (diff == 0)
                     return t;
@@ -232,7 +232,7 @@ namespace NSMBe4
 
         private static float colorDifference(Color a, Color b)
         {
-            if (a.A != b.A) return 10000f;
+            if (a.A != b.A){ return 10000f; }
 
             float res = 0;
             /*res += (float)(a.R - b.R) * (float)(a.R - b.R) / 65536f;
@@ -292,8 +292,8 @@ namespace NSMBe4
 
         public static Color colorMean(Color a, Color b, int wa, int wb)
         {
-            if (a.A == 0) return b;
-            if (b.A == 0) return a;
+            if (a.A == 0){ return b; }
+            if (b.A == 0){ return a; }
 
             return Color.FromArgb(mean(a.R, b.R, wa, wb),
                                   mean(a.G, b.G, wa, wb),

@@ -2,28 +2,28 @@
 
 namespace DSPRE {
     public static class Filesystem {
-        public static string eventFiles { get { return RomInfo.gameDirs[RomInfo.DirNames.eventFiles].unpackedDir; } }
-        public static string OWSprites { get { return RomInfo.gameDirs[RomInfo.DirNames.OWSprites].unpackedDir; } }
-        public static string mapTextures { get { return RomInfo.gameDirs[RomInfo.DirNames.mapTextures].unpackedDir; } }
-        public static string buildingTextures { get { return RomInfo.gameDirs[RomInfo.DirNames.buildingTextures].unpackedDir; } }
-        public static string dynamicHeaders { get { return RomInfo.gameDirs[RomInfo.DirNames.dynamicHeaders].unpackedDir; } }
-        public static string dynamicHeadersPacked { get { return RomInfo.gameDirs[RomInfo.DirNames.dynamicHeaders].packedDir; } }
-        public static string scripts { get { return RomInfo.gameDirs[RomInfo.DirNames.scripts].unpackedDir; } }
-        public static string maps { get { return RomInfo.gameDirs[RomInfo.DirNames.maps].unpackedDir; } }
-        public static string matrices { get { return RomInfo.gameDirs[RomInfo.DirNames.matrices].unpackedDir; } }
-        public static string buildingConfigFiles { get { return RomInfo.gameDirs[RomInfo.DirNames.buildingConfigFiles].unpackedDir; } }
-        public static string areaData { get { return RomInfo.gameDirs[RomInfo.DirNames.areaData].unpackedDir; } }
-        public static string textArchives { get { return RomInfo.gameDirs[RomInfo.DirNames.textArchives].unpackedDir; } }
-        public static string trainerProperties { get { return RomInfo.gameDirs[RomInfo.DirNames.trainerProperties].unpackedDir; } }
-        public static string trainerParty { get { return RomInfo.gameDirs[RomInfo.DirNames.trainerParty].unpackedDir; } }
-        public static string trainerGraphics { get { return RomInfo.gameDirs[RomInfo.DirNames.trainerGraphics].unpackedDir; } }
-        public static string encounters { get { return RomInfo.gameDirs[RomInfo.DirNames.encounters].unpackedDir; } }
-        public static string headbutt { get { return RomInfo.gameDirs[RomInfo.DirNames.headbutt].unpackedDir; } }
-        public static string safariZone { get { return RomInfo.gameDirs[RomInfo.DirNames.safariZone].unpackedDir; } }
-        public static string monIcons { get { return RomInfo.gameDirs[RomInfo.DirNames.monIcons].unpackedDir; } }
-        public static string synthOverlay { get { return RomInfo.gameDirs[RomInfo.DirNames.synthOverlay].unpackedDir; } }
-        public static string interiorBuildingModels { get { return RomInfo.gameDirs[RomInfo.DirNames.interiorBuildingModels].unpackedDir; } }
-        public static string exteriorBuildingModels { get { return RomInfo.gameDirs[RomInfo.DirNames.exteriorBuildingModels].unpackedDir; } }
+        public static string eventFiles => RomInfo.gameDirs[RomInfo.DirNames.eventFiles].unpackedDir;
+        public static string OWSprites => RomInfo.gameDirs[RomInfo.DirNames.OWSprites].unpackedDir;
+        public static string mapTextures => RomInfo.gameDirs[RomInfo.DirNames.mapTextures].unpackedDir;
+        public static string buildingTextures => RomInfo.gameDirs[RomInfo.DirNames.buildingTextures].unpackedDir;
+        public static string dynamicHeaders => RomInfo.gameDirs[RomInfo.DirNames.dynamicHeaders].unpackedDir;
+        public static string dynamicHeadersPacked => RomInfo.gameDirs[RomInfo.DirNames.dynamicHeaders].packedDir;
+        public static string scripts => RomInfo.gameDirs[RomInfo.DirNames.scripts].unpackedDir;
+        public static string maps => RomInfo.gameDirs[RomInfo.DirNames.maps].unpackedDir;
+        public static string matrices => RomInfo.gameDirs[RomInfo.DirNames.matrices].unpackedDir;
+        public static string buildingConfigFiles => RomInfo.gameDirs[RomInfo.DirNames.buildingConfigFiles].unpackedDir;
+        public static string areaData => RomInfo.gameDirs[RomInfo.DirNames.areaData].unpackedDir;
+        public static string textArchives => RomInfo.gameDirs[RomInfo.DirNames.textArchives].unpackedDir;
+        public static string trainerProperties => RomInfo.gameDirs[RomInfo.DirNames.trainerProperties].unpackedDir;
+        public static string trainerParty => RomInfo.gameDirs[RomInfo.DirNames.trainerParty].unpackedDir;
+        public static string trainerGraphics => RomInfo.gameDirs[RomInfo.DirNames.trainerGraphics].unpackedDir;
+        public static string encounters => RomInfo.gameDirs[RomInfo.DirNames.encounters].unpackedDir;
+        public static string headbutt => RomInfo.gameDirs[RomInfo.DirNames.headbutt].unpackedDir;
+        public static string safariZone => RomInfo.gameDirs[RomInfo.DirNames.safariZone].unpackedDir;
+        public static string monIcons => RomInfo.gameDirs[RomInfo.DirNames.monIcons].unpackedDir;
+        public static string synthOverlay => RomInfo.gameDirs[RomInfo.DirNames.synthOverlay].unpackedDir;
+        public static string interiorBuildingModels => RomInfo.gameDirs[RomInfo.DirNames.interiorBuildingModels].unpackedDir;
+        public static string exteriorBuildingModels => RomInfo.gameDirs[RomInfo.DirNames.exteriorBuildingModels].unpackedDir;
 
         public static string GetBuildingModelsDirPath(bool interior) {
             if (interior) {
@@ -33,7 +33,7 @@ namespace DSPRE {
             }
         }
 
-        public static string expArmPath { get { return Path.Combine(synthOverlay, PatchToolboxDialog.expandedARMfileID.ToString("D4")); } }
+        public static string expArmPath => Path.Combine(synthOverlay, PatchToolboxDialog.expandedARMfileID.ToString("D4"));
 
         public static string GetPath(string path, int id, string format = "D4") {
             return Path.Combine(path, id.ToString(format));
@@ -44,7 +44,7 @@ namespace DSPRE {
         }
 
         static string[] GetBuildingModelFiles(bool interior) {
-            return Directory.GetFiles(Filesystem.GetBuildingModelsDirPath(interior));
+            return string.IsNullOrWhiteSpace(Filesystem.GetBuildingModelsDirPath(interior)) ? null : Directory.GetFiles(Filesystem.GetBuildingModelsDirPath(interior));
         }
 
         public static string GetBuildingModelPath(bool interior, int id) {
@@ -56,7 +56,7 @@ namespace DSPRE {
         }
 
         public static string[] GetAreaDataFiles() {
-            return Directory.GetFiles(Filesystem.areaData);
+            return string.IsNullOrWhiteSpace(Filesystem.areaData) ? null : Directory.GetFiles(Filesystem.areaData);
         }
 
         public static string GetAreaDataPath(int id) {
@@ -75,7 +75,7 @@ namespace DSPRE {
         }
 
         static string[] GetMapTextureFiles() {
-            return Directory.GetFiles(Filesystem.mapTextures);
+            return string.IsNullOrWhiteSpace(Filesystem.mapTextures) ? null : Directory.GetFiles(Filesystem.mapTextures);
         }
 
         public static string GetMapTexturePath(int id) {
@@ -87,7 +87,7 @@ namespace DSPRE {
         }
 
         static string[] GetBuildingTextureFiles() {
-            return Directory.GetFiles(Filesystem.buildingTextures);
+            return string.IsNullOrWhiteSpace(Filesystem.buildingTextures) ? null : Directory.GetFiles(Filesystem.buildingTextures);
         }
 
         public static string GetBuildingTexturePath(int id) {
@@ -99,7 +99,7 @@ namespace DSPRE {
         }
 
         static string[] GetMatrixFiles() {
-            return Directory.GetFiles(Filesystem.matrices);
+            return string.IsNullOrWhiteSpace(Filesystem.matrices) ? null : Directory.GetFiles(Filesystem.matrices);
         }
 
         public static string GetMatrixPath(int id) {
@@ -111,7 +111,7 @@ namespace DSPRE {
         }
 
         static string[] GetTextArchiveFiles() {
-            return Directory.GetFiles(Filesystem.textArchives);
+            return string.IsNullOrWhiteSpace(Filesystem.textArchives) ? null : Directory.GetFiles(Filesystem.textArchives);
         }
 
         public static string GetTextArchivePath(int id) {
@@ -123,7 +123,7 @@ namespace DSPRE {
         }
 
         static string[] GetMapFiles() {
-            return Directory.GetFiles(Filesystem.maps);
+            return string.IsNullOrWhiteSpace(Filesystem.maps) ? null : Directory.GetFiles(Filesystem.maps);
         }
 
         public static string GetMapPath(int id) {
@@ -135,7 +135,7 @@ namespace DSPRE {
         }
 
         static string[] GetScriptFiles() {
-            return Directory.GetFiles(Filesystem.scripts);
+            return string.IsNullOrWhiteSpace(Filesystem.scripts) ? null : Directory.GetFiles(Filesystem.scripts);
         }
 
         public static string GetScriptPath(int id) {
@@ -147,7 +147,7 @@ namespace DSPRE {
         }
 
         static string[] GetEventFiles() {
-            return Directory.GetFiles(Filesystem.eventFiles);
+            return string.IsNullOrWhiteSpace(Filesystem.eventFiles) ? null : Directory.GetFiles(Filesystem.eventFiles);
         }
 
         public static string GetEventPath(int id) {
@@ -159,7 +159,7 @@ namespace DSPRE {
         }
 
         static string[] GetTrainerPropertiesFiles() {
-            return Directory.GetFiles(Filesystem.trainerProperties);
+            return string.IsNullOrWhiteSpace(Filesystem.trainerProperties) ? null : Directory.GetFiles(Filesystem.trainerProperties);
         }
 
         public static string GetTrainerPropertiesPath(int id) {
@@ -171,7 +171,7 @@ namespace DSPRE {
         }
 
         static string[] GetDynamicHeaderFiles() {
-            return Directory.GetFiles(Filesystem.dynamicHeaders);
+            return string.IsNullOrWhiteSpace(Filesystem.dynamicHeaders) ? null : Directory.GetFiles(Filesystem.dynamicHeaders);
         }
 
         public static string GetDynamicHeaderPath(int id) {
@@ -183,7 +183,7 @@ namespace DSPRE {
         }
 
         static string[] GetEncounterFiles() {
-            return Directory.GetFiles(Filesystem.encounters);
+            return string.IsNullOrWhiteSpace(Filesystem.encounters) ? null : Directory.GetFiles(Filesystem.encounters);
         }
 
         public static string GetEncounterPath(int id) {
@@ -195,7 +195,7 @@ namespace DSPRE {
         }
 
         static string[] GetSafariZoneFiles() {
-            return Directory.GetFiles(Filesystem.safariZone);
+            return string.IsNullOrWhiteSpace(Filesystem.safariZone) ? null : Directory.GetFiles(Filesystem.safariZone);
         }
 
         public static string GetSafariZonePath(int id) {
@@ -207,7 +207,7 @@ namespace DSPRE {
         }
 
         static string[] GetHeadbuttFiles() {
-            return Directory.GetFiles(Filesystem.headbutt);
+            return string.IsNullOrWhiteSpace(Filesystem.headbutt) ? null : Directory.GetFiles(Filesystem.headbutt);
         }
 
         public static string GetHeadbuttPath(int id) {

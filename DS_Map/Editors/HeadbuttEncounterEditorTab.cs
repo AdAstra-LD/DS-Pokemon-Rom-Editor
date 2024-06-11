@@ -36,9 +36,9 @@ namespace DSPRE.Editors {
     }
 
     private void listBoxEncounters_SelectedIndexChanged(object sender, EventArgs e) {
-      if (Helpers.HandlersDisabled) return;
+      if (Helpers.HandlersDisabled){ return; }
       HeadbuttEncounter headbuttEncounter = (HeadbuttEncounter)listBoxEncounters.SelectedItem;
-      if (headbuttEncounter == null) return;
+      if (headbuttEncounter == null){ return; }
       comboBoxPokemon.SelectedIndex = headbuttEncounter.pokemonID;
       numericUpDownMinLevel.Value = headbuttEncounter.minLevel;
       numericUpDownMaxLevel.Value = headbuttEncounter.maxLevel;
@@ -46,33 +46,33 @@ namespace DSPRE.Editors {
     
     private void comboBoxPokemon_SelectedIndexChanged(object sender, EventArgs e)
     {
-      if (Helpers.HandlersDisabled) return;
+      if (Helpers.HandlersDisabled){ return; }
       HeadbuttEncounter headbuttEncounter = (HeadbuttEncounter)listBoxEncounters.SelectedItem;
-      if (headbuttEncounter == null) return;
+      if (headbuttEncounter == null){ return; }
       headbuttEncounter.pokemonID = (ushort)comboBoxPokemon.SelectedIndex;
       listBoxEncounters.RefreshItem(listBoxEncounters.SelectedIndex);
     }
 
     private void numericUpDownMinLevel_ValueChanged(object sender, EventArgs e) {
-      if (Helpers.HandlersDisabled) return;
+      if (Helpers.HandlersDisabled){ return; }
       HeadbuttEncounter headbuttEncounter = (HeadbuttEncounter)listBoxEncounters.SelectedItem;
-      if (headbuttEncounter == null) return;
+      if (headbuttEncounter == null){ return; }
       headbuttEncounter.minLevel = (byte)numericUpDownMinLevel.Value;
       listBoxEncounters.RefreshItem(listBoxEncounters.SelectedIndex);
     }
 
     private void numericUpDownMaxLevel_ValueChanged(object sender, EventArgs e) {
-      if (Helpers.HandlersDisabled) return;
+      if (Helpers.HandlersDisabled){ return; }
       HeadbuttEncounter headbuttEncounter = (HeadbuttEncounter)listBoxEncounters.SelectedItem;
-      if (headbuttEncounter == null) return;
+      if (headbuttEncounter == null){ return; }
       headbuttEncounter.maxLevel = (byte)numericUpDownMaxLevel.Value;
       listBoxEncounters.RefreshItem(listBoxEncounters.SelectedIndex);
     }
 
     private void listBoxTreeGroups_SelectedIndexChanged(object sender, EventArgs e) {
-      if (Helpers.HandlersDisabled) return;
+      if (Helpers.HandlersDisabled){ return; }
       HeadbuttTreeGroup headbuttTreeGroup = (HeadbuttTreeGroup)listBoxTreeGroups.SelectedItem;
-      if (headbuttTreeGroup == null) return;
+      if (headbuttTreeGroup == null){ return; }
       listBoxTrees.DataSource = headbuttTreeGroup.trees;
     }
 
@@ -82,13 +82,13 @@ namespace DSPRE.Editors {
 
     private void buttonRemoveTreeGroup_Click(object sender, EventArgs e) {
       int selectedIndex = listBoxTreeGroups.SelectedIndex;
-      if (selectedIndex == -1) return;
+      if (selectedIndex == -1){ return; }
       treeGroups.RemoveAt(selectedIndex);
     }
 
     private void buttonDuplicateTreeGroup_Click(object sender, EventArgs e) {
       HeadbuttTreeGroup headbuttTreeGroup = (HeadbuttTreeGroup)listBoxTreeGroups.SelectedItem;
-      if (headbuttTreeGroup == null) return;
+      if (headbuttTreeGroup == null){ return; }
       treeGroups.Add(new HeadbuttTreeGroup(headbuttTreeGroup));
     }
   }

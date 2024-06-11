@@ -342,7 +342,7 @@ namespace DSPRE
 
         private void PokemonSelector_TextChanged(object sender, EventArgs e)
         {
-            if (sender == null || !(sender is ComboBox)) { return; }
+            if (sender == null || !(sender is ComboBox)){ { return; } }
 
             ComboBox comboBox = (ComboBox)sender;
             string enteredText = comboBox.Text.ToLower();

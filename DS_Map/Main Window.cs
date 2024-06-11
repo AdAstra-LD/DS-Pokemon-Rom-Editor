@@ -3963,7 +3963,7 @@ namespace DSPRE {
 
             currentMapFile.ImportBuildings(File.ReadAllBytes(ib.FileName));
             FillBuildingsBox();
-            if (buildingsListBox.Items.Count > 0) buildingsListBox.SelectedIndex = 0;
+            if (buildingsListBox.Items.Count > 0){ buildingsListBox.SelectedIndex = 0; }
 
             for (int i = 0; i < currentMapFile.buildings.Count; i++) {
                 currentMapFile.buildings[i].LoadModelData(romInfo.GetBuildingModelsDirPath(interiorbldRadioButton.Checked)); // Load building nsbmd

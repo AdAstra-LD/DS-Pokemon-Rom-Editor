@@ -98,7 +98,7 @@ namespace DSPRE.Editors {
     }
 
     public void SetupScriptEditor(MainProgram parent, bool force = false) {
-      if (scriptEditorIsReady && !force) return;
+      if (scriptEditorIsReady && !force){ return; }
       scriptEditorIsReady = true;
             this._parent = parent;
             SetupScriptEditorTextAreas();
@@ -984,7 +984,7 @@ namespace DSPRE.Editors {
     }
 
     private void goToSearchResult() {
-      if (searchInScriptsResultListBox.SelectedItem == null) return;
+      if (searchInScriptsResultListBox.SelectedItem == null){ return; }
 
       ScriptEditorSearchResult searchResult = (ScriptEditorSearchResult)searchInScriptsResultListBox.SelectedItem;
       ScriptFile scriptFile = searchResult.scriptFile;

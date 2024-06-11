@@ -29,10 +29,10 @@ namespace DSPRE.ROMFiles {
           //first byte is the script type
           //if not a valid script type, break loop
           byte triggerType = br.ReadByte();
-          if (!LevelScriptTrigger.IsValidTriggerType(triggerType)) break;
+          if (!LevelScriptTrigger.IsValidTriggerType(triggerType)){ break; }
 
           //subtract triggerType length from conditionalStructureOffset
-          if (hasConditionalStructure) conditionalStructureOffset -= sizeof(byte);
+          if (hasConditionalStructure){ conditionalStructureOffset -= sizeof(byte); }
 
           //if trigger type is a variable value, that doesn't immediately mean we're processing that trigger
           //the trigger data is processed last if it is there
@@ -47,7 +47,7 @@ namespace DSPRE.ROMFiles {
           bufferSet.Add(new MapScreenLoadTrigger(triggerType, (int)scriptToTrigger));
 
           //subtract scriptToTrigger length from conditionalStructureOffset
-          if (hasConditionalStructure) conditionalStructureOffset -= sizeof(UInt32);
+          if (hasConditionalStructure){ conditionalStructureOffset -= sizeof(UInt32); }
         }
 
         //the earliest position a trigger can be
@@ -83,7 +83,7 @@ namespace DSPRE.ROMFiles {
         while (true) {
           //there are no variables below 1
           int variableID = br.ReadUInt16();
-          if (variableID <= 0) break;
+          if (variableID <= 0){ break; }
 
           int varExpectedValue = br.ReadUInt16();
           int scriptToTrigger = br.ReadUInt16();
