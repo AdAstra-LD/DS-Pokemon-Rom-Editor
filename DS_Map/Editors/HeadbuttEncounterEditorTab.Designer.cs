@@ -75,7 +75,7 @@ namespace DSPRE.Editors
             // 
             // numericUpDownMaxLevel
             // 
-            this.numericUpDownMaxLevel.Location = new System.Drawing.Point(200, 210);
+            this.numericUpDownMaxLevel.Location = new System.Drawing.Point(200, 207);
             this.numericUpDownMaxLevel.Name = "numericUpDownMaxLevel";
             this.numericUpDownMaxLevel.Size = new System.Drawing.Size(58, 20);
             this.numericUpDownMaxLevel.TabIndex = 15;
@@ -83,7 +83,7 @@ namespace DSPRE.Editors
             // 
             // numericUpDownMinLevel
             // 
-            this.numericUpDownMinLevel.Location = new System.Drawing.Point(136, 210);
+            this.numericUpDownMinLevel.Location = new System.Drawing.Point(136, 207);
             this.numericUpDownMinLevel.Name = "numericUpDownMinLevel";
             this.numericUpDownMinLevel.Size = new System.Drawing.Size(58, 20);
             this.numericUpDownMinLevel.TabIndex = 15;
@@ -116,23 +116,23 @@ namespace DSPRE.Editors
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(0, 415);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(34, 13);
+            this.label6.Size = new System.Drawing.Size(118, 13);
             this.label6.TabIndex = 18;
-            this.label6.Text = "Trees";
+            this.label6.Text = "Trees in selected group";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(0, 193);
+            this.label2.Location = new System.Drawing.Point(0, 190);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 13);
+            this.label2.Size = new System.Drawing.Size(97, 13);
             this.label2.TabIndex = 18;
-            this.label2.Text = "Pokemon";
+            this.label2.Text = "Selected Pokémon";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(133, 193);
+            this.label3.Location = new System.Drawing.Point(133, 190);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 13);
             this.label3.TabIndex = 18;
@@ -150,7 +150,7 @@ namespace DSPRE.Editors
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(197, 193);
+            this.label4.Location = new System.Drawing.Point(197, 190);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 18;
@@ -159,7 +159,7 @@ namespace DSPRE.Editors
             // comboBoxPokemon
             // 
             this.comboBoxPokemon.FormattingEnabled = true;
-            this.comboBoxPokemon.Location = new System.Drawing.Point(3, 209);
+            this.comboBoxPokemon.Location = new System.Drawing.Point(3, 206);
             this.comboBoxPokemon.Name = "comboBoxPokemon";
             this.comboBoxPokemon.Size = new System.Drawing.Size(127, 21);
             this.comboBoxPokemon.TabIndex = 19;

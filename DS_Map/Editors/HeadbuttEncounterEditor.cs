@@ -201,7 +201,7 @@ namespace DSPRE.Editors {
 
             foreach (HeadbuttTreeGroup treeGroup in headbuttEncounterFile.normalTreeGroups) {
                 foreach (HeadbuttTree tree in treeGroup.trees) {
-                    if (!tree.unused && tree.matrixX < gameMatrix.width && tree.matrixY < gameMatrix.height) {
+                    if (!tree.IsUnused && tree.matrixX < gameMatrix.width && tree.matrixY < gameMatrix.height) {
                         int mapID = gameMatrix.maps[tree.matrixY, tree.matrixX];
                         if (mapID != GameMatrix.EMPTY) {
                             HeadbuttEncounterMap map = new HeadbuttEncounterMap(mapID, tree.matrixX, tree.matrixY);
@@ -215,7 +215,7 @@ namespace DSPRE.Editors {
 
             foreach (HeadbuttTreeGroup treeGroup in headbuttEncounterFile.specialTreeGroups) {
                 foreach (HeadbuttTree tree in treeGroup.trees) {
-                    if (!tree.unused && tree.matrixX < gameMatrix.width && tree.matrixY < gameMatrix.height) {
+                    if (!tree.IsUnused && tree.matrixX < gameMatrix.width && tree.matrixY < gameMatrix.height) {
                         int mapID = gameMatrix.maps[tree.matrixY, tree.matrixX];
                         if (mapID != GameMatrix.EMPTY) {
                             HeadbuttEncounterMap map = new HeadbuttEncounterMap(mapID, tree.matrixX, tree.matrixY);
@@ -344,7 +344,7 @@ namespace DSPRE.Editors {
             if (map != null) {
                 foreach (HeadbuttTreeGroup treeGroup in treeGroups) {
                     foreach (HeadbuttTree tree in treeGroup.trees) {
-                        if (!tree.unused && tree.matrixX == map.x && tree.matrixY == map.y) {
+                        if (!tree.IsUnused && tree.matrixX == map.x && tree.matrixY == map.y) {
                             MarkTree(g, tree, treeType);
                         }
                     }
