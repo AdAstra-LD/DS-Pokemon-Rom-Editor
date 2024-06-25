@@ -127,7 +127,7 @@ This patch is necessary to accomplish most ASM edits.
   <data name="arm9patchCB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
+        vQAADr0BR/uQrQAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
         bPLz+IQY464yh1s0Ne9LXK3rERAGkPt/hLDwPAt0WiTg7MtLYhgL3xaQZzUVsC1AD0Y7baK6AKzBaD8z
         Ya0APVi4NR/xFCZ481LLhbWHF4ToxecZ2UAmD/Y4kQ+Ag3hrB7VdSjZ6dEJpvENrBrAEguIBIb4J0FIw
         upmAncykgSX9hgfNYHyTqg2kaiXFN87xo5nSrQ+kXic1kuVygUkD6d58CYZ1nPWgzlMB3EvmcL1i+AEb
@@ -137,7 +137,7 @@ This patch is necessary to accomplish most ASM edits.
   <data name="BDHCamCB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
+        vQAADr0BR/uQrQAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
         bPLz+IQY464yh1s0Ne9LXK3rERAGkPt/hLDwPAt0WiTg7MtLYhgL3xaQZzUVsC1AD0Y7baK6AKzBaD8z
         Ya0APVi4NR/xFCZ481LLhbWHF4ToxecZ2UAmD/Y4kQ+Ag3hrB7VdSjZ6dEJpvENrBrAEguIBIb4J0FIw
         upmAncykgSX9hgfNYHyTqg2kaiXFN87xo5nSrQ+kXic1kuVygUkD6d58CYZ1nPWgzlMB3EvmcL1i+AEb
@@ -147,7 +147,7 @@ This patch is necessary to accomplish most ASM edits.
   <data name="sentenceCaseCB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
+        vQAADr0BR/uQrQAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
         bPLz+IQY464yh1s0Ne9LXK3rERAGkPt/hLDwPAt0WiTg7MtLYhgL3xaQZzUVsC1AD0Y7baK6AKzBaD8z
         Ya0APVi4NR/xFCZ481LLhbWHF4ToxecZ2UAmD/Y4kQ+Ag3hrB7VdSjZ6dEJpvENrBrAEguIBIb4J0FIw
         upmAncykgSX9hgfNYHyTqg2kaiXFN87xo5nSrQ+kXic1kuVygUkD6d58CYZ1nPWgzlMB3EvmcL1i+AEb
@@ -157,7 +157,7 @@ This patch is necessary to accomplish most ASM edits.
   <data name="itemNumbersCB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
+        vQAADr0BR/uQrQAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
         bPLz+IQY464yh1s0Ne9LXK3rERAGkPt/hLDwPAt0WiTg7MtLYhgL3xaQZzUVsC1AD0Y7baK6AKzBaD8z
         Ya0APVi4NR/xFCZ481LLhbWHF4ToxecZ2UAmD/Y4kQ+Ag3hrB7VdSjZ6dEJpvENrBrAEguIBIb4J0FIw
         upmAncykgSX9hgfNYHyTqg2kaiXFN87xo5nSrQ+kXic1kuVygUkD6d58CYZ1nPWgzlMB3EvmcL1i+AEb
@@ -167,7 +167,7 @@ This patch is necessary to accomplish most ASM edits.
   <data name="expandedMatrixCB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
+        vQAADr0BR/uQrQAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
         bPLz+IQY464yh1s0Ne9LXK3rERAGkPt/hLDwPAt0WiTg7MtLYhgL3xaQZzUVsC1AD0Y7baK6AKzBaD8z
         Ya0APVi4NR/xFCZ481LLhbWHF4ToxecZ2UAmD/Y4kQ+Ag3hrB7VdSjZ6dEJpvENrBrAEguIBIb4J0FIw
         upmAncykgSX9hgfNYHyTqg2kaiXFN87xo5nSrQ+kXic1kuVygUkD6d58CYZ1nPWgzlMB3EvmcL1i+AEb
@@ -177,7 +177,7 @@ This patch is necessary to accomplish most ASM edits.
   <data name="repointScrcmdCB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
+        vQAADr0BR/uQrQAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
         bPLz+IQY464yh1s0Ne9LXK3rERAGkPt/hLDwPAt0WiTg7MtLYhgL3xaQZzUVsC1AD0Y7baK6AKzBaD8z
         Ya0APVi4NR/xFCZ481LLhbWHF4ToxecZ2UAmD/Y4kQ+Ag3hrB7VdSjZ6dEJpvENrBrAEguIBIb4J0FIw
         upmAncykgSX9hgfNYHyTqg2kaiXFN87xo5nSrQ+kXic1kuVygUkD6d58CYZ1nPWgzlMB3EvmcL1i+AEb
@@ -187,7 +187,7 @@ This patch is necessary to accomplish most ASM edits.
   <data name="dynamicHeadersPatchCB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
+        vQAADr0BR/uQrQAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
         bPLz+IQY464yh1s0Ne9LXK3rERAGkPt/hLDwPAt0WiTg7MtLYhgL3xaQZzUVsC1AD0Y7baK6AKzBaD8z
         Ya0APVi4NR/xFCZ481LLhbWHF4ToxecZ2UAmD/Y4kQ+Ag3hrB7VdSjZ6dEJpvENrBrAEguIBIb4J0FIw
         upmAncykgSX9hgfNYHyTqg2kaiXFN87xo5nSrQ+kXic1kuVygUkD6d58CYZ1nPWgzlMB3EvmcL1i+AEb
@@ -197,7 +197,7 @@ This patch is necessary to accomplish most ASM edits.
   <data name="disableTextureAnimationsCB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
+        vQAADr0BR/uQrQAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
         bPLz+IQY464yh1s0Ne9LXK3rERAGkPt/hLDwPAt0WiTg7MtLYhgL3xaQZzUVsC1AD0Y7baK6AKzBaD8z
         Ya0APVi4NR/xFCZ481LLhbWHF4ToxecZ2UAmD/Y4kQ+Ag3hrB7VdSjZ6dEJpvENrBrAEguIBIb4J0FIw
         upmAncykgSX9hgfNYHyTqg2kaiXFN87xo5nSrQ+kXic1kuVygUkD6d58CYZ1nPWgzlMB3EvmcL1i+AEb
@@ -207,7 +207,7 @@ This patch is necessary to accomplish most ASM edits.
   <data name="expandTrainerNamesCB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
+        vAAADrwBlbxySQAAAOFJREFUOE+tj8ERgkAMRddx0Js90ItFeJS7B3vxTDO04FiCdaxJ2ISwmywjcPiT
         bPLz+IQY464yh1s0Ne9LXK3rERAGkPt/hLDwPAt0WiTg7MtLYhgL3xaQZzUVsC1AD0Y7baK6AKzBaD8z
         Ya0APVi4NR/xFCZ481LLhbWHF4ToxecZ2UAmD/Y4kQ+Ag3hrB7VdSjZ6dEJpvENrBrAEguIBIb4J0FIw
         upmAncykgSX9hgfNYHyTqg2kaiXFN87xo5nSrQ+kXic1kuVygUkD6d58CYZ1nPWgzlMB3EvmcL1i+AEb

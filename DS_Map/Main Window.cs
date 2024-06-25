@@ -7813,7 +7813,7 @@ namespace DSPRE {
         private void SetupTrainerEditor() {
             Helpers.DisableHandlers();
 
-            SetTrainerNameMaxLen();
+            //SetTrainerNameMaxLen();
             SetupTrainerClassEncounterMusicTable();
             /* Extract essential NARCs sub-archives*/
             Helpers.statusLabelMessage("Setting up Trainer Editor...");
@@ -8324,15 +8324,15 @@ namespace DSPRE {
             UpdateCurrentTrainerName(newName: trainerNameTextBox.Text);
             UpdateCurrentTrainerShownName();
 
-            if (trainerNameTextBox.Text.Length > RomInfo.trainerNameMaxLen - 1) { //Subtract 1 to account for special end character. 
+            if (trainerNameTextBox.Text.Length > RomInfo.trainerNameMaxLen) { //Subtract 1 to account for special end character. 
                 //Expose a smaller limit to the user
                 if (RomInfo.trainerNameLenOffset >= 0) {
-                    MessageBox.Show($"Trainer File saved successfully. However:\nYou attempted to save a Trainer whose name exceeds {RomInfo.trainerNameMaxLen-1} characters.\nThis may lead to issues in game." +
+                    MessageBox.Show($"Trainer File saved successfully. However:\nYou attempted to save a Trainer whose name exceeds {RomInfo.trainerNameMaxLen} characters.\nThis may lead to issues in game." +
                         (PatchToolboxDialog.flag_TrainerNamesExpanded ? "\n\nIt's recommended that you use a shorter name." : "\n\nRefer to the Patch Toolbox to extend Trainer names."),
                         "Saved successfully, but...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 } else {
                     MessageBox.Show($"Trainer File saved successfully. However:\nThe Trainer name length could not be safely determined for this ROM.\n" +
-                        $"You attempted to save a Trainer whose name exceeds {RomInfo.trainerNameMaxLen-1} characters.\nThis will most likely lead to issues in game.",
+                        $"You attempted to save a Trainer whose name exceeds {RomInfo.trainerNameMaxLen} characters.\nThis will most likely lead to issues in game.",
                         "Saved successfully, but...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             } else {

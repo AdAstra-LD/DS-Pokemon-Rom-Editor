@@ -190,6 +190,7 @@
     <Compile Include="LearnsetEditor.designer.cs">
       <DependentUpon>LearnsetEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="MessageEnc\EncryptText.cs" />
     <Compile Include="OverlayEditor.cs">
       <SubType>Form</SubType>
     </Compile>
