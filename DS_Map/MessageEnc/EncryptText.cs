@@ -65,13 +65,10 @@ namespace DSPRE.MessageEnc
                         {
                             decode.Append(textChar.ToString("X4"));
                             hasSpecialCharacter = false;
-                        }
-                        if (isCompressed)
-                        {
+                        } else if (isCompressed) {
                             int shift = 0;
                             int trans = 0;
-                            while (true)
-                            {
+                            while (true){
                                 int compChar = textChar >> shift;
                                 if (shift >= 0xF)
                                 {
