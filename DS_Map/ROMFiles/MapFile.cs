@@ -399,6 +399,33 @@ namespace DSPRE.ROMFiles
         public uint width { get; set; }
         public uint height { get; set; }
         public uint length { get; set; }
+        public decimal XCoordinate
+        {
+            get { return xPosition + ((decimal)xFraction / 65535); }
+            set
+            {
+                xPosition = (short)Math.Floor(value);
+                xFraction = (ushort)((value - Math.Floor(value)) * 65535);
+            }
+        }
+        public decimal YCoordinate
+        {
+            get { return yPosition + ((decimal)yFraction / 65535); }
+            set
+            {
+                yPosition = (short)Math.Floor(value);
+                yFraction = (ushort)((value - Math.Floor(value)) * 65535);
+            }
+        }
+        public decimal ZCoordinate
+        {
+            get { return zPosition + ((decimal)zFraction / 65535); }
+            set
+            {
+                zPosition = (short)Math.Floor(value);
+                zFraction = (ushort)((value - Math.Floor(value)) * 65535);
+            }
+        }
         #endregion Fields
 
         #region Constructors (2)
