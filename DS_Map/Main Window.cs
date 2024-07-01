@@ -9952,85 +9952,9 @@ namespace DSPRE {
             string fileExtension = Path.GetExtension(em.FileName).ToLower();
             if (fileExtension == ".json")
             {
-                //expoart all maps in one json file
-                /*var jExportFile = new JArray();
-                for (int i = 0; i < romInfo.GetMapCount(); i++)
-                {
-
-                    var mapFileToExport = new MapFile(i, RomInfo.gameFamily);
-
-                    if (mapTextureComboBox.SelectedIndex > 0)
-                    {
-                        MW_LoadModelTextures(mapFileToExport.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, mapTextureComboBox.SelectedIndex - 1);
-                    }
-
-                    for (int j = 0; j < mapFileToExport.buildings.Count; j++)
-                    {
-                        mapFileToExport.buildings[j].LoadModelData(romInfo.GetBuildingModelsDirPath(interiorbldRadioButton.Checked)); // Load building nsbmd
-                        if (buildTextureComboBox.SelectedIndex > 0)
-                        {
-                            MW_LoadModelTextures(mapFileToExport.buildings[j].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
-                        }
-                    }
-
-                    var jMap = new JObject();
-                    var jMapId = new JProperty("mapId", i);
-                    var jMapName = new JProperty("mapName", mapFileToExport.mapModel.models[0].Name);
-                    jMap.Add(jMapId);
-                    jMap.Add(jMapName);
-                    var jBuildings = new JArray();
-                    foreach (var building in mapFileToExport.buildings)
-                    {
-                        var jBuilding = new JObject();
-                        var x = building.XCoordinate;
-                        var y = building.YCoordinate;
-                        var z = building.ZCoordinate;
-                        var id = building.modelID;
-                        var name = building.NSBMDFile.models[0].Name;
-                        jBuilding.Add("x", x);
-                        jBuilding.Add("y", y);
-                        jBuilding.Add("z", z);
-                        jBuilding.Add("id", id);
-                        jBuilding.Add("name", name);
-                        jBuildings.Add(jBuilding);
-                    }
-
-
-                    JObject jPermissions = new JObject();
-                    
-                    JArray jCollisions = new JArray();
-                    for (int y = 0; y < mapFileToExport.collisions.GetLength(0); y++)
-                    {
-                        JArray row = new JArray();
-                        for (int x = 0; x < mapFileToExport.collisions.GetLength(1); x++)
-                        {
-                            row.Add(mapFileToExport.collisions[y, x]);
-                        }
-                        jCollisions.Add(row);
-                    }
-
-                    JArray jTypes = new JArray();
-                    for (int y = 0; y < mapFileToExport.types.GetLength(0); y++)
-                    {
-                        JArray row = new JArray();
-                        for (int x = 0; x < mapFileToExport.types.GetLength(1); x++)
-                        {
-                            row.Add(mapFileToExport.types[y, x]);
-                        }
-                        jTypes.Add(row);
-                    }
-
-                    jPermissions.Add("collisions", jCollisions);
-                    jPermissions.Add("types", jTypes);
-                    
-
-                    jMap.Add("buildings", jBuildings);
-                    jMap.Add("permissions", jPermissions);
-                    jExportFile.Add(jMap);
-                }*/
-
+  
                 var jMap = new JObject();
-                var jMapId = new JProperty("mapId", int.Parse(selectMapComboBox.SelectedIndex.ToString().Substring(0, 3)));
+                var jMapId = new JProperty("mapId", int.Parse(selectMapComboBox.SelectedItem.ToString().Substring(0, 3)));
                 var jMapName = new JProperty("mapName", currentMapFile.mapModel.models[0].Name);
                 jMap.Add(jMapId);
                 jMap.Add(jMapName);
