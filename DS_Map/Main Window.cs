@@ -4542,19 +4542,38 @@ namespace DSPRE {
             DrawCollisionGrid();
             RestorePainter();
         }
-        private void exportMovButton_Click(object sender, EventArgs e) {
-            SaveFileDialog em = new SaveFileDialog {
+        private void exportMovButton_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog em = new SaveFileDialog
+            {
                 Filter = MapFile.MovepermsFilter,
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
-            if (em.ShowDialog(this) != DialogResult.OK) {
+            if (em.ShowDialog(this) != DialogResult.OK)
+            {
                 return;
             }
 
-            File.WriteAllBytes(em.FileName, currentMapFile.CollisionsToByteArray());
+            string fileExtension = Path.GetExtension(em.FileName).ToLower();
+            string contentToSave;
+
+            if (fileExtension == ".json")
+            {
+                File.WriteAllText(em.FileName, currentMapFile.CollisionsToJson());
+            }
+            else if (fileExtension == ".per")
+            {
+                File.WriteAllBytes(em.FileName, currentMapFile.CollisionsToByteArray());
+            }
+            else
+            {
+                MessageBox.Show("Unsupported file format!", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             MessageBox.Show("Permissions exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
         private void importMovButton_Click(object sender, EventArgs e) {
             OpenFileDialog ip = new OpenFileDialog {
                 Filter = MapFile.MovepermsFilter
