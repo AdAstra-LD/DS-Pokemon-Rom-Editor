@@ -240,8 +240,6 @@ namespace DSPRE.ROMFiles {
                             ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
                             break;
                         case 0x5E: // Movement
-                        case 0x2A1: // Movement2
-                                    //in the case of Movement, the first param is an overworld ID
                             parameterList.Add(BitConverter.GetBytes(dataReader.ReadUInt16()));
                             ProcessRelativeJump(dataReader, ref parameterList, ref actionOffsets);
                             break;
