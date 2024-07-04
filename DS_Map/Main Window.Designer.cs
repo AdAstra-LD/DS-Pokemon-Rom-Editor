@@ -10886,7 +10886,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
-            this.Text = "DS Pokémon Rom Editor Reloaded 1.11.1 (Nømura, AdAstra/LD3005, Mixone)";
+            this.Text = "DS Pokémon Rom Editor Reloaded 1.11.1 (Nømura, AdAstra/LD3005, Luna/GXTHMXM, Mixone)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainProgram_FormClosing);
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);
