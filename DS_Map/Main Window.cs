@@ -2262,58 +2262,158 @@ namespace DSPRE {
             }
             return (Color.White, Color.Black);
         }
-        private void GenerateMatrixTables() {
+        private void GenerateMatrixTables()
+        {
             /* Generate table columns */
-            if (currentMatrix is null) {
+            if (currentMatrix is null)
+            {
                 return;
             }
 
-            for (int i = 0; i < currentMatrix.width; i++) {
-                headersGridView.Columns.Add("Column" + i, i.ToString("D"));
-                headersGridView.Columns[i].Width = 32; // Set column size
-                headersGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                headersGridView.Columns[i].Frozen = false;
-
-                heightsGridView.Columns.Add("Column" + i, i.ToString("D"));
-                heightsGridView.Columns[i].Width = 21; // Set column size
-                heightsGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                heightsGridView.Columns[i].Frozen = false;
-
-                mapFilesGridView.Columns.Add("Column" + i, i.ToString("D"));
-                mapFilesGridView.Columns[i].Width = 32; // Set column size
-                mapFilesGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                mapFilesGridView.Columns[i].Frozen = false;
-            }
+            // Create and set up DataGridViews
+            SetupDataGridView(headersGridView, currentMatrix.width, 32);
+            SetupDataGridView(heightsGridView, currentMatrix.width, 21);
+            SetupDataGridView(mapFilesGridView, currentMatrix.width, 32);
 
             /* Generate table rows */
-            for (int i = 0; i < currentMatrix.height; i++) {
-                mapFilesGridView.Rows.Add();
-                mapFilesGridView.Rows[i].HeaderCell.Value = i.ToString();
-
-                headersGridView.Rows.Add();
-                headersGridView.Rows[i].HeaderCell.Value = i.ToString();
-
-                heightsGridView.Rows.Add();
-                heightsGridView.Rows[i].HeaderCell.Value = i.ToString();
+            for (int i = 0; i < currentMatrix.height; i++)
+            {
+                AddRow(headersGridView, i);
+                AddRow(heightsGridView, i);
+                AddRow(mapFilesGridView, i);
             }
 
             /* Fill tables */
-            for (int i = 0; i < currentMatrix.height; i++) {
-                for (int j = 0; j < currentMatrix.width; j++) {
-                    headersGridView.Rows[i].Cells[j].Value = currentMatrix.headers[i, j];
-                    heightsGridView.Rows[i].Cells[j].Value = currentMatrix.altitudes[i, j];
-                    mapFilesGridView.Rows[i].Cells[j].Value = currentMatrix.maps[i, j];
+            for (int i = 0; i < currentMatrix.height; i++)
+            {
+                for (int j = 0; j < currentMatrix.width; j++)
+                {
+                    headersGridView.Rows[i].Cells[j].Value = currentMatrix.headers[i, j] != null ? currentMatrix.headers[i, j].ToString() : "-";
+                    heightsGridView.Rows[i].Cells[j].Value = currentMatrix.altitudes[i, j] != null ? currentMatrix.altitudes[i, j].ToString() : "-";
+                    mapFilesGridView.Rows[i].Cells[j].Value = currentMatrix.maps[i, j] != null ? currentMatrix.maps[i, j].ToString() : "-";
                 }
             }
 
-            if (currentMatrix.hasHeadersSection) {
+            if (currentMatrix.hasHeadersSection)
+            {
                 matrixTabControl.TabPages.Add(headersTabPage);
             }
 
-            if (currentMatrix.hasHeightsSection) {
+            if (currentMatrix.hasHeightsSection)
+            {
                 matrixTabControl.TabPages.Add(heightsTabPage);
             }
         }
+
+        private void SetupDataGridView(DataGridView dgv, int columnCount, int columnWidth)
+        {
+            for (int i = 0; i < columnCount; i++)
+            {
+                dgv.Columns.Add("Column" + i, i.ToString("D"));
+                dgv.Columns[i].Width = columnWidth;
+                dgv.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                dgv.Columns[i].Frozen = false;
+            }
+            dgv.KeyDown += DataGridView_KeyDown;
+            dgv.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
+            dgv.MultiSelect = true;
+            dgv.AllowUserToAddRows = false;
+            dgv.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+        }
+
+        private void AddRow(DataGridView dgv, int rowIndex)
+        {
+            dgv.Rows.Add();
+            dgv.Rows[rowIndex].HeaderCell.Value = rowIndex.ToString();
+        }
+
+        private void DataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (sender is DataGridView dgv)
+            {
+                if (e.Control && e.KeyCode == Keys.C)
+                {
+                    CopyToClipboard(dgv);
+                }
+                else if (e.Control && e.KeyCode == Keys.V)
+                {
+                    PasteFromClipboard(dgv);
+                }
+                else if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
+                {
+                    ClearSelectedCells(dgv);
+                }
+            }
+        }
+
+        private void CopyToClipboard(DataGridView dgv)
+        {
+            DataObject dataObj = dgv.GetClipboardContent();
+            if (dataObj != null)
+            {
+                Clipboard.SetDataObject(dataObj);
+            }
+        }
+
+        private void PasteFromClipboard(DataGridView dgv)
+        {
+            if (Clipboard.ContainsText())
+            {
+                string clipboardText = Clipboard.GetText();
+                if (dgv.SelectedCells.Count > 1)
+                {
+                    foreach (DataGridViewCell cell in dgv.SelectedCells)
+                    {
+                        cell.Value = clipboardText.Trim();
+                    }
+                }
+                else
+                {
+                    string[] lines = clipboardText.Split('\n');
+                    int startRow = dgv.CurrentCell.RowIndex;
+                    int startCol = dgv.CurrentCell.ColumnIndex;
+
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        if (startRow + i >= dgv.Rows.Count)
+                        {
+                            break;
+                        }
+
+                        string[] cells = lines[i].Split('\t');
+                        for (int j = 0; j < cells.Length; j++)
+                        {
+                            if (startCol + j >= dgv.Columns.Count)
+                            {
+                                break;
+                            }
+
+                            dgv.Rows[startRow + i].Cells[startCol + j].Value = cells[j].Trim();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ClearSelectedCells(DataGridView dgv)
+        {
+            foreach (DataGridViewCell cell in dgv.SelectedCells)
+            {
+                if (matrixTabControl.SelectedTab == headersTabPage)
+                {
+                    cell.Value = "0";
+                }
+                else if (matrixTabControl.SelectedTab == heightsTabPage)
+                {
+                    cell.Value = "00";
+                }
+                else
+                {
+                    cell.Value = "-";
+                }
+            }
+        }
+
         #endregion
         private void SetupMatrixEditor() {
             Helpers.statusLabelMessage("Setting up Matrix Editor...");
@@ -9913,6 +10013,11 @@ namespace DSPRE {
 
             Helpers.statusLabelMessage();
             Update();
+        }
+
+        private void headersGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
