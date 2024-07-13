@@ -678,7 +678,9 @@ namespace DSPRE.Resources {
 
             [0x02C1] = "ShowSaveBox",
             [0x02C2] = "HideSaveBox",
-            [0x02C3] = "ScopeMode"
+            [0x02C3] = "ScopeMode",
+
+            [0x0333] = "SetFieldVolume",
         };
         public static Dictionary<ushort, byte[]> DPPtScrCmdParameters = new Dictionary<ushort, byte[]>() {
             [0x0000] = new byte[1] { 0 },
@@ -1024,14 +1026,14 @@ namespace DSPRE.Resources {
             [0x0154] = new byte[1] { 0 },
             [0x0155] = new byte[] { 2, 2 },
             [0x0156] = new byte[] { 2 },
-            [0x0157] = new byte[1] { 0 },
+            [0x0157] = new byte[] { 2 },
             [0x0158] = new byte[1] { 0 },
-            [0x0159] = new byte[1] { 0 },
+            [0x0159] = new byte[] { 2 },
             [0x015A] = new byte[1] { 0 },
             [0x015B] = new byte[] { 2, 2 },
             [0x015C] = new byte[] { 2 },
             [0x015D] = new byte[] { 2 },
-            [0x015E] = new byte[1] { 0 },
+            [0x015E] = new byte[] { 2 },
             [0x015F] = new byte[1] { 0 },
             [0x0160] = new byte[] { 2 },
             [0x0161] = new byte[1] { 0 },
@@ -1060,12 +1062,12 @@ namespace DSPRE.Resources {
             [0x0178] = new byte[] { 1 },
             [0x0179] = new byte[] { 2 },
             [0x017A] = new byte[] { 2, 2 },
-            [0x017B] = new byte[] { 2 },
+            [0x017B] = new byte[] { 1, 2, 2 },
             [0x017C] = new byte[] { 1, 2 },
             [0x017D] = new byte[] { 2 },
             [0x017E] = new byte[] { 2 },
             [0x017F] = new byte[] { 2 },
-            [0x0180] = new byte[] { 1 },
+            [0x0180] = new byte[] { 2 },
             [0x0181] = new byte[] { 2 },
             [0x0182] = new byte[] { 2 },
             [0x0183] = new byte[] { 2 },
@@ -1494,8 +1496,11 @@ namespace DSPRE.Resources {
 
             [0x0302] = "CheckUsedRotomAppliances",
 
+            [0x0314] = "GetBattleOutcome",
             [0x0315] = "GetCurrentWeather",
 
+            [0x0317] = "GetPlayerPositionFull",
+            [0x0318] = "WildBattleFateful",
             [0x0319] = "GiratinaBattle",
             [0x031A] = "RegisterSeenPokemon",
 
@@ -1635,7 +1640,7 @@ namespace DSPRE.Resources {
             [0x0331] = new byte[1] { 0 },
             [0x0332] = new byte[1] { 0 },
             [0x0333] = new byte[] { 2 },
-            [0x0334] = new byte[1] { 0 },
+            [0x0334] = new byte[] { 2, 2 },
             [0x0335] = new byte[] { 2, 4 },
             [0x0336] = new byte[] { 2 },
 
@@ -2088,7 +2093,14 @@ namespace DSPRE.Resources {
 
             [0x0290] = "CheckHeadbuttCompatibility",
 
+            [0x02AB] = "GetBattleOutcome",
             [0x02AC] = "GetCurrentWeather",
+            [0x02AD] = "GetPlayerPositionFull",
+            [0x02AE] = "WildBattleFateful",
+            [0x02AF] = "RegisterSeenPokemon",
+
+            [0x02BF] = "SetFieldVolume",
+
 
             [0x02C4] = "FloorTrapAnimation",
 
@@ -2850,8 +2862,8 @@ namespace DSPRE.Resources {
             [0x02AA] = new byte[] { 2 },
             [0x02AB] = new byte[] { 2 },
             [0x02AC] = new byte[] { 2 },
-            [0x02AD] = new byte[] { 2, 2 },
-            [0x02AE] = new byte[1] { 0 },
+            [0x02AD] = new byte[] { 2, 2, 2 },
+            [0x02AE] = new byte[] { 2, 2 },
             [0x02AF] = new byte[] { 2 },
             [0x02B0] = new byte[] { 2 },
             [0x02B1] = new byte[] { 2 },
@@ -2868,7 +2880,7 @@ namespace DSPRE.Resources {
             [0x02BC] = new byte[] { 2 },
             [0x02BD] = new byte[] { 2, 2, 2, 2 },
             [0x02BE] = new byte[1] { 0 },
-            [0x02BF] = new byte[1] { 0 },
+            [0x02BF] = new byte[] { 2 },
             [0x02C0] = new byte[] { 2 },
             [0x02C1] = new byte[1] { 0 },
             [0x02C2] = new byte[] { 2 },
