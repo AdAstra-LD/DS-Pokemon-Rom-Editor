@@ -1922,13 +1922,14 @@ namespace DSPRE {
 
             MapHeader h = null;
             try {
-                if (new FileInfo(of.FileName).Length > 48)
+                if (new FileInfo(of.FileName).Length > 48) {
                     throw new FileFormatException();
+                }
 
                 h = MapHeader.LoadFromFile(of.FileName, currentHeader.ID, 0);
-                if (h == null)
+                if (h == null) {
                     throw new FileFormatException();
-
+                }
             } catch (FileFormatException) {
                 MessageBox.Show("The file you tried to import is either malformed or not a Header file.\nNo changes have been made.",
                         "Import Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
