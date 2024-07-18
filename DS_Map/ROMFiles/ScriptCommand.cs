@@ -14,16 +14,18 @@ namespace DSPRE.ROMFiles {
             OW_ID,
             OW_MOVEMENT_TYPE,
             OW_DIRECTION,
-            FUNCTION_ID,
+            LABEL,
             ACTION_ID,
             CMD_NUMBER
         };
 
         public ushort? id;
         public List<byte[]> cmdParams;
+        //public List<string> labels;
         public string name;
+        public uint? pos;
 
-        public ScriptCommand(ushort id, List<byte[]> parametersList) {
+        public ScriptCommand(ushort id, List<byte[]> parametersList, SortedDictionary<int, HashSet<string>> labels, uint? pos = null ){
             if (parametersList is null) {
                 this.id = null;
                 return;
@@ -33,10 +35,12 @@ namespace DSPRE.ROMFiles {
                 name = FormatNumber(id, ParamTypeEnum.CMD_NUMBER);
             }
 
+            this.pos = pos;
+
             switch (id) {
                 case 0x0016: // Jump
                 case 0x001A: // Call
-                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.FUNCTION_ID)}";
+                    name += $" {FormatOffset(parametersList[0], labels)}";
                     break;
                 case 0x0017: // JumpIfObjID
                 case 0x0018: // JumpIfEventID
@@ -48,12 +52,12 @@ namespace DSPRE.ROMFiles {
                 case 0x001C: // JumpIf
                 case 0x001D: // CallIf
                 {
-                        string number = FormatNumber(parametersList[1], ParamTypeEnum.FUNCTION_ID);
+                        string jmp = FormatOffset(parametersList[1], labels);
 
                         if (RomInfo.ScriptComparisonOperatorsDict.TryGetValue(parametersList[0][0], out string v)) {
-                            name += $" {v} {number}";
+                            name += $" {v} {jmp}";
                         } else {
-                            name += $" {parametersList[0][0]} {number}";
+                            name += $" {parametersList[0][0]} {jmp}";
                         }
 
                         break;
@@ -181,6 +185,21 @@ namespace DSPRE.ROMFiles {
 
             this.id = id;
             this.cmdParams = parametersList;
+        }
+
+        private string FormatOffset(byte[] bytes, SortedDictionary<int, HashSet<string>> labels) {
+            int offset = BitConverter.ToInt32(bytes, 0);
+            //if (pos == null) {
+            //    return $" {(pos > 0 ? "+ " : "")}{pos}";
+            //} else {
+            {
+                if (labels.TryGetValue(offset, out HashSet<string> lbls)) {
+
+                    return $"{labels[offset].First()}";
+                } else {
+                    return $"{"NONEXISTENT_"}{ScriptFile.LabelStr}{offset}";
+                }
+            }
         }
 
         private string FormatCmd_Warp(List<byte[]> parametersList) {
@@ -389,9 +408,6 @@ namespace DSPRE.ROMFiles {
             switch (paramType) {
                 case ParamTypeEnum.CMD_NUMBER:
                     return "CMD_" + prefix + num.ToString(formatOverride + '3');
-
-                case ParamTypeEnum.FUNCTION_ID:
-                    return ScriptFile.ContainerTypes.Function.ToString() + "#" + num;
 
                 case ParamTypeEnum.ACTION_ID:
                     return ScriptFile.ContainerTypes.Action.ToString() + "#" + num;

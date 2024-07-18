@@ -662,11 +662,10 @@ namespace DSPRE
                             new ScriptCommand("Jump Function_#1")
                         };
 
-                        itemScriptFile.allScripts.Add(new ScriptCommandContainer((ushort)(i + 1), ScriptFile.ContainerTypes.Script, commandList: cmdList));
+                        itemScriptFile.allScripts.Add(new ScriptCommandContainer((ushort)(i + 1), commandList: cmdList));
                     }
 
                     itemScriptFile.allScripts.Add(executeGive);
-                    itemScriptFile.allFunctions[0].usedScriptID = itemCount + 1;
 
                     itemScriptFile.SaveToFileDefaultDir(RomInfo.itemScriptFileNumber, showSuccessMessage: false);
                     MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
