@@ -30,22 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainProgram));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.headerEditorTabPage = new System.Windows.Forms.TabPage();
             this.removeLastHeaderBTN = new System.Windows.Forms.Button();
@@ -332,7 +332,6 @@
             this.addNSBTXButton = new System.Windows.Forms.Button();
             this.exportNSBTXButton = new System.Windows.Forms.Button();
             this.importNSBTXButton = new System.Windows.Forms.Button();
-            this.texturePictureBox = new DSPRE.OffsetPictureBox();
             this.palettesLabel = new System.Windows.Forms.Label();
             this.texturesLabel = new System.Windows.Forms.Label();
             this.palettesListBox = new System.Windows.Forms.ListBox();
@@ -509,9 +508,7 @@
             this.importEventFileButton = new System.Windows.Forms.Button();
             this.saveEventsButton = new System.Windows.Forms.Button();
             this.tabPageScriptEditor = new System.Windows.Forms.TabPage();
-            this.scriptEditor = new DSPRE.Editors.ScriptEditor();
             this.tabPageLevelScriptEditor = new System.Windows.Forms.TabPage();
-            this.levelScriptEditor = new DSPRE.Editors.LevelScriptEditor();
             this.textEditorTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
@@ -582,16 +579,10 @@
             this.label61 = new System.Windows.Forms.Label();
             this.label62 = new System.Windows.Forms.Label();
             this.poke6MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove6_1ComboBox = new DSPRE.InputComboBox();
-            this.partyMove6_2ComboBox = new DSPRE.InputComboBox();
-            this.partyMove6_3ComboBox = new DSPRE.InputComboBox();
-            this.partyMove6_4ComboBox = new DSPRE.InputComboBox();
             this.partyIV6UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel6UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall6UpDown = new System.Windows.Forms.NumericUpDown();
-            this.partyItem6ComboBox = new DSPRE.InputComboBox();
             this.partyPokemon6PictureBox = new System.Windows.Forms.PictureBox();
-            this.partyPokemon6ComboBox = new DSPRE.InputComboBox();
             this.party5GroupBox = new System.Windows.Forms.GroupBox();
             this.partyForm5ComboBox = new System.Windows.Forms.ComboBox();
             this.partyAbility5ComboBox = new System.Windows.Forms.ComboBox();
@@ -601,16 +592,10 @@
             this.label58 = new System.Windows.Forms.Label();
             this.label59 = new System.Windows.Forms.Label();
             this.poke5MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove5_1ComboBox = new DSPRE.InputComboBox();
-            this.partyMove5_2ComboBox = new DSPRE.InputComboBox();
-            this.partyMove5_3ComboBox = new DSPRE.InputComboBox();
-            this.partyMove5_4ComboBox = new DSPRE.InputComboBox();
             this.partyIV5UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel5UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall5UpDown = new System.Windows.Forms.NumericUpDown();
-            this.partyItem5ComboBox = new DSPRE.InputComboBox();
             this.partyPokemon5PictureBox = new System.Windows.Forms.PictureBox();
-            this.partyPokemon5ComboBox = new DSPRE.InputComboBox();
             this.party4GroupBox = new System.Windows.Forms.GroupBox();
             this.partyForm4ComboBox = new System.Windows.Forms.ComboBox();
             this.partyAbility4ComboBox = new System.Windows.Forms.ComboBox();
@@ -620,16 +605,10 @@
             this.label55 = new System.Windows.Forms.Label();
             this.label56 = new System.Windows.Forms.Label();
             this.poke4MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove4_1ComboBox = new DSPRE.InputComboBox();
-            this.partyMove4_2ComboBox = new DSPRE.InputComboBox();
-            this.partyMove4_3ComboBox = new DSPRE.InputComboBox();
-            this.partyMove4_4ComboBox = new DSPRE.InputComboBox();
             this.partyIV4UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel4UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall4UpDown = new System.Windows.Forms.NumericUpDown();
-            this.partyItem4ComboBox = new DSPRE.InputComboBox();
             this.partyPokemon4PictureBox = new System.Windows.Forms.PictureBox();
-            this.partyPokemon4ComboBox = new DSPRE.InputComboBox();
             this.party3GroupBox = new System.Windows.Forms.GroupBox();
             this.partyForm3ComboBox = new System.Windows.Forms.ComboBox();
             this.partyAbility3ComboBox = new System.Windows.Forms.ComboBox();
@@ -639,16 +618,10 @@
             this.label52 = new System.Windows.Forms.Label();
             this.label53 = new System.Windows.Forms.Label();
             this.poke3MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove3_1ComboBox = new DSPRE.InputComboBox();
-            this.partyMove3_2ComboBox = new DSPRE.InputComboBox();
-            this.partyMove3_3ComboBox = new DSPRE.InputComboBox();
-            this.partyMove3_4ComboBox = new DSPRE.InputComboBox();
             this.partyIV3UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel3UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall3UpDown = new System.Windows.Forms.NumericUpDown();
-            this.partyItem3ComboBox = new DSPRE.InputComboBox();
             this.partyPokemon3PictureBox = new System.Windows.Forms.PictureBox();
-            this.partyPokemon3ComboBox = new DSPRE.InputComboBox();
             this.party2GroupBox = new System.Windows.Forms.GroupBox();
             this.partyForm2ComboBox = new System.Windows.Forms.ComboBox();
             this.partyAbility2ComboBox = new System.Windows.Forms.ComboBox();
@@ -658,16 +631,10 @@
             this.label49 = new System.Windows.Forms.Label();
             this.label50 = new System.Windows.Forms.Label();
             this.poke2MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove2_1ComboBox = new DSPRE.InputComboBox();
-            this.partyMove2_2ComboBox = new DSPRE.InputComboBox();
-            this.partyMove2_3ComboBox = new DSPRE.InputComboBox();
-            this.partyMove2_4ComboBox = new DSPRE.InputComboBox();
             this.partyIV2UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel2UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall2UpDown = new System.Windows.Forms.NumericUpDown();
-            this.partyItem2ComboBox = new DSPRE.InputComboBox();
             this.partyPokemon2PictureBox = new System.Windows.Forms.PictureBox();
-            this.partyPokemon2ComboBox = new DSPRE.InputComboBox();
             this.party1GroupBox = new System.Windows.Forms.GroupBox();
             this.partyForm1ComboBox = new System.Windows.Forms.ComboBox();
             this.partyAbility1ComboBox = new System.Windows.Forms.ComboBox();
@@ -677,16 +644,10 @@
             this.label46 = new System.Windows.Forms.Label();
             this.label45 = new System.Windows.Forms.Label();
             this.poke1MovesGroupBox = new System.Windows.Forms.GroupBox();
-            this.partyMove1_1ComboBox = new DSPRE.InputComboBox();
-            this.partyMove1_2ComboBox = new DSPRE.InputComboBox();
-            this.partyMove1_3ComboBox = new DSPRE.InputComboBox();
-            this.partyMove1_4ComboBox = new DSPRE.InputComboBox();
             this.partyIV1UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyLevel1UpDown = new System.Windows.Forms.NumericUpDown();
             this.partyBall1UpDown = new System.Windows.Forms.NumericUpDown();
-            this.partyItem1ComboBox = new DSPRE.InputComboBox();
             this.partyPokemon1PictureBox = new System.Windows.Forms.PictureBox();
-            this.partyPokemon1ComboBox = new DSPRE.InputComboBox();
             this.groupBox27 = new System.Windows.Forms.GroupBox();
             this.eyeContactMusicAltLabel = new System.Windows.Forms.Label();
             this.encounterSSEQAltUpDown = new System.Windows.Forms.NumericUpDown();
@@ -717,10 +678,6 @@
             this.trainerAI10CheckBox = new System.Windows.Forms.CheckBox();
             this.trainerAI11CheckBox = new System.Windows.Forms.CheckBox();
             this.trainerItemsGroupBox = new System.Windows.Forms.GroupBox();
-            this.trainerItem1ComboBox = new DSPRE.InputComboBox();
-            this.trainerItem2ComboBox = new DSPRE.InputComboBox();
-            this.trainerItem3ComboBox = new DSPRE.InputComboBox();
-            this.trainerItem4ComboBox = new DSPRE.InputComboBox();
             this.trainerItemsCheckBox = new System.Windows.Forms.CheckBox();
             this.trainerMovesCheckBox = new System.Windows.Forms.CheckBox();
             this.trainerDoubleCheckBox = new System.Windows.Forms.CheckBox();
@@ -732,7 +689,6 @@
             this.trainerClassListBox = new System.Windows.Forms.ListBox();
             this.addTrainerButton = new System.Windows.Forms.Button();
             this.label42 = new System.Windows.Forms.Label();
-            this.trainerComboBox = new DSPRE.InputComboBox();
             this.trainerSaveCurrentButton = new System.Windows.Forms.Button();
             this.tableEditorTabPage = new System.Windows.Forms.TabPage();
             this.label73 = new System.Windows.Forms.Label();
@@ -779,7 +735,6 @@
             this.headerConditionalMusicComboBox = new System.Windows.Forms.ComboBox();
             this.conditionalMusicTableListBox = new System.Windows.Forms.ListBox();
             this.tabPageEncountersEditor = new System.Windows.Forms.TabPage();
-            this.encountersEditor = new DSPRE.Editors.EncountersEditor();
             this.mainTabImageList = new System.Windows.Forms.ImageList(this.components);
             this.gameIcon = new System.Windows.Forms.PictureBox();
             this.languageLabel = new System.Windows.Forms.Label();
@@ -817,6 +772,8 @@
             this.personalDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overlayEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spawnEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Help = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -851,7 +808,53 @@
             this.separator_afterMiscButtons = new System.Windows.Forms.ToolStripSeparator();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.moveDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.discordServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.texturePictureBox = new DSPRE.OffsetPictureBox();
+            this.scriptEditor = new DSPRE.Editors.ScriptEditor();
+            this.levelScriptEditor = new DSPRE.Editors.LevelScriptEditor();
+            this.partyMove6_1ComboBox = new DSPRE.InputComboBox();
+            this.partyMove6_2ComboBox = new DSPRE.InputComboBox();
+            this.partyMove6_3ComboBox = new DSPRE.InputComboBox();
+            this.partyMove6_4ComboBox = new DSPRE.InputComboBox();
+            this.partyItem6ComboBox = new DSPRE.InputComboBox();
+            this.partyPokemon6ComboBox = new DSPRE.InputComboBox();
+            this.partyMove5_1ComboBox = new DSPRE.InputComboBox();
+            this.partyMove5_2ComboBox = new DSPRE.InputComboBox();
+            this.partyMove5_3ComboBox = new DSPRE.InputComboBox();
+            this.partyMove5_4ComboBox = new DSPRE.InputComboBox();
+            this.partyItem5ComboBox = new DSPRE.InputComboBox();
+            this.partyPokemon5ComboBox = new DSPRE.InputComboBox();
+            this.partyMove4_1ComboBox = new DSPRE.InputComboBox();
+            this.partyMove4_2ComboBox = new DSPRE.InputComboBox();
+            this.partyMove4_3ComboBox = new DSPRE.InputComboBox();
+            this.partyMove4_4ComboBox = new DSPRE.InputComboBox();
+            this.partyItem4ComboBox = new DSPRE.InputComboBox();
+            this.partyPokemon4ComboBox = new DSPRE.InputComboBox();
+            this.partyMove3_1ComboBox = new DSPRE.InputComboBox();
+            this.partyMove3_2ComboBox = new DSPRE.InputComboBox();
+            this.partyMove3_3ComboBox = new DSPRE.InputComboBox();
+            this.partyMove3_4ComboBox = new DSPRE.InputComboBox();
+            this.partyItem3ComboBox = new DSPRE.InputComboBox();
+            this.partyPokemon3ComboBox = new DSPRE.InputComboBox();
+            this.partyMove2_1ComboBox = new DSPRE.InputComboBox();
+            this.partyMove2_2ComboBox = new DSPRE.InputComboBox();
+            this.partyMove2_3ComboBox = new DSPRE.InputComboBox();
+            this.partyMove2_4ComboBox = new DSPRE.InputComboBox();
+            this.partyItem2ComboBox = new DSPRE.InputComboBox();
+            this.partyPokemon2ComboBox = new DSPRE.InputComboBox();
+            this.partyMove1_1ComboBox = new DSPRE.InputComboBox();
+            this.partyMove1_2ComboBox = new DSPRE.InputComboBox();
+            this.partyMove1_3ComboBox = new DSPRE.InputComboBox();
+            this.partyMove1_4ComboBox = new DSPRE.InputComboBox();
+            this.partyItem1ComboBox = new DSPRE.InputComboBox();
+            this.partyPokemon1ComboBox = new DSPRE.InputComboBox();
+            this.trainerItem1ComboBox = new DSPRE.InputComboBox();
+            this.trainerItem2ComboBox = new DSPRE.InputComboBox();
+            this.trainerItem3ComboBox = new DSPRE.InputComboBox();
+            this.trainerItem4ComboBox = new DSPRE.InputComboBox();
+            this.trainerComboBox = new DSPRE.InputComboBox();
+            this.encountersEditor = new DSPRE.Editors.EncountersEditor();
+            this.dSPokémonHackingGiodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -939,7 +942,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.areaDataDynamicTexturesNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.areaDataMapTilesetUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.areaDataBuildingTilesetUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).BeginInit();
             this.eventEditorTabPage.SuspendLayout();
             this.groupBox21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventAreaDataUpDown)).BeginInit();
@@ -1090,6 +1092,7 @@
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // mainTabControl
@@ -1149,6 +1152,7 @@
             this.headerEditorTabPage.Size = new System.Drawing.Size(1185, 675);
             this.headerEditorTabPage.TabIndex = 0;
             this.headerEditorTabPage.Text = "Header Editor";
+            this.headerEditorTabPage.Click += new System.EventHandler(this.headerEditorTabPage_Click);
             // 
             // removeLastHeaderBTN
             // 
@@ -1191,6 +1195,7 @@
             this.worldmapCoordsGroupBox.TabIndex = 34;
             this.worldmapCoordsGroupBox.TabStop = false;
             this.worldmapCoordsGroupBox.Text = "Worldmap";
+            this.worldmapCoordsGroupBox.Enter += new System.EventHandler(this.worldmapCoordsGroupBox_Enter);
             // 
             // worldmapCoordsPasteButton
             // 
@@ -1211,6 +1216,7 @@
             this.label1.Size = new System.Drawing.Size(14, 13);
             this.label1.TabIndex = 27;
             this.label1.Text = "Y";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // worldmapCoordsCopyButton
             // 
@@ -1243,6 +1249,7 @@
             this.label36.Size = new System.Drawing.Size(14, 13);
             this.label36.TabIndex = 25;
             this.label36.Text = "X";
+            this.label36.Click += new System.EventHandler(this.label36_Click);
             // 
             // worldmapXCoordUpDown
             // 
@@ -1269,6 +1276,7 @@
             this.groupBox18.TabIndex = 51;
             this.groupBox18.TabStop = false;
             this.groupBox18.Text = "Wild Pokémon";
+            this.groupBox18.Enter += new System.EventHandler(this.groupBox18_Enter);
             // 
             // openWildEditorWithIdButton
             // 
@@ -1375,6 +1383,7 @@
             this.groupBox10.TabIndex = 31;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Events && Texts";
+            this.groupBox10.Enter += new System.EventHandler(this.groupBox10_Enter);
             // 
             // pasteTextsButton
             // 
@@ -1449,6 +1458,7 @@
             this.textLabel.Size = new System.Drawing.Size(80, 13);
             this.textLabel.TabIndex = 45;
             this.textLabel.Text = "Text Archive #:";
+            this.textLabel.Click += new System.EventHandler(this.textLabel_Click);
             // 
             // openEventsButton
             // 
@@ -1468,6 +1478,7 @@
             this.eventLabel.Size = new System.Drawing.Size(67, 13);
             this.eventLabel.TabIndex = 43;
             this.eventLabel.Text = "Event File #:";
+            this.eventLabel.Click += new System.EventHandler(this.eventLabel_Click);
             // 
             // eventFileUpDown
             // 
@@ -1500,6 +1511,7 @@
             this.groupBox4.TabIndex = 31;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Map matrix && Tileset";
+            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // pasteAreaDataButton
             // 
@@ -1571,6 +1583,7 @@
             this.areaDataLabel.Size = new System.Drawing.Size(56, 13);
             this.areaDataLabel.TabIndex = 27;
             this.areaDataLabel.Text = "Area data:";
+            this.areaDataLabel.Click += new System.EventHandler(this.areaDataLabel_Click);
             // 
             // areaDataUpDown
             // 
@@ -1593,6 +1606,7 @@
             this.matrixLabel.Size = new System.Drawing.Size(53, 13);
             this.matrixLabel.TabIndex = 25;
             this.matrixLabel.Text = "Matrix no.";
+            this.matrixLabel.Click += new System.EventHandler(this.matrixLabel_Click);
             // 
             // matrixUpDown
             // 
@@ -1618,6 +1632,7 @@
             this.groupBox9.TabIndex = 29;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Search Location Name:";
+            this.groupBox9.Enter += new System.EventHandler(this.groupBox9_Enter);
             // 
             // resetButton
             // 
@@ -1645,6 +1660,7 @@
             this.searchLocationTextBox.Name = "searchLocationTextBox";
             this.searchLocationTextBox.Size = new System.Drawing.Size(119, 20);
             this.searchLocationTextBox.TabIndex = 0;
+            this.searchLocationTextBox.TextChanged += new System.EventHandler(this.searchLocationTextBox_TextChanged);
             this.searchLocationTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchHeaderTextBox_KeyPress);
             // 
             // copyHeaderButton
@@ -1670,6 +1686,7 @@
             this.areaIconPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.areaIconPictureBox.TabIndex = 35;
             this.areaIconPictureBox.TabStop = false;
+            this.areaIconPictureBox.Click += new System.EventHandler(this.areaIconPictureBox_Click);
             // 
             // areaImageLabel
             // 
@@ -1679,6 +1696,7 @@
             this.areaImageLabel.Size = new System.Drawing.Size(52, 13);
             this.areaImageLabel.TabIndex = 34;
             this.areaImageLabel.Text = "Area icon";
+            this.areaImageLabel.Click += new System.EventHandler(this.areaImageLabel_Click);
             // 
             // nameGroupBox
             // 
@@ -1705,6 +1723,7 @@
             this.nameGroupBox.TabIndex = 28;
             this.nameGroupBox.TabStop = false;
             this.nameGroupBox.Text = "Location Info";
+            this.nameGroupBox.Enter += new System.EventHandler(this.nameGroupBox_Enter);
             // 
             // internalNameLenLabel
             // 
@@ -1714,6 +1733,7 @@
             this.internalNameLenLabel.Size = new System.Drawing.Size(32, 16);
             this.internalNameLenLabel.TabIndex = 44;
             this.internalNameLenLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.internalNameLenLabel.Click += new System.EventHandler(this.internalNameLenLabel_Click);
             // 
             // pasteLocationNameButton
             // 
@@ -1797,6 +1817,7 @@
             this.areaSettingsLabel.Size = new System.Drawing.Size(73, 13);
             this.areaSettingsLabel.TabIndex = 27;
             this.areaSettingsLabel.Text = "Area Settings:";
+            this.areaSettingsLabel.Click += new System.EventHandler(this.areaSettingsLabel_Click);
             // 
             // copyAreaSettingsButton
             // 
@@ -1816,6 +1837,7 @@
             this.label3.Size = new System.Drawing.Size(79, 13);
             this.label3.TabIndex = 28;
             this.label3.Text = "Location Name";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label14
             // 
@@ -1825,6 +1847,7 @@
             this.label14.Size = new System.Drawing.Size(71, 13);
             this.label14.TabIndex = 27;
             this.label14.Text = "Internal name";
+            this.label14.Click += new System.EventHandler(this.label14_Click);
             // 
             // internalNameBox
             // 
@@ -1843,6 +1866,7 @@
             this.label2.Size = new System.Drawing.Size(55, 13);
             this.label2.TabIndex = 4;
             this.label2.Text = "Area icon:";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // areaIconComboBox
             // 
@@ -1905,6 +1929,7 @@
             this.groupBox2.TabIndex = 29;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Appearance && Sound";
+            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // cameraUpDown
             // 
@@ -2074,6 +2099,7 @@
             this.weatherLabel.Size = new System.Drawing.Size(51, 13);
             this.weatherLabel.TabIndex = 12;
             this.weatherLabel.Text = "Weather:";
+            this.weatherLabel.Click += new System.EventHandler(this.weatherLabel_Click);
             // 
             // cameraLabel
             // 
@@ -2083,6 +2109,7 @@
             this.cameraLabel.Size = new System.Drawing.Size(76, 13);
             this.cameraLabel.TabIndex = 10;
             this.cameraLabel.Text = "Camera Angle:";
+            this.cameraLabel.Click += new System.EventHandler(this.cameraLabel_Click);
             // 
             // musicNightLabel
             // 
@@ -2092,6 +2119,7 @@
             this.musicNightLabel.Size = new System.Drawing.Size(72, 13);
             this.musicNightLabel.TabIndex = 8;
             this.musicNightLabel.Text = "Music (Night):";
+            this.musicNightLabel.Click += new System.EventHandler(this.musicNightLabel_Click);
             // 
             // cameraComboBox
             // 
@@ -2111,6 +2139,7 @@
             this.musicDayLabel.Size = new System.Drawing.Size(66, 13);
             this.musicDayLabel.TabIndex = 6;
             this.musicDayLabel.Text = "Music (Day):";
+            this.musicDayLabel.Click += new System.EventHandler(this.musicDayLabel_Click);
             // 
             // musicDayComboBox
             // 
@@ -2142,6 +2171,7 @@
             this.groupBox3.TabIndex = 30;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Scripts";
+            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // pasteLevelScriptsButton
             // 
@@ -2216,6 +2246,7 @@
             this.levelScriptLabel.Size = new System.Drawing.Size(95, 13);
             this.levelScriptLabel.TabIndex = 16;
             this.levelScriptLabel.Text = "Level Script File #:";
+            this.levelScriptLabel.Click += new System.EventHandler(this.levelScriptLabel_Click);
             // 
             // openScriptButton
             // 
@@ -2235,6 +2266,7 @@
             this.scriptLabel.Size = new System.Drawing.Size(66, 13);
             this.scriptLabel.TabIndex = 13;
             this.scriptLabel.Text = "Script File #:";
+            this.scriptLabel.Click += new System.EventHandler(this.scriptLabel_Click);
             // 
             // scriptFileUpDown
             // 
@@ -2258,6 +2290,7 @@
             this.headerListBox.Name = "headerListBox";
             this.headerListBox.Size = new System.Drawing.Size(214, 469);
             this.headerListBox.TabIndex = 2;
+            this.headerListBox.SelectedIndexChanged += new System.EventHandler(this.headerListBox_SelectedIndexChanged);
             this.headerListBox.SelectedValueChanged += new System.EventHandler(this.headerListBox_SelectedValueChanged);
             this.headerListBox.Leave += new System.EventHandler(this.headerListBox_Leave);
             // 
@@ -2297,6 +2330,7 @@
             this.flagsGroupBox.TabIndex = 32;
             this.flagsGroupBox.TabStop = false;
             this.flagsGroupBox.Text = "Map Settings";
+            this.flagsGroupBox.Enter += new System.EventHandler(this.flagsGroupBox_Enter);
             // 
             // followModeComboBox
             // 
@@ -2326,6 +2360,7 @@
             this.johtoRadioButton.Text = "Johto";
             this.johtoRadioButton.UseVisualStyleBackColor = true;
             this.johtoRadioButton.Visible = false;
+            this.johtoRadioButton.CheckedChanged += new System.EventHandler(this.johtoRadioButton_CheckedChanged);
             // 
             // kantoRadioButton
             // 
@@ -2349,6 +2384,7 @@
             this.followModeLabel.TabIndex = 58;
             this.followModeLabel.Text = "Following Pokemon:";
             this.followModeLabel.Visible = false;
+            this.followModeLabel.Click += new System.EventHandler(this.followModeLabel_Click);
             // 
             // pasteMapSettingsButton
             // 
@@ -2369,6 +2405,7 @@
             this.battleBackgroundLabel.Size = new System.Drawing.Size(52, 13);
             this.battleBackgroundLabel.TabIndex = 37;
             this.battleBackgroundLabel.Text = "Battle BG";
+            this.battleBackgroundLabel.Click += new System.EventHandler(this.battleBackgroundLabel_Click);
             // 
             // copyFlagsButton
             // 
@@ -2478,6 +2515,7 @@
             this.cameraPicLabel.Size = new System.Drawing.Size(72, 13);
             this.cameraPicLabel.TabIndex = 3;
             this.cameraPicLabel.Text = "Camera angle";
+            this.cameraPicLabel.Click += new System.EventHandler(this.cameraPicLabel_Click);
             // 
             // cameraPictureBox
             // 
@@ -2487,6 +2525,7 @@
             this.cameraPictureBox.Size = new System.Drawing.Size(256, 192);
             this.cameraPictureBox.TabIndex = 2;
             this.cameraPictureBox.TabStop = false;
+            this.cameraPictureBox.Click += new System.EventHandler(this.cameraPictureBox_Click);
             // 
             // weatherPicLabel
             // 
@@ -2496,6 +2535,7 @@
             this.weatherPicLabel.Size = new System.Drawing.Size(48, 13);
             this.weatherPicLabel.TabIndex = 1;
             this.weatherPicLabel.Text = "Weather";
+            this.weatherPicLabel.Click += new System.EventHandler(this.weatherPicLabel_Click);
             // 
             // weatherPictureBox
             // 
@@ -2505,6 +2545,7 @@
             this.weatherPictureBox.Size = new System.Drawing.Size(256, 192);
             this.weatherPictureBox.TabIndex = 0;
             this.weatherPictureBox.TabStop = false;
+            this.weatherPictureBox.Click += new System.EventHandler(this.weatherPictureBox_Click);
             // 
             // matrixEditorTabPage
             // 
@@ -2537,6 +2578,7 @@
             this.matrixEditorTabPage.Size = new System.Drawing.Size(1185, 675);
             this.matrixEditorTabPage.TabIndex = 1;
             this.matrixEditorTabPage.Text = "Matrix Editor";
+            this.matrixEditorTabPage.Click += new System.EventHandler(this.matrixEditorTabPage_Click);
             // 
             // setSpawnPointButton
             // 
@@ -2544,7 +2586,7 @@
             this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
             this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.setSpawnPointButton.Location = new System.Drawing.Point(11, 528);
+            this.setSpawnPointButton.Location = new System.Drawing.Point(11, -1275);
             this.setSpawnPointButton.Name = "setSpawnPointButton";
             this.setSpawnPointButton.Size = new System.Drawing.Size(117, 43);
             this.setSpawnPointButton.TabIndex = 35;
@@ -2560,7 +2602,7 @@
             this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.saveMatrixButton.Location = new System.Drawing.Point(11, 589);
+            this.saveMatrixButton.Location = new System.Drawing.Point(11, -1214);
             this.saveMatrixButton.Name = "saveMatrixButton";
             this.saveMatrixButton.Size = new System.Drawing.Size(117, 43);
             this.saveMatrixButton.TabIndex = 34;
@@ -2719,6 +2761,7 @@
             this.labelMatrices.Size = new System.Drawing.Size(47, 13);
             this.labelMatrices.TabIndex = 21;
             this.labelMatrices.Text = "Matrices";
+            this.labelMatrices.Click += new System.EventHandler(this.labelMatrices_Click);
             // 
             // matrixNameLabel
             // 
@@ -2729,6 +2772,7 @@
             this.matrixNameLabel.Size = new System.Drawing.Size(64, 13);
             this.matrixNameLabel.TabIndex = 20;
             this.matrixNameLabel.Text = "Matrix name";
+            this.matrixNameLabel.Click += new System.EventHandler(this.matrixNameLabel_Click);
             // 
             // matrixTabControl
             // 
@@ -2746,6 +2790,7 @@
             this.matrixTabControl.SelectedIndex = 0;
             this.matrixTabControl.Size = new System.Drawing.Size(1000, 625);
             this.matrixTabControl.TabIndex = 18;
+            this.matrixTabControl.SelectedIndexChanged += new System.EventHandler(this.matrixTabControl_SelectedIndexChanged);
             // 
             // headersTabPage
             // 
@@ -2757,6 +2802,7 @@
             this.headersTabPage.TabIndex = 1;
             this.headersTabPage.Text = "Map Headers";
             this.headersTabPage.UseVisualStyleBackColor = true;
+            this.headersTabPage.Click += new System.EventHandler(this.headersTabPage_Click);
             // 
             // headersGridView
             // 
@@ -2765,40 +2811,40 @@
             this.headersGridView.AllowUserToResizeColumns = false;
             this.headersGridView.AllowUserToResizeRows = false;
             this.headersGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Info;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
             this.headersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.Format = "D4";
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle18.Format = "D4";
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.headersGridView.DefaultCellStyle = dataGridViewCellStyle18;
             this.headersGridView.Location = new System.Drawing.Point(0, 0);
             this.headersGridView.MultiSelect = false;
             this.headersGridView.Name = "headersGridView";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.headersGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle19;
             this.headersGridView.RowHeadersWidth = 50;
             this.headersGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headersGridView.RowsDefaultCellStyle = dataGridViewCellStyle20;
             this.headersGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.headersGridView.RowTemplate.Height = 18;
             this.headersGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -2806,6 +2852,7 @@
             this.headersGridView.ShowCellErrors = false;
             this.headersGridView.Size = new System.Drawing.Size(1032, 576);
             this.headersGridView.TabIndex = 1;
+            this.headersGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.headersGridView_CellContentClick);
             this.headersGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.headersGridView_CellFormatting);
             this.headersGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.headersGridView_CellMouseDoubleClick);
             this.headersGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.headersGridView_CellValueChanged);
@@ -2820,6 +2867,7 @@
             this.heightsTabPage.TabIndex = 2;
             this.heightsTabPage.Text = "Map Heights";
             this.heightsTabPage.UseVisualStyleBackColor = true;
+            this.heightsTabPage.Click += new System.EventHandler(this.heightsTabPage_Click);
             // 
             // heightsGridView
             // 
@@ -2827,49 +2875,50 @@
             this.heightsGridView.AllowUserToDeleteRows = false;
             this.heightsGridView.AllowUserToResizeColumns = false;
             this.heightsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.heightsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
             this.heightsGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
             this.heightsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.Format = "D2";
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle23.Format = "D2";
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.heightsGridView.DefaultCellStyle = dataGridViewCellStyle23;
             this.heightsGridView.Location = new System.Drawing.Point(0, 0);
             this.heightsGridView.MultiSelect = false;
             this.heightsGridView.Name = "heightsGridView";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.heightsGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
             this.heightsGridView.RowHeadersWidth = 50;
             this.heightsGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle25.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.heightsGridView.RowsDefaultCellStyle = dataGridViewCellStyle25;
             this.heightsGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.heightsGridView.RowTemplate.Height = 18;
             this.heightsGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.heightsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.heightsGridView.Size = new System.Drawing.Size(1032, 576);
             this.heightsGridView.TabIndex = 2;
+            this.heightsGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.heightsGridView_CellContentClick);
             this.heightsGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.heightsGridView_CellFormatting);
             this.heightsGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.heightsGridView_CellValueChanged);
             this.heightsGridView.SelectionChanged += new System.EventHandler(this.heightsGridView_SelectionChanged);
@@ -2883,6 +2932,7 @@
             this.mapFilesTabPage.TabIndex = 3;
             this.mapFilesTabPage.Text = "Map Files";
             this.mapFilesTabPage.UseVisualStyleBackColor = true;
+            this.mapFilesTabPage.Click += new System.EventHandler(this.mapFilesTabPage_Click);
             // 
             // mapFilesGridView
             // 
@@ -2890,49 +2940,50 @@
             this.mapFilesGridView.AllowUserToDeleteRows = false;
             this.mapFilesGridView.AllowUserToResizeColumns = false;
             this.mapFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.mapFilesGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle26;
             this.mapFilesGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle27;
             this.mapFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle12.Format = "D4";
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle28.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle28.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle28.Format = "D4";
+            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle28.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.mapFilesGridView.DefaultCellStyle = dataGridViewCellStyle28;
             this.mapFilesGridView.Location = new System.Drawing.Point(0, 0);
             this.mapFilesGridView.MultiSelect = false;
             this.mapFilesGridView.Name = "mapFilesGridView";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle29.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            dataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mapFilesGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle29;
             this.mapFilesGridView.RowHeadersWidth = 50;
             this.mapFilesGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle30.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mapFilesGridView.RowsDefaultCellStyle = dataGridViewCellStyle30;
             this.mapFilesGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.mapFilesGridView.RowTemplate.Height = 18;
             this.mapFilesGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.mapFilesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.mapFilesGridView.Size = new System.Drawing.Size(1032, 576);
             this.mapFilesGridView.TabIndex = 2;
+            this.mapFilesGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellContentClick);
             this.mapFilesGridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellMouseDoubleClick);
             this.mapFilesGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.mapFilesGridView_CellFormatting);
             this.mapFilesGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.mapFilesGridView_CellValueChanged);
@@ -3002,6 +3053,7 @@
             this.widthLabel.Size = new System.Drawing.Size(27, 13);
             this.widthLabel.TabIndex = 13;
             this.widthLabel.Text = "Size";
+            this.widthLabel.Click += new System.EventHandler(this.widthLabel_Click);
             // 
             // selectMatrixComboBox
             // 
@@ -3036,6 +3088,7 @@
             this.mapEditorTabPage.Size = new System.Drawing.Size(1185, 675);
             this.mapEditorTabPage.TabIndex = 2;
             this.mapEditorTabPage.Text = "Map Editor";
+            this.mapEditorTabPage.Click += new System.EventHandler(this.mapEditorTabPage_Click);
             this.mapEditorTabPage.Enter += new System.EventHandler(this.mapEditorTabPage_Enter);
             // 
             // tableLayoutPanel3
@@ -3059,6 +3112,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(199, 129);
             this.tableLayoutPanel3.TabIndex = 41;
+            this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
             // 
             // addMapFileButton
             // 
@@ -3167,6 +3221,7 @@
             this.mapRenderPanel.Name = "mapRenderPanel";
             this.mapRenderPanel.Size = new System.Drawing.Size(610, 610);
             this.mapRenderPanel.TabIndex = 23;
+            this.mapRenderPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mapRenderPanel_Paint);
             // 
             // mapOpenGlControl
             // 
@@ -3185,6 +3240,7 @@
             this.mapOpenGlControl.Size = new System.Drawing.Size(608, 608);
             this.mapOpenGlControl.StencilBits = ((byte)(0));
             this.mapOpenGlControl.TabIndex = 2;
+            this.mapOpenGlControl.Load += new System.EventHandler(this.mapOpenGlControl_Load);
             this.mapOpenGlControl.Click += new System.EventHandler(this.mapOpenGlControl_Click);
             this.mapOpenGlControl.KeyUp += new System.Windows.Forms.KeyEventHandler(this.mapOpenGlControl_KeyUp);
             this.mapOpenGlControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.mapOpenGlControl_PreviewKeyDown);
@@ -3208,6 +3264,7 @@
             this.label26.Size = new System.Drawing.Size(84, 13);
             this.label26.TabIndex = 33;
             this.label26.Text = "Buildings texture";
+            this.label26.Click += new System.EventHandler(this.label26_Click);
             // 
             // buildTextureComboBox
             // 
@@ -3227,6 +3284,7 @@
             this.mapFileLabel.Size = new System.Drawing.Size(44, 13);
             this.mapFileLabel.TabIndex = 31;
             this.mapFileLabel.Text = "Map file";
+            this.mapFileLabel.Click += new System.EventHandler(this.mapFileLabel_Click);
             // 
             // mapTextureComboBox
             // 
@@ -3246,6 +3304,7 @@
             this.mapTextureLabel.Size = new System.Drawing.Size(63, 13);
             this.mapTextureLabel.TabIndex = 29;
             this.mapTextureLabel.Text = "Map texture";
+            this.mapTextureLabel.Click += new System.EventHandler(this.mapTextureLabel_Click);
             // 
             // selectMapComboBox
             // 
@@ -3296,6 +3355,7 @@
             this.buildingsTabPage.TabIndex = 0;
             this.buildingsTabPage.Text = "Buildings";
             this.buildingsTabPage.UseVisualStyleBackColor = true;
+            this.buildingsTabPage.Click += new System.EventHandler(this.buildingsTabPage_Click);
             // 
             // groupBox33
             // 
@@ -3312,6 +3372,7 @@
             this.groupBox33.TabIndex = 44;
             this.groupBox33.TabStop = false;
             this.groupBox33.Text = "Rotation";
+            this.groupBox33.Enter += new System.EventHandler(this.groupBox33_Enter);
             // 
             // yRotDegBldUpDown
             // 
@@ -3404,6 +3465,7 @@
             this.yLabel.Size = new System.Drawing.Size(15, 15);
             this.yLabel.TabIndex = 10;
             this.yLabel.Text = "Y";
+            this.yLabel.Click += new System.EventHandler(this.yLabel_Click);
             // 
             // lockXZgroupbox
             // 
@@ -3415,6 +3477,7 @@
             this.lockXZgroupbox.Size = new System.Drawing.Size(154, 36);
             this.lockXZgroupbox.TabIndex = 43;
             this.lockXZgroupbox.TabStop = false;
+            this.lockXZgroupbox.Enter += new System.EventHandler(this.lockXZgroupbox_Enter);
             // 
             // bldPlaceLockXcheckbox
             // 
@@ -3456,6 +3519,7 @@
             this.zLabel.Size = new System.Drawing.Size(15, 15);
             this.zLabel.TabIndex = 9;
             this.zLabel.Text = "Z";
+            this.zLabel.Click += new System.EventHandler(this.zLabel_Click);
             // 
             // xLabel
             // 
@@ -3467,6 +3531,7 @@
             this.xLabel.Size = new System.Drawing.Size(16, 15);
             this.xLabel.TabIndex = 8;
             this.xLabel.Text = "X";
+            this.xLabel.Click += new System.EventHandler(this.xLabel_Click);
             // 
             // bldRoundGroupbox
             // 
@@ -3478,6 +3543,7 @@
             this.bldRoundGroupbox.TabIndex = 40;
             this.bldRoundGroupbox.TabStop = false;
             this.bldRoundGroupbox.Text = "Round";
+            this.bldRoundGroupbox.Enter += new System.EventHandler(this.bldRoundGroupbox_Enter);
             // 
             // tableLayoutPanel2
             // 
@@ -3499,6 +3565,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(263, 64);
             this.tableLayoutPanel2.TabIndex = 45;
+            this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
             // 
             // bldRoundDecmil
             // 
@@ -3616,6 +3683,7 @@
             this.groupBox20.TabIndex = 26;
             this.groupBox20.TabStop = false;
             this.groupBox20.Text = "Building Selector";
+            this.groupBox20.Enter += new System.EventHandler(this.groupBox20_Enter);
             // 
             // interiorbldRadioButton
             // 
@@ -3643,6 +3711,7 @@
             this.exteriorbldRadioButton.TabStop = true;
             this.exteriorbldRadioButton.Text = "Exterior List";
             this.exteriorbldRadioButton.UseVisualStyleBackColor = true;
+            this.exteriorbldRadioButton.CheckedChanged += new System.EventHandler(this.exteriorbldRadioButton_CheckedChanged);
             // 
             // buildIndexComboBox
             // 
@@ -3665,6 +3734,7 @@
             this.groupBox19.TabIndex = 12;
             this.groupBox19.TabStop = false;
             this.groupBox19.Text = "Scale";
+            this.groupBox19.Enter += new System.EventHandler(this.groupBox19_Enter);
             // 
             // buildingHeightUpDown
             // 
@@ -3753,6 +3823,7 @@
             this.buildPositionGroupBox.TabIndex = 11;
             this.buildPositionGroupBox.TabStop = false;
             this.buildPositionGroupBox.Text = "Position";
+            this.buildPositionGroupBox.Enter += new System.EventHandler(this.buildPositionGroupBox_Enter);
             // 
             // yBuildUpDown
             // 
@@ -3839,6 +3910,7 @@
             this.permissionsTabPage.TabIndex = 1;
             this.permissionsTabPage.Text = "Move Permissions";
             this.permissionsTabPage.UseVisualStyleBackColor = true;
+            this.permissionsTabPage.Click += new System.EventHandler(this.permissionsTabPage_Click);
             // 
             // scanUnusedCollisionTypesButton
             // 
@@ -3872,6 +3944,7 @@
             this.typeLabel.Size = new System.Drawing.Size(31, 13);
             this.typeLabel.TabIndex = 29;
             this.typeLabel.Text = "Type";
+            this.typeLabel.Click += new System.EventHandler(this.typeLabel_Click);
             // 
             // collisionLabel
             // 
@@ -3882,6 +3955,7 @@
             this.collisionLabel.Size = new System.Drawing.Size(45, 13);
             this.collisionLabel.TabIndex = 28;
             this.collisionLabel.Text = "Collision";
+            this.collisionLabel.Click += new System.EventHandler(this.collisionLabel_Click);
             // 
             // typeGroupBox
             // 
@@ -3897,6 +3971,7 @@
             this.typeGroupBox.TabIndex = 25;
             this.typeGroupBox.TabStop = false;
             this.typeGroupBox.Text = "Type Painter";
+            this.typeGroupBox.Enter += new System.EventHandler(this.typeGroupBox_Enter);
             // 
             // knownTypesRadioButton
             // 
@@ -3958,6 +4033,7 @@
             this.typePainterPictureBox.Size = new System.Drawing.Size(80, 80);
             this.typePainterPictureBox.TabIndex = 1;
             this.typePainterPictureBox.TabStop = false;
+            this.typePainterPictureBox.Click += new System.EventHandler(this.typePainterPictureBox_Click);
             // 
             // collisionGroupBox
             // 
@@ -3969,6 +4045,7 @@
             this.collisionGroupBox.TabIndex = 24;
             this.collisionGroupBox.TabStop = false;
             this.collisionGroupBox.Text = "Collision Painter";
+            this.collisionGroupBox.Enter += new System.EventHandler(this.collisionGroupBox_Enter);
             // 
             // collisionPainterComboBox
             // 
@@ -3989,6 +4066,7 @@
             this.collisionPainterPictureBox.Size = new System.Drawing.Size(80, 80);
             this.collisionPainterPictureBox.TabIndex = 0;
             this.collisionPainterPictureBox.TabStop = false;
+            this.collisionPainterPictureBox.Click += new System.EventHandler(this.collisionPainterPictureBox_Click);
             // 
             // selectCollisionPanel
             // 
@@ -3997,6 +4075,7 @@
             this.selectCollisionPanel.Name = "selectCollisionPanel";
             this.selectCollisionPanel.Size = new System.Drawing.Size(102, 102);
             this.selectCollisionPanel.TabIndex = 30;
+            this.selectCollisionPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.selectCollisionPanel_Paint);
             // 
             // collisionPictureBox
             // 
@@ -4016,6 +4095,7 @@
             this.selectTypePanel.Name = "selectTypePanel";
             this.selectTypePanel.Size = new System.Drawing.Size(102, 102);
             this.selectTypePanel.TabIndex = 31;
+            this.selectTypePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.selectTypePanel_Paint);
             // 
             // typePictureBox
             // 
@@ -4071,6 +4151,7 @@
             this.modelTabPage.TabIndex = 2;
             this.modelTabPage.Text = "3D Model";
             this.modelTabPage.UseVisualStyleBackColor = true;
+            this.modelTabPage.Click += new System.EventHandler(this.modelTabPage_Click);
             // 
             // glbExportButton
             // 
@@ -4110,6 +4191,7 @@
             this.embedTexturesInMapModelCheckBox.TabIndex = 29;
             this.embedTexturesInMapModelCheckBox.Text = "Textured";
             this.embedTexturesInMapModelCheckBox.UseVisualStyleBackColor = true;
+            this.embedTexturesInMapModelCheckBox.CheckedChanged += new System.EventHandler(this.embedTexturesInMapModelCheckBox_CheckedChanged);
             // 
             // modelSizeLBL
             // 
@@ -4121,6 +4203,7 @@
             this.modelSizeLBL.Size = new System.Drawing.Size(97, 16);
             this.modelSizeLBL.TabIndex = 28;
             this.modelSizeLBL.Text = "ModelSizeTXT";
+            this.modelSizeLBL.Click += new System.EventHandler(this.modelSizeLBL_Click);
             // 
             // nsbmdSizeLabel
             // 
@@ -4133,6 +4216,7 @@
             this.nsbmdSizeLabel.Size = new System.Drawing.Size(100, 16);
             this.nsbmdSizeLabel.TabIndex = 27;
             this.nsbmdSizeLabel.Text = "3D Model Size: ";
+            this.nsbmdSizeLabel.Click += new System.EventHandler(this.nsbmdSizeLabel_Click);
             // 
             // unsupported3DModelEditLBL
             // 
@@ -4146,6 +4230,7 @@
             this.unsupported3DModelEditLBL.Text = "DSPRE cannot edit nor create 3D models.\r\nPlease use Blender, Sketchup, or \r\nTrifi" +
     "ndo\'s Pokemon DS Map Studio.";
             this.unsupported3DModelEditLBL.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.unsupported3DModelEditLBL.Click += new System.EventHandler(this.unsupported3DModelEditLBL_Click);
             // 
             // importMapButton
             // 
@@ -4187,6 +4272,7 @@
             this.terrainTabPage.TabIndex = 3;
             this.terrainTabPage.Text = "Terrain Data";
             this.terrainTabPage.UseVisualStyleBackColor = true;
+            this.terrainTabPage.Click += new System.EventHandler(this.terrainTabPage_Click);
             // 
             // terrainSizeLBL
             // 
@@ -4197,6 +4283,7 @@
             this.terrainSizeLBL.Size = new System.Drawing.Size(102, 16);
             this.terrainSizeLBL.TabIndex = 30;
             this.terrainSizeLBL.Text = "TerrainSizeTXT";
+            this.terrainSizeLBL.Click += new System.EventHandler(this.terrainSizeLBL_Click);
             // 
             // terrainDataLBL
             // 
@@ -4207,6 +4294,7 @@
             this.terrainDataLBL.Size = new System.Drawing.Size(117, 16);
             this.terrainDataLBL.TabIndex = 29;
             this.terrainDataLBL.Text = "Terrain Data Size: ";
+            this.terrainDataLBL.Click += new System.EventHandler(this.terrainDataLBL_Click);
             // 
             // unsupportedBDHCEditLBL
             // 
@@ -4219,6 +4307,7 @@
             this.unsupportedBDHCEditLBL.Text = "DSPRE cannot edit nor create BDHC data.\r\nPlease use Trifindo\'s Pokemon DS Map Stu" +
     "dio.";
             this.unsupportedBDHCEditLBL.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.unsupportedBDHCEditLBL.Click += new System.EventHandler(this.unsupportedBDHCEditLBL_Click);
             // 
             // bdhcImportButton
             // 
@@ -4260,6 +4349,7 @@
             this.bgsTabPage.TabIndex = 4;
             this.bgsTabPage.Text = "Sound Plates";
             this.bgsTabPage.UseVisualStyleBackColor = true;
+            this.bgsTabPage.Click += new System.EventHandler(this.bgsTabPage_Click);
             // 
             // blankBGSButton
             // 
@@ -4285,6 +4375,7 @@
             this.BGSSizeLBL.Size = new System.Drawing.Size(84, 16);
             this.BGSSizeLBL.TabIndex = 33;
             this.BGSSizeLBL.Text = "BGSSizeLBL";
+            this.BGSSizeLBL.Click += new System.EventHandler(this.BGSSizeLBL_Click);
             // 
             // bgsDataLBL
             // 
@@ -4295,6 +4386,7 @@
             this.bgsDataLBL.Size = new System.Drawing.Size(73, 16);
             this.bgsDataLBL.TabIndex = 32;
             this.bgsDataLBL.Text = "BGS Data: ";
+            this.bgsDataLBL.Click += new System.EventHandler(this.bgsDataLBL_Click);
             // 
             // unsupportedBGSEditLBL
             // 
@@ -4307,6 +4399,7 @@
             this.unsupportedBGSEditLBL.Text = "DSPRE cannot edit nor create Background Sound Files.\r\nPlease use Trifindo\'s Pokem" +
     "on DS Map Studio.\r\n";
             this.unsupportedBGSEditLBL.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.unsupportedBGSEditLBL.Click += new System.EventHandler(this.unsupportedBGSEditLBL_Click);
             // 
             // soundPlatesImportButton
             // 
@@ -4341,7 +4434,7 @@
             this.radio3D.AutoSize = true;
             this.radio3D.Checked = true;
             this.radio3D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio3D.Location = new System.Drawing.Point(1140, 35);
+            this.radio3D.Location = new System.Drawing.Point(-1839, -1768);
             this.radio3D.Name = "radio3D";
             this.radio3D.Size = new System.Drawing.Size(31, 23);
             this.radio3D.TabIndex = 26;
@@ -4349,6 +4442,7 @@
             this.radio3D.Text = "3D";
             this.radio3D.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.radio3D.UseVisualStyleBackColor = true;
+            this.radio3D.CheckedChanged += new System.EventHandler(this.radio3D_CheckedChanged);
             // 
             // radio2D
             // 
@@ -4356,7 +4450,7 @@
             this.radio2D.Appearance = System.Windows.Forms.Appearance.Button;
             this.radio2D.AutoSize = true;
             this.radio2D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio2D.Location = new System.Drawing.Point(1140, 6);
+            this.radio2D.Location = new System.Drawing.Point(-1839, -1797);
             this.radio2D.Name = "radio2D";
             this.radio2D.Size = new System.Drawing.Size(31, 23);
             this.radio2D.TabIndex = 25;
@@ -4371,7 +4465,7 @@
             this.wireframeCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.wireframeCheckBox.AutoSize = true;
             this.wireframeCheckBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, 64);
+            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, -1739);
             this.wireframeCheckBox.Name = "wireframeCheckBox";
             this.wireframeCheckBox.Size = new System.Drawing.Size(31, 23);
             this.wireframeCheckBox.TabIndex = 27;
@@ -4390,6 +4484,7 @@
             this.nsbtxEditorTabPage.TabIndex = 6;
             this.nsbtxEditorTabPage.Text = "NSBTX Editor";
             this.nsbtxEditorTabPage.UseVisualStyleBackColor = true;
+            this.nsbtxEditorTabPage.Click += new System.EventHandler(this.nsbtxEditorTabPage_Click);
             // 
             // groupBox7
             // 
@@ -4414,6 +4509,7 @@
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Texture Packs";
+            this.groupBox7.Enter += new System.EventHandler(this.groupBox7_Enter);
             // 
             // tableLayoutPanel37
             // 
@@ -4431,6 +4527,7 @@
             this.tableLayoutPanel37.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel37.Size = new System.Drawing.Size(85, 256);
             this.tableLayoutPanel37.TabIndex = 42;
+            this.tableLayoutPanel37.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel37_Paint);
             // 
             // groupBox35
             // 
@@ -4443,6 +4540,7 @@
             this.groupBox35.TabIndex = 23;
             this.groupBox35.TabStop = false;
             this.groupBox35.Text = "Scaling";
+            this.groupBox35.Enter += new System.EventHandler(this.groupBox35_Enter);
             // 
             // tableLayoutPanel38
             // 
@@ -4460,6 +4558,7 @@
             this.tableLayoutPanel38.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel38.Size = new System.Drawing.Size(71, 157);
             this.tableLayoutPanel38.TabIndex = 0;
+            this.tableLayoutPanel38.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel38_Paint);
             // 
             // scalingLabel
             // 
@@ -4471,6 +4570,7 @@
             this.scalingLabel.TabIndex = 3;
             this.scalingLabel.Text = "x1";
             this.scalingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.scalingLabel.Click += new System.EventHandler(this.scalingLabel_Click);
             // 
             // scalingTrackBar
             // 
@@ -4561,6 +4661,7 @@
             this.areaDataGroupBox.TabIndex = 0;
             this.areaDataGroupBox.TabStop = false;
             this.areaDataGroupBox.Text = "Area Data";
+            this.areaDataGroupBox.Enter += new System.EventHandler(this.areaDataGroupBox_Enter);
             // 
             // locateCurrentAreaData
             // 
@@ -4597,6 +4698,7 @@
             this.areaTypeGroupbox.TabIndex = 15;
             this.areaTypeGroupbox.TabStop = false;
             this.areaTypeGroupbox.Text = "Area Type";
+            this.areaTypeGroupbox.Enter += new System.EventHandler(this.areaTypeGroupbox_Enter);
             // 
             // outdoorAreaRadioButton
             // 
@@ -4610,6 +4712,7 @@
             this.outdoorAreaRadioButton.Text = "Outdoor";
             this.outdoorAreaRadioButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.outdoorAreaRadioButton.UseVisualStyleBackColor = true;
+            this.outdoorAreaRadioButton.CheckedChanged += new System.EventHandler(this.outdoorAreaRadioButton_CheckedChanged);
             // 
             // indoorAreaRadioButton
             // 
@@ -4683,6 +4786,7 @@
             this.label35.Size = new System.Drawing.Size(76, 13);
             this.label35.TabIndex = 8;
             this.label35.Text = "Global NSBTA";
+            this.label35.Click += new System.EventHandler(this.label35_Click);
             // 
             // areaDataDynamicTexturesNumericUpDown
             // 
@@ -4706,6 +4810,7 @@
             this.label34.Size = new System.Drawing.Size(53, 13);
             this.label34.TabIndex = 6;
             this.label34.Text = "Light type";
+            this.label34.Click += new System.EventHandler(this.label34_Click);
             // 
             // areaDataLightTypeComboBox
             // 
@@ -4725,6 +4830,7 @@
             this.label33.Size = new System.Drawing.Size(72, 13);
             this.label33.TabIndex = 4;
             this.label33.Text = "Map Textures";
+            this.label33.Click += new System.EventHandler(this.label33_Click);
             // 
             // areaDataMapTilesetUpDown
             // 
@@ -4747,6 +4853,7 @@
             this.label32.Size = new System.Drawing.Size(88, 13);
             this.label32.TabIndex = 2;
             this.label32.Text = "Building Textures";
+            this.label32.Click += new System.EventHandler(this.label32_Click);
             // 
             // areaDataBuildingTilesetUpDown
             // 
@@ -4809,20 +4916,6 @@
             this.importNSBTXButton.UseVisualStyleBackColor = true;
             this.importNSBTXButton.Click += new System.EventHandler(this.importNSBTXButton_Click);
             // 
-            // texturePictureBox
-            // 
-            this.texturePictureBox.BackColor = System.Drawing.Color.White;
-            this.texturePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.texturePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.texturePictureBox.Image = global::DSPRE.Properties.Resources.alphabgCheckerboard;
-            this.texturePictureBox.invertDrag = true;
-            this.texturePictureBox.Location = new System.Drawing.Point(732, 52);
-            this.texturePictureBox.Name = "texturePictureBox";
-            this.texturePictureBox.Size = new System.Drawing.Size(256, 256);
-            this.texturePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.texturePictureBox.TabIndex = 7;
-            this.texturePictureBox.TabStop = false;
-            // 
             // palettesLabel
             // 
             this.palettesLabel.AutoSize = true;
@@ -4831,6 +4924,7 @@
             this.palettesLabel.Size = new System.Drawing.Size(45, 13);
             this.palettesLabel.TabIndex = 6;
             this.palettesLabel.Text = "Palettes";
+            this.palettesLabel.Click += new System.EventHandler(this.palettesLabel_Click);
             // 
             // texturesLabel
             // 
@@ -4840,6 +4934,7 @@
             this.texturesLabel.Size = new System.Drawing.Size(48, 13);
             this.texturesLabel.TabIndex = 5;
             this.texturesLabel.Text = "Textures";
+            this.texturesLabel.Click += new System.EventHandler(this.texturesLabel_Click);
             // 
             // palettesListBox
             // 
@@ -4930,6 +5025,7 @@
             this.eventEditorTabPage.Size = new System.Drawing.Size(1185, 675);
             this.eventEditorTabPage.TabIndex = 3;
             this.eventEditorTabPage.Text = "Event Editor";
+            this.eventEditorTabPage.Click += new System.EventHandler(this.eventEditorTabPage_Click);
             this.eventEditorTabPage.Enter += new System.EventHandler(this.eventEditorTabPage_Enter);
             // 
             // locateCurrentEvFile
@@ -4957,6 +5053,7 @@
             this.groupBox21.TabIndex = 61;
             this.groupBox21.TabStop = false;
             this.groupBox21.Text = "Renderer Settings";
+            this.groupBox21.Enter += new System.EventHandler(this.groupBox21_Enter);
             // 
             // showTriggersCheckBox
             // 
@@ -5032,6 +5129,7 @@
             this.eventMapTextureLabel.Size = new System.Drawing.Size(70, 15);
             this.eventMapTextureLabel.TabIndex = 31;
             this.eventMapTextureLabel.Text = "Area Data";
+            this.eventMapTextureLabel.Click += new System.EventHandler(this.eventMapTextureLabel_Click);
             // 
             // RightClickLabel
             // 
@@ -5041,6 +5139,7 @@
             this.RightClickLabel.Size = new System.Drawing.Size(37, 13);
             this.RightClickLabel.TabIndex = 60;
             this.RightClickLabel.Text = "Select";
+            this.RightClickLabel.Click += new System.EventHandler(this.RightClickLabel_Click);
             // 
             // WheelClickLabel
             // 
@@ -5050,6 +5149,7 @@
             this.WheelClickLabel.Size = new System.Drawing.Size(33, 13);
             this.WheelClickLabel.TabIndex = 58;
             this.WheelClickLabel.Text = "Warp";
+            this.WheelClickLabel.Click += new System.EventHandler(this.WheelClickLabel_Click);
             // 
             // LeftClickLabel
             // 
@@ -5059,6 +5159,7 @@
             this.LeftClickLabel.Size = new System.Drawing.Size(34, 13);
             this.LeftClickLabel.TabIndex = 57;
             this.LeftClickLabel.Text = "Move";
+            this.LeftClickLabel.Click += new System.EventHandler(this.LeftClickLabel_Click);
             // 
             // eventMatrixYUpDown
             // 
@@ -5086,6 +5187,7 @@
             this.eventMatrixYLabel.Size = new System.Drawing.Size(60, 13);
             this.eventMatrixYLabel.TabIndex = 50;
             this.eventMatrixYLabel.Text = "Current Y";
+            this.eventMatrixYLabel.Click += new System.EventHandler(this.eventMatrixYLabel_Click);
             // 
             // eventMatrixXLabel
             // 
@@ -5097,6 +5199,7 @@
             this.eventMatrixXLabel.Size = new System.Drawing.Size(60, 13);
             this.eventMatrixXLabel.TabIndex = 49;
             this.eventMatrixXLabel.Text = "Current X";
+            this.eventMatrixXLabel.Click += new System.EventHandler(this.eventMatrixXLabel_Click);
             // 
             // matrixNavigatorLabel
             // 
@@ -5106,6 +5209,7 @@
             this.matrixNavigatorLabel.Size = new System.Drawing.Size(84, 13);
             this.matrixNavigatorLabel.TabIndex = 48;
             this.matrixNavigatorLabel.Text = "Matrix Navigator";
+            this.matrixNavigatorLabel.Click += new System.EventHandler(this.matrixNavigatorLabel_Click);
             // 
             // eventMatrixPanel
             // 
@@ -5117,6 +5221,7 @@
             this.eventMatrixPanel.Name = "eventMatrixPanel";
             this.eventMatrixPanel.Size = new System.Drawing.Size(448, 149);
             this.eventMatrixPanel.TabIndex = 47;
+            this.eventMatrixPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.eventMatrixPanel_Paint);
             // 
             // eventMatrixPictureBox
             // 
@@ -5147,6 +5252,7 @@
             this.backgroundMapLabel.Size = new System.Drawing.Size(79, 15);
             this.backgroundMapLabel.TabIndex = 29;
             this.backgroundMapLabel.Text = "Map Matrix";
+            this.backgroundMapLabel.Click += new System.EventHandler(this.backgroundMapLabel_Click);
             // 
             // eventMatrixUpDown
             // 
@@ -5194,6 +5300,7 @@
             this.signsTabPage.TabIndex = 0;
             this.signsTabPage.Text = "Spawnables";
             this.signsTabPage.UseVisualStyleBackColor = true;
+            this.signsTabPage.Click += new System.EventHandler(this.signsTabPage_Click);
             // 
             // spawnableTypeComboBox
             // 
@@ -5213,6 +5320,7 @@
             this.label18.Size = new System.Drawing.Size(87, 13);
             this.label18.TabIndex = 24;
             this.label18.Text = "Spawnable Type";
+            this.label18.Click += new System.EventHandler(this.label18_Click);
             // 
             // duplicateSpawnableButton
             // 
@@ -5246,6 +5354,7 @@
             this.groupBox5.TabIndex = 22;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Position";
+            this.groupBox5.Enter += new System.EventHandler(this.groupBox5_Enter);
             // 
             // goToSignButton
             // 
@@ -5268,6 +5377,7 @@
             this.signMatrixYLabel.Size = new System.Drawing.Size(45, 13);
             this.signMatrixYLabel.TabIndex = 19;
             this.signMatrixYLabel.Text = "Matrix Y";
+            this.signMatrixYLabel.Click += new System.EventHandler(this.signMatrixYLabel_Click);
             // 
             // spawnableXMatrixUpDown
             // 
@@ -5290,6 +5400,7 @@
             this.signMatrixXLabel.Size = new System.Drawing.Size(45, 13);
             this.signMatrixXLabel.TabIndex = 17;
             this.signMatrixXLabel.Text = "Matrix X";
+            this.signMatrixXLabel.Click += new System.EventHandler(this.signMatrixXLabel_Click);
             // 
             // spawnableYMatrixUpDown
             // 
@@ -5312,6 +5423,7 @@
             this.signZLabel.Size = new System.Drawing.Size(38, 13);
             this.signZLabel.TabIndex = 15;
             this.signZLabel.Text = "Map Z";
+            this.signZLabel.Click += new System.EventHandler(this.signZLabel_Click);
             // 
             // spawnablexMapUpDown
             // 
@@ -5357,6 +5469,7 @@
             this.signMapXLabel.Size = new System.Drawing.Size(38, 13);
             this.signMapXLabel.TabIndex = 11;
             this.signMapXLabel.Text = "Map X";
+            this.signMapXLabel.Click += new System.EventHandler(this.signMapXLabel_Click);
             // 
             // spawnableYMapUpDown
             // 
@@ -5379,6 +5492,7 @@
             this.signMapYLabel.Size = new System.Drawing.Size(38, 13);
             this.signMapYLabel.TabIndex = 13;
             this.signMapYLabel.Text = "Map Y";
+            this.signMapYLabel.Click += new System.EventHandler(this.signMapYLabel_Click);
             // 
             // removeSpawnableButton
             // 
@@ -5424,6 +5538,7 @@
             this.signOrientationLabel.Size = new System.Drawing.Size(89, 13);
             this.signOrientationLabel.TabIndex = 5;
             this.signOrientationLabel.Text = "Activation Criteria";
+            this.signOrientationLabel.Click += new System.EventHandler(this.signOrientationLabel_Click);
             // 
             // signScriptNumberLabel
             // 
@@ -5433,6 +5548,7 @@
             this.signScriptNumberLabel.Size = new System.Drawing.Size(87, 13);
             this.signScriptNumberLabel.TabIndex = 4;
             this.signScriptNumberLabel.Text = "Script to activate";
+            this.signScriptNumberLabel.Click += new System.EventHandler(this.signScriptNumberLabel_Click);
             // 
             // spawnableScriptUpDown
             // 
@@ -5486,6 +5602,7 @@
             this.overworldsTabPage.TabIndex = 1;
             this.overworldsTabPage.Text = "Overworlds";
             this.overworldsTabPage.UseVisualStyleBackColor = true;
+            this.overworldsTabPage.Click += new System.EventHandler(this.overworldsTabPage_Click);
             // 
             // sortOWsByIDDescButton
             // 
@@ -5524,6 +5641,7 @@
             this.groupBox22.TabIndex = 28;
             this.groupBox22.TabStop = false;
             this.groupBox22.Text = "Overworld Properties";
+            this.groupBox22.Enter += new System.EventHandler(this.groupBox22_Enter);
             // 
             // normalRadioButton
             // 
@@ -5567,6 +5685,7 @@
             this.spriteIDlabel.Name = "spriteIDlabel";
             this.spriteIDlabel.Size = new System.Drawing.Size(0, 13);
             this.spriteIDlabel.TabIndex = 27;
+            this.spriteIDlabel.Click += new System.EventHandler(this.spriteIDlabel_Click);
             // 
             // groupBox17
             // 
@@ -5581,6 +5700,7 @@
             this.groupBox17.TabIndex = 20;
             this.groupBox17.TabStop = false;
             this.groupBox17.Text = "Global Coordinates [Matrix]";
+            this.groupBox17.Enter += new System.EventHandler(this.groupBox17_Enter);
             // 
             // button14
             // 
@@ -5616,6 +5736,7 @@
             this.label12.Size = new System.Drawing.Size(14, 13);
             this.label12.TabIndex = 5;
             this.label12.Text = "X";
+            this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
             // owXMatrixUpDown
             // 
@@ -5638,6 +5759,7 @@
             this.label11.Size = new System.Drawing.Size(14, 13);
             this.label11.TabIndex = 7;
             this.label11.Text = "Y";
+            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // owMovementGroupBox
             // 
@@ -5651,6 +5773,7 @@
             this.owMovementGroupBox.TabIndex = 18;
             this.owMovementGroupBox.TabStop = false;
             this.owMovementGroupBox.Text = "Movement";
+            this.owMovementGroupBox.Enter += new System.EventHandler(this.owMovementGroupBox_Enter);
             // 
             // groupBox23
             // 
@@ -5664,6 +5787,7 @@
             this.groupBox23.TabIndex = 7;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Movement Range";
+            this.groupBox23.Enter += new System.EventHandler(this.groupBox23_Enter);
             // 
             // label39
             // 
@@ -5673,6 +5797,7 @@
             this.label39.Size = new System.Drawing.Size(14, 13);
             this.label39.TabIndex = 4;
             this.label39.Text = "Y";
+            this.label39.Click += new System.EventHandler(this.label39_Click);
             // 
             // label20
             // 
@@ -5682,6 +5807,7 @@
             this.label20.Size = new System.Drawing.Size(14, 13);
             this.label20.TabIndex = 3;
             this.label20.Text = "X";
+            this.label20.Click += new System.EventHandler(this.label20_Click);
             // 
             // owXRangeUpDown
             // 
@@ -5717,6 +5843,7 @@
             this.label4.Size = new System.Drawing.Size(80, 13);
             this.label4.TabIndex = 6;
             this.label4.Text = "First Orientation";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // owOrientationComboBox
             // 
@@ -5757,6 +5884,7 @@
             this.positionGroupBox.TabIndex = 19;
             this.positionGroupBox.TabStop = false;
             this.positionGroupBox.Text = "Local Coordinates [Map]";
+            this.positionGroupBox.Enter += new System.EventHandler(this.positionGroupBox_Enter);
             // 
             // label13
             // 
@@ -5766,6 +5894,7 @@
             this.label13.Size = new System.Drawing.Size(14, 13);
             this.label13.TabIndex = 9;
             this.label13.Text = "Z";
+            this.label13.Click += new System.EventHandler(this.label13_Click);
             // 
             // owXMapUpDown
             // 
@@ -5811,6 +5940,7 @@
             this.owXPositionLabel.Size = new System.Drawing.Size(14, 13);
             this.owXPositionLabel.TabIndex = 1;
             this.owXPositionLabel.Text = "X";
+            this.owXPositionLabel.Click += new System.EventHandler(this.owXPositionLabel_Click);
             // 
             // owYMapUpDown
             // 
@@ -5838,6 +5968,7 @@
             this.label10.Size = new System.Drawing.Size(14, 13);
             this.label10.TabIndex = 3;
             this.label10.Text = "Y";
+            this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // owSpecialGroupBox
             // 
@@ -5856,6 +5987,7 @@
             this.owSpecialGroupBox.TabIndex = 14;
             this.owSpecialGroupBox.TabStop = false;
             this.owSpecialGroupBox.Text = "Special Settings";
+            this.owSpecialGroupBox.Enter += new System.EventHandler(this.owSpecialGroupBox_Enter);
             // 
             // itemsSelectorHelpBtn
             // 
@@ -5897,6 +6029,7 @@
             this.owItemLabel.Size = new System.Drawing.Size(27, 13);
             this.owItemLabel.TabIndex = 5;
             this.owItemLabel.Text = "Item";
+            this.owItemLabel.Click += new System.EventHandler(this.owItemLabel_Click);
             // 
             // owTrainerComboBox
             // 
@@ -5918,6 +6051,7 @@
             this.owSightRangeLabel.Size = new System.Drawing.Size(97, 13);
             this.owSightRangeLabel.TabIndex = 3;
             this.owSightRangeLabel.Text = "Sight Range (Tiles)";
+            this.owSightRangeLabel.Click += new System.EventHandler(this.owSightRangeLabel_Click);
             // 
             // owSightRangeUpDown
             // 
@@ -5942,6 +6076,7 @@
             this.owTrainerLabel.Size = new System.Drawing.Size(40, 13);
             this.owTrainerLabel.TabIndex = 1;
             this.owTrainerLabel.Text = "Trainer";
+            this.owTrainerLabel.Click += new System.EventHandler(this.owTrainerLabel_Click);
             // 
             // owScriptLabel
             // 
@@ -5951,6 +6086,7 @@
             this.owScriptLabel.Size = new System.Drawing.Size(34, 13);
             this.owScriptLabel.TabIndex = 13;
             this.owScriptLabel.Text = "Script";
+            this.owScriptLabel.Click += new System.EventHandler(this.owScriptLabel_Click);
             // 
             // owScriptNumericUpDown
             // 
@@ -5973,6 +6109,7 @@
             this.owFlagLabel.Size = new System.Drawing.Size(27, 13);
             this.owFlagLabel.TabIndex = 11;
             this.owFlagLabel.Text = "Flag";
+            this.owFlagLabel.Click += new System.EventHandler(this.owFlagLabel_Click);
             // 
             // owFlagNumericUpDown
             // 
@@ -5995,6 +6132,7 @@
             this.owSpriteLabel.Size = new System.Drawing.Size(45, 13);
             this.owSpriteLabel.TabIndex = 9;
             this.owSpriteLabel.Text = "Entry ID";
+            this.owSpriteLabel.Click += new System.EventHandler(this.owSpriteLabel_Click);
             // 
             // owSpriteComboBox
             // 
@@ -6014,6 +6152,7 @@
             this.owIDLabel.Size = new System.Drawing.Size(58, 13);
             this.owIDLabel.TabIndex = 7;
             this.owIDLabel.Text = "ID Number";
+            this.owIDLabel.Click += new System.EventHandler(this.owIDLabel_Click);
             // 
             // owIDNumericUpDown
             // 
@@ -6050,6 +6189,7 @@
             this.owSpritePictureBox.Size = new System.Drawing.Size(66, 66);
             this.owSpritePictureBox.TabIndex = 20;
             this.owSpritePictureBox.TabStop = false;
+            this.owSpritePictureBox.Click += new System.EventHandler(this.owSpritePictureBox_Click);
             // 
             // removeOverworldButton
             // 
@@ -6101,6 +6241,7 @@
             this.warpsTabPage.TabIndex = 2;
             this.warpsTabPage.Text = "Warps";
             this.warpsTabPage.UseVisualStyleBackColor = true;
+            this.warpsTabPage.Click += new System.EventHandler(this.warpsTabPage_Click);
             // 
             // duplicateWarpsButton
             // 
@@ -6128,6 +6269,7 @@
             this.groupBox11.TabIndex = 22;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Destination";
+            this.groupBox11.Enter += new System.EventHandler(this.groupBox11_Enter);
             // 
             // eventEditorHeaderLocationNameLabel
             // 
@@ -6136,6 +6278,7 @@
             this.eventEditorHeaderLocationNameLabel.Size = new System.Drawing.Size(97, 35);
             this.eventEditorHeaderLocationNameLabel.TabIndex = 31;
             this.eventEditorHeaderLocationNameLabel.Text = "LOCATION NAME";
+            this.eventEditorHeaderLocationNameLabel.Click += new System.EventHandler(this.eventEditorHeaderLocationNameLabel_Click);
             // 
             // eventEditorWarpHeaderListBox
             // 
@@ -6180,6 +6323,7 @@
             this.warpAnchorLabel.Size = new System.Drawing.Size(47, 13);
             this.warpAnchorLabel.TabIndex = 27;
             this.warpAnchorLabel.Text = "Hook ID";
+            this.warpAnchorLabel.Click += new System.EventHandler(this.warpAnchorLabel_Click);
             // 
             // groupBox1
             // 
@@ -6191,6 +6335,7 @@
             this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Start coordinates";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // groupBox14
             // 
@@ -6205,6 +6350,7 @@
             this.groupBox14.TabIndex = 23;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Matrix coordinates";
+            this.groupBox14.Enter += new System.EventHandler(this.groupBox14_Enter);
             // 
             // goToWarpButton
             // 
@@ -6227,6 +6373,7 @@
             this.label9.Size = new System.Drawing.Size(38, 13);
             this.label9.TabIndex = 24;
             this.label9.Text = "Mat. Y";
+            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // warpXMatrixUpDown
             // 
@@ -6249,6 +6396,7 @@
             this.label15.Size = new System.Drawing.Size(38, 13);
             this.label15.TabIndex = 22;
             this.label15.Text = "Mat. X";
+            this.label15.Click += new System.EventHandler(this.label15_Click);
             // 
             // warpYMatrixUpDown
             // 
@@ -6277,6 +6425,7 @@
             this.groupBox12.TabIndex = 22;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Map coordinates";
+            this.groupBox12.Enter += new System.EventHandler(this.groupBox12_Enter);
             // 
             // warpXMapUpDown
             // 
@@ -6304,6 +6453,7 @@
             this.label24.Size = new System.Drawing.Size(14, 13);
             this.label24.TabIndex = 21;
             this.label24.Text = "Y";
+            this.label24.Click += new System.EventHandler(this.label24_Click);
             // 
             // label25
             // 
@@ -6313,6 +6463,7 @@
             this.label25.Size = new System.Drawing.Size(14, 13);
             this.label25.TabIndex = 13;
             this.label25.Text = "X";
+            this.label25.Click += new System.EventHandler(this.label25_Click);
             // 
             // warpYMapUpDown
             // 
@@ -6358,6 +6509,7 @@
             this.label16.Size = new System.Drawing.Size(14, 13);
             this.label16.TabIndex = 15;
             this.label16.Text = "Z";
+            this.label16.Click += new System.EventHandler(this.label16_Click);
             // 
             // removeWarpButton
             // 
@@ -6411,6 +6563,7 @@
             this.triggersTabPage.TabIndex = 3;
             this.triggersTabPage.Text = "Triggers";
             this.triggersTabPage.UseVisualStyleBackColor = true;
+            this.triggersTabPage.Click += new System.EventHandler(this.triggersTabPage_Click);
             // 
             // triggerLogicGroupBox
             // 
@@ -6426,6 +6579,7 @@
             this.triggerLogicGroupBox.TabIndex = 39;
             this.triggerLogicGroupBox.TabStop = false;
             this.triggerLogicGroupBox.Text = "Logic";
+            this.triggerLogicGroupBox.Enter += new System.EventHandler(this.triggerLogicGroupBox_Enter);
             // 
             // expectedVarValueTriggerUpDown
             // 
@@ -6448,6 +6602,7 @@
             this.label19.Size = new System.Drawing.Size(82, 13);
             this.label19.TabIndex = 38;
             this.label19.Text = "Expected Value";
+            this.label19.Click += new System.EventHandler(this.label19_Click);
             // 
             // triggerVariableWatchedUpDown
             // 
@@ -6470,6 +6625,7 @@
             this.label28.Size = new System.Drawing.Size(89, 13);
             this.label28.TabIndex = 27;
             this.label28.Text = "Variable watched";
+            this.label28.Click += new System.EventHandler(this.label28_Click);
             // 
             // triggerScriptUpDown
             // 
@@ -6492,6 +6648,7 @@
             this.label27.Size = new System.Drawing.Size(78, 13);
             this.label27.TabIndex = 24;
             this.label27.Text = "Script to trigger";
+            this.label27.Click += new System.EventHandler(this.label27_Click);
             // 
             // groupBox16
             // 
@@ -6505,6 +6662,7 @@
             this.groupBox16.TabIndex = 33;
             this.groupBox16.TabStop = false;
             this.groupBox16.Text = "Trigger Size";
+            this.groupBox16.Enter += new System.EventHandler(this.groupBox16_Enter);
             // 
             // triggerLengthLabel
             // 
@@ -6514,6 +6672,7 @@
             this.triggerLengthLabel.Size = new System.Drawing.Size(56, 13);
             this.triggerLengthLabel.TabIndex = 35;
             this.triggerLengthLabel.Text = "Length [Y]";
+            this.triggerLengthLabel.Click += new System.EventHandler(this.triggerLengthLabel_Click);
             // 
             // triggerLengthUpDown
             // 
@@ -6536,6 +6695,7 @@
             this.triggerWidthLabel.Size = new System.Drawing.Size(51, 13);
             this.triggerWidthLabel.TabIndex = 33;
             this.triggerWidthLabel.Text = "Width [X]";
+            this.triggerWidthLabel.Click += new System.EventHandler(this.triggerWidthLabel_Click);
             // 
             // triggerWidthUpDown
             // 
@@ -6564,6 +6724,7 @@
             this.groupBox15.TabIndex = 32;
             this.groupBox15.TabStop = false;
             this.groupBox15.Text = "Map Coordinates";
+            this.groupBox15.Enter += new System.EventHandler(this.groupBox15_Enter);
             // 
             // triggerZLabel
             // 
@@ -6573,6 +6734,7 @@
             this.triggerZLabel.Size = new System.Drawing.Size(14, 13);
             this.triggerZLabel.TabIndex = 21;
             this.triggerZLabel.Text = "Z";
+            this.triggerZLabel.Click += new System.EventHandler(this.triggerZLabel_Click);
             // 
             // triggerXMapUpDown
             // 
@@ -6618,6 +6780,7 @@
             this.triggerMapXLabel.Size = new System.Drawing.Size(14, 13);
             this.triggerMapXLabel.TabIndex = 17;
             this.triggerMapXLabel.Text = "X";
+            this.triggerMapXLabel.Click += new System.EventHandler(this.triggerMapXLabel_Click);
             // 
             // triggerYMapUpDown
             // 
@@ -6640,6 +6803,7 @@
             this.triggerYMapLabel.Size = new System.Drawing.Size(14, 13);
             this.triggerYMapLabel.TabIndex = 19;
             this.triggerYMapLabel.Text = "Y";
+            this.triggerYMapLabel.Click += new System.EventHandler(this.triggerYMapLabel_Click);
             // 
             // groupBox6
             // 
@@ -6654,6 +6818,7 @@
             this.groupBox6.TabIndex = 25;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Matrix Coordinates";
+            this.groupBox6.Enter += new System.EventHandler(this.groupBox6_Enter);
             // 
             // goToTriggerButton
             // 
@@ -6676,6 +6841,7 @@
             this.triggerYMatrixLabel.Size = new System.Drawing.Size(45, 13);
             this.triggerYMatrixLabel.TabIndex = 19;
             this.triggerYMatrixLabel.Text = "Matrix Y";
+            this.triggerYMatrixLabel.Click += new System.EventHandler(this.triggerYMatrixLabel_Click);
             // 
             // triggerXMatrixUpDown
             // 
@@ -6698,6 +6864,7 @@
             this.triggerXMatrixLabel.Size = new System.Drawing.Size(45, 13);
             this.triggerXMatrixLabel.TabIndex = 17;
             this.triggerXMatrixLabel.Text = "Matrix X";
+            this.triggerXMatrixLabel.Click += new System.EventHandler(this.triggerXMatrixLabel_Click);
             // 
             // triggerYMatrixUpDown
             // 
@@ -6769,6 +6936,7 @@
             this.eventPanel.Name = "eventPanel";
             this.eventPanel.Size = new System.Drawing.Size(546, 546);
             this.eventPanel.TabIndex = 24;
+            this.eventPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.eventPanel_Paint);
             // 
             // eventPictureBox
             // 
@@ -6798,6 +6966,7 @@
             this.eventOpenGlControl.Size = new System.Drawing.Size(544, 544);
             this.eventOpenGlControl.StencilBits = ((byte)(0));
             this.eventOpenGlControl.TabIndex = 2;
+            this.eventOpenGlControl.Load += new System.EventHandler(this.eventOpenGlControl_Load);
             // 
             // rightClickPicture
             // 
@@ -6811,6 +6980,7 @@
             this.rightClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.rightClickPicture.TabIndex = 59;
             this.rightClickPicture.TabStop = false;
+            this.rightClickPicture.Click += new System.EventHandler(this.rightClickPicture_Click);
             // 
             // wheelClickPicture
             // 
@@ -6824,6 +6994,7 @@
             this.wheelClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.wheelClickPicture.TabIndex = 56;
             this.wheelClickPicture.TabStop = false;
+            this.wheelClickPicture.Click += new System.EventHandler(this.wheelClickPicture_Click);
             // 
             // LeftClickPicture
             // 
@@ -6837,6 +7008,7 @@
             this.LeftClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.LeftClickPicture.TabIndex = 55;
             this.LeftClickPicture.TabStop = false;
+            this.LeftClickPicture.Click += new System.EventHandler(this.LeftClickPicture_Click);
             // 
             // removeEventFileButton
             // 
@@ -6959,15 +7131,7 @@
             this.tabPageScriptEditor.TabIndex = 10;
             this.tabPageScriptEditor.Text = "Script Editor";
             this.tabPageScriptEditor.UseVisualStyleBackColor = true;
-            // 
-            // scriptEditor
-            // 
-            this.scriptEditor.Location = new System.Drawing.Point(2, 3);
-            this.scriptEditor.Margin = new System.Windows.Forms.Padding(4);
-            this.scriptEditor.Name = "scriptEditor";
-            this.scriptEditor.scriptEditorIsReady = false;
-            this.scriptEditor.Size = new System.Drawing.Size(1177, 735);
-            this.scriptEditor.TabIndex = 0;
+            this.tabPageScriptEditor.Click += new System.EventHandler(this.tabPageScriptEditor_Click);
             // 
             // tabPageLevelScriptEditor
             // 
@@ -6980,16 +7144,7 @@
             this.tabPageLevelScriptEditor.TabIndex = 11;
             this.tabPageLevelScriptEditor.Text = "Level Script Editor";
             this.tabPageLevelScriptEditor.UseVisualStyleBackColor = true;
-            // 
-            // levelScriptEditor
-            // 
-            this.levelScriptEditor.BackColor = System.Drawing.SystemColors.Control;
-            this.levelScriptEditor.levelScriptEditorIsReady = false;
-            this.levelScriptEditor.Location = new System.Drawing.Point(6, 8);
-            this.levelScriptEditor.Margin = new System.Windows.Forms.Padding(4);
-            this.levelScriptEditor.Name = "levelScriptEditor";
-            this.levelScriptEditor.Size = new System.Drawing.Size(408, 622);
-            this.levelScriptEditor.TabIndex = 0;
+            this.tabPageLevelScriptEditor.Click += new System.EventHandler(this.tabPageLevelScriptEditor_Click);
             // 
             // textEditorTabPage
             // 
@@ -7006,6 +7161,7 @@
             this.textEditorTabPage.TabIndex = 5;
             this.textEditorTabPage.Text = "Text Editor";
             this.textEditorTabPage.UseVisualStyleBackColor = true;
+            this.textEditorTabPage.Click += new System.EventHandler(this.textEditorTabPage_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -7041,6 +7197,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1161, 70);
             this.tableLayoutPanel1.TabIndex = 66;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // label6
             // 
@@ -7050,6 +7207,7 @@
             this.label6.Size = new System.Drawing.Size(67, 13);
             this.label6.TabIndex = 18;
             this.label6.Text = "Text Archive";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // selectedLineMoveUpButton
             // 
@@ -7183,6 +7341,7 @@
             this.LineNumbersFormatgroupBox.TabIndex = 34;
             this.LineNumbersFormatgroupBox.TabStop = false;
             this.LineNumbersFormatgroupBox.Text = "Line Number Format";
+            this.LineNumbersFormatgroupBox.Enter += new System.EventHandler(this.LineNumbersFormatgroupBox_Enter);
             // 
             // decimalRadioButton
             // 
@@ -7195,6 +7354,7 @@
             this.decimalRadioButton.TabStop = true;
             this.decimalRadioButton.Text = "Decimal";
             this.decimalRadioButton.UseVisualStyleBackColor = true;
+            this.decimalRadioButton.CheckedChanged += new System.EventHandler(this.decimalRadioButton_CheckedChanged);
             // 
             // hexRadiobutton
             // 
@@ -7228,6 +7388,7 @@
             this.groupBox13.TabIndex = 31;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Search / Replace";
+            this.groupBox13.Enter += new System.EventHandler(this.groupBox13_Enter);
             // 
             // label67
             // 
@@ -7239,6 +7400,7 @@
             this.label67.Size = new System.Drawing.Size(74, 13);
             this.label67.TabIndex = 41;
             this.label67.Text = "[Coming soon]";
+            this.label67.Click += new System.EventHandler(this.label67_Click);
             // 
             // searchAllArchivesCheckBox
             // 
@@ -7252,6 +7414,7 @@
             this.searchAllArchivesCheckBox.Text = "All Archives";
             this.searchAllArchivesCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.searchAllArchivesCheckBox.UseVisualStyleBackColor = true;
+            this.searchAllArchivesCheckBox.CheckedChanged += new System.EventHandler(this.searchAllArchivesCheckBox_CheckedChanged);
             // 
             // caseSensitiveTextReplaceCheckbox
             // 
@@ -7263,6 +7426,7 @@
             this.caseSensitiveTextReplaceCheckbox.TabIndex = 39;
             this.caseSensitiveTextReplaceCheckbox.Text = "Copy Case";
             this.caseSensitiveTextReplaceCheckbox.UseVisualStyleBackColor = true;
+            this.caseSensitiveTextReplaceCheckbox.CheckedChanged += new System.EventHandler(this.caseSensitiveTextReplaceCheckbox_CheckedChanged);
             // 
             // textSearchResultsListBox
             // 
@@ -7272,6 +7436,7 @@
             this.textSearchResultsListBox.Name = "textSearchResultsListBox";
             this.textSearchResultsListBox.Size = new System.Drawing.Size(267, 244);
             this.textSearchResultsListBox.TabIndex = 38;
+            this.textSearchResultsListBox.SelectedIndexChanged += new System.EventHandler(this.textSearchResultsListBox_SelectedIndexChanged);
             this.textSearchResultsListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textSearchResultsListBox_KeyDown);
             this.textSearchResultsListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.textSearchResultsListBox_GoToEntryResult);
             // 
@@ -7283,6 +7448,7 @@
             this.replaceTextLabel.Size = new System.Drawing.Size(93, 13);
             this.replaceTextLabel.TabIndex = 37;
             this.replaceTextLabel.Text = "Replacement text:";
+            this.replaceTextLabel.Click += new System.EventHandler(this.replaceTextLabel_Click);
             // 
             // replaceMessageTextBox
             // 
@@ -7291,6 +7457,7 @@
             this.replaceMessageTextBox.Name = "replaceMessageTextBox";
             this.replaceMessageTextBox.Size = new System.Drawing.Size(173, 20);
             this.replaceMessageTextBox.TabIndex = 36;
+            this.replaceMessageTextBox.TextChanged += new System.EventHandler(this.replaceMessageTextBox_TextChanged);
             // 
             // label8
             // 
@@ -7300,6 +7467,7 @@
             this.label8.Size = new System.Drawing.Size(48, 13);
             this.label8.TabIndex = 35;
             this.label8.Text = "Progress";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // textSearchProgressBar
             // 
@@ -7308,6 +7476,7 @@
             this.textSearchProgressBar.Size = new System.Drawing.Size(267, 27);
             this.textSearchProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.textSearchProgressBar.TabIndex = 34;
+            this.textSearchProgressBar.Click += new System.EventHandler(this.textSearchProgressBar_Click);
             // 
             // caseSensitiveTextSearchCheckbox
             // 
@@ -7318,6 +7487,7 @@
             this.caseSensitiveTextSearchCheckbox.TabIndex = 33;
             this.caseSensitiveTextSearchCheckbox.Text = "Match Case";
             this.caseSensitiveTextSearchCheckbox.UseVisualStyleBackColor = true;
+            this.caseSensitiveTextSearchCheckbox.CheckedChanged += new System.EventHandler(this.caseSensitiveTextSearchCheckbox_CheckedChanged);
             // 
             // label7
             // 
@@ -7327,6 +7497,7 @@
             this.label7.Size = new System.Drawing.Size(42, 13);
             this.label7.TabIndex = 32;
             this.label7.Text = "Results";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // searchMessageTextBox
             // 
@@ -7335,6 +7506,7 @@
             this.searchMessageTextBox.Name = "searchMessageTextBox";
             this.searchMessageTextBox.Size = new System.Drawing.Size(175, 20);
             this.searchMessageTextBox.TabIndex = 27;
+            this.searchMessageTextBox.TextChanged += new System.EventHandler(this.searchMessageTextBox_TextChanged);
             this.searchMessageTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchMessageTextBox_KeyDown);
             // 
             // searchMessageButton
@@ -7377,10 +7549,11 @@
             this.textEditorDataGridView.Location = new System.Drawing.Point(12, 77);
             this.textEditorDataGridView.Name = "textEditorDataGridView";
             this.textEditorDataGridView.RowHeadersWidth = 68;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle31.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle31;
             this.textEditorDataGridView.Size = new System.Drawing.Size(873, 500);
             this.textEditorDataGridView.TabIndex = 24;
+            this.textEditorDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellContentClick);
             this.textEditorDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellValueChanged);
             this.textEditorDataGridView.CurrentCellChanged += new System.EventHandler(this.textEditorDataGridView_CurrentCellChanged);
             // 
@@ -7432,6 +7605,7 @@
             this.cameraEditorTabPage.TabIndex = 7;
             this.cameraEditorTabPage.Text = "Camera Editor";
             this.cameraEditorTabPage.UseVisualStyleBackColor = true;
+            this.cameraEditorTabPage.Click += new System.EventHandler(this.cameraEditorTabPage_Click);
             // 
             // exportCameraTableButton
             // 
@@ -7482,9 +7656,9 @@
             this.cameraEditorDataGridView.CausesValidation = false;
             this.cameraEditorDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.cameraEditorDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cameraEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle32;
             this.cameraEditorDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.cameraEditorDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DistanceGVCol,
@@ -7629,8 +7803,8 @@
             this.trainerEditorTabPage.Controls.Add(this.groupBox25);
             this.trainerEditorTabPage.Controls.Add(this.addTrainerButton);
             this.trainerEditorTabPage.Controls.Add(this.label42);
-            this.trainerEditorTabPage.Controls.Add(this.trainerComboBox);
             this.trainerEditorTabPage.Controls.Add(this.trainerSaveCurrentButton);
+            this.trainerEditorTabPage.Controls.Add(this.trainerComboBox);
             this.trainerEditorTabPage.ImageIndex = 8;
             this.trainerEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.trainerEditorTabPage.Name = "trainerEditorTabPage";
@@ -7638,6 +7812,7 @@
             this.trainerEditorTabPage.TabIndex = 8;
             this.trainerEditorTabPage.Text = "Trainer Editor";
             this.trainerEditorTabPage.UseVisualStyleBackColor = true;
+            this.trainerEditorTabPage.Click += new System.EventHandler(this.trainerEditorTabPage_Click);
             // 
             // tableLayoutPanel4
             // 
@@ -7653,6 +7828,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(108, 62);
             this.tableLayoutPanel4.TabIndex = 47;
+            this.tableLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel4_Paint);
             // 
             // exportTrainerButton
             // 
@@ -7699,6 +7875,7 @@
             this.groupBox28.TabIndex = 32;
             this.groupBox28.TabStop = false;
             this.groupBox28.Text = "Party";
+            this.groupBox28.Enter += new System.EventHandler(this.groupBox28_Enter);
             // 
             // tableLayoutPanel6
             // 
@@ -7715,6 +7892,7 @@
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(237, 29);
             this.tableLayoutPanel6.TabIndex = 48;
+            this.tableLayoutPanel6.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel6_Paint);
             // 
             // button3
             // 
@@ -7728,6 +7906,7 @@
             this.button3.Text = "Replace Party";
             this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -7741,6 +7920,7 @@
             this.button4.Text = "Export Party";
             this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // DVExplainButton
             // 
@@ -7762,6 +7942,7 @@
             this.label74.Name = "label74";
             this.label74.Size = new System.Drawing.Size(0, 13);
             this.label74.TabIndex = 46;
+            this.label74.Click += new System.EventHandler(this.label74_Click);
             // 
             // party6GroupBox
             // 
@@ -7786,6 +7967,7 @@
             this.party6GroupBox.TabIndex = 13;
             this.party6GroupBox.TabStop = false;
             this.party6GroupBox.Text = "Pokemon 6";
+            this.party6GroupBox.Enter += new System.EventHandler(this.party6GroupBox_Enter);
             // 
             // partyForm6ComboBox
             // 
@@ -7797,6 +7979,7 @@
             this.partyForm6ComboBox.Name = "partyForm6ComboBox";
             this.partyForm6ComboBox.Size = new System.Drawing.Size(103, 21);
             this.partyForm6ComboBox.TabIndex = 20;
+            this.partyForm6ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyForm6ComboBox_SelectedIndexChanged);
             // 
             // partyAbility6ComboBox
             // 
@@ -7806,6 +7989,7 @@
             this.partyAbility6ComboBox.Name = "partyAbility6ComboBox";
             this.partyAbility6ComboBox.Size = new System.Drawing.Size(105, 21);
             this.partyAbility6ComboBox.TabIndex = 19;
+            this.partyAbility6ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyAbility6ComboBox_SelectedIndexChanged);
             // 
             // partyGender6ComboBox
             // 
@@ -7815,6 +7999,7 @@
             this.partyGender6ComboBox.Name = "partyGender6ComboBox";
             this.partyGender6ComboBox.Size = new System.Drawing.Size(95, 21);
             this.partyGender6ComboBox.TabIndex = 15;
+            this.partyGender6ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyGender6ComboBox_SelectedIndexChanged);
             // 
             // partyPokemonItemPictureBox6
             // 
@@ -7825,6 +8010,7 @@
             this.partyPokemonItemPictureBox6.TabIndex = 13;
             this.partyPokemonItemPictureBox6.TabStop = false;
             this.partyPokemonItemPictureBox6.Visible = false;
+            this.partyPokemonItemPictureBox6.Click += new System.EventHandler(this.partyPokemonItemPictureBox6_Click);
             // 
             // label60
             // 
@@ -7834,6 +8020,7 @@
             this.label60.Size = new System.Drawing.Size(28, 26);
             this.label60.TabIndex = 9;
             this.label60.Text = "Ball\r\nSeal";
+            this.label60.Click += new System.EventHandler(this.label60_Click);
             // 
             // label61
             // 
@@ -7843,6 +8030,7 @@
             this.label61.Size = new System.Drawing.Size(22, 13);
             this.label61.TabIndex = 8;
             this.label61.Text = "DV";
+            this.label61.Click += new System.EventHandler(this.label61_Click);
             // 
             // label62
             // 
@@ -7852,6 +8040,7 @@
             this.label62.Size = new System.Drawing.Size(22, 13);
             this.label62.TabIndex = 7;
             this.label62.Text = "Lv.";
+            this.label62.Click += new System.EventHandler(this.label62_Click);
             // 
             // poke6MovesGroupBox
             // 
@@ -7865,54 +8054,7 @@
             this.poke6MovesGroupBox.TabIndex = 6;
             this.poke6MovesGroupBox.TabStop = false;
             this.poke6MovesGroupBox.Text = "Moves";
-            // 
-            // partyMove6_1ComboBox
-            // 
-            this.partyMove6_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove6_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove6_1ComboBox.Enabled = false;
-            this.partyMove6_1ComboBox.FormattingEnabled = true;
-            this.partyMove6_1ComboBox.Location = new System.Drawing.Point(10, 21);
-            this.partyMove6_1ComboBox.Name = "partyMove6_1ComboBox";
-            this.partyMove6_1ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove6_1ComboBox.TabIndex = 3;
-            this.partyMove6_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove6_2ComboBox
-            // 
-            this.partyMove6_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove6_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove6_2ComboBox.Enabled = false;
-            this.partyMove6_2ComboBox.FormattingEnabled = true;
-            this.partyMove6_2ComboBox.Location = new System.Drawing.Point(116, 21);
-            this.partyMove6_2ComboBox.Name = "partyMove6_2ComboBox";
-            this.partyMove6_2ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove6_2ComboBox.TabIndex = 6;
-            this.partyMove6_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove6_3ComboBox
-            // 
-            this.partyMove6_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove6_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove6_3ComboBox.Enabled = false;
-            this.partyMove6_3ComboBox.FormattingEnabled = true;
-            this.partyMove6_3ComboBox.Location = new System.Drawing.Point(10, 48);
-            this.partyMove6_3ComboBox.Name = "partyMove6_3ComboBox";
-            this.partyMove6_3ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove6_3ComboBox.TabIndex = 5;
-            this.partyMove6_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove6_4ComboBox
-            // 
-            this.partyMove6_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove6_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove6_4ComboBox.Enabled = false;
-            this.partyMove6_4ComboBox.FormattingEnabled = true;
-            this.partyMove6_4ComboBox.Location = new System.Drawing.Point(116, 48);
-            this.partyMove6_4ComboBox.Name = "partyMove6_4ComboBox";
-            this.partyMove6_4ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove6_4ComboBox.TabIndex = 7;
-            this.partyMove6_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.poke6MovesGroupBox.Enter += new System.EventHandler(this.poke6MovesGroupBox_Enter);
             // 
             // partyIV6UpDown
             // 
@@ -7925,6 +8067,7 @@
             this.partyIV6UpDown.Name = "partyIV6UpDown";
             this.partyIV6UpDown.Size = new System.Drawing.Size(49, 20);
             this.partyIV6UpDown.TabIndex = 5;
+            this.partyIV6UpDown.ValueChanged += new System.EventHandler(this.partyIV6UpDown_ValueChanged);
             // 
             // partyLevel6UpDown
             // 
@@ -7942,6 +8085,7 @@
             0,
             0,
             0});
+            this.partyLevel6UpDown.ValueChanged += new System.EventHandler(this.partyLevel6UpDown_ValueChanged);
             // 
             // partyBall6UpDown
             // 
@@ -7954,18 +8098,7 @@
             this.partyBall6UpDown.Name = "partyBall6UpDown";
             this.partyBall6UpDown.Size = new System.Drawing.Size(49, 20);
             this.partyBall6UpDown.TabIndex = 3;
-            // 
-            // partyItem6ComboBox
-            // 
-            this.partyItem6ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyItem6ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyItem6ComboBox.Enabled = false;
-            this.partyItem6ComboBox.FormattingEnabled = true;
-            this.partyItem6ComboBox.Location = new System.Drawing.Point(228, 28);
-            this.partyItem6ComboBox.Name = "partyItem6ComboBox";
-            this.partyItem6ComboBox.Size = new System.Drawing.Size(103, 21);
-            this.partyItem6ComboBox.TabIndex = 2;
-            this.partyItem6ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem6ComboBox_SelectedIndexChanged);
+            this.partyBall6UpDown.ValueChanged += new System.EventHandler(this.partyBall6UpDown_ValueChanged);
             // 
             // partyPokemon6PictureBox
             // 
@@ -7975,17 +8108,7 @@
             this.partyPokemon6PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.partyPokemon6PictureBox.TabIndex = 1;
             this.partyPokemon6PictureBox.TabStop = false;
-            // 
-            // partyPokemon6ComboBox
-            // 
-            this.partyPokemon6ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyPokemon6ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyPokemon6ComboBox.FormattingEnabled = true;
-            this.partyPokemon6ComboBox.Location = new System.Drawing.Point(58, 28);
-            this.partyPokemon6ComboBox.Name = "partyPokemon6ComboBox";
-            this.partyPokemon6ComboBox.Size = new System.Drawing.Size(126, 21);
-            this.partyPokemon6ComboBox.TabIndex = 0;
-            this.partyPokemon6ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyPokemon6ComboBox_SelectedIndexChanged);
+            this.partyPokemon6PictureBox.Click += new System.EventHandler(this.partyPokemon6PictureBox_Click);
             // 
             // party5GroupBox
             // 
@@ -8010,6 +8133,7 @@
             this.party5GroupBox.TabIndex = 12;
             this.party5GroupBox.TabStop = false;
             this.party5GroupBox.Text = "Pokemon 5";
+            this.party5GroupBox.Enter += new System.EventHandler(this.party5GroupBox_Enter);
             // 
             // partyForm5ComboBox
             // 
@@ -8021,6 +8145,7 @@
             this.partyForm5ComboBox.Name = "partyForm5ComboBox";
             this.partyForm5ComboBox.Size = new System.Drawing.Size(103, 21);
             this.partyForm5ComboBox.TabIndex = 19;
+            this.partyForm5ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyForm5ComboBox_SelectedIndexChanged);
             // 
             // partyAbility5ComboBox
             // 
@@ -8030,6 +8155,7 @@
             this.partyAbility5ComboBox.Name = "partyAbility5ComboBox";
             this.partyAbility5ComboBox.Size = new System.Drawing.Size(105, 21);
             this.partyAbility5ComboBox.TabIndex = 18;
+            this.partyAbility5ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyAbility5ComboBox_SelectedIndexChanged);
             // 
             // partyGender5ComboBox
             // 
@@ -8039,6 +8165,7 @@
             this.partyGender5ComboBox.Name = "partyGender5ComboBox";
             this.partyGender5ComboBox.Size = new System.Drawing.Size(95, 21);
             this.partyGender5ComboBox.TabIndex = 14;
+            this.partyGender5ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyGender5ComboBox_SelectedIndexChanged);
             // 
             // partyPokemonItemPictureBox5
             // 
@@ -8049,6 +8176,7 @@
             this.partyPokemonItemPictureBox5.TabIndex = 12;
             this.partyPokemonItemPictureBox5.TabStop = false;
             this.partyPokemonItemPictureBox5.Visible = false;
+            this.partyPokemonItemPictureBox5.Click += new System.EventHandler(this.partyPokemonItemPictureBox5_Click);
             // 
             // label57
             // 
@@ -8058,6 +8186,7 @@
             this.label57.Size = new System.Drawing.Size(28, 26);
             this.label57.TabIndex = 9;
             this.label57.Text = "Ball\r\nSeal";
+            this.label57.Click += new System.EventHandler(this.label57_Click);
             // 
             // label58
             // 
@@ -8067,6 +8196,7 @@
             this.label58.Size = new System.Drawing.Size(22, 13);
             this.label58.TabIndex = 8;
             this.label58.Text = "DV";
+            this.label58.Click += new System.EventHandler(this.label58_Click);
             // 
             // label59
             // 
@@ -8076,6 +8206,7 @@
             this.label59.Size = new System.Drawing.Size(22, 13);
             this.label59.TabIndex = 7;
             this.label59.Text = "Lv.";
+            this.label59.Click += new System.EventHandler(this.label59_Click);
             // 
             // poke5MovesGroupBox
             // 
@@ -8089,54 +8220,7 @@
             this.poke5MovesGroupBox.TabIndex = 6;
             this.poke5MovesGroupBox.TabStop = false;
             this.poke5MovesGroupBox.Text = "Moves";
-            // 
-            // partyMove5_1ComboBox
-            // 
-            this.partyMove5_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove5_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove5_1ComboBox.Enabled = false;
-            this.partyMove5_1ComboBox.FormattingEnabled = true;
-            this.partyMove5_1ComboBox.Location = new System.Drawing.Point(10, 21);
-            this.partyMove5_1ComboBox.Name = "partyMove5_1ComboBox";
-            this.partyMove5_1ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove5_1ComboBox.TabIndex = 3;
-            this.partyMove5_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove5_2ComboBox
-            // 
-            this.partyMove5_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove5_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove5_2ComboBox.Enabled = false;
-            this.partyMove5_2ComboBox.FormattingEnabled = true;
-            this.partyMove5_2ComboBox.Location = new System.Drawing.Point(116, 21);
-            this.partyMove5_2ComboBox.Name = "partyMove5_2ComboBox";
-            this.partyMove5_2ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove5_2ComboBox.TabIndex = 6;
-            this.partyMove5_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove5_3ComboBox
-            // 
-            this.partyMove5_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove5_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove5_3ComboBox.Enabled = false;
-            this.partyMove5_3ComboBox.FormattingEnabled = true;
-            this.partyMove5_3ComboBox.Location = new System.Drawing.Point(10, 48);
-            this.partyMove5_3ComboBox.Name = "partyMove5_3ComboBox";
-            this.partyMove5_3ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove5_3ComboBox.TabIndex = 5;
-            this.partyMove5_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove5_4ComboBox
-            // 
-            this.partyMove5_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove5_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove5_4ComboBox.Enabled = false;
-            this.partyMove5_4ComboBox.FormattingEnabled = true;
-            this.partyMove5_4ComboBox.Location = new System.Drawing.Point(116, 48);
-            this.partyMove5_4ComboBox.Name = "partyMove5_4ComboBox";
-            this.partyMove5_4ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove5_4ComboBox.TabIndex = 7;
-            this.partyMove5_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.poke5MovesGroupBox.Enter += new System.EventHandler(this.poke5MovesGroupBox_Enter);
             // 
             // partyIV5UpDown
             // 
@@ -8149,6 +8233,7 @@
             this.partyIV5UpDown.Name = "partyIV5UpDown";
             this.partyIV5UpDown.Size = new System.Drawing.Size(49, 20);
             this.partyIV5UpDown.TabIndex = 5;
+            this.partyIV5UpDown.ValueChanged += new System.EventHandler(this.partyIV5UpDown_ValueChanged);
             // 
             // partyLevel5UpDown
             // 
@@ -8166,6 +8251,7 @@
             0,
             0,
             0});
+            this.partyLevel5UpDown.ValueChanged += new System.EventHandler(this.partyLevel5UpDown_ValueChanged);
             // 
             // partyBall5UpDown
             // 
@@ -8178,18 +8264,7 @@
             this.partyBall5UpDown.Name = "partyBall5UpDown";
             this.partyBall5UpDown.Size = new System.Drawing.Size(49, 20);
             this.partyBall5UpDown.TabIndex = 3;
-            // 
-            // partyItem5ComboBox
-            // 
-            this.partyItem5ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyItem5ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyItem5ComboBox.Enabled = false;
-            this.partyItem5ComboBox.FormattingEnabled = true;
-            this.partyItem5ComboBox.Location = new System.Drawing.Point(228, 28);
-            this.partyItem5ComboBox.Name = "partyItem5ComboBox";
-            this.partyItem5ComboBox.Size = new System.Drawing.Size(103, 21);
-            this.partyItem5ComboBox.TabIndex = 2;
-            this.partyItem5ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem5ComboBox_SelectedIndexChanged);
+            this.partyBall5UpDown.ValueChanged += new System.EventHandler(this.partyBall5UpDown_ValueChanged);
             // 
             // partyPokemon5PictureBox
             // 
@@ -8199,17 +8274,7 @@
             this.partyPokemon5PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.partyPokemon5PictureBox.TabIndex = 1;
             this.partyPokemon5PictureBox.TabStop = false;
-            // 
-            // partyPokemon5ComboBox
-            // 
-            this.partyPokemon5ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyPokemon5ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyPokemon5ComboBox.FormattingEnabled = true;
-            this.partyPokemon5ComboBox.Location = new System.Drawing.Point(58, 28);
-            this.partyPokemon5ComboBox.Name = "partyPokemon5ComboBox";
-            this.partyPokemon5ComboBox.Size = new System.Drawing.Size(126, 21);
-            this.partyPokemon5ComboBox.TabIndex = 0;
-            this.partyPokemon5ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyPokemon5ComboBox_SelectedIndexChanged);
+            this.partyPokemon5PictureBox.Click += new System.EventHandler(this.partyPokemon5PictureBox_Click);
             // 
             // party4GroupBox
             // 
@@ -8234,6 +8299,7 @@
             this.party4GroupBox.TabIndex = 11;
             this.party4GroupBox.TabStop = false;
             this.party4GroupBox.Text = "Pokemon 4";
+            this.party4GroupBox.Enter += new System.EventHandler(this.party4GroupBox_Enter);
             // 
             // partyForm4ComboBox
             // 
@@ -8245,6 +8311,7 @@
             this.partyForm4ComboBox.Name = "partyForm4ComboBox";
             this.partyForm4ComboBox.Size = new System.Drawing.Size(103, 21);
             this.partyForm4ComboBox.TabIndex = 18;
+            this.partyForm4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyForm4ComboBox_SelectedIndexChanged);
             // 
             // partyAbility4ComboBox
             // 
@@ -8254,6 +8321,7 @@
             this.partyAbility4ComboBox.Name = "partyAbility4ComboBox";
             this.partyAbility4ComboBox.Size = new System.Drawing.Size(105, 21);
             this.partyAbility4ComboBox.TabIndex = 17;
+            this.partyAbility4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyAbility4ComboBox_SelectedIndexChanged);
             // 
             // partyGender4ComboBox
             // 
@@ -8263,6 +8331,7 @@
             this.partyGender4ComboBox.Name = "partyGender4ComboBox";
             this.partyGender4ComboBox.Size = new System.Drawing.Size(95, 21);
             this.partyGender4ComboBox.TabIndex = 16;
+            this.partyGender4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyGender4ComboBox_SelectedIndexChanged);
             // 
             // partyPokemonItemPictureBox4
             // 
@@ -8273,6 +8342,7 @@
             this.partyPokemonItemPictureBox4.TabIndex = 14;
             this.partyPokemonItemPictureBox4.TabStop = false;
             this.partyPokemonItemPictureBox4.Visible = false;
+            this.partyPokemonItemPictureBox4.Click += new System.EventHandler(this.partyPokemonItemPictureBox4_Click);
             // 
             // label54
             // 
@@ -8282,6 +8352,7 @@
             this.label54.Size = new System.Drawing.Size(28, 26);
             this.label54.TabIndex = 9;
             this.label54.Text = "Ball\r\nSeal";
+            this.label54.Click += new System.EventHandler(this.label54_Click);
             // 
             // label55
             // 
@@ -8291,6 +8362,7 @@
             this.label55.Size = new System.Drawing.Size(22, 13);
             this.label55.TabIndex = 8;
             this.label55.Text = "DV";
+            this.label55.Click += new System.EventHandler(this.label55_Click);
             // 
             // label56
             // 
@@ -8300,6 +8372,7 @@
             this.label56.Size = new System.Drawing.Size(22, 13);
             this.label56.TabIndex = 7;
             this.label56.Text = "Lv.";
+            this.label56.Click += new System.EventHandler(this.label56_Click);
             // 
             // poke4MovesGroupBox
             // 
@@ -8313,54 +8386,7 @@
             this.poke4MovesGroupBox.TabIndex = 6;
             this.poke4MovesGroupBox.TabStop = false;
             this.poke4MovesGroupBox.Text = "Moves";
-            // 
-            // partyMove4_1ComboBox
-            // 
-            this.partyMove4_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove4_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove4_1ComboBox.Enabled = false;
-            this.partyMove4_1ComboBox.FormattingEnabled = true;
-            this.partyMove4_1ComboBox.Location = new System.Drawing.Point(10, 21);
-            this.partyMove4_1ComboBox.Name = "partyMove4_1ComboBox";
-            this.partyMove4_1ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove4_1ComboBox.TabIndex = 3;
-            this.partyMove4_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove4_2ComboBox
-            // 
-            this.partyMove4_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove4_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove4_2ComboBox.Enabled = false;
-            this.partyMove4_2ComboBox.FormattingEnabled = true;
-            this.partyMove4_2ComboBox.Location = new System.Drawing.Point(116, 21);
-            this.partyMove4_2ComboBox.Name = "partyMove4_2ComboBox";
-            this.partyMove4_2ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove4_2ComboBox.TabIndex = 6;
-            this.partyMove4_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove4_3ComboBox
-            // 
-            this.partyMove4_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove4_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove4_3ComboBox.Enabled = false;
-            this.partyMove4_3ComboBox.FormattingEnabled = true;
-            this.partyMove4_3ComboBox.Location = new System.Drawing.Point(10, 48);
-            this.partyMove4_3ComboBox.Name = "partyMove4_3ComboBox";
-            this.partyMove4_3ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove4_3ComboBox.TabIndex = 5;
-            this.partyMove4_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove4_4ComboBox
-            // 
-            this.partyMove4_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove4_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove4_4ComboBox.Enabled = false;
-            this.partyMove4_4ComboBox.FormattingEnabled = true;
-            this.partyMove4_4ComboBox.Location = new System.Drawing.Point(116, 48);
-            this.partyMove4_4ComboBox.Name = "partyMove4_4ComboBox";
-            this.partyMove4_4ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove4_4ComboBox.TabIndex = 7;
-            this.partyMove4_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.poke4MovesGroupBox.Enter += new System.EventHandler(this.poke4MovesGroupBox_Enter);
             // 
             // partyIV4UpDown
             // 
@@ -8373,6 +8399,7 @@
             this.partyIV4UpDown.Name = "partyIV4UpDown";
             this.partyIV4UpDown.Size = new System.Drawing.Size(49, 20);
             this.partyIV4UpDown.TabIndex = 5;
+            this.partyIV4UpDown.ValueChanged += new System.EventHandler(this.partyIV4UpDown_ValueChanged);
             // 
             // partyLevel4UpDown
             // 
@@ -8390,6 +8417,7 @@
             0,
             0,
             0});
+            this.partyLevel4UpDown.ValueChanged += new System.EventHandler(this.partyLevel4UpDown_ValueChanged);
             // 
             // partyBall4UpDown
             // 
@@ -8402,18 +8430,7 @@
             this.partyBall4UpDown.Name = "partyBall4UpDown";
             this.partyBall4UpDown.Size = new System.Drawing.Size(49, 20);
             this.partyBall4UpDown.TabIndex = 3;
-            // 
-            // partyItem4ComboBox
-            // 
-            this.partyItem4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyItem4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyItem4ComboBox.Enabled = false;
-            this.partyItem4ComboBox.FormattingEnabled = true;
-            this.partyItem4ComboBox.Location = new System.Drawing.Point(228, 28);
-            this.partyItem4ComboBox.Name = "partyItem4ComboBox";
-            this.partyItem4ComboBox.Size = new System.Drawing.Size(103, 21);
-            this.partyItem4ComboBox.TabIndex = 2;
-            this.partyItem4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem4ComboBox_SelectedIndexChanged);
+            this.partyBall4UpDown.ValueChanged += new System.EventHandler(this.partyBall4UpDown_ValueChanged);
             // 
             // partyPokemon4PictureBox
             // 
@@ -8423,17 +8440,7 @@
             this.partyPokemon4PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.partyPokemon4PictureBox.TabIndex = 1;
             this.partyPokemon4PictureBox.TabStop = false;
-            // 
-            // partyPokemon4ComboBox
-            // 
-            this.partyPokemon4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyPokemon4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyPokemon4ComboBox.FormattingEnabled = true;
-            this.partyPokemon4ComboBox.Location = new System.Drawing.Point(58, 28);
-            this.partyPokemon4ComboBox.Name = "partyPokemon4ComboBox";
-            this.partyPokemon4ComboBox.Size = new System.Drawing.Size(126, 21);
-            this.partyPokemon4ComboBox.TabIndex = 0;
-            this.partyPokemon4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyPokemon4ComboBox_SelectedIndexChanged);
+            this.partyPokemon4PictureBox.Click += new System.EventHandler(this.partyPokemon4PictureBox_Click);
             // 
             // party3GroupBox
             // 
@@ -8458,6 +8465,7 @@
             this.party3GroupBox.TabIndex = 10;
             this.party3GroupBox.TabStop = false;
             this.party3GroupBox.Text = "Pokemon 3";
+            this.party3GroupBox.Enter += new System.EventHandler(this.party3GroupBox_Enter);
             // 
             // partyForm3ComboBox
             // 
@@ -8469,6 +8477,7 @@
             this.partyForm3ComboBox.Name = "partyForm3ComboBox";
             this.partyForm3ComboBox.Size = new System.Drawing.Size(103, 21);
             this.partyForm3ComboBox.TabIndex = 15;
+            this.partyForm3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyForm3ComboBox_SelectedIndexChanged);
             // 
             // partyAbility3ComboBox
             // 
@@ -8478,6 +8487,7 @@
             this.partyAbility3ComboBox.Name = "partyAbility3ComboBox";
             this.partyAbility3ComboBox.Size = new System.Drawing.Size(105, 21);
             this.partyAbility3ComboBox.TabIndex = 14;
+            this.partyAbility3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyAbility3ComboBox_SelectedIndexChanged);
             // 
             // partyGender3ComboBox
             // 
@@ -8487,6 +8497,7 @@
             this.partyGender3ComboBox.Name = "partyGender3ComboBox";
             this.partyGender3ComboBox.Size = new System.Drawing.Size(95, 21);
             this.partyGender3ComboBox.TabIndex = 13;
+            this.partyGender3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyGender3ComboBox_SelectedIndexChanged);
             // 
             // partyPokemonItemPictureBox3
             // 
@@ -8497,6 +8508,7 @@
             this.partyPokemonItemPictureBox3.TabIndex = 11;
             this.partyPokemonItemPictureBox3.TabStop = false;
             this.partyPokemonItemPictureBox3.Visible = false;
+            this.partyPokemonItemPictureBox3.Click += new System.EventHandler(this.partyPokemonItemPictureBox3_Click);
             // 
             // label51
             // 
@@ -8506,6 +8518,7 @@
             this.label51.Size = new System.Drawing.Size(28, 26);
             this.label51.TabIndex = 9;
             this.label51.Text = "Ball\r\nSeal";
+            this.label51.Click += new System.EventHandler(this.label51_Click);
             // 
             // label52
             // 
@@ -8515,6 +8528,7 @@
             this.label52.Size = new System.Drawing.Size(22, 13);
             this.label52.TabIndex = 8;
             this.label52.Text = "DV";
+            this.label52.Click += new System.EventHandler(this.label52_Click);
             // 
             // label53
             // 
@@ -8524,6 +8538,7 @@
             this.label53.Size = new System.Drawing.Size(22, 13);
             this.label53.TabIndex = 7;
             this.label53.Text = "Lv.";
+            this.label53.Click += new System.EventHandler(this.label53_Click);
             // 
             // poke3MovesGroupBox
             // 
@@ -8537,54 +8552,7 @@
             this.poke3MovesGroupBox.TabIndex = 6;
             this.poke3MovesGroupBox.TabStop = false;
             this.poke3MovesGroupBox.Text = "Moves";
-            // 
-            // partyMove3_1ComboBox
-            // 
-            this.partyMove3_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove3_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove3_1ComboBox.Enabled = false;
-            this.partyMove3_1ComboBox.FormattingEnabled = true;
-            this.partyMove3_1ComboBox.Location = new System.Drawing.Point(10, 21);
-            this.partyMove3_1ComboBox.Name = "partyMove3_1ComboBox";
-            this.partyMove3_1ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove3_1ComboBox.TabIndex = 3;
-            this.partyMove3_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove3_2ComboBox
-            // 
-            this.partyMove3_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove3_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove3_2ComboBox.Enabled = false;
-            this.partyMove3_2ComboBox.FormattingEnabled = true;
-            this.partyMove3_2ComboBox.Location = new System.Drawing.Point(116, 21);
-            this.partyMove3_2ComboBox.Name = "partyMove3_2ComboBox";
-            this.partyMove3_2ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove3_2ComboBox.TabIndex = 6;
-            this.partyMove3_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove3_3ComboBox
-            // 
-            this.partyMove3_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove3_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove3_3ComboBox.Enabled = false;
-            this.partyMove3_3ComboBox.FormattingEnabled = true;
-            this.partyMove3_3ComboBox.Location = new System.Drawing.Point(10, 48);
-            this.partyMove3_3ComboBox.Name = "partyMove3_3ComboBox";
-            this.partyMove3_3ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove3_3ComboBox.TabIndex = 5;
-            this.partyMove3_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove3_4ComboBox
-            // 
-            this.partyMove3_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove3_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove3_4ComboBox.Enabled = false;
-            this.partyMove3_4ComboBox.FormattingEnabled = true;
-            this.partyMove3_4ComboBox.Location = new System.Drawing.Point(116, 48);
-            this.partyMove3_4ComboBox.Name = "partyMove3_4ComboBox";
-            this.partyMove3_4ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove3_4ComboBox.TabIndex = 7;
-            this.partyMove3_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.poke3MovesGroupBox.Enter += new System.EventHandler(this.poke3MovesGroupBox_Enter);
             // 
             // partyIV3UpDown
             // 
@@ -8597,6 +8565,7 @@
             this.partyIV3UpDown.Name = "partyIV3UpDown";
             this.partyIV3UpDown.Size = new System.Drawing.Size(49, 20);
             this.partyIV3UpDown.TabIndex = 5;
+            this.partyIV3UpDown.ValueChanged += new System.EventHandler(this.partyIV3UpDown_ValueChanged);
             // 
             // partyLevel3UpDown
             // 
@@ -8614,6 +8583,7 @@
             0,
             0,
             0});
+            this.partyLevel3UpDown.ValueChanged += new System.EventHandler(this.partyLevel3UpDown_ValueChanged);
             // 
             // partyBall3UpDown
             // 
@@ -8626,18 +8596,7 @@
             this.partyBall3UpDown.Name = "partyBall3UpDown";
             this.partyBall3UpDown.Size = new System.Drawing.Size(49, 20);
             this.partyBall3UpDown.TabIndex = 3;
-            // 
-            // partyItem3ComboBox
-            // 
-            this.partyItem3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyItem3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyItem3ComboBox.Enabled = false;
-            this.partyItem3ComboBox.FormattingEnabled = true;
-            this.partyItem3ComboBox.Location = new System.Drawing.Point(228, 28);
-            this.partyItem3ComboBox.Name = "partyItem3ComboBox";
-            this.partyItem3ComboBox.Size = new System.Drawing.Size(103, 21);
-            this.partyItem3ComboBox.TabIndex = 2;
-            this.partyItem3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem3ComboBox_SelectedIndexChanged);
+            this.partyBall3UpDown.ValueChanged += new System.EventHandler(this.partyBall3UpDown_ValueChanged);
             // 
             // partyPokemon3PictureBox
             // 
@@ -8647,17 +8606,7 @@
             this.partyPokemon3PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.partyPokemon3PictureBox.TabIndex = 1;
             this.partyPokemon3PictureBox.TabStop = false;
-            // 
-            // partyPokemon3ComboBox
-            // 
-            this.partyPokemon3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyPokemon3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyPokemon3ComboBox.FormattingEnabled = true;
-            this.partyPokemon3ComboBox.Location = new System.Drawing.Point(58, 28);
-            this.partyPokemon3ComboBox.Name = "partyPokemon3ComboBox";
-            this.partyPokemon3ComboBox.Size = new System.Drawing.Size(126, 21);
-            this.partyPokemon3ComboBox.TabIndex = 0;
-            this.partyPokemon3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyPokemon3ComboBox_SelectedIndexChanged);
+            this.partyPokemon3PictureBox.Click += new System.EventHandler(this.partyPokemon3PictureBox_Click);
             // 
             // party2GroupBox
             // 
@@ -8682,6 +8631,7 @@
             this.party2GroupBox.TabIndex = 10;
             this.party2GroupBox.TabStop = false;
             this.party2GroupBox.Text = "Pokemon 2";
+            this.party2GroupBox.Enter += new System.EventHandler(this.party2GroupBox_Enter);
             // 
             // partyForm2ComboBox
             // 
@@ -8693,6 +8643,7 @@
             this.partyForm2ComboBox.Name = "partyForm2ComboBox";
             this.partyForm2ComboBox.Size = new System.Drawing.Size(103, 21);
             this.partyForm2ComboBox.TabIndex = 20;
+            this.partyForm2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyForm2ComboBox_SelectedIndexChanged);
             // 
             // partyAbility2ComboBox
             // 
@@ -8702,6 +8653,7 @@
             this.partyAbility2ComboBox.Name = "partyAbility2ComboBox";
             this.partyAbility2ComboBox.Size = new System.Drawing.Size(105, 21);
             this.partyAbility2ComboBox.TabIndex = 18;
+            this.partyAbility2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyAbility2ComboBox_SelectedIndexChanged);
             // 
             // partyGender2ComboBox
             // 
@@ -8711,6 +8663,7 @@
             this.partyGender2ComboBox.Name = "partyGender2ComboBox";
             this.partyGender2ComboBox.Size = new System.Drawing.Size(95, 21);
             this.partyGender2ComboBox.TabIndex = 17;
+            this.partyGender2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyGender2ComboBox_SelectedIndexChanged);
             // 
             // partyPokemonItemPictureBox2
             // 
@@ -8721,6 +8674,7 @@
             this.partyPokemonItemPictureBox2.TabIndex = 15;
             this.partyPokemonItemPictureBox2.TabStop = false;
             this.partyPokemonItemPictureBox2.Visible = false;
+            this.partyPokemonItemPictureBox2.Click += new System.EventHandler(this.partyPokemonItemPictureBox2_Click);
             // 
             // label48
             // 
@@ -8730,6 +8684,7 @@
             this.label48.Size = new System.Drawing.Size(28, 26);
             this.label48.TabIndex = 9;
             this.label48.Text = "Ball\r\nSeal";
+            this.label48.Click += new System.EventHandler(this.label48_Click);
             // 
             // label49
             // 
@@ -8739,6 +8694,7 @@
             this.label49.Size = new System.Drawing.Size(22, 13);
             this.label49.TabIndex = 8;
             this.label49.Text = "DV";
+            this.label49.Click += new System.EventHandler(this.label49_Click);
             // 
             // label50
             // 
@@ -8748,6 +8704,7 @@
             this.label50.Size = new System.Drawing.Size(22, 13);
             this.label50.TabIndex = 7;
             this.label50.Text = "Lv.";
+            this.label50.Click += new System.EventHandler(this.label50_Click);
             // 
             // poke2MovesGroupBox
             // 
@@ -8761,54 +8718,7 @@
             this.poke2MovesGroupBox.TabIndex = 6;
             this.poke2MovesGroupBox.TabStop = false;
             this.poke2MovesGroupBox.Text = "Moves";
-            // 
-            // partyMove2_1ComboBox
-            // 
-            this.partyMove2_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove2_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove2_1ComboBox.Enabled = false;
-            this.partyMove2_1ComboBox.FormattingEnabled = true;
-            this.partyMove2_1ComboBox.Location = new System.Drawing.Point(10, 21);
-            this.partyMove2_1ComboBox.Name = "partyMove2_1ComboBox";
-            this.partyMove2_1ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove2_1ComboBox.TabIndex = 3;
-            this.partyMove2_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove2_2ComboBox
-            // 
-            this.partyMove2_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove2_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove2_2ComboBox.Enabled = false;
-            this.partyMove2_2ComboBox.FormattingEnabled = true;
-            this.partyMove2_2ComboBox.Location = new System.Drawing.Point(116, 21);
-            this.partyMove2_2ComboBox.Name = "partyMove2_2ComboBox";
-            this.partyMove2_2ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove2_2ComboBox.TabIndex = 6;
-            this.partyMove2_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove2_3ComboBox
-            // 
-            this.partyMove2_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove2_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove2_3ComboBox.Enabled = false;
-            this.partyMove2_3ComboBox.FormattingEnabled = true;
-            this.partyMove2_3ComboBox.Location = new System.Drawing.Point(10, 48);
-            this.partyMove2_3ComboBox.Name = "partyMove2_3ComboBox";
-            this.partyMove2_3ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove2_3ComboBox.TabIndex = 5;
-            this.partyMove2_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove2_4ComboBox
-            // 
-            this.partyMove2_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove2_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove2_4ComboBox.Enabled = false;
-            this.partyMove2_4ComboBox.FormattingEnabled = true;
-            this.partyMove2_4ComboBox.Location = new System.Drawing.Point(116, 48);
-            this.partyMove2_4ComboBox.Name = "partyMove2_4ComboBox";
-            this.partyMove2_4ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove2_4ComboBox.TabIndex = 7;
-            this.partyMove2_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.poke2MovesGroupBox.Enter += new System.EventHandler(this.poke2MovesGroupBox_Enter);
             // 
             // partyIV2UpDown
             // 
@@ -8821,6 +8731,7 @@
             this.partyIV2UpDown.Name = "partyIV2UpDown";
             this.partyIV2UpDown.Size = new System.Drawing.Size(49, 20);
             this.partyIV2UpDown.TabIndex = 5;
+            this.partyIV2UpDown.ValueChanged += new System.EventHandler(this.partyIV2UpDown_ValueChanged);
             // 
             // partyLevel2UpDown
             // 
@@ -8838,6 +8749,7 @@
             0,
             0,
             0});
+            this.partyLevel2UpDown.ValueChanged += new System.EventHandler(this.partyLevel2UpDown_ValueChanged);
             // 
             // partyBall2UpDown
             // 
@@ -8850,18 +8762,7 @@
             this.partyBall2UpDown.Name = "partyBall2UpDown";
             this.partyBall2UpDown.Size = new System.Drawing.Size(49, 20);
             this.partyBall2UpDown.TabIndex = 3;
-            // 
-            // partyItem2ComboBox
-            // 
-            this.partyItem2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyItem2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyItem2ComboBox.Enabled = false;
-            this.partyItem2ComboBox.FormattingEnabled = true;
-            this.partyItem2ComboBox.Location = new System.Drawing.Point(228, 28);
-            this.partyItem2ComboBox.Name = "partyItem2ComboBox";
-            this.partyItem2ComboBox.Size = new System.Drawing.Size(103, 21);
-            this.partyItem2ComboBox.TabIndex = 2;
-            this.partyItem2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem2ComboBox_SelectedIndexChanged);
+            this.partyBall2UpDown.ValueChanged += new System.EventHandler(this.partyBall2UpDown_ValueChanged);
             // 
             // partyPokemon2PictureBox
             // 
@@ -8871,17 +8772,7 @@
             this.partyPokemon2PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.partyPokemon2PictureBox.TabIndex = 1;
             this.partyPokemon2PictureBox.TabStop = false;
-            // 
-            // partyPokemon2ComboBox
-            // 
-            this.partyPokemon2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyPokemon2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyPokemon2ComboBox.FormattingEnabled = true;
-            this.partyPokemon2ComboBox.Location = new System.Drawing.Point(58, 28);
-            this.partyPokemon2ComboBox.Name = "partyPokemon2ComboBox";
-            this.partyPokemon2ComboBox.Size = new System.Drawing.Size(126, 21);
-            this.partyPokemon2ComboBox.TabIndex = 0;
-            this.partyPokemon2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyPokemon2ComboBox_SelectedIndexChanged);
+            this.partyPokemon2PictureBox.Click += new System.EventHandler(this.partyPokemon2PictureBox_Click);
             // 
             // party1GroupBox
             // 
@@ -8906,6 +8797,7 @@
             this.party1GroupBox.TabIndex = 0;
             this.party1GroupBox.TabStop = false;
             this.party1GroupBox.Text = "Pokemon 1";
+            this.party1GroupBox.Enter += new System.EventHandler(this.party1GroupBox_Enter);
             // 
             // partyForm1ComboBox
             // 
@@ -8917,6 +8809,7 @@
             this.partyForm1ComboBox.Name = "partyForm1ComboBox";
             this.partyForm1ComboBox.Size = new System.Drawing.Size(103, 21);
             this.partyForm1ComboBox.TabIndex = 14;
+            this.partyForm1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyForm1ComboBox_SelectedIndexChanged);
             // 
             // partyAbility1ComboBox
             // 
@@ -8926,6 +8819,7 @@
             this.partyAbility1ComboBox.Name = "partyAbility1ComboBox";
             this.partyAbility1ComboBox.Size = new System.Drawing.Size(105, 21);
             this.partyAbility1ComboBox.TabIndex = 13;
+            this.partyAbility1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyAbility1ComboBox_SelectedIndexChanged);
             // 
             // partyGender1ComboBox
             // 
@@ -8935,6 +8829,7 @@
             this.partyGender1ComboBox.Name = "partyGender1ComboBox";
             this.partyGender1ComboBox.Size = new System.Drawing.Size(95, 21);
             this.partyGender1ComboBox.TabIndex = 12;
+            this.partyGender1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyGender1ComboBox_SelectedIndexChanged);
             // 
             // partyPokemonItemPictureBox1
             // 
@@ -8945,6 +8840,7 @@
             this.partyPokemonItemPictureBox1.TabIndex = 10;
             this.partyPokemonItemPictureBox1.TabStop = false;
             this.partyPokemonItemPictureBox1.Visible = false;
+            this.partyPokemonItemPictureBox1.Click += new System.EventHandler(this.partyPokemonItemPictureBox1_Click);
             // 
             // label47
             // 
@@ -8954,6 +8850,7 @@
             this.label47.Size = new System.Drawing.Size(28, 26);
             this.label47.TabIndex = 9;
             this.label47.Text = "Ball\r\nSeal";
+            this.label47.Click += new System.EventHandler(this.label47_Click);
             // 
             // label46
             // 
@@ -8963,6 +8860,7 @@
             this.label46.Size = new System.Drawing.Size(22, 13);
             this.label46.TabIndex = 8;
             this.label46.Text = "DV";
+            this.label46.Click += new System.EventHandler(this.label46_Click);
             // 
             // label45
             // 
@@ -8972,6 +8870,7 @@
             this.label45.Size = new System.Drawing.Size(22, 13);
             this.label45.TabIndex = 7;
             this.label45.Text = "Lv.";
+            this.label45.Click += new System.EventHandler(this.label45_Click);
             // 
             // poke1MovesGroupBox
             // 
@@ -8985,54 +8884,7 @@
             this.poke1MovesGroupBox.TabIndex = 6;
             this.poke1MovesGroupBox.TabStop = false;
             this.poke1MovesGroupBox.Text = "Moves";
-            // 
-            // partyMove1_1ComboBox
-            // 
-            this.partyMove1_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove1_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove1_1ComboBox.Enabled = false;
-            this.partyMove1_1ComboBox.FormattingEnabled = true;
-            this.partyMove1_1ComboBox.Location = new System.Drawing.Point(10, 21);
-            this.partyMove1_1ComboBox.Name = "partyMove1_1ComboBox";
-            this.partyMove1_1ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove1_1ComboBox.TabIndex = 3;
-            this.partyMove1_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove1_2ComboBox
-            // 
-            this.partyMove1_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove1_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove1_2ComboBox.Enabled = false;
-            this.partyMove1_2ComboBox.FormattingEnabled = true;
-            this.partyMove1_2ComboBox.Location = new System.Drawing.Point(116, 21);
-            this.partyMove1_2ComboBox.Name = "partyMove1_2ComboBox";
-            this.partyMove1_2ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove1_2ComboBox.TabIndex = 6;
-            this.partyMove1_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove1_3ComboBox
-            // 
-            this.partyMove1_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove1_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove1_3ComboBox.Enabled = false;
-            this.partyMove1_3ComboBox.FormattingEnabled = true;
-            this.partyMove1_3ComboBox.Location = new System.Drawing.Point(10, 48);
-            this.partyMove1_3ComboBox.Name = "partyMove1_3ComboBox";
-            this.partyMove1_3ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove1_3ComboBox.TabIndex = 5;
-            this.partyMove1_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
-            // 
-            // partyMove1_4ComboBox
-            // 
-            this.partyMove1_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyMove1_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyMove1_4ComboBox.Enabled = false;
-            this.partyMove1_4ComboBox.FormattingEnabled = true;
-            this.partyMove1_4ComboBox.Location = new System.Drawing.Point(116, 48);
-            this.partyMove1_4ComboBox.Name = "partyMove1_4ComboBox";
-            this.partyMove1_4ComboBox.Size = new System.Drawing.Size(100, 21);
-            this.partyMove1_4ComboBox.TabIndex = 7;
-            this.partyMove1_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            this.poke1MovesGroupBox.Enter += new System.EventHandler(this.poke1MovesGroupBox_Enter);
             // 
             // partyIV1UpDown
             // 
@@ -9045,6 +8897,7 @@
             this.partyIV1UpDown.Name = "partyIV1UpDown";
             this.partyIV1UpDown.Size = new System.Drawing.Size(49, 20);
             this.partyIV1UpDown.TabIndex = 5;
+            this.partyIV1UpDown.ValueChanged += new System.EventHandler(this.partyIV1UpDown_ValueChanged);
             // 
             // partyLevel1UpDown
             // 
@@ -9062,6 +8915,7 @@
             0,
             0,
             0});
+            this.partyLevel1UpDown.ValueChanged += new System.EventHandler(this.partyLevel1UpDown_ValueChanged);
             // 
             // partyBall1UpDown
             // 
@@ -9074,18 +8928,7 @@
             this.partyBall1UpDown.Name = "partyBall1UpDown";
             this.partyBall1UpDown.Size = new System.Drawing.Size(49, 20);
             this.partyBall1UpDown.TabIndex = 3;
-            // 
-            // partyItem1ComboBox
-            // 
-            this.partyItem1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyItem1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyItem1ComboBox.Enabled = false;
-            this.partyItem1ComboBox.FormattingEnabled = true;
-            this.partyItem1ComboBox.Location = new System.Drawing.Point(228, 28);
-            this.partyItem1ComboBox.Name = "partyItem1ComboBox";
-            this.partyItem1ComboBox.Size = new System.Drawing.Size(103, 21);
-            this.partyItem1ComboBox.TabIndex = 2;
-            this.partyItem1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem1ComboBox_SelectedIndexChanged);
+            this.partyBall1UpDown.ValueChanged += new System.EventHandler(this.partyBall1UpDown_ValueChanged);
             // 
             // partyPokemon1PictureBox
             // 
@@ -9095,17 +8938,7 @@
             this.partyPokemon1PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.partyPokemon1PictureBox.TabIndex = 1;
             this.partyPokemon1PictureBox.TabStop = false;
-            // 
-            // partyPokemon1ComboBox
-            // 
-            this.partyPokemon1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.partyPokemon1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.partyPokemon1ComboBox.FormattingEnabled = true;
-            this.partyPokemon1ComboBox.Location = new System.Drawing.Point(58, 28);
-            this.partyPokemon1ComboBox.Name = "partyPokemon1ComboBox";
-            this.partyPokemon1ComboBox.Size = new System.Drawing.Size(126, 21);
-            this.partyPokemon1ComboBox.TabIndex = 0;
-            this.partyPokemon1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyPokemon1ComboBox_SelectedIndexChanged);
+            this.partyPokemon1PictureBox.Click += new System.EventHandler(this.partyPokemon1PictureBox_Click);
             // 
             // groupBox27
             // 
@@ -9126,6 +8959,7 @@
             this.groupBox27.TabIndex = 30;
             this.groupBox27.TabStop = false;
             this.groupBox27.Text = "Trainer Class Editor";
+            this.groupBox27.Enter += new System.EventHandler(this.groupBox27_Enter);
             // 
             // eyeContactMusicAltLabel
             // 
@@ -9135,6 +8969,7 @@
             this.eyeContactMusicAltLabel.Size = new System.Drawing.Size(117, 13);
             this.eyeContactMusicAltLabel.TabIndex = 36;
             this.eyeContactMusicAltLabel.Text = "Eye Contact Music [Alt]";
+            this.eyeContactMusicAltLabel.Click += new System.EventHandler(this.eyeContactMusicAltLabel_Click);
             // 
             // encounterSSEQAltUpDown
             // 
@@ -9148,6 +8983,7 @@
             this.encounterSSEQAltUpDown.Name = "encounterSSEQAltUpDown";
             this.encounterSSEQAltUpDown.Size = new System.Drawing.Size(81, 20);
             this.encounterSSEQAltUpDown.TabIndex = 35;
+            this.encounterSSEQAltUpDown.ValueChanged += new System.EventHandler(this.encounterSSEQAltUpDown_ValueChanged);
             // 
             // eyeContactMusicLabel
             // 
@@ -9157,6 +8993,7 @@
             this.eyeContactMusicLabel.Size = new System.Drawing.Size(128, 13);
             this.eyeContactMusicLabel.TabIndex = 34;
             this.eyeContactMusicLabel.Text = "Eye Contact Music [Main]";
+            this.eyeContactMusicLabel.Click += new System.EventHandler(this.eyeContactMusicLabel_Click);
             // 
             // encounterSSEQMainUpDown
             // 
@@ -9169,6 +9006,7 @@
             this.encounterSSEQMainUpDown.Name = "encounterSSEQMainUpDown";
             this.encounterSSEQMainUpDown.Size = new System.Drawing.Size(81, 20);
             this.encounterSSEQMainUpDown.TabIndex = 33;
+            this.encounterSSEQMainUpDown.ValueChanged += new System.EventHandler(this.encounterSSEQMainUpDown_ValueChanged);
             // 
             // trainerClassFrameMaxLabel
             // 
@@ -9178,6 +9016,7 @@
             this.trainerClassFrameMaxLabel.Size = new System.Drawing.Size(18, 13);
             this.trainerClassFrameMaxLabel.TabIndex = 32;
             this.trainerClassFrameMaxLabel.Text = "/0";
+            this.trainerClassFrameMaxLabel.Click += new System.EventHandler(this.trainerClassFrameMaxLabel_Click);
             // 
             // label40
             // 
@@ -9187,6 +9026,7 @@
             this.label40.Size = new System.Drawing.Size(45, 13);
             this.label40.TabIndex = 31;
             this.label40.Text = "Preview";
+            this.label40.Click += new System.EventHandler(this.label40_Click);
             // 
             // trClassFramePreviewUpDown
             // 
@@ -9215,6 +9055,7 @@
             this.trainerClassNameTextbox.Name = "trainerClassNameTextbox";
             this.trainerClassNameTextbox.Size = new System.Drawing.Size(99, 20);
             this.trainerClassNameTextbox.TabIndex = 24;
+            this.trainerClassNameTextbox.TextChanged += new System.EventHandler(this.trainerClassNameTextbox_TextChanged);
             // 
             // label17
             // 
@@ -9224,6 +9065,7 @@
             this.label17.Size = new System.Drawing.Size(63, 13);
             this.label17.TabIndex = 23;
             this.label17.Text = "Class Name";
+            this.label17.Click += new System.EventHandler(this.label17_Click);
             // 
             // trainerClassPicBox
             // 
@@ -9234,6 +9076,7 @@
             this.trainerClassPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.trainerClassPicBox.TabIndex = 0;
             this.trainerClassPicBox.TabStop = false;
+            this.trainerClassPicBox.Click += new System.EventHandler(this.trainerClassPicBox_Click);
             // 
             // deleteTrainerButton
             // 
@@ -9248,6 +9091,7 @@
             this.deleteTrainerButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.deleteTrainerButton.UseVisualStyleBackColor = true;
             this.deleteTrainerButton.Visible = false;
+            this.deleteTrainerButton.Click += new System.EventHandler(this.deleteTrainerButton_Click);
             // 
             // groupBox25
             // 
@@ -9269,6 +9113,7 @@
             this.groupBox25.TabIndex = 29;
             this.groupBox25.TabStop = false;
             this.groupBox25.Text = "Trainer Properties [TRP]";
+            this.groupBox25.Enter += new System.EventHandler(this.groupBox25_Enter);
             // 
             // tableLayoutPanel5
             // 
@@ -9287,6 +9132,7 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(121, 62);
             this.tableLayoutPanel5.TabIndex = 48;
+            this.tableLayoutPanel5.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel5_Paint);
             // 
             // replacePropertiesButton
             // 
@@ -9335,6 +9181,7 @@
             this.TrainerAIGroupBox.TabIndex = 27;
             this.TrainerAIGroupBox.TabStop = false;
             this.TrainerAIGroupBox.Text = "AI";
+            this.TrainerAIGroupBox.Enter += new System.EventHandler(this.TrainerAIGroupBox_Enter);
             // 
             // trainerAI1CheckBox
             // 
@@ -9345,6 +9192,7 @@
             this.trainerAI1CheckBox.TabIndex = 0;
             this.trainerAI1CheckBox.Text = "Basic";
             this.trainerAI1CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI1CheckBox.CheckedChanged += new System.EventHandler(this.trainerAI1CheckBox_CheckedChanged);
             // 
             // trainerAI2CheckBox
             // 
@@ -9355,6 +9203,7 @@
             this.trainerAI2CheckBox.TabIndex = 1;
             this.trainerAI2CheckBox.Text = "Evaluate Attack";
             this.trainerAI2CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI2CheckBox.CheckedChanged += new System.EventHandler(this.trainerAI2CheckBox_CheckedChanged);
             // 
             // trainerAI3CheckBox
             // 
@@ -9365,6 +9214,7 @@
             this.trainerAI3CheckBox.TabIndex = 2;
             this.trainerAI3CheckBox.Text = "Expert";
             this.trainerAI3CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI3CheckBox.CheckedChanged += new System.EventHandler(this.trainerAI3CheckBox_CheckedChanged);
             // 
             // trainerAI4CheckBox
             // 
@@ -9375,6 +9225,7 @@
             this.trainerAI4CheckBox.TabIndex = 3;
             this.trainerAI4CheckBox.Text = "Status";
             this.trainerAI4CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI4CheckBox.CheckedChanged += new System.EventHandler(this.trainerAI4CheckBox_CheckedChanged);
             // 
             // trainerAI5CheckBox
             // 
@@ -9385,6 +9236,7 @@
             this.trainerAI5CheckBox.TabIndex = 4;
             this.trainerAI5CheckBox.Text = "Risk";
             this.trainerAI5CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI5CheckBox.CheckedChanged += new System.EventHandler(this.trainerAI5CheckBox_CheckedChanged);
             // 
             // trainerAI6CheckBox
             // 
@@ -9395,6 +9247,7 @@
             this.trainerAI6CheckBox.TabIndex = 5;
             this.trainerAI6CheckBox.Text = "Damage Priority";
             this.trainerAI6CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI6CheckBox.CheckedChanged += new System.EventHandler(this.trainerAI6CheckBox_CheckedChanged);
             // 
             // trainerAI7CheckBox
             // 
@@ -9405,6 +9258,7 @@
             this.trainerAI7CheckBox.TabIndex = 6;
             this.trainerAI7CheckBox.Text = "Baton Pass";
             this.trainerAI7CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI7CheckBox.CheckedChanged += new System.EventHandler(this.trainerAI7CheckBox_CheckedChanged);
             // 
             // trainerAI8CheckBox
             // 
@@ -9415,6 +9269,7 @@
             this.trainerAI8CheckBox.TabIndex = 7;
             this.trainerAI8CheckBox.Text = "Tag Strategy";
             this.trainerAI8CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI8CheckBox.CheckedChanged += new System.EventHandler(this.trainerAI8CheckBox_CheckedChanged);
             // 
             // trainerAI9CheckBox
             // 
@@ -9425,6 +9280,7 @@
             this.trainerAI9CheckBox.TabIndex = 8;
             this.trainerAI9CheckBox.Text = "Check HP";
             this.trainerAI9CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI9CheckBox.CheckedChanged += new System.EventHandler(this.trainerAI9CheckBox_CheckedChanged);
             // 
             // trainerAI10CheckBox
             // 
@@ -9435,6 +9291,7 @@
             this.trainerAI10CheckBox.TabIndex = 9;
             this.trainerAI10CheckBox.Text = "Weather";
             this.trainerAI10CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI10CheckBox.CheckedChanged += new System.EventHandler(this.trainerAI10CheckBox_CheckedChanged);
             // 
             // trainerAI11CheckBox
             // 
@@ -9445,6 +9302,7 @@
             this.trainerAI11CheckBox.TabIndex = 10;
             this.trainerAI11CheckBox.Text = "???";
             this.trainerAI11CheckBox.UseVisualStyleBackColor = true;
+            this.trainerAI11CheckBox.CheckedChanged += new System.EventHandler(this.trainerAI11CheckBox_CheckedChanged);
             // 
             // trainerItemsGroupBox
             // 
@@ -9458,46 +9316,7 @@
             this.trainerItemsGroupBox.TabIndex = 26;
             this.trainerItemsGroupBox.TabStop = false;
             this.trainerItemsGroupBox.Text = "Trainer Items";
-            // 
-            // trainerItem1ComboBox
-            // 
-            this.trainerItem1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.trainerItem1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.trainerItem1ComboBox.FormattingEnabled = true;
-            this.trainerItem1ComboBox.Location = new System.Drawing.Point(9, 20);
-            this.trainerItem1ComboBox.Name = "trainerItem1ComboBox";
-            this.trainerItem1ComboBox.Size = new System.Drawing.Size(171, 21);
-            this.trainerItem1ComboBox.TabIndex = 0;
-            // 
-            // trainerItem2ComboBox
-            // 
-            this.trainerItem2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.trainerItem2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.trainerItem2ComboBox.FormattingEnabled = true;
-            this.trainerItem2ComboBox.Location = new System.Drawing.Point(9, 47);
-            this.trainerItem2ComboBox.Name = "trainerItem2ComboBox";
-            this.trainerItem2ComboBox.Size = new System.Drawing.Size(171, 21);
-            this.trainerItem2ComboBox.TabIndex = 1;
-            // 
-            // trainerItem3ComboBox
-            // 
-            this.trainerItem3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.trainerItem3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.trainerItem3ComboBox.FormattingEnabled = true;
-            this.trainerItem3ComboBox.Location = new System.Drawing.Point(9, 74);
-            this.trainerItem3ComboBox.Name = "trainerItem3ComboBox";
-            this.trainerItem3ComboBox.Size = new System.Drawing.Size(171, 21);
-            this.trainerItem3ComboBox.TabIndex = 2;
-            // 
-            // trainerItem4ComboBox
-            // 
-            this.trainerItem4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.trainerItem4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.trainerItem4ComboBox.FormattingEnabled = true;
-            this.trainerItem4ComboBox.Location = new System.Drawing.Point(9, 101);
-            this.trainerItem4ComboBox.Name = "trainerItem4ComboBox";
-            this.trainerItem4ComboBox.Size = new System.Drawing.Size(171, 21);
-            this.trainerItem4ComboBox.TabIndex = 3;
+            this.trainerItemsGroupBox.Enter += new System.EventHandler(this.trainerItemsGroupBox_Enter);
             // 
             // trainerItemsCheckBox
             // 
@@ -9530,6 +9349,7 @@
             this.trainerDoubleCheckBox.TabIndex = 23;
             this.trainerDoubleCheckBox.Text = "Double Battle";
             this.trainerDoubleCheckBox.UseVisualStyleBackColor = true;
+            this.trainerDoubleCheckBox.CheckedChanged += new System.EventHandler(this.trainerDoubleCheckBox_CheckedChanged);
             // 
             // trainerNameTextBox
             // 
@@ -9537,6 +9357,7 @@
             this.trainerNameTextBox.Name = "trainerNameTextBox";
             this.trainerNameTextBox.Size = new System.Drawing.Size(148, 20);
             this.trainerNameTextBox.TabIndex = 22;
+            this.trainerNameTextBox.TextChanged += new System.EventHandler(this.trainerNameTextBox_TextChanged);
             // 
             // partyCountUpDown
             // 
@@ -9559,6 +9380,7 @@
             this.label44.Size = new System.Drawing.Size(71, 13);
             this.label44.TabIndex = 21;
             this.label44.Text = "Trainer Name";
+            this.label44.Click += new System.EventHandler(this.label44_Click);
             // 
             // label63
             // 
@@ -9568,6 +9390,7 @@
             this.label63.Size = new System.Drawing.Size(57, 13);
             this.label63.TabIndex = 34;
             this.label63.Text = "Party Slots";
+            this.label63.Click += new System.EventHandler(this.label63_Click);
             // 
             // label43
             // 
@@ -9577,6 +9400,7 @@
             this.label43.Size = new System.Drawing.Size(68, 13);
             this.label43.TabIndex = 20;
             this.label43.Text = "Trainer Class";
+            this.label43.Click += new System.EventHandler(this.label43_Click);
             // 
             // trainerClassListBox
             // 
@@ -9610,17 +9434,7 @@
             this.label42.Size = new System.Drawing.Size(59, 13);
             this.label42.TabIndex = 28;
             this.label42.Text = "Trainer File";
-            // 
-            // trainerComboBox
-            // 
-            this.trainerComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.trainerComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.trainerComboBox.FormattingEnabled = true;
-            this.trainerComboBox.Location = new System.Drawing.Point(15, 22);
-            this.trainerComboBox.Name = "trainerComboBox";
-            this.trainerComboBox.Size = new System.Drawing.Size(199, 21);
-            this.trainerComboBox.TabIndex = 27;
-            this.trainerComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerComboBox_SelectedIndexChanged);
+            this.label42.Click += new System.EventHandler(this.label42_Click);
             // 
             // trainerSaveCurrentButton
             // 
@@ -9647,6 +9461,7 @@
             this.tableEditorTabPage.TabIndex = 9;
             this.tableEditorTabPage.Text = "Table Editor";
             this.tableEditorTabPage.UseVisualStyleBackColor = true;
+            this.tableEditorTabPage.Click += new System.EventHandler(this.tableEditorTabPage_Click);
             // 
             // label73
             // 
@@ -9659,6 +9474,7 @@
             this.label73.TabIndex = 12;
             this.label73.Text = "This Editor Tab is currently under construction.";
             this.label73.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label73.Click += new System.EventHandler(this.label73_Click);
             // 
             // pbEffectsGroupBox
             // 
@@ -9671,6 +9487,7 @@
             this.pbEffectsGroupBox.TabIndex = 11;
             this.pbEffectsGroupBox.TabStop = false;
             this.pbEffectsGroupBox.Text = "Pre-Battle Effects";
+            this.pbEffectsGroupBox.Enter += new System.EventHandler(this.pbEffectsGroupBox_Enter);
             // 
             // groupBox31
             // 
@@ -9687,6 +9504,7 @@
             this.groupBox31.TabIndex = 45;
             this.groupBox31.TabStop = false;
             this.groupBox31.Text = "Maintable Effect Combos";
+            this.groupBox31.Enter += new System.EventHandler(this.groupBox31_Enter);
             // 
             // HOWpbEffectsTableButton
             // 
@@ -9709,6 +9527,7 @@
             this.pbEffectsBattleSSEQUpDown.Name = "pbEffectsBattleSSEQUpDown";
             this.pbEffectsBattleSSEQUpDown.Size = new System.Drawing.Size(54, 20);
             this.pbEffectsBattleSSEQUpDown.TabIndex = 29;
+            this.pbEffectsBattleSSEQUpDown.ValueChanged += new System.EventHandler(this.pbEffectsBattleSSEQUpDown_ValueChanged);
             // 
             // label21
             // 
@@ -9718,6 +9537,7 @@
             this.label21.Size = new System.Drawing.Size(66, 13);
             this.label21.TabIndex = 30;
             this.label21.Text = "Battle SSEQ";
+            this.label21.Click += new System.EventHandler(this.label21_Click);
             // 
             // saveEffectCombosTableBTN
             // 
@@ -9743,6 +9563,7 @@
             this.pbEffectsVSAnimationUpDown.Name = "pbEffectsVSAnimationUpDown";
             this.pbEffectsVSAnimationUpDown.Size = new System.Drawing.Size(58, 20);
             this.pbEffectsVSAnimationUpDown.TabIndex = 31;
+            this.pbEffectsVSAnimationUpDown.ValueChanged += new System.EventHandler(this.pbEffectsVSAnimationUpDown_ValueChanged);
             // 
             // pbEffectsCombosListbox
             // 
@@ -9761,6 +9582,7 @@
             this.label22.Size = new System.Drawing.Size(70, 13);
             this.label22.TabIndex = 32;
             this.label22.Text = "VS Animation";
+            this.label22.Click += new System.EventHandler(this.label22_Click);
             // 
             // pbEffectsTrainerGroupBox
             // 
@@ -9781,6 +9603,7 @@
             this.pbEffectsTrainerGroupBox.TabIndex = 34;
             this.pbEffectsTrainerGroupBox.TabStop = false;
             this.pbEffectsTrainerGroupBox.Text = "VS. Trainer";
+            this.pbEffectsTrainerGroupBox.Enter += new System.EventHandler(this.pbEffectsTrainerGroupBox_Enter);
             // 
             // label75
             // 
@@ -9790,6 +9613,7 @@
             this.label75.Size = new System.Drawing.Size(79, 13);
             this.label75.TabIndex = 46;
             this.label75.Text = "Preview frames";
+            this.label75.Click += new System.EventHandler(this.label75_Click);
             // 
             // tbEditortrainerClassFrameMaxLabel
             // 
@@ -9799,6 +9623,7 @@
             this.tbEditortrainerClassFrameMaxLabel.Size = new System.Drawing.Size(18, 13);
             this.tbEditortrainerClassFrameMaxLabel.TabIndex = 45;
             this.tbEditortrainerClassFrameMaxLabel.Text = "/0";
+            this.tbEditortrainerClassFrameMaxLabel.Click += new System.EventHandler(this.tbEditortrainerClassFrameMaxLabel_Click);
             // 
             // tbEditorTrClassFramePreviewUpDown
             // 
@@ -9816,6 +9641,7 @@
             this.tbEditorTrClassPictureBox.Size = new System.Drawing.Size(128, 96);
             this.tbEditorTrClassPictureBox.TabIndex = 43;
             this.tbEditorTrClassPictureBox.TabStop = false;
+            this.tbEditorTrClassPictureBox.Click += new System.EventHandler(this.tbEditorTrClassPictureBox_Click);
             // 
             // label68
             // 
@@ -9825,6 +9651,7 @@
             this.label68.Size = new System.Drawing.Size(120, 13);
             this.label68.TabIndex = 42;
             this.label68.Text = "Maintable Effect Combo";
+            this.label68.Click += new System.EventHandler(this.label68_Click);
             // 
             // pbEffectsTrainerChooseMainCombobox
             // 
@@ -9834,6 +9661,7 @@
             this.pbEffectsTrainerChooseMainCombobox.Name = "pbEffectsTrainerChooseMainCombobox";
             this.pbEffectsTrainerChooseMainCombobox.Size = new System.Drawing.Size(218, 21);
             this.pbEffectsTrainerChooseMainCombobox.TabIndex = 41;
+            this.pbEffectsTrainerChooseMainCombobox.SelectedIndexChanged += new System.EventHandler(this.pbEffectsTrainerChooseMainCombobox_SelectedIndexChanged);
             // 
             // HOWVsTrainerButton
             // 
@@ -9866,6 +9694,7 @@
             this.label70.Size = new System.Drawing.Size(68, 13);
             this.label70.TabIndex = 37;
             this.label70.Text = "Trainer Class";
+            this.label70.Click += new System.EventHandler(this.label70_Click);
             // 
             // pbEffectsTrainerCombobox
             // 
@@ -9902,6 +9731,7 @@
             this.pbEffectsMonGroupBox.TabIndex = 33;
             this.pbEffectsMonGroupBox.TabStop = false;
             this.pbEffectsMonGroupBox.Text = "VS. Pokémon";
+            this.pbEffectsMonGroupBox.Enter += new System.EventHandler(this.pbEffectsMonGroupBox_Enter);
             // 
             // tbEditorPokeminiPictureBox
             // 
@@ -9911,6 +9741,7 @@
             this.tbEditorPokeminiPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.tbEditorPokeminiPictureBox.TabIndex = 43;
             this.tbEditorPokeminiPictureBox.TabStop = false;
+            this.tbEditorPokeminiPictureBox.Click += new System.EventHandler(this.tbEditorPokeminiPictureBox_Click);
             // 
             // label69
             // 
@@ -9920,6 +9751,7 @@
             this.label69.Size = new System.Drawing.Size(120, 13);
             this.label69.TabIndex = 42;
             this.label69.Text = "Maintable Effect Combo";
+            this.label69.Click += new System.EventHandler(this.label69_Click);
             // 
             // pbEffectsPokemonChooseMainCombobox
             // 
@@ -9929,6 +9761,7 @@
             this.pbEffectsPokemonChooseMainCombobox.Name = "pbEffectsPokemonChooseMainCombobox";
             this.pbEffectsPokemonChooseMainCombobox.Size = new System.Drawing.Size(218, 21);
             this.pbEffectsPokemonChooseMainCombobox.TabIndex = 41;
+            this.pbEffectsPokemonChooseMainCombobox.SelectedIndexChanged += new System.EventHandler(this.pbEffectsPokemonChooseMainCombobox_SelectedIndexChanged);
             // 
             // HOWvsPokemonButton
             // 
@@ -9961,6 +9794,7 @@
             this.label71.Size = new System.Drawing.Size(52, 13);
             this.label71.TabIndex = 37;
             this.label71.Text = "Pokémon";
+            this.label71.Click += new System.EventHandler(this.label71_Click);
             // 
             // pbEffectsPokemonCombobox
             // 
@@ -10000,6 +9834,7 @@
             this.conditionalMusicGroupBox.TabIndex = 0;
             this.conditionalMusicGroupBox.TabStop = false;
             this.conditionalMusicGroupBox.Text = "Conditional Music Table";
+            this.conditionalMusicGroupBox.Enter += new System.EventHandler(this.conditionalMusicGroupBox_Enter);
             // 
             // label66
             // 
@@ -10009,6 +9844,7 @@
             this.label66.Size = new System.Drawing.Size(72, 13);
             this.label66.TabIndex = 10;
             this.label66.Text = "Locations List";
+            this.label66.Click += new System.EventHandler(this.label66_Click);
             // 
             // HOWconditionalMusicTableButton
             // 
@@ -10041,6 +9877,7 @@
             this.label65.Size = new System.Drawing.Size(49, 13);
             this.label65.TabIndex = 7;
             this.label65.Text = "Music ID";
+            this.label65.Click += new System.EventHandler(this.label65_Click);
             // 
             // musicIDconditionalMusicUpDown
             // 
@@ -10063,6 +9900,7 @@
             this.label64.Size = new System.Drawing.Size(27, 13);
             this.label64.TabIndex = 5;
             this.label64.Text = "Flag";
+            this.label64.Click += new System.EventHandler(this.label64_Click);
             // 
             // flagConditionalMusicUpDown
             // 
@@ -10085,6 +9923,7 @@
             this.label41.Size = new System.Drawing.Size(42, 13);
             this.label41.TabIndex = 3;
             this.label41.Text = "Header";
+            this.label41.Click += new System.EventHandler(this.label41_Click);
             // 
             // locationNameConditionalMusicLBL
             // 
@@ -10094,6 +9933,7 @@
             this.locationNameConditionalMusicLBL.Size = new System.Drawing.Size(79, 13);
             this.locationNameConditionalMusicLBL.TabIndex = 2;
             this.locationNameConditionalMusicLBL.Text = "Location Name";
+            this.locationNameConditionalMusicLBL.Click += new System.EventHandler(this.locationNameConditionalMusicLBL_Click);
             // 
             // headerConditionalMusicComboBox
             // 
@@ -10124,14 +9964,7 @@
             this.tabPageEncountersEditor.TabIndex = 12;
             this.tabPageEncountersEditor.Text = "Encounters";
             this.tabPageEncountersEditor.UseVisualStyleBackColor = true;
-            // 
-            // encountersEditor
-            // 
-            this.encountersEditor.Location = new System.Drawing.Point(6, 3);
-            this.encountersEditor.Margin = new System.Windows.Forms.Padding(4);
-            this.encountersEditor.Name = "encountersEditor";
-            this.encountersEditor.Size = new System.Drawing.Size(1176, 672);
-            this.encountersEditor.TabIndex = 0;
+            this.tabPageEncountersEditor.Click += new System.EventHandler(this.tabPageEncountersEditor_Click);
             // 
             // mainTabImageList
             // 
@@ -10158,6 +9991,7 @@
             this.gameIcon.Size = new System.Drawing.Size(32, 32);
             this.gameIcon.TabIndex = 8;
             this.gameIcon.TabStop = false;
+            this.gameIcon.Click += new System.EventHandler(this.gameIcon_Click);
             this.gameIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.PaintGameIcon);
             // 
             // languageLabel
@@ -10169,6 +10003,7 @@
             this.languageLabel.TabIndex = 10;
             this.languageLabel.Text = "Language:";
             this.languageLabel.Visible = false;
+            this.languageLabel.Click += new System.EventHandler(this.languageLabel_Click);
             // 
             // menuStrip1
             // 
@@ -10180,13 +10015,14 @@
             this.aboutToolStripMenuItem,
             this.menuViewToolStripMenuItem,
             this.otherEditorsToolStripMenuItem,
-            this.aboutToolStripMenuItem1});
+            this.Help});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
             this.menuStrip1.Size = new System.Drawing.Size(1214, 24);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
@@ -10197,6 +10033,7 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
             // 
             // openROMToolStripMenuItem
             // 
@@ -10239,6 +10076,7 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.aboutToolStripMenuItem.Text = "Tools";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click_1);
             // 
             // romToolboxToolStripMenuItem
             // 
@@ -10265,6 +10103,7 @@
             this.scriptCommandsDatabaseToolStripMenuItem.Name = "scriptCommandsDatabaseToolStripMenuItem";
             this.scriptCommandsDatabaseToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.scriptCommandsDatabaseToolStripMenuItem.Text = "Script Commands Database";
+            this.scriptCommandsDatabaseToolStripMenuItem.Click += new System.EventHandler(this.scriptCommandsDatabaseToolStripMenuItem_Click);
             // 
             // diamondAndPearlToolStripMenuItem
             // 
@@ -10301,6 +10140,7 @@
             this.NarcUtilityToolStripMenuItem.Name = "NarcUtilityToolStripMenuItem";
             this.NarcUtilityToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.NarcUtilityToolStripMenuItem.Text = "NARC Utility";
+            this.NarcUtilityToolStripMenuItem.Click += new System.EventHandler(this.NarcUtilityToolStripMenuItem_Click);
             // 
             // buildFomFolderToolStripMenuItem
             // 
@@ -10328,6 +10168,7 @@
             this.listBasedBatchRenameToolStripMenuItem.Name = "listBasedBatchRenameToolStripMenuItem";
             this.listBasedBatchRenameToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.listBasedBatchRenameToolStripMenuItem.Text = "Batch Rename Utility";
+            this.listBasedBatchRenameToolStripMenuItem.Click += new System.EventHandler(this.listBasedBatchRenameToolStripMenuItem_Click);
             // 
             // listBasedToolStripMenuItem
             // 
@@ -10355,6 +10196,7 @@
             this.listBuilderToolStripMenuItem.Name = "listBuilderToolStripMenuItem";
             this.listBuilderToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.listBuilderToolStripMenuItem.Text = "Folder-Based List Builder";
+            this.listBuilderToolStripMenuItem.Click += new System.EventHandler(this.listBuilderToolStripMenuItem_Click);
             // 
             // fromCEnumToolStripMenuItem
             // 
@@ -10383,6 +10225,7 @@
             this.nSBMDUtilityToolStripMenuItem.Name = "nSBMDUtilityToolStripMenuItem";
             this.nSBMDUtilityToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.nSBMDUtilityToolStripMenuItem.Text = "NSBMD Utility";
+            this.nSBMDUtilityToolStripMenuItem.Click += new System.EventHandler(this.nSBMDUtilityToolStripMenuItem_Click);
             // 
             // texturizeNSBMDToolStripMenuItem
             // 
@@ -10421,12 +10264,14 @@
             this.menuViewToolStripMenuItem.Name = "menuViewToolStripMenuItem";
             this.menuViewToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
             this.menuViewToolStripMenuItem.Text = "Menu View";
+            this.menuViewToolStripMenuItem.Click += new System.EventHandler(this.menuViewToolStripMenuItem_Click);
             // 
             // essentialToolStripMenuItem
             // 
             this.essentialToolStripMenuItem.Name = "essentialToolStripMenuItem";
             this.essentialToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.essentialToolStripMenuItem.Text = "Essential";
+            this.essentialToolStripMenuItem.Click += new System.EventHandler(this.essentialToolStripMenuItem_Click);
             this.essentialToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
             // simpleToolStripMenuItem
@@ -10434,6 +10279,7 @@
             this.simpleToolStripMenuItem.Name = "simpleToolStripMenuItem";
             this.simpleToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.simpleToolStripMenuItem.Text = "Simple";
+            this.simpleToolStripMenuItem.Click += new System.EventHandler(this.simpleToolStripMenuItem_Click);
             this.simpleToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
             // advancedStripMenuItem
@@ -10443,6 +10289,7 @@
             this.advancedStripMenuItem.Name = "advancedStripMenuItem";
             this.advancedStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.advancedStripMenuItem.Text = "Advanced";
+            this.advancedStripMenuItem.Click += new System.EventHandler(this.advancedStripMenuItem_Click);
             this.advancedStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
             // fullViewToolStripMenuItem
@@ -10450,6 +10297,7 @@
             this.fullViewToolStripMenuItem.Name = "fullViewToolStripMenuItem";
             this.fullViewToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.fullViewToolStripMenuItem.Text = "Complete";
+            this.fullViewToolStripMenuItem.Click += new System.EventHandler(this.fullViewToolStripMenuItem_Click);
             this.fullViewToolStripMenuItem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.simpleToolStripMenuItem_MouseDown);
             // 
             // otherEditorsToolStripMenuItem
@@ -10463,34 +10311,53 @@
             this.otherEditorsToolStripMenuItem.Name = "otherEditorsToolStripMenuItem";
             this.otherEditorsToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.otherEditorsToolStripMenuItem.Text = "Other Editors";
+            this.otherEditorsToolStripMenuItem.Click += new System.EventHandler(this.otherEditorsToolStripMenuItem_Click);
             // 
             // personalDataEditorToolStripMenuItem
             // 
             this.personalDataEditorToolStripMenuItem.Name = "personalDataEditorToolStripMenuItem";
-            this.personalDataEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.personalDataEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.personalDataEditorToolStripMenuItem.Text = "Pokémon Editor";
             this.personalDataEditorToolStripMenuItem.Click += new System.EventHandler(this.pokemonDataEditorToolStripMenuItem_Click);
             // 
             // overlayEditorToolStripMenuItem
             // 
             this.overlayEditorToolStripMenuItem.Name = "overlayEditorToolStripMenuItem";
-            this.overlayEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.overlayEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.overlayEditorToolStripMenuItem.Text = "Overlay Editor";
             this.overlayEditorToolStripMenuItem.Click += new System.EventHandler(this.overlayEditorToolStripMenuItem_Click);
             // 
             // spawnEditorToolStripMenuItem
             // 
             this.spawnEditorToolStripMenuItem.Name = "spawnEditorToolStripMenuItem";
-            this.spawnEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spawnEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.spawnEditorToolStripMenuItem.Text = "Spawn Point Editor";
             this.spawnEditorToolStripMenuItem.Click += new System.EventHandler(this.spawnEditorToolStripButton_Click);
+            // 
+            // moveDataEditorToolStripMenuItem
+            // 
+            this.moveDataEditorToolStripMenuItem.Name = "moveDataEditorToolStripMenuItem";
+            this.moveDataEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.moveDataEditorToolStripMenuItem.Text = "Move Data Editor";
+            this.moveDataEditorToolStripMenuItem.Click += new System.EventHandler(this.moveDataEditorToolStripMenuItem_Click);
+            // 
+            // Help
+            // 
+            this.Help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem1,
+            this.discordServerToolStripMenuItem,
+            this.dSPokémonHackingGiodeToolStripMenuItem});
+            this.Help.Name = "Help";
+            this.Help.Size = new System.Drawing.Size(44, 20);
+            this.Help.Text = "Help";
+            this.Help.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem1
             // 
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
-            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(223, 22);
             this.aboutToolStripMenuItem1.Text = "About";
-            this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
             // 
             // statusStrip1
             // 
@@ -10504,18 +10371,21 @@
             this.statusStrip1.Size = new System.Drawing.Size(1214, 22);
             this.statusStrip1.TabIndex = 13;
             this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
             // 
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(39, 17);
             this.statusLabel.Text = "Ready";
+            this.statusLabel.Click += new System.EventHandler(this.statusLabel_Click);
             // 
             // toolStripProgressBar
             // 
             this.toolStripProgressBar.Name = "toolStripProgressBar";
             this.toolStripProgressBar.Size = new System.Drawing.Size(180, 16);
             this.toolStripProgressBar.Visible = false;
+            this.toolStripProgressBar.Click += new System.EventHandler(this.toolStripProgressBar_Click);
             // 
             // mainToolStrip
             // 
@@ -10556,6 +10426,7 @@
             this.mainToolStrip.Size = new System.Drawing.Size(1214, 44);
             this.mainToolStrip.TabIndex = 16;
             this.mainToolStrip.Text = "mainToolStrip";
+            this.mainToolStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.mainToolStrip_ItemClicked);
             // 
             // loadRomButton
             // 
@@ -10599,6 +10470,7 @@
             // 
             this.separator_AfterOpenSave.Name = "separator_AfterOpenSave";
             this.separator_AfterOpenSave.Size = new System.Drawing.Size(6, 44);
+            this.separator_AfterOpenSave.Click += new System.EventHandler(this.separator_AfterOpenSave_Click);
             // 
             // unpackAllButton
             // 
@@ -10630,6 +10502,7 @@
             // 
             this.separator_afterFolderUnpackers.Name = "separator_afterFolderUnpackers";
             this.separator_afterFolderUnpackers.Size = new System.Drawing.Size(6, 44);
+            this.separator_afterFolderUnpackers.Click += new System.EventHandler(this.separator_afterFolderUnpackers_Click);
             // 
             // buildNarcFromFolderToolStripButton
             // 
@@ -10659,6 +10532,7 @@
             // 
             this.separator_afterNarcUtils.Name = "separator_afterNarcUtils";
             this.separator_afterNarcUtils.Size = new System.Drawing.Size(6, 44);
+            this.separator_afterNarcUtils.Click += new System.EventHandler(this.separator_afterNarcUtils_Click);
             // 
             // listBasedBatchRenameToolStripButton
             // 
@@ -10688,6 +10562,7 @@
             // 
             this.separator_afterRenameUtils.Name = "separator_afterRenameUtils";
             this.separator_afterRenameUtils.Size = new System.Drawing.Size(6, 44);
+            this.separator_afterRenameUtils.Click += new System.EventHandler(this.separator_afterRenameUtils_Click);
             // 
             // enumBasedListBuilderToolStripButton
             // 
@@ -10717,6 +10592,7 @@
             // 
             this.separator_afterListUtils.Name = "separator_afterListUtils";
             this.separator_afterListUtils.Size = new System.Drawing.Size(6, 44);
+            this.separator_afterListUtils.Click += new System.EventHandler(this.separator_afterListUtils_Click);
             // 
             // nsbmdAddTexButton
             // 
@@ -10761,6 +10637,7 @@
             // 
             this.separator_afterNsbmdUtils.Name = "separator_afterNsbmdUtils";
             this.separator_afterNsbmdUtils.Size = new System.Drawing.Size(6, 44);
+            this.separator_afterNsbmdUtils.Click += new System.EventHandler(this.separator_afterNsbmdUtils_Click);
             // 
             // buildingEditorButton
             // 
@@ -10848,6 +10725,7 @@
             // 
             this.separator_afterMiscButtons.Name = "separator_afterMiscButtons";
             this.separator_afterMiscButtons.Size = new System.Drawing.Size(6, 44);
+            this.separator_afterMiscButtons.Click += new System.EventHandler(this.separator_afterMiscButtons_Click);
             // 
             // versionLabel
             // 
@@ -10858,13 +10736,551 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             this.versionLabel.Visible = false;
+            this.versionLabel.Click += new System.EventHandler(this.versionLabel_Click);
             // 
-            // moveDataEditorToolStripMenuItem
+            // toolTip1
             // 
-            this.moveDataEditorToolStripMenuItem.Name = "moveDataEditorToolStripMenuItem";
-            this.moveDataEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.moveDataEditorToolStripMenuItem.Text = "Move Data Editor";
-            this.moveDataEditorToolStripMenuItem.Click += new System.EventHandler(this.moveDataEditorToolStripMenuItem_Click);
+            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
+            // 
+            // discordServerToolStripMenuItem
+            // 
+            this.discordServerToolStripMenuItem.Name = "discordServerToolStripMenuItem";
+            this.discordServerToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.discordServerToolStripMenuItem.Text = "Discord Server";
+            this.discordServerToolStripMenuItem.Click += new System.EventHandler(this.discordServerToolStripMenuItem_Click);
+            // 
+            // texturePictureBox
+            // 
+            this.texturePictureBox.BackColor = System.Drawing.Color.White;
+            this.texturePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.texturePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.texturePictureBox.Image = global::DSPRE.Properties.Resources.alphabgCheckerboard;
+            this.texturePictureBox.invertDrag = true;
+            this.texturePictureBox.Location = new System.Drawing.Point(732, 52);
+            this.texturePictureBox.Name = "texturePictureBox";
+            this.texturePictureBox.Size = new System.Drawing.Size(256, 256);
+            this.texturePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.texturePictureBox.TabIndex = 7;
+            this.texturePictureBox.TabStop = false;
+            this.texturePictureBox.Click += new System.EventHandler(this.texturePictureBox_Click);
+            // 
+            // scriptEditor
+            // 
+            this.scriptEditor.Location = new System.Drawing.Point(2, 3);
+            this.scriptEditor.Margin = new System.Windows.Forms.Padding(4);
+            this.scriptEditor.Name = "scriptEditor";
+            this.scriptEditor.scriptEditorIsReady = false;
+            this.scriptEditor.Size = new System.Drawing.Size(1177, 735);
+            this.scriptEditor.TabIndex = 0;
+            this.scriptEditor.Load += new System.EventHandler(this.scriptEditor_Load);
+            // 
+            // levelScriptEditor
+            // 
+            this.levelScriptEditor.BackColor = System.Drawing.SystemColors.Control;
+            this.levelScriptEditor.levelScriptEditorIsReady = false;
+            this.levelScriptEditor.Location = new System.Drawing.Point(6, 8);
+            this.levelScriptEditor.Margin = new System.Windows.Forms.Padding(4);
+            this.levelScriptEditor.Name = "levelScriptEditor";
+            this.levelScriptEditor.Size = new System.Drawing.Size(408, 622);
+            this.levelScriptEditor.TabIndex = 0;
+            this.levelScriptEditor.Load += new System.EventHandler(this.levelScriptEditor_Load);
+            // 
+            // partyMove6_1ComboBox
+            // 
+            this.partyMove6_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove6_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove6_1ComboBox.Enabled = false;
+            this.partyMove6_1ComboBox.FormattingEnabled = true;
+            this.partyMove6_1ComboBox.Location = new System.Drawing.Point(10, 21);
+            this.partyMove6_1ComboBox.Name = "partyMove6_1ComboBox";
+            this.partyMove6_1ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove6_1ComboBox.TabIndex = 3;
+            this.partyMove6_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove6_2ComboBox
+            // 
+            this.partyMove6_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove6_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove6_2ComboBox.Enabled = false;
+            this.partyMove6_2ComboBox.FormattingEnabled = true;
+            this.partyMove6_2ComboBox.Location = new System.Drawing.Point(116, 21);
+            this.partyMove6_2ComboBox.Name = "partyMove6_2ComboBox";
+            this.partyMove6_2ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove6_2ComboBox.TabIndex = 6;
+            this.partyMove6_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove6_3ComboBox
+            // 
+            this.partyMove6_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove6_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove6_3ComboBox.Enabled = false;
+            this.partyMove6_3ComboBox.FormattingEnabled = true;
+            this.partyMove6_3ComboBox.Location = new System.Drawing.Point(10, 48);
+            this.partyMove6_3ComboBox.Name = "partyMove6_3ComboBox";
+            this.partyMove6_3ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove6_3ComboBox.TabIndex = 5;
+            this.partyMove6_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove6_4ComboBox
+            // 
+            this.partyMove6_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove6_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove6_4ComboBox.Enabled = false;
+            this.partyMove6_4ComboBox.FormattingEnabled = true;
+            this.partyMove6_4ComboBox.Location = new System.Drawing.Point(116, 48);
+            this.partyMove6_4ComboBox.Name = "partyMove6_4ComboBox";
+            this.partyMove6_4ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove6_4ComboBox.TabIndex = 7;
+            this.partyMove6_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyItem6ComboBox
+            // 
+            this.partyItem6ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem6ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyItem6ComboBox.Enabled = false;
+            this.partyItem6ComboBox.FormattingEnabled = true;
+            this.partyItem6ComboBox.Location = new System.Drawing.Point(228, 28);
+            this.partyItem6ComboBox.Name = "partyItem6ComboBox";
+            this.partyItem6ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyItem6ComboBox.TabIndex = 2;
+            this.partyItem6ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem6ComboBox_SelectedIndexChanged);
+            // 
+            // partyPokemon6ComboBox
+            // 
+            this.partyPokemon6ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon6ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyPokemon6ComboBox.FormattingEnabled = true;
+            this.partyPokemon6ComboBox.Location = new System.Drawing.Point(58, 28);
+            this.partyPokemon6ComboBox.Name = "partyPokemon6ComboBox";
+            this.partyPokemon6ComboBox.Size = new System.Drawing.Size(126, 21);
+            this.partyPokemon6ComboBox.TabIndex = 0;
+            this.partyPokemon6ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyPokemon6ComboBox_SelectedIndexChanged);
+            // 
+            // partyMove5_1ComboBox
+            // 
+            this.partyMove5_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove5_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove5_1ComboBox.Enabled = false;
+            this.partyMove5_1ComboBox.FormattingEnabled = true;
+            this.partyMove5_1ComboBox.Location = new System.Drawing.Point(10, 21);
+            this.partyMove5_1ComboBox.Name = "partyMove5_1ComboBox";
+            this.partyMove5_1ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove5_1ComboBox.TabIndex = 3;
+            this.partyMove5_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove5_2ComboBox
+            // 
+            this.partyMove5_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove5_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove5_2ComboBox.Enabled = false;
+            this.partyMove5_2ComboBox.FormattingEnabled = true;
+            this.partyMove5_2ComboBox.Location = new System.Drawing.Point(116, 21);
+            this.partyMove5_2ComboBox.Name = "partyMove5_2ComboBox";
+            this.partyMove5_2ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove5_2ComboBox.TabIndex = 6;
+            this.partyMove5_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove5_3ComboBox
+            // 
+            this.partyMove5_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove5_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove5_3ComboBox.Enabled = false;
+            this.partyMove5_3ComboBox.FormattingEnabled = true;
+            this.partyMove5_3ComboBox.Location = new System.Drawing.Point(10, 48);
+            this.partyMove5_3ComboBox.Name = "partyMove5_3ComboBox";
+            this.partyMove5_3ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove5_3ComboBox.TabIndex = 5;
+            this.partyMove5_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove5_4ComboBox
+            // 
+            this.partyMove5_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove5_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove5_4ComboBox.Enabled = false;
+            this.partyMove5_4ComboBox.FormattingEnabled = true;
+            this.partyMove5_4ComboBox.Location = new System.Drawing.Point(116, 48);
+            this.partyMove5_4ComboBox.Name = "partyMove5_4ComboBox";
+            this.partyMove5_4ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove5_4ComboBox.TabIndex = 7;
+            this.partyMove5_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyItem5ComboBox
+            // 
+            this.partyItem5ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem5ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyItem5ComboBox.Enabled = false;
+            this.partyItem5ComboBox.FormattingEnabled = true;
+            this.partyItem5ComboBox.Location = new System.Drawing.Point(228, 28);
+            this.partyItem5ComboBox.Name = "partyItem5ComboBox";
+            this.partyItem5ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyItem5ComboBox.TabIndex = 2;
+            this.partyItem5ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem5ComboBox_SelectedIndexChanged);
+            // 
+            // partyPokemon5ComboBox
+            // 
+            this.partyPokemon5ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon5ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyPokemon5ComboBox.FormattingEnabled = true;
+            this.partyPokemon5ComboBox.Location = new System.Drawing.Point(58, 28);
+            this.partyPokemon5ComboBox.Name = "partyPokemon5ComboBox";
+            this.partyPokemon5ComboBox.Size = new System.Drawing.Size(126, 21);
+            this.partyPokemon5ComboBox.TabIndex = 0;
+            this.partyPokemon5ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyPokemon5ComboBox_SelectedIndexChanged);
+            // 
+            // partyMove4_1ComboBox
+            // 
+            this.partyMove4_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove4_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove4_1ComboBox.Enabled = false;
+            this.partyMove4_1ComboBox.FormattingEnabled = true;
+            this.partyMove4_1ComboBox.Location = new System.Drawing.Point(10, 21);
+            this.partyMove4_1ComboBox.Name = "partyMove4_1ComboBox";
+            this.partyMove4_1ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove4_1ComboBox.TabIndex = 3;
+            this.partyMove4_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove4_2ComboBox
+            // 
+            this.partyMove4_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove4_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove4_2ComboBox.Enabled = false;
+            this.partyMove4_2ComboBox.FormattingEnabled = true;
+            this.partyMove4_2ComboBox.Location = new System.Drawing.Point(116, 21);
+            this.partyMove4_2ComboBox.Name = "partyMove4_2ComboBox";
+            this.partyMove4_2ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove4_2ComboBox.TabIndex = 6;
+            this.partyMove4_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove4_3ComboBox
+            // 
+            this.partyMove4_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove4_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove4_3ComboBox.Enabled = false;
+            this.partyMove4_3ComboBox.FormattingEnabled = true;
+            this.partyMove4_3ComboBox.Location = new System.Drawing.Point(10, 48);
+            this.partyMove4_3ComboBox.Name = "partyMove4_3ComboBox";
+            this.partyMove4_3ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove4_3ComboBox.TabIndex = 5;
+            this.partyMove4_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove4_4ComboBox
+            // 
+            this.partyMove4_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove4_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove4_4ComboBox.Enabled = false;
+            this.partyMove4_4ComboBox.FormattingEnabled = true;
+            this.partyMove4_4ComboBox.Location = new System.Drawing.Point(116, 48);
+            this.partyMove4_4ComboBox.Name = "partyMove4_4ComboBox";
+            this.partyMove4_4ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove4_4ComboBox.TabIndex = 7;
+            this.partyMove4_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyItem4ComboBox
+            // 
+            this.partyItem4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyItem4ComboBox.Enabled = false;
+            this.partyItem4ComboBox.FormattingEnabled = true;
+            this.partyItem4ComboBox.Location = new System.Drawing.Point(228, 28);
+            this.partyItem4ComboBox.Name = "partyItem4ComboBox";
+            this.partyItem4ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyItem4ComboBox.TabIndex = 2;
+            this.partyItem4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem4ComboBox_SelectedIndexChanged);
+            // 
+            // partyPokemon4ComboBox
+            // 
+            this.partyPokemon4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyPokemon4ComboBox.FormattingEnabled = true;
+            this.partyPokemon4ComboBox.Location = new System.Drawing.Point(58, 28);
+            this.partyPokemon4ComboBox.Name = "partyPokemon4ComboBox";
+            this.partyPokemon4ComboBox.Size = new System.Drawing.Size(126, 21);
+            this.partyPokemon4ComboBox.TabIndex = 0;
+            this.partyPokemon4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyPokemon4ComboBox_SelectedIndexChanged);
+            // 
+            // partyMove3_1ComboBox
+            // 
+            this.partyMove3_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove3_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove3_1ComboBox.Enabled = false;
+            this.partyMove3_1ComboBox.FormattingEnabled = true;
+            this.partyMove3_1ComboBox.Location = new System.Drawing.Point(10, 21);
+            this.partyMove3_1ComboBox.Name = "partyMove3_1ComboBox";
+            this.partyMove3_1ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove3_1ComboBox.TabIndex = 3;
+            this.partyMove3_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove3_2ComboBox
+            // 
+            this.partyMove3_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove3_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove3_2ComboBox.Enabled = false;
+            this.partyMove3_2ComboBox.FormattingEnabled = true;
+            this.partyMove3_2ComboBox.Location = new System.Drawing.Point(116, 21);
+            this.partyMove3_2ComboBox.Name = "partyMove3_2ComboBox";
+            this.partyMove3_2ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove3_2ComboBox.TabIndex = 6;
+            this.partyMove3_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove3_3ComboBox
+            // 
+            this.partyMove3_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove3_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove3_3ComboBox.Enabled = false;
+            this.partyMove3_3ComboBox.FormattingEnabled = true;
+            this.partyMove3_3ComboBox.Location = new System.Drawing.Point(10, 48);
+            this.partyMove3_3ComboBox.Name = "partyMove3_3ComboBox";
+            this.partyMove3_3ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove3_3ComboBox.TabIndex = 5;
+            this.partyMove3_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove3_4ComboBox
+            // 
+            this.partyMove3_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove3_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove3_4ComboBox.Enabled = false;
+            this.partyMove3_4ComboBox.FormattingEnabled = true;
+            this.partyMove3_4ComboBox.Location = new System.Drawing.Point(116, 48);
+            this.partyMove3_4ComboBox.Name = "partyMove3_4ComboBox";
+            this.partyMove3_4ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove3_4ComboBox.TabIndex = 7;
+            this.partyMove3_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyItem3ComboBox
+            // 
+            this.partyItem3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyItem3ComboBox.Enabled = false;
+            this.partyItem3ComboBox.FormattingEnabled = true;
+            this.partyItem3ComboBox.Location = new System.Drawing.Point(228, 28);
+            this.partyItem3ComboBox.Name = "partyItem3ComboBox";
+            this.partyItem3ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyItem3ComboBox.TabIndex = 2;
+            this.partyItem3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem3ComboBox_SelectedIndexChanged);
+            // 
+            // partyPokemon3ComboBox
+            // 
+            this.partyPokemon3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyPokemon3ComboBox.FormattingEnabled = true;
+            this.partyPokemon3ComboBox.Location = new System.Drawing.Point(58, 28);
+            this.partyPokemon3ComboBox.Name = "partyPokemon3ComboBox";
+            this.partyPokemon3ComboBox.Size = new System.Drawing.Size(126, 21);
+            this.partyPokemon3ComboBox.TabIndex = 0;
+            this.partyPokemon3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyPokemon3ComboBox_SelectedIndexChanged);
+            // 
+            // partyMove2_1ComboBox
+            // 
+            this.partyMove2_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove2_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove2_1ComboBox.Enabled = false;
+            this.partyMove2_1ComboBox.FormattingEnabled = true;
+            this.partyMove2_1ComboBox.Location = new System.Drawing.Point(10, 21);
+            this.partyMove2_1ComboBox.Name = "partyMove2_1ComboBox";
+            this.partyMove2_1ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove2_1ComboBox.TabIndex = 3;
+            this.partyMove2_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove2_2ComboBox
+            // 
+            this.partyMove2_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove2_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove2_2ComboBox.Enabled = false;
+            this.partyMove2_2ComboBox.FormattingEnabled = true;
+            this.partyMove2_2ComboBox.Location = new System.Drawing.Point(116, 21);
+            this.partyMove2_2ComboBox.Name = "partyMove2_2ComboBox";
+            this.partyMove2_2ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove2_2ComboBox.TabIndex = 6;
+            this.partyMove2_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove2_3ComboBox
+            // 
+            this.partyMove2_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove2_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove2_3ComboBox.Enabled = false;
+            this.partyMove2_3ComboBox.FormattingEnabled = true;
+            this.partyMove2_3ComboBox.Location = new System.Drawing.Point(10, 48);
+            this.partyMove2_3ComboBox.Name = "partyMove2_3ComboBox";
+            this.partyMove2_3ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove2_3ComboBox.TabIndex = 5;
+            this.partyMove2_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove2_4ComboBox
+            // 
+            this.partyMove2_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove2_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove2_4ComboBox.Enabled = false;
+            this.partyMove2_4ComboBox.FormattingEnabled = true;
+            this.partyMove2_4ComboBox.Location = new System.Drawing.Point(116, 48);
+            this.partyMove2_4ComboBox.Name = "partyMove2_4ComboBox";
+            this.partyMove2_4ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove2_4ComboBox.TabIndex = 7;
+            this.partyMove2_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyItem2ComboBox
+            // 
+            this.partyItem2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyItem2ComboBox.Enabled = false;
+            this.partyItem2ComboBox.FormattingEnabled = true;
+            this.partyItem2ComboBox.Location = new System.Drawing.Point(228, 28);
+            this.partyItem2ComboBox.Name = "partyItem2ComboBox";
+            this.partyItem2ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyItem2ComboBox.TabIndex = 2;
+            this.partyItem2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem2ComboBox_SelectedIndexChanged);
+            // 
+            // partyPokemon2ComboBox
+            // 
+            this.partyPokemon2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyPokemon2ComboBox.FormattingEnabled = true;
+            this.partyPokemon2ComboBox.Location = new System.Drawing.Point(58, 28);
+            this.partyPokemon2ComboBox.Name = "partyPokemon2ComboBox";
+            this.partyPokemon2ComboBox.Size = new System.Drawing.Size(126, 21);
+            this.partyPokemon2ComboBox.TabIndex = 0;
+            this.partyPokemon2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyPokemon2ComboBox_SelectedIndexChanged);
+            // 
+            // partyMove1_1ComboBox
+            // 
+            this.partyMove1_1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove1_1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove1_1ComboBox.Enabled = false;
+            this.partyMove1_1ComboBox.FormattingEnabled = true;
+            this.partyMove1_1ComboBox.Location = new System.Drawing.Point(10, 21);
+            this.partyMove1_1ComboBox.Name = "partyMove1_1ComboBox";
+            this.partyMove1_1ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove1_1ComboBox.TabIndex = 3;
+            this.partyMove1_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove1_2ComboBox
+            // 
+            this.partyMove1_2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove1_2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove1_2ComboBox.Enabled = false;
+            this.partyMove1_2ComboBox.FormattingEnabled = true;
+            this.partyMove1_2ComboBox.Location = new System.Drawing.Point(116, 21);
+            this.partyMove1_2ComboBox.Name = "partyMove1_2ComboBox";
+            this.partyMove1_2ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove1_2ComboBox.TabIndex = 6;
+            this.partyMove1_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove1_3ComboBox
+            // 
+            this.partyMove1_3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove1_3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove1_3ComboBox.Enabled = false;
+            this.partyMove1_3ComboBox.FormattingEnabled = true;
+            this.partyMove1_3ComboBox.Location = new System.Drawing.Point(10, 48);
+            this.partyMove1_3ComboBox.Name = "partyMove1_3ComboBox";
+            this.partyMove1_3ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove1_3ComboBox.TabIndex = 5;
+            this.partyMove1_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyMove1_4ComboBox
+            // 
+            this.partyMove1_4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyMove1_4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyMove1_4ComboBox.Enabled = false;
+            this.partyMove1_4ComboBox.FormattingEnabled = true;
+            this.partyMove1_4ComboBox.Location = new System.Drawing.Point(116, 48);
+            this.partyMove1_4ComboBox.Name = "partyMove1_4ComboBox";
+            this.partyMove1_4ComboBox.Size = new System.Drawing.Size(100, 21);
+            this.partyMove1_4ComboBox.TabIndex = 7;
+            this.partyMove1_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
+            // 
+            // partyItem1ComboBox
+            // 
+            this.partyItem1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyItem1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyItem1ComboBox.Enabled = false;
+            this.partyItem1ComboBox.FormattingEnabled = true;
+            this.partyItem1ComboBox.Location = new System.Drawing.Point(228, 28);
+            this.partyItem1ComboBox.Name = "partyItem1ComboBox";
+            this.partyItem1ComboBox.Size = new System.Drawing.Size(103, 21);
+            this.partyItem1ComboBox.TabIndex = 2;
+            this.partyItem1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyItem1ComboBox_SelectedIndexChanged);
+            // 
+            // partyPokemon1ComboBox
+            // 
+            this.partyPokemon1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.partyPokemon1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.partyPokemon1ComboBox.FormattingEnabled = true;
+            this.partyPokemon1ComboBox.Location = new System.Drawing.Point(58, 28);
+            this.partyPokemon1ComboBox.Name = "partyPokemon1ComboBox";
+            this.partyPokemon1ComboBox.Size = new System.Drawing.Size(126, 21);
+            this.partyPokemon1ComboBox.TabIndex = 0;
+            this.partyPokemon1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyPokemon1ComboBox_SelectedIndexChanged);
+            // 
+            // trainerItem1ComboBox
+            // 
+            this.trainerItem1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.trainerItem1ComboBox.FormattingEnabled = true;
+            this.trainerItem1ComboBox.Location = new System.Drawing.Point(9, 20);
+            this.trainerItem1ComboBox.Name = "trainerItem1ComboBox";
+            this.trainerItem1ComboBox.Size = new System.Drawing.Size(171, 21);
+            this.trainerItem1ComboBox.TabIndex = 0;
+            this.trainerItem1ComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerItem1ComboBox_SelectedIndexChanged);
+            // 
+            // trainerItem2ComboBox
+            // 
+            this.trainerItem2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.trainerItem2ComboBox.FormattingEnabled = true;
+            this.trainerItem2ComboBox.Location = new System.Drawing.Point(9, 47);
+            this.trainerItem2ComboBox.Name = "trainerItem2ComboBox";
+            this.trainerItem2ComboBox.Size = new System.Drawing.Size(171, 21);
+            this.trainerItem2ComboBox.TabIndex = 1;
+            this.trainerItem2ComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerItem2ComboBox_SelectedIndexChanged);
+            // 
+            // trainerItem3ComboBox
+            // 
+            this.trainerItem3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.trainerItem3ComboBox.FormattingEnabled = true;
+            this.trainerItem3ComboBox.Location = new System.Drawing.Point(9, 74);
+            this.trainerItem3ComboBox.Name = "trainerItem3ComboBox";
+            this.trainerItem3ComboBox.Size = new System.Drawing.Size(171, 21);
+            this.trainerItem3ComboBox.TabIndex = 2;
+            this.trainerItem3ComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerItem3ComboBox_SelectedIndexChanged);
+            // 
+            // trainerItem4ComboBox
+            // 
+            this.trainerItem4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.trainerItem4ComboBox.FormattingEnabled = true;
+            this.trainerItem4ComboBox.Location = new System.Drawing.Point(9, 101);
+            this.trainerItem4ComboBox.Name = "trainerItem4ComboBox";
+            this.trainerItem4ComboBox.Size = new System.Drawing.Size(171, 21);
+            this.trainerItem4ComboBox.TabIndex = 3;
+            this.trainerItem4ComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerItem4ComboBox_SelectedIndexChanged);
+            // 
+            // trainerComboBox
+            // 
+            this.trainerComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.trainerComboBox.FormattingEnabled = true;
+            this.trainerComboBox.Location = new System.Drawing.Point(15, 22);
+            this.trainerComboBox.Name = "trainerComboBox";
+            this.trainerComboBox.Size = new System.Drawing.Size(199, 21);
+            this.trainerComboBox.TabIndex = 27;
+            this.trainerComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerComboBox_SelectedIndexChanged);
+            // 
+            // encountersEditor
+            // 
+            this.encountersEditor.Location = new System.Drawing.Point(6, 3);
+            this.encountersEditor.Margin = new System.Windows.Forms.Padding(4);
+            this.encountersEditor.Name = "encountersEditor";
+            this.encountersEditor.Size = new System.Drawing.Size(1176, 672);
+            this.encountersEditor.TabIndex = 0;
+            this.encountersEditor.Load += new System.EventHandler(this.encountersEditor_Load);
+            // 
+            // dSPokémonHackingGiodeToolStripMenuItem
+            // 
+            this.dSPokémonHackingGiodeToolStripMenuItem.Name = "dSPokémonHackingGiodeToolStripMenuItem";
+            this.dSPokémonHackingGiodeToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.dSPokémonHackingGiodeToolStripMenuItem.Text = "DS Pokémon Hacking Guide";
+            this.dSPokémonHackingGiodeToolStripMenuItem.Click += new System.EventHandler(this.dSPokémonHackingGiodeToolStripMenuItem_Click);
             // 
             // MainProgram
             // 
@@ -10885,8 +11301,10 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainProgram";
-            this.Text = "DS Pokémon Rom Editor Reloaded 1.11.1 (Nømura, AdAstra/LD3005, Mixone)";
+            this.Text = "DS Pokémon Rom Editor Reloaded 1.11.1 (Nømura, AdAstra/LD3005, Luna/GXTHMXM, Mixo" +
+    "ne)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainProgram_FormClosing);
+            this.Load += new System.EventHandler(this.MainProgram_Load);
             this.mainTabControl.ResumeLayout(false);
             this.headerEditorTabPage.ResumeLayout(false);
             this.headerEditorTabPage.PerformLayout();
@@ -10998,7 +11416,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.areaDataDynamicTexturesNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.areaDataMapTilesetUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.areaDataBuildingTilesetUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).EndInit();
             this.eventEditorTabPage.ResumeLayout(false);
             this.eventEditorTabPage.PerformLayout();
             this.groupBox21.ResumeLayout(false);
@@ -11190,6 +11607,7 @@
             this.statusStrip1.PerformLayout();
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.texturePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -11285,7 +11703,7 @@
         private System.Windows.Forms.RadioButton knownTypesRadioButton;
         private System.Windows.Forms.RadioButton valueTypeRadioButton;
         private System.Windows.Forms.TabPage eventEditorTabPage;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem Help;
         private System.Windows.Forms.ToolStripMenuItem romToolboxToolStripMenuItem;
         private System.Windows.Forms.Panel mapRenderPanel;
         private Tao.Platform.Windows.SimpleOpenGlControl mapOpenGlControl;
@@ -12002,6 +12420,9 @@
         private System.Windows.Forms.ToolStripMenuItem overlayEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem spawnEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveDataEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem discordServerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dSPokémonHackingGiodeToolStripMenuItem;
     }
 }
 
