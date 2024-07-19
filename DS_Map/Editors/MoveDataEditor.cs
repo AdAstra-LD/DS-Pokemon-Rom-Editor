@@ -39,7 +39,7 @@ namespace DSPRE {
                 if (i >= db.Length || db[i] is null) {
                     battleSeqComboBox.Items.Add($"{i:D3} - Undocumented");
                 } else {
-                    battleSeqComboBox.Items.Add(db[i]);
+                    battleSeqComboBox.Items.Add($"{i:D3} - {db[i]}");
                 }
             }
 
