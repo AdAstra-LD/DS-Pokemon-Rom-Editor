@@ -5,8 +5,12 @@ using System.Windows.Forms;
 using static DSPRE.RomInfo;
 using System;
 using System.Drawing;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.Text;
 
-namespace DSPRE.ROMFiles {
+namespace DSPRE.ROMFiles
+{
     /* ----------------------- MAP FILE DATA STRUCTURE (DPPtHGSS):--------------------------
 
     0x0  //  uint:       Length of permissions section (always 2048)
@@ -45,20 +49,21 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Class to store map data in Pokémon NDS games
     /// </summary>
-    public class MapFile : RomFile {
+    public class MapFile : RomFile
+    {
         #region Fields
 
         public static readonly string NSBMDFilter = "NSBMD File (*.nsbmd)|*.nsbmd";
         public static readonly string TexturedNSBMDFilter = "Textured" + NSBMDFilter;
         public static readonly string UntexturedNSBMDFilter = "Untextured" + NSBMDFilter;
 
-        public static readonly string MovepermsFilter = "Permissions File (*.per)|*.per";
+        public static readonly string MovepermsFilter = "Permissions File (*.per)|*.per|JSON File (*.json)|*.json";
 
         public static readonly string BuildingsFilter = "Buildings File (*.bld)|*.bld";
 
         public static readonly string BDHCFilter = "Terrain File (*.bdhc)|*.bdhc";
         public static readonly string BDHCamFilter = "Terrain File (*.bdhc, *.bdhcam)|*.bdhc;*.bdhcam";
-        
+
         public static readonly string BGSFilter = "BackGround Sound File (*.bgs)|*.bgs";
 
         public bool correctnessFlag = true;
@@ -76,10 +81,12 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (1)
-        public MapFile(string path, GameFamilies gFamily, bool discardMoveperms = false, bool showMessages = true) : this (new FileStream(path, FileMode.Open), gFamily, discardMoveperms, showMessages) {}
+        public MapFile(string path, GameFamilies gFamily, bool discardMoveperms = false, bool showMessages = true) : this(new FileStream(path, FileMode.Open), gFamily, discardMoveperms, showMessages) { }
         public MapFile(int mapNumber, GameFamilies gFamily, bool discardMoveperms = false, bool showMessages = true) : this(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + mapNumber.ToString("D4"), gFamily, discardMoveperms, showMessages) { }
-        public MapFile(Stream data, GameFamilies gFamily, bool discardMoveperms = false, bool showMessages = true) {
-            using (BinaryReader reader = new BinaryReader(data)) {
+        public MapFile(Stream data, GameFamilies gFamily, bool discardMoveperms = false, bool showMessages = true)
+        {
+            using (BinaryReader reader = new BinaryReader(data))
+            {
                 /* Read sections lengths */
                 int permissionsSectionLength = reader.ReadInt32();
                 int buildingsSectionLength = reader.ReadInt32();
@@ -87,16 +94,21 @@ namespace DSPRE.ROMFiles {
                 int bdhcSectionLength = reader.ReadInt32();
 
                 /* Read background sounds section */
-                if (gFamily == GameFamilies.HGSS) { //Map must be loaded as HGSS
+                if (gFamily == GameFamilies.HGSS)
+                { //Map must be loaded as HGSS
                     ushort bgsSignature = reader.ReadUInt16();
-                    if (bgsSignature == 0x1234) {
+                    if (bgsSignature == 0x1234)
+                    {
                         ushort bgsDataLength = reader.ReadUInt16();
 
                         reader.BaseStream.Position -= 4; //go back so that the signature "0x1234" + size can be read and stored
                         ImportSoundPlates(reader.ReadBytes(bgsDataLength + 4));
-                    } else {
+                    }
+                    else
+                    {
                         correctnessFlag = false;
-                        if (showMessages) {
+                        if (showMessages)
+                        {
                             MessageBox.Show("The header section of this map's BackGround Sound data is corrupted.",
                             "BGS Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
@@ -104,9 +116,12 @@ namespace DSPRE.ROMFiles {
                 }
 
                 /* Read permission data */
-                if (discardMoveperms) {
+                if (discardMoveperms)
+                {
                     reader.BaseStream.Position += permissionsSectionLength;
-                } else {
+                }
+                else
+                {
                     ImportPermissions(reader.ReadBytes(permissionsSectionLength));
                 }
 
@@ -114,7 +129,8 @@ namespace DSPRE.ROMFiles {
                 ImportBuildings(reader.ReadBytes(buildingsSectionLength));
 
                 /* Read nsbmd model */
-                if ( !LoadMapModel(reader.ReadBytes(nsbmdSectionLength), showMessages) ) { //Assign result to flag
+                if (!LoadMapModel(reader.ReadBytes(nsbmdSectionLength), showMessages))
+                { //Assign result to flag
                     correctnessFlag = false;
                     mapModel = null;
                 };
@@ -126,10 +142,13 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Methods
-        public byte[] BuildingsToByteArray() {
+        public byte[] BuildingsToByteArray()
+        {
             MemoryStream newData = new MemoryStream(buildingHeaderSize * buildings.Count);
-            using (BinaryWriter writer = new BinaryWriter(newData)) {
-                for (int i = 0; i < buildings.Count; i++) {
+            using (BinaryWriter writer = new BinaryWriter(newData))
+            {
+                for (int i = 0; i < buildings.Count; i++)
+                {
                     writer.Write(buildings[i].modelID);
                     writer.Write(buildings[i].xFraction);
                     writer.Write(buildings[i].xPosition);
@@ -153,11 +172,15 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
-        public byte[] CollisionsToByteArray() {
+        public byte[] CollisionsToByteArray()
+        {
             MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData)) {
-                for (int i = 0; i < mapSize; i++) {
-                    for (int j = 0; j < mapSize; j++) {
+            using (BinaryWriter writer = new BinaryWriter(newData))
+            {
+                for (int i = 0; i < mapSize; i++)
+                {
+                    for (int j = 0; j < mapSize; j++)
+                    {
                         writer.Write(types[i, j]);
                         writer.Write(collisions[i, j]);
                     }
@@ -165,28 +188,73 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
-        public void ImportBuildings(byte[] newData) {
+        public string CollisionsToJson()
+        {
+            var collisionsList = new List<string>();
+            var typesList = new List<string>();
+
+            for (int i = 0; i < mapSize; i++)
+            {
+                var collisionRow = new JArray();
+                var typeRow = new JArray();
+
+                for (int j = 0; j < mapSize; j++)
+                {
+                    collisionRow.Add(collisions[i, j].ToString("X2"));
+                    typeRow.Add(types[i, j].ToString("X2"));
+                }
+
+                collisionsList.Add(collisionRow.ToString(Formatting.None));
+                typesList.Add(typeRow.ToString(Formatting.None));
+            }
+
+            var jsonString = new StringBuilder();
+            jsonString.Append("{\n");
+
+            jsonString.Append("\t\"collisions\": [\n");
+            jsonString.Append("\t\t" + string.Join(",\n\t\t", collisionsList));
+            jsonString.Append("\n\t],\n");
+
+            jsonString.Append("\t\"types\": [\n");
+            jsonString.Append("\t\t" + string.Join(",\n\t\t", typesList));
+            jsonString.Append("\n\t]\n");
+
+            jsonString.Append("}");
+
+            return jsonString.ToString();
+        }
+        public void ImportBuildings(byte[] newData)
+        {
             buildings = new List<Building>();
-            using (BinaryReader reader = new BinaryReader(new MemoryStream(newData))) {
-                for (int i = 0; i < newData.Length / buildingHeaderSize; i++) {
+            using (BinaryReader reader = new BinaryReader(new MemoryStream(newData)))
+            {
+                for (int i = 0; i < newData.Length / buildingHeaderSize; i++)
+                {
                     buildings.Add(new Building(new MemoryStream(reader.ReadBytes(buildingHeaderSize))));
                 }
             }
         }
-        public bool LoadMapModel(byte[] newData, bool showMessages = true) {
-            using (BinaryReader modelReader = new BinaryReader(new MemoryStream(newData))) {
+        public bool LoadMapModel(byte[] newData, bool showMessages = true)
+        {
+            using (BinaryReader modelReader = new BinaryReader(new MemoryStream(newData)))
+            {
 
-                if (modelReader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0) {
-                    if (showMessages) {
+                if (modelReader.ReadUInt32() != NSBMD.NDS_TYPE_BMD0)
+                {
+                    if (showMessages)
+                    {
                         MessageBox.Show("Please select an NSBMD file.", "Invalid File", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     return false;
                 }
 
                 modelReader.BaseStream.Position = 0xE;
-                if (modelReader.ReadInt16() > 1) { // If NSBMD contains more than one segment, it means there are embedded textures we must remove
+                if (modelReader.ReadInt16() > 1)
+                { // If NSBMD contains more than one segment, it means there are embedded textures we must remove
                     mapModelData = NSBUtils.GetModelWithoutTextures(newData);
-                } else {
+                }
+                else
+                {
                     modelReader.BaseStream.Position = 0x0;
                     mapModelData = modelReader.ReadBytes((int)modelReader.BaseStream.Length);
                 }
@@ -196,29 +264,73 @@ namespace DSPRE.ROMFiles {
             return true;
         }
 
-        public void ImportPermissions(byte[] newData) {
-            using (BinaryReader reader = new BinaryReader(new MemoryStream(newData))) {
-                for (int i = 0; i < 32; i++) {
-                    for (int j = 0; j < 32; j++) {
-                        types[i, j] = reader.ReadByte(); // Read permission type (e.g. surfing water, grass, sand etc.)
-                        collisions[i, j] = reader.ReadByte(); // Read walkability (00 for walkable and 80 for blocked)                        
+        public void ImportPermissions(byte[] newData)
+        {
+            try
+            {
+                JObject json = JObject.Parse(Encoding.UTF8.GetString(newData));
+
+                if (json["collisions"] != null && json["types"] != null)
+                {
+                    JArray collisionsArray = (JArray)json["collisions"];
+                    JArray typesArray = (JArray)json["types"];
+
+                    for (int i = 0; i < mapSize; i++)
+                    {
+                        JArray collisionRow = (JArray)collisionsArray[i];
+                        JArray typeRow = (JArray)typesArray[i];
+
+                        for (int j = 0; j < mapSize; j++)
+                        {
+                            collisions[i, j] = Convert.ToByte(collisionRow[j].ToString(), 16);
+                            types[i, j] = Convert.ToByte(typeRow[j].ToString(), 16);
+                        }
+                    }
+                }
+                else
+                {
+                    throw new FormatException("Invalid JSON format for permissions data.");
+                }
+            }
+            catch (JsonReaderException)
+            {
+                using (BinaryReader reader = new BinaryReader(new MemoryStream(newData)))
+                {
+                    for (int i = 0; i < mapSize; i++)
+                    {
+                        for (int j = 0; j < mapSize; j++)
+                        {
+                            types[i, j] = reader.ReadByte();
+                            collisions[i, j] = reader.ReadByte();
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error importing permissions: {ex.Message}");
+            }
         }
-        public void ImportSoundPlates(byte[] newData) {
-            using (BinaryReader reader = new BinaryReader(new MemoryStream(newData))) {
+
+        public void ImportSoundPlates(byte[] newData)
+        {
+            using (BinaryReader reader = new BinaryReader(new MemoryStream(newData)))
+            {
                 bgs = reader.ReadBytes((int)newData.Length);
             }
         }
-        public void ImportTerrain(byte[] newData) {
-            using (BinaryReader reader = new BinaryReader(new MemoryStream(newData))) {
+        public void ImportTerrain(byte[] newData)
+        {
+            using (BinaryReader reader = new BinaryReader(new MemoryStream(newData)))
+            {
                 bdhc = reader.ReadBytes((int)newData.Length);
             }
         }
-        public override byte[] ToByteArray() {
+        public override byte[] ToByteArray()
+        {
             MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData)) {
+            using (BinaryWriter writer = new BinaryWriter(newData))
+            {
                 /* Write section lengths */
                 writer.Write(collisions.Length + types.Length);
 
@@ -227,7 +339,8 @@ namespace DSPRE.ROMFiles {
                 writer.Write(bdhc.Length);
 
                 /* Write soundplate section for HG/SS */
-                if (RomInfo.gameFamily == GameFamilies.HGSS) {
+                if (RomInfo.gameFamily == GameFamilies.HGSS)
+                {
                     writer.Write(bgs);
                 }
 
@@ -240,11 +353,14 @@ namespace DSPRE.ROMFiles {
             return newData.ToArray();
         }
 
-        public SortedSet<byte> GetUsedTypes() {
+        public SortedSet<byte> GetUsedTypes()
+        {
             SortedSet<byte> sortedBytes = new SortedSet<byte>();
 
-            for (int i = 0; i < mapSize; i++) {
-                for (int j = 0; j < mapSize; j++) {
+            for (int i = 0; i < mapSize; i++)
+            {
+                for (int j = 0; j < mapSize; j++)
+                {
                     sortedBytes.Add(types[i, j]);
                 }
             }
@@ -252,10 +368,12 @@ namespace DSPRE.ROMFiles {
             return sortedBytes;
         }
 
-        public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
+        public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true)
+        {
             SaveToFileDefaultDir(DirNames.maps, IDtoReplace, showSuccessMessage);
         }
-        public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true) {
+        public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true)
+        {
             SaveToFileExplorePath("Gen IV Map Bin", "bin", suggestedFileName, showSuccessMessage);
         }
         #endregion
@@ -264,7 +382,8 @@ namespace DSPRE.ROMFiles {
     /// <summary>
     /// Class to store building data from Pokémon NDS games
     /// </summary>
-    public class Building {
+    public class Building
+    {
         #region Fields (11)
         public NSBMD NSBMDFile;
         public uint modelID { get; set; }
@@ -280,11 +399,40 @@ namespace DSPRE.ROMFiles {
         public uint width { get; set; }
         public uint height { get; set; }
         public uint length { get; set; }
+        public decimal XCoordinate
+        {
+            get { return xPosition + ((decimal)xFraction / 65535); }
+            set
+            {
+                xPosition = (short)Math.Floor(value);
+                xFraction = (ushort)((value - Math.Floor(value)) * 65535);
+            }
+        }
+        public decimal YCoordinate
+        {
+            get { return yPosition + ((decimal)yFraction / 65535); }
+            set
+            {
+                yPosition = (short)Math.Floor(value);
+                yFraction = (ushort)((value - Math.Floor(value)) * 65535);
+            }
+        }
+        public decimal ZCoordinate
+        {
+            get { return zPosition + ((decimal)zFraction / 65535); }
+            set
+            {
+                zPosition = (short)Math.Floor(value);
+                zFraction = (ushort)((value - Math.Floor(value)) * 65535);
+            }
+        }
         #endregion Fields
 
         #region Constructors (2)
-        public Building(Stream data) {
-            using (BinaryReader reader = new BinaryReader(data)) {
+        public Building(Stream data)
+        {
+            using (BinaryReader reader = new BinaryReader(data))
+            {
                 modelID = reader.ReadUInt32();
 
                 xFraction = reader.ReadUInt16();
@@ -293,7 +441,7 @@ namespace DSPRE.ROMFiles {
                 yPosition = reader.ReadInt16();
                 zFraction = reader.ReadUInt16();
                 zPosition = reader.ReadInt16();
-                
+
                 xRotation = reader.ReadUInt16();
                 reader.BaseStream.Position += 0x2;
                 yRotation = reader.ReadUInt16();
@@ -308,11 +456,12 @@ namespace DSPRE.ROMFiles {
                 height = reader.ReadUInt16();
                 reader.BaseStream.Position += 0x2;
                 length = reader.ReadUInt16();
-                
+
                 //reader.BaseStream.Position += 0x2;
             }
         }
-        public Building() {
+        public Building()
+        {
             modelID = 0;
             xFraction = 0;
             xPosition = 0;
@@ -327,7 +476,8 @@ namespace DSPRE.ROMFiles {
             length = 16;
         }
 
-        public Building(Building toCopy) {
+        public Building(Building toCopy)
+        {
             modelID = toCopy.modelID;
             xFraction = toCopy.xFraction;
             xPosition = toCopy.xPosition;
@@ -345,45 +495,60 @@ namespace DSPRE.ROMFiles {
             length = toCopy.length;
         }
         #endregion Constructors
-        public static ushort DegToU16(float deg) {
+        public static ushort DegToU16(float deg)
+        {
             return (ushort)(deg * 65536 / 360);
         }
-        public static float U16ToDeg(ushort u16) {
+        public static float U16ToDeg(ushort u16)
+        {
             return (float)u16 * 360 / 65536;
         }
-        public void LoadModelData(string dir) {
+        public void LoadModelData(string dir)
+        {
             LoadModelDataFromID((int)modelID, dir);
         }
 
-        public void LoadModelData(bool interior) {
+        public void LoadModelData(bool interior)
+        {
             string modelPath = Filesystem.GetBuildingModelPath(interior, (int)modelID);
 
-            if (string.IsNullOrWhiteSpace(modelPath) || !File.Exists(modelPath)) {
+            if (string.IsNullOrWhiteSpace(modelPath) || !File.Exists(modelPath))
+            {
                 MessageBox.Show("Building " + modelID + " could not be found in\n" + '"' + Path.GetDirectoryName(modelPath) + '"', "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            try {
-                using (Stream fs = new FileStream(modelPath, FileMode.Open)) {
+            try
+            {
+                using (Stream fs = new FileStream(modelPath, FileMode.Open))
+                {
                     this.NSBMDFile = NSBMDLoader.LoadNSBMD(fs);
                 }
-            } catch (FileNotFoundException) {
+            }
+            catch (FileNotFoundException)
+            {
                 MessageBox.Show("Building " + modelID + " could not be found in\n" + '"' + Path.GetDirectoryName(modelPath) + '"', "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        public void LoadModelDataFromID(int modelID, string bmDir) {
+        public void LoadModelDataFromID(int modelID, string bmDir)
+        {
             string modelPath = bmDir + "\\" + modelID.ToString("D4");
 
-            if (string.IsNullOrWhiteSpace(modelPath) || !File.Exists(modelPath)) {
+            if (string.IsNullOrWhiteSpace(modelPath) || !File.Exists(modelPath))
+            {
                 MessageBox.Show("Building " + modelID + " could not be found in\n" + '"' + bmDir + '"', "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            try {
-                using (Stream fs = new FileStream(modelPath, FileMode.Open)) {
+            try
+            {
+                using (Stream fs = new FileStream(modelPath, FileMode.Open))
+                {
                     this.NSBMDFile = NSBMDLoader.LoadNSBMD(fs);
                 }
-            } catch (FileNotFoundException) {
+            }
+            catch (FileNotFoundException)
+            {
                 MessageBox.Show("Building " + modelID + " could not be found in\n" + '"' + bmDir + '"', "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
