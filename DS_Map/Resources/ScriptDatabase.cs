@@ -1482,6 +1482,9 @@ namespace DSPRE.Resources {
             [0x02CD] = "SetDarkFog",
             [0x02CE] = "ClearDarkFog",
 
+            [0x02E2] = "ScratchOffScreen",
+            [0x02E3] = "ReleaseScriptApp",
+
             [0x02E5] = "CheckLearnableTutorMoves",
             [0x02E6] = "ShowTutorMovesList",
             [0x02E7] = "LearnMoveScreen",
@@ -2099,6 +2102,9 @@ namespace DSPRE.Resources {
             [0x026A] = "CheckAlbumPhoto",
 
             [0x026E] = "GetOWDirection",
+
+            [0x0289] = "ScratchOffScreen",
+            [0x028A] = "ReleaseScriptApp",
 
             [0x0290] = "CheckHeadbuttCompatibility",
 
@@ -2838,7 +2844,7 @@ namespace DSPRE.Resources {
             [0x0287] = new byte[] { 2, 2 }, //To be checked!
             [0x0288] = new byte[] { 2 },
             [0x0289] = new byte[1] { 0 },
-            [0x028A] = new byte[] { 2 },
+            [0x028A] = new byte[1] { 0 },
             [0x028B] = new byte[] { 2, 2, 2 },
             [0x028C] = new byte[] { 2, 2, 2 },
             [0x028D] = new byte[] { 2, 2, 2, 2 },
