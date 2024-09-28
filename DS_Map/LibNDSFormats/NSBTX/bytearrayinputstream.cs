@@ -164,7 +164,7 @@ namespace NSMBe4
 
         public string ReadString(int l)
         {
-            if (l == 0) return ""; // simple error checking
+            if (l == 0){ return ""; } // simple error checking
 
             byte[] arr = new byte[l];
             read(arr);

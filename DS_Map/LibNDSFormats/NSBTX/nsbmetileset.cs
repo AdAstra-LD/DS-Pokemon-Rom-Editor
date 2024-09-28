@@ -597,7 +597,7 @@ namespace NSMBe4
                 {
                     ControlByte &= 0xF;
                     int num = t.Map16PaletteOffset;
-                    if (value) num++;
+                    if (value){ num++; }
                     ControlByte |= (byte)(num << 4);
                 }
             }*/
@@ -605,12 +605,12 @@ namespace NSMBe4
             /*public bool xFlip
             {
                 get { return (ControlByte & 4) != 0; }
-                set { if (((ControlByte & 4) != 0) != value) ControlByte ^= 4; }
+                set { if (((ControlByte & 4) != 0) != value){ ControlByte ^= 4; } }
             }
             public bool yFlip
             {
                 get { return (ControlByte & 8) != 0; }
-                set { if (((ControlByte & 8) != 0) != value) ControlByte ^= 8; }
+                set { if (((ControlByte & 8) != 0) != value){ ControlByte ^= 8; } }
             }
 
             public Map16Quarter(NSMBTileset t)
@@ -1065,9 +1065,9 @@ namespace NSMBe4
 
         public bool objectExists(int objNum)
         {
-            if (objNum < 0) return false;
-            if (objNum >= Objects.Length) return false;
-            if (Objects[objNum] is null) return false;
+            if (objNum < 0){ return false; }
+            if (objNum >= Objects.Length){ return false; }
+            if (Objects[objNum] is null){ return false; }
             return true;
         }
         #endregion
@@ -1083,12 +1083,12 @@ namespace NSMBe4
             Bitmap b = new Bitmap(256, tileCount / (256 / 8) * 8);
             for (int i = 0; i < tileCount; i++)
             {
-                if (tilesUsed[i] == 0) continue;
+                if (tilesUsed[i] == 0){ continue; }
 
                 int tx = (i % 32) * 8;
                 int ty = (int)(i / 32) * 8;
                 int palOffs = 0;
-                if (tilesUsed[i] == 2) palOffs = 256;
+                if (tilesUsed[i] == 2){ palOffs = 256; }
 
                 for (int x = 0; x < 8; x++)
                     for (int y = 0; y < 8; y++)
@@ -1129,9 +1129,9 @@ namespace NSMBe4
                 int ty = (int)(i / 32) * 8;
 
                 Graphics dest = ga;
-                if (newInSecondPal) dest = gb;
-                if (tilesUsed[i] == 1) dest = ga;
-                if (tilesUsed[i] == 2) dest = gb;
+                if (newInSecondPal){ dest = gb; }
+                if (tilesUsed[i] == 1){ dest = ga; }
+                if (tilesUsed[i] == 2){ dest = gb; }
 
                 dest.DrawImage(img, new Rectangle(i * 8, 0, 8, 8), tx, ty, 8, 8, GraphicsUnit.Pixel);
             }
@@ -1148,9 +1148,9 @@ namespace NSMBe4
                 int ty = (int)(i / 32) * 8;
 
                 ImageIndexer src = ia;
-                if (newInSecondPal) src = ib;
-                if (tilesUsed[i] == 1) src = ia;
-                if (tilesUsed[i] == 2) src = ib;
+                if (newInSecondPal){ src = ib; }
+                if (tilesUsed[i] == 1){ src = ia; }
+                if (tilesUsed[i] == 2){ src = ib; }
 
                 Array.Copy(src.palettedImage, i * 64, RawGFXData, i * 64, 64);
             }
@@ -1169,8 +1169,8 @@ namespace NSMBe4
 
         private void checkMap16UsedQuarter(Map16Quarter q, int[] tilesUsed)
         {
-            if (q.TileNum < 0) return;
-            if (q.TileNum >= tilesUsed.Length) return;
+            if (q.TileNum < 0){ return; }
+            if (q.TileNum >= tilesUsed.Length){ return; }
 
             if (q.secondPalette)
                 tilesUsed[q.TileNum] |= 2;

@@ -161,13 +161,7 @@ namespace LibNDSFormats.NSBMD {
 		/// Render model to OpenGL surface.
 		/// </summary>
 		public void RenderModel(string file2, MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File ani, int[] aniframeS, int[] aniframeT, int[] aniframeScaleS, int[] aniframeScaleT, int[] aniframeR, MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File ca, RenderMode r, bool anim, bool anim2, int selectedanim, float X, float Y, float dist, float elev, float ang, bool licht, MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File p, NSBMD nsb) {
-			MTX44 tmp = new MTX44();
 			file = file2;
-			for (var j = 0; j < Model.Polygons.Count - 1; j++) {
-				var poly = Model.Polygons[j];
-				int matid = poly.MatId;
-				var mat = Model.Materials[matid];
-			}
 			int light = Gl.glIsEnabled(Gl.GL_LIGHTING);
 			Gl.glDisable(Gl.GL_LIGHTING);
 			Gl.glLineWidth(2.0F);
@@ -204,7 +198,7 @@ namespace LibNDSFormats.NSBMD {
 
 			////////////////////////////////////////////////////////////
 			// display all polygons of the current model
-			for (var i = 0; i < Model.Polygons.Count - 1; i++) {
+            for (var i = 0; i < Model.Polygons.Count - 1; i++) {
 				var poly = Model.Polygons[i];
 
 				if (gOptTexture && !gOptWireFrame && g_mat) {
@@ -232,56 +226,61 @@ namespace LibNDSFormats.NSBMD {
 						// Convert pixel coords to normalised STs
 						Gl.glMatrixMode(Gl.GL_TEXTURE);
 						Gl.glLoadIdentity();
-                        if (p.Header.file_size != 0 && new List<string>(p.MPT.names).Contains(mat.MaterialName)) {
-							NSBMDMaterial mmm = mat;
-							int texid = 0;
-							for (int l = 0; l < nsb.Textures.Count; l++) {
-								if (nsb.Textures[l].texname == p.AnimData[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)].KeyFrames[frame_[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)]].texName) {
-									texid = l;
-									break;
+						
+                        if (p.Header.file_size != 0 ) { 
+							List<string> mptNames = new List<string>(p.MPT.names);
+
+							if (mptNames.Contains(mat.MaterialName)) {
+								NSBMDMaterial mmm = mat;
+								int texid = 0;
+								for (int l = 0; l < nsb.Textures.Count; l++) {
+									if (nsb.Textures[l].texname == p.AnimData[mptNames.IndexOf(mat.MaterialName)].KeyFrames[frame_[mptNames.IndexOf(mat.MaterialName)]].texName) {
+										texid = l;
+										break;
+									}
 								}
-							}
-							mmm.spdata = nsb.Textures[texid].spdata;
-							mmm.texdata = nsb.Textures[texid].texdata;
-							mmm.texname = nsb.Textures[texid].texname;
-							mmm.texoffset = nsb.Textures[texid].texoffset;
-							mmm.texsize = nsb.Textures[texid].texsize;
-							mmm.width = nsb.Textures[texid].width;
-							mmm.height = nsb.Textures[texid].height;
-							mmm.format = nsb.Textures[texid].format;
-							mmm.color0 = nsb.Textures[texid].color0;
+								mmm.spdata = nsb.Textures[texid].spdata;
+								mmm.texdata = nsb.Textures[texid].texdata;
+								mmm.texname = nsb.Textures[texid].texname;
+								mmm.texoffset = nsb.Textures[texid].texoffset;
+								mmm.texsize = nsb.Textures[texid].texsize;
+								mmm.width = nsb.Textures[texid].width;
+								mmm.height = nsb.Textures[texid].height;
+								mmm.format = nsb.Textures[texid].format;
+								mmm.color0 = nsb.Textures[texid].color0;
 
-							int palid = 0;
-							for (int l = 0; l < nsb.Textures.Count; l++) {
-								if (nsb.Palettes[l].palname == p.AnimData[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)].KeyFrames[frame_[new List<string>(p.MPT.names).IndexOf(mat.MaterialName)]].palName) {
-									palid = l;
-									break;
+								int palid = 0;
+								for (int l = 0; l < nsb.Textures.Count; l++) {
+									if (nsb.Palettes[l].palname == p.AnimData[mptNames.IndexOf(mat.MaterialName)].KeyFrames[frame_[mptNames.IndexOf(mat.MaterialName)]].palName) {
+										palid = l;
+										break;
+									}
 								}
-							}
-							mmm.paldata = nsb.Palettes[palid].paldata;
-							mmm.palname = nsb.Palettes[palid].palname;
-							mmm.paloffset = nsb.Palettes[palid].paloffset;
-							mmm.palsize = nsb.Palettes[palid].palsize;
-							MakeTexture(matid, mmm);
+								mmm.paldata = nsb.Palettes[palid].paldata;
+								mmm.palname = nsb.Palettes[palid].palname;
+								mmm.paloffset = nsb.Palettes[palid].paloffset;
+								mmm.palsize = nsb.Palettes[palid].palsize;
+								MakeTexture(matid, mmm);
 
-							if (anim2) {
-								int index = new List<string>(p.MPT.names).IndexOf(mat.MaterialName);
+								if (anim2) {
+									int index = mptNames.IndexOf(mat.MaterialName);
 
-								if (nr[index] == Math.Round(p.MPT.infoBlock.Data[index].Unknown1 / 512f)) {
-									nr[index] = 0;
-									if (frame[index] == p.MPT.NoFrames - 1) {
-										frame[index] = 0;
-										frame_[index] = 0;
-									} else {
-										frame[index]++;
-										if (p.AnimData[index].KeyFrames.Length != frame_[index] + 1) {
-											if (frame[index] == p.AnimData[index].KeyFrames[frame_[index] + 1].Start) {
-												frame_[index]++;
+									if (nr[index] == Math.Round(p.MPT.infoBlock.Data[index].Unknown1 / 512f)) {
+										nr[index] = 0;
+										if (frame[index] == p.MPT.NoFrames - 1) {
+											frame[index] = 0;
+											frame_[index] = 0;
+										} else {
+											frame[index]++;
+											if (p.AnimData[index].KeyFrames.Length != frame_[index] + 1) {
+												if (frame[index] == p.AnimData[index].KeyFrames[frame_[index] + 1].Start) {
+													frame_[index]++;
+												}
 											}
 										}
+									} else {
+										nr[index]++;//= (float)p.MPT.infoBlock.Data[index].Unknown1 / 4096f;
 									}
-								} else {
-									nr[index]++;//= (float)p.MPT.infoBlock.Data[index].Unknown1 / 4096f;
 								}
 							}
 						}
@@ -463,9 +462,14 @@ namespace LibNDSFormats.NSBMD {
 					Gl.glColor3f(1, 1, 1);
 				}
 				stackID = poly.StackID; // the first matrix used by this polygon
-				Process3DCommand(poly.PolyData, Model.Materials[poly.MatId], poly.JointID, true);
 
-			}
+				try {
+                    Process3DCommand(poly.PolyData, Model.Materials[poly.MatId], poly.JointID, true);
+                } catch {
+					Console.WriteLine($"Invalid MatID {poly.MatId}! Could not read model [file: {file}]");
+					return;
+				}
+            }
 			writevertex = false;
 		}
 		/// <summary>
@@ -561,13 +565,13 @@ namespace LibNDSFormats.NSBMD {
 
 						if (((mat.PolyAttrib >> 0xf) & 0x1) == 1 && (((mat.PolyAttrib >> 0) & 0x1) == 0 && ((mat.PolyAttrib >> 1) & 0x1) == 0 && ((mat.PolyAttrib >> 2) & 0x1) == 0 && ((mat.PolyAttrib >> 2) & 0x1) == 0) == false) {
 							Gl.glEnable(Gl.GL_LIGHTING);
-							if (((mat.PolyAttrib >> 0) & 0x1) == 1) Gl.glEnable(Gl.GL_LIGHT0);
+							if (((mat.PolyAttrib >> 0) & 0x1) == 1){ Gl.glEnable(Gl.GL_LIGHT0); }
 							else Gl.glDisable(Gl.GL_LIGHT0);
-							if (((mat.PolyAttrib >> 1) & 0x1) == 1) Gl.glEnable(Gl.GL_LIGHT1);
+							if (((mat.PolyAttrib >> 1) & 0x1) == 1){ Gl.glEnable(Gl.GL_LIGHT1); }
 							else Gl.glDisable(Gl.GL_LIGHT1);
-							if (((mat.PolyAttrib >> 2) & 0x1) == 1) Gl.glEnable(Gl.GL_LIGHT2);
+							if (((mat.PolyAttrib >> 2) & 0x1) == 1){ Gl.glEnable(Gl.GL_LIGHT2); }
 							else Gl.glDisable(Gl.GL_LIGHT2);
-							if (((mat.PolyAttrib >> 3) & 0x1) == 1) Gl.glEnable(Gl.GL_LIGHT3);
+							if (((mat.PolyAttrib >> 3) & 0x1) == 1){ Gl.glEnable(Gl.GL_LIGHT3); }
 							else Gl.glDisable(Gl.GL_LIGHT3);
 
 							Gl.glColorMaterial(Gl.GL_FRONT_AND_BACK, Gl.GL_DIFFUSE);
@@ -732,11 +736,11 @@ namespace LibNDSFormats.NSBMD {
 								full = OpenTK.Matrix4.Mult(full, Y);
 								full = OpenTK.Matrix4.Mult(full, Z);
 								/*int x = (param) & 0xFF;
-								if ((x & 0x200) != 0) x |= -256;
+								if ((x & 0x200) != 0){ x |= -256; }
 								int y = (param >> 8) & 0xFF;
-								if ((y & 0x200) != 0) y |= -256;
+								if ((y & 0x200) != 0){ y |= -256; }
 								int z = (param >> 16) & 0xFF;
-								if ((z & 0x200) != 0) z |= -256;*/
+								if ((z & 0x200) != 0){ z |= -256; }*/
 								//Gl.glRotatef((float)x / 32768F * 180F, 1, 0, 0);
 								//Gl.glRotatef((float)y / 32768F * 180F, 0, 1, 0);
 								//Gl.glRotatef((float)z / 32768F * 180F, 0, 0, 1);
@@ -1068,7 +1072,7 @@ namespace LibNDSFormats.NSBMD {
 							switch (mode) {
 								case 0:
 									pixel = pal[(addr << 1) + texel];
-									if (texel == 3) pixel = RGBA.Transparent; // make it transparent, alpha = 0
+									if (texel == 3){ pixel = RGBA.Transparent; } // make it transparent, alpha = 0
 									break;
 								case 2:
 									pixel = pal[(addr << 1) + texel];
@@ -1179,7 +1183,7 @@ namespace LibNDSFormats.NSBMD {
 							break;
 						// 4-Color Palette Texture
 						case 2:
-							if (mat.color0 != 0) mat.paldata[0] = RGBA.Transparent; // made palette entry 0 transparent
+							if (mat.color0 != 0){ mat.paldata[0] = RGBA.Transparent; } // made palette entry 0 transparent
 							for (int j = 0; j < pixelnum; j++) {
 								uint index = mat.texdata[j / 4];
 								index = (index >> ((j % 4) << 1)) & 3;
@@ -1188,7 +1192,7 @@ namespace LibNDSFormats.NSBMD {
 							break;
 						// 16-Color Palette Texture
 						case 3:
-							if (mat.color0 != 0) mat.paldata[0] = RGBA.Transparent; // made palette entry 0 transparent
+							if (mat.color0 != 0){ mat.paldata[0] = RGBA.Transparent; } // made palette entry 0 transparent
 							for (int j = 0; j < pixelnum; j++) {
 								var matindex = j / 2;
 								if (mat.texdata.Length < matindex)
@@ -1206,7 +1210,7 @@ namespace LibNDSFormats.NSBMD {
 							break;
 						// 256-Color Palette Texture
 						case 4:
-							if (mat.color0 != 0) mat.paldata[0] = RGBA.Transparent; // made palette entry 0 transparent
+							if (mat.color0 != 0){ mat.paldata[0] = RGBA.Transparent; } // made palette entry 0 transparent
 																					// made palette entry 0 transparent
 							for (int j = 0; j < pixelnum; j++) {
 								image[j] = mat.paldata[mat.texdata[j]];
@@ -1374,7 +1378,7 @@ namespace LibNDSFormats.NSBMD {
 						break;
 					// 4-Color Palette Texture
 					case 2:
-						if (mat.color0 != 0) mat.paldata[0] = RGBA.Transparent; // made palette entry 0 transparent
+						if (mat.color0 != 0){ mat.paldata[0] = RGBA.Transparent; } // made palette entry 0 transparent
 						for (int j = 0; j < pixelnum; j++) {
 							uint index = mat.texdata[j / 4];
 							index = (index >> ((j % 4) << 1)) & 3;
@@ -1383,7 +1387,7 @@ namespace LibNDSFormats.NSBMD {
 						break;
 					// 16-Color Palette Texture
 					case 3:
-						if (mat.color0 != 0) mat.paldata[0] = RGBA.Transparent; // made palette entry 0 transparent
+						if (mat.color0 != 0){ mat.paldata[0] = RGBA.Transparent; } // made palette entry 0 transparent
 						for (int j = 0; j < pixelnum; j++) {
 							var matindex = j / 2;
 							if (mat.texdata.Length < matindex)
@@ -1401,7 +1405,7 @@ namespace LibNDSFormats.NSBMD {
 						break;
 					// 256-Color Palette Texture
 					case 4:
-						if (mat.color0 != 0) mat.paldata[0] = RGBA.Transparent; // made palette entry 0 transparent
+						if (mat.color0 != 0){ mat.paldata[0] = RGBA.Transparent; } // made palette entry 0 transparent
 																				// made palette entry 0 transparent
 						for (int j = 0; j < pixelnum; j++) {
 							image[j] = mat.paldata[mat.texdata[j]];
@@ -1721,9 +1725,9 @@ namespace LibNDSFormats.NSBMD {
 								if ((x & 0x200) != 0)
 									x |= -1024;
 								y = (xyz >> 10) & 0x3FF;
-								if ((y & 0x200) != 0) y |= -1024;
+								if ((y & 0x200) != 0){ y |= -1024; }
 								z = (xyz >> 20) & 0x3FF;
-								if ((z & 0x200) != 0) z |= -1024;
+								if ((z & 0x200) != 0){ z |= -1024; }
 								Gl.glNormal3f(((float)x) / 512.0f, ((float)y) / 512.0f, ((float)z) / 512.0f);
 								if (writevertex) {
 									//normals.Add(new float[] { ((float)x) / 512.0f, ((float)y) / 512.0f, ((float)z) / 512.0f });
@@ -1747,9 +1751,9 @@ namespace LibNDSFormats.NSBMD {
 								commandptr += 4;
 
 								s = (st >> 0) & 0xffff;
-								if ((s & 0x8000) != 0) s |= unchecked((int)0xFFFF0000);//-65536;
+								if ((s & 0x8000) != 0){ s |= unchecked((int)0xFFFF0000); }//-65536;
 								t = (st >> 16) & 0xffff;
-								if ((t & 0x8000) != 0) t |= unchecked((int)0xFFFF0000);//-65536;
+								if ((t & 0x8000) != 0){ t |= unchecked((int)0xFFFF0000); }//-65536;
 								Gl.glTexCoord2f(((float)s) / 16.0f, ((float)t) / 16.0f);
 
 								if (writevertex) {
@@ -1773,14 +1777,14 @@ namespace LibNDSFormats.NSBMD {
 								commandptr += 4;
 
 								x = Sign((parameter >> 0) & 0xFFFF, 16);
-								//if ((x & 0x8000) != 0) x |= unchecked((int)0xFFFF0000);//-65536;
+								//if ((x & 0x8000) != 0){ x |= unchecked((int)0xFFFF0000); }//-65536;
 								y = Sign((parameter >> 16) & 0xFFFF, 16);
-								//if ((y & 0x8000) != 0) y |= unchecked((int)0xFFFF0000);//-65536;
+								//if ((y & 0x8000) != 0){ y |= unchecked((int)0xFFFF0000); }//-65536;
 
 								parameter = Utils.Read4BytesAsInt32(polydata, commandptr);
 								commandptr += 4;
 								z = Sign(parameter & 0xFFFF, 16);
-								// if ((z & 0x8000) != 0) z |= unchecked((int)0xFFFF0000);//-65536;
+								// if ((z & 0x8000) != 0){ z |= unchecked((int)0xFFFF0000); }//-65536;
 
 								vtx_state[0] = ((float)x) / SCALE_IV;
 								vtx_state[1] = ((float)y) / SCALE_IV;
@@ -1841,11 +1845,11 @@ namespace LibNDSFormats.NSBMD {
 								commandptr += 4;
 
 								x = Sign((xyz >> 0) & 0x3FF, 10);
-								// if ((x & 0x200) != 0) x |=  unchecked((int)0xFFFFFC00);//-1024;
+								// if ((x & 0x200) != 0){ x |=  unchecked((int)0xFFFFFC00); }//-1024;
 								y = Sign((xyz >> 10) & 0x3FF, 10);
-								//if ((y & 0x200) != 0) y |=  unchecked((int)0xFFFFFC00);//-1024;
+								//if ((y & 0x200) != 0){ y |=  unchecked((int)0xFFFFFC00); }//-1024;
 								z = Sign((xyz >> 20) & 0x3FF, 10);
-								// if ((z & 0x200) != 0) z |= unchecked((int)0xFFFFFC00);//-1024;
+								// if ((z & 0x200) != 0){ z |= unchecked((int)0xFFFFFC00); }//-1024;
 
 								vtx_state[0] = (float)x / 64.0f;
 								vtx_state[1] = (float)y / 64.0f;
@@ -1904,9 +1908,9 @@ namespace LibNDSFormats.NSBMD {
 								commandptr += 4;
 
 								x = Sign((xy >> 0) & 0xFFFF, 16);
-								//if ((x & 0x8000) != 0) x |=  unchecked((int)0xFFFF0000);//-65536;
+								//if ((x & 0x8000) != 0){ x |=  unchecked((int)0xFFFF0000); }//-65536;
 								y = Sign((xy >> 16) & 0xFFFF, 16);
-								//if ((y & 0x8000) != 0) y |= unchecked((int)0xFFFF0000);//-65536;
+								//if ((y & 0x8000) != 0){ y |= unchecked((int)0xFFFF0000); }//-65536;
 
 								vtx_state[0] = ((float)x) / SCALE_IV;
 								vtx_state[1] = ((float)y) / SCALE_IV;
@@ -1964,9 +1968,9 @@ namespace LibNDSFormats.NSBMD {
 								commandptr += 4;
 
 								x = Sign((xz >> 0) & 0xFFFF, 16);
-								// if ((x & 0x8000) != 0) x |= unchecked((int)0xFFFF0000);//-65536;
+								// if ((x & 0x8000) != 0){ x |= unchecked((int)0xFFFF0000); }//-65536;
 								z = Sign((xz >> 16) & 0xFFFF, 16);
-								// if ((z & 0x8000) != 0) z |= unchecked((int)0xFFFF0000);//-65536;
+								// if ((z & 0x8000) != 0){ z |= unchecked((int)0xFFFF0000); }//-65536;
 
 								vtx_state[0] = ((float)x) / SCALE_IV;
 								vtx_state[2] = ((float)z) / SCALE_IV;
@@ -2023,9 +2027,9 @@ namespace LibNDSFormats.NSBMD {
 								commandptr += 4;
 
 								y = Sign((yz >> 0) & 0xFFFF, 16);
-								//if ((y & 0x8000) != 0) y |= unchecked((int)0xFFFF0000);//-65536;
+								//if ((y & 0x8000) != 0){ y |= unchecked((int)0xFFFF0000); }//-65536;
 								z = Sign((yz >> 16) & 0xFFFF, 16);
-								//if ((z & 0x8000) != 0) z |= unchecked((int)0xFFFF0000);//-65536;
+								//if ((z & 0x8000) != 0){ z |= unchecked((int)0xFFFF0000); }//-65536;
 
 								vtx_state[1] = ((float)y) / SCALE_IV;
 								vtx_state[2] = ((float)z) / SCALE_IV;
@@ -2084,11 +2088,11 @@ namespace LibNDSFormats.NSBMD {
 								commandptr += 4;
 
 								x = Sign((xyz >> 0) & 0x3FF, 10);
-								//if ((x & 0x200) != 0) x |= unchecked((int)0xFFFFFC00);//-1024;
+								//if ((x & 0x200) != 0){ x |= unchecked((int)0xFFFFFC00); }//-1024;
 								y = Sign((xyz >> 10) & 0x3FF, 10);
-								//if ((y & 0x200) != 0) y |= unchecked((int)0xFFFFFC00);
+								//if ((y & 0x200) != 0){ y |= unchecked((int)0xFFFFFC00); }
 								z = Sign((xyz >> 20) & 0x3FF, 10);
-								//if ((z & 0x200) != 0) z |= unchecked((int)0xFFFFFC00);
+								//if ((z & 0x200) != 0){ z |= unchecked((int)0xFFFFFC00); }
 
 
 								vtx_state[0] += ((float)x) / SCALE_IV;

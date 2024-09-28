@@ -76,9 +76,9 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructors (1)
-        public MapFile(string path, gFamEnum gFamily, bool discardMoveperms = false, bool showMessages = true) : this (new FileStream(path, FileMode.Open), gFamily, discardMoveperms, showMessages) {}
-        public MapFile(int mapNumber, gFamEnum gFamily, bool discardMoveperms = false, bool showMessages = true) : this(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + mapNumber.ToString("D4"), gFamily, discardMoveperms, showMessages) { }
-        public MapFile(Stream data, gFamEnum gFamily, bool discardMoveperms = false, bool showMessages = true) {
+        public MapFile(string path, GameFamilies gFamily, bool discardMoveperms = false, bool showMessages = true) : this (new FileStream(path, FileMode.Open), gFamily, discardMoveperms, showMessages) {}
+        public MapFile(int mapNumber, GameFamilies gFamily, bool discardMoveperms = false, bool showMessages = true) : this(RomInfo.gameDirs[DirNames.maps].unpackedDir + "\\" + mapNumber.ToString("D4"), gFamily, discardMoveperms, showMessages) { }
+        public MapFile(Stream data, GameFamilies gFamily, bool discardMoveperms = false, bool showMessages = true) {
             using (BinaryReader reader = new BinaryReader(data)) {
                 /* Read sections lengths */
                 int permissionsSectionLength = reader.ReadInt32();
@@ -87,7 +87,7 @@ namespace DSPRE.ROMFiles {
                 int bdhcSectionLength = reader.ReadInt32();
 
                 /* Read background sounds section */
-                if (gFamily == gFamEnum.HGSS) { //Map must be loaded as HGSS
+                if (gFamily == GameFamilies.HGSS) { //Map must be loaded as HGSS
                     ushort bgsSignature = reader.ReadUInt16();
                     if (bgsSignature == 0x1234) {
                         ushort bgsDataLength = reader.ReadUInt16();
@@ -185,7 +185,7 @@ namespace DSPRE.ROMFiles {
 
                 modelReader.BaseStream.Position = 0xE;
                 if (modelReader.ReadInt16() > 1) { // If NSBMD contains more than one segment, it means there are embedded textures we must remove
-                    mapModelData = DSUtils.GetModelWithoutTextures(newData);
+                    mapModelData = NSBUtils.GetModelWithoutTextures(newData);
                 } else {
                     modelReader.BaseStream.Position = 0x0;
                     mapModelData = modelReader.ReadBytes((int)modelReader.BaseStream.Length);
@@ -227,7 +227,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write(bdhc.Length);
 
                 /* Write soundplate section for HG/SS */
-                if (RomInfo.gameFamily == gFamEnum.HGSS) {
+                if (RomInfo.gameFamily == GameFamilies.HGSS) {
                     writer.Write(bgs);
                 }
 
@@ -239,6 +239,19 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
+
+        public SortedSet<byte> GetUsedTypes() {
+            SortedSet<byte> sortedBytes = new SortedSet<byte>();
+
+            for (int i = 0; i < mapSize; i++) {
+                for (int j = 0; j < mapSize; j++) {
+                    sortedBytes.Add(types[i, j]);
+                }
+            }
+
+            return sortedBytes;
+        }
+
         public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
             SaveToFileDefaultDir(DirNames.maps, IDtoReplace, showSuccessMessage);
         }
@@ -341,6 +354,24 @@ namespace DSPRE.ROMFiles {
         public void LoadModelData(string dir) {
             LoadModelDataFromID((int)modelID, dir);
         }
+
+        public void LoadModelData(bool interior) {
+            string modelPath = Filesystem.GetBuildingModelPath(interior, (int)modelID);
+
+            if (string.IsNullOrWhiteSpace(modelPath) || !File.Exists(modelPath)) {
+                MessageBox.Show("Building " + modelID + " could not be found in\n" + '"' + Path.GetDirectoryName(modelPath) + '"', "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try {
+                using (Stream fs = new FileStream(modelPath, FileMode.Open)) {
+                    this.NSBMDFile = NSBMDLoader.LoadNSBMD(fs);
+                }
+            } catch (FileNotFoundException) {
+                MessageBox.Show("Building " + modelID + " could not be found in\n" + '"' + Path.GetDirectoryName(modelPath) + '"', "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         public void LoadModelDataFromID(int modelID, string bmDir) {
             string modelPath = bmDir + "\\" + modelID.ToString("D4");
 

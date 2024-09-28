@@ -127,7 +127,7 @@ namespace Ekona.Images
 
             // Get the new palette data
             int size = original.Length - start;
-            if (size > 0x2000) size = 0x2000;
+            if (size > 0x2000){ size = 0x2000; }
 
             Byte[] data = new byte[size];
             Array.Copy(original, start, data, 0, data.Length);

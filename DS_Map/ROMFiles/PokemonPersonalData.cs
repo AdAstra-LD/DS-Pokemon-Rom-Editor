@@ -31,12 +31,12 @@ namespace DSPRE.ROMFiles {
         Dark
     }
     public enum PokemonGrowthCurve {
-        Erratic = 0,
-        Fast,
-        MediumFast,
-        MediumSlow,
-        Slow,
+        MediumFast = 0,
+        Erratic,
         Fluctuating,
+        MediumSlow,
+        Fast,
+        Slow
     }
 
     public enum PokemonEggGroup {
@@ -151,6 +151,8 @@ namespace DSPRE.ROMFiles {
                 color = (PokemonDexColor)(colorAndFlip & 0b01111111);
                 flip = ((colorAndFlip >> 7) & 0b00000001) == 1;
 
+                reader.BaseStream.Position += 2; //Alignment
+
                 uint tm1 = reader.ReadUInt32();
                 uint tm2 = reader.ReadUInt32();
                 uint tm3 = reader.ReadUInt32();
@@ -199,6 +201,8 @@ namespace DSPRE.ROMFiles {
                                                   (((flip ? 1 : 0) & 0b00000001) << 7));
                     writer.Write(colorAndFlipflag);
 
+                    writer.BaseStream.Position += 2; //Alignment
+
                     uint[] bfs = SetToBitField(machines);
                     int l = Math.Min(bfs.Length, 4);
                     int i;
@@ -222,7 +226,7 @@ namespace DSPRE.ROMFiles {
 
                 for (int j = 0; j < 32; j++) {
                     if ((currentBitfield & (1 << j)) != 0) {
-                        result.Add((byte)(i * 32 + j+1));
+                        result.Add((byte)(i * 32 + j));
                     }
                 }
             }

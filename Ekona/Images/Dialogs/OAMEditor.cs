@@ -206,22 +206,22 @@ namespace Ekona.Images.Dialogs
             switch (oam.obj0.shape)
             {
                 case 0:
-                    if (oam.obj1.size == 0) comboSize.SelectedIndex = 0;
-                    else if (oam.obj1.size == 1) comboSize.SelectedIndex = 1;
-                    else if (oam.obj1.size == 2) comboSize.SelectedIndex = 2;
-                    else if (oam.obj1.size == 3) comboSize.SelectedIndex = 3;
+                    if (oam.obj1.size == 0){ comboSize.SelectedIndex = 0; }
+                    else if (oam.obj1.size == 1){ comboSize.SelectedIndex = 1; }
+                    else if (oam.obj1.size == 2){ comboSize.SelectedIndex = 2; }
+                    else if (oam.obj1.size == 3){ comboSize.SelectedIndex = 3; }
                     break;
                 case 1:
-                    if (oam.obj1.size == 0) comboSize.SelectedIndex = 4;
-                    else if (oam.obj1.size == 1) comboSize.SelectedIndex = 5;
-                    else if (oam.obj1.size == 2) comboSize.SelectedIndex = 6;
-                    else if (oam.obj1.size == 3) comboSize.SelectedIndex = 7;
+                    if (oam.obj1.size == 0){ comboSize.SelectedIndex = 4; }
+                    else if (oam.obj1.size == 1){ comboSize.SelectedIndex = 5; }
+                    else if (oam.obj1.size == 2){ comboSize.SelectedIndex = 6; }
+                    else if (oam.obj1.size == 3){ comboSize.SelectedIndex = 7; }
                     break;
                 case 2:
-                    if (oam.obj1.size == 0) comboSize.SelectedIndex = 8;
-                    else if (oam.obj1.size == 1) comboSize.SelectedIndex = 9;
-                    else if (oam.obj1.size == 2) comboSize.SelectedIndex = 10;
-                    else if (oam.obj1.size == 3) comboSize.SelectedIndex = 11;
+                    if (oam.obj1.size == 0){ comboSize.SelectedIndex = 8; }
+                    else if (oam.obj1.size == 1){ comboSize.SelectedIndex = 9; }
+                    else if (oam.obj1.size == 2){ comboSize.SelectedIndex = 10; }
+                    else if (oam.obj1.size == 3){ comboSize.SelectedIndex = 11; }
                     break;
             }
 

@@ -294,7 +294,7 @@ namespace Ekona.Images
             switch (format)
             {
                 case ColorFormat.A3I5:
-                    if (data.Length <= pos) break;
+                    if (data.Length <= pos){ break; }
                     index = data[pos] & 0x1F;
                     alpha = (data[pos] >> 5);
                     alpha = ((alpha * 4) + (alpha / 2)) * 8;
@@ -307,7 +307,7 @@ namespace Ekona.Images
                     pos++;
                     break;
                 case ColorFormat.A4I4:
-                    if (data.Length <= pos) break;
+                    if (data.Length <= pos){ break; }
                     index = data[pos] & 0xF;
                     alpha = (data[pos] >> 4);
                     alpha *= 16;
@@ -320,7 +320,7 @@ namespace Ekona.Images
                     pos++;
                     break;
                 case ColorFormat.A5I3:
-                    if (data.Length <= pos) break;
+                    if (data.Length <= pos){ break; }
                     index = data[pos] & 0x7;
                     alpha = (data[pos] >> 3);
                     alpha *= 8;
@@ -334,7 +334,7 @@ namespace Ekona.Images
                     break;
 
                 case ColorFormat.colors2:
-                    if (data.Length <= (pos / 8)) break;
+                    if (data.Length <= (pos / 8)){ break; }
                     byte bit1 = data[pos / 8];
                     index = Helper.BitsConverter.ByteToBits(bit1)[pos % 8];
                     if (palette.Length > index)
@@ -342,7 +342,7 @@ namespace Ekona.Images
                     pos++;
                     break;
                 case ColorFormat.colors4:
-                    if (data.Length <= (pos / 4)) break;
+                    if (data.Length <= (pos / 4)){ break; }
                     byte bit2 = data[pos / 4];
                     index = Helper.BitsConverter.ByteToBit2(bit2)[pos % 4];
                     if (palette.Length > index)
@@ -350,7 +350,7 @@ namespace Ekona.Images
                     pos++;
                     break;
                 case ColorFormat.colors16:
-                    if (data.Length <= (pos / 2)) break;
+                    if (data.Length <= (pos / 2)){ break; }
                     byte bit4 = data[pos / 2];
                     index = Helper.BitsConverter.ByteToBit4(bit4)[pos % 2];
                     if (palette.Length > index)
@@ -644,11 +644,11 @@ namespace Ekona.Images
             uint offset = partOffset + partSize;
 
             addedLength = (partSize % blockSize != 0) ? blockSize - partSize % blockSize : 0;
-            if (offset == result.Count) result.AddRange(new byte[addedLength]);
+            if (offset == result.Count){ result.AddRange(new byte[addedLength]); }
             else result.InsertRange((int)offset, new byte[addedLength]);
             offset += addedLength;
 
-            if (offset == result.Count) result.AddRange(newData);
+            if (offset == result.Count){ result.AddRange(newData); }
             else result.InsertRange((int)offset, newData);
             addedLength += (uint)newData.Length;
 

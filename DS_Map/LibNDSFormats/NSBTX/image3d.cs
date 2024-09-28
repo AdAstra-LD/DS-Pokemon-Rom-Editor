@@ -47,8 +47,8 @@ namespace NSMBe4
         private int getPixelVal(int x, int y)
         {
             int i = x + y * width;
-            if (bpp == 8) return data[i];
-            if (bpp == 16) return data[i * 2] | data[i * 2 + 1] << 8;
+            if (bpp == 8){ return data[i]; }
+            if (bpp == 16){ return data[i * 2] | data[i * 2 + 1] << 8; }
             if (bpp == 4)
             {
                 int res = data[i / 2];
@@ -69,7 +69,7 @@ namespace NSMBe4
         private void setPixelVal(int x, int y, int v)
         {
             int i = x + y * width;
-            if (bpp == 8) data[i] = (byte)v;
+            if (bpp == 8){ data[i] = (byte)v; }
             else if (bpp == 16)
             {
                 data[i * 2] = (byte)(v & 0xFF);
@@ -96,18 +96,18 @@ namespace NSMBe4
         }
         public override int getPixel(int x, int y)
         {
-            if (x < 0 || x >= width) return 0;
-            if (y < 0 || y >= height) return 0;
+            if (x < 0 || x >= width){ return 0; }
+            if (y < 0 || y >= height){ return 0; }
             int val = getPixelVal(x, y);
-            if (format == 1) val &= 0x1F;
-            if (format == 6) val &= 0x07;
+            if (format == 1){ val &= 0x1F; }
+            if (format == 6){ val &= 0x07; }
             return val;
         }
 
         public override void setPixel(int x, int y, int c)
         {
-            if (x < 0 || x >= width) return;
-            if (y < 0 || y >= height) return;
+            if (x < 0 || x >= width){ return; }
+            if (y < 0 || y >= height){ return; }
             if (format == 1)
             {
                 c &= 0x1F;

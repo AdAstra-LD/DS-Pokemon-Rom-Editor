@@ -38,6 +38,8 @@
             this.encounterFileLabel = new System.Windows.Forms.Label();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.grassGroundTabPage = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.goodRodSwarmComboBox = new DSPRE.InputComboBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -63,12 +65,10 @@
             this.hoennFirstComboBox = new DSPRE.InputComboBox();
             this.swarmsGroupBox = new System.Windows.Forms.GroupBox();
             this.superRodSwarmComboBox = new DSPRE.InputComboBox();
-            this.goodRodSwarmComboBox = new DSPRE.InputComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.surfSwarmComboBox = new DSPRE.InputComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.grassSwarmComboBox = new DSPRE.InputComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.walkingGroupBox = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -245,6 +245,7 @@
             this.repairAllButton = new System.Windows.Forms.Button();
             this.mainTabControl.SuspendLayout();
             this.grassGroundTabPage.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -329,7 +330,7 @@
             // 
             this.removeEncounterFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeEncounterFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeEncounterFileButton.Location = new System.Drawing.Point(481, 12);
+            this.removeEncounterFileButton.Location = new System.Drawing.Point(98, 593);
             this.removeEncounterFileButton.Name = "removeEncounterFileButton";
             this.removeEncounterFileButton.Size = new System.Drawing.Size(97, 35);
             this.removeEncounterFileButton.TabIndex = 67;
@@ -342,7 +343,7 @@
             // 
             this.addEncounterFileButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addEncounterFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addEncounterFileButton.Location = new System.Drawing.Point(400, 12);
+            this.addEncounterFileButton.Location = new System.Drawing.Point(13, 593);
             this.addEncounterFileButton.Name = "addEncounterFileButton";
             this.addEncounterFileButton.Size = new System.Drawing.Size(79, 35);
             this.addEncounterFileButton.TabIndex = 66;
@@ -357,7 +358,7 @@
             this.selectEncounterComboBox.FormattingEnabled = true;
             this.selectEncounterComboBox.Location = new System.Drawing.Point(12, 25);
             this.selectEncounterComboBox.Name = "selectEncounterComboBox";
-            this.selectEncounterComboBox.Size = new System.Drawing.Size(150, 21);
+            this.selectEncounterComboBox.Size = new System.Drawing.Size(425, 21);
             this.selectEncounterComboBox.TabIndex = 65;
             this.selectEncounterComboBox.SelectedIndexChanged += new System.EventHandler(this.selectEncounterComboBox_SelectedIndexChanged);
             // 
@@ -365,7 +366,7 @@
             // 
             this.exportEncounterFileButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportEncounterFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportEncounterFileButton.Location = new System.Drawing.Point(263, 12);
+            this.exportEncounterFileButton.Location = new System.Drawing.Point(668, 17);
             this.exportEncounterFileButton.Name = "exportEncounterFileButton";
             this.exportEncounterFileButton.Size = new System.Drawing.Size(91, 35);
             this.exportEncounterFileButton.TabIndex = 64;
@@ -378,7 +379,7 @@
             // 
             this.importEncounterFileButton.Image = global::DSPRE.Properties.Resources.importArrow;
             this.importEncounterFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importEncounterFileButton.Location = new System.Drawing.Point(170, 12);
+            this.importEncounterFileButton.Location = new System.Drawing.Point(566, 17);
             this.importEncounterFileButton.Name = "importEncounterFileButton";
             this.importEncounterFileButton.Size = new System.Drawing.Size(91, 35);
             this.importEncounterFileButton.TabIndex = 63;
@@ -391,7 +392,7 @@
             // 
             this.saveEncountersButton.Image = global::DSPRE.Properties.Resources.saveButton;
             this.saveEncountersButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveEncountersButton.Location = new System.Drawing.Point(630, 12);
+            this.saveEncountersButton.Location = new System.Drawing.Point(690, 593);
             this.saveEncountersButton.Name = "saveEncountersButton";
             this.saveEncountersButton.Size = new System.Drawing.Size(117, 35);
             this.saveEncountersButton.TabIndex = 62;
@@ -416,11 +417,12 @@
             this.mainTabControl.Location = new System.Drawing.Point(9, 53);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(742, 490);
+            this.mainTabControl.Size = new System.Drawing.Size(803, 534);
             this.mainTabControl.TabIndex = 68;
             // 
             // grassGroundTabPage
             // 
+            this.grassGroundTabPage.Controls.Add(this.groupBox1);
             this.grassGroundTabPage.Controls.Add(this.pictureBox3);
             this.grassGroundTabPage.Controls.Add(this.pictureBox1);
             this.grassGroundTabPage.Controls.Add(this.pictureBox2);
@@ -431,15 +433,36 @@
             this.grassGroundTabPage.Location = new System.Drawing.Point(4, 22);
             this.grassGroundTabPage.Name = "grassGroundTabPage";
             this.grassGroundTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.grassGroundTabPage.Size = new System.Drawing.Size(734, 464);
+            this.grassGroundTabPage.Size = new System.Drawing.Size(795, 508);
             this.grassGroundTabPage.TabIndex = 0;
             this.grassGroundTabPage.Text = "Grass/Ground";
             this.grassGroundTabPage.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.goodRodSwarmComboBox);
+            this.groupBox1.Location = new System.Drawing.Point(563, 445);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(223, 51);
+            this.groupBox1.TabIndex = 234;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Night Fishing";
+            // 
+            // goodRodSwarmComboBox
+            // 
+            this.goodRodSwarmComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.goodRodSwarmComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.goodRodSwarmComboBox.FormattingEnabled = true;
+            this.goodRodSwarmComboBox.Location = new System.Drawing.Point(49, 19);
+            this.goodRodSwarmComboBox.Name = "goodRodSwarmComboBox";
+            this.goodRodSwarmComboBox.Size = new System.Drawing.Size(121, 21);
+            this.goodRodSwarmComboBox.TabIndex = 48;
+            this.goodRodSwarmComboBox.SelectedIndexChanged += new System.EventHandler(this.goodRodSwarmComboBox_SelectedIndexChanged);
+            // 
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(615, 4);
+            this.pictureBox3.Location = new System.Drawing.Point(677, 9);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(16, 21);
             this.pictureBox3.TabIndex = 233;
@@ -448,7 +471,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(566, 210);
+            this.pictureBox1.Location = new System.Drawing.Point(628, 225);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(16, 21);
             this.pictureBox1.TabIndex = 232;
@@ -477,9 +500,9 @@
             this.rockSmashGroupBox.Controls.Add(this.rockSmashNinetyComboBox);
             this.rockSmashGroupBox.Controls.Add(this.label13);
             this.rockSmashGroupBox.Controls.Add(this.rockSmashTenComboBox);
-            this.rockSmashGroupBox.Location = new System.Drawing.Point(492, 212);
+            this.rockSmashGroupBox.Location = new System.Drawing.Point(554, 227);
             this.rockSmashGroupBox.Name = "rockSmashGroupBox";
-            this.rockSmashGroupBox.Size = new System.Drawing.Size(232, 189);
+            this.rockSmashGroupBox.Size = new System.Drawing.Size(232, 212);
             this.rockSmashGroupBox.TabIndex = 165;
             this.rockSmashGroupBox.TabStop = false;
             this.rockSmashGroupBox.Text = "Rock Smash";
@@ -607,9 +630,9 @@
             this.radioMusicComboBox.Controls.Add(this.hoennSecondComboBox);
             this.radioMusicComboBox.Controls.Add(this.label9);
             this.radioMusicComboBox.Controls.Add(this.hoennFirstComboBox);
-            this.radioMusicComboBox.Location = new System.Drawing.Point(492, 7);
+            this.radioMusicComboBox.Location = new System.Drawing.Point(554, 12);
             this.radioMusicComboBox.Name = "radioMusicComboBox";
-            this.radioMusicComboBox.Size = new System.Drawing.Size(232, 191);
+            this.radioMusicComboBox.Size = new System.Drawing.Size(232, 209);
             this.radioMusicComboBox.TabIndex = 164;
             this.radioMusicComboBox.TabStop = false;
             this.radioMusicComboBox.Text = "Radio Sound Pokémon";
@@ -679,16 +702,14 @@
             // swarmsGroupBox
             // 
             this.swarmsGroupBox.Controls.Add(this.superRodSwarmComboBox);
-            this.swarmsGroupBox.Controls.Add(this.goodRodSwarmComboBox);
             this.swarmsGroupBox.Controls.Add(this.label5);
             this.swarmsGroupBox.Controls.Add(this.surfSwarmComboBox);
             this.swarmsGroupBox.Controls.Add(this.label6);
             this.swarmsGroupBox.Controls.Add(this.grassSwarmComboBox);
-            this.swarmsGroupBox.Controls.Add(this.label7);
             this.swarmsGroupBox.Controls.Add(this.label8);
-            this.swarmsGroupBox.Location = new System.Drawing.Point(12, 404);
+            this.swarmsGroupBox.Location = new System.Drawing.Point(12, 445);
             this.swarmsGroupBox.Name = "swarmsGroupBox";
-            this.swarmsGroupBox.Size = new System.Drawing.Size(712, 51);
+            this.swarmsGroupBox.Size = new System.Drawing.Size(536, 51);
             this.swarmsGroupBox.TabIndex = 163;
             this.swarmsGroupBox.TabStop = false;
             this.swarmsGroupBox.Text = "Swarm";
@@ -698,28 +719,17 @@
             this.superRodSwarmComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.superRodSwarmComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.superRodSwarmComboBox.FormattingEnabled = true;
-            this.superRodSwarmComboBox.Location = new System.Drawing.Point(575, 19);
+            this.superRodSwarmComboBox.Location = new System.Drawing.Point(388, 19);
             this.superRodSwarmComboBox.Name = "superRodSwarmComboBox";
             this.superRodSwarmComboBox.Size = new System.Drawing.Size(121, 21);
             this.superRodSwarmComboBox.TabIndex = 50;
             this.superRodSwarmComboBox.SelectedIndexChanged += new System.EventHandler(this.superRodSwarmComboBox_SelectedIndexChanged);
             // 
-            // goodRodSwarmComboBox
-            // 
-            this.goodRodSwarmComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.goodRodSwarmComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.goodRodSwarmComboBox.FormattingEnabled = true;
-            this.goodRodSwarmComboBox.Location = new System.Drawing.Point(395, 19);
-            this.goodRodSwarmComboBox.Name = "goodRodSwarmComboBox";
-            this.goodRodSwarmComboBox.Size = new System.Drawing.Size(121, 21);
-            this.goodRodSwarmComboBox.TabIndex = 48;
-            this.goodRodSwarmComboBox.SelectedIndexChanged += new System.EventHandler(this.goodRodSwarmComboBox_SelectedIndexChanged);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label5.Location = new System.Drawing.Point(181, 22);
+            this.label5.Location = new System.Drawing.Point(175, 22);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(26, 13);
             this.label5.TabIndex = 47;
@@ -730,7 +740,7 @@
             this.surfSwarmComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.surfSwarmComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.surfSwarmComboBox.FormattingEnabled = true;
-            this.surfSwarmComboBox.Location = new System.Drawing.Point(213, 19);
+            this.surfSwarmComboBox.Location = new System.Drawing.Point(207, 19);
             this.surfSwarmComboBox.Name = "surfSwarmComboBox";
             this.surfSwarmComboBox.Size = new System.Drawing.Size(121, 21);
             this.surfSwarmComboBox.TabIndex = 46;
@@ -757,25 +767,15 @@
             this.grassSwarmComboBox.TabIndex = 44;
             this.grassSwarmComboBox.SelectedIndexChanged += new System.EventHandler(this.grassSwarmComboBox_SelectedIndexChanged);
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label7.Location = new System.Drawing.Point(348, 22);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(41, 13);
-            this.label7.TabIndex = 49;
-            this.label7.Text = "G. Rod";
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label8.Location = new System.Drawing.Point(529, 22);
+            this.label8.Location = new System.Drawing.Point(334, 22);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(40, 13);
+            this.label8.Size = new System.Drawing.Size(48, 13);
             this.label8.TabIndex = 51;
-            this.label8.Text = "S. Rod";
+            this.label8.Text = "Any Rod";
             // 
             // walkingGroupBox
             // 
@@ -847,7 +847,7 @@
             this.walkingGroupBox.Controls.Add(this.morningTwentyFirstComboBox);
             this.walkingGroupBox.Location = new System.Drawing.Point(12, 7);
             this.walkingGroupBox.Name = "walkingGroupBox";
-            this.walkingGroupBox.Size = new System.Drawing.Size(474, 394);
+            this.walkingGroupBox.Size = new System.Drawing.Size(536, 432);
             this.walkingGroupBox.TabIndex = 162;
             this.walkingGroupBox.TabStop = false;
             this.walkingGroupBox.Text = "Walking";
@@ -1530,7 +1530,7 @@
             this.waterTabPage.Location = new System.Drawing.Point(4, 22);
             this.waterTabPage.Name = "waterTabPage";
             this.waterTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.waterTabPage.Size = new System.Drawing.Size(734, 464);
+            this.waterTabPage.Size = new System.Drawing.Size(795, 508);
             this.waterTabPage.TabIndex = 1;
             this.waterTabPage.Text = "Water";
             this.waterTabPage.UseVisualStyleBackColor = true;
@@ -1670,7 +1670,7 @@
             this.label70.Name = "label70";
             this.label70.Size = new System.Drawing.Size(21, 13);
             this.label70.TabIndex = 20;
-            this.label70.Text = "1%";
+            this.label70.Text = "5%";
             // 
             // superRodOneComboBox
             // 
@@ -1703,11 +1703,11 @@
             // 
             this.label71.AutoSize = true;
             this.label71.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label71.Location = new System.Drawing.Point(18, 154);
+            this.label71.Location = new System.Drawing.Point(12, 154);
             this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(21, 13);
+            this.label71.Size = new System.Drawing.Size(27, 13);
             this.label71.TabIndex = 16;
-            this.label71.Text = "4%";
+            this.label71.Text = "10%";
             // 
             // superRodFourComboBox
             // 
@@ -1781,7 +1781,7 @@
             this.label73.Name = "label73";
             this.label73.Size = new System.Drawing.Size(27, 13);
             this.label73.TabIndex = 8;
-            this.label73.Text = "40%";
+            this.label73.Text = "30%";
             // 
             // superRodSecondFortyComboBox
             // 
@@ -1929,7 +1929,7 @@
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(21, 13);
             this.label54.TabIndex = 20;
-            this.label54.Text = "1%";
+            this.label54.Text = "5%";
             // 
             // goodRodOneComboBox
             // 
@@ -1962,11 +1962,11 @@
             // 
             this.label55.AutoSize = true;
             this.label55.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label55.Location = new System.Drawing.Point(18, 154);
+            this.label55.Location = new System.Drawing.Point(12, 154);
             this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(21, 13);
+            this.label55.Size = new System.Drawing.Size(27, 13);
             this.label55.TabIndex = 16;
-            this.label55.Text = "4%";
+            this.label55.Text = "10%";
             // 
             // goodRodFourComboBox
             // 
@@ -2040,7 +2040,7 @@
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(27, 13);
             this.label57.TabIndex = 8;
-            this.label57.Text = "40%";
+            this.label57.Text = "30%";
             // 
             // goodRodSecondFortyComboBox
             // 
@@ -2188,7 +2188,7 @@
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(21, 13);
             this.label46.TabIndex = 20;
-            this.label46.Text = "1%";
+            this.label46.Text = "5%";
             // 
             // oldRodOneComboBox
             // 
@@ -2221,11 +2221,11 @@
             // 
             this.label47.AutoSize = true;
             this.label47.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label47.Location = new System.Drawing.Point(18, 154);
+            this.label47.Location = new System.Drawing.Point(12, 154);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(21, 13);
+            this.label47.Size = new System.Drawing.Size(27, 13);
             this.label47.TabIndex = 16;
-            this.label47.Text = "4%";
+            this.label47.Text = "10%";
             // 
             // oldRodFourComboBox
             // 
@@ -2258,11 +2258,11 @@
             // 
             this.label48.AutoSize = true;
             this.label48.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label48.Location = new System.Drawing.Point(18, 127);
+            this.label48.Location = new System.Drawing.Point(12, 127);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(21, 13);
+            this.label48.Size = new System.Drawing.Size(27, 13);
             this.label48.TabIndex = 12;
-            this.label48.Text = "5%";
+            this.label48.Text = "15%";
             // 
             // oldRodFiveComboBox
             // 
@@ -2336,7 +2336,7 @@
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(27, 13);
             this.label50.TabIndex = 4;
-            this.label50.Text = "60%";
+            this.label50.Text = "40%";
             // 
             // oldRodSixtyComboBox
             // 
@@ -2611,7 +2611,7 @@
             // repairAllButton
             // 
             this.repairAllButton.Image = global::DSPRE.Properties.Resources.wrenchIcon;
-            this.repairAllButton.Location = new System.Drawing.Point(590, 9);
+            this.repairAllButton.Location = new System.Drawing.Point(769, 12);
             this.repairAllButton.Name = "repairAllButton";
             this.repairAllButton.Size = new System.Drawing.Size(38, 40);
             this.repairAllButton.TabIndex = 69;
@@ -2622,7 +2622,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(758, 555);
+            this.ClientSize = new System.Drawing.Size(813, 631);
             this.Controls.Add(this.repairAllButton);
             this.Controls.Add(this.mainTabControl);
             this.Controls.Add(this.removeEncounterFileButton);
@@ -2637,6 +2637,7 @@
             this.Text = "DSPRE Reloaded 1.9.3 - HGSS Encounters Editor";
             this.mainTabControl.ResumeLayout(false);
             this.grassGroundTabPage.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -2917,7 +2918,6 @@
         private DSPRE.InputComboBox surfSwarmComboBox;
         private System.Windows.Forms.Label label6;
         private DSPRE.InputComboBox grassSwarmComboBox;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.GroupBox radioMusicComboBox;
         private DSPRE.InputComboBox sinnohSecondComboBox;
@@ -2944,5 +2944,6 @@
         private System.Windows.Forms.Button repairAllButton;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

@@ -32,8 +32,8 @@ namespace System.IO {
             : this(baseStream, Endianness.BigEndian) { }
 
         public EndianBinaryReader(Stream baseStream, Endianness endianness) {
-            if (baseStream is null) throw new ArgumentNullException("baseStream");
-            if (!baseStream.CanRead) throw new ArgumentException("baseStream");
+            if (baseStream is null){ throw new ArgumentNullException("baseStream"); }
+            if (!baseStream.CanRead){ throw new ArgumentException("baseStream"); }
 
             BaseStream = baseStream;
             Endianness = endianness;

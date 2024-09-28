@@ -73,7 +73,7 @@ namespace NSMBe4.DSFileSystem
                         newDir = d;
                         break;
                     }
-                if (newDir is null) return null;
+                if (newDir is null){ return null; }
 
                 dir = newDir;
             }

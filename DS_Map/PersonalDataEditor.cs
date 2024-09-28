@@ -6,10 +6,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace DSPRE {
     public partial class PersonalDataEditor : Form {
-        private bool disableHandlers = false;
 
         private readonly string[] fileNames;
         private readonly string[] pokenames;
@@ -18,14 +18,19 @@ namespace DSPRE {
         private PokemonPersonalData currentLoadedFile = null;
 
         private static bool dirty = false;
+        private bool modifiedAbilities = false;
         private static readonly string formName = "Personal Data Editor";
 
-        public PersonalDataEditor(string[] itemNames, string[] abilityNames) {
+        PokemonEditor _parent;
+
+        public PersonalDataEditor(string[] itemNames, string[] abilityNames, System.Windows.Forms.Control parent, PokemonEditor pokeEditor) {
             this.fileNames = RomInfo.GetPokemonNames().ToArray();;
-
+            this._parent = pokeEditor;
             InitializeComponent();
-
-            disableHandlers = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Size = parent.Size;
+            this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+            Helpers.DisableHandlers();
 
             BindingList<string> listItemNames = new BindingList<string>(itemNames);
             item1InputComboBox.DataSource = new BindingSource(listItemNames, string.Empty);
@@ -65,7 +70,7 @@ namespace DSPRE {
             pokemonNameInputComboBox.Items.AddRange(this.fileNames);
             /* ---------------- */
 
-            disableHandlers = false;
+            Helpers.EnableHandlers();
 
 
             pokemonNameInputComboBox.SelectedIndex = 1;
@@ -80,7 +85,7 @@ namespace DSPRE {
             }
         }
         private void baseHpNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseHP = (byte)baseHpNumericUpDown.Value;
@@ -88,14 +93,14 @@ namespace DSPRE {
         }
 
         private void baseAtkNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseAtk = (byte)baseAtkNumericUpDown.Value;
             setDirty(true);
         }
         private void baseDefNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseDef = (byte)baseDefNumericUpDown.Value;
@@ -103,7 +108,7 @@ namespace DSPRE {
         }
 
         private void baseSpAtkNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseSpAtk = (byte)baseSpAtkNumericUpDown.Value;
@@ -111,7 +116,7 @@ namespace DSPRE {
         }
 
         private void baseSpDefNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseSpDef = (byte)baseSpDefNumericUpDown.Value;
@@ -119,7 +124,7 @@ namespace DSPRE {
         }
 
         private void baseSpeedNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseSpeed = (byte)baseSpeedNumericUpDown.Value;
@@ -127,7 +132,7 @@ namespace DSPRE {
         }
 
         private void evHpNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.evHP = (byte)evHpNumericUpDown.Value;
@@ -135,7 +140,7 @@ namespace DSPRE {
         }
 
         private void evAtkNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.evAtk = (byte)evAtkNumericUpDown.Value;
@@ -143,7 +148,7 @@ namespace DSPRE {
         }
 
         private void evDefNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.evDef = (byte)evDefNumericUpDown.Value;
@@ -151,7 +156,7 @@ namespace DSPRE {
         }
 
         private void evSpAtkNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.evSpAtk = (byte)evSpAtkNumericUpDown.Value;
@@ -159,7 +164,7 @@ namespace DSPRE {
         }
 
         private void evSpDefNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.evSpDef = (byte)evSpDefNumericUpDown.Value;
@@ -167,7 +172,7 @@ namespace DSPRE {
         }
 
         private void evSpeedNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.evSpeed = (byte)evSpeedNumericUpDown.Value;
@@ -176,7 +181,7 @@ namespace DSPRE {
 
 
         private void type1InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.type1 = (PokemonType)type1InputComboBox.SelectedIndex;
@@ -184,7 +189,7 @@ namespace DSPRE {
         }
 
         private void type2InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.type2 = (PokemonType)type2InputComboBox.SelectedIndex;
@@ -192,7 +197,7 @@ namespace DSPRE {
         }
 
         private void growthCurveInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.growthCurve = (PokemonGrowthCurve)growthCurveInputComboBox.SelectedIndex;
@@ -200,7 +205,7 @@ namespace DSPRE {
         }
 
         private void baseExpYieldNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.givenExp = (byte)baseExpYieldNumericUpDown.Value;
@@ -208,7 +213,7 @@ namespace DSPRE {
         }
 
         private void dexColorInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.color = (PokemonDexColor)dexColorInputComboBox.SelectedIndex;
@@ -216,7 +221,7 @@ namespace DSPRE {
         }
 
         private void flipFlagCheckBox_CheckedChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.flip = flipFlagCheckBox.Checked;
@@ -224,7 +229,7 @@ namespace DSPRE {
         }
 
         private void escapeRateNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.escapeRate = (byte)escapeRateNumericUpDown.Value;
@@ -232,7 +237,7 @@ namespace DSPRE {
         }
 
         private void catchRateNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.catchRate = (byte)catchRateNumericUpDown.Value;
@@ -240,7 +245,7 @@ namespace DSPRE {
         }
 
         private void genderProbabilityNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.genderVec = (byte)genderProbabilityNumericUpDown.Value;
@@ -266,21 +271,23 @@ namespace DSPRE {
         }
 
         private void ability1InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.firstAbility = (byte)ability1InputComboBox.SelectedIndex;
             setDirty(true);
+            modifiedAbilities = true;
         }
         private void ability2InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.secondAbility = (byte)ability2InputComboBox.SelectedIndex;
             setDirty(true);
+            modifiedAbilities = true;
         }
         private void eggGroup1InputCombobox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.eggGroup1 = (byte)eggGroup1InputCombobox.SelectedIndex;
@@ -288,7 +295,7 @@ namespace DSPRE {
         }
 
         private void eggGroup2InputCombobox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.eggGroup2 = (byte)eggGroup2InputCombobox.SelectedIndex;
@@ -296,7 +303,7 @@ namespace DSPRE {
         }
 
         private void eggStepsNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.eggSteps = (byte)eggStepsNumericUpDown.Value;
@@ -304,23 +311,23 @@ namespace DSPRE {
         }
 
         private void item1InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
-            currentLoadedFile.item1 = (byte)item1InputComboBox.SelectedIndex;
+            currentLoadedFile.item1 = (ushort)item1InputComboBox.SelectedIndex;
             setDirty(true);
         }
 
         private void item2InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
-            currentLoadedFile.item2 = (byte)item2InputComboBox.SelectedIndex;
+            currentLoadedFile.item2 = (ushort)item2InputComboBox.SelectedIndex;
             setDirty(true);
         }
 
         private void baseFriendshipNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             currentLoadedFile.baseFriendship = (byte)baseFriendshipNumericUpDown.Value;
@@ -333,7 +340,7 @@ namespace DSPRE {
             if (elemAdd < 0) {
                 return;
             }
-            int id = IndexFromMachineName((string)addableMachinesListBox.SelectedItem);
+            int id = ZeroBasedIndexFromMachineName((string)addableMachinesListBox.SelectedItem);
 
             currentLoadedFile.machines.Add((byte)id);
 
@@ -351,7 +358,7 @@ namespace DSPRE {
             if (elemRemove < 0) {
                 return;
             }
-            int id = IndexFromMachineName((string)addedMachinesListBox.SelectedItem);
+            int id = ZeroBasedIndexFromMachineName((string)addedMachinesListBox.SelectedItem);
             currentLoadedFile.machines.Remove((byte)id);
 
             RebuildMachinesListBoxes(true, false);
@@ -370,7 +377,7 @@ namespace DSPRE {
             }
 
             currentLoadedFile.machines = new SortedSet<byte>();
-            for (byte i = 1; i < tot + 1; i++) {
+            for (byte i = 0; i < tot; i++) {
                 currentLoadedFile.machines.Add(i);
             }
             RebuildMachinesListBoxes();
@@ -387,15 +394,19 @@ namespace DSPRE {
         }
         private void saveDataButton_Click(object sender, EventArgs e) {
             currentLoadedFile.SaveToFileDefaultDir(currentLoadedId, true);
+            if (modifiedAbilities) {
+                EditorPanels.MainProgram.RefreshAbilities(currentLoadedId);
+                modifiedAbilities = false;
+            }
             setDirty(false);
         }
         //-------------------------------
-        private bool CheckDiscardChanges() {
+        public bool CheckDiscardChanges() {
             if (!dirty) {
                 return true;
             }
 
-            DialogResult res = MessageBox.Show("There are unsaved changes to the current Pokémon data.\nDiscard and proceed?", "Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult res = MessageBox.Show("Personal Editor\nThere are unsaved changes to the current Personal data.\nDiscard and proceed?", "Personal Editor - Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res.Equals(DialogResult.Yes)) {
                 return true;
             }
@@ -408,36 +419,36 @@ namespace DSPRE {
         }
 
         private void pokemonNameInputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            Update();
+            if (Helpers.HandlersDisabled) {
                 return;
             }
-
-            disableHandlers = true;
+            this._parent.TrySyncIndices((System.Windows.Forms.ComboBox)sender);
+            Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
                 int newNumber = pokemonNameInputComboBox.SelectedIndex;
                 monNumberNumericUpDown.Value = newNumber;
                 ChangeLoadedFile(newNumber);
-               
             }
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
 
         private void monNumberNumericUpDown_ValueChanged(object sender, EventArgs e) {
-            if (disableHandlers) { 
-                return; 
+            Update();
+            if (Helpers.HandlersDisabled) {
+                return;
             }
-
-            disableHandlers = true;
+            this._parent.TrySyncIndices((NumericUpDown)sender);
+            Helpers.DisableHandlers();
             if (CheckDiscardChanges()) {
-
                 int newNumber = (int)monNumberNumericUpDown.Value;
                 pokemonNameInputComboBox.SelectedIndex = newNumber;
                 ChangeLoadedFile(newNumber);
-                
             }
-            disableHandlers = false;
+            Helpers.EnableHandlers();
         }
-        private void ChangeLoadedFile(int toLoad) {
+
+        public void ChangeLoadedFile(int toLoad) {
             currentLoadedId = toLoad;
             currentLoadedFile = new PokemonPersonalData(currentLoadedId);
 
@@ -509,8 +520,8 @@ namespace DSPRE {
 
             int dataIndex = 0;
             byte tot = (byte)(PokemonPersonalData.tmsCount + PokemonPersonalData.hmsCount);
-            for (byte i = 1; i < tot + 1; i++) {
-                string currentItem = MachineNameFromIndex(i);
+            for (byte i = 0; i < tot; i++) {
+                string currentItem = MachineNameFromZeroBasedIndex(i);
                 if (dataIndex < currentLoadedFile.machines.Count && currentLoadedFile.machines.Contains(i)) {
                     addedMachinesListBox.Items.Add(currentItem);
                     dataIndex++;
@@ -535,12 +546,15 @@ namespace DSPRE {
             }
         }
 
-        private static string MachineNameFromIndex(int n) {
+        private static string MachineNameFromZeroBasedIndex(int n) {
+            //0-91 --> TMs
+            //>=92 --> HM
+            n += 1;
             int diff = n - PokemonPersonalData.tmsCount;
             string item = diff > 0 ? "HM " + diff : "TM " + n;
             return item;
         }
-        private static int IndexFromMachineName(string machineName) {
+        private static int ZeroBasedIndexFromMachineName(string machineName) {
             // Split the machineName to get the prefix (TM or HM) and the number
             string[] parts = machineName.Split(' ');
 
@@ -550,6 +564,7 @@ namespace DSPRE {
 
                 if (isTM || parts[0].Equals("HM", StringComparison.OrdinalIgnoreCase)) {
                     if (int.TryParse(parts[1], out int number)) {
+                        number--;
                         // Calculate the index based on the prefix (TM or HM)
                         int index = isTM ? number : number + PokemonPersonalData.tmsCount;
                         return index;

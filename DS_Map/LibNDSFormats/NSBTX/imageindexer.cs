@@ -91,7 +91,7 @@ namespace NSMBe4 {
 
             int ct = 0;
             foreach (MultiColor c in freqTable.Keys)
-                if (c.someTransparent()) ct++;
+                if (c.someTransparent()){ ct++; }
             Console.Out.WriteLine("Transparent: " + ct);
 
 
@@ -100,9 +100,9 @@ namespace NSMBe4 {
                 if (!c.deleteFlag) {
                     int cnt = freqTable[c];
                     foreach (MultiColor c2 in freqTable.Keys) {
-                        if (c2 is null) continue;
-                        if (c2.deleteFlag) continue;
-                        if (c2 == c) continue;
+                        if (c2 is null){ continue; }
+                        if (c2.deleteFlag){ continue; }
+                        if (c2 == c){ continue; }
 
                         if (c.diff(c2) == 0) {
                             cnt += freqTable[c2];
@@ -119,7 +119,7 @@ namespace NSMBe4 {
 
             ct = 0;
             foreach (MultiColor c in freqTable.Keys)
-                if (c.someTransparent()) ct++;
+                if (c.someTransparent()){ ct++; }
             Console.Out.WriteLine("Transparent2: " + ct);
 
             // NOW CREATE THE PALETTE ZONES
@@ -241,12 +241,12 @@ namespace NSMBe4 {
 
         //ALGORITHM CORE
         private byte closestMultiColor(MultiColor mc) {
-            if (mc.allTransparent()) return 0;
+            if (mc.allTransparent()){ return 0; }
             else {
                 int best = -1;
                 float bestd = float.PositiveInfinity;
                 for (int i = 0; i < multiPalette.Length; i++) {
-                    if (multiPalette[i] is null) continue;
+                    if (multiPalette[i] is null){ continue; }
                     float d = mc.diff(multiPalette[i]);
                     if (d < bestd || best == -1) {
                         best = i;
@@ -332,8 +332,8 @@ namespace NSMBe4 {
                     for (int i = 0; i < c.data.Length; i++) {
                         if (!c.transp[i])
                             if (def[i]) {
-                                if (min[i] > c.data[i]) min[i] = c.data[i];
-                                if (max[i] < c.data[i]) max[i] = c.data[i];
+                                if (min[i] > c.data[i]){ min[i] = c.data[i]; }
+                                if (max[i] < c.data[i]){ max[i] = c.data[i]; }
                             } else {
                                 min[i] = c.data[i];
                                 max[i] = c.data[i];
@@ -389,18 +389,18 @@ namespace NSMBe4 {
             }
 
             public Color getColor(int i) {
-                if (transp[i * 3]) return Color.Transparent;
+                if (transp[i * 3]){ return Color.Transparent; }
                 return Color.FromArgb(data[i * 3], data[i * 3 + 1], data[i * 3 + 2]);
             }
 
             public bool allTransparent() {
                 for (int i = 0; i < transp.Length; i += 3)
-                    if (!transp[i]) return false;
+                    if (!transp[i]){ return false; }
                 return true;
             }
             public bool someTransparent() {
                 for (int i = 0; i < transp.Length; i += 3)
-                    if (transp[i]) return true;
+                    if (transp[i]){ return true; }
                 return false;
             }
 
@@ -412,7 +412,7 @@ namespace NSMBe4 {
 
                     for (int i = 0; i < data.Length; i++) {
                         hash = (hash ^ data[i]) * p;
-                        if (transp[i]) hash++;
+                        if (transp[i]){ hash++; }
                     }
 
                     hash += hash << 13;
@@ -436,8 +436,8 @@ namespace NSMBe4 {
                         return false;
 
                     for (int i = 0; i < data.Length; i++) {
-                        if (data[i] != c.data[i]) return false;
-                        if (transp[i] != c.transp[i]) return false;
+                        if (data[i] != c.data[i]){ return false; }
+                        if (transp[i] != c.transp[i]){ return false; }
                     }
                     return true;
                 } else return false;
@@ -487,16 +487,16 @@ namespace NSMBe4 {
 
             public bool inside(MultiColor c) {
                 for (int i = 0; i < min.Length; i++) {
-                    if (c.transp[i]) continue;
-                    if (c.data[i] < min[i]) return false;
-                    if (c.data[i] > max[i]) return false;
+                    if (c.transp[i]){ continue; }
+                    if (c.data[i] < min[i]){ return false; }
+                    if (c.data[i] > max[i]){ return false; }
                 }
                 return true;
             }
 
             public int dominantDimension(Dictionary<MultiColor, int> freqTable) {
                 int d = dominantDimensionNum(freqTable);
-                if (d == 255) return 0;
+                if (d == 255){ return 0; }
                 return max[d] - min[d];
             }
 
@@ -544,7 +544,7 @@ namespace NSMBe4 {
             }
 
             public bool canSplit(Dictionary<MultiColor, int> freqTable) {
-                if (splittablecached) return splittable;
+                if (splittablecached){ return splittable; }
                 else {
                     splittablecached = true;
                     splittable = canSplit2(freqTable);
@@ -690,7 +690,7 @@ namespace NSMBe4 {
         }
 
         public static float colorDifference(Color a, Color b) {
-            if (a.A != b.A) return float.MaxValue;
+            if (a.A != b.A){ return float.MaxValue; }
 
             float res = 0;
             res += (a.R - b.R) * (a.R - b.R) / 40;

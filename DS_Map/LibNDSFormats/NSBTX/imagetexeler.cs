@@ -60,11 +60,11 @@ namespace NSMBe4.NSBMD
                 //Find the two most similar palettes
                 for (int i = 0; i < palettes.Length; i++)
                 {
-                    if (paletteCounts[i] == 0) continue;
+                    if (paletteCounts[i] == 0){ continue; }
                     for (int j = 0; j < palettes.Length; j++)
                     {
-                        if (i == j) continue;
-                        if (paletteCounts[j] == 0) continue;
+                        if (i == j){ continue; }
+                        if (paletteCounts[j] == 0){ continue; }
 
                         if (paletteDiffs[i, j] < bestDif)
                         {
@@ -136,7 +136,7 @@ namespace NSMBe4.NSBMD
                             else
                             {
                                 col = (byte)ImageIndexer.closest(coll, palettes[paletteNumbers[x, y]]);
-                                if (col == 3) { col = 2; }
+                                if (col == 3){ { col = 2; } }
                             }
                             b |= (byte)(pow * col);
                             pow *= 4;
@@ -257,7 +257,7 @@ namespace NSMBe4.NSBMD
                     Progress += add;
                     bw.ReportProgress((int)Progress, "Generating Picture " + percent.ToString("000") + "%");
                     percent += add2;
-                    if (bw.CancellationPending) { bw.ReportProgress(0, "Canceled"); return; }
+                    if (bw.CancellationPending){ { bw.ReportProgress(0, "Canceled"); } return; }
                 }
             percent = 0;
             add2 = 100d / (((double)countUsedPalettes() - (double)paletteMaxNum));
@@ -274,11 +274,11 @@ namespace NSMBe4.NSBMD
                 //Find the two most similar palettes
                 for (int i = 0; i < palettes.Count; i++)
                 {
-                    if (paletteCounts[i] == 0) continue;
+                    if (paletteCounts[i] == 0){ continue; }
                     for (int j = 0; j < palettes.Count; j++)
                     {
-                        if (i == j) continue;
-                        if (paletteCounts[j] == 0) continue;
+                        if (i == j){ continue; }
+                        if (paletteCounts[j] == 0){ continue; }
 
                         if (paletteDiffs[i, j] < bestDif)
                         {
@@ -303,7 +303,7 @@ namespace NSMBe4.NSBMD
                 percent += add2;
                 bw.ReportProgress((int)Progress, "Generating Palette " + percent.ToString("000") + "%");
 
-                if (bw.CancellationPending) { bw.ReportProgress(0, "Canceled"); return; }
+                if (bw.CancellationPending){ { bw.ReportProgress(0, "Canceled"); } return; }
             }
 
 
@@ -365,7 +365,7 @@ namespace NSMBe4.NSBMD
                                     colo.RemoveAt(3);
                                 }
                                 col = (byte)ImageIndexer.closest(coll, colo.ToArray());
-                                //if (col == 3) { col = 2; }
+                                //if (col == 3){ { col = 2; } }
                             }
                             b |= (byte)(pow * col);
                             pow *= 4;
@@ -633,7 +633,7 @@ namespace NSMBe4.NSBMD
             bool aTransp = a[3] == Color.Transparent;
             bool bTransp = b[3] == Color.Transparent;
 
-            if (aTransp != bTransp) return float.PositiveInfinity;
+            if (aTransp != bTransp){ return float.PositiveInfinity; }
 
             float dif = 0;
             int len = aTransp ? 3 : 4;
@@ -647,7 +647,7 @@ namespace NSMBe4.NSBMD
                 int i2 = -1;
                 for (int j = 0; j < len; j++)
                 {
-                    if (sel[j]) continue;
+                    if (sel[j]){ continue; }
                     float diff2 = ImageIndexer.colorDifference(c, b[j]);
                     if (diff2 < diff || i2 == -1)
                     {
@@ -694,7 +694,7 @@ namespace NSMBe4.NSBMD
             //    pal1.AddRange(ImageIndexer.createPaletteForImage(bi, 2, trans));//(trans ? 3 : 4), false));
              //   pal1.AddRange(new Color[2]);
             //}
-            //if (trans) { pal1.Add(Color.Transparent); }
+            //if (trans){ { pal1.Add(Color.Transparent); } }
             Color[] pal = pal1.ToArray();
             transparentToTheEnd(pal);
             return pal;

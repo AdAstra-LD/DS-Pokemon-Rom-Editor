@@ -24,8 +24,7 @@ namespace DSPRE.ROMFiles {
         public ushort? heldItem = null;
         public ushort[] moves = null;
 
-        public enum GenderAndAbilityFlags
-        {
+        public enum GenderAndAbilityFlags {
             NO_FLAGS = 0,
             FORCE_MALE = 0x1,
             FORCE_FEMALE = 0x2,
@@ -49,8 +48,7 @@ namespace DSPRE.ROMFiles {
             this.moves = moves;
         }
 
-        public PartyPokemon(byte difficulty, ushort Level, ushort pokeNum, ushort? heldItem = null, ushort[] moves = null)
-        {
+        public PartyPokemon(byte difficulty, ushort Level, ushort pokeNum, ushort? heldItem = null, ushort[] moves = null) {
             // Simply adding a new constructor for Diamond and Pearl since they dont have ball seal config
             pokeID = pokeNum;
             level = Level;
@@ -80,7 +78,7 @@ namespace DSPRE.ROMFiles {
                         writer.Write(move);
                     }
                 }
-                if (RomInfo.gameFamily == RomInfo.gFamEnum.HGSS || RomInfo.gameFamily == RomInfo.gFamEnum.Plat)
+                if (RomInfo.gameFamily == RomInfo.GameFamilies.HGSS || RomInfo.gameFamily == RomInfo.GameFamilies.Plat)
                     writer.Write(ballSeals); // Diamond and Pearl apparently dont save ball capsule data in enemy trainer pokedata!!!
             }
             return newData.ToArray();
@@ -97,7 +95,7 @@ namespace DSPRE.ROMFiles {
         public override string ToString() {
             return CheckEmpty() ? "Empty" : this.pokeID + " Lv. " + this.level;
         }
-        public bool CheckEmpty () {
+        public bool CheckEmpty() {
             return this is null || pokeID is null || level <= 0;
         }
         #endregion
@@ -126,7 +124,7 @@ namespace DSPRE.ROMFiles {
         public TrainerProperties(ushort ID, byte partyCount = 0) {
             trainerID = ID;
             trainerItems = new ushort[TRAINER_ITEMS];
-            AI = new BitArray( new bool[AI_COUNT] { true, false, false, false, false, false, false, false, false, false, false } );
+            AI = new BitArray(new bool[AI_COUNT] { true, false, false, false, false, false, false, false, false, false, false });
             trDataUnknown = 0;
         }
         public TrainerProperties(ushort ID, Stream trainerPropertiesStream) {
@@ -144,7 +142,7 @@ namespace DSPRE.ROMFiles {
                     trainerItems[i] = reader.ReadUInt16();
                 }
 
-                AI = new BitArray( BitConverter.GetBytes(reader.ReadUInt32()) );
+                AI = new BitArray(BitConverter.GetBytes(reader.ReadUInt32()));
                 doubleBattle = reader.ReadUInt32() == 2;
             }
         }
@@ -251,7 +249,7 @@ namespace DSPRE.ROMFiles {
                         }
 
 
-                        if (RomInfo.gameFamily == RomInfo.gFamEnum.HGSS || RomInfo.gameFamily == RomInfo.gFamEnum.Plat)
+                        if (RomInfo.gameFamily == RomInfo.GameFamilies.HGSS || RomInfo.gameFamily == RomInfo.GameFamilies.Plat)
                             content[i] = new PartyPokemon(difficulty, genderAndAbilityFlags, level, pokemon, form_no, reader.ReadUInt16(), heldItem, moves);
                         else
                             content[i] = new PartyPokemon(difficulty, level, pokemon, heldItem, moves); // Diamond and Pearl apparently dont save ball capsule data in enemy trainer pokedata!!!
@@ -323,7 +321,7 @@ namespace DSPRE.ROMFiles {
         }
     }
     public class TrainerFile : RomFile {
-        public const int maxNameLen = 7;
+        public const int defaultNameLen = 10; //Does not include special \0 end character!
         public const int POKE_IN_PARTY = 6;
         public static readonly string NAME_NOT_FOUND = "NAME READ ERROR";
 
@@ -334,7 +332,7 @@ namespace DSPRE.ROMFiles {
         #endregion
 
         #region Constructor
-        public TrainerFile(TrainerProperties trp, string name = ""){
+        public TrainerFile(TrainerProperties trp, string name = "") {
             this.name = name;
             this.trp = trp;
             trp.partyCount = 1;

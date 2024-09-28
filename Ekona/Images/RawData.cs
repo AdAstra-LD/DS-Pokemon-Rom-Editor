@@ -83,11 +83,11 @@ namespace Ekona.Images
             BinaryReader br = new BinaryReader(File.OpenRead(fileIn));
             prev_data = br.ReadBytes(offset);
 
-            if (fileSize <= 0) fileSize = (int)br.BaseStream.Length;
-            if (fileSize > 0x2000) fileSize = 0x2000;
+            if (fileSize <= 0){ fileSize = (int)br.BaseStream.Length; }
+            if (fileSize > 0x2000){ fileSize = 0x2000; }
 
             int palette_length = 0x200;
-            if (depth == ColorFormat.colors16 || fileSize < 0x200) palette_length = 0x20;
+            if (depth == ColorFormat.colors16 || fileSize < 0x200){ palette_length = 0x20; }
 
             // Color data
             Color[][] palette = new Color[fileSize / palette_length][];
@@ -108,10 +108,10 @@ namespace Ekona.Images
             if (fileSize <= 0)
                 fileSize = (int)br.BaseStream.Length;
             int fileSize_ = fileSize;
-            if (fileSize > 0x2000) fileSize = 0x2000;
+            if (fileSize > 0x2000){ fileSize = 0x2000; }
 
             int palette_length = 0x200;
-            if (fileSize < 0x200) palette_length = fileSize;
+            if (fileSize < 0x200){ palette_length = fileSize; }
 
             // Color data
             Color[][] palette = new Color[fileSize / palette_length][];

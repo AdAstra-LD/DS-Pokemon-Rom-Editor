@@ -370,7 +370,7 @@ namespace Images
                 {
                     ncer.cebk.banks[i].partition_offset = Banks[i].data_offset;
                     ncer.cebk.banks[i].partition_size = Banks[i].data_size;
-                    if (ncer.cebk.banks[i].partition_size > max_partition_size) max_partition_size = ncer.cebk.banks[i].partition_size;
+                    if (ncer.cebk.banks[i].partition_size > max_partition_size){ max_partition_size = ncer.cebk.banks[i].partition_size; }
                 }
                 else
                 {

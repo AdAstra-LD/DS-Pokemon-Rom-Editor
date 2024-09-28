@@ -45,15 +45,15 @@ namespace DSPRE {
             buildingOpenGLControl.MouseWheel += new MouseEventHandler(buildingOpenGLControl_MouseWheel);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
 
-            if (RomInfo.gameFamily == gFamEnum.HGSS) {
+            if (RomInfo.gameFamily == GameFamilies.HGSS) {
                 interiorCheckBox.Enabled = true;
             }
 
-            disableHandlers = true;
+            Helpers.DisableHandlers();
             FillListBox(false);
             FillTexturesBox();
             textureComboBox.SelectedIndex = 0;
-            disableHandlers = false;
+            Helpers.EnableHandlers();
             buildingEditorBldListBox.SelectedIndex = 0;
         }
 
@@ -62,7 +62,7 @@ namespace DSPRE {
             string readingPath = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + modelID.ToString("D4");
 
             byte[] txFile = File.ReadAllBytes(readingPath);
-            byte[] texData = DSUtils.GetTexturesFromTexturedNSBMD(txFile);
+            byte[] texData = NSBUtils.GetTexturesFromTexturedNSBMD(txFile);
 
             if (texData.Length <= 4) {
                 Console.WriteLine("No textures found");
@@ -76,7 +76,7 @@ namespace DSPRE {
                 string filePath = folder + rom.GetBuildingModelsDirPath(interior) + "\\" + currentIndex.ToString("D4");
 
                 using (DSUtils.EasyReader reader = new DSUtils.EasyReader(filePath, 0x14)) {
-                    string nsbmdName = DSUtils.ReadNSBMDname(reader);
+                    string nsbmdName = NSBUtils.ReadNSBMDname(reader);
                     buildingEditorBldListBox.Items.Add("[" + currentIndex.ToString("D3") + "] " + nsbmdName);
                 }
             }
@@ -167,7 +167,7 @@ namespace DSPRE {
             RenderModel();
         }
         private void buildingEditorListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers || buildingEditorBldListBox.SelectedIndex < 0) {
+            if (Helpers.HandlersDisabled || buildingEditorBldListBox.SelectedIndex < 0) {
                 return;
             }
 
@@ -207,23 +207,23 @@ namespace DSPRE {
                     int currentIndex = buildingEditorBldListBox.SelectedIndex;
 
                     File.Copy(im.FileName, folder + rom.GetBuildingModelsDirPath(interiorCheckBox.Checked) + "\\" + currentIndex.ToString("D4"), true);
-                    buildingEditorBldListBox.Items[currentIndex] = "[" + currentIndex.ToString("D3") + "] " + DSUtils.ReadNSBMDname(reader, 0x14);
+                    buildingEditorBldListBox.Items[currentIndex] = "[" + currentIndex.ToString("D3") + "] " + NSBUtils.ReadNSBMDname(reader, 0x14);
                     buildingEditorListBox_SelectedIndexChanged(null, null);
                 }
             }
         }
         private void interiorCheckBox_CheckedChanged(object sender, EventArgs e) {
-            disableHandlers = true;
+            Helpers.DisableHandlers();
 
             buildingEditorBldListBox.Items.Clear();
             FillListBox(interiorCheckBox.Checked);
 
-            disableHandlers = false;
+            Helpers.EnableHandlers();
 
             buildingEditorBldListBox.SelectedIndex = 0;
         }
         private void textureComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (disableHandlers) {
+            if (Helpers.HandlersDisabled) {
                 return;
             }
             LoadModelTextures(textureComboBox.SelectedIndex - 1);
@@ -275,7 +275,7 @@ namespace DSPRE {
         }
 
         private void bldExportDAEbutton_Click(object sender, EventArgs e) {
-            DSUtils.ModelToDAE(
+            ModelUtils.ModelToDAE(
                 modelName: buildingEditorBldListBox.SelectedItem.ToString().TrimEnd('\0'), 
                 modelData: currentModelData, 
                 textureData: textureComboBox.SelectedIndex < 1 ? null : File.ReadAllBytes(RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (textureComboBox.SelectedIndex - 1).ToString("D4"))

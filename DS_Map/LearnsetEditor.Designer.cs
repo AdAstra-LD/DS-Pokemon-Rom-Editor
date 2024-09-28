@@ -333,9 +333,7 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox pokemonPictureBox;
-        private System.Windows.Forms.NumericUpDown monNumberNumericUpDown;
         private System.Windows.Forms.Button saveDataButton;
-        private InputComboBox pokemonNameInputComboBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -349,5 +347,7 @@
         private InputComboBox moveInputComboBox;
         private System.Windows.Forms.Label descriptorLabel;
         private System.Windows.Forms.Label statusLabel;
+        public InputComboBox pokemonNameInputComboBox;
+        public System.Windows.Forms.NumericUpDown monNumberNumericUpDown;
     }
 }

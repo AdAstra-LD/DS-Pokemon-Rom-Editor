@@ -2,9 +2,9 @@
 
 Major overhaul of Nomura's DS Pokemon ROM Editor, with lots of new features and bugfixes.
 
-![Screenshot](aDSPRE_192.png)
-![Screenshot](bDSPRE_192.png)
-![Screenshot](cDSPRE_192.png)
+![Screenshot](aDSPRE_1110.png)
+![Screenshot](bDSPRE_1110.png)
+![Screenshot](cDSPRE_1110.png)
 
 ## Misc changes to the original DSPRE
 - Significantly shorter load and save times.
@@ -145,3 +145,6 @@ Edit base stats, Learnable TMs, EVs yield, and more.
 
 ### New Learnset Editor:
 Edit the moves that a given Pokemon can learn by leveling up.
+
+### New Evolutions Editor:
+Edit evolution methods and levels for all Pokemon.
