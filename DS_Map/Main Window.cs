@@ -27,6 +27,7 @@ using static DSPRE.ROMFiles.SpeciesFile;
 using System.Reflection;
 using System.ComponentModel;
 using DSPRE.Editors;
+using static ScintillaNET.Style;
 
 namespace DSPRE {
 
@@ -38,7 +39,7 @@ namespace DSPRE {
             EditorPanels.Initialize(this);
             Helpers.Initialize(this);
             SetMenuLayout(Properties.Settings.Default.menuLayout); //Read user settings for menu layout
-            Text = "DS Pokémon Rom Editor Reloaded " + GetDSPREVersion() + " (Nømura, AdAstra/LD3005, Mixone)";
+            Text = "Lost in Time Rom Editor " + GetDSPREVersion() + " (Nømura, AdAstra/LD3005, Mixone, Kuha)";
         }
 
         #region Program Window
@@ -703,7 +704,8 @@ namespace DSPRE {
 
         private void saveRom_Click(object sender, EventArgs e) {
             SaveFileDialog saveRom = new SaveFileDialog {
-                Filter = DSUtils.NDSRomFilter
+                Filter = DSUtils.NDSRomFilter,
+                InitialDirectory = Properties.Settings.Default.exportPath
             };
             if (saveRom.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -4704,8 +4706,9 @@ namespace DSPRE {
 
         private void importMapButton_Click(object sender, EventArgs e) {
             OpenFileDialog im = new OpenFileDialog {
-                Filter = MapFile.NSBMDFilter
-            };
+                Filter = MapFile.NSBMDFilter,
+                InitialDirectory = Properties.Settings.Default.mapImportStarterPoint
+        };
             if (im.ShowDialog(this) != DialogResult.OK) {
                 return;
             }
@@ -4781,7 +4784,8 @@ namespace DSPRE {
         #region BDHC I/O
         private void bdhcImportButton_Click(object sender, EventArgs e) {
             OpenFileDialog it = new OpenFileDialog() {
-                Filter = RomInfo.gameFamily == GameFamilies.DP ? MapFile.BDHCFilter : MapFile.BDHCamFilter
+                Filter = RomInfo.gameFamily == GameFamilies.DP ? MapFile.BDHCFilter : MapFile.BDHCamFilter,
+                InitialDirectory = Properties.Settings.Default.mapImportStarterPoint
             };
 
             if (it.ShowDialog(this) != DialogResult.OK) {
@@ -7290,7 +7294,8 @@ namespace DSPRE {
         private void importNSBTXButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .nsbtx file */
             OpenFileDialog ofd = new OpenFileDialog {
-                Filter = "NSBTX File (*.nsbtx)|*.nsbtx"
+                Filter = "NSBTX File (*.nsbtx)|*.nsbtx",
+                InitialDirectory = Properties.Settings.Default.mapImportStarterPoint
             };
             if (ofd.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -9913,6 +9918,12 @@ namespace DSPRE {
 
             Helpers.statusLabelMessage();
             Update();
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (settingsWindow editor = new settingsWindow())
+                editor.ShowDialog();
         }
     }
 }

@@ -179,6 +179,12 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Filesystem.cs" />
+    <Compile Include="settingsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="settingsWindow.Designer.cs">
+      <DependentUpon>settingsWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameCamera.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="InputComboBox.cs">
@@ -443,6 +449,9 @@
     <EmbeddedResource Include="ScintillaUtils\ScriptTooltip.resx">
       <DependentUpon>ScriptTooltip.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="settingsWindow.resx">
+      <DependentUpon>settingsWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SpawnEditor.resx">
       <DependentUpon>SpawnEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -698,7 +707,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 e x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 et x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

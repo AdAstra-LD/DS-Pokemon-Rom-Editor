@@ -577,7 +577,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 193F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 12F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 39F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 198F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 199F));
             this.tableLayoutPanel3.Controls.Add(this.label33, 0, 6);
             this.tableLayoutPanel3.Controls.Add(this.leafGreenFirstComboBox, 4, 5);
             this.tableLayoutPanel3.Controls.Add(this.fireRedSecondComboBox, 1, 6);
@@ -631,7 +631,7 @@
             this.leafGreenFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.leafGreenFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.leafGreenFirstComboBox.FormattingEnabled = true;
-            this.leafGreenFirstComboBox.Location = new System.Drawing.Point(275, 104);
+            this.leafGreenFirstComboBox.Location = new System.Drawing.Point(274, 104);
             this.leafGreenFirstComboBox.Name = "leafGreenFirstComboBox";
             this.leafGreenFirstComboBox.Size = new System.Drawing.Size(184, 21);
             this.leafGreenFirstComboBox.TabIndex = 207;
@@ -660,7 +660,7 @@
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(248, 131);
+            this.label37.Location = new System.Drawing.Point(247, 131);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(21, 13);
             this.label37.TabIndex = 210;
@@ -680,7 +680,7 @@
             this.leafGreenSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.leafGreenSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.leafGreenSecondComboBox.FormattingEnabled = true;
-            this.leafGreenSecondComboBox.Location = new System.Drawing.Point(275, 134);
+            this.leafGreenSecondComboBox.Location = new System.Drawing.Point(274, 134);
             this.leafGreenSecondComboBox.Name = "leafGreenSecondComboBox";
             this.leafGreenSecondComboBox.Size = new System.Drawing.Size(183, 21);
             this.leafGreenSecondComboBox.TabIndex = 209;
@@ -718,7 +718,7 @@
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(248, 101);
+            this.label39.Location = new System.Drawing.Point(247, 101);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(21, 13);
             this.label39.TabIndex = 208;
@@ -749,7 +749,7 @@
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(275, 84);
+            this.label36.Location = new System.Drawing.Point(274, 84);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(60, 13);
             this.label36.TabIndex = 216;
@@ -767,7 +767,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(275, 0);
+            this.label27.Location = new System.Drawing.Point(274, 0);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(49, 9);
             this.label27.TabIndex = 201;
@@ -776,7 +776,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(248, 9);
+            this.label30.Location = new System.Drawing.Point(247, 9);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(21, 13);
             this.label30.TabIndex = 193;
@@ -785,7 +785,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(248, 45);
+            this.label28.Location = new System.Drawing.Point(247, 45);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(21, 13);
             this.label28.TabIndex = 195;
@@ -796,7 +796,7 @@
             this.sapphireFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.sapphireFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.sapphireFirstComboBox.FormattingEnabled = true;
-            this.sapphireFirstComboBox.Location = new System.Drawing.Point(275, 12);
+            this.sapphireFirstComboBox.Location = new System.Drawing.Point(274, 12);
             this.sapphireFirstComboBox.Name = "sapphireFirstComboBox";
             this.sapphireFirstComboBox.Size = new System.Drawing.Size(184, 21);
             this.sapphireFirstComboBox.TabIndex = 192;
@@ -807,7 +807,7 @@
             this.sapphireSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.sapphireSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.sapphireSecondComboBox.FormattingEnabled = true;
-            this.sapphireSecondComboBox.Location = new System.Drawing.Point(275, 48);
+            this.sapphireSecondComboBox.Location = new System.Drawing.Point(274, 48);
             this.sapphireSecondComboBox.Name = "sapphireSecondComboBox";
             this.sapphireSecondComboBox.Size = new System.Drawing.Size(183, 21);
             this.sapphireSecondComboBox.TabIndex = 194;
@@ -816,7 +816,7 @@
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(480, 45);
+            this.label32.Location = new System.Drawing.Point(479, 45);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(21, 13);
             this.label32.TabIndex = 199;
@@ -827,7 +827,7 @@
             this.emeraldSecondComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.emeraldSecondComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.emeraldSecondComboBox.FormattingEnabled = true;
-            this.emeraldSecondComboBox.Location = new System.Drawing.Point(519, 48);
+            this.emeraldSecondComboBox.Location = new System.Drawing.Point(518, 48);
             this.emeraldSecondComboBox.Name = "emeraldSecondComboBox";
             this.emeraldSecondComboBox.Size = new System.Drawing.Size(184, 21);
             this.emeraldSecondComboBox.TabIndex = 198;
@@ -836,7 +836,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(480, 9);
+            this.label31.Location = new System.Drawing.Point(479, 9);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(21, 13);
             this.label31.TabIndex = 197;
@@ -847,7 +847,7 @@
             this.emeraldFirstComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.emeraldFirstComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.emeraldFirstComboBox.FormattingEnabled = true;
-            this.emeraldFirstComboBox.Location = new System.Drawing.Point(519, 12);
+            this.emeraldFirstComboBox.Location = new System.Drawing.Point(518, 12);
             this.emeraldFirstComboBox.Name = "emeraldFirstComboBox";
             this.emeraldFirstComboBox.Size = new System.Drawing.Size(184, 21);
             this.emeraldFirstComboBox.TabIndex = 196;
@@ -856,7 +856,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(519, 0);
+            this.label25.Location = new System.Drawing.Point(518, 0);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(45, 9);
             this.label25.TabIndex = 202;
