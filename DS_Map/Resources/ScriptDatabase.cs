@@ -261,7 +261,7 @@ namespace DSPRE.Resources {
             [0x0053] = "SetMusic",
             [0x0054] = "FadeOutMusic",
             [0x0055] = "FadeInMusic",
-
+            [0x0056] = "SetMusicPauseStatus",
             [0x0057] = "PlayFieldBGM",
 
             [0x0059] = "CheckChatotCry",
@@ -331,7 +331,7 @@ namespace DSPRE.Resources {
             [0x0099] = "CheckMove",
             [0x009A] = "CheckMoveInParty",
 
-            [0x009C] = "DummySetWeather",
+            [0x009C] = "SetWeather",
             [0x009D] = "DummyInitWeather",
             [0x009E] = "DummyUpdateWeather",
             [0x009F] = "DummyCheckMapPosition",
@@ -864,7 +864,7 @@ namespace DSPRE.Resources {
             [0x0099] = new byte[] { 2, 2, 2 },
             [0x009A] = new byte[] { 2, 2 },
             [0x009B] = new byte[] { 2, 2 },
-            [0x009C] = new byte[1] { 0 },
+            [0x009C] = new byte[] { 2 },
             [0x009D] = new byte[1] { 0 },
             [0x009E] = new byte[1] { 0 },
             [0x009F] = new byte[1] { 0 },
@@ -1785,7 +1785,7 @@ namespace DSPRE.Resources {
             [0x0053] = "SetMusic",
             [0x0054] = "FadeOutMusic",
             [0x0055] = "FadeInMusic",
-
+            [0x0056] = "SetMusicPauseStatus",
             [0x0059] = "CheckChatotCry",
             [0x005A] = "StartChatotCry",
             [0x005B] = "StopChatotCry",
