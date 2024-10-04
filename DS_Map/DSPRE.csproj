@@ -298,6 +298,12 @@
       <DependentUpon>SpawnEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="UniqueList.cs" />
+    <Compile Include="WeatherEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WeatherEditor.Designer.cs">
+      <DependentUpon>WeatherEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="WildEditorHGSS.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -454,6 +460,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SpawnEditor.resx">
       <DependentUpon>SpawnEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WeatherEditor.resx">
+      <DependentUpon>WeatherEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WildEditorHGSS.resx">
       <DependentUpon>WildEditorHGSS.cs</DependentUpon>
@@ -677,6 +686,7 @@
     <Content Include="Resources\Graphics\Program Icons\sortAscending.png" />
     <Content Include="Resources\Graphics\Program Icons\sortDescending.png" />
     <Content Include="Resources\Graphics\Program Icons\tableEditor.png" />
+    <None Include="Resources\Graphics\Program Icons\weather_editor.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptblueish.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptdarkfog.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptdim.png" />

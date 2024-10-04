@@ -9925,5 +9925,11 @@ namespace DSPRE {
             using (settingsWindow editor = new settingsWindow())
                 editor.ShowDialog();
         }
+
+        private void weatherMapEditor_Click(object sender, EventArgs e)
+        {
+            WeatherEditor form = new WeatherEditor();
+            form.Show();
+        }
     }
 }
