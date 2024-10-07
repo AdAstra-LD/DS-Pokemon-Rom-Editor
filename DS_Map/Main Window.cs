@@ -40,6 +40,8 @@ namespace DSPRE {
             Helpers.Initialize(this);
             SetMenuLayout(Properties.Settings.Default.menuLayout); //Read user settings for menu layout
             Text = "Lost in Time Rom Editor " + GetDSPREVersion() + " (Nømura, AdAstra/LD3005, Mixone, Kuha)";
+            saveMatrixButton.Location = new Point(11, 540);
+
         }
 
         #region Program Window
@@ -9930,6 +9932,11 @@ namespace DSPRE {
         {
             WeatherEditor form = new WeatherEditor();
             form.Show();
+        }
+
+        private void MainProgram_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

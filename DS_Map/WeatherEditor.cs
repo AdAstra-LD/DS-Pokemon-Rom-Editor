@@ -37,9 +37,9 @@ namespace DSPRE
             totalPercentageFill.Maximum = (int)totalPercentage.Value;
             totalPercentageFill.Minimum = 0;
 
-            randomVarNum.Value = 18459;
-            weatherVarNum.Value = 18460;
-            currWeatherVarNum.Value = 18461;
+            randomVarNum.Value = 16416;
+            weatherVarNum.Value = 16417;
+            currWeatherVarNum.Value = 16418;
 
             writeBaseScript();
         }
@@ -227,6 +227,7 @@ namespace DSPRE
             functionCodeView.AppendText("Function " + (dataGridView1.Rows.Count + 1) + ":\n");
             functionCodeView.AppendText("   SetWeather " + weatherVarNum.Value + "\n");
             functionCodeView.AppendText("   GetCurrentWeather " + currWeatherVarNum.Value + "\n");
+            functionCodeView.AppendText("End");
 
             scriptCodeView.AppendText("Jump Function#" + (dataGridView1.Rows.Count + 1) + "\n");
         }
