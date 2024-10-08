@@ -1976,7 +1976,7 @@ namespace DSPRE.Resources {
             [0x017E] = "GetPokemonHappiness",
             [0x017F] = "AddHappiness",
             [0x0180] = "SubHappiness",
-
+            [0x0181] = "TextDaycareMonData",
             [0x0182] = "GetPlayerDirection",
 
             [0x0185] = "CheckBornPokemonInParty",
@@ -2544,7 +2544,7 @@ namespace DSPRE.Resources {
             [0x017E] = new byte[] { 2, 2 },
             [0x017F] = new byte[] { 2, 2 },
             [0x0180] = new byte[] { 2, 2 },
-            [0x0181] = new byte[] { 2, 2 },
+            [0x0181] = new byte[] { 2, 2, 2, 2 },
             [0x0182] = new byte[] { 2 },
             [0x0183] = new byte[] { 2 },
             [0x0184] = new byte[] { 2 },
