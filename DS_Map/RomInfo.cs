@@ -1117,6 +1117,9 @@ namespace DSPRE
         private static void SetMoveTextNumbers() {
             switch (gameFamily) {
                 case GameFamilies.DP:
+                    moveDescriptionsTextNumbers = 587;
+                    moveNamesTextNumbers = 588;
+                    break;
                 case GameFamilies.Plat:
                     moveDescriptionsTextNumbers = 646;
                     moveNamesTextNumbers = 647;
@@ -1408,6 +1411,7 @@ namespace DSPRE
                         [DirNames.trainerProperties] = @"data\poketool\trainer\trdata.narc",
                         [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
                         [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
+                        [DirNames.moveData] = @"data\poketool\waza\waza_tbl.narc",
 
                         [DirNames.monIcons] = @"data\poketool\icongra\poke_icon.narc",
 
