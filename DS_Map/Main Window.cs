@@ -690,6 +690,7 @@ namespace DSPRE {
             romToolboxToolStripMenuItem.Enabled = true;
             headerSearchToolStripButton.Enabled = true;
             headerSearchToolStripMenuItem.Enabled = true;
+            addressHelperToolStripMenuItem.Enabled = true;
             spawnEditorToolStripMenuItem.Enabled = true;
             otherEditorsToolStripMenuItem.Enabled = true;
 
@@ -9986,6 +9987,12 @@ namespace DSPRE {
                 DrawTypeGrid();
             }
 
+        }
+
+        private void addressHelperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddressHelper form = new AddressHelper();
+            form.Show();
         }
     }
 }
