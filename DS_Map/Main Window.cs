@@ -715,6 +715,7 @@ namespace DSPRE {
 
             Helpers.statusLabelMessage("Repacking NARCS...");
             Update();
+            var dateBegin = DateTime.Now;
 
             // Repack NARCs
             foreach (KeyValuePair<DirNames, (string packedDir, string unpackedDir)> kvp in RomInfo.gameDirs) {
@@ -777,7 +778,27 @@ namespace DSPRE {
             Properties.Settings.Default.Save();
             var date = DateTime.Now;
             var StringDate = formatTime(date.Hour) + ":" + formatTime(date.Minute) + ":" + formatTime(date.Second);
-            Helpers.statusLabelMessage("Ready -" + StringDate);
+            int timeSpent = CalculateTimeDifferenceInSeconds(dateBegin.Hour, dateBegin.Minute, dateBegin.Second, date.Hour, date.Minute, date.Second);
+
+            Helpers.statusLabelMessage("Ready - " + StringDate + " | Build time: " + timeSpent.ToString() + "s");
+        }
+
+        static int CalculateTimeDifferenceInSeconds(int startHour, int startMinute, int startSecond, int endHour, int endMinute, int endSecond)
+        {
+            // Convert start time and end time to seconds since midnight
+            int startTimeInSeconds = (startHour * 3600) + (startMinute * 60) + startSecond;
+            int endTimeInSeconds = (endHour * 3600) + (endMinute * 60) + endSecond;
+
+            // Calculate difference
+            int timeDifference = endTimeInSeconds - startTimeInSeconds;
+
+            // If time difference is negative (end time is past midnight), adjust
+            if (timeDifference < 0)
+            {
+                timeDifference += 24 * 3600; // Add 24 hours in seconds
+            }
+
+            return timeDifference;
         }
 
         private String formatTime(int time)
