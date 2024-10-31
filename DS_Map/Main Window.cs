@@ -703,7 +703,8 @@ namespace DSPRE {
 
         private void saveRom_Click(object sender, EventArgs e) {
             SaveFileDialog saveRom = new SaveFileDialog {
-                Filter = DSUtils.NDSRomFilter
+                Filter = DSUtils.NDSRomFilter,
+                InitialDirectory = Properties.Settings.Default.exportPath
             };
             if (saveRom.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -711,6 +712,7 @@ namespace DSPRE {
 
             Helpers.statusLabelMessage("Repacking NARCS...");
             Update();
+            var dateBegin = DateTime.Now;
 
             // Repack NARCs
             foreach (KeyValuePair<DirNames, (string packedDir, string unpackedDir)> kvp in RomInfo.gameDirs) {
@@ -772,6 +774,40 @@ namespace DSPRE {
 
             Properties.Settings.Default.Save();
             Helpers.statusLabelMessage();
+            var date = DateTime.Now;
+            var StringDate = formatTime(date.Hour) + ":" + formatTime(date.Minute) + ":" + formatTime(date.Second);
+            int timeSpent = CalculateTimeDifferenceInSeconds(dateBegin.Hour, dateBegin.Minute, dateBegin.Second, date.Hour, date.Minute, date.Second);
+
+            Helpers.statusLabelMessage("Ready - " + StringDate + " | Build time: " + timeSpent.ToString() + "s");
+        }
+
+        static int CalculateTimeDifferenceInSeconds(int startHour, int startMinute, int startSecond, int endHour, int endMinute, int endSecond)
+        {
+            // Convert start time and end time to seconds since midnight
+            int startTimeInSeconds = (startHour * 3600) + (startMinute * 60) + startSecond;
+            int endTimeInSeconds = (endHour * 3600) + (endMinute * 60) + endSecond;
+
+            // Calculate difference
+            int timeDifference = endTimeInSeconds - startTimeInSeconds;
+
+            // If time difference is negative (end time is past midnight), adjust
+            if (timeDifference < 0)
+            {
+                timeDifference += 24 * 3600; // Add 24 hours in seconds
+            }
+
+            return timeDifference;
+        }
+
+        private String formatTime(int time)
+        {
+            string stringTime = time.ToString();
+            if (time < 10)
+            {
+                stringTime = "0" + stringTime;
+            }
+
+            return stringTime;
         }
         private void unpackAllButton_Click(object sender, EventArgs e) {
             Helpers.statusLabelMessage("Awaiting user response...");
@@ -3059,6 +3095,7 @@ namespace DSPRE {
 
         /* Permission painters */
         public Pen paintPen;
+        public int Transparency = 128;
         public SolidBrush paintBrush;
         public SolidBrush textBrush;
         public byte paintByte;
@@ -4302,106 +4339,111 @@ namespace DSPRE {
                 typePainterUpDown_ValueChanged(null, null);
             }
         }
-        private void PrepareCollisionPainterGraphics(byte collisionValue) {
-            switch (collisionValue) {
+        private void PrepareCollisionPainterGraphics(byte collisionValue)
+        {
+            switch (collisionValue)
+            {
                 case 0x01: // Snow
-                    paintPen = new Pen(Color.FromArgb(128, Color.Lavender));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Lavender));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.Lavender));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.Lavender));
                     break;
                 case 0x02: // Leaves
-                    paintPen = new Pen(Color.FromArgb(128, Color.ForestGreen));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.ForestGreen));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.ForestGreen));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.ForestGreen));
                     break;
                 case 0x04: // Grass
-                    paintPen = new Pen(Color.FromArgb(128, Color.LimeGreen));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.LimeGreen));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.LimeGreen));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.LimeGreen));
                     break;
                 case 0x06: // Stairs and ice
-                    paintPen = new Pen(Color.FromArgb(128, Color.PowderBlue));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.PowderBlue));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.PowderBlue));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.PowderBlue));
                     break;
                 case 0x07: // Metal
-                    paintPen = new Pen(Color.FromArgb(128, Color.Silver));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Silver));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.Silver));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.Silver));
                     break;
                 case 0x0A: // Stone
-                    paintPen = new Pen(Color.FromArgb(128, Color.DimGray));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.DimGray));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.DimGray));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.DimGray));
                     break;
                 case 0x0D: // Wood
-                    paintPen = new Pen(Color.FromArgb(128, Color.SaddleBrown));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.SaddleBrown));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.SaddleBrown));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.SaddleBrown));
                     break;
                 case 0x80:
-                    paintPen = new Pen(Color.FromArgb(128, Color.Red));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Red));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.Red));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.Red));
                     break;
                 default: // 0x00 - Walkeable               
-                    paintPen = new Pen(Color.FromArgb(128, Color.White));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.White));
+                    paintPen = new Pen(Color.FromArgb(32, Color.White));
+                    paintBrush = new SolidBrush(Color.FromArgb(32, Color.White));
                     break;
             }
         }
-        private void PrepareTypePainterGraphics(byte typeValue) {
-            switch (typeValue) {
+
+        private void PrepareTypePainterGraphics(byte typeValue)
+        {
+            switch (typeValue)
+            {
                 case 0x0:
-                    paintPen = new Pen(Color.FromArgb(128, Color.White));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.White));
+                    paintPen = new Pen(Color.FromArgb(32, Color.White));
+                    paintBrush = new SolidBrush(Color.FromArgb(32, Color.White));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 9.0f);
                     break;
                 case 0x2:
-                    paintPen = new Pen(Color.FromArgb(128, Color.LimeGreen));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.LimeGreen));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.LimeGreen));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.LimeGreen));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 9.0f);
                     break;
                 case 0x3:
-                    paintPen = new Pen(Color.FromArgb(128, Color.Green));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Green));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.Green));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.Green));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 9.0f);
                     break;
                 case 0x8:
                 case 0xC:
-                    paintPen = new Pen(Color.FromArgb(128, Color.BurlyWood));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.BurlyWood));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.BurlyWood));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.BurlyWood));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 8.65f);
                     break;
                 case 0x10:
-                    paintPen = new Pen(Color.FromArgb(128, Color.SkyBlue));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.SkyBlue));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.SkyBlue));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.SkyBlue));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 9.0f);
                     break;
                 case 0x13:
-                    paintPen = new Pen(Color.FromArgb(128, Color.SteelBlue));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.SteelBlue));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.SteelBlue));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.SteelBlue));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 9.0f);
                     break;
                 case 0x15:
-                    paintPen = new Pen(Color.FromArgb(128, Color.RoyalBlue));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.RoyalBlue));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.RoyalBlue));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.RoyalBlue));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 9.0f);
                     break;
                 case 0x16:
-                    paintPen = new Pen(Color.FromArgb(128, Color.LightSlateGray));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.LightSlateGray));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.LightSlateGray));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.LightSlateGray));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 9.0f);
                     break;
                 case 0x20:
-                    paintPen = new Pen(Color.FromArgb(128, Color.Cyan));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Cyan));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.Cyan));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.Cyan));
                     textBrush = new SolidBrush(Color.Black);
                     textFont = new Font("Arial", 9.0f);
                     break;
                 case 0x21:
-                    paintPen = new Pen(Color.FromArgb(128, Color.PeachPuff));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.PeachPuff));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.PeachPuff));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.PeachPuff));
                     textBrush = new SolidBrush(Color.Black);
                     textFont = new Font("Arial", 9.0f);
                     break;
@@ -4409,8 +4451,8 @@ namespace DSPRE {
                 case 0x31:
                 case 0x32:
                 case 0x33:
-                    paintPen = new Pen(Color.FromArgb(128, Color.Red));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Red));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.Red));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.Red));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 9.0f);
                     break;
@@ -4426,8 +4468,8 @@ namespace DSPRE {
                 case 0x39:
                 case 0x3A:
                 case 0x3B:
-                    paintPen = new Pen(Color.FromArgb(128, Color.Maroon));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Maroon));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.Maroon));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.Maroon));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 8.65f);
                     break;
@@ -4435,21 +4477,21 @@ namespace DSPRE {
                 case 0x41:
                 case 0x42:
                 case 0x43:
-                    paintPen = new Pen(Color.FromArgb(128, Color.Gold));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Gold));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.Gold));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.Gold));
                     textBrush = new SolidBrush(Color.Black);
                     textFont = new Font("Arial", 9.0f);
                     break;
                 case 0x4B:
                 case 0x4C:
-                    paintPen = new Pen(Color.FromArgb(128, Color.Sienna));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Sienna));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.Sienna));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.Sienna));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 9.0f);
                     break;
                 case 0x5E:
-                    paintPen = new Pen(Color.FromArgb(128, Color.DarkOrchid));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.DarkOrchid));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.DarkOrchid));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.DarkOrchid));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 8.65f);
                     break;
@@ -4459,8 +4501,8 @@ namespace DSPRE {
                 case 0x64:
                 case 0x65:
                 case 0x69:
-                    paintPen = new Pen(Color.FromArgb(128, Color.DarkOrchid));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.DarkOrchid));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.DarkOrchid));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.DarkOrchid));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 8.65f);
                     break;
@@ -4468,34 +4510,34 @@ namespace DSPRE {
                 case 0x6D:
                 case 0x6E:
                 case 0x6F:
-                    paintPen = new Pen(Color.FromArgb(128, Color.DarkOrchid));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.DarkOrchid));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.DarkOrchid));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.DarkOrchid));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 8.65f);
                     break;
                 case 0xA1:
                 case 0xA2:
                 case 0xA3:
-                    paintPen = new Pen(Color.FromArgb(128, Color.Honeydew));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Honeydew));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.Honeydew));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.Honeydew));
                     textBrush = new SolidBrush(Color.Black);
                     textFont = new Font("Arial", 8.65f);
                     break;
                 case 0xA4:
-                    paintPen = new Pen(Color.FromArgb(128, Color.Peru));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.Peru));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.Peru));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.Peru));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 8.65f);
                     break;
                 case 0xA6:
-                    paintPen = new Pen(Color.FromArgb(128, Color.SeaGreen));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.SeaGreen));
+                    paintPen = new Pen(Color.FromArgb(Transparency, Color.SeaGreen));
+                    paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.SeaGreen));
                     textBrush = new SolidBrush(Color.White);
                     textFont = new Font("Arial", 8.65f);
                     break;
                 default:
-                    paintPen = new Pen(Color.FromArgb(128, Color.White));
-                    paintBrush = new SolidBrush(Color.FromArgb(128, Color.White));
+                    paintPen = new Pen(Color.FromArgb(32, Color.White));
+                    paintBrush = new SolidBrush(Color.FromArgb(32, Color.White));
                     textBrush = new SolidBrush(Color.Black);
                     textFont = new Font("Arial", 8.65f);
                     break;
@@ -4704,7 +4746,8 @@ namespace DSPRE {
 
         private void importMapButton_Click(object sender, EventArgs e) {
             OpenFileDialog im = new OpenFileDialog {
-                Filter = MapFile.NSBMDFilter
+                Filter = "NSBTX File (*.nsbtx)|*.nsbtx",
+                InitialDirectory = Properties.Settings.Default.mapImportStarterPoint
             };
             if (im.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -9913,6 +9956,43 @@ namespace DSPRE {
 
             Helpers.statusLabelMessage();
             Update();
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (SettingsWindow editor = new SettingsWindow())
+                editor.ShowDialog();
+        }
+
+        private void weatherMapEditor_Click(object sender, EventArgs e)
+        {
+            WeatherEditor form = new WeatherEditor();
+            form.Show();
+        }
+
+        private void MainProgram_Load(object sender, EventArgs e)
+        {
+            transparencyBar.Value = Transparency;
+        }
+
+        private void transparencyBar_Scroll(object sender, EventArgs e)
+        {
+            Transparency = transparencyBar.Value;
+            if (selectCollisionPanel.BackColor == Color.MidnightBlue)
+            {
+                DrawCollisionGrid();
+            }
+            else
+            {
+                DrawTypeGrid();
+            }
+
+        }
+
+        private void addressHelperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddressHelper form = new AddressHelper();
+            form.Show();
         }
     }
 }

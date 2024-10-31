@@ -34,8 +34,7 @@ namespace DSPRE
                 for (int i = 0; i < foundInOvl.Count; i++)
                 {
                     int ovl = foundInOvl[i];
-                    Console.WriteLine(ovl);
-                    addressesGrid.Rows.Add(ovl, getOffsetInOverlay(convertedAddress, ovl));
+                    addressesGrid.Rows.Add("Overlay " + ovl, getOffsetInOverlay(convertedAddress, ovl));
                 }
 
 
@@ -52,7 +51,7 @@ namespace DSPRE
 
                 if (convertedAddress >= RomInfo.synthOverlayLoadAddress)
                 {
-                    addressesGrid.Rows.Add("SynthOVL", "?");
+                    addressesGrid.Rows.Add("SynthOVL", $"0x{convertedAddress - RomInfo.synthOverlayLoadAddress:X4}");
                 }
             }
             catch
@@ -71,7 +70,7 @@ namespace DSPRE
                 uint currentOvlAddress = OverlayUtils.OverlayTable.GetRAMAddress(i);
                 bool checkOverlayN = currentOvlAddress >= address;
                 bool checkOverlayN1 = address < (currentOvlAddress + OverlayUtils.OverlayTable.GetUncompressedSize(i));
-                Console.WriteLine(currentOvlAddress);
+
                 if (checkOverlayN && checkOverlayN1)
                 {
                     overlayNumbers.Add(i);

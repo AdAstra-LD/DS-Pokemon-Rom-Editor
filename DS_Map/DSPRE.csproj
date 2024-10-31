@@ -687,6 +687,7 @@
     <Content Include="Resources\Graphics\Program Icons\sortAscending.png" />
     <Content Include="Resources\Graphics\Program Icons\sortDescending.png" />
     <Content Include="Resources\Graphics\Program Icons\tableEditor.png" />
+    <None Include="Resources\Graphics\Program Icons\weather_editor.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptblueish.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptdarkfog.png" />
     <Content Include="Resources\Graphics\Weather\DPPt\ptdim.png" />
@@ -700,6 +701,7 @@
     <None Include="Resources\Graphics\Program Icons\sortAscending.png" />
     <None Include="Resources\Graphics\Program Icons\sortDescending.png" />
     <None Include="Resources\RenameIcon.png" />
+    <None Include="Resources\weather_editor.bmp" />
     <Content Include="Tools\apicula.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
