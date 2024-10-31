@@ -26,7 +26,7 @@ namespace DSPRE
 
         private void searchAddressButton_Click(object sender, EventArgs e)
         {
-            addressReturnTab.Text = "";
+            addressesGrid.Rows.Clear(); 
             try
             {
                 int convertedAddress = Convert.ToInt32(AddressInput.Text, 16);
@@ -35,7 +35,7 @@ namespace DSPRE
                 {
                     int ovl = foundInOvl[i]; 
                     Console.WriteLine(ovl);
-                    addressReturnTab.AppendText("overlay " + ovl + " at offset " + getOffsetInOverlay(convertedAddress, ovl) + "\n");
+                    addressesGrid.Rows.Add(ovl, getOffsetInOverlay(convertedAddress, ovl));
                 }
 
 
@@ -44,18 +44,19 @@ namespace DSPRE
 
                 if(addressToARMLoad && addressToARMEnd)
                 {
-                    addressReturnTab.Text = "Address in ARM9 at offset " + $"0x{(convertedAddress - ARM9LoadAddress):X4}";
+                    addressesGrid.Rows.Clear();
+                    addressesGrid.Rows.Add("ARM9", $"0x{(convertedAddress - ARM9LoadAddress):X4}");
                 }
 
 
 
                 if (convertedAddress >= RomInfo.synthOverlayLoadAddress)
                 {
-                    addressReturnTab.Text = "Address in synthOvl";
+                    addressesGrid.Rows.Add("SynthOVL", "?");
                 }
             }
             catch {
-                addressReturnTab.Text = "No overlay found";
+                MessageBox.Show("No overlay found");
             }
         }
 
@@ -71,7 +72,6 @@ namespace DSPRE
                 Console.WriteLine(currentOvlAddress);
                 if (checkOverlayN && checkOverlayN1)
                 {
-                    Console.WriteLine("In");
                     overlayNumbers.Add(i);
                 } 
             }
