@@ -801,6 +801,7 @@
             this.listBasedBatchRenameToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.contentBasedBatchRenameToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.separator_afterRenameUtils = new System.Windows.Forms.ToolStripSeparator();
+            this.weatherMapEditor = new System.Windows.Forms.ToolStripButton();
             this.enumBasedListBuilderToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.folderBasedListBuilderToolStriButton = new System.Windows.Forms.ToolStripButton();
             this.separator_afterListUtils = new System.Windows.Forms.ToolStripSeparator();

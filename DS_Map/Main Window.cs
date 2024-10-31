@@ -4339,8 +4339,10 @@ namespace DSPRE {
                 typePainterUpDown_ValueChanged(null, null);
             }
         }
-        private void PrepareCollisionPainterGraphics(byte collisionValue) {
-            switch (collisionValue) {
+        private void PrepareCollisionPainterGraphics(byte collisionValue)
+        {
+            switch (collisionValue)
+            {
                 case 0x01: // Snow
                     paintPen = new Pen(Color.FromArgb(Transparency, Color.Lavender));
                     paintBrush = new SolidBrush(Color.FromArgb(Transparency, Color.Lavender));
@@ -4379,8 +4381,11 @@ namespace DSPRE {
                     break;
             }
         }
-        private void PrepareTypePainterGraphics(byte typeValue) {
-            switch (typeValue) {
+
+        private void PrepareTypePainterGraphics(byte typeValue)
+        {
+            switch (typeValue)
+            {
                 case 0x0:
                     paintPen = new Pen(Color.FromArgb(32, Color.White));
                     paintBrush = new SolidBrush(Color.FromArgb(32, Color.White));
@@ -9956,7 +9961,7 @@ namespace DSPRE {
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (settingsWindow editor = new settingsWindow())
+            using (SettingsWindow editor = new SettingsWindow())
                 editor.ShowDialog();
         }
 
@@ -9968,7 +9973,7 @@ namespace DSPRE {
 
         private void MainProgram_Load(object sender, EventArgs e)
         {
-            transparencyBar.Value  = Transparency; 
+            transparencyBar.Value = Transparency;
         }
 
         private void transparencyBar_Scroll(object sender, EventArgs e)
