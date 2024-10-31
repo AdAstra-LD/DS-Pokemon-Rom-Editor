@@ -26,14 +26,15 @@ namespace DSPRE
 
         private void searchAddressButton_Click(object sender, EventArgs e)
         {
-            addressesGrid.Rows.Clear(); 
+            addressesGrid.Rows.Clear();
             try
             {
                 int convertedAddress = Convert.ToInt32(AddressInput.Text, 16);
                 List<int> foundInOvl = getOverlayNumberFromAddress(convertedAddress);
                 for (int i = 0; i < foundInOvl.Count; i++)
                 {
-                    int ovl = foundInOvl[i]; 
+                    int ovl = foundInOvl[i];
+
                     addressesGrid.Rows.Add("Overlay " + ovl, getOffsetInOverlay(convertedAddress, ovl));
                 }
 
@@ -41,7 +42,7 @@ namespace DSPRE
                 bool addressToARMLoad = convertedAddress >= ARM9LoadAddress;
                 bool addressToARMEnd = convertedAddress < OverlayUtils.OverlayTable.GetRAMAddress(0);
 
-                if(addressToARMLoad && addressToARMEnd)
+                if (addressToARMLoad && addressToARMEnd)
                 {
                     addressesGrid.Rows.Clear();
                     addressesGrid.Rows.Add("ARM9", $"0x{(convertedAddress - ARM9LoadAddress):X4}");
@@ -61,17 +62,19 @@ namespace DSPRE
 
         private List<int> getOverlayNumberFromAddress(int address)
         {
-             List<int> overlayNumbers = new List<int>();
+            List<int> overlayNumbers = new List<int>();
 
 
-            for (int i = 0; i < overlaysSize - 1; i++) {
+            for (int i = 0; i < overlaysSize - 1; i++)
+            {
                 uint currentOvlAddress = OverlayUtils.OverlayTable.GetRAMAddress(i);
                 bool checkOverlayN = currentOvlAddress >= address;
                 bool checkOverlayN1 = address < (currentOvlAddress + OverlayUtils.OverlayTable.GetUncompressedSize(i));
+                
                 if (checkOverlayN && checkOverlayN1)
                 {
                     overlayNumbers.Add(i);
-                } 
+                }
             }
 
 

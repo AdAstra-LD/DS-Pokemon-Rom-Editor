@@ -706,6 +706,13 @@ namespace DSPRE.Resources {
             [0x349] = "MultiplyVar", // Command by me, multiplies variables
             [0x34A] = "CreateOW", // 
             [0x0333] = "SetFieldVolume",
+
+            [0x0360] = "CollisionZone",  // Command by AdAstra, big collision zone
+            [0x035D] = "SpawnBuilding", // Command by AdAstra, add building to the map
+            [0x035E] = "DeleteBuilding", // Remove previously added building
+            [0x035F] = "CollisionTile", // Command by AdAstra, small collision (tile)
+            [0x0349] = "MultiplyVar", // Command by Kuha, multiplies variables
+            [0x034A] = "CreateOW", // 
         };
         public static Dictionary<ushort, byte[]> DPPtScrCmdParameters = new Dictionary<ushort, byte[]>() {
             [0x0000] = new byte[] { 2 }, // Debug
