@@ -27,7 +27,6 @@ using static DSPRE.ROMFiles.SpeciesFile;
 using System.Reflection;
 using System.ComponentModel;
 using DSPRE.Editors;
-using static ScintillaNET.Style;
 
 namespace DSPRE {
 
@@ -40,8 +39,6 @@ namespace DSPRE {
             Helpers.Initialize(this);
             SetMenuLayout(Properties.Settings.Default.menuLayout); //Read user settings for menu layout
             Text = "Lost in Time Rom Editor " + GetDSPREVersion() + " (Nømura, AdAstra/LD3005, Mixone, Kuha)";
-            saveMatrixButton.Location = new Point(11, 540);
-
         }
 
         #region Program Window
@@ -4822,8 +4819,7 @@ namespace DSPRE {
         #region BDHC I/O
         private void bdhcImportButton_Click(object sender, EventArgs e) {
             OpenFileDialog it = new OpenFileDialog() {
-                Filter = RomInfo.gameFamily == GameFamilies.DP ? MapFile.BDHCFilter : MapFile.BDHCamFilter,
-                InitialDirectory = Properties.Settings.Default.mapImportStarterPoint
+                Filter = RomInfo.gameFamily == GameFamilies.DP ? MapFile.BDHCFilter : MapFile.BDHCamFilter
             };
 
             if (it.ShowDialog(this) != DialogResult.OK) {

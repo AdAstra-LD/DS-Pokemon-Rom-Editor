@@ -509,7 +509,9 @@
             this.importEventFileButton = new System.Windows.Forms.Button();
             this.saveEventsButton = new System.Windows.Forms.Button();
             this.tabPageScriptEditor = new System.Windows.Forms.TabPage();
+            this.scriptEditor = new DSPRE.Editors.ScriptEditor();
             this.tabPageLevelScriptEditor = new System.Windows.Forms.TabPage();
+            this.levelScriptEditor = new DSPRE.Editors.LevelScriptEditor();
             this.textEditorTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
@@ -679,6 +681,10 @@
             this.trainerAI10CheckBox = new System.Windows.Forms.CheckBox();
             this.trainerAI11CheckBox = new System.Windows.Forms.CheckBox();
             this.trainerItemsGroupBox = new System.Windows.Forms.GroupBox();
+            this.trainerItem1ComboBox = new DSPRE.InputComboBox();
+            this.trainerItem2ComboBox = new DSPRE.InputComboBox();
+            this.trainerItem3ComboBox = new DSPRE.InputComboBox();
+            this.trainerItem4ComboBox = new DSPRE.InputComboBox();
             this.trainerItemsCheckBox = new System.Windows.Forms.CheckBox();
             this.trainerMovesCheckBox = new System.Windows.Forms.CheckBox();
             this.trainerDoubleCheckBox = new System.Windows.Forms.CheckBox();
@@ -690,6 +696,7 @@
             this.trainerClassListBox = new System.Windows.Forms.ListBox();
             this.addTrainerButton = new System.Windows.Forms.Button();
             this.label42 = new System.Windows.Forms.Label();
+            this.trainerComboBox = new DSPRE.InputComboBox();
             this.trainerSaveCurrentButton = new System.Windows.Forms.Button();
             this.tableEditorTabPage = new System.Windows.Forms.TabPage();
             this.label73 = new System.Windows.Forms.Label();
@@ -736,6 +743,7 @@
             this.headerConditionalMusicComboBox = new System.Windows.Forms.ComboBox();
             this.conditionalMusicTableListBox = new System.Windows.Forms.ListBox();
             this.tabPageEncountersEditor = new System.Windows.Forms.TabPage();
+            this.encountersEditor = new DSPRE.Editors.EncountersEditor();
             this.mainTabImageList = new System.Windows.Forms.ImageList(this.components);
             this.gameIcon = new System.Windows.Forms.PictureBox();
             this.languageLabel = new System.Windows.Forms.Label();
@@ -775,7 +783,6 @@
             this.personalDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overlayEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spawnEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.moveDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -811,7 +818,8 @@
             this.separator_afterMiscButtons = new System.Windows.Forms.ToolStripSeparator();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.texturePictureBox = new DSPRE.OffsetPictureBox();
+            this.moveDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+                        this.texturePictureBox = new DSPRE.OffsetPictureBox();
             this.scriptEditor = new DSPRE.Editors.ScriptEditor();
             this.levelScriptEditor = new DSPRE.Editors.LevelScriptEditor();
             this.partyMove6_1ComboBox = new DSPRE.InputComboBox();
@@ -2549,7 +2557,7 @@
             this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
             this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.setSpawnPointButton.Location = new System.Drawing.Point(11, -4280);
+            this.setSpawnPointButton.Location = new System.Drawing.Point(11, 528);
             this.setSpawnPointButton.Name = "setSpawnPointButton";
             this.setSpawnPointButton.Size = new System.Drawing.Size(117, 43);
             this.setSpawnPointButton.TabIndex = 35;
@@ -2565,7 +2573,7 @@
             this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.saveMatrixButton.Location = new System.Drawing.Point(11, -4219);
+            this.saveMatrixButton.Location = new System.Drawing.Point(11, 589);
             this.saveMatrixButton.Name = "saveMatrixButton";
             this.saveMatrixButton.Size = new System.Drawing.Size(117, 43);
             this.saveMatrixButton.TabIndex = 34;
@@ -4360,7 +4368,7 @@
             this.radio3D.AutoSize = true;
             this.radio3D.Checked = true;
             this.radio3D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio3D.Location = new System.Drawing.Point(-6804, -4773);
+            this.radio3D.Location = new System.Drawing.Point(1140, 35);
             this.radio3D.Name = "radio3D";
             this.radio3D.Size = new System.Drawing.Size(31, 23);
             this.radio3D.TabIndex = 26;
@@ -4375,7 +4383,7 @@
             this.radio2D.Appearance = System.Windows.Forms.Appearance.Button;
             this.radio2D.AutoSize = true;
             this.radio2D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio2D.Location = new System.Drawing.Point(-6804, -4802);
+            this.radio2D.Location = new System.Drawing.Point(1140, 6);
             this.radio2D.Name = "radio2D";
             this.radio2D.Size = new System.Drawing.Size(31, 23);
             this.radio2D.TabIndex = 25;
@@ -4390,7 +4398,7 @@
             this.wireframeCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.wireframeCheckBox.AutoSize = true;
             this.wireframeCheckBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, -4744);
+            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, 64);
             this.wireframeCheckBox.Name = "wireframeCheckBox";
             this.wireframeCheckBox.Size = new System.Drawing.Size(31, 23);
             this.wireframeCheckBox.TabIndex = 27;
@@ -6965,6 +6973,15 @@
             this.tabPageScriptEditor.Text = "Script Editor";
             this.tabPageScriptEditor.UseVisualStyleBackColor = true;
             // 
+            // scriptEditor
+            // 
+            this.scriptEditor.Location = new System.Drawing.Point(2, 3);
+            this.scriptEditor.Margin = new System.Windows.Forms.Padding(4);
+            this.scriptEditor.Name = "scriptEditor";
+            this.scriptEditor.scriptEditorIsReady = false;
+            this.scriptEditor.Size = new System.Drawing.Size(1177, 735);
+            this.scriptEditor.TabIndex = 0;
+            // 
             // tabPageLevelScriptEditor
             // 
             this.tabPageLevelScriptEditor.Controls.Add(this.levelScriptEditor);
@@ -9019,6 +9036,46 @@
             this.trainerItemsGroupBox.TabStop = false;
             this.trainerItemsGroupBox.Text = "Trainer Items";
             // 
+            // trainerItem1ComboBox
+            // 
+            this.trainerItem1ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem1ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.trainerItem1ComboBox.FormattingEnabled = true;
+            this.trainerItem1ComboBox.Location = new System.Drawing.Point(9, 20);
+            this.trainerItem1ComboBox.Name = "trainerItem1ComboBox";
+            this.trainerItem1ComboBox.Size = new System.Drawing.Size(171, 21);
+            this.trainerItem1ComboBox.TabIndex = 0;
+            // 
+            // trainerItem2ComboBox
+            // 
+            this.trainerItem2ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem2ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.trainerItem2ComboBox.FormattingEnabled = true;
+            this.trainerItem2ComboBox.Location = new System.Drawing.Point(9, 47);
+            this.trainerItem2ComboBox.Name = "trainerItem2ComboBox";
+            this.trainerItem2ComboBox.Size = new System.Drawing.Size(171, 21);
+            this.trainerItem2ComboBox.TabIndex = 1;
+            // 
+            // trainerItem3ComboBox
+            // 
+            this.trainerItem3ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem3ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.trainerItem3ComboBox.FormattingEnabled = true;
+            this.trainerItem3ComboBox.Location = new System.Drawing.Point(9, 74);
+            this.trainerItem3ComboBox.Name = "trainerItem3ComboBox";
+            this.trainerItem3ComboBox.Size = new System.Drawing.Size(171, 21);
+            this.trainerItem3ComboBox.TabIndex = 2;
+            // 
+            // trainerItem4ComboBox
+            // 
+            this.trainerItem4ComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerItem4ComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.trainerItem4ComboBox.FormattingEnabled = true;
+            this.trainerItem4ComboBox.Location = new System.Drawing.Point(9, 101);
+            this.trainerItem4ComboBox.Name = "trainerItem4ComboBox";
+            this.trainerItem4ComboBox.Size = new System.Drawing.Size(171, 21);
+            this.trainerItem4ComboBox.TabIndex = 3;
+            // 
             // trainerItemsCheckBox
             // 
             this.trainerItemsCheckBox.AutoSize = true;
@@ -9130,6 +9187,17 @@
             this.label42.Size = new System.Drawing.Size(59, 13);
             this.label42.TabIndex = 28;
             this.label42.Text = "Trainer File";
+            // 
+            // trainerComboBox
+            // 
+            this.trainerComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.trainerComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.trainerComboBox.FormattingEnabled = true;
+            this.trainerComboBox.Location = new System.Drawing.Point(15, 22);
+            this.trainerComboBox.Name = "trainerComboBox";
+            this.trainerComboBox.Size = new System.Drawing.Size(199, 21);
+            this.trainerComboBox.TabIndex = 27;
+            this.trainerComboBox.SelectedIndexChanged += new System.EventHandler(this.trainerComboBox_SelectedIndexChanged);
             // 
             // trainerSaveCurrentButton
             // 
@@ -9633,6 +9701,14 @@
             this.tabPageEncountersEditor.TabIndex = 12;
             this.tabPageEncountersEditor.Text = "Encounters";
             this.tabPageEncountersEditor.UseVisualStyleBackColor = true;
+            // 
+            // encountersEditor
+            // 
+            this.encountersEditor.Location = new System.Drawing.Point(6, 3);
+            this.encountersEditor.Margin = new System.Windows.Forms.Padding(4);
+            this.encountersEditor.Name = "encountersEditor";
+            this.encountersEditor.Size = new System.Drawing.Size(1176, 672);
+            this.encountersEditor.TabIndex = 0;
             // 
             // mainTabImageList
             // 
@@ -10400,7 +10476,7 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             this.versionLabel.Visible = false;
-            // 
+                        // 
             // texturePictureBox
             // 
             this.texturePictureBox.BackColor = System.Drawing.Color.White;
@@ -10918,6 +10994,13 @@
             this.encountersEditor.Name = "encountersEditor";
             this.encountersEditor.Size = new System.Drawing.Size(1176, 672);
             this.encountersEditor.TabIndex = 0;
+            // 
+            // moveDataEditorToolStripMenuItem
+            // 
+            this.moveDataEditorToolStripMenuItem.Name = "moveDataEditorToolStripMenuItem";
+            this.moveDataEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.moveDataEditorToolStripMenuItem.Text = "Move Data Editor";
+            this.moveDataEditorToolStripMenuItem.Click += new System.EventHandler(this.moveDataEditorToolStripMenuItem_Click);
             // 
             // MainProgram
             // 
