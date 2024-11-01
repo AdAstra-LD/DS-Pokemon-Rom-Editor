@@ -182,10 +182,10 @@
     <Compile Include="EventFileImport.designer.cs">
       <DependentUpon>EventFileImport.cs</DependentUpon>
     </Compile>
-    <Compile Include="EvolutionsEditor.cs">
+    <Compile Include="Editors\EvolutionsEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EvolutionsEditor.designer.cs">
+    <Compile Include="Editors\EvolutionsEditor.designer.cs">
       <DependentUpon>EvolutionsEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="ExtensionMethods.cs" />
@@ -196,29 +196,29 @@
     <Compile Include="InputComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="LearnsetEditor.cs">
+    <Compile Include="Editors\LearnsetEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LearnsetEditor.designer.cs">
+    <Compile Include="Editors\LearnsetEditor.designer.cs">
       <DependentUpon>LearnsetEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="MessageEnc\EncryptText.cs" />
-    <Compile Include="OverlayEditor.cs">
+    <Compile Include="Editors\OverlayEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OverlayEditor.Designer.cs">
+    <Compile Include="Editors\OverlayEditor.Designer.cs">
       <DependentUpon>OverlayEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="PersonalDataEditor.cs">
+    <Compile Include="Editors\PersonalDataEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PersonalDataEditor.designer.cs">
+    <Compile Include="Editors\PersonalDataEditor.designer.cs">
       <DependentUpon>PersonalDataEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="PokemonEditor.cs">
+    <Compile Include="Editors\PokemonEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PokemonEditor.Designer.cs">
+    <Compile Include="Editors\PokemonEditor.Designer.cs">
       <DependentUpon>PokemonEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -270,7 +270,9 @@
     <Compile Include="ROMFiles\SafariZoneObjectRequirement.cs" />
     <Compile Include="ROMFiles\ScriptAction.cs" />
     <Compile Include="ROMFiles\ScriptActionContainer.cs" />
+    <Compile Include="ROMFiles\ScriptCommand.cs" />
     <Compile Include="ROMFiles\ScriptCommandContainer.cs" />
+    <Compile Include="ROMFiles\ScriptFile.cs" />
     <Compile Include="ROMFiles\ScriptReference.cs" />
     <Compile Include="ROMFiles\SpeciesFile.cs" />
     <Compile Include="ROMFiles\TrainerFile.cs" />
@@ -281,14 +283,13 @@
     <Compile Include="PatchToolboxDialog.Designer.cs">
       <DependentUpon>PatchToolboxDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="BuildingEditor.cs">
+    <Compile Include="Editors\BuildingEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BuildingEditor.Designer.cs">
+    <Compile Include="Editors\BuildingEditor.Designer.cs">
       <DependentUpon>BuildingEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="RomInfo.cs" />
-    <Compile Include="ROMFiles\ScriptCommand.cs" />
     <Compile Include="ScintillaUtils\HotKeyManager.cs" />
     <Compile Include="ScintillaUtils\ScriptTooltip.cs">
       <SubType>Form</SubType>
@@ -304,29 +305,28 @@
     <Compile Include="SettingsWindow.Designer.cs">
       <DependentUpon>SettingsWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="SpawnEditor.cs">
+    <Compile Include="Editors\SpawnEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SpawnEditor.Designer.cs">
+    <Compile Include="Editors\SpawnEditor.Designer.cs">
       <DependentUpon>SpawnEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="UniqueList.cs" />
-    <Compile Include="WildEditorHGSS.cs">
+    <Compile Include="Editors\WildEditorHGSS.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WildEditorHGSS.Designer.cs">
+    <Compile Include="Editors\WildEditorHGSS.Designer.cs">
       <DependentUpon>WildEditorHGSS.cs</DependentUpon>
     </Compile>
-    <Compile Include="WildEditorDPPt.cs">
+    <Compile Include="Editors\WildEditorDPPt.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WildEditorDPPt.Designer.cs">
+    <Compile Include="Editors\WildEditorDPPt.Designer.cs">
       <DependentUpon>WildEditorDPPt.cs</DependentUpon>
     </Compile>
     <Compile Include="ROMFiles\EncounterFile.cs" />
     <Compile Include="ROMFiles\TextArchive.cs" />
     <Compile Include="ROMFiles\MapHeader.cs" />
-    <Compile Include="ROMFiles\ScriptFile.cs" />
     <Compile Include="ROMFiles\GameMatrix.cs" />
     <Compile Include="ROMFiles\EventFile.cs" />
     <Compile Include="LibNDSFormats\bytearrayoutputstream.cs" />
@@ -425,22 +425,22 @@
     <EmbeddedResource Include="EventFileImport.resx">
       <DependentUpon>EventFileImport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EvolutionsEditor.resx">
+    <EmbeddedResource Include="Editors\EvolutionsEditor.resx">
       <DependentUpon>EvolutionsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HeaderSearch.resx">
       <DependentUpon>HeaderSearch.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LearnsetEditor.resx">
+    <EmbeddedResource Include="Editors\LearnsetEditor.resx">
       <DependentUpon>LearnsetEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OverlayEditor.resx">
+    <EmbeddedResource Include="Editors\OverlayEditor.resx">
       <DependentUpon>OverlayEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PersonalDataEditor.resx">
+    <EmbeddedResource Include="Editors\PersonalDataEditor.resx">
       <DependentUpon>PersonalDataEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PokemonEditor.resx">
+    <EmbeddedResource Include="Editors\PokemonEditor.resx">
       <DependentUpon>PokemonEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ROMToolboxDB\BDHCAMPatchDB.resx">
@@ -456,16 +456,16 @@
     <EmbeddedResource Include="PatchToolboxDialog.resx">
       <DependentUpon>PatchToolboxDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BuildingEditor.resx">
+    <EmbeddedResource Include="Editors\BuildingEditor.resx">
       <DependentUpon>BuildingEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ScintillaUtils\ScriptTooltip.resx">
       <DependentUpon>ScriptTooltip.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SpawnEditor.resx">
+    <EmbeddedResource Include="Editors\SpawnEditor.resx">
       <DependentUpon>SpawnEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WildEditorHGSS.resx">
+    <EmbeddedResource Include="Editors\WildEditorHGSS.resx">
       <DependentUpon>WildEditorHGSS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main Window.resx">
@@ -478,7 +478,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\writeText.resx" />
-    <EmbeddedResource Include="WildEditorDPPt.resx">
+    <EmbeddedResource Include="Editors\WildEditorDPPt.resx">
       <DependentUpon>WildEditorDPPt.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
