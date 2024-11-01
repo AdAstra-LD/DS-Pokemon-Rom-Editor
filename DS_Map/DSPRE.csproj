@@ -140,12 +140,16 @@
     <Compile Include="Editors\LevelScriptEditor.Designer.cs">
       <DependentUpon>LevelScriptEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\LoadingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Editors\MoveDataEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Editors\MoveDataEditor.designer.cs">
       <DependentUpon>MoveDataEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\PokemonSpriteEditor.cs" />
     <Compile Include="Editors\SafariZoneEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -169,6 +173,12 @@
     </Compile>
     <Compile Include="Editors\ScriptEditor.Designer.cs">
       <DependentUpon>ScriptEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\SizeChooser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\SpriteCropper.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Editors\WeatherEditor.cs">
       <SubType>Form</SubType>

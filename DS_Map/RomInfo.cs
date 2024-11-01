@@ -134,6 +134,7 @@ namespace DSPRE
         public enum DirNames : byte
         {
             personalPokeData,
+            pokemonBattleSPrites,
 
             synthOverlay,
             dynamicHeaders,
@@ -1473,6 +1474,7 @@ namespace DSPRE
                     packedDirsDict = new Dictionary<DirNames, string>()
                     {
                         [DirNames.personalPokeData] = @"data\a\0\0\2",
+                        [DirNames.pokemonBattleSPrites] = @"data\a\0\0\4",
                         [DirNames.synthOverlay] = @"data\a\0\2\8",
                         [DirNames.dynamicHeaders] = @"data\a\0\5\0",
 
