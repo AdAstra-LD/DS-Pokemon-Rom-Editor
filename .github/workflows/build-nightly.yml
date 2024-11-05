@@ -8,7 +8,7 @@ jobs:
     runs-on: windows-latest
  
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
       name: Checkout Code
      
     - name: Setup MSBuild Path
