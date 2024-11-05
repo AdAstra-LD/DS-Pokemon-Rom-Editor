@@ -27,7 +27,6 @@ using static DSPRE.ROMFiles.SpeciesFile;
 using System.Reflection;
 using System.ComponentModel;
 using DSPRE.Editors;
-using DSPRE.Tools;
 
 namespace DSPRE {
 
@@ -10027,7 +10026,7 @@ namespace DSPRE {
 
         private void exportScriptDatabaseJSONToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            JsonExporter.ExportDictionaries();
+            MessageBox.Show("Not implemented yet");
         }
     }
 }

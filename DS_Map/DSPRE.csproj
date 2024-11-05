@@ -322,7 +322,6 @@
     <Compile Include="Editors\SpawnEditor.Designer.cs">
       <DependentUpon>SpawnEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tools\JsonExporter.cs" />
     <Compile Include="UniqueList.cs" />
     <Compile Include="Editors\WildEditorHGSS.cs">
       <SubType>Form</SubType>
@@ -493,36 +492,6 @@
     <EmbeddedResource Include="Editors\WildEditorDPPt.resx">
       <DependentUpon>WildEditorDPPt.cs</DependentUpon>
     </EmbeddedResource>
-    <Content Include="Exports\ScriptDatabase\commandsWithRelativeJump.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Exports\ScriptDatabase\comparisonOperatorsDict.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Exports\ScriptDatabase\comparisonOperatorsGenVappendix.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Exports\ScriptDatabase\DPPtCommands.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Exports\ScriptDatabase\endCodes.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Exports\ScriptDatabase\HGSSCommands.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Exports\ScriptDatabase\movementEndCodes.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Exports\ScriptDatabase\movementsDictIDName.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Exports\ScriptDatabase\overworldDirections.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Exports\ScriptDatabase\specialOverworlds.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
