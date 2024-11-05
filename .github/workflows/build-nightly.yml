@@ -2,26 +2,29 @@ name: DSPRE Build
  
 on: [push]
  
+env:
+  SOLUTION_FILE_PATH: DS_Map.sln
+  BUILD_CONFIGURATION: Release
+
 jobs:
   build:
- 
     runs-on: windows-latest
- 
+
     steps:
-    - uses: actions/checkout@v4
-      name: Checkout Code
-     
-    - name: Setup MSBuild Path
+    - uses: actions/checkout@v2
+
+    - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
-       
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.2
-     
-    - name: Restore NuGet Packages
-      run: nuget restore DS_Map.sln
- 
-    - name: Build and Publish DSPRE Reloaded
-      run: msbuild DS_Map.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
+
+    - name: Restore NuGet packages
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Add additional options to the MSBuild command line here (like platform or verbosity level).
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
  
     - name: Upload Artifact
       uses: actions/upload-artifact@v4.0.0
