@@ -27,6 +27,7 @@ using static DSPRE.ROMFiles.SpeciesFile;
 using System.Reflection;
 using System.ComponentModel;
 using DSPRE.Editors;
+using DSPRE.Tools;
 
 namespace DSPRE {
 
@@ -10022,6 +10023,11 @@ namespace DSPRE {
         {
             AddressHelper form = new AddressHelper();
             form.Show();
+        }
+
+        private void exportScriptDatabaseJSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            JsonExporter.ExportDictionaries();
         }
     }
 }

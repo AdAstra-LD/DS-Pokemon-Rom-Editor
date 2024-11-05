@@ -96,27 +96,16 @@ namespace DSPRE.Editors
 
         ComboBox IndexBox;
         ComboBox SaveBox;
+        ComboBox BasePalette;
+        ComboBox ShinyPalette;
         Button OpenPngs;
         Button LoadSheet;
         Button SaveSingle;
         Button MakeShiny;
+        Button OpenOther;
 
         NarcReader nr;
         PictureBox[,] Display;
-
-        MainMenu mainMenu1;
-        MenuItem menuFile;
-        MenuItem menuItem10;
-        MenuItem menuOpenPng;
-        MenuItem menuSavePng;
-        MenuItem menuLoadSheet;
-        MenuItem menuAbout;
-        MenuItem menuOpenNarc;
-        MenuItem menuWriteToNarc;
-        MenuItem menuOptions;
-        MenuItem AutoColor;
-        MenuItem AutoConvert;
-        MenuItem UseShrinking;
 
         Label lblMale;
         Label lblFemale;
@@ -134,9 +123,204 @@ namespace DSPRE.Editors
         SpriteSet CurrentSprites;
         private readonly string[] pokenames;
 
+        private readonly int[] formPalettes = new int[]
+        {
+            // Deoxys forms (Base, Attack, Defence, Speed)
+            158, 158, 158, 158, 
+
+            // Unown forms (A-Z, !, ?)
+            160, 160, 160, 160, 160, 160, 160, 160, 160, 160,
+            160, 160, 160, 160, 160, 160, 160, 160, 160, 160,
+            160, 160, 160, 160, 160, 160, 160, 160, 160, 160,
+
+            // Castform (Base, Sunny, Rainy, Snowy)
+            162, 162, 162, 162, 
+
+            // Burmy (Plant, Sandy, Trash)
+            164, 164, 164, 
+
+            // Wormadam (Plant, Sandy, Trash)
+            166, 166, 166, 
+
+            // Shellos (West, East)
+            168, 168, 168, 168,
+
+            // Gastrodon (West, East)
+            170, 170, 170, 170,
+
+            // Cherrim (Overcast, Sunny)
+            172, 172, 172, 172,
+
+            // Arceus (various forms)
+            174, 174, 174, 174, 174, 174, 174, 174,
+            174, 174, 174, 174, 174, 174, 174, 174,
+            174, 174, 174, 174, 174, 174, 174, 174,
+            174, 174, 174, 174, 174, 174, 174, 174,
+            174, 174, 174, 174, 174, 174, 174, 174,
+
+            // Egg (Global, Manaphy)
+            176, 176,
+
+            // Shaymin (Land, Sky)
+            178, 178, 178, 178,
+
+            // Rotom (Normal, Heat, Wash, Frost, Fan, Mow)
+            180, 180, 180, 180, 180, 180, 180, 180,
+            180, 180, 180, 180, 180, 180, 180, 180,
+
+            // Giratina (Altered, Origin)
+            182, 182, 182, 182,
+
+            // Substitute (Sprites)
+            184, 184, 184,
+
+            // Shadows
+            186, 186
+        };
+
+        private readonly int[] shinyPalettes = new int[]
+        {
+            // Deoxys forms (Base, Attack, Defence, Speed)
+            159, 159, 159, 159,
+
+            // Unown forms (A-Z, !, ?)
+            161, 161, 161, 161, 161, 161, 161, 161, 161, 161,
+            161, 161, 161, 161, 161, 161, 161, 161, 161, 161,
+            161, 161, 161, 161, 161, 161, 161, 161, 161, 161,
+
+            // Castform (Base, Sunny, Rainy, Snowy)
+            163, 163, 163, 163, 
+
+            // Burmy (Plant, Sandy, Trash)
+            165, 165, 165, 
+
+            // Wormadam (Plant, Sandy, Trash)
+            167, 167, 167, 
+
+            // Shellos (West, East)
+            169, 169, 169, 169,
+
+            // Gastrodon (West, East)
+            171, 171, 171, 171,
+
+            // Cherrim (Overcast, Sunny)
+            173, 173, 173, 173,
+
+            // Arceus (various forms)
+            175, 175, 175, 175, 175, 175, 175, 175,
+            175, 175, 175, 175, 175, 175, 175, 175,
+            175, 175, 175, 175, 175, 175, 175, 175,
+            175, 175, 175, 175, 175, 175, 175, 175,
+            175, 175, 175, 175, 175, 175, 175, 175,
+
+            // Egg (Global, Manaphy)
+            177, 177,
+
+            // Shaymin (Land, Sky)
+            179, 179, 179, 179,
+
+            // Rotom (Normal, Heat, Wash, Frost, Fan, Mow)
+            181, 181, 181, 181, 181, 181, 181, 181,
+            181, 181, 181, 181, 181, 181, 181, 181,
+
+            // Giratina (Altered, Origin)
+            183, 183, 183, 183,
+
+            // Substitute (Sprites)
+            185, 185, 185,
+
+            // Shadows
+            187, 187
+        };
+
+        private readonly int[] validPalettesHGSS = new int[] 
+        {
+            158, 159, 160, 161, 162, 163, 164, 165, 166, 167,
+            168, 169, 170, 171, 172, 173, 174, 175, 176, 177,
+            178, 179, 180, 181, 182, 183, 184, 185, 186, 187,
+            188, 189, 190, 191, 192, 193, 194, 195, 196, 197,
+            198, 199, 200, 201, 202, 203, 204, 205, 206, 207,
+            208, 209, 210, 211, 212, 213, 214, 215, 216, 217,
+            218, 219, 220, 221, 222, 223, 224, 225, 226, 227,
+            228, 229, 230, 231, 232, 233, 234, 235, 236, 237,
+            238, 239, 240, 241, 242, 243, 244, 245, 246, 247,
+            248, 249, 250, 251, 252, 253, 254, 255, 258, 260
+        };
+
+        private readonly int[] validPalettesPt = new int[]
+        {
+            154, 155, 156, 157, 158, 159, 160, 161, 162, 163,
+            164, 165, 166, 167, 168, 169, 170, 171, 172, 173,
+            174, 175, 176, 177, 178, 179, 180, 181, 182, 183,
+            184, 185, 186, 187, 188, 189, 190, 191, 192, 193,
+            194, 195, 196, 197, 198, 199, 200, 201, 202, 203,
+            204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
+            214, 215, 216, 217, 218, 219, 220, 221, 222, 223,
+            224, 225, 226, 227, 228, 229, 230, 231, 232, 233,
+            234, 235, 236, 237, 238, 239, 240, 241, 242, 243,
+            244, 245, 246, 247, 250, 252
+        };
+
+        private readonly int[] validPalettesDP = new int[]
+        {
+            134, 135, 136, 137, 138, 139, 140, 141, 142, 145,
+            146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 
+            156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 
+            166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 
+            176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 
+            186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 
+            196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 
+            206, 207, 210, 212, 
+        };
+
+        private readonly string[] otherPokenames = new string[]
+        {
+            "Deoxys - Base", "Deoxys - Attack", "Deoxys - Defence", "Deoxys - Speed",
+            "Unown - A", "Unown - B", "Unown - C", "Unown - D", "Unown - E", "Unown - F",
+            "Unown - G", "Unown - H", "Unown - I", "Unown - J", "Unown - K", "Unown - L",
+            "Unown - M", "Unown - N", "Unown - O", "Unown - P", "Unown - Q", "Unown - R",
+            "Unown - S", "Unown - T", "Unown - U", "Unown - V", "Unown - W", "Unown - X",
+            "Unown - Y", "Unown - Z", "Unown - !", "Unown - ?",
+            "Castform - Base", "Castform - Sunny", "Castform - Rainy", "Castform - Snow", 
+            "Burmy - Plant", "Burmy - Sandy", "Burmy - Trash", 
+            "Wormadam - Plant", "Wormadam - Sandy", "Wormadam - Trash", 
+            "Shellos", "Shellos", 
+            "Gastrodon", "Gastrodon", 
+            "Cherrim", "Cherrim", 
+            "Arceus - Type 1", "Arceus - Type 2", "Arceus - Type 3", "Arceus - Type 4",
+            "Arceus - Type 5", "Arceus - Type 6", "Arceus - Type 7", "Arceus - Type 8",
+            "Arceus - Type 9", "Arceus - Type 10", "Arceus - Type 11", "Arceus - Type 12",
+            "Arceus - Type 13", "Arceus - Type 14", "Arceus - Type 15", "Arceus - Type 16",
+            "Egg", "Egg",
+            "Shaymin", "Shaymin", "Shaymin", "Shaymin",
+            "Rotom", "Rotom", "Rotom", "Rotom", "Rotom", "Rotom", "Rotom", "Rotom",
+            "Rotom", "Rotom", "Rotom", "Rotom", "Rotom", "Rotom", "Rotom", "Rotom",
+            "Giratina", "Giratina", "Giratina", "Giratina",
+            "Deoxys", "Deoxys",
+            "Unown", "Unown",
+            "Castform", "Castform", "Castform", "Castform", "Castform", "Castform", "Castform", "Castform",
+            "Burmy", "Burmy", "Burmy", "Burmy", "Burmy", "Burmy",
+            "Wormadam", "Wormadam", "Wormadam", "Wormadam", "Wormadam", "Wormadam",
+            "Shellos", "Shellos", "Shellos", "Shellos",
+            "Gastrodon", "Gastrodon", "Gastrodon", "Gastrodon",
+            "Cherrim", "Cherrim", "Cherrim", "Cherrim",
+            "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus",
+            "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus",
+            "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus",
+            "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus",
+            "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus", "Arceus",
+            "Egg", "Egg",
+            "Shaymin", "Shaymin", "Shaymin", "Shaymin",
+            "Rotom", "Rotom", "Rotom", "Rotom", "Rotom", "Rotom", "Rotom", "Rotom",
+            "Rotom", "Rotom", "Rotom", "Rotom", "Rotom", "Rotom", "Rotom", "Rotom",
+            "Giratina", "Giratina", "Giratina", "Giratina",
+            "Substitute", "Substitute", "Substitute",
+            "Shadows", "Shadows"
+        };
+
         static string[] names = { "Female backsprite", "Male backsprite", "Female frontsprite", "Male frontsprite", "Shiny" };
 
-
+        private bool loadingOther = false;
         private PokemonEditor _parent;
 
         private static bool dirty = false;
@@ -160,28 +344,12 @@ namespace DSPRE.Editors
             Handler = new IndexedBitmapHandler();
             CurrentSprites = new SpriteSet();
             BuildPictureBoxes(96, 56);
-
-            mainMenu1 = new MainMenu();
-            menuFile = new MenuItem();
-            menuOpenNarc = new MenuItem();
-            menuWriteToNarc = new MenuItem();
-            menuOpenPng = new MenuItem();
-            menuSavePng = new MenuItem();
-            menuLoadSheet = new MenuItem();
-            menuItem10 = new MenuItem();
-            menuAbout = new MenuItem();
-            menuOptions = new MenuItem();
-            AutoColor = new MenuItem();
-            AutoConvert = new MenuItem();
-            UseShrinking = new MenuItem();
-
-            AutoColor.Checked = true;
-            AutoConvert.Checked = true;
-
+            
             OpenPngs = new Button();
             LoadSheet = new Button();
             SaveSingle = new Button();
             MakeShiny = new Button();
+            OpenOther = new Button();
 
             lblMale = new Label();
             lblFemale = new Label();
@@ -191,49 +359,7 @@ namespace DSPRE.Editors
             FrontS = new Label();
             lblNormal = new Label();
             lblShiny = new Label();
-            SuspendLayout();
-
-            mainMenu1.MenuItems.AddRange(new MenuItem[3] { menuFile, menuOptions, menuItem10 });
-            menuFile.Index = 0;
-            menuFile.MenuItems.AddRange(new MenuItem[5] { menuOpenNarc, menuWriteToNarc, menuOpenPng, menuSavePng, menuLoadSheet });
-            menuFile.Text = "&File";
-            menuOpenNarc.Index = 0;
-            menuOpenNarc.Text = "&Open narc...";
-            menuOpenNarc.Shortcut = Shortcut.CtrlO;
-            menuWriteToNarc.Index = 1;
-            menuWriteToNarc.Text = "&Write to narc...";
-            menuWriteToNarc.Click += (menuItem8_Click);
-            menuWriteToNarc.Shortcut = Shortcut.CtrlW;
-            menuOpenPng.Index = 2;
-            menuOpenPng.Text = "&Load Sprite Set";
-            menuOpenPng.Click += (OpenPng_Click);
-            menuOpenPng.Shortcut = Shortcut.CtrlL;
-            menuSavePng.Index = 3;
-            menuSavePng.Text = "&Save Sprite Set";
-            menuSavePng.Click += (btnSaveAs_Click);
-            menuSavePng.Shortcut = Shortcut.CtrlS;
-            menuLoadSheet.Index = 4;
-            menuLoadSheet.Text = "Load Spr&ite Sheet";
-            menuLoadSheet.Click += (btnLoadSheet_Click);
-            menuLoadSheet.Shortcut = Shortcut.CtrlI;
-            menuOptions.Index = 1;
-            menuOptions.MenuItems.AddRange(new MenuItem[3] { AutoColor, AutoConvert, UseShrinking });
-            menuOptions.Text = "Options";
-            AutoColor.Index = 0;
-            AutoColor.Text = "Fix Non-standard Colors";
-            AutoColor.Click += (menuCheck_Click);
-            AutoConvert.Index = 1;
-            AutoConvert.Text = "Convert Wrong Format Images";
-            AutoConvert.Click += (menuCheck_Click);
-            UseShrinking.Index = 2;
-            UseShrinking.Text = "Allow Shrinking of Expanded Images";
-            UseShrinking.Click += (menuCheck_Click);
-            menuItem10.Index = 2;
-            menuItem10.MenuItems.AddRange(new MenuItem[1] { menuAbout });
-            menuItem10.Text = "Help";
-            menuAbout.Index = 0;
-            menuAbout.Text = "Credits";
-            menuAbout.Click += (menuItem13_Click);
+            SuspendLayout();           
 
             IndexBox = new ComboBox();
             IndexBox.DropDownWidth = 160;
@@ -243,6 +369,37 @@ namespace DSPRE.Editors
             IndexBox.Size = new Size(160, 21);
             IndexBox.TabIndex = 6;
             IndexBox.SelectedIndexChanged += (IndexBox_SelectedIndexChanged);
+
+            int[] source = RomInfo.gameFamily == GameFamilies.Plat ? validPalettesPt : RomInfo.gameFamily == GameFamilies.DP ? validPalettesDP : validPalettesHGSS;
+
+            BasePalette = new ComboBox();
+            BasePalette.DropDownWidth = 160;
+            BasePalette.Location = new Point(220, 728);
+            BasePalette.MaxDropDownItems = 16;
+            BasePalette.Name = "BasePalette";
+            BasePalette.Size = new Size(160, 21);
+            BasePalette.TabIndex = 6;
+            BasePalette.SelectedIndexChanged += (BasePalette_SelectedIndexChanged);
+            
+            ShinyPalette = new ComboBox();  
+            ShinyPalette.DropDownWidth = 160;
+            ShinyPalette.Location = new Point(400, 728);
+            ShinyPalette.MaxDropDownItems = 16;
+            ShinyPalette.Name = "ShinyPalette";
+            ShinyPalette.Size = new Size(160, 21);
+            ShinyPalette.TabIndex = 6;
+            ShinyPalette.SelectedIndexChanged += (ShinyPalette_SelectedIndexChanged);
+
+            foreach ( var item in source )
+            {
+                BasePalette.Items.Add( item );
+                ShinyPalette.Items.Add( item );
+            }
+
+            BasePalette.Enabled = false;
+            BasePalette.Visible = false;
+            ShinyPalette.Enabled = false;
+            ShinyPalette.Visible = false;
 
             OpenPngs.Location = new Point(646, 8);
             OpenPngs.Name = "OpenPng";
@@ -256,6 +413,12 @@ namespace DSPRE.Editors
             LoadSheet.Size = new Size(100, 25);
             LoadSheet.Text = "Load Sprite Sheet";
             LoadSheet.Click += (btnLoadSheet_Click);
+
+            OpenOther.Location = new Point(130, 8);
+            OpenOther.Name = "OpenForms";
+            OpenOther.Size = new Size(100, 25);
+            OpenOther.Text = "Open Forms";
+            OpenOther.Click += (btnOpenOther_Click);
 
             SaveBox = new ComboBox();
             SaveBox.DropDownWidth = 160;
@@ -313,18 +476,18 @@ namespace DSPRE.Editors
 
             ResumeLayout(false);
 
-            Menu = mainMenu1;
             Controls.Add(IndexBox);
+            Controls.Add(BasePalette);
+            Controls.Add(ShinyPalette);
             Controls.Add(SaveBox);
             Controls.Add(OpenPngs);
             Controls.Add(LoadSheet);
             Controls.Add(SaveSingle);
             Controls.Add(MakeShiny);
+            Controls.Add(OpenOther);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Width = 760;
             Height = 808;
-            Text = "Gen IV Sprite Editor";
-            Name = "MainForm";
             AutoScaleBaseSize = new Size(5, 13);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             MaximizeBox = false;
@@ -334,30 +497,84 @@ namespace DSPRE.Editors
         void IndexBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             CurrentSprites = new SpriteSet();
-            int num = (IndexBox.Items.IndexOf(IndexBox.Text) * 6);
-            for (int i = 0; i < 4; i++)
+            if ( !this.loadingOther )
             {
-                if (nr.fe[num + i].Size == 6448)
+                int num = (IndexBox.Items.IndexOf(IndexBox.Text) * 6);
+                for (int i = 0; i < 4; i++)
                 {
-                    nr.OpenEntry(num + i);
-                    CurrentSprites.Sprites[i] = MakeImage(nr.fs);
+                    if (nr.fe[num + i].Size == 6448)
+                    {
+                        nr.OpenEntry(num + i);
+                        CurrentSprites.Sprites[i] = MakeImage(nr.fs);
+                        nr.Close();
+                    }
+                }
+                if (nr.fe[num + 4].Size == 72)
+                {
+                    nr.OpenEntry(num + 4);
+                    CurrentSprites.Normal = SetPal(nr.fs);
+                    nr.Close();
+                }
+                if (nr.fe[num + 5].Size == 72)
+                {
+                    nr.OpenEntry(num + 5);
+                    CurrentSprites.Shiny = SetPal(nr.fs);
+                    nr.Close();
+                }
+            } else
+            {
+                int num = (IndexBox.Items.IndexOf(IndexBox.Text) * 2);
+                for (int i = 0; i < 2; i++)
+                {
+                    if (nr.fe[num + i].Size == 6448)
+                    {
+                        nr.OpenEntry(num + i);
+                        CurrentSprites.Sprites[i*2 + 1] = MakeImage(nr.fs);
+                        nr.Close();
+                    }
+                }
+                if (nr.fe[(int)BasePalette.SelectedItem].Size == 72)
+                {
+                    nr.OpenEntry((int)BasePalette.SelectedItem);
+                    CurrentSprites.Normal = SetPal(nr.fs);
+                    nr.Close();
+                }
+                if (nr.fe[(int)ShinyPalette.SelectedItem].Size == 72)
+                {
+                    nr.OpenEntry((int)ShinyPalette.SelectedItem);
+                    CurrentSprites.Shiny = SetPal(nr.fs);
                     nr.Close();
                 }
             }
-            if (nr.fe[num + 4].Size == 72)
+            
+            LoadImages();
+            OpenPngs.Enabled = true;
+        }
+
+        void BasePalette_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled) return;
+            if (nr.fe[(int)BasePalette.SelectedItem].Size == 72)
             {
-                nr.OpenEntry(num + 4);
+                nr.OpenEntry((int)BasePalette.SelectedItem);
                 CurrentSprites.Normal = SetPal(nr.fs);
                 nr.Close();
-            }
-            if (nr.fe[num + 5].Size == 72)
+            }         
+
+            LoadImages();
+        }
+
+        void ShinyPalette_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled) return;
+            if (nr.fe[(int)ShinyPalette.SelectedItem].Size == 72)
             {
-                nr.OpenEntry(num + 5);
+                nr.OpenEntry((int)ShinyPalette.SelectedItem);
                 CurrentSprites.Shiny = SetPal(nr.fs);
                 nr.Close();
             }
+
             LoadImages();
-            OpenPngs.Enabled = true;
         }
 
         void BuildPictureBoxes(int x_start, int y_start)
@@ -409,10 +626,7 @@ namespace DSPRE.Editors
             IndexedBitmapHandler Handler = new IndexedBitmapHandler();
             if (image.PixelFormat != PixelFormat.Format8bppIndexed)
             {
-                if (AutoConvert.Checked)
-                    yesno = DialogResult.Yes;
-                else
-                    yesno = MessageBox.Show(filename + " is not 8bpp Indexed!  Attempt conversion?", "Incompatible image format", MessageBoxButtons.YesNo);
+                yesno = MessageBox.Show(filename + " is not 8bpp Indexed!  Attempt conversion?", "Incompatible image format", MessageBoxButtons.YesNo);
                 if (yesno != DialogResult.Yes)
                     return null;
                 image = Handler.Convert(image, PixelFormat.Format8bppIndexed);
@@ -427,23 +641,22 @@ namespace DSPRE.Editors
             if (((image.Height != 64) && (image.Height != 80)) || ((image.Width != 64) && (image.Width != 80) && (image.Width != 160)))
             {
                 int imagescale = 0;
-                if (UseShrinking.Checked)
+
+                if ((image.Width / 64 == image.Height / 64) && (image.Width % 64 == 0) && (image.Height % 64 == 0))
+                    imagescale = image.Width / 64;
+                if ((image.Width / 80 == image.Height / 80) && (image.Width % 80 == 0) && (image.Height % 80 == 0))
+                    imagescale = image.Width / 80;
+                if ((image.Width / 160 == image.Height / 80) && (image.Width % 160 == 0) && (image.Height % 80 == 0))
+                    imagescale = image.Width / 160;
+                if (imagescale > 1)
                 {
-                    if ((image.Width / 64 == image.Height / 64) && (image.Width % 64 == 0) && (image.Height % 64 == 0))
-                        imagescale = image.Width / 64;
-                    if ((image.Width / 80 == image.Height / 80) && (image.Width % 80 == 0) && (image.Height % 80 == 0))
-                        imagescale = image.Width / 80;
-                    if ((image.Width / 160 == image.Height / 80) && (image.Width % 160 == 0) && (image.Height % 80 == 0))
-                        imagescale = image.Width / 160;
-                    if (imagescale > 1)
-                    {
-                        yesno = MessageBox.Show(filename + " is too large.  Attempt to shrink?", "Too large", MessageBoxButtons.YesNo);
-                        if (yesno == DialogResult.Yes)
-                            image = Handler.ShrinkImage(image, imagescale, imagescale);
-                        else
-                            imagescale = 0;
-                    }
+                    yesno = MessageBox.Show(filename + " is too large.  Attempt to shrink?", "Too large", MessageBoxButtons.YesNo);
+                    if (yesno == DialogResult.Yes)
+                        image = Handler.ShrinkImage(image, imagescale, imagescale);
+                    else
+                        imagescale = 0;
                 }
+                
                 if (imagescale == 0)
                 {
                     yesno = MessageBox.Show(filename + " size not recognized. Use Canvas Splitter?", "Unrecognized size", MessageBoxButtons.YesNo);
@@ -478,8 +691,8 @@ namespace DSPRE.Editors
                     Cropper.Dispose();
                 }
             }
-            if (AutoColor.Checked)
-                image.Palette = StandardizeColors(image);
+            
+            //image.Palette = StandardizeColors(image);
             byte check = Handler.PaletteSize(image);
             if (check > 16)
             {
@@ -598,12 +811,27 @@ namespace DSPRE.Editors
         {
             OpenPngs.Enabled = false;
             IndexBox.Items.Clear();
-            nr = new NarcReader(RomInfo.gameDirs[DirNames.pokemonBattleSPrites].packedDir);
-            for (int i = 0; i < nr.Entrys; i += 6)
+            int tot6448 = 0, tot72 = 0;
+            if (!this.loadingOther)
             {
-                IndexBox.Items.Add(this.pokenames[i/6] + " (" + nr.fe[i].Size + ")");
-            }
-            IndexBox.SelectedIndex = 1;
+                nr = new NarcReader(RomInfo.gameDirs[DirNames.pokemonBattleSprites].packedDir);
+                for (int i = 0; i < nr.Entrys; i += 6)
+                {
+                    IndexBox.Items.Add(this.pokenames[i / 6] + " (" + nr.fe[i].Size + ")");
+                }
+                IndexBox.SelectedIndex = 1;
+            } else
+            {
+                nr = new NarcReader(RomInfo.gameDirs[DirNames.otherPokemonBattleSprites].packedDir);
+                for (int i = 0; i < nr.Entrys; i += 2)
+                {
+                    IndexBox.Items.Add(this.otherPokenames[i/2] + " (" + nr.fe[i].Size + ")");
+                }
+
+                IndexBox.SelectedIndex = 0;
+            }           
+
+            
             
         }
 
@@ -875,6 +1103,20 @@ namespace DSPRE.Editors
                     image.Palette = CurrentSprites.Normal;
                 SavePNG(image, fileName);
             }
+        }
+
+        void btnOpenOther_Click(object sender, EventArgs e)
+        {
+            Helpers.DisableHandlers();
+            this.loadingOther = true;
+            BasePalette.Enabled = true;
+            ShinyPalette.Enabled = true;
+            BasePalette.Visible = true;
+            ShinyPalette.Visible = true;
+            BasePalette.SelectedIndex = 0;
+            ShinyPalette.SelectedIndex = 0;
+            LoadSprites();
+            Helpers.EnableHandlers();
         }
 
         void btnLoadSheet_Click(object sender, EventArgs e)
