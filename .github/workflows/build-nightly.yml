@@ -1,6 +1,9 @@
 name: LiTRE Build 
  
-on: [push]
+on:
+  push:
+    tags:
+      - 'v*'
  
 env:
   SOLUTION_FILE_PATH: DS_Map.sln
@@ -42,7 +45,8 @@ jobs:
       run: gh release create "$tag" \
           --repo="$GITHUB_REPOSITORY" \
           --title="${tag#v}" \
-          --generate-notes
+          --generate-notes \
+          --prerelease
     - name: Upload File to Release
       run: |
         gh release upload "$tag" ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
