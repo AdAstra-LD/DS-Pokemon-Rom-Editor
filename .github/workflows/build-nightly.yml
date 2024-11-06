@@ -40,9 +40,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.ref_name }}
       run: |
-        gh release create "$tag" \
-            --repo="$GITHUB_REPOSITORY" \
-            --title="${tag#v}" \
-            --generate-notes
+        gh release upload "$tag" ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
 
           
