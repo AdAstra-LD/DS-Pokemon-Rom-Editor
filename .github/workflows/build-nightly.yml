@@ -36,7 +36,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: release-artifact
-        path: "${{ env.RELEASE_FILE_PATH }}"
+        path: ${{ env.RELEASE_FILE_PATH }}
         
     - name: Checkout repository
         uses: actions/checkout@v3
