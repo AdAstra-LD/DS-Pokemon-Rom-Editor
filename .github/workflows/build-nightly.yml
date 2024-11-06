@@ -35,16 +35,15 @@ jobs:
         name: release-artifact
         path: ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
 
-  release:
-      runs-on: ubuntu-22.04
-      
-      steps:
-          - name: Create release
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              tag: ${{ github.ref_name }}
-            run: |
-              gh release create "$tag" \
-                  --repo="$GITHUB_REPOSITORY" \
-                  --title="${tag#v}" \
-                  --generate-notes
+    - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+        prerelease: true
+        run: |
+          gh release create "$tag" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${tag#v}" \
+              --generate-notes
+
+          
