@@ -40,26 +40,27 @@ jobs:
 
     - name: Get latest tag
       id: get_latest_tag
+      shell: pwsh
       run: |
-        latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-        echo "latest_tag=$latest_tag" >> $GITHUB_ENV
-      shell: bash  # Ensures it runs in bash
+        $latestTag = git describe --tags --abbrev=0 2>$null
+        if (-not $latestTag) { $latestTag = "v0.0.0" }
+        echo "latest_tag=$latestTag" | Out-File -FilePath $env:GITHUB_ENV -Append
 
     - name: Increment version
       id: increment_version
+      shell: pwsh
       run: |
-        current_version="${{ env.latest_tag }}"
-        IFS='.' read -r -a version_parts <<< "${current_version#v}"
-        ((version_parts[2]++))
-        new_version="v${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
-        echo "new_version=$new_version" >> $GITHUB_ENV
-      shell: bash
+        $currentVersion = "${{ env.latest_tag }}"
+        $versionParts = $currentVersion.TrimStart('v').Split('.')
+        $versionParts[2] = [int]$versionParts[2] + 1
+        $newVersion = "v$($versionParts -join '.')"
+        echo "new_version=$newVersion" | Out-File -FilePath $env:GITHUB_ENV -Append
 
     - name: Create new tag
+      shell: pwsh
       run: |
         git tag ${{ env.new_version }}
         git push origin ${{ env.new_version }}
-      shell: bash
 
     - name: Create GitHub Release
       uses: actions/create-release@v1
@@ -77,8 +78,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create-release.outputs.upload_url }}
-        asset_path: "${{ env.RELEASE_FILE_PATH }}"
+        asset_path: "${{ env.RELEASE_FILE_PATH }}\\release-file.zip"
         asset_name: "release-file.zip"
         asset_content_type: application/zip
-
-        
