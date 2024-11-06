@@ -33,4 +33,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: release-artifact
-        path: ${{env.GITHUB_WORKSPACE}}\release.zip
+        path: ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
