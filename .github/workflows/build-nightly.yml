@@ -1,13 +1,13 @@
 name: LiTRE Build 
  
 on:
-  push:
-    tags:
-      - 'v*'
- 
+  [push]
+
+
 env:
   SOLUTION_FILE_PATH: DS_Map.sln
   BUILD_CONFIGURATION: Release
+  RELEASE_FILE_PATH: "${{ github.workspace }}/DS_Map/bin/Release"
 
 jobs:
   build:
@@ -36,19 +36,54 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: release-artifact
-        path: ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
+        path: "${{ env.RELEASE_FILE_PATH }}"
+        
+    - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Create release
+    - name: Set up Git
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Get latest tag
+      id: get_latest_tag
+      run: |
+        latest_tag=$(git describe --tags --abbrev=0 || echo "v0.0.0")
+        echo "latest_tag=${latest_tag}" >> $GITHUB_ENV
+
+    - name: Increment version
+      id: increment_version
+      run: |
+        current_version="${{ env.latest_tag }}"
+        IFS='.' read -r -a version_parts <<< "${current_version#v}"
+        ((version_parts[2]++))
+        new_version="v${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
+        echo "new_version=${new_version}" >> $GITHUB_ENV
+
+    - name: Create new tag
+      run: |
+        git tag ${{ env.new_version }}
+        git push origin ${{ env.new_version }}
+
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref_name }}
-      run: gh release create "$tag" \
-          --repo="$GITHUB_REPOSITORY" \
-          --title="${tag#v}" \
-          --generate-notes \
-          --prerelease
-    - name: Upload File to Release
-      run: |
-        gh release upload "$tag" ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
+      with:
+        tag_name: ${{ env.new_version }}
+        release_name: Release ${{ env.new_version }}
+        draft: false
+        prerelease: false
+
+    - name: Upload release asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create-release.outputs.upload_url }}
+        asset_path: "${{ env.RELEASE_FILE_PATH }}"
+        asset_name: "release-file.zip"
+        asset_content_type: application/zip
 
           
