@@ -38,51 +38,51 @@ jobs:
         name: release-artifact
         path: ${{ env.RELEASE_FILE_PATH }}
 
-      - name: Get latest tag
-        id: get_latest_tag
-        shell: pwsh
-        run: |
-          # Check if there are any tags
-          $tagExists = git tag | Measure-Object | Select-Object -ExpandProperty Count
-          if ($tagExists -eq 0) {
-            $latestTag = "v0.0.0"
-          } else {
-            $latestTag = git describe --tags --abbrev=0
-          }
-          echo "latest_tag=$latestTag" | Out-File -FilePath $env:GITHUB_ENV -Append
+    - name: Get latest tag
+      id: get_latest_tag
+      shell: pwsh
+      run: |
+        # Check if there are any tags
+        $tagExists = git tag | Measure-Object | Select-Object -ExpandProperty Count
+        if ($tagExists -eq 0) {
+          $latestTag = "v0.0.0"
+        } else {
+          $latestTag = git describe --tags --abbrev=0
+        }
+        echo "latest_tag=$latestTag" | Out-File -FilePath $env:GITHUB_ENV -Append
 
-      - name: Increment version
-        id: increment_version
-        shell: pwsh
-        run: |
-          $currentVersion = "${{ env.latest_tag }}"
-          $versionParts = $currentVersion.TrimStart('v').Split('.')
-          $versionParts[2] = [int]$versionParts[2] + 1
-          $newVersion = "v$($versionParts -join '.')"
-          echo "new_version=$newVersion" | Out-File -FilePath $env:GITHUB_ENV -Append
+    - name: Increment version
+      id: increment_version
+      shell: pwsh
+      run: |
+        $currentVersion = "${{ env.latest_tag }}"
+        $versionParts = $currentVersion.TrimStart('v').Split('.')
+        $versionParts[2] = [int]$versionParts[2] + 1
+        $newVersion = "v$($versionParts -join '.')"
+        echo "new_version=$newVersion" | Out-File -FilePath $env:GITHUB_ENV -Append
 
-      - name: Create new tag
-        shell: pwsh
-        run: |
-          git tag ${{ env.new_version }}
-          git push origin ${{ env.new_version }}
+    - name: Create new tag
+      shell: pwsh
+      run: |
+        git tag ${{ env.new_version }}
+        git push origin ${{ env.new_version }}
 
-      - name: Create GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.new_version }}
-          release_name: Release ${{ env.new_version }}
-          draft: false
-          prerelease: false
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.new_version }}
+        release_name: Release ${{ env.new_version }}
+        draft: false
+        prerelease: false
 
-      - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create-release.outputs.upload_url }}
-          asset_path: "${{ env.RELEASE_FILE_PATH }}\\release-file.zip"
-          asset_name: "release-file.zip"
-          asset_content_type: application/zip
+    - name: Upload release asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create-release.outputs.upload_url }}
+        asset_path: "${{ env.RELEASE_FILE_PATH }}\\release-file.zip"
+        asset_name: "release-file.zip"
+        asset_content_type: application/zip
