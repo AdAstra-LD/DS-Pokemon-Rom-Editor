@@ -68,6 +68,7 @@ jobs:
         git push origin ${{ env.new_version }}
 
     - name: Create GitHub Release
+      id: create_release  # Add an ID to reference this step
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -82,7 +83,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create-release.outputs.upload_url }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }}  # Reference the output from create_release
         asset_path: "${{ env.RELEASE_FILE_PATH }}\\release-file.zip"
         asset_name: "release-file.zip"
         asset_content_type: application/zip
