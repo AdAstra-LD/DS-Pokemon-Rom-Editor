@@ -61,6 +61,6 @@ jobs:
           }
 
     - name: Upload File to Release
-      run: gh release upload ${{process.env.RELEASE_TAG}} ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
+      run: gh release upload ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
 
           
