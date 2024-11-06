@@ -35,32 +35,16 @@ jobs:
         name: release-artifact
         path: ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
 
-    - name: "Determine tag"
-      run: "echo \"RELEASE_TAG=${GITHUB_REF#refs/tags/}\" >> $GITHUB_ENV"
-
-    - name: "Create release"
-      uses: "actions/github-script@v6"
-      with:
-        github-token: "${{ secrets.GITHUB_TOKEN }}"
-        script: |
-          try {
-            const response = await github.rest.repos.createRelease({
-              draft: false,
-              generate_release_notes: true,
-              name: process.env.RELEASE_TAG,
-              owner: context.repo.owner,
-              prerelease: true,
-              repo: context.repo.repo,
-              tag_name: process.env.RELEASE_TAG,
-            });
-
-            core.exportVariable('RELEASE_ID', response.data.id);
-            core.exportVariable('RELEASE_UPLOAD_URL', response.data.upload_url);
-          } catch (error) {
-            core.setFailed(error.message);
-          }
-
+    - name: Create release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref_name }}
+      run: gh release create "$tag" \
+          --repo="$GITHUB_REPOSITORY" \
+          --title="${tag#v}" \
+          --generate-notes
     - name: Upload File to Release
-      run: gh release upload ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
+      run: |
+        gh release upload "$tag" ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
 
           
