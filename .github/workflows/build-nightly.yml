@@ -42,8 +42,11 @@ jobs:
       id: get_latest_tag
       shell: pwsh
       run: |
-        $latestTag = git describe --tags --abbrev=0 2>$null
-        if (-not $latestTag) { $latestTag = "v0.0.0" }
+        try {
+          $latestTag = git describe --tags --abbrev=0
+        } catch {
+          $latestTag = "v0.0.0"
+        }
         echo "latest_tag=$latestTag" | Out-File -FilePath $env:GITHUB_ENV -Append
 
     - name: Increment version
