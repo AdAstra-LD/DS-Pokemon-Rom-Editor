@@ -37,17 +37,13 @@ jobs:
       with:
         name: release-artifact
         path: ${{ env.RELEASE_FILE_PATH }}
-        
-    - name: Set up Git
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
 
     - name: Get latest tag
       id: get_latest_tag
       run: |
-        latest_tag=$(git describe --tags --abbrev=0 || echo "v0.0.0")
-        echo "latest_tag=${latest_tag}" >> $GITHUB_ENV
+        latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+        echo "latest_tag=$latest_tag" >> $GITHUB_ENV
+      shell: bash  # Ensures it runs in bash
 
     - name: Increment version
       id: increment_version
@@ -56,12 +52,14 @@ jobs:
         IFS='.' read -r -a version_parts <<< "${current_version#v}"
         ((version_parts[2]++))
         new_version="v${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
-        echo "new_version=${new_version}" >> $GITHUB_ENV
+        echo "new_version=$new_version" >> $GITHUB_ENV
+      shell: bash
 
     - name: Create new tag
       run: |
         git tag ${{ env.new_version }}
         git push origin ${{ env.new_version }}
+      shell: bash
 
     - name: Create GitHub Release
       uses: actions/create-release@v1
@@ -83,4 +81,4 @@ jobs:
         asset_name: "release-file.zip"
         asset_content_type: application/zip
 
-          
+        
