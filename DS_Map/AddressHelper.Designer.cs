@@ -119,7 +119,7 @@
             // 
             // overlayCol
             // 
-            this.overlayCol.HeaderText = "Overlay";
+            this.overlayCol.HeaderText = "Segment";
             this.overlayCol.Name = "overlayCol";
             this.overlayCol.ReadOnly = true;
             // 
