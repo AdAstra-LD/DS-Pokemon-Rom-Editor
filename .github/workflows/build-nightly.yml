@@ -7,7 +7,7 @@ on:
 env:
   SOLUTION_FILE_PATH: DS_Map.sln
   BUILD_CONFIGURATION: Release
-  RELEASE_FILE_PATH: "${{ github.workspace }}/DS_Map/bin/Release"
+  RELEASE_FILE_PATH: "${{ github.workspace }}/DS_Map/bin/Release "
 
 jobs:
   build:
