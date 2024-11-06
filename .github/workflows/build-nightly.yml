@@ -35,15 +35,37 @@ jobs:
         name: release-artifact
         path: ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
 
+    - name: Generate Git Tag
+      id: generate_tag
+      run: |
+        VERSION_PREFIX="v"
+        VERSION_MAJOR_MINOR="1.0"
+        VERSION_PATCH=$(git tag --list "${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.*" --sort=-version:refname | head -n 1 | grep -oE '[0-9]+$')
+        if [ -z "$VERSION_PATCH" ]; then
+          VERSION_PATCH=0
+        else
+          VERSION_PATCH=$((VERSION_PATCH + 1))
+        fi
+        NEW_TAG="${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.${VERSION_PATCH}"
+        echo "Generated new tag: $NEW_TAG"
+        echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+        - name: Push Git Tag
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "github-actions@users.noreply.github.com"
+        git tag $NEW_TAG
+        git push origin $NEW_TAG
+
     - name: Create release
       uses: actions/create-release@latest
-      tag_name: ${{ steps.package-version.outputs.version }}
-      release_name: Release ${{ github.ref }}
-      prerelease: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
- 
+      with:
+        tag_name: $NEW_TAG
+        release_name: Release ${{ github.ref }}
+        prerelease: true
+
     - name: Upload File to Release
-      run: gh release upload "$tag" ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
+      run: gh release upload $NEW_TAG ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
 
           
