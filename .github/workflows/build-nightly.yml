@@ -38,9 +38,6 @@ jobs:
         name: release-artifact
         path: ${{ env.RELEASE_FILE_PATH }}
         
-    - name: Checkout repository
-        uses: actions/checkout@v3
-
     - name: Set up Git
       run: |
         git config user.name "github-actions[bot]"
