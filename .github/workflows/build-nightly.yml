@@ -39,10 +39,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.ref_name }}
-      run: |
-        gh release create "$tag" --repo="$GITHUB_REPOSITORY" --title="${tag#v}" --generate-notes
+      run: gh release create "$tag" --repo="$GITHUB_REPOSITORY" --title="${tag#v}" --generate-notes
     - name: Upload File to Release
-      run: |
-        gh release upload "$tag" ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
+      run: gh release upload "$tag" ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release
 
           
