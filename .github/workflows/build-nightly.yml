@@ -2,6 +2,9 @@ name: DSPRE Build
  
 on: [push]
  
+permissions:
+  contents: write
+
 env:
   SOLUTION_FILE_PATH: DS_Map.sln
   BUILD_CONFIGURATION: Release
