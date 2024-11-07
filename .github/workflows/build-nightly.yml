@@ -32,6 +32,7 @@ jobs:
     - name: Release with Notes
       uses: softprops/action-gh-release@v2
       with:
+        tag_name: beta_canary
         name: DSPRE Beta Canary Build
         files: DSPRE-beta-canary.zip
         token: ${{ secrets.GITHUB_TOKEN }}
