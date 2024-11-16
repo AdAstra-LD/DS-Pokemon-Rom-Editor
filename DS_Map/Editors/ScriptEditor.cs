@@ -544,11 +544,11 @@ namespace DSPRE.Editors {
                 }
             }
 
-            if (!currentScriptFile.isLevelScript) {
-                displayScriptFile(ScriptFile.ContainerTypes.Script, currentScriptFile.allScripts, scriptsNavListbox, ScriptTextArea);
-                displayScriptFile(ScriptFile.ContainerTypes.Function, currentScriptFile.allFunctions, functionsNavListbox, FunctionTextArea);
-                displayScriptFileActions(ScriptFile.ContainerTypes.Action, currentScriptFile.allActions, actionsNavListbox, ActionTextArea);
-            }
+      if (!currentScriptFile.isLevelScript) {
+        displayScriptFile(ScriptFile.ContainerTypes.Script, currentScriptFile, scriptsNavListbox, ScriptTextArea);
+        displayScriptFile(ScriptFile.ContainerTypes.Function, currentScriptFile, functionsNavListbox, FunctionTextArea);
+        displayScriptFileActions(ScriptFile.ContainerTypes.Action, currentScriptFile, currentScriptFile.allActions, actionsNavListbox, ActionTextArea);
+      }
 
             ScriptEditorSetClean();
 
@@ -558,59 +558,92 @@ namespace DSPRE.Editors {
             return true;
         }
 
-        static void displayScriptFile(ScriptFile.ContainerTypes containerType, List<ScriptCommandContainer> commandList, ListBox navListBox, Scintilla textArea) {
-            string buffer = "";
-            /* Add commands */
-            for (int i = 0; i < commandList.Count; i++) {
-                ScriptCommandContainer scriptCommandContainer = commandList[i];
+    static void displayScriptFile(ScriptFile.ContainerTypes containerType, ScriptFile currentScriptFile, ListBox navListBox, Scintilla textArea) {
+      if (containerType == ScriptFile.ContainerTypes.Script) {
+        string path_script = RomInfo.workDir + "..\\script_export\\" + currentScriptFile.fileID.ToString("D4") + "_script.script";
+        textArea.Text = File.ReadAllText(path_script);
 
-                /* Write header */
-                string header = containerType + " " + (i + 1);
-                buffer += header + ':' + Environment.NewLine;
-                navListBox.Items.Add(header);
+        String buffer = "";
 
-                /* If current command is identical to another, print UseScript instead of commands */
-                if (scriptCommandContainer.usedScriptID < 0) {
-                    for (int j = 0; j < scriptCommandContainer.commands.Count; j++) {
-                        ScriptCommand command = scriptCommandContainer.commands[j];
-                        if (!ScriptDatabase.endCodes.Contains(command.id)) {
-                            buffer += '\t';
-                        }
-
-                        buffer += command.name + Environment.NewLine;
-                    }
-                } else {
-                    buffer += '\t' + "UseScript_#" + scriptCommandContainer.usedScriptID + Environment.NewLine;
-                }
-
-                textArea.AppendText(buffer + Environment.NewLine);
-                buffer = "";
+        for (int i = 0; i < currentScriptFile.allScripts.Count; i++) {
+          ScriptCommandContainer currentScript = currentScriptFile.allScripts[i];
+          /* Write header */
+          string header = ScriptFile.ContainerTypes.Script + " " + (i + 1);
+          buffer += header + ':' + Environment.NewLine;
+          navListBox.Items.Add(header);
+          
+          /* If current script is identical to another, print UseScript instead of commands */
+          if (currentScript.usedScriptID < 0) {
+            for (int j = 0; j < currentScript.commands.Count; j++) {
+              if (!ScriptDatabase.endCodes.Contains(currentScript.commands[j].id)) {
+                buffer += '\t';
+              }
+              buffer += currentScript.commands[j].name + Environment.NewLine;
             }
+          }
+          else {
+            buffer += '\t' + "UseScript_#" + currentScript.usedScriptID + Environment.NewLine;
+          }
+          
+          buffer = "";
         }
+      }
+      else if (containerType == ScriptFile.ContainerTypes.Function) {
+        string path_function = RomInfo.workDir + "..\\script_export\\" + currentScriptFile.fileID.ToString("D4") + "_func.script";
+        textArea.Text = File.ReadAllText(path_function);
+        
+        String buffer = "";
 
-        static void displayScriptFileActions(ScriptFile.ContainerTypes containerType, List<ScriptActionContainer> commandList, ListBox navListBox, Scintilla textArea) {
-            /* Add movements */
-            string buffer = "";
-            for (int i = 0; i < commandList.Count; i++) {
-                ScriptActionContainer currentCommand = commandList[i];
+        for (int i = 0; i < currentScriptFile.allFunctions.Count; i++) {
+          ScriptCommandContainer currentFunction = currentScriptFile.allFunctions[i];
+         
+          /* Write Heaader */
+          string header = ScriptFile.ContainerTypes.Function.ToString() + " " + (i + 1);
+          buffer += header + ':' + Environment.NewLine;
+          navListBox.Items.Add(header);
+          
+          /* If current function is identical to a script, print UseScript instead of commands */
+          if (currentFunction.usedScriptID < 0) {
+            for (int j = 0; j < currentFunction.commands.Count; j++) {
+              if (!ScriptDatabase.endCodes.Contains(currentFunction.commands[j].id)) {
+                buffer += '\t';
+              }
 
-                string header = containerType + " " + (i + 1);
-                buffer += header + ':' + Environment.NewLine;
-                navListBox.Items.Add(header);
-
-                for (int j = 0; j < currentCommand.commands.Count; j++) {
-                    ScriptAction command = currentCommand.commands[j];
-                    if (!ScriptDatabase.movementEndCodes.Contains(command.id)) {
-                        buffer += '\t';
-                    }
-
-                    buffer += command.name + Environment.NewLine;
-                }
-
-                textArea.AppendText(buffer + Environment.NewLine);
-                buffer = "";
+              buffer += currentFunction.commands[j].name + Environment.NewLine;
             }
+          }
+          else {
+            buffer += '\t' + "UseScript_#" + currentFunction.usedScriptID + Environment.NewLine;
+          }
+          buffer = "";
         }
+      }
+    }
+
+    static void displayScriptFileActions(ScriptFile.ContainerTypes containerType, ScriptFile currentScriptFile, List<ScriptActionContainer> commandList, ListBox navListBox, Scintilla textArea) {
+      /* Add movements */
+      string buffer = "";
+      string path_action = RomInfo.workDir + "..\\script_export\\" + currentScriptFile.fileID.ToString("D4") + "_action.action";
+      textArea.Text = File.ReadAllText(path_action);
+      
+      for (int i = 0; i < commandList.Count; i++) {
+        ScriptActionContainer currentCommand = commandList[i];
+
+        string header = containerType + " " + (i + 1);
+        buffer += header + ':' + Environment.NewLine;
+        navListBox.Items.Add(header);
+
+        for (int j = 0; j < currentCommand.commands.Count; j++) {
+          ScriptAction command = currentCommand.commands[j];
+          if (!ScriptDatabase.movementEndCodes.Contains(command.id)) {
+            buffer += '\t';
+          }
+
+          buffer += command.name + Environment.NewLine;
+        }
+        buffer = "";
+      }
+    }
 
         private void scriptEditorZoomInButton_Click(object sender, EventArgs e) {
             ZoomIn(currentScintillaEditor);
@@ -667,29 +700,91 @@ namespace DSPRE.Editors {
               fileID
             );
 
-            //check if ScriptFile instance was created successfully
-            if (scriptFile.SaveToFileDefaultDir(fileID, showSuccessMessage: false)) {
-                /* Update ComboBox and select new file */
-                selectScriptFileComboBox.Items.Add(scriptFile);
-                selectScriptFileComboBox.SelectedItem = scriptFile;
+      //check if ScriptFile instance was created successfully
+      if (scriptFile.SaveToFileDefaultDir(fileID, showSuccessMessage: false)) {
+        /* Update ComboBox and select new file */
+        selectScriptFileComboBox.Items.Add(scriptFile);
+        selectScriptFileComboBox.SelectedItem = scriptFile;
+      }
+    }
+    
+    public static void WriteAllLinesBetter(string path, params string[] lines) {
+      if (path == null)
+        throw new ArgumentNullException("path");
+      if (lines == null)
+        throw new ArgumentNullException("lines");
+
+      using (var stream = File.OpenWrite(path)) {
+        stream.SetLength(0);
+        using (var writer = new StreamWriter(stream)) {
+          if (lines.Length > 0)
+          {
+            for (var i = 0; i < lines.Length - 1; i++)
+            {
+              writer.WriteLine(lines[i]);
             }
+            writer.Write(lines[lines.Length - 1]);
+          }
         }
+      }
+    }
 
         private void saveScriptFileButton_Click(object sender, EventArgs e) {
             /* Create new ScriptFile object using the values in the script editor */
             int fileID = currentScriptFile.fileID;
 
-            ScriptFile userEdited = new ScriptFile(
-              scriptLines: ScriptTextArea.Lines.ToStringsList(trim: true),
-              functionLines: FunctionTextArea.Lines.ToStringsList(trim: true),
-              actionLines: ActionTextArea.Lines.ToStringsList(trim: true),
-              fileID
-            );
+      ScriptFile userEdited = new ScriptFile(
+        scriptLines: ScriptTextArea.Lines.ToStringsList(trim: true),
+        functionLines: FunctionTextArea.Lines.ToStringsList(trim: true),
+        actionLines: ActionTextArea.Lines.ToStringsList(trim: true),
+        fileID
+      );
+      
+      DialogResult d = MessageBox.Show("Do you wish to export the scripts\nin a readable format?", "Unsaved work", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (d.Equals(DialogResult.Yes))
+            {
 
-            if (userEdited.hasNoScripts) {
-                MessageBox.Show("This " + nameof(ScriptFile) + " couldn't be saved. A minimum of one script is required.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                string subPath = RomInfo.workDir + "..\\script_export";
+
+                bool exists = System.IO.Directory.Exists(subPath);
+
+                if (!exists)
+                    System.IO.Directory.CreateDirectory(subPath);
+
+                string script_lines = ScriptTextArea.Text;
+                string function_lines = FunctionTextArea.Text;
+                string action_lines = ActionTextArea.Text;
+                string path_script = RomInfo.workDir + "..\\script_export\\" + fileID.ToString("D4") + "_script.script";
+                string path_function = RomInfo.workDir + "..\\script_export\\" + fileID.ToString("D4") + "_func.script";
+                string path_action = RomInfo.workDir + "..\\script_export\\" + fileID.ToString("D4") + "_action.action";
+
+                WriteAllLinesBetter(path_script, script_lines);
+
+                WriteAllLinesBetter(path_function, function_lines);
+
+                WriteAllLinesBetter(path_action, action_lines);
+
+                /* Write new scripts to file after exporting readable*/
+                if (userEdited.fileID == null)
+                {
+                    MessageBox.Show("This " + typeof(ScriptFile).Name + " couldn't be saved, due to a processing error.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else if (userEdited.fileID == int.MaxValue)
+                {
+                    MessageBox.Show("This " + typeof(ScriptFile).Name + " is couldn't be saved since it's empty.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                { //check if ScriptFile instance was created succesfully
+                    userEdited.SaveToFileDefaultDir(selectScriptFileComboBox.SelectedIndex);
+                    currentScriptFile = userEdited;
+                    ScriptEditorSetClean();
+                }
             }
+
+      if (userEdited.hasNoScripts) {
+        MessageBox.Show("This " + nameof(ScriptFile) + " couldn't be saved. A minimum of one script is required.", "Can't save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        return;
+      }
 
             //check if ScriptFile instance was created successfully
             if (userEdited.SaveToFileDefaultDir(fileID)) {
@@ -1012,6 +1107,48 @@ namespace DSPRE.Editors {
                 searchManager.textAreaScintilla.FirstVisibleLine = resultStart;
             }
         }
+
+        private void exportallcustom_button_Click(object sender, EventArgs e)
+        {
+            int scriptCount = Filesystem.GetScriptCount();
+
+            for (int i = 0; i < scriptCount; i++)
+            {
+
+                int fileID = i;
+
+                ScriptFile userEdited = new ScriptFile(
+                 scriptLines: ScriptTextArea.Lines.ToStringsList(trim: true),
+                 functionLines: FunctionTextArea.Lines.ToStringsList(trim: true),
+                 actionLines: ActionTextArea.Lines.ToStringsList(trim: true),
+                 fileID
+               );
+
+                string subPath = RomInfo.workDir + "..\\script_export";
+
+                bool exists = System.IO.Directory.Exists(subPath);
+
+                if (!exists)
+                    System.IO.Directory.CreateDirectory(subPath);
+
+                string script_lines = ScriptTextArea.Text;
+                string function_lines = FunctionTextArea.Text;
+                string action_lines = ActionTextArea.Text;
+                string path_script = RomInfo.workDir + "..\\script_export\\" + fileID.ToString("D4") + "_script.script";
+                string path_function = RomInfo.workDir + "..\\script_export\\" + fileID.ToString("D4") + "_func.script";
+                string path_action = RomInfo.workDir + "..\\script_export\\" + fileID.ToString("D4") + "_action.action";
+
+                WriteAllLinesBetter(path_script, script_lines);
+                WriteAllLinesBetter(path_function, function_lines);
+                WriteAllLinesBetter(path_action, action_lines);
+
+                if (selectScriptFileComboBox.SelectedIndex <= scriptCount)
+                {
+                    selectScriptFileComboBox.SelectedIndex = selectScriptFileComboBox.SelectedIndex + 1;
+                }
+            }
+        }
+
     }
 
     public class ScriptEditorSearchResult {

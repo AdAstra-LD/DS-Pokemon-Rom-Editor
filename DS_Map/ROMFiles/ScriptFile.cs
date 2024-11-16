@@ -28,6 +28,7 @@ namespace DSPRE.ROMFiles {
         public List<ScriptActionContainer> allActions = new List<ScriptActionContainer>();
         public int fileID = -1;
         public bool isLevelScript = new bool();
+        public bool blockComment = new bool();
 
         public bool hasNoScripts { get { return fileID == int.MaxValue; } }
 
@@ -240,6 +241,8 @@ namespace DSPRE.ROMFiles {
                             ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
                             break;
                         case 0x5E: // Movement
+                        case 0x2A1: // Movement2
+                                    //in the case of Movement, the first param is an overworld ID
                             parameterList.Add(BitConverter.GetBytes(dataReader.ReadUInt16()));
                             ProcessRelativeJump(dataReader, ref parameterList, ref actionOffsets);
                             break;
@@ -544,9 +547,12 @@ namespace DSPRE.ROMFiles {
                         ScriptCommand lastRead;
 
                         do {
-                            lastRead = new ScriptCommand(lineSource[i].text, lineSource[i].linenum + 1);
+                            lastRead = new ScriptCommand(lineSource[i].text, this, lineSource[i].linenum + 1);
                             if (lastRead.id is null) {
                                 return null;
+                            }
+                            else if (lastRead.id == 0xFFFF) { // entire line is block comment, nothing to compile
+                                continue;
                             }
 
                             cmdList.Add(lastRead);
@@ -609,9 +615,11 @@ namespace DSPRE.ROMFiles {
                     List<ScriptAction> cmdList = new List<ScriptAction>();
                     /* Read script actions */
                     do {
-                        ScriptAction toAdd = new ScriptAction(lineSource[i].text, lineSource[i].linenum + 1);
-                        if (toAdd.id is null) {
+                        ScriptAction toAdd = new ScriptAction(lineSource[i].text, this, lineSource[i].linenum + 1);
+                        if (toAdd.id is null)
                             return null;
+                        else if (toAdd.id == 0xFFFF) { // entire line is block comment, nothing to compile
+                            continue;
                         }
 
                         cmdList.Add(toAdd);
