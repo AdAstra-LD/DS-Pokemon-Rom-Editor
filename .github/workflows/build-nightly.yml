@@ -43,15 +43,11 @@ jobs:
         name: release-artifact
         path: ${{ env.RELEASE_FILE_PATH }}
 
-    - name: Get current date
-      id: date
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: release.zip
-        asset_name: ${{ env.RELEASE_FILE_PATH }}
+        asset_name: ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release ${{env.GITHUB_WORKSPACE}}\release.zip
         tag: ${{ steps.tag_version.outputs.new_tag }}
         overwrite: true
