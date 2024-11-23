@@ -43,11 +43,9 @@ jobs:
         name: release-artifact
         path: ${{ env.RELEASE_FILE_PATH }}
 
-    - name: Bump version and push tag
-      id: tag_version
-      uses: mathieudutour/github-tag-action@v6.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
