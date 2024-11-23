@@ -48,6 +48,6 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: release.zip
-        asset_name: ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release ${{env.GITHUB_WORKSPACE}}\release.zip
+        asset_name: ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release \release.zip
         tag: ${{ steps.tag_version.outputs.new_tag }}
         overwrite: true
