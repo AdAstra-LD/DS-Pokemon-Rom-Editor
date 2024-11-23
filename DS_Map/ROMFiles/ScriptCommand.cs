@@ -43,7 +43,7 @@ namespace DSPRE.ROMFiles {
                     name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1])}";
                     break;
                 case 0x0019: // JumpIfPlayerDir
-                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_DIRECTION)} {FormatNumber(parametersList[1], ParamTypeEnum.FUNCTION_ID)}";
+                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_DIRECTION)} {FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID)}";
                     break;
                 case 0x001C: // JumpIf
                 case 0x001D: // CallIf
@@ -203,9 +203,70 @@ namespace DSPRE.ROMFiles {
             return $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1], ParamTypeEnum.OW_DIRECTION)}";
         }
 
-        public ScriptCommand(string wholeLine, int lineNumber = 0) {
+        public ScriptCommand(string wholeLine, ScriptFile scriptFile, int lineNumber = 0){
+            // the issue here is really this:
+            // ScriptCommand 0x1 """block comment 0x2""" 0x2 """yesnobox""" 0x3 """
+            // Script Command_457""" yesnobox 3
+            // """block comment here
+            // """
+            // Message 45 5
+            // should become:
+            // ScriptCommand 0x1  0x2  0x3
+            //  yesnobox 3
+            // Message 45 5
             name = wholeLine;
             cmdParams = new List<byte[]>();
+            
+            // handle block comments
+            int blockCommentPos1 = -1;
+            int blockCommentPos2 = -1;
+            int saveTextBeforePos = 0; // block comments will remove text after this point
+
+            if (scriptFile != null && wholeLine.IndexOf("\"\"\"", StringComparison.InvariantCultureIgnoreCase) >= 0)
+            { // if there is a """ on this line
+                while ((blockCommentPos1 = wholeLine.IndexOf("\"\"\"", StringComparison.InvariantCultureIgnoreCase)) >= 0)
+                { // while a block comment is on the current line
+                    if (scriptFile.blockComment)
+                    { // if currently in a block comment, remove everything before the upcoming """ after saveTextBeforePos.  end the block comment
+                        wholeLine = wholeLine.Remove(saveTextBeforePos, blockCommentPos1 + 3 - saveTextBeforePos);
+                        scriptFile.blockComment = false; // toggle block comment
+                    }
+                    else
+                    { // initiate a new block comment
+                        blockCommentPos2 = wholeLine.Remove(blockCommentPos1, 3).IndexOf("\"\"\"", StringComparison.InvariantCultureIgnoreCase);
+
+                        if (blockCommentPos2 >= 0)
+                        { // there is another """ in wholeLine, let blockComment == true above handle it but delete comment from string itself so it's not sensed a second time
+                            wholeLine = wholeLine.Remove(blockCommentPos1, 3);
+                            saveTextBeforePos = blockCommentPos1;
+                        }
+                        else
+                        { // there is no other """ in wholeLine, delete rest of line
+                            wholeLine = wholeLine.Substring(0, blockCommentPos1);
+                        }
+                        scriptFile.blockComment = true; // toggle block comment
+                    }
+                }
+            }
+            else if (scriptFile.blockComment)
+            { // if the whole line is contained in a blockComment with no toggle
+                id = 0xFFFF;
+                return;
+            }
+
+            // handle line comments
+            int commentPos = wholeLine.IndexOf("##", StringComparison.InvariantCultureIgnoreCase);
+
+            if (commentPos > 0)
+            {
+                wholeLine = wholeLine.Substring(0, commentPos);
+            }
+            else if (commentPos == 0)
+            {
+                id = 0xFFFF;
+                return;
+            }
+
 
             string[] nameParts = wholeLine.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries); // Separate command code from parameters
             /* Get command id, which is always first in the description */

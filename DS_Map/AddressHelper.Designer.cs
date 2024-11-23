@@ -35,8 +35,11 @@
             this.searchAddressButton = new System.Windows.Forms.Button();
             this.AddressInput = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.addressReturnTab = new ScintillaNET.Scintilla();
+            this.addressesGrid = new System.Windows.Forms.DataGridView();
+            this.overlayCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OffsetCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.addressesGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -86,25 +89,45 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.AutoSize = true;
-            this.groupBox1.Controls.Add(this.addressReturnTab);
+            this.groupBox1.Controls.Add(this.addressesGrid);
             this.groupBox1.Location = new System.Drawing.Point(-3, 55);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(338, 156);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             // 
-            // addressReturnTab
+            // addressesGrid
             // 
-            this.addressReturnTab.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.addressReturnTab.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.addressReturnTab.Location = new System.Drawing.Point(3, 16);
-            this.addressReturnTab.Name = "addressReturnTab";
-            this.addressReturnTab.Size = new System.Drawing.Size(332, 137);
-            this.addressReturnTab.TabIndex = 0;
+            this.addressesGrid.AllowUserToAddRows = false;
+            this.addressesGrid.AllowUserToDeleteRows = false;
+            this.addressesGrid.AllowUserToOrderColumns = true;
+            this.addressesGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.addressesGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.addressesGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.overlayCol,
+            this.OffsetCol});
+            this.addressesGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addressesGrid.Location = new System.Drawing.Point(3, 16);
+            this.addressesGrid.Name = "addressesGrid";
+            this.addressesGrid.ReadOnly = true;
+            this.addressesGrid.Size = new System.Drawing.Size(332, 137);
+            this.addressesGrid.TabIndex = 0;
+            // 
+            // overlayCol
+            // 
+            this.overlayCol.HeaderText = "Segment";
+            this.overlayCol.Name = "overlayCol";
+            this.overlayCol.ReadOnly = true;
+            // 
+            // OffsetCol
+            // 
+            this.OffsetCol.HeaderText = "Offset";
+            this.OffsetCol.Name = "OffsetCol";
+            this.OffsetCol.ReadOnly = true;
             // 
             // AddressHelper
             // 
@@ -123,6 +146,7 @@
             this.Name = "AddressHelper";
             this.Text = "AddressHelper";
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.addressesGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,6 +160,8 @@
         private System.Windows.Forms.Button searchAddressButton;
         private System.Windows.Forms.TextBox AddressInput;
         private System.Windows.Forms.GroupBox groupBox1;
-        private ScintillaNET.Scintilla addressReturnTab;
+        private System.Windows.Forms.DataGridView addressesGrid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn overlayCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OffsetCol;
     }
 }

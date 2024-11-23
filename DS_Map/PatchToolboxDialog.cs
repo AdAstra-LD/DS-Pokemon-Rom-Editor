@@ -657,9 +657,9 @@ namespace DSPRE
                     for (ushort i = 0; i < itemCount; i++)
                     {
                         List<ScriptCommand> cmdList = new List<ScriptCommand> {
-                            new ScriptCommand("SetVar 0x8008 " + i),
-                            new ScriptCommand("SetVar 0x8009 0x1"),
-                            new ScriptCommand("Jump Function_#1")
+                            new ScriptCommand("SetVar 0x8008 " + i, itemScriptFile),
+                            new ScriptCommand("SetVar 0x8009 0x1", itemScriptFile),
+                            new ScriptCommand("Jump Function_#1", itemScriptFile)
                         };
 
                         itemScriptFile.allScripts.Add(new ScriptCommandContainer((ushort)(i + 1), ScriptFile.ContainerTypes.Script, commandList: cmdList));

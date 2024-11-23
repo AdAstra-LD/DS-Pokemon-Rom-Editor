@@ -127,7 +127,7 @@ namespace DSPRE.Editors {
 
                 listBoxTriggers.DataSource = _levelScriptFile.bufferSet;
                 if (listBoxTriggers.Items.Count > 0){ listBoxTriggers.SelectedIndex = 0; }
-
+                // Check for 318767104
                 enableButtons();
             } catch (InvalidDataException ex) { //not a level script
                 disableButtons();

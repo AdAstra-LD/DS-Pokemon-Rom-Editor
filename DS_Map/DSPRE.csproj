@@ -170,6 +170,12 @@
     <Compile Include="Editors\ScriptEditor.Designer.cs">
       <DependentUpon>ScriptEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\WeatherEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\WeatherEditor.Designer.cs">
+      <DependentUpon>WeatherEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="EventFileImport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -297,6 +303,13 @@
       <DependentUpon>ScriptTooltip.cs</DependentUpon>
     </Compile>
     <Compile Include="ScintillaUtils\SearchManager.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SettingsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsWindow.Designer.cs">
+      <DependentUpon>SettingsWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="SpawnEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -709,6 +722,7 @@
     <None Include="Resources\Graphics\Program Icons\sortAscending.png" />
     <None Include="Resources\Graphics\Program Icons\sortDescending.png" />
     <None Include="Resources\RenameIcon.png" />
+    <None Include="Resources\weather_editor.bmp" />
     <Content Include="Tools\apicula.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
