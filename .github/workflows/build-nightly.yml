@@ -35,7 +35,7 @@ jobs:
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}} 
     
     - name: Zip Release Files
-      run: Compress-Archive ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release${{env.GITHUB_WORKSPACE}}\release.zip
+      run: Compress-Archive ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release ${{env.GITHUB_WORKSPACE}}\release.zip
 
     - name: Upload Release Artifact
       uses: actions/upload-artifact@v3
@@ -47,7 +47,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ env.RELEASE_FILE_PATH }}\release.zip
+        file: ${{env.GITHUB_WORKSPACE}}\release.zip
         asset_name: release.zip
         tag: ${{ steps.tag_version.outputs.new_tag }}
         overwrite: true
