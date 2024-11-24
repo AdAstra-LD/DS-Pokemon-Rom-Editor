@@ -51,3 +51,4 @@ jobs:
         asset_name: release.zip
         tag: ${{ steps.tag_version.outputs.new_tag }}
         overwrite: true
+        prerelease: true
