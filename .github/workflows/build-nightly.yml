@@ -47,7 +47,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release \release.zip
-        asset_name: ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release \release.zip
+        file: ${{ env.RELEASE_FILE_PATH }}\release.zip
+        asset_name: release.zip
         tag: ${{ steps.tag_version.outputs.new_tag }}
         overwrite: true
