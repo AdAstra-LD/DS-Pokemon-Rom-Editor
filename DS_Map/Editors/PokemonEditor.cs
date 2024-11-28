@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSPRE.Editors;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,7 @@ namespace DSPRE {
         PersonalDataEditor personalEditor;
         LearnsetEditor learnsetEditor;
         EvolutionsEditor evoEditor;
+        PokemonSpriteEditor spriteEditor;
 
         public PokemonEditor(string[] itemNames, string[] abilityNames, string[] moveNames) {
             InitializeComponent();
@@ -34,6 +36,11 @@ namespace DSPRE {
             evoEditor.TopLevel = false;
             evoEditor.Show();
             evoPage.Controls.Add(evoEditor);
+
+            spriteEditor = new PokemonSpriteEditor(spritePage, this);
+            spriteEditor.TopLevel = false;
+            spriteEditor.Show();
+            spritePage.Controls.Add(spriteEditor);
         }
 
         public void TrySyncIndices(ComboBox sender) {

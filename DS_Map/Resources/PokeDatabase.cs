@@ -665,8 +665,11 @@ namespace DSPRE.Resources {
                 [0x00] = "[00] None",
                 [0x02] = "[02] Tall Grass (Wild)",
                 [0x03] = "[03] Very Tall Grass (Wild)",
-                [0x06] = "[06] Tree Headbutt (HGSS)",
+                [0x06] = "[06] Headbutt - No Encounter",
+                [0x07] = "[07] Headbutt - Common Encounter",
                 [0x08] = "[08] Cave Floor",
+                [0x09] = "[09] Headbutt - Rare Encounter",
+                [0x0A] = "[0A] Headbutt - Special Encounter",
                 [0x0B] = "[0B] Old Château floor",
                 [0x0C] = "[0C] Ground Mountain",
                 [0x10] = "[10] River Water (Wild)",
@@ -1490,6 +1493,11 @@ namespace DSPRE.Resources {
                     [new List<uint> { 208 }] = (Color.ForestGreen, Color.White),
                     [new List<uint> { 209 }] = (Color.SteelBlue, Color.White),
                     [new List<uint> { 210 }] = (Color.Sienna, Color.White),
+                    [new List<uint> { 767 }] = (Color.SteelBlue, Color.White),
+                    [new List<uint> { 821 }] = (Color.SteelBlue, Color.White),
+                    [new List<uint> { 823 }] = (Color.ForestGreen, Color.White),
+                    [new List<uint> { 824 }] = (Color.ForestGreen, Color.White),
+                    [new List<uint> { 825 }] = (Color.SteelBlue, Color.White),
                     [new List<uint> { GameMatrix.EMPTY }] = (Color.Black, Color.White)
                 };
                 public static Dictionary<List<uint>, (Color back, Color fore)> GenericMatrixColorsDict = new Dictionary<List<uint>, (Color back, Color fore)> {

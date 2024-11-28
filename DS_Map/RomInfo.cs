@@ -134,6 +134,8 @@ namespace DSPRE
         public enum DirNames : byte
         {
             personalPokeData,
+            pokemonBattleSprites,
+            otherPokemonBattleSprites,
 
             synthOverlay,
             dynamicHeaders,
@@ -1117,6 +1119,9 @@ namespace DSPRE
         private static void SetMoveTextNumbers() {
             switch (gameFamily) {
                 case GameFamilies.DP:
+                    moveDescriptionsTextNumbers = 587;
+                    moveNamesTextNumbers = 588;
+                    break;
                 case GameFamilies.Plat:
                     moveDescriptionsTextNumbers = 646;
                     moveNamesTextNumbers = 647;
@@ -1408,12 +1413,16 @@ namespace DSPRE
                         [DirNames.trainerProperties] = @"data\poketool\trainer\trdata.narc",
                         [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
                         [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
+                        [DirNames.moveData] = @"data\poketool\waza\waza_tbl.narc",
 
                         [DirNames.monIcons] = @"data\poketool\icongra\poke_icon.narc",
 
                         [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc",
                         [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
                         [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
+
+                        [DirNames.pokemonBattleSprites] = @"data\poketool\pokegra\pokegra.narc",
+                        [DirNames.otherPokemonBattleSprites] = @"data\poketool\pokegra\otherpoke.narc",
                     };
 
                     //Personal Data archive is different for Pearl
@@ -1433,6 +1442,10 @@ namespace DSPRE
                     packedDirsDict = new Dictionary<DirNames, string>()
                     {
                         [DirNames.personalPokeData] = @"data\poketool\personal\pl_personal.narc",
+
+                        [DirNames.pokemonBattleSprites] = @"data\poketool\pokegra\pl_pokegra.narc",
+                        [DirNames.otherPokemonBattleSprites] = @"data\poketool\pokegra\pl_otherpoke.narc",
+
                         [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
                         [DirNames.dynamicHeaders] = @"data\debug\cb_edit\d_test.narc",
 
@@ -1469,6 +1482,9 @@ namespace DSPRE
                     packedDirsDict = new Dictionary<DirNames, string>()
                     {
                         [DirNames.personalPokeData] = @"data\a\0\0\2",
+                        [DirNames.pokemonBattleSprites] = @"data\a\0\0\4",
+                        [DirNames.otherPokemonBattleSprites] = @"data\a\1\1\4",
+
                         [DirNames.synthOverlay] = @"data\a\0\2\8",
                         [DirNames.dynamicHeaders] = @"data\a\0\5\0",
 

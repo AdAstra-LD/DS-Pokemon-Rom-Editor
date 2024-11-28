@@ -255,6 +255,7 @@
             this.zBuildUpDown = new System.Windows.Forms.NumericUpDown();
             this.buildingsListBox = new System.Windows.Forms.ListBox();
             this.permissionsTabPage = new System.Windows.Forms.TabPage();
+            this.transparencyBar = new System.Windows.Forms.TrackBar();
             this.scanUnusedCollisionTypesButton = new System.Windows.Forms.Button();
             this.clearCurrentButton = new System.Windows.Forms.Button();
             this.typeLabel = new System.Windows.Forms.Label();
@@ -788,9 +789,11 @@
             this.openROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveROMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.romToolboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.headerSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addressHelperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scriptCommandsDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diamondAndPearlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.platinumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -817,6 +820,7 @@
             this.personalDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overlayEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spawnEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -849,9 +853,10 @@
             this.headerSearchToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.spawnEditorToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.separator_afterMiscButtons = new System.Windows.Forms.ToolStripSeparator();
+            this.weatherMapEditor = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.moveDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportScriptDatabaseJSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -916,6 +921,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.xBuildUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zBuildUpDown)).BeginInit();
             this.permissionsTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.transparencyBar)).BeginInit();
             this.typeGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.typePainterUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.typePainterPictureBox)).BeginInit();
@@ -2544,7 +2550,7 @@
             this.setSpawnPointButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
             this.setSpawnPointButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.setSpawnPointButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.setSpawnPointButton.Location = new System.Drawing.Point(11, 528);
+            this.setSpawnPointButton.Location = new System.Drawing.Point(11, -73);
             this.setSpawnPointButton.Name = "setSpawnPointButton";
             this.setSpawnPointButton.Size = new System.Drawing.Size(117, 43);
             this.setSpawnPointButton.TabIndex = 35;
@@ -2560,7 +2566,7 @@
             this.saveMatrixButton.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveMatrixButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveMatrixButton.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.saveMatrixButton.Location = new System.Drawing.Point(11, 589);
+            this.saveMatrixButton.Location = new System.Drawing.Point(11, -12);
             this.saveMatrixButton.Name = "saveMatrixButton";
             this.saveMatrixButton.Size = new System.Drawing.Size(117, 43);
             this.saveMatrixButton.TabIndex = 34;
@@ -2714,7 +2720,7 @@
             // 
             this.labelMatrices.AutoSize = true;
             this.labelMatrices.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.labelMatrices.Location = new System.Drawing.Point(9, 11);
+            this.labelMatrices.Location = new System.Drawing.Point(10, 11);
             this.labelMatrices.Name = "labelMatrices";
             this.labelMatrices.Size = new System.Drawing.Size(47, 13);
             this.labelMatrices.TabIndex = 21;
@@ -3822,6 +3828,7 @@
             // 
             // permissionsTabPage
             // 
+            this.permissionsTabPage.Controls.Add(this.transparencyBar);
             this.permissionsTabPage.Controls.Add(this.scanUnusedCollisionTypesButton);
             this.permissionsTabPage.Controls.Add(this.clearCurrentButton);
             this.permissionsTabPage.Controls.Add(this.typeLabel);
@@ -3840,11 +3847,24 @@
             this.permissionsTabPage.Text = "Move Permissions";
             this.permissionsTabPage.UseVisualStyleBackColor = true;
             // 
+            // transparencyBar
+            // 
+            this.transparencyBar.BackColor = System.Drawing.SystemColors.Menu;
+            this.transparencyBar.Location = new System.Drawing.Point(12, 391);
+            this.transparencyBar.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.transparencyBar.Maximum = 255;
+            this.transparencyBar.Name = "transparencyBar";
+            this.transparencyBar.Size = new System.Drawing.Size(445, 45);
+            this.transparencyBar.TabIndex = 42;
+            this.transparencyBar.TickFrequency = 255;
+            this.transparencyBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.transparencyBar.Scroll += new System.EventHandler(this.transparencyBar_Scroll);
+            // 
             // scanUnusedCollisionTypesButton
             // 
             this.scanUnusedCollisionTypesButton.Image = global::DSPRE.Properties.Resources.SearchMiniIcon;
             this.scanUnusedCollisionTypesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.scanUnusedCollisionTypesButton.Location = new System.Drawing.Point(345, 110);
+            this.scanUnusedCollisionTypesButton.Location = new System.Drawing.Point(345, 108);
             this.scanUnusedCollisionTypesButton.Name = "scanUnusedCollisionTypesButton";
             this.scanUnusedCollisionTypesButton.Size = new System.Drawing.Size(111, 27);
             this.scanUnusedCollisionTypesButton.TabIndex = 33;
@@ -3891,9 +3911,9 @@
             this.typeGroupBox.Controls.Add(this.collisionTypePainterComboBox);
             this.typeGroupBox.Controls.Add(this.typePainterPictureBox);
             this.typeGroupBox.Enabled = false;
-            this.typeGroupBox.Location = new System.Drawing.Point(12, 301);
+            this.typeGroupBox.Location = new System.Drawing.Point(13, 272);
             this.typeGroupBox.Name = "typeGroupBox";
-            this.typeGroupBox.Size = new System.Drawing.Size(444, 134);
+            this.typeGroupBox.Size = new System.Drawing.Size(444, 113);
             this.typeGroupBox.TabIndex = 25;
             this.typeGroupBox.TabStop = false;
             this.typeGroupBox.Text = "Type Painter";
@@ -3914,7 +3934,7 @@
             // valueTypeRadioButton
             // 
             this.valueTypeRadioButton.AutoSize = true;
-            this.valueTypeRadioButton.Location = new System.Drawing.Point(135, 78);
+            this.valueTypeRadioButton.Location = new System.Drawing.Point(341, 19);
             this.valueTypeRadioButton.Name = "valueTypeRadioButton";
             this.valueTypeRadioButton.Size = new System.Drawing.Size(52, 17);
             this.valueTypeRadioButton.TabIndex = 4;
@@ -3926,7 +3946,7 @@
             // 
             this.typePainterUpDown.Enabled = false;
             this.typePainterUpDown.Hexadecimal = true;
-            this.typePainterUpDown.Location = new System.Drawing.Point(134, 101);
+            this.typePainterUpDown.Location = new System.Drawing.Point(341, 45);
             this.typePainterUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -3945,7 +3965,7 @@
             this.collisionTypePainterComboBox.Location = new System.Drawing.Point(135, 44);
             this.collisionTypePainterComboBox.MaxDropDownItems = 10;
             this.collisionTypePainterComboBox.Name = "collisionTypePainterComboBox";
-            this.collisionTypePainterComboBox.Size = new System.Drawing.Size(283, 21);
+            this.collisionTypePainterComboBox.Size = new System.Drawing.Size(200, 21);
             this.collisionTypePainterComboBox.TabIndex = 2;
             this.collisionTypePainterComboBox.SelectedIndexChanged += new System.EventHandler(this.typePainterComboBox_SelectedIndexChanged);
             // 
@@ -3955,7 +3975,7 @@
             this.typePainterPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.typePainterPictureBox.Location = new System.Drawing.Point(18, 31);
             this.typePainterPictureBox.Name = "typePainterPictureBox";
-            this.typePainterPictureBox.Size = new System.Drawing.Size(80, 80);
+            this.typePainterPictureBox.Size = new System.Drawing.Size(66, 64);
             this.typePainterPictureBox.TabIndex = 1;
             this.typePainterPictureBox.TabStop = false;
             // 
@@ -3965,7 +3985,7 @@
             this.collisionGroupBox.Controls.Add(this.collisionPainterPictureBox);
             this.collisionGroupBox.Location = new System.Drawing.Point(12, 167);
             this.collisionGroupBox.Name = "collisionGroupBox";
-            this.collisionGroupBox.Size = new System.Drawing.Size(444, 118);
+            this.collisionGroupBox.Size = new System.Drawing.Size(444, 99);
             this.collisionGroupBox.TabIndex = 24;
             this.collisionGroupBox.TabStop = false;
             this.collisionGroupBox.Text = "Collision Painter";
@@ -3974,7 +3994,7 @@
             // 
             this.collisionPainterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.collisionPainterComboBox.FormattingEnabled = true;
-            this.collisionPainterComboBox.Location = new System.Drawing.Point(134, 50);
+            this.collisionPainterComboBox.Location = new System.Drawing.Point(134, 23);
             this.collisionPainterComboBox.Name = "collisionPainterComboBox";
             this.collisionPainterComboBox.Size = new System.Drawing.Size(284, 21);
             this.collisionPainterComboBox.TabIndex = 1;
@@ -3986,7 +4006,7 @@
             this.collisionPainterPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.collisionPainterPictureBox.Location = new System.Drawing.Point(18, 23);
             this.collisionPainterPictureBox.Name = "collisionPainterPictureBox";
-            this.collisionPainterPictureBox.Size = new System.Drawing.Size(80, 80);
+            this.collisionPainterPictureBox.Size = new System.Drawing.Size(66, 64);
             this.collisionPainterPictureBox.TabIndex = 0;
             this.collisionPainterPictureBox.TabStop = false;
             // 
@@ -4341,7 +4361,7 @@
             this.radio3D.AutoSize = true;
             this.radio3D.Checked = true;
             this.radio3D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio3D.Location = new System.Drawing.Point(1140, 35);
+            this.radio3D.Location = new System.Drawing.Point(147, -566);
             this.radio3D.Name = "radio3D";
             this.radio3D.Size = new System.Drawing.Size(31, 23);
             this.radio3D.TabIndex = 26;
@@ -4356,7 +4376,7 @@
             this.radio2D.Appearance = System.Windows.Forms.Appearance.Button;
             this.radio2D.AutoSize = true;
             this.radio2D.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.radio2D.Location = new System.Drawing.Point(1140, 6);
+            this.radio2D.Location = new System.Drawing.Point(147, -595);
             this.radio2D.Name = "radio2D";
             this.radio2D.Size = new System.Drawing.Size(31, 23);
             this.radio2D.TabIndex = 25;
@@ -4371,7 +4391,7 @@
             this.wireframeCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.wireframeCheckBox.AutoSize = true;
             this.wireframeCheckBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, 64);
+            this.wireframeCheckBox.Location = new System.Drawing.Point(1140, -537);
             this.wireframeCheckBox.Name = "wireframeCheckBox";
             this.wireframeCheckBox.Size = new System.Drawing.Size(31, 23);
             this.wireframeCheckBox.TabIndex = 27;
@@ -10193,7 +10213,8 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openROMToolStripMenuItem,
             this.openFolderToolStripMenuItem,
-            this.saveROMToolStripMenuItem});
+            this.saveROMToolStripMenuItem,
+            this.settingsToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -10226,16 +10247,28 @@
             this.saveROMToolStripMenuItem.Text = "Save ROM";
             this.saveROMToolStripMenuItem.Click += new System.EventHandler(this.saveRom_Click);
             // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Image = global::DSPRE.Properties.Resources.wrenchIcon;
+            this.settingsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.RightToLeftAutoMirrorImage = true;
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(155, 38);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.romToolboxToolStripMenuItem,
             this.headerSearchToolStripMenuItem,
+            this.addressHelperToolStripMenuItem,
             this.scriptCommandsDatabaseToolStripMenuItem,
             this.NarcUtilityToolStripMenuItem,
             this.listBasedBatchRenameToolStripMenuItem,
             this.listBuilderToolStripMenuItem,
-            this.nSBMDUtilityToolStripMenuItem});
+            this.nSBMDUtilityToolStripMenuItem,
+            this.exportScriptDatabaseJSONToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.aboutToolStripMenuItem.Text = "Tools";
@@ -10255,6 +10288,14 @@
             this.headerSearchToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.headerSearchToolStripMenuItem.Text = "Advanced Header Search";
             this.headerSearchToolStripMenuItem.Click += new System.EventHandler(this.advancedHeaderSearchToolStripMenuItem_Click);
+            // 
+            // addressHelperToolStripMenuItem
+            // 
+            this.addressHelperToolStripMenuItem.Enabled = false;
+            this.addressHelperToolStripMenuItem.Name = "addressHelperToolStripMenuItem";
+            this.addressHelperToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.addressHelperToolStripMenuItem.Text = "Address Helper";
+            this.addressHelperToolStripMenuItem.Click += new System.EventHandler(this.addressHelperToolStripMenuItem_Click);
             // 
             // scriptCommandsDatabaseToolStripMenuItem
             // 
@@ -10467,23 +10508,30 @@
             // personalDataEditorToolStripMenuItem
             // 
             this.personalDataEditorToolStripMenuItem.Name = "personalDataEditorToolStripMenuItem";
-            this.personalDataEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.personalDataEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.personalDataEditorToolStripMenuItem.Text = "Pokémon Editor";
             this.personalDataEditorToolStripMenuItem.Click += new System.EventHandler(this.pokemonDataEditorToolStripMenuItem_Click);
             // 
             // overlayEditorToolStripMenuItem
             // 
             this.overlayEditorToolStripMenuItem.Name = "overlayEditorToolStripMenuItem";
-            this.overlayEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.overlayEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.overlayEditorToolStripMenuItem.Text = "Overlay Editor";
             this.overlayEditorToolStripMenuItem.Click += new System.EventHandler(this.overlayEditorToolStripMenuItem_Click);
             // 
             // spawnEditorToolStripMenuItem
             // 
             this.spawnEditorToolStripMenuItem.Name = "spawnEditorToolStripMenuItem";
-            this.spawnEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spawnEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.spawnEditorToolStripMenuItem.Text = "Spawn Point Editor";
             this.spawnEditorToolStripMenuItem.Click += new System.EventHandler(this.spawnEditorToolStripButton_Click);
+            // 
+            // moveDataEditorToolStripMenuItem
+            // 
+            this.moveDataEditorToolStripMenuItem.Name = "moveDataEditorToolStripMenuItem";
+            this.moveDataEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.moveDataEditorToolStripMenuItem.Text = "Move Data Editor";
+            this.moveDataEditorToolStripMenuItem.Click += new System.EventHandler(this.moveDataEditorToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem1
             // 
@@ -10849,6 +10897,19 @@
             this.separator_afterMiscButtons.Name = "separator_afterMiscButtons";
             this.separator_afterMiscButtons.Size = new System.Drawing.Size(6, 44);
             // 
+            // weatherMapEditor
+            // 
+            this.weatherMapEditor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.weatherMapEditor.Image = global::DSPRE.Properties.Resources.weather_editor;
+            this.weatherMapEditor.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.weatherMapEditor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.weatherMapEditor.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.weatherMapEditor.Name = "weatherMapEditor";
+            this.weatherMapEditor.Size = new System.Drawing.Size(36, 36);
+            this.weatherMapEditor.Text = "Weather Map Editor";
+            this.weatherMapEditor.ToolTipText = "Weather Map Editor";
+            this.weatherMapEditor.Click += new System.EventHandler(this.weatherMapEditor_Click);
+            // 
             // versionLabel
             // 
             this.versionLabel.AutoSize = true;
@@ -10859,12 +10920,12 @@
             this.versionLabel.Text = "ROM:";
             this.versionLabel.Visible = false;
             // 
-            // moveDataEditorToolStripMenuItem
+            // exportScriptDatabaseJSONToolStripMenuItem
             // 
-            this.moveDataEditorToolStripMenuItem.Name = "moveDataEditorToolStripMenuItem";
-            this.moveDataEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.moveDataEditorToolStripMenuItem.Text = "Move Data Editor";
-            this.moveDataEditorToolStripMenuItem.Click += new System.EventHandler(this.moveDataEditorToolStripMenuItem_Click);
+            this.exportScriptDatabaseJSONToolStripMenuItem.Name = "exportScriptDatabaseJSONToolStripMenuItem";
+            this.exportScriptDatabaseJSONToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.exportScriptDatabaseJSONToolStripMenuItem.Text = "Export ScriptDatabase JSON";
+            this.exportScriptDatabaseJSONToolStripMenuItem.Click += new System.EventHandler(this.exportScriptDatabaseJSONToolStripMenuItem_Click);
             // 
             // MainProgram
             // 
@@ -10966,6 +11027,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.zBuildUpDown)).EndInit();
             this.permissionsTabPage.ResumeLayout(false);
             this.permissionsTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.transparencyBar)).EndInit();
             this.typeGroupBox.ResumeLayout(false);
             this.typeGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.typePainterUpDown)).EndInit();
@@ -12002,6 +12064,11 @@
         private System.Windows.Forms.ToolStripMenuItem overlayEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem spawnEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveDataEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton weatherMapEditor;
+        private System.Windows.Forms.TrackBar transparencyBar;
+        private System.Windows.Forms.ToolStripMenuItem addressHelperToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportScriptDatabaseJSONToolStripMenuItem;
     }
 }
 

@@ -153,6 +153,20 @@ namespace DSPRE.Resources {
             [0x0065] = "WaitJumpSite",
             [0x0067] = "WaitDoubleExclamation",
             [0x0068] = "WaitMoveForever",
+            [0x009e] = "Heart",
+            [0x009f] = "Smile",
+            [0x00A0] = "Anger",
+            [0x00A1] = "Sad",
+            [0x00A2] = "Grin",
+            [0x00A3] = "Suspecting",
+            [0x00A4] = "MusicNote",
+            [0x00A5] = "Question",
+            [0x00A6] = "BigExclamation",
+            [0x00A7] = "Water",
+            [0x00A8] = "Exhaust",
+            [0x00A9] = "Poison",
+            [0x00AA] = "Ellipsis",
+            [0x00AB] = "Asleep",
             [0x00FE] = "End"
         };
 
@@ -247,7 +261,7 @@ namespace DSPRE.Resources {
             [0x0053] = "SetMusic",
             [0x0054] = "FadeOutMusic",
             [0x0055] = "FadeInMusic",
-
+            [0x0056] = "SetMusicPauseStatus",
             [0x0057] = "PlayFieldBGM",
 
             [0x0059] = "CheckChatotCry",
@@ -684,9 +698,16 @@ namespace DSPRE.Resources {
 
             [0x02C1] = "ShowSaveBox",
             [0x02C2] = "HideSaveBox",
-            [0x02C3] = "ScopeMode",
+            [0x02C3] = "ScopeMode",            
 
             [0x0333] = "SetFieldVolume",
+
+            [0x0360] = "CollisionZone",  // Command by AdAstra, big collision zone
+            [0x035D] = "SpawnBuilding", // Command by AdAstra, add building to the map
+            [0x035E] = "DeleteBuilding", // Remove previously added building
+            [0x035F] = "CollisionTile", // Command by AdAstra, small collision (tile)
+            [0x0349] = "MultiplyVar", // Command by Kuha, multiplies variables
+            [0x034A] = "CreateOW", // 
         };
         public static Dictionary<ushort, byte[]> DPPtScrCmdParameters = new Dictionary<ushort, byte[]>() {
             [0x0000] = new byte[1] { 0 },
@@ -1439,6 +1460,12 @@ namespace DSPRE.Resources {
             [0x02C1] = new byte[1] { 0 },
             [0x02C2] = new byte[1] { 0 },
             [0x02C3] = new byte[1] { 1 },
+            [0x0360] = new byte[] { 2, 2, 2, 2, 1, 2, 2 }, // big collision?
+            [0x035D] = new byte[] { 2, 2, 2, 2, 2, 2, 2, 2 }, // spawn bld
+            [0x035E] = new byte[] { 2 }, // despawn bld
+            [0x035F] = new byte[] { 2, 2, 1, 2, 2 }, // small collision? ,
+            [0x0349] = new byte[] { 2, 2 }, // multiply var
+            [0x034A] = new byte[] { 2, 2, 2, 2, 2, 2 } // createOW
         };
 
         public static Dictionary<ushort, string> DPScrCmdNames = new Dictionary<ushort, string>() {
@@ -1760,7 +1787,7 @@ namespace DSPRE.Resources {
             [0x0053] = "SetMusic",
             [0x0054] = "FadeOutMusic",
             [0x0055] = "FadeInMusic",
-
+            [0x0056] = "SetMusicPauseStatus",
             [0x0059] = "CheckChatotCry",
             [0x005A] = "StartChatotCry",
             [0x005B] = "StopChatotCry",
