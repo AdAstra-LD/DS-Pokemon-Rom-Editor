@@ -1,7 +1,10 @@
-name: DSPRE Beta Canary Build 
- 
-on: [push]
- 
+name: DSPRE Beta Canary Build
+
+on:
+  push:
+    branches:
+      - main  # Trigger only on pushes to the main branch
+
 permissions:
   contents: write
 
@@ -25,18 +28,43 @@ jobs:
 
     - name: Build DSPRE
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}} 
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
     
     - name: Zip Release Files
-      run: Compress-Archive ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release DSPRE-beta-canary.zip
+      run: Compress-Archive -Path ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release -DestinationPath DSPRE-beta-canary.zip
 
-    - name: Release with Notes
+    - name: Fetch tags
+      run: git fetch --prune --unshallow --tags
+
+    - name: Get latest tag
+      id: get_latest_tag
+      run: |
+        last_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "beta_canary.0")
+        echo "last_tag=$last_tag" >> $GITHUB_ENV
+
+    - name: Increment tag
+      id: increment_tag
+      run: |
+        # Extract the numeric portion of the tag
+        base_tag=${{ env.last_tag%%.* }}
+        version_number=${{ env.last_tag##*. }}
+        new_tag="$base_tag.$((version_number + 1))"
+        echo "new_tag=$new_tag" >> $GITHUB_ENV
+
+    - name: Delete previous release
+      run: |
+        existing_release_id=$(gh release list --tag ${{ env.last_tag }} --json id --jq '.[0].id')
+        if [ -n "$existing_release_id" ]; then
+          gh release delete --yes ${{ env.last_tag }}
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create new release
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: beta_canary
-        name: DSPRE Beta Canary Build
+        tag_name: ${{ env.new_tag }}
+        name: DSPRE Beta Canary Build ${{ env.new_tag }}
         files: DSPRE-beta-canary.zip
         token: ${{ secrets.GITHUB_TOKEN }}
         prerelease: true
