@@ -38,10 +38,8 @@ jobs:
 
     - name: Delete previous release
       run: |
-        existing_release_id=$(gh release list --tag ${{ env.new_tag }} --json id --jq '.[0].id')
-        if [ -n "$existing_release_id" ]; then
-          gh release delete --yes beta_canary
-        fi
+        gh release delete --yes beta_canary
+
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Get current date
