@@ -36,32 +36,23 @@ jobs:
     - name: Fetch tags
       run: git fetch --prune --unshallow --tags
 
-    - name: Get latest tag and increment
-      id: increment_tag
-      run: |
-        # Get the latest tag or use default
-        last_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "beta_canary.0")
-        base_tag="${last_tag%.*}"
-        version_number="${last_tag##*.}"
-        new_tag="${base_tag}.$((version_number + 1))"
-        echo "new_tag=$new_tag" >> $GITHUB_ENV
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Delete previous release
       run: |
         existing_release_id=$(gh release list --tag ${{ env.new_tag }} --json id --jq '.[0].id')
         if [ -n "$existing_release_id" ]; then
-          gh release delete --yes ${{ env.new_tag }}
+          gh release delete --yes beta_canary
         fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        
     - name: Create new release
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: ${{ env.new_tag }}
-        name: DSPRE Beta Canary Build ${{ env.new_tag }}
+        tag_name: beta_canary
+        name: DSPRE Beta Canary Build ${{ steps.date.outputs.date }}
         files: DSPRE-beta-canary.zip
         token: ${{ secrets.GITHUB_TOKEN }}
         prerelease: true
