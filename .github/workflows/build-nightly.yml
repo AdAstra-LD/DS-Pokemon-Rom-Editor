@@ -36,26 +36,23 @@ jobs:
     - name: Fetch tags
       run: git fetch --prune --unshallow --tags
 
-    - name: Get latest tag
-      id: get_latest_tag
-      run: |
-        last_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "beta_canary.0")
-        echo "last_tag=$last_tag" >> $GITHUB_ENV
-
-    - name: Increment tag
+    - name: Get latest tag and increment
       id: increment_tag
       run: |
-        # Extract the numeric portion of the tag
-        base_tag=${{ env.last_tag%%.* }}
-        version_number=${{ env.last_tag##*. }}
-        new_tag="$base_tag.$((version_number + 1))"
+        # Get the latest tag or use default
+        last_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "beta_canary.0")
+        base_tag="${last_tag%.*}"
+        version_number="${last_tag##*.}"
+        new_tag="${base_tag}.$((version_number + 1))"
         echo "new_tag=$new_tag" >> $GITHUB_ENV
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Delete previous release
       run: |
-        existing_release_id=$(gh release list --tag ${{ env.last_tag }} --json id --jq '.[0].id')
+        existing_release_id=$(gh release list --tag ${{ env.new_tag }} --json id --jq '.[0].id')
         if [ -n "$existing_release_id" ]; then
-          gh release delete --yes ${{ env.last_tag }}
+          gh release delete --yes ${{ env.new_tag }}
         fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
